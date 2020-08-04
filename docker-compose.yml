@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  client:
+    build: .
+    command: ./bin/run.sh
+    environment:
+      - DJANGO_SECRET_KEY
+      - DJANGO_DEBUG
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_HOST
+      - POSTGRES_PORT
+    ports:
+      - "${DJANGO_LOCAL_PORT}:8000"
+    volumes:
+    - .:/usr/src/cal-itp:cached
