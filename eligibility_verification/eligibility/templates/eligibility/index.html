@@ -1,0 +1,16 @@
+<h1>Let's see what programs you're eligible for</h1>
+
+<form action="{% url 'eligibility:verify' %}" method="post">
+    {% csrf_token %}
+
+    <label for="first_name">First name</label>
+    <input type="text" id="first_name" name="first_name">
+
+    <label for="last_name">Last name</label>
+    <input type="text" id="last_name" name="last_name">
+
+    <label for="id">Driver's License or State ID number</label>
+    <input type="text" id="id" name="id">
+
+    <input type="submit" value="Check eligibility">
+</form>
