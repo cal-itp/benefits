@@ -1,0 +1,3 @@
+FROM eligibility_verification_client:latest
+
+RUN pip install -U flake8 debugpy

@@ -1,21 +1,10 @@
 version: "3.8"
 
 services:
-  db:
-    image: postgres:12
-    environment:
-      - POSTGRES_DB
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-
   client:
+    build:
+      dockerfile: Dockerfile.dev
+    image: eligibility_verification_client:dev
+    command: python -m debugpy --wait-for-client --listen 5678 manage.py runserver 0.0.0.0:8000
     depends_on:
       - db
-
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_EMAIL
-      - PGADMIN_DEFAULT_PASSWORD
-    ports:
-      - "${PGADMIN_LOCAL_PORT}:80"

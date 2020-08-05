@@ -4,6 +4,8 @@ Transit discount eligibility verification, minus the paperwork.
 
 ## Development
 
+Requires [Docker][docker] and [Docker Compose][docker-compose].
+
 Clone the repository locally:
 
 ```bash
@@ -17,17 +19,33 @@ Create an environment file from the sample:
 cp .env.sample .env
 ```
 
-### Recommended: VS Code with Dev Containers
-
-[VS Code][vscode] can be used together with [Docker][docker] via the [Remote - Containers][vscode-containers] extension to use
-a Docker container as a consistent development environment. This repository includes a [`.devcontainer.json`][config-file]
-configuration file enabling remote container development.
-
-First build the base image (from Python 3.8):
+Build the eligibility verification client:
 
 ```bash
-docker-compose build base
+docker-compose build client
 ```
+
+### Run the client locally
+
+Start a local PostgreSQL container:
+
+```bash
+docker-compose up -d db
+```
+
+Then start the eligibility verification client:
+
+```bash
+docker-compose up -d client
+```
+
+The client is running at `http://localhost:${CLIENT_LOCAL_PORT}` (http://localhost:8000 by default).
+
+### VS Code with Dev Containers
+
+[VS Code][vscode] can be used together with Docker via the [Remote - Containers][vscode-containers] extension to enable a
+container-based development environment. This repository includes a [`.devcontainer.json`][config-file] file that configures
+remote container development and debugging.
 
 With the [Remote - Containers][vscode-containers] extension enabled, open the folder containing this repository inside Visual
 Studio Code.
@@ -41,13 +59,15 @@ If you do not receive a prompt:
 1. Type `Remote-Containers` to filter the commands
 1. Select `Reopen in Container`
 
-The client is running at `http://localhost:${CLIENT_LOCAL_PORT}` (http://localhost:8000 by default).
+Press `F5` to run the client at `http://localhost:${CLIENT_LOCAL_PORT}` (http://localhost:8000 by default) and
+connect to the debugger.
 
 A [pgAdmin][pgadmin] container is also running at `http://localhost:${PGADMIN_LOCAL_PORT}` (http://localhost:8001 by default).
 Connect using details from the `.env` file.
 
 [config-file]: ./.devcontainer.json
 [docker]: https://docs.docker.com/
+[docker-compose]: https://docs.docker.com/compose/
 [pgadmin]: https://www.pgadmin.org/
 [vscode]: https://code.visualstudio.com/
 [vscode-containers]: https://code.visualstudio.com/docs/remote/containers

@@ -2,8 +2,11 @@ version: "3.8"
 
 services:
   client:
-    build: .
-    command: ./bin/run.sh
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: eligibility_verification_client:latest
+    command: python manage.py runserver 0.0.0.0:8000
     environment:
       - DJANGO_SECRET_KEY
       - DJANGO_DEBUG
@@ -16,3 +19,18 @@ services:
       - "${DJANGO_LOCAL_PORT}:8000"
     volumes:
     - .:/usr/src/cal-itp:cached
+
+  db:
+    image: postgres:12
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+
+  pgadmin:
+      image: dpage/pgadmin4
+      environment:
+        - PGADMIN_DEFAULT_EMAIL
+        - PGADMIN_DEFAULT_PASSWORD
+      ports:
+        - "${PGADMIN_LOCAL_PORT}:80"
