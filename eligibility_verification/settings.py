@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
+    "eligibility_verification.core",
     "eligibility_verification.eligibility"
 ]
 
