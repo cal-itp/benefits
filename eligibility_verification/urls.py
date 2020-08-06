@@ -9,6 +9,7 @@ from django.urls import include, path
 
 
 urlpatterns = [
+    path("", include("eligibility_verification.core.urls")),
     path("eligibility/", include("eligibility_verification.eligibility.urls")),
     path("admin/", admin.site.urls)
 ]
