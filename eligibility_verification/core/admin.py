@@ -1,5 +1,7 @@
+"""
+The core application: Admin interface configuration.
+"""
 from django.contrib import admin
-
 
 from . import models
 

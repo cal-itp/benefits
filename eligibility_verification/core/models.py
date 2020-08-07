@@ -1,10 +1,14 @@
+"""
+The core application: Common model definitions.
+"""
 import uuid
-
 
 from django.db import models
 
 
 class EligibilityType(models.Model):
+    """A single conditional eligibility type."""
+
     short_name = models.CharField(max_length=10)
     long_name = models.CharField(max_length=25)
     group_id = models.UUIDField(default=uuid.uuid4())
@@ -14,6 +18,8 @@ class EligibilityType(models.Model):
 
 
 class TransitAgency(models.Model):
+    """An agency offering transit service."""
+
     short_name = models.CharField(max_length=5)
     long_name = models.CharField(max_length=25)
     agency_id = models.CharField(max_length=50)

@@ -1,15 +1,19 @@
+"""
+The eligibility application: URLConf for the eligibility verification flow.
+"""
 from django.urls import path
 
 from . import views
 
-app_name = 'eligibility'
+
+app_name = "eligibility"
 urlpatterns = [
     # /eligiblity
-    path('', views.index, name='index'),
+    path("", views.index, name="index"),
     # /eligibility/verify
-    path('verify', views.verify, name='verify'),
+    path("verify", views.verify, name="verify"),
     # /eligibility/verify/verified
-    path('verify/verified', views.verified, name='verified'),
+    path("verify/verified", views.verified, name="verified"),
     # /eligibility/verify/unverified
-    path('verify/unverified', views.unverified, name='unverified')
+    path("verify/unverified", views.unverified, name="unverified")
 ]
