@@ -8,9 +8,13 @@ from django.urls import reverse
 from .forms import EligibilityVerificationForm
 
 
-def index(request):
-    form = EligibilityVerificationForm(auto_id=True, label_suffix="")
+def _render_index(request, form=None):
+    form = form or EligibilityVerificationForm(auto_id=True, label_suffix="")
     return render(request, "eligibility/index.html", {"form": form})
+
+
+def index(request):
+    return _render_index(request)
 
 
 def verify(request):
@@ -18,7 +22,7 @@ def verify(request):
     if form.is_valid():
         return HttpResponseRedirect(reverse("eligibility:verified"))
     else:
-        return HttpResponseRedirect(reverse("eligibility:unverified"))
+        return _render_index(request, form)
 
 
 def verified(request):
