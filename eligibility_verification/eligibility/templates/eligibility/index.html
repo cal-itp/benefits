@@ -7,30 +7,7 @@
 <form action="{% url 'eligibility:verify' %}" method="post" role="form">
     {% csrf_token %}
 
-    {% for field in form %}
-    <div class="form-group">
-        <label for="{{ field.id_for_label }}" class="form-control-label">
-            {% if field.field.required %}<span class="required-label">*</span>{% endif %}
-            {{ field.label }}
-        </label>
-
-        {{ field }}
-
-        {% if field.help_text %}
-        <small class="form-text text-muted">
-            {{ field.help_text }}
-        </small>
-        {% endif %}
-
-        {% if field.errors %}
-        <div class="invalid-feedback">
-            {% for error in field.errors %}
-            <p>{{ error }}</p>
-            {% endfor %}
-        </div>
-        {% endif %}
-    </div>
-    {% endfor %}
+    {% include "core/includes/form.html" %}
 
     <div class="form-group">
         <input type="submit" class="btn btn-lg btn-primary" value="{{ form.submit_value }}">

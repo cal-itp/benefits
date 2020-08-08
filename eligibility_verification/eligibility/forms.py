@@ -7,6 +7,8 @@ from eligibility_verification.core import widgets
 
 
 class EligibilityVerificationForm(forms.Form):
+    """Form to collect eligibility verification details."""
+
     submit_value = "Check eligibility"
 
     last_name = forms.CharField(
@@ -14,10 +16,7 @@ class EligibilityVerificationForm(forms.Form):
         widget=widgets.FormControlTextInput(placeholder="Your last name")
     )
 
-    pattern = r"[A-Z][0-9]{7}"
-    card = forms.RegexField(
-        pattern,
+    card = forms.CharField(
         label="CA Driver License or ID Card number",
-        error_messages={"invalid": "Enter a valid CA Driver License or ID Card number"},
-        widget=widgets.FormControlTextInput(pattern=pattern, placeholder="A1234567")
+        widget=widgets.FormControlTextInput(placeholder="A1234567")
     )
