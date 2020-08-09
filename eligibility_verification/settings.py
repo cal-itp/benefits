@@ -51,6 +51,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
+    "eligibility_verification.core.middleware.DebugMiddleware",
     "eligibility_verification.core.middleware.TransitAgencyMiddleware"
 ]
 

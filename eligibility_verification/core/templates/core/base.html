@@ -20,6 +20,10 @@
                 <a href="#main-content">Skip to Main Content</a>
             </div>
 
+            {% if debug %}
+            {% include "core/includes/debug.html" %}
+            {% endif %}
+
             {% include "core/includes/branding.html" %}
         </header>
         <div id="main-content" class="main-content">
