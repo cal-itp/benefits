@@ -1,8 +1,11 @@
 """
 The core application: view definition for the root of the webapp.
 """
-from django.shortcuts import render
+from django.template.response import TemplateResponse
 
 
 def index(request):
-    return render(request, "core/index.html")
+    if request.session["agency"]:
+        return TemplateResponse(request, "core/index.html")
+    else:
+        return TemplateResponse(request, "core/error.html")
