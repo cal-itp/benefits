@@ -9,6 +9,7 @@ services:
     environment:
       - DJANGO_SECRET_KEY
       - DJANGO_DEBUG
+      - DJANGO_ADMIN
       - DJANGO_DB
     ports:
       - "${DJANGO_LOCAL_PORT}:8000"

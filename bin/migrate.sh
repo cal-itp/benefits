@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
-set -e
+set -euo
 
 # Run Django database migrations
-python manage.py migrate admin zero && \
-python manage.py migrate auth zero && \
-python manage.py migrate core zero && \
+
+if [ -z "$DJANGO_ADMIN" ] && [ "$DJANGO_ADMIN" = true ] ; then
+    python manage.py migrate admin zero
+    python manage.py migrate auth zero
+else
+    echo "Django not configured for Admin access"
+fi
+
+python manage.py migrate core zero
 python manage.py migrate

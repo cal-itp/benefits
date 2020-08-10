@@ -4,8 +4,9 @@ benefits URL Configuration
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
 """
-from django.contrib import admin
 from django.urls import include, path
+
+from benefits.settings import ADMIN
 
 
 handler400 = "benefits.core.views.bad_request"
@@ -17,5 +18,8 @@ urlpatterns = [
     path("discounts/", include("benefits.discounts.urls")),
     path("eligibility/", include("benefits.eligibility.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
-    path("admin/", admin.site.urls)
 ]
+
+if ADMIN:
+    from django.contrib import admin
+    urlpatterns.append(path("admin/", admin.site.urls))
