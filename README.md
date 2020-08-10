@@ -19,13 +19,43 @@ Create an environment file from the sample:
 cp .env.sample .env
 ```
 
-Run the setup script to initialize the Django environment:
+### Local Django setup
+
+If you're in `bash`, shortcut the following setup steps by running:
 
 ```bash
 ./bin/setup.sh
 ```
 
-Follow the CLI prompts to create a Django admin user.
+Otherwise, start by building the eligibility verification client image:
+
+```bash
+docker-compose build --no-cache client
+```
+
+Ensure the local database container is running:
+
+```bash
+docker-compose up -d db
+```
+
+Run Django database migrations:
+
+```bash
+docker-compose run client python manage.py migrate
+```
+
+Load sample Django model data:
+
+```bash
+docker-compose run client python manage.py loaddata EligibilityTypes EligibilityVerifiers TransitAgencies
+```
+
+Create a superuser account for Django backend admin access (follow the CLI prompts):
+
+```bash
+docker-compose run client python manage.py createsuperuser
+```
 
 ### Run the client locally
 
