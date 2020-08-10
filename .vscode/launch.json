@@ -15,7 +15,7 @@
             "django": true
         },
         {
-            "name": "Flask: Eligibility Server",
+            "name": "Flask: Eligibility Verification Server",
             "type": "python",
             "request": "attach",
             "connect": {

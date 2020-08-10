@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo
+set -eu
 
 # Create a superuser account for backend admin access
 

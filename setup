@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
-set -e
+set -eu
 
 # Build the main app image
-docker-compose build --no-cache client && \
+docker-compose build --no-cache client
 
 # Run Django database migrations
-docker-compose run client migrate && \
+docker-compose run client migrate
 
 # Load sample Django model data
-docker-compose run client data && \
+docker-compose run client data
 
 # Create a superuser account for backend admin access
-docker-compose run client superuser && \
+docker-compose run client superuser
 
 # Clean up completed container runs (don't prompt for confirmation)
 docker container prune --force

@@ -132,12 +132,10 @@ LOCALE_PATHS = [
     os.path.join(BASE_DIR, "benefits", "locale")
 ]
 
-TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_L10N = True
 
+TIME_ZONE = "UTC"
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -146,3 +144,4 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "benefits", "static")
 ]
+STATIC_ROOT = "/var/www/static"

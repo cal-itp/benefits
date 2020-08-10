@@ -1,13 +1,25 @@
-FROM python:3.8
+FROM python:3.9-slim
 ENV PYTHONUNBUFFERED 1
 
 EXPOSE 80
 
-WORKDIR /usr/src/cal-itp
+USER root
+
+RUN apt-get update && \
+    apt-get install -qq gettext nginx
+
+ENV USER=calitp
+
+RUN useradd --create-home --shell /bin/bash $USER
+
+USER $USER
+WORKDIR /home/$USER/benefits
+
+ENV PATH=/home/$USER/.local/bin:$PATH
 
 COPY requirements.txt requirements.txt
 
-RUN apt-get update && \
-    apt-get install -qq gettext && \
-    python -m pip install --upgrade pip && \
-    pip install -r requirements.txt
+RUN pip install -r requirements.txt
+
+COPY manage.py manage.py
+COPY benefits/ benefits/
