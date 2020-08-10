@@ -1,0 +1,13 @@
+[
+    {
+        "model": "core.eligibilityverifier",
+        "pk": 1,
+        "fields": {
+            "name": "Test Verifier",
+            "api_url": "http://localhost:8888/verify",
+            "eligibility_types": [
+                1
+            ]
+        }
+    }
+]

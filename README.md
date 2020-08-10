@@ -19,21 +19,15 @@ Create an environment file from the sample:
 cp .env.sample .env
 ```
 
-Build the eligibility verification client:
+Run the setup script to initialize the Django environment:
 
 ```bash
-docker-compose build client
+./bin/setup.sh
 ```
+
+Follow the CLI prompts to create a Django admin user.
 
 ### Run the client locally
-
-Start a local PostgreSQL container:
-
-```bash
-docker-compose up -d db
-```
-
-Then start the eligibility verification client:
 
 ```bash
 docker-compose up -d client
@@ -59,8 +53,8 @@ If you do not receive a prompt:
 1. Type `Remote-Containers` to filter the commands
 1. Select `Reopen in Container`
 
-Press `F5` to run the client at `http://localhost:${CLIENT_LOCAL_PORT}` (http://localhost:8000 by default) and
-connect to the debugger.
+One running inside a container, press `F5` to attach a debugger to the client at `http://localhost:${CLIENT_LOCAL_PORT}`
+(http://localhost:8000 by default).
 
 A [pgAdmin][pgadmin] container is also running at `http://localhost:${PGADMIN_LOCAL_PORT}` (http://localhost:8001 by default).
 Connect using details from the `.env` file.

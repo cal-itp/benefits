@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
             name='EligibilityVerifier',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=25)),
+                ('name', models.CharField(max_length=50)),
                 ('api_url', models.URLField()),
                 ('eligibility_types', models.ManyToManyField(to='core.EligibilityType')),
             ],
@@ -32,13 +32,13 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('short_name', models.CharField(max_length=5)),
-                ('long_name', models.CharField(max_length=25)),
+                ('long_name', models.CharField(max_length=50)),
                 ('agency_id', models.CharField(max_length=50)),
                 ('mechant_id', models.CharField(max_length=50)),
                 ('logo_url', models.URLField()),
-                ('street_address1', models.CharField(max_length=25)),
-                ('street_address2', models.CharField(max_length=25)),
-                ('city', models.CharField(max_length=25)),
+                ('street_address1', models.CharField(max_length=50)),
+                ('street_address2', models.CharField(max_length=50, blank=True)),
+                ('city', models.CharField(max_length=50)),
                 ('zipcode', models.CharField(max_length=5)),
                 ('eligibility_verifiers', models.ManyToManyField(to='core.EligibilityVerifier'))
             ],
