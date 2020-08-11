@@ -45,4 +45,4 @@ class TransitAgency(models.Model):
 
     @staticmethod
     def get(agency):
-        return TransitAgency.objects.filter(short_name=agency)
+        return TransitAgency.objects.filter(short_name=agency).first()
