@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "name": "Test Verifier",
-            "api_url": "http://localhost:8888/verify",
+            "api_url": "http://localhost:5000/verify",
             "eligibility_types": [
                 1
             ]

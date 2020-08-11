@@ -48,7 +48,10 @@ docker-compose run client python manage.py migrate
 Load sample Django model data:
 
 ```bash
-docker-compose run client python manage.py loaddata EligibilityTypes EligibilityVerifiers TransitAgencies
+docker-compose run client python manage.py loaddata \
+    EligibilityTypes \
+    EligibilityVerifiers \
+    TransitAgencies
 ```
 
 Create a superuser account for Django backend admin access (follow the CLI prompts):
@@ -63,7 +66,17 @@ docker-compose run client python manage.py createsuperuser
 docker-compose up -d client
 ```
 
-The client is running at `http://localhost:${CLIENT_LOCAL_PORT}` (http://localhost:8000 by default).
+The client is running at `http://localhost:${DJANGO_LOCAL_PORT}` (http://localhost:8000 by default).
+
+### Run a local test verification server
+
+A basic eligibility verification server is available for testing:
+
+```bash
+docker-compose up -d --build server
+```
+
+The API endpoint is running at `http://localhost:5000/verify`
 
 ### VS Code with Dev Containers
 
@@ -83,11 +96,12 @@ If you do not receive a prompt:
 1. Type `Remote-Containers` to filter the commands
 1. Select `Reopen in Container`
 
-One running inside a container, press `F5` to attach a debugger to the client at `http://localhost:${CLIENT_LOCAL_PORT}`
+Once running inside a container, press `F5` to attach a debugger to the client at `http://localhost:${DJANGO_LOCAL_PORT}`
 (http://localhost:8000 by default).
 
-A [pgAdmin][pgadmin] container is also running at `http://localhost:${PGADMIN_LOCAL_PORT}` (http://localhost:8001 by default).
-Connect using details from the `.env` file.
+The test eligibility verification server container is running at `http://localhost:5000/verify`.
+
+A [pgAdmin][pgadmin] container is also running at `http://localhost:8001`. See `docker-compose.dev.yml` for more details.
 
 [config-file]: ./.devcontainer.json
 [docker]: https://docs.docker.com/

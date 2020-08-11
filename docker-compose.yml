@@ -2,9 +2,7 @@ version: "3.8"
 
 services:
   client:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     image: eligibility_verification_client:latest
     command: python manage.py runserver 0.0.0.0:8000
     environment:
@@ -31,7 +29,20 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     environment:
-      - PGADMIN_DEFAULT_EMAIL
-      - PGADMIN_DEFAULT_PASSWORD
+      - PGADMIN_DEFAULT_EMAIL=example@example.com
+      - PGADMIN_DEFAULT_PASSWORD=pgadmin
     ports:
-      - "${PGADMIN_LOCAL_PORT}:80"
+      - "8001:80"
+
+  server:
+    build: ./server
+    image: eligibility_verification_server:dev
+    command: python app.py
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_DEBUG=1
+      - FLASK_ENV=development
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/usr/src/server:cached
