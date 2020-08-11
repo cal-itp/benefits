@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<form action="{% url 'eligibility:verify' %}" method="post" role="form">
+<form action="{% url 'eligibility:index' %}" method="POST" role="form">
     {% csrf_token %}
 
     {% include "core/includes/form.html" %}

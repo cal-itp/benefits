@@ -5,24 +5,23 @@ from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 
+from . import api
 from .forms import EligibilityVerificationForm
 
 
-def _render_index(request, form=None):
-    form = form or EligibilityVerificationForm(auto_id=True, label_suffix="")
-    return TemplateResponse(request, "eligibility/index.html", {"form": form})
-
-
 def index(request):
-    return _render_index(request)
-
-
-def verify(request):
-    form = EligibilityVerificationForm(request.POST)
-    if form.is_valid():
-        return HttpResponseRedirect(reverse("eligibility:verified"))
+    if request.method == "POST":
+        form = EligibilityVerificationForm(request.POST)
+        if form.is_valid():
+            result = api.verify(form.cleaned_data)
+            if result:
+                return HttpResponseRedirect(reverse("eligibility:verified"))
+            else:
+                return HttpResponseRedirect(reverse("eligibility:unverified"))
     else:
-        return _render_index(request, form)
+        form = EligibilityVerificationForm(auto_id=True, label_suffix="")
+
+    return TemplateResponse(request, "eligibility/index.html", {"form": form})
 
 
 def verified(request):
