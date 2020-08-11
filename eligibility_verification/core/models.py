@@ -19,7 +19,7 @@ class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""
 
     name = models.CharField(max_length=25)
-    api_url = models.URLField()
+    api_url = models.CharField(max_length=50)
     eligibility_types = models.ManyToManyField(EligibilityType)
 
     def __str__(self):

@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=50)),
-                ('api_url', models.URLField()),
+                ('api_url', models.CharField(max_length=50)),
                 ('eligibility_types', models.ManyToManyField(to='core.EligibilityType')),
             ],
         ),

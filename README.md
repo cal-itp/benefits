@@ -76,7 +76,7 @@ A basic eligibility verification server is available for testing:
 docker-compose up -d --build server
 ```
 
-The API endpoint is running at `http://localhost:5000/verify`
+The API endpoint is running at `http://localhost:5000/verify`.
 
 ### VS Code with Dev Containers
 
@@ -97,11 +97,12 @@ If you do not receive a prompt:
 1. Select `Reopen in Container`
 
 Once running inside a container, press `F5` to attach a debugger to the client at `http://localhost:${DJANGO_LOCAL_PORT}`
-(http://localhost:8000 by default).
+(http://localhost:8000 by default) on your host machine.
 
-The test eligibility verification server container is running at `http://localhost:5000/verify`.
+The test eligibility verification server container is running at `http://localhost:5000/verify` on your host machine.
+Access the server from within the Dev Container at `http://server:5000/verify`.
 
-A [pgAdmin][pgadmin] container is also running at `http://localhost:8001`. See `docker-compose.dev.yml` for more details.
+A [pgAdmin][pgadmin] container is also running at `http://localhost:8001` on the host machine.
 
 [config-file]: ./.devcontainer.json
 [docker]: https://docs.docker.com/
