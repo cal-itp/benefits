@@ -1,5 +1,5 @@
 """
-The eligibility application: Eligiblity Verification API implementation.
+The eligibility application: Eligibility Verification API implementation.
 """
 import base64
 import datetime
@@ -9,6 +9,21 @@ import uuid
 import requests
 
 from eligibility_verification.settings import ALLOWED_HOSTS
+
+
+class Response():
+    """Eligibility Verification API response."""
+
+    def __init__(self, token):
+        token_bytes = bytes(token, "utf-8")
+        dec = str(base64.urlsafe_b64decode(token_bytes), "utf-8")
+        payload = json.loads(dec)
+
+        self.jti = str(payload.get("jti"))
+        self.iss = str(payload.get("iss"))
+        self.iat = int(payload.get("iat"))
+        self.eligibility = list(payload.get("eligibility", []))
+        self.error = json.loads(payload.get("error", "{}"))
 
 
 class Token():
@@ -51,7 +66,7 @@ class Client():
         token = self._tokenize(payload)
         auth_header = self._auth_header(token)
         r = requests.get(self.url, headers=auth_header)
-        return (r.status_code, r.json())
+        return r.status_code, Response(r.json())
 
     def verify(self, sub, name):
         payload = dict(sub=sub, name=name)
@@ -61,14 +76,14 @@ class Client():
 def verify(agency, sub, name):
     """Attempt eligibility verification, returning a tuple of lists (results, errors)."""
 
-    results = []
+    responses = []
     errors = []
 
     for verifier in agency.eligibility_verifiers.all():
         result = Client(verifier, agency).verify(sub, name)
         if result and result[0] == 200:
-            results.append(result[1])
+            responses.append(result[1])
         elif result and result[0] != 200:
             errors.append(result[1])
 
-    return results, errors
+    return responses, errors
