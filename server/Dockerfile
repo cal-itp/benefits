@@ -1,4 +1,4 @@
-FROM eligibility_verification_client:dev
+FROM eligibility_verification_client:latest
 
 EXPOSE 5000
 
