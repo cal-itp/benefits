@@ -8,10 +8,10 @@ docker-compose build --no-cache client && \
 docker-compose up -d db && \
 
 # Run Django database migrations
-docker-compose run client python manage.py migrate && \
+docker-compose run client migrate && \
 
 # Load sample Django model data
-docker-compose run client python manage.py loaddata EligibilityTypes EligibilityVerifiers TransitAgencies && \
+docker-compose run client data && \
 
 # Create a superuser account for backend admin access
-docker-compose run client python manage.py createsuperuser
+docker-compose run client superuser

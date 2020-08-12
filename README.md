@@ -21,10 +21,10 @@ cp .env.sample .env
 
 ### Local Django setup
 
-If you're in `bash`, shortcut the following setup steps by running:
+If you are running `bash`, shortcut the following steps with the [`setup`](./setup) script:
 
 ```bash
-./bin/setup.sh
+./setup
 ```
 
 Otherwise, start by building the eligibility verification client image:
@@ -42,22 +42,19 @@ docker-compose up -d db
 Run Django database migrations:
 
 ```bash
-docker-compose run client python manage.py migrate
+docker-compose run client migrate
 ```
 
 Load sample Django model data:
 
 ```bash
-docker-compose run client python manage.py loaddata \
-    EligibilityTypes \
-    EligibilityVerifiers \
-    TransitAgencies
+docker-compose run client data
 ```
 
 Create a superuser account for Django backend admin access (follow the CLI prompts):
 
 ```bash
-docker-compose run client python manage.py createsuperuser
+docker-compose run client superuser
 ```
 
 ### Run the client locally
@@ -66,7 +63,15 @@ docker-compose run client python manage.py createsuperuser
 docker-compose up -d client
 ```
 
-The client is running at `http://localhost:${DJANGO_LOCAL_PORT}` (http://localhost:8000 by default).
+The client is running at `http://localhost:${DJANGO_LOCAL_PORT}` (<http://localhost:8000> by default).
+
+The backend administrative interface can be accessed with the superuser you setup at <http://localhost:8000/admin>.
+
+Stop a running client (and supporting containers) with:
+
+```bash
+docker-compose down
+```
 
 ### Run a local test verification server
 
@@ -96,8 +101,8 @@ If you do not receive a prompt:
 1. Type `Remote-Containers` to filter the commands
 1. Select `Reopen in Container`
 
-Once running inside a container, press `F5` to attach a debugger to the client at `http://localhost:${DJANGO_LOCAL_PORT}`
-(http://localhost:8000 by default) on your host machine.
+Once running inside a container, press **`F5`** to attach a debugger to the client at `http://localhost:${DJANGO_LOCAL_PORT}`
+(<http://localhost:8000> by default) on your host machine.
 
 The test eligibility verification server container is running at `http://localhost:5000/verify` on your host machine.
 Access the server from within the Dev Container at `http://server:5000/verify`.

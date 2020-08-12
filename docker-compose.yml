@@ -4,7 +4,8 @@ services:
   client:
     build: .
     image: eligibility_verification_client:latest
-    command: python manage.py runserver 0.0.0.0:8000
+    entrypoint: ["bin/entrypoint.sh"]
+    command: manage runserver 0.0.0.0:8000
     environment:
       - DJANGO_SECRET_KEY
       - DJANGO_DEBUG
