@@ -19,11 +19,22 @@ class Response():
         dec = str(base64.urlsafe_b64decode(token_bytes), "utf-8")
         payload = json.loads(dec)
 
-        self.jti = str(payload.get("jti"))
-        self.iss = str(payload.get("iss"))
-        self.iat = int(payload.get("iat"))
-        self.eligibility = list(payload.get("eligibility", []))
-        self.error = json.loads(payload.get("error", "{}"))
+        self._payload = dict(
+            jti=str(payload.get("jti")),
+            iss=str(payload.get("iss")),
+            iat=int(payload.get("iat")),
+            eligibility=list(payload.get("eligibility", [])),
+            error=json.loads(payload.get("error", "{}"))
+        )
+
+    def __repr__(self):
+        return str(self)
+
+    def __str__(self):
+        return json.dumps(self._payload)
+
+    def verified(self):
+        return len(self._payload["eligibility"]) > 0
 
 
 class Token():
@@ -39,6 +50,9 @@ class Token():
             sub=kwargs.get("sub"),
             name=kwargs.get("name")
         )
+
+    def __repr__(self):
+        return str(self)
 
     def __str__(self):
         return json.dumps(self._payload)
@@ -69,6 +83,7 @@ class Client():
         return r.status_code, Response(r.json())
 
     def verify(self, sub, name):
+        """Check eligibility for the subject and name."""
         payload = dict(sub=sub, name=name)
         return self._request(payload)
 

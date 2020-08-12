@@ -34,15 +34,15 @@ def _verify(request, form):
 
     results, errors = api.verify(agency, sub, name)
 
-    if len(results) > 0:
-        return verified(request, results)
+    if any([r.verified() for r in results]):
+        return verified(request, [r for r in results if r.verified()])
     else:
-        return unverified(request, errors)
+        return unverified(request, results, errors)
 
 
 def verified(request, results):
     return TemplateResponse(request, "eligibility/verified.html", {"results": results})
 
 
-def unverified(request, errors):
-    return TemplateResponse(request, "eligibility/unverified.html", {"errors": errors})
+def unverified(request, results, errors):
+    return TemplateResponse(request, "eligibility/unverified.html", {"results": results, "errors": errors})

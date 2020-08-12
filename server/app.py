@@ -15,17 +15,16 @@ class Database():
     _USERS = {
         "A1234567": ("Garcia", ["type1"]),
         "B2345678": ("Hernandez", []),
-        "C3456789": ("Smith", [])
     }
 
     def check(self, key, user, types):
         """Check if the data matches a record in the database."""
-        if all([
+        if all((
             len(types) > 0,
             key in self._USERS,
             self._USERS[key][0] == user,
             len(set(self._USERS[key][1]) & set(types)) > 0
-        ]):
+        )):
             return list(set(self._USERS[key][1]) & set(types))
         else:
             return []
@@ -60,13 +59,15 @@ class Verify(Resource):
         """Respond to a verification request."""
         db = Database()
         token = self._auth_token()
+
         if token:
             data = self._req_payload(token)
+            sub, name, eligibility = data["sub"], data["name"], list(data["eligibility"])
             payload = dict(
                 jti=data["jti"],
                 iss=app.name,
                 iat=int(datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).timestamp()),
-                eligibility=db.check(data["sub"], data["name"], data["eligibility"])
+                eligibility=db.check(sub, name, eligibility)
             )
         else:
             payload = {"errors": "Wrong Authorization header"}
