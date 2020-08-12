@@ -28,6 +28,13 @@ TRANSIT_AGENCY = os.environ.get("DJANGO_TRANSIT_AGENCY", False)
 
 ALLOWED_HOSTS = []
 
+if DEBUG:
+    ALLOWED_HOSTS.extend([
+        'localhost',
+        '127.0.0.1',
+        '[::1]'
+    ])
+
 # Application definition
 
 INSTALLED_APPS = [

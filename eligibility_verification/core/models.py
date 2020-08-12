@@ -25,6 +25,10 @@ class EligibilityVerifier(models.Model):
     def __str__(self):
         return self.name
 
+    def eligibility_set(self):
+        """Set of eligibility_type names"""
+        return set(self.eligibility_types.values_list("name", flat=True))
+
 
 class TransitAgency(models.Model):
     """An agency offering transit service."""
@@ -38,10 +42,15 @@ class TransitAgency(models.Model):
     street_address2 = models.CharField(max_length=25, blank=True)
     city = models.CharField(max_length=25)
     zipcode = models.CharField(max_length=5)
+    eligibility_types = models.ManyToManyField(EligibilityType)
     eligibility_verifiers = models.ManyToManyField(EligibilityVerifier)
 
     def __str__(self):
         return self.long_name
+
+    def eligibility_set(self):
+        """Set of eligibility_type names"""
+        return set(self.eligibility_types.values_list("name", flat=True))
 
     @staticmethod
     def get(agency):

@@ -12,6 +12,9 @@
             "street_address2": "",
             "city": "Everytown",
             "zipcode": "55555",
+            "eligibility_types": [
+                1
+            ],
             "eligibility_verifiers": [
                 1
             ]
