@@ -6,14 +6,12 @@
 
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
 
+{% if debug %}
 <h2>Errors</h2>
-<pre>
-    {{ errors | pprint  }}
-</pre>
+{% include "core/includes/data.html" with data=errors %}
 
 <h2>Results</h2>
-<pre>
-    {{ results | pprint }}
-</pre>
+{% include "core/includes/data.html" with data=results %}
+{% endif %}
 
 {% endblock %}
