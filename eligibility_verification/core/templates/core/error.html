@@ -5,4 +5,9 @@
 {% block main_content %}
     <h1>Error!</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+    {% if debug %}
+    <h2>Details</h2>
+    {% include "core/includes/data.html" with data=error %}
+    {% endif %}
 {% endblock %}

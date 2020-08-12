@@ -30,9 +30,12 @@ def _verify(request, form):
     sub, name = form.cleaned_data["card"], form.cleaned_data["last_name"]
 
     if not all((agency, sub, name)):
-        return TemplateResponse(request, "core/error.html")
+        return error(request, {"error": "Missing data", "agency": agency, "sub": sub, "name": name})
 
-    results, errors = api.verify(agency, sub, name)
+    try:
+        results, errors = api.verify(agency, sub, name)
+    except Exception:
+        return error(request, {"error": "Problem communicating with API server"})
 
     if any([r.verified() for r in results]):
         return verified(request, [r for r in results if r.verified()])
@@ -46,3 +49,7 @@ def verified(request, results):
 
 def unverified(request, results, errors):
     return TemplateResponse(request, "eligibility/unverified.html", {"results": results, "errors": errors})
+
+
+def error(request, error={}):
+    return TemplateResponse(request, "core/error.html", {"error": error})
