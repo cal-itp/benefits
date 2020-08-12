@@ -10,4 +10,5 @@ app_name = "core"
 urlpatterns = [
     # website root
     path("", views.index, name="index"),
+    path("error", views.error, name="error")
 ]
