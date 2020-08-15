@@ -1,10 +1,8 @@
 <div class="navbar navbar-expand-sm navbar-dark bg-danger">
     <div class="container">
         <span class="navbar-brand">DEBUG MODE</span>
-        {% if agency %}
         <span class="navbar-text">
-            TRANSIT_AGENCY: <code class="text-white">{{ agency }}</code>
+            TRANSIT_AGENCY: <code class="text-white">{% if agency %}{{ agency }}{% else %}all active{% endif %}</code>
         </span>
-        {% endif %}
     </div>
 </div>

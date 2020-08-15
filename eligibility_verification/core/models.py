@@ -42,6 +42,7 @@ class TransitAgency(models.Model):
     street_address2 = models.CharField(max_length=25, blank=True)
     city = models.CharField(max_length=25)
     zipcode = models.CharField(max_length=5)
+    active = models.BooleanField(default=False)
     eligibility_types = models.ManyToManyField(EligibilityType)
     eligibility_verifiers = models.ManyToManyField(EligibilityVerifier)
 
@@ -54,4 +55,10 @@ class TransitAgency(models.Model):
 
     @staticmethod
     def get(agency):
+        """Get a TransitAgency instance by its short name."""
         return TransitAgency.objects.filter(short_name=agency).first()
+
+    @staticmethod
+    def all_active():
+        """Get all TransitAgency instances marked active."""
+        return TransitAgency.objects.filter(active=True)

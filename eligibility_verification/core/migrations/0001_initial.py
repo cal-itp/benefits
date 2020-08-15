@@ -40,6 +40,7 @@ class Migration(migrations.Migration):
                 ('street_address2', models.CharField(max_length=50, blank=True)),
                 ('city', models.CharField(max_length=50)),
                 ('zipcode', models.CharField(max_length=5)),
+                ('active', models.BooleanField(default=False)),
                 ('eligibility_types', models.ManyToManyField(to='core.EligibilityType')),
                 ('eligibility_verifiers', models.ManyToManyField(to='core.EligibilityVerifier'))
             ],
