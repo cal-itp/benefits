@@ -4,6 +4,7 @@ The eligibility application: view definitions for the eligibility verification f
 from django.template.response import TemplateResponse
 
 from eligibility_verification.core import models, viewmodels
+from eligibility_verification.settings import DEBUG
 from . import api, forms
 
 
@@ -20,14 +21,16 @@ def index(request):
 
     if request.method == "POST":
         form = forms.EligibilityVerificationForm(request.POST)
-        result = _verify(request, form)
-        if result is None:
-            context["page"]["form"] = form
-            result = TemplateResponse(request, "core/page.html", context)
-    else:
-        result = TemplateResponse(request, "core/page.html", context)
+        response = _verify(request, form)
 
-    return result
+        if response is None:
+            page.form = form
+            context = viewmodels.page_context(page)
+            response = TemplateResponse(request, "core/page.html", context)
+    else:
+        response = TemplateResponse(request, "core/page.html", context)
+
+    return response
 
 
 def _verify(request, form):
@@ -36,25 +39,29 @@ def _verify(request, form):
     if not form.is_valid():
         return None
 
-    agency = models.TransitAgency.get(request.session["agency"])
     sub, name = form.cleaned_data["card"], form.cleaned_data["last_name"]
 
-    if not all((agency, sub, name)):
-        return error(request, {"error": "Missing data", "agency": agency, "sub": sub, "name": name})
+    if not all((sub, name)):
+        return error(request, {"error": "Missing data", "sub": sub, "name": name})
+
+    agency = None
+    if "agency" in request.session:
+        agency = models.TransitAgency.get(request.session["agency"])
 
     try:
-        results, errors = api.verify(agency, sub, name)
+        types, results, errors = api.verify(sub, name, agency)
     except Exception:
         return error(request, {"error": "Problem communicating with API server"})
 
-    if any([r.verified() for r in results]):
-        verified_types = api.verified_types(results)
-        return verified(request, verified_types, results)
+    if any(types):
+        debug = {"eligibility": types, "results": results} if DEBUG else None
+        return verified(request, types, debug)
     else:
-        return unverified(request, errors, results + errors)
+        debug = {"errors": errors, "results": results} if DEBUG else None
+        return unverified(request, errors, debug)
 
 
-def verified(request, results, debug=None):
+def verified(request, verified_types, debug=None):
     """View handler for the verified eligiblity page."""
 
     page = viewmodels.Page(
@@ -64,7 +71,7 @@ def verified(request, results, debug=None):
         debug=debug
     )
     context = viewmodels.page_context(page)
-    request.session["eligibility"] = results
+    request.session["eligibility"] = verified_types
     return TemplateResponse(request, "core/page.html", context)
 
 

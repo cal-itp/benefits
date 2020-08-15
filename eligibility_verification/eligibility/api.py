@@ -8,22 +8,25 @@ import uuid
 
 import requests
 
+from eligibility_verification.core.models import TransitAgency
 from eligibility_verification.settings import ALLOWED_HOSTS
 
 
 class Response():
     """Eligibility Verification API response."""
 
-    def __init__(self, token):
+    def __init__(self, status_code, token):
         token_bytes = bytes(token, "utf-8")
         dec = str(base64.urlsafe_b64decode(token_bytes), "utf-8")
         payload = json.loads(dec)
 
+        self.eligibility = list(payload.get("eligibility", []))
+        self.status_code = status_code
         self._payload = dict(
             jti=str(payload.get("jti")),
             iss=str(payload.get("iss")),
             iat=int(payload.get("iat")),
-            eligibility=list(payload.get("eligibility", [])),
+            eligibility=self.eligibility,
             error=json.loads(payload.get("error", "{}"))
         )
 
@@ -35,6 +38,12 @@ class Response():
 
     def verified(self):
         return len(self._payload["eligibility"]) > 0
+
+    def error(self):
+        return self.status_code != 200
+
+    def success(self):
+        return self.status_code == 200
 
 
 class Token():
@@ -80,7 +89,7 @@ class Client():
         token = self._tokenize(payload)
         auth_header = self._auth_header(token)
         r = requests.get(self.url, headers=auth_header)
-        return r.status_code, Response(r.json())
+        return Response(r.status_code, r.json())
 
     def verify(self, sub, name):
         """Check eligibility for the subject and name."""
@@ -88,17 +97,29 @@ class Client():
         return self._request(payload)
 
 
-def verify(agency, sub, name):
-    """Attempt eligibility verification, returning a tuple of lists (results, errors)."""
+def verify(sub, name, agency=None):
+    """Attempt eligibility verification, returning a tuple (verified_types: str[], results: Response[], errors: Response[])."""
 
-    responses = []
+    results = []
     errors = []
+    agencies = TransitAgency.all_active() if agency is None else [agency]
 
-    for verifier in agency.eligibility_verifiers.all():
-        result = Client(verifier, agency).verify(sub, name)
-        if result and result[0] == 200:
-            responses.append(result[1])
-        elif result and result[0] != 200:
-            errors.append(result[1])
+    for agency in agencies:
+        for verifier in agency.eligibility_verifiers.all():
+            try:
+                response = Client(verifier, agency).verify(sub, name)
+                if response and response.success():
+                    results.append(response)
+                elif response and response.error():
+                    errors.append(response)
+            except Exception:
+                continue
 
-    return responses, errors
+    verified_types = _verified_types(results)
+
+    return verified_types, results, errors
+
+
+def _verified_types(results):
+    """Return the list of distinct verified eligiblity types using results from verify()."""
+    return list(set([e for result in results for e in result.eligibility]))
