@@ -6,7 +6,8 @@
             "name": "Test Verifier",
             "api_url": "http://server:5000/verify",
             "eligibility_types": [
-                1
+                1,
+                2
             ]
         }
     }

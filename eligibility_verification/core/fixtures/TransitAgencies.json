@@ -20,5 +20,27 @@
                 1
             ]
         }
+    },
+    {
+        "model": "core.transitagency",
+        "pk": 2,
+        "fields": {
+            "short_name": "def",
+            "long_name": "DEF Transit Lines",
+            "agency_id": "def456",
+            "mechant_id": "234567890",
+            "logo_url": "https://www.example.com/logo.png",
+            "street_address1": "4567 Main Street",
+            "street_address2": "",
+            "city": "Everytown",
+            "zipcode": "55555",
+            "active": true,
+            "eligibility_types": [
+                2
+            ],
+            "eligibility_verifiers": [
+                1
+            ]
+        }
     }
 ]
