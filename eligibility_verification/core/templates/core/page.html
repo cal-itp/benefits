@@ -1,0 +1,34 @@
+{% extends "core/base.html" %}
+
+{% if page.title %}
+{% block page_title %}{{ page.title }} | {% endblock %}
+{% endif %}
+
+{% block main_content %}
+    {% if page.content_title %}
+    <h1>{{ page.content_title }}</h1>
+    {% endif %}
+
+    {% for p in page.paragraphs %}
+    <p>
+        {{ p }}
+    </p>
+    {% endfor %}
+
+    {% if page.form %}
+    {% include "core/includes/form.html" with form=page.form %}
+    {% endif %}
+
+    {% if page.debug %}
+    <h2>Debug information</h2>
+    {% include "core/includes/data.html" with data=page.debug %}
+    {% endif%}
+
+    {% if page.prev_button %}
+    {% include "core/includes/button.html" with button=page.prev_button %}
+    {% endif %}
+
+    {% if page.next_button %}
+    {% include "core/includes/button.html" with button=page.next_button %}
+    {% endif %}
+{% endblock %}

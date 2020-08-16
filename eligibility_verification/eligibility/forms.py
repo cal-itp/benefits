@@ -9,10 +9,11 @@ from eligibility_verification.core import widgets
 class EligibilityVerificationForm(forms.Form):
     """Form to collect eligibility verification details."""
 
-    submit_value = "Check eligibility"
+    action_url = "eligibility:index"
+    method = "POST"
 
     card = forms.CharField(
-        label="CA Driver License or ID Card number",
+        label="CA Driver License or ID Number",
         widget=widgets.FormControlTextInput(placeholder="A1234567")
     )
 
@@ -20,3 +21,5 @@ class EligibilityVerificationForm(forms.Form):
         help_text="We use this to confirm your driver license number",
         widget=widgets.FormControlTextInput(placeholder="Your last name")
     )
+
+    submit_value = "Check status"

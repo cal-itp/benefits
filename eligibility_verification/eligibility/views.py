@@ -3,21 +3,31 @@ The eligibility application: view definitions for the eligibility verification f
 """
 from django.template.response import TemplateResponse
 
-from eligibility_verification.core import models
+from eligibility_verification.core import models, viewmodels
 from . import api, forms
 
 
 def index(request):
     """View handler for the eligibility verification form."""
 
+    page = viewmodels.Page(
+        title="Eligibility verification",
+        content_title="Let's see if we can pull your Senior status from the DMV",
+        paragraphs=[],
+        form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="")
+    )
+    context = viewmodels.page_context(page)
+
     if request.method == "POST":
         form = forms.EligibilityVerificationForm(request.POST)
         result = _verify(request, form)
+        if result is None:
+            context["page"]["form"] = form
+            result = TemplateResponse(request, "core/page.html", context)
     else:
-        form = forms.EligibilityVerificationForm(auto_id=True, label_suffix="")
-        result = None
+        result = TemplateResponse(request, "core/page.html", context)
 
-    return result or TemplateResponse(request, "eligibility/index.html", {"form": form})
+    return result
 
 
 def _verify(request, form):
@@ -38,18 +48,39 @@ def _verify(request, form):
         return error(request, {"error": "Problem communicating with API server"})
 
     if any([r.verified() for r in results]):
-        return verified(request, [r for r in results if r.verified()])
+        verified_types = api.verified_types(results)
+        return verified(request, verified_types, results)
     else:
-        return unverified(request, results, errors)
+        return unverified(request, errors, results + errors)
 
 
-def verified(request, results):
-    return TemplateResponse(request, "eligibility/verified.html", {"results": results})
+def verified(request, results, debug=None):
+    """View handler for the verified eligiblity page."""
+
+    page = viewmodels.Page(
+        title="Verified | Eligibility verification",
+        content_title="Eligibility has been verified!",
+        paragraphs=["Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."],
+        debug=debug
+    )
+    context = viewmodels.page_context(page)
+    request.session["eligibility"] = results
+    return TemplateResponse(request, "core/page.html", context)
 
 
-def unverified(request, results, errors):
-    return TemplateResponse(request, "eligibility/unverified.html", {"results": results, "errors": errors})
+def unverified(request, errors, debug=None):
+    """View handler for the unverified eligiblity page."""
+
+    page = viewmodels.Page(
+        title="Unverified | Eligibility verification",
+        content_title="Eligibility could not be verified",
+        paragraphs=["Sed do eiusmod tempor incididunt ut labore, consectetur adipiscing elit, lorem ipsum dolor sit amet."],
+        debug=debug
+    )
+    context = viewmodels.page_context(page)
+    return TemplateResponse(request, "core/page.html", context)
 
 
-def error(request, error={}):
-    return TemplateResponse(request, "core/error.html", {"error": error})
+def error(request, errors={}):
+    context = {"errors": errors}
+    return TemplateResponse(request, "core/error.html", context)

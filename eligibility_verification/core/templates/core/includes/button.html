@@ -1,0 +1,3 @@
+{% if button.url %}
+<a class="{{ button.classes | join:" " }}" href="{% url button.url %}">{{ button.text }}</a>
+{% endif %}
