@@ -24,11 +24,19 @@
     {% include "core/includes/data.html" with data=page.debug %}
     {% endif%}
 
+    {% if page.prev_button or page.next_button %}
+    <p>
+    {% endif %}
+
     {% if page.prev_button %}
     {% include "core/includes/button.html" with button=page.prev_button %}
     {% endif %}
 
     {% if page.next_button %}
     {% include "core/includes/button.html" with button=page.next_button %}
+    {% endif %}
+
+    {% if page.prev_button or page.next_button %}
+    </p>
     {% endif %}
 {% endblock %}

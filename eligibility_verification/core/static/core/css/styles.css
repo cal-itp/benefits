@@ -1,3 +1,11 @@
+p {
+    margin-bottom: 1rem;
+}
+
+main :last-child .btn {
+    margin-top: 1.5rem;
+}
+
 .invalid-feedback {
     display: block;
 }
