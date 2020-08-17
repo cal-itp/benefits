@@ -83,7 +83,7 @@ docker-compose up -d --build server
 
 The API endpoint is running at `http://localhost:5000/verify`.
 
-### VS Code with Dev Containers
+## VS Code with Dev Containers
 
 [VS Code][vscode] can be used together with Docker via the [Remote - Containers][vscode-containers] extension to enable a
 container-based development environment. This repository includes a [`.devcontainer.json`][config-file] file that configures
