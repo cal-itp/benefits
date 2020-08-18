@@ -12,12 +12,9 @@ from flask_restful import Api, Resource, reqparse
 class Database():
     """Simple hard-coded database of eligibility."""
 
-    _USERS = {
-        "A1234567": ("Garcia", ["type1"]),
-        "B2345678": ("Hernandez", ["type2"]),
-        "C3456789": ("Smith", []),
-        "D4567890": ("Jones", ["type1", "type2"])
-    }
+    def __init__(self):
+        with open("data/db.json") as f:
+            self._USERS = json.load(f)
 
     def check(self, key, user, types):
         """Check if the data matches a record in the database."""

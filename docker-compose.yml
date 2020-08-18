@@ -47,3 +47,4 @@ services:
       - "5000:5000"
     volumes:
       - ./server:/usr/src/server:cached
+      - ./data/server:/usr/src/server/data

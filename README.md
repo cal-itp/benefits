@@ -45,7 +45,7 @@ Run Django database migrations:
 docker-compose run client migrate
 ```
 
-Load sample Django model data:
+Load [sample Django model data](./data/client):
 
 ```bash
 docker-compose run client data
@@ -82,6 +82,8 @@ docker-compose up -d --build server
 ```
 
 The API endpoint is running at `http://localhost:5000/verify`.
+
+Sample users and eligiblity can be found in [`data/server/db.json`](./data/server/db.json).
 
 ## VS Code with Dev Containers
 
