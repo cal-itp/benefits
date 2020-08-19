@@ -6,6 +6,11 @@ p {
     width: 120px;
 }
 
+.btn-lg {
+    border-width: 2px;
+    width: 100%;
+}
+
 main :last-child .btn {
     margin-top: 1.5rem;
 }
