@@ -6,7 +6,14 @@
 
 {% block main_content %}
     {% if page.content_title %}
-    <h1>{{ page.content_title }}</h1>
+    <h1>
+        {% if page.icon %}
+        <div class="page-icon">
+            {% include "core/includes/icon.html" with icon=page.icon alt=page.icon_alt %}
+        </div>
+        {% endif %}
+        {{ page.content_title }}
+    </h1>
     {% endif %}
 
     {% for p in page.paragraphs %}

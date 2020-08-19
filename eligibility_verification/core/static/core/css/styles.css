@@ -2,8 +2,16 @@ p {
     margin-bottom: 1rem;
 }
 
+.navbar-brand img.sm {
+    width: 120px;
+}
+
 main :last-child .btn {
     margin-top: 1.5rem;
+}
+
+h1 .page-icon {
+    text-align: center;
 }
 
 .invalid-feedback {

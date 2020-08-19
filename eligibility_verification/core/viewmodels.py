@@ -20,6 +20,7 @@ class Page():
     """
     Represents a page of content:
     * title
+    * icon
     * content_title
     * paragraphs
     * form
@@ -29,7 +30,9 @@ class Page():
     """
     def __init__(self, **kwargs):
         self.title = kwargs.get("title")
+        self.icon = kwargs.get("icon")
         self.content_title = kwargs.get("content_title")
+        self.icon_alt = kwargs.get("icon_alt", f"Icon for page: '{self.title}'")
         self.paragraphs = kwargs.get("paragraphs", [])
         self.form = kwargs.get("form")
         self.prev_button = kwargs.get("prev_button")
