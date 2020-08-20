@@ -20,13 +20,17 @@ main .btn-lg {
     padding: 1rem;
 }
 
-h1 .page-icon {
+main h1 .page-icon {
     text-align: center;
 }
 
+main h1 ~ p:nth-last-of-type(1) {
+    margin-bottom: 2rem;
+}
+
 .steps {
-    height: 100%;
-    margin-top: 2rem;
+    min-height: 4rem;
+    margin-bottom: 4rem;
 }
 
 .steps .step-container {
@@ -43,6 +47,21 @@ h1 .page-icon {
     font-weight: 800;
     text-align: center;
     font-size: 1.3rem;
+}
+
+.form-group:nth-last-of-type(2) {
+    margin-bottom: 4rem;
+}
+
+.form-control {
+    border-radius: 0.25rem;
+    border-color: #212121;
+    border-width: 2px;
+    color: #212121;
+}
+
+.form-control-lg {
+    border-radius: 0.3rem;
 }
 
 .invalid-feedback {

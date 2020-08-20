@@ -4,7 +4,12 @@ The core application: view model definitions for the root of the webapp.
 
 
 class Button():
-    """Represents a clickable button as styled <a> element."""
+    """"
+    Represents a clickable button as styled <a> element:
+    * classes: str, str[]
+    * text: str
+    * url: str
+    """
     def __init__(self, **kwargs):
         classes = kwargs.get("classes", [])
         if isinstance(classes, str):
