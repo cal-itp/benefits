@@ -18,7 +18,6 @@ class EligibilityVerificationForm(forms.Form):
     )
 
     last_name = forms.CharField(
-        help_text="We use this to confirm your driver license number",
         widget=widgets.FormControlTextInput(placeholder="Your last name")
     )
 

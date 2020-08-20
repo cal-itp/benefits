@@ -14,7 +14,9 @@ def index(request):
     page = viewmodels.Page(
         title="Eligibility verification",
         content_title="Let's see if we can pull your Senior status from the DMV",
-        paragraphs=[],
+        paragraphs=[
+            "We use this to check which programs you could participate in."
+        ],
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="")
     )
     context = viewmodels.page_context(page)
@@ -66,8 +68,19 @@ def verified(request, verified_types, debug=None):
 
     page = viewmodels.Page(
         title="Verified | Eligibility verification",
-        content_title="Eligibility has been verified!",
-        paragraphs=["Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore."],
+        content_title="Great! Looks like you are eligible for a Senior discount",
+        paragraphs=[
+            "Next we need to match a credit card to the information you provided to verify it's really you."
+        ],
+        steps=[
+            "Link your credit card. No charges will be made. Just identity verification.",
+            "We make sure all relevant discounts are applied every time you use your credit card."
+        ],
+        next_button=viewmodels.Button(
+            classes="btn-primary",
+            text="Continue",
+            url="#payments"
+        ),
         debug=debug
     )
     context = viewmodels.page_context(page)
