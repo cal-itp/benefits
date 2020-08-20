@@ -34,7 +34,7 @@ main h1 ~ p:nth-last-of-type(1) {
 }
 
 .steps .step-container {
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
     height: 1.5rem;
 }
 
