@@ -24,11 +24,13 @@
     {% endfor %}
 
     {% if page.steps %}
-    <ol class="steps">
+    <div class="steps">
     {% for step in page.steps %}
-        <li>{{ step }}</li>
+        <div class="step-container">
+            <span class="number bg-highlight">{{ forloop.counter }}</span><span class="step">{{ step }}</span>
+        </div>
     {% endfor %}
-    </ol>
+    </div>
     {% endif %}
 
     {% if page.form %}
@@ -41,7 +43,7 @@
     {% endif%}
 
     {% if page.prev_button or page.next_button %}
-    <p>
+    <p class="buttons">
     {% endif %}
 
     {% if page.prev_button %}

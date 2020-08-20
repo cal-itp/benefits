@@ -9,14 +9,19 @@ from . import viewmodels
 def index(request):
     page = viewmodels.Page(
         title="Transit Discount Eligibility Verification",
-        icon="creditcardsuccess",
-        content_title="Let's see if you're eligible for a Senior discounted-fare",
+        icon=viewmodels.Icon("creditcardsuccess", "Credit card icon"),
+        content_title="Get your Senior discount every time you use your credit card",
         paragraphs=[
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            "We can verify your Senior status using your ID and make sure your discounted fare is always applied.",
+            "It's easy! You'll need:"
+        ],
+        steps=[
+            "Your California ID",
+            "A credit card"
         ],
         next_button=viewmodels.Button(
             classes="btn-primary",
-            text="Get Started",
+            text="Let's do it!",
             url="eligibility:index"
         )
     )
