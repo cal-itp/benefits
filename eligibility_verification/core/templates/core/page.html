@@ -5,11 +5,12 @@
 {% endif %}
 
 {% block main_content %}
+    <div class="container content-container">
     {% if page.content_title %}
     <h1>
         {% if page.icon %}
         <div class="page-icon">
-            {% include "core/includes/icon.html" with icon=page.icon alt=page.icon_alt %}
+            {% include "core/includes/icon.html" with icon=page.icon.icon alt=page.icon.alt %}
         </div>
         {% endif %}
         {{ page.content_title }}
@@ -21,6 +22,14 @@
         {{ p }}
     </p>
     {% endfor %}
+
+    {% if page.steps %}
+    <ol class="steps">
+    {% for step in page.steps %}
+        <li>{{ step }}</li>
+    {% endfor %}
+    </ol>
+    {% endif %}
 
     {% if page.form %}
     {% include "core/includes/form.html" with form=page.form %}
@@ -46,4 +55,5 @@
     {% if page.prev_button or page.next_button %}
     </p>
     {% endif %}
+    </div>
 {% endblock %}

@@ -16,24 +16,32 @@ class Button():
         self.url = kwargs.get("url")
 
 
+class Icon():
+    """Represents a graphical icon."""
+    def __init__(self, icon, alt):
+        self.icon = icon
+        self.alt = alt
+
+
 class Page():
     """
     Represents a page of content:
-    * title
-    * icon
-    * content_title
-    * paragraphs
-    * form
-    * prev_button
-    * next_button
-    * debug
+    * title: str
+    * icon: core.viewmodels.Icon
+    * content_title: str
+    * paragraphs: str[]
+    * steps: str[]
+    * form: django.forms.Form
+    * prev_button: core.viewmodels.Button
+    * next_button: core.viewmodels.Button
+    * debug: Any
     """
     def __init__(self, **kwargs):
         self.title = kwargs.get("title")
         self.icon = kwargs.get("icon")
         self.content_title = kwargs.get("content_title")
-        self.icon_alt = kwargs.get("icon_alt", f"Icon for page: '{self.title}'")
         self.paragraphs = kwargs.get("paragraphs", [])
+        self.steps = kwargs.get("steps")
         self.form = kwargs.get("form")
         self.prev_button = kwargs.get("prev_button")
         self.next_button = kwargs.get("next_button")
