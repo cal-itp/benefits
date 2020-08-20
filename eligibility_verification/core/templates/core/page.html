@@ -24,13 +24,7 @@
     {% endfor %}
 
     {% if page.steps %}
-    <div class="steps">
-    {% for step in page.steps %}
-        <div class="step-container">
-            <span class="number bg-highlight">{{ forloop.counter }}</span><span class="step">{{ step }}</span>
-        </div>
-    {% endfor %}
-    </div>
+    {% include "core/includes/steps.html" with steps=page.steps %}
     {% endif %}
 
     {% if page.form %}
