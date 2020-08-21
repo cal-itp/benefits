@@ -4,5 +4,5 @@
 <p class="bg-grey-lightest color-standout">Missing <strong><code>icon</code></strong> argument</p>
 {% else %}
 {% load static %}
-<img src="{% static "core/img/icon/"|add:icon|add:".svg" %}" alt="{{ alt }}" />
+<img class="icon" src="{% static "core/img/icon/"|add:icon|add:".svg" %}" alt="{{ alt }}" />
 {% endif %}

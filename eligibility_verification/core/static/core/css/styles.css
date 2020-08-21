@@ -20,8 +20,10 @@ main .btn-lg {
     padding: 1rem;
 }
 
-main h1 .page-icon {
+main h1.icon-title span.icon {
     text-align: center;
+    display: block;
+    margin-bottom: 1rem;
 }
 
 main h1 ~ p:nth-last-of-type(1) {

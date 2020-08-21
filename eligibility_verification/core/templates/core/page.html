@@ -7,14 +7,11 @@
 {% block main_content %}
 
     {% if page.content_title %}
-    <h1>
         {% if page.icon %}
-        <div class="page-icon">
-            {% include "core/includes/icon.html" with icon=page.icon.icon alt=page.icon.alt %}
-        </div>
+            {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon.icon alt=page.icon.alt %}
+        {% else %}
+            <h1>{{ page.content_title }}</h1>
         {% endif %}
-        {{ page.content_title }}
-    </h1>
     {% endif %}
 
     {% for p in page.paragraphs %}
@@ -24,31 +21,31 @@
     {% endfor %}
 
     {% if page.steps %}
-    {% include "core/includes/steps.html" with steps=page.steps %}
+        {% include "core/includes/steps.html" with steps=page.steps %}
     {% endif %}
 
     {% if page.form %}
-    {% include "core/includes/form.html" with form=page.form %}
+        {% include "core/includes/form.html" with form=page.form %}
     {% endif %}
 
     {% if page.debug %}
-    <h2>Debug information</h2>
-    {% include "core/includes/data.html" with data=page.debug %}
+        <h2>Debug information</h2>
+        {% include "core/includes/data.html" with data=page.debug %}
     {% endif%}
 
     {% if page.prev_button or page.next_button %}
-    <div class="buttons">
+        <div class="buttons">
     {% endif %}
 
     {% if page.prev_button %}
-    {% include "core/includes/button.html" with button=page.prev_button %}
+        {% include "core/includes/button.html" with button=page.prev_button %}
     {% endif %}
 
     {% if page.next_button %}
-    {% include "core/includes/button.html" with button=page.next_button %}
+        {% include "core/includes/button.html" with button=page.next_button %}
     {% endif %}
 
     {% if page.prev_button or page.next_button %}
-    </div>
+        </div>
     {% endif %}
 {% endblock %}
