@@ -68,6 +68,6 @@ main h1 ~ p:nth-last-of-type(1) {
     display: block;
 }
 
-main p.buttons {
-    margin-top: 4rem;
+main .buttons {
+    margin-bottom: 4rem;
 }
