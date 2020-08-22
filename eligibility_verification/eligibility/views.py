@@ -19,7 +19,7 @@ def index(request):
         ],
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="")
     )
-    context = viewmodels.page_context(page)
+    context = page.context_dict()
 
     if request.method == "POST":
         form = forms.EligibilityVerificationForm(request.POST)
@@ -27,7 +27,7 @@ def index(request):
 
         if response is None:
             page.form = form
-            context = viewmodels.page_context(page)
+            context = page.context_dict()
             response = TemplateResponse(request, "core/page.html", context)
     else:
         response = TemplateResponse(request, "core/page.html", context)
@@ -83,7 +83,7 @@ def verified(request, verified_types, debug=None):
         ),
         debug=debug
     )
-    context = viewmodels.page_context(page)
+    context = page.context_dict()
     request.session["eligibility"] = verified_types
     return TemplateResponse(request, "core/page.html", context)
 
@@ -97,7 +97,7 @@ def unverified(request, errors, debug=None):
         paragraphs=["Sed do eiusmod tempor incididunt ut labore, consectetur adipiscing elit, lorem ipsum dolor sit amet."],
         debug=debug
     )
-    context = viewmodels.page_context(page)
+    context = page.context_dict()
     return TemplateResponse(request, "core/page.html", context)
 
 

@@ -52,7 +52,6 @@ class Page():
         self.next_button = kwargs.get("next_button")
         self.debug = kwargs.get("debug")
 
-
-def page_context(page):
-    """Return a context dict for the page."""
-    return {"page": page}
+    def context_dict(self):
+        """Return a context dict for a Page."""
+        return {"page": self}

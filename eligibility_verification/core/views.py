@@ -26,7 +26,7 @@ def index(request):
         )
     )
 
-    context = viewmodels.page_context(page)
+    context = page.context_dict()
     return TemplateResponse(request, "core/page.html", context)
 
 
