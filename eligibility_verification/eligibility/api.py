@@ -106,14 +106,11 @@ def verify(sub, name, agency=None):
 
     for agency in agencies:
         for verifier in agency.eligibility_verifiers.all():
-            try:
-                response = Client(verifier, agency).verify(sub, name)
-                if response and response.success():
-                    results.append(response)
-                elif response and response.error():
-                    errors.append(response)
-            except Exception:
-                continue
+            response = Client(verifier, agency).verify(sub, name)
+            if response and response.success():
+                results.append(response)
+            elif response and response.error():
+                errors.append(response)
 
     verified_types = _verified_types(results)
 
