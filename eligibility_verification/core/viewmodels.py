@@ -55,3 +55,26 @@ class Page():
     def context_dict(self):
         """Return a context dict for a Page."""
         return {"page": self}
+
+
+class ErrorPage(Page):
+    """
+    Represents an error page:
+    * title: str
+    * content_title: str
+    * paragraphs: str[]
+    * button: core.viewmodels.Button
+    * debug: Any
+    """
+    def __init__(self, **kwargs):
+        super().__init__(
+            title=kwargs.get("title", "Error"),
+            icon=Icon("busfail", "Bus with flat tire icon"),
+            content_title=kwargs.get("content_title", "System is down"),
+            paragraphs=kwargs.get("paragraphs", [
+                "Unfortunately, our system is having a problem right now.",
+                "Please check back later"
+            ]),
+            prev_button=kwargs.get("button"),
+            debug=kwargs.get("debug")
+        )

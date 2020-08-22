@@ -31,4 +31,7 @@ def index(request):
 
 
 def error(request):
-    return TemplateResponse(request, "core/error.html")
+    page = viewmodels.ErrorPage()
+
+    context = page.context_dict()
+    return TemplateResponse(request, "core/page.html", context)
