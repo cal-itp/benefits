@@ -11,30 +11,10 @@ services:
       - DJANGO_DEBUG
       - DJANGO_TRANSIT_AGENCY
       - DJANGO_DB
-      - POSTGRES_DB
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-      - POSTGRES_HOST
-      - POSTGRES_PORT
     ports:
       - "${DJANGO_LOCAL_PORT}:8000"
     volumes:
       - .:/usr/src/cal-itp:cached
-
-  db:
-    image: postgres:12
-    environment:
-      - POSTGRES_DB
-      - POSTGRES_USER
-      - POSTGRES_PASSWORD
-
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=example@example.com
-      - PGADMIN_DEFAULT_PASSWORD=pgadmin
-    ports:
-      - "8001:80"
 
   server:
     build: ./server

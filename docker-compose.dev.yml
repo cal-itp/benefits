@@ -9,5 +9,4 @@ services:
     entrypoint: []
     command: python -m debugpy --wait-for-client --listen 5678 manage.py runserver 0.0.0.0:8000
     depends_on:
-      - db
       - server
