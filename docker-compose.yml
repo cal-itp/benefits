@@ -10,6 +10,7 @@ services:
       - DJANGO_SECRET_KEY
       - DJANGO_DEBUG
       - DJANGO_TRANSIT_AGENCY
+      - DJANGO_DB
       - POSTGRES_DB
       - POSTGRES_USER
       - POSTGRES_PASSWORD
