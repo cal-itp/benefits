@@ -6,7 +6,11 @@ from django.template.response import TemplateResponse
 from . import viewmodels
 
 
-def index(request):
+def index(request, agency):
+    # keep a ref to the agency that initialized this session
+    request.session["agency"] = agency.id
+
+    # build the page vm
     page = viewmodels.Page(
         title="Transit Discount Eligibility Verification",
         icon=viewmodels.Icon("creditcardsuccess", "Credit card icon"),
