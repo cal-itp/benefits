@@ -24,8 +24,6 @@ SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get("DJANGO_DEBUG", False))
 
-TRANSIT_AGENCY = os.environ.get("DJANGO_TRANSIT_AGENCY", False)
-
 ALLOWED_HOSTS = []
 
 if DEBUG:
@@ -58,8 +56,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
-    "eligibility_verification.core.middleware.DebugMiddleware",
-    "eligibility_verification.core.middleware.TransitAgencyMiddleware"
+    "eligibility_verification.core.middleware.DebugMiddleware"
 ]
 
 ROOT_URLCONF = "eligibility_verification.urls"
