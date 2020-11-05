@@ -33,12 +33,6 @@ Otherwise, start by building the eligibility verification client image:
 docker-compose build --no-cache client
 ```
 
-Ensure the local database container is running:
-
-```bash
-docker-compose up -d db
-```
-
 Run Django database migrations:
 
 ```bash
@@ -109,8 +103,6 @@ Once running inside a container, press **`F5`** to attach a debugger to the clie
 The test eligibility verification server endpoint is running at `http://localhost:5000/verify` on your host machine.
 Access the server endpoint from within the Dev Container at `http://server:5000/verify`.
 
-A [pgAdmin][pgadmin] container is also running at `http://localhost:8001` on your host machine.
-
 To close out of the container and re-open the directory locally in Visual Studio Code:
 
 1. `Ctrl+Shift+P` to bring up the command palette in Visual Studio Code
@@ -120,6 +112,5 @@ To close out of the container and re-open the directory locally in Visual Studio
 [config-file]: ./.devcontainer.json
 [docker]: https://docs.docker.com/
 [docker-compose]: https://docs.docker.com/compose/
-[pgadmin]: https://www.pgadmin.org/
 [vscode]: https://code.visualstudio.com/
 [vscode-containers]: https://code.visualstudio.com/docs/remote/containers

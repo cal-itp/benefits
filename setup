@@ -4,9 +4,6 @@ set -e
 # Build the main app image
 docker-compose build --no-cache client && \
 
-# Ensure the local database container is running
-docker-compose up -d db && \
-
 # Run Django database migrations
 docker-compose run client migrate && \
 
