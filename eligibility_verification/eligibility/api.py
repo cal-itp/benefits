@@ -118,5 +118,5 @@ def verify(sub, name, agency=None):
 
 
 def _verified_types(results):
-    """Return the list of distinct verified eligiblity types using results from verify()."""
+    """Return the list of distinct verified eligibility types using results from verify()."""
     return list(set([e for result in results for e in result.eligibility]))

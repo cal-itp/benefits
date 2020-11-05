@@ -8,6 +8,6 @@ from . import views
 
 app_name = "eligibility"
 urlpatterns = [
-    # /eligiblity
+    # /eligibility
     path("", views.index, name="index")
 ]

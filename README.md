@@ -77,7 +77,7 @@ docker-compose up -d --build server
 
 The API endpoint is running at `http://localhost:5000/verify`.
 
-Sample users and eligiblity can be found in [`data/server/db.json`](./data/server/db.json).
+Sample users and eligibility can be found in [`data/server/db.json`](./data/server/db.json).
 
 ## VS Code with Dev Containers
 

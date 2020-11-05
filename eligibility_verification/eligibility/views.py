@@ -64,7 +64,7 @@ def _verify(request, form):
 
 
 def verified(request, verified_types, debug=None):
-    """View handler for the verified eligiblity page."""
+    """View handler for the verified eligibility page."""
 
     page = viewmodels.Page(
         title="Verified | Eligibility verification",
@@ -89,7 +89,7 @@ def verified(request, verified_types, debug=None):
 
 
 def unverified(request, errors, debug=None):
-    """View handler for the unverified eligiblity page."""
+    """View handler for the unverified eligibility page."""
 
     page = viewmodels.Page(
         title="Unverified | Eligibility verification",
