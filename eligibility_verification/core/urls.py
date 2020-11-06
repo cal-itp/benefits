@@ -12,6 +12,7 @@ class TransitAgencyPathConverter():
     regex = "[a-zA-Z]{3,5}"
 
     def to_python(self, value):
+        value = str(value).lower()
         agency = models.TransitAgency.get(value)
         if agency and agency.active:
             return agency
