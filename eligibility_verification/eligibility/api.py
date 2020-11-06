@@ -8,7 +8,6 @@ import uuid
 
 import requests
 
-from eligibility_verification.core.models import TransitAgency
 from eligibility_verification.settings import ALLOWED_HOSTS
 
 
@@ -97,24 +96,20 @@ class Client():
         return self._request(payload)
 
 
-def verify(sub, name, agency=None):
-    """Attempt eligibility verification, returning a tuple (verified_types: str[], results: Response[], errors: Response[])."""
+def verify(sub, name, agency):
+    """Attempt eligibility verification, returning a tuple (verified_types: str[], errors: Response[])."""
 
     results = []
     errors = []
-    agencies = TransitAgency.all_active() if agency is None else [agency]
 
-    for agency in agencies:
-        for verifier in agency.eligibility_verifiers.all():
-            response = Client(verifier, agency).verify(sub, name)
-            if response and response.success():
-                results.append(response)
-            elif response and response.error():
-                errors.append(response)
+    for verifier in agency.eligibility_verifiers.all():
+        response = Client(verifier, agency).verify(sub, name)
+        if response and response.success():
+            results.append(response)
+        elif response and response.error():
+            errors.append(response)
 
-    verified_types = _verified_types(results)
-
-    return verified_types, results, errors
+    return _verified_types(results), errors
 
 
 def _verified_types(results):
