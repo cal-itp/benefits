@@ -33,7 +33,7 @@ class EligibilityVerifier(models.Model):
 class TransitAgency(models.Model):
     """An agency offering transit service."""
 
-    short_name = models.CharField(max_length=5)
+    slug = models.CharField(max_length=5)
     long_name = models.CharField(max_length=25)
     agency_id = models.CharField(max_length=50)
     mechant_id = models.CharField(max_length=50)
@@ -54,9 +54,14 @@ class TransitAgency(models.Model):
         return set(self.eligibility_types.values_list("name", flat=True))
 
     @staticmethod
-    def get(agency):
-        """Get a TransitAgency instance by its short name."""
-        return TransitAgency.objects.filter(short_name=agency).first()
+    def by_id(id):
+        """Get a TransitAgency instance by its ID."""
+        return TransitAgency.objects.get(id=id)
+
+    @staticmethod
+    def by_slug(slug):
+        """Get a TransitAgency instance by its slug."""
+        return TransitAgency.objects.filter(slug=slug).first()
 
     @staticmethod
     def all_active():
