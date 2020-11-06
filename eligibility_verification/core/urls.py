@@ -20,7 +20,7 @@ class TransitAgencyPathConverter():
             raise ValueError()
 
     def to_url(self, value):
-        return value.short_name
+        return value.slug
 
 
 register_converter(TransitAgencyPathConverter, "agency")

@@ -22,8 +22,7 @@ class DebugMiddleware():
         response.context_data["debug"] = DEBUG
 
         if DEBUG:
-            # send the agency.short_name with debug context
             agency = models.TransitAgency.objects.get(id=request.session["agency"])
-            response.context_data["agency"] = agency.short_name
+            response.context_data["agency"] = agency.slug
 
         return response
