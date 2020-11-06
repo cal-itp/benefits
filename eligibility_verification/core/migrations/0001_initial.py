@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
             name='TransitAgency',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('short_name', models.CharField(max_length=5)),
+                ('slug', models.CharField(max_length=5)),
                 ('long_name', models.CharField(max_length=50)),
                 ('agency_id', models.CharField(max_length=50)),
                 ('mechant_id', models.CharField(max_length=50)),

@@ -13,7 +13,7 @@ class TransitAgencyPathConverter():
 
     def to_python(self, value):
         value = str(value).lower()
-        agency = models.TransitAgency.get(value)
+        agency = models.TransitAgency.by_slug(value)
         if agency and agency.active:
             return agency
         else:

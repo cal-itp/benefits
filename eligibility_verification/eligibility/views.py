@@ -46,9 +46,10 @@ def _verify(request, form):
     if not all((sub, name)):
         return internal_error(request, sub is None, name is None)
 
-    agency = None
     if "agency" in request.session:
-        agency = models.TransitAgency.get(request.session["agency"])
+        agency = models.TransitAgency.by_id(request.session["agency"])
+    else:
+        return internal_error(request, False, False)
 
     try:
         types, results, errors = api.verify(sub, name, agency)
