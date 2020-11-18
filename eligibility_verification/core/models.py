@@ -21,6 +21,8 @@ class EligibilityVerifier(models.Model):
 
     name = models.TextField()
     api_url = models.TextField()
+    api_auth_header = models.CharField(max_length=50)
+    api_auth_key = models.CharField(max_length=100)
     eligibility_types = models.ManyToManyField(EligibilityType)
 
     def __str__(self):

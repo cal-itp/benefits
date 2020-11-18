@@ -5,6 +5,8 @@
         "fields": {
             "name": "Test Verifier",
             "api_url": "http://server:5000/verify",
+            "api_auth_header": "X-Server-API-Key",
+            "api_auth_key": "server-auth-token",
             "eligibility_types": [
                 1,
                 2

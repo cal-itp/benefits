@@ -24,6 +24,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.TextField()),
                 ('api_url', models.TextField()),
+                ('api_auth_header', models.CharField(max_length=50)),
+                ('api_auth_key', models.CharField(max_length=100)),
                 ('eligibility_types', models.ManyToManyField(to='core.EligibilityType')),
             ],
         ),

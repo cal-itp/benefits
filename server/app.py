@@ -11,13 +11,15 @@ from flask_restful import Api, Resource, reqparse
 
 
 class Database():
-    """Simple hard-coded database of eligibility."""
+    """Simple hard-coded server database."""
 
     def __init__(self):
         with open("data/db.json") as f:
-            self._USERS = json.load(f)
+            data = json.load(f)
+            self._AUTH = data["auth"]
+            self._USERS = data["users"]
 
-    def check(self, key, user, types):
+    def check_user(self, key, user, types):
         """Check if the data matches a record in the database."""
         if all((
             len(types) > 0,
@@ -29,20 +31,38 @@ class Database():
         else:
             return []
 
+    @property
+    def auth_header(self):
+        return self._AUTH["auth_header"]
+
+    @property
+    def auth_token(self):
+        return self._AUTH["auth_token"]
+
+    @property
+    def token_header(self):
+        return self._AUTH["token_header"]
+
 
 app = Flask(__name__)
 api = Api(app)
 
 
 class Verify(Resource):
-    auth_key = "Authorization"
-    req_parser = reqparse.RequestParser()
-    req_parser.add_argument(auth_key, location="headers", required=True)
 
-    def _auth_token(self):
-        """Get the bearer token from auth header."""
-        args = self.req_parser.parse_args()
-        token = args.get(self.auth_key, "")
+    db = Database()
+
+    def _check_headers(self):
+        """Ensure correct request headers."""
+        req_parser = reqparse.RequestParser()
+        req_parser.add_argument(self.db.token_header, location="headers", required=True)
+        req_parser.add_argument(self.db.auth_header, location="headers", required=True)
+        headers = req_parser.parse_args()
+
+        if headers.get(self.db.auth_header) == self.db.auth_token:
+            return headers
+        else:
+            return False
 
         if token.startswith("Bearer "):
             return token[len("Bearer "):]
@@ -57,8 +77,12 @@ class Verify(Resource):
 
     def get(self):
         """Respond to a verification request."""
-        db = Database()
-        token = self._auth_token()
+        headers = {}
+
+        try:
+            headers = self._check_headers()
+        except Exception as ex:
+            return "Unauthorized", 403
 
         if token:
             data = self._req_payload(token)

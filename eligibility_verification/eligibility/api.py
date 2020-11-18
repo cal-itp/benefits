@@ -33,30 +33,36 @@ class Response():
         return str(self)
 
     def __str__(self):
-        return json.dumps(self._payload)
+        if self.is_error():
+            return json.dumps(self.error)
+        else:
+            return json.dumps(self.eligibility)
 
-    def verified(self):
-        return len(self._payload["eligibility"]) > 0
+    def is_verified(self):
+        return len(self.eligibility) > 0
 
-    def error(self):
-        return self.status_code != 200
+    def is_error(self):
+        return self.error is not None
 
-    def success(self):
+    def is_success(self):
         return self.status_code == 200
 
 
 class Token():
     """Eligibility Verification API request token."""
 
-    def __init__(self, **kwargs):
+    def __init__(self, agency, verifier, sub, name):
+        # compute the eligibility set for this token from agency and verifier
+        eligibility = list(verifier.eligibility_set() & agency.eligibility_set())
+        # craft the main token payload
         self._payload = dict(
             jti=str(uuid.uuid4()),
             iss=ALLOWED_HOSTS[0],
             iat=int(datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).timestamp()),
-            agency=kwargs.get("agency"),
-            eligibility=kwargs.get("eligibility"),
-            sub=kwargs.get("sub"),
-            name=kwargs.get("name")
+            agency=agency.agency_id,
+            eligibility=eligibility,
+            sub=sub,
+            name=name
         )
 
     def __repr__(self):
@@ -69,31 +75,30 @@ class Token():
 class Client():
     """Eligibility Verification API HTTP client."""
 
-    def __init__(self, verifier, agency):
-        self.url = verifier.api_url
-        self.agency_id = agency.agency_id
-        self.eligibility_types = list(verifier.eligibility_set & agency.eligibility_set)
+    def __init__(self, agency, verifier):
+        self.agency = agency
+        self.verifier = verifier
 
-    def _tokenize(self, payload):
+    def _tokenize(self, sub, name):
         """Create the request token."""
-        return Token(agency=self.agency_id, eligibility=self.eligibility_types, **payload)
+        return Token(agency=self.agency, verifier=self.verifier, sub=sub, name=name)
 
-    def _auth_header(self, token):
-        """Create an Authorization header for the request."""
-        enc = str(base64.urlsafe_b64encode(bytes(str(token), "utf-8")), "utf-8")
-        return dict(Authorization=f"Bearer {enc}")
+    def _auth_headers(self, token):
+        """Create headers for the request with the token and verifier API keys"""
+        headers = dict(Authorization=f"Bearer {token}")
+        headers[self.verifier.api_auth_header] = self.verifier.api_auth_key
+        return headers
 
-    def _request(self, payload):
+    def _request(self, sub, name):
         """Make an API request for eligibility verification."""
-        token = self._tokenize(payload)
-        auth_header = self._auth_header(token)
-        r = requests.get(self.url, headers=auth_header)
+        token = self._tokenize(sub, name)
+        headers = self._auth_headers(token)
+        r = requests.get(self.verifier.api_url, headers=headers)
         return Response(r.status_code, r.json())
 
     def verify(self, sub, name):
         """Check eligibility for the subject and name."""
-        payload = dict(sub=sub, name=name)
-        return self._request(payload)
+        return self._request(sub, name)
 
 
 def verify(sub, name, agency):
@@ -103,10 +108,10 @@ def verify(sub, name, agency):
     errors = []
 
     for verifier in agency.eligibility_verifiers.all():
-        response = Client(verifier, agency).verify(sub, name)
-        if response and response.success():
+        response = Client(agency=agency, verifier=verifier).verify(sub=sub, name=name)
+        if response and response.is_success():
             results.append(response)
-        elif response and response.error():
+        elif response and response.is_error():
             errors.append(response)
 
     return _verified_types(results), errors
