@@ -7,6 +7,24 @@ services:
       dockerfile: Dockerfile.dev
     image: eligibility_verification_client:dev
     entrypoint: []
-    command: python -m debugpy --wait-for-client --listen 5678 manage.py runserver 0.0.0.0:8000
+    command: python -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000
     depends_on:
       - server
+    ports:
+      - "${DJANGO_LOCAL_PORT}:8000"
+      - "5678:5678"
+
+  server:
+    build: ./server
+    image: eligibility_verification_server:dev
+    command: python -m debugpy --listen 0.0.0.0:5789 app.py
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_DEBUG=1
+      - FLASK_ENV=development
+    ports:
+      - "5000:5000"
+      - "5789:5789"
+    volumes:
+      - ./server:/usr/src/server:cached
+      - ./data/server:/usr/src/server/data

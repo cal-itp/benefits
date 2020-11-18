@@ -13,6 +13,21 @@
                 "port": 5678
             },
             "django": true
+        },
+        {
+            "name": "Flask: Eligibility Server",
+            "type": "python",
+            "request": "attach",
+            "connect": {
+                "host": "localhost",
+                "port": 5789
+            },
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}/server",
+                    "remoteRoot": "/usr/src/server"
+                }
+            ]
         }
     ]
 }

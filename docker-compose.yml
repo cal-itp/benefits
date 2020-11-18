@@ -14,17 +14,3 @@ services:
       - "${DJANGO_LOCAL_PORT}:8000"
     volumes:
       - .:/usr/src/cal-itp:cached
-
-  server:
-    build: ./server
-    image: eligibility_verification_server:dev
-    command: python app.py
-    environment:
-      - FLASK_APP=app.py
-      - FLASK_DEBUG=1
-      - FLASK_ENV=development
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./server:/usr/src/server:cached
-      - ./data/server:/usr/src/server/data
