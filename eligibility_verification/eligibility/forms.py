@@ -12,12 +12,12 @@ class EligibilityVerificationForm(forms.Form):
     action_url = "eligibility:verify"
     method = "POST"
 
-    card = forms.CharField(
+    sub = forms.CharField(
         label="CA Driver License or ID Number",
         widget=widgets.FormControlTextInput(placeholder="A1234567")
     )
 
-    last_name = forms.CharField(
+    name = forms.CharField(
         label="Last Name (as it appears on ID)",
         widget=widgets.FormControlTextInput(placeholder="Rodriguez")
     )

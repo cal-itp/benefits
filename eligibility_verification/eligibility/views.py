@@ -84,7 +84,7 @@ def _verify(request, form):
     if not form.is_valid():
         return None
 
-    sub, name = form.cleaned_data.get("card"), form.cleaned_data.get("last_name")
+    sub, name = form.cleaned_data.get("sub"), form.cleaned_data.get("name")
 
     if not all((sub, name)):
         raise ValueError("Missing form data")
