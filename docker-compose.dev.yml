@@ -28,3 +28,4 @@ services:
     volumes:
       - ./server:/usr/src/server:cached
       - ./data/server:/usr/src/server/data
+      - ./keys:/usr/src/server/keys

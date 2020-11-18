@@ -21,9 +21,22 @@ class EligibilityVerifier(models.Model):
 
     name = models.TextField()
     api_url = models.TextField()
-    api_auth_header = models.CharField(max_length=50)
-    api_auth_key = models.CharField(max_length=100)
+    api_auth_header = models.TextField()
+    api_auth_key = models.TextField()
     eligibility_types = models.ManyToManyField(EligibilityType)
+    public_key_pem = models.TextField(
+        help_text="The Verifier's public key in PEM format, used to encrypt requests targeted at this Verifier\
+            and to verify signed responses from this verifier."
+    )
+    jwe_cek_enc = models.TextField(
+        help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode"
+    )
+    jwe_encryption_alg = models.TextField(
+        help_text="The JWE-compatible encryption algorithm"
+    )
+    jws_signing_alg = models.TextField(
+        help_text="The JWS-compatible signing algorithm"
+    )
 
     def __str__(self):
         return self.name
@@ -51,6 +64,12 @@ class TransitAgency(models.Model):
     active = models.BooleanField(default=False)
     eligibility_types = models.ManyToManyField(EligibilityType)
     eligibility_verifiers = models.ManyToManyField(EligibilityVerifier)
+    private_key_pem = models.TextField(
+        help_text="The Agency's private key in PEM format, used to sign tokens created on behalf of this Agency."
+    )
+    jws_signing_alg = models.TextField(
+        help_text="The JWS-compatible signing algorithm."
+    )
 
     def __str__(self):
         return self.long_name
