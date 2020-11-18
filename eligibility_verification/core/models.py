@@ -4,6 +4,15 @@ The core application: Common model definitions.
 from django.db import models
 from django.urls import reverse
 
+from jwcrypto import jwk
+
+
+def pem_to_jwk(pem):
+    """jwcrypto.jwk.JWK instance of a key in PEM format"""
+    if not isinstance(pem, bytes):
+        pem = bytes(str(pem), "utf-8")
+    return jwk.JWK.from_pem(pem)
+
 
 class EligibilityType(models.Model):
     """A single conditional eligibility type."""
@@ -46,6 +55,11 @@ class EligibilityVerifier(models.Model):
         """Set of eligibility_type names"""
         return set(self.eligibility_types.values_list("name", flat=True))
 
+    @property
+    def public_jwk(self):
+        """jwcrypto.jwk.JWK instance of this Verifier's public key"""
+        return pem_to_jwk(self.public_key_pem)
+
 
 class TransitAgency(models.Model):
     """An agency offering transit service."""
@@ -83,6 +97,11 @@ class TransitAgency(models.Model):
     def index_url(self):
         """Url to the TransitAgency's landing page."""
         return reverse("core:agency_index", args=[self.slug])
+
+    @property
+    def private_jwk(self):
+        """jwcrypto.jwk.JWK instance of this Agency's private key"""
+        return pem_to_jwk(self.private_key_pem)
 
     @staticmethod
     def by_id(id):
