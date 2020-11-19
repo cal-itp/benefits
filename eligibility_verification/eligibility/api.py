@@ -5,7 +5,7 @@ import datetime
 import json
 import uuid
 
-from jwcrypto import jwe, jws, jwt
+from jwcrypto import common as jwcrypto, jwe, jws, jwt
 import requests
 
 from eligibility_verification.settings import ALLOWED_HOSTS
@@ -51,36 +51,12 @@ class Token():
 
 
 class Response():
-    """Eligibility Verification API response."""
+    """Eligibility Verification API base response."""
 
-    def __init__(self, response, agency, verifier):
-        self.status_code = response.status_code
+    def __init__(self, status_code, error=None, message=None):
+        self.status_code = status_code
         self.eligibility = []
-        self.error = None
-
-        # bail early for remote server errors
-        if response.status_code >= 500:
-            self.error = response.text
-            return
-
-        # read response token from body
-        encrypted_signed_token = response.json()
-
-        # decrypt using agency's private key
-        decrypted_token = jwe.JWE(algs=[verifier.jwe_encryption_alg, verifier.jwe_cek_enc])
-        decrypted_token.deserialize(encrypted_signed_token, key=agency.private_jwk)
-        decrypted_payload = str(decrypted_token.payload, "utf-8")
-
-        # verify signature using verifier's public key
-        signed_token = jws.JWS()
-        signed_token.deserialize(decrypted_payload, key=verifier.public_jwk(), alg=agency.jws_signing_alg)
-
-        # parse final payload
-        payload = json.loads(str(signed_token.payload, "utf-8"))
-
-        # extract payload values
-        self.eligibility = list(payload.get("eligibility", []))
-        self.error = payload.get("error", None)
+        self._assign_error(error=error, message=message)
 
     def __repr__(self):
         return str(self)
@@ -91,6 +67,12 @@ class Response():
         else:
             return json.dumps(self.eligibility)
 
+    def _assign_error(self, error=None, message=None):
+        """Assign this Response's error attribute"""
+        if not any([error, message]):
+            return
+        self.error = (message if not error else f"{message}: {str(error)}") if message else str(error)
+
     def is_verified(self):
         return len(self.eligibility) > 0
 
@@ -99,6 +81,54 @@ class Response():
 
     def is_success(self):
         return self.status_code == 200
+
+
+class TokenResponse(Response):
+    """Eligibility Verification API response token."""
+
+    def __init__(self, response, agency, verifier):
+        super().__init__(response.status_code, message=response.text)
+
+        # bail early for remote server errors
+        if self.status_code >= 500:
+            return
+
+        # read response token from body
+        try:
+            encrypted_signed_token = response.json()
+        except ValueError as ex:
+            self._assign_error(ex, "Invalid response format")
+            return
+
+        # decrypt using agency's private key
+        allowed_algs = [verifier.jwe_encryption_alg, verifier.jwe_cek_enc]
+        decrypted_token = jwe.JWE(algs=allowed_algs)
+        try:
+            decrypted_token.deserialize(encrypted_signed_token, key=agency.private_jwk)
+        except jwe.InvalidJWEData as ex:
+            self._assign_error(ex, "Invalid JWE token")
+            return
+        except jwe.InvalidJWEOperation as ex:
+            self._assign_error(ex, "JWE token decryption failed")
+            return
+
+        decrypted_payload = str(decrypted_token.payload, "utf-8")
+
+        # verify signature using verifier's public key
+        signed_token = jws.JWS()
+        try:
+            signed_token.deserialize(decrypted_payload, key=verifier.public_jwk, alg=agency.jws_signing_alg)
+        except jws.InvalidJWSObject as ex:
+            self._assign_error(ex, "Invalid JWS token")
+            return
+        except jws.InvalidJWSSignature as ex:
+            self._assign_error(ex, "JWS token signature verification failed")
+            return
+
+        # parse final payload and extract values
+        payload = json.loads(str(signed_token.payload, "utf-8"))
+        self.eligibility = list(payload.get("eligibility", []))
+        self.error = payload.get("error", None)
 
 
 class Client():
@@ -120,10 +150,26 @@ class Client():
 
     def _request(self, sub, name):
         """Make an API request for eligibility verification."""
-        token = self._tokenize(sub, name)
-        headers = self._auth_headers(token)
-        r = requests.get(self.verifier.api_url, headers=headers)
-        return Response(response=r, agency=self.agency, verifier=self.verifier)
+        try:
+            token = self._tokenize(sub, name)
+        except jwcrypto.JWException as ex:
+            return Response(500, error=ex, message="Tokenize form values failed")
+
+        try:
+            headers = self._auth_headers(token)
+        except Exception as ex:
+            return Response(500, error=ex, message="Create auth headers failed")
+
+        try:
+            r = requests.get(self.verifier.api_url, headers=headers)
+        except requests.ConnectionError as ex:
+            return Response(500, error=ex, messages="Connection to verification server failed")
+        except requests.Timeout as ex:
+            return Response(500, error=ex, messages="Connection to verification server timed out")
+        except requests.TooManyRedirects as ex:
+            return Response(500, error=ex, messages="Too many redirects to verification server")
+
+        return TokenResponse(response=r, agency=self.agency, verifier=self.verifier)
 
     def verify(self, sub, name):
         """Check eligibility for the subject and name."""

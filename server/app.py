@@ -28,15 +28,13 @@ class Database():
 
     def check_user(self, key, user, types):
         """Check if the data matches a record in the database."""
-        if all((
-            len(types) > 0,
-            key in self._users,
-            self._users[key][0] == user,
-            len(set(self._users[key][1]) & set(types)) > 0
-        )):
-            return list(set(self._users[key][1]) & set(types))
-        else:
+        if (len(types) < 1 or
+            key not in self._users or
+            self._users[key][0] != user or
+            len(set(self._users[key][1]) & set(types)) < 1):
             return []
+
+        return list(set(self._users[key][1]) & set(types))
 
     @property
     def auth_header(self):
