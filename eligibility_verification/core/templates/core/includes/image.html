@@ -1,0 +1,8 @@
+{% if not alt %}
+<p class="bg-grey-lightest color-standout">Missing <strong><code>alt</code></strong> argument</p>
+{% elif not src %}
+<p class="bg-grey-lightest color-standout">Missing <strong><code>src</code></strong> argument</p>
+{% else %}
+{% load static %}
+<img class="image" src="{% static src %}" alt="{{ alt }}" />
+{% endif %}

@@ -5,38 +5,42 @@
 {% endif %}
 
 {% block main_content %}
+    {% if page.image %}
+        {% include "core/includes/image.html" with src=page.image.src alt=page.image.alt %}
+    {% endif %}
+
+    <div class="container">
     {% if page.content_title %}
         {% if page.icon %}
-            {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon.icon alt=page.icon.alt %}
+                {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon %}
         {% else %}
             <h1>{{ page.content_title }}</h1>
         {% endif %}
     {% endif %}
 
+        {% if page.media|length_is:"0" %}{% else %}
+            {% include "core/includes/media-list.html" with items=page.media %}
+        {% endif %}
+
     {% for p in page.paragraphs %}
-    <p>
-        {{ p }}
-    </p>
+        <p>{{ p }}</p>
     {% endfor %}
 
-    {% if page.steps %}
-        {% include "core/includes/steps.html" with steps=page.steps %}
-    {% endif %}
-
     {% if page.form %}
-        {% include "core/includes/form.html" with form=page.form %}
+            {% include "core/includes/form.html" with form=page.form %}
     {% endif %}
-
-    {% if page.debug %}
-        <h2>Debug information</h2>
-        {% include "core/includes/data.html" with data=page.debug %}
-    {% endif%}
 
     {% if page.buttons|length_is:"0" %}{% else %}
         <div class="buttons">
         {% for b in page.buttons %}
-            {% include "core/includes/button.html" with button=b %}
+                {% include "core/includes/button.html" with button=b %}
         {% endfor %}
         </div>
     {% endif %}
+
+        {% if page.debug %}
+            <h2>Debug information</h2>
+            {% include "core/includes/data.html" with data=page.debug %}
+        {% endif%}
+    </div>
 {% endblock %}

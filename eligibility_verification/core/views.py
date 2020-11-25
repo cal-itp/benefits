@@ -8,6 +8,8 @@ from . import models, viewmodels
 
 
 def index(request):
+    """View handler for the main entry page."""
+
     # reset the agency ref
     request.session["agency"] = None
 
@@ -16,53 +18,34 @@ def index(request):
 
     # generate a button to the landing page for each
     buttons = [
-        viewmodels.Button(classes="btn-primary", text=a.long_name, url=reverse("core:agency_index", args=[a.slug]))
+        viewmodels.Button(
+            classes="btn-outline-primary",
+            text=a.long_name,
+            url=reverse("core:agency_index", args=[a.slug])
+        )
         for a in agencies
     ]
 
     # build the page vm
-    page = viewmodels.Page(
-        title="Transit Discount Eligibility Verification",
-        icon=viewmodels.Icon("creditcardsuccess", "Credit card icon"),
-        content_title="Get your Senior discount every time you use your credit card",
-        paragraphs=[
-            "We can verify your Senior status using your ID and make sure your discounted fare is always applied.",
-            "It's easy! You'll need:"
-        ],
-        steps=[
-            "Your California ID",
-            "A credit card"
-        ],
-        buttons=buttons
-    )
+    page = viewmodels.page_from_base(buttons=buttons)
+    page.paragraphs.append("Choose your transit provider")
 
-    context = page.context_dict()
-    return TemplateResponse(request, "core/page.html", context)
+    return TemplateResponse(request, "core/page.html", page.context_dict())
 
 
 def agency_index(request, agency):
+    """View handler for an agency entry page."""
+
     # keep a ref to the agency that initialized this session
     request.session["agency"] = agency.id
 
     # build the page vm
-    page = viewmodels.Page(
-        title="Transit Discount Eligibility Verification",
-        icon=viewmodels.Icon("creditcardsuccess", "Credit card icon"),
-        content_title=f"Get your Senior discount every time you use your credit card with {agency.long_name}",
-        paragraphs=[
-            "We can verify your Senior status using your ID and make sure your discounted fare is always applied.",
-            "It's easy! You'll need:"
-        ],
-        steps=[
-            "Your California ID",
-            "A credit card"
-        ],
+    page = viewmodels.page_from_base(
         button=viewmodels.Button(
             classes="btn-primary",
-            text="Let's do it!",
-            url="eligibility:index"
+            text="Let’s do it!",
+            url=reverse("eligibility:index")
         )
     )
 
-    context = page.context_dict()
-    return TemplateResponse(request, "core/page.html", context)
+    return TemplateResponse(request, "core/page.html", page.context_dict())

@@ -3,6 +3,7 @@ The eligibility application: view definitions for the eligibility verification f
 """
 from django.http import HttpResponseServerError
 from django.template.response import TemplateResponse
+from django.urls import reverse
 
 from eligibility_verification.core import models, viewmodels
 from eligibility_verification.settings import DEBUG
@@ -10,16 +11,51 @@ from . import api, forms
 
 
 def index(request):
+    """View handler for the eligibility verification getting started screen."""
+
+    page = viewmodels.page_from_base(
+        title=f"{viewmodels.BASE_PAGE.title}: Getting Started",
+        content_title="Great, you’ll need two things before we get started...",
+        media=[
+            viewmodels.MediaItem(
+                icon=viewmodels.Icon("idcardcheck", "identification card icon"),
+                heading="Your California ID",
+                details="Driver License or ID card"
+            ),
+            viewmodels.MediaItem(
+                icon=viewmodels.Icon("paymentcardcheck", "payment card icon"),
+                heading="Your payment card",
+                details="A debit, credit, or prepaid card"
+            ),
+        ],
+        paragraphs=[
+            "This program is currently open to those who are 65 or older. \
+                Not over 65? Get in touch with your transit provider to \
+                learn about available discount programs."
+        ],
+        button=viewmodels.Button(
+            classes="btn-primary",
+            text="Ready to continue",
+            url=reverse("eligibility:verify")
+        )
+    )
+
+    return TemplateResponse(request, "core/page.html", page.context_dict())
+
+
+def verify(request):
     """View handler for the eligibility verification form."""
 
     page = viewmodels.Page(
-        title="Eligibility verification",
-        content_title="Let's see if we can pull your Senior status from the DMV",
+        title=f"{viewmodels.BASE_PAGE.title}: Verify",
+        content_title="Let’s see if we can verify your age with the DMV",
         paragraphs=[
-            "We use this to check which programs you could participate in."
+            "If you’re 65 or older, we can confirm you are eligible for a \
+                senior discount when you ride transit."
         ],
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="")
     )
+
     context = page.context_dict()
 
     if request.method == "POST":
@@ -28,7 +64,6 @@ def index(request):
 
         if response is None:
             page.form = form
-            context = page.context_dict()
             response = TemplateResponse(request, "core/page.html", context)
     else:
         response = TemplateResponse(request, "core/page.html", context)
@@ -45,12 +80,9 @@ def _verify(request, form):
     sub, name = form.cleaned_data.get("card"), form.cleaned_data.get("last_name")
 
     if not all((sub, name)):
-        return HttpResponseServerError("Missing form data")
+        raise ValueError("Missing form data")
 
-    if "agency" in request.session:
-        agency = models.TransitAgency.by_id(request.session["agency"])
-    else:
-        return HttpResponseServerError("No agency configured")
+    agency = models.TransitAgency.by_id(request.session["agency"])
 
     try:
         types, errors = api.verify(sub, name, agency)
@@ -72,34 +104,59 @@ def verified(request, verified_types, debug=None):
     request.session["eligibility"] = verified_types
 
     page = viewmodels.Page(
-        title="Verified | Eligibility verification",
-        content_title="Great! Looks like you are eligible for a Senior discount",
+        title=f"{viewmodels.BASE_PAGE.title}: Verified!",
+        content_title="Great! You’re eligible for a senior discount!",
+        icon=viewmodels.Icon("idcardcheck", "identification card icon"),
         paragraphs=[
-            "Next we need to match a credit card to the information you provided to verify it's really you."
+            "Next, we need to attach your discount to your payment card so \
+                when you pay with that card, you always get your discount.",
+            "Use a credit, debit, or prepaid card."
         ],
-        steps=[
-            "Link your credit card. No charges will be made. Just identity verification.",
-            "We make sure all relevant discounts are applied every time you use your credit card."
+        buttons=[
+            viewmodels.Button(
+                classes="btn-primary",
+                text="Continue to our payment partner",
+                url="#payments"
+            ),
+            viewmodels.Button(
+                classes="btn-link btn-sm",
+                text="What if I don’t have a payment card?",
+                url="#payments/no-card"
+            )
         ],
-        next_button=viewmodels.Button(
-            classes="btn-primary",
-            text="Continue",
-            url="#payments"
-        ),
         debug=debug
     )
-    context = page.context_dict()
-    return TemplateResponse(request, "core/page.html", context)
+
+    return TemplateResponse(request, "core/page.html", page.context_dict())
 
 
 def unverified(request, errors, debug=None):
     """View handler for the unverified eligibility page."""
 
+    # query all active agencies
+    agencies = models.TransitAgency.all_active()
+
+    # generate buttons with phone number links
+    buttons = [
+        viewmodels.Button(
+            classes="btn-link text-left pl-0 pt-0 border-left-0",
+            text=a.phone,
+            url=f"tel:{a.phone}",
+            label=f"{a.long_name}:")
+        for a in agencies
+    ]
+
     page = viewmodels.Page(
-        title="Unverified | Eligibility verification",
-        content_title="Eligibility could not be verified",
-        paragraphs=["Sed do eiusmod tempor incididunt ut labore, consectetur adipiscing elit, lorem ipsum dolor sit amet."],
+        title=f"{viewmodels.BASE_PAGE.title}: Age not verified",
+        content_title="We can’t verify your age",
+        icon=viewmodels.Icon("idcardquestion", "identification card icon"),
+        paragraphs=[
+            "You may still be eligible for a discount but we can’t verify \
+                your age with the DMV.",
+            "Reach out to your transit provider for assistance."
+        ],
+        buttons=buttons,
         debug=debug
     )
-    context = page.context_dict()
-    return TemplateResponse(request, "core/page.html", context)
+
+    return TemplateResponse(request, "core/page.html", page.context_dict())

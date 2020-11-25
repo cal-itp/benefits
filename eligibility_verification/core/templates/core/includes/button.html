@@ -1,3 +1,6 @@
 {% if button.url %}
-<a class="{{ button.classes | join:" " }}" href="{% if button.url|slice:"1" == "#" or button.url|slice:"1" == "/" %}{{ button.url }}{% else %}{% url button.url %}{% endif %}">{{ button.text }}</a>
+{% if button.label %}
+<label>{{ button.label }}</label>
+{% endif %}
+<a class="{{ button.classes | join:" " }}" href="{{ button.url }}">{{ button.text }}</a>
 {% endif %}

@@ -1,58 +1,42 @@
+/* HTML element overrides */
+
+body {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
+}
+
 body, h1, h2, h3, h4, h5, h6, p, a, span, li {
     font-family: "Roboto", sans-serif;
-    font-weight: 550;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+    margin-top: 30px;
+    margin-bottom: 20px;
 }
 
 p {
     margin-bottom: 1rem;
 }
 
-.navbar-brand img.sm {
-    width: 120px;
-}
+/* class styles */
 
 .btn-lg {
     border-width: 2px;
     width: 100%;
 }
 
-main .btn-lg {
-    padding: 1rem;
-}
-
-main h1.icon-title span.icon {
-    text-align: center;
-    display: block;
-    margin-bottom: 1rem;
-}
-
-main h1 ~ p:nth-last-of-type(1) {
-    margin-bottom: 2rem;
-}
-
-.steps {
-    min-height: 4rem;
-    margin-bottom: 4rem;
-}
-
-.steps .step-container {
-    margin-bottom: 4rem;
-    height: 1.5rem;
-}
-
-.steps .step-container .number {
-    height: 1.5rem;
-    width: 1.5rem;
-    padding: 0.5rem 1rem;
-    border-radius: 50%;
-    margin-right: 1rem;
-    font-weight: 800;
-    text-align: center;
-    font-size: 1.3rem;
+.container {
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .form-group:nth-last-of-type(2) {
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
 }
 
 .form-control {
@@ -74,6 +58,59 @@ main h1 ~ p:nth-last-of-type(1) {
     display: block;
 }
 
+.media-list {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.media-list .media {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.media-list .media .media-left {
+    margin-right: 18px;
+}
+
+.media-list .media .media-left img {
+    height: 75px;
+}
+
+.media-list .media .media-body {
+    max-width: 160px;
+}
+
+/* context-specific overrides */
+
+.navbar-brand img.sm {
+    width: 120px;
+}
+
+main .btn-lg {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+main .btn-link {
+    text-decoration: underline;
+}
+
+main h1.icon-title span.icon {
+    text-align: center;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+main h1 ~ p:nth-last-of-type(1) {
+    margin-bottom: 2rem;
+}
+
+main img.image {
+    max-width: 100%;
+}
+
 main .buttons {
-    margin-bottom: 4rem;
+    margin-bottom: 1rem;
 }

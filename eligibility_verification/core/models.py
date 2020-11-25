@@ -7,9 +7,9 @@ from django.db import models
 class EligibilityType(models.Model):
     """A single conditional eligibility type."""
 
-    name = models.CharField(max_length=25)
-    label = models.CharField(max_length=50)
-    group_id = models.CharField(max_length=50)
+    name = models.TextField()
+    label = models.TextField()
+    group_id = models.TextField()
 
     def __str__(self):
         return self.label
@@ -18,8 +18,8 @@ class EligibilityType(models.Model):
 class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""
 
-    name = models.CharField(max_length=25)
-    api_url = models.CharField(max_length=50)
+    name = models.TextField()
+    api_url = models.TextField()
     eligibility_types = models.ManyToManyField(EligibilityType)
 
     def __str__(self):
@@ -33,15 +33,16 @@ class EligibilityVerifier(models.Model):
 class TransitAgency(models.Model):
     """An agency offering transit service."""
 
-    slug = models.CharField(max_length=5)
-    long_name = models.CharField(max_length=25)
-    agency_id = models.CharField(max_length=50)
-    mechant_id = models.CharField(max_length=50)
+    slug = models.TextField()
+    long_name = models.TextField()
+    agency_id = models.TextField()
+    mechant_id = models.TextField()
     logo_url = models.URLField()
-    street_address1 = models.CharField(max_length=25)
-    street_address2 = models.CharField(max_length=25, blank=True)
-    city = models.CharField(max_length=25)
-    zipcode = models.CharField(max_length=5)
+    street_address1 = models.TextField()
+    street_address2 = models.TextField(blank=True)
+    city = models.TextField()
+    zipcode = models.TextField()
+    phone = models.TextField()
     active = models.BooleanField(default=False)
     eligibility_types = models.ManyToManyField(EligibilityType)
     eligibility_verifiers = models.ManyToManyField(EligibilityVerifier)

@@ -12,6 +12,7 @@
             "street_address2": "",
             "city": "Everytown",
             "zipcode": "55555",
+            "phone": "1-800-555-5555",
             "active": true,
             "eligibility_types": [
                 1
@@ -34,6 +35,7 @@
             "street_address2": "",
             "city": "Everytown",
             "zipcode": "55555",
+            "phone": "321-555-5555",
             "active": true,
             "eligibility_types": [
                 2
