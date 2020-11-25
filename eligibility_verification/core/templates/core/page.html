@@ -5,7 +5,6 @@
 {% endif %}
 
 {% block main_content %}
-
     {% if page.content_title %}
         {% if page.icon %}
             {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon.icon alt=page.icon.alt %}
@@ -33,19 +32,11 @@
         {% include "core/includes/data.html" with data=page.debug %}
     {% endif%}
 
-    {% if page.prev_button or page.next_button %}
+    {% if page.buttons|length_is:"0" %}{% else %}
         <div class="buttons">
-    {% endif %}
-
-    {% if page.prev_button %}
-        {% include "core/includes/button.html" with button=page.prev_button %}
-    {% endif %}
-
-    {% if page.next_button %}
-        {% include "core/includes/button.html" with button=page.next_button %}
-    {% endif %}
-
-    {% if page.prev_button or page.next_button %}
+        {% for b in page.buttons %}
+            {% include "core/includes/button.html" with button=b %}
+        {% endfor %}
         </div>
     {% endif %}
 {% endblock %}

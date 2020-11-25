@@ -37,6 +37,8 @@ class Page():
     * paragraphs: str[]
     * steps: str[]
     * form: django.forms.Form
+    * button: core.viewmodels.Button
+    * buttons: core.viewmodels.Button[]
     * prev_button: core.viewmodels.Button
     * next_button: core.viewmodels.Button
     * debug: Any
@@ -48,9 +50,17 @@ class Page():
         self.paragraphs = kwargs.get("paragraphs", [])
         self.steps = kwargs.get("steps")
         self.form = kwargs.get("form")
-        self.prev_button = kwargs.get("prev_button")
-        self.next_button = kwargs.get("next_button")
         self.debug = kwargs.get("debug")
+
+        self.buttons = kwargs.get("buttons", [])
+        if not isinstance(self.buttons, list):
+            self.buttons = [self.buttons]
+        if "button" in kwargs:
+            self.buttons.append(kwargs.get("button"))
+        if "prev_button" in kwargs:
+            self.buttons.append(kwargs.get("prev_button"))
+        if "next_button" in kwargs:
+            self.buttons.append(kwargs.get("next_button"))
 
     def context_dict(self):
         """Return a context dict for a Page."""
@@ -75,6 +85,6 @@ class ErrorPage(Page):
                 "Unfortunately, our system is having a problem right now.",
                 "Please check back later"
             ]),
-            prev_button=kwargs.get("button"),
+            button=kwargs.get("button"),
             debug=kwargs.get("debug")
         )

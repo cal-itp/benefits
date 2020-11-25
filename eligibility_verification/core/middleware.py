@@ -22,7 +22,10 @@ class DebugMiddleware():
         response.context_data["debug"] = DEBUG
 
         if DEBUG:
-            agency = models.TransitAgency.objects.get(id=request.session["agency"])
-            response.context_data["agency"] = agency.slug
+            try:
+                agency = models.TransitAgency.objects.get(id=request.session["agency"]).slug
+            except models.TransitAgency.DoesNotExist:
+                agency = "None"
+            response.context_data["agency"] = agency
 
         return response
