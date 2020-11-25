@@ -36,5 +36,4 @@ app_name = "core"
 urlpatterns = [
     path("", views.index, name="index"),
     path("<agency:agency>", views.agency_index, name="agency_index"),
-    path("error", views.error, name="error")
 ]

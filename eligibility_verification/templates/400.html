@@ -1,0 +1,12 @@
+{% extends "core/base.html" %}
+
+{% block page_title %}Bad request (400) at {{ request.path }} | {% endblock %}
+
+{% block main_content %}
+
+<div class="container">
+    <h1>Bad request</h1>
+    <p>Problem requesting page <pre>{{ request.path }}</pre></p>
+</div>
+
+{% endblock %}

@@ -64,7 +64,9 @@ ROOT_URLCONF = "eligibility_verification.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, "eligibility_verification", "templates")
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

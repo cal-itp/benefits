@@ -1,0 +1,12 @@
+{% extends "core/base.html" %}
+
+{% block page_title %}Page not found (404) at {{ request.path }} | {% endblock %}
+
+{% block main_content %}
+
+<div class="container">
+    <h1>Page not found</h1>
+    <p>The requested page <pre>{{ request.path }}</pre> does not exist</p>
+</div>
+
+{% endblock %}

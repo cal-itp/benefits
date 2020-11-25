@@ -66,10 +66,3 @@ def agency_index(request, agency):
 
     context = page.context_dict()
     return TemplateResponse(request, "core/page.html", context)
-
-
-def error(request):
-    page = viewmodels.ErrorPage()
-
-    context = page.context_dict()
-    return TemplateResponse(request, "core/page.html", context)

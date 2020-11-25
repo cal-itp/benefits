@@ -1,6 +1,7 @@
 """
 The eligibility application: view definitions for the eligibility verification flow.
 """
+from django.http import HttpResponseServerError
 from django.template.response import TemplateResponse
 
 from eligibility_verification.core import models, viewmodels
@@ -44,17 +45,17 @@ def _verify(request, form):
     sub, name = form.cleaned_data.get("card"), form.cleaned_data.get("last_name")
 
     if not all((sub, name)):
-        return internal_error(request, sub is None, name is None)
+        return HttpResponseServerError("Missing form data")
 
     if "agency" in request.session:
         agency = models.TransitAgency.by_id(request.session["agency"])
     else:
-        return internal_error(request, False, False)
+        return HttpResponseServerError("No agency configured")
 
     try:
         types, errors = api.verify(sub, name, agency)
     except Exception as ex:
-        return server_error(request, {"exception": ex})
+        return HttpResponseServerError(ex)
 
     if any(types):
         debug = {"eligibility": types} if DEBUG else None
@@ -98,42 +99,6 @@ def unverified(request, errors, debug=None):
         title="Unverified | Eligibility verification",
         content_title="Eligibility could not be verified",
         paragraphs=["Sed do eiusmod tempor incididunt ut labore, consectetur adipiscing elit, lorem ipsum dolor sit amet."],
-        debug=debug
-    )
-    context = page.context_dict()
-    return TemplateResponse(request, "core/page.html", context)
-
-
-def internal_error(request, sub_missing, name_missing):
-    page = viewmodels.ErrorPage(
-        content_title="Our system is down",
-        paragraphs=[
-            "Unfortunately, our system is experiencing problems right now.",
-            "Please check back later."
-        ],
-        button=viewmodels.Button(
-            classes="btn-primary",
-            text="Start over",
-            url=""
-        ),
-        debug={"sub_missing": sub_missing, "name_missing": name_missing}
-    )
-    context = page.context_dict()
-    return TemplateResponse(request, "core/page.html", context)
-
-
-def server_error(request, debug={}):
-    page = viewmodels.ErrorPage(
-        content_title="Service is down",
-        paragraphs=[
-            "Unfortunately, we can't reach the verification service right now.",
-            "Please check back later."
-        ],
-        button=viewmodels.Button(
-            classes="btn-primary",
-            text="Start over",
-            url=""
-        ),
         debug=debug
     )
     context = page.context_dict()
