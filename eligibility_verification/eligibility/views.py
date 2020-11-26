@@ -4,12 +4,14 @@ The eligibility application: view definitions for the eligibility verification f
 from django.http import HttpResponseServerError
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.utils.decorators import decorator_from_middleware
 
-from eligibility_verification.core import models, viewmodels
+from eligibility_verification.core import middleware, models, viewmodels
 from eligibility_verification.settings import DEBUG
 from . import api, forms
 
 
+@decorator_from_middleware(middleware.AgencyRequiredMiddleware)
 def index(request):
     """View handler for the eligibility verification getting started screen."""
 
@@ -43,6 +45,7 @@ def index(request):
     return TemplateResponse(request, "core/page.html", page.context_dict())
 
 
+@decorator_from_middleware(middleware.AgencyRequiredMiddleware)
 def verify(request):
     """View handler for the eligibility verification form."""
 
@@ -97,6 +100,7 @@ def _verify(request, form):
         return unverified(request, errors, debug)
 
 
+@decorator_from_middleware(middleware.AgencyRequiredMiddleware)
 def verified(request, verified_types, debug=None):
     """View handler for the verified eligibility page."""
 
@@ -130,6 +134,7 @@ def verified(request, verified_types, debug=None):
     return TemplateResponse(request, "core/page.html", page.context_dict())
 
 
+@decorator_from_middleware(middleware.AgencyRequiredMiddleware)
 def unverified(request, errors, debug=None):
     """View handler for the unverified eligibility page."""
 

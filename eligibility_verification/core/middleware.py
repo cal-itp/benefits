@@ -1,9 +1,26 @@
 """
 The core application: middleware definitions for request/response cycle.
 """
+from django.utils.deprecation import MiddlewareMixin
+
 from eligibility_verification.settings import DEBUG
 
 from . import models
+
+
+class AgencyRequiredMiddleware(MiddlewareMixin):
+    """Middleware raises an exception for sessions lacking an agency configuration."""
+
+    # Django 1.9 and older method signature needed for decorators
+    # https://docs.djangoproject.com/en/3.1/ref/utils/#django.utils.decorators.decorator_from_middleware
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        if ("agency" in request.session and
+            request.session["agency"] is not None and
+            models.TransitAgency.by_id(request.session["agency"]).active
+        ):
+            return None
+        else:
+            raise AttributeError("Agency not configured for session")
 
 
 class DebugMiddleware():
