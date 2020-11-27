@@ -115,6 +115,7 @@ class ErrorPage(Page):
     """
     Represents an error page:
     * title: str
+    * icon: core.viewmodels.Icon
     * content_title: str
     * paragraphs: str[]
     * button: core.viewmodels.Button
@@ -123,11 +124,10 @@ class ErrorPage(Page):
     def __init__(self, **kwargs):
         super().__init__(
             title=kwargs.get("title", "Error"),
-            icon=Icon("busfail", "Bus with flat tire icon"),
-            content_title=kwargs.get("content_title", "System is down"),
+            icon=kwargs.get("icon", Icon("busfail", "Bus with flat tire icon")),
+            content_title=kwargs.get("content_title", "Error"),
             paragraphs=kwargs.get("paragraphs", [
-                "Unfortunately, our system is having a problem right now.",
-                "Please check back later"
+                "Unfortunately, our system is having a problem right now."
             ]),
             button=kwargs.get("button"),
             debug=kwargs.get("debug")
@@ -146,6 +146,21 @@ BASE_PAGE = Page(
     ]
 )
 
+ERROR_PAGE = ErrorPage(
+    title="Service is down",
+    content_title="Service is down",
+    paragraphs=[
+        "Unfortunately, our service is having a problem right now.",
+        "Please check back later."
+    ]
+)
+
+NOTFOUND_PAGE = ErrorPage(
+    title="Page not found",
+    content_title="We can’t find that page",
+    paragraphs=["It looks like that page doesn’t exist or it was moved."]
+)
+
 
 def page_from_base(
         title=BASE_PAGE.title,
@@ -159,5 +174,36 @@ def page_from_base(
         image=image,
         content_title=content_title,
         paragraphs=list(paragraphs),
+        **kwargs
+    )
+
+
+def error_from_base(
+        title=ERROR_PAGE.title,
+        content_title=ERROR_PAGE.content_title,
+        paragraphs=ERROR_PAGE.paragraphs,
+        **kwargs):
+    """Create a new core.viewmodels.ErrorPage instance using core.viewmodels.ERROR_PAGE as defaults."""
+    return ErrorPage(
+        title=title,
+        content_title=content_title,
+        paragraphs=paragraphs,
+        **kwargs
+    )
+
+
+def not_found_from_base(
+        title=NOTFOUND_PAGE.title,
+        content_title=NOTFOUND_PAGE.content_title,
+        paragraphs=NOTFOUND_PAGE.paragraphs,
+        **kwargs):
+    """Create a new core.viewmodels.ErrorPage instance using core.viewmodels.ERROR_PAGE as defaults."""
+    path = kwargs.pop("path", None)
+    if path and title:
+        title = f"{title}: {path}"
+    return ErrorPage(
+        title=title,
+        content_title=content_title,
+        paragraphs=paragraphs,
         **kwargs
     )

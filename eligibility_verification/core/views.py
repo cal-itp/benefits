@@ -1,6 +1,8 @@
 """
 The core application: view definition for the root of the webapp.
 """
+from django.http import HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
+from django.template import loader
 from django.template.response import TemplateResponse
 from django.urls import reverse
 
@@ -45,3 +47,32 @@ def agency_index(request, agency):
     )
 
     return TemplateResponse(request, "core/page.html", page.context_dict())
+
+
+def _home_button(request):
+    """Create a button pointing back to the correct landing page for the current session."""
+    return viewmodels.Button(text="Return home", url=session.origin(request))
+
+
+def bad_request(request, exception, template_name="400.html"):
+    """View handler for HTTP 400 Bad Request responses."""
+    home = _home_button(request)
+    page = viewmodels.error_from_base(button=home)
+    t = loader.get_template(template_name)
+    return HttpResponseBadRequest(t.render(page.context_dict()))
+
+
+def page_not_found(request, exception, template_name="404.html"):
+    """View handler for HTTP 404 Not Found responses."""
+    home = _home_button(request)
+    page = viewmodels.not_found_from_base(button=home, path=request.path)
+    t = loader.get_template(template_name)
+    return HttpResponseNotFound(t.render(page.context_dict()))
+
+
+def server_error(request, template_name="500.html"):
+    """View handler for HTTP 500 Server Error responses."""
+    home = _home_button(request)
+    page = viewmodels.error_from_base(button=home)
+    t = loader.get_template(template_name)
+    return HttpResponseServerError(t.render(page.context_dict()))
