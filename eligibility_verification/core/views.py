@@ -17,8 +17,7 @@ def index(request):
 
     # generate a button to the landing page for each
     buttons = [
-        viewmodels.Button(
-            classes="btn-outline-primary",
+        viewmodels.Button.outline_primary(
             text=a.long_name,
             url=reverse("core:agency_index", args=[a.slug])
         )
@@ -39,8 +38,7 @@ def agency_index(request, agency):
 
     # build the page vm
     page = viewmodels.page_from_base(
-        button=viewmodels.Button(
-            classes="btn-primary",
+        button=viewmodels.Button.primary(
             text="Let’s do it!",
             url=reverse("eligibility:index")
         )

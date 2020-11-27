@@ -35,8 +35,7 @@ def index(request):
                 Not over 65? Get in touch with your transit provider to \
                 learn about available discount programs."
         ],
-        button=viewmodels.Button(
-            classes="btn-primary",
+        button=viewmodels.Button.primary(
             text="Ready to continue",
             url=reverse("eligibility:verify")
         )
@@ -117,13 +116,12 @@ def verified(request, verified_types, debug=None):
             "Use a credit, debit, or prepaid card."
         ],
         buttons=[
-            viewmodels.Button(
-                classes="btn-primary",
+            viewmodels.Button.primary(
                 text="Continue to our payment partner",
                 url="#payments"
             ),
-            viewmodels.Button(
-                classes="btn-link btn-sm",
+            viewmodels.Button.link(
+                classes="btn-sm",
                 text="What if I don’t have a payment card?",
                 url="#payments/no-card"
             )
@@ -143,8 +141,8 @@ def unverified(request, errors, debug=None):
 
     # generate buttons with phone number links
     buttons = [
-        viewmodels.Button(
-            classes="btn-link text-left pl-0 pt-0 border-left-0",
+        viewmodels.Button.link(
+            classes="text-left pl-0 pt-0 border-left-0",
             text=a.phone,
             url=f"tel:{a.phone}",
             label=f"{a.long_name}:")

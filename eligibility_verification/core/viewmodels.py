@@ -22,6 +22,30 @@ class Button():
         self.text = kwargs.get("text", "Button")
         self.url = kwargs.get("url")
 
+    @staticmethod
+    def link(**kwargs):
+        classes = kwargs.pop("classes", [])
+        if isinstance(classes, str):
+            classes = classes.split(" ")
+        classes.insert(0, "btn-link")
+        return Button(classes=classes, **kwargs)
+
+    @staticmethod
+    def primary(**kwargs):
+        classes = kwargs.pop("classes", [])
+        if isinstance(classes, str):
+            classes = classes.split(" ")
+        classes.insert(0, "btn-primary")
+        return Button(classes=classes, **kwargs)
+
+    @staticmethod
+    def outline_primary(**kwargs):
+        classes = kwargs.pop("classes", [])
+        if isinstance(classes, str):
+            classes = classes.split(" ")
+        classes.insert(0, "btn-outline-primary")
+        return Button(classes=classes, **kwargs)
+
 
 class Image():
     """Represents a generic image."""
