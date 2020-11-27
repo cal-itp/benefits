@@ -4,14 +4,13 @@ The core application: view definition for the root of the webapp.
 from django.template.response import TemplateResponse
 from django.urls import reverse
 
-from . import models, viewmodels
+from . import models, session, viewmodels
 
 
 def index(request):
     """View handler for the main entry page."""
 
-    # reset the agency ref
-    request.session["agency"] = None
+    session.reset(request)
 
     # query all active agencies
     agencies = models.TransitAgency.all_active()
@@ -36,8 +35,7 @@ def index(request):
 def agency_index(request, agency):
     """View handler for an agency entry page."""
 
-    # keep a ref to the agency that initialized this session
-    request.session["agency"] = agency.id
+    session.update(request, agency=agency, origin=reverse("core:agency_index", args=[agency.slug]))
 
     # build the page vm
     page = viewmodels.page_from_base(

@@ -6,12 +6,12 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 
-from eligibility_verification.core import middleware, models, viewmodels
+from eligibility_verification.core import middleware, models, session, viewmodels
 from eligibility_verification.settings import DEBUG
 from . import api, forms
 
 
-@decorator_from_middleware(middleware.AgencyRequiredMiddleware)
+@decorator_from_middleware(middleware.AgencySessionRequired)
 def index(request):
     """View handler for the eligibility verification getting started screen."""
 
@@ -45,7 +45,7 @@ def index(request):
     return TemplateResponse(request, "core/page.html", page.context_dict())
 
 
-@decorator_from_middleware(middleware.AgencyRequiredMiddleware)
+@decorator_from_middleware(middleware.AgencySessionRequired)
 def verify(request):
     """View handler for the eligibility verification form."""
 
@@ -85,7 +85,7 @@ def _verify(request, form):
     if not all((sub, name)):
         raise ValueError("Missing form data")
 
-    agency = models.TransitAgency.by_id(request.session["agency"])
+    agency = session.agency(request)
 
     try:
         types, errors = api.verify(sub, name, agency)
@@ -100,12 +100,12 @@ def _verify(request, form):
         return unverified(request, errors, debug)
 
 
-@decorator_from_middleware(middleware.AgencyRequiredMiddleware)
+@decorator_from_middleware(middleware.AgencySessionRequired)
 def verified(request, verified_types, debug=None):
     """View handler for the verified eligibility page."""
 
     # keep a ref to the verified types in session
-    request.session["eligibility"] = verified_types
+    session.update(request, eligibility=verified_types)
 
     page = viewmodels.Page(
         title=f"{viewmodels.BASE_PAGE.title}: Verified!",
@@ -134,7 +134,7 @@ def verified(request, verified_types, debug=None):
     return TemplateResponse(request, "core/page.html", page.context_dict())
 
 
-@decorator_from_middleware(middleware.AgencyRequiredMiddleware)
+@decorator_from_middleware(middleware.AgencySessionRequired)
 def unverified(request, errors, debug=None):
     """View handler for the unverified eligibility page."""
 

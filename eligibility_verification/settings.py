@@ -56,7 +56,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
-    "eligibility_verification.core.middleware.DebugMiddleware"
+    "eligibility_verification.core.middleware.DebugSession"
 ]
 
 ROOT_URLCONF = "eligibility_verification.urls"
@@ -74,6 +74,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "eligibility_verification.core.context_processors.debug",
             ],
         },
     },
