@@ -94,7 +94,7 @@ class Page():
     * form: django.forms.Form
     * button: core.viewmodels.Button
     * buttons: core.viewmodels.Button[]
-    * debug: Any
+    * classes: str[]
     """
     def __init__(self, **kwargs):
         self.title = kwargs.get("title")
@@ -105,12 +105,16 @@ class Page():
         self.paragraphs = kwargs.get("paragraphs", [])
         self.steps = kwargs.get("steps")
         self.form = kwargs.get("form")
-        self.debug = kwargs.get("debug")
+
         self.buttons = kwargs.get("buttons", [])
         if not isinstance(self.buttons, list):
             self.buttons = [self.buttons]
         if "button" in kwargs:
             self.buttons.append(kwargs.get("button"))
+
+        self.classes = kwargs.get("classes", [])
+        if not isinstance(self.classes, list):
+            self.classes = self.classes.split(" ")
 
     def context_dict(self):
         """Return a context dict for a Page."""
@@ -145,7 +149,6 @@ class ErrorPage(Page):
     * content_title: str
     * paragraphs: str[]
     * button: core.viewmodels.Button
-    * debug: Any
     """
     def __init__(self, **kwargs):
         super().__init__(

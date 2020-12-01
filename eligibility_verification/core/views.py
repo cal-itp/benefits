@@ -34,7 +34,7 @@ def index(request):
     buttons[0].label = "Choose your transit provider"
 
     # build the page vm
-    page = viewmodels.Page.from_base(buttons=buttons)
+    page = viewmodels.Page.from_base(buttons=buttons, classes="home")
 
     return PageTemplateResponse(request, page)
 
@@ -49,7 +49,8 @@ def agency_index(request, agency):
         button=viewmodels.Button.primary(
             text="Let’s do it!",
             url=reverse("eligibility:index")
-        )
+        ),
+        classes="home"
     )
 
     return PageTemplateResponse(request, page)

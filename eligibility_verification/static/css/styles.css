@@ -12,11 +12,15 @@ body, h1, h2, h3, h4, h5, h6, p, a, span, li {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
+    font-weight: 500;
     font-size: 24px;
     line-height: 30px;
     margin-top: 30px;
     margin-bottom: 20px;
+}
+
+h1 {
+    font-weight: 700;
 }
 
 p {
@@ -27,12 +31,6 @@ p {
 
 .btn-lg {
     border-width: 2px;
-    width: 100%;
-}
-
-.container {
-    padding-left: 30px;
-    padding-right: 30px;
 }
 
 .form-group:nth-last-of-type(2) {
@@ -77,40 +75,105 @@ p {
     height: 75px;
 }
 
-.media-list .media .media-body {
-    max-width: 160px;
-}
-
 /* context-specific overrides */
 
 .navbar-brand img.sm {
     width: 120px;
 }
 
-main .btn-lg {
-    font-weight: 500;
-    margin-bottom: 1rem;
-    padding: 1rem;
+.navbar-brand img.lg {
+    width: 274px;
 }
 
-main .btn-link {
-    text-decoration: underline;
+.image[class*="col-"] {
+    min-height: 213px;
 }
 
-main h1.icon-title span.icon {
+.container.content {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.container.content h1.icon-title span.icon {
     text-align: center;
     display: block;
     margin-bottom: 1rem;
 }
 
-main h1 ~ p:nth-last-of-type(1) {
+.container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 2rem;
 }
 
-main img.image {
-    max-width: 100%;
+.container.content .btn-lg {
+    font-weight: 500;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    width: 100%;
 }
 
-main .buttons {
-    margin-bottom: 1rem;
+.container.content .btn-link {
+    text-decoration: underline;
+}
+
+.text-lg-center form,
+.text-lg-center .buttons {
+    text-align: left !important;
+}
+
+/* media queries */
+
+@media (max-width: 767px) {
+    /* xs and sm */
+    .media-list .media .media-body {
+        max-width: 160px;
+    }
+
+    .global-footer ul li {
+        width: 40%;
+    }
+}
+
+@media (min-width: 992px) {
+    /* lg+ */
+    h1 {
+        font-size: 36px;
+        line-height: 45px;
+    }
+
+    h2 {
+        font-size: 30px;
+        line-height: 36px;
+    }
+
+    .home p,
+    .home label {
+        font-size: 24px;
+        line-height: 30px;
+    }
+
+    .image[class*="col-"] {
+        min-height: 725px;
+    }
+
+    .container.content {
+        padding-left: 3.5rem;
+        padding-right: 3.5rem;
+        margin-top: 8rem;
+        margin-bottom: 7rem;
+    }
+
+    .container.content input[type=submit],
+    .container.content .btn:not(.btn-link) {
+        width: 70%;
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+}
+
+@media (min-width: 1200px) {
+    /* xl+ */
+    .container.content {
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
 }

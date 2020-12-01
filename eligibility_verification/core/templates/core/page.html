@@ -5,42 +5,46 @@
 {% endif %}
 
 {% block main_content %}
-    {% if page.image %}
-        {% include "core/includes/image.html" with src=page.image.src alt=page.image.alt %}
-    {% endif %}
-
-    <div class="container">
-    {% if page.content_title %}
-        {% if page.icon %}
-                {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon %}
-        {% else %}
-            <h1>{{ page.content_title }}</h1>
-        {% endif %}
-    {% endif %}
-
-        {% if page.media|length_is:"0" %}{% else %}
-            {% include "core/includes/media-list.html" with items=page.media %}
-        {% endif %}
-
-    {% for p in page.paragraphs %}
-        <p>{{ p }}</p>
-    {% endfor %}
-
-    {% if page.form %}
-            {% include "core/includes/form.html" with form=page.form %}
-    {% endif %}
-
-    {% if page.buttons|length_is:"0" %}{% else %}
-        <div class="buttons">
-        {% for b in page.buttons %}
-                {% include "core/includes/button.html" with button=b %}
-        {% endfor %}
+<div class="container-fluid {{ page.classes|join:" " }}">
+    <div class="row">
+        {% if page.image %}
+        {% load static %}
+        <div class="col-lg-6 image" style="background: 42% 75% url('{% static page.image.src %}') no-repeat; background-size: cover;">
         </div>
-    {% endif %}
+        <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-0">
+        {% else %}
+        <div class="col-md-6 offset-md-3">
+        {% endif %}
+            <div class="container content">
+            {% if page.content_title %}
+                {% if page.icon %}
+                    {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon %}
+                {% else %}
+                    <h1>{{ page.content_title }}</h1>
+                {% endif %}
+            {% endif %}
 
-        {% if page.debug %}
-            <h2>Debug information</h2>
-            {% include "core/includes/data.html" with data=page.debug %}
-        {% endif%}
+            {% if page.media|length_is:"0" %}{% else %}
+                {% include "core/includes/media-list.html" with items=page.media %}
+            {% endif %}
+
+            {% for p in page.paragraphs %}
+                <p>{{ p }}</p>
+            {% endfor %}
+
+            {% if page.form %}
+                {% include "core/includes/form.html" with form=page.form %}
+            {% endif %}
+
+            {% if page.buttons|length_is:"0" %}{% else %}
+                <div class="buttons">
+                    {% for b in page.buttons %}
+                        {% include "core/includes/button.html" with button=b %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            </div>
+        </div>
     </div>
+</div>
 {% endblock %}

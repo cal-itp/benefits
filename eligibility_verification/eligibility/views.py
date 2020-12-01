@@ -57,7 +57,8 @@ def verify(request):
             "If you’re 65 or older, we can confirm you are eligible for a \
                 senior discount when you ride transit."
         ],
-        form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="")
+        form=forms.EligibilityVerificationForm(auto_id=True, label_suffix=""),
+        classes="text-lg-center"
     )
 
     if request.method == "POST":
@@ -113,6 +114,7 @@ def verified(request, verified_types):
                 when you pay with that card, you always get your discount.",
             "Use a credit, debit, or prepaid card."
         ],
+        classes="text-lg-center",
         buttons=[
             viewmodels.Button.primary(
                 text="Continue to our payment partner",
@@ -155,7 +157,8 @@ def unverified(request, errors):
                 your age with the DMV.",
             "Reach out to your transit provider for assistance."
         ],
-        buttons=buttons
+        buttons=buttons,
+        classes="text-lg-center"
     )
 
     return PageTemplateResponse(request, page)
