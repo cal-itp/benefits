@@ -1,6 +1,7 @@
 """
 The core application: view model definitions for the root of the webapp.
 """
+from . import session
 
 
 class Button():
@@ -21,6 +22,11 @@ class Button():
         self.label = kwargs.get("label")
         self.text = kwargs.get("text", "Button")
         self.url = kwargs.get("url")
+
+    @staticmethod
+    def home(request):
+        """Create a button back to this session's origin."""
+        return Button.primary(text="Return home", url=session.origin(request))
 
     @staticmethod
     def link(**kwargs):
@@ -110,6 +116,26 @@ class Page():
         """Return a context dict for a Page."""
         return {"page": self}
 
+    @staticmethod
+    def from_base(
+            title="Transit Discounts",
+            image=Image("riderboardingbusandtapping.svg", "Senior transit rider"),
+            content_title="The new way to pay for transit makes it easier to get your discount every time you ride",
+            paragraphs=[
+                "With new contactless payment options, you can tap your payment card \
+                    when you board and your discount will automatically apply.",
+                "Verify your discount and connect your payment card today."
+            ],
+            **kwargs):
+        """Create a new core.viewmodels.Page instance using sensible defaults."""
+        return Page(
+            title=title,
+            image=image,
+            content_title=content_title,
+            paragraphs=list(paragraphs),
+            **kwargs
+        )
+
 
 class ErrorPage(Page):
     """
@@ -126,84 +152,39 @@ class ErrorPage(Page):
             title=kwargs.get("title", "Error"),
             icon=kwargs.get("icon", Icon("busfail", "Bus with flat tire icon")),
             content_title=kwargs.get("content_title", "Error"),
-            paragraphs=kwargs.get("paragraphs", [
-                "Unfortunately, our system is having a problem right now."
-            ]),
-            button=kwargs.get("button"),
-            debug=kwargs.get("debug")
+            paragraphs=kwargs.get("paragraphs", ["Unfortunately, our system is having a problem right now."]),
+            button=kwargs.get("button")
         )
 
+    @staticmethod
+    def error(
+            title="Service is down",
+            content_title="Service is down",
+            paragraphs=["We should be back in operation soon!", "Please check back later."],
+            **kwargs):
+        """Create a new core.viewmodels.ErrorPage instance with defaults for a generic error."""
+        return ErrorPage(
+            title=title,
+            content_title=content_title,
+            paragraphs=paragraphs,
+            **kwargs
+        )
 
-BASE_PAGE = Page(
-    title="Transit Discounts",
-    image=Image("riderboardingbusandtapping.svg", "Senior transit rider"),
-    content_title="The new way to pay for transit makes it easier to get \
-        your discount every time you ride",
-    paragraphs=[
-        "With new contactless payment options, you can tap your payment card \
-            when you board and your discount will automatically apply.",
-        "Verify your discount and connect your payment card today."
-    ]
-)
-
-ERROR_PAGE = ErrorPage(
-    title="Service is down",
-    content_title="Service is down",
-    paragraphs=[
-        "Unfortunately, our service is having a problem right now.",
-        "Please check back later."
-    ]
-)
-
-NOTFOUND_PAGE = ErrorPage(
-    title="Page not found",
-    content_title="We can’t find that page",
-    paragraphs=["It looks like that page doesn’t exist or it was moved."]
-)
-
-
-def page_from_base(
-        title=BASE_PAGE.title,
-        image=BASE_PAGE.image,
-        content_title=BASE_PAGE.content_title,
-        paragraphs=list(BASE_PAGE.paragraphs),
-        **kwargs):
-    """Create a new core.viewmodels.Page instance using core.viewmodels.BASE_PAGE as defaults."""
-    return Page(
-        title=title,
-        image=image,
-        content_title=content_title,
-        paragraphs=list(paragraphs),
-        **kwargs
-    )
-
-
-def error_from_base(
-        title=ERROR_PAGE.title,
-        content_title=ERROR_PAGE.content_title,
-        paragraphs=ERROR_PAGE.paragraphs,
-        **kwargs):
-    """Create a new core.viewmodels.ErrorPage instance using core.viewmodels.ERROR_PAGE as defaults."""
-    return ErrorPage(
-        title=title,
-        content_title=content_title,
-        paragraphs=paragraphs,
-        **kwargs
-    )
-
-
-def not_found_from_base(
-        title=NOTFOUND_PAGE.title,
-        content_title=NOTFOUND_PAGE.content_title,
-        paragraphs=NOTFOUND_PAGE.paragraphs,
-        **kwargs):
-    """Create a new core.viewmodels.ErrorPage instance using core.viewmodels.ERROR_PAGE as defaults."""
-    path = kwargs.pop("path", None)
-    if path and title:
-        title = f"{title}: {path}"
-    return ErrorPage(
-        title=title,
-        content_title=content_title,
-        paragraphs=paragraphs,
-        **kwargs
-    )
+    @staticmethod
+    def not_found(
+            title="Page not found",
+            content_title="We can’t find that page",
+            paragraphs=["It looks like that page doesn’t exist or it was moved."],
+            **kwargs):
+        """Create a new core.viewmodels.ErrorPage with defaults for a 404."""
+        path = kwargs.pop("path", None)
+        if path and title:
+            title = f"{title}: {path}"
+        elif path and not title:
+            title = path
+        return ErrorPage(
+            title=title,
+            content_title=content_title,
+            paragraphs=paragraphs,
+            **kwargs
+        )

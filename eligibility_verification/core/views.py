@@ -9,6 +9,11 @@ from django.urls import reverse
 from . import models, session, viewmodels
 
 
+def PageTemplateResponse(request, page_vm):
+    """Helper returns a TemplateResponse using the common page template."""
+    return TemplateResponse(request, "core/page.html", page_vm.context_dict())
+
+
 def index(request):
     """View handler for the main entry page."""
 
@@ -25,12 +30,13 @@ def index(request):
         )
         for a in agencies
     ]
+    buttons[0].classes.append("mt-3")
+    buttons[0].label = "Choose your transit provider"
 
     # build the page vm
-    page = viewmodels.page_from_base(buttons=buttons)
-    page.paragraphs.append("Choose your transit provider")
+    page = viewmodels.Page.from_base(buttons=buttons)
 
-    return TemplateResponse(request, "core/page.html", page.context_dict())
+    return PageTemplateResponse(request, page)
 
 
 def agency_index(request, agency):
@@ -39,40 +45,35 @@ def agency_index(request, agency):
     session.update(request, agency=agency, origin=reverse("core:agency_index", args=[agency.slug]))
 
     # build the page vm
-    page = viewmodels.page_from_base(
+    page = viewmodels.Page.from_base(
         button=viewmodels.Button.primary(
             text="Let’s do it!",
             url=reverse("eligibility:index")
         )
     )
 
-    return TemplateResponse(request, "core/page.html", page.context_dict())
-
-
-def _home_button(request):
-    """Create a button pointing back to the correct landing page for the current session."""
-    return viewmodels.Button(text="Return home", url=session.origin(request))
+    return PageTemplateResponse(request, page)
 
 
 def bad_request(request, exception, template_name="400.html"):
     """View handler for HTTP 400 Bad Request responses."""
-    home = _home_button(request)
-    page = viewmodels.error_from_base(button=home)
+    home = viewmodels.Button.home(request)
+    page = viewmodels.ErrorPage.error(button=home)
     t = loader.get_template(template_name)
     return HttpResponseBadRequest(t.render(page.context_dict()))
 
 
 def page_not_found(request, exception, template_name="404.html"):
     """View handler for HTTP 404 Not Found responses."""
-    home = _home_button(request)
-    page = viewmodels.not_found_from_base(button=home, path=request.path)
+    home = viewmodels.Button.home(request)
+    page = viewmodels.ErrorPage.not_found(button=home, path=request.path)
     t = loader.get_template(template_name)
     return HttpResponseNotFound(t.render(page.context_dict()))
 
 
 def server_error(request, template_name="500.html"):
     """View handler for HTTP 500 Server Error responses."""
-    home = _home_button(request)
-    page = viewmodels.error_from_base(button=home)
+    home = viewmodels.Button.home(request)
+    page = viewmodels.ErrorPage.error(button=home)
     t = loader.get_template(template_name)
     return HttpResponseServerError(t.render(page.context_dict()))

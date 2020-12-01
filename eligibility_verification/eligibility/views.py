@@ -2,21 +2,23 @@
 The eligibility application: view definitions for the eligibility verification flow.
 """
 from django.http import HttpResponseServerError
-from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 
-from eligibility_verification.core import middleware, models, session, viewmodels
-from eligibility_verification.settings import DEBUG
+from eligibility_verification.core import middleware, session, viewmodels
+from eligibility_verification.core.views import PageTemplateResponse
 from . import api, forms
+
+
+BASE_TITLE = viewmodels.Page.from_base().title
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
 def index(request):
     """View handler for the eligibility verification getting started screen."""
 
-    page = viewmodels.page_from_base(
-        title=f"{viewmodels.BASE_PAGE.title}: Getting Started",
+    page = viewmodels.Page.from_base(
+        title=f"{BASE_TITLE}: Getting Started",
         content_title="Great, you’ll need two things before we get started...",
         media=[
             viewmodels.MediaItem(
@@ -41,7 +43,7 @@ def index(request):
         )
     )
 
-    return TemplateResponse(request, "core/page.html", page.context_dict())
+    return PageTemplateResponse(request, page)
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
@@ -49,7 +51,7 @@ def verify(request):
     """View handler for the eligibility verification form."""
 
     page = viewmodels.Page(
-        title=f"{viewmodels.BASE_PAGE.title}: Verify",
+        title=f"{BASE_TITLE}: Verify",
         content_title="Let’s see if we can verify your age with the DMV",
         paragraphs=[
             "If you’re 65 or older, we can confirm you are eligible for a \
@@ -58,17 +60,15 @@ def verify(request):
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="")
     )
 
-    context = page.context_dict()
-
     if request.method == "POST":
         form = forms.EligibilityVerificationForm(request.POST)
         response = _verify(request, form)
 
         if response is None:
             page.form = form
-            response = TemplateResponse(request, "core/page.html", context)
+            response = PageTemplateResponse(request, page)
     else:
-        response = TemplateResponse(request, "core/page.html", context)
+        response = PageTemplateResponse(request, page)
 
     return response
 
@@ -92,22 +92,20 @@ def _verify(request, form):
         return HttpResponseServerError(ex)
 
     if any(types):
-        debug = {"eligibility": types} if DEBUG else None
-        return verified(request, types, debug)
+        return verified(request, types)
     else:
-        debug = {"errors": errors} if DEBUG else None
-        return unverified(request, errors, debug)
+        return unverified(request, errors)
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
-def verified(request, verified_types, debug=None):
+def verified(request, verified_types):
     """View handler for the verified eligibility page."""
 
     # keep a ref to the verified types in session
     session.update(request, eligibility=verified_types)
 
     page = viewmodels.Page(
-        title=f"{viewmodels.BASE_PAGE.title}: Verified!",
+        title=f"{BASE_TITLE}: Verified!",
         content_title="Great! You’re eligible for a senior discount!",
         icon=viewmodels.Icon("idcardcheck", "identification card icon"),
         paragraphs=[
@@ -125,15 +123,14 @@ def verified(request, verified_types, debug=None):
                 text="What if I don’t have a payment card?",
                 url="#payments/no-card"
             )
-        ],
-        debug=debug
+        ]
     )
 
-    return TemplateResponse(request, "core/page.html", page.context_dict())
+    return PageTemplateResponse(request, page)
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
-def unverified(request, errors, debug=None):
+def unverified(request, errors):
     """View handler for the unverified eligibility page."""
 
     # query all active agencies
@@ -150,7 +147,7 @@ def unverified(request, errors, debug=None):
     ]
 
     page = viewmodels.Page(
-        title=f"{viewmodels.BASE_PAGE.title}: Age not verified",
+        title=f"{BASE_TITLE}: Age not verified",
         content_title="We can’t verify your age",
         icon=viewmodels.Icon("idcardquestion", "identification card icon"),
         paragraphs=[
@@ -158,8 +155,7 @@ def unverified(request, errors, debug=None):
                 your age with the DMV.",
             "Reach out to your transit provider for assistance."
         ],
-        buttons=buttons,
-        debug=debug
+        buttons=buttons
     )
 
-    return TemplateResponse(request, "core/page.html", page.context_dict())
+    return PageTemplateResponse(request, page)
