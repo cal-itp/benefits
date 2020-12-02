@@ -1,7 +1,7 @@
 """
 The core application: view model definitions for the root of the webapp.
 """
-from . import session
+from . import models, session
 
 
 class Button():
@@ -22,6 +22,16 @@ class Button():
         self.label = kwargs.get("label")
         self.text = kwargs.get("text", "Button")
         self.url = kwargs.get("url")
+
+    @staticmethod
+    def agency_phone_link(agency):
+        """Create a tel: link button with the agency's phone number."""
+        return Button.link(
+            classes="text-left pl-0 pt-0 border-left-0",
+            label=agency.long_name,
+            text=agency.phone,
+            url=f"tel:{agency.phone}"
+        )
 
     @staticmethod
     def home(request):
@@ -51,6 +61,11 @@ class Button():
             classes = classes.split(" ")
         classes.insert(0, "btn-outline-primary")
         return Button(classes=classes, **kwargs)
+
+
+def active_agency_phone_links():
+    """Generate a list of core.viewmodels.Button of tel: links for each active agency."""
+    return [Button.agency_phone_link(a) for a in models.TransitAgency.all_active()]
 
 
 class Image():

@@ -1,7 +1,7 @@
 {% extends "core/base.html" %}
 
 {% if page.title %}
-{% block page_title %}{{ page.title }} | {% endblock %}
+{% block page_title %}{{ page.title }} | {% endblock page_title %}
 {% endif %}
 
 {% block main_content %}
@@ -16,6 +16,9 @@
         <div class="col-md-6 offset-md-3">
         {% endif %}
             <div class="container content">
+            {% block container_content %}
+
+            {% block icon_title %}
             {% if page.content_title %}
                 {% if page.icon %}
                     {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon %}
@@ -23,19 +26,27 @@
                     <h1>{{ page.content_title }}</h1>
                 {% endif %}
             {% endif %}
+            {% endblock icon_title %}
 
+            {% block media_list %}
             {% if page.media|length_is:"0" %}{% else %}
                 {% include "core/includes/media-list.html" with items=page.media %}
             {% endif %}
+            {% endblock media_list %}
 
+            {% block paragraph_content %}
             {% for p in page.paragraphs %}
                 <p>{{ p }}</p>
             {% endfor %}
+            {% endblock paragraph_content %}
 
+            {% block form %}
             {% if page.form %}
                 {% include "core/includes/form.html" with form=page.form %}
             {% endif %}
+            {% endblock form %}
 
+            {% block buttons %}
             {% if page.buttons|length_is:"0" %}{% else %}
                 <div class="buttons">
                     {% for b in page.buttons %}
@@ -43,8 +54,11 @@
                     {% endfor %}
                 </div>
             {% endif %}
+            {% endblock buttons %}
+
+            {% endblock container_content %}
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
+{% endblock main_content %}

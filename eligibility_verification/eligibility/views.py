@@ -123,7 +123,7 @@ def verified(request, verified_types):
             viewmodels.Button.link(
                 classes="btn-sm",
                 text="What if I don’t have a payment card?",
-                url="#payments/no-card"
+                url=reverse("core:payment_cards")
             )
         ]
     )
@@ -135,18 +135,8 @@ def verified(request, verified_types):
 def unverified(request, errors):
     """View handler for the unverified eligibility page."""
 
-    # query all active agencies
-    agencies = models.TransitAgency.all_active()
-
-    # generate buttons with phone number links
-    buttons = [
-        viewmodels.Button.link(
-            classes="text-left pl-0 pt-0 border-left-0",
-            text=a.phone,
-            url=f"tel:{a.phone}",
-            label=f"{a.long_name}:")
-        for a in agencies
-    ]
+    # tel: links to agency phone numbers
+    buttons = viewmodels.active_agency_phone_links()
 
     page = viewmodels.Page(
         title=f"{BASE_TITLE}: Age not verified",

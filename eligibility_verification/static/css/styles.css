@@ -140,6 +140,10 @@ p {
         line-height: 45px;
     }
 
+    h1.icon-title {
+        text-align: center;
+    }
+
     h2 {
         font-size: 30px;
         line-height: 36px;

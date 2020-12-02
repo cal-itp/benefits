@@ -56,6 +56,47 @@ def agency_index(request, agency):
     return PageTemplateResponse(request, page)
 
 
+def help(request):
+    """View handler for the help page."""
+
+    # tel: links to agency phone numbers
+    buttons = viewmodels.active_agency_phone_links()
+
+    # back to home button
+    buttons.append(viewmodels.Button.home(request))
+
+    page = viewmodels.Page(
+        title="Help",
+        content_title="Help",
+        paragraphs=[
+            "Cal-ITP is a new program serving all Californians. \
+                The best way to get support if you hit a problem on this site \
+                is to reach out to customer service for your local transit provider."
+        ],
+        buttons=buttons,
+        classes="text-lg-center",
+    )
+
+    return PageTemplateResponse(request, page)
+
+
+def payment_cards(request):
+    """View handler for the 'What if I don't have a payment card?' page."""
+    page = viewmodels.Page(
+        title="Payment Cards",
+        icon=viewmodels.Icon("paymentcardcheck", "payment card icon"),
+        content_title="What if I don't have a payment card?",
+        buttons=viewmodels.Button.home(request)
+    )
+    return TemplateResponse(request, "core/payment-cards.html", page.context_dict())
+
+
+def privacy(request):
+    """View handler for the privacy policy page."""
+    page = viewmodels.Page(title="Privacy Policy")
+    return TemplateResponse(request, "core/privacy.html", page.context_dict())
+
+
 def bad_request(request, exception, template_name="400.html"):
     """View handler for HTTP 400 Bad Request responses."""
     home = viewmodels.Button.home(request)
