@@ -26,6 +26,16 @@ def active_agency(request):
     return a and a.active
 
 
+def context_dict(request):
+    """The request's session context as a dict."""
+    return {
+        _AGENCY: agency(request).slug if active_agency(request) else None,
+        _DEBUG: debug(request),
+        _ELIGIBILITY: ", ".join(eligibility(request)),
+        _ORIGIN: origin(request)
+    }
+
+
 def debug(request):
     """Get the DEBUG flag from the request's session, or None."""
     try:
@@ -60,7 +70,6 @@ def origin(request):
 def reset(request):
     """Reset the session for the request."""
     request.session[_AGENCY] = None
-    request.session[_DEBUG] = None
     request.session[_ELIGIBILITY] = None
     request.session[_ORIGIN] = reverse("core:index")
 

@@ -8,11 +8,9 @@ from . import session
 
 def debug(request):
     """Context processor adds debug information to request context."""
-
-    context = dict(debug=DEBUG)
+    context = {}
 
     if DEBUG:
-        agency = session.agency(request) or None
-        context.update(dict(agency=agency.slug if agency else "None"))
+        context.update(dict(debug=session.context_dict(request)))
 
     return context

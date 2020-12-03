@@ -1,8 +1,10 @@
 <div class="navbar navbar-expand-sm navbar-dark bg-danger">
     <div class="container">
         <span class="navbar-brand">DEBUG MODE</span>
-        <span class="navbar-text">
-            TRANSIT_AGENCY: <code class="text-white">{% if agency %}{{ agency }}{% else %}None{% endif %}</code>
-        </span>
+        {% if debug %}
+        <code class="navbar-text">
+        { {% for key, value in debug.items %}"{{ key }}": "{{ value }}"{% if not forloop.last %}, {% endif %}{% endfor %} }
+        </code>
+        {% endif %}
     </div>
 </div>

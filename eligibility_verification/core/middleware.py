@@ -27,5 +27,5 @@ class DebugSession():
         self.get_response = get_response
 
     def __call__(self, request):
-        request.session["debug"] = DEBUG
+        session.update(request, debug=DEBUG)
         return self.get_response(request)
