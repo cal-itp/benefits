@@ -14,9 +14,13 @@ def PageTemplateResponse(request, page_vm):
     return TemplateResponse(request, "core/page.html", page_vm.context_dict())
 
 
+def _index_url():
+    """Helper computes the index url path."""
+    return reverse("core:index")
+
+
 def index(request):
     """View handler for the main entry page."""
-
     session.reset(request)
 
     # query all active agencies
@@ -24,16 +28,12 @@ def index(request):
 
     # generate a button to the landing page for each
     buttons = [
-        viewmodels.Button.outline_primary(
-            text=a.long_name,
-            url=reverse("core:agency_index", args=[a.slug])
-        )
+        viewmodels.Button.outline_primary(text=a.long_name, url=a.index_url)
         for a in agencies
     ]
     buttons[0].classes.append("mt-3")
     buttons[0].label = "Choose your transit provider"
 
-    # build the page vm
     page = viewmodels.Page.from_base(buttons=buttons, classes="home")
 
     return PageTemplateResponse(request, page)
@@ -41,10 +41,9 @@ def index(request):
 
 def agency_index(request, agency):
     """View handler for an agency entry page."""
+    session.reset(request)
+    session.update(request, agency=agency, origin=agency.index_url)
 
-    session.update(request, agency=agency, origin=reverse("core:agency_index", args=[agency.slug]))
-
-    # build the page vm
     page = viewmodels.Page.from_base(
         button=viewmodels.Button.primary(
             text="Let’s do it!",
@@ -58,12 +57,8 @@ def agency_index(request, agency):
 
 def help(request):
     """View handler for the help page."""
-
-    # tel: links to agency phone numbers
     buttons = viewmodels.active_agency_phone_links()
-
-    # back to home button
-    buttons.append(viewmodels.Button.home(request))
+    buttons.append(viewmodels.Button.home(request, "Go back"))
 
     page = viewmodels.Page(
         title="Help",
@@ -86,7 +81,7 @@ def payment_cards(request):
         title="Payment Cards",
         icon=viewmodels.Icon("paymentcardcheck", "payment card icon"),
         content_title="What if I don't have a payment card?",
-        buttons=viewmodels.Button.home(request)
+        buttons=viewmodels.Button.home(request, text="Go back")
     )
     return TemplateResponse(request, "core/payment-cards.html", page.context_dict())
 
@@ -99,23 +94,41 @@ def privacy(request):
 
 def bad_request(request, exception, template_name="400.html"):
     """View handler for HTTP 400 Bad Request responses."""
+    if session.active_agency(request):
+        session.update(request, origin=session.agency(request).index_url)
+    else:
+        session.update(request, origin=_index_url())
+
     home = viewmodels.Button.home(request)
     page = viewmodels.ErrorPage.error(button=home)
     t = loader.get_template(template_name)
+
     return HttpResponseBadRequest(t.render(page.context_dict()))
 
 
 def page_not_found(request, exception, template_name="404.html"):
     """View handler for HTTP 404 Not Found responses."""
+    if session.active_agency(request):
+        session.update(request, origin=session.agency(request).index_url)
+    else:
+        session.update(request, origin=_index_url())
+
     home = viewmodels.Button.home(request)
     page = viewmodels.ErrorPage.not_found(button=home, path=request.path)
     t = loader.get_template(template_name)
+
     return HttpResponseNotFound(t.render(page.context_dict()))
 
 
 def server_error(request, template_name="500.html"):
     """View handler for HTTP 500 Server Error responses."""
+    if session.active_agency(request):
+        session.update(request, origin=session.agency(request).index_url)
+    else:
+        session.update(request, origin=_index_url())
+
     home = viewmodels.Button.home(request)
     page = viewmodels.ErrorPage.error(button=home)
     t = loader.get_template(template_name)
+
     return HttpResponseServerError(t.render(page.context_dict()))

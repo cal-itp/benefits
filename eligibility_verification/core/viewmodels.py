@@ -34,9 +34,9 @@ class Button():
         )
 
     @staticmethod
-    def home(request):
+    def home(request, text="Return home"):
         """Create a button back to this session's origin."""
-        return Button.primary(text="Return home", url=session.origin(request))
+        return Button.primary(text=text, url=session.origin(request))
 
     @staticmethod
     def link(**kwargs):

@@ -17,6 +17,8 @@ BASE_TITLE = viewmodels.Page.from_base().title
 def index(request):
     """View handler for the eligibility verification getting started screen."""
 
+    session.update(request, eligibility_types=[], origin=reverse("eligibility:index"))
+
     page = viewmodels.Page.from_base(
         title=f"{BASE_TITLE}: Getting Started",
         content_title="Great, you’ll need two things before we get started...",
@@ -68,6 +70,8 @@ def verify(request):
         if response is None:
             page.form = form
             response = PageTemplateResponse(request, page)
+    elif session.eligible(request):
+        response = verified(request, session.eligibility(request))
     else:
         response = PageTemplateResponse(request, page)
 
@@ -102,8 +106,7 @@ def _verify(request, form):
 def verified(request, verified_types):
     """View handler for the verified eligibility page."""
 
-    # keep a ref to the verified types in session
-    session.update(request, eligibility=verified_types)
+    session.update(request, eligibility_types=verified_types, origin=reverse("eligibility:verify"))
 
     page = viewmodels.Page(
         title=f"{BASE_TITLE}: Verified!",

@@ -12,28 +12,8 @@ _ELIGIBILITY = "eligibility"
 _ORIGIN = "origin"
 
 
-def reset(request):
-    """Reset the session for the request."""
-    request.session[_AGENCY] = None
-    request.session[_DEBUG] = None
-    request.session[_ELIGIBILITY] = None
-    request.session[_ORIGIN] = reverse("core:index")
-
-
-def update(request, agency=None, debug=None, eligibility=None, origin=None):
-    """Update the request's session."""
-    if agency is not None:
-        request.session[_AGENCY] = agency.id
-    if debug is not None:
-        request.session[_DEBUG] = debug
-    if eligibility is not None:
-        request.session[_ELIGIBILITY] = eligibility
-    if origin is not None:
-        request.session[_ORIGIN] = origin
-
-
 def agency(request):
-    """Get the agency from the request's session."""
+    """Get the agency from the request's session, or None"""
     try:
         return models.TransitAgency.by_id(request.session[_AGENCY])
     except (KeyError, models.TransitAgency.DoesNotExist):
@@ -46,6 +26,52 @@ def active_agency(request):
     return a and a.active
 
 
+def debug(request):
+    """Get the DEBUG flag from the request's session, or None."""
+    try:
+        return request.session[_DEBUG]
+    except KeyError:
+        return None
+
+
+def eligibility(request):
+    """Get the list of confirmed eligibility types from the request's session, or []"""
+    try:
+        return (request.session[_ELIGIBILITY] or "").split(", ")
+    except KeyError:
+        return []
+
+
+def eligible(request):
+    """True if the request's session is configured with an active agency and has confirmed eligibility. False otherwise."""
+    a = agency(request)
+    e = eligibility(request)
+    return active_agency(request) and len(e) > 0 and set(e).issubset(a.eligibility_set)
+
+
 def origin(request):
-    """Get the origin for the request."""
-    return request.session[_ORIGIN]
+    """Get the origin for the request, or None."""
+    try:
+        return request.session[_ORIGIN]
+    except KeyError:
+        return None
+
+
+def reset(request):
+    """Reset the session for the request."""
+    request.session[_AGENCY] = None
+    request.session[_DEBUG] = None
+    request.session[_ELIGIBILITY] = None
+    request.session[_ORIGIN] = reverse("core:index")
+
+
+def update(request, agency=None, debug=None, eligibility_types=None, origin=None):
+    if agency is not None and isinstance(agency, models.TransitAgency):
+        request.session[_AGENCY] = agency.id
+    if debug is not None:
+        request.session[_DEBUG] = debug
+    if eligibility_types is not None and (isinstance(eligibility_types, list) or isinstance(eligibility_types, str)):
+        eligibility_types = eligibility_types.split(", ") if isinstance(eligibility_types, str) else eligibility_types
+        request.session[_ELIGIBILITY] = ", ".join(eligibility_types)
+    if origin is not None:
+        request.session[_ORIGIN] = origin

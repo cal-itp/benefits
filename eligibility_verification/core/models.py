@@ -2,6 +2,7 @@
 The core application: Common model definitions.
 """
 from django.db import models
+from django.urls import reverse
 
 
 class EligibilityType(models.Model):
@@ -25,6 +26,7 @@ class EligibilityVerifier(models.Model):
     def __str__(self):
         return self.name
 
+    @property
     def eligibility_set(self):
         """Set of eligibility_type names"""
         return set(self.eligibility_types.values_list("name", flat=True))
@@ -50,9 +52,15 @@ class TransitAgency(models.Model):
     def __str__(self):
         return self.long_name
 
+    @property
     def eligibility_set(self):
         """Set of eligibility_type names"""
         return set(self.eligibility_types.values_list("name", flat=True))
+
+    @property
+    def index_url(self):
+        """Url to the TransitAgency's landing page."""
+        return reverse("core:agency_index", args=[self.slug])
 
     @staticmethod
     def by_id(id):
