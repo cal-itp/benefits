@@ -31,6 +31,24 @@
     <div class="form-group">
         <input type="submit" class="btn btn-lg btn-primary" value="{{ form.submit_value }}">
     </div>
+
+    {% load static %}
+    {% static "img/loader.svg" as loader %}
+
+    <script>
+        $(function(){
+            $("form").on("submit", function(e) {
+                var attrs = [
+                    "background-image:url('{{ loader }}') !important",
+                    "background-position:90% center",
+                    "background-repeat:no-repeat",
+                    "transition: none"
+                ];
+                var sub = $("input[type=submit]", this);
+                sub.attr("style", attrs.join(";"));
+            });
+        });
+    </script>
 </form>
 
 {% endif %}
