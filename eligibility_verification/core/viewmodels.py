@@ -27,7 +27,7 @@ class Button():
     def agency_phone_link(agency):
         """Create a tel: link button with the agency's phone number."""
         return Button.link(
-            classes="text-left pl-0 pt-0 border-left-0",
+            classes="pt-0",
             label=agency.long_name,
             text=agency.phone,
             url=f"tel:{agency.phone}"

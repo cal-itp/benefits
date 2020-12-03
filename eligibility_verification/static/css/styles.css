@@ -33,6 +33,10 @@ p {
     border-width: 2px;
 }
 
+.btn-link {
+    color: #046b99;
+}
+
 .form-group:nth-last-of-type(2) {
     margin-bottom: 2rem;
 }
@@ -86,7 +90,7 @@ p {
 }
 
 .image[class*="col-"] {
-    min-height: 213px;
+    min-height: 230px;
 }
 
 .container.content {
@@ -155,6 +159,10 @@ p {
         line-height: 30px;
     }
 
+    .text-lg-center .buttons {
+        text-align: center !important;
+    }
+
     .image[class*="col-"] {
         min-height: 725px;
     }
@@ -167,7 +175,7 @@ p {
     }
 
     .container.content input[type=submit],
-    .container.content .btn:not(.btn-link) {
+    .container.content .btn {
         width: 70%;
         margin-left: 15%;
         margin-right: 15%;
