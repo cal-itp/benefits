@@ -32,6 +32,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('slug', models.TextField()),
+                ('short_name', models.TextField()),
                 ('long_name', models.TextField()),
                 ('agency_id', models.TextField()),
                 ('mechant_id', models.TextField()),

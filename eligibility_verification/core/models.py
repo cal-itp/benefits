@@ -36,6 +36,7 @@ class TransitAgency(models.Model):
     """An agency offering transit service."""
 
     slug = models.TextField()
+    short_name = models.TextField()
     long_name = models.TextField()
     agency_id = models.TextField()
     mechant_id = models.TextField()

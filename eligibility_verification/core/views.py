@@ -28,7 +28,7 @@ def index(request):
 
     # generate a button to the landing page for each
     buttons = [
-        viewmodels.Button.outline_primary(text=a.long_name, url=a.index_url)
+        viewmodels.Button.outline_primary(text=a.short_name, url=a.index_url)
         for a in agencies
     ]
     buttons[0].classes.append("mt-3")

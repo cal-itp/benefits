@@ -4,6 +4,7 @@
         "pk": 1,
         "fields": {
             "slug": "abc",
+            "short_name": "ABC",
             "long_name": "ABC Transit Company",
             "agency_id": "abc123",
             "mechant_id": "123456789",
@@ -26,7 +27,8 @@
         "model": "core.transitagency",
         "pk": 2,
         "fields": {
-            "slug": "def",
+            "slug": "deftl",
+            "short_name": "DefTL",
             "long_name": "DEF Transit Lines",
             "agency_id": "def456",
             "mechant_id": "234567890",
