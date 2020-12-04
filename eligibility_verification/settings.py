@@ -30,8 +30,7 @@ if DEBUG:
     ALLOWED_HOSTS.extend([
         'localhost',
         '127.0.0.1',
-        '[::1]',
-        '2bca31ace8e4.ngrok.io'
+        '[::1]'
     ])
 
 # Application definition
