@@ -30,7 +30,8 @@ if DEBUG:
     ALLOWED_HOSTS.extend([
         'localhost',
         '127.0.0.1',
-        '[::1]'
+        '[::1]',
+        '2bca31ace8e4.ngrok.io'
     ])
 
 # Application definition
@@ -56,7 +57,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
-    "eligibility_verification.core.middleware.DebugMiddleware"
+    "eligibility_verification.core.middleware.DebugSession"
 ]
 
 ROOT_URLCONF = "eligibility_verification.urls"
@@ -64,7 +65,9 @@ ROOT_URLCONF = "eligibility_verification.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, "eligibility_verification", "templates")
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -72,6 +75,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "eligibility_verification.core.context_processors.debug",
             ],
         },
     },
@@ -121,3 +125,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = "/static/"
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "eligibility_verification", "static")
+]

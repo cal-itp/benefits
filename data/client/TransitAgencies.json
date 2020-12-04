@@ -4,6 +4,7 @@
         "pk": 1,
         "fields": {
             "slug": "abc",
+            "short_name": "ABC",
             "long_name": "ABC Transit Company",
             "agency_id": "abc123",
             "mechant_id": "123456789",
@@ -12,6 +13,7 @@
             "street_address2": "",
             "city": "Everytown",
             "zipcode": "55555",
+            "phone": "1-800-555-5555",
             "active": true,
             "eligibility_types": [
                 1
@@ -25,7 +27,8 @@
         "model": "core.transitagency",
         "pk": 2,
         "fields": {
-            "slug": "def",
+            "slug": "deftl",
+            "short_name": "DefTL",
             "long_name": "DEF Transit Lines",
             "agency_id": "def456",
             "mechant_id": "234567890",
@@ -34,6 +37,7 @@
             "street_address2": "",
             "city": "Everytown",
             "zipcode": "55555",
+            "phone": "321-555-5555",
             "active": true,
             "eligibility_types": [
                 2

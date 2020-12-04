@@ -9,5 +9,6 @@ from . import views
 app_name = "eligibility"
 urlpatterns = [
     # /eligibility
-    path("", views.index, name="index")
+    path("", views.index, name="index"),
+    path("verify", views.verify, name="verify")
 ]

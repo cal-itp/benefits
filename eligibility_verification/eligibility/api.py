@@ -72,7 +72,7 @@ class Client():
     def __init__(self, verifier, agency):
         self.url = verifier.api_url
         self.agency_id = agency.agency_id
-        self.eligibility_types = list(verifier.eligibility_set() & agency.eligibility_set())
+        self.eligibility_types = list(verifier.eligibility_set & agency.eligibility_set)
 
     def _tokenize(self, payload):
         """Create the request token."""

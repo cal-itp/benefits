@@ -1,25 +1,67 @@
 """
 The eligibility application: view definitions for the eligibility verification flow.
 """
-from django.template.response import TemplateResponse
+from django.http import HttpResponseServerError
+from django.urls import reverse
+from django.utils.decorators import decorator_from_middleware
 
-from eligibility_verification.core import models, viewmodels
-from eligibility_verification.settings import DEBUG
+from eligibility_verification.core import middleware, session, viewmodels
+from eligibility_verification.core.views import PageTemplateResponse
 from . import api, forms
 
 
+BASE_TITLE = viewmodels.Page.from_base().title
+
+
+@decorator_from_middleware(middleware.AgencySessionRequired)
 def index(request):
+    """View handler for the eligibility verification getting started screen."""
+
+    session.update(request, eligibility_types=[], origin=reverse("eligibility:index"))
+
+    page = viewmodels.Page.from_base(
+        title=f"{BASE_TITLE}: Getting Started",
+        content_title="Great, you’ll need two things before we get started...",
+        media=[
+            viewmodels.MediaItem(
+                icon=viewmodels.Icon("idcardcheck", "identification card icon"),
+                heading="Your California ID",
+                details="Driver License or ID card"
+            ),
+            viewmodels.MediaItem(
+                icon=viewmodels.Icon("paymentcardcheck", "payment card icon"),
+                heading="Your payment card",
+                details="A debit, credit, or prepaid card"
+            ),
+        ],
+        paragraphs=[
+            "This program is currently open to those who are 65 or older. \
+                Not over 65? Get in touch with your transit provider to \
+                learn about available discount programs."
+        ],
+        button=viewmodels.Button.primary(
+            text="Ready to continue",
+            url=reverse("eligibility:verify")
+        )
+    )
+
+    return PageTemplateResponse(request, page)
+
+
+@decorator_from_middleware(middleware.AgencySessionRequired)
+def verify(request):
     """View handler for the eligibility verification form."""
 
     page = viewmodels.Page(
-        title="Eligibility verification",
-        content_title="Let's see if we can pull your Senior status from the DMV",
+        title=f"{BASE_TITLE}: Verify",
+        content_title="Let’s see if we can verify your age with the DMV",
         paragraphs=[
-            "We use this to check which programs you could participate in."
+            "If you’re 65 or older, we can confirm you are eligible for a \
+                senior discount when you ride transit."
         ],
-        form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="")
+        form=forms.EligibilityVerificationForm(auto_id=True, label_suffix=""),
+        classes="text-lg-center"
     )
-    context = page.context_dict()
 
     if request.method == "POST":
         form = forms.EligibilityVerificationForm(request.POST)
@@ -27,10 +69,11 @@ def index(request):
 
         if response is None:
             page.form = form
-            context = page.context_dict()
-            response = TemplateResponse(request, "core/page.html", context)
+            response = PageTemplateResponse(request, page)
+    elif session.eligible(request):
+        response = verified(request, session.eligibility(request))
     else:
-        response = TemplateResponse(request, "core/page.html", context)
+        response = PageTemplateResponse(request, page)
 
     return response
 
@@ -44,97 +87,71 @@ def _verify(request, form):
     sub, name = form.cleaned_data.get("card"), form.cleaned_data.get("last_name")
 
     if not all((sub, name)):
-        return internal_error(request, sub is None, name is None)
+        raise ValueError("Missing form data")
 
-    if "agency" in request.session:
-        agency = models.TransitAgency.by_id(request.session["agency"])
-    else:
-        return internal_error(request, False, False)
+    agency = session.agency(request)
 
     try:
         types, errors = api.verify(sub, name, agency)
     except Exception as ex:
-        return server_error(request, {"exception": ex})
+        return HttpResponseServerError(ex)
 
     if any(types):
-        debug = {"eligibility": types} if DEBUG else None
-        return verified(request, types, debug)
+        return verified(request, types)
     else:
-        debug = {"errors": errors} if DEBUG else None
-        return unverified(request, errors, debug)
+        return unverified(request, errors)
 
 
-def verified(request, verified_types, debug=None):
+@decorator_from_middleware(middleware.AgencySessionRequired)
+def verified(request, verified_types):
     """View handler for the verified eligibility page."""
 
-    # keep a ref to the verified types in session
-    request.session["eligibility"] = verified_types
+    session.update(request, eligibility_types=verified_types, origin=reverse("eligibility:verify"))
 
     page = viewmodels.Page(
-        title="Verified | Eligibility verification",
-        content_title="Great! Looks like you are eligible for a Senior discount",
+        title=f"{BASE_TITLE}: Verified!",
+        content_title="Great! You’re eligible for a senior discount!",
+        icon=viewmodels.Icon("idcardcheck", "identification card icon"),
         paragraphs=[
-            "Next we need to match a credit card to the information you provided to verify it's really you."
+            "Next, we need to attach your discount to your payment card so \
+                when you pay with that card, you always get your discount.",
+            "Use a credit, debit, or prepaid card."
         ],
-        steps=[
-            "Link your credit card. No charges will be made. Just identity verification.",
-            "We make sure all relevant discounts are applied every time you use your credit card."
-        ],
-        next_button=viewmodels.Button(
-            classes="btn-primary",
-            text="Continue",
-            url="#payments"
-        ),
-        debug=debug
+        classes="text-lg-center",
+        buttons=[
+            viewmodels.Button.primary(
+                text="Continue to our payment partner",
+                url="#payments"
+            ),
+            viewmodels.Button.link(
+                classes="btn-sm",
+                text="What if I don’t have a payment card?",
+                url=reverse("core:payment_cards")
+            )
+        ]
     )
-    context = page.context_dict()
-    return TemplateResponse(request, "core/page.html", context)
+
+    return PageTemplateResponse(request, page)
 
 
-def unverified(request, errors, debug=None):
+@decorator_from_middleware(middleware.AgencySessionRequired)
+def unverified(request, errors):
     """View handler for the unverified eligibility page."""
 
+    # tel: links to agency phone numbers
+    buttons = viewmodels.active_agency_phone_links()
+
     page = viewmodels.Page(
-        title="Unverified | Eligibility verification",
-        content_title="Eligibility could not be verified",
-        paragraphs=["Sed do eiusmod tempor incididunt ut labore, consectetur adipiscing elit, lorem ipsum dolor sit amet."],
-        debug=debug
-    )
-    context = page.context_dict()
-    return TemplateResponse(request, "core/page.html", context)
-
-
-def internal_error(request, sub_missing, name_missing):
-    page = viewmodels.ErrorPage(
-        content_title="Our system is down",
+        title=f"{BASE_TITLE}: Age not verified",
+        content_title="We can’t verify your age",
+        icon=viewmodels.Icon("idcardquestion", "identification card icon"),
         paragraphs=[
-            "Unfortunately, our system is experiencing problems right now.",
-            "Please check back later."
+            "You may still be eligible for a discount but we can’t verify \
+                your age with the DMV.",
+            "Reach out to your transit provider for assistance."
         ],
-        button=viewmodels.Button(
-            classes="btn-primary",
-            text="Start over",
-            url=""
-        ),
-        debug={"sub_missing": sub_missing, "name_missing": name_missing}
+        buttons=buttons,
+        classes="text-lg-center"
     )
-    context = page.context_dict()
-    return TemplateResponse(request, "core/page.html", context)
 
-
-def server_error(request, debug={}):
-    page = viewmodels.ErrorPage(
-        content_title="Service is down",
-        paragraphs=[
-            "Unfortunately, we can't reach the verification service right now.",
-            "Please check back later."
-        ],
-        button=viewmodels.Button(
-            classes="btn-primary",
-            text="Start over",
-            url=""
-        ),
-        debug=debug
-    )
-    context = page.context_dict()
-    return TemplateResponse(request, "core/page.html", context)
+    return PageTemplateResponse(request, page)

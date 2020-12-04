@@ -4,6 +4,7 @@ Simple Test Eligibility Verification API Server.
 import base64
 import datetime
 import json
+import time
 
 from flask import Flask
 from flask_restful import Api, Resource, reqparse
@@ -72,6 +73,10 @@ class Verify(Resource):
             payload = {"errors": "Wrong Authorization header"}
 
         payload_bytes = bytes(json.dumps(payload), "utf-8")
+
+        # introduce small fake delay
+        time.sleep(2)
+
         return str(base64.urlsafe_b64encode(payload_bytes), "utf-8")
 
 

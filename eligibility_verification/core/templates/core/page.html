@@ -1,51 +1,68 @@
 {% extends "core/base.html" %}
 
 {% if page.title %}
-{% block page_title %}{{ page.title }} | {% endblock %}
+{% block classes %}{{ page.classes|join:" " }}{% endblock %}
+{% endif %}
+
+{% if page.title %}
+{% block page_title %}{{ page.title }} | {% endblock page_title %}
 {% endif %}
 
 {% block main_content %}
-
-    {% if page.content_title %}
-        {% if page.icon %}
-            {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon.icon alt=page.icon.alt %}
-        {% else %}
-            <h1>{{ page.content_title }}</h1>
-        {% endif %}
-    {% endif %}
-
-    {% for p in page.paragraphs %}
-    <p>
-        {{ p }}
-    </p>
-    {% endfor %}
-
-    {% if page.steps %}
-        {% include "core/includes/steps.html" with steps=page.steps %}
-    {% endif %}
-
-    {% if page.form %}
-        {% include "core/includes/form.html" with form=page.form %}
-    {% endif %}
-
-    {% if page.debug %}
-        <h2>Debug information</h2>
-        {% include "core/includes/data.html" with data=page.debug %}
-    {% endif%}
-
-    {% if page.prev_button or page.next_button %}
-        <div class="buttons">
-    {% endif %}
-
-    {% if page.prev_button %}
-        {% include "core/includes/button.html" with button=page.prev_button %}
-    {% endif %}
-
-    {% if page.next_button %}
-        {% include "core/includes/button.html" with button=page.next_button %}
-    {% endif %}
-
-    {% if page.prev_button or page.next_button %}
+<div class="container-fluid">
+    <div class="row">
+        {% if page.image %}
+        {% load static %}
+        <div class="col-lg-6 image" style="background: 48% 75% url('{% static page.image.src %}') no-repeat; background-size: cover;">
         </div>
-    {% endif %}
-{% endblock %}
+        <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-0">
+        {% else %}
+        <div class="col-md-8 offset-md-2 col-xl-6 offset-xl-3">
+        {% endif %}
+            <div class="container content">
+            {% block container_content %}
+
+            {% block icon_title %}
+            {% if page.content_title %}
+                {% if page.icon %}
+                    {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon %}
+                {% else %}
+                    <h1>{{ page.content_title }}</h1>
+                {% endif %}
+            {% endif %}
+            {% endblock icon_title %}
+
+            {% block media_list %}
+            {% if page.media|length_is:"0" %}{% else %}
+                {% include "core/includes/media-list.html" with items=page.media %}
+            {% endif %}
+            {% endblock media_list %}
+
+            {% block paragraph_content %}
+            {% for p in page.paragraphs %}
+                <p>{{ p }}</p>
+            {% endfor %}
+            {% endblock paragraph_content %}
+
+            {% block form %}
+            {% if page.form %}
+                {% include "core/includes/form.html" with form=page.form %}
+            {% endif %}
+            {% endblock form %}
+
+            {% block buttons %}
+            {% if page.buttons|length_is:"0" %}{% else %}
+                <div class="buttons">
+                    {% for b in page.buttons %}
+                        {% include "core/includes/button.html" with button=b %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% endblock buttons %}
+
+            {% endblock container_content %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}
