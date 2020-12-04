@@ -1,6 +1,6 @@
 {% load static %}
 <!doctype html>
-<html lang="en">
+<html lang="en" class="{% block classes %}{% endblock %}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,11 +28,11 @@
             {% include "core/includes/branding.html" %}
         </header>
 
-        <div id="main-content" class="main-content">
-            <main class="main-primary">
+        <main id="main-content" class="main-content" role="main">
+            <div class="main-primary">
                 {% block main_content %}{% endblock %}
-            </main>
-        </div>
+            </div>
+        </main>
 
         <footer id="footer" class="global-footer">
             <div class="container">

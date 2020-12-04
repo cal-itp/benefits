@@ -1,11 +1,15 @@
 {% extends "core/base.html" %}
 
 {% if page.title %}
+{% block classes %}{{ page.classes|join:" " }}{% endblock %}
+{% endif %}
+
+{% if page.title %}
 {% block page_title %}{{ page.title }} | {% endblock page_title %}
 {% endif %}
 
 {% block main_content %}
-<div class="container-fluid {{ page.classes|join:" " }}">
+<div class="container-fluid">
     <div class="row">
         {% if page.image %}
         {% load static %}

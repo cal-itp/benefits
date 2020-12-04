@@ -27,6 +27,24 @@ p {
     margin-bottom: 1rem;
 }
 
+/* making the sticky footer */
+
+html, body {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex-shrink: 0 !important;
+}
+footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
 /* class styles */
 
 .btn-lg {
@@ -119,9 +137,12 @@ p {
     text-decoration: underline;
 }
 
-.text-lg-center form,
-.text-lg-center .buttons {
+.text-lg-center form {
     text-align: left !important;
+}
+.text-lg-center .buttons label {
+    width: 100%;
+    text-align: center !important;
 }
 
 /* media queries */
@@ -139,6 +160,20 @@ p {
 
 @media (min-width: 992px) {
     /* lg+ */
+
+    /* undoing the sticky footer for pages with header image
+       the backup plan is to color the body the same as the footer
+       to avoid the floating footer look 
+    */
+    .with-image main {
+        flex-shrink: unset;
+    }
+    .with-image footer {
+        margin-top: unset;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
     h1 {
         font-size: 36px;
         line-height: 45px;
@@ -157,10 +192,6 @@ p {
     .home label {
         font-size: 24px;
         line-height: 30px;
-    }
-
-    .text-lg-center .buttons {
-        text-align: center !important;
     }
 
     .image[class*="col-"] {

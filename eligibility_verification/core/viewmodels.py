@@ -130,6 +130,8 @@ class Page():
         self.classes = kwargs.get("classes", [])
         if not isinstance(self.classes, list):
             self.classes = self.classes.split(" ")
+        if isinstance(self.image, Image):
+            self.classes.append("with-image")
 
     def context_dict(self):
         """Return a context dict for a Page."""
