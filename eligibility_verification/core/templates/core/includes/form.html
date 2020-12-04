@@ -39,13 +39,14 @@
         $(function(){
             $("form").on("submit", function(e) {
                 var attrs = [
-                    "background-image:url('{{ loader }}') !important",
-                    "background-position:90% center",
-                    "background-repeat:no-repeat",
+                    "background-image: url('{{ loader }}') !important",
+                    "background-position: 90% center",
+                    "background-repeat: no-repeat",
                     "transition: none"
                 ];
                 var sub = $("input[type=submit]", this);
                 sub.attr("style", attrs.join(";"));
+                sub.val("{{ form.submitting_value }}");
             });
         });
     </script>

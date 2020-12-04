@@ -23,3 +23,4 @@ class EligibilityVerificationForm(forms.Form):
     )
 
     submit_value = "Check status"
+    submitting_value = "Checking"
