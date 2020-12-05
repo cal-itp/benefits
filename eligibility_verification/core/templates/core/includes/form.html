@@ -51,6 +51,9 @@
                 var sub = $("input[type=submit]", this);
                 sub.attr("style", attrs.join(";"));
                 sub.val("{{ form.submitting_value }}");
+
+                $(".form-group", this).removeClass("with-errors");
+                $(".error-message", this).remove();
             });
         });
     </script>
