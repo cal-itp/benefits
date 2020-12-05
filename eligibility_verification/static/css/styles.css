@@ -56,10 +56,6 @@ footer {
     color: #046b99;
 }
 
-.form-group:nth-last-of-type(2) {
-    margin-bottom: 2rem;
-}
-
 .form-control {
     border-radius: 0.25rem;
     border-color: #212121;
@@ -77,6 +73,14 @@ footer {
 
 .required-label {
     color: #000;
+}
+
+.form-group:not(.with-errors) {
+    margin-bottom: 2.375rem;
+}
+
+.form-group:not(.with-errors):nth-last-of-type(2) {
+    margin-bottom: 3.375rem;
 }
 
 .form-group.with-errors label,
