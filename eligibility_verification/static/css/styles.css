@@ -75,8 +75,22 @@ footer {
     border-radius: 0.3rem;
 }
 
-.invalid-feedback {
-    display: block;
+.required-label {
+    color: #000;
+}
+
+.form-group.with-errors label,
+.form-group.with-errors .required-label {
+    color: #DE0C0C;
+}
+
+.form-group.with-errors .form-control {
+    border-color: #DE0C0C;
+}
+
+.form-group.with-errors .error-message {
+    font-size: 14px;
+    padding-left: 1rem;
 }
 
 .media-list {
