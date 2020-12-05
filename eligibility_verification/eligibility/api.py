@@ -11,6 +11,11 @@ import requests
 from eligibility_verification.settings import ALLOWED_HOSTS
 
 
+class Error(ValueError):
+    """Exception for Eligibility Verification API errors."""
+    pass
+
+
 class Token():
     """Eligibility Verification API request token."""
 
@@ -87,7 +92,7 @@ class TokenResponse(Response):
     """Eligibility Verification API response token."""
 
     def __init__(self, response, agency, verifier):
-        super().__init__(response.status_code, message=response.text)
+        super().__init__(response.status_code)
 
         # bail early for remote server errors
         if self.status_code >= 500:

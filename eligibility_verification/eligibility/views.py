@@ -86,9 +86,6 @@ def _verify(request, form):
 
     sub, name = form.cleaned_data.get("sub"), form.cleaned_data.get("name")
 
-    if not all((sub, name)):
-        raise ValueError("Missing form data")
-
     agency = session.agency(request)
 
     try:
@@ -98,8 +95,10 @@ def _verify(request, form):
 
     if any(types):
         return verified(request, types)
+    elif any(errors):
+        return api_errors(request, errors, form)
     else:
-        return unverified(request, errors)
+        return unverified(request)
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
@@ -135,7 +134,21 @@ def verified(request, verified_types):
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
-def unverified(request, errors):
+def api_errors(request, errors, form):
+    """View handler for API error responses."""
+
+    form_errors = [e.error for e in errors if e.status_code == 400]
+    if any(form_errors):
+        form.add_api_errors(form_errors)
+        return None
+
+    other_errors = [e.error for e in errors if e.status_code != 400]
+    if any(other_errors):
+        return HttpResponseServerError(api.Error(", ".join(other_errors)))
+
+
+@decorator_from_middleware(middleware.AgencySessionRequired)
+def unverified(request):
     """View handler for the unverified eligibility page."""
 
     # tel: links to agency phone numbers
