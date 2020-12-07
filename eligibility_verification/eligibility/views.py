@@ -151,8 +151,9 @@ def api_errors(request, errors, form):
 def unverified(request):
     """View handler for the unverified eligibility page."""
 
-    # tel: links to agency phone numbers
-    buttons = viewmodels.active_agency_phone_links()
+    # tel: link to agency phone number
+    agency = session.agency(request)
+    buttons = [viewmodels.Button.agency_phone_link(agency)]
 
     page = viewmodels.Page(
         title=f"{BASE_TITLE}: Age not verified",
