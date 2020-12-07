@@ -57,7 +57,16 @@ def agency_index(request, agency):
 
 def help(request):
     """View handler for the help page."""
-    buttons = viewmodels.active_agency_phone_links()
+
+    if session.active_agency(request):
+        agency = session.agency(request)
+        buttons = [viewmodels.Button.agency_phone_link(agency)]
+    else:
+        buttons = [
+            viewmodels.Button.agency_phone_link(a)
+            for a in models.TransitAgency.all_active()
+        ]
+
     buttons.append(viewmodels.Button.home(request, "Go back"))
 
     page = viewmodels.Page(
