@@ -48,6 +48,20 @@
         </footer>
 
         <script src="https://california.azureedge.net/cdt/statetemplate/6.0.2/js/cagov.core.js"></script>
+        <script>
+            $(function() {
+                var doc = document.documentElement;
+                if ($(doc).hasClass("with-image")) {
+                    var top = localStorage.getItem("scroll");
+                    if (top !== null) {
+                        doc.scrollTop = parseInt(top, 10);
+                    }
+                    window.addEventListener("visibilitychange", () => {
+                        localStorage.setItem("scroll", doc.scrollTop);
+                    });
+                }
+            });
+        </script>
     </body>
 </html>
 
