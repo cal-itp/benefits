@@ -40,4 +40,12 @@ def index(request):
 
 
 def success(request):
-    pass
+    """View handler for the final success page."""
+
+    page = viewmodels.Page(
+        title="Success!",
+        content_title="Success!",
+        icon=viewmodels.Icon("paymentcardcheck", "Payment card verified icon")
+    )
+
+    return TemplateResponse(request, "discounts/success.html", page.context_dict())
