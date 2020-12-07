@@ -14,6 +14,22 @@ def pem_to_jwk(pem):
     return jwk.JWK.from_pem(pem)
 
 
+class DiscountProvider(models.Model):
+    """An entity that provides transit discounts."""
+
+    name = models.TextField()
+    api_base_url = models.TextField()
+    api_access_token_url = models.TextField()
+    api_access_token_key = models.TextField()
+    api_access_token_service = models.TextField()
+    card_tokenize_url = models.TextField()
+    card_tokenize_func = models.TextField()
+    env = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
 class EligibilityType(models.Model):
     """A single conditional eligibility type."""
 
@@ -34,8 +50,8 @@ class EligibilityVerifier(models.Model):
     api_auth_key = models.TextField()
     eligibility_types = models.ManyToManyField(EligibilityType)
     public_key_pem = models.TextField(
-        help_text="The Verifier's public key in PEM format, used to encrypt requests targeted at this Verifier\
-            and to verify signed responses from this verifier."
+        help_text="The Verifier's public key in PEM format, used to encrypt requests targeted at this Verifier \
+and to verify signed responses from this verifier."
     )
     jwe_cek_enc = models.TextField(
         help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode"
@@ -68,16 +84,18 @@ class TransitAgency(models.Model):
     short_name = models.TextField()
     long_name = models.TextField()
     agency_id = models.TextField()
-    mechant_id = models.TextField()
+    merchant_id = models.TextField()
     logo_url = models.URLField()
     street_address1 = models.TextField()
     street_address2 = models.TextField(blank=True)
     city = models.TextField()
-    zipcode = models.TextField()
+    zip_code = models.TextField()
+    country_code = models.TextField()
     phone = models.TextField()
     active = models.BooleanField(default=False)
     eligibility_types = models.ManyToManyField(EligibilityType)
     eligibility_verifiers = models.ManyToManyField(EligibilityVerifier)
+    discount_provider = models.ForeignKey(DiscountProvider, on_delete=models.PROTECT)
     private_key_pem = models.TextField(
         help_text="The Agency's private key in PEM format, used to sign tokens created on behalf of this Agency."
     )
