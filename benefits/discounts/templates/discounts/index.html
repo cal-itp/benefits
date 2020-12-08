@@ -1,1 +1,66 @@
 {% extends "core/page.html" %}
+
+{% block paragraph_content %}
+{{ block.super }}
+{% if provider %}
+    <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
+        Please wait...
+        <span class="spinner-border" aria-hidden="true"></span>
+    </button>
+    <script src="{{ provider.card_tokenize_url }}"></script>
+    <script>
+        $(".loading").remove();
+
+        {{ provider.card_tokenize_func }}({
+            authorization: '{{ provider.access_token }}',
+            element: '{{ provider.element_id }}',
+            env: '{{ provider.env }}',
+            options: {
+                logo: '{{ agency.logo_url }}',
+                name: '{{ agency.long_name }}',
+                color: '#286090',
+                address: {
+                    address1: '{{ agency.street_address1 }}',
+                    address2: '{{ agency.street_address2 }}',
+                    town_city: '{{ agency.city }}',
+                    postcode: '{{ agency.zip_code }}',
+                    country: '{{ agency.country_code }}'
+                }
+            },
+            onTokenize: function (response) {
+                /* This function executes when the
+                /* card/address verification returns
+                /* successfully with a token from littlepay server */
+                return console.log(response);
+            },
+            onVerificationFailure: function (response) {
+                /* This function executes when the
+                /* card/address verification fails and server
+                /* return verification failure message */
+                return console.log(response);
+            },
+            onError: function (response) {
+                /* This function executes when the
+                /* server returns error or token is invalid.
+                /* 400 or 500 will return. */
+                return console.log(response);
+            },
+            onCancel: function () {
+                /* This function executes when the
+                /* user cancels and closes the window
+                /* and returns to home page. */
+                return console.log('canceled');
+            }
+        });
+    </script>
+{% else %}
+    <h2>Error!</h2>
+    <p>No access token configured</p>
+{% endif %}
+{% endblock %}
+
+{% block buttons %}
+{% if provider %}
+{{ block.super }}
+{% endif %}
+{% endblock %}

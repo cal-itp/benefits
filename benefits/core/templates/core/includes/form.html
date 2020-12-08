@@ -36,24 +36,24 @@
         <input type="submit" class="btn btn-lg btn-primary" value="{{ form.submit_value }}">
     </div>
 
-    {% load static %}
-    {% static "img/loader.svg" as loader %}
-
     <script>
         $(function(){
             $("form").on("submit", function(e) {
-                var attrs = [
-                    "background-image: url('{{ loader }}') !important",
-                    "background-position: 90% center",
-                    "background-repeat: no-repeat",
-                    "transition: none"
-                ];
-                var sub = $("input[type=submit]", this);
-                sub.attr("style", attrs.join(";"));
-                sub.val("{{ form.submitting_value }}");
-
                 $(".form-group", this).removeClass("with-errors");
                 $(".error-message", this).remove();
+
+                var loading = $("<button />")
+                    .addClass("btn btn-lg btn-primary text-center")
+                    .attr("role", "status")
+                    .attr("disabled", "true")
+                    .append(
+                        $("<span />").text("{{ form.submitting_value }}")
+                    )
+                    .append(
+                        $("<span />").addClass("spinner-border")
+                    );
+
+                $("input[type=submit]", this).replaceWith(loading);
             });
         });
     </script>

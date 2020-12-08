@@ -1,6 +1,8 @@
 """
 The core application: view model definitions for the root of the webapp.
 """
+from benefits.core import models
+
 from . import session
 
 
@@ -8,6 +10,7 @@ class Button():
     """"
     Represents a clickable button as styled <a> element (with optional label):
     * label: str
+    * id: str
     * classes: str, str[]
     * text: str
     * url: str
@@ -19,6 +22,7 @@ class Button():
 
         self.classes = ["btn", "btn-lg"]
         self.classes.extend(classes)
+        self.id = kwargs.get("id")
         self.label = kwargs.get("label")
         self.text = kwargs.get("text", "Button")
         self.url = kwargs.get("url")
@@ -203,3 +207,48 @@ class ErrorPage(Page):
             paragraphs=paragraphs,
             **kwargs
         )
+
+
+class DiscountProvider():
+    """
+    Represents a core.models.DiscountProvider:
+    * model: core.models.DiscountProvider
+    * access_token: str
+    * element_id: str
+    """
+    def __init__(self, model, access_token, element_id):
+        if isinstance(model, models.DiscountProvider):
+            self.access_token = access_token
+            self.element_id = element_id
+            self.card_tokenize_url = model.card_tokenize_url
+            self.card_tokenize_func = model.card_tokenize_func
+            self.env = model.env
+
+    def context_dict(self):
+        """Return a context dict for a DiscountProvider."""
+        return {"provider": self}
+
+
+class TransitAgency():
+    """
+    Represents a core.models.TransitAgency:
+    * model: core.models.TransitAgency
+    """
+    def __init__(self, model):
+        if isinstance(model, models.TransitAgency):
+            self.slug = model.slug
+            self.short_name = model.short_name
+            self.long_name = model.long_name
+            self.agency_id = model.agency_id
+            self.merchant_id = model.merchant_id
+            self.logo_url = model.logo_url
+            self.street_address1 = model.street_address1
+            self.street_address2 = model.street_address2
+            self.city = model.city
+            self.zip_code = model.zip_code
+            self.country_code = model.country_code
+            self.phone = model.phone
+
+    def context_dict(self):
+        """Return a context dict for a TransitAgency."""
+        return {"agency": self}
