@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 
 from benefits.core import middleware, session, viewmodels
-from . import api
+from . import api, forms
 
 
 def _check_access_token(request, agency):
@@ -24,9 +24,8 @@ def _check_access_token(request, agency):
     return None
 
 
-@decorator_from_middleware(middleware.AgencySessionRequired)
-def index(request):
-    """View handler for the discounts landing page."""
+def _index(request):
+    """Helper handles GET requests to discounts index."""
     agency = session.agency(request)
 
     error_result = _check_access_token(request, agency)
@@ -45,6 +44,7 @@ def index(request):
             "Use a credit, debit, or prepaid card."
         ],
         classes="text-lg-center",
+        form=forms.CardTokenForm(auto_id=True, label_suffix=""),
         buttons=[
             viewmodels.Button.primary(
                 text="Continue to our payment partner",
@@ -73,6 +73,25 @@ def index(request):
     context.update(provider_vm.context_dict())
 
     return TemplateResponse(request, "discounts/index.html", context)
+
+
+@decorator_from_middleware(middleware.AgencySessionRequired)
+def index(request):
+    """View handler for the discounts landing page."""
+    if request.method == "POST":
+        response = _associate_discount(request)
+    else:
+        response = _index(request)
+
+    return response
+
+
+def _associate_discount(request):
+    """Helper calls the discount APIs."""
+    form = forms.CardTokenForm(request.POST)
+    if not form.is_valid():
+        raise Exception("[Card token]: ")
+    pass
 
 
 def success(request):
