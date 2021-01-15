@@ -1,6 +1,6 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json
 {
-    "name": "Eligibility Verification",
+    "name": "Benefits",
     "dockerComposeFile": ["./docker-compose.yml", "./docker-compose.dev.yml"],
     "service": "client",
     "runServices": ["client", "server"],

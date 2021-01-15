@@ -1,7 +1,7 @@
 """
 The core application: context processors for enriching request context data.
 """
-from eligibility_verification.settings import DEBUG
+from benefits.settings import DEBUG
 
 from . import session
 

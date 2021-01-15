@@ -5,9 +5,9 @@ from django.apps import AppConfig
 
 
 class EligibilityAppConfig(AppConfig):
-    name = "eligibility_verification.eligibility"
+    name = "benefits.eligibility"
     label = "eligibility"
     verbose_name = "Eligibility Verification"
 
 
-default_app_config = "eligibility_verification.eligibility.EligibilityAppConfig"
+default_app_config = "benefits.eligibility.EligibilityAppConfig"

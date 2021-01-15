@@ -3,7 +3,7 @@ version: "3.8"
 services:
   client:
     build: .
-    image: eligibility_verification_client:latest
+    image: benefits_client:latest
     entrypoint: ["bin/entrypoint.sh"]
     command: manage runserver 0.0.0.0:8000
     environment:

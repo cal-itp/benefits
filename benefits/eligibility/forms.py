@@ -3,7 +3,7 @@ The eligibility application: Form definition for the eligibility verification fl
 """
 from django import forms
 
-from eligibility_verification.core import widgets
+from benefits.core import widgets
 
 
 class EligibilityVerificationForm(forms.Form):
