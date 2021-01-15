@@ -1,6 +1,7 @@
 """
 The discounts application: Discounts API implementation.
 """
+import tempfile
 import time
 
 import requests
@@ -56,18 +57,46 @@ class Client():
             self.provider.api_access_token_request_val
         }
 
-        headers = {"Accept": "application/json", "Content-type": "application/json"}
+        headers = {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+        }
 
         try:
-            r = requests.post(url, json=payload, headers=headers)
+            # create named (on-disk) temp files for client cert auth
+            # requests library reads the underlying files
+            # the "with" context destroys temp files when response comes back
+            with tempfile.NamedTemporaryFile("w+") as cert, \
+                 tempfile.NamedTemporaryFile("w+") as key, \
+                 tempfile.NamedTemporaryFile("w+") as ca:
+
+                cert.write(self.provider.client_cert_pem)
+                cert.seek(0)
+
+                key.write(self.provider.client_cert_private_key_pem)
+                key.seek(0)
+
+                ca.write(self.provider.client_cert_root_ca_pem)
+                ca.seek(0)
+
+                # request using temp file paths
+                r = requests.post(
+                        url,
+                        json=payload,
+                        headers=headers,
+                        verify=ca.name,
+                        cert=(cert.name, key.name)
+                    )
         except requests.ConnectionError as ex:
             return Response(500, error=ex, message="Access token: Connection to discounts server failed")
         except requests.Timeout as ex:
             return Response(500, error=ex, message="Access token: Connection to discounts server timed out")
         except requests.TooManyRedirects as ex:
             return Response(500, error=ex, message="Access token: Too many redirects to discounts server")
+        except Exception as ex:
+            return Response(500, error=ex, message="Access token: Error")
 
-        if r.status_code == 200:
+        if r.status_code in (200, 201):
             return AccessTokenResponse(r, self.agency, self.provider)
         elif r.status_code == 400:
             return Response(r.status_code, message="Access token: Bad request")

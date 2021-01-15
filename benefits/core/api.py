@@ -15,11 +15,12 @@ class Response():
 
     def _assign_error(self, error=None, message=None):
         if not any([error, message]):
-            return
-        self.error = (message if not error else f"{message}: {str(error)}") if message else str(error)
+            self.error = self.status_code if not self.is_success() else None
+        else:
+            self.error = (message if not error else f"{message}: {str(error)}") if message else str(error)
 
     def is_error(self):
         return self.error is not None
 
     def is_success(self):
-        return self.status_code == 200
+        return 200 <= self.status_code < 300

@@ -1,7 +1,6 @@
 """
 The discounts application: view definitions for the discounts association flow.
 """
-from django.http import HttpResponseServerError
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
@@ -13,24 +12,21 @@ from . import api, forms
 def _check_access_token(request, agency):
     """
     Ensure the request's session is configured with an access token.
-    Return an HttpResponseServerError if an access token cannot be obtained, otherwise return None.
+    Raise an exception if an access token cannot be obtained.
     """
     if not session.valid_token(request):
         response = api.Client(agency=agency).access_token()
-        if isinstance(response, api.AccessTokenResponse) and response.status_code == 200:
+        if isinstance(response, api.AccessTokenResponse) and response.is_success():
             session.update(request, token=response.access_token, token_exp=response.expiry)
         else:
-            return HttpResponseServerError(response.error)
-    return None
+            raise Exception(response.error)
 
 
 def _index(request):
     """Helper handles GET requests to discounts index."""
     agency = session.agency(request)
 
-    error_result = _check_access_token(request, agency)
-    if error_result:
-        return error_result
+    _check_access_token(request, agency)
 
     tokenize_button = "tokenize_card"
 

@@ -1,7 +1,6 @@
 """
 The eligibility application: view definitions for the eligibility verification flow.
 """
-from django.http import HttpResponseServerError
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
@@ -92,7 +91,7 @@ def _verify(request, form):
     try:
         types, errors = api.verify(sub, name, agency)
     except Exception as ex:
-        return HttpResponseServerError(ex)
+        raise ex
 
     if any(types):
         return verified(request, types)
@@ -119,11 +118,11 @@ def api_errors(request, errors, form):
     form_errors = [e.error for e in errors if e.status_code == 400]
     if any(form_errors):
         form.add_api_errors(form_errors)
-        return None
+        return
 
     other_errors = [e.error for e in errors if e.status_code != 400]
     if any(other_errors):
-        return HttpResponseServerError(api.Error(", ".join(other_errors)))
+        raise Exception(api.Error(", ".join(other_errors)))
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)

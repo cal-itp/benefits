@@ -118,6 +118,7 @@ def valid_token(request):
     """True if the request's session is configured with a valid token. False otherwise."""
     if token(request) is not None:
         exp = token_expiry(request)
-        return exp is None or exp > time.time()
+        # ensure token does not expire in the next 1 second
+        return exp is None or exp > (time.time() + 1)
     else:
         return False
