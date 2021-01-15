@@ -3,7 +3,7 @@ The core application: middleware definitions for request/response cycle.
 """
 from django.utils.deprecation import MiddlewareMixin
 
-from eligibility_verification.settings import DEBUG
+from benefits.settings import DEBUG
 
 from . import session
 

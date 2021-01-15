@@ -8,7 +8,7 @@ import uuid
 from jwcrypto import common as jwcrypto, jwe, jws, jwt
 import requests
 
-from eligibility_verification.settings import ALLOWED_HOSTS
+from benefits.settings import ALLOWED_HOSTS
 
 
 class Error(ValueError):

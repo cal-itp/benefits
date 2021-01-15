@@ -5,8 +5,8 @@ from django.http import HttpResponseServerError
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 
-from eligibility_verification.core import middleware, session, viewmodels
-from eligibility_verification.core.views import PageTemplateResponse
+from benefits.core import middleware, session, viewmodels
+from benefits.core.views import PageTemplateResponse
 from . import api, forms
 
 

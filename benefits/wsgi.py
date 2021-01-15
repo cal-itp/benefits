@@ -1,5 +1,5 @@
 """
-WSGI config for eligibility_verification project.
+WSGI config for benefits project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 from django.core.wsgi import get_wsgi_application
 
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "eligibility_verification.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "benefits.settings")
 
 application = get_wsgi_application()
