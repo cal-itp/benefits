@@ -222,7 +222,7 @@ class DiscountProvider():
             self.element_id = element_id
             self.card_tokenize_url = model.card_tokenize_url
             self.card_tokenize_func = model.card_tokenize_func
-            self.env = model.env
+            self.card_tokenize_env = model.card_tokenize_env
 
     def context_dict(self):
         """Return a context dict for a DiscountProvider."""

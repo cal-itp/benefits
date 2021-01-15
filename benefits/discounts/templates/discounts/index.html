@@ -14,7 +14,7 @@
         {{ provider.card_tokenize_func }}({
             authorization: '{{ provider.access_token }}',
             element: '{{ provider.element_id }}',
-            env: '{{ provider.env }}',
+            env: '{{ provider.card_tokenize_env }}',
             options: {
                 logo: '{{ agency.logo_url }}',
                 name: '{{ agency.long_name }}',

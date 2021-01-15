@@ -45,9 +45,16 @@ class Client():
     def access_token(self):
         """Obtain an access token to use for integrating with other APIs."""
 
-        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.api_access_token_url))
+        url = "/".join((
+            self.provider.api_base_url,
+            self.agency.merchant_id,
+            self.provider.api_access_token_endpoint
+        ))
 
-        payload = {self.provider.api_access_token_key: self.provider.api_access_token_service}
+        payload = {
+            self.provider.api_access_token_request_key:
+            self.provider.api_access_token_request_val
+        }
 
         headers = {"Accept": "application/json", "Content-type": "application/json"}
 

@@ -19,12 +19,21 @@ class DiscountProvider(models.Model):
 
     name = models.TextField()
     api_base_url = models.TextField()
-    api_access_token_url = models.TextField()
-    api_access_token_key = models.TextField()
-    api_access_token_service = models.TextField()
+    api_access_token_endpoint = models.TextField()
+    api_access_token_request_key = models.TextField()
+    api_access_token_request_val = models.TextField()
     card_tokenize_url = models.TextField()
     card_tokenize_func = models.TextField()
-    env = models.TextField()
+    card_tokenize_env = models.TextField()
+    client_cert_pem = models.TextField(
+        help_text="A certificate in PEM format, used for client certificate authentication to this Provider's API."
+    )
+    client_cert_private_key_pem = models.TextField(
+        help_text="The private key in PEM format used to sign the certificate."
+    )
+    client_cert_root_ca_pem = models.TextField(
+        help_text="The root CA bundle in PEM format used to verify the Provider's server."
+    )
 
     def __str__(self):
         return self.name
@@ -51,7 +60,7 @@ class EligibilityVerifier(models.Model):
     eligibility_types = models.ManyToManyField(EligibilityType)
     public_key_pem = models.TextField(
         help_text="The Verifier's public key in PEM format, used to encrypt requests targeted at this Verifier \
-and to verify signed responses from this verifier."
+            and to verify signed responses from this verifier."
     )
     jwe_cek_enc = models.TextField(
         help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode"

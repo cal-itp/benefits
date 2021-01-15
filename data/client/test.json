@@ -5,12 +5,15 @@
         "fields": {
             "name": "Test Discount Provider",
             "api_base_url": "http://server:5000",
-            "api_access_token_url": "access-token",
-            "api_access_token_key": "request_access",
-            "api_access_token_service": "REQUEST_ACCESS",
+            "api_access_token_endpoint": "access-token",
+            "api_access_token_request_key": "request_access",
+            "api_access_token_request_val": "REQUEST_ACCESS",
             "card_tokenize_url": "http://localhost:5000/static/tokenize.js",
             "card_tokenize_func": "tokenize",
-            "env": "test"
+            "card_tokenize_env": "test",
+            "client_cert_pem": "client_cert_pem",
+            "client_cert_private_key_pem": "client_cert_private_key_pem",
+            "client_cert_root_ca_pem": "client_cert_root_ca_pem"
         }
     },
     {
