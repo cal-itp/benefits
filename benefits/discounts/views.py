@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 
 from benefits.core import middleware, session, viewmodels
+from benefits.core.views import PageTemplateResponse
 from . import api, forms
 
 
@@ -29,6 +30,8 @@ def _index(request):
     _check_access_token(request, agency)
 
     tokenize_button = "tokenize_card"
+    tokenize_retry_form = forms.CardTokenizeFailForm("discounts:retry")
+    tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
     page = viewmodels.Page(
         title="Eligibility Verified!",
@@ -40,7 +43,7 @@ def _index(request):
             "Use a credit, debit, or prepaid card."
         ],
         classes="text-lg-center",
-        form=forms.CardTokenForm(auto_id=True, label_suffix=""),
+        forms=[tokenize_retry_form, tokenize_success_form],
         buttons=[
             viewmodels.Button.primary(
                 text="Continue to our payment partner",
@@ -70,7 +73,21 @@ def _index(request):
     )
     context.update(provider_vm.context_dict())
 
+    # the tokenize form URLs are injected to page-generated Javascript
+    context.update({"forms": {
+        "tokenize_retry": reverse(tokenize_retry_form.action_url),
+        "tokenize_success": reverse(tokenize_success_form.action_url)
+    }})
+
     return TemplateResponse(request, "discounts/index.html", context)
+
+
+def _associate_discount(request):
+    """Helper calls the discount APIs."""
+    form = forms.CardTokenForm(request.POST)
+    if not form.is_valid():
+        raise Exception("[Card token]")
+    pass
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
@@ -84,12 +101,28 @@ def index(request):
     return response
 
 
-def _associate_discount(request):
-    """Helper calls the discount APIs."""
-    form = forms.CardTokenForm(request.POST)
-    if not form.is_valid():
-        raise Exception("[Card token]: ")
-    pass
+@decorator_from_middleware(middleware.AgencySessionRequired)
+def retry(request):
+    """View handler for a recoverable failure condition."""
+    if request.method == "POST":
+        form = forms.CardTokenizeFailForm(request.POST)
+        if form.is_valid():
+            agency = session.agency(request)
+            page = viewmodels.Page(
+                title="We couldn’t connect your payment card",
+                icon=viewmodels.Icon("paymentcardquestion", "Payment card question icon"),
+                content_title="We couldn’t connect your payment card",
+                paragraphs=["You can try again or reach out to your transit provider for assistance."],
+                buttons=[
+                    viewmodels.Button.agency_phone_link(agency),
+                    viewmodels.Button.primary(text="Try again", url=session.origin(request))
+                ]
+            )
+            return PageTemplateResponse(request, page)
+        else:
+            raise Exception("Invalid retry submission.")
+    else:
+        raise ValueError("This view method only supports POST.")
 
 
 def success(request):

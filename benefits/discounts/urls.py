@@ -10,5 +10,6 @@ app_name = "discounts"
 urlpatterns = [
     # /discounts
     path("", views.index, name="index"),
+    path("retry", views.retry, name="retry"),
     path("success", views.success, name="success"),
 ]

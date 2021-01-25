@@ -223,13 +223,15 @@ class DiscountProvider():
     * element_id: str
     * color: str
     * [name: str]
+    * [loading_text: str]
     """
-    def __init__(self, model, access_token, element_id, color, name=None):
+    def __init__(self, model, access_token, element_id, color, name=None, loading_text="Please wait..."):
         if isinstance(model, models.DiscountProvider):
             self.access_token = access_token
             self.element_id = element_id
             self.color = color
             self.name = name or model.name
+            self.loading_text = loading_text
             self.card_tokenize_url = model.card_tokenize_url
             self.card_tokenize_func = model.card_tokenize_func
             self.card_tokenize_env = model.card_tokenize_env

@@ -4,13 +4,17 @@
 {{ block.super }}
 {% if provider %}
     <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
-        Please wait...
+        {{ provider.loading_text }}
     </button>
     <script>
         $.getScript("{{ provider.card_tokenize_url }}")
             .done(function() {
                 $(".loading").remove();
                 $(".invisible").removeClass("invisible");
+
+                $("{{ provider.element_id }}").on("click", function() {
+                    $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ provider.loading_text }}");
+                });
 
                 {{ provider.card_tokenize_func }}({
                     authorization: '{{ provider.access_token }}',
@@ -23,26 +27,31 @@
                     onTokenize: function (response) {
                         /* This function executes when the
                         /* card/address verification returns
-                        /* successfully with a token from littlepay server */
-                        return console.log(response);
+                        /* successfully with a token from discount server */
+                        var form = $("form[action='{{ forms.tokenize_success }}']");
+                        $("#card_token", form).val(response.token);
+                        form.submit();
                     },
                     onVerificationFailure: function (response) {
                         /* This function executes when the
                         /* card/address verification fails and server
                         /* return verification failure message */
-                        return console.log(response);
+                        var form = $("form[action='{{ forms.tokenize_retry }}']");
+                        form.submit();
                     },
                     onError: function (response) {
                         /* This function executes when the
                         /* server returns error or token is invalid.
                         /* 400 or 500 will return. */
-                        return console.log(response);
+                        var form = $("form[action='{{ forms.tokenize_retry }}']");
+                        form.submit();
                     },
                     onCancel: function () {
                         /* This function executes when the
                         /* user cancels and closes the window
                         /* and returns to home page. */
-                        return console.log('canceled');
+                        console.log('canceled');
+                        return location.reload();
                     }
                 });
             })
