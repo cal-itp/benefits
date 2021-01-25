@@ -15,18 +15,10 @@
                 {{ provider.card_tokenize_func }}({
                     authorization: '{{ provider.access_token }}',
                     element: '{{ provider.element_id }}',
-                    env: '{{ provider.card_tokenize_env }}',
+                    envUrl: '{{ provider.card_tokenize_env }}',
                     options: {
-                        logo: '{{ agency.logo_url }}',
-                        name: '{{ agency.long_name }}',
-                        color: '#286090',
-                        address: {
-                            address1: '{{ agency.street_address1 }}',
-                            address2: '{{ agency.street_address2 }}',
-                            town_city: '{{ agency.city }}',
-                            postcode: '{{ agency.zip_code }}',
-                            country: '{{ agency.country_code }}'
-                        }
+                        name: '{{ provider.name }}',
+                        color: '{{ provider.color }}'
                     },
                     onTokenize: function (response) {
                         /* This function executes when the

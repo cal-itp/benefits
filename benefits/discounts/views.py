@@ -64,7 +64,9 @@ def _index(request):
     provider_vm = viewmodels.DiscountProvider(
         model=agency.discount_provider,
         access_token=session.token(request),
-        element_id=f"#{tokenize_button}"
+        element_id=f"#{tokenize_button}",
+        color="#046b99",
+        name=f"{agency.long_name} partnered with {agency.discount_provider.name}"
     )
     context.update(provider_vm.context_dict())
 

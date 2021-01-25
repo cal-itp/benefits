@@ -215,11 +215,15 @@ class DiscountProvider():
     * model: core.models.DiscountProvider
     * access_token: str
     * element_id: str
+    * color: str
+    * [name: str]
     """
-    def __init__(self, model, access_token, element_id):
+    def __init__(self, model, access_token, element_id, color, name=None):
         if isinstance(model, models.DiscountProvider):
             self.access_token = access_token
             self.element_id = element_id
+            self.color = color
+            self.name = name or model.name
             self.card_tokenize_url = model.card_tokenize_url
             self.card_tokenize_func = model.card_tokenize_func
             self.card_tokenize_env = model.card_tokenize_env
