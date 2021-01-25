@@ -68,7 +68,7 @@ def verify(request):
         response = _verify(request, form)
 
         if response is None:
-            page.form = form
+            page.forms = [form]
             response = PageTemplateResponse(request, page)
     elif session.eligible(request):
         response = verified(request, session.eligibility(request))

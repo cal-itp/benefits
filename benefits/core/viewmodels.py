@@ -106,6 +106,7 @@ class Page():
     * media: core.viewmodels.MediaItem[]
     * paragraphs: str[]
     * form: django.forms.Form
+    * forms: django.forms.Form[]
     * button: core.viewmodels.Button
     * buttons: core.viewmodels.Button[]
     * classes: str[]
@@ -118,7 +119,12 @@ class Page():
         self.media = kwargs.get("media", [])
         self.paragraphs = kwargs.get("paragraphs", [])
         self.steps = kwargs.get("steps")
-        self.form = kwargs.get("form")
+
+        self.forms = kwargs.get("forms", [])
+        if not isinstance(self.forms, list):
+            self.forms = [self.forms]
+        if "form" in kwargs:
+            self.forms.append(kwargs.get("form"))
 
         self.buttons = kwargs.get("buttons", [])
         if not isinstance(self.buttons, list):
