@@ -5,12 +5,12 @@
 {% if provider %}
     <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
         Please wait...
-        <span class="spinner-border" aria-hidden="true"></span>
     </button>
     <script>
         $.getScript("{{ provider.card_tokenize_url }}")
             .done(function() {
                 $(".loading").remove();
+                $(".invisible").removeClass("invisible");
 
                 {{ provider.card_tokenize_func }}({
                     authorization: '{{ provider.access_token }}',
@@ -67,6 +67,8 @@
 
 {% block buttons %}
 {% if provider %}
+<div class="invisible">
 {{ block.super }}
+</div>
 {% endif %}
 {% endblock %}

@@ -56,9 +56,6 @@
                         .attr("disabled", "true")
                         .append(
                             $("<span />").text("{{ form.submitting_value }}")
-                        )
-                        .append(
-                            $("<span />").addClass("spinner-border")
                         );
 
                     $("input[type=submit]", this).replaceWith(loading);
