@@ -13,7 +13,9 @@
             "card_tokenize_env": "test",
             "client_cert_pem": "client_cert_pem",
             "client_cert_private_key_pem": "client_cert_private_key_pem",
-            "client_cert_root_ca_pem": "client_cert_root_ca_pem"
+            "client_cert_root_ca_pem": "client_cert_root_ca_pem",
+            "customer_endpoint": "customer",
+            "customers_endpoint": "customers",
         }
     },
     {

@@ -86,8 +86,21 @@ def _associate_discount(request):
     """Helper calls the discount APIs."""
     form = forms.CardTokenForm(request.POST)
     if not form.is_valid():
-        raise Exception("[Card token]")
-    pass
+        raise Exception("Invalid card token form.")
+    card_token = form.cleaned_data.get("card_token")
+
+    eligibility = session.eligibility(request)
+    if len(eligibility) == 1:
+        eligibility = eligibility[0]
+    else:
+        raise Exception("Session contains more than one eligibility")
+
+    agency = session.agency(request)
+
+    response = api.CustomerClient(agency=agency).create_or_update(card_token)
+    if not isinstance(response, api.CustomerResponse) and response.is_success():
+        raise Exception(response.error)
+    customer_id = response.id
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)

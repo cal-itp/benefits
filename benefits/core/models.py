@@ -34,6 +34,8 @@ class DiscountProvider(models.Model):
     client_cert_root_ca_pem = models.TextField(
         help_text="The root CA bundle in PEM format used to verify the Provider's server."
     )
+    customer_endpoint = models.TextField()
+    customers_endpoint = models.TextField()
 
     def __str__(self):
         return self.name

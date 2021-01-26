@@ -3,6 +3,7 @@ The discounts application: Discounts API implementation.
 """
 import tempfile
 import time
+import uuid
 
 import requests
 
@@ -125,3 +126,108 @@ class AccessTokenClient(Client):
             return Response(r.status_code, message="Access token: Not found")
         else:
             return Response(r.status_code, message="Access token: Error")
+
+
+class CustomerResponse(Response):
+    """Discount Provider Customer API response."""
+    def __init__(self, response):
+        super().__init__(response.status_code)
+
+        # bail early for remote server errors
+        if self.status_code >= 500:
+            return
+
+        # read response payload from body
+        try:
+            payload = response.json()
+        except ValueError as ex:
+            self._assign_error(ex, "Invalid response format")
+            return
+
+        # extract the customer data
+        self.id = payload.get("id")
+        self.customer_ref = payload.get("customer_ref")
+        self.is_registered = payload.get("is_registered")
+        self.created_date = payload.get("created_date")
+
+
+class CustomerClient(Client):
+    """Discounts Provider Customer API client."""
+
+    def create_or_update(self, token):
+        """Create or update a customer in the Discount Provider's system using the token that represents that customer."""
+        url = "/".join((
+            self.provider.api_base_url,
+            self.agency.merchant_id,
+            self.provider.customers_endpoint
+        ))
+
+        payload = {"token": token}
+
+        try:
+            r = self._get(url, payload)
+            if r.status_code == 200:
+                # customer already exists with this token, update registration with ref
+                customer = CustomerResponse(r)
+                return self._update(customer)
+            elif r.status_code == 404:
+                # customer does not exist with this token, create customer
+                return self._create(payload)
+            else:
+                return Response(r.status_code, message="Customer: Error")
+        except requests.ConnectionError as ex:
+            return Response(500, error=ex, message="Customer: Connection to discounts server failed")
+        except requests.Timeout as ex:
+            return Response(500, error=ex, message="Customer: Connection to discounts server timed out")
+        except requests.TooManyRedirects as ex:
+            return Response(500, error=ex, message="Customer: Too many redirects to discounts server")
+        except Exception as ex:
+            return Response(500, error=ex, message="Customer: Error")
+
+    def _create(self, payload):
+        """Create the customer represented by the payload token."""
+        url = "/".join((
+            self.provider.api_base_url,
+            self.agency.merchant_id,
+            self.provider.customers_endpoint
+        ))
+
+        payload.update({"customer_ref": uuid.uuid4(), "is_registered": True})
+
+        r = self._post(url, payload)
+
+        if r.status_code in (200, 201):
+            return CustomerResponse(r)
+        elif r.status_code == 400:
+            return Response(r.status_code, message="Customer: Bad create payload")
+        elif r.status_code == 404:
+            return Response(r.status_code, message="Customer: Invalid token")
+        elif r.status_code == 409:
+            return Response(r.status_code, message="Customer: Customer with token or ref already exists")
+        else:
+            return Response(r.status_code, message="Customer: Error")
+
+    def _update(self, customer):
+        """Update the customer represented by the CustomerResponse object."""
+        url = "/".join((
+            self.provider.api_base_url,
+            self.agency.merchant_id,
+            self.provider.customer_endpoint,
+            customer.id
+        ))
+
+        payload = {"customer_ref": customer.customer_ref or uuid.uuid4(), "is_registered": True}
+
+        r = self._patch(url, payload)
+
+        if r.status_code in (200, 201):
+            return CustomerResponse(r)
+        elif r.status_code == 400:
+            return Response(r.status_code, message="Customer: Bad update payload")
+        elif r.status_code == 404:
+            return Response(r.status_code, message="Customer: Customer not found")
+        elif r.status_code == 409:
+            return Response(r.status_code, message="Customer: Customer with ref already exists, or ref mismatch")
+        else:
+            return Response(r.status_code, message="Customer: Error")
+
