@@ -82,6 +82,17 @@ def _index(request):
     return TemplateResponse(request, "discounts/index.html", context)
 
 
+@decorator_from_middleware(middleware.AgencySessionRequired)
+def index(request):
+    """View handler for the discounts landing page."""
+    if request.method == "POST":
+        response = _associate_discount(request)
+    else:
+        response = _index(request)
+
+    return response
+
+
 def _associate_discount(request):
     """Helper calls the discount APIs."""
     form = forms.CardTokenForm(request.POST)
@@ -110,17 +121,6 @@ def _associate_discount(request):
         return success(request)
     else:
         raise Exception("Updated customer_id does not match enrolled customer_id")
-
-
-@decorator_from_middleware(middleware.AgencySessionRequired)
-def index(request):
-    """View handler for the discounts landing page."""
-    if request.method == "POST":
-        response = _associate_discount(request)
-    else:
-        response = _index(request)
-
-    return response
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
