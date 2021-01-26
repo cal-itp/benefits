@@ -102,6 +102,15 @@ def _associate_discount(request):
         raise Exception(response.error)
     customer_id = response.id
 
+    response = api.GroupClient(agency=agency).enroll_customer(customer_id, eligibility.group_id)
+    if not isinstance(response, api.GroupResponse) and response.is_success():
+        raise Exception(response.error)
+
+    if response.updated_customer_id == customer_id:
+        return success(request)
+    else:
+        raise Exception("Updated customer_id does not match enrolled customer_id")
+
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
 def index(request):

@@ -231,3 +231,61 @@ class CustomerClient(Client):
         else:
             return Response(r.status_code, message="Customer: Error")
 
+
+class GroupResponse(Response):
+    """Discount Provider Customer Group API response."""
+    def __init__(self, response):
+        super().__init__(response.status_code)
+
+        # bail early for remote server errors
+        if self.status_code >= 500:
+            return
+
+        # read response payload from body
+        try:
+            payload = response.json()
+        except ValueError as ex:
+            self._assign_error(ex, "Invalid response format")
+            return
+
+        # extract the customer data
+        self.customer_ids = payload.get("customer_ids", [])
+        self.updated_count = len(self.customer_ids)
+        self.updated_customer_id = self.customer_ids[0] if self.updated_count == 1 else None
+
+
+class GroupClient(Client):
+    """Discounts Provider Customer Group API client."""
+
+    def enroll_customer(self, customer_id, group_id):
+        """Enroll the customer in the group."""
+        url = "/".join((
+            self.provider.api_base_url,
+            self.agency.merchant_id,
+            self.provider.groups_endpoint,
+            group_id
+        ))
+
+        payload = {"customer_ids": [customer_id]}
+
+        try:
+            r = self._patch(url, payload)
+
+            if r.status_code in (200, 201):
+                return GroupResponse(r)
+            elif r.status_code == 400:
+                return Response(r.status_code, message="Group: Bad create payload")
+            elif r.status_code == 404:
+                return Response(r.status_code, message="Group: Invalid token")
+            elif r.status_code == 409:
+                return Response(r.status_code, message="Group: Customer with token or ref already exists")
+            else:
+                return Response(r.status_code, message="Group: Error")
+        except requests.ConnectionError as ex:
+            return Response(500, error=ex, message="Group: Connection to discounts server failed")
+        except requests.Timeout as ex:
+            return Response(500, error=ex, message="Group: Connection to discounts server timed out")
+        except requests.TooManyRedirects as ex:
+            return Response(500, error=ex, message="Group: Too many redirects to discounts server")
+        except Exception as ex:
+            return Response(500, error=ex, message="Group: Error")
