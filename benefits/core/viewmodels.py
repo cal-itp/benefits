@@ -165,7 +165,7 @@ class ErrorPage(Page):
     def __init__(self, **kwargs):
         super().__init__(
             title=kwargs.get("title", "Error"),
-            icon=kwargs.get("icon", Icon("busfail", "Bus with flat tire icon")),
+            icon=kwargs.get("icon", Icon("sadbus", "Bus with flat tire icon")),
             content_title=kwargs.get("content_title", "Error"),
             paragraphs=kwargs.get("paragraphs", ["Unfortunately, our system is having a problem right now."]),
             button=kwargs.get("button")
