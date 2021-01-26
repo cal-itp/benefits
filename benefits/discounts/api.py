@@ -9,6 +9,59 @@ import requests
 from benefits.core.api import Response
 
 
+class Client():
+    """Base Provider API client. Dot not use this class directly. Use one of the child class implementations."""
+
+    def __init__(self, agency):
+        self.agency = agency
+        self.provider = agency.discount_provider
+        self.headers = {
+            "Accept": "application/json",
+            "Content-type": "application/json"
+        }
+
+    def _headers(self, headers=None):
+        h = dict(self.headers)
+        if headers:
+            h.update(headers)
+        return h
+
+    def _get(self, url, payload, headers=None):
+        h = self._headers(headers)
+        return self._cert_request(lambda verify, cert: requests.get(url, headers=h, params=payload, verify=verify, cert=cert))
+
+    def _patch(self, url, payload, headers=None):
+        h = self._headers(headers)
+        return self._cert_request(lambda verify, cert: requests.patch(url, headers=h, json=payload, verify=verify, cert=cert))
+
+    def _post(self, url, payload, headers=None):
+        h = self._headers(headers)
+        return self._cert_request(lambda verify, cert: requests.post(url, headers=h, json=payload, verify=verify, cert=cert))
+
+    def _cert_request(self, request_func):
+        """
+        Creates named (on-disk) temp files for client cert auth.
+        * request_func: parameterized callable from `requests` library (e.g. `requests.get`).
+        """
+        # requests library reads temp files from file path
+        # The "with" context destroys temp files when response comes back
+        with tempfile.NamedTemporaryFile("w+") as cert, \
+                tempfile.NamedTemporaryFile("w+") as key, \
+                tempfile.NamedTemporaryFile("w+") as ca:
+
+            cert.write(self.provider.client_cert_pem)
+            cert.seek(0)
+
+            key.write(self.provider.client_cert_private_key_pem)
+            key.seek(0)
+
+            ca.write(self.provider.client_cert_root_ca_pem)
+            ca.seek(0)
+
+            # request using temp file paths
+            return request_func(verify=ca.name, cert=(cert.name, key.name))
+
+
 class AccessTokenResponse(Response):
     """Discount Provider API Access Token response."""
 
@@ -36,14 +89,10 @@ class AccessTokenResponse(Response):
             self.expiry = None
 
 
-class Client():
-    """Discounts Provider API HTTP client."""
+class AccessTokenClient(Client):
+    """Discounts Provider API Access Token client."""
 
-    def __init__(self, agency):
-        self.agency = agency
-        self.provider = agency.discount_provider
-
-    def access_token(self):
+    def get(self):
         """Obtain an access token to use for integrating with other APIs."""
 
         url = "/".join((
@@ -57,36 +106,8 @@ class Client():
             self.provider.api_access_token_request_val
         }
 
-        headers = {
-            "Accept": "application/json",
-            "Content-type": "application/json"
-        }
-
         try:
-            # create named (on-disk) temp files for client cert auth
-            # requests library reads the underlying files
-            # the "with" context destroys temp files when response comes back
-            with tempfile.NamedTemporaryFile("w+") as cert, \
-                 tempfile.NamedTemporaryFile("w+") as key, \
-                 tempfile.NamedTemporaryFile("w+") as ca:
-
-                cert.write(self.provider.client_cert_pem)
-                cert.seek(0)
-
-                key.write(self.provider.client_cert_private_key_pem)
-                key.seek(0)
-
-                ca.write(self.provider.client_cert_root_ca_pem)
-                ca.seek(0)
-
-                # request using temp file paths
-                r = requests.post(
-                        url,
-                        json=payload,
-                        headers=headers,
-                        verify=ca.name,
-                        cert=(cert.name, key.name)
-                    )
+            r = self._post(url, payload)
         except requests.ConnectionError as ex:
             return Response(500, error=ex, message="Access token: Connection to discounts server failed")
         except requests.Timeout as ex:
@@ -99,7 +120,7 @@ class Client():
         if r.status_code in (200, 201):
             return AccessTokenResponse(r, self.agency, self.provider)
         elif r.status_code == 400:
-            return Response(r.status_code, message="Access token: Bad request")
+            return Response(r.status_code, message="Access token: Bad request payload")
         elif r.status_code == 404:
             return Response(r.status_code, message="Access token: Not found")
         else:

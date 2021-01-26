@@ -16,7 +16,7 @@ def _check_access_token(request, agency):
     Raise an exception if an access token cannot be obtained.
     """
     if not session.valid_token(request):
-        response = api.Client(agency=agency).access_token()
+        response = api.AccessTokenClient(agency=agency).get()
         if isinstance(response, api.AccessTokenResponse) and response.is_success():
             session.update(request, token=response.access_token, token_exp=response.expiry)
         else:
