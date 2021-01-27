@@ -2,8 +2,5 @@ FROM benefits_client:latest
 
 USER root
 
-RUN apt-get install -y git
-
-USER $USER
-
-RUN pip install flake8 debugpy
+RUN apt-get install -qq git && \
+    pip install flake8 debugpy

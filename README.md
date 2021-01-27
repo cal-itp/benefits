@@ -21,34 +21,10 @@ cp .env.sample .env
 
 ### Local Django setup
 
-If you are running `bash`, shortcut the following steps with the [`setup`](./setup) script:
-
-```bash
-./setup
-```
-
-Otherwise, start by building the Benefits client image:
+Build the Benefits client image:
 
 ```bash
 docker-compose build --no-cache client
-```
-
-Run Django database migrations:
-
-```bash
-docker-compose run client migrate
-```
-
-Load [sample Django model data](./data/client):
-
-```bash
-docker-compose run client data
-```
-
-Create a superuser account for Django backend admin access (follow the CLI prompts):
-
-```bash
-docker-compose run client superuser
 ```
 
 ### Run the client locally
@@ -57,9 +33,10 @@ docker-compose run client superuser
 docker-compose up -d client
 ```
 
-The client is running at `http://localhost:${DJANGO_LOCAL_PORT}` (<http://localhost:8000> by default).
+After initialization, the client is running at `http://localhost:${DJANGO_LOCAL_PORT}` (<http://localhost:8000> by default).
 
-The backend administrative interface can be accessed with the superuser you setup at <http://localhost:8000/admin>.
+If `DJANGO_ADMIN=true`, the backend administrative interface can be accessed with the superuser you setup at
+<http://localhost:8000/admin>.
 
 Stop a running client (and supporting containers) with:
 
@@ -80,6 +57,8 @@ The API endpoint is running at `http://localhost:5000/verify`.
 Sample users and eligibility can be found in [`data/server/db.json`](./data/server/db.json).
 
 ## VS Code with Dev Containers
+
+**This is the recommended development setup**.
 
 [VS Code][vscode] can be used together with Docker via the [Remote - Containers][vscode-containers] extension to enable a
 container-based development environment. This repository includes a [`.devcontainer.json`][config-file] file that configures

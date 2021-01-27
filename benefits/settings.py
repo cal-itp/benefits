@@ -144,4 +144,4 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "benefits", "static")
 ]
-STATIC_ROOT = "/var/www/static"
+STATIC_ROOT = "/var/www/static/"
