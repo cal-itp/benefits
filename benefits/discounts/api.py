@@ -234,19 +234,16 @@ class CustomerClient(Client):
 
 class GroupResponse(Response):
     """Discount Provider Customer Group API response."""
-    def __init__(self, response):
+    def __init__(self, response, payload=None):
         super().__init__(response.status_code)
 
-        # bail early for remote server errors
-        if self.status_code >= 500:
-            return
-
-        # read response payload from body
-        try:
-            payload = response.json()
-        except ValueError as ex:
-            self._assign_error(ex, "Invalid response format")
-            return
+        if payload is None:
+            # read response payload from body
+            try:
+                payload = response.json()
+            except ValueError as ex:
+                self._assign_error(ex, "Invalid response format")
+                return
 
         # extract the customer data
         self.customer_ids = payload.get("customer_ids", [])
@@ -273,12 +270,11 @@ class GroupClient(Client):
 
             if r.status_code in (200, 201):
                 return GroupResponse(r)
-            elif r.status_code == 400:
-                return Response(r.status_code, message="Group: Bad create payload")
-            elif r.status_code == 404:
-                return Response(r.status_code, message="Group: Invalid token")
-            elif r.status_code == 409:
-                return Response(r.status_code, message="Group: Customer with token or ref already exists")
+            elif r.status_code == 403:
+                return Response(r.status_code, message="Group: Invalid merchant_id")
+            elif r.status_code == 500:
+                # 500 indicates the customer already exists in the group
+                return GroupResponse(r, payload=payload)
             else:
                 return Response(r.status_code, message="Group: Error")
         except requests.ConnectionError as ex:

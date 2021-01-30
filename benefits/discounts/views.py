@@ -109,12 +109,12 @@ def _associate_discount(request):
     agency = session.agency(request)
 
     response = api.CustomerClient(agency=agency).create_or_update(card_token)
-    if not isinstance(response, api.CustomerResponse) and response.is_success():
+    if not isinstance(response, api.CustomerResponse) or not response.is_success():
         raise Exception(response.error)
     customer_id = response.id
 
     response = api.GroupClient(agency=agency).enroll_customer(customer_id, eligibility.group_id)
-    if not isinstance(response, api.GroupResponse) and response.is_success():
+    if not isinstance(response, api.GroupResponse):
         raise Exception(response.error)
 
     if response.updated_customer_id == customer_id:
