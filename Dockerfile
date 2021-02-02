@@ -41,7 +41,7 @@ RUN pip install -r requirements.txt
 COPY manage.py manage.py
 COPY benefits/ benefits/
 COPY bin/ bin/
-COPY data/ data/
+COPY data/client/ data/
 
 # switch to non-root $USER
 USER $USER
