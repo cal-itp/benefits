@@ -59,6 +59,14 @@ if ADMIN:
         "django.contrib.messages.middleware.MessageMiddleware",
     ])
 
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SECURE = True
+
+SESSION_COOKIE_AGE = 3600
+SESSION_COOKIE_SAMESITE = "Strict"
+SESSION_COOKIE_SECURE = True
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
 ROOT_URLCONF = "benefits.urls"
 
 template_ctx_processors = [
