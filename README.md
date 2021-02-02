@@ -19,18 +19,16 @@ Create an environment file from the sample:
 cp .env.sample .env
 ```
 
-### Local Django setup
-
-Build the Benefits client image:
+Build the Docker image using Docker Compose:
 
 ```bash
-docker-compose build --no-cache client
+docker-compose build [--no-cache] client
 ```
 
 ### Run the client locally
 
 ```bash
-docker-compose up -d client
+docker-compose up [-d] client
 ```
 
 After initialization, the client is running at `http://localhost:${DJANGO_LOCAL_PORT}` (<http://localhost:8000> by default).
@@ -38,7 +36,7 @@ After initialization, the client is running at `http://localhost:${DJANGO_LOCAL_
 If `DJANGO_ADMIN=true`, the backend administrative interface can be accessed with the superuser you setup at
 <http://localhost:8000/admin>.
 
-Stop a running client (and supporting containers) with:
+Stop the running services with:
 
 ```bash
 docker-compose down
@@ -49,7 +47,7 @@ docker-compose down
 A basic eligibility verification server is available for testing:
 
 ```bash
-docker-compose up -d --build server
+docker-compose up [-d] --build server
 ```
 
 The API endpoint is running at `http://localhost:5000/verify`.

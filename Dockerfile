@@ -18,19 +18,12 @@ RUN useradd --create-home --shell /bin/bash $USER && \
     chown -R $USER /var/log/nginx && \
     touch /var/run/nginx.pid && \
     chown -R $USER /var/run/nginx.pid && \
-    # and permissions for Django
-    mkdir -p /home/$USER/app && \
-    chown -R $USER /home/$USER/app && \
-    mkdir -p /var/www/static && \
-    chown -R $USER /var/www/static && \
-    # and permissions for gunicorn
-    mkdir -p /var/log/gunicorn && \
-    chown -R $USER /var/log/gunicorn
+    # setup directories and permissions for Django and gunicorn
+    mkdir -p /home/$USER/app/run && \
+    mkdir -p /home/$USER/app/static && \
+    chown -R $USER /home/$USER
 
-# overwrite default nginx configs
-COPY nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
-
+# enter app directory
 WORKDIR /home/$USER/app
 
 # install python dependencies
@@ -42,6 +35,9 @@ COPY manage.py manage.py
 COPY benefits/ benefits/
 COPY bin/ bin/
 COPY data/client/ data/
+
+# overwrite default nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # switch to non-root $USER
 USER $USER
