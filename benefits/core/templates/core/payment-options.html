@@ -1,0 +1,20 @@
+{% extends "core/page.html" %}
+{% load static %}
+{% block paragraph_content %}
+<p>
+    Cal-ITP is a new program serving all Californians.
+    In order to activate your discount, you need a bank card that has the contactless symbol on it.
+    The contactless symbol is four curved lines and it looks like this:
+</p>
+<p class="contactless-symbol">
+    <img class="icon mx-auto d-block" src="{% static 'img/icon/contactless.svg' %}" alt="The contactless symbol" />
+</p>
+<p>A contactless bank card can be:</p>
+<ul>
+    <li>A credit card</li>
+    <li>A debit card</li>
+    <li>A prepaid card (if it includes a Visa logo)</li>
+</ul>
+<p>We are working to add additional options for people who do not have access to a bank card. Please check back on this website, or get in touch with your local transit provider.</p>
+<p>You can still get your discount by going through your local transit provider’s application process.</p>
+{% endblock %}

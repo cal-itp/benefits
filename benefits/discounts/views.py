@@ -53,7 +53,7 @@ def _index(request):
             viewmodels.Button.link(
                 classes="btn-sm",
                 text="What if I don’t have a payment card?",
-                url=reverse("core:payment_cards")
+                url=reverse("core:payment_options")
             )
         ]
     )

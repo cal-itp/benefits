@@ -116,15 +116,15 @@ def help(request):
     return PageTemplateResponse(request, page)
 
 
-def payment_cards(request):
-    """View handler for the 'What if I don't have a payment card?' page."""
+def payment_options(request):
+    """View handler for the Payment Options page."""
     page = viewmodels.Page(
-        title="Payment Cards",
-        icon=viewmodels.Icon("paymentcardcheck", "payment card icon"),
-        content_title="What if I don't have a payment card?",
+        title="Payment Options",
+        icon=viewmodels.Icon("paymentcard", "payment card icon"),
+        content_title="Payment options",
         buttons=viewmodels.Button.home(request, text="Go back")
     )
-    return TemplateResponse(request, "core/payment-cards.html", page.context_dict())
+    return TemplateResponse(request, "core/payment-options.html", page.context_dict())
 
 
 def bad_request(request, exception, template_name="400.html"):
