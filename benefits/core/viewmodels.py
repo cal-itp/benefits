@@ -113,6 +113,11 @@ class Page():
     """
     def __init__(self, **kwargs):
         self.title = kwargs.get("title")
+        if self.title is None:
+            self.title = "Transit Benefits"
+        else:
+            self.title = f"Transit Benefits: {self.title}"
+
         self.image = kwargs.get("image")
         self.icon = kwargs.get("icon")
         self.content_title = kwargs.get("content_title")
@@ -141,26 +146,6 @@ class Page():
     def context_dict(self):
         """Return a context dict for a Page."""
         return {"page": self}
-
-    @staticmethod
-    def from_base(
-            title="Transit Discounts",
-            image=Image("riderboardingbusandtapping.svg", "Senior transit rider"),
-            content_title="The new way to pay for transit makes it easier to get your discount every time you ride",
-            paragraphs=[
-                "With new contactless payment options, you can tap your payment card \
-                    when you board and your discount will automatically apply.",
-                "Verify your discount and connect your payment card today."
-            ],
-            **kwargs):
-        """Create a new core.viewmodels.Page instance using sensible defaults."""
-        return Page(
-            title=title,
-            image=image,
-            content_title=content_title,
-            paragraphs=list(paragraphs),
-            **kwargs
-        )
 
 
 class ErrorPage(Page):

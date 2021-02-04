@@ -14,6 +14,26 @@ def PageTemplateResponse(request, page_vm):
     return TemplateResponse(request, "core/page.html", page_vm.context_dict())
 
 
+def _index_content_title():
+    """Helper returns the content title for the common index page."""
+    return "The new way to pay for transit makes it easier to get your discount every time you ride"
+
+
+def _index_image():
+    """"""
+    return viewmodels.Image("riderboardingbusandtapping.svg", "Senior transit rider")
+
+
+def _index_paragraphs():
+    """Helper returns the content paragraphs for the common index page."""
+    return [
+        "With new contactless payment options, you can tap your bank-issued credit, debit or Visa prepaid card when you board,\
+            and your discount will automatically apply.",
+        "We don’t save any of your information, and you don’t need to create an account!",
+        "Verify your discount, and connect your bank card today."
+    ]
+
+
 def _index_url():
     """Helper computes the index url path."""
     return reverse("core:index")
@@ -34,7 +54,13 @@ def index(request):
     buttons[0].classes.append("mt-3")
     buttons[0].label = "Choose your transit provider"
 
-    page = viewmodels.Page.from_base(buttons=buttons, classes="home")
+    page = viewmodels.Page(
+        content_title=_index_content_title(),
+        paragraphs=_index_paragraphs(),
+        image=_index_image(),
+        buttons=buttons,
+        classes="home"
+    )
 
     return PageTemplateResponse(request, page)
 
@@ -44,7 +70,10 @@ def agency_index(request, agency):
     session.reset(request)
     session.update(request, agency=agency, origin=agency.index_url)
 
-    page = viewmodels.Page.from_base(
+    page = viewmodels.Page(
+        content_title=_index_content_title(),
+        paragraphs=_index_paragraphs(),
+        image=_index_image(),
         button=viewmodels.Button.primary(
             text="Let’s do it!",
             url=reverse("eligibility:index")

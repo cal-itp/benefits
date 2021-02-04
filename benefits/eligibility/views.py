@@ -6,11 +6,8 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 
 from benefits.core import middleware, session, viewmodels
-from benefits.core.views import PageTemplateResponse
+from benefits.core.views import PageTemplateResponse, _index_image
 from . import api, forms
-
-
-BASE_TITLE = viewmodels.Page.from_base().title
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
@@ -19,26 +16,27 @@ def index(request):
 
     session.update(request, eligibility_types=[], origin=reverse("eligibility:index"))
 
-    page = viewmodels.Page.from_base(
-        title=f"{BASE_TITLE}: Getting Started",
+    page = viewmodels.Page(
+        title="Getting started",
         content_title="Great, you’ll need two things before we get started...",
         media=[
             viewmodels.MediaItem(
                 icon=viewmodels.Icon("idcardcheck", "identification card icon"),
                 heading="Your California ID",
-                details="Driver License or ID card"
+                details="Driver’s license or ID card"
             ),
             viewmodels.MediaItem(
-                icon=viewmodels.Icon("paymentcardcheck", "payment card icon"),
-                heading="Your payment card",
-                details="A debit, credit, or prepaid card"
+                icon=viewmodels.Icon("paymentcardcheck", "bank card icon"),
+                heading="Your bank card",
+                details="A debit, credit, or Visa prepaid card"
             ),
         ],
         paragraphs=[
             "This program is currently open to those who are 65 or older. \
                 Not over 65? Get in touch with your transit provider to \
-                learn about available discount programs."
+                learn about other available discount programs."
         ],
+        image=_index_image(),
         button=viewmodels.Button.primary(
             text="Ready to continue",
             url=reverse("eligibility:verify")
@@ -53,11 +51,11 @@ def verify(request):
     """View handler for the eligibility verification form."""
 
     page = viewmodels.Page(
-        title=f"{BASE_TITLE}: Verify",
-        content_title="Let’s see if we can verify your age with the DMV",
+        title="Confirm your age",
+        content_title="Let’s see if we can confirm your age with the DMV",
         paragraphs=[
             "If you’re 65 or older, we can confirm you are eligible for a \
-                senior discount when you ride transit."
+                senior discount when you ride transit. We don’t save your information."
         ],
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix=""),
         classes="text-lg-center"
@@ -134,11 +132,11 @@ def unverified(request):
     buttons = [viewmodels.Button.agency_phone_link(agency)]
 
     page = viewmodels.Page(
-        title=f"{BASE_TITLE}: Age not verified",
-        content_title="We can’t verify your age",
+        title="Age not confirmed",
+        content_title="We can’t confirm your age",
         icon=viewmodels.Icon("idcardquestion", "identification card icon"),
         paragraphs=[
-            "You may still be eligible for a discount but we can’t verify \
+            "You may still be eligible for a discount, but we can’t confirm \
                 your age with the DMV.",
             "Reach out to your transit provider for assistance."
         ],
