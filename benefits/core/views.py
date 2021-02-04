@@ -102,9 +102,12 @@ def help(request):
         title="Help",
         content_title="Help",
         paragraphs=[
-            "Cal-ITP is a new program serving all Californians. \
-                The best way to get support if you hit a problem on this site \
-                is to reach out to customer service for your local transit provider."
+            "Cal-ITP is a new project from the California Department of Transportation. \
+                We partner with the California DMV to confirm age for age-based discounts. \
+                We partner with Littlepay to attach your discount to your bank card so that \
+                    when you pay for your transit ride, you get your discount automatically.",
+            "If you need assistance with the site, please reach out to the customer service \
+                team for your local transit provider."
         ],
         buttons=buttons,
         classes="text-lg-center",
