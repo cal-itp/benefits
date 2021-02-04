@@ -39,7 +39,7 @@ def index(request):
         image=_index_image(),
         button=viewmodels.Button.primary(
             text="Ready to continue",
-            url=reverse("eligibility:verify")
+            url=reverse("eligibility:confirm")
         )
     )
 
@@ -47,7 +47,7 @@ def index(request):
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
-def verify(request):
+def confirm(request):
     """View handler for the eligibility verification form."""
 
     page = viewmodels.Page(

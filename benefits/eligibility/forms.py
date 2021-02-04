@@ -9,7 +9,7 @@ from benefits.core import widgets
 class EligibilityVerificationForm(forms.Form):
     """Form to collect eligibility verification details."""
 
-    action_url = "eligibility:verify"
+    action_url = "eligibility:confirm"
     method = "POST"
 
     sub = forms.CharField(
