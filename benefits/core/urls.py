@@ -38,5 +38,4 @@ urlpatterns = [
     path("<agency:agency>", views.agency_index, name="agency_index"),
     path("help", views.help, name="help"),
     path("payment-cards", views.payment_cards, name="payment_cards"),
-    path("privacy", views.privacy, name="privacy")
 ]

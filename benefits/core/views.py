@@ -95,12 +95,6 @@ def payment_cards(request):
     return TemplateResponse(request, "core/payment-cards.html", page.context_dict())
 
 
-def privacy(request):
-    """View handler for the privacy policy page."""
-    page = viewmodels.Page(title="Privacy Policy")
-    return TemplateResponse(request, "core/privacy.html", page.context_dict())
-
-
 def bad_request(request, exception, template_name="400.html"):
     """View handler for HTTP 400 Bad Request responses."""
     if session.active_agency(request):
