@@ -4,6 +4,7 @@ The discounts application: view definitions for the discounts association flow.
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
+from django.utils.translation import ugettext as _
 
 from benefits.core import middleware, session, viewmodels
 from benefits.core.views import PageTemplateResponse
@@ -34,26 +35,26 @@ def _index(request):
     tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
     page = viewmodels.Page(
-        title="Eligibility Verified!",
-        content_title="Great! You’re eligible for a discount!",
-        icon=viewmodels.Icon("idcardcheck", "identification card icon"),
+        title=_("Eligibility Confirmed!"),
+        content_title=_("Great! You’re eligible for a discount!"),
+        icon=viewmodels.Icon("idcardcheck", _("Identification card icon")),
         paragraphs=[
-            "Next, we need to attach your discount to your bank card.\
+            _("Next, we need to attach your discount to your bank card.\
                 We don’t store your information, and you won’t be charged.\
-                When you use this card to pay for transit, you will always receive your discount.",
-            "Use a bank-issued credit, debit, or Visa prepaid card."
+                When you use this card to pay for transit, you will always receive your discount."),
+            _("Use a bank-issued credit, debit, or Visa prepaid card.")
         ],
         classes="text-lg-center",
         forms=[tokenize_retry_form, tokenize_success_form],
         buttons=[
             viewmodels.Button.primary(
-                text="Continue to our payment partner",
+                text=_("Continue to our payment partner"),
                 id=tokenize_button,
                 url=f"#{tokenize_button}"
             ),
             viewmodels.Button.link(
                 classes="btn-sm",
-                text="What if I don’t have a bank card?",
+                text=_("What if I don’t have a bank card?"),
                 url=reverse("core:payment_options")
             )
         ]
@@ -70,7 +71,7 @@ def _index(request):
         access_token=session.token(request),
         element_id=f"#{tokenize_button}",
         color="#046b99",
-        name=f"{agency.long_name} partnered with {agency.discount_provider.name}"
+        name=f"{agency.long_name} {_('partnered with')} {agency.discount_provider.name}"
     )
     context.update(provider_vm.context_dict())
 
@@ -132,13 +133,13 @@ def retry(request):
         if form.is_valid():
             agency = session.agency(request)
             page = viewmodels.Page(
-                title="We couldn’t connect your bank card",
-                icon=viewmodels.Icon("paymentcardquestion", "Bank card question icon"),
-                content_title="We couldn’t connect your bank card",
-                paragraphs=["You can try again or reach out to your transit provider for assistance."],
+                title=_("We couldn’t connect your bank card"),
+                icon=viewmodels.Icon("paymentcardquestion", _("Bank card question icon")),
+                content_title=_("We couldn’t connect your bank card"),
+                paragraphs=[_("You can try again or reach out to your transit provider for assistance.")],
                 buttons=[
                     viewmodels.Button.agency_phone_link(agency),
-                    viewmodels.Button.primary(text="Try again", url=session.origin(request))
+                    viewmodels.Button.primary(text=_("Try again"), url=session.origin(request))
                 ]
             )
             return PageTemplateResponse(request, page)
@@ -152,9 +153,9 @@ def success(request):
     """View handler for the final success page."""
 
     page = viewmodels.Page(
-        title="Success!",
-        icon=viewmodels.Icon("paymentcardcheck", "Bank card verified icon"),
-        content_title="Success!"
+        title=_("Success!"),
+        icon=viewmodels.Icon("paymentcardcheck", _("Bank card verified icon")),
+        content_title=_("Success!")
     )
 
     return TemplateResponse(request, "discounts/success.html", page.context_dict())

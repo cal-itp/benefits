@@ -1,6 +1,8 @@
 """
 The core application: view model definitions for the root of the webapp.
 """
+from django.utils.translation import ugettext as _
+
 from benefits.core import models
 
 from . import session
@@ -38,7 +40,7 @@ class Button():
         )
 
     @staticmethod
-    def home(request, text="Return home"):
+    def home(request, text=_("Return home")):
         """Create a button back to this session's origin."""
         return Button.primary(text=text, url=session.origin(request))
 
@@ -114,9 +116,9 @@ class Page():
     def __init__(self, **kwargs):
         self.title = kwargs.get("title")
         if self.title is None:
-            self.title = "Transit Benefits"
+            self.title = _("Transit Benefits")
         else:
-            self.title = f"Transit Benefits: {self.title}"
+            self.title = f"{_('Transit Benefits')}: {self.title}"
 
         self.image = kwargs.get("image")
         self.icon = kwargs.get("icon")
@@ -159,18 +161,18 @@ class ErrorPage(Page):
     """
     def __init__(self, **kwargs):
         super().__init__(
-            title=kwargs.get("title", "Error"),
-            icon=kwargs.get("icon", Icon("sadbus", "Bus with flat tire icon")),
-            content_title=kwargs.get("content_title", "Error"),
-            paragraphs=kwargs.get("paragraphs", ["Unfortunately, our system is having a problem right now."]),
+            title=kwargs.get("title", _("Error")),
+            icon=kwargs.get("icon", Icon("sadbus", _("Bus with flat tire icon"))),
+            content_title=kwargs.get("content_title", _("Error")),
+            paragraphs=kwargs.get("paragraphs", [_("Unfortunately, our system is having a problem right now.")]),
             button=kwargs.get("button")
         )
 
     @staticmethod
     def error(
-            title="Service is down",
-            content_title="Service is down",
-            paragraphs=["We should be back in operation soon!", "Please check back later."],
+            title=_("Service is down"),
+            content_title=_("Service is down"),
+            paragraphs=[_("We should be back in operation soon!"), _("Please check back later.")],
             **kwargs):
         """Create a new core.viewmodels.ErrorPage instance with defaults for a generic error."""
         return ErrorPage(
@@ -182,9 +184,9 @@ class ErrorPage(Page):
 
     @staticmethod
     def not_found(
-            title="Page not found",
-            content_title="We can’t find that page",
-            paragraphs=["It looks like that page doesn’t exist or it was moved."],
+            title=_("Page not found"),
+            content_title=_("We can’t find that page"),
+            paragraphs=[_("It looks like that page doesn’t exist or it was moved.")],
             **kwargs):
         """Create a new core.viewmodels.ErrorPage with defaults for a 404."""
         path = kwargs.pop("path", None)
@@ -210,7 +212,7 @@ class DiscountProvider():
     * [name: str]
     * [loading_text: str]
     """
-    def __init__(self, model, access_token, element_id, color, name=None, loading_text="Please wait..."):
+    def __init__(self, model, access_token, element_id, color, name=None, loading_text=_("Please wait...")):
         if isinstance(model, models.DiscountProvider):
             self.access_token = access_token
             self.element_id = element_id

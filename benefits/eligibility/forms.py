@@ -2,6 +2,7 @@
 The eligibility application: Form definition for the eligibility verification flow.
 """
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 
 from benefits.core import widgets
 
@@ -13,21 +14,21 @@ class EligibilityVerificationForm(forms.Form):
     method = "POST"
 
     sub = forms.CharField(
-        label="CA driver’s license or ID number",
+        label=_("CA driver’s license or ID number"),
         widget=widgets.FormControlTextInput(placeholder="A1234567")
     )
 
     name = forms.CharField(
-        label="Last name (as it appears on ID)",
+        label=_("Last name (as it appears on ID)"),
         widget=widgets.FormControlTextInput(placeholder="Rodriguez")
     )
 
-    submit_value = "Check status"
-    submitting_value = "Checking"
+    submit_value = _("Check status")
+    submitting_value = _("Checking")
 
     _error_messages = {
-        "invalid": "Check your input. The format looks wrong.",
-        "missing": "This field is required."
+        "invalid": _("Check your input. The format looks wrong."),
+        "missing": _("This field is required.")
     }
 
     def add_api_errors(self, form_errors):
@@ -41,7 +42,7 @@ class EligibilityVerificationForm(forms.Form):
             ]
 
             validation_errors = {
-                field: forms.ValidationError(self._error_messages.get(code, "Error"), code=code)
+                field: forms.ValidationError(self._error_messages.get(code, _("Error")), code=code)
                 for (field, code) in field_errors
             }
 

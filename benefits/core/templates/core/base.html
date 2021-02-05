@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load static %}
 <!doctype html>
 <html lang="en" class="{% block classes %}{% endblock %}">
@@ -18,7 +19,7 @@
     <body>
         <header role="banner" id="header" class="global-header">
             <div id="skip-to-content">
-                <a href="#main-content">Skip to Main Content</a>
+                <a href="#main-content">{% translate "Skip to Main Content" %}</a>
             </div>
 
             {% if debug %}
@@ -39,9 +40,9 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <ul class="footer-links">
-                            <li><a href="{% url "core:payment_options" %}">Payment Options</a></li>
-                            <li><a href="{% url "core:help" %}">Help</a></li>
-                            <li><a href="https://www.dmv.ca.gov/portal/privacy-and-security/" target="_blank">Privacy Policy</a></li>
+                            <li><a href="{% url "core:payment_options" %}">{% translate "Payment Options" %}</a></li>
+                            <li><a href="{% url "core:help" %}">{% translate "Help" %}</a></li>
+                            <li><a href="https://www.dmv.ca.gov/portal/privacy-and-security/" target="_blank">{% translate "Privacy Policy" %}</a></li>
                         </ul>
                     </div>
                 </div>
