@@ -7,5 +7,7 @@ WORKDIR /usr/src/cal-itp
 
 COPY requirements.txt requirements.txt
 
-RUN python -m pip install --upgrade pip && \
+RUN apt-get update && \
+    apt-get install -qq gettext && \
+    python -m pip install --upgrade pip && \
     pip install -r requirements.txt
