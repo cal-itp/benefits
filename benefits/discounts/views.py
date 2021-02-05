@@ -53,7 +53,7 @@ def _index(request):
             ),
             viewmodels.Button.link(
                 classes="btn-sm",
-                text="What if I don’t have a payment card?",
+                text="What if I don’t have a bank card?",
                 url=reverse("core:payment_options")
             )
         ]
@@ -133,7 +133,7 @@ def retry(request):
             agency = session.agency(request)
             page = viewmodels.Page(
                 title="We couldn’t connect your bank card",
-                icon=viewmodels.Icon("paymentcardquestion", "Payment card question icon"),
+                icon=viewmodels.Icon("paymentcardquestion", "Bank card question icon"),
                 content_title="We couldn’t connect your bank card",
                 paragraphs=["You can try again or reach out to your transit provider for assistance."],
                 buttons=[
@@ -153,7 +153,7 @@ def success(request):
 
     page = viewmodels.Page(
         title="Success!",
-        icon=viewmodels.Icon("paymentcardcheck", "Payment card verified icon"),
+        icon=viewmodels.Icon("paymentcardcheck", "Bank card verified icon"),
         content_title="Success!"
     )
 

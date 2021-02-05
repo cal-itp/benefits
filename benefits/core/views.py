@@ -120,7 +120,7 @@ def payment_options(request):
     """View handler for the Payment Options page."""
     page = viewmodels.Page(
         title="Payment Options",
-        icon=viewmodels.Icon("paymentcard", "payment card icon"),
+        icon=viewmodels.Icon("paymentcard", "Bank card icon"),
         content_title="Payment options",
         buttons=viewmodels.Button.home(request, text="Go back")
     )
