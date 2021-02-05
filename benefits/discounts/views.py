@@ -35,12 +35,13 @@ def _index(request):
 
     page = viewmodels.Page(
         title="Eligibility Verified!",
-        content_title="Great! You’re eligible for a senior discount!",
+        content_title="Great! You’re eligible for a discount!",
         icon=viewmodels.Icon("idcardcheck", "identification card icon"),
         paragraphs=[
-            "Next, we need to attach your discount to your payment card so \
-                when you pay with that card, you always get your discount.",
-            "Use a credit, debit, or prepaid card."
+            "Next, we need to attach your discount to your bank card.\
+                We don’t store your information, and you won’t be charged.\
+                When you use this card to pay for transit, you will always receive your discount.",
+            "Use a bank-issued credit, debit, or Visa prepaid card."
         ],
         classes="text-lg-center",
         forms=[tokenize_retry_form, tokenize_success_form],
@@ -131,9 +132,9 @@ def retry(request):
         if form.is_valid():
             agency = session.agency(request)
             page = viewmodels.Page(
-                title="We couldn’t connect your payment card",
+                title="We couldn’t connect your bank card",
                 icon=viewmodels.Icon("paymentcardquestion", "Payment card question icon"),
-                content_title="We couldn’t connect your payment card",
+                content_title="We couldn’t connect your bank card",
                 paragraphs=["You can try again or reach out to your transit provider for assistance."],
                 buttons=[
                     viewmodels.Button.agency_phone_link(agency),
@@ -152,8 +153,8 @@ def success(request):
 
     page = viewmodels.Page(
         title="Success!",
-        content_title="Success!",
-        icon=viewmodels.Icon("paymentcardcheck", "Payment card verified icon")
+        icon=viewmodels.Icon("paymentcardcheck", "Payment card verified icon"),
+        content_title="Success!"
     )
 
     return TemplateResponse(request, "discounts/success.html", page.context_dict())
