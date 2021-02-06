@@ -16,5 +16,6 @@ urlpatterns = [
     path("", include("benefits.core.urls")),
     path("discounts/", include("benefits.discounts.urls")),
     path("eligibility/", include("benefits.eligibility.urls")),
+    path("i18n/", include("django.conf.urls.i18n")),
     path("admin/", admin.site.urls)
 ]

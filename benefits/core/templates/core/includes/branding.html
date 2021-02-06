@@ -7,7 +7,7 @@
             <img class="lg d-none d-lg-block" src="{% static "img/logo-lg.svg" %}"  alt="{% translate "core.logo.large" context "image alt text" %}" />
         </span>
         <span class="form-inline">
-            <button class="btn btn-lg btn-outline-light">Español</button>
+            {% include "core/includes/lang-selector.html" %}
         </span>
     </div>
 </div>
