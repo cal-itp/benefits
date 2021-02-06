@@ -254,11 +254,6 @@ class TransitAgency():
             self.agency_id = model.agency_id
             self.merchant_id = model.merchant_id
             self.logo_url = model.logo_url
-            self.street_address1 = model.street_address1
-            self.street_address2 = model.street_address2
-            self.city = model.city
-            self.zip_code = model.zip_code
-            self.country_code = model.country_code
             self.phone = model.phone
 
     def context_dict(self):

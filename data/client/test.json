@@ -65,12 +65,7 @@
             "agency_id": "abc123",
             "merchant_id": "abc",
             "logo_url": "https://www.example.com/logo.png",
-            "street_address1": "1234 Main Street",
-            "street_address2": "",
-            "city": "Everytown",
-            "zip_code": "55555",
-            "country_code": "US",
-            "phone": "1-800-555-5555",
+            "phone": "800-555-5555",
             "active": true,
             "eligibility_types": [
                 1
@@ -93,11 +88,6 @@
             "agency_id": "def456",
             "merchant_id": "deftl",
             "logo_url": "https://www.example.com/logo.png",
-            "street_address1": "4567 Main Street",
-            "street_address2": "",
-            "city": "Everytown",
-            "zip_code": "55555",
-            "country_code": "US",
             "phone": "321-555-5555",
             "active": true,
             "eligibility_types": [
