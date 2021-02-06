@@ -14,21 +14,21 @@ class EligibilityVerificationForm(forms.Form):
     method = "POST"
 
     sub = forms.CharField(
-        label=_("CA driver’s license or ID number"),
+        label=_("eligibility.form.id"),
         widget=widgets.FormControlTextInput(placeholder="A1234567")
     )
 
     name = forms.CharField(
-        label=_("Last name (as it appears on ID)"),
+        label=_("eligibility.form.name"),
         widget=widgets.FormControlTextInput(placeholder="Rodriguez")
     )
 
-    submit_value = _("Check status")
-    submitting_value = _("Checking")
+    submit_value = _("eligibility.form.submit")
+    submitting_value = _("eligibility.form.submitting")
 
     _error_messages = {
-        "invalid": _("Check your input. The format looks wrong."),
-        "missing": _("This field is required.")
+        "invalid": _("eligibility.form.error.invalid"),
+        "missing": _("eligibility.form.error.missing")
     }
 
     def add_api_errors(self, form_errors):
@@ -42,7 +42,7 @@ class EligibilityVerificationForm(forms.Form):
             ]
 
             validation_errors = {
-                field: forms.ValidationError(self._error_messages.get(code, _("Error")), code=code)
+                field: forms.ValidationError(self._error_messages.get(code, _("core.error")), code=code)
                 for (field, code) in field_errors
             }
 

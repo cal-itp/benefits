@@ -4,7 +4,7 @@ The eligibility application: view definitions for the eligibility verification f
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.utils.translation import ugettext as _
+from django.utils.translation import pgettext, ugettext as _
 
 from benefits.core import middleware, session, viewmodels
 from benefits.core.views import PageTemplateResponse, _index_image
@@ -18,28 +18,26 @@ def index(request):
     session.update(request, eligibility_types=[], origin=reverse("eligibility:index"))
 
     page = viewmodels.Page(
-        title=_("Getting started"),
-        content_title=_("Great, you’ll need two things before we get started..."),
+        title=_("eligibility.index.title"),
+        content_title=_("eligibility.index.content_title"),
         media=[
             viewmodels.MediaItem(
-                icon=viewmodels.Icon("idcardcheck", _("Identification card icon")),
-                heading=_("Your California ID"),
-                details=_("Driver’s license or ID card")
+                icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcard")),
+                heading=_("eligibility.index.item1.title"),
+                details=_("eligibility.index.item1.text")
             ),
             viewmodels.MediaItem(
-                icon=viewmodels.Icon("paymentcardcheck", _("Bank card icon")),
-                heading=_("Your bank card"),
-                details=_("A debit, credit, or Visa prepaid card")
+                icon=viewmodels.Icon("paymentcardcheck", pgettext("image alt text", "core.icons.bankcard")),
+                heading=_("eligibility.index.item2.title"),
+                details=_("eligibility.index.item2.text")
             ),
         ],
         paragraphs=[
-            _("This program is currently open to those who are 65 or older. \
-                Not over 65? Get in touch with your transit provider to \
-                learn about other available discount programs.")
+            _("eligibility.index.p1")
         ],
         image=_index_image(),
         button=viewmodels.Button.primary(
-            text=_("Ready to continue"),
+            text=_("eligibility.index.button"),
             url=reverse("eligibility:confirm")
         )
     )
@@ -52,11 +50,10 @@ def confirm(request):
     """View handler for the eligibility verification form."""
 
     page = viewmodels.Page(
-        title=_("Confirm your age"),
-        content_title=_("Let’s see if we can confirm your age with the DMV"),
+        title=_("eligibility.confirm.title"),
+        content_title=_("eligibility.confirm.content_title"),
         paragraphs=[
-            _("If you’re 65 or older, we can confirm you are eligible for a \
-                senior discount when you ride transit. We don’t save your information.")
+            _("eligibility.confirm.p1")
         ],
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix=""),
         classes="text-lg-center"
@@ -78,7 +75,7 @@ def confirm(request):
 
 
 def _verify(request, form):
-    """"Helper calls the eligibility verification API to verify user input."""
+    """Helper calls the eligibility verification API to verify user input."""
 
     if not form.is_valid():
         return None
@@ -133,13 +130,12 @@ def unverified(request):
     buttons = [viewmodels.Button.agency_phone_link(agency)]
 
     page = viewmodels.Page(
-        title=_("Age not confirmed"),
-        content_title=_("We can’t confirm your age"),
-        icon=viewmodels.Icon("idcardquestion", _("Identification card icon")),
+        title=_("eligibility.unverified.title"),
+        content_title=_("eligibility.unverified.content_title"),
+        icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcard")),
         paragraphs=[
-            _("You may still be eligible for a discount, but we can’t confirm \
-                your age with the DMV."),
-            _("Reach out to your transit provider for assistance.")
+            _("eligibility.unverified.p1"),
+            _("eligibility.unverified.p2")
         ],
         buttons=buttons,
         classes="text-lg-center"

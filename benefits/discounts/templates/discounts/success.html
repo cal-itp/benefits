@@ -2,10 +2,10 @@
 {% load i18n %}
 {% load static %}
 {% block paragraph_content %}
-<p>{% translate "Your discount is now linked to your bank card. You were not charged anything today." %}</p>
-<p>{% translate "When boarding transit, pay with this same card, and your discount will automatically be applied to your fare purchase." %}</p>
-<p>{% translate "To add or edit your bank cards" %}, <a href="#" target="_blank">{% translate "go to the Littlepay website" context "link text" %}</a>.</p>
+<p>{% translate "discounts.success.p1" %}</p>
+<p>{% translate "discounts.success.p2" %}</p>
+<p>{% translate "discounts.success.p3.text" %}, <a href="#" target="_blank">{% translate "discounts.success.p3.link" context "link text" %}</a>.</p>
 <p>
-    <img class="img-fluid" src="{% static 'img/riderboardingbusandtapping.svg' %}" alt="{% translate "Image caption goes here" %}" />
+    <img class="img-fluid" src="{% static 'img/riderboardingbusandtapping.svg' %}" alt="{% translate "discounts.success.image" context "image alt text" %}" />
 </p>
 {% endblock %}

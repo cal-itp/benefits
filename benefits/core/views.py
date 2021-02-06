@@ -5,7 +5,7 @@ from django.http import HttpResponseBadRequest, HttpResponseNotFound, HttpRespon
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import pgettext, ugettext as _
 
 from . import models, session, viewmodels
 
@@ -17,21 +17,20 @@ def PageTemplateResponse(request, page_vm):
 
 def _index_content_title():
     """Helper returns the content title for the common index page."""
-    return _("The new way to pay for transit makes it easier to get your discount every time you ride")
+    return _("core.index.content_title")
 
 
 def _index_image():
     """"""
-    return viewmodels.Image("riderboardingbusandtapping.svg", _("Senior transit rider"))
+    return viewmodels.Image("riderboardingbusandtapping.svg", pgettext("image alt text", "core.index.image"))
 
 
 def _index_paragraphs():
     """Helper returns the content paragraphs for the common index page."""
     return [
-        _("With new contactless payment options, you can tap your bank-issued credit, debit or Visa prepaid card when you board,\
-            and your discount will automatically apply."),
-        _("We don’t save any of your information, and you don’t need to create an account!"),
-        _("Verify your discount, and connect your bank card today.")
+        _("core.index.p1"),
+        _("core.index.p2"),
+        _("core.index.p3")
     ]
 
 
@@ -53,7 +52,7 @@ def index(request):
         for a in agencies
     ]
     buttons[0].classes.append("mt-3")
-    buttons[0].label = _("Choose your transit provider")
+    buttons[0].label = _("core.index.chooseprovider")
 
     page = viewmodels.Page(
         content_title=_index_content_title(),
@@ -76,7 +75,7 @@ def agency_index(request, agency):
         paragraphs=_index_paragraphs(),
         image=_index_image(),
         button=viewmodels.Button.primary(
-            text=_("Let’s do it!"),
+            text=_("core.index.continue"),
             url=reverse("eligibility:index")
         ),
         classes="home"
@@ -97,18 +96,14 @@ def help(request):
             for a in models.TransitAgency.all_active()
         ]
 
-    buttons.append(viewmodels.Button.home(request, _("Go back")))
+    buttons.append(viewmodels.Button.home(request, _("core.buttons.back")))
 
     page = viewmodels.Page(
-        title=_("Help"),
-        content_title=_("Help"),
+        title=_("core.help"),
+        content_title=_("core.help"),
         paragraphs=[
-            _("Cal-ITP is a new project from the California Department of Transportation. \
-                We partner with the California DMV to confirm age for age-based discounts. \
-                We partner with Littlepay to attach your discount to your bank card so that \
-                    when you pay for your transit ride, you get your discount automatically."),
-            _("If you need assistance with the site, please reach out to the customer service \
-                team for your local transit provider.")
+            _("core.help.p1"),
+            _("core.help.p2")
         ],
         buttons=buttons,
         classes="text-lg-center",
@@ -120,10 +115,10 @@ def help(request):
 def payment_options(request):
     """View handler for the Payment Options page."""
     page = viewmodels.Page(
-        title=_("Payment Options"),
-        icon=viewmodels.Icon("paymentcard", _("Bank card icon")),
-        content_title=_("Payment options"),
-        buttons=viewmodels.Button.home(request, text=_("Go back"))
+        title=_("core.payment-options"),
+        icon=viewmodels.Icon("paymentcard", pgettext("image alt text", "core.icons.bankcard")),
+        content_title=_("core.payment-options"),
+        buttons=viewmodels.Button.home(request, text=_("core.buttons.back"))
     )
     return TemplateResponse(request, "core/payment-options.html", page.context_dict())
 

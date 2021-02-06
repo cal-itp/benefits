@@ -3,28 +3,28 @@
 {% load static %}
 {% block paragraph_content %}
 <p>
-    {% blocktranslate %}
+    {% blocktranslate trimmed context "template text block" %}
     Cal-ITP is a new program serving all Californians.
     In order to activate your discount, you need a bank card that has the contactless symbol on it.
     The contactless symbol is four curved lines and it looks like this:
     {% endblocktranslate %}
 </p>
 <p class="contactless-symbol">
-    <img class="icon mx-auto d-block" src="{% static 'img/icon/contactless.svg' %}" alt="{% translate "The contactless symbol" %}" />
+    <img class="icon mx-auto d-block" src="{% static 'img/icon/contactless.svg' %}" alt="{% translate "core.icons.contactless" context "image alt text" %}" />
 </p>
-<p>{% translate "A contactless bank card can be" %}:</p>
+<p>{% translate "core.payments.p3" %}:</p>
 <ul>
-    <li>{% translate "A credit card" %}</li>
-    <li>{% translate "A debit card" %}</li>
-    <li>{% translate "A prepaid card (if it includes a Visa logo)" %}</li>
+    <li>{% translate "core.payments.option.creditcard" %}</li>
+    <li>{% translate "core.payments.option.debitcard" %}</li>
+    <li>{% translate "core.payments.option.prepaid" %}</li>
 </ul>
 <p>
-    {% blocktranslate %}
+    {% blocktranslate trimmed context "template text block" %}
     We are working to add additional options for people who do not have access to a bank card.
     Please check back on this website, or get in touch with your local transit provider.
     {% endblocktranslate %}
 </p>
 <p>
-    {% translate "You can still get your discount by going through your local transit provider’s application process." %}
+    {% translate "core.payments.p5" %}
 </p>
 {% endblock %}
