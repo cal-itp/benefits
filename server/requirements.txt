@@ -1,5 +1,5 @@
-cryptography==3.2.1
-debugpy
+cryptography==3.4.2
+debugpy==1.2.1
 Flask==1.1.2
 Flask-RESTful==0.3.8
 jwcrypto==0.8
