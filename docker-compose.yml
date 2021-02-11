@@ -9,7 +9,8 @@ services:
       - DJANGO_DEBUG
       - DJANGO_ADMIN
       - DJANGO_DB
-      - DJANGO_INIT_DATA
+      - DJANGO_INIT_JSON
+      - DJANGO_INIT_PATH
       - GUNICORN_CMD_ARGS
     ports:
       - "${DJANGO_LOCAL_PORT}:80"
@@ -24,7 +25,8 @@ services:
       - DJANGO_DEBUG
       - DJANGO_ADMIN
       - DJANGO_DB
-      - DJANGO_INIT_DATA
+      - DJANGO_INIT_JSON
+      - DJANGO_INIT_PATH=data/client/test.json
     entrypoint: []
     command: python -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8888
     depends_on:
