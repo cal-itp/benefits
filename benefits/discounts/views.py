@@ -37,7 +37,7 @@ def _index(request):
     page = viewmodels.Page(
         title=_("discounts.index.title"),
         content_title=_("discounts.index.content_title"),
-        icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcard")),
+        icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
         paragraphs=[
             _("discounts.index.p1"),
             _("discounts.index.p2")
@@ -132,7 +132,7 @@ def retry(request):
             agency = session.agency(request)
             page = viewmodels.Page(
                 title=_("discounts.retry.title"),
-                icon=viewmodels.Icon("paymentcardquestion", pgettext("image alt text", "core.icons.bankcard")),
+                icon=viewmodels.Icon("bankcardquestion", pgettext("image alt text", "core.icons.bankcardquestion")),
                 content_title=_("discounts.retry.title"),
                 paragraphs=[_("discounts.retry.p1")],
                 buttons=[
@@ -152,7 +152,7 @@ def success(request):
 
     page = viewmodels.Page(
         title=_("discounts.success.title"),
-        icon=viewmodels.Icon("paymentcardcheck", pgettext("image alt text", "core.icons.bankcard")),
+        icon=viewmodels.Icon("paymentcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
         content_title=_("discounts.success.title")
     )
 

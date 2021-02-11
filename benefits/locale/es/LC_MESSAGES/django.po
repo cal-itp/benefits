@@ -6,28 +6,28 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues\n"
-"POT-Creation-Date: 2021-02-06 20:15+0000\n"
+"POT-Creation-Date: 2021-02-11 22:26+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: benefits/core/templates/core/base.html:22
+#: benefits/core/templates/core/base.html:23
 msgid "core.skip"
 msgstr "Skip to Main Content"
 
-#: benefits/core/templates/core/base.html:43 benefits/core/views.py:118
+#: benefits/core/templates/core/base.html:44 benefits/core/views.py:118
 #: benefits/core/views.py:120
 msgid "core.payment-options"
 msgstr "Payment Options"
 
-#: benefits/core/templates/core/base.html:44 benefits/core/views.py:102
+#: benefits/core/templates/core/base.html:45 benefits/core/views.py:102
 #: benefits/core/views.py:103
 msgid "core.help"
 msgstr "Ayuda"
 
-#: benefits/core/templates/core/base.html:45
+#: benefits/core/templates/core/base.html:46
 msgid "core.privacy"
 msgstr "Privacy Policy"
 
@@ -194,16 +194,14 @@ msgstr ""
 "If you need assistance with the site, please reach out to the customer "
 "service team for your local transit provider."
 
-#: benefits/core/views.py:119 benefits/discounts/views.py:135
-#: benefits/discounts/views.py:155 benefits/eligibility/views.py:30
+#: benefits/core/views.py:119
 msgctxt "image alt text"
 msgid "core.icons.bankcard"
 msgstr "Bank card icon"
 
 #: benefits/discounts/templates/discounts/success.html:5
 msgid "discounts.success.p1"
-msgstr ""
-"Su descuento ahora está vinculado a su tarjeta de pago."
+msgstr "Su descuento ahora está vinculado a su tarjeta de pago."
 
 #: benefits/discounts/templates/discounts/success.html:6
 msgid "discounts.success.p2"
@@ -234,10 +232,9 @@ msgid "discounts.index.content_title"
 msgstr "¡Genial! ¡Eres elegible para un descuento!"
 
 #: benefits/discounts/views.py:40 benefits/eligibility/views.py:25
-#: benefits/eligibility/views.py:136
 msgctxt "image alt text"
-msgid "core.icons.idcard"
-msgstr "Identification card icon"
+msgid "core.icons.idcardcheck"
+msgstr "Identification card with checkmark"
 
 #: benefits/discounts/views.py:42
 msgid "discounts.index.p1"
@@ -261,11 +258,16 @@ msgstr "What if I don’t have a bank card?"
 msgid "discounts.retry.title"
 msgstr "No pudimos conectar tu tarjeta de pago"
 
+#: benefits/discounts/views.py:135
+msgctxt "image alt text"
+msgid "core.icons.bankcardquestion"
+msgstr "Bank card with contactless symbol and question mark"
+
 #: benefits/discounts/views.py:137
 msgid "discounts.retry.p1"
 msgstr ""
-"Puede intentarlo de nuevo, o puede comunicarse con su proveedor de transporte "
-"público para obtener ayuda."
+"Puede intentarlo de nuevo, o puede comunicarse con su proveedor de "
+"transporte público para obtener ayuda."
 
 #: benefits/discounts/views.py:140
 msgid "discounts.retry.button"
@@ -274,6 +276,11 @@ msgstr "Inténtalo de nuevo"
 #: benefits/discounts/views.py:154 benefits/discounts/views.py:156
 msgid "discounts.success.title"
 msgstr "¡Éxito!"
+
+#: benefits/discounts/views.py:155 benefits/eligibility/views.py:30
+msgctxt "image alt text"
+msgid "core.icons.bankcardcheck"
+msgstr "Bank card with contactless symbol and checkmark"
 
 #: benefits/eligibility/forms.py:17
 msgid "eligibility.form.id"
@@ -326,9 +333,10 @@ msgstr "Una tarjeta de débito, crédito o prepago"
 #: benefits/eligibility/views.py:36
 msgid "eligibility.index.p1"
 msgstr ""
-"Este programa está actualmente abierto a personas mayores de 65 años. "
-"¿No tienes más de 65 años? Póngase en contacto con su proveedor de transporte "
-"público para obtener información sobre los programas de descuento disponibles."
+"Este programa está actualmente abierto a personas mayores de 65 años. ¿No "
+"tienes más de 65 años? Póngase en contacto con su proveedor de transporte "
+"público para obtener información sobre los programas de descuento "
+"disponibles."
 
 #: benefits/eligibility/views.py:40
 msgid "eligibility.index.button"
@@ -348,20 +356,25 @@ msgstr ""
 "Si tiene 65 años o más, podemos confirmar que es elegible para un descuento "
 "para personas mayores cuando viaja en transporte público."
 
-#: benefits/eligibility/views.py:134
+#: benefits/eligibility/views.py:133
 msgid "eligibility.unverified.title"
 msgstr "Age not confirmed"
 
-#: benefits/eligibility/views.py:135
+#: benefits/eligibility/views.py:134
 msgid "eligibility.unverified.content_title"
 msgstr "No podemos verificar su edad"
 
-#: benefits/eligibility/views.py:138
+#: benefits/eligibility/views.py:135
+msgctxt "image alt text"
+msgid "core.icons.idcardquestion"
+msgstr "Identification card with question mark"
+
+#: benefits/eligibility/views.py:137
 msgid "eligibility.unverified.p1"
 msgstr ""
-"Usted todavía puede ser elegible para un descuento, pero no podemos verificar "
-"su edad con el DMV."
+"Usted todavía puede ser elegible para un descuento, pero no podemos "
+"verificar su edad con el DMV."
 
-#: benefits/eligibility/views.py:139
+#: benefits/eligibility/views.py:138
 msgid "eligibility.unverified.p2"
 msgstr "Comuníquese con su proveedor de tránsito para obtener ayuda."

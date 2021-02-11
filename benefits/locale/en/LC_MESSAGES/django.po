@@ -6,28 +6,28 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues\n"
-"POT-Creation-Date: 2021-02-06 20:00+0000\n"
+"POT-Creation-Date: 2021-02-11 22:16+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: benefits/core/templates/core/base.html:22
+#: benefits/core/templates/core/base.html:23
 msgid "core.skip"
 msgstr "Skip to Main Content"
 
-#: benefits/core/templates/core/base.html:43 benefits/core/views.py:118
+#: benefits/core/templates/core/base.html:44 benefits/core/views.py:118
 #: benefits/core/views.py:120
 msgid "core.payment-options"
 msgstr "Payment Options"
 
-#: benefits/core/templates/core/base.html:44 benefits/core/views.py:102
+#: benefits/core/templates/core/base.html:45 benefits/core/views.py:102
 #: benefits/core/views.py:103
 msgid "core.help"
 msgstr "Help"
 
-#: benefits/core/templates/core/base.html:45
+#: benefits/core/templates/core/base.html:46
 msgid "core.privacy"
 msgstr "Privacy Policy"
 
@@ -194,11 +194,10 @@ msgstr ""
 "If you need assistance with the site, please reach out to the customer "
 "service team for your local transit provider."
 
-#: benefits/core/views.py:119 benefits/discounts/views.py:135
-#: benefits/discounts/views.py:155 benefits/eligibility/views.py:30
+#: benefits/core/views.py:119
 msgctxt "image alt text"
 msgid "core.icons.bankcard"
-msgstr "Bank card icon"
+msgstr "Bank card with contactless symbol"
 
 #: benefits/discounts/templates/discounts/success.html:5
 msgid "discounts.success.p1"
@@ -235,10 +234,9 @@ msgid "discounts.index.content_title"
 msgstr "Great! You’re eligible for a discount!"
 
 #: benefits/discounts/views.py:40 benefits/eligibility/views.py:25
-#: benefits/eligibility/views.py:136
 msgctxt "image alt text"
-msgid "core.icons.idcard"
-msgstr "Identification card icon"
+msgid "core.icons.idcardcheck"
+msgstr "Identification card with checkmark"
 
 #: benefits/discounts/views.py:42
 msgid "discounts.index.p1"
@@ -263,6 +261,11 @@ msgstr "What if I don’t have a bank card?"
 msgid "discounts.retry.title"
 msgstr "We couldn’t connect your bank card"
 
+#: benefits/discounts/views.py:135
+msgctxt "image alt text"
+msgid "core.icons.bankcardquestion"
+msgstr "Bank card with contactless symbol and question mark"
+
 #: benefits/discounts/views.py:137
 msgid "discounts.retry.p1"
 msgstr ""
@@ -275,6 +278,11 @@ msgstr "Try again"
 #: benefits/discounts/views.py:154 benefits/discounts/views.py:156
 msgid "discounts.success.title"
 msgstr "Success!"
+
+#: benefits/discounts/views.py:155 benefits/eligibility/views.py:30
+msgctxt "image alt text"
+msgid "core.icons.bankcardcheck"
+msgstr "Bank card with contactless symbol and checkmark"
 
 #: benefits/eligibility/forms.py:17
 msgid "eligibility.form.id"
@@ -349,20 +357,25 @@ msgstr ""
 "If you’re 65 or older, we can confirm you are eligible for a senior discount "
 "when you ride transit. We don’t save your information."
 
-#: benefits/eligibility/views.py:134
+#: benefits/eligibility/views.py:133
 msgid "eligibility.unverified.title"
 msgstr "Age not confirmed"
 
-#: benefits/eligibility/views.py:135
+#: benefits/eligibility/views.py:134
 msgid "eligibility.unverified.content_title"
 msgstr "We can’t confirm your age"
 
-#: benefits/eligibility/views.py:138
+#: benefits/eligibility/views.py:135
+msgctxt "image alt text"
+msgid "core.icons.idcardquestion"
+msgstr "Identification card with question mark"
+
+#: benefits/eligibility/views.py:137
 msgid "eligibility.unverified.p1"
 msgstr ""
 "You may still be eligible for a discount, but we can’t verify your age with "
 "the DMV."
 
-#: benefits/eligibility/views.py:139
+#: benefits/eligibility/views.py:138
 msgid "eligibility.unverified.p2"
 msgstr "Reach out to your transit provider for assistance."

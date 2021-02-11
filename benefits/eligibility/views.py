@@ -22,12 +22,12 @@ def index(request):
         content_title=_("eligibility.index.content_title"),
         media=[
             viewmodels.MediaItem(
-                icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcard")),
+                icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
                 heading=_("eligibility.index.item1.title"),
                 details=_("eligibility.index.item1.text")
             ),
             viewmodels.MediaItem(
-                icon=viewmodels.Icon("paymentcardcheck", pgettext("image alt text", "core.icons.bankcard")),
+                icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
                 heading=_("eligibility.index.item2.title"),
                 details=_("eligibility.index.item2.text")
             ),
@@ -132,7 +132,7 @@ def unverified(request):
     page = viewmodels.Page(
         title=_("eligibility.unverified.title"),
         content_title=_("eligibility.unverified.content_title"),
-        icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcard")),
+        icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
         paragraphs=[
             _("eligibility.unverified.p1"),
             _("eligibility.unverified.p2")

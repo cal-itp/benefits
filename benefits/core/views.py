@@ -116,7 +116,7 @@ def payment_options(request):
     """View handler for the Payment Options page."""
     page = viewmodels.Page(
         title=_("core.payment-options"),
-        icon=viewmodels.Icon("paymentcard", pgettext("image alt text", "core.icons.bankcard")),
+        icon=viewmodels.Icon("bankcard", pgettext("image alt text", "core.icons.bankcard")),
         content_title=_("core.payment-options"),
         buttons=viewmodels.Button.home(request, text=_("core.buttons.back"))
     )
