@@ -15,7 +15,8 @@
 
     // Add the IDs of extensions you want installed when the container is created.
     "extensions": [
+        "batisteo.vscode-django",
         "ms-python.python",
-        "batisteo.vscode-django"
+        "ms-python.vscode-pylance",
     ]
 }

@@ -2,5 +2,5 @@ FROM benefits_client:latest
 
 USER root
 
-RUN apt-get install -qq git && \
+RUN apt-get install -qq curl git jq ssh && \
     pip install flake8 debugpy
