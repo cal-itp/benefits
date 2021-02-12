@@ -8,6 +8,7 @@ services:
       - DJANGO_SECRET_KEY
       - DJANGO_DEBUG
       - DJANGO_ADMIN
+      - DJANGO_ALLOWED_HOSTS
       - DJANGO_DB
       - DJANGO_INIT_JSON
       - DJANGO_INIT_PATH
@@ -24,6 +25,7 @@ services:
       - DJANGO_SECRET_KEY
       - DJANGO_DEBUG
       - DJANGO_ADMIN
+      - DJANGO_ALLOWED_HOSTS
       - DJANGO_DB
       - DJANGO_INIT_JSON
       - DJANGO_INIT_PATH=data/client/test.json

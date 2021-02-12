@@ -22,6 +22,9 @@ if DEBUG:
         '127.0.0.1',
         '[::1]'
     ])
+else:
+    hosts = os.environ["DJANGO_ALLOWED_HOSTS"].split()
+    ALLOWED_HOSTS.extend(hosts)
 
 # Application definition
 
