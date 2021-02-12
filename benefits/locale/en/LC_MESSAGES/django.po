@@ -223,7 +223,7 @@ msgstr "go to the Littlepay website"
 #: benefits/discounts/templates/discounts/success.html:9
 msgctxt "image alt text"
 msgid "discounts.success.image"
-msgstr "Image caption goes here"
+msgstr "Tapping bank card on the bus reader"
 
 #: benefits/discounts/views.py:38
 msgid "discounts.index.title"
