@@ -8,7 +8,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN useradd --create-home --shell /bin/bash $USER && \
     # install nginx
     apt-get update && \
-    apt-get install -qq --no-install-recommends nginx && \
+    apt-get install -qq --no-install-recommends gettext nginx && \
     # setup $USER permissions for nginx
     mkdir -p /var/cache/nginx && \
     chown -R $USER /var/cache/nginx && \
