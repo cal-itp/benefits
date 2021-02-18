@@ -63,12 +63,14 @@ if ADMIN:
     ])
 
 CSRF_COOKIE_HTTPONLY = True
-CSRF_COOKIE_SECURE = True
 
 SESSION_COOKIE_AGE = 3600
 SESSION_COOKIE_SAMESITE = "Strict"
-SESSION_COOKIE_SECURE = True
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
 
 ROOT_URLCONF = "benefits.urls"
 
