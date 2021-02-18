@@ -38,6 +38,9 @@ COPY bin/ bin/
 # overwrite default nginx.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
+# ensure $USER can compile messages in the locale directories
+RUN chown -R $USER /home/$USER/app/benefits/locale
+
 # switch to non-root $USER
 USER $USER
 
