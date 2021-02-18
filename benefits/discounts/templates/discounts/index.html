@@ -1,0 +1,75 @@
+{% extends "core/page.html" %}
+
+{% block paragraph_content %}
+{{ block.super }}
+{% if provider %}
+    <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
+        {{ provider.loading_text }}
+    </button>
+    <script>
+        $.getScript("{{ provider.card_tokenize_url }}")
+            .done(function() {
+                $(".loading").remove();
+                $(".invisible").removeClass("invisible");
+
+                $("{{ provider.element_id }}").on("click", function() {
+                    $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ provider.loading_text }}");
+                });
+
+                {{ provider.card_tokenize_func }}({
+                    authorization: '{{ provider.access_token }}',
+                    element: '{{ provider.element_id }}',
+                    envUrl: '{{ provider.card_tokenize_env }}',
+                    options: {
+                        name: '{{ provider.name }}',
+                        color: '{{ provider.color }}'
+                    },
+                    onTokenize: function (response) {
+                        /* This function executes when the
+                        /* card/address verification returns
+                        /* successfully with a token from discount server */
+                        var form = $("form[action='{{ forms.tokenize_success }}']");
+                        $("#card_token", form).val(response.token);
+                        form.submit();
+                    },
+                    onVerificationFailure: function (response) {
+                        /* This function executes when the
+                        /* card/address verification fails and server
+                        /* return verification failure message */
+                        var form = $("form[action='{{ forms.tokenize_retry }}']");
+                        form.submit();
+                    },
+                    onError: function (response) {
+                        /* This function executes when the
+                        /* server returns error or token is invalid.
+                        /* 400 or 500 will return. */
+                        var form = $("form[action='{{ forms.tokenize_retry }}']");
+                        form.submit();
+                    },
+                    onCancel: function () {
+                        /* This function executes when the
+                        /* user cancels and closes the window
+                        /* and returns to home page. */
+                        console.log('canceled');
+                        return location.reload();
+                    }
+                });
+            })
+            .fail(function(jqxhr, settings, exception) {
+                $(".loading").remove();
+                console.log(exception);
+            });
+    </script>
+{% else %}
+    <h2>Error!</h2>
+    <p>No access token configured</p>
+{% endif %}
+{% endblock %}
+
+{% block buttons %}
+{% if provider %}
+<div class="invisible">
+{{ block.super }}
+</div>
+{% endif %}
+{% endblock %}

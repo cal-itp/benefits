@@ -44,11 +44,13 @@
             {% endfor %}
             {% endblock paragraph_content %}
 
-            {% block form %}
-            {% if page.form %}
-                {% include "core/includes/form.html" with form=page.form %}
+            {% block forms %}
+            {% if page.forms %}
+            {% for f in page.forms %}
+                {% include "core/includes/form.html" with form=f %}
+            {% endfor %}
             {% endif %}
-            {% endblock form %}
+            {% endblock forms %}
 
             {% block buttons %}
             {% if page.buttons|length_is:"0" %}{% else %}

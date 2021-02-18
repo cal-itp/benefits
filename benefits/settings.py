@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     "benefits.core",
+    "benefits.discounts",
     "benefits.eligibility"
 ]
 

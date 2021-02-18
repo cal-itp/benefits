@@ -1,6 +1,8 @@
 """
 The core application: view model definitions for the root of the webapp.
 """
+from benefits.core import models
+
 from . import session
 
 
@@ -8,6 +10,7 @@ class Button():
     """"
     Represents a clickable button as styled <a> element (with optional label):
     * label: str
+    * id: str
     * classes: str, str[]
     * text: str
     * url: str
@@ -19,6 +22,7 @@ class Button():
 
         self.classes = ["btn", "btn-lg"]
         self.classes.extend(classes)
+        self.id = kwargs.get("id")
         self.label = kwargs.get("label")
         self.text = kwargs.get("text", "Button")
         self.url = kwargs.get("url")
@@ -102,6 +106,7 @@ class Page():
     * media: core.viewmodels.MediaItem[]
     * paragraphs: str[]
     * form: django.forms.Form
+    * forms: django.forms.Form[]
     * button: core.viewmodels.Button
     * buttons: core.viewmodels.Button[]
     * classes: str[]
@@ -114,7 +119,12 @@ class Page():
         self.media = kwargs.get("media", [])
         self.paragraphs = kwargs.get("paragraphs", [])
         self.steps = kwargs.get("steps")
-        self.form = kwargs.get("form")
+
+        self.forms = kwargs.get("forms", [])
+        if not isinstance(self.forms, list):
+            self.forms = [self.forms]
+        if "form" in kwargs:
+            self.forms.append(kwargs.get("form"))
 
         self.buttons = kwargs.get("buttons", [])
         if not isinstance(self.buttons, list):
@@ -165,7 +175,7 @@ class ErrorPage(Page):
     def __init__(self, **kwargs):
         super().__init__(
             title=kwargs.get("title", "Error"),
-            icon=kwargs.get("icon", Icon("busfail", "Bus with flat tire icon")),
+            icon=kwargs.get("icon", Icon("sadbus", "Bus with flat tire icon")),
             content_title=kwargs.get("content_title", "Error"),
             paragraphs=kwargs.get("paragraphs", ["Unfortunately, our system is having a problem right now."]),
             button=kwargs.get("button")
@@ -203,3 +213,49 @@ class ErrorPage(Page):
             paragraphs=paragraphs,
             **kwargs
         )
+
+
+class DiscountProvider():
+    """
+    Represents a core.models.DiscountProvider:
+    * model: core.models.DiscountProvider
+    * access_token: str
+    * element_id: str
+    * color: str
+    * [name: str]
+    * [loading_text: str]
+    """
+    def __init__(self, model, access_token, element_id, color, name=None, loading_text="Please wait..."):
+        if isinstance(model, models.DiscountProvider):
+            self.access_token = access_token
+            self.element_id = element_id
+            self.color = color
+            self.name = name or model.name
+            self.loading_text = loading_text
+            self.card_tokenize_url = model.card_tokenize_url
+            self.card_tokenize_func = model.card_tokenize_func
+            self.card_tokenize_env = model.card_tokenize_env
+
+    def context_dict(self):
+        """Return a context dict for a DiscountProvider."""
+        return {"provider": self}
+
+
+class TransitAgency():
+    """
+    Represents a core.models.TransitAgency:
+    * model: core.models.TransitAgency
+    """
+    def __init__(self, model):
+        if isinstance(model, models.TransitAgency):
+            self.slug = model.slug
+            self.short_name = model.short_name
+            self.long_name = model.long_name
+            self.agency_id = model.agency_id
+            self.merchant_id = model.merchant_id
+            self.logo_url = model.logo_url
+            self.phone = model.phone
+
+    def context_dict(self):
+        """Return a context dict for a TransitAgency."""
+        return {"agency": self}

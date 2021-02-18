@@ -1,6 +1,8 @@
 """
 The core application: helpers to work with request sessions.
 """
+import time
+
 from django.urls import reverse
 
 from . import models
@@ -10,6 +12,8 @@ _AGENCY = "agency"
 _DEBUG = "debug"
 _ELIGIBILITY = "eligibility"
 _ORIGIN = "origin"
+_TOKEN = "token"
+_TOKEN_EXP = "token_exp"
 
 
 def agency(request):
@@ -32,7 +36,9 @@ def context_dict(request):
         _AGENCY: agency(request).slug if active_agency(request) else None,
         _DEBUG: debug(request),
         _ELIGIBILITY: ", ".join(eligibility(request)),
-        _ORIGIN: origin(request)
+        _ORIGIN: origin(request),
+        _TOKEN: token(request),
+        _TOKEN_EXP: token_expiry(request)
     }
 
 
@@ -60,7 +66,7 @@ def eligible(request):
 
 
 def origin(request):
-    """Get the origin for the request, or None."""
+    """Get the origin for the request's session, or None."""
     try:
         return request.session[_ORIGIN]
     except KeyError:
@@ -72,9 +78,28 @@ def reset(request):
     request.session[_AGENCY] = None
     request.session[_ELIGIBILITY] = None
     request.session[_ORIGIN] = reverse("core:index")
+    request.session[_TOKEN] = None
+    request.session[_TOKEN_EXP] = None
 
 
-def update(request, agency=None, debug=None, eligibility_types=None, origin=None):
+def token(request):
+    """Get the token from the request's session, or None."""
+    try:
+        return request.session[_TOKEN]
+    except KeyError:
+        return None
+
+
+def token_expiry(request):
+    """Get the token's expiry time from the request's session, or None."""
+    try:
+        return request.session[_TOKEN_EXP]
+    except KeyError:
+        return None
+
+
+def update(request, agency=None, debug=None, eligibility_types=None, origin=None, token=None, token_exp=None):
+    """Update the request's session with non-null values."""
     if agency is not None and isinstance(agency, models.TransitAgency):
         request.session[_AGENCY] = agency.id
     if debug is not None:
@@ -84,3 +109,16 @@ def update(request, agency=None, debug=None, eligibility_types=None, origin=None
         request.session[_ELIGIBILITY] = ", ".join(eligibility_types)
     if origin is not None:
         request.session[_ORIGIN] = origin
+    if token is not None:
+        request.session[_TOKEN] = token
+        request.session[_TOKEN_EXP] = token_exp
+
+
+def valid_token(request):
+    """True if the request's session is configured with a valid token. False otherwise."""
+    if token(request) is not None:
+        exp = token_expiry(request)
+        # ensure token does not expire in the next 1 second
+        return exp is None or exp > (time.time() + 1)
+    else:
+        return False

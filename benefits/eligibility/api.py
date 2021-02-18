@@ -8,6 +8,7 @@ import uuid
 from jwcrypto import common as jwcrypto, jwe, jws, jwt
 import requests
 
+from benefits.core import api
 from benefits.settings import ALLOWED_HOSTS
 
 
@@ -55,16 +56,12 @@ class Token():
         return self._jwe.serialize()
 
 
-class Response():
+class Response(api.Response):
     """Eligibility Verification API base response."""
 
     def __init__(self, status_code, error=None, message=None):
-        self.status_code = status_code
+        super().__init__(status_code, error, message)
         self.eligibility = []
-        self._assign_error(error=error, message=message)
-
-    def __repr__(self):
-        return str(self)
 
     def __str__(self):
         if self.is_error():
@@ -72,20 +69,8 @@ class Response():
         else:
             return json.dumps(self.eligibility)
 
-    def _assign_error(self, error=None, message=None):
-        """Assign this Response's error attribute"""
-        if not any([error, message]):
-            return
-        self.error = (message if not error else f"{message}: {str(error)}") if message else str(error)
-
     def is_verified(self):
         return len(self.eligibility) > 0
-
-    def is_error(self):
-        return self.error is not None
-
-    def is_success(self):
-        return self.status_code == 200
 
 
 class TokenResponse(Response):
@@ -168,11 +153,11 @@ class Client():
         try:
             r = requests.get(self.verifier.api_url, headers=headers)
         except requests.ConnectionError as ex:
-            return Response(500, error=ex, messages="Connection to verification server failed")
+            return Response(500, error=ex, message="Connection to verification server failed")
         except requests.Timeout as ex:
-            return Response(500, error=ex, messages="Connection to verification server timed out")
+            return Response(500, error=ex, message="Connection to verification server timed out")
         except requests.TooManyRedirects as ex:
-            return Response(500, error=ex, messages="Too many redirects to verification server")
+            return Response(500, error=ex, message="Too many redirects to verification server")
 
         return TokenResponse(response=r, agency=self.agency, verifier=self.verifier)
 

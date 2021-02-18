@@ -24,7 +24,12 @@ class Database():
         with open("data/db.json") as f:
             data = json.load(f)
             self._config = data["config"]
+            self._merchants = data["merchants"]
             self._users = data["users"]
+
+    def check_merchant(self, merchant_id):
+        """Check if the data matches a record in the database."""
+        return merchant_id in self._merchants
 
     def check_user(self, key, user, types):
         """Check if the data matches a record in the database."""
@@ -60,9 +65,48 @@ class Database():
     def jws_signing_alg(self):
         return self._config["jws_signing_alg"]
 
+    @property
+    def request_access(self):
+        return self._config["request_access"]
+
 
 app = Flask(__name__)
 api = Api(app)
+
+
+class MerchantAuthToken(Resource):
+
+    db = Database()
+
+    def _bad_request(self):
+        return {"status": "400", "message": "Invalid request payload"}
+
+    def _check_payload(self):
+        """Ensure correct request payload"""
+        req_parser = reqparse.RequestParser()
+        req_parser.add_argument("request_access", required=True)
+        args = req_parser.parse_args()
+
+        if args.get("request_access") == self.db.request_access:
+            return True
+        else:
+            return False
+
+    def _not_found(self):
+        return {"status": "404", "message": "Merchant doesn't exist"}
+
+    def _token(self):
+        return {"access_token": self.db.auth_token, "token_type": "Bearer", "expires_in": 60}
+
+    def post(self, merchant_id):
+        """Respond to an auth token request."""
+        if self.db.check_merchant(merchant_id):
+            if self._check_payload():
+                return self._token(), 200
+            else:
+                return self._bad_request(), 400
+        else:
+            return self._not_found(), 404
 
 
 class Verify(Resource):
@@ -165,6 +209,7 @@ class Verify(Resource):
             return "Invalid token format", 400
 
 
+api.add_resource(MerchantAuthToken, "/<merchant_id>/access-token")
 api.add_resource(Verify, "/verify")
 
 

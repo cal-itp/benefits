@@ -1,6 +1,8 @@
 {% if form.action_url %}
 
-<form action="{% url form.action_url %}" method="{{ form.method | default:"post" | upper }}" role="form">
+{% url form.action_url as form_action %}
+
+<form action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
     {% csrf_token %}
 
     {% for field in form %}
@@ -9,10 +11,13 @@
     {% else %}
     <div class="form-group">
     {% endif %}
+
+        {% if field.label %}
         <label for="{{ field.id_for_label }}" class="form-control-label">
             {{ field.label }}
             {% if field.field.required %}<span class="required-label">*</span>{% endif %}
         </label>
+        {% endif %}
 
         {{ field }}
 
@@ -32,28 +37,29 @@
     </div>
     {% endfor %}
 
+    {% if form.submit_value %}
     <div class="form-group">
         <input type="submit" class="btn btn-lg btn-primary" value="{{ form.submit_value }}">
     </div>
-
-    {% load static %}
-    {% static "img/loader.svg" as loader %}
+    {% endif %}
 
     <script>
         $(function(){
-            $("form").on("submit", function(e) {
-                var attrs = [
-                    "background-image: url('{{ loader }}') !important",
-                    "background-position: 90% center",
-                    "background-repeat: no-repeat",
-                    "transition: none"
-                ];
-                var sub = $("input[type=submit]", this);
-                sub.attr("style", attrs.join(";"));
-                sub.val("{{ form.submitting_value }}");
-
+            $("form[action='{{form_action}}']").on("submit", function(e) {
                 $(".form-group", this).removeClass("with-errors");
                 $(".error-message", this).remove();
+
+                if ("{{ form.submitting_value }}" !== "") {
+                    var loading = $("<button />")
+                        .addClass("btn btn-lg btn-primary text-center")
+                        .attr("role", "status")
+                        .attr("disabled", "true")
+                        .append(
+                            $("<span />").text("{{ form.submitting_value }}")
+                        );
+
+                    $("input[type=submit]", this).replaceWith(loading);
+                }
             });
         });
     </script>

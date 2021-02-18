@@ -14,6 +14,7 @@ handler500 = "benefits.core.views.server_error"
 
 urlpatterns = [
     path("", include("benefits.core.urls")),
+    path("discounts/", include("benefits.discounts.urls")),
     path("eligibility/", include("benefits.eligibility.urls")),
     path("admin/", admin.site.urls)
 ]

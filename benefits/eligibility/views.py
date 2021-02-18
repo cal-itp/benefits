@@ -1,7 +1,7 @@
 """
 The eligibility application: view definitions for the eligibility verification flow.
 """
-from django.http import HttpResponseServerError
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 
@@ -68,7 +68,7 @@ def verify(request):
         response = _verify(request, form)
 
         if response is None:
-            page.form = form
+            page.forms = [form]
             response = PageTemplateResponse(request, page)
     elif session.eligible(request):
         response = verified(request, session.eligibility(request))
@@ -91,7 +91,7 @@ def _verify(request, form):
     try:
         types, errors = api.verify(sub, name, agency)
     except Exception as ex:
-        return HttpResponseServerError(ex)
+        raise ex
 
     if any(types):
         return verified(request, types)
@@ -105,32 +105,10 @@ def _verify(request, form):
 def verified(request, verified_types):
     """View handler for the verified eligibility page."""
 
-    session.update(request, eligibility_types=verified_types, origin=reverse("eligibility:verify"))
+    discounts_index = reverse("discounts:index")
+    session.update(request, eligibility_types=verified_types, origin=discounts_index)
 
-    page = viewmodels.Page(
-        title=f"{BASE_TITLE}: Verified!",
-        content_title="Great! You’re eligible for a senior discount!",
-        icon=viewmodels.Icon("idcardcheck", "identification card icon"),
-        paragraphs=[
-            "Next, we need to attach your discount to your payment card so \
-                when you pay with that card, you always get your discount.",
-            "Use a credit, debit, or prepaid card."
-        ],
-        classes="text-lg-center",
-        buttons=[
-            viewmodels.Button.primary(
-                text="Continue to our payment partner",
-                url="#payments"
-            ),
-            viewmodels.Button.link(
-                classes="btn-sm",
-                text="What if I don’t have a payment card?",
-                url=reverse("core:payment_cards")
-            )
-        ]
-    )
-
-    return PageTemplateResponse(request, page)
+    return redirect(discounts_index)
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
@@ -140,11 +118,11 @@ def api_errors(request, errors, form):
     form_errors = [e.error for e in errors if e.status_code == 400]
     if any(form_errors):
         form.add_api_errors(form_errors)
-        return None
+        return
 
     other_errors = [e.error for e in errors if e.status_code != 400]
     if any(other_errors):
-        return HttpResponseServerError(api.Error(", ".join(other_errors)))
+        raise Exception(api.Error(", ".join(other_errors)))
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
