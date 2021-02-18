@@ -28,7 +28,7 @@ services:
       - DJANGO_ALLOWED_HOSTS
       - DJANGO_DB
       - DJANGO_INIT_JSON
-      - DJANGO_INIT_PATH=data/client/test.json
+      - DJANGO_INIT_PATH
     entrypoint: []
     command: python -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8888
     depends_on:
@@ -52,5 +52,5 @@ services:
       - "5789:5789"
     volumes:
       - ./server:/usr/src/server:cached
-      - ./data/server:/usr/src/server/data
+      - ./data:/usr/src/server/data
       - ./keys:/usr/src/server/keys

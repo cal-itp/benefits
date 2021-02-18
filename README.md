@@ -2,11 +2,11 @@
 
 Transit benefits enrollment, minus the paperwork.
 
-## Development
+## Running locally
 
 Requires [Docker][docker] and [Docker Compose][docker-compose].
 
-Clone the repository locally:
+Clone the repository:
 
 ```bash
 git clone https://github.com/cal-itp/benefits
@@ -25,7 +25,7 @@ Build the Docker image using Docker Compose:
 docker-compose build [--no-cache] client
 ```
 
-### Run the client locally
+### Start the client
 
 ```bash
 docker-compose up [-d] client
@@ -36,13 +36,22 @@ After initialization, the client is running at `http://localhost:${DJANGO_LOCAL_
 If `DJANGO_ADMIN=true`, the backend administrative interface can be accessed with the superuser you setup at
 <http://localhost:8000/admin>.
 
+By default, sample data from [`data/client.json`](./data/client.json) is used to initialize Django. Alternatively you may:
+
+* Modify the sample data file; or
+* Point `DJANGO_INIT_PATH` at a different data file; or
+* Hardcode the JSON in `DJANGO_INIT_JSON` e.g.  
+`DJANGO_INIT_JSON='[{"model":"core.eligibilitytype",...}]'`; or
+
+* (If `DJANGO_ADMIN=true`) use the backend administrative interface CRUD
+
 Stop the running services with:
 
 ```bash
 docker-compose down
 ```
 
-### Run a local test verification server
+### Test verification server
 
 A basic eligibility verification server is available for testing:
 
@@ -52,7 +61,7 @@ docker-compose up [-d] --build server
 
 The API endpoint is running at `http://localhost:5000/verify`.
 
-Sample users and eligibility can be found in [`data/server/db.json`](./data/server/db.json).
+Sample users and eligibility can be found in [`data/server.json`](./data/server.json).
 
 ## VS Code with Dev Containers
 

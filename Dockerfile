@@ -8,7 +8,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN useradd --create-home --shell /bin/bash $USER && \
     # install nginx
     apt-get update && \
-    apt-get install -qq nginx && \
+    apt-get install -qq --no-install-recommends nginx && \
     # setup $USER permissions for nginx
     mkdir -p /var/cache/nginx && \
     chown -R $USER /var/cache/nginx && \
@@ -28,13 +28,12 @@ WORKDIR /home/$USER/app
 
 # install python dependencies
 COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # copy source files
 COPY manage.py manage.py
 COPY benefits/ benefits/
 COPY bin/ bin/
-COPY data/client/ data/
 
 # overwrite default nginx.conf
 COPY nginx.conf /etc/nginx/nginx.conf
