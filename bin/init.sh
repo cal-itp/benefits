@@ -24,3 +24,7 @@ if [[ ${DJANGO_ADMIN:-false} = true ]]; then
 else
     echo "superuser: Django not configured for Admin access"
 fi
+
+# generate language *.mo files for use by Django
+
+django-admin compilemessages
