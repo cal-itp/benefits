@@ -1,6 +1,8 @@
 """
 The core application: view model definitions for the root of the webapp.
 """
+from django.utils.translation import pgettext, ugettext as _
+
 from benefits.core import models
 
 from . import session
@@ -38,7 +40,7 @@ class Button():
         )
 
     @staticmethod
-    def home(request, text="Return home"):
+    def home(request, text=_("core.buttons.home")):
         """Create a button back to this session's origin."""
         return Button.primary(text=text, url=session.origin(request))
 
@@ -113,6 +115,11 @@ class Page():
     """
     def __init__(self, **kwargs):
         self.title = kwargs.get("title")
+        if self.title is None:
+            self.title = _("core.page.title")
+        else:
+            self.title = f"{_('core.page.title')}: {self.title}"
+
         self.image = kwargs.get("image")
         self.icon = kwargs.get("icon")
         self.content_title = kwargs.get("content_title")
@@ -142,26 +149,6 @@ class Page():
         """Return a context dict for a Page."""
         return {"page": self}
 
-    @staticmethod
-    def from_base(
-            title="Transit Discounts",
-            image=Image("riderboardingbusandtapping.svg", "Senior transit rider"),
-            content_title="The new way to pay for transit makes it easier to get your discount every time you ride",
-            paragraphs=[
-                "With new contactless payment options, you can tap your payment card \
-                    when you board and your discount will automatically apply.",
-                "Verify your discount and connect your payment card today."
-            ],
-            **kwargs):
-        """Create a new core.viewmodels.Page instance using sensible defaults."""
-        return Page(
-            title=title,
-            image=image,
-            content_title=content_title,
-            paragraphs=list(paragraphs),
-            **kwargs
-        )
-
 
 class ErrorPage(Page):
     """
@@ -174,18 +161,18 @@ class ErrorPage(Page):
     """
     def __init__(self, **kwargs):
         super().__init__(
-            title=kwargs.get("title", "Error"),
-            icon=kwargs.get("icon", Icon("sadbus", "Bus with flat tire icon")),
-            content_title=kwargs.get("content_title", "Error"),
-            paragraphs=kwargs.get("paragraphs", ["Unfortunately, our system is having a problem right now."]),
+            title=kwargs.get("title", _("core.error")),
+            icon=kwargs.get("icon", Icon("sadbus", pgettext("image alt text", "core.icons.sadbus"))),
+            content_title=kwargs.get("content_title", _("core.error")),
+            paragraphs=kwargs.get("paragraphs", [_("core.error.server.content_title")]),
             button=kwargs.get("button")
         )
 
     @staticmethod
     def error(
-            title="Service is down",
-            content_title="Service is down",
-            paragraphs=["We should be back in operation soon!", "Please check back later."],
+            title=_("core.error.server.title"),
+            content_title=_("core.error.server.title"),
+            paragraphs=[_("core.error.server.p1"), _("core.error.server.p2")],
             **kwargs):
         """Create a new core.viewmodels.ErrorPage instance with defaults for a generic error."""
         return ErrorPage(
@@ -197,9 +184,9 @@ class ErrorPage(Page):
 
     @staticmethod
     def not_found(
-            title="Page not found",
-            content_title="We can’t find that page",
-            paragraphs=["It looks like that page doesn’t exist or it was moved."],
+            title=_("core.error.notfound.title"),
+            content_title=_("core.error.notfound.content_title"),
+            paragraphs=[_("core.error.notfound.p1")],
             **kwargs):
         """Create a new core.viewmodels.ErrorPage with defaults for a 404."""
         path = kwargs.pop("path", None)
@@ -225,7 +212,7 @@ class DiscountProvider():
     * [name: str]
     * [loading_text: str]
     """
-    def __init__(self, model, access_token, element_id, color, name=None, loading_text="Please wait..."):
+    def __init__(self, model, access_token, element_id, color, name=None, loading_text=_("core.buttons.wait")):
         if isinstance(model, models.DiscountProvider):
             self.access_token = access_token
             self.element_id = element_id

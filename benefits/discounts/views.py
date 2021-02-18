@@ -4,6 +4,7 @@ The discounts application: view definitions for the discounts association flow.
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
+from django.utils.translation import pgettext, ugettext as _
 
 from benefits.core import middleware, session, viewmodels
 from benefits.core.views import PageTemplateResponse
@@ -34,26 +35,25 @@ def _index(request):
     tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
     page = viewmodels.Page(
-        title="Eligibility Verified!",
-        content_title="Great! You’re eligible for a senior discount!",
-        icon=viewmodels.Icon("idcardcheck", "identification card icon"),
+        title=_("discounts.index.title"),
+        content_title=_("discounts.index.content_title"),
+        icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
         paragraphs=[
-            "Next, we need to attach your discount to your payment card so \
-                when you pay with that card, you always get your discount.",
-            "Use a credit, debit, or prepaid card."
+            _("discounts.index.p1"),
+            _("discounts.index.p2")
         ],
         classes="text-lg-center",
         forms=[tokenize_retry_form, tokenize_success_form],
         buttons=[
             viewmodels.Button.primary(
-                text="Continue to our payment partner",
+                text=_("discounts.buttons.paymentpartner"),
                 id=tokenize_button,
                 url=f"#{tokenize_button}"
             ),
             viewmodels.Button.link(
                 classes="btn-sm",
-                text="What if I don’t have a payment card?",
-                url=reverse("core:payment_cards")
+                text=_("discounts.buttons.paymentoptions"),
+                url=reverse("core:payment_options")
             )
         ]
     )
@@ -69,7 +69,7 @@ def _index(request):
         access_token=session.token(request),
         element_id=f"#{tokenize_button}",
         color="#046b99",
-        name=f"{agency.long_name} partnered with {agency.discount_provider.name}"
+        name=f"{agency.long_name} {_('partnered with')} {agency.discount_provider.name}"
     )
     context.update(provider_vm.context_dict())
 
@@ -131,13 +131,13 @@ def retry(request):
         if form.is_valid():
             agency = session.agency(request)
             page = viewmodels.Page(
-                title="We couldn’t connect your payment card",
-                icon=viewmodels.Icon("paymentcardquestion", "Payment card question icon"),
-                content_title="We couldn’t connect your payment card",
-                paragraphs=["You can try again or reach out to your transit provider for assistance."],
+                title=_("discounts.retry.title"),
+                icon=viewmodels.Icon("bankcardquestion", pgettext("image alt text", "core.icons.bankcardquestion")),
+                content_title=_("discounts.retry.title"),
+                paragraphs=[_("discounts.retry.p1")],
                 buttons=[
                     viewmodels.Button.agency_phone_link(agency),
-                    viewmodels.Button.primary(text="Try again", url=session.origin(request))
+                    viewmodels.Button.primary(text=_("discounts.retry.button"), url=session.origin(request))
                 ]
             )
             return PageTemplateResponse(request, page)
@@ -151,9 +151,9 @@ def success(request):
     """View handler for the final success page."""
 
     page = viewmodels.Page(
-        title="Success!",
-        content_title="Success!",
-        icon=viewmodels.Icon("paymentcardcheck", "Payment card verified icon")
+        title=_("discounts.success.title"),
+        icon=viewmodels.Icon("paymentcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
+        content_title=_("discounts.success.title")
     )
 
     return TemplateResponse(request, "discounts/success.html", page.context_dict())

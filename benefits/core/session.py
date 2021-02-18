@@ -11,6 +11,7 @@ from . import models
 _AGENCY = "agency"
 _DEBUG = "debug"
 _ELIGIBILITY = "eligibility"
+_LANG = "lang"
 _ORIGIN = "origin"
 _TOKEN = "token"
 _TOKEN_EXP = "token_exp"
@@ -36,6 +37,7 @@ def context_dict(request):
         _AGENCY: agency(request).slug if active_agency(request) else None,
         _DEBUG: debug(request),
         _ELIGIBILITY: ", ".join(eligibility(request)),
+        _LANG: language(request),
         _ORIGIN: origin(request),
         _TOKEN: token(request),
         _TOKEN_EXP: token_expiry(request)
@@ -63,6 +65,11 @@ def eligible(request):
     a = agency(request)
     e = eligibility(request)
     return active_agency(request) and len(e) > 0 and set(e).issubset(a.eligibility_set)
+
+
+def language(request):
+    """Get the language configured for the request."""
+    return request.LANGUAGE_CODE
 
 
 def origin(request):

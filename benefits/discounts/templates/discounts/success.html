@@ -1,7 +1,11 @@
 {% extends "core/page.html" %}
-
+{% load i18n %}
+{% load static %}
 {% block paragraph_content %}
-<h2 class="text-lg-center">Your senior discount is now linked to your payment card.</h2>
-<p>When boarding transit, pay with this same card and your discount will be applied to your fare purchase.</p>
-<p>To add or edit your payment cards, <a href="#">go to the Littlepay website</a>.</p>
+<p>{% translate "discounts.success.p1" %}</p>
+<p>{% translate "discounts.success.p2" %}</p>
+<p>{% translate "discounts.success.p3.text" %}, <a href="#" target="_blank">{% translate "discounts.success.p3.link" context "link text" %}</a>.</p>
+<p>
+    <img class="img-fluid" src="{% static 'img/riderboardingbusandtapping.svg' %}" alt="{% translate "discounts.success.image" context "image alt text" %}" />
+</p>
 {% endblock %}

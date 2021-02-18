@@ -4,13 +4,11 @@ The eligibility application: view definitions for the eligibility verification f
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
+from django.utils.translation import pgettext, ugettext as _
 
 from benefits.core import middleware, session, viewmodels
-from benefits.core.views import PageTemplateResponse
+from benefits.core.views import PageTemplateResponse, _index_image
 from . import api, forms
-
-
-BASE_TITLE = viewmodels.Page.from_base().title
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
@@ -19,29 +17,28 @@ def index(request):
 
     session.update(request, eligibility_types=[], origin=reverse("eligibility:index"))
 
-    page = viewmodels.Page.from_base(
-        title=f"{BASE_TITLE}: Getting Started",
-        content_title="Great, you’ll need two things before we get started...",
+    page = viewmodels.Page(
+        title=_("eligibility.index.title"),
+        content_title=_("eligibility.index.content_title"),
         media=[
             viewmodels.MediaItem(
-                icon=viewmodels.Icon("idcardcheck", "identification card icon"),
-                heading="Your California ID",
-                details="Driver License or ID card"
+                icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
+                heading=_("eligibility.index.item1.title"),
+                details=_("eligibility.index.item1.text")
             ),
             viewmodels.MediaItem(
-                icon=viewmodels.Icon("paymentcardcheck", "payment card icon"),
-                heading="Your payment card",
-                details="A debit, credit, or prepaid card"
+                icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
+                heading=_("eligibility.index.item2.title"),
+                details=_("eligibility.index.item2.text")
             ),
         ],
         paragraphs=[
-            "This program is currently open to those who are 65 or older. \
-                Not over 65? Get in touch with your transit provider to \
-                learn about available discount programs."
+            _("eligibility.index.p1")
         ],
+        image=_index_image(),
         button=viewmodels.Button.primary(
-            text="Ready to continue",
-            url=reverse("eligibility:verify")
+            text=_("eligibility.index.button"),
+            url=reverse("eligibility:confirm")
         )
     )
 
@@ -49,15 +46,14 @@ def index(request):
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
-def verify(request):
+def confirm(request):
     """View handler for the eligibility verification form."""
 
     page = viewmodels.Page(
-        title=f"{BASE_TITLE}: Verify",
-        content_title="Let’s see if we can verify your age with the DMV",
+        title=_("eligibility.confirm.title"),
+        content_title=_("eligibility.confirm.content_title"),
         paragraphs=[
-            "If you’re 65 or older, we can confirm you are eligible for a \
-                senior discount when you ride transit."
+            _("eligibility.confirm.p1")
         ],
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix=""),
         classes="text-lg-center"
@@ -79,7 +75,7 @@ def verify(request):
 
 
 def _verify(request, form):
-    """"Helper calls the eligibility verification API to verify user input."""
+    """Helper calls the eligibility verification API to verify user input."""
 
     if not form.is_valid():
         return None
@@ -134,13 +130,12 @@ def unverified(request):
     buttons = [viewmodels.Button.agency_phone_link(agency)]
 
     page = viewmodels.Page(
-        title=f"{BASE_TITLE}: Age not verified",
-        content_title="We can’t verify your age",
-        icon=viewmodels.Icon("idcardquestion", "identification card icon"),
+        title=_("eligibility.unverified.title"),
+        content_title=_("eligibility.unverified.content_title"),
+        icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
         paragraphs=[
-            "You may still be eligible for a discount but we can’t verify \
-                your age with the DMV.",
-            "Reach out to your transit provider for assistance."
+            _("eligibility.unverified.p1"),
+            _("eligibility.unverified.p2")
         ],
         buttons=buttons,
         classes="text-lg-center"

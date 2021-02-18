@@ -5,6 +5,7 @@ from django.http import HttpResponseBadRequest, HttpResponseNotFound, HttpRespon
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.utils.translation import pgettext, ugettext as _
 
 from . import models, session, viewmodels
 
@@ -12,6 +13,25 @@ from . import models, session, viewmodels
 def PageTemplateResponse(request, page_vm):
     """Helper returns a TemplateResponse using the common page template."""
     return TemplateResponse(request, "core/page.html", page_vm.context_dict())
+
+
+def _index_content_title():
+    """Helper returns the content title for the common index page."""
+    return _("core.index.content_title")
+
+
+def _index_image():
+    """"""
+    return viewmodels.Image("riderboardingbusandtapping.svg", pgettext("image alt text", "core.index.image"))
+
+
+def _index_paragraphs():
+    """Helper returns the content paragraphs for the common index page."""
+    return [
+        _("core.index.p1"),
+        _("core.index.p2"),
+        _("core.index.p3")
+    ]
 
 
 def _index_url():
@@ -32,9 +52,15 @@ def index(request):
         for a in agencies
     ]
     buttons[0].classes.append("mt-3")
-    buttons[0].label = "Choose your transit provider"
+    buttons[0].label = _("core.index.chooseprovider")
 
-    page = viewmodels.Page.from_base(buttons=buttons, classes="home")
+    page = viewmodels.Page(
+        content_title=_index_content_title(),
+        paragraphs=_index_paragraphs(),
+        image=_index_image(),
+        buttons=buttons,
+        classes="home"
+    )
 
     return PageTemplateResponse(request, page)
 
@@ -44,9 +70,12 @@ def agency_index(request, agency):
     session.reset(request)
     session.update(request, agency=agency, origin=agency.index_url)
 
-    page = viewmodels.Page.from_base(
+    page = viewmodels.Page(
+        content_title=_index_content_title(),
+        paragraphs=_index_paragraphs(),
+        image=_index_image(),
         button=viewmodels.Button.primary(
-            text="Let’s do it!",
+            text=_("core.index.continue"),
             url=reverse("eligibility:index")
         ),
         classes="home"
@@ -67,15 +96,14 @@ def help(request):
             for a in models.TransitAgency.all_active()
         ]
 
-    buttons.append(viewmodels.Button.home(request, "Go back"))
+    buttons.append(viewmodels.Button.home(request, _("core.buttons.back")))
 
     page = viewmodels.Page(
-        title="Help",
-        content_title="Help",
+        title=_("core.help"),
+        content_title=_("core.help"),
         paragraphs=[
-            "Cal-ITP is a new program serving all Californians. \
-                The best way to get support if you hit a problem on this site \
-                is to reach out to customer service for your local transit provider."
+            _("core.help.p1"),
+            _("core.help.p2")
         ],
         buttons=buttons,
         classes="text-lg-center",
@@ -84,21 +112,15 @@ def help(request):
     return PageTemplateResponse(request, page)
 
 
-def payment_cards(request):
-    """View handler for the 'What if I don't have a payment card?' page."""
+def payment_options(request):
+    """View handler for the Payment Options page."""
     page = viewmodels.Page(
-        title="Payment Cards",
-        icon=viewmodels.Icon("paymentcardcheck", "payment card icon"),
-        content_title="What if I don't have a payment card?",
-        buttons=viewmodels.Button.home(request, text="Go back")
+        title=_("core.payment-options"),
+        icon=viewmodels.Icon("bankcard", pgettext("image alt text", "core.icons.bankcard")),
+        content_title=_("core.payment-options"),
+        buttons=viewmodels.Button.home(request, text=_("core.buttons.back"))
     )
-    return TemplateResponse(request, "core/payment-cards.html", page.context_dict())
-
-
-def privacy(request):
-    """View handler for the privacy policy page."""
-    page = viewmodels.Page(title="Privacy Policy")
-    return TemplateResponse(request, "core/privacy.html", page.context_dict())
+    return TemplateResponse(request, "core/payment-options.html", page.context_dict())
 
 
 def bad_request(request, exception, template_name="400.html"):
