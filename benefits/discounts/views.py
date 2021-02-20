@@ -95,16 +95,16 @@ def index(request):
 
 def _associate_discount(request):
     """Helper calls the discount APIs."""
-    form = forms.CardTokenForm(request.POST)
+    form = forms.CardTokenizeSuccessForm(request.POST)
     if not form.is_valid():
         raise Exception("Invalid card token form.")
     card_token = form.cleaned_data.get("card_token")
 
     eligibility = session.eligibility(request)
-    if len(eligibility) == 1:
+    if len(eligibility) > 0:
         eligibility = eligibility[0]
     else:
-        raise Exception("Session contains more than one eligibility")
+        raise Exception("Session contains no eligibility information")
 
     agency = session.agency(request)
 
@@ -144,7 +144,7 @@ def retry(request):
         else:
             raise Exception("Invalid retry submission.")
     else:
-        raise ValueError("This view method only supports POST.")
+        raise Exception("This view method only supports POST.")
 
 
 def success(request):
