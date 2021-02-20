@@ -10,6 +10,7 @@ from benefits.settings import ADMIN
 
 
 handler400 = "benefits.core.views.bad_request"
+handler403 = "benefits.core.views.bad_request"
 handler404 = "benefits.core.views.page_not_found"
 handler500 = "benefits.core.views.server_error"
 
