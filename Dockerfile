@@ -31,6 +31,7 @@ COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # copy source files
+COPY gunicorn.conf.py gunicorn.conf.py
 COPY manage.py manage.py
 COPY benefits/ benefits/
 COPY bin/ bin/
