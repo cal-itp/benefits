@@ -28,3 +28,7 @@ fi
 # generate language *.mo files for use by Django
 
 django-admin compilemessages
+
+# collect static files
+
+python manage.py collectstatic --no-input

@@ -5,10 +5,6 @@ set -eu
 
 bin/init.sh
 
-# collect static files
-
-python manage.py collectstatic --no-input
-
 # start the web server
 
 nginx
