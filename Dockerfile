@@ -35,6 +35,7 @@ COPY gunicorn.conf.py gunicorn.conf.py
 COPY manage.py manage.py
 COPY benefits/ benefits/
 COPY bin/ bin/
+COPY data/client.json data/client.json
 
 # overwrite default nginx.conf
 COPY nginx.conf /etc/nginx/nginx.conf
