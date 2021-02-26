@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          ref: aws-deploy
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
