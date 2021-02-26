@@ -28,9 +28,7 @@ class DiscountProvider(models.Model):
     client_cert_pem = models.TextField(
         help_text="A certificate in PEM format, used for client certificate authentication to this Provider's API."
     )
-    client_cert_private_key_pem = models.TextField(
-        help_text="The private key in PEM format used to sign the certificate."
-    )
+    client_cert_private_key_pem = models.TextField(help_text="The private key in PEM format used to sign the certificate.")
     client_cert_root_ca_pem = models.TextField(
         help_text="The root CA bundle in PEM format used to verify the Provider's server."
     )
@@ -65,15 +63,9 @@ class EligibilityVerifier(models.Model):
         help_text="The Verifier's public key in PEM format, used to encrypt requests targeted at this Verifier \
             and to verify signed responses from this verifier."
     )
-    jwe_cek_enc = models.TextField(
-        help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode"
-    )
-    jwe_encryption_alg = models.TextField(
-        help_text="The JWE-compatible encryption algorithm"
-    )
-    jws_signing_alg = models.TextField(
-        help_text="The JWS-compatible signing algorithm"
-    )
+    jwe_cek_enc = models.TextField(help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode")
+    jwe_encryption_alg = models.TextField(help_text="The JWE-compatible encryption algorithm")
+    jws_signing_alg = models.TextField(help_text="The JWS-compatible signing algorithm")
 
     def __str__(self):
         return self.name
@@ -106,9 +98,7 @@ class TransitAgency(models.Model):
     private_key_pem = models.TextField(
         help_text="The Agency's private key in PEM format, used to sign tokens created on behalf of this Agency."
     )
-    jws_signing_alg = models.TextField(
-        help_text="The JWS-compatible signing algorithm."
-    )
+    jws_signing_alg = models.TextField(help_text="The JWS-compatible signing algorithm.")
 
     def __str__(self):
         return self.long_name

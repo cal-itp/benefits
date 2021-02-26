@@ -8,8 +8,8 @@ from benefits.core import models
 from . import session
 
 
-class Button():
-    """"
+class Button:
+    """ "
     Represents a clickable button as styled <a> element (with optional label):
     * label: str
     * id: str
@@ -17,6 +17,7 @@ class Button():
     * text: str
     * url: str
     """
+
     def __init__(self, **kwargs):
         classes = kwargs.get("classes", [])
         if isinstance(classes, str):
@@ -32,12 +33,7 @@ class Button():
     @staticmethod
     def agency_phone_link(agency):
         """Create a tel: link button with the agency's phone number."""
-        return Button.link(
-            classes="pt-0",
-            label=agency.long_name,
-            text=agency.phone,
-            url=f"tel:{agency.phone}"
-        )
+        return Button.link(classes="pt-0", label=agency.long_name, text=agency.phone, url=f"tel:{agency.phone}")
 
     @staticmethod
     def home(request, text=_("core.buttons.home")):
@@ -69,8 +65,9 @@ class Button():
         return Button(classes=classes, **kwargs)
 
 
-class Image():
+class Image:
     """Represents a generic image."""
+
     def __init__(self, src, alt):
         self.src = src
         if not self.src.startswith("http"):
@@ -81,24 +78,26 @@ class Image():
 
 class Icon(Image):
     """Represents an icon."""
+
     def __init__(self, icon, alt):
         super().__init__(src=f"icon/{icon}.svg", alt=alt)
 
 
-class MediaItem():
-    """"
+class MediaItem:
+    """ "
     Represents a list item:
     * icon: core.viewmodels.Icon
     * heading: str
     * details: str
     """
+
     def __init__(self, icon, heading, details):
         self.icon = icon
         self.heading = heading
         self.details = details
 
 
-class Page():
+class Page:
     """
     Represents a page of content:
     * title: str
@@ -113,6 +112,7 @@ class Page():
     * buttons: core.viewmodels.Button[]
     * classes: str[]
     """
+
     def __init__(self, **kwargs):
         self.title = kwargs.get("title")
         if self.title is None:
@@ -159,50 +159,43 @@ class ErrorPage(Page):
     * paragraphs: str[]
     * button: core.viewmodels.Button
     """
+
     def __init__(self, **kwargs):
         super().__init__(
             title=kwargs.get("title", _("core.error")),
             icon=kwargs.get("icon", Icon("sadbus", pgettext("image alt text", "core.icons.sadbus"))),
             content_title=kwargs.get("content_title", _("core.error")),
             paragraphs=kwargs.get("paragraphs", [_("core.error.server.content_title")]),
-            button=kwargs.get("button")
+            button=kwargs.get("button"),
         )
 
     @staticmethod
     def error(
-            title=_("core.error.server.title"),
-            content_title=_("core.error.server.title"),
-            paragraphs=[_("core.error.server.p1"), _("core.error.server.p2")],
-            **kwargs):
+        title=_("core.error.server.title"),
+        content_title=_("core.error.server.title"),
+        paragraphs=[_("core.error.server.p1"), _("core.error.server.p2")],
+        **kwargs,
+    ):
         """Create a new core.viewmodels.ErrorPage instance with defaults for a generic error."""
-        return ErrorPage(
-            title=title,
-            content_title=content_title,
-            paragraphs=paragraphs,
-            **kwargs
-        )
+        return ErrorPage(title=title, content_title=content_title, paragraphs=paragraphs, **kwargs)
 
     @staticmethod
     def not_found(
-            title=_("core.error.notfound.title"),
-            content_title=_("core.error.notfound.content_title"),
-            paragraphs=[_("core.error.notfound.p1")],
-            **kwargs):
+        title=_("core.error.notfound.title"),
+        content_title=_("core.error.notfound.content_title"),
+        paragraphs=[_("core.error.notfound.p1")],
+        **kwargs,
+    ):
         """Create a new core.viewmodels.ErrorPage with defaults for a 404."""
         path = kwargs.pop("path", None)
         if path and title:
             title = f"{title}: {path}"
         elif path and not title:
             title = path
-        return ErrorPage(
-            title=title,
-            content_title=content_title,
-            paragraphs=paragraphs,
-            **kwargs
-        )
+        return ErrorPage(title=title, content_title=content_title, paragraphs=paragraphs, **kwargs)
 
 
-class DiscountProvider():
+class DiscountProvider:
     """
     Represents a core.models.DiscountProvider:
     * model: core.models.DiscountProvider
@@ -212,6 +205,7 @@ class DiscountProvider():
     * [name: str]
     * [loading_text: str]
     """
+
     def __init__(self, model, access_token, element_id, color, name=None, loading_text=_("core.buttons.wait")):
         if isinstance(model, models.DiscountProvider):
             self.access_token = access_token
@@ -228,11 +222,12 @@ class DiscountProvider():
         return {"provider": self}
 
 
-class TransitAgency():
+class TransitAgency:
     """
     Represents a core.models.TransitAgency:
     * model: core.models.TransitAgency
     """
+
     def __init__(self, model):
         if isinstance(model, models.TransitAgency):
             self.slug = model.slug

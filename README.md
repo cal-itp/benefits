@@ -40,7 +40,7 @@ By default, sample data from [`data/client.json`](./data/client.json) is used to
 
 * Modify the sample data file; or
 * Point `DJANGO_INIT_PATH` at a different data file; or
-* Hardcode the JSON in `DJANGO_INIT_JSON` e.g.  
+* Hardcode the JSON in `DJANGO_INIT_JSON` e.g.
 `DJANGO_INIT_JSON='[{"model":"core.eligibilitytype",...}]'`; or
 
 * (If `DJANGO_ADMIN=true`) use the backend administrative interface CRUD

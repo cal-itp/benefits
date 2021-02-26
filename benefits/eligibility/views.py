@@ -24,22 +24,17 @@ def index(request):
             viewmodels.MediaItem(
                 icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
                 heading=_("eligibility.index.item1.title"),
-                details=_("eligibility.index.item1.text")
+                details=_("eligibility.index.item1.text"),
             ),
             viewmodels.MediaItem(
                 icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
                 heading=_("eligibility.index.item2.title"),
-                details=_("eligibility.index.item2.text")
+                details=_("eligibility.index.item2.text"),
             ),
         ],
-        paragraphs=[
-            _("eligibility.index.p1")
-        ],
+        paragraphs=[_("eligibility.index.p1")],
         image=_index_image(),
-        button=viewmodels.Button.primary(
-            text=_("eligibility.index.button"),
-            url=reverse("eligibility:confirm")
-        )
+        button=viewmodels.Button.primary(text=_("eligibility.index.button"), url=reverse("eligibility:confirm")),
     )
 
     return PageTemplateResponse(request, page)
@@ -52,11 +47,9 @@ def confirm(request):
     page = viewmodels.Page(
         title=_("eligibility.confirm.title"),
         content_title=_("eligibility.confirm.content_title"),
-        paragraphs=[
-            _("eligibility.confirm.p1")
-        ],
+        paragraphs=[_("eligibility.confirm.p1")],
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix=""),
-        classes="text-lg-center"
+        classes="text-lg-center",
     )
 
     if request.method == "POST":
@@ -133,12 +126,9 @@ def unverified(request):
         title=_("eligibility.unverified.title"),
         content_title=_("eligibility.unverified.content_title"),
         icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
-        paragraphs=[
-            _("eligibility.unverified.p1"),
-            _("eligibility.unverified.p2")
-        ],
+        paragraphs=[_("eligibility.unverified.p1"), _("eligibility.unverified.p2")],
         buttons=buttons,
-        classes="text-lg-center"
+        classes="text-lg-center",
     )
 
     return PageTemplateResponse(request, page)

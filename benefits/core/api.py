@@ -1,6 +1,4 @@
-
-
-class Response():
+class Response:
     """Base API response."""
 
     def __init__(self, status_code, error=None, message=None):

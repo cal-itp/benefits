@@ -20,7 +20,7 @@ class AgencySessionRequired(MiddlewareMixin):
             raise AttributeError("Agency not configured for session")
 
 
-class DebugSession():
+class DebugSession:
     """Middleware to configure debug context in the request session."""
 
     def __init__(self, get_response):

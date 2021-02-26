@@ -23,4 +23,5 @@ urlpatterns = [
 
 if ADMIN:
     from django.contrib import admin
+
     urlpatterns.append(path("admin/", admin.site.urls))

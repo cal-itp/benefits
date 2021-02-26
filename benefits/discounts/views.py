@@ -38,24 +38,17 @@ def _index(request):
         title=_("discounts.index.title"),
         content_title=_("discounts.index.content_title"),
         icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-        paragraphs=[
-            _("discounts.index.p1"),
-            _("discounts.index.p2")
-        ],
+        paragraphs=[_("discounts.index.p1"), _("discounts.index.p2")],
         classes="text-lg-center",
         forms=[tokenize_retry_form, tokenize_success_form],
         buttons=[
             viewmodels.Button.primary(
-                text=_("discounts.buttons.paymentpartner"),
-                id=tokenize_button,
-                url=f"#{tokenize_button}"
+                text=_("discounts.buttons.paymentpartner"), id=tokenize_button, url=f"#{tokenize_button}"
             ),
             viewmodels.Button.link(
-                classes="btn-sm",
-                text=_("discounts.buttons.paymentoptions"),
-                url=reverse("core:payment_options")
-            )
-        ]
+                classes="btn-sm", text=_("discounts.buttons.paymentoptions"), url=reverse("core:payment_options")
+            ),
+        ],
     )
     context = page.context_dict()
 
@@ -69,15 +62,19 @@ def _index(request):
         access_token=session.token(request),
         element_id=f"#{tokenize_button}",
         color="#046b99",
-        name=f"{agency.long_name} {_('partnered with')} {agency.discount_provider.name}"
+        name=f"{agency.long_name} {_('partnered with')} {agency.discount_provider.name}",
     )
     context.update(provider_vm.context_dict())
 
     # the tokenize form URLs are injected to page-generated Javascript
-    context.update({"forms": {
-        "tokenize_retry": reverse(tokenize_retry_form.action_url),
-        "tokenize_success": reverse(tokenize_success_form.action_url)
-    }})
+    context.update(
+        {
+            "forms": {
+                "tokenize_retry": reverse(tokenize_retry_form.action_url),
+                "tokenize_success": reverse(tokenize_success_form.action_url),
+            }
+        }
+    )
 
     return TemplateResponse(request, "discounts/index.html", context)
 
@@ -137,8 +134,8 @@ def retry(request):
                 paragraphs=[_("discounts.retry.p1")],
                 buttons=[
                     viewmodels.Button.agency_phone_link(agency),
-                    viewmodels.Button.primary(text=_("discounts.retry.button"), url=session.origin(request))
-                ]
+                    viewmodels.Button.primary(text=_("discounts.retry.button"), url=session.origin(request)),
+                ],
             )
             return PageTemplateResponse(request, page)
         else:
@@ -153,7 +150,7 @@ def success(request):
     page = viewmodels.Page(
         title=_("discounts.success.title"),
         icon=viewmodels.Icon("paymentcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-        content_title=_("discounts.success.title")
+        content_title=_("discounts.success.title"),
     )
 
     return TemplateResponse(request, "discounts/success.html", page.context_dict())

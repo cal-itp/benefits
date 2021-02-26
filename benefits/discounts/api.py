@@ -10,16 +10,13 @@ import requests
 from benefits.core.api import Response
 
 
-class Client():
+class Client:
     """Base Provider API client. Dot not use this class directly. Use one of the child class implementations."""
 
     def __init__(self, agency):
         self.agency = agency
         self.provider = agency.discount_provider
-        self.headers = {
-            "Accept": "application/json",
-            "Content-type": "application/json"
-        }
+        self.headers = {"Accept": "application/json", "Content-type": "application/json"}
 
     def _headers(self, headers=None):
         h = dict(self.headers)
@@ -46,9 +43,9 @@ class Client():
         """
         # requests library reads temp files from file path
         # The "with" context destroys temp files when response comes back
-        with tempfile.NamedTemporaryFile("w+") as cert, \
-                tempfile.NamedTemporaryFile("w+") as key, \
-                tempfile.NamedTemporaryFile("w+") as ca:
+        with tempfile.NamedTemporaryFile("w+") as cert, tempfile.NamedTemporaryFile("w+") as key, tempfile.NamedTemporaryFile(
+            "w+"
+        ) as ca:
 
             cert.write(self.provider.client_cert_pem)
             cert.seek(0)
@@ -96,16 +93,9 @@ class AccessTokenClient(Client):
     def get(self):
         """Obtain an access token to use for integrating with other APIs."""
 
-        url = "/".join((
-            self.provider.api_base_url,
-            self.agency.merchant_id,
-            self.provider.api_access_token_endpoint
-        ))
+        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.api_access_token_endpoint))
 
-        payload = {
-            self.provider.api_access_token_request_key:
-            self.provider.api_access_token_request_val
-        }
+        payload = {self.provider.api_access_token_request_key: self.provider.api_access_token_request_val}
 
         try:
             r = self._post(url, payload)
@@ -130,6 +120,7 @@ class AccessTokenClient(Client):
 
 class CustomerResponse(Response):
     """Discount Provider Customer API response."""
+
     def __init__(self, response):
         super().__init__(response.status_code)
 
@@ -156,11 +147,7 @@ class CustomerClient(Client):
 
     def create_or_update(self, token):
         """Create or update a customer in the Discount Provider's system using the token that represents that customer."""
-        url = "/".join((
-            self.provider.api_base_url,
-            self.agency.merchant_id,
-            self.provider.customers_endpoint
-        ))
+        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.customers_endpoint))
 
         payload = {"token": token}
 
@@ -186,11 +173,7 @@ class CustomerClient(Client):
 
     def _create(self, payload):
         """Create the customer represented by the payload token."""
-        url = "/".join((
-            self.provider.api_base_url,
-            self.agency.merchant_id,
-            self.provider.customers_endpoint
-        ))
+        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.customers_endpoint))
 
         payload.update({"customer_ref": uuid.uuid4(), "is_registered": True})
 
@@ -209,12 +192,7 @@ class CustomerClient(Client):
 
     def _update(self, customer):
         """Update the customer represented by the CustomerResponse object."""
-        url = "/".join((
-            self.provider.api_base_url,
-            self.agency.merchant_id,
-            self.provider.customer_endpoint,
-            customer.id
-        ))
+        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.customer_endpoint, customer.id))
 
         payload = {"customer_ref": customer.customer_ref or uuid.uuid4(), "is_registered": True}
 
@@ -234,6 +212,7 @@ class CustomerClient(Client):
 
 class GroupResponse(Response):
     """Discount Provider Customer Group API response."""
+
     def __init__(self, response, payload=None):
         super().__init__(response.status_code)
 
@@ -256,12 +235,7 @@ class GroupClient(Client):
 
     def enroll_customer(self, customer_id, group_id):
         """Enroll the customer in the group."""
-        url = "/".join((
-            self.provider.api_base_url,
-            self.agency.merchant_id,
-            self.provider.groups_endpoint,
-            group_id
-        ))
+        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.groups_endpoint, group_id))
 
         payload = {"customer_ids": [customer_id]}
 

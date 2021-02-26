@@ -27,11 +27,7 @@ def _index_image():
 
 def _index_paragraphs():
     """Helper returns the content paragraphs for the common index page."""
-    return [
-        _("core.index.p1"),
-        _("core.index.p2"),
-        _("core.index.p3")
-    ]
+    return [_("core.index.p1"), _("core.index.p2"), _("core.index.p3")]
 
 
 def _index_url():
@@ -47,10 +43,7 @@ def index(request):
     agencies = models.TransitAgency.all_active()
 
     # generate a button to the landing page for each
-    buttons = [
-        viewmodels.Button.outline_primary(text=a.short_name, url=a.index_url)
-        for a in agencies
-    ]
+    buttons = [viewmodels.Button.outline_primary(text=a.short_name, url=a.index_url) for a in agencies]
     buttons[0].classes.append("mt-3")
     buttons[0].label = _("core.index.chooseprovider")
 
@@ -59,7 +52,7 @@ def index(request):
         paragraphs=_index_paragraphs(),
         image=_index_image(),
         buttons=buttons,
-        classes="home"
+        classes="home",
     )
 
     return PageTemplateResponse(request, page)
@@ -74,11 +67,8 @@ def agency_index(request, agency):
         content_title=_index_content_title(),
         paragraphs=_index_paragraphs(),
         image=_index_image(),
-        button=viewmodels.Button.primary(
-            text=_("core.index.continue"),
-            url=reverse("eligibility:index")
-        ),
-        classes="home"
+        button=viewmodels.Button.primary(text=_("core.index.continue"), url=reverse("eligibility:index")),
+        classes="home",
     )
 
     return PageTemplateResponse(request, page)
@@ -91,20 +81,14 @@ def help(request):
         agency = session.agency(request)
         buttons = [viewmodels.Button.agency_phone_link(agency)]
     else:
-        buttons = [
-            viewmodels.Button.agency_phone_link(a)
-            for a in models.TransitAgency.all_active()
-        ]
+        buttons = [viewmodels.Button.agency_phone_link(a) for a in models.TransitAgency.all_active()]
 
     buttons.append(viewmodels.Button.home(request, _("core.buttons.back")))
 
     page = viewmodels.Page(
         title=_("core.help"),
         content_title=_("core.help"),
-        paragraphs=[
-            _("core.help.p1"),
-            _("core.help.p2")
-        ],
+        paragraphs=[_("core.help.p1"), _("core.help.p2")],
         buttons=buttons,
         classes="text-lg-center",
     )
@@ -118,7 +102,7 @@ def payment_options(request):
         title=_("core.payment-options"),
         icon=viewmodels.Icon("bankcard", pgettext("image alt text", "core.icons.bankcard")),
         content_title=_("core.payment-options"),
-        buttons=viewmodels.Button.home(request, text=_("core.buttons.back"))
+        buttons=viewmodels.Button.home(request, text=_("core.buttons.back")),
     )
     return TemplateResponse(request, "core/payment-options.html", page.context_dict())
 
