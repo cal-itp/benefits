@@ -21,7 +21,7 @@ class Database():
     """Simple hard-coded server database."""
 
     def __init__(self):
-        with open("data/db.json") as f:
+        with open("data/server.json") as f:
             data = json.load(f)
             self._config = data["config"]
             self._merchants = data["merchants"]

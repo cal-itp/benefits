@@ -1,3 +1,5 @@
 *.db
 .env
 *.mo
+static/
+!benefits/static

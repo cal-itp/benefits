@@ -4,13 +4,54 @@ services:
   client:
     build: .
     image: benefits_client:latest
-    entrypoint: ["bin/entrypoint.sh"]
-    command: manage runserver 0.0.0.0:8000
     environment:
       - DJANGO_SECRET_KEY
       - DJANGO_DEBUG
+      - DJANGO_ADMIN
+      - DJANGO_ALLOWED_HOSTS
       - DJANGO_DB
+      - DJANGO_INIT_JSON
+      - DJANGO_INIT_PATH
     ports:
-      - "${DJANGO_LOCAL_PORT}:8000"
+      - "${DJANGO_LOCAL_PORT}:80"
     volumes:
-      - .:/usr/src/cal-itp:cached
+      - ./data:/home/calitp/app/data:cached
+
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: benefits_client:dev
+    environment:
+      - DJANGO_SECRET_KEY
+      - DJANGO_DEBUG
+      - DJANGO_ADMIN
+      - DJANGO_ALLOWED_HOSTS
+      - DJANGO_DB
+      - DJANGO_INIT_JSON
+      - DJANGO_INIT_PATH
+    entrypoint: []
+    command: python -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8888
+    depends_on:
+      - server
+    ports:
+      - "${DJANGO_LOCAL_PORT}:8888"
+      - "5678:5678"
+    volumes:
+      - .:/home/calitp/app:cached
+
+  server:
+    build: ./server
+    image: eligibility_verification_server:dev
+    command: python -m debugpy --listen 0.0.0.0:5789 app.py
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_DEBUG=1
+      - FLASK_ENV=development
+    ports:
+      - "5000:5000"
+      - "5789:5789"
+    volumes:
+      - ./server:/usr/src/server:cached
+      - ./data:/usr/src/server/data
+      - ./keys:/usr/src/server/keys

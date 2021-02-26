@@ -1,0 +1,10 @@
+.vscode/
+keys/
+server/
+**/__pycache__/
+.devcontainer.json
+.flake8
+.*ignore
+*.db
+docker-compose.yml
+Dockerfile*

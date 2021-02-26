@@ -2,11 +2,11 @@
 
 Transit benefits enrollment, minus the paperwork.
 
-## Development
+## Running locally
 
 Requires [Docker][docker] and [Docker Compose][docker-compose].
 
-Clone the repository locally:
+Clone the repository:
 
 ```bash
 git clone https://github.com/cal-itp/benefits
@@ -19,67 +19,53 @@ Create an environment file from the sample:
 cp .env.sample .env
 ```
 
-### Local Django setup
-
-If you are running `bash`, shortcut the following steps with the [`setup`](./setup) script:
+Build the Docker image using Docker Compose:
 
 ```bash
-./setup
+docker-compose build [--no-cache] client
 ```
 
-Otherwise, start by building the Benefits client image:
+### Start the client
 
 ```bash
-docker-compose build --no-cache client
+docker-compose up [-d] client
 ```
 
-Run Django database migrations:
+After initialization, the client is running at `http://localhost:${DJANGO_LOCAL_PORT}` (<http://localhost:8000> by default).
 
-```bash
-docker-compose run client migrate
-```
+If `DJANGO_ADMIN=true`, the backend administrative interface can be accessed with the superuser you setup at
+<http://localhost:8000/admin>.
 
-Load [sample Django model data](./data/client):
+By default, sample data from [`data/client.json`](./data/client.json) is used to initialize Django. Alternatively you may:
 
-```bash
-docker-compose run client data
-```
+* Modify the sample data file; or
+* Point `DJANGO_INIT_PATH` at a different data file; or
+* Hardcode the JSON in `DJANGO_INIT_JSON` e.g.  
+`DJANGO_INIT_JSON='[{"model":"core.eligibilitytype",...}]'`; or
 
-Create a superuser account for Django backend admin access (follow the CLI prompts):
+* (If `DJANGO_ADMIN=true`) use the backend administrative interface CRUD
 
-```bash
-docker-compose run client superuser
-```
-
-### Run the client locally
-
-```bash
-docker-compose up -d client
-```
-
-The client is running at `http://localhost:${DJANGO_LOCAL_PORT}` (<http://localhost:8000> by default).
-
-The backend administrative interface can be accessed with the superuser you setup at <http://localhost:8000/admin>.
-
-Stop a running client (and supporting containers) with:
+Stop the running services with:
 
 ```bash
 docker-compose down
 ```
 
-### Run a local test verification server
+### Test verification server
 
 A basic eligibility verification server is available for testing:
 
 ```bash
-docker-compose up -d --build server
+docker-compose up [-d] --build server
 ```
 
 The API endpoint is running at `http://localhost:5000/verify`.
 
-Sample users and eligibility can be found in [`data/server/db.json`](./data/server/db.json).
+Sample users and eligibility can be found in [`data/server.json`](./data/server.json).
 
 ## VS Code with Dev Containers
+
+**This is the recommended development setup**.
 
 [VS Code][vscode] can be used together with Docker via the [Remote - Containers][vscode-containers] extension to enable a
 container-based development environment. This repository includes a [`.devcontainer.json`][config-file] file that configures
