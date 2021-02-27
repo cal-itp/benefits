@@ -13,7 +13,7 @@ services:
       - DJANGO_INIT_JSON
       - DJANGO_INIT_PATH
     ports:
-      - "${DJANGO_LOCAL_PORT}:80"
+      - "${DJANGO_LOCAL_PORT}:8000"
     volumes:
       - ./data:/home/calitp/app/data:cached
 
@@ -31,11 +31,11 @@ services:
       - DJANGO_INIT_JSON
       - DJANGO_INIT_PATH
     entrypoint: []
-    command: python -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8888
+    command: python -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000
     depends_on:
       - server
     ports:
-      - "${DJANGO_LOCAL_PORT}:8888"
+      - "${DJANGO_LOCAL_PORT}:8000"
       - "5678:5678"
     volumes:
       - .:/home/calitp/app:cached

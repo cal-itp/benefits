@@ -55,6 +55,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: cal-itp-benefits-client-test
-          cluster: cal-itp-benefits-client-cluster
+          service: cal-itp-benefits-client
+          cluster: cal-itp-clientCluster
           wait-for-service-stability: true
