@@ -1,4 +1,4 @@
-name: Lint and style checks
+name: Lint and formatting
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: main
 
 jobs:
-  run:
+  pre-commit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
