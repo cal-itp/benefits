@@ -8,26 +8,26 @@ Requires [Docker][docker] and [Docker Compose][docker-compose].
 
 Clone the repository:
 
-```bash
+```console
 git clone https://github.com/cal-itp/benefits
 cd benefits
 ```
 
 Create an environment file from the sample:
 
-```bash
+```console
 cp .env.sample .env
 ```
 
 Build the Docker image using Docker Compose:
 
-```bash
+```console
 docker-compose build [--no-cache] client
 ```
 
 ### Start the client
 
-```bash
+```console
 docker-compose up [-d] client
 ```
 
@@ -47,7 +47,7 @@ By default, sample data from [`data/client.json`](./data/client.json) is used to
 
 Stop the running services with:
 
-```bash
+```console
 docker-compose down
 ```
 
@@ -55,7 +55,7 @@ docker-compose down
 
 A basic eligibility verification server is available for testing:
 
-```bash
+```console
 docker-compose up [-d] --build server
 ```
 

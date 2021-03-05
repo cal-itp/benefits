@@ -9,7 +9,7 @@ from . import session
 
 
 class Button:
-    """ "
+    """
     Represents a clickable button as styled <a> element (with optional label):
     * label: str
     * id: str
@@ -84,7 +84,7 @@ class Icon(Image):
 
 
 class MediaItem:
-    """ "
+    """
     Represents a list item:
     * icon: core.viewmodels.Icon
     * heading: str

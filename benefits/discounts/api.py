@@ -1,7 +1,7 @@
 """
 The discounts application: Discounts API implementation.
 """
-import tempfile
+from tempfile import NamedTemporaryFile
 import time
 import uuid
 
@@ -43,10 +43,7 @@ class Client:
         """
         # requests library reads temp files from file path
         # The "with" context destroys temp files when response comes back
-        with tempfile.NamedTemporaryFile("w+") as cert, tempfile.NamedTemporaryFile("w+") as key, tempfile.NamedTemporaryFile(
-            "w+"
-        ) as ca:
-
+        with NamedTemporaryFile("w+") as cert, NamedTemporaryFile("w+") as key, NamedTemporaryFile("w+") as ca:
             cert.write(self.provider.client_cert_pem)
             cert.seek(0)
 
