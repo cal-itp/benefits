@@ -3,5 +3,4 @@ FROM benefits_client:latest
 USER root
 
 RUN apt-get install -qq --no-install-recommends curl git jq ssh && \
-    pip install --no-cache-dir flake8 debugpy pre-commit && \
-    pre-commit install
+    pip install --no-cache-dir flake8 debugpy pre-commit
