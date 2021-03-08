@@ -6,7 +6,7 @@ from django.urls import path, register_converter
 from . import models, views
 
 
-class TransitAgencyPathConverter():
+class TransitAgencyPathConverter:
     """Path converter to parse valid TransitAgency objects from URL paths."""
 
     # used to test the url fragment, determines if this PathConverter is used

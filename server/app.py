@@ -17,7 +17,7 @@ with open("./keys/client.pub", "rb") as pemfile:
     client_public_key = jwk.JWK.from_pem(pemfile.read())
 
 
-class Database():
+class Database:
     """Simple hard-coded server database."""
 
     def __init__(self):
@@ -33,10 +33,12 @@ class Database():
 
     def check_user(self, key, user, types):
         """Check if the data matches a record in the database."""
-        if (len(types) < 1 or
-            key not in self._users or
-            self._users[key][0] != user or
-            len(set(self._users[key][1]) & set(types)) < 1):
+        if (
+            len(types) < 1
+            or key not in self._users
+            or self._users[key][0] != user
+            or len(set(self._users[key][1]) & set(types)) < 1
+        ):
             return []
 
         return list(set(self._users[key][1]) & set(types))

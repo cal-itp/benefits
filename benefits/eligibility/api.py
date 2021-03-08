@@ -14,10 +14,11 @@ from benefits.settings import ALLOWED_HOSTS
 
 class Error(ValueError):
     """Exception for Eligibility Verification API errors."""
+
     pass
 
 
-class Token():
+class Token:
     """Eligibility Verification API request token."""
 
     def __init__(self, agency, verifier, sub, name):
@@ -32,7 +33,7 @@ class Token():
             agency=agency.agency_id,
             eligibility=eligibility,
             sub=sub,
-            name=name
+            name=name,
         )
 
         # sign the payload with agency's private key
@@ -121,7 +122,7 @@ class TokenResponse(Response):
         self.error = payload.get("error", None)
 
 
-class Client():
+class Client:
     """Eligibility Verification API HTTP client."""
 
     def __init__(self, agency, verifier):

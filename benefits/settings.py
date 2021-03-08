@@ -27,19 +27,20 @@ else:
 INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.staticfiles",
-
     "benefits.core",
     "benefits.discounts",
-    "benefits.eligibility"
+    "benefits.eligibility",
 ]
 
 if ADMIN:
-    INSTALLED_APPS.extend([
-        "django.contrib.admin",
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
-        "django.contrib.messages",
-    ])
+    INSTALLED_APPS.extend(
+        [
+            "django.contrib.admin",
+            "django.contrib.auth",
+            "django.contrib.contenttypes",
+            "django.contrib.messages",
+        ]
+    )
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -48,15 +49,16 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-
-    "benefits.core.middleware.DebugSession"
+    "benefits.core.middleware.DebugSession",
 ]
 
 if ADMIN:
-    MIDDLEWARE.extend([
-        "django.contrib.auth.middleware.AuthenticationMiddleware",
-        "django.contrib.messages.middleware.MessageMiddleware",
-    ])
+    MIDDLEWARE.extend(
+        [
+            "django.contrib.auth.middleware.AuthenticationMiddleware",
+            "django.contrib.messages.middleware.MessageMiddleware",
+        ]
+    )
 
 CSRF_COOKIE_HTTPONLY = True
 
@@ -75,23 +77,25 @@ template_ctx_processors = [
 ]
 
 if DEBUG:
-    template_ctx_processors.extend([
-        "django.template.context_processors.debug",
-        "benefits.core.context_processors.debug",
-    ])
+    template_ctx_processors.extend(
+        [
+            "django.template.context_processors.debug",
+            "benefits.core.context_processors.debug",
+        ]
+    )
 
 if ADMIN:
-    template_ctx_processors.extend([
-        "django.contrib.auth.context_processors.auth",
-        "django.contrib.messages.context_processors.messages",
-    ])
+    template_ctx_processors.extend(
+        [
+            "django.contrib.auth.context_processors.auth",
+            "django.contrib.messages.context_processors.messages",
+        ]
+    )
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            os.path.join(BASE_DIR, "benefits", "templates")
-        ],
+        "DIRS": [os.path.join(BASE_DIR, "benefits", "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": template_ctx_processors,
@@ -113,33 +117,30 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = []
 
 if ADMIN:
-    AUTH_PASSWORD_VALIDATORS.extend([
-        {
-            "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-        },
-        {
-            "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-        },
-        {
-            "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-        },
-        {
-            "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-        },
-    ])
+    AUTH_PASSWORD_VALIDATORS.extend(
+        [
+            {
+                "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+            },
+            {
+                "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+            },
+            {
+                "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+            },
+            {
+                "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+            },
+        ]
+    )
 
 # Internationalization
 
 LANGUAGE_CODE = "en"
 
-LANGUAGES = [
-  ("en", "English"),
-  ("es", "Español")
-]
+LANGUAGES = [("en", "English"), ("es", "Español")]
 
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, "benefits", "locale")
-]
+LOCALE_PATHS = [os.path.join(BASE_DIR, "benefits", "locale")]
 
 USE_I18N = True
 USE_L10N = True
@@ -150,7 +151,5 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = "/static/"
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "benefits", "static")
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "benefits", "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "static")

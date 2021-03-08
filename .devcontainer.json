@@ -8,7 +8,7 @@
     "postStartCommand": ["/bin/bash", "bin/init.sh"],
 
     // Set *default* container specific settings.json values on container create.
-    "settings": { 
+    "settings": {
         "terminal.integrated.shell.linux": "/bin/bash",
         "python.pythonPath": "/usr/local/bin/python",
     },

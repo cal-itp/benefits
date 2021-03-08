@@ -40,7 +40,7 @@ def context_dict(request):
         _LANG: language(request),
         _ORIGIN: origin(request),
         _TOKEN: token(request),
-        _TOKEN_EXP: token_expiry(request)
+        _TOKEN_EXP: token_expiry(request),
     }
 
 

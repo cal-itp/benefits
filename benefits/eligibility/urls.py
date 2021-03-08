@@ -10,5 +10,5 @@ app_name = "eligibility"
 urlpatterns = [
     # /eligibility
     path("", views.index, name="index"),
-    path("confirm", views.confirm, name="confirm")
+    path("confirm", views.confirm, name="confirm"),
 ]
