@@ -2,9 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% block paragraph_content %}
-<p>{% translate "discounts.success.p1" %}</p>
-<p>{% translate "discounts.success.p2" %}</p>
-<p>{% translate "discounts.success.p3.text" %}, <a href="#" target="_blank">{% translate "discounts.success.p3.link" context "link text" %}</a>.</p>
+{{ block.super }}
 <p>
     <img class="img-fluid" src="{% static 'img/riderboardingbusandtapping.svg' %}" alt="{% translate "discounts.success.image" context "image alt text" %}" />
 </p>
