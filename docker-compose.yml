@@ -10,7 +10,6 @@ services:
       - DJANGO_ADMIN
       - DJANGO_ALLOWED_HOSTS
       - DJANGO_DB
-      - DJANGO_INIT_JSON
       - DJANGO_INIT_PATH
     ports:
       - "${DJANGO_LOCAL_PORT}:8000"
@@ -59,10 +58,11 @@ services:
 
   config:
     image: amazon/aws-cli
-    command: s3 cp s3://${AWS_BUCKET_PATH} .
+    command: s3 cp s3://${CONFIG_BUCKET_PATH} .
     environment:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
+      - AWS_DEFAULT_REGION
     volumes:
       - configvolume:/aws
 
