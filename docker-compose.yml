@@ -58,7 +58,8 @@ services:
 
   config:
     image: amazon/aws-cli
-    command: s3 cp s3://${CONFIG_BUCKET_PATH} .
+    entrypoint: ["/bin/sh"]
+    command: ["-c", "aws s3 cp s3://${CONFIG_BUCKET_PATH} ."]
     environment:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
