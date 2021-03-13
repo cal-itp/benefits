@@ -9,9 +9,7 @@ python manage.py migrate
 
 echo $DJANGO_INIT_PATH
 
-ls config/
-
-cat $DJANGO_INIT_PATH
+ls -al
 
 python manage.py loaddata $DJANGO_INIT_PATH
 
