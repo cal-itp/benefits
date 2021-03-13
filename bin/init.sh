@@ -9,6 +9,10 @@ python manage.py migrate
 
 echo $DJANGO_INIT_PATH
 
+ls config/
+
+cat $DJANGO_INIT_PATH
+
 python manage.py loaddata $DJANGO_INIT_PATH
 
 # create a superuser account for backend admin access
