@@ -19,8 +19,8 @@ RUN useradd --create-home --shell /bin/bash $USER && \
     touch /var/run/nginx.pid && \
     chown -R $USER /var/run/nginx.pid && \
     # setup directories and permissions for Django and gunicorn
-    mkdir -p /home/$USER/app/run && \
     mkdir -p /home/$USER/app/config && \
+    mkdir -p /home/$USER/app/run && \
     mkdir -p /home/$USER/app/static && \
     chown -R $USER /home/$USER
 
