@@ -56,7 +56,7 @@ services:
       - ./data:/usr/src/server/data
       - ./keys:/usr/src/server/keys
 
-  config:
+  s3config:
     image: amazon/aws-cli
     entrypoint: ["/bin/sh"]
     command: ["-c", "aws s3 cp s3://${CONFIG_BUCKET_PATH} ."]
