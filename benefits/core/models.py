@@ -50,6 +50,11 @@ class EligibilityType(models.Model):
     def __str__(self):
         return self.label
 
+    @staticmethod
+    def by_name(name):
+        """Get an EligibilityType instance by its name."""
+        return EligibilityType.objects.get(name=name)
+
 
 class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""

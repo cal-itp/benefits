@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, ugettext as _
 
-from benefits.core import middleware, session, viewmodels
+from benefits.core import middleware, models, session, viewmodels
 from benefits.core.views import PageTemplateResponse
 from . import api, forms
 
@@ -110,6 +110,7 @@ def _associate_discount(request):
         raise Exception(response.error)
     customer_id = response.id
 
+    eligibility = models.EligibilityType.by_name(eligibility)
     response = api.GroupClient(agency=agency).enroll_customer(customer_id, eligibility.group_id)
     if not isinstance(response, api.GroupResponse):
         raise Exception(response.error)
