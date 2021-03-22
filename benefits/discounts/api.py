@@ -14,6 +14,11 @@ class Client:
     """Base Provider API client. Dot not use this class directly. Use one of the child class implementations."""
 
     def __init__(self, agency):
+        if agency is None:
+            raise ValueError("agency")
+        if agency.discount_provider is None:
+            raise ValueError("agency.discount_provider")
+
         self.agency = agency
         self.provider = agency.discount_provider
         self.headers = {"Accept": "application/json", "Content-type": "application/json"}
@@ -144,6 +149,8 @@ class CustomerClient(Client):
 
     def create_or_update(self, token):
         """Create or update a customer in the Discount Provider's system using the token that represents that customer."""
+        if token is None:
+            raise ValueError("token")
         url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.customers_endpoint))
 
         payload = {"token": token}
@@ -187,11 +194,16 @@ class CustomerClient(Client):
         else:
             return Response(r.status_code, message="Customer: Error")
 
-    def _update(self, customer):
-        """Update the customer represented by the CustomerResponse object."""
-        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.customer_endpoint, customer.id))
+    def _update(self, customer_id, customer_ref):
+        """Update a customer using their unique info."""
+        if customer_id is None:
+            raise ValueError("customer_id")
+        if customer_ref is None:
+            raise ValueError("customer_ref")
 
-        payload = {"customer_ref": customer.customer_ref or uuid.uuid4(), "is_registered": True}
+        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.customer_endpoint, customer_id))
+
+        payload = {"customer_ref": customer_ref, "is_registered": True}
 
         r = self._patch(url, payload)
 
@@ -232,6 +244,11 @@ class GroupClient(Client):
 
     def enroll_customer(self, customer_id, group_id):
         """Enroll the customer in the group."""
+        if customer_id is None:
+            raise ValueError("customer_id")
+        if group_id is None:
+            raise ValueError("group_id")
+
         url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.groups_endpoint, group_id))
 
         payload = {"customer_ids": [customer_id]}
