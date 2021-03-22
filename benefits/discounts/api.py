@@ -44,7 +44,7 @@ class Client:
     def _cert_request(self, request_func):
         """
         Creates named (on-disk) temp files for client cert auth.
-        * request_func: parameterized callable from `requests` library (e.g. `requests.get`).
+        * request_func: curried callable from `requests` library (e.g. `requests.get`).
         """
         # requests library reads temp files from file path
         # The "with" context destroys temp files when response comes back
@@ -140,8 +140,7 @@ class CustomerResponse(Response):
         # extract the customer data
         self.id = payload.get("id")
         self.customer_ref = payload.get("customer_ref")
-        self.is_registered = payload.get("is_registered")
-        self.created_date = payload.get("created_date")
+        self.is_registered = str(payload.get("is_registered", "false")).lower() == "true"
 
 
 class CustomerClient(Client):
@@ -158,9 +157,9 @@ class CustomerClient(Client):
         try:
             r = self._get(url, payload)
             if r.status_code == 200:
-                # customer already exists with this token, update registration with ref
+                # customer already exists with this token, update registration if needed
                 customer = CustomerResponse(r)
-                return self._update(customer)
+                return customer if customer.is_registered else self._update(customer.id, customer.customer_ref)
             elif r.status_code == 404:
                 # customer does not exist with this token, create customer
                 return self._create(payload)
