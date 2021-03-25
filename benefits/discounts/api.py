@@ -123,7 +123,7 @@ class AccessTokenClient(Client):
 class CustomerResponse(Response):
     """Discount Provider Customer API response."""
 
-    def __init__(self, response):
+    def __init__(self, response, customer_id=None):
         super().__init__(response.status_code)
 
         # bail early for remote server errors
@@ -138,7 +138,7 @@ class CustomerResponse(Response):
             return
 
         # extract the customer data
-        self.id = payload.get("id")
+        self.id = payload.get("id", customer_id)
         self.customer_ref = payload.get("customer_ref")
         self.is_registered = str(payload.get("is_registered", "false")).lower() == "true"
 
@@ -207,7 +207,7 @@ class CustomerClient(Client):
         r = self._patch(url, payload)
 
         if r.status_code in (200, 201):
-            return CustomerResponse(r)
+            return CustomerResponse(r, customer_id)
         elif r.status_code == 400:
             return Response(r.status_code, message="Customer: Bad update payload")
         elif r.status_code == 404:
