@@ -153,3 +153,26 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "benefits", "static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+# Logging configuration
+
+LOG_LEVEL = os.environ.get("DJANGO_LOG_LEVEL", "DEBUG" if DEBUG else "WARNING")
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "default": {
+            "format": "[{asctime}] {levelname} {name}:{lineno} {message}",
+            "datefmt": "%d/%b/%Y %H:%M:%S",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "default": {"class": "logging.StreamHandler", "formatter": "default"},
+    },
+    "root": {
+        "handlers": ["default"],
+        "level": LOG_LEVEL,
+    },
+    "loggers": {"django": {"handlers": ["default"], "propagate": False}},
+}
