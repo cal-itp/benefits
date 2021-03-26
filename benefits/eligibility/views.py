@@ -80,9 +80,7 @@ def _verify(request, form):
 
     response = client.verify(sub, name)
 
-    if not isinstance(response, api.TokenResponse):
-        raise Exception("Unexpected API return type")
-    elif response.error and any(response.error):
+    if response.error and any(response.error):
         form.add_api_errors(response.error)
         return None
     elif any(response.eligibility):
