@@ -125,9 +125,9 @@ class TokenResponse(Response):
 class Client:
     """Eligibility Verification API HTTP client."""
 
-    def __init__(self, agency, verifier):
+    def __init__(self, agency):
         self.agency = agency
-        self.verifier = verifier
+        self.verifier = agency.eligibility_verifier
 
     def _tokenize(self, sub, name):
         """Create the request token."""
@@ -165,25 +165,3 @@ class Client:
     def verify(self, sub, name):
         """Check eligibility for the subject and name."""
         return self._request(sub, name)
-
-
-def verify(sub, name, agency):
-    """Attempt eligibility verification, returning a tuple (verified_types: str[], errors: Response[])."""
-    results = []
-    errors = []
-    # run through each verifier for this agency
-    # TODO: probably not the best approach if there really are multiple verifiers
-    for verifier in agency.eligibility_verifiers.all():
-        # get a response, determine success/failure
-        response = Client(agency=agency, verifier=verifier).verify(sub=sub, name=name)
-        if response and response.is_success():
-            results.append(response)
-        elif response and response.is_error():
-            errors.append(response)
-    # return overall results and errors
-    return _verified_types(results), errors
-
-
-def _verified_types(results):
-    """Return the list of distinct verified eligibility types using results from verify()."""
-    return list(set([e for result in results for e in result.eligibility]))

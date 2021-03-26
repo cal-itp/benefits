@@ -76,16 +76,17 @@ def _verify(request, form):
     sub, name = form.cleaned_data.get("sub"), form.cleaned_data.get("name")
 
     agency = session.agency(request)
+    client = api.Client(agency)
 
-    try:
-        types, errors = api.verify(sub, name, agency)
-    except Exception as ex:
-        raise ex
+    response = client.verify(sub, name)
 
-    if any(types):
-        return verified(request, types)
-    elif any(errors):
-        return api_errors(request, errors, form)
+    if not isinstance(response, api.TokenResponse):
+        raise Exception("Unexpected API return type")
+    elif response.error and any(response.error):
+        form.add_api_errors(response.error)
+        return None
+    elif any(response.eligibility):
+        return verified(request, response.eligibility)
     else:
         return unverified(request)
 
@@ -98,20 +99,6 @@ def verified(request, verified_types):
     session.update(request, eligibility_types=verified_types, origin=discounts_index)
 
     return redirect(discounts_index)
-
-
-@decorator_from_middleware(middleware.AgencySessionRequired)
-def api_errors(request, errors, form):
-    """View handler for API error responses."""
-
-    form_errors = [e.error for e in errors if e.status_code == 400]
-    if any(form_errors):
-        form.add_api_errors(form_errors)
-        return
-
-    other_errors = [e.error for e in errors if e.status_code != 400]
-    if any(other_errors):
-        raise Exception(api.Error(", ".join(other_errors)))
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
