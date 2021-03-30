@@ -3,12 +3,16 @@ The eligibility application: Eligibility Verification API implementation.
 """
 import datetime
 import json
+import logging
 import uuid
 
 from jwcrypto import common as jwcrypto, jwe, jws, jwt
 import requests
 
 from benefits.settings import ALLOWED_HOSTS
+
+
+logger = logging.getLogger(__name__)
 
 
 class ApiError(Exception):
@@ -23,10 +27,12 @@ class TokenError(Exception):
     pass
 
 
-class TokenRequest:
+class RequestToken:
     """Eligibility Verification API request token."""
 
     def __init__(self, agency, verifier, sub, name):
+        logger.info("Initialize new request token")
+
         # compute the eligibility set for this token from agency and verifier
         eligibility = list(verifier.eligibility_set & agency.eligibility_set)
 
@@ -41,18 +47,18 @@ class TokenRequest:
             name=name,
         )
 
-        # sign the payload with agency's private key
+        logger.debug("Sign token payload with agency's private key")
         header = {"typ": "JWS", "alg": agency.jws_signing_alg}
         signed_token = jwt.JWT(header=header, claims=payload)
         signed_token.make_signed_token(agency.private_jwk)
         signed_payload = signed_token.serialize()
 
-        # encrypt the signed payload with verifier's public key
+        logger.debug("Encrypt signed token payload with verifier's public key")
         header = {"typ": "JWE", "alg": verifier.jwe_encryption_alg, "enc": verifier.jwe_cek_enc}
         encrypted_token = jwt.JWT(header=header, claims=signed_payload)
         encrypted_token.make_encrypted_token(verifier.public_jwk)
 
-        # keep a reference to JWE
+        logger.info("Signed and encrypted request token initialized")
         self._jwe = encrypted_token
 
     def __repr__(self):
@@ -62,17 +68,18 @@ class TokenRequest:
         return self._jwe.serialize()
 
 
-class TokenResponse:
+class ResponseToken:
     """Eligibility Verification API response token."""
 
     def __init__(self, response, agency, verifier):
-        # read response token from body
+        logger.info("Read encrypted token from response")
+
         try:
             encrypted_signed_token = response.json()
         except ValueError:
             raise TokenError("Invalid response format")
 
-        # decrypt using agency's private key
+        logger.debug("Decrypt response token using agency's private key")
         allowed_algs = [verifier.jwe_encryption_alg, verifier.jwe_cek_enc]
         decrypted_token = jwe.JWE(algs=allowed_algs)
         try:
@@ -84,7 +91,7 @@ class TokenResponse:
 
         decrypted_payload = str(decrypted_token.payload, "utf-8")
 
-        # verify signature using verifier's public key
+        logger.debug("Verify decrypted response token's signature using verifier's public key")
         signed_token = jws.JWS()
         try:
             signed_token.deserialize(decrypted_payload, key=verifier.public_jwk, alg=agency.jws_signing_alg)
@@ -93,7 +100,8 @@ class TokenResponse:
         except jws.InvalidJWSSignature:
             raise TokenError("JWS token signature verification failed")
 
-        # parse final payload and extract values
+        logger.info("Response token decrypted and signature verified")
+
         payload = json.loads(str(signed_token.payload, "utf-8"))
         self.eligibility = list(payload.get("eligibility", []))
         self.error = payload.get("error", None)
@@ -103,12 +111,17 @@ class Client:
     """Eligibility Verification API HTTP client."""
 
     def __init__(self, agency):
+        logger.debug(f"Initialize client for agency: {agency.short_name}")
         self.agency = agency
         self.verifier = agency.eligibility_verifier
 
-    def _tokenize(self, sub, name):
-        """Create the request token."""
-        return TokenRequest(agency=self.agency, verifier=self.verifier, sub=sub, name=name)
+    def _tokenize_request(self, sub, name):
+        """Create a request token."""
+        return RequestToken(self.agency, self.verifier, sub, name)
+
+    def _tokenize_response(self, response):
+        """Parse a response token."""
+        return ResponseToken(response, self.agency, self.verifier)
 
     def _auth_headers(self, token):
         """Create headers for the request with the token and verifier API keys"""
@@ -118,15 +131,16 @@ class Client:
 
     def _request(self, sub, name):
         """Make an API request for eligibility verification."""
+        logger.debug("Start new eligibility verification request")
+
         try:
-            token = self._tokenize(sub, name)
+            token = self._tokenize_request(sub, name)
         except jwcrypto.JWException:
             raise TokenError("Failed to tokenize form values")
 
-        headers = self._auth_headers(token)
-
         try:
-            r = requests.get(self.verifier.api_url, headers=headers)
+            r = requests.get(self.verifier.api_url, headers=self._auth_headers(token))
+            del token
             r.raise_for_status()
         except requests.ConnectionError:
             raise ApiError("Connection to verification server failed")
@@ -137,7 +151,8 @@ class Client:
         except requests.HTTPError as e:
             raise ApiError(e)
 
-        return TokenResponse(r, self.agency, self.verifier)
+        logger.debug("Process eligiblity verification response")
+        return self._tokenize_response(r)
 
     def verify(self, sub, name):
         """Check eligibility for the subject and name."""
