@@ -1,0 +1,11 @@
+{% extends "core/page.html" %}
+{% load i18n %}
+{% block container_content %}
+{{ block.super }}
+<p class="mt-4">
+    {% translate "core.help.foss.text" %}
+    <a href="https://www.github.com/cal-itp/benefits" target="_blank">
+        {% translate "core.help.foss.link" %}
+    </a>.
+</p>
+{% endblock %}

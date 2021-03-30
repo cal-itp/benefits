@@ -93,7 +93,7 @@ def help(request):
         classes="text-lg-center",
     )
 
-    return PageTemplateResponse(request, page)
+    return TemplateResponse(request, "core/help.html", page.context_dict())
 
 
 def payment_options(request):
