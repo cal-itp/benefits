@@ -8,24 +8,6 @@ import uuid
 import requests
 
 
-class AccessTokenError(Exception):
-    """Error with Discounts API access token."""
-
-    pass
-
-
-class CustomerApiError(Exception):
-    """Error calling Customer API."""
-
-    pass
-
-
-class GroupApiError(Exception):
-    """Error calling Group API."""
-
-    pass
-
-
 class Client:
     """Base Provider API client. Dot not use this class directly. Use one of the child class implementations."""
 
@@ -65,6 +47,8 @@ class Client:
         # requests library reads temp files from file path
         # The "with" context destroys temp files when response comes back
         with NamedTemporaryFile("w+") as cert, NamedTemporaryFile("w+") as key, NamedTemporaryFile("w+") as ca:
+            # write provider client cert data to temp files
+            # resetting so they can be read again by requests
             cert.write(self.provider.client_cert_pem)
             cert.seek(0)
 
@@ -78,17 +62,21 @@ class Client:
             return request_func(verify=ca.name, cert=(cert.name, key.name))
 
 
+class AccessTokenError(Exception):
+    """Error with Discounts API access token."""
+
+    pass
+
+
 class AccessTokenResponse:
     """Discount Provider API Access Token response."""
 
     def __init__(self, response):
-        # read response payload from body
         try:
             payload = response.json()
         except ValueError:
             raise AccessTokenError("Invalid response format")
 
-        # extract the token data
         self.access_token = payload.get("access_token")
         self.token_type = payload.get("token_type")
         self.expires_in = payload.get("expires_in")
@@ -103,7 +91,6 @@ class AccessTokenClient(Client):
 
     def get(self):
         """Obtain an access token to use for integrating with other APIs."""
-
         url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.api_access_token_endpoint))
 
         payload = {self.provider.api_access_token_request_key: self.provider.api_access_token_request_val}
@@ -116,24 +103,28 @@ class AccessTokenClient(Client):
         except requests.Timeout:
             raise AccessTokenError("Connection to discounts server timed out")
         except requests.TooManyRedirects:
-            raise AccessTokenError("Access token: Too many redirects to discounts server")
+            raise AccessTokenError("Too many redirects to discounts server")
         except requests.HTTPError as e:
             raise AccessTokenError(e)
 
         return AccessTokenResponse(r)
 
 
+class CustomerApiError(Exception):
+    """Error calling Customer API."""
+
+    pass
+
+
 class CustomerResponse:
     """Discount Provider Customer API response."""
 
     def __init__(self, response, customer_id=None):
-        # read response payload from body
         try:
             payload = response.json()
         except ValueError:
             raise CustomerApiError("Invalid response format")
 
-        # extract the customer data
         self.id = payload.get("id", customer_id)
         self.customer_ref = payload.get("customer_ref")
         self.is_registered = str(payload.get("is_registered", "false")).lower() == "true"
@@ -146,6 +137,7 @@ class CustomerClient(Client):
         """Create or update a customer in the Discount Provider's system using the token that represents that customer."""
         if token is None:
             raise ValueError("token")
+
         url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.customers_endpoint))
 
         payload = {"token": token}
@@ -162,7 +154,7 @@ class CustomerClient(Client):
             else:
                 r.raise_for_status()
         except requests.ConnectionError:
-            raise CustomerApiError("Customer: Connection to discounts server failed")
+            raise CustomerApiError("Connection to discounts server failed")
         except requests.Timeout:
             raise CustomerApiError("Connection to discounts server timed out")
         except requests.TooManyRedirects:
@@ -198,18 +190,22 @@ class CustomerClient(Client):
         return CustomerResponse(r)
 
 
+class GroupApiError(Exception):
+    """Error calling Group API."""
+
+    pass
+
+
 class GroupResponse:
     """Discount Provider Customer Group API response."""
 
     def __init__(self, response, payload=None):
         if payload is None:
-            # read response payload from body
             try:
                 payload = response.json()
             except ValueError:
                 raise GroupApiError("Invalid response format")
 
-        # extract the customer data
         self.customer_ids = payload.get("customer_ids", [])
         self.updated_count = len(self.customer_ids)
         self.updated_customer_id = self.customer_ids[0] if self.updated_count == 1 else None
