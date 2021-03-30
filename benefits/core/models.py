@@ -1,10 +1,15 @@
 """
 The core application: Common model definitions.
 """
+import logging
+
 from django.db import models
 from django.urls import reverse
 
 from jwcrypto import jwk
+
+
+logger = logging.getLogger(__name__)
 
 
 def pem_to_jwk(pem):
@@ -53,6 +58,7 @@ class EligibilityType(models.Model):
     @staticmethod
     def by_name(name):
         """Get an EligibilityType instance by its name."""
+        logger.debug(f"Get {EligibilityType.__name__} by name: {name}")
         return EligibilityType.objects.get(name=name)
 
 
@@ -126,14 +132,17 @@ class TransitAgency(models.Model):
     @staticmethod
     def by_id(id):
         """Get a TransitAgency instance by its ID."""
+        logger.debug(f"Get {TransitAgency.__name__} by id: {id}")
         return TransitAgency.objects.get(id=id)
 
     @staticmethod
     def by_slug(slug):
         """Get a TransitAgency instance by its slug."""
+        logger.debug(f"Get {TransitAgency.__name__} by slug: {slug}")
         return TransitAgency.objects.filter(slug=slug).first()
 
     @staticmethod
     def all_active():
         """Get all TransitAgency instances marked active."""
+        logger.debug(f"Get all active {TransitAgency.__name__}")
         return TransitAgency.objects.filter(active=True)

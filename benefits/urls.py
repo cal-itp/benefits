@@ -4,10 +4,14 @@ benefits URL Configuration
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
 """
+import logging
+
 from django.urls import include, path
 
 from benefits.settings import ADMIN
 
+
+logger = logging.getLogger(__name__)
 
 handler400 = "benefits.core.views.bad_request"
 handler403 = "benefits.core.views.bad_request"
@@ -24,4 +28,7 @@ urlpatterns = [
 if ADMIN:
     from django.contrib import admin
 
+    logger.debug("Register admin/ urls")
     urlpatterns.append(path("admin/", admin.site.urls))
+else:
+    logger.debug("Skip url registrations for admin")

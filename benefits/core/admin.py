@@ -5,10 +5,12 @@ from benefits.settings import ADMIN
 
 
 if ADMIN:
+    import logging
     from django.contrib import admin
     from . import models
 
-    admin.site.register(models.EligibilityType)
-    admin.site.register(models.EligibilityVerifier)
-    admin.site.register(models.TransitAgency)
-    admin.site.register(models.DiscountProvider)
+    logger = logging.getLogger(__name__)
+
+    for model in [models.EligibilityType, models.EligibilityVerifier, models.TransitAgency, models.DiscountProvider]:
+        logger.debug(f"Register {model.__name__}")
+        admin.site.register(model)
