@@ -23,7 +23,7 @@ class TokenError(Exception):
     pass
 
 
-class Token:
+class TokenRequest:
     """Eligibility Verification API request token."""
 
     def __init__(self, agency, verifier, sub, name):
@@ -108,7 +108,7 @@ class Client:
 
     def _tokenize(self, sub, name):
         """Create the request token."""
-        return Token(agency=self.agency, verifier=self.verifier, sub=sub, name=name)
+        return TokenRequest(agency=self.agency, verifier=self.verifier, sub=sub, name=name)
 
     def _auth_headers(self, token):
         """Create headers for the request with the token and verifier API keys"""
