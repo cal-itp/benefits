@@ -23,8 +23,8 @@ class Migration(migrations.Migration):
                 (
                     "client_cert_pem",
                     models.TextField(
-                        help_text="A certificate in PEM format, \
-                            used for client certificate authentication to this Provider's API."
+                        help_text="A certificate in PEM format, used for client certificate authentication to this Provider's \
+                            API."
                     ),
                 ),
                 (
@@ -60,8 +60,8 @@ class Migration(migrations.Migration):
                 (
                     "public_key_pem",
                     models.TextField(
-                        help_text="The Verifier's public key in PEM format, used to encrypt requests targeted at this \
-                            Verifier and to verify signed responses from this verifier."
+                        help_text="The Verifier's public key in PEM format, used to encrypt requests targeted at this Verifier \
+                            and to verify signed responses from this verifier."
                     ),
                 ),
                 (
@@ -81,21 +81,27 @@ class Migration(migrations.Migration):
                 ("short_name", models.TextField()),
                 ("long_name", models.TextField()),
                 ("agency_id", models.TextField()),
-                (
-                    "private_key_pem",
-                    models.TextField(
-                        help_text="The Agency's private key in PEM format, \
-                            used to sign tokens created on behalf of this Agency."
-                    ),
-                ),
-                ("jws_signing_alg", models.TextField(help_text="The JWS-compatible signing algorithm.")),
                 ("merchant_id", models.TextField()),
                 ("logo_url", models.URLField()),
                 ("phone", models.TextField()),
                 ("active", models.BooleanField(default=False)),
+                (
+                    "private_key_pem",
+                    models.TextField(
+                        help_text="The Agency's private key in PEM format, used to sign tokens created on behalf of this \
+                            Agency."
+                    ),
+                ),
+                ("jws_signing_alg", models.TextField(help_text="The JWS-compatible signing algorithm.")),
+                (
+                    "discount_provider",
+                    models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.discountprovider"),
+                ),
                 ("eligibility_types", models.ManyToManyField(to="core.EligibilityType")),
-                ("eligibility_verifiers", models.ManyToManyField(to="core.EligibilityVerifier")),
-                ("discount_provider", models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.DiscountProvider")),
+                (
+                    "eligibility_verifier",
+                    models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.eligibilityverifier"),
+                ),
             ],
         ),
     ]

@@ -50,6 +50,11 @@ class EligibilityType(models.Model):
     def __str__(self):
         return self.label
 
+    @staticmethod
+    def by_name(name):
+        """Get an EligibilityType instance by its name."""
+        return EligibilityType.objects.get(name=name)
+
 
 class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""
@@ -93,7 +98,7 @@ class TransitAgency(models.Model):
     phone = models.TextField()
     active = models.BooleanField(default=False)
     eligibility_types = models.ManyToManyField(EligibilityType)
-    eligibility_verifiers = models.ManyToManyField(EligibilityVerifier)
+    eligibility_verifier = models.ForeignKey(EligibilityVerifier, on_delete=models.PROTECT)
     discount_provider = models.ForeignKey(DiscountProvider, on_delete=models.PROTECT)
     private_key_pem = models.TextField(
         help_text="The Agency's private key in PEM format, used to sign tokens created on behalf of this Agency."

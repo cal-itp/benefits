@@ -8,17 +8,22 @@ import uuid
 from jwcrypto import common as jwcrypto, jwe, jws, jwt
 import requests
 
-from benefits.core import api
 from benefits.settings import ALLOWED_HOSTS
 
 
-class Error(ValueError):
-    """Exception for Eligibility Verification API errors."""
+class ApiError(Exception):
+    """Error calling the Eligibility Verification API."""
 
     pass
 
 
-class Token:
+class TokenError(Exception):
+    """Error with API request/response token."""
+
+    pass
+
+
+class TokenRequest:
     """Eligibility Verification API request token."""
 
     def __init__(self, agency, verifier, sub, name):
@@ -57,51 +62,25 @@ class Token:
         return self._jwe.serialize()
 
 
-class Response(api.Response):
-    """Eligibility Verification API base response."""
-
-    def __init__(self, status_code, error=None, message=None):
-        super().__init__(status_code, error, message)
-        self.eligibility = []
-
-    def __str__(self):
-        if self.is_error():
-            return json.dumps(self.error)
-        else:
-            return json.dumps(self.eligibility)
-
-    def is_verified(self):
-        return len(self.eligibility) > 0
-
-
-class TokenResponse(Response):
+class TokenResponse:
     """Eligibility Verification API response token."""
 
     def __init__(self, response, agency, verifier):
-        super().__init__(response.status_code)
-
-        # bail early for remote server errors
-        if self.status_code >= 500:
-            return
-
         # read response token from body
         try:
             encrypted_signed_token = response.json()
-        except ValueError as ex:
-            self._assign_error(ex, "Invalid response format")
-            return
+        except ValueError:
+            raise TokenError("Invalid response format")
 
         # decrypt using agency's private key
         allowed_algs = [verifier.jwe_encryption_alg, verifier.jwe_cek_enc]
         decrypted_token = jwe.JWE(algs=allowed_algs)
         try:
             decrypted_token.deserialize(encrypted_signed_token, key=agency.private_jwk)
-        except jwe.InvalidJWEData as ex:
-            self._assign_error(ex, "Invalid JWE token")
-            return
-        except jwe.InvalidJWEOperation as ex:
-            self._assign_error(ex, "JWE token decryption failed")
-            return
+        except jwe.InvalidJWEData:
+            raise TokenError("Invalid JWE token")
+        except jwe.InvalidJWEOperation:
+            raise TokenError("JWE token decryption failed")
 
         decrypted_payload = str(decrypted_token.payload, "utf-8")
 
@@ -109,12 +88,10 @@ class TokenResponse(Response):
         signed_token = jws.JWS()
         try:
             signed_token.deserialize(decrypted_payload, key=verifier.public_jwk, alg=agency.jws_signing_alg)
-        except jws.InvalidJWSObject as ex:
-            self._assign_error(ex, "Invalid JWS token")
-            return
-        except jws.InvalidJWSSignature as ex:
-            self._assign_error(ex, "JWS token signature verification failed")
-            return
+        except jws.InvalidJWSObject:
+            raise TokenError("Invalid JWS token")
+        except jws.InvalidJWSSignature:
+            raise TokenError("JWS token signature verification failed")
 
         # parse final payload and extract values
         payload = json.loads(str(signed_token.payload, "utf-8"))
@@ -125,13 +102,13 @@ class TokenResponse(Response):
 class Client:
     """Eligibility Verification API HTTP client."""
 
-    def __init__(self, agency, verifier):
+    def __init__(self, agency):
         self.agency = agency
-        self.verifier = verifier
+        self.verifier = agency.eligibility_verifier
 
     def _tokenize(self, sub, name):
         """Create the request token."""
-        return Token(agency=self.agency, verifier=self.verifier, sub=sub, name=name)
+        return TokenRequest(agency=self.agency, verifier=self.verifier, sub=sub, name=name)
 
     def _auth_headers(self, token):
         """Create headers for the request with the token and verifier API keys"""
@@ -143,47 +120,25 @@ class Client:
         """Make an API request for eligibility verification."""
         try:
             token = self._tokenize(sub, name)
-        except jwcrypto.JWException as ex:
-            return Response(500, error=ex, message="Tokenize form values failed")
+        except jwcrypto.JWException:
+            raise TokenError("Failed to tokenize form values")
 
-        try:
-            headers = self._auth_headers(token)
-        except Exception as ex:
-            return Response(500, error=ex, message="Create auth headers failed")
+        headers = self._auth_headers(token)
 
         try:
             r = requests.get(self.verifier.api_url, headers=headers)
-        except requests.ConnectionError as ex:
-            return Response(500, error=ex, message="Connection to verification server failed")
-        except requests.Timeout as ex:
-            return Response(500, error=ex, message="Connection to verification server timed out")
-        except requests.TooManyRedirects as ex:
-            return Response(500, error=ex, message="Too many redirects to verification server")
+            r.raise_for_status()
+        except requests.ConnectionError:
+            raise ApiError("Connection to verification server failed")
+        except requests.Timeout:
+            raise ApiError("Connection to verification server timed out")
+        except requests.TooManyRedirects:
+            raise ApiError("Too many redirects to verification server")
+        except requests.HTTPError as e:
+            raise ApiError(e)
 
-        return TokenResponse(response=r, agency=self.agency, verifier=self.verifier)
+        return TokenResponse(r, self.agency, self.verifier)
 
     def verify(self, sub, name):
         """Check eligibility for the subject and name."""
         return self._request(sub, name)
-
-
-def verify(sub, name, agency):
-    """Attempt eligibility verification, returning a tuple (verified_types: str[], errors: Response[])."""
-    results = []
-    errors = []
-    # run through each verifier for this agency
-    # TODO: probably not the best approach if there really are multiple verifiers
-    for verifier in agency.eligibility_verifiers.all():
-        # get a response, determine success/failure
-        response = Client(agency=agency, verifier=verifier).verify(sub=sub, name=name)
-        if response and response.is_success():
-            results.append(response)
-        elif response and response.is_error():
-            errors.append(response)
-    # return overall results and errors
-    return _verified_types(results), errors
-
-
-def _verified_types(results):
-    """Return the list of distinct verified eligibility types using results from verify()."""
-    return list(set([e for result in results for e in result.eligibility]))

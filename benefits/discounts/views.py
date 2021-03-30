@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, ugettext as _
 
-from benefits.core import middleware, session, viewmodels
+from benefits.core import middleware, models, session, viewmodels
 from benefits.core.views import PageTemplateResponse
 from . import api, forms
 
@@ -17,11 +17,8 @@ def _check_access_token(request, agency):
     Raise an exception if an access token cannot be obtained.
     """
     if not session.valid_token(request):
-        response = api.AccessTokenClient(agency=agency).get()
-        if isinstance(response, api.AccessTokenResponse) and response.is_success():
-            session.update(request, token=response.access_token, token_exp=response.expiry)
-        else:
-            raise Exception(response.error)
+        response = api.AccessTokenClient(agency).get()
+        session.update(request, token=response.access_token, token_exp=response.expiry)
 
 
 def _index(request):
@@ -105,15 +102,11 @@ def _associate_discount(request):
 
     agency = session.agency(request)
 
-    response = api.CustomerClient(agency=agency).create_or_update(card_token)
-    if not isinstance(response, api.CustomerResponse) or not response.is_success():
-        raise Exception(response.error)
+    response = api.CustomerClient(agency).create_or_update(card_token)
     customer_id = response.id
 
-    response = api.GroupClient(agency=agency).enroll_customer(customer_id, eligibility.group_id)
-    if not isinstance(response, api.GroupResponse):
-        raise Exception(response.error)
-
+    eligibility = models.EligibilityType.by_name(eligibility)
+    response = api.GroupClient(agency).enroll_customer(customer_id, eligibility.group_id)
     if response.updated_customer_id == customer_id:
         return success(request)
     else:
