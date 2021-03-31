@@ -5,12 +5,13 @@ services:
     build: .
     image: benefits_client:latest
     environment:
-      - DJANGO_SECRET_KEY
-      - DJANGO_DEBUG
       - DJANGO_ADMIN
       - DJANGO_ALLOWED_HOSTS
       - DJANGO_DB
+      - DJANGO_DEBUG
       - DJANGO_INIT_PATH
+      - DJANGO_LOG_LEVEL
+      - DJANGO_SECRET_KEY
     ports:
       - "${DJANGO_LOCAL_PORT}:8000"
     volumes:
@@ -23,13 +24,13 @@ services:
       dockerfile: Dockerfile.dev
     image: benefits_client:dev
     environment:
-      - DJANGO_SECRET_KEY
-      - DJANGO_DEBUG
       - DJANGO_ADMIN
       - DJANGO_ALLOWED_HOSTS
       - DJANGO_DB
-      - DJANGO_INIT_JSON
+      - DJANGO_DEBUG
       - DJANGO_INIT_PATH
+      - DJANGO_LOG_LEVEL
+      - DJANGO_SECRET_KEY
     entrypoint: []
     command: python -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000
     depends_on:

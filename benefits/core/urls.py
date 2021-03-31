@@ -1,9 +1,14 @@
 """
 The core application: URLConf for the root of the webapp.
 """
+import logging
+
 from django.urls import path, register_converter
 
 from . import models, views
+
+
+logger = logging.getLogger(__name__)
 
 
 class TransitAgencyPathConverter:
@@ -15,11 +20,15 @@ class TransitAgencyPathConverter:
     def to_python(self, value):
         """Determine if the matched fragment corresponds to an active Agency."""
         value = str(value).lower()
+        logger.debug(f"Matched fragment from path: {value}")
+
         agency = models.TransitAgency.by_slug(value)
         if agency and agency.active:
+            logger.debug("Path fragment is an active agency")
             return agency
         else:
-            raise ValueError()
+            logger.error("Path fragment is not an active agency")
+            raise ValueError("value")
 
     def to_url(self, agency):
         """Convert the Agency back into a string for a URL."""
@@ -29,6 +38,7 @@ class TransitAgencyPathConverter:
             return str(agency)
 
 
+logger.debug(f"Register path converter: {TransitAgencyPathConverter.__name__}")
 register_converter(TransitAgencyPathConverter, "agency")
 
 app_name = "core"

@@ -21,7 +21,7 @@ def _index_content_title():
 
 
 def _index_image():
-    """"""
+    """Helper returns a viewmodels.Image for the common index page."""
     return viewmodels.Image("riderboardingbusandtapping.svg", pgettext("image alt text", "core.index.image"))
 
 
@@ -39,10 +39,8 @@ def index(request):
     """View handler for the main entry page."""
     session.reset(request)
 
-    # query all active agencies
+    # generate a button to the landing page for each active agency
     agencies = models.TransitAgency.all_active()
-
-    # generate a button to the landing page for each
     buttons = [viewmodels.Button.outline_primary(text=a.short_name, url=a.index_url) for a in agencies]
     buttons[0].classes.append("mt-3")
     buttons[0].label = _("core.index.chooseprovider")
@@ -76,7 +74,6 @@ def agency_index(request, agency):
 
 def help(request):
     """View handler for the help page."""
-
     if session.active_agency(request):
         agency = session.agency(request)
         buttons = [viewmodels.Button.agency_phone_link(agency)]
@@ -104,6 +101,7 @@ def payment_options(request):
         content_title=_("core.payment-options"),
         buttons=viewmodels.Button.home(request, text=_("core.buttons.back")),
     )
+
     return TemplateResponse(request, "core/payment-options.html", page.context_dict())
 
 

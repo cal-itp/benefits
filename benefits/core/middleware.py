@@ -1,11 +1,15 @@
 """
 The core application: middleware definitions for request/response cycle.
 """
+import logging
+
 from django.utils.deprecation import MiddlewareMixin
 
 from benefits.settings import DEBUG
-
 from . import session
+
+
+logger = logging.getLogger(__name__)
 
 
 class AgencySessionRequired(MiddlewareMixin):
@@ -15,9 +19,10 @@ class AgencySessionRequired(MiddlewareMixin):
     # https://docs.djangoproject.com/en/3.1/ref/utils/#django.utils.decorators.decorator_from_middleware
     def process_view(self, request, view_func, view_args, view_kwargs):
         if session.active_agency(request):
+            logger.debug("Session configured with agency")
             return None
         else:
-            raise AttributeError("Agency not configured for session")
+            raise AttributeError("Session not configured with agency")
 
 
 class DebugSession:
