@@ -16,7 +16,7 @@
             "client_cert_root_ca_pem": "client_cert_root_ca_pem",
             "customer_endpoint": "customer",
             "customers_endpoint": "customers",
-            "groups_endpoint": "groups"
+            "group_endpoint": "group"
         }
     },
     {

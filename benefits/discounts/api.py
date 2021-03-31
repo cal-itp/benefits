@@ -254,7 +254,7 @@ class GroupClient(Client):
         if group_id is None:
             raise ValueError("group_id")
 
-        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.groups_endpoint, group_id))
+        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.group_endpoint, group_id))
         payload = {"customer_ids": [customer_id]}
 
         try:
