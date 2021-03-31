@@ -124,20 +124,20 @@ def token_expiry(request):
 def update(request, agency=None, debug=None, eligibility_types=None, origin=None, token=None, token_exp=None):
     """Update the request's session with non-null values."""
     if agency is not None and isinstance(agency, models.TransitAgency):
-        logger.info(f"Update session.{_AGENCY}")
+        logger.info(f"Update session {_AGENCY}")
         request.session[_AGENCY] = agency.id
     if debug is not None:
-        logger.info(f"Update session.{_DEBUG}")
+        logger.info(f"Update session {_DEBUG}")
         request.session[_DEBUG] = debug
     if eligibility_types is not None and (isinstance(eligibility_types, list) or isinstance(eligibility_types, str)):
-        logger.info(f"Update session.{_ELIGIBILITY}")
+        logger.info(f"Update session {_ELIGIBILITY}")
         eligibility_types = eligibility_types.split(", ") if isinstance(eligibility_types, str) else eligibility_types
         request.session[_ELIGIBILITY] = ", ".join(eligibility_types)
     if origin is not None:
-        logger.info(f"Update session.{_ORIGIN}")
+        logger.info(f"Update session {_ORIGIN}")
         request.session[_ORIGIN] = origin
     if token is not None:
-        logger.info(f"Update session.{_TOKEN}")
+        logger.info(f"Update session {_TOKEN}")
         request.session[_TOKEN] = token
         request.session[_TOKEN_EXP] = token_exp
 
