@@ -39,7 +39,7 @@ class DiscountProvider(models.Model):
     )
     customer_endpoint = models.TextField()
     customers_endpoint = models.TextField()
-    groups_endpoint = models.TextField()
+    group_endpoint = models.TextField()
 
     def __str__(self):
         return self.name
