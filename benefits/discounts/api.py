@@ -255,7 +255,7 @@ class GroupClient(Client):
             raise ValueError("group_id")
 
         url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.group_endpoint, group_id))
-        payload = {"customer_ids": [customer_id]}
+        payload = [customer_id]
 
         try:
             r = self._patch(url, payload)
