@@ -229,17 +229,22 @@ class GroupResponse:
 
     def __init__(self, response, payload=None):
         if payload is None:
-            logger.info("Read group details from response")
             try:
                 payload = response.json()
             except ValueError:
                 raise GroupApiError("Invalid response format")
         else:
-            logger.info("Read group details from argument")
+            try:
+                # Group API uses an error response (500) to indicate that the customer already exists in the group (!!!)
+                # The error message should contain the customer ID we sent via payload
+                error = response.json()["errors"][0]
+                customer_id = payload[0]
+                assert error["detail"].startswith("Duplicate") and customer_id in error["detail"]
+            except (AssertionError, KeyError, ValueError):
+                raise GroupApiError("Invalid response format")
 
-        self.customer_ids = payload.get("customer_ids", [])
-        self.updated_count = len(self.customer_ids)
-        self.updated_customer_id = self.customer_ids[0] if self.updated_count == 1 else None
+        self.customer_ids = list(payload)
+        self.updated_customer_id = self.customer_ids[0] if len(self.customer_ids) == 1 else None
 
 
 class GroupClient(Client):
@@ -261,9 +266,10 @@ class GroupClient(Client):
             r = self._patch(url, payload)
 
             if r.status_code in (200, 201):
+                logger.info("Customer enrolled in group")
                 return GroupResponse(r)
             elif r.status_code == 500:
-                # 500 indicates the customer already exists in the group
+                logger.info("Customer already exists in group")
                 return GroupResponse(r, payload=payload)
             else:
                 r.raise_for_status()
