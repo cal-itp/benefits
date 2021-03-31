@@ -1,6 +1,7 @@
 """
 The discounts application: Discounts API implementation.
 """
+import logging
 from tempfile import NamedTemporaryFile
 import time
 import uuid
@@ -8,10 +9,15 @@ import uuid
 import requests
 
 
+logger = logging.getLogger(__name__)
+
+
 class Client:
-    """Base Provider API client. Dot not use this class directly. Use one of the child class implementations."""
+    """Base Discount Provider API client. Dot not use this class directly. Use one of the child class implementations."""
 
     def __init__(self, agency):
+        logger.debug("Initialize base Discount Provider API Client")
+
         if agency is None:
             raise ValueError("agency")
         if agency.discount_provider is None:
@@ -28,14 +34,17 @@ class Client:
         return h
 
     def _get(self, url, payload, headers=None):
+        logger.debug("GET request in base Discount Provider API Client")
         h = self._headers(headers)
         return self._cert_request(lambda verify, cert: requests.get(url, headers=h, params=payload, verify=verify, cert=cert))
 
     def _patch(self, url, payload, headers=None):
+        logger.debug("PATCH request in base Discount Provider API Client")
         h = self._headers(headers)
         return self._cert_request(lambda verify, cert: requests.patch(url, headers=h, json=payload, verify=verify, cert=cert))
 
     def _post(self, url, payload, headers=None):
+        logger.debug("POST request in base Discount Provider API Client")
         h = self._headers(headers)
         return self._cert_request(lambda verify, cert: requests.post(url, headers=h, json=payload, verify=verify, cert=cert))
 
@@ -72,6 +81,8 @@ class AccessTokenResponse:
     """Discount Provider API Access Token response."""
 
     def __init__(self, response):
+        logger.info("Read access token from response")
+
         try:
             payload = response.json()
         except ValueError:
@@ -81,9 +92,13 @@ class AccessTokenResponse:
         self.token_type = payload.get("token_type")
         self.expires_in = payload.get("expires_in")
         if self.expires_in is not None:
+            logger.debug("Access token has expiry")
             self.expiry = time.time() + self.expires_in
         else:
+            logger.debug("Access token has no expiry")
             self.expiry = None
+
+        logger.info("Access token successfully read from response")
 
 
 class AccessTokenClient(Client):
@@ -91,8 +106,9 @@ class AccessTokenClient(Client):
 
     def get(self):
         """Obtain an access token to use for integrating with other APIs."""
-        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.api_access_token_endpoint))
+        logger.info("Get new access token")
 
+        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.api_access_token_endpoint))
         payload = {self.provider.api_access_token_request_key: self.provider.api_access_token_request_val}
 
         try:
@@ -120,6 +136,8 @@ class CustomerResponse:
     """Discount Provider Customer API response."""
 
     def __init__(self, response, customer_id=None):
+        logger.info("Read customer details from response")
+
         try:
             payload = response.json()
         except ValueError:
@@ -129,27 +147,35 @@ class CustomerResponse:
         self.customer_ref = payload.get("customer_ref")
         self.is_registered = str(payload.get("is_registered", "false")).lower() == "true"
 
+        logger.info("Customer details successfully read from response")
+
 
 class CustomerClient(Client):
     """Discounts Provider Customer API client."""
 
     def create_or_update(self, token):
         """Create or update a customer in the Discount Provider's system using the token that represents that customer."""
+        logger.info("Check for existing customer record")
+
         if token is None:
             raise ValueError("token")
 
         url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.customers_endpoint))
-
         payload = {"token": token}
 
         try:
             r = self._get(url, payload)
             if r.status_code == 200:
-                # customer already exists with this token, update registration if needed
+                logger.debug("Customer record exists")
                 customer = CustomerResponse(r)
-                return customer if customer.is_registered else self._update(customer.id, customer.customer_ref)
+                if customer.is_registered:
+                    logger.debug("Customer is registered, skip update")
+                    return customer
+                else:
+                    logger.debug("Customer is not registered, update")
+                    return self._update(customer.id, customer.customer_ref)
             elif r.status_code == 404:
-                # customer does not exist with this token, create customer
+                logger.debug("Customer does not exist, create")
                 return self._create(payload)
             else:
                 r.raise_for_status()
@@ -164,8 +190,9 @@ class CustomerClient(Client):
 
     def _create(self, payload):
         """Create the customer represented by the payload token."""
-        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.customers_endpoint))
+        logger.info("Create new customer record")
 
+        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.customers_endpoint))
         payload.update({"customer_ref": uuid.uuid4(), "is_registered": True})
 
         r = self._post(url, payload)
@@ -175,13 +202,14 @@ class CustomerClient(Client):
 
     def _update(self, customer_id, customer_ref):
         """Update a customer using their unique info."""
+        logger.info("Update existing customer record")
+
         if customer_id is None:
             raise ValueError("customer_id")
         if customer_ref is None:
             raise ValueError("customer_ref")
 
         url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.customer_endpoint, customer_id))
-
         payload = {"customer_ref": customer_ref, "is_registered": True}
 
         r = self._patch(url, payload)
@@ -201,10 +229,13 @@ class GroupResponse:
 
     def __init__(self, response, payload=None):
         if payload is None:
+            logger.info("Read group details from response")
             try:
                 payload = response.json()
             except ValueError:
                 raise GroupApiError("Invalid response format")
+        else:
+            logger.info("Read group details from argument")
 
         self.customer_ids = payload.get("customer_ids", [])
         self.updated_count = len(self.customer_ids)
@@ -216,13 +247,14 @@ class GroupClient(Client):
 
     def enroll_customer(self, customer_id, group_id):
         """Enroll the customer in the group."""
+        logger.info("Enroll customer in product group")
+
         if customer_id is None:
             raise ValueError("customer_id")
         if group_id is None:
             raise ValueError("group_id")
 
         url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.groups_endpoint, group_id))
-
         payload = {"customer_ids": [customer_id]}
 
         try:

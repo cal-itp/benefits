@@ -1,6 +1,8 @@
 """
 The discounts application: view definitions for the discounts association flow.
 """
+import logging
+
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
@@ -9,6 +11,9 @@ from django.utils.translation import pgettext, ugettext as _
 from benefits.core import middleware, models, session, viewmodels
 from benefits.core.views import PageTemplateResponse
 from . import api, forms
+
+
+logger = logging.getLogger(__name__)
 
 
 def _check_access_token(request, agency):
@@ -62,6 +67,7 @@ def _index(request):
         name=f"{agency.long_name} {_('partnered with')} {agency.discount_provider.name}",
     )
     context.update(provider_vm.context_dict())
+    logger.info(f"card_tokenize_url: {context['provider'].card_tokenize_url}")
 
     # the tokenize form URLs are injected to page-generated Javascript
     context.update(
@@ -89,22 +95,29 @@ def index(request):
 
 def _associate_discount(request):
     """Helper calls the discount APIs."""
+    logger.debug("Read tokenized card")
     form = forms.CardTokenizeSuccessForm(request.POST)
     if not form.is_valid():
-        raise Exception("Invalid card token form.")
+        raise Exception("Invalid card token form")
     card_token = form.cleaned_data.get("card_token")
 
     eligibility = session.eligibility(request)
     if len(eligibility) > 0:
         eligibility = eligibility[0]
+        if len(eligibility) == 1:
+            logger.debug(f"Session contains 1 {models.EligibilityType.__name__}")
+        else:
+            logger.debug(f"Session contains ({len(eligibility)}) {models.EligibilityType.__name__}s")
     else:
         raise Exception("Session contains no eligibility information")
 
     agency = session.agency(request)
 
+    logger.debug("Call customer API")
     response = api.CustomerClient(agency).create_or_update(card_token)
     customer_id = response.id
 
+    logger.debug("Call group API")
     eligibility = models.EligibilityType.by_name(eligibility)
     response = api.GroupClient(agency).enroll_customer(customer_id, eligibility.group_id)
     if response.updated_customer_id == customer_id:
@@ -139,7 +152,6 @@ def retry(request):
 
 def success(request):
     """View handler for the final success page."""
-
     page = viewmodels.Page(
         title=_("discounts.success.title"),
         icon=viewmodels.Icon("paymentcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
