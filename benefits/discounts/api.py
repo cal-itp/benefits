@@ -4,7 +4,6 @@ The discounts application: Discounts API implementation.
 import logging
 from tempfile import NamedTemporaryFile
 import time
-import uuid
 
 import requests
 
@@ -153,8 +152,8 @@ class CustomerResponse:
 class CustomerClient(Client):
     """Discounts Provider Customer API client."""
 
-    def create_or_update(self, token):
-        """Create or update a customer in the Discount Provider's system using the token that represents that customer."""
+    def get(self, token):
+        """Get a customer record from Discount Provider's system using the token that represents that customer."""
         logger.info("Check for existing customer record")
 
         if token is None:
@@ -174,9 +173,6 @@ class CustomerClient(Client):
                 else:
                     logger.debug("Customer is not registered, update")
                     return self._update(customer.id, customer.customer_ref)
-            elif r.status_code == 404:
-                logger.debug("Customer does not exist, create")
-                return self._create(payload)
             else:
                 r.raise_for_status()
         except requests.ConnectionError:
@@ -187,18 +183,6 @@ class CustomerClient(Client):
             raise CustomerApiError("Too many redirects to discounts server")
         except requests.HTTPError as e:
             raise CustomerApiError(e)
-
-    def _create(self, payload):
-        """Create the customer represented by the payload token."""
-        logger.info("Create new customer record")
-
-        url = "/".join((self.provider.api_base_url, self.agency.merchant_id, self.provider.customers_endpoint))
-        payload.update({"customer_ref": uuid.uuid4(), "is_registered": True})
-
-        r = self._post(url, payload)
-        r.raise_for_status()
-
-        return CustomerResponse(r)
 
     def _update(self, customer_id, customer_ref):
         """Update a customer using their unique info."""
