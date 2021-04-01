@@ -3,6 +3,7 @@ The core application: helpers to work with request sessions.
 """
 import logging
 import time
+import uuid
 
 from django.urls import reverse
 
@@ -17,8 +18,10 @@ _DEBUG = "debug"
 _ELIGIBILITY = "eligibility"
 _LANG = "lang"
 _ORIGIN = "origin"
+_START = "start"
 _TOKEN = "token"
 _TOKEN_EXP = "token_exp"
+_UID = "uid"
 
 
 def agency(request):
@@ -47,27 +50,23 @@ def context_dict(request):
         _ELIGIBILITY: ", ".join(eligibility(request)),
         _LANG: language(request),
         _ORIGIN: origin(request),
+        _START: start(request),
         _TOKEN: token(request),
         _TOKEN_EXP: token_expiry(request),
+        _UID: uid(request),
     }
 
 
 def debug(request):
-    """Get the DEBUG flag from the request's session, or None."""
+    """Get the DEBUG flag from the request's session."""
     logger.debug("Get session debug flag")
-    try:
-        return request.session[_DEBUG]
-    except KeyError:
-        return None
+    return bool(request.session.get(_DEBUG, False))
 
 
 def eligibility(request):
     """Get the list of confirmed eligibility types from the request's session, or []"""
     logger.debug("Get session confirmed eligibility")
-    try:
-        return (request.session[_ELIGIBILITY] or "").split(", ")
-    except KeyError:
-        return []
+    return (request.session.get(_ELIGIBILITY) or "").split(",")
 
 
 def eligible(request):
@@ -87,10 +86,7 @@ def language(request):
 def origin(request):
     """Get the origin for the request's session, or None."""
     logger.debug("Get session origin")
-    try:
-        return request.session[_ORIGIN]
-    except KeyError:
-        return None
+    return request.session.get(_ORIGIN)
 
 
 def reset(request):
@@ -102,23 +98,34 @@ def reset(request):
     request.session[_TOKEN] = None
     request.session[_TOKEN_EXP] = None
 
+    if not uid(request):
+        logger.info("Reset session time and uid")
+        request.session[_START] = int(time.time() * 1000)
+        request.session[_UID] = str(uuid.uuid4())
+
+
+def start(request):
+    """Get the start time from the request's session, as integer milliseconds since Epoch."""
+    logger.info("Get session time")
+    return request.session.get(_START)
+
 
 def token(request):
     """Get the token from the request's session, or None."""
     logger.info("Get session token")
-    try:
-        return request.session[_TOKEN]
-    except KeyError:
-        return None
+    return request.session.get(_TOKEN)
 
 
 def token_expiry(request):
     """Get the token's expiry time from the request's session, or None."""
     logger.info("Get session token expiry")
-    try:
-        return request.session[_TOKEN_EXP]
-    except KeyError:
-        return None
+    return request.session.get(_TOKEN_EXP)
+
+
+def uid(request):
+    """Get the session's unique ID, or None."""
+    logger.debug("Get session key")
+    return request.session.get(_UID)
 
 
 def update(request, agency=None, debug=None, eligibility_types=None, origin=None, token=None, token_exp=None):
