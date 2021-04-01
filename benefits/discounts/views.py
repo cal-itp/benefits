@@ -19,7 +19,6 @@ logger = logging.getLogger(__name__)
 def _check_access_token(request, agency):
     """
     Ensure the request's session is configured with an access token.
-    Raise an exception if an access token cannot be obtained.
     """
     if not session.valid_token(request):
         response = api.AccessTokenClient(agency).get()
@@ -114,7 +113,7 @@ def _associate_discount(request):
     agency = session.agency(request)
 
     logger.debug("Call customer API")
-    response = api.CustomerClient(agency).create_or_update(card_token)
+    response = api.CustomerClient(agency).get(card_token)
     customer_id = response.id
 
     logger.debug("Call group API")
