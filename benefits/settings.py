@@ -176,3 +176,7 @@ LOGGING = {
     },
     "loggers": {"django": {"handlers": ["default"], "propagate": False}},
 }
+
+# Analytics configuration
+
+ANALYTICS_KEY = os.environ.get("AMP_API_KEY")
