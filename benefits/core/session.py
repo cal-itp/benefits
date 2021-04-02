@@ -98,7 +98,7 @@ def reset(request):
     request.session[_TOKEN] = None
     request.session[_TOKEN_EXP] = None
 
-    if not uid(request):
+    if _UID not in request.session or not request.session[_UID]:
         logger.info("Reset session time and uid")
         request.session[_START] = int(time.time() * 1000)
         request.session[_UID] = str(uuid.uuid4())
@@ -107,7 +107,11 @@ def reset(request):
 def start(request):
     """Get the start time from the request's session, as integer milliseconds since Epoch."""
     logger.info("Get session time")
-    return request.session.get(_START)
+    s = request.session.get(_START)
+    if not s:
+        reset(request)
+        s = request.session.get(_START)
+    return s
 
 
 def token(request):
@@ -124,8 +128,12 @@ def token_expiry(request):
 
 def uid(request):
     """Get the session's unique ID, or None."""
-    logger.debug("Get session key")
-    return request.session.get(_UID)
+    logger.debug("Get session uid")
+    u = request.session.get(_UID)
+    if not u:
+        reset(request)
+        u = request.session.get(_UID)
+    return u
 
 
 def update(request, agency=None, debug=None, eligibility_types=None, origin=None, token=None, token_exp=None):
