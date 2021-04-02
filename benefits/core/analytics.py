@@ -53,25 +53,43 @@ class Client:
         self.url = "https://api2.amplitude.com/2/httpapi"
 
     def _payload(self, events):
-        return {"api_key": ANALYTICS_KEY, "events": events}
+        if not isinstance(events, list):
+            events = [events]
+        return {"api_key": ANALYTICS_KEY, "events": [e.__dict__ for e in events]}
 
     def send(self, event):
-        """Send a single event."""
-        logger.debug("Sending a single event.")
-        self.batch([event])
+        """Send an analytics event."""
+        if not ANALYTICS_KEY:
+            logger.warning(f"ANALYTICS_KEY is not configured, cannot send: {event}")
+            return
 
-    def batch(self, events):
-        """Send a batch of events."""
-        logger.debug(f"Sending a batch of {len(events)} events.")
-        r = requests.post(self.url, headers=self.headers, data=self._payload(events))
+        payload = self._payload(event)
+        logger.debug(f"Sending event payload: {payload}")
+        r = requests.post(self.url, headers=self.headers, json=payload)
 
         if r.status_code == 200:
-            logger.debug("Batch sent successfully")
+            logger.debug(f"Event sent successfully: {r.json()}")
         elif r.status_code == 400:
-            logger.error("Batch request was invalid", exc_info=r.json())
+            logger.error(f"Event request was invalid: {r.json()}")
         elif r.status_code == 413:
-            logger.error("Batch payload was too large", exc_info=r.json())
+            logger.error(f"Event payload was too large: {r.json()}")
         elif r.status_code == 429:
-            logger.error("Batch contained too many requests for some users", exc_info=r.json())
+            logger.error(f"Event contained too many requests for some users: {r.json()}")
         else:
-            logger.error("Batch failed to send", exc_info=r.json())
+            logger.error(f"Event failed to send: {r.json()}")
+
+
+def send_event(event=None, request=None, event_type=None, **kwargs):
+    """
+    Send an analytics event. If :event: is an Event instance, send that.
+    Otherwise :request: and :event_type: are required to construct a new Event instance.
+    Extra kwargs are added as event_properties (must be JSON-serializable).
+    """
+    if isinstance(event, Event):
+        event.event_properties.update(kwargs)
+        Client().send(event)
+    elif all((request, event_type)):
+        event = Event(request, event_type, **kwargs)
+        Client().send(event)
+    else:
+        raise ValueError("Either pass an Event instance, or Django request object and event type string")
