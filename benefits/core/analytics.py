@@ -1,12 +1,15 @@
 """
 The core application: analytics implementation.
 """
+import itertools
+import json
 import logging
 import time
 import uuid
 
 import requests
 
+from benefits import VERSION
 from benefits.settings import ANALYTICS_KEY
 from . import session
 
@@ -23,12 +26,22 @@ class ApiError(Exception):
 class Event:
     """Represents a single analytics event."""
 
-    def __init__(self, request, event_type):
+    _counter = itertools.count()
+
+    def __init__(self, request, event_type, **kwargs):
+        self.app_version = VERSION
         self.event_type = event_type
         self.insert_id = str(uuid.uuid4())
+        self.language = session.language(request)
         self.session_id = session.start(request)
         self.time = int(time.time() * 1000)
         self.user_id = session.uid(request)
+        self.event_properties = kwargs
+        # event is initialized, consume next counter
+        self.event_id = next(Event._counter)
+
+    def __str__(self):
+        return json.dumps(self.__dict__)
 
 
 class Client:
