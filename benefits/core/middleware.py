@@ -3,6 +3,7 @@ The core application: middleware definitions for request/response cycle.
 """
 import logging
 
+from django.utils.decorators import decorator_from_middleware_with_args
 from django.utils.deprecation import MiddlewareMixin
 
 from benefits.settings import DEBUG
@@ -39,9 +40,21 @@ class DebugSession:
 class PageviewEvent(MiddlewareMixin):
     """Middleware sends an analytics event for pageviews."""
 
+    def __init__(self, get_response, page_name):
+        super().__init__(get_response)
+        # the value sent via Analyics API
+        self.page_name = page_name
+
     # Django 1.9 and older method signature needed for decorators
     # https://docs.djangoproject.com/en/3.1/ref/utils/#django.utils.decorators.decorator_from_middleware
     def process_request(self, request):
-        kwargs = dict(path=request.path, referer=request.headers.get("referer"))
-        analytics.send_event(request=request, event_type="pageview", **kwargs)
-        return None
+        event = analytics.PageviewEvent(request, self.page_name)
+        try:
+            analytics.send_event(event)
+        except Exception:
+            logger.warning(f"Failed to send event: {event}")
+        finally:
+            return None
+
+
+pageview_decorator = decorator_from_middleware_with_args(PageviewEvent)
