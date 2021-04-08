@@ -72,8 +72,9 @@ class ChangeLanguageEvent(Event):
 
 
 class Client:
-    def __init__(self):
+    def __init__(self, api_key):
         """Analytics API client"""
+        self.api_key = api_key
         self.headers = {"Accept": "*/*", "Content-type": "application/json"}
         self.url = "https://api2.amplitude.com/2/httpapi"
         logger.debug(f"Initialize Client for {self.url}")
@@ -81,15 +82,15 @@ class Client:
     def _payload(self, events):
         if not isinstance(events, list):
             events = [events]
-        return {"api_key": ANALYTICS_KEY, "events": [e.__dict__ for e in events]}
+        return {"api_key": self.api_key, "events": [e.__dict__ for e in events]}
 
     def send(self, event):
         """Send an analytics event."""
         if not isinstance(event, Event):
             raise ValueError("event must be an Event instance")
 
-        if not ANALYTICS_KEY:
-            logger.warning(f"ANALYTICS_KEY is not configured, cannot send: {event}")
+        if not self.api_key:
+            logger.warning(f"api_key is not configured, cannot send event: {event}")
             return
 
         try:
@@ -119,9 +120,9 @@ def send_event(event=None, request=None, event_type=None, **kwargs):
     """
     if isinstance(event, Event):
         event.update(**kwargs)
-        Client().send(event)
+        Client(ANALYTICS_KEY).send(event)
     elif all((request, event_type)):
         event = Event(request, event_type, **kwargs)
-        Client().send(event)
+        Client(ANALYTICS_KEY).send(event)
     else:
         raise ValueError("Either pass an Event instance, or Django request object and event type string")
