@@ -17,8 +17,6 @@ logger = logging.getLogger(__name__)
 class AgencySessionRequired(MiddlewareMixin):
     """Middleware raises an exception for sessions lacking an agency configuration."""
 
-    # Django 1.9 and older method signature needed for decorators
-    # https://docs.djangoproject.com/en/3.1/ref/utils/#django.utils.decorators.decorator_from_middleware
     def process_request(self, request):
         if session.active_agency(request):
             logger.debug("Session configured with agency")
@@ -38,7 +36,7 @@ class DebugSession:
         return self.get_response(request)
 
 
-class PageviewEvent(MiddlewareMixin):
+class ViewPageEvent(MiddlewareMixin):
     """Middleware sends an analytics event for pageviews."""
 
     def __init__(self, get_response, page_name):
@@ -46,10 +44,8 @@ class PageviewEvent(MiddlewareMixin):
         # the value sent via Analyics API
         self.page_name = page_name
 
-    # Django 1.9 and older method signature needed for decorators
-    # https://docs.djangoproject.com/en/3.1/ref/utils/#django.utils.decorators.decorator_from_middleware
     def process_request(self, request):
-        event = analytics.PageviewEvent(request, self.page_name)
+        event = analytics.ViewPageEvent(request, self.page_name)
         try:
             analytics.send_event(event)
         except Exception:
@@ -58,10 +54,10 @@ class PageviewEvent(MiddlewareMixin):
             return None
 
 
-pageview_decorator = decorator_from_middleware_with_args(PageviewEvent)
+pageview_decorator = decorator_from_middleware_with_args(ViewPageEvent)
 
 
-class LanguageChangeEvent:
+class ChangeLanguageEvent:
     """Middleware hooks into django.views.i18n.set_language to send an analytics event."""
 
     def __init__(self, get_response):
@@ -73,6 +69,6 @@ class LanguageChangeEvent:
     def process_view(self, request, view_func, view_args, view_kwargs):
         if view_func == i18n.set_language:
             new_lang = request.POST["language"]
-            event = analytics.LanguageChangeEvent(request, new_lang)
+            event = analytics.ChangeLanguageEvent(request, new_lang)
             analytics.send_event(event)
         return None

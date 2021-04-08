@@ -25,7 +25,7 @@ class Event:
         """A single analytics event of the given type, including attributes from request's session."""
         self.app_version = VERSION
         self.event_properties = {}
-        self.event_type = event_type
+        self.event_type = str(event_type).lower()
         self.insert_id = str(uuid.uuid4())
         self.language = session.language(request)
         self.session_id = session.start(request)
@@ -43,17 +43,17 @@ class Event:
         self.__dict__.update(kwargs)
 
 
-class PageviewEvent(Event):
+class ViewPageEvent(Event):
     _domain_re = re.compile(r"^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)", re.IGNORECASE)
 
     def __init__(self, request, page_name, **kwargs):
         """Analytics event representing a single pageview, with common properties."""
-        super().__init__(request, f"land on {page_name} page", **kwargs)
+        super().__init__(request, f"view page {page_name}", **kwargs)
 
         uagent = request.headers.get("user-agent")
 
         ref = request.headers.get("referer")
-        match = PageviewEvent._domain_re.match(ref) if ref else None
+        match = ViewPageEvent._domain_re.match(ref) if ref else None
         refdom = match.group(1) if match else None
 
         agency = session.agency(request)
@@ -64,7 +64,7 @@ class PageviewEvent(Event):
         )
 
 
-class LanguageChangeEvent(Event):
+class ChangeLanguageEvent(Event):
     def __init__(self, request, new_lang, **kwargs):
         """Analytics event representing a change in the app's language."""
         super().__init__(request, "change language", **kwargs)
