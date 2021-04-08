@@ -186,9 +186,9 @@ msgstr "Regresar"
 msgid "core.help.p1"
 msgstr ""
 "Cal-ITP es un nuevo proyecto del Departamento de Transporte de California. "
-"Nos asociamos con el DMV de California para confirmar la edad para los descuentos. " 
+"Nos asociamos con el DMV de California para confirmar la edad para los descuentos. "
 "Nos asociamos con Littlepay para conectar el descuento con su tarjeta bancaria "
-"y así, cuando pague el transporte público, obtenga su descuento automáticamente." 
+"y así, cuando pague el transporte público, obtenga su descuento automáticamente."
 
 #: benefits/core/views.py:91
 msgid "core.help.p2"
