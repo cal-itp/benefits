@@ -223,7 +223,7 @@ msgstr "Icono de tarjeta de identificación con marca de verificación"
 msgid "discounts.index.p1"
 msgstr ""
 "Ahora, tenemos que vincular su descuento a su tarjeta bancaria. Nosotros "
-"no guardamos su información y no se le cobrará. Cuando utilice esta tarjeta 
+"no guardamos su información y no se le cobrará. Cuando utilice esta tarjeta "
 "para pagar el transporte público, siempre recibirá su descuento."
 
 #: benefits/discounts/views.py:41
