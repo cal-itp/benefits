@@ -64,6 +64,13 @@ class PageviewEvent(Event):
         )
 
 
+class LanguageChangeEvent(Event):
+    def __init__(self, request, new_lang, **kwargs):
+        """Analytics event representing a change in the app's language."""
+        super().__init__(request, "change language", **kwargs)
+        self.update(event_properties=dict(language=new_lang))
+
+
 class Client:
     def __init__(self):
         """Analytics API client"""

@@ -5,6 +5,7 @@ import logging
 
 from django.utils.decorators import decorator_from_middleware_with_args
 from django.utils.deprecation import MiddlewareMixin
+from django.views import i18n
 
 from benefits.settings import DEBUG
 from . import analytics, session
@@ -58,3 +59,20 @@ class PageviewEvent(MiddlewareMixin):
 
 
 pageview_decorator = decorator_from_middleware_with_args(PageviewEvent)
+
+
+class LanguageChangeEvent:
+    """Middleware hooks into django.views.i18n.set_language to send an analytics event."""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        return self.get_response(request)
+
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        if view_func == i18n.set_language:
+            new_lang = request.POST["language"]
+            event = analytics.LanguageChangeEvent(request, new_lang)
+            analytics.send_event(event)
+        return None
