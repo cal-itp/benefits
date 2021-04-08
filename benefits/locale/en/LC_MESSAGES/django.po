@@ -150,13 +150,13 @@ msgstr ""
 #: benefits/core/views.py:25
 msgctxt "image alt text"
 msgid "core.index.image"
-msgstr "Senior transit rider"
+msgstr "Rider tapping a debit card to pay for their trip"
 
 #: benefits/core/views.py:30
 msgid "core.index.p1"
 msgstr ""
-"With new contactless payment options, you can tap your bank-issued credit, "
-"debit or Visa prepaid card when you board, and your discount will "
+"With new contactless payment options, you can tap your bank-issued credit "
+"or debit card when you board, and your discount will "
 "automatically apply."
 
 #: benefits/core/views.py:30
@@ -227,7 +227,7 @@ msgstr ""
 
 #: benefits/discounts/views.py:41
 msgid "discounts.index.p2"
-msgstr "Use a bank-issued credit, debit, or Visa prepaid card."
+msgstr "Use a bank-issued credit or debit card."
 
 #: benefits/discounts/views.py:46
 msgid "discounts.buttons.paymentpartner"
@@ -322,7 +322,7 @@ msgstr "Your bank card"
 
 #: benefits/eligibility/views.py:32
 msgid "eligibility.index.item2.text"
-msgstr "A debit, credit, or Visa prepaid card"
+msgstr "A debit or credit card"
 
 #: benefits/eligibility/views.py:35
 msgid "eligibility.index.p1"
