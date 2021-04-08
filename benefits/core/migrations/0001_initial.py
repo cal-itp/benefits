@@ -20,22 +20,12 @@ class Migration(migrations.Migration):
                 ("card_tokenize_url", models.TextField()),
                 ("card_tokenize_func", models.TextField()),
                 ("card_tokenize_env", models.TextField()),
-                (
-                    "client_cert_pem",
-                    models.TextField(
-                        help_text="A certificate in PEM format, used for client certificate authentication to this Provider's \
-                            API."
-                    ),
-                ),
-                (
-                    "client_cert_private_key_pem",
-                    models.TextField(help_text="The private key in PEM format used to sign the certificate."),
-                ),
-                (
-                    "client_cert_root_ca_pem",
-                    models.TextField(help_text="The root CA bundle in PEM format used to verify the Provider's server."),
-                ),
+                # fmt: off
+                ("client_cert_pem", models.TextField(help_text="A certificate in PEM format, used for client certificate authentication to this Provider's API.")),  # noqa: E501
+                ("client_cert_private_key_pem", models.TextField(help_text="The private key in PEM format used to sign the certificate.")),  # noqa: E501
+                ("client_cert_root_ca_pem", models.TextField(help_text="The root CA bundle in PEM format used to verify the Provider's server.")),  # noqa: E501
                 ("customer_endpoint", models.TextField()),
+                # fmt: on
                 ("customers_endpoint", models.TextField()),
                 ("group_endpoint", models.TextField()),
             ],
@@ -57,18 +47,11 @@ class Migration(migrations.Migration):
                 ("api_url", models.TextField()),
                 ("api_auth_header", models.TextField()),
                 ("api_auth_key", models.TextField()),
-                (
-                    "public_key_pem",
-                    models.TextField(
-                        help_text="The Verifier's public key in PEM format, used to encrypt requests targeted at this Verifier \
-                            and to verify signed responses from this verifier."
-                    ),
-                ),
-                (
-                    "jwe_cek_enc",
-                    models.TextField(help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode"),
-                ),
+                # fmt: off
+                ("public_key_pem", models.TextField(help_text="The Verifier's public key in PEM format, used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier.")),  # noqa: E501
+                ("jwe_cek_enc", models.TextField(help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode")),  # noqa: E501
                 ("jwe_encryption_alg", models.TextField(help_text="The JWE-compatible encryption algorithm")),
+                # fmt: on
                 ("jws_signing_alg", models.TextField(help_text="The JWS-compatible signing algorithm")),
                 ("eligibility_types", models.ManyToManyField(to="core.EligibilityType")),
             ],
@@ -85,23 +68,13 @@ class Migration(migrations.Migration):
                 ("logo_url", models.URLField()),
                 ("phone", models.TextField()),
                 ("active", models.BooleanField(default=False)),
-                (
-                    "private_key_pem",
-                    models.TextField(
-                        help_text="The Agency's private key in PEM format, used to sign tokens created on behalf of this \
-                            Agency."
-                    ),
-                ),
+                # fmt: off
+                ("private_key_pem", models.TextField(help_text="The Agency's private key in PEM format, used to sign tokens created on behalf of this Agency.")),  # noqa: E501
                 ("jws_signing_alg", models.TextField(help_text="The JWS-compatible signing algorithm.")),
-                (
-                    "discount_provider",
-                    models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.discountprovider"),
-                ),
+                ("discount_provider", models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.discountprovider")),
                 ("eligibility_types", models.ManyToManyField(to="core.EligibilityType")),
-                (
-                    "eligibility_verifier",
-                    models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.eligibilityverifier"),
-                ),
+                ("eligibility_verifier", models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.eligibilityverifier")),
+                # fmt: on
             ],
         ),
     ]

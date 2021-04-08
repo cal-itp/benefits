@@ -22,6 +22,7 @@ def pem_to_jwk(pem):
 class DiscountProvider(models.Model):
     """An entity that provides transit discounts."""
 
+    # fmt: off
     name = models.TextField()
     api_base_url = models.TextField()
     api_access_token_endpoint = models.TextField()
@@ -30,16 +31,13 @@ class DiscountProvider(models.Model):
     card_tokenize_url = models.TextField()
     card_tokenize_func = models.TextField()
     card_tokenize_env = models.TextField()
-    client_cert_pem = models.TextField(
-        help_text="A certificate in PEM format, used for client certificate authentication to this Provider's API."
-    )
+    client_cert_pem = models.TextField(help_text="A certificate in PEM format, used for client certificate authentication to this Provider's API.")  # noqa: 503
     client_cert_private_key_pem = models.TextField(help_text="The private key in PEM format used to sign the certificate.")
-    client_cert_root_ca_pem = models.TextField(
-        help_text="The root CA bundle in PEM format used to verify the Provider's server."
-    )
+    client_cert_root_ca_pem = models.TextField(help_text="The root CA bundle in PEM format used to verify the Provider's server.")  # noqa: 503
     customer_endpoint = models.TextField()
     customers_endpoint = models.TextField()
     group_endpoint = models.TextField()
+    # fmt: on
 
     def __str__(self):
         return self.name
@@ -65,18 +63,17 @@ class EligibilityType(models.Model):
 class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""
 
+    # fmt: off
     name = models.TextField()
     api_url = models.TextField()
     api_auth_header = models.TextField()
     api_auth_key = models.TextField()
     eligibility_types = models.ManyToManyField(EligibilityType)
-    public_key_pem = models.TextField(
-        help_text="The Verifier's public key in PEM format, used to encrypt requests targeted at this Verifier \
-            and to verify signed responses from this verifier."
-    )
+    public_key_pem = models.TextField(help_text="The Verifier's public key in PEM format, used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier.")  # noqa: 503
     jwe_cek_enc = models.TextField(help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode")
     jwe_encryption_alg = models.TextField(help_text="The JWE-compatible encryption algorithm")
     jws_signing_alg = models.TextField(help_text="The JWS-compatible signing algorithm")
+    # fmt: on
 
     def __str__(self):
         return self.name
@@ -95,6 +92,7 @@ class EligibilityVerifier(models.Model):
 class TransitAgency(models.Model):
     """An agency offering transit service."""
 
+    # fmt: off
     slug = models.TextField()
     short_name = models.TextField()
     long_name = models.TextField()
@@ -106,10 +104,9 @@ class TransitAgency(models.Model):
     eligibility_types = models.ManyToManyField(EligibilityType)
     eligibility_verifier = models.ForeignKey(EligibilityVerifier, on_delete=models.PROTECT)
     discount_provider = models.ForeignKey(DiscountProvider, on_delete=models.PROTECT)
-    private_key_pem = models.TextField(
-        help_text="The Agency's private key in PEM format, used to sign tokens created on behalf of this Agency."
-    )
+    private_key_pem = models.TextField(help_text="The Agency's private key in PEM format, used to sign tokens created on behalf of this Agency.")  # noqa: 503
     jws_signing_alg = models.TextField(help_text="The JWS-compatible signing algorithm.")
+    # fmt: on
 
     def __str__(self):
         return self.long_name
