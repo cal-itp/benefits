@@ -140,8 +140,6 @@ class Client:
 
         try:
             r = requests.get(self.verifier.api_url, headers=self._auth_headers(token))
-            del token
-            r.raise_for_status()
         except requests.ConnectionError:
             raise ApiError("Connection to verification server failed")
         except requests.Timeout:
