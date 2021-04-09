@@ -50,7 +50,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "benefits.core.middleware.DebugSession",
-    "benefits.core.middleware.ChangeLanguageEvent",
+    "benefits.core.middleware.ChangedLanguageEvent",
 ]
 
 if ADMIN:

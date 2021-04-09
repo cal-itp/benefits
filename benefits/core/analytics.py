@@ -20,9 +20,10 @@ logger = logging.getLogger(__name__)
 
 class Event:
     _counter = itertools.count()
+    _domain_re = re.compile(r"^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)", re.IGNORECASE)
 
     def __init__(self, request, event_type, **kwargs):
-        """A single analytics event of the given type, including attributes from request's session."""
+        """Analytics event of the given type, including attributes from request's session."""
         self.app_version = VERSION
         self.event_properties = {}
         self.event_type = str(event_type).lower()
@@ -32,43 +33,45 @@ class Event:
         self.time = int(time.time() * 1000)
         self.user_id = session.uid(request)
         self.user_properties = {}
-        self.update(**kwargs)
+        self.__dict__.update(kwargs)
+
+        agency = session.agency(request)
+        self.update_event_properties(path=request.path, provider_name=agency.long_name if agency else None)
+
+        uagent = request.headers.get("user-agent")
+
+        ref = request.headers.get("referer")
+        match = ViewedPageEvent._domain_re.match(ref) if ref else None
+        refdom = match.group(1) if match else None
+
+        self.update_user_properties(referrer=ref, referring_domain=refdom, user_agent=uagent)
+
         # event is initialized, consume next counter
         self.event_id = next(Event._counter)
 
     def __str__(self):
         return json.dumps(self.__dict__)
 
-    def update(self, **kwargs):
-        self.__dict__.update(kwargs)
+    def update_event_properties(self, **kwargs):
+        """Merge kwargs into the self.event_properties dict."""
+        self.event_properties.update(kwargs)
+
+    def update_user_properties(self, **kwargs):
+        """Merge kwargs into the self.user_properties dict."""
+        self.user_properties.update(kwargs)
 
 
-class ViewPageEvent(Event):
-    _domain_re = re.compile(r"^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)", re.IGNORECASE)
-
-    def __init__(self, request, page_name, **kwargs):
-        """Analytics event representing a single pageview, with common properties."""
-        super().__init__(request, f"view page {page_name}", **kwargs)
-
-        uagent = request.headers.get("user-agent")
-
-        ref = request.headers.get("referer")
-        match = ViewPageEvent._domain_re.match(ref) if ref else None
-        refdom = match.group(1) if match else None
-
-        agency = session.agency(request)
-
-        self.update(
-            event_properties=dict(path=request.path, provider_name=agency.long_name if agency else None),
-            user_properties=dict(referrer=ref, referring_domain=refdom, user_agent=uagent),
-        )
+class ViewedPageEvent(Event):
+    def __init__(self, request):
+        """Analytics event representing a single page view."""
+        super().__init__(request, "viewed page")
 
 
-class ChangeLanguageEvent(Event):
-    def __init__(self, request, new_lang, **kwargs):
+class ChangedLanguageEvent(Event):
+    def __init__(self, request, new_lang):
         """Analytics event representing a change in the app's language."""
-        super().__init__(request, "change language", **kwargs)
-        self.update(event_properties=dict(language=new_lang))
+        super().__init__(request, "changed language")
+        self.update_event_properties(language=new_lang)
 
 
 class Client:
@@ -108,21 +111,14 @@ class Client:
                 logger.error(f"Event contained too many requests for some users: {r.json()}")
             else:
                 logger.error(f"Failed to send event: {r.json()}")
+
         except Exception:
             logger.error(f"Failed to send event: {event}")
 
 
-def send_event(event=None, request=None, event_type=None, **kwargs):
-    """
-    Send an analytics event. If :event: is an Event instance, use that.
-    Otherwise :request: and :event_type: are required to construct a new Event instance.
-    Extra kwargs are merged as event attributes (must be JSON-serializable).
-    """
+def send_event(event):
+    """Send an analytics event."""
     if isinstance(event, Event):
-        event.update(**kwargs)
-        Client(ANALYTICS_KEY).send(event)
-    elif all((request, event_type)):
-        event = Event(request, event_type, **kwargs)
         Client(ANALYTICS_KEY).send(event)
     else:
-        raise ValueError("Either pass an Event instance, or Django request object and event type string")
+        raise ValueError("event must be an Event instance")
