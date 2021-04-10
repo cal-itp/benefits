@@ -25,6 +25,7 @@ class Event:
     def __init__(self, request, event_type, **kwargs):
         """Analytics event of the given type, including attributes from request's session."""
         self.app_version = VERSION
+        self.device_id = session.did(request)
         self.event_properties = {}
         self.event_type = str(event_type).lower()
         self.insert_id = str(uuid.uuid4())

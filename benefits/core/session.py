@@ -1,6 +1,7 @@
 """
 The core application: helpers to work with request sessions.
 """
+import hashlib
 import logging
 import time
 import uuid
@@ -61,6 +62,12 @@ def debug(request):
     """Get the DEBUG flag from the request's session."""
     logger.debug("Get session debug flag")
     return bool(request.session.get(_DEBUG, False))
+
+
+def did(request):
+    """Get the session's device ID, a hashed version of the unique ID."""
+    hash = hashlib.sha512(bytes(uid(request), "utf8"))
+    return hash.hexdigest()[:26]
 
 
 def eligibility(request):
@@ -127,7 +134,7 @@ def token_expiry(request):
 
 
 def uid(request):
-    """Get the session's unique ID, or None."""
+    """Get the session's unique ID, generating a new one if necessary."""
     logger.debug("Get session uid")
     u = request.session.get(_UID)
     if not u:
