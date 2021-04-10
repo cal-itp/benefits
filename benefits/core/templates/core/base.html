@@ -16,6 +16,8 @@
 
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
         <script src="https://code.jquery.com/jquery-migrate-3.0.1.min.js"></script>
+
+        {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
     </head>
     <body>
         <header role="banner" id="header" class="global-header">
