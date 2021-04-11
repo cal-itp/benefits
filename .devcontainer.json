@@ -6,11 +6,16 @@
     "runServices": ["dev", "server"],
     "workspaceFolder": "/home/calitp/app",
     "postStartCommand": ["/bin/bash", "bin/init.sh"],
-    "postAttachCommand": "pre-commit install",
+    "postAttachCommand": "pre-commit install --install-hooks",
 
     // Set *default* container specific settings.json values on container create.
     "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash",
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+            "bash": {
+                "path": "/bin/bash"
+            }
+        },
         "python.pythonPath": "/usr/local/bin/python",
     },
 
