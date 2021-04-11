@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 _AGENCY = "agency"
 _DEBUG = "debug"
+_DID = "did"
 _ELIGIBILITY = "eligibility"
 _LANG = "lang"
 _ORIGIN = "origin"
@@ -48,6 +49,7 @@ def context_dict(request):
     return {
         _AGENCY: agency(request).slug if active_agency(request) else None,
         _DEBUG: debug(request),
+        _DID: did(request),
         _ELIGIBILITY: ", ".join(eligibility(request)),
         _LANG: language(request),
         _ORIGIN: origin(request),
@@ -66,8 +68,12 @@ def debug(request):
 
 def did(request):
     """Get the session's device ID, a hashed version of the unique ID."""
-    hash = hashlib.sha512(bytes(uid(request), "utf8"))
-    return hash.hexdigest()[:26]
+    logger.debug("Get session did")
+    d = request.session.get(_DID)
+    if not d:
+        reset(request)
+        d = request.session.get(_DID)
+    return str(d)
 
 
 def eligibility(request):
@@ -108,7 +114,9 @@ def reset(request):
     if _UID not in request.session or not request.session[_UID]:
         logger.info("Reset session time and uid")
         request.session[_START] = int(time.time() * 1000)
-        request.session[_UID] = str(uuid.uuid4())
+        u = str(uuid.uuid4())
+        request.session[_UID] = u
+        request.session[_DID] = str(uuid.UUID(hashlib.sha512(bytes(u, "utf8")).hexdigest()[:32]))
 
 
 def start(request):
