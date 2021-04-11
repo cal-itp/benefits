@@ -42,7 +42,7 @@ class Event:
         uagent = request.headers.get("user-agent")
 
         ref = request.headers.get("referer")
-        match = ViewedPageEvent._domain_re.match(ref) if ref else None
+        match = Event._domain_re.match(ref) if ref else None
         refdom = match.group(1) if match else None
 
         self.update_user_properties(referrer=ref, referring_domain=refdom, user_agent=uagent)
