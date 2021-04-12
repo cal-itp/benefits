@@ -12,7 +12,7 @@
         <link href="https://california.azureedge.net/cdt/statetemplate/6.0.2/css/cagov.core.css" rel="stylesheet">
         <link href="https://california.azureedge.net/cdt/statetemplate/6.0.2/css/colorscheme-oceanside.css" rel="stylesheet">
         <link href="{% static "css/styles.css" %}" rel="stylesheet">
-        {% include "core/includes/favicon.html" %}
+        <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
 
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
         <script src="https://code.jquery.com/jquery-migrate-3.0.1.min.js"></script>
@@ -27,7 +27,17 @@
             {% include "core/includes/debug.html" %}
             {% endif %}
 
-            {% include "core/includes/branding.html" %}
+            <div class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-between">
+                <div class="container">
+                    <span class="navbar-brand">
+                        <img class="sm d-lg-none" src="{% static "img/logo-sm.svg" %}" alt="{% translate "core.logo.small" context "image alt text" %}" />
+                        <img class="lg d-none d-lg-block" src="{% static "img/logo-lg.svg" %}"  alt="{% translate "core.logo.large" context "image alt text" %}" />
+                    </span>
+                    <span class="form-inline">
+                        {% include "core/includes/lang-selector.html" %}
+                    </span>
+                </div>
+            </div>
         </header>
 
         <main id="main-content" class="main-content" role="main">
