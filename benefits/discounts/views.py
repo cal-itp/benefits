@@ -153,7 +153,7 @@ def success(request):
     """View handler for the final success page."""
     page = viewmodels.Page(
         title=_("discounts.success.title"),
-        icon=viewmodels.Icon("paymentcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
+        icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
         content_title=_("discounts.success.title"),
         paragraphs=[_("discounts.success.p1"), _("discounts.success.p2")],
     )
