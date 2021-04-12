@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues\n"
-"POT-Creation-Date: 2021-03-12 20:00+0000\n"
+"POT-Creation-Date: 2021-04-12 23:30+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,38 +17,39 @@ msgstr ""
 msgid "core.skip"
 msgstr "Skip to Main Content"
 
-#: benefits/core/templates/core/base.html:44 benefits/core/views.py:102
-#: benefits/core/views.py:104
+#: benefits/core/templates/core/base.html:33
+msgctxt "image alt text"
+msgid "core.logo.small"
+msgstr "California Integrated Travel Project: Benefits logo (small)"
+
+#: benefits/core/templates/core/base.html:34
+msgctxt "image alt text"
+msgid "core.logo.large"
+msgstr "California Integrated Travel Project: Benefits logo (large)"
+
+#: benefits/core/templates/core/base.html:54 benefits/core/views.py:99
+#: benefits/core/views.py:101
 msgid "core.payment-options"
 msgstr "Payment Options"
 
-#: benefits/core/templates/core/base.html:45 benefits/core/views.py:89
-#: benefits/core/views.py:90
+#: benefits/core/templates/core/base.html:55 benefits/core/views.py:86
+#: benefits/core/views.py:87
 msgid "core.help"
 msgstr "Help"
 
-#: benefits/core/templates/core/base.html:46
+#: benefits/core/templates/core/base.html:56
 msgid "core.privacy"
 msgstr "Privacy Policy"
 
 #: benefits/core/templates/core/help.html:6
 msgid "core.help.foss.text"
 msgstr ""
-"This application is Free and Open Source Software. You may obtain the source code from"
+"This application is Free and Open Source Software. You may obtain the source "
+"code from"
 
 #: benefits/core/templates/core/help.html:8
 msgid "core.help.foss.link"
 msgstr "GitHub"
-
-#: benefits/core/templates/core/includes/branding.html:6
-msgctxt "image alt text"
-msgid "core.logo.small"
-msgstr "California Integrated Travel Project: Benefits logo (small)"
-
-#: benefits/core/templates/core/includes/branding.html:7
-msgctxt "image alt text"
-msgid "core.logo.large"
-msgstr "California Integrated Travel Project: Benefits logo (large)"
 
 #: benefits/core/templates/core/payment-options.html:5
 msgid "core.payments.p1"
@@ -100,7 +101,7 @@ msgid "core.page.title"
 msgstr "Transit Benefits"
 
 #: benefits/core/viewmodels.py:165 benefits/core/viewmodels.py:167
-#: benefits/eligibility/forms.py:32
+#: benefits/eligibility/forms.py:34
 msgid "core.error"
 msgstr "Error"
 
@@ -155,9 +156,8 @@ msgstr "Rider tapping a debit card to pay for their trip"
 #: benefits/core/views.py:30
 msgid "core.index.p1"
 msgstr ""
-"With new contactless payment options, you can tap your bank-issued credit "
-"or debit card when you board, and your discount will "
-"automatically apply."
+"With new contactless payment options, you can tap your bank-issued credit or "
+"debit card when you board, and your discount will automatically apply."
 
 #: benefits/core/views.py:30
 msgid "core.index.p2"
@@ -169,19 +169,19 @@ msgstr ""
 msgid "core.index.p3"
 msgstr "Verify your discount, and connect your bank card today."
 
-#: benefits/core/views.py:48
+#: benefits/core/views.py:46
 msgid "core.index.chooseprovider"
 msgstr "Choose your transit provider"
 
-#: benefits/core/views.py:70
+#: benefits/core/views.py:68
 msgid "core.index.continue"
 msgstr "Let’s do it!"
 
-#: benefits/core/views.py:86 benefits/core/views.py:105
+#: benefits/core/views.py:83 benefits/core/views.py:102
 msgid "core.buttons.back"
 msgstr "Go back"
 
-#: benefits/core/views.py:91
+#: benefits/core/views.py:88
 msgid "core.help.p1"
 msgstr ""
 "Cal-ITP is a new project from the California Department of Transportation. "
@@ -189,13 +189,13 @@ msgstr ""
 "We partner with Littlepay to attach your discount to your bank card so that "
 "when you pay for your transit ride, you get your discount automatically."
 
-#: benefits/core/views.py:91
+#: benefits/core/views.py:88
 msgid "core.help.p2"
 msgstr ""
 "If you need assistance with the site, please reach out to the customer "
 "service team for your local transit provider."
 
-#: benefits/core/views.py:103
+#: benefits/core/views.py:100
 msgctxt "image alt text"
 msgid "core.icons.bankcard"
 msgstr "Bank card icon with contactless symbol"
@@ -205,98 +205,98 @@ msgctxt "image alt text"
 msgid "discounts.success.image"
 msgstr "Tapping bank card on the bus reader"
 
-#: benefits/discounts/views.py:38
+#: benefits/discounts/views.py:39
 msgid "discounts.index.title"
 msgstr "Eligibility Confirmed!"
 
-#: benefits/discounts/views.py:39
+#: benefits/discounts/views.py:40
 msgid "discounts.index.content_title"
 msgstr "Great! You’re eligible for a discount!"
 
-#: benefits/discounts/views.py:40 benefits/eligibility/views.py:25
+#: benefits/discounts/views.py:41 benefits/eligibility/views.py:25
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Identification card icon with checkmark"
 
-#: benefits/discounts/views.py:41
+#: benefits/discounts/views.py:42
 msgid "discounts.index.p1"
 msgstr ""
 "Next, we need to attach your discount to your bank card. We don’t store your "
 "information, and you won’t be charged. When you use this card to pay for "
 "transit, you will always receive your discount."
 
-#: benefits/discounts/views.py:41
+#: benefits/discounts/views.py:42
 msgid "discounts.index.p2"
 msgstr "Use a bank-issued credit or debit card."
 
-#: benefits/discounts/views.py:46
+#: benefits/discounts/views.py:47
 msgid "discounts.buttons.paymentpartner"
 msgstr "Continue to our payment partner"
 
-#: benefits/discounts/views.py:49
+#: benefits/discounts/views.py:50
 msgid "discounts.buttons.paymentoptions"
 msgstr "What if I don’t have a bank card?"
 
-#: benefits/discounts/views.py:131 benefits/discounts/views.py:133
+#: benefits/discounts/views.py:136 benefits/discounts/views.py:138
 msgid "discounts.retry.title"
 msgstr "We couldn’t connect your bank card"
 
-#: benefits/discounts/views.py:132
+#: benefits/discounts/views.py:137
 msgctxt "image alt text"
 msgid "core.icons.bankcardquestion"
 msgstr "Bank card icon with contactless symbol and question mark"
 
-#: benefits/discounts/views.py:134
+#: benefits/discounts/views.py:139
 msgid "discounts.retry.p1"
 msgstr ""
 "You can try again or reach out to your transit provider for assistance."
 
-#: benefits/discounts/views.py:137
+#: benefits/discounts/views.py:142
 msgid "discounts.retry.button"
 msgstr "Try again"
 
-#: benefits/discounts/views.py:151 benefits/discounts/views.py:153
+#: benefits/discounts/views.py:155 benefits/discounts/views.py:157
 msgid "discounts.success.title"
 msgstr "Success!"
 
-#: benefits/discounts/views.py:152 benefits/eligibility/views.py:30
+#: benefits/discounts/views.py:156 benefits/eligibility/views.py:30
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
 msgstr "Bank card icon with contactless symbol and checkmark"
 
-#: benefits/discounts/views.py:154
+#: benefits/discounts/views.py:158
 msgid "discounts.success.p1"
 msgstr ""
 "Your discount is now linked to your bank card. You were not charged anything "
 "today."
 
-#: benefits/discounts/views.py:154
+#: benefits/discounts/views.py:158
 msgid "discounts.success.p2"
 msgstr ""
 "When boarding transit, pay with this same card, and your discount will "
 "automatically be applied to your fare purchase."
 
-#: benefits/eligibility/forms.py:16
+#: benefits/eligibility/forms.py:21
 msgid "eligibility.form.id"
 msgstr "CA driver’s license or ID number"
 
-#: benefits/eligibility/forms.py:18
+#: benefits/eligibility/forms.py:23
 msgid "eligibility.form.name"
 msgstr "Last name (as it appears on ID)"
 
-#: benefits/eligibility/forms.py:20
+#: benefits/eligibility/forms.py:25
 msgid "eligibility.form.submit"
 msgstr "Check status"
 
-#: benefits/eligibility/forms.py:21
+#: benefits/eligibility/forms.py:26
 msgid "eligibility.form.submitting"
 msgstr "Checking"
 
-#: benefits/eligibility/forms.py:23
+#: benefits/eligibility/forms.py:28
 msgid "eligibility.form.error.invalid"
 msgstr "Check your input. The format looks wrong."
 
-#: benefits/eligibility/forms.py:23
+#: benefits/eligibility/forms.py:28
 msgid "eligibility.form.error.missing"
 msgstr "This field is required."
 
@@ -349,25 +349,25 @@ msgstr ""
 "If you’re 65 or older, we can confirm you are eligible for a senior discount "
 "when you ride transit. We don’t save your information."
 
-#: benefits/eligibility/views.py:126
+#: benefits/eligibility/views.py:111
 msgid "eligibility.unverified.title"
 msgstr "Age not confirmed"
 
-#: benefits/eligibility/views.py:127
+#: benefits/eligibility/views.py:112
 msgid "eligibility.unverified.content_title"
 msgstr "We can’t confirm your age"
 
-#: benefits/eligibility/views.py:128
+#: benefits/eligibility/views.py:113
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Identification card icon with question mark"
 
-#: benefits/eligibility/views.py:129
+#: benefits/eligibility/views.py:114
 msgid "eligibility.unverified.p1"
 msgstr ""
 "You may still be eligible for a discount, but we can’t verify your age with "
 "the DMV."
 
-#: benefits/eligibility/views.py:129
+#: benefits/eligibility/views.py:114
 msgid "eligibility.unverified.p2"
 msgstr "Reach out to your transit provider for assistance."
