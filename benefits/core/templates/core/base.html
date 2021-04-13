@@ -75,6 +75,9 @@
                         localStorage.setItem("scroll", doc.scrollTop);
                     });
                 }
+                $("a[href^='https'], a[href^='tel']").on("click", function(e) {
+                    amplitude.getInstance().logEvent('clicked link', {'href': e.target.href, 'path': window.location.pathname});
+                });
             });
         </script>
     </body>
