@@ -5,7 +5,7 @@ services:
     build: .
     image: benefits_client:latest
     environment:
-      - AMP_API_KEY
+      - ANALYTICS_KEY
       - DJANGO_ADMIN
       - DJANGO_ALLOWED_HOSTS
       - DJANGO_DB
@@ -25,7 +25,7 @@ services:
       dockerfile: Dockerfile.dev
     image: benefits_client:dev
     environment:
-      - AMP_API_KEY
+      - ANALYTICS_KEY
       - DJANGO_ADMIN
       - DJANGO_ALLOWED_HOSTS
       - DJANGO_DB

@@ -181,4 +181,4 @@ LOGGING = {
 
 # Analytics configuration
 
-ANALYTICS_KEY = os.environ.get("AMP_API_KEY")
+ANALYTICS_KEY = os.environ.get("ANALYTICS_KEY")
