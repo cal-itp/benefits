@@ -21,7 +21,7 @@ def _check_access_token(request, agency):
     Ensure the request's session is configured with an access token.
     """
     if not session.valid_token(request):
-        response = api.AccessTokenClient(agency).get()
+        response = api.Client(agency).access_token()
         session.update(request, token=response.access_token, token_exp=response.expiry)
 
 
@@ -107,16 +107,12 @@ def _enroll(request):
     else:
         raise Exception("Session contains no eligibility information")
 
+    eligibility = models.EligibilityType.by_name(eligibility)
     agency = session.agency(request)
 
-    logger.debug("Call customer API")
-    response = api.CustomerClient(agency).get(card_token)
-    customer_id = response.id
+    response = api.Client(agency).enroll(card_token, eligibility.group_id)
 
-    logger.debug("Call group API")
-    eligibility = models.EligibilityType.by_name(eligibility)
-    response = api.GroupClient(agency).enroll_customer(customer_id, eligibility.group_id)
-    if response.updated_customer_id == customer_id:
+    if response.success:
         return success(request)
     else:
         raise Exception("Updated customer_id does not match enrolled customer_id")
