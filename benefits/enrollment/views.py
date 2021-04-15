@@ -58,13 +58,13 @@ def _index(request):
     agency_vm = viewmodels.TransitAgency(agency)
     context.update(agency_vm.context_dict())
 
-    # and discount provider details
+    # and benefits provider details
     provider_vm = viewmodels.BenefitsProvider(
-        model=agency.discount_provider,
+        model=agency.benefits_provider,
         access_token=session.token(request),
         element_id=f"#{tokenize_button}",
         color="#046b99",
-        name=f"{agency.long_name} {_('partnered with')} {agency.discount_provider.name}",
+        name=f"{agency.long_name} {_('partnered with')} {agency.benefits_provider.name}",
     )
     context.update(provider_vm.context_dict())
     logger.info(f"card_tokenize_url: {context['provider'].card_tokenize_url}")
@@ -82,15 +82,15 @@ def _index(request):
 def index(request):
     """View handler for the enrollment landing page."""
     if request.method == "POST":
-        response = _associate_discount(request)
+        response = _enroll(request)
     else:
         response = _index(request)
 
     return response
 
 
-def _associate_discount(request):
-    """Helper calls the discount APIs."""
+def _enroll(request):
+    """Helper calls the enrollment APIs."""
     logger.debug("Read tokenized card")
     form = forms.CardTokenizeSuccessForm(request.POST)
     if not form.is_valid():

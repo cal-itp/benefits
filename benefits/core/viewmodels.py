@@ -218,7 +218,7 @@ class BenefitsProvider:
             self.card_tokenize_env = model.card_tokenize_env
 
     def context_dict(self):
-        """Return a context dict for a DiscountProvider."""
+        """Return a context dict for a BenefitsProvider."""
         return {"provider": self}
 
 
