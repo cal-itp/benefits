@@ -5,6 +5,7 @@ services:
     build: .
     image: benefits_client:latest
     environment:
+      - ANALYTICS_KEY
       - DJANGO_ADMIN
       - DJANGO_ALLOWED_HOSTS
       - DJANGO_DB
@@ -24,6 +25,7 @@ services:
       dockerfile: Dockerfile.dev
     image: benefits_client:dev
     environment:
+      - ANALYTICS_KEY
       - DJANGO_ADMIN
       - DJANGO_ALLOWED_HOSTS
       - DJANGO_DB

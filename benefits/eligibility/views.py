@@ -8,7 +8,7 @@ from django.utils.translation import pgettext, ugettext as _
 
 from benefits.core import middleware, session, viewmodels
 from benefits.core.views import PageTemplateResponse, _index_image
-from . import api, forms
+from . import analytics, api, forms
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
@@ -53,10 +53,14 @@ def confirm(request):
     )
 
     if request.method == "POST":
+        analytics.started_eligibility(request)
+
         form = forms.EligibilityVerificationForm(request.POST)
         response = _verify(request, form)
 
         if response is None:
+            # form was not valid, allow for correction/resubmission
+            analytics.returned_error(request, form.errors)
             page.forms = [form]
             response = PageTemplateResponse(request, page)
     elif session.eligible(request):
@@ -68,7 +72,7 @@ def confirm(request):
 
 
 def _verify(request, form):
-    """Helper calls the eligibility verification API to verify user input."""
+    """Helper calls the eligibility verification API with user input."""
 
     if not form.is_valid():
         return None
@@ -93,6 +97,8 @@ def _verify(request, form):
 def verified(request, verified_types):
     """View handler for the verified eligibility page."""
 
+    analytics.returned_success(request)
+
     discounts_index = reverse("discounts:index")
     session.update(request, eligibility_types=verified_types, origin=discounts_index)
 
@@ -102,6 +108,8 @@ def verified(request, verified_types):
 @decorator_from_middleware(middleware.AgencySessionRequired)
 def unverified(request):
     """View handler for the unverified eligibility page."""
+
+    analytics.returned_fail(request)
 
     # tel: link to agency phone number
     agency = session.agency(request)

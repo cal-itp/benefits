@@ -7,12 +7,18 @@
         {{ provider.loading_text }}
     </button>
     <script>
+        var startedEvent = "started payment connection", closedEvent = "closed payment connection";
+
         $.getScript("{{ provider.card_tokenize_url }}")
             .done(function() {
                 $(".loading").remove();
                 $(".invisible").removeClass("invisible");
 
                 $("{{ provider.element_id }}").on("click", function() {
+                    amplitude.getInstance().logEvent(startedEvent, {
+                        card_tokenize_url: "{{ provider.card_tokenize_url }}",
+                        card_tokenize_func: "{{ provider.card_tokenize_func }}"
+                    });
                     $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ provider.loading_text }}");
                 });
 
@@ -28,6 +34,8 @@
                         /* This function executes when the
                         /* card/address verification returns
                         /* successfully with a token from discount server */
+                        amplitude.getInstance().logEvent(closedEvent, {status: "success"});
+
                         var form = $("form[action='{{ forms.tokenize_success }}']");
                         $("#card_token", form).val(response.token);
                         form.submit();
@@ -36,6 +44,8 @@
                         /* This function executes when the
                         /* card/address verification fails and server
                         /* return verification failure message */
+                        amplitude.getInstance().logEvent(closedEvent, {status: "fail"});
+
                         var form = $("form[action='{{ forms.tokenize_retry }}']");
                         form.submit();
                     },
@@ -43,6 +53,8 @@
                         /* This function executes when the
                         /* server returns error or token is invalid.
                         /* 400 or 500 will return. */
+                        amplitude.getInstance().logEvent(closedEvent, {status: "error", error: response});
+
                         var form = $("form[action='{{ forms.tokenize_retry }}']");
                         form.submit();
                     },
@@ -50,7 +62,8 @@
                         /* This function executes when the
                         /* user cancels and closes the window
                         /* and returns to home page. */
-                        console.log('canceled');
+                        amplitude.getInstance().logEvent(closedEvent, {status: "cancel"});
+
                         return location.reload();
                     }
                 });

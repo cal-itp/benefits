@@ -50,6 +50,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "benefits.core.middleware.DebugSession",
+    "benefits.core.middleware.ChangedLanguageEvent",
 ]
 
 if ADMIN:
@@ -74,6 +75,7 @@ ROOT_URLCONF = "benefits.urls"
 
 template_ctx_processors = [
     "django.template.context_processors.request",
+    "benefits.core.context_processors.analytics",
 ]
 
 if DEBUG:
@@ -176,3 +178,7 @@ LOGGING = {
     },
     "loggers": {"django": {"handlers": ["default"], "propagate": False}},
 }
+
+# Analytics configuration
+
+ANALYTICS_KEY = os.environ.get("ANALYTICS_KEY")

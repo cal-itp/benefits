@@ -51,7 +51,8 @@ def _index(request):
             ),
         ],
     )
-    context = page.context_dict()
+    context = {}
+    context.update(page.context_dict())
 
     # add agency details
     agency_vm = viewmodels.TransitAgency(agency)
@@ -69,14 +70,10 @@ def _index(request):
     logger.info(f"card_tokenize_url: {context['provider'].card_tokenize_url}")
 
     # the tokenize form URLs are injected to page-generated Javascript
-    context.update(
-        {
-            "forms": {
-                "tokenize_retry": reverse(tokenize_retry_form.action_url),
-                "tokenize_success": reverse(tokenize_success_form.action_url),
-            }
-        }
-    )
+    context["forms"] = {
+        "tokenize_retry": reverse(tokenize_retry_form.action_url),
+        "tokenize_success": reverse(tokenize_success_form.action_url),
+    }
 
     return TemplateResponse(request, "discounts/index.html", context)
 
@@ -149,8 +146,12 @@ def retry(request):
         raise Exception("This view method only supports POST.")
 
 
+@middleware.pageview_decorator
 def success(request):
     """View handler for the final success page."""
+
+    request.path = "/discounts/success"
+
     page = viewmodels.Page(
         title=_("discounts.success.title"),
         icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
