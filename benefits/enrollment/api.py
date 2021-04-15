@@ -1,5 +1,5 @@
 """
-The discounts application: Discounts API implementation.
+The enrollment application: Benefits Enrollment API implementation.
 """
 import logging
 from tempfile import NamedTemporaryFile
@@ -12,10 +12,10 @@ logger = logging.getLogger(__name__)
 
 
 class Client:
-    """Base Discount Provider API client. Dot not use this class directly. Use one of the child class implementations."""
+    """Base Benefits Enrollment API client. Dot not use this class directly. Use one of the child class implementations."""
 
     def __init__(self, agency):
-        logger.debug("Initialize base Discount Provider API Client")
+        logger.debug("Initialize base Benefits Enrollment API Client")
 
         if agency is None:
             raise ValueError("agency")
@@ -33,17 +33,17 @@ class Client:
         return h
 
     def _get(self, url, payload, headers=None):
-        logger.debug("GET request in base Discount Provider API Client")
+        logger.debug("GET request in base Benefits Enrollment API Client")
         h = self._headers(headers)
         return self._cert_request(lambda verify, cert: requests.get(url, headers=h, params=payload, verify=verify, cert=cert))
 
     def _patch(self, url, payload, headers=None):
-        logger.debug("PATCH request in base Discount Provider API Client")
+        logger.debug("PATCH request in base Benefits Enrollment API Client")
         h = self._headers(headers)
         return self._cert_request(lambda verify, cert: requests.patch(url, headers=h, json=payload, verify=verify, cert=cert))
 
     def _post(self, url, payload, headers=None):
-        logger.debug("POST request in base Discount Provider API Client")
+        logger.debug("POST request in base Benefits Enrollment API Client")
         h = self._headers(headers)
         return self._cert_request(lambda verify, cert: requests.post(url, headers=h, json=payload, verify=verify, cert=cert))
 
@@ -71,13 +71,13 @@ class Client:
 
 
 class AccessTokenError(Exception):
-    """Error with Discounts API access token."""
+    """Error with Enrollment API access token."""
 
     pass
 
 
 class AccessTokenResponse:
-    """Discount Provider API Access Token response."""
+    """Benefits Enrollment API Access Token response."""
 
     def __init__(self, response):
         logger.info("Read access token from response")
@@ -101,7 +101,7 @@ class AccessTokenResponse:
 
 
 class AccessTokenClient(Client):
-    """Discounts Provider API Access Token client."""
+    """Benefits Enrollment API Access Token client."""
 
     def get(self):
         """Obtain an access token to use for integrating with other APIs."""
@@ -114,11 +114,11 @@ class AccessTokenClient(Client):
             r = self._post(url, payload)
             r.raise_for_status()
         except requests.ConnectionError:
-            raise AccessTokenError("Connection to discounts server failed")
+            raise AccessTokenError("Connection to enrollment server failed")
         except requests.Timeout:
-            raise AccessTokenError("Connection to discounts server timed out")
+            raise AccessTokenError("Connection to enrollment server timed out")
         except requests.TooManyRedirects:
-            raise AccessTokenError("Too many redirects to discounts server")
+            raise AccessTokenError("Too many redirects to enrollment server")
         except requests.HTTPError as e:
             raise AccessTokenError(e)
 
@@ -132,7 +132,7 @@ class CustomerApiError(Exception):
 
 
 class CustomerResponse:
-    """Discount Provider Customer API response."""
+    """Benefits Enrollment Customer API response."""
 
     def __init__(self, response, customer_id=None):
         logger.info("Read customer details from response")
@@ -150,10 +150,10 @@ class CustomerResponse:
 
 
 class CustomerClient(Client):
-    """Discounts Provider Customer API client."""
+    """Benefits Enrollment Customer API client."""
 
     def get(self, token):
-        """Get a customer record from Discount Provider's system using the token that represents that customer."""
+        """Get a customer record from Benefit Provider's system using the token that represents that customer."""
         logger.info("Check for existing customer record")
 
         if token is None:
@@ -176,11 +176,11 @@ class CustomerClient(Client):
             else:
                 r.raise_for_status()
         except requests.ConnectionError:
-            raise CustomerApiError("Connection to discounts server failed")
+            raise CustomerApiError("Connection to enrollment server failed")
         except requests.Timeout:
-            raise CustomerApiError("Connection to discounts server timed out")
+            raise CustomerApiError("Connection to enrollment server timed out")
         except requests.TooManyRedirects:
-            raise CustomerApiError("Too many redirects to discounts server")
+            raise CustomerApiError("Too many redirects to enrollment server")
         except requests.HTTPError as e:
             raise CustomerApiError(e)
 
@@ -209,7 +209,7 @@ class GroupApiError(Exception):
 
 
 class GroupResponse:
-    """Discount Provider Customer Group API response."""
+    """Benefits Enrollment Customer Group API response."""
 
     def __init__(self, response, payload=None):
         if payload is None:
@@ -232,7 +232,7 @@ class GroupResponse:
 
 
 class GroupClient(Client):
-    """Discounts Provider Customer Group API client."""
+    """Benefits Enrollment Customer Group API client."""
 
     def enroll_customer(self, customer_id, group_id):
         """Enroll the customer in the group."""
@@ -258,10 +258,10 @@ class GroupClient(Client):
             else:
                 r.raise_for_status()
         except requests.ConnectionError:
-            raise GroupApiError("Connection to discounts server failed")
+            raise GroupApiError("Connection to enrollment server failed")
         except requests.Timeout:
-            raise GroupApiError("Connection to discounts server timed out")
+            raise GroupApiError("Connection to enrollment server timed out")
         except requests.TooManyRedirects:
-            raise GroupApiError("Too many redirects to discounts server")
+            raise GroupApiError("Too many redirects to enrollment server")
         except requests.HTTPError as e:
             raise GroupApiError(e)

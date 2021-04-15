@@ -1,5 +1,5 @@
 """
-The eligibility application: Verifies eligibility for discounts.
+The eligibility application: Verifies eligibility for benefits.
 """
 from django.apps import AppConfig
 

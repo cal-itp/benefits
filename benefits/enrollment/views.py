@@ -1,5 +1,5 @@
 """
-The discounts application: view definitions for the discounts association flow.
+The enrollment application: view definitions for the benefits enrollment flow.
 """
 import logging
 
@@ -26,28 +26,28 @@ def _check_access_token(request, agency):
 
 
 def _index(request):
-    """Helper handles GET requests to discounts index."""
+    """Helper handles GET requests to enrollment index."""
     agency = session.agency(request)
 
     _check_access_token(request, agency)
 
     tokenize_button = "tokenize_card"
-    tokenize_retry_form = forms.CardTokenizeFailForm("discounts:retry")
+    tokenize_retry_form = forms.CardTokenizeFailForm("enrollment:retry")
     tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
     page = viewmodels.Page(
-        title=_("discounts.index.title"),
-        content_title=_("discounts.index.content_title"),
+        title=_("enrollment.index.title"),
+        content_title=_("enrollment.index.content_title"),
         icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-        paragraphs=[_("discounts.index.p1"), _("discounts.index.p2")],
+        paragraphs=[_("enrollment.index.p1"), _("enrollment.index.p2")],
         classes="text-lg-center",
         forms=[tokenize_retry_form, tokenize_success_form],
         buttons=[
             viewmodels.Button.primary(
-                text=_("discounts.buttons.paymentpartner"), id=tokenize_button, url=f"#{tokenize_button}"
+                text=_("enrollment.buttons.paymentpartner"), id=tokenize_button, url=f"#{tokenize_button}"
             ),
             viewmodels.Button.link(
-                classes="btn-sm", text=_("discounts.buttons.paymentoptions"), url=reverse("core:payment_options")
+                classes="btn-sm", text=_("enrollment.buttons.paymentoptions"), url=reverse("core:payment_options")
             ),
         ],
     )
@@ -59,7 +59,7 @@ def _index(request):
     context.update(agency_vm.context_dict())
 
     # and discount provider details
-    provider_vm = viewmodels.DiscountProvider(
+    provider_vm = viewmodels.BenefitsProvider(
         model=agency.discount_provider,
         access_token=session.token(request),
         element_id=f"#{tokenize_button}",
@@ -75,12 +75,12 @@ def _index(request):
         "tokenize_success": reverse(tokenize_success_form.action_url),
     }
 
-    return TemplateResponse(request, "discounts/index.html", context)
+    return TemplateResponse(request, "enrollment/index.html", context)
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
 def index(request):
-    """View handler for the discounts landing page."""
+    """View handler for the enrollment landing page."""
     if request.method == "POST":
         response = _associate_discount(request)
     else:
@@ -130,13 +130,13 @@ def retry(request):
         if form.is_valid():
             agency = session.agency(request)
             page = viewmodels.Page(
-                title=_("discounts.retry.title"),
+                title=_("enrollment.retry.title"),
                 icon=viewmodels.Icon("bankcardquestion", pgettext("image alt text", "core.icons.bankcardquestion")),
-                content_title=_("discounts.retry.title"),
-                paragraphs=[_("discounts.retry.p1")],
+                content_title=_("enrollment.retry.title"),
+                paragraphs=[_("enrollment.retry.p1")],
                 buttons=[
                     viewmodels.Button.agency_phone_link(agency),
-                    viewmodels.Button.primary(text=_("discounts.retry.button"), url=session.origin(request)),
+                    viewmodels.Button.primary(text=_("enrollment.retry.button"), url=session.origin(request)),
                 ],
             )
             return PageTemplateResponse(request, page)
@@ -149,14 +149,13 @@ def retry(request):
 @middleware.pageview_decorator
 def success(request):
     """View handler for the final success page."""
-
-    request.path = "/discounts/success"
+    request.path = "/enrollment/success"
 
     page = viewmodels.Page(
-        title=_("discounts.success.title"),
+        title=_("enrollment.success.title"),
         icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-        content_title=_("discounts.success.title"),
-        paragraphs=[_("discounts.success.p1"), _("discounts.success.p2")],
+        content_title=_("enrollment.success.title"),
+        paragraphs=[_("enrollment.success.p1"), _("enrollment.success.p2")],
     )
 
-    return TemplateResponse(request, "discounts/success.html", page.context_dict())
+    return TemplateResponse(request, "enrollment/success.html", page.context_dict())

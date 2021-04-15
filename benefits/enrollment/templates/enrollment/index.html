@@ -33,7 +33,7 @@
                     onTokenize: function (response) {
                         /* This function executes when the
                         /* card/address verification returns
-                        /* successfully with a token from discount server */
+                        /* successfully with a token from enrollment server */
                         amplitude.getInstance().logEvent(closedEvent, {status: "success"});
 
                         var form = $("form[action='{{ forms.tokenize_success }}']");
