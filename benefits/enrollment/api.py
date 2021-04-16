@@ -11,8 +11,8 @@ import requests
 logger = logging.getLogger(__name__)
 
 
-class AccessTokenError(Exception):
-    """Error with Enrollment API access token."""
+class ApiError(Exception):
+    """Error calling the enrollment APIs."""
 
     pass
 
@@ -26,7 +26,7 @@ class AccessTokenResponse:
         try:
             payload = response.json()
         except ValueError:
-            raise AccessTokenError("Invalid response format")
+            raise ApiError("Invalid response format")
 
         self.access_token = payload.get("access_token")
         self.token_type = payload.get("token_type")
@@ -41,12 +41,6 @@ class AccessTokenResponse:
         logger.info("Access token successfully read from response")
 
 
-class EnrollmentApiError(Exception):
-    """Error calling the enrollment APIs."""
-
-    pass
-
-
 class CustomerResponse:
     """Benefits Enrollment Customer API response."""
 
@@ -56,7 +50,7 @@ class CustomerResponse:
         try:
             payload = response.json()
         except ValueError:
-            raise EnrollmentApiError("Invalid response format")
+            raise ApiError("Invalid response format")
 
         self.id = payload.get("id", customer_id)
         self.customer_ref = payload.get("customer_ref")
@@ -73,7 +67,7 @@ class GroupResponse:
             try:
                 payload = response.json()
             except ValueError:
-                raise EnrollmentApiError("Invalid response format")
+                raise ApiError("Invalid response format")
         else:
             try:
                 # Group API uses an error response (500) to indicate that the customer already exists in the group (!!!)
@@ -81,9 +75,9 @@ class GroupResponse:
                 error = response.json()["errors"][0]
                 customer_id = payload[0]
                 if not error["detail"].startswith("Duplicate") and customer_id in error["detail"]:
-                    raise EnrollmentApiError("Invalid response format")
+                    raise ApiError("Invalid response format")
             except (KeyError, ValueError):
-                raise EnrollmentApiError("Invalid response format")
+                raise ApiError("Invalid response format")
 
         self.customer_ids = list(payload)
         self.updated_customer_id = self.customer_ids[0] if len(self.customer_ids) == 1 else None
@@ -172,13 +166,13 @@ class Client:
             else:
                 r.raise_for_status()
         except requests.ConnectionError:
-            raise EnrollmentApiError("Connection to enrollment server failed")
+            raise ApiError("Connection to enrollment server failed")
         except requests.Timeout:
-            raise EnrollmentApiError("Connection to enrollment server timed out")
+            raise ApiError("Connection to enrollment server timed out")
         except requests.TooManyRedirects:
-            raise EnrollmentApiError("Too many redirects to enrollment server")
+            raise ApiError("Too many redirects to enrollment server")
         except requests.HTTPError as e:
-            raise EnrollmentApiError(e)
+            raise ApiError(e)
 
     def _update_customer(self, customer_id, customer_ref):
         """Update a customer using their unique info."""
@@ -208,13 +202,13 @@ class Client:
             r = self._post(url, payload)
             r.raise_for_status()
         except requests.ConnectionError:
-            raise AccessTokenError("Connection to enrollment server failed")
+            raise ApiError("Connection to enrollment server failed")
         except requests.Timeout:
-            raise AccessTokenError("Connection to enrollment server timed out")
+            raise ApiError("Connection to enrollment server timed out")
         except requests.TooManyRedirects:
-            raise AccessTokenError("Too many redirects to enrollment server")
+            raise ApiError("Too many redirects to enrollment server")
         except requests.HTTPError as e:
-            raise AccessTokenError(e)
+            raise ApiError(e)
 
         return AccessTokenResponse(r)
 
@@ -243,10 +237,10 @@ class Client:
             else:
                 r.raise_for_status()
         except requests.ConnectionError:
-            raise EnrollmentApiError("Connection to enrollment server failed")
+            raise ApiError("Connection to enrollment server failed")
         except requests.Timeout:
-            raise EnrollmentApiError("Connection to enrollment server timed out")
+            raise ApiError("Connection to enrollment server timed out")
         except requests.TooManyRedirects:
-            raise EnrollmentApiError("Too many redirects to enrollment server")
+            raise ApiError("Too many redirects to enrollment server")
         except requests.HTTPError as e:
-            raise EnrollmentApiError(e)
+            raise ApiError(e)
