@@ -222,6 +222,11 @@ class Client:
         """Enroll a customer in a product group using the token that represents that customer."""
         logger.info("Enroll customer in product group")
 
+        if customer_token is None:
+            raise ValueError("customer_token")
+        if group_id is None:
+            raise ValueError("group_id")
+
         customer = self._get_customer(customer_token)
         url = self._make_url(self.provider.group_endpoint, group_id)
         payload = [customer.id]
