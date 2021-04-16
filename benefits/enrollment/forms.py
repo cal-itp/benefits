@@ -1,5 +1,5 @@
 """
-The discounts application: Form definitions for results from Hosted Card Verification Flow.
+The enrollment application: Form definitions for results from Hosted Card Verification Flow.
 """
 from django import forms
 
@@ -7,7 +7,7 @@ from django import forms
 class CardTokenizeSuccessForm(forms.Form):
     """Form to bring client card token back to server."""
 
-    action_url = "discounts:index"
+    action_url = "enrollment:index"
     method = "POST"
 
     # hidden input with no label

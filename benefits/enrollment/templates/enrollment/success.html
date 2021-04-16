@@ -1,0 +1,9 @@
+{% extends "core/page.html" %}
+{% load i18n %}
+{% load static %}
+{% block paragraph_content %}
+{{ block.super }}
+<p>
+    <img class="img-fluid" src="{% static 'img/ridertappingbankcard.png' %}" alt="{% translate "enrollment.success.image" context "image alt text" %}" />
+</p>
+{% endblock %}

@@ -195,10 +195,10 @@ class ErrorPage(Page):
         return ErrorPage(title=title, content_title=content_title, paragraphs=paragraphs, **kwargs)
 
 
-class DiscountProvider:
+class BenefitsProvider:
     """
-    Represents a core.models.DiscountProvider:
-    * model: core.models.DiscountProvider
+    Represents a core.models.BenefitsProvider:
+    * model: core.models.BenefitsProvider
     * access_token: str
     * element_id: str
     * color: str
@@ -207,7 +207,7 @@ class DiscountProvider:
     """
 
     def __init__(self, model, access_token, element_id, color, name=None, loading_text=_("core.buttons.wait")):
-        if isinstance(model, models.DiscountProvider):
+        if isinstance(model, models.BenefitsProvider):
             self.access_token = access_token
             self.element_id = element_id
             self.color = color
@@ -218,7 +218,7 @@ class DiscountProvider:
             self.card_tokenize_env = model.card_tokenize_env
 
     def context_dict(self):
-        """Return a context dict for a DiscountProvider."""
+        """Return a context dict for a BenefitsProvider."""
         return {"provider": self}
 
 
