@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues\n"
-"POT-Creation-Date: 2021-04-15 19:00+0000\n"
+"POT-Creation-Date: 2021-04-20 20:00+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,29 +17,29 @@ msgstr ""
 msgid "core.skip"
 msgstr "Saltar al contenido principal"
 
-#: benefits/core/templates/core/base.html:35
+#: benefits/core/templates/core/base.html:43
 msgctxt "image alt text"
 msgid "core.logo.small"
 msgstr ""
 "Proyecto de viaje integrado de California: logotipo de beneficios (pequeño)"
 
-#: benefits/core/templates/core/base.html:36
+#: benefits/core/templates/core/base.html:44
 msgctxt "image alt text"
 msgid "core.logo.large"
 msgstr ""
 "Proyecto de viaje integrado de California: logotipo de beneficios (grande)"
 
-#: benefits/core/templates/core/base.html:56 benefits/core/views.py:103
+#: benefits/core/templates/core/base.html:64 benefits/core/views.py:103
 #: benefits/core/views.py:105
 msgid "core.payment-options"
 msgstr "Opciones de Pago"
 
-#: benefits/core/templates/core/base.html:57 benefits/core/views.py:89
+#: benefits/core/templates/core/base.html:65 benefits/core/views.py:89
 #: benefits/core/views.py:90
 msgid "core.help"
 msgstr "Ayuda"
 
-#: benefits/core/templates/core/base.html:58
+#: benefits/core/templates/core/base.html:66
 msgid "core.privacy"
 msgstr "Póliza de Privacidad"
 
@@ -52,6 +52,32 @@ msgstr ""
 #: benefits/core/templates/core/help.html:8
 msgid "core.help.foss.link"
 msgstr "GitHub"
+
+#: benefits/core/templates/core/includes/nocookies.html:6
+msgid "core.nocookies.brand"
+msgstr "Cookies están inactivos"
+
+#: benefits/core/templates/core/includes/nocookies.html:8
+msgid "core.nocookies.text"
+msgstr ""
+"Para funcionar correctamente, este sitio web requiere un navegador que "
+"admita cookies. Por favor, active cookies por este sitio web y"
+
+#: benefits/core/templates/core/includes/nocookies.html:8
+#: benefits/core/templates/core/includes/noscript.html:8
+#: benefits/core/viewmodels.py:39
+msgid "core.buttons.home"
+msgstr "Regresar a la pantalla de inicio"
+
+#: benefits/core/templates/core/includes/noscript.html:6
+msgid "core.noscript.brand"
+msgstr "JavaScript está inactivo"
+
+#: benefits/core/templates/core/includes/noscript.html:8
+msgid "core.noscript.text"
+msgstr ""
+"Para funcionar correctamente, este sitio web requiere un navegador que "
+"admita JavaScript. Por favor, active JavaScript por este sitio web y"
 
 #: benefits/core/templates/core/payment-options.html:5
 msgid "core.payments.p1"
@@ -94,10 +120,6 @@ msgid "core.payments.p5"
 msgstr ""
 "Aún puede obtener su descuento mediante el proceso de solicitud de su "
 "proveedor de transporte público."
-
-#: benefits/core/viewmodels.py:39
-msgid "core.buttons.home"
-msgstr "Regresar a la pantalla de inicio"
 
 #: benefits/core/viewmodels.py:119
 msgid "core.page.title"
@@ -248,7 +270,7 @@ msgstr "Tu identificación de California"
 msgid "eligibility.index.item1.text"
 msgstr "Licencia de conducir o tarjeta de identificación"
 
-#: benefits/eligibility/views.py:30 benefits/enrollment/views.py:156
+#: benefits/eligibility/views.py:30 benefits/enrollment/views.py:152
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
 msgstr ""
@@ -344,37 +366,37 @@ msgstr "Continúe con nuestro socio de pago"
 msgid "enrollment.buttons.paymentoptions"
 msgstr "¿Qué pasa si no tengo una tarjeta bancaria?"
 
-#: benefits/enrollment/views.py:133 benefits/enrollment/views.py:135
+#: benefits/enrollment/views.py:129 benefits/enrollment/views.py:131
 msgid "enrollment.retry.title"
 msgstr "No pudimos conectar tu tarjeta bancaria"
 
-#: benefits/enrollment/views.py:134
+#: benefits/enrollment/views.py:130
 msgctxt "image alt text"
 msgid "core.icons.bankcardquestion"
 msgstr ""
 "Icono de tarjeta bancaria con símbolo sin contacto y signo de interrogación"
 
-#: benefits/enrollment/views.py:136
+#: benefits/enrollment/views.py:132
 msgid "enrollment.retry.p1"
 msgstr ""
 "Puede intentarlo de nuevo o puede comunicarse con su proveedor de transporte "
 "público para obtener ayuda."
 
-#: benefits/enrollment/views.py:139
+#: benefits/enrollment/views.py:135
 msgid "enrollment.retry.button"
 msgstr "Inténtalo de nuevo"
 
-#: benefits/enrollment/views.py:155 benefits/enrollment/views.py:157
+#: benefits/enrollment/views.py:151 benefits/enrollment/views.py:153
 msgid "enrollment.success.title"
 msgstr "¡Éxito!"
 
-#: benefits/enrollment/views.py:158
+#: benefits/enrollment/views.py:154
 msgid "enrollment.success.p1"
 msgstr ""
 "Su descuento ahora está vinculado a su tarjeta bancaria. Hoy no se le cobró "
 "nada."
 
-#: benefits/enrollment/views.py:158
+#: benefits/enrollment/views.py:154
 msgid "enrollment.success.p2"
 msgstr ""
 "Pague con esta misma tarjeta al abordar el transporte público y su descuento "

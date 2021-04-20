@@ -25,6 +25,14 @@
                 <a href="#main-content">{% translate "core.skip" %}</a>
             </div>
 
+            <div class="nocookies d-none" >
+            {% include "core/includes/nocookies.html" %}
+            </div>
+
+            <noscript>
+            {% include "core/includes/noscript.html" %}
+            </noscript>
+
             {% if debug %}
             {% include "core/includes/debug.html" %}
             {% endif %}
@@ -65,6 +73,15 @@
         <script src="https://california.azureedge.net/cdt/statetemplate/6.0.2/js/cagov.core.js"></script>
         <script>
             $(function() {
+                document.cookie = "testcookie"
+                if (document.cookie.indexOf("testcookie") < 0) {
+                    $(".nocookies").removeClass("d-none");
+                }
+                else {
+                    document.cookie = "testcookie; expires=Thu, 01-Jan-1970 00:00:01 GMT";
+                    $(".nocookies").addClass("d-none");
+                }
+
                 var doc = document.documentElement;
                 if ($(doc).hasClass("with-image")) {
                     var top = localStorage.getItem("scroll");
@@ -75,6 +92,7 @@
                         localStorage.setItem("scroll", doc.scrollTop);
                     });
                 }
+
                 $("a[href^='https'], a[href^='tel']").on("click", function(e) {
                     amplitude.getInstance().logEvent('clicked link', {'href': e.target.href, 'path': window.location.pathname});
                 });
