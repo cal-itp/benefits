@@ -20,8 +20,8 @@ handler500 = "benefits.core.views.server_error"
 
 urlpatterns = [
     path("", include("benefits.core.urls")),
-    path("enrollment/", include("benefits.enrollment.urls")),
     path("eligibility/", include("benefits.eligibility.urls")),
+    path("enrollment/", include("benefits.enrollment.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
 ]
 

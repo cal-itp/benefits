@@ -1,0 +1,11 @@
+{% extends "core/includes/alert-bar.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="text-left">
+<span class="navbar-brand">{% translate "core.noscript.brand" %}</span>
+<span class="navbar-text">
+    {% translate "core.noscript.text" %} <a href="/">{% translate "core.buttons.home" %}</a>.
+</span>
+</div>
+{% endblock %}
