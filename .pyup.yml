@@ -1,0 +1,8 @@
+# pyup.io config file
+# see https://pyup.io/docs/configuration/ for all available options
+
+schedule: "every day"
+update: all
+requirements:
+  - server/requirements.txt:
+      update: insecure
