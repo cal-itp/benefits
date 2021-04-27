@@ -1,4 +1,4 @@
-cryptography==3.4.2
+cryptography==3.4.7
 debugpy==1.2.1
 Flask==1.1.2
 Flask-RESTful==0.3.8
