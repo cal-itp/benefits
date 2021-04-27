@@ -21,9 +21,12 @@ _ELIGIBILITY = "eligibility"
 _LANG = "lang"
 _ORIGIN = "origin"
 _START = "start"
-_TOKEN = "token"
-_TOKEN_EXP = "token_exp"
 _UID = "uid"
+
+# ignore bandit B105:hardcoded_password_string
+# as these are not passwords, but keys for the session dict
+_TOKEN = "token"  # nosec
+_TOKEN_EXP = "token_exp"  # nosec
 
 
 def agency(request):
