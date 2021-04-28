@@ -20,3 +20,10 @@ repos:
       - id: flake8
         types:
           - python
+  - repo: https://github.com/pycqa/bandit
+    rev: 1.7.0
+    hooks:
+      - id: bandit
+        args: ["-ll"]
+        exclude: ^server/
+        files: .py$
