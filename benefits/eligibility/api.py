@@ -75,7 +75,11 @@ class ResponseToken:
         logger.info("Read encrypted token from response")
 
         try:
-            encrypted_signed_token = response.json()
+            encrypted_signed_token = response.text
+            if not encrypted_signed_token:
+                raise ValueError()
+            # strip extra spaces and wrapping quote chars
+            encrypted_signed_token = encrypted_signed_token.strip("'\n\"")
         except ValueError:
             raise TokenError("Invalid response format")
 
@@ -139,6 +143,7 @@ class Client:
             raise TokenError("Failed to tokenize form values")
 
         try:
+            logger.debug(f"GET request to {self.verifier.api_url}")
             r = requests.get(self.verifier.api_url, headers=self._auth_headers(token))
         except requests.ConnectionError:
             raise ApiError("Connection to verification server failed")
