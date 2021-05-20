@@ -23,6 +23,7 @@ class BenefitsProvider(models.Model):
     """An entity that provides transit benefits."""
 
     # fmt: off
+    id = models.AutoField(primary_key=True)
     name = models.TextField()
     api_base_url = models.TextField()
     api_access_token_endpoint = models.TextField()
@@ -46,6 +47,7 @@ class BenefitsProvider(models.Model):
 class EligibilityType(models.Model):
     """A single conditional eligibility type."""
 
+    id = models.AutoField(primary_key=True)
     name = models.TextField()
     label = models.TextField()
     group_id = models.TextField()
@@ -64,6 +66,7 @@ class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""
 
     # fmt: off
+    id = models.AutoField(primary_key=True)
     name = models.TextField()
     api_url = models.TextField()
     api_auth_header = models.TextField()
@@ -93,12 +96,13 @@ class TransitAgency(models.Model):
     """An agency offering transit service."""
 
     # fmt: off
+    id = models.AutoField(primary_key=True)
     slug = models.TextField()
     short_name = models.TextField()
     long_name = models.TextField()
     agency_id = models.TextField()
     merchant_id = models.TextField()
-    logo_url = models.URLField()
+    info_url = models.URLField()
     phone = models.TextField()
     active = models.BooleanField(default=False)
     eligibility_types = models.ManyToManyField(EligibilityType)

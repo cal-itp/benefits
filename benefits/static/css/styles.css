@@ -152,6 +152,15 @@ footer {
     width: 100%;
 }
 
+.container.content .btn-lg.agency-url {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.container.content .btn-lg.agency-url,
+.container.content .btn-lg.agency-phone {
+    padding-top: 0;
+}
+
 .container.content .btn-link {
     text-decoration: underline;
 }

@@ -113,7 +113,7 @@ def unverified(request):
 
     # tel: link to agency phone number
     agency = session.agency(request)
-    buttons = [viewmodels.Button.agency_phone_link(agency)]
+    buttons = viewmodels.Button.agency_contact_links(agency)
 
     page = viewmodels.Page(
         title=_("eligibility.unverified.title"),

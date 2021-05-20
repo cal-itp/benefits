@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues\n"
-"POT-Creation-Date: 2021-04-20 20:00+0000\n"
+"POT-Creation-Date: 2021-05-20 19:20+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -65,7 +65,7 @@ msgstr ""
 
 #: benefits/core/templates/core/includes/nocookies.html:8
 #: benefits/core/templates/core/includes/noscript.html:8
-#: benefits/core/viewmodels.py:39
+#: benefits/core/viewmodels.py:42
 msgid "core.buttons.home"
 msgstr "Regresar a la pantalla de inicio"
 
@@ -121,49 +121,49 @@ msgstr ""
 "Aún puede obtener su descuento mediante el proceso de solicitud de su "
 "proveedor de transporte público."
 
-#: benefits/core/viewmodels.py:119
+#: benefits/core/viewmodels.py:122
 msgid "core.page.title"
 msgstr "Beneficios del Tránsito"
 
-#: benefits/core/viewmodels.py:165 benefits/core/viewmodels.py:167
+#: benefits/core/viewmodels.py:168 benefits/core/viewmodels.py:170
 #: benefits/eligibility/forms.py:34
 msgid "core.error"
 msgstr "Error"
 
-#: benefits/core/viewmodels.py:166
+#: benefits/core/viewmodels.py:169
 msgctxt "image alt text"
 msgid "core.icons.sadbus"
 msgstr "Icono de autobus con llanta ponchada"
 
-#: benefits/core/viewmodels.py:168
+#: benefits/core/viewmodels.py:171
 msgid "core.error.server.content_title"
 msgstr "El servicio no está funcionando"
 
-#: benefits/core/viewmodels.py:174 benefits/core/viewmodels.py:175
+#: benefits/core/viewmodels.py:177 benefits/core/viewmodels.py:178
 msgid "core.error.server.title"
 msgstr "El servicio no está funcionando"
 
-#: benefits/core/viewmodels.py:176
+#: benefits/core/viewmodels.py:179
 msgid "core.error.server.p1"
 msgstr "¡Pronto volveremos a estar en funcionamiento!"
 
-#: benefits/core/viewmodels.py:176
+#: benefits/core/viewmodels.py:179
 msgid "core.error.server.p2"
 msgstr "Por favor, vuelva más tarde."
 
-#: benefits/core/viewmodels.py:184
+#: benefits/core/viewmodels.py:187
 msgid "core.error.notfound.title"
 msgstr "No podemos encontrar esa página"
 
-#: benefits/core/viewmodels.py:185
+#: benefits/core/viewmodels.py:188
 msgid "core.error.notfound.content_title"
 msgstr "No podemos encontrar esa página"
 
-#: benefits/core/viewmodels.py:186
+#: benefits/core/viewmodels.py:189
 msgid "core.error.notfound.p1"
 msgstr "Parece que esa página no existe o se ha movido."
 
-#: benefits/core/viewmodels.py:209
+#: benefits/core/viewmodels.py:212
 msgid "core.buttons.wait"
 msgstr "Espere por favor..."
 
@@ -270,7 +270,7 @@ msgstr "Tu identificación de California"
 msgid "eligibility.index.item1.text"
 msgstr "Licencia de conducir o tarjeta de identificación"
 
-#: benefits/eligibility/views.py:30 benefits/enrollment/views.py:152
+#: benefits/eligibility/views.py:30 benefits/enrollment/views.py:150
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
 msgstr ""
@@ -386,17 +386,17 @@ msgstr ""
 msgid "enrollment.retry.button"
 msgstr "Inténtalo de nuevo"
 
-#: benefits/enrollment/views.py:151 benefits/enrollment/views.py:153
+#: benefits/enrollment/views.py:149 benefits/enrollment/views.py:151
 msgid "enrollment.success.title"
 msgstr "¡Éxito!"
 
-#: benefits/enrollment/views.py:154
+#: benefits/enrollment/views.py:152
 msgid "enrollment.success.p1"
 msgstr ""
 "Su descuento ahora está vinculado a su tarjeta bancaria. Hoy no se le cobró "
 "nada."
 
-#: benefits/enrollment/views.py:154
+#: benefits/enrollment/views.py:152
 msgid "enrollment.success.p2"
 msgstr ""
 "Pague con esta misma tarjeta al abordar el transporte público y su descuento "
