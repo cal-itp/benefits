@@ -31,9 +31,12 @@ class Button:
         self.url = kwargs.get("url")
 
     @staticmethod
-    def agency_phone_link(agency):
-        """Create a tel: link button with the agency's phone number."""
-        return Button.link(classes="pt-0", label=agency.long_name, text=agency.phone, url=f"tel:{agency.phone}")
+    def agency_contact_links(agency):
+        """"""
+        return [
+            Button.link(classes="agency-url", label=agency.long_name, text=_("core.agency.url.text"), url=agency.info_url),
+            Button.link(classes="agency-phone", text=agency.phone, url=f"tel:{agency.phone}"),
+        ]
 
     @staticmethod
     def home(request, text=_("core.buttons.home")):
@@ -235,7 +238,7 @@ class TransitAgency:
             self.long_name = model.long_name
             self.agency_id = model.agency_id
             self.merchant_id = model.merchant_id
-            self.logo_url = model.logo_url
+            self.info_url = model.info_url
             self.phone = model.phone
 
     def context_dict(self):
