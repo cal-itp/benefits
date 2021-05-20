@@ -3,3 +3,6 @@
 
 schedule: ""
 update: all
+requirements:
+  - server/requirements.txt:
+      update: False
