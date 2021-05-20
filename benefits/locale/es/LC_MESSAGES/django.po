@@ -121,10 +121,6 @@ msgstr ""
 "Aún puede obtener su descuento mediante el proceso de solicitud de su "
 "proveedor de transporte público."
 
-#: benefits/core/viewmodels.py:37
-msgid "core.agency.url.text"
-msgstr "Más información en línea"
-
 #: benefits/core/viewmodels.py:122
 msgid "core.page.title"
 msgstr "Beneficios del Tránsito"

@@ -34,7 +34,7 @@ class Button:
     def agency_contact_links(agency):
         """"""
         return [
-            Button.link(classes="agency-url", label=agency.long_name, text=_("core.agency.url.text"), url=agency.info_url),
+            Button.link(classes="agency-url", label=agency.long_name, text=agency.info_url, url=agency.info_url),
             Button.link(classes="agency-phone", text=agency.phone, url=f"tel:{agency.phone}"),
         ]
 
