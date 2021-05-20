@@ -11,7 +11,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="BenefitsProvider",
             fields=[
-                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("id", models.AutoField(primary_key=True, serialize=False, verbose_name="ID")),
                 ("name", models.TextField()),
                 ("api_base_url", models.TextField()),
                 ("api_access_token_endpoint", models.TextField()),
@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="EligibilityType",
             fields=[
-                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("id", models.AutoField(primary_key=True, serialize=False, verbose_name="ID")),
                 ("name", models.TextField()),
                 ("label", models.TextField()),
                 ("group_id", models.TextField()),
@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="EligibilityVerifier",
             fields=[
-                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("id", models.AutoField(primary_key=True, serialize=False, verbose_name="ID")),
                 ("name", models.TextField()),
                 ("api_url", models.TextField()),
                 ("api_auth_header", models.TextField()),
@@ -59,7 +59,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name="TransitAgency",
             fields=[
-                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("id", models.AutoField(primary_key=True, serialize=False, verbose_name="ID")),
                 ("slug", models.TextField()),
                 ("short_name", models.TextField()),
                 ("long_name", models.TextField()),
