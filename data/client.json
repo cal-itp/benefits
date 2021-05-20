@@ -64,7 +64,7 @@
             "long_name": "ABC Transit Company",
             "agency_id": "abc123",
             "merchant_id": "abc",
-            "logo_url": "https://www.example.com/logo.png",
+            "info_url": "https://www.example.com/help",
             "phone": "800-555-5555",
             "active": true,
             "eligibility_types": [
@@ -85,7 +85,7 @@
             "long_name": "DEF Transit Lines",
             "agency_id": "def456",
             "merchant_id": "deftl",
-            "logo_url": "https://www.example.com/logo.png",
+            "info_url": "https://www.example.com/help",
             "phone": "321-555-5555",
             "active": true,
             "eligibility_types": [
