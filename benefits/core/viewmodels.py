@@ -29,13 +29,16 @@ class Button:
         self.label = kwargs.get("label")
         self.text = kwargs.get("text", "Button")
         self.url = kwargs.get("url")
+        self.target = kwargs.get("target")
 
     @staticmethod
     def agency_contact_links(agency):
-        """"""
+        """Create link buttons for agency contact information."""
         return [
-            Button.link(classes="agency-url", label=agency.long_name, text=agency.info_url, url=agency.info_url),
+            # fmt: off
+            Button.link(classes="agency-url", label=agency.long_name, text=agency.info_url, url=agency.info_url, target="_blank"),  # noqa: E501
             Button.link(classes="agency-phone", text=agency.phone, url=f"tel:{agency.phone}"),
+            # fmt: on
         ]
 
     @staticmethod
