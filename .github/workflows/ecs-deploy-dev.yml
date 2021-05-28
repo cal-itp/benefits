@@ -1,19 +1,17 @@
-name: Deploy to Amazon ECS
+name: Deploy to Amazon ECS (dev)
 
 on:
   workflow_dispatch:
   push:
     branches:
       - dev
-      - test
-      - main
 
 defaults:
   run:
     shell: bash
 
 jobs:
-  deploy-dev:
+  deploy:
     runs-on: ubuntu-latest
     environment: dev
     concurrency: dev
@@ -52,9 +50,11 @@ jobs:
         env:
           AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
           DOCKER_HUB_SECRET: ${{ secrets.DOCKER_HUB_SECRET }}
         run: |
           sed -i "s/<aws_account>/$AWS_ACCOUNT/g" .aws/ecs-task.json
+          sed -i "s/<aws_bucket>/$AWS_BUCKET/g" .aws/ecs-task.json
           sed -i "s/<aws_region>/$AWS_REGION/g" .aws/ecs-task.json
           sed -i "s/<docker_hub_secret>/$DOCKER_HUB_SECRET/g" .aws/ecs-task.json
 
