@@ -69,7 +69,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
-    CSRF_FAILURE_VIEW = "benefits.core.views.bad_request"
+    CSRF_FAILURE_VIEW = "benefits.core.views.csrf_failure"
     SESSION_COOKIE_SECURE = True
 
 ROOT_URLCONF = "benefits.urls"

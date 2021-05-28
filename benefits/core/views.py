@@ -125,6 +125,23 @@ def bad_request(request, exception, template_name="400.html"):
 
 
 @middleware.pageview_decorator
+def csrf_failure(request, reason):
+    """
+    View handler for CSRF_FAILURE_VIEW with custom data.
+    """
+    if session.active_agency(request):
+        session.update(request, origin=session.agency(request).index_url)
+    else:
+        session.update(request, origin=_index_url())
+
+    home = viewmodels.Button.home(request)
+    page = viewmodels.ErrorPage.not_found(button=home, path=request.path)
+    t = loader.get_template("400.html")
+
+    return HttpResponseNotFound(t.render(page.context_dict()))
+
+
+@middleware.pageview_decorator
 def page_not_found(request, exception, template_name="404.html"):
     """View handler for HTTP 404 Not Found responses."""
     if session.active_agency(request):
