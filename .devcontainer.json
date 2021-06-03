@@ -6,7 +6,7 @@
     "runServices": ["dev", "server"],
     "workspaceFolder": "/home/calitp/app",
     "postStartCommand": ["/bin/bash", "bin/init.sh"],
-    "postAttachCommand": "pre-commit install --install-hooks",
+    "postAttachCommand": ["/bin/bash", "bin/pre-commit.sh"],
 
     // Set *default* container specific settings.json values on container create.
     "settings": {
