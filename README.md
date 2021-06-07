@@ -74,7 +74,7 @@ pip install pre-commit
 Then run (from the root of this repository):
 
 ```console
-pre-commit install
+bin/pre-commit.sh
 ```
 
 ### VS Code with Dev Containers
