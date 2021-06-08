@@ -3,4 +3,6 @@ FROM benefits_client:latest
 USER root
 
 RUN apt-get install -qq --no-install-recommends curl git jq ssh && \
-    pip install --no-cache-dir flake8 debugpy pre-commit
+    pip install --no-cache-dir flake8 debugpy pre-commit \
+        mkdocs mkdocs-material mkdocs-awesome-pages-plugin \
+        fontawesome_markdown mdx_truly_sane_lists mkdocs-macros-plugin

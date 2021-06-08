@@ -3,7 +3,7 @@
     "name": "Benefits",
     "dockerComposeFile": ["./docker-compose.yml"],
     "service": "dev",
-    "runServices": ["dev", "server"],
+    "runServices": ["dev", "docs", "server"],
     "workspaceFolder": "/home/calitp/app",
     "postStartCommand": ["/bin/bash", "bin/init.sh"],
     "postAttachCommand": ["/bin/bash", "bin/pre-commit.sh"],
