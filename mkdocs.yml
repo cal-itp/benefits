@@ -1,7 +1,6 @@
 site_name: Benefits Documentation
 repo_url: https://github.com/cal-itp/benefits
 edit_uri: edit/dev/docs
-docs_dir: ./
 site_url: https://docs.calitp.org/benefits
 
 theme:

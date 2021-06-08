@@ -46,7 +46,7 @@ services:
   docs:
     image: benefits_client:dev
     entrypoint: []
-    command: mkdocs serve --config-file docs/mkdocs.yml --dev-addr "0.0.0.0:8001"
+    command: mkdocs serve --dev-addr "0.0.0.0:8001"
     ports:
       - "${DOCS_LOCAL_PORT}:8001"
     volumes:
