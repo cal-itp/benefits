@@ -16,6 +16,7 @@ jobs:
       - name: Deploy docs
         uses: mhausenblas/mkdocs-deploy-gh-pages@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REQUIREMENTS: docs/requirements.txt
           CUSTOM_DOMAIN: docs.calitp.org
           CONFIG_FILE: docs/mkdocs.yml
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
