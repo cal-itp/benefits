@@ -2,8 +2,9 @@ FROM benefits_client:latest
 
 USER root
 
+RUN apt-get install -qq --no-install-recommends curl git jq ssh && \
+    pip install --no-cache-dir flake8 debugpy pre-commit
+
 COPY docs/requirements.txt docs/requirements.txt
 
-RUN apt-get install -qq --no-install-recommends curl git jq ssh && \
-    pip install --no-cache-dir flake8 debugpy pre-commit && \
-    pip install --no-cache-dir -r docs/requirements.txt
+RUN pip install --no-cache-dir -r docs/requirements.txt

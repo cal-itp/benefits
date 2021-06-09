@@ -47,4 +47,5 @@ RUN chown -R $USER /home/$USER/app/benefits/locale
 USER $USER
 
 # configure container executable
-ENTRYPOINT ["/bin/bash", "bin/start.sh"]
+ENTRYPOINT ["/bin/bash"]
+CMD ["bin/start.sh"]
