@@ -3,4 +3,4 @@ mdx_truly_sane_lists
 mkdocs
 mkdocs-awesome-pages-plugin
 mkdocs-macros-plugin
-mkdocs-material
+mkdocs-material==7.1.7
