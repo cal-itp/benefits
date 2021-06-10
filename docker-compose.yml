@@ -22,7 +22,7 @@ services:
   dev:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: ./localhost/Dockerfile.dev
     image: benefits_client:dev
     environment:
       - ANALYTICS_KEY
@@ -53,7 +53,7 @@ services:
       - .:/home/calitp/app:cached
 
   server:
-    build: ./server
+    build: ./localhost/server
     image: eligibility_verification_server:dev
     command: python -m debugpy --listen 0.0.0.0:5789 app.py
     environment:
@@ -64,9 +64,9 @@ services:
       - "5000:5000"
       - "5789:5789"
     volumes:
-      - ./server:/usr/src/server:cached
-      - ./data:/usr/src/server/data
-      - ./keys:/usr/src/server/keys
+      - ./localhost/server:/usr/src/server:cached
+      - ./localhost/data:/usr/src/server/data
+      - ./localhost/keys:/usr/src/server/keys
 
   s3config:
     image: amazon/aws-cli

@@ -36,7 +36,8 @@ After initialization, the client is running at `http://localhost:${DJANGO_LOCAL_
 If `DJANGO_ADMIN=true`, the backend administrative interface can be accessed with the superuser you setup at
 <http://localhost:8000/admin>.
 
-By default, sample data from [`data/client.json`](./data/client.json) is used to initialize Django. Alternatively you may:
+By default, sample data from [`localhost/data/client.json`](./localhost/data/client.json) is used to initialize Django.
+Alternatively you may:
 
 * Modify the sample data file; or
 * Point `DJANGO_INIT_PATH` at a different data file; or
@@ -59,7 +60,7 @@ docker-compose up [-d] --build server
 
 The API endpoint is running at `http://localhost:5000/verify`.
 
-Sample users and eligibility can be found in [`data/server.json`](./data/server.json).
+Sample users and eligibility can be found in [`localhost/data/server.json`](./localhost/data/server.json).
 
 ## Development
 
