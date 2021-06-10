@@ -10,7 +10,7 @@ Clone the repository:
 
 ```console
 git clone https://github.com/cal-itp/benefits
-cd benefits
+cd benefits/localhost
 ```
 
 Create an environment file from the sample:

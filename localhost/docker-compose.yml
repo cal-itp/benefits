@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   client:
-    build: .
+    build: ..
     image: benefits_client:latest
     environment:
       - ANALYTICS_KEY
@@ -16,13 +16,13 @@ services:
     ports:
       - "${DJANGO_LOCAL_PORT}:8000"
     volumes:
-      - ./localhost/data:/home/calitp/app/data:cached
+      - ./data:/home/calitp/app/data:cached
       - configvolume:/home/calitp/app/config:ro
 
   dev:
     build:
-      context: .
-      dockerfile: ./localhost/Dockerfile.dev
+      context: ..
+      dockerfile: localhost/Dockerfile.dev
     image: benefits_client:dev
     environment:
       - ANALYTICS_KEY
@@ -41,7 +41,7 @@ services:
       - "${DJANGO_LOCAL_PORT}:8000"
       - "5678:5678"
     volumes:
-      - .:/home/calitp/app:cached
+      - ../:/home/calitp/app:cached
 
   docs:
     image: benefits_client:dev
@@ -50,10 +50,10 @@ services:
     ports:
       - "${DOCS_LOCAL_PORT}:8001"
     volumes:
-      - .:/home/calitp/app:cached
+      - ../:/home/calitp/app:cached
 
   server:
-    build: ./localhost/server
+    build: ./server
     image: eligibility_verification_server:dev
     command: python -m debugpy --listen 0.0.0.0:5789 app.py
     environment:
@@ -64,9 +64,9 @@ services:
       - "5000:5000"
       - "5789:5789"
     volumes:
-      - ./localhost/server:/usr/src/server:cached
-      - ./localhost/data:/usr/src/server/data
-      - ./localhost/keys:/usr/src/server/keys
+      - ./server:/usr/src/server:cached
+      - ./data:/usr/src/server/data
+      - ./keys:/usr/src/server/keys
 
   s3config:
     image: amazon/aws-cli
