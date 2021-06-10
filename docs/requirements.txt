@@ -2,5 +2,5 @@ fontawesome_markdown
 mdx_truly_sane_lists
 mkdocs
 mkdocs-awesome-pages-plugin
-mkdocs-macros-plugin
+mkdocs-macros-plugin==0.5.5
 mkdocs-material
