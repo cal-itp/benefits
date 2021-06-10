@@ -16,7 +16,7 @@ services:
     ports:
       - "${DJANGO_LOCAL_PORT}:8000"
     volumes:
-      - ./data:/home/calitp/app/data:cached
+      - ./localhost/data:/home/calitp/app/data:cached
       - configvolume:/home/calitp/app/config:ro
 
   dev:
