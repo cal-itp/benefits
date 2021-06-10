@@ -2,65 +2,7 @@
 
 Transit benefits enrollment, minus the paperwork.
 
-## Running locally
-
-Requires [Docker][docker] and [Docker Compose][docker-compose].
-
-Clone the repository:
-
-```console
-git clone https://github.com/cal-itp/benefits
-cd benefits/localhost
-```
-
-Create an environment file from the sample:
-
-```console
-cp .env.sample .env
-```
-
-Build the Docker image using Docker Compose:
-
-```console
-docker-compose build [--no-cache] client
-```
-
-### Start the client
-
-```console
-docker-compose up [-d] client
-```
-
-After initialization, the client is running at `http://localhost:${DJANGO_LOCAL_PORT}` (<http://localhost:8000> by default).
-
-If `DJANGO_ADMIN=true`, the backend administrative interface can be accessed with the superuser you setup at
-<http://localhost:8000/admin>.
-
-By default, sample data from [`localhost/data/client.json`](./localhost/data/client.json) is used to initialize Django.
-Alternatively you may:
-
-* Modify the sample data file; or
-* Point `DJANGO_INIT_PATH` at a different data file; or
-* Use production data stored in S3 (see [Deployment](#deployment)); or
-* (If `DJANGO_ADMIN=true`) use the backend administrative interface CRUD
-
-Stop the running services with:
-
-```console
-docker-compose down
-```
-
-### Test verification server
-
-A basic eligibility verification server is available for testing:
-
-```console
-docker-compose up [-d] --build server
-```
-
-The API endpoint is running at `http://localhost:5000/verify`.
-
-Sample users and eligibility can be found in [`localhost/data/server.json`](./localhost/data/server.json).
+View the technical documentation online: <https://docs.calitp.org/benefits>
 
 ## Development
 
@@ -148,8 +90,6 @@ docker-compose run s3config
 
 [config-file]: ./.devcontainer.json
 [ecs-task-definition]: ./.aws/ecs-task-definition.json
-[docker]: https://docs.docker.com/
-[docker-compose]: https://docs.docker.com/compose/
 [vscode]: https://code.visualstudio.com/
 [pre-commit]: https://pre-commit.com/
 [vscode-containers]: https://code.visualstudio.com/docs/remote/containers
