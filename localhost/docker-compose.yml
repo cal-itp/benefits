@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   client:
-    build: .
+    build: ..
     image: benefits_client:latest
     environment:
       - ANALYTICS_KEY
@@ -21,8 +21,8 @@ services:
 
   dev:
     build:
-      context: .
-      dockerfile: Dockerfile.dev
+      context: ..
+      dockerfile: localhost/Dockerfile.dev
     image: benefits_client:dev
     environment:
       - ANALYTICS_KEY
@@ -41,7 +41,7 @@ services:
       - "${DJANGO_LOCAL_PORT}:8000"
       - "5678:5678"
     volumes:
-      - .:/home/calitp/app:cached
+      - ../:/home/calitp/app:cached
 
   docs:
     image: benefits_client:dev
@@ -50,7 +50,7 @@ services:
     ports:
       - "${DOCS_LOCAL_PORT}:8001"
     volumes:
-      - .:/home/calitp/app:cached
+      - ../:/home/calitp/app:cached
 
   server:
     build: ./server
