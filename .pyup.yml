@@ -5,5 +5,7 @@ branch: dev
 schedule: ""
 update: all
 requirements:
+  - docs/requirements.txt:
+      pin: False
   - localhost/server/requirements.txt:
       update: False
