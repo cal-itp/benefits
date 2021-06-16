@@ -24,7 +24,7 @@
             },
             "pathMappings": [
                 {
-                    "localRoot": "${workspaceFolder}/server",
+                    "localRoot": "${workspaceFolder}/localhost/server",
                     "remoteRoot": "/usr/src/server"
                 }
             ]

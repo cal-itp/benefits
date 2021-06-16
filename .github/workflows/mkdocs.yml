@@ -1,0 +1,21 @@
+name: Publish docs
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+
+jobs:
+  docs:
+    name: Publish docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Deploy docs
+        uses: mhausenblas/mkdocs-deploy-gh-pages@master
+        env:
+          REQUIREMENTS: docs/requirements.txt
+          CUSTOM_DOMAIN: docs.calitp.org
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,8 +1,11 @@
 # pyup.io config file
 # see https://pyup.io/docs/configuration/ for all available options
 
+branch: dev
 schedule: ""
 update: all
 requirements:
-  - server/requirements.txt:
-      update: False
+  - docs/requirements.txt:
+      pin: False
+  - localhost/server/requirements.txt:
+      update: insecure
