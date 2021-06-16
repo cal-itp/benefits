@@ -92,11 +92,11 @@ class Client:
 
         if agency is None:
             raise ValueError("agency")
-        if agency.benefits_provider is None:
-            raise ValueError("agency.benefits_provider")
+        if agency.payment_processor is None:
+            raise ValueError("agency.payment_processor")
 
         self.agency = agency
-        self.provider = agency.benefits_provider
+        self.provider = agency.payment_processor
         self.headers = {"Accept": "application/json", "Content-type": "application/json"}
 
     def _headers(self, headers=None):
