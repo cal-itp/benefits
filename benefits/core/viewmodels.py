@@ -225,7 +225,7 @@ class PaymentProcessor:
 
     def context_dict(self):
         """Return a context dict for a PaymentProcessor."""
-        return {"provider": self}
+        return {"payment_processor": self}
 
 
 class TransitAgency:

@@ -96,7 +96,7 @@ class Client:
             raise ValueError("agency.payment_processor")
 
         self.agency = agency
-        self.provider = agency.payment_processor
+        self.payment_processor = agency.payment_processor
         self.headers = {"Accept": "application/json", "Content-type": "application/json"}
 
     def _headers(self, headers=None):
@@ -106,7 +106,7 @@ class Client:
         return h
 
     def _make_url(self, *parts):
-        return "/".join((self.provider.api_base_url, self.agency.merchant_id, *parts))
+        return "/".join((self.payment_processor.api_base_url, self.agency.merchant_id, *parts))
 
     def _get(self, url, payload, headers=None):
         h = self._headers(headers)
@@ -128,28 +128,28 @@ class Client:
         # requests library reads temp files from file path
         # The "with" context destroys temp files when response comes back
         with NamedTemporaryFile("w+") as cert, NamedTemporaryFile("w+") as key, NamedTemporaryFile("w+") as ca:
-            # write provider client cert data to temp files
+            # write client cert data to temp files
             # resetting so they can be read again by requests
-            cert.write(self.provider.client_cert_pem)
+            cert.write(self.payment_processor.client_cert_pem)
             cert.seek(0)
 
-            key.write(self.provider.client_cert_private_key_pem)
+            key.write(self.payment_processor.client_cert_private_key_pem)
             key.seek(0)
 
-            ca.write(self.provider.client_cert_root_ca_pem)
+            ca.write(self.payment_processor.client_cert_root_ca_pem)
             ca.seek(0)
 
             # request using temp file paths
             return request_func(verify=ca.name, cert=(cert.name, key.name))
 
     def _get_customer(self, token):
-        """Get a customer record from Benefit Provider's system """
+        """Get a customer record from Payment Processor's system """
         logger.info("Check for existing customer record")
 
         if token is None:
             raise ValueError("token")
 
-        url = self._make_url(self.provider.customers_endpoint)
+        url = self._make_url(self.payment_processor.customers_endpoint)
         payload = {"token": token}
 
         try:
@@ -183,7 +183,7 @@ class Client:
         if customer_ref is None:
             raise ValueError("customer_ref")
 
-        url = self._make_url(self.provider.customer_endpoint, customer_id)
+        url = self._make_url(self.payment_processor.customer_endpoint, customer_id)
         payload = {"customer_ref": customer_ref, "is_registered": True}
 
         r = self._patch(url, payload)
@@ -195,8 +195,8 @@ class Client:
         """Obtain an access token to use for integrating with other APIs."""
         logger.info("Get new access token")
 
-        url = self._make_url(self.provider.api_access_token_endpoint)
-        payload = {self.provider.api_access_token_request_key: self.provider.api_access_token_request_val}
+        url = self._make_url(self.payment_processor.api_access_token_endpoint)
+        payload = {self.payment_processor.api_access_token_request_key: self.payment_processor.api_access_token_request_val}
 
         try:
             r = self._post(url, payload)
@@ -222,7 +222,7 @@ class Client:
             raise ValueError("group_id")
 
         customer = self._get_customer(customer_token)
-        url = self._make_url(self.provider.group_endpoint, group_id)
+        url = self._make_url(self.payment_processor.group_endpoint, group_id)
         payload = [customer.id]
 
         try:

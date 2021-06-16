@@ -59,15 +59,15 @@ def _index(request):
     context.update(agency_vm.context_dict())
 
     # and payment processor details
-    provider_vm = viewmodels.PaymentProcessor(
+    processor_vm = viewmodels.PaymentProcessor(
         model=agency.payment_processor,
         access_token=session.token(request),
         element_id=f"#{tokenize_button}",
         color="#046b99",
         name=f"{agency.long_name} {_('partnered with')} {agency.payment_processor.name}",
     )
-    context.update(provider_vm.context_dict())
-    logger.info(f"card_tokenize_url: {context['provider'].card_tokenize_url}")
+    context.update(processor_vm.context_dict())
+    logger.info(f"card_tokenize_url: {context['payment_processor'].card_tokenize_url}")
 
     # the tokenize form URLs are injected to page-generated Javascript
     context["forms"] = {

@@ -2,33 +2,33 @@
 
 {% block paragraph_content %}
 {{ block.super }}
-{% if provider %}
+{% if payment_processor %}
     <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
-        {{ provider.loading_text }}
+        {{ payment_processor.loading_text }}
     </button>
     <script>
         var startedEvent = "started payment connection", closedEvent = "closed payment connection";
 
-        $.getScript("{{ provider.card_tokenize_url }}")
+        $.getScript("{{ payment_processor.card_tokenize_url }}")
             .done(function() {
                 $(".loading").remove();
                 $(".invisible").removeClass("invisible");
 
-                $("{{ provider.element_id }}").on("click", function() {
+                $("{{ payment_processor.element_id }}").on("click", function() {
                     amplitude.getInstance().logEvent(startedEvent, {
-                        card_tokenize_url: "{{ provider.card_tokenize_url }}",
-                        card_tokenize_func: "{{ provider.card_tokenize_func }}"
+                        card_tokenize_url: "{{ payment_processor.card_tokenize_url }}",
+                        card_tokenize_func: "{{ payment_processor.card_tokenize_func }}"
                     });
-                    $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ provider.loading_text }}");
+                    $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ payment_processor.loading_text }}");
                 });
 
-                {{ provider.card_tokenize_func }}({
-                    authorization: '{{ provider.access_token }}',
-                    element: '{{ provider.element_id }}',
-                    envUrl: '{{ provider.card_tokenize_env }}',
+                {{ payment_processor.card_tokenize_func }}({
+                    authorization: '{{ payment_processor.access_token }}',
+                    element: '{{ payment_processor.element_id }}',
+                    envUrl: '{{ payment_processor.card_tokenize_env }}',
                     options: {
-                        name: '{{ provider.name }}',
-                        color: '{{ provider.color }}'
+                        name: '{{ payment_processor.name }}',
+                        color: '{{ payment_processor.color }}'
                     },
                     onTokenize: function (response) {
                         /* This function executes when the
@@ -80,7 +80,7 @@
 {% endblock %}
 
 {% block buttons %}
-{% if provider %}
+{% if payment_processor %}
 <div class="invisible">
 {{ block.super }}
 </div>
