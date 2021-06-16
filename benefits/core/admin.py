@@ -11,6 +11,6 @@ if ADMIN:
 
     logger = logging.getLogger(__name__)
 
-    for model in [models.EligibilityType, models.EligibilityVerifier, models.TransitAgency, models.BenefitsProvider]:
+    for model in [models.EligibilityType, models.EligibilityVerifier, models.TransitAgency, models.PaymentProcessor]:
         logger.debug(f"Register {model.__name__}")
         admin.site.register(model)

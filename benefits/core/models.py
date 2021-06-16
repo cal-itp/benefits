@@ -19,8 +19,8 @@ def pem_to_jwk(pem):
     return jwk.JWK.from_pem(pem)
 
 
-class BenefitsProvider(models.Model):
-    """An entity that provides transit benefits."""
+class PaymentProcessor(models.Model):
+    """An entity that processes payments for transit agencies."""
 
     # fmt: off
     id = models.AutoField(primary_key=True)
@@ -32,9 +32,9 @@ class BenefitsProvider(models.Model):
     card_tokenize_url = models.TextField()
     card_tokenize_func = models.TextField()
     card_tokenize_env = models.TextField()
-    client_cert_pem = models.TextField(help_text="A certificate in PEM format, used for client certificate authentication to this Provider's API.")  # noqa: 503
+    client_cert_pem = models.TextField(help_text="A certificate in PEM format, used for client certificate authentication to the API.")  # noqa: 503
     client_cert_private_key_pem = models.TextField(help_text="The private key in PEM format used to sign the certificate.")
-    client_cert_root_ca_pem = models.TextField(help_text="The root CA bundle in PEM format used to verify the Provider's server.")  # noqa: 503
+    client_cert_root_ca_pem = models.TextField(help_text="The root CA bundle in PEM format used to verify the server.")  # noqa: 503
     customer_endpoint = models.TextField()
     customers_endpoint = models.TextField()
     group_endpoint = models.TextField()
@@ -107,7 +107,7 @@ class TransitAgency(models.Model):
     active = models.BooleanField(default=False)
     eligibility_types = models.ManyToManyField(EligibilityType)
     eligibility_verifier = models.ForeignKey(EligibilityVerifier, on_delete=models.PROTECT)
-    benefits_provider = models.ForeignKey(BenefitsProvider, on_delete=models.PROTECT)
+    payment_processor = models.ForeignKey(PaymentProcessor, on_delete=models.PROTECT)
     private_key_pem = models.TextField(help_text="The Agency's private key in PEM format, used to sign tokens created on behalf of this Agency.")  # noqa: 503
     jws_signing_alg = models.TextField(help_text="The JWS-compatible signing algorithm.")
     # fmt: on
