@@ -47,9 +47,9 @@ class Migration(migrations.Migration):
                 ("card_tokenize_func", models.TextField()),
                 ("card_tokenize_env", models.TextField()),
                 # fmt: off
-                ("client_cert_pem", models.TextField(help_text="A certificate in PEM format, used for client certificate authentication to this Provider's API.")),  # noqa: E501
+                ("client_cert_pem", models.TextField(help_text="A certificate in PEM format, used for client certificate authentication to the API.")),  # noqa: E501
                 ("client_cert_private_key_pem", models.TextField(help_text="The private key in PEM format used to sign the certificate.")),  # noqa: E501
-                ("client_cert_root_ca_pem", models.TextField(help_text="The root CA bundle in PEM format used to verify the Provider's server.")),  # noqa: E501
+                ("client_cert_root_ca_pem", models.TextField(help_text="The root CA bundle in PEM format used to verify the server.")),  # noqa: E501
                 ("customer_endpoint", models.TextField()),
                 # fmt: on
                 ("customers_endpoint", models.TextField()),

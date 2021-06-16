@@ -32,9 +32,9 @@ class PaymentProcessor(models.Model):
     card_tokenize_url = models.TextField()
     card_tokenize_func = models.TextField()
     card_tokenize_env = models.TextField()
-    client_cert_pem = models.TextField(help_text="A certificate in PEM format, used for client certificate authentication to this Provider's API.")  # noqa: 503
+    client_cert_pem = models.TextField(help_text="A certificate in PEM format, used for client certificate authentication to the API.")  # noqa: 503
     client_cert_private_key_pem = models.TextField(help_text="The private key in PEM format used to sign the certificate.")
-    client_cert_root_ca_pem = models.TextField(help_text="The root CA bundle in PEM format used to verify the Provider's server.")  # noqa: 503
+    client_cert_root_ca_pem = models.TextField(help_text="The root CA bundle in PEM format used to verify the server.")  # noqa: 503
     customer_endpoint = models.TextField()
     customers_endpoint = models.TextField()
     group_endpoint = models.TextField()
