@@ -64,7 +64,8 @@ def confirm(request):
             page.forms = [form]
             response = PageTemplateResponse(request, page)
     elif session.eligible(request):
-        response = verified(request, session.eligibility(request))
+        eligibility = session.eligibility(request)
+        response = verified(request, [eligibility.name])
     else:
         response = PageTemplateResponse(request, page)
 

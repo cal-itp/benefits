@@ -56,10 +56,10 @@ class EligibilityType(models.Model):
         return self.label
 
     @staticmethod
-    def by_name(name):
-        """Get an EligibilityType instance by its name."""
-        logger.debug(f"Get {EligibilityType.__name__} by name: {name}")
-        return EligibilityType.objects.get(name=name)
+    def get(id):
+        """Get an EligibilityType instance by its id."""
+        logger.debug(f"Get {EligibilityType.__name__} by id: {id}")
+        return EligibilityType.objects.get(pk=id)
 
     @staticmethod
     def get_many(ids):
@@ -115,6 +115,14 @@ class TransitAgency(models.Model):
 
     def __str__(self):
         return self.long_name
+
+    def get_type_id(self, name):
+        """Get the id of the EligibilityType identified by the given name for this agency."""
+        eligibility = self.eligibility_types.all().filter(name=name)
+        if eligibility.count() == 1:
+            return eligibility[0].id
+        else:
+            raise Exception("name does not correspond to a single eligibility type for agency")
 
     def supports_type(self, eligibility_type):
         """True if the eligibility_type is one of this agency's types. False otherwise."""

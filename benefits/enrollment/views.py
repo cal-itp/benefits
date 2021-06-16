@@ -98,16 +98,11 @@ def _enroll(request):
     card_token = form.cleaned_data.get("card_token")
 
     eligibility = session.eligibility(request)
-    if len(eligibility) > 0:
-        eligibility = eligibility[0]
-        if len(eligibility) == 1:
-            logger.debug(f"Session contains 1 {models.EligibilityType.__name__}")
-        else:
-            logger.debug(f"Session contains ({len(eligibility)}) {models.EligibilityType.__name__}s")
+    if eligibility:
+        logger.debug(f"Session contains an {models.EligibilityType.__name__}")
     else:
         raise Exception("Session contains no eligibility information")
 
-    eligibility = models.EligibilityType.by_name(eligibility)
     agency = session.agency(request)
 
     response = api.Client(agency).enroll(card_token, eligibility.group_id)
