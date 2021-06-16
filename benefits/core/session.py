@@ -88,9 +88,7 @@ def eligibility(request):
 def eligible(request):
     """True if the request's session is configured with an active agency and has confirmed eligibility. False otherwise."""
     logger.debug("Get session eligible flag")
-    a = agency(request)
-    e = eligibility(request)
-    return active_agency(request) and len(e) > 0 and set(e).issubset(a.eligibility_set)
+    return active_agency(request) and agency(request).supports_type(eligibility(request))
 
 
 def language(request):

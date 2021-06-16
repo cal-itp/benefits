@@ -61,6 +61,12 @@ class EligibilityType(models.Model):
         logger.debug(f"Get {EligibilityType.__name__} by name: {name}")
         return EligibilityType.objects.get(name=name)
 
+    @staticmethod
+    def get_many(ids):
+        """Get a list of EligibilityType instances from a list of ids."""
+        logger.debug(f"Get {EligibilityType.__name__} list by ids: {ids}")
+        return EligibilityType.objects.filter(id__in=ids)
+
 
 class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""
@@ -80,11 +86,6 @@ class EligibilityVerifier(models.Model):
 
     def __str__(self):
         return self.name
-
-    @property
-    def eligibility_set(self):
-        """Set of eligibility_type names"""
-        return set(self.eligibility_types.values_list("name", flat=True))
 
     @property
     def public_jwk(self):
@@ -115,10 +116,17 @@ class TransitAgency(models.Model):
     def __str__(self):
         return self.long_name
 
-    @property
-    def eligibility_set(self):
-        """Set of eligibility_type names"""
-        return set(self.eligibility_types.values_list("name", flat=True))
+    def supports_type(self, eligibility_type):
+        """True if the eligibility_type is one of this agency's types. False otherwise."""
+        return isinstance(eligibility_type, EligibilityType) and eligibility_type in self.eligibility_types.all()
+
+    def types_to_verify(self):
+        """List of eligibility types to verify for this agency."""
+        # compute set intersection of agency and verifier type ids
+        agency_types = set(self.eligibility_types.values_list("id", flat=True))
+        verifier_types = set(self.eligibility_verifier.eligibility_types.values_list("id", flat=True))
+        supported_types = list(agency_types & verifier_types)
+        return EligibilityType.get_many(supported_types)
 
     @property
     def index_url(self):

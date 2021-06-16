@@ -33,8 +33,8 @@ class RequestToken:
     def __init__(self, agency, verifier, sub, name):
         logger.info("Initialize new request token")
 
-        # compute the eligibility set for this token from agency and verifier
-        eligibility = list(verifier.eligibility_set & agency.eligibility_set)
+        # send the eligibility type names
+        types = list(map(lambda t: t.name, agency.types_to_verify()))
 
         # craft the main token payload
         payload = dict(
@@ -42,7 +42,7 @@ class RequestToken:
             iss=ALLOWED_HOSTS[0],
             iat=int(datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).timestamp()),
             agency=agency.agency_id,
-            eligibility=eligibility,
+            eligibility=types,
             sub=sub,
             name=name,
         )
