@@ -1,8 +1,8 @@
 # Local setup
 
-Running the Benefits application in a local, non-production environment.
+Running the Benefits application in a local, non-production environment requires [Docker](https://docs.docker.com/).
 
-Requires [Docker](https://docs.docker.com/). The following commands should be run in a terminal program like `bash`.
+The following commands should be run in a terminal program like `bash`.
 
 ## Clone the repository
 
