@@ -53,7 +53,7 @@ def context_dict(request):
         _AGENCY: agency(request).slug if active_agency(request) else None,
         _DEBUG: debug(request),
         _DID: did(request),
-        _ELIGIBILITY: ", ".join(eligibility(request)),
+        _ELIGIBILITY: eligibility(request),
         _LANG: language(request),
         _ORIGIN: origin(request),
         _START: start(request),
@@ -80,17 +80,19 @@ def did(request):
 
 
 def eligibility(request):
-    """Get the list of confirmed eligibility types from the request's session, or []"""
+    """Get the confirmed models.EligibilityType from the request's session, or None"""
     logger.debug("Get session confirmed eligibility")
-    return (request.session.get(_ELIGIBILITY) or "").split(",")
+    eligibility = request.session.get(_ELIGIBILITY)
+    if eligibility:
+        return models.EligibilityType.get(eligibility)
+    else:
+        return None
 
 
 def eligible(request):
     """True if the request's session is configured with an active agency and has confirmed eligibility. False otherwise."""
     logger.debug("Get session eligible flag")
-    a = agency(request)
-    e = eligibility(request)
-    return active_agency(request) and len(e) > 0 and set(e).issubset(a.eligibility_set)
+    return active_agency(request) and agency(request).supports_type(eligibility(request))
 
 
 def language(request):
@@ -162,10 +164,15 @@ def update(request, agency=None, debug=None, eligibility_types=None, origin=None
     if debug is not None:
         logger.info(f"Update session {_DEBUG}")
         request.session[_DEBUG] = debug
-    if eligibility_types is not None and (isinstance(eligibility_types, list) or isinstance(eligibility_types, str)):
+    if eligibility_types is not None and isinstance(eligibility_types, list):
         logger.info(f"Update session {_ELIGIBILITY}")
-        eligibility_types = eligibility_types.split(", ") if isinstance(eligibility_types, str) else eligibility_types
-        request.session[_ELIGIBILITY] = ", ".join(eligibility_types)
+        if len(eligibility_types) > 1:
+            raise NotImplementedError("Multiple eligibilities are not supported at this time.")
+        elif len(eligibility_types) == 1:
+            # get the eligibility corresponding to the session's agency
+            a = models.TransitAgency.by_id(request.session[_AGENCY])
+            t = str(eligibility_types[0]).strip()
+            request.session[_ELIGIBILITY] = a.get_type_id(t)
     if origin is not None:
         logger.info(f"Update session {_ORIGIN}")
         request.session[_ORIGIN] = origin
