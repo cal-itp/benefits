@@ -49,14 +49,16 @@ jobs:
         id: task-env
         env:
           AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
-          DOCKER_HUB_SECRET: ${{ secrets.DOCKER_HUB_SECRET }}
+          AWS_CLI_ECR: ${{ secrets.AWS_CLI_ECR }}
+          AWS_CLI_VERSION: ${{ secrets.AWS_CLI_VERSION }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
           sed -i "s/<aws_account>/$AWS_ACCOUNT/g" .aws/ecs-task.json
           sed -i "s/<aws_bucket>/$AWS_BUCKET/g" .aws/ecs-task.json
+          sed -i "s/<aws_cli_ecr>/$AWS_CLI_ECR/g" .aws/ecs-task.json
+          sed -i "s/<aws_cli_version>/$AWS_CLI_VERSION/g" .aws/ecs-task.json
           sed -i "s/<aws_region>/$AWS_REGION/g" .aws/ecs-task.json
-          sed -i "s/<docker_hub_secret>/$DOCKER_HUB_SECRET/g" .aws/ecs-task.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
