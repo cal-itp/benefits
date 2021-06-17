@@ -1,4 +1,4 @@
-# Getting started
+# Local setup
 
 Running the Benefits application in a local, non-production environment.
 
