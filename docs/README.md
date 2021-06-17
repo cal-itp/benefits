@@ -3,7 +3,7 @@
 This website provides technical documentation for [`benefits`](https://github.com/cal-itp/benefits)
 from the [California Integrated Travel Project (Cal-ITP)](https://www.calitp.org).
 
-Documentation for the `main` branch is available online at: <https://cal-itp.github.io/benefits>.
+Documentation for the `main` branch is available online at: <https://docs.calitp.org/benefits>.
 
 ## Editing documentation
 
