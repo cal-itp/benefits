@@ -1,18 +1,32 @@
 # Home
 
-This website provides technical documentation for [`benefits`](https://github.com/cal-itp/benefits)
+This website provides technical documentation for the [`benefits`](https://github.com/cal-itp/benefits) application
 from the [California Integrated Travel Project (Cal-ITP)](https://www.calitp.org).
 
 Documentation for the `main` branch is available online at: <https://docs.calitp.org/benefits>.
 
-## Editing documentation
+## Building the documentation
 
-Docs content all lives under `docs/`, with some top-level configuration for how the website is built under `mkdocs.yml`.
-To add new sections/articles, simply create new directories/files under `docs/` in Markdown format.
+This website is built using [`mkdocs`](https://www.mkdocs.org/) from the contents of the `main` branch.
 
-## Documentation features
+The [`mkdocs.yml`](https://github.com/cal-itp/benefits/blob/dev/mkdocs.yml) file in the repository root configures the build
+process, including the available plugins.
 
-- [Material for MkDocs: Reference](https://squidfunk.github.io/mkdocs-material/reference/admonitions/)
+### Editing
+
+All content lives under the [`docs/`](../) directory.
+
+To add new sections/articles, create new directories and files under the `docs/` directory, in Markdown format.
+
+The pencil icon is a shortcut to quickly edit the content of the page you are viewing on the website:
+
+![Screenshot showing edit pencil](img/edit-pencil.png)
+
+*Above: Screenshot showing the edit pencil circled in red*
+
+### Features
+
+- [Material for MkDocs: Reference](https://squidfunk.github.io/mkdocs-material/reference/)
 
     See `mkdocs.yml` for enabled plugins/features
 
