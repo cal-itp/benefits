@@ -1,5 +1,7 @@
 *.db
 *.env
 *.mo
+localhost/data/*.json
+!localhost/data/[client|server].json
 static/
 !benefits/static
