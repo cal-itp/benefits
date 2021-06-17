@@ -11,6 +11,7 @@ nav:
       - 'The localhost directory': getting-started/localhost-directory.md
       - 'The test verification server': getting-started/test-verification-server.md
       - 'Docs server': getting-started/docs-server.md
+  - 'Token signing & encryption': token-signing-encryption.md
   - Deployment: deployment.md
 
 theme:
