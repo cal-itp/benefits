@@ -17,5 +17,4 @@ jobs:
         uses: mhausenblas/mkdocs-deploy-gh-pages@master
         env:
           REQUIREMENTS: docs/requirements.txt
-          CUSTOM_DOMAIN: docs.calitp.org
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
