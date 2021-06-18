@@ -32,7 +32,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build, tag, and push image to Amazon ECR
-        id: build-image
+        id: build-client-image
         env:
           ECR_REPOSITORY: cal-itp-benefits-client
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -45,31 +45,46 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-      - name: Add environment-specific config in the Amazon ECS task definition
+      - name: Define path to configuration image
+        id: define-config-image
+        env:
+          ECR_REPOSITORY: aws-cli
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ secrets.AWS_CLI_TAG }}
+        run: |
+          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+      - name: Add environment-specific config to ECS task
         id: task-env
         env:
           AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
-          DOCKER_HUB_SECRET: ${{ secrets.DOCKER_HUB_SECRET }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
           sed -i "s/<aws_account>/$AWS_ACCOUNT/g" .aws/ecs-task.json
           sed -i "s/<aws_bucket>/$AWS_BUCKET/g" .aws/ecs-task.json
           sed -i "s/<aws_region>/$AWS_REGION/g" .aws/ecs-task.json
-          sed -i "s/<docker_hub_secret>/$DOCKER_HUB_SECRET/g" .aws/ecs-task.json
 
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
+      - name: Fill in client image ID in ECS task
+        id: client-task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: .aws/ecs-task.json
           container-name: cal-itp-benefits-client
-          image: ${{ steps.build-image.outputs.image }}
+          image: ${{ steps.build-client-image.outputs.image }}
+
+      - name: Fill in config image ID in ECS task
+        id: config-task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ steps.client-task-def.outputs.task-definition }}
+          container-name: cal-itp-benefits-client-config
+          image: ${{ steps.define-config-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          task-definition: ${{ steps.config-task-def.outputs.task-definition }}
           service: cal-itp-benefits-client
           cluster: cal-itp-clientCluster
           wait-for-service-stability: true

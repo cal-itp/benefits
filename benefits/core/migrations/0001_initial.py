@@ -9,28 +9,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="BenefitsProvider",
-            fields=[
-                ("id", models.AutoField(primary_key=True, serialize=False, verbose_name="ID")),
-                ("name", models.TextField()),
-                ("api_base_url", models.TextField()),
-                ("api_access_token_endpoint", models.TextField()),
-                ("api_access_token_request_key", models.TextField()),
-                ("api_access_token_request_val", models.TextField()),
-                ("card_tokenize_url", models.TextField()),
-                ("card_tokenize_func", models.TextField()),
-                ("card_tokenize_env", models.TextField()),
-                # fmt: off
-                ("client_cert_pem", models.TextField(help_text="A certificate in PEM format, used for client certificate authentication to this Provider's API.")),  # noqa: E501
-                ("client_cert_private_key_pem", models.TextField(help_text="The private key in PEM format used to sign the certificate.")),  # noqa: E501
-                ("client_cert_root_ca_pem", models.TextField(help_text="The root CA bundle in PEM format used to verify the Provider's server.")),  # noqa: E501
-                ("customer_endpoint", models.TextField()),
-                # fmt: on
-                ("customers_endpoint", models.TextField()),
-                ("group_endpoint", models.TextField()),
-            ],
-        ),
-        migrations.CreateModel(
             name="EligibilityType",
             fields=[
                 ("id", models.AutoField(primary_key=True, serialize=False, verbose_name="ID")),
@@ -57,6 +35,28 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name="PaymentProcessor",
+            fields=[
+                ("id", models.AutoField(primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.TextField()),
+                ("api_base_url", models.TextField()),
+                ("api_access_token_endpoint", models.TextField()),
+                ("api_access_token_request_key", models.TextField()),
+                ("api_access_token_request_val", models.TextField()),
+                ("card_tokenize_url", models.TextField()),
+                ("card_tokenize_func", models.TextField()),
+                ("card_tokenize_env", models.TextField()),
+                # fmt: off
+                ("client_cert_pem", models.TextField(help_text="A certificate in PEM format, used for client certificate authentication to the API.")),  # noqa: E501
+                ("client_cert_private_key_pem", models.TextField(help_text="The private key in PEM format used to sign the certificate.")),  # noqa: E501
+                ("client_cert_root_ca_pem", models.TextField(help_text="The root CA bundle in PEM format used to verify the server.")),  # noqa: E501
+                ("customer_endpoint", models.TextField()),
+                # fmt: on
+                ("customers_endpoint", models.TextField()),
+                ("group_endpoint", models.TextField()),
+            ],
+        ),
+        migrations.CreateModel(
             name="TransitAgency",
             fields=[
                 ("id", models.AutoField(primary_key=True, serialize=False, verbose_name="ID")),
@@ -71,7 +71,7 @@ class Migration(migrations.Migration):
                 # fmt: off
                 ("private_key_pem", models.TextField(help_text="The Agency's private key in PEM format, used to sign tokens created on behalf of this Agency.")),  # noqa: E501
                 ("jws_signing_alg", models.TextField(help_text="The JWS-compatible signing algorithm.")),
-                ("benefits_provider", models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.benefitsprovider")),
+                ("payment_processor", models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.paymentprocessor")),
                 ("eligibility_types", models.ManyToManyField(to="core.EligibilityType")),
                 ("eligibility_verifier", models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.eligibilityverifier")),
                 # fmt: on

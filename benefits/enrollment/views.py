@@ -58,16 +58,16 @@ def _index(request):
     agency_vm = viewmodels.TransitAgency(agency)
     context.update(agency_vm.context_dict())
 
-    # and benefits provider details
-    provider_vm = viewmodels.BenefitsProvider(
-        model=agency.benefits_provider,
+    # and payment processor details
+    processor_vm = viewmodels.PaymentProcessor(
+        model=agency.payment_processor,
         access_token=session.token(request),
         element_id=f"#{tokenize_button}",
         color="#046b99",
-        name=f"{agency.long_name} {_('partnered with')} {agency.benefits_provider.name}",
+        name=f"{agency.long_name} {_('partnered with')} {agency.payment_processor.name}",
     )
-    context.update(provider_vm.context_dict())
-    logger.info(f"card_tokenize_url: {context['provider'].card_tokenize_url}")
+    context.update(processor_vm.context_dict())
+    logger.info(f"card_tokenize_url: {context['payment_processor'].card_tokenize_url}")
 
     # the tokenize form URLs are injected to page-generated Javascript
     context["forms"] = {
@@ -98,16 +98,11 @@ def _enroll(request):
     card_token = form.cleaned_data.get("card_token")
 
     eligibility = session.eligibility(request)
-    if len(eligibility) > 0:
-        eligibility = eligibility[0]
-        if len(eligibility) == 1:
-            logger.debug(f"Session contains 1 {models.EligibilityType.__name__}")
-        else:
-            logger.debug(f"Session contains ({len(eligibility)}) {models.EligibilityType.__name__}s")
+    if eligibility:
+        logger.debug(f"Session contains an {models.EligibilityType.__name__}")
     else:
         raise Exception("Session contains no eligibility information")
 
-    eligibility = models.EligibilityType.by_name(eligibility)
     agency = session.agency(request)
 
     response = api.Client(agency).enroll(card_token, eligibility.group_id)
