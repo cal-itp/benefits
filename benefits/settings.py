@@ -22,8 +22,6 @@ else:
     hosts = os.environ["DJANGO_ALLOWED_HOSTS"].split()
     ALLOWED_HOSTS.extend(hosts)
 
-ALLOWED_HOSTS = ["test-benefits.calitp.org"]
-    
 # Application definition
 
 INSTALLED_APPS = [
