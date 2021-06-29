@@ -34,6 +34,11 @@ theme:
         icon: material/toggle-switch
         name: Switch to light mode
 
+extra:
+  analytics:
+    provider: google
+    property: G-SZB618VNBZ
+
 plugins:
   - search
   - awesome-pages
