@@ -35,7 +35,7 @@ def agency(request):
     try:
         return models.TransitAgency.by_id(request.session[_AGENCY])
     except (KeyError, models.TransitAgency.DoesNotExist):
-        logger.info("Can't get agency from session")
+        logger.debug("Can't get agency from session")
         return None
 
 
@@ -109,7 +109,7 @@ def origin(request):
 
 def reset(request):
     """Reset the session for the request."""
-    logger.info("Reset session")
+    logger.debug("Reset session")
     request.session[_AGENCY] = None
     request.session[_ELIGIBILITY] = None
     request.session[_ORIGIN] = reverse("core:index")
@@ -117,7 +117,7 @@ def reset(request):
     request.session[_TOKEN_EXP] = None
 
     if _UID not in request.session or not request.session[_UID]:
-        logger.info("Reset session time and uid")
+        logger.debug("Reset session time and uid")
         request.session[_START] = int(time.time() * 1000)
         u = str(uuid.uuid4())
         request.session[_UID] = u
@@ -126,7 +126,7 @@ def reset(request):
 
 def start(request):
     """Get the start time from the request's session, as integer milliseconds since Epoch."""
-    logger.info("Get session time")
+    logger.debug("Get session time")
     s = request.session.get(_START)
     if not s:
         reset(request)
@@ -136,13 +136,13 @@ def start(request):
 
 def token(request):
     """Get the token from the request's session, or None."""
-    logger.info("Get session token")
+    logger.debug("Get session token")
     return request.session.get(_TOKEN)
 
 
 def token_expiry(request):
     """Get the token's expiry time from the request's session, or None."""
-    logger.info("Get session token expiry")
+    logger.debug("Get session token expiry")
     return request.session.get(_TOKEN_EXP)
 
 
@@ -159,13 +159,13 @@ def uid(request):
 def update(request, agency=None, debug=None, eligibility_types=None, origin=None, token=None, token_exp=None):
     """Update the request's session with non-null values."""
     if agency is not None and isinstance(agency, models.TransitAgency):
-        logger.info(f"Update session {_AGENCY}")
+        logger.debug(f"Update session {_AGENCY}")
         request.session[_AGENCY] = agency.id
     if debug is not None:
-        logger.info(f"Update session {_DEBUG}")
+        logger.debug(f"Update session {_DEBUG}")
         request.session[_DEBUG] = debug
     if eligibility_types is not None and isinstance(eligibility_types, list):
-        logger.info(f"Update session {_ELIGIBILITY}")
+        logger.debug(f"Update session {_ELIGIBILITY}")
         if len(eligibility_types) > 1:
             raise NotImplementedError("Multiple eligibilities are not supported at this time.")
         elif len(eligibility_types) == 1:
@@ -174,10 +174,10 @@ def update(request, agency=None, debug=None, eligibility_types=None, origin=None
             t = str(eligibility_types[0]).strip()
             request.session[_ELIGIBILITY] = a.get_type_id(t)
     if origin is not None:
-        logger.info(f"Update session {_ORIGIN}")
+        logger.debug(f"Update session {_ORIGIN}")
         request.session[_ORIGIN] = origin
     if token is not None:
-        logger.info(f"Update session {_TOKEN}")
+        logger.debug(f"Update session {_TOKEN}")
         request.session[_TOKEN] = token
         request.session[_TOKEN_EXP] = token_exp
 
@@ -185,14 +185,14 @@ def update(request, agency=None, debug=None, eligibility_types=None, origin=None
 def valid_token(request):
     """True if the request's session is configured with a valid token. False otherwise."""
     if token(request) is not None:
-        logger.info("Session contains a token")
+        logger.debug("Session contains a token")
         exp = token_expiry(request)
 
         # ensure token does not expire in the next 5 seconds
         valid = exp is None or exp > (time.time() + 5)
 
-        logger.info(f"Session token is {'valid' if valid else 'expired'}")
+        logger.debug(f"Session token is {'valid' if valid else 'expired'}")
         return valid
     else:
-        logger.info("Session does not contain a valid token")
+        logger.debug("Session does not contain a valid token")
         return False

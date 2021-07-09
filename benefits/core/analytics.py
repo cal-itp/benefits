@@ -103,7 +103,7 @@ class Client:
 
             r = requests.post(self.url, headers=self.headers, json=payload)
             if r.status_code == 200:
-                logger.info(f"Event sent successfully: {r.json()}")
+                logger.debug(f"Event sent successfully: {r.json()}")
             elif r.status_code == 400:
                 logger.error(f"Event request was invalid: {r.json()}")
             elif r.status_code == 413:
