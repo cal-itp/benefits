@@ -70,10 +70,11 @@ class GroupResponse:
         else:
             try:
                 # Group API uses an error response (500) to indicate that the customer already exists in the group (!!!)
-                # The error message should contain the customer ID we sent via payload
+                # The error message should contain the customer ID we sent via payload and start with "Duplicate"
                 error = response.json()["errors"][0]
                 customer_id = payload[0]
-                if not error["detail"].startswith("Duplicate") and customer_id in error["detail"]:
+                detail = error["detail"]
+                if all((customer_id, detail)) and customer_id in detail and not detail.startswith("Duplicate"):
                     raise ApiError("Invalid response format")
             except (KeyError, ValueError):
                 raise ApiError("Invalid response format")
