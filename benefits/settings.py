@@ -19,7 +19,7 @@ ALLOWED_HOSTS = []
 if DEBUG:
     ALLOWED_HOSTS.extend(["*"])
 else:
-    hosts = os.environ["DJANGO_ALLOWED_HOSTS"].split()
+    hosts = os.environ["DJANGO_ALLOWED_HOSTS"].split(",")
     ALLOWED_HOSTS.extend(hosts)
 
 # Application definition
