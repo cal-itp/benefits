@@ -67,7 +67,7 @@ def _index(request):
         name=f"{agency.long_name} {_('partnered with')} {agency.payment_processor.name}",
     )
     context.update(processor_vm.context_dict())
-    logger.info(f"card_tokenize_url: {context['payment_processor'].card_tokenize_url}")
+    logger.warn(f"card_tokenize_url: {context['payment_processor'].card_tokenize_url}")
 
     # the tokenize form URLs are injected to page-generated Javascript
     context["forms"] = {
