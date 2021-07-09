@@ -53,7 +53,6 @@ class CustomerResponse:
             raise ApiError("Invalid response format")
 
         self.id = payload.get("id", customer_id)
-        self.customer_ref = payload.get("customer_ref")
         self.is_registered = str(payload.get("is_registered", "false")).lower() == "true"
 
         logger.info("Customer details successfully read from response")
@@ -162,7 +161,7 @@ class Client:
                     return customer
                 else:
                     logger.debug("Customer is not registered, update")
-                    return self._update_customer(customer.id, customer.customer_ref)
+                    return self._update_customer(customer.id)
             else:
                 r.raise_for_status()
         except requests.ConnectionError:
@@ -174,17 +173,15 @@ class Client:
         except requests.HTTPError as e:
             raise ApiError(e)
 
-    def _update_customer(self, customer_id, customer_ref):
+    def _update_customer(self, customer_id):
         """Update a customer using their unique info."""
         logger.info("Update existing customer record")
 
         if customer_id is None:
             raise ValueError("customer_id")
-        if customer_ref is None:
-            raise ValueError("customer_ref")
 
         url = self._make_url(self.payment_processor.customer_endpoint, customer_id)
-        payload = {"customer_ref": customer_ref, "is_registered": True}
+        payload = {"is_registered": True}
 
         r = self._patch(url, payload)
         r.raise_for_status()
