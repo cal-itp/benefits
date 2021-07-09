@@ -41,6 +41,7 @@ services:
       - "${DJANGO_LOCAL_PORT}:8000"
       - "5678:5678"
     volumes:
+      - ./data:/home/calitp/app/data:cached
       - ../:/home/calitp/app:cached
 
   docs:
