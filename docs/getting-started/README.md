@@ -8,6 +8,13 @@ The following commands should be run in a terminal program like `bash`.
 
 ```bash
 git clone https://github.com/cal-itp/benefits
+```
+
+## Change into the localhost dir
+
+This is where configuration for running locally is stored.
+
+```bash
 cd benefits/localhost
 ```
 
