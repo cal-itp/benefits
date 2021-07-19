@@ -5,14 +5,13 @@ site_url: https://docs.calitp.org/benefits
 
 nav:
   - Home: README.md
-  - 'Getting started':
-      - 'Local setup': getting-started/README.md
-      - 'Development': getting-started/development.md
-      - 'The localhost directory': getting-started/localhost-directory.md
-      - 'The test verification server': getting-started/test-verification-server.md
-      - 'Docs server': getting-started/docs-server.md
-  - 'Token signing & encryption': token-signing-encryption.md
-  - Deployment: deployment.md
+  - "Getting started":
+      - "Local setup": getting-started/README.md
+      - "Development": getting-started/development.md
+      - "The localhost directory": getting-started/localhost-directory.md
+      - "The test verification server": getting-started/test-verification-server.md
+      - "Documentation": getting-started/documentation.md
+  - "Token signing & encryption": token-signing-encryption.md
 
 theme:
   name: material
