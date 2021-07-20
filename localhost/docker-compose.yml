@@ -69,10 +69,21 @@ services:
       - ./data:/usr/src/server/data
       - ./keys:/usr/src/server/keys
 
-  s3config:
+  s3pull:
     image: amazon/aws-cli
     entrypoint: ["/bin/sh"]
-    command: ["-c", "aws s3 cp s3://${AWS_BUCKET}/${CONFIG_FILE} ."]
+    command: ["-c", "aws s3 cp s3://${AWS_BUCKET} ."]
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_DEFAULT_REGION
+    volumes:
+      - configvolume:/aws
+
+  s3push:
+    image: amazon/aws-cli
+    entrypoint: ["/bin/sh"]
+    command: ["-c", "aws s3 cp . s3://${AWS_BUCKET}"]
     environment:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
