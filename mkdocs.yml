@@ -12,6 +12,9 @@ nav:
       - "The test verification server": getting-started/test-verification-server.md
       - "Documentation": getting-started/documentation.md
   - "Token signing & encryption": token-signing-encryption.md
+  - Deployment:
+      - "The basics": deployment/README.md
+      - "Configuration": deployment/configuration.md
 
 theme:
   name: material
