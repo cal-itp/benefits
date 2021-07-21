@@ -1,0 +1,5 @@
+nav:
+  - Local setup: README.md
+  - Development: development.md
+  - ...
+  - Documentation: documentation.md
