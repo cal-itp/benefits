@@ -275,7 +275,7 @@ pxbNbuCg18R7uR8Gag
 **HTTP Response**
 
 ```http
-HTTP/1.1 200 OK
+HTTP/1.1 400 Bad Request
 Date: Wed, 29 Sep 2021 05:30:17 GMT
 Content-Type: text/plain; charset=UTF-8
 Content-Length: 258
@@ -340,7 +340,7 @@ w5JhbfIzOSdKWTOrP5CQdhWw9Vo8VunoASe4EVZOoI
 **HTTP Response**
 
 ```http
-HTTP/1.1 200 OK
+HTTP/1.1 400 Bad Request
 Date: Wed, 29 Sep 2021 05:30:17 GMT
 Content-Type: text/plain; charset=UTF-8
 Content-Length: 258
