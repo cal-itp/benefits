@@ -10,8 +10,8 @@ Documentation for the `main` branch is available online at: <https://docs.calitp
 `benefits` is a [Django 3.x][django] web application enabling automated eligibility verification and enrollment for transit
 benefits onto customers' existing contactless bank (credit/debit) cards.
 
-The application implements an Eligibility Verification API. Both the API and the application are designed for privacy and
-security of user information:
+The application implements an [Eligibility Verification API](eligibility-verification/). Both the API and the application are
+designed for privacy and security of user information:
 
 * The API communicates with signed and encrypted JSON Web Tokens containing only the most necessary of user data
   for the purpose of eligibility verification
