@@ -14,13 +14,16 @@ Then run (from the root of this repository):
 bin/pre-commit.sh
 ```
 
-### VS Code with Dev Containers
+## VS Code with Dev Containers
 
 **This is the recommended development setup**.
 
 [VS Code][vscode] can be used together with Docker via the [Remote - Containers][vscode-containers] extension to enable a
 container-based development environment. This repository includes a [`.devcontainer.json`][config-file] file that configures
 remote container development and debugging.
+
+*Note: you must build the base Docker image `benefits_client:latest` before running the devcontainer.
+See [Local Setup](./README.md)*
 
 With the [Remote - Containers][vscode-containers] extension enabled, open the folder containing this repository inside Visual
 Studio Code.

@@ -1,6 +1,6 @@
 # Local setup
 
-Running the Benefits application in a local, non-production environment requires [Docker](https://docs.docker.com/).
+Running the Benefits application in a local, non-production environment requires [Docker][docker].
 
 The following commands should be run in a terminal program like `bash`.
 
@@ -8,6 +8,13 @@ The following commands should be run in a terminal program like `bash`.
 
 ```bash
 git clone https://github.com/cal-itp/benefits
+```
+
+## Change into the localhost dir
+
+This is where configuration for running locally is stored.
+
+```bash
 cd benefits/localhost
 ```
 
@@ -47,7 +54,8 @@ By default, [sample data][sample-data] is used to initialize Django. Alternative
 Stop the running services with:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
+[docker]: https://www.docker.com/products/docker-desktop
 [sample-data]: https://github.com/cal-itp/benefits/blob/dev/localhost/data/client.json

@@ -1,49 +1,34 @@
 # Home
 
-This website provides technical documentation for the [`benefits`](https://github.com/cal-itp/benefits) application
-from the [California Integrated Travel Project (Cal-ITP)](https://www.calitp.org).
+This website provides technical documentation for the [`benefits`][benefits-repo] application from the
+[California Integrated Travel Project (Cal-ITP)][calitp].
 
 Documentation for the `main` branch is available online at: <https://docs.calitp.org/benefits>.
 
-## Building the documentation
+## Overview
 
-This website is built using [`mkdocs`](https://www.mkdocs.org/) from the contents of the `main` branch.
+`benefits` is a [Django 3.x][django] web application enabling automated eligibility verification and enrollment for transit
+benefits onto customers' existing contactless bank (credit/debit) cards.
 
-The [`mkdocs.yml`](https://github.com/cal-itp/benefits/blob/dev/mkdocs.yml) file in the repository root configures the build
-process, including the available plugins.
+The application implements an [Eligibility Verification API](eligibility-verification/). Both the API and the application are
+designed for privacy and security of user information:
 
-### Editing
+* The API communicates with signed and encrypted JSON Web Tokens containing only the most necessary of user data
+  for the purpose of eligibility verification
+* The application requires no user accounts and stores no information about the user
+* Interaction with the application is anonymous, with only minimal event tracking for usage and problem analysis
 
-All content lives under the [`docs/`](../) directory.
+`benefits` is hosted in Amazon Web Services (AWS) [Elastic Container Service (ECS) on Fargate][ecs-fargate] and deployed with
+GitHub Actions.
 
-To add new sections/articles, create new directories and files under the `docs/` directory, in Markdown format.
+Running the application locally is possible with [Docker and Docker Compose][docker].
 
-The pencil icon is a shortcut to quickly edit the content of the page you are viewing on the website:
+The user interface and content is available in both English and Spanish. Additional language support is possible via Django's
+[i18n and l10n features][i18n].
 
-![Screenshot showing edit pencil](img/edit-pencil.png)
-
-*Above: Screenshot showing the edit pencil circled in red*
-
-### Features
-
-- [Material for MkDocs: Reference](https://squidfunk.github.io/mkdocs-material/reference/)
-
-    See `mkdocs.yml` for enabled plugins/features
-
-- [Mermaid](https://mermaid-js.github.io/mermaid/)
-
-    Use code fences with `mermaid` type to render Mermaid diagrams within docs. For example, this markdown:
-
-    ~~~markdown
-    ```mermaid
-    graph LR
-        Start --> Stop
-    ```
-    ~~~
-
-    Yields this diagram:
-
-    ~~~mermaid
-    graph LR
-        Start --> Stop
-    ~~~
+[benefits-repo]: https://github.com/cal-itp/benefits
+[calitp]: https://calitp.org
+[django]: https://docs.djangoproject.com/en/
+[docker]: https://www.docker.com/products/docker-desktop
+[ecs-fargate]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html
+[i18n]: https://docs.djangoproject.com/en/3.2/topics/i18n/
