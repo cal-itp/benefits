@@ -1,7 +1,7 @@
 """
 The core application: view definition for the root of the webapp.
 """
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
+from django.http import HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.urls import reverse
@@ -72,11 +72,6 @@ def agency_index(request, agency):
     )
 
     return PageTemplateResponse(request, page)
-
-
-def healthcheck(request):
-    """Simple healthcheck to see if app is responding."""
-    return HttpResponse("Healthy", content_type="text/plain")
 
 
 @middleware.pageview_decorator

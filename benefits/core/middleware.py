@@ -3,6 +3,7 @@ The core application: middleware definitions for request/response cycle.
 """
 import logging
 
+from django.http import HttpResponse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
@@ -31,6 +32,18 @@ class DebugSession(MiddlewareMixin):
     def process_request(self, request):
         session.update(request, debug=DEBUG)
         return None
+
+
+class Healthcheck:
+    """Middleware intercepts and accepts /healthcheck requests."""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if request.path == "/healthcheck":
+            return HttpResponse("Healthy", content_type="text/plain")
+        return self.get_response(request)
 
 
 class ViewedPageEvent(MiddlewareMixin):
