@@ -1,6 +1,6 @@
 # Documentation
 
-This website is built using [`mkdocs`](https://www.mkdocs.org/) from the contents of the `main` branch.
+This website is built using [`mkdocs`](https://www.mkdocs.org/) from the contents of the `dev` (default) branch.
 
 The [`mkdocs.yml`][mkdocs.yml] file in the repository root configures the build process, including the available plugins.
 
