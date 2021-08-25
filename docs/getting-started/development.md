@@ -2,7 +2,7 @@
 
 ## Branches and merging
 
-The default GitHub branch is `dev`. All new feature work should be in the form of Pull Requests that target `dev` as their
+The default GitHub branch is `dev`. All new feature work should be in the form of Pull Requests (PR) that target `dev` as their
 base.
 
 In addition to `dev`, the repository has three other long-lived branches:
@@ -16,6 +16,13 @@ In addition to `dev`, the repository has three other long-lived branches:
 * Prevent branch deletion
 * Restrict force-pushing, where appropriate
 * Require passing status checks before merging into the target branch is allowed
+
+Merging of PRs should be done using the *merge commit* strategy. The *squash* strategy is also enabled for particularly wild or
+messy PRs, but this should only be used as a last resort when it is not possible or too difficult to rebase the PR branch onto
+the target branch before merging.
+
+When merging a PR into `dev`, it is customary to format the merge commit message like `Title of PR (#number)` instead of the
+default `Merge pull request #number from source-repo/source-branch`.
 
 Application deployments occur automatically when a PR is merged to the target environment branch. A successful deploy to
 `dev` is required before a deploy to `test` is allowed; a successful deploy to `test` is required before a deploy to `main` is
