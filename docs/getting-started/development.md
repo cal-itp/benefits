@@ -1,5 +1,30 @@
 # Development
 
+## Branches and merging
+
+The default GitHub branch is `dev`. All new feature work should be in the form of Pull Requests that target `dev` as their
+base.
+
+In addition to `dev`, the repository has three other long-lived branches:
+
+* `test` and `main` correspond to the Test and Production [deploy environments](../deployment), respectively.
+* `gh-pages` hosts the compiled documentation, and is always forced-pushed by the
+[docs build process](./documentation.md#deploying).
+
+[Branch protection rules][gh-branch-protection] are in place on three environment branches (`dev`, `test`, `main`) to:
+
+* Prevent branch deletion
+* Restrict force-pushing, where appropriate
+* Require passing status checks before merging into the target branch is allowed
+
+Application deployments occur automatically when a PR is merged to the target environment branch. A successful deploy to
+`dev` is required before a deploy to `test` is allowed; a successful deploy to `test` is required before a deploy to `main` is
+allowed.
+
+See [Deployment](../deployment) for more information.
+
+## pre-commit
+
 This repository uses [`pre-commit`][pre-commit] hooks to check and format code.
 
 Ensure you have `pre-commit` installed:
@@ -57,7 +82,9 @@ To close out of the container and re-open the directory locally in Visual Studio
 1. Type `Remote-Containers` to filter the commands
 1. Select `Reopen Locally`
 
+
 [config-file]: https://github.com/cal-itp/benefits/blob/dev/.devcontainer.json
+[gh-branch-protection]: https://docs.github.com/en/github/administering-a-repository/defining-the-mergeability-of-pull-requests/about-protected-branches
 [pre-commit]: https://pre-commit.com/
 [vscode]: https://code.visualstudio.com/
 [vscode-containers]: https://code.visualstudio.com/docs/remote/containers
