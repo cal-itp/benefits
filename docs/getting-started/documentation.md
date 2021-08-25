@@ -53,6 +53,14 @@ Browse to `http://localhost:${DOCS_LOCAL_PORT}` (<http://localhost:8001> by defa
 
 The website is automatically rebuilt as changes are made to local files.
 
+## Deploying
+
+A [GitHub Action][mkdocs-action] watches for pushes to `dev`, and uses
+[`mhausenblas/mkdocs-deploy-gh-pages`][mkdocs-deploy-gh-pages] to build the `mkdocs` content, force-pushing to the `gh-pages`
+branch. At that point, GitHub Pages redeploys the docs site.
+
 
 [docs]: https://github.com/cal-itp/benefits/tree/dev/docs
 [mkdocs.yml]: https://github.com/cal-itp/benefits/blob/dev/mkdocs.yml
+[mkdocs-action]: https://github.com/cal-itp/benefits/blob/dev/.github/workflows/mkdocs.yml
+[mkdocs-deploy-gh-pages]: https://github.com/mhausenblas/mkdocs-deploy-gh-pages
