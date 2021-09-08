@@ -5,3 +5,4 @@
 !localhost/data/[client|server].json
 static/
 !benefits/static
+__pycache__/
