@@ -3,6 +3,6 @@
 *.mo
 **/data/*.json
 !localhost/data/[client|server].json
-localhost/server/__pycache__/
 static/
 !benefits/static
+__pycache__/
