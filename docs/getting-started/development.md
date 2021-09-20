@@ -77,7 +77,7 @@ inside a container.
 
 If you do not receive a prompt, or when you feel like starting from a fresh environment:
 
-1. `Ctrl+Shift+P` to bring up the command palette in Visual Studio Code
+1. `Ctrl/Cmd+Shift+P` to bring up the command palette in Visual Studio Code
 1. Type `Remote-Containers` to filter the commands
 1. Select `Rebuild and Reopen in Container`
 
@@ -97,7 +97,7 @@ on your host machine. Access the server endpoint from within the Dev Container a
 
 To close out of the container and re-open the directory locally in Visual Studio Code:
 
-1. `Ctrl+Shift+P` to bring up the command palette in Visual Studio Code
+1. `Ctrl/Cmd+Shift+P` to bring up the command palette in Visual Studio Code
 1. Type `Remote-Containers` to filter the commands
 1. Select `Reopen Locally`
 
