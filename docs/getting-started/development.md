@@ -7,11 +7,11 @@ base.
 
 In addition to `dev`, the repository has three other long-lived branches:
 
-* `test` and `main` correspond to the Test and Production [deploy environments](../deployment), respectively.
+* `test` and `prod` correspond to the Test and Production [deploy environments](../deployment), respectively.
 * `gh-pages` hosts the compiled documentation, and is always forced-pushed by the
 [docs build process](./documentation.md#deploying).
 
-[Branch protection rules][gh-branch-protection] are in place on three environment branches (`dev`, `test`, `main`) to:
+[Branch protection rules][gh-branch-protection] are in place on three environment branches (`dev`, `test`, `prod`) to:
 
 * Prevent branch deletion
 * Restrict force-pushing, where appropriate
@@ -25,7 +25,7 @@ When merging a PR into `dev`, it is customary to format the merge commit message
 default `Merge pull request #number from source-repo/source-branch`.
 
 Application deployments occur automatically when a PR is merged to the target environment branch. A successful deploy to
-`dev` is required before a deploy to `test` is allowed; a successful deploy to `test` is required before a deploy to `main` is
+`dev` is required before a deploy to `test` is allowed; a successful deploy to `test` is required before a deploy to `prod` is
 allowed.
 
 See [Deployment](../deployment) for more information.
