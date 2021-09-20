@@ -21,8 +21,17 @@ Merging of PRs should be done using the *merge commit* strategy. The *squash* st
 messy PRs, but this should only be used as a last resort when it is not possible or too difficult to rebase the PR branch onto
 the target branch before merging.
 
-When merging a PR into `dev`, it is customary to format the merge commit message like `Title of PR (#number)` instead of the
-default `Merge pull request #number from source-repo/source-branch`.
+When merging a PR into `dev`, it is customary to format the merge commit message like:
+
+```
+Title of PR (#number)
+```
+
+instead of the default:
+
+```
+Merge pull request #number from source-repo/source-branch
+```
 
 Application deployments occur automatically when a PR is merged to the target environment branch. A successful deploy to
 `dev` is required before a deploy to `test` is allowed; a successful deploy to `test` is required before a deploy to `prod` is
