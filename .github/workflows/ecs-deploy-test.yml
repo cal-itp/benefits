@@ -58,8 +58,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           builder: ${{ steps.buildx.outputs.name }}
-          cache-from: type=gha,scope=benefits
-          cache-to: type=gha,scope=benefits,mode=max
+          cache-from: type=gha,scope=cal-itp
+          cache-to: type=gha,scope=cal-itp,mode=max
           context: .
           push: true
           tags: ${{ steps.define-image-paths.outputs.client }}
