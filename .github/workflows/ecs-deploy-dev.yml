@@ -7,6 +7,15 @@ on:
       - dev
     paths-ignore:
       - 'docs/**'
+      - 'localhost/**'
+      - '.vscode/**'
+      - '.gitignore'
+      - '.github/workflows/mkdocs.yml'
+      - '.github/workflows/pre-commit.yml'
+      - '.pre-commit-config.yaml'
+      - '.pyup.yml'
+      - 'README.md'
+      - 'mkdocs.yml'
 
 defaults:
   run:
