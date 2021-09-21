@@ -7,11 +7,11 @@ base.
 
 In addition to `dev`, the repository has three other long-lived branches:
 
-* `test` and `main` correspond to the Test and Production [deploy environments](../deployment), respectively.
+* `test` and `prod` correspond to the Test and Production [deploy environments](../deployment/README.md), respectively.
 * `gh-pages` hosts the compiled documentation, and is always forced-pushed by the
 [docs build process](./documentation.md#deploying).
 
-[Branch protection rules][gh-branch-protection] are in place on three environment branches (`dev`, `test`, `main`) to:
+[Branch protection rules][gh-branch-protection] are in place on three environment branches (`dev`, `test`, `prod`) to:
 
 * Prevent branch deletion
 * Restrict force-pushing, where appropriate
@@ -21,14 +21,23 @@ Merging of PRs should be done using the *merge commit* strategy. The *squash* st
 messy PRs, but this should only be used as a last resort when it is not possible or too difficult to rebase the PR branch onto
 the target branch before merging.
 
-When merging a PR into `dev`, it is customary to format the merge commit message like `Title of PR (#number)` instead of the
-default `Merge pull request #number from source-repo/source-branch`.
+When merging a PR into `dev`, it is customary to format the merge commit message like:
+
+```
+Title of PR (#number)
+```
+
+instead of the default:
+
+```
+Merge pull request #number from source-repo/source-branch
+```
 
 Application deployments occur automatically when a PR is merged to the target environment branch. A successful deploy to
-`dev` is required before a deploy to `test` is allowed; a successful deploy to `test` is required before a deploy to `main` is
+`dev` is required before a deploy to `test` is allowed; a successful deploy to `test` is required before a deploy to `prod` is
 allowed.
 
-See [Deployment](../deployment) for more information.
+See [Deployment](../deployment/README.md) for more information.
 
 ## pre-commit
 
@@ -68,7 +77,7 @@ inside a container.
 
 If you do not receive a prompt, or when you feel like starting from a fresh environment:
 
-1. `Ctrl+Shift+P` to bring up the command palette in Visual Studio Code
+1. `Ctrl/Cmd+Shift+P` to bring up the command palette in Visual Studio Code
 1. Type `Remote-Containers` to filter the commands
 1. Select `Rebuild and Reopen in Container`
 
@@ -88,7 +97,7 @@ on your host machine. Access the server endpoint from within the Dev Container a
 
 To close out of the container and re-open the directory locally in Visual Studio Code:
 
-1. `Ctrl+Shift+P` to bring up the command palette in Visual Studio Code
+1. `Ctrl/Cmd+Shift+P` to bring up the command palette in Visual Studio Code
 1. Type `Remote-Containers` to filter the commands
 1. Select `Reopen Locally`
 
