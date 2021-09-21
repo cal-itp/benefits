@@ -5,17 +5,15 @@ on:
   push:
     branches:
       - dev
-    paths-ignore:
-      - 'docs/**'
-      - 'localhost/**'
-      - '.vscode/**'
-      - '.gitignore'
-      - '.github/workflows/mkdocs.yml'
-      - '.github/workflows/pre-commit.yml'
-      - '.pre-commit-config.yaml'
-      - '.pyup.yml'
-      - 'README.md'
-      - 'mkdocs.yml'
+    paths:
+      - '.aws/**'
+      - '.github/workflows/ecs-deploy-*.yml'
+      - 'benefits/**'
+      - 'bin/**'
+      - Dockerfile
+      - gunicorn.conf.py
+      - nginx.conf
+      - requirements.txt
 
 defaults:
   run:
