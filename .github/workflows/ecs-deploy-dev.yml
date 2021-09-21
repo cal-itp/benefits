@@ -5,6 +5,15 @@ on:
   push:
     branches:
       - dev
+    paths:
+      - '.aws/**'
+      - '.github/workflows/ecs-deploy-*.yml'
+      - 'benefits/**'
+      - 'bin/**'
+      - Dockerfile
+      - gunicorn.conf.py
+      - nginx.conf
+      - requirements.txt
 
 defaults:
   run:
