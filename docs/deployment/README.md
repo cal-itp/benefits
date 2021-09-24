@@ -31,10 +31,10 @@ bucket.
 
 !!! warning
 
-    The following command will decrypt and download the `benefits` configuration from S3 into the directory from which it is
-    run on your local computer. Be sure this is what you want to do.
+    The following command will decrypt and download the `benefits` configuration from S3 into the `.aws/config` directory on
+    your local computer. Be sure this is what you want to do.
 
-To replicate the AWS configuration locally, fill in the appropriate values in your local `.env` file:
+To copy the AWS configuration locally, fill in the appropriate values in your local `.env` file:
 
 * for the AWS connection:
 
@@ -43,32 +43,33 @@ To replicate the AWS configuration locally, fill in the appropriate values in yo
     AWS_ACCESS_KEY_ID=access-key-id
     AWS_SECRET_ACCESS_KEY=secret-access-key
     AWS_BUCKET=bucket-name
-    CONFIG_FILE=file.json
     ```
 
-* and to ensure Django looks in the `configvolume` (defined in [docker-compose.yml][docker-compose.yml]):
+* and to ensure Django uses the downloaded configuration:
 
     ```console
-    DJANGO_INIT_PATH=config/file.json
+    DJANGO_INIT_PATH=config/<file>.json
     ```
 
 and then pull the files down to your local computer:
 
 ```bash
-docker-compose run s3pull
+docker compose run s3pull
 ```
 
 ### Update AWS
 
 !!! warning
 
-    The following command will send the **entire contents** of the directory from which it is run on your local computer into
-    the `benefits` S3 bucket for the configured environment. Be sure this is what you want to do.
+    The following command will send the **entire contents** of the `.aws/config` directory from your local computer into the
+    `benefits` S3 bucket for the configured environment. Be sure this is what you want to do.
 
 A Docker Compose service can also be used to push updates to the configuration data into S3 for the given deploy environment:
 
+Ensure you have content (e.g. an `.env` or `config.json` file) inside `.aws/config` in your local repository and then run:
+
 ```bash
-docker-compose run s3push
+docker compose run s3push
 ```
 
 
