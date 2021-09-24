@@ -17,7 +17,7 @@ services:
       - "8000"
     volumes:
       - ./data:/home/calitp/app/data:cached
-      - configvolume:/home/calitp/app/config:ro
+      - ../.aws/config:/home/calitp/app/config:ro
 
   dev:
     build:
@@ -67,7 +67,7 @@ services:
       - AWS_SECRET_ACCESS_KEY
       - AWS_DEFAULT_REGION
     volumes:
-      - configvolume:/aws
+      - ../.aws/config:/aws
 
   s3push:
     image: amazon/aws-cli
@@ -78,7 +78,7 @@ services:
       - AWS_SECRET_ACCESS_KEY
       - AWS_DEFAULT_REGION
     volumes:
-      - configvolume:/aws
+      - ../.aws/config:/aws
 
   tests-e2e:
     image: cypress/included:8.5.0
@@ -89,6 +89,3 @@ services:
     working_dir: /usr/src/e2e
     volumes:
       - ../tests/e2e:/usr/src/e2e
-
-volumes:
-  configvolume:
