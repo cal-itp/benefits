@@ -1,6 +1,6 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json
 {
-    "name": "Benefits",
+    "name": "cal-itp/benefits",
     "dockerComposeFile": ["./localhost/docker-compose.yml"],
     "service": "dev",
     "runServices": ["dev", "docs", "server"],
