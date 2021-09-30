@@ -23,13 +23,13 @@ the target branch before merging.
 
 When merging a PR into `dev`, it is customary to format the merge commit message like:
 
-```
+```console
 Title of PR (#number)
 ```
 
 instead of the default:
 
-```
+```console
 Merge pull request #number from source-repo/source-branch
 ```
 
@@ -83,15 +83,22 @@ If you do not receive a prompt, or when you feel like starting from a fresh envi
 
 ### Attach a debugger
 
-Once running inside a container, press **`F5`** to attach a debugger to the client at `http://localhost:${DJANGO_LOCAL_PORT}`
-(<http://localhost:8000> by default) on your host machine.
+Once running inside a container, press **`F5`** to attach a debugger to the client, running on `http://localhost` at a port
+dynamically assigned by Docker.
 
-Add breakpoints in the code and browse the local site to trigger them.
+Look on the `PORTS` tab in VS Code's _Terminal_ window. The _Local Address_ corresponding to the _Port_ `8000` is where the
+site is accessible on your host machine. Replace `0.0.0.0` with `localhost` and use the same port number shown in the
+_Local Address_ column.
+
+Add breakpoints in the code and browse the local site to trigger a pause. Press `F5` to continue execution from the breakpoint.
 
 ### Test verification server
 
-The [test eligibility verification server](./test-verification-server.md) endpoint is running at `http://localhost:5000/verify`
-on your host machine. Access the server endpoint from within the Dev Container at `http://server:5000/verify`.
+The [test eligibility verification server](./test-verification-server.md) is also running on `http://localhost` at another port
+dynamically assigned by Docker (see the linked page for more details). Since VS Code can only attach to a single Dev Container,
+the server is not shown in the VS Code `PORTS` tab.
+
+The server endpoint is accessible from within the Dev Container at its Compose service address: `http://server:5000`.
 
 ### Exiting dev containers
 

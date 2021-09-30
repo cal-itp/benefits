@@ -35,14 +35,30 @@ docker compose build --no-cache client
 ## Start the client
 
 ```bash
-docker compose up client
+docker compose up [-d] client
 ```
 
-After initialization, the client is running at `http://localhost:${DJANGO_LOCAL_PORT}`
-(<http://localhost:8000> by default).
+The optional `-d` flag will start in _detatched_ mode and allow you to continue using the terminal session. Otherwise your
+terminal will be attached to the container's terminal, showing the startup and runtime output.
 
-If `DJANGO_ADMIN=true`, the backend administrative interface can be accessed with the superuser you setup at
-<http://localhost:8000/admin>.
+After initialization, the client is running running on `http://localhost` at a port dynamically assigned by Docker. To find the
+exact address, either look in the Docker Desktop interface or run:
+
+```bash
+docker ps -f name=client
+```
+
+The `PORTS` column should look like:
+
+```console
+0.0.0.0:$PORT->8000/tcp
+```
+
+Where `$PORT` is the dynamically assigned `localhost` port. You can navigate in a browser to <http://localhost:$PORT> to view
+the client.
+
+If `DJANGO_ADMIN=true`, the backend administrative interface can be accessed at the `/admin` route using the superuser account
+you setup as part of initialization.
 
 By default, [sample data][sample-data] is used to initialize Django. Alternatively you may:
 

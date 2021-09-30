@@ -49,7 +49,21 @@ The documentation website can be run locally using Docker Compose:
 docker-compose up docs
 ```
 
-Browse to `http://localhost:${DOCS_LOCAL_PORT}` (<http://localhost:8001> by default) to view the docs site.
+The site is served from `http://localhost` at a port dynamically assigned by Docker. To find the exact address, either look in
+the Docker Desktop interface or run:
+
+```bash
+docker ps -f name=docs
+```
+
+The `PORTS` column should look like:
+
+```console
+0.0.0.0:$PORT->8000/tcp
+```
+
+Where `$PORT` is the dynamically assigned `localhost` port. You can navigate in a browser to <http://localhost:$PORT> to view
+the docs site.
 
 The website is automatically rebuilt as changes are made to local files.
 
