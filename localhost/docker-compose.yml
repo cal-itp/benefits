@@ -93,8 +93,10 @@ services:
 
   tests-e2e:
     image: cypress/included:8.3.1
+    depends_on:
+      - client
     environment:
-      - CYPRESS_baseUrl=http://localhost:${DJANGO_LOCAL_PORT}
+      - CYPRESS_baseUrl
     working_dir: /usr/src/e2e
     volumes:
       - ../tests/e2e:/usr/src/e2e
