@@ -60,14 +60,18 @@ allowed.
 
 ## VS Code with Devcontainers
 
-**This is the recommended development setup**.
+!!! tip
+
+    This is the recommended development setup
+
+!!! warning
+
+    You must build the base Docker image `benefits_client:latest` before running the devcontainer.
+    See [Local Setup](./README.md)
 
 [VS Code][vscode] can be used together with Docker via the [Remote - Containers][vscode-containers] extension to enable a
 container-based development environment. This repository includes a [`.devcontainer.json`][config-file] file that configures
 remote container development and debugging.
-
-*Note: you must build the base Docker image `benefits_client:latest` before running the devcontainer.
-See [Local Setup](./README.md)*
 
 With the [Remote - Containers][vscode-containers] extension enabled, open the folder containing this repository inside Visual
 Studio Code.
