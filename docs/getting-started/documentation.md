@@ -49,29 +49,16 @@ The documentation website can be run locally using Docker Compose:
 docker compose up docs
 ```
 
-The site is served from `http://localhost` at a port dynamically assigned by Docker. To find the exact address, either look in
-the Docker Desktop interface or run:
+The site is served from `http://localhost` at a port dynamically assigned by Docker. See
+[Docker dynamic ports](./docker-dynamic-ports.md) for more information.
 
-```bash
-docker ps -f name=docs
-```
+The website is automatically rebuilt as changes are made to `docs/` files.
 
-The `PORTS` column should look like:
+### In the Devcontainer
 
-```console
-0.0.0.0:$PORT->8000/tcp
-```
+When running the [Devcontainer](./development.md#vs-code-with-devcontainers), the docs site is automatically started.
 
-Where `$PORT` is the dynamically assigned `localhost` port. You can navigate in a browser to <http://localhost:$PORT> to view
-the docs site.
-
-The website is automatically rebuilt as changes are made to local files.
-
-### In the Dev Container
-
-When running the [Dev Container](./development.md#vs-code-with-dev-containers), the docs site is automatically started as well.
-
-See the tips above for finding the exact port number that Docker assigns for `http://localhost`.
+See [Docker dynamic ports](./docker-dynamic-ports.md) for more information on accessing the site on localhost.
 
 ## Deploying
 

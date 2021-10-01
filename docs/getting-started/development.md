@@ -58,7 +58,7 @@ bin/pre-commit.sh
 Branch protection rules on the environment branches in GitHub ensure that `pre-commit` checks have passed before a merge is
 allowed.
 
-## VS Code with Dev Containers
+## VS Code with Devcontainers
 
 **This is the recommended development setup**.
 
@@ -84,15 +84,11 @@ If you do not receive a prompt, or when you feel like starting from a fresh envi
 ### Attach a debugger
 
 Once running inside a container, press **`F5`** to attach a debugger to the client, running on `http://localhost` at a port
-dynamically assigned by Docker.
-
-Look on the `PORTS` tab in VS Code's _Terminal_ window. The _Local Address_ corresponding to the _Port_ `8000` is where the
-site is accessible on your host machine. Replace `0.0.0.0` with `localhost` and use the same port number shown in the
-_Local Address_ column.
+dynamically assigned by Docker. See [Docker dynamic ports](./docker-dynamic-ports.md) for more information.
 
 Add breakpoints in the code and browse the local site to trigger a pause. Press `F5` to continue execution from the breakpoint.
 
-### Exiting dev containers
+### Exiting devcontainers
 
 To close out of the container and re-open the directory locally in Visual Studio Code:
 
@@ -103,6 +99,7 @@ To close out of the container and re-open the directory locally in Visual Studio
 ## Test Eligibility Verification server
 
 Read more about the [test eligibility server](./test-eligibility-server.md)
+
 
 [config-file]: https://github.com/cal-itp/benefits/blob/dev/.devcontainer.json
 [gh-branch-protection]: https://docs.github.com/en/github/administering-a-repository/defining-the-mergeability-of-pull-requests/about-protected-branches
