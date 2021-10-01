@@ -26,6 +26,7 @@ services:
     image: benefits_client:dev
     environment:
       - ANALYTICS_KEY
+      - CYPRESS_baseUrl
       - DJANGO_ADMIN
       - DJANGO_ALLOWED_HOSTS
       - DJANGO_DB
