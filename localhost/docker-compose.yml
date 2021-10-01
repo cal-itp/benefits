@@ -93,7 +93,7 @@ services:
       - configvolume:/aws
 
   tests-e2e:
-    image: cypress/included:8.3.1
+    image: cypress/included:8.5.0
     depends_on:
       - client
     environment:
