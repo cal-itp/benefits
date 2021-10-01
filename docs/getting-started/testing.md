@@ -9,7 +9,16 @@ See the [`cypress` Command Line](https://docs.cypress.io/guides/guides/command-l
 
 ### Using Docker Compose
 
-Run the tests with Docker Compose, from inside the `localhost` directory, against the `client` service:
+Run the tests with Docker Compose against the `client` service:
+
+First ensure your `.env` file has an updated `CYPRESS_baseUrl` variable:
+
+```env
+# using the Docker Compose service address
+CYPRESS_baseURL=http://client:8000
+```
+
+Then from within the `localhost` directory:
 
 ```bash
 docker compose run tests-e2e
@@ -17,9 +26,16 @@ docker compose run tests-e2e
 
 ### From the Dev Container
 
-`cypress` is installed and available to run in a terminal in the [Dev Container](development.md#vs-code-with-dev-containers).
+`cypress` is installed and available to run directly in the devcontainer.
 
-From within the `tests/e2e` directory:
+First ensure your `.env` file has an updated `CYPRESS_baseUrl` variable:
+
+```env
+# using localhost since we're inside the container
+CYPRESS_baseURL=http://localhost:8000
+```
+
+Then Rebuild and Reopen, and start the `benefits` app with `F5`. Then from within the `tests/e2e` directory:
 
 ```bash
 npx cypress run
