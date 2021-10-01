@@ -23,13 +23,13 @@ the target branch before merging.
 
 When merging a PR into `dev`, it is customary to format the merge commit message like:
 
-```
+```console
 Title of PR (#number)
 ```
 
 instead of the default:
 
-```
+```console
 Merge pull request #number from source-repo/source-branch
 ```
 
@@ -58,16 +58,20 @@ bin/pre-commit.sh
 Branch protection rules on the environment branches in GitHub ensure that `pre-commit` checks have passed before a merge is
 allowed.
 
-## VS Code with Dev Containers
+## VS Code with Devcontainers
 
-**This is the recommended development setup**.
+!!! tip
+
+    This is the recommended development setup
+
+!!! warning
+
+    You must build the base Docker image `benefits_client:latest` before running the devcontainer.
+    See [Local Setup](./README.md)
 
 [VS Code][vscode] can be used together with Docker via the [Remote - Containers][vscode-containers] extension to enable a
 container-based development environment. This repository includes a [`.devcontainer.json`][config-file] file that configures
 remote container development and debugging.
-
-*Note: you must build the base Docker image `benefits_client:latest` before running the devcontainer.
-See [Local Setup](./README.md)*
 
 With the [Remote - Containers][vscode-containers] extension enabled, open the folder containing this repository inside Visual
 Studio Code.
@@ -83,23 +87,22 @@ If you do not receive a prompt, or when you feel like starting from a fresh envi
 
 ### Attach a debugger
 
-Once running inside a container, press **`F5`** to attach a debugger to the client at `http://localhost:${DJANGO_LOCAL_PORT}`
-(<http://localhost:8000> by default) on your host machine.
+Once running inside a container, press **`F5`** to attach a debugger to the client, running on `http://localhost` at a port
+dynamically assigned by Docker. See [Docker dynamic ports](./docker-dynamic-ports.md) for more information.
 
-Add breakpoints in the code and browse the local site to trigger them.
+Add breakpoints in the code and browse the local site to trigger a pause. Press `F5` to continue execution from the breakpoint.
 
-### Test verification server
-
-The [test eligibility verification server](./test-verification-server.md) endpoint is running at `http://localhost:5000/verify`
-on your host machine. Access the server endpoint from within the Dev Container at `http://server:5000/verify`.
-
-### Exiting dev containers
+### Exiting devcontainers
 
 To close out of the container and re-open the directory locally in Visual Studio Code:
 
 1. `Ctrl/Cmd+Shift+P` to bring up the command palette in Visual Studio Code
 1. Type `Remote-Containers` to filter the commands
 1. Select `Reopen Locally`
+
+## Test Eligibility Verification server
+
+Read more about the [test eligibility server](./test-eligibility-server.md)
 
 
 [config-file]: https://github.com/cal-itp/benefits/blob/dev/.devcontainer.json

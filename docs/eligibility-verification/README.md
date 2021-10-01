@@ -13,7 +13,7 @@ This document outlines the requirements for data exchange to verify one or more 
 Under these definitions, the [`benefits`](../README.md) application acts as the Client and communicates with partner Servers.
 
 For the purposes of testing and development, the `benefits` code repository includes an example Server, which can be run
-locally. Read more about the [Test verification server](../getting-started/test-verification-server.md).
+locally. Read more about the [Test eligibility server](../getting-started/test-eligibility-server.md).
 
 ### Authentication/Authorization
 
