@@ -92,14 +92,6 @@ _Local Address_ column.
 
 Add breakpoints in the code and browse the local site to trigger a pause. Press `F5` to continue execution from the breakpoint.
 
-### Test verification server
-
-The [test eligibility verification server](./test-verification-server.md) is also running on `http://localhost` at another port
-dynamically assigned by Docker (see the linked page for more details). Since VS Code can only attach to a single Dev Container,
-the server is not shown in the VS Code `PORTS` tab.
-
-The server endpoint is accessible from within the Dev Container at its Compose service address: `http://server:5000`.
-
 ### Exiting dev containers
 
 To close out of the container and re-open the directory locally in Visual Studio Code:
@@ -108,6 +100,9 @@ To close out of the container and re-open the directory locally in Visual Studio
 1. Type `Remote-Containers` to filter the commands
 1. Select `Reopen Locally`
 
+## Test Eligibility Verification server
+
+Read more about the [test eligibility server](./test-eligibility-server.md)
 
 [config-file]: https://github.com/cal-itp/benefits/blob/dev/.devcontainer.json
 [gh-branch-protection]: https://docs.github.com/en/github/administering-a-repository/defining-the-mergeability-of-pull-requests/about-protected-branches
