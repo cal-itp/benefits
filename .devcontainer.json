@@ -15,8 +15,7 @@
             "bash": {
                 "path": "/bin/bash"
             }
-        },
-        "python.pythonPath": "/usr/local/bin/python",
+        }
     },
 
     // Add the IDs of extensions you want installed when the container is created.
