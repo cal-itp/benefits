@@ -57,10 +57,6 @@ services:
     image: ghcr.io/cal-itp/eligibility-server:main
     ports:
       - "5000"
-    volumes:
-      - ./server:/usr/src/server:cached
-      - ./data:/usr/src/server/data
-      - ./keys:/usr/src/server/keys
 
   s3pull:
     image: amazon/aws-cli
