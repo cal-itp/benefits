@@ -3,7 +3,7 @@
     "name": "cal-itp/benefits",
     "dockerComposeFile": ["./localhost/docker-compose.yml"],
     "service": "dev",
-    "runServices": ["dev", "docs", "server"],
+    "runServices": ["dev", "docs"],
     "workspaceFolder": "/home/calitp/app",
     "postStartCommand": ["/bin/bash", "bin/init.sh"],
     "postAttachCommand": ["/bin/bash", "localhost/bin/init.sh"],

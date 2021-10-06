@@ -54,16 +54,9 @@ services:
       - ../:/home/calitp/app:cached
 
   server:
-    build: ./server
-    image: eligibility_verification_server:dev
-    command: python -m debugpy --listen 0.0.0.0:5678 app.py
-    environment:
-      - FLASK_APP=app.py
-      - FLASK_DEBUG=1
-      - FLASK_ENV=development
+    image: ghcr.io/machikoyasuda/eligibility-server:test
     ports:
       - "5000"
-      - "5678"
     volumes:
       - ./server:/usr/src/server:cached
       - ./data:/usr/src/server/data
