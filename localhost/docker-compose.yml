@@ -54,7 +54,7 @@ services:
       - ../:/home/calitp/app:cached
 
   server:
-    image: ghcr.io/machikoyasuda/eligibility-server:test
+    image: ghcr.io/cal-itp/eligibility-server:main
     ports:
       - "5000"
     volumes:
