@@ -130,13 +130,13 @@ class Client:
         with NamedTemporaryFile("w+") as cert, NamedTemporaryFile("w+") as key, NamedTemporaryFile("w+") as ca:
             # write client cert data to temp files
             # resetting so they can be read again by requests
-            cert.write(self.payment_processor.client_cert_pem)
+            cert.write(self.payment_processor.client_cert.text)
             cert.seek(0)
 
-            key.write(self.payment_processor.client_cert_private_key_pem)
+            key.write(self.payment_processor.client_cert_private_key.text)
             key.seek(0)
 
-            ca.write(self.payment_processor.client_cert_root_ca_pem)
+            ca.write(self.payment_processor.client_cert_root_ca.text)
             ca.seek(0)
 
             # request using temp file paths
