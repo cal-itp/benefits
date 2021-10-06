@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ("api_auth_header", models.TextField()),
                 ("api_auth_key", models.TextField()),
                 # fmt: off
-                ("public_key_pem", models.TextField(help_text="The Verifier's public key in PEM format, used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier.")),  # noqa: E501
+                ("public_key", models.ForeignKey(help_text="The Verifier's public key, used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier.", on_delete=models.deletion.PROTECT, related_name="+", to="core.PemData")),  # noqa: E501
                 ("jwe_cek_enc", models.TextField(help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode")),  # noqa: E501
                 ("jwe_encryption_alg", models.TextField(help_text="The JWE-compatible encryption algorithm")),
                 # fmt: on
@@ -55,9 +55,9 @@ class Migration(migrations.Migration):
                 ("card_tokenize_func", models.TextField()),
                 ("card_tokenize_env", models.TextField()),
                 # fmt: off
-                ("client_cert_pem", models.TextField(help_text="A certificate in PEM format, used for client certificate authentication to the API.")),  # noqa: E501
-                ("client_cert_private_key_pem", models.TextField(help_text="The private key in PEM format used to sign the certificate.")),  # noqa: E501
-                ("client_cert_root_ca_pem", models.TextField(help_text="The root CA bundle in PEM format used to verify the server.")),  # noqa: E501
+                ("client_cert", models.ForeignKey(help_text="The certificate used for client certificate authentication to the API.", on_delete=models.deletion.PROTECT, related_name="+", to="core.PemData")),  # noqa: E501
+                ("client_cert_private_key", models.ForeignKey(help_text="The private key used to sign the certificate.", on_delete=models.deletion.PROTECT, related_name="+", to="core.PemData")),  # noqa: E501
+                ("client_cert_root_ca", models.ForeignKey(help_text="The root CA bundle used to verify the server.", on_delete=models.deletion.PROTECT, related_name="+", to="core.PemData")),  # noqa: E501
                 ("customer_endpoint", models.TextField()),
                 # fmt: on
                 ("customers_endpoint", models.TextField()),
@@ -77,7 +77,7 @@ class Migration(migrations.Migration):
                 ("phone", models.TextField()),
                 ("active", models.BooleanField(default=False)),
                 # fmt: off
-                ("private_key_pem", models.TextField(help_text="The Agency's private key in PEM format, used to sign tokens created on behalf of this Agency.")),  # noqa: E501
+                ("private_key", models.ForeignKey(help_text="The Agency's private key, used to sign tokens created on behalf of this Agency.", on_delete=models.deletion.PROTECT, related_name="+", to="core.PemData")),  # noqa: E501
                 ("jws_signing_alg", models.TextField(help_text="The JWS-compatible signing algorithm.")),
                 ("payment_processor", models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.paymentprocessor")),
                 ("eligibility_types", models.ManyToManyField(to="core.EligibilityType")),
