@@ -18,6 +18,14 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name="PemData",
+            fields=[
+                ("id", models.AutoField(primary_key=True, serialize=False)),
+                ("text", models.TextField(help_text="The data in utf-8 encoded PEM text format.")),
+                ("label", models.TextField(help_text="Human description of the PEM data.")),
+            ],
+        ),
+        migrations.CreateModel(
             name="EligibilityVerifier",
             fields=[
                 ("id", models.AutoField(primary_key=True, serialize=False, verbose_name="ID")),

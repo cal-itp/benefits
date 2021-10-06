@@ -19,29 +19,21 @@ def pem_to_jwk(pem):
     return jwk.JWK.from_pem(pem)
 
 
-class PaymentProcessor(models.Model):
-    """An entity that processes payments for transit agencies."""
+class PemData(models.Model):
+    """API Certificate or Key in PEM format."""
 
-    # fmt: off
     id = models.AutoField(primary_key=True)
-    name = models.TextField()
-    api_base_url = models.TextField()
-    api_access_token_endpoint = models.TextField()
-    api_access_token_request_key = models.TextField()
-    api_access_token_request_val = models.TextField()
-    card_tokenize_url = models.TextField()
-    card_tokenize_func = models.TextField()
-    card_tokenize_env = models.TextField()
-    client_cert_pem = models.TextField(help_text="A certificate in PEM format, used for client certificate authentication to the API.")  # noqa: 503
-    client_cert_private_key_pem = models.TextField(help_text="The private key in PEM format used to sign the certificate.")
-    client_cert_root_ca_pem = models.TextField(help_text="The root CA bundle in PEM format used to verify the server.")  # noqa: 503
-    customer_endpoint = models.TextField()
-    customers_endpoint = models.TextField()
-    group_endpoint = models.TextField()
-    # fmt: on
+    text = models.TextField(help_text="The data in utf-8 encoded PEM text format.")
+    label = models.TextField(help_text="Human description of the PEM data.")
 
     def __str__(self):
-        return self.name
+        return self.label
+
+    @property
+    def jwk(self):
+        """jwcrypto.jwk.JWK instance from this PemData."""
+        pem_bytes = bytes(self.text, "utf-8")
+        return jwk.JWK.from_pem(pem_bytes)
 
 
 class EligibilityType(models.Model):
@@ -91,6 +83,31 @@ class EligibilityVerifier(models.Model):
     def public_jwk(self):
         """jwcrypto.jwk.JWK instance of this Verifier's public key"""
         return pem_to_jwk(self.public_key_pem)
+
+
+class PaymentProcessor(models.Model):
+    """An entity that processes payments for transit agencies."""
+
+    # fmt: off
+    id = models.AutoField(primary_key=True)
+    name = models.TextField()
+    api_base_url = models.TextField()
+    api_access_token_endpoint = models.TextField()
+    api_access_token_request_key = models.TextField()
+    api_access_token_request_val = models.TextField()
+    card_tokenize_url = models.TextField()
+    card_tokenize_func = models.TextField()
+    card_tokenize_env = models.TextField()
+    client_cert_pem = models.TextField(help_text="A certificate in PEM format, used for client certificate authentication to the API.")  # noqa: 503
+    client_cert_private_key_pem = models.TextField(help_text="The private key in PEM format used to sign the certificate.")
+    client_cert_root_ca_pem = models.TextField(help_text="The root CA bundle in PEM format used to verify the server.")  # noqa: 503
+    customer_endpoint = models.TextField()
+    customers_endpoint = models.TextField()
+    group_endpoint = models.TextField()
+    # fmt: on
+
+    def __str__(self):
+        return self.name
 
 
 class TransitAgency(models.Model):
