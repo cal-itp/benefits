@@ -55,15 +55,12 @@ jobs:
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: Add environment-specific config to ECS task
-        id: task-env
         env:
           AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
           AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
-          sed -i "s/<aws_account>/$AWS_ACCOUNT/g" .aws/ecs-task.json
-          sed -i "s/<aws_bucket>/$AWS_BUCKET/g" .aws/ecs-task.json
-          sed -i "s/<aws_region>/$AWS_REGION/g" .aws/ecs-task.json
+          .aws/set-env.sh .aws/ecs-task.json
 
       - name: Fill in client image ID in ECS task
         id: client-task-def
