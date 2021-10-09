@@ -31,6 +31,16 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      - name: Define image paths
+        id: define-image-paths
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          GIT_SHA: ${{ github.sha }}
+          AWS_CLI_TAG: ${{ secrets.AWS_CLI_TAG }}
+        run: |
+          echo "::set-output name=client::$ECR_REGISTRY/cal-itp-benefits-client:$GIT_SHA"
+          echo "::set-output name=config::$ECR_REGISTRY/aws-cli:$AWS_CLI_TAG"
+
       - name: Build, tag, and push image to Amazon ECR
         id: build-client-image
         env:
@@ -43,16 +53,6 @@ jobs:
           # be deployed to ECS.
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-
-      - name: Define path to configuration image
-        id: define-config-image
-        env:
-          ECR_REPOSITORY: aws-cli
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ secrets.AWS_CLI_TAG }}
-        run: |
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: Add environment-specific config to ECS task
         env:
@@ -68,7 +68,7 @@ jobs:
         with:
           task-definition: .aws/ecs-task.json
           container-name: cal-itp-benefits-client
-          image: ${{ steps.build-client-image.outputs.image }}
+          image: ${{ steps.define-image-paths.outputs.client }}
 
       - name: Fill in config image ID in ECS task
         id: config-task-def
@@ -76,7 +76,7 @@ jobs:
         with:
           task-definition: ${{ steps.client-task-def.outputs.task-definition }}
           container-name: cal-itp-benefits-client-config
-          image: ${{ steps.define-config-image.outputs.image }}
+          image: ${{ steps.define-image-paths.outputs.config }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
