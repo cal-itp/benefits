@@ -102,7 +102,7 @@ To close out of the container and re-open the directory locally in Visual Studio
 
 ## Test Eligibility Verification server
 
-Read more about the [test eligibility server](./test-eligibility-server.md)
+Read more about the [test eligibility server](https://docs.calitp.org/eligibility-server/)
 
 
 [config-file]: https://github.com/cal-itp/benefits/blob/dev/.devcontainer.json

@@ -1,6 +1,6 @@
 # The test eligibility server
 
-A basic eligibility verification server is available for testing.
+A basic eligibility verification server is available for testing. The server code is available on [GitHub](https://github.com/cal-itp/eligibility-server/), with its own set of [documentation](https://docs.calitp.org/eligibility-server/).
 
 ## Running locally
 
