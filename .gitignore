@@ -2,6 +2,7 @@
 *.env
 *.mo
 **/data/*.json
-!localhost/data/[client|server].json
+!localhost/data/client.json
 static/
 !benefits/static
+__pycache__/

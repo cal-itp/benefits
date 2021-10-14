@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - dev
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - '.github/workflows/mkdocs.yml'
 
 jobs:
   docs:

@@ -7,27 +7,13 @@
         {
             "name": "Django: Benefits Client",
             "type": "python",
-            "request": "attach",
-            "connect": {
-                "host": "localhost",
-                "port": 5678
-            },
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "runserver",
+                "0.0.0.0:8000"
+            ],
             "django": true
-        },
-        {
-            "name": "Flask: Eligibility Verification Server",
-            "type": "python",
-            "request": "attach",
-            "connect": {
-                "host": "localhost",
-                "port": 5789
-            },
-            "pathMappings": [
-                {
-                    "localRoot": "${workspaceFolder}/localhost/server",
-                    "remoteRoot": "/usr/src/server"
-                }
-            ]
         }
     ]
 }

@@ -14,7 +14,7 @@ services:
       - DJANGO_LOG_LEVEL
       - DJANGO_SECRET_KEY
     ports:
-      - "${DJANGO_LOCAL_PORT}:8000"
+      - "8000"
     volumes:
       - ./data:/home/calitp/app/data:cached
       - configvolume:/home/calitp/app/config:ro
@@ -26,6 +26,7 @@ services:
     image: benefits_client:dev
     environment:
       - ANALYTICS_KEY
+      - CYPRESS_baseUrl
       - DJANGO_ADMIN
       - DJANGO_ALLOWED_HOSTS
       - DJANGO_DB
@@ -34,40 +35,28 @@ services:
       - DJANGO_LOG_LEVEL
       - DJANGO_SECRET_KEY
     entrypoint: []
-    command: python -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000
+    command: sleep infinity
     depends_on:
       - server
     ports:
-      - "${DJANGO_LOCAL_PORT}:8000"
-      - "5678:5678"
+      - "8000"
     volumes:
       - ./data:/home/calitp/app/data:cached
       - ../:/home/calitp/app:cached
 
   docs:
     image: benefits_client:dev
-    entrypoint: []
-    command: mkdocs serve --dev-addr "0.0.0.0:8001"
+    entrypoint: mkdocs
+    command: serve --dev-addr "0.0.0.0:8000"
     ports:
-      - "${DOCS_LOCAL_PORT}:8001"
+      - "8000"
     volumes:
       - ../:/home/calitp/app:cached
 
   server:
-    build: ./server
-    image: eligibility_verification_server:dev
-    command: python -m debugpy --listen 0.0.0.0:5789 app.py
-    environment:
-      - FLASK_APP=app.py
-      - FLASK_DEBUG=1
-      - FLASK_ENV=development
+    image: ghcr.io/cal-itp/eligibility-server:main
     ports:
-      - "5000:5000"
-      - "5789:5789"
-    volumes:
-      - ./server:/usr/src/server:cached
-      - ./data:/usr/src/server/data
-      - ./keys:/usr/src/server/keys
+      - "5000"
 
   s3pull:
     image: amazon/aws-cli
@@ -90,6 +79,16 @@ services:
       - AWS_DEFAULT_REGION
     volumes:
       - configvolume:/aws
+
+  tests-e2e:
+    image: cypress/included:8.5.0
+    depends_on:
+      - client
+    environment:
+      - CYPRESS_baseUrl
+    working_dir: /usr/src/e2e
+    volumes:
+      - ../tests/e2e:/usr/src/e2e
 
 volumes:
   configvolume:

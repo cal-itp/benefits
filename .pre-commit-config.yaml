@@ -35,5 +35,4 @@ repos:
     hooks:
       - id: bandit
         args: ["-ll"]
-        exclude: ^server/
         files: .py$
