@@ -97,10 +97,10 @@ jobs:
           container-name: cal-itp-benefits-client-config
           image: ${{ steps.define-image-paths.outputs.config }}
 
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.config-task-def.outputs.task-definition }}
-          service: cal-itp-benefits-client
-          cluster: cal-itp-clientCluster
-          wait-for-service-stability: true
+      # - name: Deploy Amazon ECS task definition
+      #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      #   with:
+      #     task-definition: ${{ steps.config-task-def.outputs.task-definition }}
+      #     service: cal-itp-benefits-client
+      #     cluster: cal-itp-clientCluster
+      #     wait-for-service-stability: true
