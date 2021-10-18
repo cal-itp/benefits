@@ -11,6 +11,7 @@
             "program": "${workspaceFolder}/manage.py",
             "args": [
                 "runserver",
+                "--insecure",
                 "0.0.0.0:8000"
             ],
             "django": true
