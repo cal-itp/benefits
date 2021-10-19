@@ -104,19 +104,19 @@ msgstr "Una tarjeta de crédito"
 msgid "core.payments.option.debitcard"
 msgstr "Una tarjeta de débito"
 
-#: benefits/core/templates/core/payment-options.html:13
-msgid "core.payments.option.prepaid"
-msgstr "Una tarjeta prepagada (si incluye un logotipo Visa)"
-
 #: benefits/core/templates/core/payment-options.html:15
 msgid "core.payments.p4"
+msgstr "Nota: Debe incluir un logo de Visa o Mastercard"
+
+#: benefits/core/templates/core/payment-options.html:15
+msgid "core.payments.p5"
 msgstr ""
 "Estamos trabajando para agregar opciones adicionales para las personas que "
 "no tienen acceso a una tarjeta bancaria. Vuelva a consultar este sitio web o "
 "póngase en contacto con su proveedor de transporte público."
 
 #: benefits/core/templates/core/payment-options.html:16
-msgid "core.payments.p5"
+msgid "core.payments.p6"
 msgstr ""
 "Aún puede obtener su descuento mediante el proceso de solicitud de su "
 "proveedor de transporte público."
