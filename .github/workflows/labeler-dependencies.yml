@@ -1,0 +1,16 @@
+name: Label dependencies
+
+on:
+  pull_request:
+    branches: [dev]
+    types: [opened]
+
+jobs:
+  label-dependencies:
+    if: github.event.pull_request.sender.login == 'pyup-bot'
+    runs-on: ubuntu-latest
+    steps:
+      - name: add-label
+        uses: andymckay/labeler@master
+        with:
+          add-labels: "dependencies"
