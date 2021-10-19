@@ -101,19 +101,19 @@ msgstr "A credit card"
 msgid "core.payments.option.debitcard"
 msgstr "A debit card"
 
-#: benefits/core/templates/core/payment-options.html:13
-msgid "core.payments.option.prepaid"
-msgstr "A prepaid card (if it includes a Visa logo)"
-
 #: benefits/core/templates/core/payment-options.html:15
 msgid "core.payments.p4"
+msgstr "Note: Must include a Visa or Mastercard logo."
+
+#: benefits/core/templates/core/payment-options.html:15
+msgid "core.payments.p5"
 msgstr ""
 "We are working to add additional options for people who do not have access "
 "to a bank card. Please check back on this website, or get in touch with your "
 "local transit provider."
 
 #: benefits/core/templates/core/payment-options.html:16
-msgid "core.payments.p5"
+msgid "core.payments.p6"
 msgstr ""
 "You can still get your discount by going through your local transit "
 "provider’s application process."
