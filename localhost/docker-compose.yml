@@ -1,0 +1,91 @@
+version: "3.8"
+
+services:
+  client:
+    build: ..
+    image: benefits_client:latest
+    environment:
+      - ANALYTICS_KEY
+      - DJANGO_ADMIN
+      - DJANGO_ALLOWED_HOSTS
+      - DJANGO_DB
+      - DJANGO_DEBUG
+      - DJANGO_INIT_PATH
+      - DJANGO_LOG_LEVEL
+      - DJANGO_SECRET_KEY
+    ports:
+      - "8000"
+    volumes:
+      - ./data:/home/calitp/app/data:cached
+      - ../.aws/config:/home/calitp/app/config:ro
+
+  dev:
+    build:
+      context: ..
+      dockerfile: localhost/Dockerfile.dev
+    image: benefits_client:dev
+    environment:
+      - ANALYTICS_KEY
+      - CYPRESS_baseUrl
+      - DJANGO_ADMIN
+      - DJANGO_ALLOWED_HOSTS
+      - DJANGO_DB
+      - DJANGO_DEBUG
+      - DJANGO_INIT_PATH
+      - DJANGO_LOG_LEVEL
+      - DJANGO_SECRET_KEY
+    entrypoint: []
+    command: sleep infinity
+    depends_on:
+      - server
+    ports:
+      - "8000"
+    volumes:
+      - ./data:/home/calitp/app/data:cached
+      - ../:/home/calitp/app:cached
+
+  docs:
+    image: benefits_client:dev
+    entrypoint: mkdocs
+    command: serve --dev-addr "0.0.0.0:8000"
+    ports:
+      - "8000"
+    volumes:
+      - ../:/home/calitp/app:cached
+
+  server:
+    image: ghcr.io/cal-itp/eligibility-server:main
+    ports:
+      - "5000"
+
+  s3pull:
+    image: amazon/aws-cli
+    entrypoint: ["/bin/sh"]
+    command: ["-c", "aws s3 sync s3://${AWS_BUCKET} ."]
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_DEFAULT_REGION
+    volumes:
+      - ../.aws/config:/aws
+
+  s3push:
+    image: amazon/aws-cli
+    entrypoint: ["/bin/sh"]
+    command: ["-c", "aws s3 sync . s3://${AWS_BUCKET}"]
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - AWS_DEFAULT_REGION
+    volumes:
+      - ../.aws/config:/aws
+
+  tests-e2e:
+    image: cypress/included:8.5.0
+    depends_on:
+      - client
+    environment:
+      - CYPRESS_baseUrl
+    working_dir: /usr/src/e2e
+    volumes:
+      - ../tests/e2e:/usr/src/e2e

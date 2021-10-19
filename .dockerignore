@@ -1,8 +1,8 @@
+.aws/
 .git/
 .github/
 .vscode/
-keys/
-server/
+localhost/
 **/__pycache__/
 .devcontainer.json
 .flake8

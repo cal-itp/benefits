@@ -53,7 +53,6 @@ class CustomerResponse:
             raise ApiError("Invalid response format")
 
         self.id = payload.get("id", customer_id)
-        self.customer_ref = payload.get("customer_ref")
         self.is_registered = str(payload.get("is_registered", "false")).lower() == "true"
 
         logger.info("Customer details successfully read from response")
@@ -71,10 +70,11 @@ class GroupResponse:
         else:
             try:
                 # Group API uses an error response (500) to indicate that the customer already exists in the group (!!!)
-                # The error message should contain the customer ID we sent via payload
+                # The error message should contain the customer ID we sent via payload and start with "Duplicate"
                 error = response.json()["errors"][0]
                 customer_id = payload[0]
-                if not error["detail"].startswith("Duplicate") and customer_id in error["detail"]:
+                detail = error["detail"]
+                if all((customer_id, detail)) and customer_id in detail and not detail.startswith("Duplicate"):
                     raise ApiError("Invalid response format")
             except (KeyError, ValueError):
                 raise ApiError("Invalid response format")
@@ -92,11 +92,11 @@ class Client:
 
         if agency is None:
             raise ValueError("agency")
-        if agency.benefits_provider is None:
-            raise ValueError("agency.benefits_provider")
+        if agency.payment_processor is None:
+            raise ValueError("agency.payment_processor")
 
         self.agency = agency
-        self.provider = agency.benefits_provider
+        self.payment_processor = agency.payment_processor
         self.headers = {"Accept": "application/json", "Content-type": "application/json"}
 
     def _headers(self, headers=None):
@@ -106,7 +106,7 @@ class Client:
         return h
 
     def _make_url(self, *parts):
-        return "/".join((self.provider.api_base_url, self.agency.merchant_id, *parts))
+        return "/".join((self.payment_processor.api_base_url, self.agency.merchant_id, *parts))
 
     def _get(self, url, payload, headers=None):
         h = self._headers(headers)
@@ -128,28 +128,28 @@ class Client:
         # requests library reads temp files from file path
         # The "with" context destroys temp files when response comes back
         with NamedTemporaryFile("w+") as cert, NamedTemporaryFile("w+") as key, NamedTemporaryFile("w+") as ca:
-            # write provider client cert data to temp files
+            # write client cert data to temp files
             # resetting so they can be read again by requests
-            cert.write(self.provider.client_cert_pem)
+            cert.write(self.payment_processor.client_cert.text)
             cert.seek(0)
 
-            key.write(self.provider.client_cert_private_key_pem)
+            key.write(self.payment_processor.client_cert_private_key.text)
             key.seek(0)
 
-            ca.write(self.provider.client_cert_root_ca_pem)
+            ca.write(self.payment_processor.client_cert_root_ca.text)
             ca.seek(0)
 
             # request using temp file paths
             return request_func(verify=ca.name, cert=(cert.name, key.name))
 
     def _get_customer(self, token):
-        """Get a customer record from Benefit Provider's system """
+        """Get a customer record from Payment Processor's system """
         logger.info("Check for existing customer record")
 
         if token is None:
             raise ValueError("token")
 
-        url = self._make_url(self.provider.customers_endpoint)
+        url = self._make_url(self.payment_processor.customers_endpoint)
         payload = {"token": token}
 
         try:
@@ -162,7 +162,7 @@ class Client:
                     return customer
                 else:
                     logger.debug("Customer is not registered, update")
-                    return self._update_customer(customer.id, customer.customer_ref)
+                    return self._update_customer(customer.id)
             else:
                 r.raise_for_status()
         except requests.ConnectionError:
@@ -174,17 +174,15 @@ class Client:
         except requests.HTTPError as e:
             raise ApiError(e)
 
-    def _update_customer(self, customer_id, customer_ref):
+    def _update_customer(self, customer_id):
         """Update a customer using their unique info."""
         logger.info("Update existing customer record")
 
         if customer_id is None:
             raise ValueError("customer_id")
-        if customer_ref is None:
-            raise ValueError("customer_ref")
 
-        url = self._make_url(self.provider.customer_endpoint, customer_id)
-        payload = {"customer_ref": customer_ref, "is_registered": True}
+        url = self._make_url(self.payment_processor.customer_endpoint, customer_id)
+        payload = {"is_registered": True}
 
         r = self._patch(url, payload)
         r.raise_for_status()
@@ -195,8 +193,8 @@ class Client:
         """Obtain an access token to use for integrating with other APIs."""
         logger.info("Get new access token")
 
-        url = self._make_url(self.provider.api_access_token_endpoint)
-        payload = {self.provider.api_access_token_request_key: self.provider.api_access_token_request_val}
+        url = self._make_url(self.payment_processor.api_access_token_endpoint)
+        payload = {self.payment_processor.api_access_token_request_key: self.payment_processor.api_access_token_request_val}
 
         try:
             r = self._post(url, payload)
@@ -222,7 +220,7 @@ class Client:
             raise ValueError("group_id")
 
         customer = self._get_customer(customer_token)
-        url = self._make_url(self.provider.group_endpoint, group_id)
+        url = self._make_url(self.payment_processor.group_endpoint, group_id)
         payload = [customer.id]
 
         try:

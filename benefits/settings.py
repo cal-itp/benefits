@@ -19,7 +19,7 @@ ALLOWED_HOSTS = []
 if DEBUG:
     ALLOWED_HOSTS.extend(["*"])
 else:
-    hosts = os.environ["DJANGO_ALLOWED_HOSTS"].split()
+    hosts = os.environ["DJANGO_ALLOWED_HOSTS"].split(",")
     ALLOWED_HOSTS.extend(hosts)
 
 # Application definition
@@ -46,6 +46,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "benefits.core.middleware.Healthcheck",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -69,7 +70,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
-    CSRF_FAILURE_VIEW = "benefits.core.views.bad_request"
+    CSRF_FAILURE_VIEW = "benefits.core.views.csrf_failure"
     SESSION_COOKIE_SECURE = True
 
 ROOT_URLCONF = "benefits.urls"
