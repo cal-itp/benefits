@@ -1,0 +1,19 @@
+name: Label docs
+
+on:
+  pull_request:
+    branches: [dev]
+    types: [opened]
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - '.github/workflows/mkdocs.yml'
+
+jobs:
+  label-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: add-label
+        uses: andymckay/labeler@master
+        with:
+          add-labels: "docs"

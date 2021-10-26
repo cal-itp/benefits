@@ -1,0 +1,24 @@
+name: Label dev deploys
+
+on:
+  pull_request:
+    branches: [dev]
+    types: [opened]
+    paths:
+      - '.aws/**'
+      - '.github/workflows/ecs-deploy-*.yml'
+      - 'benefits/**'
+      - 'bin/**'
+      - Dockerfile
+      - gunicorn.conf.py
+      - nginx.conf
+      - requirements.txt
+
+jobs:
+  label-deployment-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: add-label
+        uses: andymckay/labeler@master
+        with:
+          add-labels: "deployment-dev"

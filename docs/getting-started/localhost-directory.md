@@ -5,16 +5,11 @@
 ## [`data/`][localhost/data]
 
 * `client.json`: sample configuration for the Benefits client
-* `server.json`: sample configuration for a local Eligibility Verification server, including users and eligibility
 
 ## [`keys/`][localhost/keys]
 
 * `client.key` and `client.pub`: sample encryption keypair for the Benefits client
-* `server.key` and `server.pub`: sample encryption keypair for the local Eligibility Verification server
-
-## [`server/`][localhost/server]
-
-* Simple Flask app implementing Eligiblity Verification server
+* `server.pub`: sample encryption key for the local Eligibility Verification server
 
 ## [`Dockerfile.dev`][localhost/Dockerfile.dev]
 

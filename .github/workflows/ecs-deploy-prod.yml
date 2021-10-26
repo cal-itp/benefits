@@ -1,10 +1,10 @@
-name: Deploy to Amazon ECS (test)
+name: Deploy to Amazon ECS (prod)
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - test
+      - prod
 
 defaults:
   run:
@@ -13,8 +13,8 @@ defaults:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: test
-    concurrency: test
+    environment: prod
+    concurrency: prod
 
     steps:
       - name: Checkout
