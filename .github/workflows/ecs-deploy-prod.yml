@@ -1,19 +1,10 @@
-name: Deploy to Amazon ECS (dev)
+name: Deploy to Amazon ECS (prod)
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - dev
-    paths:
-      - '.aws/**'
-      - '.github/workflows/ecs-deploy-*.yml'
-      - 'benefits/**'
-      - 'bin/**'
-      - Dockerfile
-      - gunicorn.conf.py
-      - nginx.conf
-      - requirements.txt
+      - prod
 
 defaults:
   run:
@@ -22,8 +13,8 @@ defaults:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: dev
-    concurrency: dev
+    environment: prod
+    concurrency: prod
 
     steps:
       - name: Checkout
