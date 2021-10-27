@@ -1,6 +1,6 @@
 cryptography==35.0.0
 Django==3.2.7
 gunicorn==20.1.0
-jwcrypto==0.9.1
+jwcrypto==1.0
 requests==2.26.0
 six==1.16.0
