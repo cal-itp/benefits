@@ -7,7 +7,7 @@ on:
       - dev
     paths:
       - '.aws/**'
-      - '.github/workflows/ecs-deploy-*.yml'
+      - '.github/workflows/deploy-*.yml'
       - 'benefits/**'
       - 'bin/**'
       - Dockerfile
