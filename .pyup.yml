@@ -1,9 +1,0 @@
-# pyup.io config file
-# see https://pyup.io/docs/configuration/ for all available options
-
-branch: dev
-schedule: ""
-update: all
-requirements:
-  - docs/requirements.txt:
-      pin: False
