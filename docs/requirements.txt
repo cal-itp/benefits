@@ -1,5 +1,5 @@
 fontawesome_markdown
 mkdocs
 mkdocs-awesome-pages-plugin
-mkdocs-macros-plugin
+mkdocs-macros-plugin==0.6.0
 mkdocs-material
