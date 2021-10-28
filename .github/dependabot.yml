@@ -25,3 +25,12 @@ updates:
       include: "scope"
     labels:
       - "dependencies"
+  - package-ecosystem: "npm"
+    directory: "/tests/e2e" # e2e Cypress testing
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    labels:
+      - "dependencies"
