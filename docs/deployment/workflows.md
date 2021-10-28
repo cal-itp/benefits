@@ -2,9 +2,9 @@
 
 There are three different GitHub Actions deployment workflows, one for each environment:
 
-* [`.github/workflows/ecs-deploy-dev.yml`][deploy-dev]
-* [`.github/workflows/ecs-deploy-test.yml`][deploy-test]
-* [`.github/workflows/ecs-deploy-prod.yml`][deploy-prod]
+* [`.github/workflows/deploy-dev.yml`][deploy-dev]
+* [`.github/workflows/deploy-test.yml`][deploy-test]
+* [`.github/workflows/deploy-prod.yml`][deploy-prod]
 
 !!! info
 
@@ -91,9 +91,9 @@ If in the future GitHub allows for templated workflows or branch-matrix support,
 single file.
 
 
-[deploy-dev]: https://github.com/cal-itp/benefits/blob/dev/.github/workflows/ecs-deploy-dev.yml
-[deploy-test]: https://github.com/cal-itp/benefits/blob/dev/.github/workflows/ecs-deploy-test.yml
-[deploy-prod]: https://github.com/cal-itp/benefits/blob/dev/.github/workflows/ecs-deploy-prod.yml
+[deploy-dev]: https://github.com/cal-itp/benefits/blob/dev/.github/workflows/deploy-dev.yml
+[deploy-test]: https://github.com/cal-itp/benefits/blob/dev/.github/workflows/deploy-test.yml
+[deploy-prod]: https://github.com/cal-itp/benefits/blob/dev/.github/workflows/deploy-prod.yml
 [dockerfile]: https://github.com/cal-itp/benefits/blob/dev/Dockerfile
 [ecr]: https://aws.amazon.com/ecr/
 [ecs-task-template]: https://github.com/cal-itp/benefits/blob/dev/.aws/ecs-task.json

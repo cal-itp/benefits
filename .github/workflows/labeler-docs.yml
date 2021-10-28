@@ -16,4 +16,4 @@ jobs:
       - name: add-label
         uses: andymckay/labeler@master
         with:
-          add-labels: "docs"
+          add-labels: "documentation"
