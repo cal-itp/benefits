@@ -2,4 +2,4 @@ fontawesome_markdown
 mkdocs
 mkdocs-awesome-pages-plugin
 mkdocs-macros-plugin
-mkdocs-material
+mkdocs-material==7.3.5
