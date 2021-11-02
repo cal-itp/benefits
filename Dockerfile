@@ -27,6 +27,7 @@ RUN useradd --create-home --shell /bin/bash $USER && \
 # enter app directory
 WORKDIR /home/$USER/app
 
+USER $USER
 # install python dependencies
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
@@ -40,6 +41,7 @@ COPY bin/ bin/
 # overwrite default nginx.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
+USER root
 # ensure $USER can compile messages in the locale directories
 RUN chown -R $USER /home/$USER/app/benefits/locale
 
