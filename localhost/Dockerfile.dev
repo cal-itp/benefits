@@ -13,8 +13,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash
 RUN apt-get install -qq nodejs libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev \
                         libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
 
-# todo: need to extract this
-USER calitp
-ENV PATH "$PATH:/home/calitp/.local/bin"
+USER $USER
+ENV PATH "$PATH:/home/${USER}/.local/bin"
 COPY docs/requirements.txt docs/requirements.txt
 RUN pip install --no-cache-dir -r docs/requirements.txt
