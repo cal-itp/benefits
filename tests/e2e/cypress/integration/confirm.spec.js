@@ -26,4 +26,16 @@ describe("Confirmation page spec", () => {
     cy.contains("We can’t confirm your age")
     cy.contains("You may still be eligible for a discount, but we can’t verify your age with the DMV.")
   })
+
+  it("Validates an invalid number/id field", () => {
+    cy.get("#sub").type("A12347")
+    cy.get("#name").type("Garcia")
+    cy.get("input[type='submit']")
+      .click()
+    cy.contains("Check your input. The format looks wrong.")
+    cy.get("#id_sub")
+      .then(($e) => {
+        expect($e).to.have.css("border-color", "rgb(222, 12, 12)")
+      })
+  })
 })
