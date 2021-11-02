@@ -1,7 +1,9 @@
 describe("Index page spec", () => {
-  it("Gives user transit provider options", () => {
+  beforeEach(() => {
     cy.visit("/")
+  })
 
+  it("Gives user transit provider options", () => {
     cy.contains("Choose your transit provider")
       .siblings(".btn")
       .should('not.be.empty')
@@ -11,8 +13,6 @@ describe("Index page spec", () => {
   })
 
   it("Takes user to transit provider page", () => {
-    cy.visit("/")
-
     cy.get(".buttons .btn")
       .first()
       .click()
@@ -24,8 +24,6 @@ describe("Index page spec", () => {
   })
 
   it("Has a payment options page", () => {
-    cy.visit("/")
-
     cy.contains("Payment Options")
       .click()
 
@@ -33,8 +31,6 @@ describe("Index page spec", () => {
   })
 
   it("Has a help page", () => {
-    cy.visit("/")
-
     cy.contains("Help")
       .click()
 
