@@ -1,14 +1,14 @@
 describe("Index page - Internationalization spec", () => {
-  it("Gives user Spanish language option", () => {
+  beforeEach(() => {
     cy.visit("/")
+  })
 
+  it("Gives user Spanish language option", () => {
     cy.get("#header").should("contain", "Español")
     cy.get("#header").should("not.contain", "English")
   })
 
   it("Changes the language to Spanish", () => {
-    cy.visit("/")
-
     cy.contains("Español")
       .click()
 
@@ -18,7 +18,6 @@ describe("Index page - Internationalization spec", () => {
   })
 
   it("Changes the language from Spanish back to English", () => {
-    cy.visit("/")
 
     cy.contains("Español")
       .click()
@@ -34,8 +33,6 @@ describe("Index page - Internationalization spec", () => {
   })
 
   it("Changes the language to Spanish from any page", () => {
-    cy.visit("/")
-
     cy.get(".buttons .btn")
       .first()
       .click()
