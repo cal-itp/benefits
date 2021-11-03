@@ -20,7 +20,7 @@ fi
 
 # generate language *.mo files for use by Django
 
-django-admin compilemessages
+python manage.py compilemessages
 
 # collect static files
 
