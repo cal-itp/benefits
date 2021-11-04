@@ -12,7 +12,7 @@ describe("Index page spec", () => {
       })
   })
 
-  it("Takes user to transit provider page", () => {
+  it("Takes user to a transit provider page", () => {
     cy.get(".buttons .btn")
       .first()
       .click()
@@ -23,18 +23,12 @@ describe("Index page spec", () => {
       })
   })
 
-  it("Has a payment options page", () => {
+  it("Has a payment options page link", () => {
     cy.contains("Payment Options")
-      .click()
-
-    cy.contains("The contactless symbol is four curved lines")
   })
 
-  it("Has a help page", () => {
+  it("Has a help page link", () => {
     cy.contains("Help")
-      .click()
-
-    cy.contains("If you need assistance with the site, please reach out to the customer service team for your local transit provider.")
   })
 
 })
