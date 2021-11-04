@@ -39,11 +39,18 @@ ENV PATH "$PATH:/home/$USER/.local/bin"
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-# copy source files
+# copy source files (as root)
 COPY gunicorn.conf.py gunicorn.conf.py
 COPY manage.py manage.py
 COPY benefits/ benefits/
 COPY bin/ bin/
+
+# ensure $USER can compile messages in the locale directories
+USER root
+RUN chmod -R 777 /home/$USER/app/benefits/locale
+
+# switch back to non-root $USER
+USER $USER
 
 # overwrite default nginx.conf
 COPY nginx.conf /etc/nginx/nginx.conf
