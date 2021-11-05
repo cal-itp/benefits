@@ -37,8 +37,8 @@ COPY manage.py manage.py
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # copy source files
-COPY benefits/ benefits/
 COPY bin/ bin/
+COPY benefits/ benefits/
 
 # ensure $USER can compile messages in the locale directories
 RUN chmod -R 777 benefits/locale
