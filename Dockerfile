@@ -26,11 +26,25 @@ RUN useradd --create-home --shell /bin/bash $USER && \
     apt-get update && \
     apt-get install -qq --no-install-recommends gettext nginx
 
-# switch to non-root $USER
-USER $USER
-
 # enter app directory
 WORKDIR /home/$USER/app
+
+# copy config files
+COPY gunicorn.conf.py gunicorn.conf.py
+COPY manage.py manage.py
+
+# overwrite default nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# copy source files
+COPY bin/ bin/
+COPY benefits/ benefits/
+
+# ensure $USER can compile messages in the locale directories
+RUN chmod -R 777 benefits/locale
+
+# switch to non-root $USER
+USER $USER
 
 # update PATH for local pip installs
 ENV PATH "$PATH:/home/$USER/.local/bin"
@@ -38,15 +52,6 @@ ENV PATH "$PATH:/home/$USER/.local/bin"
 # install python dependencies
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-
-# copy source files
-COPY gunicorn.conf.py gunicorn.conf.py
-COPY manage.py manage.py
-COPY benefits/ benefits/
-COPY bin/ bin/
-
-# overwrite default nginx.conf
-COPY nginx.conf /etc/nginx/nginx.conf
 
 # configure container executable
 ENTRYPOINT ["/bin/bash"]
