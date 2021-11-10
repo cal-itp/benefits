@@ -11,4 +11,4 @@ nginx
 
 # start the application server
 
-gunicorn benefits.wsgi
+python -m gunicorn benefits.wsgi

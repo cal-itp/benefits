@@ -1,25 +1,29 @@
+const agencies = require('../fixtures/transit-agencies.json')
+
 describe("Index page spec", () => {
   beforeEach(() => {
     cy.visit("/")
   })
 
-  it("Gives user transit provider options", () => {
+  it("Gives user transit provider options to click", () => {
     cy.contains("Choose your transit provider")
-      .siblings(".btn")
-      .should('not.be.empty')
-      .each(($e) => {
-        expect($e).attr("href").to.match(/\/[a-z]{3,}$/)
+    cy.contains(agencies[0].short_name)
+      .then(($e) => {
+        expect($e).attr("href").to.include("/" + agencies[0].slug)
+      })
+    cy.contains(agencies[1].short_name)
+      .then(($e) => {
+        expect($e).attr("href").to.include("/" + agencies[1].slug)
       })
   })
 
-  it("Takes user to a transit provider page", () => {
-    cy.get(".buttons .btn")
-      .first()
+  it("Clicking transit option link takes user to a transit provider page", () => {
+    cy.contains(agencies[0].short_name)
       .click()
 
     cy.contains("Let’s do it!")
       .then(($e) => {
-        expect($e).attr("href").to.match(/\/eligibility\/$/)
+        expect($e).attr("href").to.include("/eligibility")
       })
   })
 

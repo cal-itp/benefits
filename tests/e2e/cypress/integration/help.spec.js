@@ -1,4 +1,4 @@
-const help = require('../fixtures/help.json')
+const agencies = require('../fixtures/transit-agencies.json')
 
 describe("Help page spec", () => {
   beforeEach(() => {
@@ -36,19 +36,19 @@ describe("Help page spec", () => {
     cy.contains("Help")
       .click()
 
-    cy.contains(help[0].long_name)
-    cy.contains(help[1].long_name)
-    cy.contains(help[0].phone)
-    cy.contains(help[1].phone)
+    cy.contains(agencies[0].long_name)
+    cy.contains(agencies[1].long_name)
+    cy.contains(agencies[0].phone)
+    cy.contains(agencies[1].phone)
   })
 
   it("Has help information for correct transit agency if clicking Help from a transit page", () => {
-    cy.contains(help[0].short_name)
+    cy.contains(agencies[0].short_name)
       .click()
 
-    cy.contains(help[0].long_name)
-    cy.contains(help[0].phone)
-    cy.should("not.contain", help[1].long_name)
-    cy.should("not.contain", help[1].phone)
+    cy.contains(agencies[0].long_name)
+    cy.contains(agencies[0].phone)
+    cy.should("not.contain", agencies[1].long_name)
+    cy.should("not.contain", agencies[1].phone)
   })
 })

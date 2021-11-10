@@ -3,11 +3,11 @@
     "name": "Garcia",
     "sub": "A1234567"
   },
-  "wrongName": {
+  "ineligible": {
     "name": "Bob",
     "sub": "A1234567"
   },
-  "wrongSub": {
+  "invalidSub": {
     "name": "Garcia",
     "sub": "A12347"
   }
