@@ -33,7 +33,7 @@ describe("Confirms a user’s eligibility status", () => {
     cy.get('input:focus').should('have.length', 1)
   })
 
-  it("From the confirmation page, confirms an eligible user", () => {
+  it.skip("From the confirmation page, confirms an eligible user", () => {
     cy.get("#sub").type(users.eligible.sub)
     cy.get("#name").type(users.eligible.name)
     cy.get("input[type='submit']")
