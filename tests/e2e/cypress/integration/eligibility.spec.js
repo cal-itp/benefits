@@ -1,9 +1,10 @@
-const fixtures = require("../fixtures/eligibility.json")
+const users = require("../fixtures/users.json")
+const agencies = require('../fixtures/transit-agencies.json')
 
 describe("Confirms a user’s eligibility status", () => {
   beforeEach(() => {
     cy.visit("/")
-    cy.contains("ABC")
+    cy.contains(agencies[0].short_name)
       .click()
     cy.contains("Let’s do it!")
       .click()
@@ -33,8 +34,8 @@ describe("Confirms a user’s eligibility status", () => {
   })
 
   it("From the confirmation page, confirms an eligible user", () => {
-    cy.get("#sub").type(fixtures.eligible.sub)
-    cy.get("#name").type(fixtures.eligible.name)
+    cy.get("#sub").type(users.eligible.sub)
+    cy.get("#name").type(users.eligible.name)
     cy.get("input[type='submit']")
       .click()
 
@@ -42,8 +43,8 @@ describe("Confirms a user’s eligibility status", () => {
   })
 
   it("From the confirmation page, confirms an ineligible user", () => {
-    cy.get("#sub").type(fixtures.wrongName.sub)
-    cy.get("#name").type(fixtures.wrongName.name)
+    cy.get("#sub").type(users.ineligible.sub)
+    cy.get("#name").type(users.ineligible.name)
     cy.get("input[type='submit']")
       .click()
 
@@ -52,8 +53,8 @@ describe("Confirms a user’s eligibility status", () => {
   })
 
   it("From the confirmation page, validates an invalid number/id field", () => {
-    cy.get("#sub").type(fixtures.wrongSub.sub)
-    cy.get("#name").type(fixtures.wrongSub.name)
+    cy.get("#sub").type(users.invalidSub.sub)
+    cy.get("#name").type(users.invalidSub.name)
     cy.get("input[type='submit']")
       .click()
 
@@ -65,7 +66,7 @@ describe("Confirms a user’s eligibility status", () => {
   })
 
   it("From the confirmation page, validates an empty name field", () => {
-    cy.get("#sub").type(fixtures.wrongSub.sub)
+    cy.get("#sub").type(users.invalidSub.sub)
     cy.get("input[type='submit']")
       .click()
 
