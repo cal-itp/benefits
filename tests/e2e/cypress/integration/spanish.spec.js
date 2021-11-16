@@ -34,7 +34,7 @@ describe("Spanish language", () => {
     cy.get("#header").should("not.contain", "English")
   })
 
-  it.only("Changes the language to Spanish from any page", () => {
+  it("Changes the language to Spanish from any page", () => {
     let agencySlug = agencies[0].slug
     cy.contains(agencies[0].short_name)
       .click()
