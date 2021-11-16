@@ -22,7 +22,7 @@ services:
   dev:
     build:
       context: ..
-      dockerfile: localhost/Dockerfile.dev
+      dockerfile: .devcontainer/Dockerfile
     image: benefits_client:dev
     environment:
       - ANALYTICS_KEY
@@ -60,8 +60,8 @@ services:
 
   s3pull:
     image: amazon/aws-cli
-    entrypoint: ["/bin/sh"]
-    command: ["-c", "aws s3 sync s3://${AWS_BUCKET} ."]
+    entrypoint: [ "/bin/sh" ]
+    command: [ "-c", "aws s3 sync s3://${AWS_BUCKET} ." ]
     environment:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
@@ -71,8 +71,8 @@ services:
 
   s3push:
     image: amazon/aws-cli
-    entrypoint: ["/bin/sh"]
-    command: ["-c", "aws s3 sync . s3://${AWS_BUCKET}"]
+    entrypoint: [ "/bin/sh" ]
+    command: [ "-c", "aws s3 sync . s3://${AWS_BUCKET}" ]
     environment:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
