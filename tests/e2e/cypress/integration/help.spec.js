@@ -36,19 +36,23 @@ describe("Help page spec", () => {
     cy.contains("Help")
       .click()
 
-    cy.contains(agencies[0].long_name)
-    cy.contains(agencies[1].long_name)
-    cy.contains(agencies[0].phone)
-    cy.contains(agencies[1].phone)
+    agencies.forEach(function (agency) {
+      cy.contains(agency.long_name)
+      cy.contains(agency.phone)
+    })
   })
 
   it("Has help information for correct transit agency if clicking Help from a transit page", () => {
-    cy.contains(agencies[0].short_name)
+    let chosenAgency = agencies[0]
+    let otherAgency = agencies[1]
+    cy.contains(chosenAgency.short_name)
+      .click()
+    cy.contains("Help")
       .click()
 
-    cy.contains(agencies[0].long_name)
-    cy.contains(agencies[0].phone)
-    cy.should("not.contain", agencies[1].long_name)
-    cy.should("not.contain", agencies[1].phone)
+    cy.contains(chosenAgency.long_name)
+    cy.contains(chosenAgency.phone)
+    cy.should("not.contain", otherAgency.long_name)
+    cy.should("not.contain", otherAgency.phone)
   })
 })
