@@ -26,6 +26,17 @@ class AgencySessionRequired(MiddlewareMixin):
             raise AttributeError("Session not configured with agency")
 
 
+class EligibleSessionRequired(MiddlewareMixin):
+    """Middleware raises an exception for sessions lacking confirmed eligibility."""
+
+    def process_request(self, request):
+        if session.eligible(request):
+            logger.debug("Session has confirmed eligibility")
+            return None
+        else:
+            raise AttributeError("Session has no confirmed eligibility")
+
+
 class DebugSession(MiddlewareMixin):
     """Middleware to configure debug context in the request session."""
 
