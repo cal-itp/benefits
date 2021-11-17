@@ -43,18 +43,6 @@ See [Deployment](../deployment/README.md) for more information.
 
 This repository uses [`pre-commit`][pre-commit] hooks to check and format code.
 
-Ensure you have `pre-commit` installed locally before making any commits:
-
-```console
-pip install pre-commit
-```
-
-Then run (from the root of this repository):
-
-```console
-bin/pre-commit.sh
-```
-
 Branch protection rules on the environment branches in GitHub ensure that `pre-commit` checks have passed before a merge is
 allowed.
 
@@ -62,7 +50,7 @@ allowed.
 
 !!! tip
 
-    This is the recommended development setup
+    VS Code with Devcontainers is the recommended development setup
 
 !!! warning
 
