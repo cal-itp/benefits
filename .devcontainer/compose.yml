@@ -16,8 +16,8 @@ services:
     ports:
       - "8000"
     volumes:
-      - ./data:/home/calitp/app/data:cached
       - ../.aws/config:/home/calitp/app/config:ro
+      - ../fixtures:/home/calitp/app/fixtures:cached
 
   dev:
     build:
@@ -41,7 +41,6 @@ services:
     ports:
       - "8000"
     volumes:
-      - ./data:/home/calitp/app/data:cached
       - ../:/home/calitp/app:cached
 
   docs:
