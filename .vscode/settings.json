@@ -1,5 +1,15 @@
 {
   "editor.formatOnSave": true,
+  "editor.defaultFormatter": null,
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": null
+  },
   "files.encoding": "utf8",
   "files.eol": "\n",
   "files.insertFinalNewline": true,
