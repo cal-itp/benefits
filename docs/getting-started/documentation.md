@@ -14,38 +14,38 @@ The pencil icon is a shortcut to quickly edit the content of the page you are vi
 
 ![Screenshot showing edit pencil](img/edit-pencil.png)
 
-*Above: Screenshot showing the edit pencil circled in red*
+_Above: Screenshot showing the edit pencil circled in red_
 
 ## Features
 
 - [Material for MkDocs: Reference](https://squidfunk.github.io/mkdocs-material/reference/)
 
-    See `mkdocs.yml` for enabled plugins/features
+  See `mkdocs.yml` for enabled plugins/features
 
 - [Mermaid](https://mermaid-js.github.io/mermaid/)
 
-    Use code fences with `mermaid` type to render Mermaid diagrams within docs. For example, this markdown:
+  Use code fences with `mermaid` type to render Mermaid diagrams within docs. For example, this markdown:
 
-    ~~~markdown
-    ```mermaid
-    graph LR
-        Start --> Stop
-    ```
-    ~~~
+  ````markdown
+  ```mermaid
+  graph LR
+      Start --> Stop
+  ```
+  ````
 
-    Yields this diagram:
+  Yields this diagram:
 
-    ~~~mermaid
-    graph LR
-        Start --> Stop
-    ~~~
+  ```mermaid
+  graph LR
+      Start --> Stop
+  ```
 
 ## Running locally
 
 The documentation website can be run locally using Docker Compose:
 
 ```bash
-# from inside the localhost/ directory
+# from inside the .devcontainer/ directory
 docker compose up docs
 ```
 
@@ -65,7 +65,6 @@ See [Docker dynamic ports](./docker-dynamic-ports.md) for more information on ac
 A [GitHub Action][mkdocs-action] watches for pushes to `dev`, and uses
 [`mhausenblas/mkdocs-deploy-gh-pages`][mkdocs-deploy-gh-pages] to build the `mkdocs` content, force-pushing to the `gh-pages`
 branch. At that point, GitHub Pages redeploys the docs site.
-
 
 [docs]: https://github.com/cal-itp/benefits/tree/dev/docs
 [mkdocs.yml]: https://github.com/cal-itp/benefits/blob/dev/mkdocs.yml
