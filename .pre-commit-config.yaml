@@ -41,4 +41,4 @@ repos:
     rev: v2.4.1
     hooks:
       - id: prettier
-        types_or: [javascript]
+        types_or: [javascript, css]
