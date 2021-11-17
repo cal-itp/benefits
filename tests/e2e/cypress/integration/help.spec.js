@@ -1,4 +1,4 @@
-const agencies = require("../../../../fixtures/core.transitagency.json");
+const agencies = require("../fixtures/transit-agencies");
 
 describe("Help page spec", () => {
   beforeEach(() => {

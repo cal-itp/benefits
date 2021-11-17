@@ -1,5 +1,5 @@
+const agencies = require("../fixtures/transit-agencies");
 const users = require("../fixtures/users.json");
-const agencies = require("../../../../fixtures/core.transitagency.json");
 
 describe("Confirms a user’s eligibility status", () => {
   beforeEach(() => {
