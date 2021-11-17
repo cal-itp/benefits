@@ -1,0 +1,47 @@
+name: UI automation tests
+
+on:
+  pull_request:
+    branches: ["*"]
+    paths:
+      - .github/workflows/tests-ui.yml
+      - "benefits/**"
+      - "fixtures/**"
+      - "tests/e2e/**"
+      - requirements.txt
+
+jobs:
+  tests-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Dockerfile
+        id: build-client-image
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          cache-from: type=gha,scope=cal-itp
+          cache-to: type=gha,scope=cal-itp,mode=max
+          context: .
+          push: false
+          tags: benefits_client:${{ github.sha }}
+
+      - name: Start app
+        uses: addnab/docker-run-action@v3
+        with:
+          image: benefits_client:${{ github.sha }}
+          options: --env-file tests/e2e/.env.tests -p 8000:8000
+
+      - name: Run tests
+        uses: cypress-io/github-action@v2
+        with:
+          working-directory: tests/e2e
+          wait-on: "http://localhost:8000"
+          spec: |
+            cypress/specs/ui/*.spec.js
