@@ -1,4 +1,4 @@
-const agencies = require("../fixtures/transit-agencies.json");
+const agencies = require("../../../../fixtures/core.transitagency.json");
 
 describe("Index page spec", () => {
   beforeEach(() => {
@@ -7,20 +7,20 @@ describe("Index page spec", () => {
 
   it("Gives user transit provider options to click", () => {
     cy.contains("Choose your transit provider");
-    cy.contains(agencies[0].short_name).then(($e) => {
+    cy.contains(agencies[0].fields.short_name).then(($e) => {
       expect($e)
         .attr("href")
-        .to.include("/" + agencies[0].slug);
+        .to.include("/" + agencies[0].fields.slug);
     });
-    cy.contains(agencies[1].short_name).then(($e) => {
+    cy.contains(agencies[1].fields.short_name).then(($e) => {
       expect($e)
         .attr("href")
-        .to.include("/" + agencies[1].slug);
+        .to.include("/" + agencies[1].fields.slug);
     });
   });
 
   it("Clicking transit option link takes user to a transit provider page", () => {
-    cy.contains(agencies[0].short_name).click();
+    cy.contains(agencies[0].fields.short_name).click();
 
     cy.contains("Let’s do it!").then(($e) => {
       expect($e).attr("href").to.include("/eligibility");

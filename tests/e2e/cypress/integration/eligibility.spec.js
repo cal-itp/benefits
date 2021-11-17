@@ -1,10 +1,10 @@
 const users = require("../fixtures/users.json");
-const agencies = require("../fixtures/transit-agencies.json");
+const agencies = require("../../../../fixtures/core.transitagency.json");
 
 describe("Confirms a user’s eligibility status", () => {
   beforeEach(() => {
     cy.visit("/");
-    cy.contains(agencies[0].short_name).click();
+    cy.contains(agencies[0].fields.short_name).click();
     cy.contains("Let’s do it!").click();
     cy.contains("Ready to continue").click();
   });

@@ -1,4 +1,4 @@
-const agencies = require("../fixtures/transit-agencies.json");
+const agencies = require("../../../../fixtures/core.transitagency.json");
 
 describe("Help page spec", () => {
   beforeEach(() => {
@@ -31,20 +31,20 @@ describe("Help page spec", () => {
     cy.contains("Help").click();
 
     agencies.forEach(function (agency) {
-      cy.contains(agency.long_name);
-      cy.contains(agency.phone);
+      cy.contains(agency.fields.long_name);
+      cy.contains(agency.fields.phone);
     });
   });
 
   it("Has help information for correct transit agency if clicking Help from a transit page", () => {
     let chosenAgency = agencies[0];
     let otherAgency = agencies[1];
-    cy.contains(chosenAgency.short_name).click();
+    cy.contains(chosenAgency.fields.short_name).click();
     cy.contains("Help").click();
 
-    cy.contains(chosenAgency.long_name);
-    cy.contains(chosenAgency.phone);
-    cy.should("not.contain", otherAgency.long_name);
-    cy.should("not.contain", otherAgency.phone);
+    cy.contains(chosenAgency.fields.long_name);
+    cy.contains(chosenAgency.fields.phone);
+    cy.should("not.contain", otherAgency.fields.long_name);
+    cy.should("not.contain", otherAgency.fields.phone);
   });
 });
