@@ -59,5 +59,7 @@ jobs:
       - name: Run Lighthouse tests for a11y
         uses: treosh/lighthouse-ci-action@v8
         with:
-          urls: http://localhost:8000
+          urls: |
+            http://localhost:8000
+            http://localhost:8000/help
           configPath: ".github/lighthouserc.json"

@@ -1,10 +1,15 @@
 {
   "ci": {
+    "numberOfRuns": 2,
+    "settings": {
+      "preset": "mobile"
+    },
     "assert": {
       "assertions": {
         "categories:accessibility": ["error", {"minScore": 1}],
         "categories:best-practices": ["warn", {"minScore": 1}]
-      }
+      },
+      "includePassedAssertions": true
     }
   }
 }
