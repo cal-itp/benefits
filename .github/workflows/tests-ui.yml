@@ -10,6 +10,10 @@ on:
       - "tests/e2e/**"
       - requirements.txt
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   tests-ui:
     runs-on: ubuntu-latest
@@ -34,10 +38,13 @@ jobs:
           tags: benefits_client:${{ github.sha }}
 
       - name: Start app
-        uses: addnab/docker-run-action@v3
-        with:
-          image: benefits_client:${{ github.sha }}
-          options: --env-file tests/e2e/.env.tests -p 8000:8000 -v ${{ github.workspace }}/fixtures:/home/calitp/app/fixtures
+        run: |
+          docker run \
+            --detach \
+            --env-file tests/e2e/.env.tests \
+            -p 8000:8000 \
+            -v ${{ github.workspace }}/fixtures:/home/calitp/app/fixtures \
+            benefits_client:${{ github.sha }}
 
       - name: Run tests
         uses: cypress-io/github-action@v2
