@@ -1,12 +1,10 @@
 .aws/
+.devcontainer/
 .git/
 .github/
 .vscode/
-localhost/
 **/__pycache__/
-.devcontainer.json
 .flake8
 .*ignore
 *.db
-docker-compose.yml
 Dockerfile*

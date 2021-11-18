@@ -1,253 +1,269 @@
 /* HTML element overrides */
 
 body {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 22px;
-    color: #000000;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000000;
 }
 
-body, h1, h2, h3, h4, h5, h6, p, a, span, li {
-    font-family: "Roboto", sans-serif;
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+span,
+li {
+  font-family: "Roboto", sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 30px;
-    margin-top: 30px;
-    margin-bottom: 20px;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 30px;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
 h1 {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 p {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* making the sticky footer */
 
-html, body {
-    height: 100%;
-    overflow-y: unset;
+html,
+body {
+  height: 100%;
+  overflow-y: unset;
 }
 body {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 main {
-    flex-shrink: 0 !important;
+  flex-shrink: 0 !important;
 }
 footer {
-    margin-top: auto;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 /* class styles */
 
 .btn-lg {
-    border-width: 2px;
+  border-width: 2px;
 }
 
 .btn-link {
-    color: #046b99;
+  color: #046b99;
 }
 
 .form-control {
-    border-radius: 0.25rem;
-    border-color: #212121;
-    border-width: 2px;
-    color: #212121;
+  border-radius: 0.25rem;
+  border-color: #212121;
+  border-width: 2px;
+  color: #212121;
 }
 
 .form-control:focus-within {
-    color: #212121;
+  color: #212121;
 }
 
 .form-control-lg {
-    border-radius: 0.3rem;
+  border-radius: 0.3rem;
 }
 
 .required-label {
-    color: #000;
+  color: #000;
 }
 
 .form-group:not(.with-errors) {
-    margin-bottom: 2.375rem;
+  margin-bottom: 2.375rem;
 }
 
 .form-group:not(.with-errors):nth-last-of-type(2) {
-    margin-bottom: 3.375rem;
+  margin-bottom: 3.375rem;
 }
 
 .form-group.with-errors label,
 .form-group.with-errors .required-label {
-    color: #DE0C0C;
+  color: #de0c0c;
 }
 
 .form-group.with-errors .form-control {
-    border-color: #DE0C0C;
+  border-color: #de0c0c;
 }
 
 .form-group.with-errors .error-message {
-    font-size: 14px;
-    padding-left: 1rem;
+  font-size: 14px;
+  padding-left: 1rem;
 }
 
 .media-list {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .media-list .media {
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
 }
 
 .media-list .media .media-left {
-    margin-right: 18px;
+  margin-right: 18px;
 }
 
 .media-list .media .media-left img {
-    height: 75px;
+  height: 75px;
 }
 
 /* context-specific overrides */
 
 .navbar-brand img.sm {
-    width: 120px;
+  width: 120px;
 }
 
 .navbar-brand img.lg {
-    width: 274px;
+  width: 274px;
 }
 
 .image[class*="col-"] {
-    min-height: 230px;
+  min-height: 230px;
 }
 
 .container.content {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .container.content h1.icon-title span.icon {
-    text-align: center;
-    display: block;
-    margin-bottom: 1rem;
+  text-align: center;
+  display: block;
+  margin-bottom: 1rem;
 }
 
 .container.content h1 ~ p:nth-last-of-type(1) {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 .container.content .btn-lg {
-    font-weight: 500;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    width: 100%;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  width: 100%;
 }
 
 .container.content .btn-lg.agency-url {
-    margin-bottom: 0;
-    padding-bottom: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 .container.content .btn-lg.agency-url,
 .container.content .btn-lg.agency-phone {
-    padding-top: 0;
+  padding-top: 0;
 }
 
 .container.content .btn-link {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .text-lg-center form {
-    text-align: left !important;
+  text-align: left !important;
 }
 .text-lg-center .buttons label {
-    width: 100%;
-    text-align: center !important;
+  width: 100%;
+  text-align: center !important;
 }
 
 /* media queries */
 
 @media (max-width: 767px) {
-    /* xs and sm */
-    .media-list .media .media-body {
-        max-width: 160px;
-    }
+  /* xs and sm */
+  .media-list .media .media-body {
+    max-width: 160px;
+  }
 
-    .global-footer ul li {
-        width: 40%;
-    }
+  .global-footer ul li {
+    width: 40%;
+  }
 }
 
 @media (min-width: 992px) {
-    /* lg+ */
+  /* lg+ */
 
-    /* undoing the sticky footer for pages with header image
+  /* undoing the sticky footer for pages with header image
        the backup plan is to color the body the same as the footer
        to avoid the floating footer look
     */
-    .with-image main {
-        flex-shrink: unset;
-    }
-    .with-image .container.content {
-        min-height: 800px;
-    }
-    .with-image footer {
-        margin-top: unset;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-    }
+  .with-image main {
+    flex-shrink: unset;
+  }
+  .with-image .container.content {
+    min-height: 800px;
+  }
+  .with-image footer {
+    margin-top: unset;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
 
-    h1 {
-        font-size: 36px;
-        line-height: 45px;
-    }
+  h1 {
+    font-size: 36px;
+    line-height: 45px;
+  }
 
-    h1.icon-title {
-        text-align: center;
-    }
+  h1.icon-title {
+    text-align: center;
+  }
 
-    h2 {
-        font-size: 30px;
-        line-height: 36px;
-    }
+  h2 {
+    font-size: 30px;
+    line-height: 36px;
+  }
 
-    .home p,
-    .home label {
-        font-size: 24px;
-        line-height: 30px;
-    }
+  .home p,
+  .home label {
+    font-size: 24px;
+    line-height: 30px;
+  }
 
-    .image[class*="col-"] {
-        min-height: 725px;
-    }
+  .image[class*="col-"] {
+    min-height: 725px;
+  }
 
-    .container.content {
-        padding-left: 3.5rem;
-        padding-right: 3.5rem;
-        margin-top: 8rem;
-        margin-bottom: 7rem;
-    }
+  .container.content {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+    margin-top: 8rem;
+    margin-bottom: 7rem;
+  }
 
-    .container.content input[type=submit],
-    .container.content .btn {
-        width: 70%;
-        margin-left: 15%;
-        margin-right: 15%;
-    }
+  .container.content input[type="submit"],
+  .container.content .btn {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
 }
 
 @media (min-width: 1200px) {
-    /* xl+ */
-    .container.content {
-        padding-left: 5rem;
-        padding-right: 5rem;
-    }
+  /* xl+ */
+  .container.content {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
 }

@@ -1,0 +1,14 @@
+{
+  "eligible": {
+    "name": "Garcia",
+    "sub": "A1234567"
+  },
+  "ineligible": {
+    "name": "Bob",
+    "sub": "A1234567"
+  },
+  "invalidSub": {
+    "name": "Garcia",
+    "sub": "A12347"
+  }
+}

@@ -1,25 +1,37 @@
+const agencies = require("../fixtures/transit-agencies");
+
 describe("Index page spec", () => {
-    it("Gives user transit provider options", () => {
-        cy.visit("/")
+  beforeEach(() => {
+    cy.visit("/");
+  });
 
-        cy.contains("Choose your transit provider")
-          .siblings(".btn")
-          .should('not.be.empty')
-          .each(($e) => {
-              expect($e).attr("href").to.match(/\/[a-z]{3,}$/)
-          })
-    })
+  it("Gives user transit provider options to click", () => {
+    cy.contains("Choose your transit provider");
+    cy.contains(agencies[0].fields.short_name).then(($e) => {
+      expect($e)
+        .attr("href")
+        .to.include("/" + agencies[0].fields.slug);
+    });
+    cy.contains(agencies[1].fields.short_name).then(($e) => {
+      expect($e)
+        .attr("href")
+        .to.include("/" + agencies[1].fields.slug);
+    });
+  });
 
-    it("Takes user to transit provider page", () => {
-        cy.visit("/")
+  it("Clicking transit option link takes user to a transit provider page", () => {
+    cy.contains(agencies[0].fields.short_name).click();
 
-        cy.get(".buttons .btn")
-          .first()
-          .click()
+    cy.contains("Let’s do it!").then(($e) => {
+      expect($e).attr("href").to.include("/eligibility");
+    });
+  });
 
-        cy.contains("Let’s do it!")
-          .then(($e) => {
-            expect($e).attr("href").to.match(/\/eligibility\/$/)
-          })
-    })
-})
+  it("Has a payment options page link", () => {
+    cy.contains("Payment Options");
+  });
+
+  it("Has a help page link", () => {
+    cy.contains("Help");
+  });
+});
