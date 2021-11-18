@@ -30,6 +30,7 @@ jobs:
           cache-to: type=gha,scope=cal-itp,mode=max
           context: .
           push: false
+          load: true
           tags: benefits_client:${{ github.sha }}
 
       - name: Start app
