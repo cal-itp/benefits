@@ -37,7 +37,7 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: benefits_client:${{ github.sha }}
-          options: --env-file tests/e2e/.env.tests -p 8000:8000
+          options: --env-file tests/e2e/.env.tests -p 8000:8000 -v ${{ github.workspace }}/fixtures:/home/calitp/app/fixtures
 
       - name: Run tests
         uses: cypress-io/github-action@v2
