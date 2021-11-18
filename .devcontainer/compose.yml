@@ -16,13 +16,13 @@ services:
     ports:
       - "8000"
     volumes:
-      - ./data:/home/calitp/app/data:cached
       - ../.aws/config:/home/calitp/app/config:ro
+      - ../fixtures:/home/calitp/app/fixtures:cached
 
   dev:
     build:
       context: ..
-      dockerfile: localhost/Dockerfile.dev
+      dockerfile: .devcontainer/Dockerfile
     image: benefits_client:dev
     environment:
       - ANALYTICS_KEY
@@ -41,7 +41,6 @@ services:
     ports:
       - "8000"
     volumes:
-      - ./data:/home/calitp/app/data:cached
       - ../:/home/calitp/app:cached
 
   docs:
@@ -60,8 +59,8 @@ services:
 
   s3pull:
     image: amazon/aws-cli
-    entrypoint: ["/bin/sh"]
-    command: ["-c", "aws s3 sync s3://${AWS_BUCKET} ."]
+    entrypoint: [ "/bin/sh" ]
+    command: [ "-c", "aws s3 sync s3://${AWS_BUCKET} ." ]
     environment:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
@@ -71,21 +70,11 @@ services:
 
   s3push:
     image: amazon/aws-cli
-    entrypoint: ["/bin/sh"]
-    command: ["-c", "aws s3 sync . s3://${AWS_BUCKET}"]
+    entrypoint: [ "/bin/sh" ]
+    command: [ "-c", "aws s3 sync . s3://${AWS_BUCKET}" ]
     environment:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
       - AWS_DEFAULT_REGION
     volumes:
       - ../.aws/config:/aws
-
-  tests-e2e:
-    image: cypress/included:8.5.0
-    depends_on:
-      - client
-    environment:
-      - CYPRESS_baseUrl
-    working_dir: /usr/src/e2e
-    volumes:
-      - ../tests/e2e:/usr/src/e2e

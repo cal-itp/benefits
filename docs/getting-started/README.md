@@ -10,12 +10,12 @@ The following commands should be run in a terminal program like `bash`.
 git clone https://github.com/cal-itp/benefits
 ```
 
-## Change into the localhost dir
+## Change into the .devcontainer dir
 
 This is where configuration for running locally is stored.
 
 ```bash
-cd benefits/localhost
+cd benefits/.devcontainer
 ```
 
 ## Create an environment file
@@ -49,8 +49,8 @@ you setup as part of initialization.
 
 By default, [sample data][sample-data] is used to initialize Django. Alternatively you may:
 
-* Modify the sample data file; or
-* Point `DJANGO_INIT_PATH` at a different data file; or
+* Modify the sample data file(s); or
+* Point `DJANGO_INIT_PATH` at different data file(s); or
 * Use production data stored in S3 (see [Deployment](../deployment)); or
 * (If `DJANGO_ADMIN=true`) use the backend administrative interface CRUD
 
@@ -61,4 +61,4 @@ docker compose down
 ```
 
 [docker]: https://www.docker.com/products/docker-desktop
-[sample-data]: https://github.com/cal-itp/benefits/blob/dev/localhost/data/client.json
+[sample-data]: https://github.com/cal-itp/benefits/tree/dev/fixtures

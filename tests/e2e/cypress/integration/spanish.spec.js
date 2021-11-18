@@ -1,4 +1,4 @@
-const agencies = require("../fixtures/transit-agencies.json");
+const agencies = require("../fixtures/transit-agencies");
 
 describe("Spanish language", () => {
   beforeEach(() => {
@@ -32,8 +32,8 @@ describe("Spanish language", () => {
   });
 
   it("Changes the language to Spanish from any page", () => {
-    let agencySlug = agencies[0].slug;
-    cy.contains(agencies[0].short_name)
+    let agencySlug = agencies[0].fields.slug;
+    cy.contains(agencies[0].fields.short_name)
       .click()
       .location("pathname")
       .should("eq", "/" + agencySlug);
