@@ -1,0 +1,27 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json
+{
+  "name": "cal-itp/benefits",
+  "dockerComposeFile": ["./localhost/docker-compose.yml"],
+  "service": "dev",
+  "runServices": ["dev", "docs", "server"],
+  "workspaceFolder": "/home/calitp/app",
+  "postStartCommand": ["/bin/bash", "bin/init.sh"],
+  "postAttachCommand": ["/bin/bash", "localhost/bin/init.sh"],
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.profiles.linux": {
+      "bash": {
+        "path": "/bin/bash"
+      }
+    }
+  },
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "batisteo.vscode-django",
+    "eamodio.gitlens",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "esbenp.prettier-vscode"
+  ]
+}
