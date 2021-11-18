@@ -78,17 +78,6 @@ def _index(request):
     return TemplateResponse(request, "enrollment/index.html", context)
 
 
-@decorator_from_middleware(middleware.EligibleSessionRequired)
-def index(request):
-    """View handler for the enrollment landing page."""
-    if request.method == "POST":
-        response = _enroll(request)
-    else:
-        response = _index(request)
-
-    return response
-
-
 def _enroll(request):
     """Helper calls the enrollment APIs."""
     logger.debug("Read tokenized card")
@@ -111,6 +100,17 @@ def _enroll(request):
         return success(request)
     else:
         raise Exception("Updated customer_id does not match enrolled customer_id")
+
+
+@decorator_from_middleware(middleware.EligibleSessionRequired)
+def index(request):
+    """View handler for the enrollment landing page."""
+    if request.method == "POST":
+        response = _enroll(request)
+    else:
+        response = _index(request)
+
+    return response
 
 
 @decorator_from_middleware(middleware.EligibleSessionRequired)
