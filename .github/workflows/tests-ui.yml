@@ -1,4 +1,4 @@
-name: UI automation tests
+name: UI automation and a11y Lighthouse tests
 
 on:
   pull_request:
@@ -46,7 +46,7 @@ jobs:
             -v ${{ github.workspace }}/fixtures:/home/calitp/app/fixtures \
             benefits_client:${{ github.sha }}
 
-      - name: Run tests
+      - name: Run UI automation tests
         uses: cypress-io/github-action@v2
         env:
           CYPRESS_baseUrl: http://localhost:8000
@@ -55,3 +55,9 @@ jobs:
           wait-on: http://localhost:8000/healthcheck
           spec: |
             cypress/specs/ui/*.spec.js
+
+      - name: Run Lighthouse tests for a11y
+        uses: treosh/lighthouse-ci-action@v8
+        with:
+          urls: http://localhost:8000
+          configPath: ".github/lighthouserc.json"
