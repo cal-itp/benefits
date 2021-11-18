@@ -48,8 +48,10 @@ jobs:
 
       - name: Run tests
         uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_baseUrl: http://localhost:8000
         with:
           working-directory: tests/e2e
-          wait-on: "http://localhost:8000"
+          wait-on: http://localhost:8000/healthcheck
           spec: |
             cypress/specs/ui/*.spec.js
