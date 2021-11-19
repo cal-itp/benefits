@@ -34,5 +34,6 @@
     "eamodio.gitlens",
     "ms-python.python",
     "ms-python.vscode-pylance",
+    "esbenp.prettier-vscode"
   ]
 }

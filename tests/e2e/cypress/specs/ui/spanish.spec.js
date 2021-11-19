@@ -1,4 +1,4 @@
-const agencies = require("../fixtures/transit-agencies");
+const agencies = require("../../fixtures/transit-agencies");
 
 describe("Spanish language", () => {
   beforeEach(() => {

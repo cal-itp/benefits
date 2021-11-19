@@ -1,4 +1,4 @@
-const agencies = require("../fixtures/transit-agencies");
+const agencies = require("../../fixtures/transit-agencies");
 
 describe("Index page spec", () => {
   beforeEach(() => {

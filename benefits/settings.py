@@ -50,6 +50,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "csp.middleware.CSPMiddleware",
     "benefits.core.middleware.DebugSession",
     "benefits.core.middleware.ChangedLanguageEvent",
 ]
@@ -62,16 +63,20 @@ if ADMIN:
         ]
     )
 
+CSRF_COOKIE_AGE = None
+CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_HTTPONLY = True
 
-SESSION_COOKIE_AGE = 3600
 SESSION_COOKIE_SAMESITE = "Strict"
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
     CSRF_FAILURE_VIEW = "benefits.core.views.csrf_failure"
     SESSION_COOKIE_SECURE = True
+
+SECURE_BROWSER_XSS_FILTER = True
 
 ROOT_URLCONF = "benefits.urls"
 
@@ -142,6 +147,10 @@ if ADMIN:
 
 LANGUAGE_CODE = "en"
 
+LANGUAGE_COOKIE_HTTPONLY = True
+LANGUAGE_COOKIE_SAMESITE = "Strict"
+LANGUAGE_COOKIE_SECURE = True
+
 LANGUAGES = [("en", "English"), ("es", "Español")]
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, "benefits", "locale")]
@@ -184,3 +193,35 @@ LOGGING = {
 # Analytics configuration
 
 ANALYTICS_KEY = os.environ.get("ANALYTICS_KEY")
+
+# Content Security Policy
+# Configuration docs at https://django-csp.readthedocs.io/en/latest/configuration.html
+
+# In particular, note that the inner single-quotes are required!
+# https://django-csp.readthedocs.io/en/latest/configuration.html#policy-settings
+
+CSP_DEFAULT_SRC = ["'self'"]
+
+CSP_CONNECT_SRC = ["'self'", "https://api.amplitude.com/"]
+
+CSP_FONT_SRC = ["https://california.azureedge.net/cdt/statetemplate/", "https://fonts.gstatic.com/"]
+
+CSP_FRAME_ANCESTORS = ["'none'"]
+CSP_FRAME_SRC = ["'none'"]
+
+CSP_SCRIPT_SRC_ELEM = [
+    "'unsafe-inline'",
+    "https://california.azureedge.net/cdt/statetemplate/",
+    "https://cdn.amplitude.com/libs/",
+    "https://code.jquery.com/",
+    "*.littlepay.com",
+]
+
+CSP_STYLE_SRC = ["'unsafe-inline'"]
+
+CSP_STYLE_SRC_ELEM = [
+    "'self'",
+    "'unsafe-inline'",
+    "https://california.azureedge.net/cdt/statetemplate/",
+    "https://fonts.googleapis.com/css",
+]
