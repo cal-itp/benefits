@@ -197,5 +197,8 @@ ANALYTICS_KEY = os.environ.get("ANALYTICS_KEY")
 # https://django-csp.readthedocs.io/en/latest/configuration.html#policy-settings
 
 CSP_DEFAULT_SRC = ["'self'"]
+
+CSP_FONT_SRC = ["https://california.azureedge.net/cdt/statetemplate/", "https://fonts.gstatic.com/"]
+
 CSP_FRAME_ANCESTORS = ["'none'"]
 CSP_FRAME_SRC = ["'none'"]
