@@ -203,6 +203,14 @@ CSP_FONT_SRC = ["https://california.azureedge.net/cdt/statetemplate/", "https://
 CSP_FRAME_ANCESTORS = ["'none'"]
 CSP_FRAME_SRC = ["'none'"]
 
+CSP_SCRIPT_SRC_ELEM = [
+    "'unsafe-inline'",
+    "https://california.azureedge.net/cdt/statetemplate/",
+    "https://cdn.amplitude.com/libs/",
+    "https://code.jquery.com/",
+    "*.littlepay.com",
+]
+
 CSP_STYLE_SRC = ["'unsafe-inline'"]
 
 CSP_STYLE_SRC_ELEM = [
