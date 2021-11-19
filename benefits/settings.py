@@ -142,6 +142,10 @@ if ADMIN:
 
 LANGUAGE_CODE = "en"
 
+LANGUAGE_COOKIE_HTTPONLY = True
+LANGUAGE_COOKIE_SAMESITE = "Strict"
+LANGUAGE_COOKIE_SECURE = True
+
 LANGUAGES = [("en", "English"), ("es", "Español")]
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, "benefits", "locale")]
