@@ -62,11 +62,13 @@ if ADMIN:
         ]
     )
 
+CSRF_COOKIE_AGE = None
+CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_HTTPONLY = True
 
-SESSION_COOKIE_AGE = 3600
 SESSION_COOKIE_SAMESITE = "Strict"
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
