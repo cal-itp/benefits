@@ -202,3 +202,12 @@ CSP_FONT_SRC = ["https://california.azureedge.net/cdt/statetemplate/", "https://
 
 CSP_FRAME_ANCESTORS = ["'none'"]
 CSP_FRAME_SRC = ["'none'"]
+
+CSP_STYLE_SRC = ["'unsafe-inline'"]
+
+CSP_STYLE_SRC_ELEM = [
+    "'self'",
+    "'unsafe-inline'",
+    "https://california.azureedge.net/cdt/statetemplate/",
+    "https://fonts.googleapis.com/css",
+]
