@@ -209,7 +209,7 @@ CSP_FONT_SRC = ["https://california.azureedge.net/cdt/statetemplate/", "https://
 CSP_FRAME_ANCESTORS = ["'none'"]
 CSP_FRAME_SRC = ["'none'"]
 
-CSP_SCRIPT_SRC_ELEM = [
+CSP_SCRIPT_SRC = [
     "'unsafe-inline'",
     "https://california.azureedge.net/cdt/statetemplate/",
     "https://cdn.amplitude.com/libs/",
@@ -217,9 +217,7 @@ CSP_SCRIPT_SRC_ELEM = [
     "*.littlepay.com",
 ]
 
-CSP_STYLE_SRC = ["'unsafe-inline'"]
-
-CSP_STYLE_SRC_ELEM = [
+CSP_STYLE_SRC = [
     "'self'",
     "'unsafe-inline'",
     "https://california.azureedge.net/cdt/statetemplate/",
