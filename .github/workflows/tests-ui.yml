@@ -1,4 +1,4 @@
-name: UI automation and a11y Lighthouse tests
+name: UI & a11y tests
 
 on:
   pull_request:
@@ -63,3 +63,5 @@ jobs:
             http://localhost:8000
             http://localhost:8000/help
           configPath: ".github/lighthouserc.json"
+          temporaryPublicStorage: true
+          uploadArtifacts: true
