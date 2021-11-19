@@ -50,6 +50,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "csp.middleware.CSPMiddleware",
     "benefits.core.middleware.DebugSession",
     "benefits.core.middleware.ChangedLanguageEvent",
 ]
@@ -190,3 +191,35 @@ LOGGING = {
 # Analytics configuration
 
 ANALYTICS_KEY = os.environ.get("ANALYTICS_KEY")
+
+# Content Security Policy
+# Configuration docs at https://django-csp.readthedocs.io/en/latest/configuration.html
+
+# In particular, note that the inner single-quotes are required!
+# https://django-csp.readthedocs.io/en/latest/configuration.html#policy-settings
+
+CSP_DEFAULT_SRC = ["'self'"]
+
+CSP_CONNECT_SRC = ["'self'", "https://api.amplitude.com/"]
+
+CSP_FONT_SRC = ["https://california.azureedge.net/cdt/statetemplate/", "https://fonts.gstatic.com/"]
+
+CSP_FRAME_ANCESTORS = ["'none'"]
+CSP_FRAME_SRC = ["'none'"]
+
+CSP_SCRIPT_SRC_ELEM = [
+    "'unsafe-inline'",
+    "https://california.azureedge.net/cdt/statetemplate/",
+    "https://cdn.amplitude.com/libs/",
+    "https://code.jquery.com/",
+    "*.littlepay.com",
+]
+
+CSP_STYLE_SRC = ["'unsafe-inline'"]
+
+CSP_STYLE_SRC_ELEM = [
+    "'self'",
+    "'unsafe-inline'",
+    "https://california.azureedge.net/cdt/statetemplate/",
+    "https://fonts.googleapis.com/css",
+]
