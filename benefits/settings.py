@@ -75,6 +75,8 @@ if not DEBUG:
     CSRF_FAILURE_VIEW = "benefits.core.views.csrf_failure"
     SESSION_COOKIE_SECURE = True
 
+SECURE_BROWSER_XSS_FILTER = True
+
 ROOT_URLCONF = "benefits.urls"
 
 template_ctx_processors = [
