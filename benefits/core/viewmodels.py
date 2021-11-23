@@ -16,6 +16,8 @@ class Button:
     * classes: str, str[]
     * text: str
     * url: str
+    * target: str
+    * rel: str
     """
 
     def __init__(self, **kwargs):
@@ -30,13 +32,14 @@ class Button:
         self.text = kwargs.get("text", "Button")
         self.url = kwargs.get("url")
         self.target = kwargs.get("target")
+        self.rel = kwargs.get("rel")
 
     @staticmethod
     def agency_contact_links(agency):
         """Create link buttons for agency contact information."""
         return [
             # fmt: off
-            Button.link(classes="agency-url", label=agency.long_name, text=agency.info_url, url=agency.info_url, target="_blank"),  # noqa: E501
+            Button.link(classes="agency-url", label=agency.long_name, text=agency.info_url, url=agency.info_url, target="_blank", rel="noopener noreferrer"),  # noqa: E501
             Button.link(classes="agency-phone", text=agency.phone, url=f"tel:{agency.phone}"),
             # fmt: on
         ]
