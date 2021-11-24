@@ -61,7 +61,7 @@ def _index(request):
     # and payment processor details
     processor_vm = viewmodels.PaymentProcessor(
         model=agency.payment_processor,
-        access_token=session.token(request),
+        access_token_url=reverse("enrollment:token"),
         element_id=f"#{tokenize_button}",
         color="#046b99",
         name=f"{agency.long_name} {_('partnered with')} {agency.payment_processor.name}",
@@ -100,6 +100,12 @@ def _enroll(request):
         return success(request)
     else:
         raise Exception("Updated customer_id does not match enrolled customer_id")
+
+
+@decorator_from_middleware(middleware.EligibleSessionRequired)
+def token(request):
+    """View handler for the enrollment auth token."""
+    pass
 
 
 @decorator_from_middleware(middleware.EligibleSessionRequired)
