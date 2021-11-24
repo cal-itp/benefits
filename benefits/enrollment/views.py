@@ -3,6 +3,7 @@ The enrollment application: view definitions for the benefits enrollment flow.
 """
 import logging
 
+from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
@@ -16,20 +17,9 @@ from . import api, forms
 logger = logging.getLogger(__name__)
 
 
-def _check_access_token(request, agency):
-    """
-    Ensure the request's session is configured with an access token.
-    """
-    if not session.valid_token(request):
-        response = api.Client(agency).access_token()
-        session.update(request, token=response.access_token, token_exp=response.expiry)
-
-
 def _index(request):
     """Helper handles GET requests to enrollment index."""
     agency = session.agency(request)
-
-    _check_access_token(request, agency)
 
     tokenize_button = "tokenize_card"
     tokenize_retry_form = forms.CardTokenizeFailForm("enrollment:retry")
@@ -105,7 +95,14 @@ def _enroll(request):
 @decorator_from_middleware(middleware.EligibleSessionRequired)
 def token(request):
     """View handler for the enrollment auth token."""
-    pass
+    if not session.valid_token(request):
+        agency = session.agency(request)
+        response = api.Client(agency).access_token()
+        session.update(request, token=response.access_token, token_exp=response.expiry)
+
+    data = {"token": session.token(request)}
+
+    return JsonResponse(data)
 
 
 @decorator_from_middleware(middleware.EligibleSessionRequired)
