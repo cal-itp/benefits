@@ -1,0 +1,10 @@
+[
+  {
+    "model": "core.image",
+    "pk": 1,
+    "fields": {
+      "file": "ridertappingbankcard.png",
+      "alt": 8
+    }
+  }
+]

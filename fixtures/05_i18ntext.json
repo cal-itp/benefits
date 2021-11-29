@@ -1,0 +1,194 @@
+[
+  {
+    "model": "core.i18ntext",
+    "pk": 1,
+    "fields": {
+      "label": "core.icons.bankcard",
+      "text": "Bank card icon with contactless symbol"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 2,
+    "fields": {
+      "label": "core.icons.bankcardcheck",
+      "text": "Bank card icon with contactless symbol and checkmark"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 3,
+    "fields": {
+      "label": "core.icons.bankcardquestion",
+      "text": "Bank card icon with contactless symbol and question mark"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 4,
+    "fields": {
+      "label": "core.icons.contactless",
+      "text": "The contactless symbol"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 5,
+    "fields": {
+      "label": "core.icons.idcardcheck",
+      "text": "Identification card icon with checkmark"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 6,
+    "fields": {
+      "label": "core.icons.idcardquestion",
+      "text": "Identification card icon with question mark"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 7,
+    "fields": {
+      "label": "core.icons.sadbus",
+      "text": "Bus icon with flat tire"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 8,
+    "fields": {
+      "label": "core.images.index",
+      "text": "Rider tapping a debit card to pay for their trip"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 9,
+    "fields": {
+      "label": "core.pages.index.title",
+      "text": "Transit Benefits"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 10,
+    "fields": {
+      "label": "core.pages.index.content_title",
+      "text": "The new way to pay for transit makes it easier to get your discount every time you ride"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 11,
+    "fields": {
+      "label": "core.pages.index.p1",
+      "text": "With new contactless payment options, you can tap your bank-issued credit or debit card when you board, and your discount will automatically apply."
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 12,
+    "fields": {
+      "label": "core.pages.index.p2",
+      "text": "We don’t save any of your information, and you don’t need to create an account!"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 13,
+    "fields": {
+      "label": "core.pages.index.p3",
+      "text": "Verify your discount, and connect your bank card today."
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 14,
+    "fields": {
+      "label": "core.pages.index.chooseprovider",
+      "text": "Choose your transit provider"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 15,
+    "fields": {
+      "label": "core.pages.index.nav:mst",
+      "text": "MST (local)"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 16,
+    "fields": {
+      "label": "core.pages.index.nav:sacrt",
+      "text": "SacRT (local)"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 17,
+    "fields": {
+      "label": "core.pages.index.nav:continue",
+      "text": "Let’s do it!"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 18,
+    "fields": {
+      "label": "eligibility.pages.index.title",
+      "text": "Getting started"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 19,
+    "fields": {
+      "label": "eligibility.pages.index.content_title",
+      "text": "Great, you’ll need two things before we get started..."
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 20,
+    "fields": {
+      "label": "eligibility.pages.index.item1.heading",
+      "text": "Your California ID"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 21,
+    "fields": {
+      "label": "eligibility.pages.index.item1.details",
+      "text": "Driver’s license or ID card"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 22,
+    "fields": {
+      "label": "eligibility.pages.index.item2.heading",
+      "text": "Your bank card"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 23,
+    "fields": {
+      "label": "eligibility.pages.index.item2.details",
+      "text": "A debit or credit card"
+    }
+  },
+  {
+    "model": "core.i18ntext",
+    "pk": 24,
+    "fields": {
+      "label": "eligibility.pages.index.p1",
+      "text": "This program is currently open to those who are 65 or older. Not over 65? Get in touch with your transit provider to learn about other available discount programs."
+    }
+  }
+]

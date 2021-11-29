@@ -1,0 +1,58 @@
+[
+  {
+    "model": "core.icon",
+    "pk": 1,
+    "fields": {
+      "file": "bankcard.svg",
+      "alt": 3
+    }
+  },
+  {
+    "model": "core.icon",
+    "pk": 2,
+    "fields": {
+      "file": "bankcardcheck.svg",
+      "alt": 3
+    }
+  },
+  {
+    "model": "core.icon",
+    "pk": 3,
+    "fields": {
+      "file": "bankcardquestion.svg",
+      "alt": 3
+    }
+  },
+  {
+    "model": "core.icon",
+    "pk": 4,
+    "fields": {
+      "file": "contactless.svg",
+      "alt": 3
+    }
+  },
+  {
+    "model": "core.icon",
+    "pk": 5,
+    "fields": {
+      "file": "idcardcheck.svg",
+      "alt": 3
+    }
+  },
+  {
+    "model": "core.icon",
+    "pk": 6,
+    "fields": {
+      "file": "idcardquestion.svg",
+      "alt": 3
+    }
+  },
+  {
+    "model": "core.icon",
+    "pk": 7,
+    "fields": {
+      "file": "sadbus.svg",
+      "alt": 3
+    }
+  }
+]
