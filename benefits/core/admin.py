@@ -14,6 +14,11 @@ if ADMIN:
     for model in [
         models.EligibilityType,
         models.EligibilityVerifier,
+        models.I18nText,
+        models.Icon,
+        models.Image,
+        models.MediaItem,
+        models.Page,
         models.PaymentProcessor,
         models.PemData,
         models.TransitAgency,
