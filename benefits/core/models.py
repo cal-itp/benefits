@@ -12,6 +12,82 @@ from jwcrypto import jwk
 logger = logging.getLogger(__name__)
 
 
+class I18nText(models.Model):
+    """A string of translatable end-user text content."""
+
+    id = models.AutoField(primary_key=True)
+    label = models.TextField()
+    text = models.TextField()
+
+    def __str__(self) -> str:
+        return self.label
+
+
+class Icon(models.Model):
+    """An icon with translatable alt text."""
+
+    id = models.AutoField(primary_key=True)
+    file = models.FileField(upload_to="icon/")
+    alt = models.ForeignKey(I18nText, related_name="+", on_delete=models.PROTECT)
+
+    def __str__(self) -> str:
+        return str(self.alt)
+
+
+class Image(models.Model):
+    """An image with translatable alt text."""
+
+    id = models.AutoField(primary_key=True)
+    file = models.FileField(upload_to="img/")
+    alt = models.ForeignKey(I18nText, related_name="+", on_delete=models.PROTECT)
+
+    def __str__(self) -> str:
+        return str(self.alt)
+
+
+class MediaItem(models.Model):
+    """Represents a list item with icon and text."""
+
+    id = models.AutoField(primary_key=True)
+    icon = models.ForeignKey(Icon, related_name="+", on_delete=models.PROTECT)
+    heading = models.ForeignKey(I18nText, related_name="+", on_delete=models.PROTECT)
+    details = models.ForeignKey(I18nText, related_name="+", on_delete=models.PROTECT)
+
+    def __str__(self) -> str:
+        return str(self.heading)
+
+
+class PageNavigation(models.Model):
+    """Represents a transition to a Page."""
+
+    id = models.AutoField(primary_key=True)
+    text = models.ForeignKey(I18nText, related_name="+", on_delete=models.PROTECT)
+    target = models.ForeignKey("core.page", related_name="+", on_delete=models.PROTECT)
+    classes = models.JSONField(blank=True, null=True)
+
+    def __str__(self) -> str:
+        return self.text
+
+
+class Page(models.Model):
+    """A page of content."""
+
+    id = models.AutoField(primary_key=True)
+    label = models.TextField()
+    title = models.ForeignKey(I18nText, related_name="+", on_delete=models.PROTECT)
+    image = models.ForeignKey(Image, blank=True, null=True, related_name="+", on_delete=models.PROTECT)
+    icon = models.ForeignKey(Icon, blank=True, null=True, related_name="+", on_delete=models.PROTECT)
+    content_title = models.ForeignKey(I18nText, blank=True, null=True, related_name="+", on_delete=models.PROTECT)
+    media = models.ManyToManyField(MediaItem, blank=True)
+    paragraphs = models.ManyToManyField(I18nText, blank=True)
+    navigation_title = models.ForeignKey(I18nText, blank=True, null=True, related_name="+", on_delete=models.PROTECT)
+    navigation = models.ManyToManyField(PageNavigation, blank=True)
+    classes = models.JSONField(blank=True, null=True)
+
+    def __str__(self) -> str:
+        return self.label
+
+
 class PemData(models.Model):
     """API Certificate or Key in PEM format."""
 
