@@ -208,16 +208,16 @@ class PaymentProcessor:
     """
     Represents a core.models.PaymentProcessor:
     * model: core.models.PaymentProcessor
-    * access_token: str
+    * access_token_url: str
     * element_id: str
     * color: str
     * [name: str]
     * [loading_text: str]
     """
 
-    def __init__(self, model, access_token, element_id, color, name=None, loading_text=_("core.buttons.wait")):
+    def __init__(self, model, access_token_url, element_id, color, name=None, loading_text=_("core.buttons.wait")):
         if isinstance(model, models.PaymentProcessor):
-            self.access_token = access_token
+            self.access_token_url = access_token_url
             self.element_id = element_id
             self.color = color
             self.name = name or model.name
