@@ -1,0 +1,28 @@
+[
+  {
+    "model": "core.pagenavigation",
+    "pk": 1,
+    "fields": {
+      "text": 15,
+      "target": 2,
+      "classes": ["btn-outline-primary", "mt-3"]
+    }
+  },
+  {
+    "model": "core.pagenavigation",
+    "pk": 2,
+    "fields": {
+      "text": 16,
+      "target": 3,
+      "classes": ["btn-outline-primary"]
+    }
+  },
+  {
+    "model": "core.pagenavigation",
+    "pk": 3,
+    "fields": {
+      "text": 17,
+      "target": 4
+    }
+  }
+]

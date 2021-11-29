@@ -1,0 +1,20 @@
+[
+  {
+    "model": "core.mediaitem",
+    "pk": 1,
+    "fields": {
+      "icon": 5,
+      "heading": 20,
+      "details": 21
+    }
+  },
+  {
+    "model": "core.mediaitem",
+    "pk": 2,
+    "fields": {
+      "icon": 2,
+      "heading": 22,
+      "details": 23
+    }
+  }
+]
