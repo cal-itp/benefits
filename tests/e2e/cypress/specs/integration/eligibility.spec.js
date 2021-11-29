@@ -9,7 +9,7 @@ describe("Eligibility Confirmation flow", () => {
     cy.contains("Ready to continue").click();
   });
 
-  it.skip("Confirms an eligible user", () => {
+  it("Confirms an eligible user", () => {
     cy.get("#sub").type(users.eligible.sub);
     cy.get("#name").type(users.eligible.name);
     cy.get("input[type='submit']").click();
