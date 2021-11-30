@@ -1,0 +1,67 @@
+name: UI & a11y tests
+
+on:
+  pull_request:
+    branches: ["*"]
+    paths:
+      - .github/workflows/tests-ui.yml
+      - "benefits/**"
+      - "fixtures/**"
+      - "tests/e2e/**"
+      - requirements.txt
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  tests-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Dockerfile
+        id: build-client-image
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          cache-from: type=gha,scope=cal-itp
+          cache-to: type=gha,scope=cal-itp,mode=max
+          context: .
+          push: false
+          load: true
+          tags: benefits_client:${{ github.sha }}
+
+      - name: Start app
+        run: |
+          docker run \
+            --detach \
+            --env-file tests/e2e/.env.tests \
+            -p 8000:8000 \
+            -v ${{ github.workspace }}/fixtures:/home/calitp/app/fixtures \
+            benefits_client:${{ github.sha }}
+
+      - name: Run UI automation tests
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_baseUrl: http://localhost:8000
+        with:
+          working-directory: tests/e2e
+          wait-on: http://localhost:8000/healthcheck
+          spec: |
+            cypress/specs/ui/*.spec.js
+
+      - name: Run Lighthouse tests for a11y
+        uses: treosh/lighthouse-ci-action@v8
+        with:
+          urls: |
+            http://localhost:8000
+            http://localhost:8000/help
+          configPath: ".github/lighthouserc.json"
+          temporaryPublicStorage: true
+          uploadArtifacts: true

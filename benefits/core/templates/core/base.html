@@ -6,16 +6,16 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="{% translate "core.help.p1" %}">
         <title>{% block page_title %}{% endblock  %}Cal-ITP</title>
 
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css">
-        <link href="https://california.azureedge.net/cdt/statetemplate/6.0.2/css/cagov.core.css" rel="stylesheet">
-        <link href="https://california.azureedge.net/cdt/statetemplate/6.0.2/css/colorscheme-oceanside.css" rel="stylesheet">
+        <link href="https://california.azureedge.net/cdt/statetemplate/6.0.2/css/cagov.core.min.css" rel="stylesheet">
+        <link href="https://california.azureedge.net/cdt/statetemplate/6.0.2/css/colorscheme-oceanside.min.css" rel="stylesheet">
         <link href="{% static "css/styles.css" %}" rel="stylesheet">
         <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
 
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js" type="text/javascript"></script>
-        <script src="https://code.jquery.com/jquery-migrate-3.0.1.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript"></script>
 
         {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
     </head>
@@ -63,14 +63,14 @@
                         <ul class="footer-links">
                             <li><a href="{% url "core:payment_options" %}">{% translate "core.payment-options" %}</a></li>
                             <li><a href="{% url "core:help" %}">{% translate "core.help" %}</a></li>
-                            <li><a href="https://www.dmv.ca.gov/portal/privacy-and-security/" target="_blank">{% translate "core.privacy" %}</a></li>
+                            <li><a href="https://www.dmv.ca.gov/portal/privacy-and-security/" target="_blank" rel="noopener noreferrer">{% translate "core.privacy" %}</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </footer>
 
-        <script src="https://california.azureedge.net/cdt/statetemplate/6.0.2/js/cagov.core.js"></script>
+        <script src="https://california.azureedge.net/cdt/statetemplate/6.0.2/js/cagov.core.min.js"></script>
         <script>
             $(function() {
                 document.cookie = "testcookie"

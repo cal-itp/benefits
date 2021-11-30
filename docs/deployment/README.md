@@ -12,14 +12,14 @@ AWS location.
 
 ## Configuration
 
-Configuration data (based on [`localhost/.env.sample`][.env.sample] and [`localhost/data/client.json`][client.json]) is stored
+Configuration data (based on [`.devcontainer/.env.sample`][.env.sample] and [`fixtures/`][fixtures]) is stored
 in AWS S3 buckets for each deployment environment.
 
 ### ECS runtime
 
-The ECS Task Definition includes a `containerDefinition`, using the [AWS CLI][aws-cli] Docker image, to pull the `client.json`
-file from the corresponding S3 bucket during service (re)start. This configuration file is copied into a volume that is also
-mounted into the main application container.
+The ECS Task Definition includes a `containerDefinition`, using the [AWS CLI][aws-cli] Docker image, to pull the fixture data
+from the corresponding S3 bucket during service (re)start. This configuration is copied into a volume that is also mounted
+into the main application container.
 
 The main application `containerDefinition` uses [`dependsOn`][depends-on] to ensure that the AWS CLI container task has
 completed successfully, before starting itself.
@@ -36,20 +36,20 @@ bucket.
 
 To copy the AWS configuration locally, fill in the appropriate values in your local `.env` file:
 
-* for the AWS connection:
+- for the AWS connection:
 
-    ```console
-    AWS_DEFAULT_REGION=us-west-2
-    AWS_ACCESS_KEY_ID=access-key-id
-    AWS_SECRET_ACCESS_KEY=secret-access-key
-    AWS_BUCKET=bucket-name
-    ```
+  ```console
+  AWS_DEFAULT_REGION=us-west-2
+  AWS_ACCESS_KEY_ID=access-key-id
+  AWS_SECRET_ACCESS_KEY=secret-access-key
+  AWS_BUCKET=bucket-name
+  ```
 
-* and to ensure Django uses the downloaded configuration:
+- and to ensure Django uses the downloaded configuration:
 
-    ```console
-    DJANGO_INIT_PATH=config/<file>.json
-    ```
+  ```console
+  DJANGO_INIT_PATH=config/<file>.json
+  ```
 
 and then pull the files down to your local computer:
 
@@ -72,15 +72,13 @@ Ensure you have content (e.g. an `.env` or `config.json` file) inside `.aws/conf
 docker compose run s3push
 ```
 
-
-[.env.sample]: https://github.com/cal-itp/benefits/tree/dev/localhost/.env.sample
+[.env.sample]: https://github.com/cal-itp/benefits/tree/dev/.devcontainer/.env.sample
 [aws-cli]: https://aws.amazon.com/cli/
-[client.json]: https://github.com/cal-itp/benefits/tree/dev/localhost/data/client.json
 [depends-on]: https://docs.aws.amazon.com/AmazonECS/latest/userguide/task_definition_parameters.html#container_definition_dependson
-[docker-compose.yml]: https://github.com/cal-itp/benefits/tree/dev/localhost/docker-compose.yml
 [ecs-task-definition]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html
 [ecs-task-definition-template]: https://github.com/cal-itp/benefits/blob/dev/.aws/ecs-task.json
 [ecs-welcome]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html
 [env-files]: https://docs.aws.amazon.com/AmazonECS/latest/userguide/taskdef-envfiles.html
+[fixtures]: https://github.com/cal-itp/benefits/tree/dev/fixtures/
 [gh-actions]: https://docs.github.com/en/actions
 [gh-environments]: https://docs.github.com/en/actions/reference/environments

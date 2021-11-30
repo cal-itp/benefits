@@ -3,6 +3,7 @@ The enrollment application: view definitions for the benefits enrollment flow.
 """
 import logging
 
+from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
@@ -16,20 +17,9 @@ from . import api, forms
 logger = logging.getLogger(__name__)
 
 
-def _check_access_token(request, agency):
-    """
-    Ensure the request's session is configured with an access token.
-    """
-    if not session.valid_token(request):
-        response = api.Client(agency).access_token()
-        session.update(request, token=response.access_token, token_exp=response.expiry)
-
-
 def _index(request):
     """Helper handles GET requests to enrollment index."""
     agency = session.agency(request)
-
-    _check_access_token(request, agency)
 
     tokenize_button = "tokenize_card"
     tokenize_retry_form = forms.CardTokenizeFailForm("enrollment:retry")
@@ -61,7 +51,7 @@ def _index(request):
     # and payment processor details
     processor_vm = viewmodels.PaymentProcessor(
         model=agency.payment_processor,
-        access_token=session.token(request),
+        access_token_url=reverse("enrollment:token"),
         element_id=f"#{tokenize_button}",
         color="#046b99",
         name=f"{agency.long_name} {_('partnered with')} {agency.payment_processor.name}",
@@ -76,17 +66,6 @@ def _index(request):
     }
 
     return TemplateResponse(request, "enrollment/index.html", context)
-
-
-@decorator_from_middleware(middleware.AgencySessionRequired)
-def index(request):
-    """View handler for the enrollment landing page."""
-    if request.method == "POST":
-        response = _enroll(request)
-    else:
-        response = _index(request)
-
-    return response
 
 
 def _enroll(request):
@@ -113,7 +92,31 @@ def _enroll(request):
         raise Exception("Updated customer_id does not match enrolled customer_id")
 
 
-@decorator_from_middleware(middleware.AgencySessionRequired)
+@decorator_from_middleware(middleware.EligibleSessionRequired)
+def token(request):
+    """View handler for the enrollment auth token."""
+    if not session.valid_token(request):
+        agency = session.agency(request)
+        response = api.Client(agency).access_token()
+        session.update(request, token=response.access_token, token_exp=response.expiry)
+
+    data = {"token": session.token(request)}
+
+    return JsonResponse(data)
+
+
+@decorator_from_middleware(middleware.EligibleSessionRequired)
+def index(request):
+    """View handler for the enrollment landing page."""
+    if request.method == "POST":
+        response = _enroll(request)
+    else:
+        response = _index(request)
+
+    return response
+
+
+@decorator_from_middleware(middleware.EligibleSessionRequired)
 def retry(request):
     """View handler for a recoverable failure condition."""
     if request.method == "POST":

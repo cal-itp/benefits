@@ -1,0 +1,22 @@
+[
+  {
+    "model": "core.paymentprocessor",
+    "pk": 1,
+    "fields": {
+      "name": "Test Payment Processor",
+      "api_base_url": "http://server:5000",
+      "api_access_token_endpoint": "access-token",
+      "api_access_token_request_key": "request_access",
+      "api_access_token_request_val": "REQUEST_ACCESS",
+      "card_tokenize_url": "http://localhost:5000/static/tokenize.js",
+      "card_tokenize_func": "tokenize",
+      "card_tokenize_env": "test",
+      "client_cert": 3,
+      "client_cert_private_key": 2,
+      "client_cert_root_ca": 3,
+      "customer_endpoint": "customer",
+      "customers_endpoint": "customers",
+      "group_endpoint": "group"
+    }
+  }
+]

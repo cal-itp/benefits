@@ -1,0 +1,20 @@
+[
+  {
+    "model": "core.eligibilitytype",
+    "pk": 1,
+    "fields": {
+      "name": "type1",
+      "label": "Eligibility Type 1",
+      "group_id": "group1"
+    }
+  },
+  {
+    "model": "core.eligibilitytype",
+    "pk": 2,
+    "fields": {
+      "name": "type2",
+      "label": "Eligibility Type 2",
+      "group_id": "group2"
+    }
+  }
+]
