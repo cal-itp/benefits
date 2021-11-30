@@ -16,6 +16,8 @@ class Button:
     * classes: str, str[]
     * text: str
     * url: str
+    * target: str
+    * rel: str
     """
 
     def __init__(self, **kwargs):
@@ -30,13 +32,14 @@ class Button:
         self.text = kwargs.get("text", "Button")
         self.url = kwargs.get("url")
         self.target = kwargs.get("target")
+        self.rel = kwargs.get("rel")
 
     @staticmethod
     def agency_contact_links(agency):
         """Create link buttons for agency contact information."""
         return [
             # fmt: off
-            Button.link(classes="agency-url", label=agency.long_name, text=agency.info_url, url=agency.info_url, target="_blank"),  # noqa: E501
+            Button.link(classes="agency-url", label=agency.long_name, text=agency.info_url, url=agency.info_url, target="_blank", rel="noopener noreferrer"),  # noqa: E501
             Button.link(classes="agency-phone", text=agency.phone, url=f"tel:{agency.phone}"),
             # fmt: on
         ]
@@ -205,16 +208,16 @@ class PaymentProcessor:
     """
     Represents a core.models.PaymentProcessor:
     * model: core.models.PaymentProcessor
-    * access_token: str
+    * access_token_url: str
     * element_id: str
     * color: str
     * [name: str]
     * [loading_text: str]
     """
 
-    def __init__(self, model, access_token, element_id, color, name=None, loading_text=_("core.buttons.wait")):
+    def __init__(self, model, access_token_url, element_id, color, name=None, loading_text=_("core.buttons.wait")):
         if isinstance(model, models.PaymentProcessor):
-            self.access_token = access_token
+            self.access_token_url = access_token_url
             self.element_id = element_id
             self.color = color
             self.name = name or model.name

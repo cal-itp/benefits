@@ -10,6 +10,7 @@ app_name = "enrollment"
 urlpatterns = [
     # /enrollment
     path("", views.index, name="index"),
+    path("token", views.token, name="token"),
     path("retry", views.retry, name="retry"),
     path("success", views.success, name="success"),
 ]

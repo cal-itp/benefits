@@ -51,7 +51,6 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "csp.middleware.CSPMiddleware",
-    "benefits.core.middleware.DebugSession",
     "benefits.core.middleware.ChangedLanguageEvent",
 ]
 
@@ -62,6 +61,9 @@ if ADMIN:
             "django.contrib.messages.middleware.MessageMiddleware",
         ]
     )
+
+if DEBUG:
+    MIDDLEWARE.extend(["benefits.core.middleware.DebugSession"])
 
 CSRF_COOKIE_AGE = None
 CSRF_COOKIE_SAMESITE = "Strict"
