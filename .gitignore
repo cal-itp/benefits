@@ -2,7 +2,7 @@
 *.env
 *.mo
 fixtures/*.json
-!fixtures/core.*.json
+!fixtures/??_*.json
 static/
 !benefits/static
 __pycache__/
