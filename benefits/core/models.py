@@ -65,7 +65,7 @@ class PageNavigation(models.Model):
     target = models.ForeignKey("core.page", related_name="+", on_delete=models.PROTECT)
 
     def __str__(self) -> str:
-        return self.text
+        return str(self.text)
 
 
 class Page(models.Model):
