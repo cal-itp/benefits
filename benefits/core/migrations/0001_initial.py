@@ -40,6 +40,8 @@ class Migration(migrations.Migration):
                 ("id", models.AutoField(primary_key=True, serialize=False)),
                 ("label", models.TextField()),
                 ("text", models.TextField()),
+                ("text_en", models.TextField(null=True)),
+                ("text_es", models.TextField(null=True)),
             ],
         ),
         migrations.CreateModel(
