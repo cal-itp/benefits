@@ -19,6 +19,7 @@ if ADMIN:
         models.Image,
         models.MediaItem,
         models.Page,
+        models.PageNavigation,
         models.PaymentProcessor,
         models.PemData,
         models.TransitAgency,
