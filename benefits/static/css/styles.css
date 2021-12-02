@@ -49,17 +49,29 @@ body {
   height: 100%;
   overflow-y: unset;
 }
+
 body {
   display: flex;
   flex-direction: column;
 }
+
 main {
   flex-shrink: 0 !important;
 }
+
 footer {
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.bg-p2,
+.bg-primary {
+  background-color: #046b99 !important;
+}
+
+.global-footer {
+  background: #222;
 }
 
 /* class styles */
