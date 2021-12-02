@@ -13,7 +13,8 @@
     <div class="row">
         {% if page.image %}
         {% load static %}
-        <div class="col-lg-6 image" style="background: 48% 75% url('{% static page.image.src %}') no-repeat; background-size: cover;">
+        <div class="col-lg-6 image">
+            <img src="{% static page.image.src %}" class="core-image">
         </div>
         <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-0">
         {% else %}
