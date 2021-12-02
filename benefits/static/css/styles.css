@@ -148,10 +148,20 @@ footer {
 
 .navbar-brand img.sm {
   width: 120px;
+  height: 51px;
 }
 
 .navbar-brand img.lg {
   width: 274px;
+  height: 64px;
+}
+
+.core-image {
+  width: calc(100% + 30px);
+  height: 100%;
+  object-fit: cover;
+  object-position: 48% 75%;
+  margin-left: -15px;
 }
 
 .image[class*="col-"] {
@@ -211,6 +221,10 @@ footer {
 
   .global-footer ul li {
     width: 40%;
+  }
+
+  .image[class*="col-"] {
+    height: 230px;
   }
 }
 

@@ -22,7 +22,7 @@ def _index_content_title():
 
 def _index_image():
     """Helper returns a viewmodels.Image for the common index page."""
-    return viewmodels.Image("ridertappingbankcard.png", pgettext("image alt text", "core.index.image"))
+    return viewmodels.Image("ridertappingbankcard.webp", pgettext("image alt text", "core.index.image"))
 
 
 def _index_paragraphs():
