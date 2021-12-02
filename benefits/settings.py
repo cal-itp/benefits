@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "benefits.core",
     "benefits.enrollment",
     "benefits.eligibility",
+    "modeltranslation",
 ]
 
 if ADMIN:
