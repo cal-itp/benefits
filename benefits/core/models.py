@@ -66,7 +66,7 @@ class PageNavigation(models.Model):
     classes = models.JSONField(blank=True, null=True)
 
     def __str__(self) -> str:
-        return self.text
+        return str(self.text)
 
 
 class Page(models.Model):
