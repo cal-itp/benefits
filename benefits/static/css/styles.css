@@ -65,16 +65,12 @@ footer {
   padding-bottom: 1rem;
 }
 
+/* class styles */
+
 .bg-p2,
 .bg-primary {
   background-color: #046b99 !important;
 }
-
-.global-footer {
-  background: #222;
-}
-
-/* class styles */
 
 .btn-lg {
   border-width: 2px;
@@ -123,6 +119,10 @@ footer {
 .form-group.with-errors .error-message {
   font-size: 14px;
   padding-left: 1rem;
+}
+
+.global-footer {
+  background: #222;
 }
 
 .media-list {
