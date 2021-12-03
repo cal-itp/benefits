@@ -10,8 +10,8 @@ on:
     - cron: "24 9 * * 6"
 
 jobs:
-  analyze:
-    name: Analyze
+  codeql:
+    name: CodeQL Analyze
     runs-on: ubuntu-latest
     permissions:
       actions: read
