@@ -1,0 +1,47 @@
+# This workflow performs a container image vulnerability scan with Anchore's Grype tool
+# https://github.com/anchore/grype
+# https://github.com/anchore/scan-action
+
+name: Anchore Grype image scan
+
+on:
+  push:
+    branches: [ dev, test, prod ]
+  pull_request:
+    branches: [ dev ]
+  schedule:
+    - cron: "23 17 * * 3"
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build and tag Docker image
+      id: build-client-image
+      uses: docker/build-push-action@v2
+      with:
+        builder: ${{ steps.buildx.outputs.name }}
+        cache-from: type=gha,scope=cal-itp
+        cache-to: type=gha,scope=cal-itp,mode=max
+        context: .
+        push: false
+        load: true
+        tags: benefits_client:${{ github.sha }}
+
+    - name: Run the Anchore scan action
+      uses: anchore/scan-action@v3.1.0
+      with:
+        image: benefits_client:${{ github.sha }}
+        acs-report-enable: true
+
+    - name: Upload Anchore Scan Report
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: results.sarif
