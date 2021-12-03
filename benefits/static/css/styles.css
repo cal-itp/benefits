@@ -80,6 +80,14 @@ footer {
   color: #046b99;
 }
 
+.page-image {
+  width: calc(100% + 30px);
+  height: 100%;
+  object-fit: cover;
+  object-position: 48% 75%;
+  margin-left: -15px;
+}
+
 .form-control {
   border-radius: 0.25rem;
   border-color: #212121;
@@ -154,14 +162,6 @@ footer {
 .navbar-brand img.lg {
   width: 274px;
   height: 64px;
-}
-
-.core-image {
-  width: calc(100% + 30px);
-  height: 100%;
-  object-fit: cover;
-  object-position: 48% 75%;
-  margin-left: -15px;
 }
 
 .image[class*="col-"] {
