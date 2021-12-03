@@ -14,7 +14,11 @@
         {% if page.image %}
         {% load static %}
         <div class="col-lg-6 image">
-            <img src="{% static page.image.src %}" class="core-image" alt="{% translate "core.index.image" context "image alt text" %}" >
+            <picture>
+                <source type="image/webp" srcset="{% static 'img/ridertappingbankcard.webp' %}">
+                <source type="image/png" srcset="{% static 'img/ridertappingbankcard.png' %}">
+                <img src="{% static page.image.src %}" class="page-image" alt="{% translate "core.index.image" context "image alt text" %}">
+            </picture>
         </div>
         <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-0">
         {% else %}

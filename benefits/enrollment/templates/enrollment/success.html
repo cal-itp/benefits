@@ -4,6 +4,10 @@
 {% block paragraph_content %}
 {{ block.super }}
 <p>
-    <img class="img-fluid" src="{% static 'img/ridertappingbankcard.webp' %}" alt="{% translate "enrollment.success.image" context "image alt text" %}" />
+    <picture>
+        <source type="image/webp" srcset="{% static 'img/ridertappingbankcard.webp' %}">
+        <source type="image/png" srcset="{% static 'img/ridertappingbankcard.png' %}">
+        <img src="{% static page.image.src %}" class="image-fluid" alt="{% translate "core.index.image" context "image alt text" %}">
+    </picture>
 </p>
 {% endblock %}
