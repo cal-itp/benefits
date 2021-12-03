@@ -39,8 +39,7 @@ jobs:
       uses: anchore/scan-action@v3.1.0
       with:
         image: benefits_client:${{ github.sha }}
-        fail-build: true
-        severity-cutoff: high
+        fail-build: false
         acs-report-enable: true
 
     - name: Upload Anchore Scan Report
