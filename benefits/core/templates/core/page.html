@@ -1,5 +1,5 @@
 {% extends "core/base.html" %}
-
+{% load i18n %}
 {% if page.title %}
 {% block classes %}{{ page.classes|join:" " }}{% endblock %}
 {% endif %}
@@ -14,7 +14,7 @@
         {% if page.image %}
         {% load static %}
         <div class="col-lg-6 image">
-            <img src="{% static page.image.src %}" class="core-image" alt="Rider tapping a debit card to pay for their trip" >
+            <img src="{% static page.image.src %}" class="core-image" alt="{% translate "core.index.image" context "image alt text" %}" >
         </div>
         <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-0">
         {% else %}
