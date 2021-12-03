@@ -213,7 +213,6 @@ CSP_FRAME_SRC = ["'none'"]
 
 CSP_SCRIPT_SRC = [
     "'unsafe-inline'",
-    "https://california.azureedge.net/cdt/statetemplate/",
     "https://cdn.amplitude.com/libs/",
     "https://code.jquery.com/",
     "*.littlepay.com",
