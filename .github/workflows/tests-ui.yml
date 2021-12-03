@@ -3,13 +3,7 @@ name: UI & a11y tests
 on:
   workflow_dispatch:
   pull_request:
-    branches: ["*"]
-    paths:
-      - .github/workflows/tests-ui.yml
-      - "benefits/**"
-      - "fixtures/**"
-      - "tests/e2e/**"
-      - requirements.txt
+    branches: [dev, test, prod]
 
 defaults:
   run:
