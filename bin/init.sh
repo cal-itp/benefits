@@ -7,7 +7,7 @@ python manage.py migrate
 
 # load config data
 
-ls ${DJANGO_INIT_PATH} | xargs python manage.py loaddata
+python manage.py loaddata ${DJANGO_INIT_PATH}
 
 # create a superuser account for backend admin access
 # check DJANGO_ADMIN = true, default to false if empty or unset
