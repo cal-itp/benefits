@@ -167,6 +167,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "benefits", "static")]
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Logging configuration
@@ -213,7 +214,6 @@ CSP_FRAME_SRC = ["'none'"]
 
 CSP_SCRIPT_SRC = [
     "'unsafe-inline'",
-    "https://california.azureedge.net/cdt/statetemplate/",
     "https://cdn.amplitude.com/libs/",
     "https://code.jquery.com/",
     "*.littlepay.com",

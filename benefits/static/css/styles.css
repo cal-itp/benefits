@@ -49,13 +49,16 @@ body {
   height: 100%;
   overflow-y: unset;
 }
+
 body {
   display: flex;
   flex-direction: column;
 }
+
 main {
   flex-shrink: 0 !important;
 }
+
 footer {
   margin-top: auto;
   padding-top: 1rem;
@@ -63,6 +66,11 @@ footer {
 }
 
 /* class styles */
+
+.bg-p2,
+.bg-primary {
+  background-color: #046b99 !important;
+}
 
 .btn-lg {
   border-width: 2px;
@@ -111,6 +119,10 @@ footer {
 .form-group.with-errors .error-message {
   font-size: 14px;
   padding-left: 1rem;
+}
+
+.global-footer {
+  background: #222;
 }
 
 .media-list {
