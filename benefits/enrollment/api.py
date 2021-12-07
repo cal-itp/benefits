@@ -74,7 +74,15 @@ class GroupResponse:
                 error = response.json()["errors"][0]
                 customer_id = payload[0]
                 detail = error["detail"]
-                if all((customer_id, detail)) and customer_id in detail and not detail.startswith("Duplicate"):
+
+                failure = (
+                    customer_id is None,
+                    detail is None,
+                    customer_id not in detail,
+                    customer_id in detail and not detail.startswith("Duplicate"),
+                )
+
+                if any(failure):
                     raise ApiError("Invalid response format")
             except (KeyError, ValueError):
                 raise ApiError("Invalid response format")
@@ -143,7 +151,7 @@ class Client:
             return request_func(verify=ca.name, cert=(cert.name, key.name))
 
     def _get_customer(self, token):
-        """Get a customer record from Payment Processor's system """
+        """Get a customer record from Payment Processor's system"""
         logger.info("Check for existing customer record")
 
         if token is None:
