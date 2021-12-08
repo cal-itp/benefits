@@ -193,7 +193,7 @@ class Client:
             raise ValueError("customer_id")
 
         url = self._make_url(self.payment_processor.customer_endpoint, customer_id)
-        payload = {"is_registered": True}
+        payload = {"is_registered": True, "id": customer_id}
 
         r = self._patch(url, payload)
         r.raise_for_status()
