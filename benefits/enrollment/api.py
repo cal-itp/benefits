@@ -44,15 +44,18 @@ class AccessTokenResponse:
 class CustomerResponse:
     """Benefits Enrollment Customer API response."""
 
-    def __init__(self, response, customer_id=None):
+    def __init__(self, response):
         logger.info("Read customer details from response")
 
         try:
             payload = response.json()
-        except ValueError:
+            self.id = payload["id"]
+        except (KeyError, ValueError):
             raise ApiError("Invalid response format")
 
-        self.id = payload.get("id", customer_id)
+        if self.id is None:
+            raise ApiError("Invalid response format")
+
         self.is_registered = str(payload.get("is_registered", "false")).lower() == "true"
 
         logger.info("Customer details successfully read from response")
