@@ -44,15 +44,18 @@ class AccessTokenResponse:
 class CustomerResponse:
     """Benefits Enrollment Customer API response."""
 
-    def __init__(self, response, customer_id=None):
+    def __init__(self, response):
         logger.info("Read customer details from response")
 
         try:
             payload = response.json()
-        except ValueError:
+            self.id = payload["id"]
+        except (KeyError, ValueError):
             raise ApiError("Invalid response format")
 
-        self.id = payload.get("id", customer_id)
+        if self.id is None:
+            raise ApiError("Invalid response format")
+
         self.is_registered = str(payload.get("is_registered", "false")).lower() == "true"
 
         logger.info("Customer details successfully read from response")
@@ -74,7 +77,15 @@ class GroupResponse:
                 error = response.json()["errors"][0]
                 customer_id = payload[0]
                 detail = error["detail"]
-                if all((customer_id, detail)) and customer_id in detail and not detail.startswith("Duplicate"):
+
+                failure = (
+                    customer_id is None,
+                    detail is None,
+                    customer_id not in detail,
+                    customer_id in detail and not detail.startswith("Duplicate"),
+                )
+
+                if any(failure):
                     raise ApiError("Invalid response format")
             except (KeyError, ValueError):
                 raise ApiError("Invalid response format")
@@ -143,7 +154,7 @@ class Client:
             return request_func(verify=ca.name, cert=(cert.name, key.name))
 
     def _get_customer(self, token):
-        """Get a customer record from Payment Processor's system """
+        """Get a customer record from Payment Processor's system"""
         logger.info("Check for existing customer record")
 
         if token is None:
@@ -182,7 +193,7 @@ class Client:
             raise ValueError("customer_id")
 
         url = self._make_url(self.payment_processor.customer_endpoint, customer_id)
-        payload = {"is_registered": True}
+        payload = {"is_registered": True, "id": customer_id}
 
         r = self._patch(url, payload)
         r.raise_for_status()
