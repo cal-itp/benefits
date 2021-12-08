@@ -28,12 +28,14 @@ jobs:
             key: API_CHECK_PROD_KEY
             ca-cert: API_CHECK_PROD_CA_CERT
             url: API_CHECK_PROD_URL
+            data: API_CHECK_PROD_DATA
 
           - name: qa
             cert: API_CHECK_QA_CERT
             key: API_CHECK_QA_KEY
             ca-cert: API_CHECK_QA_CA_CERT
             url: API_CHECK_QA_URL
+            data: API_CHECK_QA_DATA
 
     name: Check API endpoint (${{ matrix.name }})
     steps:
@@ -58,7 +60,7 @@ jobs:
           curl -i --url ${{ secrets[matrix.url] }} \
           --header 'Accept: application/json' \
           --header 'Content-type: application/json' \
-          --data '{"request_access":"CARD_TOKENISATION"}' \
+          --data '${{ matrix.data }}' \
           --cert $temp_dir/cert.pem \
           --key $temp_dir/key.pem \
           --cacert $temp_dir/cacert.ca > $temp_dir/payload.txt
