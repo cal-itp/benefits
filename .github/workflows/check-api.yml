@@ -69,9 +69,9 @@ jobs:
           curl -i --url ${{ secrets[matrix.url] }} \
           --header 'Accept: application/json' \
           --header 'Content-type: application/json' \
-          --data '${{ matrix.data }}' \
+          --data '${{ secrets[matrix.data] }}' \
           --cert $temp_dir/cert.pem \
           --key $temp_dir/key.pem \
           --cacert $temp_dir/cacert.ca > $temp_dir/payload.txt
 
-          test $(head -n 1 $temp_dir/payload.txt | grep -o 201) == "201"
+          test $(head -n 1 $temp_dir/payload.txt | grep -o 201)
