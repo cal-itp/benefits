@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SHOULD_RUN: |
-        ${{ github.event.name == 'schedule'
+        ${{ github.event_name == 'schedule'
         || github.event.inputs.environment == 'all'
         || github.event.inputs.environment == matrix.name
         }}
@@ -41,7 +41,7 @@ jobs:
     steps:
       - name: Echo workflow run information
         run: |
-          echo "Triggering event name: \"${{ github.event.name }}\", \
+          echo "Triggering event name: \"${{ github.event_name }}\", \
           APIs to check: \"${{ github.event.inputs.environment }}\""
 
       - name: Decode cert files
