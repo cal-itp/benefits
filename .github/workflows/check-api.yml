@@ -58,7 +58,7 @@ jobs:
           ${{ secrets[matrix.key] }}
           EOM
 
-          cat > $temp_dir/cacert.ca
+          cat > $temp_dir/cacert.ca <<- EOM
           ${{ secrets[matrix.ca-cert] }}
           EOM
 
