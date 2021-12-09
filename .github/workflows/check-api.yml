@@ -41,8 +41,8 @@ jobs:
     steps:
       - name: Echo workflow run information
         run: |
-          echo "Triggering event name: \"${{ github.event_name }}\", \
-          APIs to check: \"${{ github.event.inputs.environment }}\""
+          echo "Triggering event name: ${{ github.event_name }}, \
+          APIs to check: ${{ github.event.inputs.environment }}"
 
       - name: Decode cert files
         if: contains(env.SHOULD_RUN, 'true')
