@@ -49,9 +49,18 @@ jobs:
         run: |
           mkdir $RUNNER_TEMP/${{ matrix.name }}
           temp_dir=$RUNNER_TEMP/${{ matrix.name }}
-          echo ${{ secrets[matrix.cert] }} | base64 -d > $temp_dir/cert.pem
-          echo ${{ secrets[matrix.key] }} | base64 -d > $temp_dir/key.pem
-          echo ${{ secrets[matrix.ca-cert] }} | base64 -d > $temp_dir/cacert.ca
+
+          cat > $temp_dir/cert.pem <<- EOM
+          ${{ secrets[matrix.cert] }}
+          EOM
+
+          cat > $temp_dir/key.pem <<- EOM
+          ${{ secrets[matrix.key] }}
+          EOM
+
+          cat > $temp_dir/cacert.ca
+          ${{ secrets[matrix.ca-cert] }}
+          EOM
 
       - name: Call API endpoint
         if: contains(env.SHOULD_RUN, 'true')
