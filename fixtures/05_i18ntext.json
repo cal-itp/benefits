@@ -4,9 +4,8 @@
     "pk": 1,
     "fields": {
       "label": "core.icons.bankcard",
-      "text": "Bank card icon with contactless symbol",
       "text_en": "Bank card icon with contactless symbol",
-      "text_es": null
+      "text_es": "Icono de tarjeta bancaria"
     }
   },
   {
@@ -14,9 +13,8 @@
     "pk": 2,
     "fields": {
       "label": "core.icons.bankcardcheck",
-      "text": "Bank card icon with contactless symbol and checkmark",
       "text_en": "Bank card icon with contactless symbol and checkmark",
-      "text_es": null
+      "text_es": "Icono de tarjeta bancaria con símbolo sin contacto y marca de verificación"
     }
   },
   {
@@ -24,9 +22,8 @@
     "pk": 3,
     "fields": {
       "label": "core.icons.bankcardquestion",
-      "text": "Bank card icon with contactless symbol and question mark",
       "text_en": "Bank card icon with contactless symbol and question mark",
-      "text_es": null
+      "text_es": "Icono de tarjeta bancaria con símbolo sin contacto y signo de interrogación"
     }
   },
   {
@@ -34,9 +31,8 @@
     "pk": 4,
     "fields": {
       "label": "core.icons.contactless",
-      "text": "The contactless symbol",
       "text_en": "The contactless symbol",
-      "text_es": null
+      "text_es": "El símbolo sin contacto"
     }
   },
   {
@@ -44,9 +40,8 @@
     "pk": 5,
     "fields": {
       "label": "core.icons.idcardcheck",
-      "text": "Identification card icon with checkmark",
       "text_en": "Identification card icon with checkmark",
-      "text_es": null
+      "text_es": "Icono de tarjeta de identificación con marca de verificación"
     }
   },
   {
@@ -54,9 +49,8 @@
     "pk": 6,
     "fields": {
       "label": "core.icons.idcardquestion",
-      "text": "Identification card icon with question mark",
       "text_en": "Identification card icon with question mark",
-      "text_es": null
+      "text_es": "Icono de tarjeta de identificación con signo de interrogación"
     }
   },
   {
@@ -64,9 +58,8 @@
     "pk": 7,
     "fields": {
       "label": "core.icons.sadbus",
-      "text": "Bus icon with flat tire",
       "text_en": "Bus icon with flat tire",
-      "text_es": null
+      "text_es": "Icono de autobus con llanta ponchada"
     }
   },
   {
@@ -74,9 +67,8 @@
     "pk": 8,
     "fields": {
       "label": "core.images.index",
-      "text": "Rider tapping a debit card to pay for their trip",
       "text_en": "Rider tapping a debit card to pay for their trip",
-      "text_es": null
+      "text_es": "Pasajera utiliza una tarjeta de débito para pagar su paseo."
     }
   },
   {
@@ -84,9 +76,8 @@
     "pk": 9,
     "fields": {
       "label": "core.pages.index.title",
-      "text": "Transit Benefits",
       "text_en": "Transit Benefits",
-      "text_es": null
+      "text_es": "Beneficios del Tránsito"
     }
   },
   {
@@ -94,9 +85,8 @@
     "pk": 10,
     "fields": {
       "label": "core.pages.index.content_title",
-      "text": "The new way to pay for transit makes it easier to get your discount every time you ride",
       "text_en": "The new way to pay for transit makes it easier to get your discount every time you ride",
-      "text_es": null
+      "text_es": "La nueva forma de pagar el transporte público hace que sea más fácil obtener su descuento cada vez que viaja"
     }
   },
   {
@@ -104,9 +94,8 @@
     "pk": 11,
     "fields": {
       "label": "core.pages.index.p1",
-      "text": "With new contactless payment options, you can tap your bank-issued credit or debit card when you board, and your discount will automatically apply.",
       "text_en": "With new contactless payment options, you can tap your bank-issued credit or debit card when you board, and your discount will automatically apply.",
-      "text_es": null
+      "text_es": "Con las nuevas opciones de pago sin contacto, puede acercar su tarjeta bancaria de crédito o débito cuando aborde y su descuento se aplicará automáticamente."
     }
   },
   {
@@ -114,9 +103,8 @@
     "pk": 12,
     "fields": {
       "label": "core.pages.index.p2",
-      "text": "We don’t save any of your information, and you don’t need to create an account!",
       "text_en": "We don’t save any of your information, and you don’t need to create an account!",
-      "text_es": null
+      "text_es": "Nosotros no guardamos su información ¡y no necesita crear una cuenta!"
     }
   },
   {
@@ -124,9 +112,8 @@
     "pk": 13,
     "fields": {
       "label": "core.pages.index.p3",
-      "text": "Verify your discount, and connect your bank card today.",
       "text_en": "Verify your discount, and connect your bank card today.",
-      "text_es": null
+      "text_es": "Verifique su descuento y conecte su tarjeta de banco ahora."
     }
   },
   {
@@ -134,9 +121,8 @@
     "pk": 14,
     "fields": {
       "label": "core.pages.index.chooseprovider",
-      "text": "Choose your transit provider",
       "text_en": "Choose your transit provider",
-      "text_es": null
+      "text_es": "Elige tu proveedor de transporte público"
     }
   },
   {
@@ -144,7 +130,6 @@
     "pk": 15,
     "fields": {
       "label": "core.pages.index.nav:mst",
-      "text": "MST (local)",
       "text_en": "MST (local)",
       "text_es": null
     }
@@ -154,7 +139,6 @@
     "pk": 16,
     "fields": {
       "label": "core.pages.index.nav:sacrt",
-      "text": "SacRT (local)",
       "text_en": "SacRT (local)",
       "text_es": null
     }
@@ -164,9 +148,8 @@
     "pk": 17,
     "fields": {
       "label": "core.pages.index.nav:continue",
-      "text": "Let’s do it!",
       "text_en": "Let’s do it!",
-      "text_es": null
+      "text_es": "¡Hagámoslo!"
     }
   },
   {
@@ -174,9 +157,8 @@
     "pk": 18,
     "fields": {
       "label": "eligibility.pages.index.title",
-      "text": "Getting started",
       "text_en": "Getting started",
-      "text_es": null
+      "text_es": "Preparación"
     }
   },
   {
@@ -184,9 +166,8 @@
     "pk": 19,
     "fields": {
       "label": "eligibility.pages.index.content_title",
-      "text": "Great, you’ll need two things before we get started...",
       "text_en": "Great, you’ll need two things before we get started...",
-      "text_es": null
+      "text_es": "Genial, necesitarás dos cosas antes de comenzar..."
     }
   },
   {
@@ -194,9 +175,8 @@
     "pk": 20,
     "fields": {
       "label": "eligibility.pages.index.item1.heading",
-      "text": "Your California ID",
       "text_en": "Your California ID",
-      "text_es": null
+      "text_es": "Tu identificación de California"
     }
   },
   {
@@ -204,9 +184,8 @@
     "pk": 21,
     "fields": {
       "label": "eligibility.pages.index.item1.details",
-      "text": "Driver’s license or ID card",
       "text_en": "Driver’s license or ID card",
-      "text_es": null
+      "text_es": "Licencia de conducir o tarjeta de identificación"
     }
   },
   {
@@ -214,9 +193,8 @@
     "pk": 22,
     "fields": {
       "label": "eligibility.pages.index.item2.heading",
-      "text": "Your bank card",
       "text_en": "Your bank card",
-      "text_es": null
+      "text_es": "Tu tarjeta bancaria"
     }
   },
   {
@@ -224,9 +202,8 @@
     "pk": 23,
     "fields": {
       "label": "eligibility.pages.index.item2.details",
-      "text": "A debit or credit card",
       "text_en": "A debit or credit card",
-      "text_es": null
+      "text_es": "Una tarjeta de débito o crédito"
     }
   },
   {
@@ -234,9 +211,8 @@
     "pk": 24,
     "fields": {
       "label": "eligibility.pages.index.p1",
-      "text": "This program is currently open to those who are 65 or older. Not over 65? Get in touch with your transit provider to learn about other available discount programs.",
       "text_en": "This program is currently open to those who are 65 or older. Not over 65? Get in touch with your transit provider to learn about other available discount programs.",
-      "text_es": null
+      "text_es": "Este programa actualmente está disponible para personas de 65 años o más. ¿No tienes más de 65 años? Póngase en contacto con su proveedor de transporte público para obtener información sobre los programas de descuento disponibles."
     }
   }
 ]
