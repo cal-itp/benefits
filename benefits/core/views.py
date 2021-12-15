@@ -7,7 +7,9 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import pgettext, ugettext as _
 
-from . import middleware, models, session, viewmodels
+from . import middleware, models, pageviews, session, viewmodels
+
+import importlib
 
 
 def PageTemplateResponse(request, page_vm):
@@ -35,30 +37,41 @@ def _index_url():
     return reverse("core:index")
 
 
-@middleware.pageview_decorator
-def index(request):
-    """View handler for the main entry page."""
-    session.reset(request)
-
-    # generate a button to the landing page for each active agency
-    agencies = models.TransitAgency.all_active()
-    buttons = [viewmodels.Button.outline_primary(text=a.short_name, url=a.index_url) for a in agencies]
-    buttons[0].classes.append("mt-3")
-    buttons[0].label = _("core.index.chooseprovider")
-
-    page = viewmodels.Page(
-        content_title=_index_content_title(),
-        paragraphs=_index_paragraphs(),
-        image=_index_image(),
-        buttons=buttons,
-        classes="home",
-    )
+def handle_pageview(pageview, request, **kwargs):
+    pageview.accept(request, **kwargs)
+    page = pageview.render_page()
 
     return PageTemplateResponse(request, page)
 
 
 @middleware.pageview_decorator
+def index(request):
+    """View handler for the main entry page."""
+    return handle_pageview(pageviews.IndexView(), request)
+
+
 def agency_index(request, agency):
+    class_name = agency.slug.title()
+    agency_pageviews_class = getattr(importlib.import_module("benefits.core.pageviews"), class_name)
+
+    instance = agency_pageviews_class()
+    pageview = instance.get_initial_pageview()
+
+    return handle_pageview(pageview, request, agency=agency)
+
+
+def agency_page(request, slug):
+    class_name = session.agency(request).slug.title()
+    agency_pageviews_class = getattr(importlib.import_module("benefits.core.pageviews"), class_name)
+
+    instance = agency_pageviews_class()
+    pageview = instance.get_pageview_from_slug(slug)
+
+    return handle_pageview(pageview, request)
+
+
+@middleware.pageview_decorator
+def agency_index_old(request, agency):
     """View handler for an agency entry page."""
     session.reset(request)
     session.update(request, agency=agency, origin=agency.index_url)

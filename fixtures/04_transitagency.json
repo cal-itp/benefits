@@ -3,7 +3,7 @@
     "model": "core.transitagency",
     "pk": 1,
     "fields": {
-      "slug": "abc",
+      "slug": "mst",
       "short_name": "ABC",
       "long_name": "ABC Transit Company",
       "agency_id": "abc123",
@@ -24,7 +24,7 @@
     "model": "core.transitagency",
     "pk": 2,
     "fields": {
-      "slug": "deftl",
+      "slug": "sacrt",
       "short_name": "DefTL",
       "long_name": "DEF Transit Lines",
       "agency_id": "def456",

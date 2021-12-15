@@ -47,5 +47,7 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("help", views.help, name="help"),
     path("payment-options", views.payment_options, name="payment_options"),
+    # need to figure out what to do for reverse("core:agency_index")
     path("<agency:agency>", views.agency_index, name="agency_index"),
+    path("<slug>", views.agency_page),
 ]
