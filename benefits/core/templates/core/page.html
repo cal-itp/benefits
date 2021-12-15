@@ -5,15 +5,15 @@
 {% endif %}
 
 {% if page.title %}
-{% block page_title %}{{ page.title }} | {% endblock page_title %}
+{% block page_title %}{{ page.title.text }} | {% endblock page_title %}
 {% endif %}
 
 {% block main_content %}
 <div class="container-fluid">
     <div class="row">
-        {% if page.image %}
+        {% if page.image.file %}
         {% load static %}
-        <div class="col-lg-6 image" style="background: 48% 75% url('{% static page.image.src %}') no-repeat; background-size: cover;">
+        <div class="col-lg-6 image" style="background: 48% 75% url('{% static 'img/' %}{{ page.image.file }}') no-repeat; background-size: cover;">
         </div>
         <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-0">
         {% else %}
@@ -27,7 +27,7 @@
                 {% if page.icon %}
                     {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon %}
                 {% else %}
-                    <h1>{{ page.content_title }}</h1>
+                    <h1>{{ page.content_title.text }}</h1>
                 {% endif %}
             {% endif %}
             {% endblock icon_title %}
@@ -39,8 +39,8 @@
             {% endblock media_list %}
 
             {% block paragraph_content %}
-            {% for p in page.paragraphs %}
-                <p>{{ p }}</p>
+            {% for p in page.paragraphs.all %}
+                <p>{{ p.text }}</p>
             {% endfor %}
             {% endblock paragraph_content %}
 
@@ -53,10 +53,14 @@
             {% endblock forms %}
 
             {% block buttons %}
-            {% if page.buttons|length_is:"0" %}{% else %}
+            {% if page.navigation.all|length_is:"0" %}{% else %}
                 <div class="buttons">
-                    {% for b in page.buttons %}
-                        {% include "core/includes/button.html" with button=b %}
+                    {% if page.navigation_title %}
+                    <label>{{ page.navigation_title.text }}</label>
+                    {% endif %}
+
+                    {% for b in page.navigation.all %}
+                        {% include "core/includes/button.html" with navigation=b page=page %}
                     {% endfor %}
                 </div>
             {% endif %}

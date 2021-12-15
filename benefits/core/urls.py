@@ -4,6 +4,7 @@ The core application: URLConf for the root of the webapp.
 import logging
 
 from django.urls import path, register_converter
+from django.urls.converters import StringConverter
 
 from . import models, views
 
@@ -41,11 +42,20 @@ class TransitAgencyPathConverter:
 logger.debug(f"Register path converter: {TransitAgencyPathConverter.__name__}")
 register_converter(TransitAgencyPathConverter, "agency")
 
+
+class CustomSlugConverter(StringConverter):
+    regex = "(?!eligibility)[-a-zA-Z0-9_]*"
+
+
+logger.debug(f"Register converter: {CustomSlugConverter.__name__}")
+register_converter(CustomSlugConverter, "custom-slug")
+
 app_name = "core"
 
 urlpatterns = [
-    path("", views.index, name="index"),
     path("help", views.help, name="help"),
     path("payment-options", views.payment_options, name="payment_options"),
+    path("<custom-slug:slug>", views.PageView.as_view(), name="index"),
+    # I would just remove this, but there are usages of `reverse("core:agency_index")`` that will break if I do.
     path("<agency:agency>", views.agency_index, name="agency_index"),
 ]

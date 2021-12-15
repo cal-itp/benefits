@@ -4,7 +4,8 @@
     "pk": 1,
     "fields": {
       "text": 15,
-      "target": 2
+      "target": 2,
+      "classes": ["btn-outline-primary"]
     }
   },
   {
@@ -12,7 +13,8 @@
     "pk": 2,
     "fields": {
       "text": 16,
-      "target": 3
+      "target": 3,
+      "classes": ["btn-outline-primary"]
     }
   },
   {
@@ -20,7 +22,8 @@
     "pk": 3,
     "fields": {
       "text": 17,
-      "target": 4
+      "target": 4,
+      "classes": ["btn-primary"]
     }
   }
 ]

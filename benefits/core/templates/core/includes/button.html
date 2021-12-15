@@ -1,13 +1,10 @@
-{% if button.url %}
-{% if button.label %}
-<label>{{ button.label }}</label>
-{% endif %}
-<a {%if button.id %}id="{{ button.id }}"{% endif %}
-    {%if button.target %}target="{{ button.target }}"{% endif %}
-    {%if button.rel %}rel="{{ button.rel }}"{% endif %}
-    class="{{ button.classes | join:" " }}"
-    href="{{ button.url }}"
+{% if navigation.target %}
+<a {%if navigation.id %}id="{{ navigation.id }}"{% endif %}
+    {% comment %} {%if navigation.target %}target="{{ navigation.target }}"{% endif %} {% endcomment %}
+    {%if navigation.rel %}rel="{{ navigation.rel }}"{% endif %}
+    class="btn btn-lg {{ navigation.classes | join:" " }}"
+    href="/{{ navigation.target.slug }}"
     role="button">
-    {{ button.text }}
+    {{ navigation.text.text }}
 </a>
 {% endif %}

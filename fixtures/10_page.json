@@ -18,7 +18,9 @@
         1,
         2
       ],
-      "classes": ["home"]
+      "navigation_title": 14,
+      "classes": ["home"],
+      "slug": ""
     }
   },
   {
@@ -39,7 +41,9 @@
       "navigation": [
         3
       ],
-      "classes": ["home"]
+      "navigation_title": null,
+      "classes": ["home"],
+      "slug": "mst"
     }
   },
   {
@@ -60,7 +64,9 @@
       "navigation": [
         3
       ],
-      "classes": ["home"]
+      "navigation_title": null,
+      "classes": ["home"],
+      "slug": "sacrt"
     }
   },
   {
@@ -80,7 +86,9 @@
         24
       ],
       "navigation": [],
-      "classes": []
+      "navigation_title": null,
+      "classes": [],
+      "slug": "eligibility"
     }
   }
 ]

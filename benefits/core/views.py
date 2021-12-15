@@ -6,6 +6,7 @@ from django.template import loader
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import pgettext, ugettext as _
+from django.views.generic.detail import DetailView
 
 from . import middleware, models, session, viewmodels
 
@@ -33,6 +34,11 @@ def _index_paragraphs():
 def _index_url():
     """Helper computes the index url path."""
     return reverse("core:index")
+
+
+class PageView(DetailView):
+    model = models.Page
+    template_name = "core/page.html"
 
 
 @middleware.pageview_decorator

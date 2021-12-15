@@ -112,7 +112,7 @@ def reset(request):
     logger.debug("Reset session")
     request.session[_AGENCY] = None
     request.session[_ELIGIBILITY] = None
-    request.session[_ORIGIN] = reverse("core:index")
+    request.session[_ORIGIN] = reverse("core:index", args=[""])
     request.session[_TOKEN] = None
     request.session[_TOKEN_EXP] = None
 

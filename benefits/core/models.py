@@ -63,6 +63,7 @@ class PageNavigation(models.Model):
     id = models.AutoField(primary_key=True)
     text = models.ForeignKey(I18nText, related_name="+", on_delete=models.PROTECT)
     target = models.ForeignKey("core.page", related_name="+", on_delete=models.PROTECT)
+    classes = models.JSONField(blank=True, null=True)
 
     def __str__(self) -> str:
         return str(self.text)
@@ -80,7 +81,9 @@ class Page(models.Model):
     media = models.ManyToManyField(MediaItem, blank=True)
     paragraphs = models.ManyToManyField(I18nText, blank=True)
     navigation = models.ManyToManyField(PageNavigation, blank=True)
+    navigation_title = models.ForeignKey(I18nText, blank=True, null=True, related_name="+", on_delete=models.PROTECT)
     classes = models.JSONField(blank=True, null=True)
+    slug = models.SlugField(unique=True, blank=True)
 
     def __str__(self) -> str:
         return self.label
