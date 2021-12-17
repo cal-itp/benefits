@@ -11,4 +11,5 @@ urlpatterns = [
     # /eligibility
     path("", views.index, name="index"),
     path("confirm", views.confirm, name="confirm"),
+    path("link/<agency:agency>/<uuid:uuid>", views.link, name="link"),
 ]
