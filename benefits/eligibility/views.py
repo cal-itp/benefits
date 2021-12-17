@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
-from benefits.core import middleware, session, viewmodels
+from benefits.core import models, middleware, session, viewmodels
 from benefits.core.views import PageTemplateResponse, _index_image
 from . import analytics, api, forms
 
@@ -126,3 +126,16 @@ def unverified(request):
     )
 
     return PageTemplateResponse(request, page)
+
+
+def link(request, agency, uuid):
+    """Simple view handler for eligibility links."""
+
+    try:
+        link = models.EligibilityLink.objects.filter(id=uuid, agency=agency).get()
+        eligibility = [link.eligibility_type.name]
+        verified(request, eligibility)
+    except models.EligibilityLink.DoesNotExist:
+        return unverified(request)
+
+    return unverified(request)
