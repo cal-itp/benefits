@@ -2,6 +2,7 @@
 The core application: Common model definitions.
 """
 import logging
+import uuid
 
 from django.db import models
 from django.urls import reverse
@@ -173,3 +174,11 @@ class TransitAgency(models.Model):
         """Get all TransitAgency instances marked active."""
         logger.debug(f"Get all active {TransitAgency.__name__}")
         return TransitAgency.objects.filter(active=True)
+
+
+class EligibilityLink(models.Model):
+    """A short link for Agency eligibility verification."""
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    agency = models.ForeignKey(TransitAgency, on_delete=models.PROTECT)
+    eligibility_type = models.ForeignKey(EligibilityType, on_delete=models.PROTECT)

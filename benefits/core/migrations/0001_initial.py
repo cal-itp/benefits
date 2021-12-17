@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import migrations, models
 
 
@@ -83,6 +85,14 @@ class Migration(migrations.Migration):
                 ("eligibility_types", models.ManyToManyField(to="core.EligibilityType")),
                 ("eligibility_verifier", models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.eligibilityverifier")),
                 # fmt: on
+            ],
+        ),
+        migrations.CreateModel(
+            name="EligibilityLink",
+            fields=[
+                ("id", models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
+                ("agency", models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.transitagency")),
+                ("eligibility_type", models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.eligibilitytype")),
             ],
         ),
     ]
