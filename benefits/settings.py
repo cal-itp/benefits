@@ -68,6 +68,7 @@ if DEBUG:
 CSRF_COOKIE_AGE = None
 CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_HTTPONLY = True
+CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS
 
 SESSION_COOKIE_SAMESITE = "Strict"
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
