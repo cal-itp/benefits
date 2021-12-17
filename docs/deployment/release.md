@@ -10,7 +10,7 @@ can be found under [Workflows](./workflows.md).
 The list of releases can be found on the [repository Releases page](https://github.com/cal-itp/benefits/tags)
 on GitHub.
 
-## 0. Decide on the new version
+## 0. Decide on the new version number
 
 A new release implies a new version.
 
@@ -50,7 +50,7 @@ graph LR
 By convention the release branch is called `release/YYYY.0M.R` using the
 upcoming version number.
 
-## 2. Bump the application version
+## 2. Bump the application version number
 
 The app code maintains a version number in
 [`benefits/__init__.py`](https://github.com/cal-itp/benefits/blob/dev/benefits/__init__.py),
