@@ -4,7 +4,7 @@ The eligibility application: view definitions for the eligibility verification f
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.utils.translation import pgettext, ugettext as _
+from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import middleware, session, viewmodels
 from benefits.core.views import PageTemplateResponse, _index_image

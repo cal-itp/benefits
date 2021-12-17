@@ -1,5 +1,5 @@
-cryptography==36.0.0
-Django==3.2.9
+cryptography==36.0.1
+Django==4.0
 django-csp==3.7
 gunicorn==20.1.0
 jwcrypto==1.0

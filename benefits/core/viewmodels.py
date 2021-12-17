@@ -1,7 +1,7 @@
 """
 The core application: view model definitions for the root of the webapp.
 """
-from django.utils.translation import pgettext, ugettext as _
+from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import models
 

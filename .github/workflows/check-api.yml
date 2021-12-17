@@ -1,0 +1,77 @@
+name: Check access to API
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Select the API environment
+        options: [all, prod, qa]
+  schedule:
+    - cron: "0 12 * * *"
+
+jobs:
+  check-api:
+    runs-on: ubuntu-latest
+    env:
+      SHOULD_RUN: |
+        ${{ github.event_name == 'schedule'
+        || github.event.inputs.environment == 'all'
+        || github.event.inputs.environment == matrix.name
+        }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: prod
+            cert: API_CHECK_PROD_CERT
+            key: API_CHECK_PROD_KEY
+            ca-cert: API_CHECK_PROD_CA_CERT
+            url: API_CHECK_PROD_URL
+            data: API_CHECK_PROD_DATA
+
+          - name: qa
+            cert: API_CHECK_QA_CERT
+            key: API_CHECK_QA_KEY
+            ca-cert: API_CHECK_QA_CA_CERT
+            url: API_CHECK_QA_URL
+            data: API_CHECK_QA_DATA
+
+    name: Check API endpoint (${{ matrix.name }})
+    steps:
+      - name: Echo workflow run information
+        run: |
+          echo "Triggering event name: ${{ github.event_name }}, \
+          APIs to check: ${{ github.event.inputs.environment }}"
+
+      - name: Decode cert files
+        if: contains(env.SHOULD_RUN, 'true')
+        run: |
+          mkdir $RUNNER_TEMP/${{ matrix.name }}
+          temp_dir=$RUNNER_TEMP/${{ matrix.name }}
+
+          cat > $temp_dir/cert.pem <<- EOM
+          ${{ secrets[matrix.cert] }}
+          EOM
+
+          cat > $temp_dir/key.pem <<- EOM
+          ${{ secrets[matrix.key] }}
+          EOM
+
+          cat > $temp_dir/cacert.ca <<- EOM
+          ${{ secrets[matrix.ca-cert] }}
+          EOM
+
+      - name: Call API endpoint
+        if: contains(env.SHOULD_RUN, 'true')
+        run: |
+          temp_dir=$RUNNER_TEMP/${{ matrix.name }}
+          curl -i --url ${{ secrets[matrix.url] }} \
+          --header 'Accept: application/json' \
+          --header 'Content-type: application/json' \
+          --data '${{ secrets[matrix.data] }}' \
+          --cert $temp_dir/cert.pem \
+          --key $temp_dir/key.pem \
+          --cacert $temp_dir/cacert.ca > $temp_dir/payload.txt
+
+          test $(head -n 1 $temp_dir/payload.txt | grep -o 201)

@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.utils.translation import pgettext, ugettext as _
+from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import middleware, models, session, viewmodels
 from benefits.core.views import PageTemplateResponse
