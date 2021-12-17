@@ -8,6 +8,7 @@ services:
       - ANALYTICS_KEY
       - DJANGO_ADMIN
       - DJANGO_ALLOWED_HOSTS
+      - DJANGO_TRUSTED_ORIGINS
       - DJANGO_DB
       - DJANGO_DEBUG
       - DJANGO_INIT_PATH
@@ -29,6 +30,7 @@ services:
       - CYPRESS_baseUrl
       - DJANGO_ADMIN
       - DJANGO_ALLOWED_HOSTS
+      - DJANGO_TRUSTED_ORIGINS
       - DJANGO_DB
       - DJANGO_DEBUG
       - DJANGO_INIT_PATH
