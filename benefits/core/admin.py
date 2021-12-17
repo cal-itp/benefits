@@ -17,6 +17,7 @@ if ADMIN:
         models.PaymentProcessor,
         models.PemData,
         models.TransitAgency,
+        models.EligibilityLink,
     ]:
         logger.debug(f"Register {model.__name__}")
         admin.site.register(model)
