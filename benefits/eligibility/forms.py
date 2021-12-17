@@ -4,7 +4,7 @@ The eligibility application: Form definition for the eligibility verification fl
 import logging
 
 from django import forms
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from benefits.core import widgets
 

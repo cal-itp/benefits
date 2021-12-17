@@ -5,7 +5,7 @@ from django.http import HttpResponseBadRequest, HttpResponseNotFound, HttpRespon
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.utils.translation import pgettext, ugettext as _
+from django.utils.translation import pgettext, gettext as _
 
 from . import middleware, models, session, viewmodels
 
