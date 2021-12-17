@@ -14,13 +14,7 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
 
 ADMIN = os.environ.get("DJANGO_ADMIN", "False").lower() == "true"
 
-ALLOWED_HOSTS = []
-
-if DEBUG:
-    ALLOWED_HOSTS.extend(["*"])
-else:
-    hosts = os.environ["DJANGO_ALLOWED_HOSTS"].split(",")
-    ALLOWED_HOSTS.extend(hosts)
+ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split(",")
 
 # Application definition
 
