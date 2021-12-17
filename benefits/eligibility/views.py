@@ -131,6 +131,9 @@ def unverified(request):
 def link(request, agency, uuid):
     """Simple view handler for eligibility links."""
 
+    session.reset(request)
+    session.update(request, agency=agency)
+
     try:
         link = models.EligibilityLink.objects.filter(id=uuid, agency=agency).get()
         eligibility = [link.eligibility_type.name]
