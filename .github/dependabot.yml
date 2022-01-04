@@ -26,7 +26,7 @@ updates:
     labels:
       - "dependencies"
   - package-ecosystem: "npm"
-    directory: "/tests/e2e" # e2e Cypress testing
+    directory: "/tests/cypress" # Cypress testing
     schedule:
       interval: "daily"
     commit-message:

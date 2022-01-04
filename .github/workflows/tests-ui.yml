@@ -36,7 +36,7 @@ jobs:
         run: |
           docker run \
             --detach \
-            --env-file tests/e2e/.env.tests \
+            --env-file tests/cypress/.env.tests \
             -p 8000:8000 \
             -v ${{ github.workspace }}/fixtures:/home/calitp/app/fixtures \
             benefits_client:${{ github.sha }}
@@ -46,10 +46,10 @@ jobs:
         env:
           CYPRESS_baseUrl: http://localhost:8000
         with:
-          working-directory: tests/e2e
+          working-directory: tests/cypress
           wait-on: http://localhost:8000/healthcheck
           spec: |
-            cypress/specs/ui/*.spec.js
+            specs/ui/*.spec.js
 
       - name: Run Lighthouse tests for a11y
         uses: treosh/lighthouse-ci-action@v8
