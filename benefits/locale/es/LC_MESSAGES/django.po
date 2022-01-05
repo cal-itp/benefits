@@ -90,7 +90,7 @@ msgstr ""
 #: benefits/core/templates/core/payment-options.html:7
 msgctxt "image alt text"
 msgid "core.icons.contactless"
-msgstr "El símbolo sin contacto"
+msgstr "Cuatro líneas curvas en las tarjetas habilitadas sin contacto"
 
 #: benefits/core/templates/core/payment-options.html:9
 msgid "core.payments.p3"

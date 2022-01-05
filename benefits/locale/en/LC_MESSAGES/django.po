@@ -88,7 +88,7 @@ msgstr ""
 #: benefits/core/templates/core/payment-options.html:7
 msgctxt "image alt text"
 msgid "core.icons.contactless"
-msgstr "The contactless symbol"
+msgstr "Four curved lines on contactless-enabled cards"
 
 #: benefits/core/templates/core/payment-options.html:9
 msgid "core.payments.p3"
