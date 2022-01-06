@@ -159,7 +159,7 @@ class Client:
             logger.debug("Process eligiblity verification response")
             return self._tokenize_response(r)
         else:
-            logger.info(f"Unexpected eligibility verification response status code: {r.status_code}")
+            logger.warning(f"Unexpected eligibility verification response status code: {r.status_code}")
             raise ApiError("Unexpected eligibility verification response")
 
     def verify(self, sub, name):
