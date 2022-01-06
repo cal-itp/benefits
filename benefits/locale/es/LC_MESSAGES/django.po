@@ -83,14 +83,14 @@ msgstr ""
 msgid "core.payments.p1"
 msgstr ""
 "Cal-ITP es un nuevo programa que sirve a todos los Californianos. Para "
-"activar su descuento, necesita una tarjeta bancaria que tenga el símbolo de "
-"sin contacto. El símbolo sin contacto tiene cuatro líneas curveadas y se ve "
-"así:"
+"activar su descuento, necesita una tarjeta bancaria habilitada sin "
+"contacto. Las tarjetas habilitadas sin contacto tienen el siguiente símbolo "
+"(cuatro líneas curvas) en la parte delantera o trasera de la tarjeta:"
 
 #: benefits/core/templates/core/payment-options.html:7
 msgctxt "image alt text"
 msgid "core.icons.contactless"
-msgstr "El símbolo sin contacto"
+msgstr "Cuatro líneas curvas en las tarjetas habilitadas sin contacto"
 
 #: benefits/core/templates/core/payment-options.html:9
 msgid "core.payments.p3"
@@ -111,11 +111,15 @@ msgstr "Nota: Debe incluir un logo de Visa o Mastercard"
 #: benefits/core/templates/core/payment-options.html:15
 msgid "core.payments.p5"
 msgstr ""
-"Estamos trabajando para agregar opciones adicionales para las personas que "
-"no tienen acceso a una tarjeta bancaria. Vuelva a consultar este sitio web o "
-"póngase en contacto con su proveedor de transporte público."
+"¿No tienes acceso a una tarjeta bancaria? Puede solicitar una tarjeta "
+"sin contacto a una de las compañías que ofrecen tarjetas de débito "
+"prepagas sin contacto gratuitas, como la tarjeta de "
 
-#: benefits/core/templates/core/payment-options.html:16
+#: benefits/core/templates/core/payment-options.html:17
+msgid "core.payments.or"
+msgstr "o la"
+
+#: benefits/core/templates/core/payment-options.html:19
 msgid "core.payments.p6"
 msgstr ""
 "Aún puede obtener su descuento mediante el proceso de solicitud de su "
