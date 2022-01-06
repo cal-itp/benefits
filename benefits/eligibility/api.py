@@ -154,8 +154,13 @@ class Client:
         except requests.HTTPError as e:
             raise ApiError(e)
 
-        logger.debug("Process eligiblity verification response")
-        return self._tokenize_response(r)
+        expected_status_codes = {200, 400}
+        if r.status_code in expected_status_codes:
+            logger.debug("Process eligiblity verification response")
+            return self._tokenize_response(r)
+        else:
+            logger.info(f"Unexpected eligibility verification response status code: {r.status_code}")
+            raise ApiError("Unexpected eligibility verification response")
 
     def verify(self, sub, name):
         """Check eligibility for the subject and name."""
