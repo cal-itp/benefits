@@ -20,8 +20,8 @@ version numbers look like: `YYYY.0M.R`
 * `YYYY` is the 4-digit year of the release; e.g. `2021`, `2022`
 * `0M` is the 2-digit, 0-padded month of the release; e.g. `02` is February, `12`
   is December.
-* `R` is the 0-based release counter for the given year and month;
-  e.g. `0` for the first release of the month, `1` for the second, and so on.
+* `R` is the 1-based release counter for the given year and month;
+  e.g. `1` for the first release of the month, `2` for the second, and so on.
 
 ## 1. Prepare release in a branch
 
