@@ -8,4 +8,4 @@ pre-commit install --install-hooks --overwrite
 pre-commit install --hook-type commit-msg
 
 # install cypress
-cd tests/e2e && npm install && npx cypress install
+cd tests/cypress && npm install && npx cypress install

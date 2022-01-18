@@ -14,13 +14,7 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
 
 ADMIN = os.environ.get("DJANGO_ADMIN", "False").lower() == "true"
 
-ALLOWED_HOSTS = []
-
-if DEBUG:
-    ALLOWED_HOSTS.extend(["*"])
-else:
-    hosts = os.environ["DJANGO_ALLOWED_HOSTS"].split(",")
-    ALLOWED_HOSTS.extend(hosts)
+ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split(",")
 
 # Application definition
 
@@ -68,6 +62,7 @@ if DEBUG:
 CSRF_COOKIE_AGE = None
 CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_HTTPONLY = True
+CSRF_TRUSTED_ORIGINS = os.environ["DJANGO_TRUSTED_ORIGINS"].split(",")
 
 SESSION_COOKIE_SAMESITE = "Strict"
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"

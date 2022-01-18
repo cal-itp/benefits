@@ -37,7 +37,9 @@ class Event:
         self.__dict__.update(kwargs)
 
         agency = session.agency(request)
-        self.update_event_properties(path=request.path, provider_name=agency.long_name if agency else None)
+        name = agency.long_name if agency else None
+
+        self.update_event_properties(path=request.path, provider_name=name)
 
         uagent = request.headers.get("user-agent")
 
@@ -45,7 +47,7 @@ class Event:
         match = Event._domain_re.match(ref) if ref else None
         refdom = match.group(1) if match else None
 
-        self.update_user_properties(referrer=ref, referring_domain=refdom, user_agent=uagent)
+        self.update_user_properties(referrer=ref, referring_domain=refdom, user_agent=uagent, provider_name=name)
 
         # event is initialized, consume next counter
         self.event_id = next(Event._counter)
