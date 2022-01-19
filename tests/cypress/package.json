@@ -10,6 +10,6 @@
   "license": "AGPL-3.0-or-later",
   "private": true,
   "devDependencies": {
-    "cypress": "^9.2.1"
+    "cypress": "^9.3.1"
   }
 }
