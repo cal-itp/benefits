@@ -2,13 +2,14 @@
 The core application: middleware definitions for request/response cycle.
 """
 import logging
+import time
 
 from django.http import HttpResponse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
 
-from benefits.settings import DEBUG
+from benefits.settings import RATE_LIMIT, RATE_LIMIT_METHODS, RATE_LIMIT_PERIOD, DEBUG
 from . import analytics, session
 
 
@@ -24,6 +25,37 @@ class AgencySessionRequired(MiddlewareMixin):
             return None
         else:
             raise AttributeError("Session not configured with agency")
+
+
+class RateLimit(MiddlewareMixin):
+    """Middleware checks settings and session to ensure rate limit is respected."""
+
+    def process_request(self, request):
+        if any((RATE_LIMIT < 1, len(RATE_LIMIT_METHODS) < 1, RATE_LIMIT_PERIOD < 1)):
+            logger.debug("RATE_LIMIT, RATE_LIMIT_METHODS, or RATE_LIMIT_PERIOD are not configured")
+            return None
+
+        if request.method in RATE_LIMIT_METHODS:
+            session.increment_rate_limit_counter(request)
+        else:
+            # bail early if the request method doesn't match
+            return None
+
+        counter = session.rate_limit_counter(request)
+        reset_time = session.rate_limit_time(request)
+        now = int(time.time())
+
+        if counter > RATE_LIMIT:
+            if reset_time > now:
+                logger.warn("Rate limit exceeded")
+                res = HttpResponse("Too many requests")
+                res.status_code = 429
+                return res
+            else:
+                # enough time has passed, reset the rate limit
+                session.reset_rate_limit(request)
+
+        return None
 
 
 class EligibleSessionRequired(MiddlewareMixin):
