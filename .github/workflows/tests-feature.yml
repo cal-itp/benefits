@@ -1,0 +1,51 @@
+name: Feature tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [dev, test, prod]
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  tests-feature:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Dockerfile
+        id: build-client-image
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          cache-from: type=gha,scope=cal-itp
+          cache-to: type=gha,scope=cal-itp,mode=max
+          context: .
+          push: false
+          load: true
+          tags: benefits_client:${{ github.sha }}
+
+      - name: Start app
+        run: |
+          docker run \
+            --detach \
+            --env-file tests/cypress/.env.tests \
+            -p 8000:8000 \
+            -v ${{ github.workspace }}/fixtures:/home/calitp/app/fixtures \
+            benefits_client:${{ github.sha }}
+
+      - name: Run feature tests
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_baseUrl: http://localhost:8000
+        with:
+          command: npm run cypress:feature
+          working-directory: tests/cypress
+          wait-on: http://localhost:8000/healthcheck
