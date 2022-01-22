@@ -3,6 +3,11 @@ Django settings for benefits project.
 """
 import os
 
+
+def _filter_empty(ls):
+    return [s for s in ls if s]
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -14,7 +19,7 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
 
 ADMIN = os.environ.get("DJANGO_ADMIN", "False").lower() == "true"
 
-ALLOWED_HOSTS = os.environ["DJANGO_ALLOWED_HOSTS"].split(",")
+ALLOWED_HOSTS = _filter_empty(os.environ["DJANGO_ALLOWED_HOSTS"].split(","))
 
 # Application definition
 
@@ -62,7 +67,7 @@ if DEBUG:
 CSRF_COOKIE_AGE = None
 CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_HTTPONLY = True
-CSRF_TRUSTED_ORIGINS = os.environ["DJANGO_TRUSTED_ORIGINS"].split(",")
+CSRF_TRUSTED_ORIGINS = _filter_empty(os.environ["DJANGO_TRUSTED_ORIGINS"].split(","))
 
 SESSION_COOKIE_SAMESITE = "Strict"
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
@@ -198,25 +203,23 @@ ANALYTICS_KEY = os.environ.get("ANALYTICS_KEY")
 # In particular, note that the inner single-quotes are required!
 # https://django-csp.readthedocs.io/en/latest/configuration.html#policy-settings
 
+
 CSP_DEFAULT_SRC = ["'self'"]
 
-CSP_CONNECT_SRC = ["'self'", "https://api.amplitude.com/"]
+env_connect_src = _filter_empty(os.environ.get("DJANGO_CSP_CONNECT_SRC", "").split(","))
+CSP_CONNECT_SRC = ["'self'"]
+CSP_CONNECT_SRC.extend(env_connect_src)
 
-CSP_FONT_SRC = ["https://california.azureedge.net/cdt/statetemplate/", "https://fonts.gstatic.com/"]
+env_font_src = _filter_empty(os.environ.get("DJANGO_CSP_FONT_SRC", "").split(","))
+CSP_FONT_SRC = list(env_font_src)
 
 CSP_FRAME_ANCESTORS = ["'none'"]
 CSP_FRAME_SRC = ["'none'"]
 
-CSP_SCRIPT_SRC = [
-    "'unsafe-inline'",
-    "https://cdn.amplitude.com/libs/",
-    "https://code.jquery.com/",
-    "*.littlepay.com",
-]
+env_script_src = _filter_empty(os.environ.get("DJANGO_CSP_SCRIPT_SRC", "").split(","))
+CSP_SCRIPT_SRC = ["'unsafe-inline'"]
+CSP_SCRIPT_SRC.extend(env_script_src)
 
-CSP_STYLE_SRC = [
-    "'self'",
-    "'unsafe-inline'",
-    "https://california.azureedge.net/cdt/statetemplate/",
-    "https://fonts.googleapis.com/css",
-]
+env_style_src = _filter_empty(os.environ.get("DJANGO_CSP_STYLE_SRC", "").split(","))
+CSP_STYLE_SRC = ["'self'", "'unsafe-inline'"]
+CSP_STYLE_SRC.extend(env_style_src)
