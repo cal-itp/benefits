@@ -46,10 +46,9 @@ jobs:
         env:
           CYPRESS_baseUrl: http://localhost:8000
         with:
+          command: npm run cypress:ui
           working-directory: tests/cypress
           wait-on: http://localhost:8000/healthcheck
-          spec: |
-            specs/ui/*.spec.js
 
       - name: Run Lighthouse tests for a11y
         uses: treosh/lighthouse-ci-action@v8
