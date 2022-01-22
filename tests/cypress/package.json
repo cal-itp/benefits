@@ -1,15 +1,20 @@
 {
-  "name": "benefits-e2e",
+  "name": "benefits-cypress",
   "version": "1.0.0",
   "description": "Cypress tests for the benefits app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cypress": "npm test",
+    "cypress:open": "env-cmd -f ./.env.tests npx cypress open",
+    "cypress:feature": "npm test -- --spec \"specs/feature/**/*\"",
+    "cypress:ui": "npm test -- --spec \"specs/ui/**/*\"",
+    "test": "env-cmd -f ./.env.tests npx cypress run"
   },
   "author": "",
   "license": "AGPL-3.0-or-later",
   "private": true,
   "devDependencies": {
-    "cypress": "^9.3.1"
+    "cypress": "^9.3.1",
+    "env-cmd": "^10.1.0"
   }
 }
