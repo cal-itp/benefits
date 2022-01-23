@@ -85,6 +85,7 @@ ROOT_URLCONF = "benefits.urls"
 template_ctx_processors = [
     "django.template.context_processors.request",
     "benefits.core.context_processors.analytics",
+    "benefits.core.context_processors.recaptcha",
 ]
 
 if DEBUG:
