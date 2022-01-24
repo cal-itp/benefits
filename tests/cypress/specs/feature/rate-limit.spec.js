@@ -1,7 +1,6 @@
 const agencies = require("../../fixtures/transit-agencies");
 const users = require("../../fixtures/users.json");
-
-const eligibility_url = "/eligibility/confirm";
+const { eligibility_url, post_confirm } = require("../../plugins/eligibility");
 
 describe("Rate limiting feature spec", () => {
   beforeEach(() => {
@@ -26,27 +25,14 @@ describe("Rate limiting feature spec", () => {
       .then((csrfmiddlewaretoken) => {
         // make excess requests
         for (let i = 0; i < N_REQUESTS; i++) {
-          cy.request({
-            method: "POST",
-            url: eligibility_url,
-            followRedirect: false,
-            // don't raise an exception for non-success status codes so we can inspect the response
-            failOnStatusCode: false,
-            // submit body as application/x-www-form-urlencoded
-            form: true,
-            // the same body a user-initiated form-submission sends
-            body: {
-              csrfmiddlewaretoken,
-              sub,
-              name,
-            },
-          }).then((res) => {
+          // continue on non-200 status codes to check response
+          post_confirm(csrfmiddlewaretoken, sub, name, false).then((res) => {
             if (i < RATE_LIMIT) {
               // allow up to API_RATE_LIMIT requests
               expect(res.status).to.eq(200);
             } else {
               // we've gone beyond API_RATE_LIMIT
-              expect(res.status).to.eq(429);
+              expect(res.status).to.eq(400);
             }
           });
         }
@@ -60,21 +46,7 @@ describe("Rate limiting feature spec", () => {
 
         // and try again with a reasonable number of requests
         for (let i = 0; i < RATE_LIMIT - 1; i++) {
-          cy.request({
-            method: "POST",
-            url: eligibility_url,
-            followRedirect: false,
-            // we expect all of these requests to succeed
-            failOnStatusCode: true,
-            // submit body as application/x-www-form-urlencoded
-            form: true,
-            // the same body a user-initiated form-submission sends
-            body: {
-              csrfmiddlewaretoken,
-              sub,
-              name,
-            },
-          }).then((res) => {
+          post_request(csrfmiddlewaretoken, sub, name, true).then((res) => {
             // these requests should all succeed
             expect(res.status).to.eq(200);
           });
