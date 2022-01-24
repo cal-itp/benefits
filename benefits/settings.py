@@ -24,6 +24,7 @@ ALLOWED_HOSTS = _filter_empty(os.environ["DJANGO_ALLOWED_HOSTS"].split(","))
 # Application definition
 
 INSTALLED_APPS = [
+    "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     "benefits.core",
@@ -37,13 +38,13 @@ if ADMIN:
             "django.contrib.admin",
             "django.contrib.auth",
             "django.contrib.contenttypes",
-            "django.contrib.messages",
         ]
     )
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "benefits.core.middleware.Healthcheck",
     "django.middleware.common.CommonMiddleware",
@@ -84,6 +85,7 @@ ROOT_URLCONF = "benefits.urls"
 
 template_ctx_processors = [
     "django.template.context_processors.request",
+    "django.contrib.messages.context_processors.messages",
     "benefits.core.context_processors.analytics",
     "benefits.core.context_processors.recaptcha",
 ]

@@ -9,6 +9,11 @@ from benefits.settings import RECAPTCHA_ENABLED, RECAPTCHA_SECRET_KEY, RECAPTCHA
 _POST_DATA = "g-recaptcha-response"
 
 
+def has_error(form) -> bool:
+    """True if the given form has a reCAPTCHA error. False otherwise."""
+    return any([s for (_, v) in form.errors.items() for s in v if "reCAPTCHA" in s])
+
+
 def verify(form_data: dict) -> bool:
     """
     Check with Google reCAPTCHA if the given response is a valid user.
