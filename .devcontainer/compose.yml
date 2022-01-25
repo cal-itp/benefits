@@ -4,16 +4,7 @@ services:
   client:
     build: ..
     image: benefits_client:latest
-    environment:
-      - ANALYTICS_KEY
-      - DJANGO_ADMIN
-      - DJANGO_ALLOWED_HOSTS
-      - DJANGO_TRUSTED_ORIGINS
-      - DJANGO_DB
-      - DJANGO_DEBUG
-      - DJANGO_INIT_PATH
-      - DJANGO_LOG_LEVEL
-      - DJANGO_SECRET_KEY
+    env_file: .env
     ports:
       - "8000"
     volumes:
@@ -25,17 +16,7 @@ services:
       context: ..
       dockerfile: .devcontainer/Dockerfile
     image: benefits_client:dev
-    environment:
-      - ANALYTICS_KEY
-      - CYPRESS_baseUrl
-      - DJANGO_ADMIN
-      - DJANGO_ALLOWED_HOSTS
-      - DJANGO_TRUSTED_ORIGINS
-      - DJANGO_DB
-      - DJANGO_DEBUG
-      - DJANGO_INIT_PATH
-      - DJANGO_LOG_LEVEL
-      - DJANGO_SECRET_KEY
+    env_file: .env
     entrypoint: []
     command: sleep infinity
     depends_on:
