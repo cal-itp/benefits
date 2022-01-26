@@ -41,6 +41,13 @@ jobs:
             -v ${{ github.workspace }}/fixtures:/home/calitp/app/fixtures \
             benefits_client:${{ github.sha }}
 
+      - name: Start server
+        run: |
+          docker run \
+            --detach \
+            -p 5000:5000 \
+            ghcr.io/cal-itp/eligibility-server:main
+
       - name: Run UI automation tests
         uses: cypress-io/github-action@v2
         env:
