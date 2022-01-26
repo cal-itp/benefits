@@ -5,8 +5,10 @@ const eligibility_url = "/eligibility/confirm";
 
 describe("Eligibility confirmation flow", () => {
   beforeEach(() => {
-    cy.visit("/" + agencies[0].fields.slug);
-    cy.visit(eligibility_url);
+    cy.visit("/");
+    cy.contains(agencies[0].fields.short_name).click();
+    cy.contains("Let’s do it!").click();
+    cy.contains("Ready to continue").click();
   });
 
   it("Confirms an eligible user", () => {
