@@ -4,7 +4,8 @@ The core application: middleware definitions for request/response cycle.
 import logging
 import time
 
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.contrib import messages
+from django.http import HttpResponse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
@@ -48,7 +49,7 @@ class RateLimit(MiddlewareMixin):
         if counter > RATE_LIMIT:
             if reset_time > now:
                 logger.warn("Rate limit exceeded")
-                return HttpResponseBadRequest("Too many requests. Try again later.")
+                messages.error(request, "You have exceeded the rate limit. Please try again.")
             else:
                 # enough time has passed, reset the rate limit
                 session.reset_rate_limit(request)
