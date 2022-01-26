@@ -46,7 +46,7 @@ describe("Rate limiting feature spec", () => {
 
         // and try again with a reasonable number of requests
         for (let i = 0; i < RATE_LIMIT - 1; i++) {
-          post_request(csrfmiddlewaretoken, sub, name, true).then((res) => {
+          post_confirm(csrfmiddlewaretoken, sub, name, true).then((res) => {
             // these requests should all succeed
             expect(res.status).to.eq(200);
           });
