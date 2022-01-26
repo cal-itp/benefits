@@ -217,7 +217,7 @@ CSP_FONT_SRC = list(env_font_src)
 
 CSP_FRAME_ANCESTORS = ["'none'"]
 CSP_FRAME_SRC = ["'none'"]
-env_frame_src = _filter_empty(os.environ.get("DJANGO_CSP_FRAME_SRC")).split(",")
+env_frame_src = _filter_empty(os.environ.get("DJANGO_CSP_FRAME_SRC", "").split(","))
 if any(env_frame_src):
     CSP_FRAME_SRC = list(env_frame_src)
 
