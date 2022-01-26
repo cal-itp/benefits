@@ -5,12 +5,13 @@ import logging
 import time
 
 from django.http import HttpResponse, HttpResponseBadRequest
+from django.template import loader
 from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
 
 from benefits.settings import RATE_LIMIT, RATE_LIMIT_METHODS, RATE_LIMIT_PERIOD, DEBUG
-from . import analytics, session
+from . import analytics, session, viewmodels
 
 
 logger = logging.getLogger(__name__)
@@ -48,7 +49,15 @@ class RateLimit(MiddlewareMixin):
         if counter > RATE_LIMIT:
             if reset_time > now:
                 logger.warn("Rate limit exceeded")
-                return HttpResponseBadRequest("Too many requests. Try again later.")
+                home = viewmodels.Button.home(request)
+                page = viewmodels.ErrorPage.error(
+                    title="Rate limit error",
+                    content_title="Rate limit error",
+                    paragraphs=["You have reached the rate limit. Please try again."],
+                    button=home,
+                )
+                t = loader.get_template("400.html")
+                return HttpResponseBadRequest(t.render(page.context_dict()))
             else:
                 # enough time has passed, reset the rate limit
                 session.reset_rate_limit(request)
