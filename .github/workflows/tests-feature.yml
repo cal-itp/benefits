@@ -49,3 +49,9 @@ jobs:
           command: npm run cypress:feature
           working-directory: tests/cypress
           wait-on: http://localhost:8000/healthcheck
+
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: tests/cypress/screenshots
