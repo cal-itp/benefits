@@ -79,7 +79,7 @@ def _verify(request, form):
 
     if not form.is_valid():
         if recaptcha.has_error(form):
-            messages.error(request, "reCAPTCHA failed")
+            messages.error(request, "Recaptcha failed. Please try again.")
         return None
 
     sub, name = form.cleaned_data.get("sub"), form.cleaned_data.get("name")
