@@ -1,12 +1,13 @@
 """
 The eligibility application: view definitions for the eligibility verification flow.
 """
+from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
-from benefits.core import middleware, session, viewmodels
+from benefits.core import middleware, recaptcha, session, viewmodels
 from benefits.core.views import PageTemplateResponse, _index_image
 from . import analytics, api, forms
 
@@ -77,6 +78,8 @@ def _verify(request, form):
     """Helper calls the eligibility verification API with user input."""
 
     if not form.is_valid():
+        if recaptcha.has_error(form):
+            messages.error(request, "Recaptcha failed. Please try again.")
         return None
 
     sub, name = form.cleaned_data.get("sub"), form.cleaned_data.get("name")

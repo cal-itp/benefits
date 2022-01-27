@@ -24,6 +24,7 @@ ALLOWED_HOSTS = _filter_empty(os.environ["DJANGO_ALLOWED_HOSTS"].split(","))
 # Application definition
 
 INSTALLED_APPS = [
+    "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     "benefits.core",
@@ -37,13 +38,13 @@ if ADMIN:
             "django.contrib.admin",
             "django.contrib.auth",
             "django.contrib.contenttypes",
-            "django.contrib.messages",
         ]
     )
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "benefits.core.middleware.Healthcheck",
     "django.middleware.common.CommonMiddleware",
@@ -84,7 +85,9 @@ ROOT_URLCONF = "benefits.urls"
 
 template_ctx_processors = [
     "django.template.context_processors.request",
+    "django.contrib.messages.context_processors.messages",
     "benefits.core.context_processors.analytics",
+    "benefits.core.context_processors.recaptcha",
 ]
 
 if DEBUG:
@@ -214,6 +217,9 @@ CSP_FONT_SRC = list(env_font_src)
 
 CSP_FRAME_ANCESTORS = ["'none'"]
 CSP_FRAME_SRC = ["'none'"]
+env_frame_src = _filter_empty(os.environ.get("DJANGO_CSP_FRAME_SRC", "").split(","))
+if any(env_frame_src):
+    CSP_FRAME_SRC = list(env_frame_src)
 
 env_script_src = _filter_empty(os.environ.get("DJANGO_CSP_SCRIPT_SRC", "").split(","))
 CSP_SCRIPT_SRC = ["'unsafe-inline'"]
@@ -233,3 +239,11 @@ RATE_LIMIT_METHODS = os.environ.get("DJANGO_RATE_LIMIT_METHODS", "").upper().spl
 
 # number of seconds before additional requests are denied
 RATE_LIMIT_PERIOD = int(os.environ.get("DJANGO_RATE_LIMIT_PERIOD", 0))
+
+# reCAPTCHA configuration
+
+RECAPTCHA_API_URL = os.environ.get("DJANGO_RECAPTCHA_API_URL")
+RECAPTCHA_SITE_KEY = os.environ.get("DJANGO_RECAPTCHA_SITE_KEY")
+RECAPTCHA_SECRET_KEY = os.environ.get("DJANGO_RECAPTCHA_SECRET_KEY")
+RECAPTCHA_VERIFY_URL = os.environ.get("DJANGO_RECAPTCHA_VERIFY_URL")
+RECAPTCHA_ENABLED = all((RECAPTCHA_API_URL, RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET_KEY, RECAPTCHA_VERIFY_URL))

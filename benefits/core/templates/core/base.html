@@ -23,6 +23,11 @@
             <div id="skip-to-content">
                 <a href="#main-content">{% translate "core.skip" %}</a>
             </div>
+            {% if messages %}
+            {% for message in messages %}
+            {% include "core/includes/alert.html" with message=message %}
+            {% endfor %}
+            {% endif %}
 
             <div class="nocookies d-none" >
             {% include "core/includes/nocookies.html" %}
@@ -69,6 +74,7 @@
             </div>
         </footer>
 
+        <script src="https://california.azureedge.net/cdt/statetemplate/6.0.2/js/cagov.core.js"></script>
         <script>
             $(function() {
                 document.cookie = "testcookie"
