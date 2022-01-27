@@ -146,8 +146,7 @@ def reset(request):
         u = str(uuid.uuid4())
         request.session[_UID] = u
         request.session[_DID] = str(uuid.UUID(hashlib.sha512(bytes(u, "utf8")).hexdigest()[:32]))
-
-    reset_rate_limit(request)
+        reset_rate_limit(request)
 
 
 def reset_rate_limit(request):
