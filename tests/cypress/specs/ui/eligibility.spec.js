@@ -14,8 +14,10 @@ describe("Eligibility confirmation page spec", () => {
 
 describe("Eligibility confirmation form spec", () => {
   beforeEach(() => {
-    cy.visit("/" + agencies[0].fields.slug);
-    cy.visit(eligibility_url);
+    cy.visit("/");
+    cy.contains(agencies[0].fields.short_name).click();
+    cy.contains("Let’s do it!").click();
+    cy.contains("Ready to continue").click();
   });
 
   it("Has a driver’s license or ID number form label and corresponding field", () => {
