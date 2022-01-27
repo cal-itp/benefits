@@ -6,7 +6,7 @@ import logging
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from benefits.core import widgets
+from benefits.core import recaptcha, widgets
 
 
 logger = logging.getLogger(__name__)
@@ -41,3 +41,7 @@ class EligibilityVerificationForm(forms.Form):
 
         for (field, err) in validation_errors.items():
             self.add_error(field, err)
+
+    def clean(self):
+        if not recaptcha.verify(self.data):
+            raise forms.ValidationError("reCAPTCHA failed")

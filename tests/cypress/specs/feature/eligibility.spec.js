@@ -1,7 +1,9 @@
 const agencies = require("../../fixtures/transit-agencies");
 const users = require("../../fixtures/users.json");
 
-describe("Eligibility Confirmation flow", () => {
+const eligibility_url = "/eligibility/confirm";
+
+describe("Eligibility confirmation flow", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.contains(agencies[0].fields.short_name).click();
