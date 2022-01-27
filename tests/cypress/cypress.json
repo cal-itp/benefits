@@ -1,8 +1,9 @@
 {
   "$schema": "https://on.cypress.io/cypress.schema.json",
+  "downloadsFolder": "downloads",
   "fixturesFolder": "fixtures",
   "integrationFolder": "specs",
-  "pluginsFile": false,
+  "pluginsFile": "plugins/index.js",
   "screenshotsFolder": "screenshots",
   "supportFile": false,
   "videosFolder": "videos"

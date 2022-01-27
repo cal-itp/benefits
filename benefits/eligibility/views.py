@@ -41,6 +41,7 @@ def index(request):
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
+@decorator_from_middleware(middleware.RateLimit)
 def confirm(request):
     """View handler for the eligibility verification form."""
 
