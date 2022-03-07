@@ -14,7 +14,7 @@
   "license": "AGPL-3.0-or-later",
   "private": true,
   "devDependencies": {
-    "cypress": "^9.5.0",
+    "cypress": "^9.5.1",
     "env-cmd": "^10.1.0"
   }
 }
