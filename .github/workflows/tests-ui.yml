@@ -64,7 +64,7 @@ jobs:
           path: tests/cypress/screenshots
 
       - name: Run Lighthouse tests for a11y
-        uses: treosh/lighthouse-ci-action@v8
+        uses: treosh/lighthouse-ci-action@9.3.0
         with:
           urls: |
             http://localhost:8000
