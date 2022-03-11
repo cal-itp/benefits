@@ -1,5 +1,5 @@
 <div class="media-list">
-{% for media in items %}
+{% for media in items.all %}
     {% include "core/includes/media-item.html" with item=media %}
 {% endfor %}
 </div>

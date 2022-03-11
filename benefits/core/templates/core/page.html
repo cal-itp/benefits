@@ -1,20 +1,18 @@
 {% extends "core/base.html" %}
 
-{% if page.title %}
+{% if page.classes %}
 {% block classes %}{{ page.classes|join:" " }}{% endblock %}
 {% endif %}
 
 {% if page.title %}
-{% block page_title %}{{ page.title }} | {% endblock page_title %}
+{% block page_title %}{{ page.title.text }} | {% endblock page_title %}
 {% endif %}
 
 {% block main_content %}
 <div class="container-fluid">
     <div class="row">
-        {% if page.image %}
-        {% load static %}
-        <div class="col-lg-6 image" style="background: 48% 75% url('{% static page.image.src %}') no-repeat; background-size: cover;">
-        </div>
+        {% if page.image.file %}
+        <div class="col-lg-6 image" style="background: 48% 75% url('{{ page.image.file.url }}') no-repeat; background-size: cover;"></div>
         <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-0">
         {% else %}
         <div class="col-md-8 offset-md-2 col-xl-6 offset-xl-3">
@@ -27,20 +25,20 @@
                 {% if page.icon %}
                     {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon %}
                 {% else %}
-                    <h1>{{ page.content_title }}</h1>
+                    <h1>{{ page.content_title.text }}</h1>
                 {% endif %}
             {% endif %}
             {% endblock icon_title %}
 
             {% block media_list %}
-            {% if page.media|length_is:"0" %}{% else %}
-                {% include "core/includes/media-list.html" with items=page.media %}
+            {% if page.media.all.length > 0 %}
+                {% include "core/includes/media-list.html" with items=page.media.all %}
             {% endif %}
             {% endblock media_list %}
 
             {% block paragraph_content %}
-            {% for p in page.paragraphs %}
-                <p>{{ p }}</p>
+            {% for p in page.paragraphs.all %}
+                <p>{{ p.text }}</p>
             {% endfor %}
             {% endblock paragraph_content %}
 
@@ -53,10 +51,13 @@
             {% endblock forms %}
 
             {% block buttons %}
-            {% if page.buttons|length_is:"0" %}{% else %}
+            {% if page.navigation.all.length > 0 %}
                 <div class="buttons">
-                    {% for b in page.buttons %}
-                        {% include "core/includes/button.html" with button=b %}
+                    {% if page.navigation_title %}
+                    <label>{{ page.navigation_title.text }}</label>
+                    {% endif %}
+                    {% for n in page.navigation.all %}
+                        {% include "core/includes/pagenavigation-button.html" with pagenav=n %}
                     {% endfor %}
                 </div>
             {% endif %}

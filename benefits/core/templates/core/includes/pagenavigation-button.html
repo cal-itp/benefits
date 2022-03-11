@@ -1,0 +1,10 @@
+{% if pagenav.target %}
+<a {%if pagenav.id %}id="{{ pagenav.id }}"{% endif %}
+    {%if pagenav.target %}target="{{ pagenav.target }}"{% endif %}
+    {%if pagenav.rel %}rel="{{ pagenav.rel }}"{% endif %}
+    class="btn btn-lg {{ pagenav.classes | join:' ' }}"
+    href="{{ pagenav.target.slug }}"
+    role="button">
+    {{ pagenav.text.text }}
+</a>
+{% endif %}
