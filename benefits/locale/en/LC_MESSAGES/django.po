@@ -335,38 +335,38 @@ msgstr "Reach out to your transit provider for assistance."
 
 #: benefits/enrollment/templates/enrollment/success.html:7
 msgctxt "image alt text"
-msgid "enrollment.success.image"
+msgid "enrollment.pages.success.image"
 msgstr "Tapping bank card on the bus reader"
 
 #: benefits/enrollment/views.py:39
-msgid "enrollment.index.title"
+msgid "enrollment.pages.index.title"
 msgstr "Eligibility Confirmed!"
 
 #: benefits/enrollment/views.py:40
-msgid "enrollment.index.content_title"
+msgid "enrollment.pages.index.content_title"
 msgstr "Great! You’re eligible for a discount!"
 
 #: benefits/enrollment/views.py:42
-msgid "enrollment.index.p1"
+msgid "enrollment.pages.index.p[0]"
 msgstr ""
 "Next, we need to attach your discount to your bank card. We don’t store your "
 "information, and you won’t be charged. When you use this card to pay for "
 "transit, you will always receive your discount."
 
 #: benefits/enrollment/views.py:42
-msgid "enrollment.index.p2"
+msgid "enrollment.pages.index.p[1]"
 msgstr "Use a bank-issued credit or debit card."
 
 #: benefits/enrollment/views.py:47
-msgid "enrollment.buttons.paymentpartner"
+msgid "enrollment.buttons.payment_partner"
 msgstr "Continue to our payment partner"
 
 #: benefits/enrollment/views.py:50
-msgid "enrollment.buttons.paymentoptions"
+msgid "enrollment.buttons.payment_options"
 msgstr "What if I don’t have a bank card?"
 
 #: benefits/enrollment/views.py:129 benefits/enrollment/views.py:131
-msgid "enrollment.retry.title"
+msgid "enrollment.pages.retry.title"
 msgstr "We couldn’t connect your bank card"
 
 #: benefits/enrollment/views.py:130
@@ -375,26 +375,26 @@ msgid "core.icons.bankcardquestion"
 msgstr "Bank card icon with contactless symbol and question mark"
 
 #: benefits/enrollment/views.py:132
-msgid "enrollment.retry.p1"
+msgid "enrollment.pages.retry.p[0]"
 msgstr ""
 "You can try again or reach out to your transit provider for assistance."
 
 #: benefits/enrollment/views.py:135
-msgid "enrollment.retry.button"
+msgid "enrollment.buttons.retry"
 msgstr "Try again"
 
 #: benefits/enrollment/views.py:149 benefits/enrollment/views.py:151
-msgid "enrollment.success.title"
+msgid "enrollment.pages.success.title"
 msgstr "Success!"
 
 #: benefits/enrollment/views.py:152
-msgid "enrollment.success.p1"
+msgid "enrollment.pages.success.p1"
 msgstr ""
 "Your discount is now linked to your bank card. You were not charged anything "
 "today."
 
 #: benefits/enrollment/views.py:152
-msgid "enrollment.success.p2"
+msgid "enrollment.pages.success.p2"
 msgstr ""
 "When boarding transit, pay with this same card, and your discount will "
 "automatically be applied to your fare purchase."

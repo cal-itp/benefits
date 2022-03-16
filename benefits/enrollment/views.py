@@ -26,18 +26,18 @@ def _index(request):
     tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
     page = viewmodels.Page(
-        title=_("enrollment.index.title"),
-        content_title=_("enrollment.index.content_title"),
+        title=_("enrollment.pages.index.title"),
+        content_title=_("enrollment.pages.index.content_title"),
         icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-        paragraphs=[_("enrollment.index.p1"), _("enrollment.index.p2")],
+        paragraphs=[_("enrollment.pages.index.p[0]"), _("enrollment.pages.index.p[1]")],
         classes="text-lg-center",
         forms=[tokenize_retry_form, tokenize_success_form],
         buttons=[
             viewmodels.Button.primary(
-                text=_("enrollment.buttons.paymentpartner"), id=tokenize_button, url=f"#{tokenize_button}"
+                text=_("enrollment.buttons.payment_partner"), id=tokenize_button, url=f"#{tokenize_button}"
             ),
             viewmodels.Button.link(
-                classes="btn-sm", text=_("enrollment.buttons.paymentoptions"), url=reverse("core:payment_options")
+                classes="btn-sm", text=_("enrollment.buttons.payment_options"), url=reverse("core:payment_options")
             ),
         ],
     )
@@ -124,13 +124,13 @@ def retry(request):
         if form.is_valid():
             agency = session.agency(request)
             page = viewmodels.Page(
-                title=_("enrollment.retry.title"),
+                title=_("enrollment.pages.retry.title"),
                 icon=viewmodels.Icon("bankcardquestion", pgettext("image alt text", "core.icons.bankcardquestion")),
-                content_title=_("enrollment.retry.title"),
-                paragraphs=[_("enrollment.retry.p1")],
+                content_title=_("enrollment.pages.retry.title"),
+                paragraphs=[_("enrollment.pages.retry.p[0]")],
                 buttons=viewmodels.Button.agency_contact_links(agency),
             )
-            page.buttons.append(viewmodels.Button.primary(text=_("enrollment.retry.button"), url=session.origin(request)))
+            page.buttons.append(viewmodels.Button.primary(text=_("enrollment.buttons.retry"), url=session.origin(request)))
             return PageTemplateResponse(request, page)
         else:
             raise Exception("Invalid retry submission.")
@@ -144,10 +144,10 @@ def success(request):
     request.path = "/enrollment/success"
 
     page = viewmodels.Page(
-        title=_("enrollment.success.title"),
+        title=_("enrollment.pages.success.title"),
         icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-        content_title=_("enrollment.success.title"),
-        paragraphs=[_("enrollment.success.p1"), _("enrollment.success.p2")],
+        content_title=_("enrollment.pages.success.title"),
+        paragraphs=[_("enrollment.pages.success.p1"), _("enrollment.pages.success.p2")],
     )
 
     return TemplateResponse(request, "enrollment/success.html", page.context_dict())
