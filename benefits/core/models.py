@@ -117,7 +117,7 @@ class TransitAgency(models.Model):
     phone = models.TextField()
     active = models.BooleanField(default=False)
     eligibility_types = models.ManyToManyField(EligibilityType)
-    eligibility_verifier = models.ForeignKey(EligibilityVerifier, on_delete=models.PROTECT)
+    eligibility_verifiers = models.ManyToManyField(EligibilityVerifier)
     payment_processor = models.ForeignKey(PaymentProcessor, on_delete=models.PROTECT)
     private_key = models.ForeignKey(PemData, help_text="The Agency's private key, used to sign tokens created on behalf of this Agency.", related_name="+", on_delete=models.PROTECT)  # noqa: 503
     jws_signing_alg = models.TextField(help_text="The JWS-compatible signing algorithm.")
@@ -138,11 +138,11 @@ class TransitAgency(models.Model):
         """True if the eligibility_type is one of this agency's types. False otherwise."""
         return isinstance(eligibility_type, EligibilityType) and eligibility_type in self.eligibility_types.all()
 
-    def types_to_verify(self):
+    def types_to_verify(self, eligibility_verifier):
         """List of eligibility types to verify for this agency."""
         # compute set intersection of agency and verifier type ids
         agency_types = set(self.eligibility_types.values_list("id", flat=True))
-        verifier_types = set(self.eligibility_verifier.eligibility_types.values_list("id", flat=True))
+        verifier_types = set(eligibility_verifier.eligibility_types.values_list("id", flat=True))
         supported_types = list(agency_types & verifier_types)
         return EligibilityType.get_many(supported_types)
 
