@@ -17,17 +17,17 @@ def PageTemplateResponse(request, page_vm):
 
 def _index_content_title():
     """Helper returns the content title for the common index page."""
-    return _("core.index.content_title")
+    return _("core.pages.index.content_title")
 
 
 def _index_image():
     """Helper returns a viewmodels.Image for the common index page."""
-    return viewmodels.Image("ridertappingbankcard.png", pgettext("image alt text", "core.index.image"))
+    return viewmodels.Image("ridertappingbankcard.png", pgettext("image alt text", "core.pages.index.image"))
 
 
 def _index_paragraphs():
     """Helper returns the content paragraphs for the common index page."""
-    return [_("core.index.p1"), _("core.index.p2"), _("core.index.p3")]
+    return [_("core.pages.index.p[0]"), _("core.pages.index.p[1]"), _("core.pages.index.p[2]")]
 
 
 def _index_url():
@@ -44,7 +44,7 @@ def index(request):
     agencies = models.TransitAgency.all_active()
     buttons = [viewmodels.Button.outline_primary(text=a.short_name, url=a.index_url) for a in agencies]
     buttons[0].classes.append("mt-3")
-    buttons[0].label = _("core.index.chooseprovider")
+    buttons[0].label = _("core.pages.index.chooseprovider")
 
     page = viewmodels.Page(
         content_title=_index_content_title(),
@@ -67,7 +67,7 @@ def agency_index(request, agency):
         content_title=_index_content_title(),
         paragraphs=_index_paragraphs(),
         image=_index_image(),
-        button=viewmodels.Button.primary(text=_("core.index.continue"), url=reverse("eligibility:index")),
+        button=viewmodels.Button.primary(text=_("core.pages.index.continue"), url=reverse("eligibility:index")),
         classes="home",
     )
 
@@ -86,9 +86,9 @@ def help(request):
     buttons.append(viewmodels.Button.home(request, _("core.buttons.back")))
 
     page = viewmodels.Page(
-        title=_("core.help"),
-        content_title=_("core.help"),
-        paragraphs=[_("core.help.p1"), _("core.help.p2")],
+        title=_("core.buttons.help"),
+        content_title=_("core.buttons.help"),
+        paragraphs=[_("core.pages.help.p[0]"), _("core.pages.help.p[1]")],
         buttons=buttons,
         classes="text-lg-center",
     )
@@ -100,9 +100,9 @@ def help(request):
 def payment_options(request):
     """View handler for the Payment Options page."""
     page = viewmodels.Page(
-        title=_("core.payment-options"),
+        title=_("core.buttons.payment_options"),
         icon=viewmodels.Icon("bankcard", pgettext("image alt text", "core.icons.bankcard")),
-        content_title=_("core.payment-options"),
+        content_title=_("core.buttons.payment_options"),
         buttons=viewmodels.Button.home(request, text=_("core.buttons.back")),
     )
 

@@ -14,49 +14,49 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: benefits/core/templates/core/base.html:25
-msgid "core.skip"
+msgid "core.buttons.skip"
 msgstr "Skip to Main Content"
 
 #: benefits/core/templates/core/base.html:43
 msgctxt "image alt text"
-msgid "core.logo.small"
+msgid "core.logos.small"
 msgstr "California Integrated Travel Project: Benefits logo (small)"
 
 #: benefits/core/templates/core/base.html:44
 msgctxt "image alt text"
-msgid "core.logo.large"
+msgid "core.logos.large"
 msgstr "California Integrated Travel Project: Benefits logo (large)"
 
 #: benefits/core/templates/core/base.html:64 benefits/core/views.py:103
 #: benefits/core/views.py:105
-msgid "core.payment-options"
+msgid "core.buttons.payment_options"
 msgstr "Payment Options"
 
 #: benefits/core/templates/core/base.html:65 benefits/core/views.py:89
 #: benefits/core/views.py:90
-msgid "core.help"
+msgid "core.buttons.help"
 msgstr "Help"
 
 #: benefits/core/templates/core/base.html:66
-msgid "core.privacy"
+msgid "core.buttons.privacy"
 msgstr "Privacy Policy"
 
 #: benefits/core/templates/core/help.html:6
-msgid "core.help.foss.text"
+msgid "core.pages.help.foss.text"
 msgstr ""
 "This application is Free and Open Source Software. You may obtain the source "
 "code from"
 
 #: benefits/core/templates/core/help.html:8
-msgid "core.help.foss.link"
+msgid "core.pages.help.foss.link"
 msgstr "GitHub"
 
 #: benefits/core/templates/core/includes/nocookies.html:6
-msgid "core.nocookies.brand"
+msgid "core.includes.nocookies.brand"
 msgstr "Cookies are disabled"
 
 #: benefits/core/templates/core/includes/nocookies.html:8
-msgid "core.nocookies.text"
+msgid "core.includes.nocookies.text"
 msgstr ""
 "To function properly, this website requires a browser that supports cookies. "
 "Please enable cookies for this website and"
@@ -64,21 +64,21 @@ msgstr ""
 #: benefits/core/templates/core/includes/nocookies.html:8
 #: benefits/core/templates/core/includes/noscript.html:8
 #: benefits/core/viewmodels.py:42
-msgid "core.buttons.home"
+msgid "core.buttons.return_home"
 msgstr "Return home"
 
 #: benefits/core/templates/core/includes/noscript.html:6
-msgid "core.noscript.brand"
+msgid "core.includes.noscript.brand"
 msgstr "JavaScript is disabled"
 
 #: benefits/core/templates/core/includes/noscript.html:8
-msgid "core.noscript.text"
+msgid "core.includes.noscript.text"
 msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
 
 #: benefits/core/templates/core/payment-options.html:5
-msgid "core.payments.p1"
+msgid "core.pages.payment_options.p[0]"
 msgstr ""
 "Cal-ITP is a new program serving all Californians. In order to activate your "
 "discount, you need a contactless-enabled bank card. Cards that are "
@@ -91,45 +91,45 @@ msgid "core.icons.contactless"
 msgstr "Four curved lines on contactless-enabled cards"
 
 #: benefits/core/templates/core/payment-options.html:9
-msgid "core.payments.p3"
+msgid "core.pages.payment_options.p[1]"
 msgstr "A contactless bank card can be"
 
 #: benefits/core/templates/core/payment-options.html:11
-msgid "core.payments.option.creditcard"
+msgid "core.pages.payment_options.options.creditcard"
 msgstr "A credit card"
 
 #: benefits/core/templates/core/payment-options.html:12
-msgid "core.payments.option.debitcard"
+msgid "core.pages.payment_options.options.debitcard"
 msgstr "A debit card"
 
 #: benefits/core/templates/core/payment-options.html:15
-msgid "core.payments.p4"
+msgid "core.pages.payment_options.p[2]"
 msgstr "Note: Must include a Visa or Mastercard logo."
 
 #: benefits/core/templates/core/payment-options.html:15
-msgid "core.payments.p5"
+msgid "core.pages.payment_options.p[3]"
 msgstr ""
 "Don't have access to a bank card? You can request a contactless card "
 "from one of the companies that offer free contactless prepaid debit "
 "cards, such as the "
 
 #: benefits/core/templates/core/payment-options.html:17
-msgid "core.payments.or"
+msgid "core.pages.payment_options.or"
 msgstr "or the"
 
 #: benefits/core/templates/core/payment-options.html:19
-msgid "core.payments.p6"
+msgid "core.pages.payment_options.p[4]"
 msgstr ""
 "You can still get your discount by going through your local transit "
 "provider’s application process."
 
 #: benefits/core/viewmodels.py:122
-msgid "core.page.title"
+msgid "core.pages.index.title"
 msgstr "Transit Benefits"
 
 #: benefits/core/viewmodels.py:168 benefits/core/viewmodels.py:170
 #: benefits/eligibility/forms.py:34
-msgid "core.error"
+msgid "core.pages.error.title"
 msgstr "Error"
 
 #: benefits/core/viewmodels.py:169
@@ -138,31 +138,31 @@ msgid "core.icons.sadbus"
 msgstr "Bus icon with flat tire"
 
 #: benefits/core/viewmodels.py:171
-msgid "core.error.server.content_title"
+msgid "core.pages.server_error.content_title"
 msgstr "Unfortunately, our system is having a problem right now."
 
 #: benefits/core/viewmodels.py:177 benefits/core/viewmodels.py:178
-msgid "core.error.server.title"
+msgid "core.pages.server_error.title"
 msgstr "Service is down"
 
 #: benefits/core/viewmodels.py:179
-msgid "core.error.server.p1"
+msgid "core.pages.server_error.p[0]"
 msgstr "We should be back in operation soon!"
 
 #: benefits/core/viewmodels.py:179
-msgid "core.error.server.p2"
+msgid "core.pages.server_error.p[1]"
 msgstr "Please check back later."
 
 #: benefits/core/viewmodels.py:187
-msgid "core.error.notfound.title"
+msgid "core.pages.not_found.title"
 msgstr "Page not found"
 
 #: benefits/core/viewmodels.py:188
-msgid "core.error.notfound.content_title"
+msgid "core.pages.not_found.content_title"
 msgstr "We can’t find that page"
 
 #: benefits/core/viewmodels.py:189
-msgid "core.error.notfound.p1"
+msgid "core.pages.not_found.p[0]"
 msgstr "It looks like that page doesn’t exist or it was moved."
 
 #: benefits/core/viewmodels.py:212
@@ -170,38 +170,38 @@ msgid "core.buttons.wait"
 msgstr "Please wait..."
 
 #: benefits/core/views.py:20
-msgid "core.index.content_title"
+msgid "core.pages.index.content_title"
 msgstr ""
 "The new way to pay for transit makes it easier to get your discount every "
 "time you ride"
 
 #: benefits/core/views.py:25
 msgctxt "image alt text"
-msgid "core.index.image"
+msgid "core.pages.index.image"
 msgstr "Rider tapping a debit card to pay for their trip"
 
 #: benefits/core/views.py:30
-msgid "core.index.p1"
+msgid "core.pages.index.p[0]"
 msgstr ""
 "With new contactless payment options, you can tap your bank-issued credit or "
 "debit card when you board, and your discount will automatically apply."
 
 #: benefits/core/views.py:30
-msgid "core.index.p2"
+msgid "core.pages.index.p[1]"
 msgstr ""
 "We don’t save any of your information, and you don’t need to create an "
 "account!"
 
 #: benefits/core/views.py:30
-msgid "core.index.p3"
+msgid "core.pages.index.p[2]"
 msgstr "Verify your discount, and connect your bank card today."
 
 #: benefits/core/views.py:47
-msgid "core.index.chooseprovider"
+msgid "core.pages.index.chooseprovider"
 msgstr "Choose your transit provider"
 
 #: benefits/core/views.py:70
-msgid "core.index.continue"
+msgid "core.pages.index.continue"
 msgstr "Let’s do it!"
 
 #: benefits/core/views.py:86 benefits/core/views.py:106
@@ -209,7 +209,7 @@ msgid "core.buttons.back"
 msgstr "Go back"
 
 #: benefits/core/views.py:91
-msgid "core.help.p1"
+msgid "core.pages.help.p[0]"
 msgstr ""
 "Cal-ITP is a new project from the California Department of Transportation. "
 "We partner with the California DMV to confirm age for age-based discounts. "
@@ -217,7 +217,7 @@ msgstr ""
 "when you pay for your transit ride, you get your discount automatically."
 
 #: benefits/core/views.py:91
-msgid "core.help.p2"
+msgid "core.pages.help.p[1]"
 msgstr ""
 "If you need assistance with the site, please reach out to the customer "
 "service team for your local transit provider."

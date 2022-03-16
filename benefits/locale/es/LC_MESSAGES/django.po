@@ -14,51 +14,51 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: benefits/core/templates/core/base.html:25
-msgid "core.skip"
+msgid "core.buttons.skip"
 msgstr "Saltar al contenido principal"
 
 #: benefits/core/templates/core/base.html:43
 msgctxt "image alt text"
-msgid "core.logo.small"
+msgid "core.logos.small"
 msgstr ""
 "Proyecto de viaje integrado de California: logotipo de beneficios (pequeño)"
 
 #: benefits/core/templates/core/base.html:44
 msgctxt "image alt text"
-msgid "core.logo.large"
+msgid "core.logos.large"
 msgstr ""
 "Proyecto de viaje integrado de California: logotipo de beneficios (grande)"
 
 #: benefits/core/templates/core/base.html:64 benefits/core/views.py:103
 #: benefits/core/views.py:105
-msgid "core.payment-options"
+msgid "core.buttons.payment_options"
 msgstr "Opciones de Pago"
 
 #: benefits/core/templates/core/base.html:65 benefits/core/views.py:89
 #: benefits/core/views.py:90
-msgid "core.help"
+msgid "core.buttons.help"
 msgstr "Ayuda"
 
 #: benefits/core/templates/core/base.html:66
-msgid "core.privacy"
+msgid "core.buttons.privacy"
 msgstr "Póliza de Privacidad"
 
 #: benefits/core/templates/core/help.html:6
-msgid "core.help.foss.text"
+msgid "core.pages.help.foss.text"
 msgstr ""
 "Esta aplicación es un software libre y de código abierto. Puede obtener el "
 "código fuente de"
 
 #: benefits/core/templates/core/help.html:8
-msgid "core.help.foss.link"
+msgid "core.pages.help.foss.link"
 msgstr "GitHub"
 
 #: benefits/core/templates/core/includes/nocookies.html:6
-msgid "core.nocookies.brand"
+msgid "core.includes.nocookies.brand"
 msgstr "Cookies están inactivos"
 
 #: benefits/core/templates/core/includes/nocookies.html:8
-msgid "core.nocookies.text"
+msgid "core.includes.nocookies.text"
 msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita cookies. Por favor, active cookies por este sitio web y"
@@ -66,21 +66,21 @@ msgstr ""
 #: benefits/core/templates/core/includes/nocookies.html:8
 #: benefits/core/templates/core/includes/noscript.html:8
 #: benefits/core/viewmodels.py:42
-msgid "core.buttons.home"
+msgid "core.buttons.return_home"
 msgstr "Regresar a la pantalla de inicio"
 
 #: benefits/core/templates/core/includes/noscript.html:6
-msgid "core.noscript.brand"
+msgid "core.includes.noscript.brand"
 msgstr "JavaScript está inactivo"
 
 #: benefits/core/templates/core/includes/noscript.html:8
-msgid "core.noscript.text"
+msgid "core.includes.noscript.text"
 msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita JavaScript. Por favor, active JavaScript por este sitio web y"
 
 #: benefits/core/templates/core/payment-options.html:5
-msgid "core.payments.p1"
+msgid "core.pages.payment_options.p[0]"
 msgstr ""
 "Cal-ITP es un nuevo programa que sirve a todos los Californianos. Para "
 "activar su descuento, necesita una tarjeta bancaria habilitada sin "
@@ -93,45 +93,45 @@ msgid "core.icons.contactless"
 msgstr "Cuatro líneas curvas en las tarjetas habilitadas sin contacto"
 
 #: benefits/core/templates/core/payment-options.html:9
-msgid "core.payments.p3"
+msgid "core.pages.payment_options.p[1]"
 msgstr "Una tarjeta de banco sin contacto puede ser"
 
 #: benefits/core/templates/core/payment-options.html:11
-msgid "core.payments.option.creditcard"
+msgid "core.pages.payment_options.options.creditcard"
 msgstr "Una tarjeta de crédito"
 
 #: benefits/core/templates/core/payment-options.html:12
-msgid "core.payments.option.debitcard"
+msgid "core.pages.payment_options.options.debitcard"
 msgstr "Una tarjeta de débito"
 
 #: benefits/core/templates/core/payment-options.html:15
-msgid "core.payments.p4"
+msgid "core.pages.payment_options.p[2]"
 msgstr "Nota: Debe incluir un logo de Visa o Mastercard"
 
 #: benefits/core/templates/core/payment-options.html:15
-msgid "core.payments.p5"
+msgid "core.pages.payment_options.p[3]"
 msgstr ""
 "¿No tienes acceso a una tarjeta bancaria? Puede solicitar una tarjeta "
 "sin contacto a una de las compañías que ofrecen tarjetas de débito "
 "prepagas sin contacto gratuitas, como la tarjeta de "
 
 #: benefits/core/templates/core/payment-options.html:17
-msgid "core.payments.or"
+msgid "core.pages.payment_options.or"
 msgstr "o la"
 
 #: benefits/core/templates/core/payment-options.html:19
-msgid "core.payments.p6"
+msgid "core.pages.payment_options.p[4]"
 msgstr ""
 "Aún puede obtener su descuento mediante el proceso de solicitud de su "
 "proveedor de transporte público."
 
 #: benefits/core/viewmodels.py:122
-msgid "core.page.title"
+msgid "core.pages.index.title"
 msgstr "Beneficios del Tránsito"
 
 #: benefits/core/viewmodels.py:168 benefits/core/viewmodels.py:170
 #: benefits/eligibility/forms.py:34
-msgid "core.error"
+msgid "core.pages.error.title"
 msgstr "Error"
 
 #: benefits/core/viewmodels.py:169
@@ -140,31 +140,31 @@ msgid "core.icons.sadbus"
 msgstr "Icono de autobus con llanta ponchada"
 
 #: benefits/core/viewmodels.py:171
-msgid "core.error.server.content_title"
+msgid "core.pages.server_error.content_title"
 msgstr "El servicio no está funcionando"
 
 #: benefits/core/viewmodels.py:177 benefits/core/viewmodels.py:178
-msgid "core.error.server.title"
+msgid "core.pages.server_error.title"
 msgstr "El servicio no está funcionando"
 
 #: benefits/core/viewmodels.py:179
-msgid "core.error.server.p1"
+msgid "core.pages.server_error.p[0]"
 msgstr "¡Pronto volveremos a estar en funcionamiento!"
 
 #: benefits/core/viewmodels.py:179
-msgid "core.error.server.p2"
+msgid "core.pages.server_error.p[1]"
 msgstr "Por favor, vuelva más tarde."
 
 #: benefits/core/viewmodels.py:187
-msgid "core.error.notfound.title"
+msgid "core.pages.not_found.title"
 msgstr "No podemos encontrar esa página"
 
 #: benefits/core/viewmodels.py:188
-msgid "core.error.notfound.content_title"
+msgid "core.pages.not_found.content_title"
 msgstr "No podemos encontrar esa página"
 
 #: benefits/core/viewmodels.py:189
-msgid "core.error.notfound.p1"
+msgid "core.pages.not_found.p[0]"
 msgstr "Parece que esa página no existe o se ha movido."
 
 #: benefits/core/viewmodels.py:212
@@ -172,37 +172,37 @@ msgid "core.buttons.wait"
 msgstr "Espere por favor..."
 
 #: benefits/core/views.py:20
-msgid "core.index.content_title"
+msgid "core.pages.index.content_title"
 msgstr ""
 "La nueva forma de pagar el transporte público hace que sea más fácil obtener "
 "su descuento cada vez que viaja"
 
 #: benefits/core/views.py:25
 msgctxt "image alt text"
-msgid "core.index.image"
+msgid "core.pages.index.image"
 msgstr "Pasajera utiliza una tarjeta de débito para pagar su paseo."
 
 #: benefits/core/views.py:30
-msgid "core.index.p1"
+msgid "core.pages.index.p[0]"
 msgstr ""
 "Con las nuevas opciones de pago sin contacto, puede acercar su tarjeta "
 "bancaria de crédito o débito cuando aborde y su descuento se aplicará "
 "automáticamente."
 
 #: benefits/core/views.py:30
-msgid "core.index.p2"
+msgid "core.pages.index.p[1]"
 msgstr "Nosotros no guardamos su información ¡y no necesita crear una cuenta!"
 
 #: benefits/core/views.py:30
-msgid "core.index.p3"
+msgid "core.pages.index.p[2]"
 msgstr "Verifique su descuento y conecte su tarjeta de banco ahora."
 
 #: benefits/core/views.py:47
-msgid "core.index.chooseprovider"
+msgid "core.pages.index.chooseprovider"
 msgstr "Elige tu proveedor de transporte público"
 
 #: benefits/core/views.py:70
-msgid "core.index.continue"
+msgid "core.pages.index.continue"
 msgstr "¡Hagámoslo!"
 
 #: benefits/core/views.py:86 benefits/core/views.py:106
@@ -210,7 +210,7 @@ msgid "core.buttons.back"
 msgstr "Regresar"
 
 #: benefits/core/views.py:91
-msgid "core.help.p1"
+msgid "core.pages.help.p[0]"
 msgstr ""
 "Cal-ITP es un nuevo proyecto del Departamento de Transporte de California. "
 "Nos asociamos con el DMV de California para confirmar la edad para los "
@@ -219,7 +219,7 @@ msgstr ""
 "descuento automáticamente."
 
 #: benefits/core/views.py:91
-msgid "core.help.p2"
+msgid "core.pages.help.p[1]"
 msgstr ""
 "Si necesita ayuda con el sitio web, comuníquese con el equipo de servicio al "
 "cliente de su proveedor de transporte público."

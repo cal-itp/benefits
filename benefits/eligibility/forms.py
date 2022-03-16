@@ -31,7 +31,7 @@ class EligibilityVerificationForm(forms.Form):
         """Handle errors passed back from API server related to submitted form values."""
 
         validation_errors = {
-            field: forms.ValidationError(self._error_messages.get(code, _("core.error")), code=code)
+            field: forms.ValidationError(self._error_messages.get(code, _("core.pages.error.title")), code=code)
             for (field, code) in form_errors.items()
             if field in self.fields
         }
