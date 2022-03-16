@@ -228,35 +228,35 @@ msgid "core.icons.bankcard"
 msgstr "Bank card icon with contactless symbol"
 
 #: benefits/eligibility/forms.py:21
-msgid "eligibility.form.id"
+msgid "eligibility.forms.confirm.fields.sub"
 msgstr "CA driver’s license or ID number"
 
 #: benefits/eligibility/forms.py:23
-msgid "eligibility.form.name"
+msgid "eligibility.forms.confirm.fields.name"
 msgstr "Last name (as it appears on ID)"
 
 #: benefits/eligibility/forms.py:25
-msgid "eligibility.form.submit"
+msgid "eligibility.forms.confirm.submit"
 msgstr "Check status"
 
 #: benefits/eligibility/forms.py:26
-msgid "eligibility.form.submitting"
+msgid "eligibility.forms.confirm.submitting"
 msgstr "Checking"
 
 #: benefits/eligibility/forms.py:28
-msgid "eligibility.form.error.invalid"
+msgid "eligibility.forms.confirm.errors.invalid"
 msgstr "Check your input. The format looks wrong."
 
 #: benefits/eligibility/forms.py:28
-msgid "eligibility.form.error.missing"
+msgid "eligibility.forms.confirm.errors.missing"
 msgstr "This field is required."
 
 #: benefits/eligibility/views.py:21
-msgid "eligibility.index.title"
+msgid "eligibility.pages.index.title"
 msgstr "Getting started"
 
 #: benefits/eligibility/views.py:22
-msgid "eligibility.index.content_title"
+msgid "eligibility.pages.index.content_title"
 msgstr "Great, you’ll need two things before we get started..."
 
 #: benefits/eligibility/views.py:25 benefits/enrollment/views.py:41
@@ -265,11 +265,11 @@ msgid "core.icons.idcardcheck"
 msgstr "Identification card icon with checkmark"
 
 #: benefits/eligibility/views.py:26
-msgid "eligibility.index.item1.title"
+msgid "eligibility.pages.index.items[0].title"
 msgstr "Your California ID"
 
 #: benefits/eligibility/views.py:27
-msgid "eligibility.index.item1.text"
+msgid "eligibility.pages.index.items[0].text"
 msgstr "Driver’s license or ID card"
 
 #: benefits/eligibility/views.py:30 benefits/enrollment/views.py:150
@@ -278,44 +278,44 @@ msgid "core.icons.bankcardcheck"
 msgstr "Bank card icon with contactless symbol and checkmark"
 
 #: benefits/eligibility/views.py:31
-msgid "eligibility.index.item2.title"
+msgid "eligibility.pages.index.items[1].title"
 msgstr "Your bank card"
 
 #: benefits/eligibility/views.py:32
-msgid "eligibility.index.item2.text"
+msgid "eligibility.pages.index.items[1].text"
 msgstr "A debit or credit card"
 
 #: benefits/eligibility/views.py:35
-msgid "eligibility.index.p1"
+msgid "eligibility.pages.index.p[0]"
 msgstr ""
 "This program is currently open to those who are 65 or older. Not over 65? "
 "Get in touch with your transit provider to learn about other available "
 "discount programs."
 
 #: benefits/eligibility/views.py:37
-msgid "eligibility.index.button"
+msgid "eligibility.pages.index.button"
 msgstr "Ready to continue"
 
 #: benefits/eligibility/views.py:48
-msgid "eligibility.confirm.title"
+msgid "eligibility.pages.confirm.title"
 msgstr "Confirm your age"
 
 #: benefits/eligibility/views.py:49
-msgid "eligibility.confirm.content_title"
+msgid "eligibility.pages.confirm.content_title"
 msgstr "Let’s see if we can confirm your age with the DMV"
 
 #: benefits/eligibility/views.py:50
-msgid "eligibility.confirm.p1"
+msgid "eligibility.pages.confirm.p[0]"
 msgstr ""
 "If you’re 65 or older, we can confirm you are eligible for a senior discount "
 "when you ride transit. We don’t save your information."
 
 #: benefits/eligibility/views.py:119
-msgid "eligibility.unverified.title"
+msgid "eligibility.pages.unverified.title"
 msgstr "Age not confirmed"
 
 #: benefits/eligibility/views.py:120
-msgid "eligibility.unverified.content_title"
+msgid "eligibility.pages.unverified.content_title"
 msgstr "We can’t confirm your age"
 
 #: benefits/eligibility/views.py:121
@@ -324,13 +324,13 @@ msgid "core.icons.idcardquestion"
 msgstr "Identification card icon with question mark"
 
 #: benefits/eligibility/views.py:122
-msgid "eligibility.unverified.p1"
+msgid "eligibility.pages.unverified.p[0]"
 msgstr ""
 "You may still be eligible for a discount, but we can’t verify your age with "
 "the DMV."
 
 #: benefits/eligibility/views.py:122
-msgid "eligibility.unverified.p2"
+msgid "eligibility.pages.unverified.p[1]"
 msgstr "Reach out to your transit provider for assistance."
 
 #: benefits/enrollment/templates/enrollment/success.html:7
