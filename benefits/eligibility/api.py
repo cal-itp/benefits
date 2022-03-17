@@ -34,7 +34,7 @@ class RequestToken:
         logger.info("Initialize new request token")
 
         # send the eligibility type names
-        types = list(map(lambda t: t.name, agency.types_to_verify()))
+        types = list(map(lambda t: t.name, agency.types_to_verify(verifier)))
 
         # craft the main token payload
         payload = dict(
@@ -114,10 +114,10 @@ class ResponseToken:
 class Client:
     """Eligibility Verification API HTTP client."""
 
-    def __init__(self, agency):
-        logger.debug(f"Initialize client for agency: {agency.short_name}")
+    def __init__(self, agency, verifier):
+        logger.debug(f"Initialize client for agency: {agency.short_name}, verifier: {verifier.name}")
         self.agency = agency
-        self.verifier = agency.eligibility_verifier
+        self.verifier = verifier
 
     def _tokenize_request(self, sub, name):
         """Create a request token."""

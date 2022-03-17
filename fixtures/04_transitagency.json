@@ -14,7 +14,7 @@
       "eligibility_types": [
         1
       ],
-      "eligibility_verifier": 1,
+      "eligibility_verifiers": [1],
       "private_key": 2,
       "jws_signing_alg": "RS256",
       "payment_processor": 1
@@ -35,7 +35,7 @@
       "eligibility_types": [
         2
       ],
-      "eligibility_verifier": 1,
+      "eligibility_verifiers": [1],
       "private_key": 2,
       "jws_signing_alg": "RS256",
       "payment_processor": 1

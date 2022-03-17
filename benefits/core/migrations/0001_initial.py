@@ -81,7 +81,7 @@ class Migration(migrations.Migration):
                 ("jws_signing_alg", models.TextField(help_text="The JWS-compatible signing algorithm.")),
                 ("payment_processor", models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.paymentprocessor")),
                 ("eligibility_types", models.ManyToManyField(to="core.EligibilityType")),
-                ("eligibility_verifier", models.ForeignKey(on_delete=models.deletion.PROTECT, to="core.eligibilityverifier")),
+                ("eligibility_verifiers", models.ManyToManyField(to="core.eligibilityverifier")),
                 # fmt: on
             ],
         ),
