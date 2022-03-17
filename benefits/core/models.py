@@ -75,6 +75,12 @@ class EligibilityVerifier(models.Model):
     instructions_item_name = models.TextField()
     instructions_item_description = models.TextField()
     instructions_blurb = models.TextField()
+    form_title = models.TextField()
+    form_blurb = models.TextField()
+    form_sub_label = models.TextField()
+    form_sub_placeholder = models.TextField()
+    form_name_label = models.TextField()
+    form_name_placeholder = models.TextField()
     # fmt: on
 
     def __str__(self):
