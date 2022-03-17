@@ -79,6 +79,12 @@ class EligibilityVerifier(models.Model):
         """jwcrypto.jwk.JWK instance of this Verifier's public key"""
         return self.public_key.jwk
 
+    @staticmethod
+    def by_id(id):
+        """Get an EligibilityVerifier instance by its ID."""
+        logger.debug(f"Get {EligibilityVerifier.__name__} by id: {id}")
+        return EligibilityVerifier.objects.get(id=id)
+
 
 class PaymentProcessor(models.Model):
     """An entity that processes payments for transit agencies."""

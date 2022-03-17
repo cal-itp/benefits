@@ -25,6 +25,7 @@ _LIMITUNTIL = "limituntil"
 _ORIGIN = "origin"
 _START = "start"
 _UID = "uid"
+_VERIFIER = "verifier"
 
 # ignore bandit B105:hardcoded_password_string
 # as these are not passwords, but keys for the session dict
@@ -65,6 +66,7 @@ def context_dict(request):
         _TOKEN: token(request),
         _TOKEN_EXP: token_expiry(request),
         _UID: uid(request),
+        _VERIFIER: verifier(request),
     }
 
 
@@ -139,6 +141,7 @@ def reset(request):
     request.session[_ORIGIN] = reverse("core:index")
     request.session[_TOKEN] = None
     request.session[_TOKEN_EXP] = None
+    request.session[_VERIFIER] = None
 
     if _UID not in request.session or not request.session[_UID]:
         logger.debug("Reset session time and uid")
@@ -189,7 +192,7 @@ def uid(request):
     return u
 
 
-def update(request, agency=None, debug=None, eligibility_types=None, origin=None, token=None, token_exp=None):
+def update(request, agency=None, debug=None, eligibility_types=None, origin=None, token=None, token_exp=None, verifier=None):
     """Update the request's session with non-null values."""
     if agency is not None and isinstance(agency, models.TransitAgency):
         logger.debug(f"Update session {_AGENCY}")
@@ -213,6 +216,9 @@ def update(request, agency=None, debug=None, eligibility_types=None, origin=None
         logger.debug(f"Update session {_TOKEN}")
         request.session[_TOKEN] = token
         request.session[_TOKEN_EXP] = token_exp
+    if verifier is not None and isinstance(verifier, models.EligibilityVerifier):
+        logger.debug(f"Update session {_VERIFIER}")
+        request.session[_VERIFIER] = verifier.id
 
 
 def valid_token(request):
@@ -229,3 +235,13 @@ def valid_token(request):
     else:
         logger.debug("Session does not contain a valid token")
         return False
+
+
+def verifier(request):
+    """Get the verifier from the request's session, or None"""
+    logger.debug("Get session verifier")
+    try:
+        return models.EligibilityVerifier.by_id(request.session[_VERIFIER])
+    except (KeyError, models.EligibilityVerifier.DoesNotExist):
+        logger.debug("Can't get verifier from session")
+        return None
