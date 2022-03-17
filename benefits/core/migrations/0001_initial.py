@@ -34,6 +34,8 @@ class Migration(migrations.Migration):
                 ("api_auth_header", models.TextField()),
                 ("api_auth_key", models.TextField()),
                 # fmt: off
+                ("sub_regex", models.TextField(help_text="A regular expression used to validate the 'sub' API field before sending to this verifier", null=True)),  # noqa: E501
+                ("name_max_length", models.PositiveSmallIntegerField(help_text="The maximum length accepted for the 'name' API field before sending to this verifier", null=True)),  # noqa: E501
                 ("public_key", models.ForeignKey(help_text="The Verifier's public key, used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier.", on_delete=models.deletion.PROTECT, related_name="+", to="core.PemData")),  # noqa: E501
                 ("jwe_cek_enc", models.TextField(help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode")),  # noqa: E501
                 ("jwe_encryption_alg", models.TextField(help_text="The JWE-compatible encryption algorithm")),
