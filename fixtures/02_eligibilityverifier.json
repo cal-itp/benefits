@@ -15,7 +15,8 @@
       "jwe_cek_enc": "A256CBC-HS512",
       "jwe_encryption_alg": "RSA-OAEP",
       "jws_signing_alg": "RS256",
-      "sub_regex": ".+"
+      "sub_regex": ".+",
+      "name_max_length": 255
     }
   }
 ]
