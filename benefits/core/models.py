@@ -70,7 +70,7 @@ class EligibilityVerifier(models.Model):
     sub_regex = models.TextField(null=True, help_text="A regular expression used to validate the 'sub' API field before sending to this verifier")  # noqa: 503
     name_max_length = models.PositiveSmallIntegerField(null=True, help_text="The maximum length accepted for the 'name' API field before sending to this verifier")  # noqa: 503
     selection_label = models.TextField()
-    selection_label_description = models.TextField()
+    selection_label_description = models.TextField(null=True)
     instructions_title = models.TextField()
     instructions_item_name = models.TextField()
     instructions_item_description = models.TextField()

@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                 ("jws_signing_alg", models.TextField(help_text="The JWS-compatible signing algorithm")),
                 ("eligibility_types", models.ManyToManyField(to="core.EligibilityType")),
                 ("selection_label", models.TextField()),
-                ("selection_label_description", models.TextField()),
+                ("selection_label_description", models.TextField(null=True)),
                 ("instructions_title", models.TextField()),
                 ("instructions_item_name", models.TextField()),
                 ("instructions_item_description", models.TextField()),
