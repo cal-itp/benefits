@@ -85,7 +85,7 @@ def _verify(request, form):
     sub, name = form.cleaned_data.get("sub"), form.cleaned_data.get("name")
 
     agency = session.agency(request)
-    verifier = agency.eligibility_verifiers.all()[0]
+    verifier = session.verifier(request)
     client = api.Client(agency, verifier)
 
     response = client.verify(sub, name)
