@@ -67,6 +67,7 @@ class EligibilityVerifier(models.Model):
     jwe_cek_enc = models.TextField(help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode")
     jwe_encryption_alg = models.TextField(help_text="The JWE-compatible encryption algorithm")
     jws_signing_alg = models.TextField(help_text="The JWS-compatible signing algorithm")
+    sub_regex = models.TextField(null=True, help_text="A regular expression used to validate the 'sub' API field before sending to this verifier")  # noqa: 503
     # fmt: on
 
     def __str__(self):
