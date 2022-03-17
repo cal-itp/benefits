@@ -69,6 +69,8 @@ class EligibilityVerifier(models.Model):
     jws_signing_alg = models.TextField(help_text="The JWS-compatible signing algorithm")
     sub_regex = models.TextField(null=True, help_text="A regular expression used to validate the 'sub' API field before sending to this verifier")  # noqa: 503
     name_max_length = models.PositiveSmallIntegerField(null=True, help_text="The maximum length accepted for the 'name' API field before sending to this verifier")  # noqa: 503
+    selection_label = models.TextField()
+    selection_label_description = models.TextField()
     # fmt: on
 
     def __str__(self):
