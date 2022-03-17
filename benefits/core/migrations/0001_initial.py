@@ -44,6 +44,10 @@ class Migration(migrations.Migration):
                 ("eligibility_types", models.ManyToManyField(to="core.EligibilityType")),
                 ("selection_label", models.TextField()),
                 ("selection_label_description", models.TextField()),
+                ("instructions_title", models.TextField()),
+                ("instructions_item_name", models.TextField()),
+                ("instructions_item_description", models.TextField()),
+                ("instructions_blurb", models.TextField()),
             ],
         ),
         migrations.CreateModel(

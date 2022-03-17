@@ -71,6 +71,10 @@ class EligibilityVerifier(models.Model):
     name_max_length = models.PositiveSmallIntegerField(null=True, help_text="The maximum length accepted for the 'name' API field before sending to this verifier")  # noqa: 503
     selection_label = models.TextField()
     selection_label_description = models.TextField()
+    instructions_title = models.TextField()
+    instructions_item_name = models.TextField()
+    instructions_item_description = models.TextField()
+    instructions_blurb = models.TextField()
     # fmt: on
 
     def __str__(self):
