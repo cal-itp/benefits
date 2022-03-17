@@ -45,7 +45,7 @@ class Button:
         ]
 
     @staticmethod
-    def home(request, text=_("core.buttons.home")):
+    def home(request, text=_("core.buttons.return_home")):
         """Create a button back to this session's origin."""
         return Button.primary(text=text, url=session.origin(request))
 
@@ -125,9 +125,9 @@ class Page:
     def __init__(self, **kwargs):
         self.title = kwargs.get("title")
         if self.title is None:
-            self.title = _("core.page.title")
+            self.title = _("core.pages.index.title")
         else:
-            self.title = f"{_('core.page.title')}: {self.title}"
+            self.title = f"{_('core.pages.index.title')}: {self.title}"
 
         self.image = kwargs.get("image")
         self.icon = kwargs.get("icon")
@@ -171,18 +171,18 @@ class ErrorPage(Page):
 
     def __init__(self, **kwargs):
         super().__init__(
-            title=kwargs.get("title", _("core.error")),
+            title=kwargs.get("title", _("core.pages.error.title")),
             icon=kwargs.get("icon", Icon("sadbus", pgettext("image alt text", "core.icons.sadbus"))),
-            content_title=kwargs.get("content_title", _("core.error")),
-            paragraphs=kwargs.get("paragraphs", [_("core.error.server.content_title")]),
+            content_title=kwargs.get("content_title", _("core.pages.error.title")),
+            paragraphs=kwargs.get("paragraphs", [_("core.pages.server_error.content_title")]),
             button=kwargs.get("button"),
         )
 
     @staticmethod
     def error(
-        title=_("core.error.server.title"),
-        content_title=_("core.error.server.title"),
-        paragraphs=[_("core.error.server.p1"), _("core.error.server.p2")],
+        title=_("core.pages.server_error.title"),
+        content_title=_("core.pages.server_error.title"),
+        paragraphs=[_("core.pages.server_error.p[0]"), _("core.pages.server_error.p[1]")],
         **kwargs,
     ):
         """Create a new core.viewmodels.ErrorPage instance with defaults for a generic error."""
@@ -190,9 +190,9 @@ class ErrorPage(Page):
 
     @staticmethod
     def not_found(
-        title=_("core.error.notfound.title"),
-        content_title=_("core.error.notfound.content_title"),
-        paragraphs=[_("core.error.notfound.p1")],
+        title=_("core.pages.not_found.title"),
+        content_title=_("core.pages.not_found.content_title"),
+        paragraphs=[_("core.pages.not_found.p[0]")],
         **kwargs,
     ):
         """Create a new core.viewmodels.ErrorPage with defaults for a 404."""

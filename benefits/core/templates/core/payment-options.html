@@ -2,19 +2,19 @@
 {% load i18n %}
 {% load static %}
 {% block paragraph_content %}
-<p>{% translate "core.payments.p1" %}</p>
+<p>{% translate "core.pages.payment_options.p[0]" %}</p>
 <p class="contactless-symbol">
     <img class="icon mx-auto d-block" src="{% static 'img/icon/contactless.svg' %}" alt="{% translate "core.icons.contactless" context "image alt text" %}" />
 </p>
-<p>{% translate "core.payments.p3" %}:</p>
+<p>{% translate "core.pages.payment_options.p[1]" %}:</p>
 <ul>
-    <li>{% translate "core.payments.option.creditcard" %}</li>
-    <li>{% translate "core.payments.option.debitcard" %}</li>
+    <li>{% translate "core.pages.payment_options.options.creditcard" %}</li>
+    <li>{% translate "core.pages.payment_options.options.debitcard" %}</li>
 </ul>
-<p>{% translate "core.payments.p4" %}</p>
-<p>{% translate "core.payments.p5" %}
+<p>{% translate "core.pages.payment_options.p[2]" %}</p>
+<p>{% translate "core.pages.payment_options.p[3]" %}
     <a rel="noreferrer" target="_blank" href="https://cash.app/help/us/en-us/14425-cal-transit">Cash App Visa Debit Card</a>
-    {% translate "core.payments.or" %}
+    {% translate "core.pages.payment_options.or" %}
     <a rel="noreferrer" target="_blank" href="https://venmo.com/about/debitcard/">Venmo Mastercard Debit Card</a>.</p>
-<p>{% translate "core.payments.p6" %}</p>
+<p>{% translate "core.pages.payment_options.p[4]" %}</p>
 {% endblock %}

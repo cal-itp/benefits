@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="{% translate "core.help.p1" %}">
+        <meta name="description" content="{% translate "core.pages.help.p[0]" %}">
         <title>{% block page_title %}{% endblock  %}Cal-ITP</title>
 
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css">
@@ -21,7 +21,7 @@
     <body>
         <header role="banner" id="header" class="global-header">
             <div id="skip-to-content">
-                <a href="#main-content">{% translate "core.skip" %}</a>
+                <a href="#main-content">{% translate "core.buttons.skip" %}</a>
             </div>
             {% if messages %}
             {% for message in messages %}
@@ -44,8 +44,8 @@
             <div class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-between">
                 <div class="container">
                     <span class="navbar-brand">
-                        <img class="sm d-lg-none" src="{% static "img/logo-sm.svg" %}" alt="{% translate "core.logo.small" context "image alt text" %}" />
-                        <img class="lg d-none d-lg-block" src="{% static "img/logo-lg.svg" %}"  alt="{% translate "core.logo.large" context "image alt text" %}" />
+                        <img class="sm d-lg-none" src="{% static "img/logo-sm.svg" %}" alt="{% translate "core.logos.small" context "image alt text" %}" />
+                        <img class="lg d-none d-lg-block" src="{% static "img/logo-lg.svg" %}"  alt="{% translate "core.logos.large" context "image alt text" %}" />
                     </span>
                     <span class="form-inline">
                         {% include "core/includes/lang-selector.html" %}
@@ -65,9 +65,9 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <ul class="footer-links">
-                            <li><a href="{% url "core:payment_options" %}">{% translate "core.payment-options" %}</a></li>
-                            <li><a href="{% url "core:help" %}">{% translate "core.help" %}</a></li>
-                            <li><a href="https://www.dmv.ca.gov/portal/privacy-and-security/" target="_blank" rel="noopener noreferrer">{% translate "core.privacy" %}</a></li>
+                            <li><a href="{% url "core:payment_options" %}">{% translate "core.buttons.payment_options" %}</a></li>
+                            <li><a href="{% url "core:help" %}">{% translate "core.buttons.help" %}</a></li>
+                            <li><a href="https://www.dmv.ca.gov/portal/privacy-and-security/" target="_blank" rel="noopener noreferrer">{% translate "core.buttons.privacy" %}</a></li>
                         </ul>
                     </div>
                 </div>
