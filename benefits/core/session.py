@@ -66,6 +66,7 @@ def context_dict(request):
         _TOKEN: token(request),
         _TOKEN_EXP: token_expiry(request),
         _UID: uid(request),
+        _VERIFIER: verifier(request),
     }
 
 
@@ -234,3 +235,13 @@ def valid_token(request):
     else:
         logger.debug("Session does not contain a valid token")
         return False
+
+
+def verifier(request):
+    """Get the verifier from the request's session, or None"""
+    logger.debug("Get session verifier")
+    try:
+        return models.EligibilityVerifier.by_id(request.session[_VERIFIER])
+    except (KeyError, models.EligibilityVerifier.DoesNotExist):
+        logger.debug("Can't get verifier from session")
+        return None
