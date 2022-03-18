@@ -96,6 +96,17 @@ class Healthcheck:
         return self.get_response(request)
 
 
+class VerifierSessionRequired(MiddlewareMixin):
+    """Middleware raises an exception for sessions lacking an eligibility verifier configuration."""
+
+    def process_request(self, request):
+        if session.verifier(request):
+            logger.debug("Session configured with eligibility verifier")
+            return None
+        else:
+            raise AttributeError("Session not configured with eligibility verifier")
+
+
 class ViewedPageEvent(MiddlewareMixin):
     """Middleware sends an analytics event for page views."""
 
