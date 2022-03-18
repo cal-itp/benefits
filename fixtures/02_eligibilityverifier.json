@@ -15,7 +15,19 @@
       "jwe_cek_enc": "A256CBC-HS512",
       "jwe_encryption_alg": "RSA-OAEP",
       "jws_signing_alg": "RS256",
+      "selection_label": "",
+      "selection_label_description": null,
+      "instructions_title": "eligibility.pages.index.content_title",
+      "instructions_item_name": "eligibility.pages.index.items[0].title",
+      "instructions_item_description": "eligibility.pages.index.items[0].text",
+      "instructions_blurb": "eligibility.pages.index.p[0]",
+      "form_title": "eligibility.pages.confirm.content_title",
+      "form_blurb": "eligibility.pages.confirm.p[0]",
+      "form_sub_label": "eligibility.forms.confirm.fields.sub",
+      "form_sub_placeholder": "",
       "form_sub_pattern": ".+",
+      "form_name_label": "eligibility.forms.confirm.fields.name",
+      "form_name_placeholder": "",
       "form_name_max_length": 255
     }
   }
