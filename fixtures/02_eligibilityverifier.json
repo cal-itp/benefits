@@ -26,7 +26,10 @@
       "form_sub_pattern": ".+",
       "form_name_label": "eligibility.forms.confirm.fields.name",
       "form_name_placeholder": "",
-      "form_name_max_length": 255
+      "form_name_max_length": 255,
+      "unverified_title": "eligibility.pages.unverified.title",
+      "unverified_content_title": "eligibility.pages.unverified.content_title",
+      "unverified_blurb": "eligibility.pages.unverified.p[0]"
     }
   }
 ]

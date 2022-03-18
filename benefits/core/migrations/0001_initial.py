@@ -55,6 +55,9 @@ class Migration(migrations.Migration):
                 ("form_sub_placeholder", models.TextField()),
                 ("form_name_label", models.TextField()),
                 ("form_name_placeholder", models.TextField()),
+                ("unverified_title", models.TextField()),
+                ("unverified_content_title", models.TextField()),
+                ("unverified_blurb", models.TextField()),
             ],
         ),
         migrations.CreateModel(
