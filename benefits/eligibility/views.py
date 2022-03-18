@@ -13,6 +13,7 @@ from . import analytics, api, forms
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
+@decorator_from_middleware(middleware.VerifierSessionRequired)
 def index(request):
     """View handler for the eligibility verification getting started screen."""
 
@@ -43,6 +44,7 @@ def index(request):
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
 @decorator_from_middleware(middleware.RateLimit)
+@decorator_from_middleware(middleware.VerifierSessionRequired)
 def confirm(request):
     """View handler for the eligibility verification form."""
 
