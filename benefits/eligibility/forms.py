@@ -6,7 +6,7 @@ import logging
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from benefits.core import recaptcha, widgets
+from benefits.core import models, recaptcha, widgets
 
 
 logger = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ class EligibilityVerificationForm(forms.Form):
         "missing": _("eligibility.forms.confirm.errors.missing"),
     }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, verifier: models.EligibilityVerifier, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.fields["sub"] = forms.CharField(

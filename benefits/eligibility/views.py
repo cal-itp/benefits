@@ -48,18 +48,20 @@ def index(request):
 def confirm(request):
     """View handler for the eligibility verification form."""
 
+    verifier = session.verifier(request)
+
     page = viewmodels.Page(
         title=_("eligibility.pages.confirm.title"),
         content_title=_("eligibility.pages.confirm.content_title"),
         paragraphs=[_("eligibility.pages.confirm.p[0]")],
-        form=forms.EligibilityVerificationForm(auto_id=True, label_suffix=""),
+        form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
         classes="text-lg-center",
     )
 
     if request.method == "POST":
         analytics.started_eligibility(request)
 
-        form = forms.EligibilityVerificationForm(request.POST)
+        form = forms.EligibilityVerificationForm(data=request.POST, verifier=verifier)
         response = _verify(request, form)
 
         if response is None:
