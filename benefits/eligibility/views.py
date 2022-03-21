@@ -51,9 +51,9 @@ def confirm(request):
     verifier = session.verifier(request)
 
     page = viewmodels.Page(
-        title=_("eligibility.pages.confirm.title"),
-        content_title=_("eligibility.pages.confirm.content_title"),
-        paragraphs=[_("eligibility.pages.confirm.p[0]")],
+        title=_(verifier.form_title),
+        content_title=_(verifier.form_content_title),
+        paragraphs=[_(verifier.form_blurb)],
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
         classes="text-lg-center",
     )
