@@ -29,13 +29,17 @@ class EligibilityVerificationForm(forms.Form):
     def __init__(self, verifier: models.EligibilityVerifier, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields["sub"] = forms.CharField(
-            label=_("eligibility.forms.confirm.fields.sub"), widget=widgets.FormControlTextInput(placeholder="A1234567")
-        )
+        sub_widget = widgets.FormControlTextInput(placeholder=verifier.form_sub_placeholder)
+        if verifier.form_sub_pattern:
+            sub_widget.attrs.update({"pattern": verifier.form_sub_pattern})
 
-        self.fields["name"] = forms.CharField(
-            label=_("eligibility.forms.confirm.fields.name"), widget=widgets.FormControlTextInput(placeholder="Rodriguez")
-        )
+        self.fields["sub"] = forms.CharField(label=_(verifier.form_sub_label), widget=sub_widget)
+
+        name_widget = widgets.FormControlTextInput(placeholder=verifier.form_name_placeholder)
+        if verifier.form_name_max_length:
+            name_widget.attrs.update({"maxlength": verifier.form_name_max_length})
+
+        self.fields["name"] = forms.CharField(label=_(verifier.form_name_label), widget=name_widget)
 
     def add_api_errors(self, form_errors):
         """Handle errors passed back from API server related to submitted form values."""
