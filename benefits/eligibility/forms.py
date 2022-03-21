@@ -18,14 +18,6 @@ class EligibilityVerificationForm(forms.Form):
     action_url = "eligibility:confirm"
     method = "POST"
 
-    sub = forms.CharField(
-        label=_("eligibility.forms.confirm.fields.sub"), widget=widgets.FormControlTextInput(placeholder="A1234567")
-    )
-
-    name = forms.CharField(
-        label=_("eligibility.forms.confirm.fields.name"), widget=widgets.FormControlTextInput(placeholder="Rodriguez")
-    )
-
     submit_value = _("eligibility.forms.confirm.submit")
     submitting_value = _("eligibility.forms.confirm.submitting")
 
@@ -33,6 +25,17 @@ class EligibilityVerificationForm(forms.Form):
         "invalid": _("eligibility.forms.confirm.errors.invalid"),
         "missing": _("eligibility.forms.confirm.errors.missing"),
     }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["sub"] = forms.CharField(
+            label=_("eligibility.forms.confirm.fields.sub"), widget=widgets.FormControlTextInput(placeholder="A1234567")
+        )
+
+        self.fields["name"] = forms.CharField(
+            label=_("eligibility.forms.confirm.fields.name"), widget=widgets.FormControlTextInput(placeholder="Rodriguez")
+        )
 
     def add_api_errors(self, form_errors):
         """Handle errors passed back from API server related to submitted form values."""
