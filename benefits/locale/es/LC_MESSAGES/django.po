@@ -229,6 +229,14 @@ msgctxt "image alt text"
 msgid "core.icons.bankcard"
 msgstr "Icono de tarjeta bancaria"
 
+#: benefits/eligibility/forms.py:23
+msgid "eligibility.form.continue"
+msgstr "Continuar"
+
+#: benefits/eligibility/forms.py:24
+msgid "eligibility.form.continuing"
+msgstr "Continuando"
+
 #: benefits/eligibility/forms.py:22
 msgid "eligibility.forms.confirm.fields.sub"
 msgstr "Licencia de conducir de CA o número de identificación"
