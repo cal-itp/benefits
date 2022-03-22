@@ -67,8 +67,24 @@ class EligibilityVerifier(models.Model):
     jwe_cek_enc = models.TextField(help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode")
     jwe_encryption_alg = models.TextField(help_text="The JWE-compatible encryption algorithm")
     jws_signing_alg = models.TextField(help_text="The JWS-compatible signing algorithm")
-    sub_regex = models.TextField(null=True, help_text="A regular expression used to validate the 'sub' API field before sending to this verifier")  # noqa: 503
-    name_max_length = models.PositiveSmallIntegerField(null=True, help_text="The maximum length accepted for the 'name' API field before sending to this verifier")  # noqa: 503
+    selection_label = models.TextField()
+    selection_label_description = models.TextField(null=True)
+    instructions_content_title = models.TextField()
+    instructions_item_name = models.TextField()
+    instructions_item_description = models.TextField()
+    instructions_blurb = models.TextField()
+    form_title = models.TextField()
+    form_content_title = models.TextField()
+    form_blurb = models.TextField()
+    form_sub_label = models.TextField()
+    form_sub_placeholder = models.TextField()
+    form_sub_pattern = models.TextField(null=True, help_text="A regular expression used to validate the 'sub' API field before sending to this verifier")  # noqa: 503
+    form_name_label = models.TextField()
+    form_name_placeholder = models.TextField()
+    form_name_max_length = models.PositiveSmallIntegerField(null=True, help_text="The maximum length accepted for the 'name' API field before sending to this verifier")  # noqa: 503
+    unverified_title = models.TextField()
+    unverified_content_title = models.TextField()
+    unverified_blurb = models.TextField()
     # fmt: on
 
     def __str__(self):

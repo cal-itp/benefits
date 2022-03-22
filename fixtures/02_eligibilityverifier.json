@@ -7,16 +7,29 @@
       "api_url": "http://server:5000/verify",
       "api_auth_header": "X-Server-API-Key",
       "api_auth_key": "server-auth-token",
-      "eligibility_types": [
-        1,
-        2
-      ],
+      "eligibility_types": [1, 2],
       "public_key": 1,
       "jwe_cek_enc": "A256CBC-HS512",
       "jwe_encryption_alg": "RSA-OAEP",
       "jws_signing_alg": "RS256",
-      "sub_regex": ".+",
-      "name_max_length": 255
+      "selection_label": "",
+      "selection_label_description": null,
+      "instructions_content_title": "eligibility.pages.index.content_title",
+      "instructions_item_name": "eligibility.pages.index.items[0].title",
+      "instructions_item_description": "eligibility.pages.index.items[0].text",
+      "instructions_blurb": "eligibility.pages.index.p[0]",
+      "form_title": "eligibility.pages.confirm.title",
+      "form_content_title": "eligibility.pages.confirm.content_title",
+      "form_blurb": "eligibility.pages.confirm.p[0]",
+      "form_sub_label": "eligibility.forms.confirm.fields.sub",
+      "form_sub_placeholder": "",
+      "form_sub_pattern": ".+",
+      "form_name_label": "eligibility.forms.confirm.fields.name",
+      "form_name_placeholder": "",
+      "form_name_max_length": 255,
+      "unverified_title": "eligibility.pages.unverified.title",
+      "unverified_content_title": "eligibility.pages.unverified.content_title",
+      "unverified_blurb": "eligibility.pages.unverified.p[0]"
     }
   }
 ]

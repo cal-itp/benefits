@@ -34,14 +34,30 @@ class Migration(migrations.Migration):
                 ("api_auth_header", models.TextField()),
                 ("api_auth_key", models.TextField()),
                 # fmt: off
-                ("sub_regex", models.TextField(help_text="A regular expression used to validate the 'sub' API field before sending to this verifier", null=True)),  # noqa: E501
-                ("name_max_length", models.PositiveSmallIntegerField(help_text="The maximum length accepted for the 'name' API field before sending to this verifier", null=True)),  # noqa: E501
+                ("form_sub_pattern", models.TextField(help_text="A regular expression used to validate the 'sub' API field before sending to this verifier", null=True)),  # noqa: E501
+                ("form_name_max_length", models.PositiveSmallIntegerField(help_text="The maximum length accepted for the 'name' API field before sending to this verifier", null=True)),  # noqa: E501
                 ("public_key", models.ForeignKey(help_text="The Verifier's public key, used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier.", on_delete=models.deletion.PROTECT, related_name="+", to="core.PemData")),  # noqa: E501
                 ("jwe_cek_enc", models.TextField(help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode")),  # noqa: E501
                 ("jwe_encryption_alg", models.TextField(help_text="The JWE-compatible encryption algorithm")),
                 # fmt: on
                 ("jws_signing_alg", models.TextField(help_text="The JWS-compatible signing algorithm")),
                 ("eligibility_types", models.ManyToManyField(to="core.EligibilityType")),
+                ("selection_label", models.TextField()),
+                ("selection_label_description", models.TextField(null=True)),
+                ("instructions_content_title", models.TextField()),
+                ("instructions_item_name", models.TextField()),
+                ("instructions_item_description", models.TextField()),
+                ("instructions_blurb", models.TextField()),
+                ("form_title", models.TextField()),
+                ("form_content_title", models.TextField()),
+                ("form_blurb", models.TextField()),
+                ("form_sub_label", models.TextField()),
+                ("form_sub_placeholder", models.TextField()),
+                ("form_name_label", models.TextField()),
+                ("form_name_placeholder", models.TextField()),
+                ("unverified_title", models.TextField()),
+                ("unverified_content_title", models.TextField()),
+                ("unverified_blurb", models.TextField()),
             ],
         ),
         migrations.CreateModel(
