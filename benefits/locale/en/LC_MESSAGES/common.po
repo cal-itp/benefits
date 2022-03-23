@@ -1,4 +1,4 @@
-# Cal-ITP Benefits: English PO file.
+# Cal-ITP Benefits: English PO file for the common app strings.
 # Copyright (C) 2021 California Department of Transportation
 # This file is distributed under the same license as the benefits package.
 #
@@ -227,10 +227,6 @@ msgctxt "image alt text"
 msgid "core.icons.bankcard"
 msgstr "Bank card icon with contactless symbol"
 
-#: benefits/eligibility/forms.py:22
-msgid "eligibility.forms.confirm.fields.sub"
-msgstr "CA driver’s license or ID number"
-
 #: benefits/eligibility/forms.py:26
 msgid "eligibility.forms.confirm.fields.name"
 msgstr "Last name (as it appears on ID)"
@@ -264,14 +260,6 @@ msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Identification card icon with checkmark"
 
-#: benefits/eligibility/views.py:27
-msgid "eligibility.pages.index.items[0].title"
-msgstr "Your California ID"
-
-#: benefits/eligibility/views.py:28
-msgid "eligibility.pages.index.items[0].text"
-msgstr "Driver’s license or ID card"
-
 #: benefits/eligibility/views.py:31 benefits/enrollment/views.py:148
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
@@ -285,84 +273,14 @@ msgstr "Your bank card"
 msgid "eligibility.pages.index.items[1].text"
 msgstr "A debit or credit card"
 
-#: benefits/eligibility/views.py:36
-msgid "eligibility.pages.index.p[0]"
-msgstr ""
-"This program is currently open to those who are 65 or older. Not over 65? "
-"Get in touch with your transit provider to learn about other available "
-"discount programs."
-
 #: benefits/eligibility/views.py:38
 msgid "eligibility.pages.index.button"
 msgstr "Continue"
-
-#: benefits/eligibility/views.py:22
-msgid "eligibility.pages.start.title"
-msgstr "Getting started"
-
-#: benefits/eligibility/views.py:23
-msgid "eligibility.pages.start.content_title"
-msgstr "Great, you’ll need two things before we get started..."
-
-#: benefits/eligibility/views.py:27
-msgid "eligibility.pages.start.items[0].title"
-msgstr "Your California ID"
-
-#: benefits/eligibility/views.py:28
-msgid "eligibility.pages.start.items[0].text"
-msgstr "Driver’s license or ID card"
-
-#: benefits/eligibility/views.py:32
-msgid "eligibility.pages.start.items[1].title"
-msgstr "Your bank card"
-
-#: benefits/eligibility/views.py:33
-msgid "eligibility.pages.start.items[1].text"
-msgstr "A debit or credit card"
-
-#: benefits/eligibility/views.py:36
-msgid "eligibility.pages.start.p[0]"
-msgstr ""
-"This program is currently open to those who are 65 or older. Not over 65? "
-"Get in touch with your transit provider to learn about other available "
-"discount programs."
-
-#: benefits/eligibility/views.py:38
-msgid "eligibility.pages.start.button"
-msgstr "Ready to continue"
-
-#: benefits/eligibility/views.py:50
-msgid "eligibility.pages.confirm.title"
-msgstr "Confirm your age"
-
-#: benefits/eligibility/views.py:51
-msgid "eligibility.pages.confirm.content_title"
-msgstr "Let’s see if we can confirm your age with the DMV"
-
-#: benefits/eligibility/views.py:52
-msgid "eligibility.pages.confirm.p[0]"
-msgstr ""
-"If you’re 65 or older, we can confirm you are eligible for a senior discount "
-"when you ride transit. We don’t save your information."
-
-#: benefits/eligibility/views.py:124
-msgid "eligibility.pages.unverified.title"
-msgstr "Age not confirmed"
-
-#: benefits/eligibility/views.py:125
-msgid "eligibility.pages.unverified.content_title"
-msgstr "We can’t confirm your age"
 
 #: benefits/eligibility/views.py:126
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Identification card icon with question mark"
-
-#: benefits/eligibility/views.py:127
-msgid "eligibility.pages.unverified.p[0]"
-msgstr ""
-"You may still be eligible for a discount, but we can’t verify your age with "
-"the DMV."
 
 #: benefits/eligibility/views.py:127
 msgid "eligibility.pages.unverified.p[1]"

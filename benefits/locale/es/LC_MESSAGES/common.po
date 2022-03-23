@@ -1,4 +1,4 @@
-# Cal-ITP Benefits: Español PO file.
+# Cal-ITP Benefits: Español PO file for the common app strings.
 # Copyright (C) 2021 California Department of Transportation
 # This file is distributed under the same license as the benefits package.
 #
@@ -229,10 +229,6 @@ msgctxt "image alt text"
 msgid "core.icons.bankcard"
 msgstr "Icono de tarjeta bancaria"
 
-#: benefits/eligibility/forms.py:22
-msgid "eligibility.forms.confirm.fields.sub"
-msgstr "Licencia de conducir de CA o número de identificación"
-
 #: benefits/eligibility/forms.py:26
 msgid "eligibility.forms.confirm.fields.name"
 msgstr "Apellido (como aparece en la identificación)"
@@ -266,14 +262,6 @@ msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Icono de tarjeta de identificación con marca de verificación"
 
-#: benefits/eligibility/views.py:27
-msgid "eligibility.pages.index.items[0].title"
-msgstr "Tu identificación de California"
-
-#: benefits/eligibility/views.py:28
-msgid "eligibility.pages.index.items[0].text"
-msgstr "Licencia de conducir o tarjeta de identificación"
-
 #: benefits/eligibility/views.py:31 benefits/enrollment/views.py:148
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
@@ -288,87 +276,14 @@ msgstr "Tu tarjeta bancaria"
 msgid "eligibility.pages.index.items[1].text"
 msgstr "Una tarjeta de débito o crédito"
 
-#: benefits/eligibility/views.py:36
-msgid "eligibility.pages.index.p[0]"
-msgstr ""
-"Este programa actualmente está disponible para personas de 65 años o más. "
-"¿No tienes más de 65 años? Póngase en contacto con su proveedor de "
-"transporte público para obtener información sobre los programas de descuento "
-"disponibles."
-
 #: benefits/eligibility/views.py:38
 msgid "eligibility.pages.index.button"
 msgstr "Continuar"
-
-#: benefits/eligibility/views.py:22
-msgid "eligibility.pages.start.title"
-msgstr "Preparación"
-
-#: benefits/eligibility/views.py:23
-msgid "eligibility.pages.start.content_title"
-msgstr "Genial, necesitarás dos cosas antes de comenzar..."
-
-#: benefits/eligibility/views.py:27
-msgid "eligibility.pages.start.items[0].title"
-msgstr "Tu identificación de California"
-
-#: benefits/eligibility/views.py:28
-msgid "eligibility.pages.start.items[0].text"
-msgstr "Licencia de conducir o tarjeta de identificación"
-
-#: benefits/eligibility/views.py:32
-msgid "eligibility.pages.start.items[1].title"
-msgstr "Tu tarjeta bancaria"
-
-#: benefits/eligibility/views.py:33
-msgid "eligibility.pages.start.items[1].text"
-msgstr "Una tarjeta de débito o crédito"
-
-#: benefits/eligibility/views.py:36
-msgid "eligibility.pages.start.p[0]"
-msgstr ""
-"Este programa actualmente está disponible para personas de 65 años o más. "
-"¿No tienes más de 65 años? Póngase en contacto con su proveedor de "
-"transporte público para obtener información sobre los programas de descuento "
-"disponibles."
-
-#: benefits/eligibility/views.py:38
-msgid "eligibility.pages.start.button"
-msgstr "Listo para continuar"
-
-#: benefits/eligibility/views.py:50
-msgid "eligibility.pages.confirm.title"
-msgstr "Verificar su edad"
-
-#: benefits/eligibility/views.py:51
-msgid "eligibility.pages.confirm.content_title"
-msgstr "Veamos si podemos verificar su edad con el DMV"
-
-#: benefits/eligibility/views.py:52
-msgid "eligibility.pages.confirm.p[0]"
-msgstr ""
-"Si tiene 65 años o más, podemos confirmar que es elegible para un descuento "
-"para personas mayores cuando viaja en transporte público. Nosotros no "
-"guardamos su información."
-
-#: benefits/eligibility/views.py:124
-msgid "eligibility.pages.unverified.title"
-msgstr "Edad no confirmada"
-
-#: benefits/eligibility/views.py:125
-msgid "eligibility.pages.unverified.content_title"
-msgstr "No podemos confirmar su edad"
 
 #: benefits/eligibility/views.py:126
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Icono de tarjeta de identificación con signo de interrogación"
-
-#: benefits/eligibility/views.py:127
-msgid "eligibility.pages.unverified.p[0]"
-msgstr ""
-"Usted todavía puede ser elegible para un descuento, pero no podemos "
-"verificar su edad con el DMV."
 
 #: benefits/eligibility/views.py:127
 msgid "eligibility.pages.unverified.p[1]"
