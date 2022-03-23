@@ -61,7 +61,7 @@ def index(request):
 def agency_index(request, agency):
     """View handler for an agency entry page."""
     session.reset(request)
-    session.update(request, agency=agency, verifier=agency.eligibility_verifiers.all()[0], origin=agency.index_url)
+    session.update(request, agency=agency, origin=agency.index_url)
 
     page = viewmodels.Page(
         content_title=_index_content_title(),

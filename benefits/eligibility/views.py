@@ -8,38 +8,44 @@ from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import middleware, recaptcha, session, viewmodels
+from benefits.core.models import EligibilityVerifier
 from benefits.core.views import PageTemplateResponse, _index_image
 from . import analytics, api, forms
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
-@decorator_from_middleware(middleware.VerifierSessionRequired)
 def index(request):
-    """View handler for the eligibility verification getting started screen."""
+    """View handler for the eligibility verifier selection form."""
 
     session.update(request, eligibility_types=[], origin=reverse("eligibility:index"))
+    agency = session.agency(request)
 
-    page = viewmodels.Page(
-        title=_("eligibility.pages.index.title"),
-        content_title=_("eligibility.pages.index.content_title"),
-        media=[
-            viewmodels.MediaItem(
-                icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-                heading=_("eligibility.pages.index.items[0].title"),
-                details=_("eligibility.pages.index.items[0].text"),
-            ),
-            viewmodels.MediaItem(
-                icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-                heading=_("eligibility.pages.index.items[1].title"),
-                details=_("eligibility.pages.index.items[1].text"),
-            ),
-        ],
-        paragraphs=[_("eligibility.pages.index.p[0]")],
-        image=_index_image(),
-        button=viewmodels.Button.primary(text=_("eligibility.pages.index.button"), url=reverse("eligibility:confirm")),
-    )
+    eligibility_start = reverse("eligibility:start")
 
-    return PageTemplateResponse(request, page)
+    if request.method == "POST":
+        form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency)
+
+        if not form.is_valid():
+            return None
+
+        verifier_id = form.cleaned_data.get("verifier")
+        verifier = EligibilityVerifier.objects.get(id=verifier_id)
+        session.update(request, verifier=verifier)
+
+        return redirect(eligibility_start)
+    else:
+        if agency.eligibility_verifiers.count() == 1:
+            verifier = agency.eligibility_verifiers.first()
+            session.update(request, verifier=verifier)
+            return redirect(eligibility_start)
+        else:
+            page = viewmodels.Page(
+                title=_("eligibility.pages.index.title"),
+                content_title=_("eligibility.pages.index.content_title"),
+                forms=forms.EligibilityVerifierSelectionForm(agency=agency),
+                image=_index_image(),
+            )
+            return PageTemplateResponse(request, page)
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)

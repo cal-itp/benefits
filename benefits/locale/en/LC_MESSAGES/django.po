@@ -265,7 +265,7 @@ msgstr "Getting started"
 
 #: benefits/eligibility/views.py:23
 msgid "eligibility.pages.index.content_title"
-msgstr "Great, you’ll need two things before we get started..."
+msgstr "Select the discount option that best applies to you:"
 
 #: benefits/eligibility/views.py:26 benefits/enrollment/views.py:31
 msgctxt "image alt text"
