@@ -17,6 +17,10 @@ msgstr ""
 msgid "eligibility.forms.confirm.dmv.fields.sub"
 msgstr "CA driver’s license or ID number"
 
+#: benefits/eligibility/forms.py:26
+msgid "eligibility.forms.confirm.dmv.fields.name"
+msgstr "Last name (as it appears on ID)"
+
 #: benefits/eligibility/views.py:27
 msgid "eligibility.pages.start.dmv.items[0].title"
 msgstr "Your California ID"

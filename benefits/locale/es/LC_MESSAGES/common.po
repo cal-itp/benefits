@@ -229,10 +229,6 @@ msgctxt "image alt text"
 msgid "core.icons.bankcard"
 msgstr "Icono de tarjeta bancaria"
 
-#: benefits/eligibility/forms.py:26
-msgid "eligibility.forms.confirm.fields.name"
-msgstr "Apellido (como aparece en la identificación)"
-
 #: benefits/eligibility/forms.py:29
 msgid "eligibility.forms.confirm.submit"
 msgstr "Verificar"

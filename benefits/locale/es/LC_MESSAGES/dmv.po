@@ -17,6 +17,10 @@ msgstr ""
 msgid "eligibility.forms.confirm.dmv.fields.sub"
 msgstr "Licencia de conducir de CA o número de identificación"
 
+#: benefits/eligibility/forms.py:26
+msgid "eligibility.forms.confirm.dmv.fields.name"
+msgstr "Apellido (como aparece en la identificación)"
+
 #: benefits/eligibility/views.py:27
 msgid "eligibility.pages.start.dmv.items[0].title"
 msgstr "Tu identificación de California"
