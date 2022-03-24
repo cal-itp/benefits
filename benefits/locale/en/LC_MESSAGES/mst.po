@@ -1,0 +1,65 @@
+# Cal-ITP Benefits: English PO file for the MST Courtesy Card verifier content.
+# Copyright (C) 2021 California Department of Transportation
+# This file is distributed under the same license as the benefits package.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues\n"
+"POT-Creation-Date: 2022-03-24 22:00+0000\n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: benefits/eligibility/forms.py:22
+msgid "eligibility.forms.confirm.mst.fields.sub"
+msgstr "CA driver’s license or ID number"
+
+#: benefits/eligibility/forms.py:26
+msgid "eligibility.forms.confirm.mst.fields.name"
+msgstr "Last name (as it appears on ID)"
+
+#: benefits/eligibility/views.py:27
+msgid "eligibility.pages.start.mst.items[0].title"
+msgstr "Your California ID"
+
+#: benefits/eligibility/views.py:28
+msgid "eligibility.pages.start.mst.items[0].text"
+msgstr "Driver’s license or ID card"
+
+#: benefits/eligibility/views.py:36
+msgid "eligibility.pages.start.mst.p[0]"
+msgstr ""
+"This program is currently open to those who are 65 or older. Not over 65? "
+"Get in touch with your transit provider to learn about other available "
+"discount programs."
+
+#: benefits/eligibility/views.py:50
+msgid "eligibility.pages.confirm.mst.title"
+msgstr "Confirm your age"
+
+#: benefits/eligibility/views.py:51
+msgid "eligibility.pages.confirm.mst.content_title"
+msgstr "Let’s see if we can confirm your age with the DMV"
+
+#: benefits/eligibility/views.py:52
+msgid "eligibility.pages.confirm.mst.p[0]"
+msgstr ""
+"If you’re 65 or older, we can confirm you are eligible for a senior discount "
+"when you ride transit. We don’t save your information."
+
+#: benefits/eligibility/views.py:124
+msgid "eligibility.pages.unverified.mst.title"
+msgstr "Age not confirmed"
+
+#: benefits/eligibility/views.py:125
+msgid "eligibility.pages.unverified.mst.content_title"
+msgstr "We can’t confirm your age"
+
+#: benefits/eligibility/views.py:127
+msgid "eligibility.pages.unverified.mst.p[0]"
+msgstr ""
+"You may still be eligible for a discount, but we can’t verify your age with "
+"the DMV."
