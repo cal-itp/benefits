@@ -15,51 +15,52 @@ msgstr ""
 
 #: benefits/eligibility/forms.py:22
 msgid "eligibility.forms.confirm.mst.fields.sub"
-msgstr "CA driver’s license or ID number"
+msgstr "MST Courtesy Card number"
 
 #: benefits/eligibility/forms.py:26
 msgid "eligibility.forms.confirm.mst.fields.name"
-msgstr "Last name (as it appears on ID)"
+msgstr "Last name (as it appears on Courtesy Card)"
 
 #: benefits/eligibility/views.py:27
 msgid "eligibility.pages.start.mst.items[0].title"
-msgstr "Your California ID"
+msgstr "Your MST Courtesy Card"
 
 #: benefits/eligibility/views.py:28
 msgid "eligibility.pages.start.mst.items[0].text"
-msgstr "Driver’s license or ID card"
+msgstr "An active card that has not expired"
 
 #: benefits/eligibility/views.py:36
 msgid "eligibility.pages.start.mst.p[0]"
 msgstr ""
-"This program is currently open to those who are 65 or older. Not over 65? "
-"Get in touch with your transit provider to learn about other available "
-"discount programs."
+"This program is currently open to all MST Courtesy Cardholders. Not "
+"a Courtesy Cardholder? Get in touch with your transit provider to "
+"learn about other available discount programs at"
 
 #: benefits/eligibility/views.py:50
 msgid "eligibility.pages.confirm.mst.title"
-msgstr "Confirm your age"
+msgstr "Confirm your Courtesy Card"
 
 #: benefits/eligibility/views.py:51
 msgid "eligibility.pages.confirm.mst.content_title"
-msgstr "Let’s see if we can confirm your age with the DMV"
+msgstr "Let’s see if we can find you in our system"
 
 #: benefits/eligibility/views.py:52
 msgid "eligibility.pages.confirm.mst.p[0]"
 msgstr ""
-"If you’re 65 or older, we can confirm you are eligible for a senior discount "
-"when you ride transit. We don’t save your information."
+"Please input your Courtesy Card number and last name below. If you're a "
+"current MST Courtesy Cardholder, we can confirm that you are eligible "
+"for a discount. We do not save your information."
 
 #: benefits/eligibility/views.py:124
 msgid "eligibility.pages.unverified.mst.title"
-msgstr "Age not confirmed"
+msgstr "Courtesy Card not located"
 
 #: benefits/eligibility/views.py:125
 msgid "eligibility.pages.unverified.mst.content_title"
-msgstr "We can’t confirm your age"
+msgstr "We couldn’t locate you in our system"
 
 #: benefits/eligibility/views.py:127
 msgid "eligibility.pages.unverified.mst.p[0]"
 msgstr ""
-"You may still be eligible for a discount, but we can’t verify your age with "
-"the DMV."
+"That’s okay! You may still be eligible for our program. "
+"Please reach out to Monterey-Salinas Transit for assistance."
