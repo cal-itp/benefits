@@ -22,30 +22,35 @@ def index(request):
 
     eligibility_start = reverse("eligibility:start")
 
+    page = viewmodels.Page(
+        title=_("eligibility.pages.index.title"),
+        content_title=_("eligibility.pages.index.content_title"),
+        forms=forms.EligibilityVerifierSelectionForm(agency=agency),
+        image=_index_image(),
+    )
+
     if request.method == "POST":
         form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency)
 
-        if not form.is_valid():
-            return None
+        if form.is_valid():
+            verifier_id = form.cleaned_data.get("verifier")
+            verifier = EligibilityVerifier.objects.get(id=verifier_id)
+            session.update(request, verifier=verifier)
 
-        verifier_id = form.cleaned_data.get("verifier")
-        verifier = EligibilityVerifier.objects.get(id=verifier_id)
-        session.update(request, verifier=verifier)
-
-        return redirect(eligibility_start)
+            response = redirect(eligibility_start)
+        else:
+            # form was not valid, allow for correction/resubmission
+            page.forms = [form]
+            response = PageTemplateResponse(request, page)
     else:
         if agency.eligibility_verifiers.count() == 1:
             verifier = agency.eligibility_verifiers.first()
             session.update(request, verifier=verifier)
-            return redirect(eligibility_start)
+            response = redirect(eligibility_start)
         else:
-            page = viewmodels.Page(
-                title=_("eligibility.pages.index.title"),
-                content_title=_("eligibility.pages.index.content_title"),
-                forms=forms.EligibilityVerifierSelectionForm(agency=agency),
-                image=_index_image(),
-            )
-            return PageTemplateResponse(request, page)
+            response = PageTemplateResponse(request, page)
+
+    return response
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
