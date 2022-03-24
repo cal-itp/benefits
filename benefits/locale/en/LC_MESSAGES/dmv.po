@@ -14,48 +14,48 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: benefits/eligibility/forms.py:22
-msgid "eligibility.forms.confirm.fields.sub"
+msgid "eligibility.forms.confirm.dmv.fields.sub"
 msgstr "CA driver’s license or ID number"
 
 #: benefits/eligibility/views.py:27
-msgid "eligibility.pages.index.items[0].title"
+msgid "eligibility.pages.start.dmv.items[0].title"
 msgstr "Your California ID"
 
 #: benefits/eligibility/views.py:28
-msgid "eligibility.pages.index.items[0].text"
+msgid "eligibility.pages.start.dmv.items[0].text"
 msgstr "Driver’s license or ID card"
 
 #: benefits/eligibility/views.py:36
-msgid "eligibility.pages.index.p[0]"
+msgid "eligibility.pages.start.dmv.p[0]"
 msgstr ""
 "This program is currently open to those who are 65 or older. Not over 65? "
 "Get in touch with your transit provider to learn about other available "
 "discount programs."
 
 #: benefits/eligibility/views.py:50
-msgid "eligibility.pages.confirm.title"
+msgid "eligibility.pages.confirm.dmv.title"
 msgstr "Confirm your age"
 
 #: benefits/eligibility/views.py:51
-msgid "eligibility.pages.confirm.content_title"
+msgid "eligibility.pages.confirm.dmv.content_title"
 msgstr "Let’s see if we can confirm your age with the DMV"
 
 #: benefits/eligibility/views.py:52
-msgid "eligibility.pages.confirm.p[0]"
+msgid "eligibility.pages.confirm.dmv.p[0]"
 msgstr ""
 "If you’re 65 or older, we can confirm you are eligible for a senior discount "
 "when you ride transit. We don’t save your information."
 
 #: benefits/eligibility/views.py:124
-msgid "eligibility.pages.unverified.title"
+msgid "eligibility.pages.unverified.dmv.title"
 msgstr "Age not confirmed"
 
 #: benefits/eligibility/views.py:125
-msgid "eligibility.pages.unverified.content_title"
+msgid "eligibility.pages.unverified.dmv.content_title"
 msgstr "We can’t confirm your age"
 
 #: benefits/eligibility/views.py:127
-msgid "eligibility.pages.unverified.p[0]"
+msgid "eligibility.pages.unverified.dmv.p[0]"
 msgstr ""
 "You may still be eligible for a discount, but we can’t verify your age with "
 "the DMV."

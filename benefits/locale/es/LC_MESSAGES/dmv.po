@@ -14,19 +14,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: benefits/eligibility/forms.py:22
-msgid "eligibility.forms.confirm.fields.sub"
+msgid "eligibility.forms.confirm.dmv.fields.sub"
 msgstr "Licencia de conducir de CA o número de identificación"
 
 #: benefits/eligibility/views.py:27
-msgid "eligibility.pages.index.items[0].title"
+msgid "eligibility.pages.start.dmv.items[0].title"
 msgstr "Tu identificación de California"
 
 #: benefits/eligibility/views.py:28
-msgid "eligibility.pages.index.items[0].text"
+msgid "eligibility.pages.start.dmv.items[0].text"
 msgstr "Licencia de conducir o tarjeta de identificación"
 
 #: benefits/eligibility/views.py:36
-msgid "eligibility.pages.index.p[0]"
+msgid "eligibility.pages.start.dmv.p[0]"
 msgstr ""
 "Este programa actualmente está disponible para personas de 65 años o más. "
 "¿No tienes más de 65 años? Póngase en contacto con su proveedor de "
@@ -34,30 +34,30 @@ msgstr ""
 "disponibles."
 
 #: benefits/eligibility/views.py:50
-msgid "eligibility.pages.confirm.title"
+msgid "eligibility.pages.confirm.dmv.title"
 msgstr "Verificar su edad"
 
 #: benefits/eligibility/views.py:51
-msgid "eligibility.pages.confirm.content_title"
+msgid "eligibility.pages.confirm.dmv.content_title"
 msgstr "Veamos si podemos verificar su edad con el DMV"
 
 #: benefits/eligibility/views.py:52
-msgid "eligibility.pages.confirm.p[0]"
+msgid "eligibility.pages.confirm.dmv.p[0]"
 msgstr ""
 "Si tiene 65 años o más, podemos confirmar que es elegible para un descuento "
 "para personas mayores cuando viaja en transporte público. Nosotros no "
 "guardamos su información."
 
 #: benefits/eligibility/views.py:124
-msgid "eligibility.pages.unverified.title"
+msgid "eligibility.pages.unverified.dmv.title"
 msgstr "Edad no confirmada"
 
 #: benefits/eligibility/views.py:125
-msgid "eligibility.pages.unverified.content_title"
+msgid "eligibility.pages.unverified.dmv.content_title"
 msgstr "No podemos confirmar su edad"
 
 #: benefits/eligibility/views.py:127
-msgid "eligibility.pages.unverified.p[0]"
+msgid "eligibility.pages.unverified.dmv.p[0]"
 msgstr ""
 "Usted todavía puede ser elegible para un descuento, pero no podemos "
 "verificar su edad con el DMV."
