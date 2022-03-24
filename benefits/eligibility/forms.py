@@ -20,7 +20,7 @@ class EligibilityVerifierSelectionForm(forms.Form):
 
     verifier = forms.ChoiceField(label="", widget=forms.RadioSelect)
 
-    submit_value = _("eligibility.form.continue")
+    submit_value = _("eligibility.pages.index.button")
     submitting_value = _("eligibility.form.continuing")
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):

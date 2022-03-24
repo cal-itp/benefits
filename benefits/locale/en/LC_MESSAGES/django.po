@@ -227,10 +227,6 @@ msgctxt "image alt text"
 msgid "core.icons.bankcard"
 msgstr "Bank card icon with contactless symbol"
 
-#: benefits/eligibility/forms.py:23
-msgid "eligibility.form.continue"
-msgstr "Continue"
-
 #: benefits/eligibility/forms.py:24
 msgid "eligibility.form.continuing"
 msgstr "Continuing"
@@ -302,7 +298,7 @@ msgstr ""
 
 #: benefits/eligibility/views.py:38
 msgid "eligibility.pages.index.button"
-msgstr "Ready to continue"
+msgstr "Continue"
 
 #: benefits/eligibility/views.py:22
 msgid "eligibility.pages.start.title"
