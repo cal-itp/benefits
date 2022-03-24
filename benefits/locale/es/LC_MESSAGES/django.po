@@ -246,7 +246,7 @@ msgid "eligibility.forms.confirm.errors.missing"
 msgstr "Este campo es requerido."
 
 #: benefits/eligibility/views.py:22
-msgid "eligibility.pages.index.title"
+msgid "eligibility.pages.start.title"
 msgstr "Preparación"
 
 #: benefits/eligibility/views.py:23
@@ -265,15 +265,15 @@ msgstr ""
 "Icono de tarjeta bancaria con símbolo sin contacto y marca de verificación"
 
 #: benefits/eligibility/views.py:32
-msgid "eligibility.pages.index.items[1].title"
+msgid "eligibility.pages.start.items[1].title"
 msgstr "Tu tarjeta bancaria"
 
 #: benefits/eligibility/views.py:33
-msgid "eligibility.pages.index.items[1].text"
+msgid "eligibility.pages.start.items[1].text"
 msgstr "Una tarjeta de débito o crédito"
 
 #: benefits/eligibility/views.py:38
-msgid "eligibility.pages.index.button"
+msgid "eligibility.buttons.continue"
 msgstr "Continuar"
 
 #: benefits/eligibility/views.py:126
@@ -284,6 +284,10 @@ msgstr "Icono de tarjeta de identificación con signo de interrogación"
 #: benefits/eligibility/views.py:127
 msgid "eligibility.pages.unverified.p[1]"
 msgstr "Comuníquese con su proveedor de transporte público para obtener ayuda."
+
+#: benefits/eligibility/views.py:23
+msgid "eligibility.pages.start.dmv.content_title"
+msgstr "Genial, necesitarás dos cosas antes de comenzar..."
 
 #: benefits/eligibility/forms.py:22
 msgid "eligibility.forms.confirm.dmv.fields.sub"
@@ -345,6 +349,10 @@ msgstr "Número de tarjeta cortesía MST"
 #: benefits/eligibility/forms.py:26
 msgid "eligibility.forms.confirm.mst.fields.name"
 msgstr "Apellido (como aparece en la identificación)"
+
+#: benefits/eligibility/views.py:23
+msgid "eligibility.pages.start.mst.content_title"
+msgstr "Genial, necesitarás dos cosas antes de empeza"
 
 #: benefits/eligibility/views.py:27
 msgid "eligibility.pages.start.mst.items[0].title"

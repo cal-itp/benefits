@@ -244,7 +244,7 @@ msgid "eligibility.forms.confirm.errors.missing"
 msgstr "This field is required."
 
 #: benefits/eligibility/views.py:22
-msgid "eligibility.pages.index.title"
+msgid "eligibility.pages.start.title"
 msgstr "Getting started"
 
 #: benefits/eligibility/views.py:23
@@ -262,15 +262,15 @@ msgid "core.icons.bankcardcheck"
 msgstr "Bank card icon with contactless symbol and checkmark"
 
 #: benefits/eligibility/views.py:32
-msgid "eligibility.pages.index.items[1].title"
+msgid "eligibility.pages.start.items[1].title"
 msgstr "Your bank card"
 
 #: benefits/eligibility/views.py:33
-msgid "eligibility.pages.index.items[1].text"
+msgid "eligibility.pages.start.items[1].text"
 msgstr "A debit or credit card"
 
 #: benefits/eligibility/views.py:38
-msgid "eligibility.pages.index.button"
+msgid "eligibility.buttons.continue"
 msgstr "Continue"
 
 #: benefits/eligibility/views.py:126
@@ -289,6 +289,10 @@ msgstr "CA driver’s license or ID number"
 #: benefits/eligibility/forms.py:26
 msgid "eligibility.forms.confirm.dmv.fields.name"
 msgstr "Last name (as it appears on ID)"
+
+#: benefits/eligibility/views.py:23
+msgid "eligibility.pages.start.dmv.content_title"
+msgstr "Great, you’ll need two things before we get started..."
 
 #: benefits/eligibility/views.py:27
 msgid "eligibility.pages.start.dmv.items[0].title"
@@ -340,6 +344,10 @@ msgstr "MST Courtesy Card number"
 #: benefits/eligibility/forms.py:26
 msgid "eligibility.forms.confirm.mst.fields.name"
 msgstr "Last name (as it appears on Courtesy Card)"
+
+#: benefits/eligibility/views.py:23
+msgid "eligibility.pages.start.mst.content_title"
+msgstr "You’ll need two things before we get started:"
 
 #: benefits/eligibility/views.py:27
 msgid "eligibility.pages.start.mst.items[0].title"
