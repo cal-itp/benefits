@@ -6,7 +6,7 @@ import logging
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from benefits.core import recaptcha, widgets
+from benefits.core import models, recaptcha, widgets
 
 
 logger = logging.getLogger(__name__)
@@ -18,14 +18,6 @@ class EligibilityVerificationForm(forms.Form):
     action_url = "eligibility:confirm"
     method = "POST"
 
-    sub = forms.CharField(
-        label=_("eligibility.forms.confirm.fields.sub"), widget=widgets.FormControlTextInput(placeholder="A1234567")
-    )
-
-    name = forms.CharField(
-        label=_("eligibility.forms.confirm.fields.name"), widget=widgets.FormControlTextInput(placeholder="Rodriguez")
-    )
-
     submit_value = _("eligibility.forms.confirm.submit")
     submitting_value = _("eligibility.forms.confirm.submitting")
 
@@ -33,6 +25,21 @@ class EligibilityVerificationForm(forms.Form):
         "invalid": _("eligibility.forms.confirm.errors.invalid"),
         "missing": _("eligibility.forms.confirm.errors.missing"),
     }
+
+    def __init__(self, verifier: models.EligibilityVerifier, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        sub_widget = widgets.FormControlTextInput(placeholder=verifier.form_sub_placeholder)
+        if verifier.form_sub_pattern:
+            sub_widget.attrs.update({"pattern": verifier.form_sub_pattern})
+
+        self.fields["sub"] = forms.CharField(label=_(verifier.form_sub_label), widget=sub_widget)
+
+        name_widget = widgets.FormControlTextInput(placeholder=verifier.form_name_placeholder)
+        if verifier.form_name_max_length:
+            name_widget.attrs.update({"maxlength": verifier.form_name_max_length})
+
+        self.fields["name"] = forms.CharField(label=_(verifier.form_name_label), widget=name_widget)
 
     def add_api_errors(self, form_errors):
         """Handle errors passed back from API server related to submitted form values."""
