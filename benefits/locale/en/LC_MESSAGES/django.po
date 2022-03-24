@@ -296,6 +296,41 @@ msgstr ""
 msgid "eligibility.pages.index.button"
 msgstr "Ready to continue"
 
+#: benefits/eligibility/views.py:22
+msgid "eligibility.pages.start.title"
+msgstr "Getting started"
+
+#: benefits/eligibility/views.py:23
+msgid "eligibility.pages.start.content_title"
+msgstr "Great, you’ll need two things before we get started..."
+
+#: benefits/eligibility/views.py:27
+msgid "eligibility.pages.start.items[0].title"
+msgstr "Your California ID"
+
+#: benefits/eligibility/views.py:28
+msgid "eligibility.pages.start.items[0].text"
+msgstr "Driver’s license or ID card"
+
+#: benefits/eligibility/views.py:32
+msgid "eligibility.pages.start.items[1].title"
+msgstr "Your bank card"
+
+#: benefits/eligibility/views.py:33
+msgid "eligibility.pages.start.items[1].text"
+msgstr "A debit or credit card"
+
+#: benefits/eligibility/views.py:36
+msgid "eligibility.pages.start.p[0]"
+msgstr ""
+"This program is currently open to those who are 65 or older. Not over 65? "
+"Get in touch with your transit provider to learn about other available "
+"discount programs."
+
+#: benefits/eligibility/views.py:38
+msgid "eligibility.pages.start.button"
+msgstr "Ready to continue"
+
 #: benefits/eligibility/views.py:50
 msgid "eligibility.pages.confirm.title"
 msgstr "Confirm your age"

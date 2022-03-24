@@ -300,6 +300,42 @@ msgstr ""
 msgid "eligibility.pages.index.button"
 msgstr "Listo para continuar"
 
+#: benefits/eligibility/views.py:22
+msgid "eligibility.pages.start.title"
+msgstr "Preparación"
+
+#: benefits/eligibility/views.py:23
+msgid "eligibility.pages.start.content_title"
+msgstr "Genial, necesitarás dos cosas antes de comenzar..."
+
+#: benefits/eligibility/views.py:27
+msgid "eligibility.pages.start.items[0].title"
+msgstr "Tu identificación de California"
+
+#: benefits/eligibility/views.py:28
+msgid "eligibility.pages.start.items[0].text"
+msgstr "Licencia de conducir o tarjeta de identificación"
+
+#: benefits/eligibility/views.py:32
+msgid "eligibility.pages.start.items[1].title"
+msgstr "Tu tarjeta bancaria"
+
+#: benefits/eligibility/views.py:33
+msgid "eligibility.pages.start.items[1].text"
+msgstr "Una tarjeta de débito o crédito"
+
+#: benefits/eligibility/views.py:36
+msgid "eligibility.pages.start.p[0]"
+msgstr ""
+"Este programa actualmente está disponible para personas de 65 años o más. "
+"¿No tienes más de 65 años? Póngase en contacto con su proveedor de "
+"transporte público para obtener información sobre los programas de descuento "
+"disponibles."
+
+#: benefits/eligibility/views.py:38
+msgid "eligibility.pages.start.button"
+msgstr "Listo para continuar"
+
 #: benefits/eligibility/views.py:50
 msgid "eligibility.pages.confirm.title"
 msgstr "Verificar su edad"

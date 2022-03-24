@@ -43,6 +43,36 @@ def index(request):
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
+@decorator_from_middleware(middleware.VerifierSessionRequired)
+def start(request):
+    """View handler for the eligibility verification getting started screen."""
+
+    verifier = session.verifier(request)
+
+    page = viewmodels.Page(
+        title=_("eligibility.pages.start.title"),
+        content_title=_(verifier.start_content_title),
+        media=[
+            viewmodels.MediaItem(
+                icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
+                heading=_(verifier.start_item_name),
+                details=_(verifier.start_item_description),
+            ),
+            viewmodels.MediaItem(
+                icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
+                heading=_("eligibility.pages.start.items[1].title"),
+                details=_("eligibility.pages.start.items[1].text"),
+            ),
+        ],
+        paragraphs=[_(verifier.start_blurb)],
+        image=_index_image(),
+        button=viewmodels.Button.primary(text=_("eligibility.pages.start.button"), url=reverse("eligibility:confirm")),
+    )
+
+    return PageTemplateResponse(request, page)
+
+
+@decorator_from_middleware(middleware.AgencySessionRequired)
 @decorator_from_middleware(middleware.RateLimit)
 @decorator_from_middleware(middleware.VerifierSessionRequired)
 def confirm(request):
