@@ -285,6 +285,111 @@ msgstr "Icono de tarjeta de identificación con signo de interrogación"
 msgid "eligibility.pages.unverified.p[1]"
 msgstr "Comuníquese con su proveedor de transporte público para obtener ayuda."
 
+#: benefits/eligibility/forms.py:22
+msgid "eligibility.forms.confirm.dmv.fields.sub"
+msgstr "Licencia de conducir de CA o número de identificación"
+
+#: benefits/eligibility/forms.py:26
+msgid "eligibility.forms.confirm.dmv.fields.name"
+msgstr "Apellido (como aparece en la identificación)"
+
+#: benefits/eligibility/views.py:27
+msgid "eligibility.pages.start.dmv.items[0].title"
+msgstr "Tu identificación de California"
+
+#: benefits/eligibility/views.py:28
+msgid "eligibility.pages.start.dmv.items[0].text"
+msgstr "Licencia de conducir o tarjeta de identificación"
+
+#: benefits/eligibility/views.py:36
+msgid "eligibility.pages.start.dmv.p[0]"
+msgstr ""
+"Este programa actualmente está disponible para personas de 65 años o más. "
+"¿No tienes más de 65 años? Póngase en contacto con su proveedor de "
+"transporte público para obtener información sobre los programas de descuento "
+"disponibles."
+
+#: benefits/eligibility/views.py:50
+msgid "eligibility.pages.confirm.dmv.title"
+msgstr "Verificar su edad"
+
+#: benefits/eligibility/views.py:51
+msgid "eligibility.pages.confirm.dmv.content_title"
+msgstr "Veamos si podemos verificar su edad con el DMV"
+
+#: benefits/eligibility/views.py:52
+msgid "eligibility.pages.confirm.dmv.p[0]"
+msgstr ""
+"Si tiene 65 años o más, podemos confirmar que es elegible para un descuento "
+"para personas mayores cuando viaja en transporte público. Nosotros no "
+"guardamos su información."
+
+#: benefits/eligibility/views.py:124
+msgid "eligibility.pages.unverified.dmv.title"
+msgstr "Edad no confirmada"
+
+#: benefits/eligibility/views.py:125
+msgid "eligibility.pages.unverified.dmv.content_title"
+msgstr "No podemos confirmar su edad"
+
+#: benefits/eligibility/views.py:127
+msgid "eligibility.pages.unverified.dmv.p[0]"
+msgstr ""
+"Usted todavía puede ser elegible para un descuento, pero no podemos "
+"verificar su edad con el DMV."
+
+#: benefits/eligibility/forms.py:22
+msgid "eligibility.forms.confirm.mst.fields.sub"
+msgstr "Número de tarjeta cortesía MST"
+
+#: benefits/eligibility/forms.py:26
+msgid "eligibility.forms.confirm.mst.fields.name"
+msgstr "Apellido (como aparece en la identificación)"
+
+#: benefits/eligibility/views.py:27
+msgid "eligibility.pages.start.mst.items[0].title"
+msgstr "Tu tarjeta de cortesía MST"
+
+#: benefits/eligibility/views.py:28
+msgid "eligibility.pages.start.mst.items[0].text"
+msgstr "Una tarjeta activa que no ha caducado"
+
+#: benefits/eligibility/views.py:36
+msgid "eligibility.pages.start.mst.p[0]"
+msgstr ""
+"Este programa está actualmente abierto a todas los titulares de tarjetas de "
+"cortesía MST. ¿No es titular de una tarjeta de cortesía? Póngase en contacto "
+"con su proveedor de transporte público para obtener información sobre los "
+"programas de descuento disponibles"
+
+#: benefits/eligibility/views.py:50
+msgid "eligibility.pages.confirm.mst.title"
+msgstr "Verificar su tarjeta de cortesía MST"
+
+#: benefits/eligibility/views.py:51
+msgid "eligibility.pages.confirm.mst.content_title"
+msgstr "Veamos si podemos encontrarle en nuestra sistema"
+
+#: benefits/eligibility/views.py:52
+msgid "eligibility.pages.confirm.mst.p[0]"
+msgstr ""
+"Por favor ingrese su número de tarjeta cortesía y "
+"apellido a continuación. Si eres titular de una tarjeta de cortesía MST, "
+"podemos confirmar que ere elegible para un descuento. "
+"Nosotros no guardamos su información."
+
+#: benefits/eligibility/views.py:124
+msgid "eligibility.pages.unverified.mst.title"
+msgstr "Tarjeta de cortesía MST no confirmada"
+
+#: benefits/eligibility/views.py:125
+msgid "eligibility.pages.unverified.mst.content_title"
+msgstr "No podemos confirmar su tarjeta de cortesía MST"
+
+#: benefits/eligibility/views.py:127
+msgid "eligibility.pages.unverified.mst.p[0]"
+msgstr ""
+
 #: benefits/enrollment/templates/enrollment/success.html:7
 msgctxt "image alt text"
 msgid "enrollment.pages.success.image"
