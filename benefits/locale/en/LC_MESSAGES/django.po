@@ -227,10 +227,6 @@ msgctxt "image alt text"
 msgid "core.icons.bankcard"
 msgstr "Bank card icon with contactless symbol"
 
-#: benefits/eligibility/forms.py:24
-msgid "eligibility.form.continuing"
-msgstr "Continuing"
-
 #: benefits/eligibility/forms.py:22
 msgid "eligibility.forms.confirm.fields.sub"
 msgstr "CA driver’s license or ID number"
