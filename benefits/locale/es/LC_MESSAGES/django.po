@@ -259,7 +259,7 @@ msgstr "Preparación"
 
 #: benefits/eligibility/views.py:23
 msgid "eligibility.pages.index.content_title"
-msgstr "Genial, necesitarás dos cosas antes de comenzar..."
+msgstr "TODO"
 
 #: benefits/eligibility/views.py:26 benefits/enrollment/views.py:31
 msgctxt "image alt text"
@@ -298,7 +298,7 @@ msgstr ""
 
 #: benefits/eligibility/views.py:38
 msgid "eligibility.pages.index.button"
-msgstr "Listo para continuar"
+msgstr "Continuar"
 
 #: benefits/eligibility/views.py:22
 msgid "eligibility.pages.start.title"

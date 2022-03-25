@@ -12,6 +12,22 @@ from benefits.core import models, recaptcha, widgets
 logger = logging.getLogger(__name__)
 
 
+class EligibilityVerifierSelectionForm(forms.Form):
+    """Form to capture eligibility verifier selection."""
+
+    action_url = "eligibility:index"
+    method = "POST"
+
+    verifier = forms.ChoiceField(label="", widget=forms.RadioSelect)
+
+    submit_value = _("eligibility.pages.index.button")
+
+    def __init__(self, agency: models.TransitAgency, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        choices = [(v.id, v.selection_label) for v in agency.eligibility_verifiers.all()]
+        self.fields["verifier"].choices = choices
+
+
 class EligibilityVerificationForm(forms.Form):
     """Form to collect eligibility verification details."""
 
