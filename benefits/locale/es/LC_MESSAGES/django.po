@@ -1,4 +1,4 @@
-# Cal-ITP Benefits: Español PO file for the common app strings.
+# Cal-ITP Benefits: Español PO file.
 # Copyright (C) 2021 California Department of Transportation
 # This file is distributed under the same license as the benefits package.
 #
@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues\n"
-"POT-Creation-Date: 2022-03-16 22:30+0000\n"
+"POT-Creation-Date: 2022-03-25 15:00+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -139,7 +139,7 @@ msgid "core.pages.index.title"
 msgstr "Beneficios del Tránsito"
 
 #: benefits/core/viewmodels.py:174 benefits/core/viewmodels.py:176
-#: benefits/eligibility/forms.py:41
+#: benefits/eligibility/forms.py:64
 msgid "core.pages.error.title"
 msgstr "Error"
 
@@ -229,174 +229,73 @@ msgctxt "image alt text"
 msgid "core.icons.bankcard"
 msgstr "Icono de tarjeta bancaria"
 
-#: benefits/eligibility/forms.py:29
+#: benefits/eligibility/forms.py:37
 msgid "eligibility.forms.confirm.submit"
 msgstr "Verificar"
 
-#: benefits/eligibility/forms.py:30
+#: benefits/eligibility/forms.py:38
 msgid "eligibility.forms.confirm.submitting"
 msgstr "Verificando"
 
-#: benefits/eligibility/forms.py:33
+#: benefits/eligibility/forms.py:41
 msgid "eligibility.forms.confirm.errors.invalid"
 msgstr "Verifique su entrada. El formato parece incorrecto."
 
-#: benefits/eligibility/forms.py:34
+#: benefits/eligibility/forms.py:42
 msgid "eligibility.forms.confirm.errors.missing"
 msgstr "Este campo es requerido."
 
-#: benefits/eligibility/views.py:22
-msgid "eligibility.pages.start.title"
-msgstr "Preparación"
+#: benefits/eligibility/views.py:26
+msgid "eligibility.pages.index.title"
+msgstr "TODO"
 
-#: benefits/eligibility/views.py:23
+#: benefits/eligibility/views.py:27
 msgid "eligibility.pages.index.content_title"
 msgstr "TODO"
 
-#: benefits/eligibility/views.py:26 benefits/enrollment/views.py:31
+#: benefits/eligibility/views.py:64
+msgid "eligibility.pages.start.title"
+msgstr "Preparación"
+
+#: benefits/eligibility/views.py:68 benefits/enrollment/views.py:31
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Icono de tarjeta de identificación con marca de verificación"
 
-#: benefits/eligibility/views.py:31 benefits/enrollment/views.py:148
+#: benefits/eligibility/views.py:73 benefits/enrollment/views.py:148
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
 msgstr ""
 "Icono de tarjeta bancaria con símbolo sin contacto y marca de verificación"
 
-#: benefits/eligibility/views.py:32
+#: benefits/eligibility/views.py:74
 msgid "eligibility.pages.start.items[1].title"
 msgstr "Tu tarjeta bancaria"
 
-#: benefits/eligibility/views.py:33
+#: benefits/eligibility/views.py:75
 msgid "eligibility.pages.start.items[1].text"
 msgstr "Una tarjeta de débito o crédito"
 
-#: benefits/eligibility/views.py:38
+#: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
 msgstr "Continuar"
 
-#: benefits/eligibility/views.py:126
+#: benefits/eligibility/views.py:170
+msgid "eligibility.pages.unverified.dmv.title"
+msgstr "Edad no confirmada"
+
+#: benefits/eligibility/views.py:171
+msgid "eligibility.pages.unverified.dmv.content_title"
+msgstr "No podemos confirmar su edad"
+
+#: benefits/eligibility/views.py:172
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Icono de tarjeta de identificación con signo de interrogación"
 
-#: benefits/eligibility/views.py:127
+#: benefits/eligibility/views.py:173
 msgid "eligibility.pages.unverified.p[1]"
 msgstr "Comuníquese con su proveedor de transporte público para obtener ayuda."
-
-#: benefits/eligibility/views.py:23
-msgid "eligibility.pages.start.dmv.content_title"
-msgstr "Genial, necesitarás dos cosas antes de comenzar..."
-
-#: benefits/eligibility/forms.py:22
-msgid "eligibility.forms.confirm.dmv.fields.sub"
-msgstr "Licencia de conducir de CA o número de identificación"
-
-#: benefits/eligibility/forms.py:26
-msgid "eligibility.forms.confirm.dmv.fields.name"
-msgstr "Apellido (como aparece en la identificación)"
-
-#: benefits/eligibility/views.py:27
-msgid "eligibility.pages.start.dmv.items[0].title"
-msgstr "Tu identificación de California"
-
-#: benefits/eligibility/views.py:28
-msgid "eligibility.pages.start.dmv.items[0].text"
-msgstr "Licencia de conducir o tarjeta de identificación"
-
-#: benefits/eligibility/views.py:36
-msgid "eligibility.pages.start.dmv.p[0]"
-msgstr ""
-"Este programa actualmente está disponible para personas de 65 años o más. "
-"¿No tienes más de 65 años? Póngase en contacto con su proveedor de "
-"transporte público para obtener información sobre los programas de descuento "
-"disponibles."
-
-#: benefits/eligibility/views.py:50
-msgid "eligibility.pages.confirm.dmv.title"
-msgstr "Verificar su edad"
-
-#: benefits/eligibility/views.py:51
-msgid "eligibility.pages.confirm.dmv.content_title"
-msgstr "Veamos si podemos verificar su edad con el DMV"
-
-#: benefits/eligibility/views.py:52
-msgid "eligibility.pages.confirm.dmv.p[0]"
-msgstr ""
-"Si tiene 65 años o más, podemos confirmar que es elegible para un descuento "
-"para personas mayores cuando viaja en transporte público. Nosotros no "
-"guardamos su información."
-
-#: benefits/eligibility/views.py:124
-msgid "eligibility.pages.unverified.dmv.title"
-msgstr "Edad no confirmada"
-
-#: benefits/eligibility/views.py:125
-msgid "eligibility.pages.unverified.dmv.content_title"
-msgstr "No podemos confirmar su edad"
-
-#: benefits/eligibility/views.py:127
-msgid "eligibility.pages.unverified.dmv.p[0]"
-msgstr ""
-"Usted todavía puede ser elegible para un descuento, pero no podemos "
-"verificar su edad con el DMV."
-
-#: benefits/eligibility/forms.py:22
-msgid "eligibility.forms.confirm.mst.fields.sub"
-msgstr "Número de tarjeta cortesía MST"
-
-#: benefits/eligibility/forms.py:26
-msgid "eligibility.forms.confirm.mst.fields.name"
-msgstr "Apellido (como aparece en la identificación)"
-
-#: benefits/eligibility/views.py:23
-msgid "eligibility.pages.start.mst.content_title"
-msgstr "Genial, necesitarás dos cosas antes de empeza"
-
-#: benefits/eligibility/views.py:27
-msgid "eligibility.pages.start.mst.items[0].title"
-msgstr "Tu tarjeta de cortesía MST"
-
-#: benefits/eligibility/views.py:28
-msgid "eligibility.pages.start.mst.items[0].text"
-msgstr "Una tarjeta activa que no ha caducado"
-
-#: benefits/eligibility/views.py:36
-msgid "eligibility.pages.start.mst.p[0]"
-msgstr ""
-"Este programa está actualmente abierto a todas los titulares de tarjetas de "
-"cortesía MST. ¿No es titular de una tarjeta de cortesía? Póngase en contacto "
-"con su proveedor de transporte público para obtener información sobre los "
-"programas de descuento disponibles"
-
-#: benefits/eligibility/views.py:50
-msgid "eligibility.pages.confirm.mst.title"
-msgstr "Verificar su tarjeta de cortesía MST"
-
-#: benefits/eligibility/views.py:51
-msgid "eligibility.pages.confirm.mst.content_title"
-msgstr "Veamos si podemos encontrarle en nuestra sistema"
-
-#: benefits/eligibility/views.py:52
-msgid "eligibility.pages.confirm.mst.p[0]"
-msgstr ""
-"Por favor ingrese su número de tarjeta cortesía y "
-"apellido a continuación. Si eres titular de una tarjeta de cortesía MST, "
-"podemos confirmar que ere elegible para un descuento. "
-"Nosotros no guardamos su información."
-
-#: benefits/eligibility/views.py:124
-msgid "eligibility.pages.unverified.mst.title"
-msgstr "Tarjeta de cortesía MST no confirmada"
-
-#: benefits/eligibility/views.py:125
-msgid "eligibility.pages.unverified.mst.content_title"
-msgstr "No podemos confirmar su tarjeta de cortesía MST"
-
-#: benefits/eligibility/views.py:127
-msgid "eligibility.pages.unverified.mst.p[0]"
-msgstr ""
 
 #: benefits/enrollment/templates/enrollment/success.html:7
 msgctxt "image alt text"
@@ -465,3 +364,83 @@ msgid "enrollment.pages.success.p2"
 msgstr ""
 "Pague con esta misma tarjeta al abordar el transporte público y su descuento "
 "se aplicará automáticamente en el total de su tarifa."
+
+msgid "eligibility.pages.confirm.dmv.content_title"
+msgstr "Veamos si podemos verificar su edad con el DMV"
+
+msgid "eligibility.pages.start.dmv.items[0].title"
+msgstr "Tu identificación de California"
+
+msgid "eligibility.pages.start.dmv.items[0].text"
+msgstr "Licencia de conducir o tarjeta de identificación"
+
+msgid "eligibility.pages.confirm.dmv.p[0]"
+msgstr ""
+"Si tiene 65 años o más, podemos confirmar que es elegible para un "
+"descuento para personas mayores cuando viaja en transporte público. "
+"Nosotros no guardamos su información."
+
+msgid "eligibility.pages.start.dmv.content_title"
+msgstr "Genial, necesitarás dos cosas antes de comenzar..."
+
+msgid "eligibility.forms.confirm.dmv.fields.sub"
+msgstr "Licencia de conducir de CA o número de identificación"
+
+msgid "eligibility.forms.confirm.dmv.fields.name"
+msgstr "Apellido (como aparece en la identificación)"
+
+msgid "eligibility.pages.start.dmv.p[0]"
+msgstr ""
+"Este programa actualmente está disponible para personas de 65 años o más. "
+"¿No tienes más de 65 años? Póngase en contacto con su proveedor de "
+"transporte público para obtener información sobre los programas de "
+"descuento disponibles."
+
+msgid "eligibility.pages.confirm.dmv.title"
+msgstr "Verificar su edad"
+
+msgid "eligibility.pages.unverified.dmv.p[0]"
+msgstr ""
+"Usted todavía puede ser elegible para un descuento, pero no podemos "
+"verificar su edad con el DMV."
+
+msgid "eligibility.forms.confirm.mst.fields.sub"
+msgstr "Número de tarjeta cortesía MST"
+
+msgid "eligibility.forms.confirm.mst.fields.name"
+msgstr "Apellido (como aparece en la identificación)"
+
+msgid "eligibility.pages.start.mst.content_title"
+msgstr "Genial, necesitarás dos cosas antes de empeza"
+
+msgid "eligibility.pages.start.mst.items[0].title"
+msgstr "Tu tarjeta de cortesía MST"
+
+msgid "eligibility.pages.start.mst.items[0].text"
+msgstr "Una tarjeta activa que no ha caducado"
+
+msgid "eligibility.pages.start.mst.p[0]"
+msgstr ""
+"Este programa está actualmente abierto a todas los titulares de tarjetas "
+"de cortesía MST. ¿No es titular de una tarjeta de cortesía? Póngase en "
+"contacto con su proveedor de transporte público para obtener información "
+"sobre los programas de descuento disponibles"
+
+msgid "eligibility.pages.confirm.mst.title"
+msgstr "Verificar su tarjeta de cortesía MST"
+
+msgid "eligibility.pages.confirm.mst.content_title"
+msgstr "Veamos si podemos encontrarle en nuestra sistema"
+
+msgid "eligibility.pages.confirm.mst.p[0]"
+msgstr ""
+"Por favor ingrese su número de tarjeta cortesía y apellido a "
+"continuación. Si eres titular de una tarjeta de cortesía MST, podemos "
+"confirmar que ere elegible para un descuento. Nosotros no guardamos su "
+"información."
+
+msgid "eligibility.pages.unverified.mst.title"
+msgstr "Tarjeta de cortesía MST no confirmada"
+
+msgid "eligibility.pages.unverified.mst.content_title"
+msgstr "No podemos confirmar su tarjeta de cortesía MST"
