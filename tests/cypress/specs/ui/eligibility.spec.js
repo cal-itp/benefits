@@ -7,7 +7,7 @@ describe("Eligibility confirmation page spec", () => {
     cy.visit("/");
     cy.contains(agencies[0].fields.short_name).click();
     cy.contains("Let’s do it!").click();
-    cy.contains("Ready to continue").click();
+    cy.contains("Continue").click();
     cy.url().should("include", eligibility_url);
   });
 });
@@ -17,7 +17,7 @@ describe("Eligibility confirmation form spec", () => {
     cy.visit("/");
     cy.contains(agencies[0].fields.short_name).click();
     cy.contains("Let’s do it!").click();
-    cy.contains("Ready to continue").click();
+    cy.contains("Continue").click();
   });
 
   it("Has a driver’s license or ID number form label and corresponding field", () => {
