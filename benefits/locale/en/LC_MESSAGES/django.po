@@ -360,6 +360,12 @@ msgstr ""
 "When boarding transit, pay with this same card, and your discount will "
 "automatically be applied to your fare purchase."
 
+msgid "eligibility.pages.index.dmv.label"
+msgstr "Senior Discount Program"
+
+msgid "eligibility.pages.index.mst.label"
+msgstr "MST Courtesy Cardholder"
+
 msgid "eligibility.pages.confirm.dmv.content_title"
 msgstr "Let’s see if we can confirm your age with the DMV"
 

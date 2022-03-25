@@ -365,6 +365,12 @@ msgstr ""
 "Pague con esta misma tarjeta al abordar el transporte público y su descuento "
 "se aplicará automáticamente en el total de su tarifa."
 
+msgid "eligibility.pages.index.dmv.label"
+msgstr "TODO: Senior Discount Program"
+
+msgid "eligibility.pages.index.mst.label"
+msgstr "TODO: MST Courtesy Cardholder"
+
 msgid "eligibility.pages.confirm.dmv.content_title"
 msgstr "Veamos si podemos verificar su edad con el DMV"
 

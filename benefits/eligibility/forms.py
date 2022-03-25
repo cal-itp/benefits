@@ -24,7 +24,7 @@ class EligibilityVerifierSelectionForm(forms.Form):
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        choices = [(v.id, v.selection_label) for v in agency.eligibility_verifiers.all()]
+        choices = [(v.id, _(v.selection_label)) for v in agency.eligibility_verifiers.all()]
         self.fields["verifier"].choices = choices
 
 
