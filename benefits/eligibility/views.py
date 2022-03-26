@@ -77,7 +77,7 @@ def start(request):
         ],
         paragraphs=[_(verifier.start_blurb)],
         image=_index_image(),
-        button=viewmodels.Button.primary(text=_("eligibility.pages.start.button"), url=reverse("eligibility:confirm")),
+        button=viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm")),
     )
 
     return PageTemplateResponse(request, page)
