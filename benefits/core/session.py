@@ -209,6 +209,9 @@ def update(request, agency=None, debug=None, eligibility_types=None, origin=None
             a = models.TransitAgency.by_id(request.session[_AGENCY])
             t = str(eligibility_types[0]).strip()
             request.session[_ELIGIBILITY] = a.get_type_id(t)
+        else:
+            # empty list, clear session eligibility
+            request.session[_ELIGIBILITY] = None
     if origin is not None:
         logger.debug(f"Update session {_ORIGIN}")
         request.session[_ORIGIN] = origin
