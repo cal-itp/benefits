@@ -58,6 +58,7 @@ def index(request):
 def start(request):
     """View handler for the eligibility verification getting started screen."""
 
+    session.update(request, eligibility_types=[])
     verifier = session.verifier(request)
 
     page = viewmodels.Page(
