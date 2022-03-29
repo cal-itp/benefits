@@ -9,7 +9,7 @@ from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import middleware, recaptcha, session, viewmodels
 from benefits.core.models import EligibilityVerifier
-from benefits.core.views import PageTemplateResponse, _index_image
+from benefits.core.views import PageTemplateResponse
 from . import analytics, api, forms
 
 
@@ -26,7 +26,6 @@ def index(request):
         title=_("eligibility.pages.index.title"),
         content_title=_("eligibility.pages.index.content_title"),
         forms=forms.EligibilityVerifierSelectionForm(agency=agency),
-        image=_index_image(),
     )
 
     if request.method == "POST":
@@ -77,7 +76,6 @@ def start(request):
             ),
         ],
         paragraphs=[_(verifier.start_blurb)],
-        image=_index_image(),
         button=viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm")),
     )
 

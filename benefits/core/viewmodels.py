@@ -110,7 +110,7 @@ class Page:
     """
     Represents a page of content:
     * title: str
-    * image: core.viewmodels.Image
+    * noimage: bool
     * icon: core.viewmodels.Icon
     * content_title: str
     * media: core.viewmodels.MediaItem[]
@@ -129,7 +129,7 @@ class Page:
         else:
             self.title = f"{_('core.pages.index.title')}: {self.title}"
 
-        self.image = kwargs.get("image")
+        self.noimage = kwargs.get("noimage", False)
         self.icon = kwargs.get("icon")
         self.content_title = kwargs.get("content_title")
         self.media = kwargs.get("media", [])
@@ -151,7 +151,8 @@ class Page:
         self.classes = kwargs.get("classes", [])
         if not isinstance(self.classes, list):
             self.classes = self.classes.split(" ")
-        if isinstance(self.image, Image):
+        if not self.noimage:
+            self.image = "img/ridertappingbankcard.png"
             self.classes.append("with-image")
 
     def context_dict(self):

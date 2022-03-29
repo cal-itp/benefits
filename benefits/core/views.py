@@ -20,11 +20,6 @@ def _index_content_title():
     return _("core.pages.index.content_title")
 
 
-def _index_image():
-    """Helper returns a viewmodels.Image for the common index page."""
-    return viewmodels.Image("ridertappingbankcard.png", pgettext("image alt text", "core.pages.index.image"))
-
-
 def _index_paragraphs():
     """Helper returns the content paragraphs for the common index page."""
     return [_("core.pages.index.p[0]"), _("core.pages.index.p[1]"), _("core.pages.index.p[2]")]
@@ -49,7 +44,6 @@ def index(request):
     page = viewmodels.Page(
         content_title=_index_content_title(),
         paragraphs=_index_paragraphs(),
-        image=_index_image(),
         buttons=buttons,
         classes="home",
     )
@@ -66,7 +60,6 @@ def agency_index(request, agency):
     page = viewmodels.Page(
         content_title=_index_content_title(),
         paragraphs=_index_paragraphs(),
-        image=_index_image(),
         button=viewmodels.Button.primary(text=_("core.pages.index.continue"), url=reverse("eligibility:index")),
         classes="home",
     )
@@ -91,6 +84,7 @@ def help(request):
         paragraphs=[_("core.pages.help.p[0]"), _("core.pages.help.p[1]")],
         buttons=buttons,
         classes="text-lg-center",
+        noimage=True,
     )
 
     return TemplateResponse(request, "core/help.html", page.context_dict())
@@ -104,6 +98,7 @@ def payment_options(request):
         icon=viewmodels.Icon("bankcard", pgettext("image alt text", "core.icons.bankcard")),
         content_title=_("core.buttons.payment_options"),
         buttons=viewmodels.Button.home(request, text=_("core.buttons.back")),
+        noimage=True,
     )
 
     return TemplateResponse(request, "core/payment-options.html", page.context_dict())
