@@ -74,22 +74,12 @@ class Button:
         return Button(classes=classes, **kwargs)
 
 
-class Image:
-    """Represents a generic image."""
-
-    def __init__(self, src, alt):
-        self.src = src
-        if not self.src.startswith("http"):
-            self.src = f"img/{self.src}"
-
-        self.alt = alt
-
-
-class Icon(Image):
+class Icon:
     """Represents an icon."""
 
     def __init__(self, icon, alt):
-        super().__init__(src=f"icon/{icon}.svg", alt=alt)
+        self.src = f"img/icon/{icon}.svg"
+        self.alt = alt
 
 
 class MediaItem:
