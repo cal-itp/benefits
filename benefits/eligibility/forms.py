@@ -12,18 +12,13 @@ from benefits.core import models, recaptcha, widgets
 logger = logging.getLogger(__name__)
 
 
-class CATemplateRadioSelect(forms.RadioSelect):
-    template_name = "core/widgets/ca_template_radio_select.html"
-    option_template_name = "core/widgets/ca_template_radio_select_option.html"
-
-
 class EligibilityVerifierSelectionForm(forms.Form):
     """Form to capture eligibility verifier selection."""
 
     action_url = "eligibility:index"
     method = "POST"
 
-    verifier = forms.ChoiceField(label="", widget=CATemplateRadioSelect)
+    verifier = forms.ChoiceField(label="", widget=widgets.RadioSelect)
 
     submit_value = _("eligibility.buttons.continue")
 

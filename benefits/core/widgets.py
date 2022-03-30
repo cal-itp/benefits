@@ -15,3 +15,8 @@ class FormControlTextInput(widgets.TextInput):
             self.attrs.update({"pattern": pattern})
         if placeholder:
             self.attrs.update({"placeholder": placeholder})
+
+
+class RadioSelect(widgets.RadioSelect):
+    template_name = "core/widgets/radio_select.html"
+    option_template_name = "core/widgets/radio_select_option.html"
