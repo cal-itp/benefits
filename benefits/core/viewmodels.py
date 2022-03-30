@@ -74,22 +74,12 @@ class Button:
         return Button(classes=classes, **kwargs)
 
 
-class Image:
-    """Represents a generic image."""
-
-    def __init__(self, src, alt):
-        self.src = src
-        if not self.src.startswith("http"):
-            self.src = f"img/{self.src}"
-
-        self.alt = alt
-
-
-class Icon(Image):
+class Icon:
     """Represents an icon."""
 
     def __init__(self, icon, alt):
-        super().__init__(src=f"icon/{icon}.svg", alt=alt)
+        self.src = f"img/icon/{icon}.svg"
+        self.alt = alt
 
 
 class MediaItem:
@@ -110,7 +100,7 @@ class Page:
     """
     Represents a page of content:
     * title: str
-    * image: core.viewmodels.Image
+    * noimage: bool
     * icon: core.viewmodels.Icon
     * content_title: str
     * media: core.viewmodels.MediaItem[]
@@ -129,7 +119,7 @@ class Page:
         else:
             self.title = f"{_('core.pages.index.title')}: {self.title}"
 
-        self.image = kwargs.get("image")
+        self.noimage = kwargs.get("noimage", False)
         self.icon = kwargs.get("icon")
         self.content_title = kwargs.get("content_title")
         self.media = kwargs.get("media", [])
@@ -151,7 +141,8 @@ class Page:
         self.classes = kwargs.get("classes", [])
         if not isinstance(self.classes, list):
             self.classes = self.classes.split(" ")
-        if isinstance(self.image, Image):
+        if not self.noimage:
+            self.image = "img/ridertappingbankcard.png"
             self.classes.append("with-image")
 
     def context_dict(self):
