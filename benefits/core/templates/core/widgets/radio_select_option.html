@@ -5,5 +5,10 @@
 {% if widget.wrap_label %}
 <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}" class="radio-label"{% endif %}>
 {{ widget.label }}
+{% if widget.description %}
+<span class="radio-label-description">
+{{ widget.description }}
+</span>
+{% endif %}
 </label>
 {% endif %}

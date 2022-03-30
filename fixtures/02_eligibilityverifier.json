@@ -46,7 +46,7 @@
       "jwe_encryption_alg": "RSA-OAEP",
       "jws_signing_alg": "RS256",
       "selection_label": "eligibility.pages.index.mst.label",
-      "selection_label_description": null,
+      "selection_label_description": "eligibility.pages.index.mst.description",
       "start_content_title": "eligibility.pages.start.mst.content_title",
       "start_item_name": "eligibility.pages.start.mst.items[0].title",
       "start_item_description": "eligibility.pages.start.mst.items[0].text",

@@ -27,6 +27,13 @@ class EligibilityVerifierSelectionForm(forms.Form):
         choices = [(v.id, _(v.selection_label)) for v in agency.eligibility_verifiers.all()]
         self.fields["verifier"].choices = choices
 
+        choice_descriptions = []
+        for verifier in agency.eligibility_verifiers.all():
+            if verifier.selection_label_description:
+                choice_descriptions.append((verifier.id, _(verifier.selection_label_description)))
+
+        self.fields["verifier"].widget.choice_descriptions = choice_descriptions
+
 
 class EligibilityVerificationForm(forms.Form):
     """Form to collect eligibility verification details."""

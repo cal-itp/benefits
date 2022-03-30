@@ -200,6 +200,13 @@ footer {
   position: relative;
 }
 
+.radio-label-description {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  font-weight: normal;
+}
+
 /* context-specific overrides */
 
 .navbar-brand img.sm {
