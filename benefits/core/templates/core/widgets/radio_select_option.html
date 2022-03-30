@@ -1,15 +1,9 @@
-{% if widget.wrap_label %}
-<label{% if widget.attrs.id %} for="{{ widget.attrs.id }}" class="form-check-inline p-l-md m-l-0 m-r-md"{% endif %}>
-{% endif %}
-
-<input class="hidden-up pos-abs" type="{{ widget.type }}" name="{{ widget.name }}"
+<input class="radio-input" type="{{ widget.type }}" name="{{ widget.name }}"
 {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
 {% include "django/forms/widgets/attrs.html" %}>
 
 {% if widget.wrap_label %}
-<div class="check-icon-radio">
-    <i></i>
-</div>
+<label{% if widget.attrs.id %} for="{{ widget.attrs.id }}" class="radio-label"{% endif %}>
 {{ widget.label }}
 </label>
 {% endif %}
