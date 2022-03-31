@@ -41,7 +41,7 @@ describe("Multiple Verifier: Verifier selection page spec", () => {
     cy.contains("Continue").click();
     cy.url().should("include", verifier_selection_url);
     cy.get("input:radio:checked").should("have.length", 0);
-    cy.get("input:radio:invalid").should("have.length", 2);
+    cy.get("input:invalid").should("have.length", 2);
     cy.get("input:radio"[0])
       .invoke("prop", "validationMessage")
       .should("equal", "Please select one of the options");
