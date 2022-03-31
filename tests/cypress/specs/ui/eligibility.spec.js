@@ -4,7 +4,7 @@ const verifier_selection_url = "/eligibility";
 const eligibility_confirm_url = "/eligibility/confirm";
 const eligibility_start_url = "/eligibility/start";
 
-describe.skip("Single verifier: Eligibility confirmation page spec", () => {
+describe("Single verifier: Eligibility confirmation page spec", () => {
   it("User can navigate to the confirmation page", () => {
     cy.visit("/");
     // Selecting DEFTl will go down the single verifier flow
@@ -57,7 +57,7 @@ describe("Multiple Verifier: Verifier selection page spec", () => {
   });
 });
 
-describe.skip("Multiple verifier: Eligibility confirmation form spec", () => {
+describe("Multiple verifier: Eligibility confirmation form spec", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.contains(agencies[0].fields.short_name).click();
