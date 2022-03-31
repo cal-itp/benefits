@@ -1,6 +1,6 @@
 # Automated tests
 
-## Integration
+## Cypress
 
 Feature and user interface tests are implemented with [`cypress`](https://www.cypress.io/) and can be found in the
 [`tests/cypress`](https://github.com/cal-itp/benefits/tree/dev/tests/cypress) directory in the repository.
