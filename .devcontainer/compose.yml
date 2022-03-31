@@ -18,7 +18,7 @@ services:
     image: benefits_client:dev
     env_file: .env
     entrypoint: []
-    command: sleep infinity
+    command: ["-c", "sleep infinity"]
     depends_on:
       - server
     ports:
