@@ -166,11 +166,13 @@ def unverified(request):
     agency = session.agency(request)
     buttons = viewmodels.Button.agency_contact_links(agency)
 
+    verifier = session.verifier(request)
+
     page = viewmodels.Page(
-        title=_("eligibility.pages.unverified.title"),
-        content_title=_("eligibility.pages.unverified.content_title"),
+        title=_(verifier.unverified_title),
+        content_title=_(verifier.unverified_content_title),
         icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
-        paragraphs=[_("eligibility.pages.unverified.p[0]"), _("eligibility.pages.unverified.p[1]")],
+        paragraphs=[_(verifier.unverified_blurb), _("eligibility.pages.unverified.p[1]")],
         buttons=buttons,
         classes="text-lg-center",
     )
