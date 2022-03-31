@@ -25,19 +25,19 @@ describe("Verifier selection page spec", () => {
     cy.contains("Let’s do it!").click();
   });
 
-  it.skip("User can navigate to the Verifier Selection page", () => {
+  it("User can navigate to the Verifier Selection page", () => {
     cy.contains("Continue");
     cy.url().should("include", verifier_selection_url);
     cy.contains("Select the discount option that best applies to you:");
   });
 
-  it.skip("User sees two radio buttons", () => {
+  it("User sees two radio buttons", () => {
     cy.get("input:radio").should("have.length", 2);
     cy.contains("MST Courtesy Cardholder");
     cy.contains("Senior Discount Program");
   });
 
-  it.skip("User must select a radio button, or else see a validation message", () => {
+  it("User must select a radio button, or else see a validation message", () => {
     cy.get("input:radio").should("have.length", 2);
     cy.get("input:radio:checked").should("have.length", 0);
     cy.contains("Continue").click();
@@ -46,7 +46,7 @@ describe("Verifier selection page spec", () => {
     cy.contains("This field is required.");
   });
 
-  it.skip("User can click a radio button and click Continue", () => {
+  it("User can click a radio button and click Continue", () => {
     cy.get("input:radio:checked").should("have.length", 0);
     cy.contains("Senior Discount Program").click();
     cy.get("input:radio:checked").should("have.length", 1);
