@@ -37,7 +37,7 @@ describe("Verifier selection page spec", () => {
     cy.contains("Senior Discount Program");
   });
 
-  it("User must select a radio button, or else see a validation message", () => {
+  it.skip("User must select a radio button, or else see a validation message", () => {
     cy.get("input:radio").should("have.length", 2);
     cy.get("input:radio:checked").should("have.length", 0);
     cy.contains("Continue").click();
