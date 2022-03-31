@@ -42,6 +42,7 @@ describe("Verifier selection page spec", () => {
     cy.get("input:radio:checked").should("have.length", 0);
     cy.contains("Continue").click();
     cy.url().should("include", verifier_selection_url);
+    cy.get("label").should("have.css", "color", "rgb(222, 12, 12)");
     cy.contains("This field is required.");
   });
 
