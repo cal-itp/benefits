@@ -156,6 +156,7 @@ def verified(request, verified_types):
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
+@decorator_from_middleware(middleware.VerifierSessionRequired)
 def unverified(request):
     """View handler for the unverified eligibility page."""
 
