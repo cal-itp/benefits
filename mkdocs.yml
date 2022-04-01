@@ -31,6 +31,10 @@ extra:
 plugins:
   - search
   - awesome-pages
+  - redirects:
+      redirect_maps:
+        "getting-started/development.md": "development/README.md"
+        "getting-started/docker-dynamic-ports.md": "development/docker-dynamic-ports.md"
 
 extra_javascript:
   - https://unpkg.com/mermaid@8.5.0/dist/mermaid.min.js

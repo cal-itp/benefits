@@ -42,7 +42,7 @@ The optional `-d` flag will start in _detatched_ mode and allow you to continue 
 terminal will be attached to the container's terminal, showing the startup and runtime output.
 
 After initialization, the client is running running on `http://localhost` at a port dynamically assigned by Docker. See
-[Docker dynamic ports](./docker-dynamic-ports.md) for more information on accessing the site on localhost.
+[Docker dynamic ports](../development/docker-dynamic-ports.md) for more information on accessing the site on localhost.
 
 If `DJANGO_ADMIN=true`, the backend administrative interface can be accessed at the `/admin` route using the superuser account
 you setup as part of initialization.

@@ -1,4 +1,5 @@
 nav:
   - Home: README.md
   - Getting started: getting-started
-  - ...
+  - Development: development
+  - Deployment: deployment

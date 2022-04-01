@@ -56,41 +56,6 @@ Once deployed, ECS does the following:
 
 The GitHub Actions workflows wait for the service to restart and to reach a steady state before marking successful completion.
 
-## How do the workflows differ?
-
-The only differences between the three workflow files are the **name**:
-
-```diff
--name: Deploy to Amazon ECS (dev)
-+name: Deploy to Amazon ECS (test)
-```
-
-the **branch** filter:
-
-```diff
- on:
-   push:
-     branches:
--      - dev
-+      - test
-```
-
-and the **environment** (and related *concurrency* setting) to load with each run:
-
-```diff
- jobs:
-   deploy:
-     runs-on: ubuntu-latest
--    environment: dev
--    concurrency: dev
-+    environment: test
-+    concurrency: test
-```
-
-If in the future GitHub allows for templated workflows or branch-matrix support, these definitions may be collapsed into a
-single file.
-
-
 [deploy-dev]: https://github.com/cal-itp/benefits/blob/dev/.github/workflows/deploy-dev.yml
 [deploy-test]: https://github.com/cal-itp/benefits/blob/dev/.github/workflows/deploy-test.yml
 [deploy-prod]: https://github.com/cal-itp/benefits/blob/dev/.github/workflows/deploy-prod.yml
