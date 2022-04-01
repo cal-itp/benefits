@@ -50,15 +50,15 @@ docker compose up docs
 ```
 
 The site is served from `http://localhost` at a port dynamically assigned by Docker. See
-[Docker dynamic ports](./docker-dynamic-ports.md) for more information.
+[Docker dynamic ports](../development/docker-dynamic-ports.md) for more information.
 
 The website is automatically rebuilt as changes are made to `docs/` files.
 
 ### In the Devcontainer
 
-When running the [Devcontainer](./development.md#vs-code-with-devcontainers), the docs site is automatically started.
+When running the [Devcontainer](../development/README.md#vs-code-with-devcontainers), the docs site is automatically started.
 
-See [Docker dynamic ports](./docker-dynamic-ports.md) for more information on accessing the site on localhost.
+See [Docker dynamic ports](../development/docker-dynamic-ports.md) for more information on accessing the site on localhost.
 
 ## Deploying
 
