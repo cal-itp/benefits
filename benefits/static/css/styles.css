@@ -150,11 +150,13 @@ footer {
 }
 
 .radio-label {
+  cursor: pointer;
   display: inline;
   margin-left: 15px;
 }
 
 .radio-input {
+  cursor: pointer;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
