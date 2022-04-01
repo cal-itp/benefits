@@ -34,8 +34,7 @@ class RadioSelect(widgets.RadioSelect):
     def create_option(self, name, value, label, selected, index, subindex, attrs):
         option = super().create_option(name, value, label, selected, index, subindex, attrs)
         # this implementation does not support groups from ChoiceWidget.optgroups
-        for choice_value, choice_description in self.choice_descriptions:
-            if choice_value == value and choice_description is not None:
-                option.update({"description": choice_description})
+        if value in self.choice_descriptions:
+            option.update({"description": self.choice_descriptions[value]})
 
         return option

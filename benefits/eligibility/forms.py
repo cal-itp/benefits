@@ -26,11 +26,10 @@ class EligibilityVerifierSelectionForm(forms.Form):
         super().__init__(*args, **kwargs)
         verifiers = agency.eligibility_verifiers.all()
 
-        choices = [(v.id, _(v.selection_label)) for v in verifiers]
-        self.fields["verifier"].choices = choices
-
-        choice_descriptions = [(v.id, _(v.selection_label_description)) for v in verifiers if v.selection_label_description]
-        self.fields["verifier"].widget.choice_descriptions = choice_descriptions
+        self.fields["verifier"].choices = [(v.id, _(v.selection_label)) for v in verifiers]
+        self.fields["verifier"].widget.choice_descriptions = {
+            v.id: _(v.selection_label_description) for v in verifiers if v.selection_label_description
+        }
 
 
 class EligibilityVerificationForm(forms.Form):
