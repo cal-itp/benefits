@@ -29,6 +29,20 @@ class PemData(models.Model):
         return jwk.JWK.from_pem(pem_bytes)
 
 
+class AuthProvider(models.Model):
+    """An entity that provides authentication for eligibility verifiers."""
+
+    # fmt: off
+    id = models.AutoField(primary_key=True)
+    authority = models.TextField(help_text="Authorization server address")
+    client_id = models.TextField(help_text="The application ID registered with auth server")
+    redirect_uri = models.TextField(help_text="Post-login, the user is redirected here")
+    post_logout_redirect_uri = models.TextField(help_text="Post-logout, the user is redirected here")
+    response_type = models.TextField(help_text="Must be \"code\" to use the authorization-code flow")
+    scope = models.TextField(help_text="Space-delimited list. If you need refresh tokens, you must add the \"offline access\" scope")  # noqa: 503
+    # fmt: on
+
+
 class EligibilityType(models.Model):
     """A single conditional eligibility type."""
 
@@ -67,6 +81,7 @@ class EligibilityVerifier(models.Model):
     jwe_cek_enc = models.TextField(help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode")
     jwe_encryption_alg = models.TextField(help_text="The JWE-compatible encryption algorithm")
     jws_signing_alg = models.TextField(help_text="The JWS-compatible signing algorithm")
+    auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True)
     selection_label = models.TextField()
     selection_label_description = models.TextField(null=True)
     start_content_title = models.TextField()
