@@ -18,14 +18,18 @@ class EligibilityVerifierSelectionForm(forms.Form):
     action_url = "eligibility:index"
     method = "POST"
 
-    verifier = forms.ChoiceField(label="", widget=forms.RadioSelect)
+    verifier = forms.ChoiceField(label="", widget=widgets.RadioSelect)
 
     submit_value = _("eligibility.buttons.continue")
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        choices = [(v.id, _(v.selection_label)) for v in agency.eligibility_verifiers.all()]
-        self.fields["verifier"].choices = choices
+        verifiers = agency.eligibility_verifiers.all()
+
+        self.fields["verifier"].choices = [(v.id, _(v.selection_label)) for v in verifiers]
+        self.fields["verifier"].widget.choice_descriptions = {
+            v.id: _(v.selection_label_description) for v in verifiers if v.selection_label_description
+        }
 
 
 class EligibilityVerificationForm(forms.Form):

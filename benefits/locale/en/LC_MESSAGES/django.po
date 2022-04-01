@@ -366,6 +366,9 @@ msgstr "Senior Discount Program"
 msgid "eligibility.pages.index.mst.label"
 msgstr "MST Courtesy Cardholder"
 
+msgid "eligibility.pages.index.mst.description"
+msgstr "(includes MST RIDES Paratransit Eligibility cardholders)"
+
 msgid "eligibility.pages.confirm.dmv.content_title"
 msgstr "Let’s see if we can confirm your age with the DMV"
 
