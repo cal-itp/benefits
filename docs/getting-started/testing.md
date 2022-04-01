@@ -9,7 +9,7 @@ See the [`cypress` Command Line](https://docs.cypress.io/guides/guides/command-l
 
 ### Running in the Dev Container
 
-`cypress` is installed and available to run directly in the devcontainer.
+`cypress` is installed and available to run directly in the [devcontainer](../development/README.md#vs-code-with-devcontainers).
 
 1. Ensure your `.env` file has an updated `CYPRESS_baseUrl` variable:
 
@@ -23,7 +23,7 @@ See the [`cypress` Command Line](https://docs.cypress.io/guides/guides/command-l
 4. From within the `tests/cypress` directory:
 
     ```bash
-    npx cypress run
+    npm run cypress:ui
     ```
 
 ### Running outside of the Dev Container
@@ -38,23 +38,31 @@ node -v
 npm -v
 ```
 
-If not, install Node.js locally. Instructions [here](https://nodejs.org/en/download/).
+If not, [install Node.js](https://nodejs.org/en/download/) locally.
 
-2. Get into the `cypress` directory:
+2. Start the the application container
 
 ```bash
+cd .devcontainer/
+docker compose up -d client
+```
+
+3. Change into the `cypress` directory:
+
+```bash
+cd ..
 cd tests/cypress
 ```
 
-3. Install all packages and `cypress`. Verify `cypress` installation succeeds:
+4. Install all packages and `cypress`. Verify `cypress` installation succeeds:
 
 ```bash
 npm install
-cypress install
+npx cypress install
 npx cypress verify
 ```
 
-4. Run `cypress` with test environment variables and configuration variables:
+5. Run `cypress` with test environment variables and configuration variables:
 
 ```bash
 CYPRESS_baseUrl=http://localhost:8000 npm run cypress:open
