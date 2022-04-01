@@ -24,14 +24,12 @@ class EligibilityVerifierSelectionForm(forms.Form):
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        choices = [(v.id, _(v.selection_label)) for v in agency.eligibility_verifiers.all()]
+        verifiers = agency.eligibility_verifiers.all()
+
+        choices = [(v.id, _(v.selection_label)) for v in verifiers]
         self.fields["verifier"].choices = choices
 
-        choice_descriptions = []
-        for verifier in agency.eligibility_verifiers.all():
-            if verifier.selection_label_description:
-                choice_descriptions.append((verifier.id, _(verifier.selection_label_description)))
-
+        choice_descriptions = [(v.id, _(v.selection_label_description)) for v in verifiers if v.selection_label_description]
         self.fields["verifier"].widget.choice_descriptions = choice_descriptions
 
 
