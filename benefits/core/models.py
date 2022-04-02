@@ -110,6 +110,10 @@ class EligibilityVerifier(models.Model):
         """jwcrypto.jwk.JWK instance of this Verifier's public key"""
         return self.public_key.jwk
 
+    @property
+    def requires_authentication(self):
+        return self.auth_provider.all().exists()
+
     @staticmethod
     def by_id(id):
         """Get an EligibilityVerifier instance by its ID."""
