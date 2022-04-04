@@ -112,7 +112,7 @@ class EligibilityVerifier(models.Model):
 
     @property
     def requires_authentication(self):
-        return self.auth_provider.all().exists()
+        return self.auth_provider is not None
 
     @staticmethod
     def by_id(id):
