@@ -53,7 +53,7 @@ def active_agency(request):
 
 def auth(request):
     """Get the auth from the request's session, or None"""
-    logger.debug("Get auth token")
+    logger.debug("Get session auth")
     return request.get(_AUTH)
 
 
