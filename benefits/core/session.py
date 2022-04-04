@@ -54,7 +54,7 @@ def active_agency(request):
 def auth(request):
     """Get the auth from the request's session, or None"""
     logger.debug("Get session auth")
-    return request.get(_AUTH)
+    return request.session.get(_AUTH)
 
 
 def context_dict(request):
@@ -62,6 +62,7 @@ def context_dict(request):
     logger.debug("Get session context dict")
     return {
         _AGENCY: agency(request).slug if active_agency(request) else None,
+        _AUTH: auth(request),
         _LIMITCOUNTER: rate_limit_counter(request),
         _DEBUG: debug(request),
         _DID: did(request),
