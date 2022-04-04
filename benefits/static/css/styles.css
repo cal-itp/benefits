@@ -65,11 +65,15 @@ footer {
   padding-bottom: 1rem;
 }
 
+footer a {
+  font-size: 16px;
+}
+
 /* class styles */
 
 .bg-p2,
 .bg-primary {
-  background-color: #046b99 !important;
+  background-color: #2b6597 !important;
 }
 
 .btn-lg {
@@ -122,7 +126,7 @@ footer {
 }
 
 .global-footer {
-  background: #222;
+  background: #212121;
 }
 
 .media-list {
@@ -163,6 +167,16 @@ footer {
   margin-bottom: 2rem;
 }
 
+.container.content h1 {
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.container.content p {
+  font-size: 18px;
+  line-height: 27px;
+}
+
 .container.content h1.icon-title span.icon {
   text-align: center;
   display: block;
@@ -178,6 +192,11 @@ footer {
   margin-bottom: 1rem;
   padding: 1rem;
   width: 100%;
+  text-transform: uppercase;
+}
+
+.buttons a.btn.btn-lg.btn-outline-primary {
+  text-transform: inherit;
 }
 
 .container.content .btn-lg.agency-url {
