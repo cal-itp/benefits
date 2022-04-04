@@ -9,7 +9,7 @@ services:
       - "${DJANGO_LOCAL_PORT}:8000"
     volumes:
       - ../.aws/config:/home/calitp/app/config:ro
-      - ../fixtures:/home/calitp/app/fixtures:cached
+      - ../fixtures:/home/calitp/app/fixtures
 
   dev:
     build:
@@ -24,7 +24,7 @@ services:
     ports:
       - "${DJANGO_LOCAL_PORT}:8000"
     volumes:
-      - ../:/home/calitp/app:cached
+      - ../:/home/calitp/app
 
   docs:
     image: benefits_client:dev
@@ -33,7 +33,7 @@ services:
     ports:
       - "8000"
     volumes:
-      - ../:/home/calitp/app:cached
+      - ../:/home/calitp/app
 
   server:
     image: ghcr.io/cal-itp/eligibility-server:main
