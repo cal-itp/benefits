@@ -7,7 +7,18 @@
     {% endblock %}
 
     {% block media_list %}
-    {{ block.super }}
+    {% if page.media|length_is:"0" %}{% else %}
+    <div class="media-list">
+    {% for item in page.media %}
+        <div class="media">
+            <div class="media-left">
+                {% include "core/includes/icon.html" with icon=item.icon %}
+            </div>
+            <div class="media-body"><strong>{{ item.heading }}</strong><br />{{ item.details }}</div>
+        </div>
+    {% endfor %}
+    </div>
+    {% endif %}
     {% endblock %}
 
     {% block paragraph_content %}

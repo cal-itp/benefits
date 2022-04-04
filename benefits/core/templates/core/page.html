@@ -32,12 +32,6 @@
             {% endif %}
             {% endblock icon_title %}
 
-            {% block media_list %}
-            {% if page.media|length_is:"0" %}{% else %}
-                {% include "core/includes/media-list.html" with items=page.media %}
-            {% endif %}
-            {% endblock media_list %}
-
             {% block paragraph_content %}
             {% for p in page.paragraphs %}
                 <p>{{ p }}</p>
