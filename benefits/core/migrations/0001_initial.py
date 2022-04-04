@@ -40,6 +40,8 @@ class Migration(migrations.Migration):
                         help_text='Space-delimited list. If you need refresh tokens, you must add the "offline access" scope'
                     ),
                 ),
+                ("sign_in_button_label", models.TextField()),
+                ("sign_out_button_label", models.TextField()),
             ],
         ),
         migrations.CreateModel(

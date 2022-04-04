@@ -40,6 +40,8 @@ class AuthProvider(models.Model):
     post_logout_redirect_uri = models.TextField(help_text="Post-logout, the user is redirected here")
     response_type = models.TextField(help_text="Must be \"code\" to use the authorization-code flow")
     scope = models.TextField(help_text="Space-delimited list. If you need refresh tokens, you must add the \"offline access\" scope")  # noqa: 503
+    sign_in_button_label = models.TextField()
+    sign_out_button_label = models.TextField()
     # fmt: on
 
 
