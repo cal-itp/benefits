@@ -51,6 +51,12 @@ def active_agency(request):
     return a and a.active
 
 
+def auth(request):
+    """Get the auth from the request's session, or None"""
+    logger.debug("Get auth token")
+    return request.get(_AUTH)
+
+
 def context_dict(request):
     """The request's session context as a dict."""
     logger.debug("Get session context dict")
@@ -138,6 +144,7 @@ def reset(request):
     """Reset the session for the request."""
     logger.debug("Reset session")
     request.session[_AGENCY] = None
+    request.session[_AUTH] = None
     request.session[_ELIGIBILITY] = None
     request.session[_ORIGIN] = reverse("core:index")
     request.session[_TOKEN] = None
@@ -193,11 +200,24 @@ def uid(request):
     return u
 
 
-def update(request, agency=None, debug=None, eligibility_types=None, origin=None, token=None, token_exp=None, verifier=None):
+def update(
+    request,
+    agency=None,
+    auth=False,
+    debug=None,
+    eligibility_types=None,
+    origin=None,
+    token=None,
+    token_exp=None,
+    verifier=None,
+):
     """Update the request's session with non-null values."""
     if agency is not None and isinstance(agency, models.TransitAgency):
         logger.debug(f"Update session {_AGENCY}")
         request.session[_AGENCY] = agency.id
+    if auth is not None and type(auth) == bool:
+        logger.debug(f"Update session {_AUTH}")
+        request.session[_AUTH] = auth
     if debug is not None:
         logger.debug(f"Update session {_DEBUG}")
         request.session[_DEBUG] = debug
