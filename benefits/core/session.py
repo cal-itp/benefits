@@ -145,7 +145,7 @@ def reset(request):
     """Reset the session for the request."""
     logger.debug("Reset session")
     request.session[_AGENCY] = None
-    request.session[_AUTH] = None
+    request.session[_AUTH] = False
     request.session[_ELIGIBILITY] = None
     request.session[_ORIGIN] = reverse("core:index")
     request.session[_TOKEN] = None
@@ -204,7 +204,7 @@ def uid(request):
 def update(
     request,
     agency=None,
-    auth=False,
+    auth=None,
     debug=None,
     eligibility_types=None,
     origin=None,
