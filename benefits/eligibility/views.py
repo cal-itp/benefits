@@ -64,23 +64,25 @@ def start(request):
     page = viewmodels.Page(
         title=_("eligibility.pages.start.title"),
         content_title=_(verifier.start_content_title),
-        media=[
-            viewmodels.MediaItem(
-                icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-                heading=_(verifier.start_item_name),
-                details=_(verifier.start_item_description),
-            ),
-            viewmodels.MediaItem(
-                icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-                heading=_("eligibility.pages.start.items[1].title"),
-                details=_("eligibility.pages.start.items[1].text"),
-            ),
-        ],
         paragraphs=[_(verifier.start_blurb)],
         button=viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm")),
     )
 
-    return TemplateResponse(request, "eligibility/start.html", page.context_dict())
+    ctx = page.context_dict()
+    ctx["media"] = [
+        dict(
+            icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
+            heading=_(verifier.start_item_name),
+            details=_(verifier.start_item_description),
+        ),
+        dict(
+            icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
+            heading=_("eligibility.pages.start.items[1].title"),
+            details=_("eligibility.pages.start.items[1].text"),
+        ),
+    ]
+
+    return TemplateResponse(request, "eligibility/start.html", ctx)
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)

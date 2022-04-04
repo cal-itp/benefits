@@ -82,20 +82,6 @@ class Icon:
         self.alt = alt
 
 
-class MediaItem:
-    """
-    Represents a list item:
-    * icon: core.viewmodels.Icon
-    * heading: str
-    * details: str
-    """
-
-    def __init__(self, icon, heading, details):
-        self.icon = icon
-        self.heading = heading
-        self.details = details
-
-
 class Page:
     """
     Represents a page of content:
@@ -103,7 +89,6 @@ class Page:
     * noimage: bool
     * icon: core.viewmodels.Icon
     * content_title: str
-    * media: core.viewmodels.MediaItem[]
     * paragraphs: str[]
     * form: django.forms.Form
     * forms: django.forms.Form[]
@@ -122,7 +107,6 @@ class Page:
         self.noimage = kwargs.get("noimage", False)
         self.icon = kwargs.get("icon")
         self.content_title = kwargs.get("content_title")
-        self.media = kwargs.get("media", [])
         self.paragraphs = kwargs.get("paragraphs", [])
         self.steps = kwargs.get("steps")
 

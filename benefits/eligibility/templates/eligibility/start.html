@@ -7,9 +7,9 @@
     {% endblock %}
 
     {% block media_list %}
-    {% if page.media|length_is:"0" %}{% else %}
+    {% if media|length_is:"0" %}{% else %}
     <div class="media-list">
-    {% for item in page.media %}
+    {% for item in media %}
         <div class="media">
             <div class="media-left">
                 {% include "core/includes/icon.html" with icon=item.icon %}
