@@ -1,1 +1,21 @@
 {% extends "core/page.html" %}
+
+{% block container_content %}
+
+    {% block icon_title %}
+    {{ block.super }}
+    {% endblock %}
+
+    {% block media_list %}
+    {{ block.super }}
+    {% endblock %}
+
+    {% block paragraph_content %}
+    {{ block.super }}
+    {% endblock %}
+
+    {% block buttons %}
+    {{ block.super }}
+    {% endblock %}
+
+{% endblock %}
