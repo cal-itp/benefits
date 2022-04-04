@@ -3,6 +3,7 @@ The eligibility application: view definitions for the eligibility verification f
 """
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
@@ -79,7 +80,7 @@ def start(request):
         button=viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm")),
     )
 
-    return PageTemplateResponse(request, page)
+    return TemplateResponse(request, "eligibility/start.html", page.context_dict())
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
