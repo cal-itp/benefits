@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 _AGENCY = "agency"
+_AUTH = "auth"
 _DEBUG = "debug"
 _DID = "did"
 _ELIGIBILITY = "eligibility"
