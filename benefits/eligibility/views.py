@@ -64,6 +64,7 @@ def start(request):
     page = viewmodels.Page(
         title=_("eligibility.pages.start.title"),
         content_title=_(verifier.start_content_title),
+        noimage=True,
         paragraphs=[_(verifier.start_blurb)],
         button=viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm")),
     )
