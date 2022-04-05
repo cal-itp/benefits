@@ -26,6 +26,25 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
+            name="AuthProvider",
+            fields=[
+                ("id", models.AutoField(primary_key=True, serialize=False)),
+                ("authority", models.TextField(help_text="Authorization server address")),
+                ("client_id", models.TextField(help_text="The application ID registered with auth server")),
+                ("redirect_uri", models.TextField(help_text="Post-login, the user is redirected here")),
+                ("post_logout_redirect_uri", models.TextField(help_text="Post-logout, the user is redirected here")),
+                ("response_type", models.TextField(help_text='Must be "code" to use the authorization-code flow')),
+                (
+                    "scope",
+                    models.TextField(
+                        help_text='Space-delimited list. If you need refresh tokens, you must add the "offline access" scope'
+                    ),
+                ),
+                ("sign_in_button_label", models.TextField()),
+                ("sign_out_button_label", models.TextField()),
+            ],
+        ),
+        migrations.CreateModel(
             name="EligibilityVerifier",
             fields=[
                 ("id", models.AutoField(primary_key=True, serialize=False, verbose_name="ID")),
@@ -39,6 +58,7 @@ class Migration(migrations.Migration):
                 ("public_key", models.ForeignKey(help_text="The Verifier's public key, used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier.", on_delete=models.deletion.PROTECT, related_name="+", to="core.PemData")),  # noqa: E501
                 ("jwe_cek_enc", models.TextField(help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode")),  # noqa: E501
                 ("jwe_encryption_alg", models.TextField(help_text="The JWE-compatible encryption algorithm")),
+                ("auth_provider", models.ForeignKey(null=True, on_delete=models.deletion.PROTECT, to="core.authprovider")),
                 # fmt: on
                 ("jws_signing_alg", models.TextField(help_text="The JWS-compatible signing algorithm")),
                 ("eligibility_types", models.ManyToManyField(to="core.EligibilityType")),
