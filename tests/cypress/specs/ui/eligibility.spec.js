@@ -15,7 +15,7 @@ describe("Single verifier: Eligibility confirmation page spec", () => {
   });
 });
 
-describe("Multiple Verifier: Verifier selection page spec", () => {
+describe("Multiple Verifier, no AuthProvider: Verifier selection page spec", () => {
   beforeEach(() => {
     cy.visit("/");
     // Selecting ABC will go down the multiple verifier flow
@@ -50,27 +50,27 @@ describe("Multiple Verifier: Verifier selection page spec", () => {
 
   it("User can click a radio button and click Continue", () => {
     cy.get("input:radio:checked").should("have.length", 0);
-    cy.contains("Senior Discount Program").click();
+    cy.get("input:radio").last().click();
     cy.get("input:radio:checked").should("have.length", 1);
     cy.contains("Continue").click();
     cy.url().should("include", eligibility_start_url);
   });
 });
 
-describe("Multiple verifier: Eligibility confirmation form spec", () => {
+describe("Multiple verifier, no AuthProvider: Eligibility confirmation form spec", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.contains(agencies[0].fields.short_name).click();
     cy.contains("Let’s do it!").click();
-    cy.contains("Senior Discount Program").click();
+    cy.get("input:radio").last().click();
     cy.contains("Continue").click();
-    cy.contains("Great, you’ll need two things before we get started...");
+    cy.contains("You’ll need two things before we get started:");
   });
 
-  it("Has a driver’s license or ID number form label and corresponding field", () => {
+  it("Has a Courtesy Card number form label and corresponding field", () => {
     cy.contains("Continue").click();
     cy.get("input:focus").should("have.length", 0);
-    cy.contains("CA driver’s license or ID number *").click();
+    cy.contains("MST Courtesy Card number *").click();
 
     cy.get("input:focus").should("have.length", 1);
     cy.url().should("include", eligibility_confirm_url);
@@ -79,7 +79,7 @@ describe("Multiple verifier: Eligibility confirmation form spec", () => {
   it("Has a last name form label and corresponding form field", () => {
     cy.contains("Continue").click();
     cy.get("input:focus").should("have.length", 0);
-    cy.contains("Last name (as it appears on ID) *").click();
+    cy.contains("Last name (as it appears on Courtesy Card) *").click();
 
     cy.get("input:focus").should("have.length", 1);
     cy.url().should("include", eligibility_confirm_url);
