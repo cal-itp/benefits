@@ -76,6 +76,12 @@ footer {
   border-width: 2px;
 }
 
+.btn-external {
+  border-radius: 0;
+  border-color: #2b6597;
+  color: #2b6597;
+}
+
 .btn-link {
   color: #046b99;
 }
