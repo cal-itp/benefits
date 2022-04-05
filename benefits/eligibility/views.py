@@ -72,6 +72,12 @@ def start(request):
     ctx = page.context_dict()
     ctx["media"] = [
         dict(
+            icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
+            heading=_("Sign in to your Login.gov account"),
+            details=_("You will be able to create an account if you’re not already signed up."),
+            links=[viewmodels.Button.link(classes="btn-text", text="Learn more about Login.gov", url="https://login.gov/")],
+        ),
+        dict(
             icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
             heading=_(verifier.start_item_name),
             details=_(verifier.start_item_description),
@@ -80,6 +86,12 @@ def start(request):
             icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
             heading=_("eligibility.pages.start.items[1].title"),
             details=_("eligibility.pages.start.items[1].text"),
+            links=[
+                viewmodels.Button.link(classes="btn-text", text="Don't have a bank card?", url="https://login.gov/"),
+                viewmodels.Button.link(
+                    classes="btn-text", text="Unsure if you have a contactless card?", url="https://login.gov/"
+                ),
+            ],
         ),
     ]
 
