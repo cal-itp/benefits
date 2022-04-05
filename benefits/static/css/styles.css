@@ -36,10 +36,16 @@ h6 {
 
 h1 {
   font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: 0.05em;
 }
 
 p {
   margin-bottom: 1rem;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.05em;
 }
 
 /* making the sticky footer */
@@ -65,7 +71,7 @@ footer {
   padding-bottom: 1rem;
 }
 
-footer a {
+footer .footer-links a {
   font-size: 16px;
 }
 
@@ -82,6 +88,18 @@ footer a {
 
 .btn-link {
   color: #046b99;
+}
+
+.btn-primary {
+  text-transform: uppercase;
+  height: 60px;
+  letter-spacing: 0.05em;
+}
+
+.btn-outline-light {
+  width: 126px;
+  height: 38px;
+  padding: 0px !important;
 }
 
 .form-control {
@@ -167,16 +185,6 @@ footer a {
   margin-bottom: 2rem;
 }
 
-.container.content h1 {
-  font-size: 24px;
-  line-height: 30px;
-}
-
-.container.content p {
-  font-size: 18px;
-  line-height: 27px;
-}
-
 .container.content h1.icon-title span.icon {
   text-align: center;
   display: block;
@@ -192,11 +200,6 @@ footer a {
   margin-bottom: 1rem;
   padding: 1rem;
   width: 100%;
-  text-transform: uppercase;
-}
-
-.buttons a.btn.btn-lg.btn-outline-primary {
-  text-transform: inherit;
 }
 
 .container.content .btn-lg.agency-url {
@@ -235,7 +238,9 @@ footer a {
 
 @media (min-width: 992px) {
   /* lg+ */
-
+  header {
+    height: 80px;
+  }
   /* undoing the sticky footer for pages with header image
        the backup plan is to color the body the same as the footer
        to avoid the floating footer look
@@ -248,8 +253,8 @@ footer a {
   }
   .with-image footer {
     margin-top: unset;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 0.138rem;
+    padding-bottom: 0.138rem;
   }
 
   h1 {
