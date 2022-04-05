@@ -54,7 +54,8 @@
 
             {% block buttons %}
             {% if page.buttons|length_is:"0" %}{% else %}
-                <div class="buttons">
+                <h2 style="margin-top:20vh; font-weight:bold">{{page.choose_provider}}</h2>
+                <div style="display:flex; justify-content: space-between" class="buttons">
                     {% for b in page.buttons %}
                         {% include "core/includes/button.html" with button=b %}
                     {% endfor %}

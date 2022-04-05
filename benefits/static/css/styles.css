@@ -177,7 +177,7 @@ footer {
   font-weight: 500;
   margin-bottom: 1rem;
   padding: 1rem;
-  width: 100%;
+  width: 49%;
 }
 
 .container.content .btn-lg.agency-url {
@@ -262,13 +262,6 @@ footer {
     padding-right: 3.5rem;
     margin-top: 8rem;
     margin-bottom: 7rem;
-  }
-
-  .container.content input[type="submit"],
-  .container.content .btn {
-    width: 70%;
-    margin-left: 15%;
-    margin-right: 15%;
   }
 }
 

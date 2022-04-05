@@ -30,6 +30,11 @@ def _index_url():
     return reverse("core:index")
 
 
+def _index_choose_provider():
+    """Helper returns the content title for the common index page."""
+    return _("core.pages.index.chooseprovider")
+
+
 @middleware.pageview_decorator
 def index(request):
     """View handler for the main entry page."""
@@ -39,11 +44,11 @@ def index(request):
     agencies = models.TransitAgency.all_active()
     buttons = [viewmodels.Button.outline_primary(text=a.short_name, url=a.index_url) for a in agencies]
     buttons[0].classes.append("mt-3")
-    buttons[0].label = _("core.pages.index.chooseprovider")
+    buttons[1].classes.append("mt-3")
 
     page = viewmodels.Page(
         content_title=_index_content_title(),
-        paragraphs=_index_paragraphs(),
+        choose_provider=_index_choose_provider(),
         buttons=buttons,
         classes="home",
     )
