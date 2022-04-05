@@ -36,9 +36,7 @@ def _index(request):
             viewmodels.Button.primary(
                 text=_("enrollment.buttons.payment_partner"), id=tokenize_button, url=f"#{tokenize_button}"
             ),
-            viewmodels.Button.link(
-                classes="btn-sm", text=_("enrollment.buttons.payment_options"), url=reverse("core:payment_options")
-            ),
+            viewmodels.Button.link(classes="btn-sm", text=_("enrollment.buttons.payment_options"), url=reverse("core:help")),
         ],
     )
     context = {}

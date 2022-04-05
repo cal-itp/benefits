@@ -5,7 +5,7 @@ from django.http import HttpResponseBadRequest, HttpResponseNotFound, HttpRespon
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.utils.translation import pgettext, gettext as _
+from django.utils.translation import gettext as _
 
 from . import middleware, models, session, viewmodels
 
@@ -88,20 +88,6 @@ def help(request):
     )
 
     return TemplateResponse(request, "core/help.html", page.context_dict())
-
-
-@middleware.pageview_decorator
-def payment_options(request):
-    """View handler for the Payment Options page."""
-    page = viewmodels.Page(
-        title=_("core.buttons.payment_options"),
-        icon=viewmodels.Icon("bankcard", pgettext("image alt text", "core.icons.bankcard")),
-        content_title=_("core.buttons.payment_options"),
-        buttons=viewmodels.Button.home(request, text=_("core.buttons.back")),
-        noimage=True,
-    )
-
-    return TemplateResponse(request, "core/payment-options.html", page.context_dict())
 
 
 @middleware.pageview_decorator
