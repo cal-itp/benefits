@@ -96,7 +96,7 @@ describe("Multiple verifier, with AuthProvider: Eligibility start page spec", ()
     cy.url().should("include", eligibility_start_url);
   });
 
-  it("Has a Login.gov button", () => {
+  it.skip("Has a Login.gov button", () => {
     cy.contains("Continue with Login.gov");
   });
 });
