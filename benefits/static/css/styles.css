@@ -80,6 +80,27 @@ footer {
   border-radius: 0;
   border-color: #2b6597;
   color: #2b6597;
+  position: relative;
+}
+
+.btn-external i {
+  width: 25px;
+  height: 22px;
+  position: absolute;
+  left: 89%;
+  bottom: 30%;
+}
+
+.btn-external .btn-external-icon-hover {
+  display: none;
+}
+
+.btn-external:hover .btn-external-icon {
+  display: none;
+}
+
+.btn-external:hover .btn-external-icon-hover {
+  display: inherit;
 }
 
 .btn-link {
