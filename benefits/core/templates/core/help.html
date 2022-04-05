@@ -1,7 +1,43 @@
 {% extends "core/page.html" %}
 {% load i18n %}
+{% load static %}
 {% block container_content %}
+
+{% block icon_title %}
 {{ block.super }}
+{% endblock %}
+
+<h2 id="what-is-cal-itp">{% translate "core.pages.help.header[0]" %}</h2>
+<p>{% translate "core.pages.help.header[0].p[0]" %}</p>
+<p>{% translate "core.pages.help.header[0].p[1]" %}</p>
+
+<h2 id="payment-options">{% translate "core.pages.help.header[1]" %}</h2>
+<p>{% translate "core.pages.help.header[1].p[0]" %}</p>
+
+<p class="contactless-symbol">
+    <img class="icon mx-auto d-block" src="{% static 'img/icon/contactless.svg' %}" alt="{% translate "core.icons.contactless" context "image alt text" %}" />
+</p>
+
+<p>{% translate "core.pages.help.header[1].p[1]" %}</p>
+<p>{% translate "core.pages.help.header[1].p[2]" %}</p>
+<p>{% translate "core.pages.help.header[1].p[3]" %}</p>
+
+<h2 id="login-gov">{% translate "core.pages.help.header[2]" %}</h2>
+<p>{% translate "core.pages.help.header[2].p[0]" %}</p>
+<p>{% translate "core.pages.help.header[2].p[1]" %}</p>
+<p>{% translate "core.pages.help.header[2].p[2]" %}</p>
+
+<h2 id="littlepay">{% translate "core.pages.help.header[3]" %}</h2>
+<p>{% translate "core.pages.help.header[3].p[0]" %}</p>
+<p>{% translate "core.pages.help.header[3].p[1]" %}</p>
+
+<h2 id="questions">{% translate "core.pages.help.header[4]" %}</h2>
+<p>{% translate "core.pages.help.header[4].p[0]" %}</p>
+
+{% block buttons %}
+{{ block.super }}
+{% endblock %}
+
 <p class="mt-4">
     {% translate "core.pages.help.foss.text" %}
     <a href="https://www.github.com/cal-itp/benefits" target="_blank" rel="noopener noreferrer">{% translate "core.pages.help.foss.link" %}</a>.

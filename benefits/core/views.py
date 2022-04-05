@@ -81,7 +81,6 @@ def help(request):
     page = viewmodels.Page(
         title=_("core.buttons.help"),
         content_title=_("core.buttons.help"),
-        paragraphs=[_("core.pages.help.p[0]"), _("core.pages.help.p[1]")],
         buttons=buttons,
         classes="text-lg-center",
         noimage=True,
