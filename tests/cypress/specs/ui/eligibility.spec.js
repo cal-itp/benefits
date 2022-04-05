@@ -85,3 +85,18 @@ describe("Multiple verifier, no AuthProvider: Eligibility confirmation form spec
     cy.url().should("include", eligibility_confirm_url);
   });
 });
+
+describe("Multiple verifier, with AuthProvider: Eligibility start page spec", () => {
+  beforeEach(() => {
+    cy.visit("/");
+    cy.contains(agencies[0].fields.short_name).click();
+    cy.contains("Let’s do it!").click();
+    cy.get("input:radio").first().click();
+    cy.contains("Continue").click();
+    cy.url().should("include", eligibility_start_url);
+  });
+
+  it("Has a Login.gov button", () => {
+    cy.contains("Continue with Login.gov");
+  });
+});
