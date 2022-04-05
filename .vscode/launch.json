@@ -10,7 +10,12 @@
       "request": "launch",
       "program": "${workspaceFolder}/manage.py",
       "args": ["runserver", "--insecure", "0.0.0.0:8000"],
-      "django": true
+      "django": true,
+      "serverReadyAction": {
+        "pattern": "Starting development server at http://0.0.0.0:([0-9]+)/",
+        "uriFormat": "http://localhost:%s",
+        "action": "openExternally"
+      }
     }
   ]
 }

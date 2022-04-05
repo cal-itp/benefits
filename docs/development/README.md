@@ -31,8 +31,7 @@ If you do not receive a prompt, or when you feel like starting from a fresh envi
 
 ## Attach a debugger
 
-Once running inside a container, press **`F5`** to attach a debugger to the client, running on `http://localhost` at a port
-dynamically assigned by Docker. See [Docker dynamic ports](./docker-dynamic-ports.md) for more information.
+Once running inside a container, press **`F5`** to start the server and attach a debugger to the client, running at `http://localhost:8000`.
 
 Add breakpoints in the code and browse the local site to trigger a pause. Press `F5` to continue execution from the breakpoint.
 
