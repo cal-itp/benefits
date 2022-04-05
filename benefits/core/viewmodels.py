@@ -73,6 +73,14 @@ class Button:
         classes.insert(0, "btn-outline-primary")
         return Button(classes=classes, **kwargs)
 
+    @staticmethod
+    def external(**kwargs):
+        classes = kwargs.pop("classes", [])
+        if isinstance(classes, str):
+            classes = classes.split(" ")
+        classes.insert(0, "btn-external")
+        return Button.outline_primary(classes=classes, **kwargs)
+
 
 class Icon:
     """Represents an icon."""

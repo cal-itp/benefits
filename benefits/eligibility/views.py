@@ -61,6 +61,12 @@ def start(request):
     session.update(request, eligibility_types=[])
     verifier = session.verifier(request)
 
+    if verifier.requires_authentication:
+        auth_provider = verifier.auth_provider
+        button = viewmodels.Button.external(text=_(auth_provider.sign_in_button_label), url="#", id="login")
+    else:
+        button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm"))
+
     page = viewmodels.Page(
         title=_("eligibility.pages.start.title"),
         content_title=_(verifier.start_content_title),
@@ -77,7 +83,7 @@ def start(request):
             ),
         ],
         paragraphs=[_(verifier.start_blurb)],
-        button=viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm")),
+        button=button,
     )
 
     return TemplateResponse(request, "eligibility/start.html", page.context_dict())
