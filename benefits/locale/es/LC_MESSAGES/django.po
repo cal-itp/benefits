@@ -280,6 +280,14 @@ msgstr "Una tarjeta de débito o crédito"
 msgid "eligibility.buttons.continue"
 msgstr "Continuar"
 
+#: benefits/eligibility/views.py:80
+msgid "eligibility.buttons.signin"
+msgstr "TODO: Continue with Login.gov"
+
+#: benefits/eligibility/views.py:80
+msgid "eligibility.buttons.signout"
+msgstr "TODO: Sign out of Login.gov"
+
 #: benefits/eligibility/views.py:170
 msgid "eligibility.pages.unverified.dmv.title"
 msgstr "Edad no confirmada"
