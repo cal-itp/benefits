@@ -24,6 +24,8 @@
 
 {% if auth_provider %}
 
+{% load static %}
+
 <div class="navbar navbar-expand-sm navbar-dark bg-info">
     <pre>
     config = {
@@ -32,6 +34,7 @@
     </pre>
 </div>
 
+<script src="{% static "js/oidc-client-ts.min.js" %}" type="text/javascript"></script>
 {% endif %}
 
 {% endblock %}
