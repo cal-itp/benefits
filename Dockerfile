@@ -22,9 +22,11 @@ RUN useradd --create-home --shell /bin/bash $USER && \
     mkdir -p /home/$USER/app/run && \
     mkdir -p /home/$USER/app/static && \
     chown -R $USER /home/$USER && \
-    # install server components
+    # install server components, nodejs
+    # see https://github.com/nodesource/distributions#installation-instructions
+    curl -fsSL https://deb.nodesource.com/setup_16.x | bash && \
     apt-get update && \
-    apt-get install -qq --no-install-recommends gettext nginx
+    apt-get install -qq --no-install-recommends gettext nginx nodejs npm
 
 # enter app directory
 WORKDIR /home/$USER/app
