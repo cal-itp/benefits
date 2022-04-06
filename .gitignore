@@ -1,9 +1,11 @@
 *.db
 *.env
 *.mo
+.DS_Store
+benefits/static/js/oidc-client-ts*
 fixtures/*.json
 !fixtures/??_*.json
+node_modules/
 static/
 !benefits/static
 __pycache__/
-.DS_Store
