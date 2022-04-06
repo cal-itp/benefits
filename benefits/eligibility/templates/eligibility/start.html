@@ -35,6 +35,20 @@
 </div>
 
 <script src="{% static "js/oidc-client-ts.min.js" %}" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(function() {
+        var settings = {
+            authority: "{{ auth_provider.authority }}",
+            client_id: "{{ auth_provider.client_id }}",
+            redirect_uri: "{{ auth_provider.redirect_uri }}",
+            post_logout_redirect_uri: "{{ auth_provider.post_logout_redirect_uri }}",
+            response_type: "{{ auth_provider.response_type }}",
+            scope: "{{ auth_provider.scope }}",
+        };
+    });
+</script>
+
 {% endif %}
 
 {% endblock %}
