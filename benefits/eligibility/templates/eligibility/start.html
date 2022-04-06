@@ -46,6 +46,11 @@
             response_type: "{{ auth_provider.response_type }}",
             scope: "{{ auth_provider.scope }}",
         };
+
+        $("#login").on("click", function() {
+            var mgr = new oidc.UserManager(settings);
+            mgr.signinRedirect();
+        });
     });
 </script>
 
