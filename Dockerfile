@@ -4,7 +4,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     USER=calitp
 
-    # create non-root $USER and home directory
+# create non-root $USER and home directory
 RUN useradd --create-home --shell /bin/bash $USER && \
     # setup $USER permissions for nginx
     mkdir -p /var/cache/nginx && \
@@ -42,11 +42,15 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY bin/ bin/
 COPY benefits/ benefits/
 
-# ensure $USER can compile messages in the locale directories
-RUN chmod -R 777 benefits/locale
+# ensure $USER can compile messages and copy static files
+RUN chmod -R 777 benefits/locale benefits/static
 
 # switch to non-root $USER
 USER $USER
+
+# install node dependencies
+COPY package*.json .
+RUN npm ci && cp node_modules/oidc-client-ts/dist/browser/oidc-client-ts* benefits/static/js
 
 # update PATH for local pip installs
 ENV PATH "$PATH:/home/$USER/.local/bin"

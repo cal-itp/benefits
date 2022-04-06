@@ -1,0 +1,8 @@
+{
+  "name": "benefits",
+  "version": "1.0.0",
+  "description": "Benefits app",
+  "dependencies": {
+    "oidc-client-ts": "^2.0.2"
+  }
+}
