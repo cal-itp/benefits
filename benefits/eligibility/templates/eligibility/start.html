@@ -26,14 +26,6 @@
 
 {% load static %}
 
-<div class="navbar navbar-expand-sm navbar-dark bg-info">
-    <pre>
-    config = {
-        "client_id": {{ auth_provider.client_id }},
-    }
-    </pre>
-</div>
-
 <script src="{% static "js/oidc-client-ts.min.js" %}" type="text/javascript"></script>
 
 <script type="text/javascript">
