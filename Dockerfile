@@ -50,7 +50,9 @@ USER $USER
 
 # install node dependencies
 COPY package*.json .
-RUN npm ci && cp node_modules/oidc-client-ts/dist/browser/oidc-client-ts* benefits/static/js
+RUN npm ci && \
+    mkdir -p benefits/static/js && \
+    cp node_modules/oidc-client-ts/dist/browser/oidc-client-ts* benefits/static/js
 
 # update PATH for local pip installs
 ENV PATH "$PATH:/home/$USER/.local/bin"
