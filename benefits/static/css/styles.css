@@ -36,10 +36,16 @@ h6 {
 
 h1 {
   font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: 0.05em;
 }
 
 p {
   margin-bottom: 1rem;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.05em;
 }
 
 /* making the sticky footer */
@@ -65,11 +71,15 @@ footer {
   padding-bottom: 1rem;
 }
 
+footer .footer-links a {
+  font-size: 16px;
+}
+
 /* class styles */
 
 .bg-p2,
 .bg-primary {
-  background-color: #046b99 !important;
+  background-color: #2b6597 !important;
 }
 
 .btn-lg {
@@ -78,6 +88,18 @@ footer {
 
 .btn-link {
   color: #046b99;
+}
+
+.btn-primary {
+  text-transform: uppercase;
+  height: 60px;
+  letter-spacing: 0.05em;
+}
+
+.btn-outline-light {
+  width: 126px;
+  height: 38px;
+  padding: 0px !important;
 }
 
 .form-control {
@@ -122,7 +144,7 @@ footer {
 }
 
 .global-footer {
-  background: #222;
+  background: #212121;
 }
 
 .media-list {
@@ -267,7 +289,9 @@ footer {
 
 @media (min-width: 992px) {
   /* lg+ */
-
+  header {
+    height: 80px;
+  }
   /* undoing the sticky footer for pages with header image
        the backup plan is to color the body the same as the footer
        to avoid the floating footer look
@@ -280,8 +304,8 @@ footer {
   }
   .with-image footer {
     margin-top: unset;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+    padding-top: 0.138rem;
+    padding-bottom: 0.138rem;
   }
 
   h1 {
