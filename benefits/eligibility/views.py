@@ -59,11 +59,14 @@ def start(request):
     """View handler for the eligibility verification getting started screen."""
 
     session.update(request, eligibility_types=[])
+
     verifier = session.verifier(request)
+    ctx = {}
 
     if verifier.requires_authentication:
         auth_provider = verifier.auth_provider
         button = viewmodels.Button.external(text=_(auth_provider.sign_in_button_label), url="#", id="login")
+        ctx["auth_provider"] = auth_provider
     else:
         button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm"))
 
@@ -85,8 +88,9 @@ def start(request):
         paragraphs=[_(verifier.start_blurb)],
         button=button,
     )
+    ctx.update(page.context_dict())
 
-    return TemplateResponse(request, "eligibility/start.html", page.context_dict())
+    return TemplateResponse(request, "eligibility/start.html", ctx)
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
