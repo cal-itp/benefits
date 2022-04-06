@@ -27,10 +27,6 @@ describe("Index page spec", () => {
     });
   });
 
-  it("Has a payment options page link", () => {
-    cy.contains("Payment Options");
-  });
-
   it("Has a help page link", () => {
     cy.contains("Help");
   });
