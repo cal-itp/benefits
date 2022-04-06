@@ -25,11 +25,11 @@
 <h2 id="login-gov">{% translate "core.pages.help.header[2]" %}</h2>
 <p>{% translate "core.pages.help.header[2].p[0]" %}</p>
 <p>{% translate "core.pages.help.header[2].p[1]" %}</p>
-<p>{% translate "core.pages.help.header[2].p[2]" %}</p>
+<p>{% blocktranslate with website="https://login.gov"%}core.pages.help.header[2].p[2]{{ website }}{% endblocktranslate %}</p>
 
 <h2 id="littlepay">{% translate "core.pages.help.header[3]" %}</h2>
 <p>{% translate "core.pages.help.header[3].p[0]" %}</p>
-<p>{% translate "core.pages.help.header[3].p[1]" %}</p>
+<p>{% blocktranslate with website="https://littlepay.com" %}core.pages.help.header[3].p[1]{{ website }}{% endblocktranslate %}</p>
 
 <h2 id="questions">{% translate "core.pages.help.header[4]" %}</h2>
 <p>{% translate "core.pages.help.header[4].p[0]" %}</p>

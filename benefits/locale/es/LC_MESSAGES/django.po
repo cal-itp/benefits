@@ -62,8 +62,8 @@ msgstr "TODO: Creating an account is simple. You will need an email address and 
 "authenticating your account&mdash;which will use either a landline, mobile phone, or "
 "backup codes that must be printed or written down."
 
-msgid "core.pages.help.header[2].p[2]"
-msgstr "TODO: For more information on Login.gov, check out their website."
+msgid "core.pages.help.header[2].p[2]%(website)s"
+msgstr "<a href=\"%(website)s\">TODO</a>: For more information on Login.gov, check out their website."
 
 msgid "core.pages.help.header[3]"
 msgstr "TODO: What is Littlepay?"
@@ -72,8 +72,8 @@ msgid "core.pages.help.header[3].p[0]"
 msgstr "TODO: Our payment partner, Littlepay is a secure, end-to-end payment processing "
 "platform that allows us to seamlessly attach your transit discount to your bank card."
 
-msgid "core.pages.help.header[3].p[1]"
-msgstr "TODO: For more information on Littlepay, check out their website."
+msgid "core.pages.help.header[3].p[1]%(website)s"
+msgstr "<a href=\"%(website)s\">TODO</a>: For more information on Littlepay, check out their website."
 
 msgid "core.pages.help.header[4]"
 msgstr "TODO: Questions?"
