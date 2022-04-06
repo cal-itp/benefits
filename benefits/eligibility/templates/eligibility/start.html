@@ -19,3 +19,19 @@
     {% endblock %}
 
 {% endblock %}
+
+{% block scripts %}
+
+{% if auth_provider %}
+
+<div class="navbar navbar-expand-sm navbar-dark bg-info">
+    <pre>
+    config = {
+        "client_id": {{ auth_provider.client_id }},
+    }
+    </pre>
+</div>
+
+{% endif %}
+
+{% endblock %}
