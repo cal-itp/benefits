@@ -12,7 +12,7 @@
       "jwe_cek_enc": "A256CBC-HS512",
       "jwe_encryption_alg": "RSA-OAEP",
       "jws_signing_alg": "RS256",
-      "auth_provider": null,
+      "auth_provider": 1,
       "selection_label": "eligibility.pages.index.dmv.label",
       "selection_label_description": null,
       "start_content_title": "eligibility.pages.start.dmv.content_title",
