@@ -1,8 +1,13 @@
-from django.http import JsonResponse
-from benefits.core import session
+from django.contrib.auth import authenticate, login
+from django.http import HttpResponse
 
 
-def login(request):
-    # TODO THIS IS NOT PROPER AUTHENTICATION. Just implemented this way for testing.
-    session.update(request, auth=True)
-    return JsonResponse(session.context_dict(request))
+def sign_in(request):
+    user = authenticate(request)
+    if user:
+        login(request, user)
+        response = HttpResponse("Signed in!")
+    else:
+        response = HttpResponse("Not signed in")
+
+    return response
