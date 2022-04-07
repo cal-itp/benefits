@@ -24,11 +24,13 @@ ALLOWED_HOSTS = _filter_empty(os.environ["DJANGO_ALLOWED_HOSTS"].split(","))
 # Application definition
 
 INSTALLED_APPS = [
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
     "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     "benefits.core",
-    "benefits.auth",
+    "benefits.authn",
     "benefits.enrollment",
     "benefits.eligibility",
 ]

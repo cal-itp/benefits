@@ -5,8 +5,8 @@ from django.apps import AppConfig
 
 
 class AuthAppConfig(AppConfig):
-    name = "benefits.auth"
-    label = "auth"
+    name = "benefits.authn"
+    label = "authn"
     verbose_name = "Benefits Auth"
 
 
