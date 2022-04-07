@@ -69,19 +69,24 @@ def start(request):
 
     page = viewmodels.Page(
         title=_("eligibility.pages.start.title"),
-        content_title=_(verifier.start_content_title),
+        # content_title=_(verifier.start_content_title),
         noimage=True,
         paragraphs=[_(verifier.start_blurb)],
         button=button,
     )
 
     ctx = page.context_dict()
+    ctx["title"] = _(verifier.start_content_title)
     ctx["media"] = [
         dict(
             icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
             heading=_("Sign in to your Login.gov account"),
             details=_("You will be able to create an account if you’re not already signed up."),
-            links=[viewmodels.Button.link(classes="btn-text", text="Learn more about Login.gov", url="https://login.gov/")],
+            links=[
+                viewmodels.Button.link(
+                    classes="btn-text btn-link", text="Learn more about Login.gov", url="https://login.gov/"
+                )
+            ],
         ),
         dict(
             icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
@@ -93,7 +98,7 @@ def start(request):
             heading=_("eligibility.pages.start.items[1].title"),
             details=_("eligibility.pages.start.items[1].text"),
             links=[
-                viewmodels.Button.link(classes="btn-text", text="Don't have a bank card?", url="https://login.gov/"),
+                viewmodels.Button.link(classes="btn-text btn-link", text="Don't have a bank card?", url="https://login.gov/"),
                 viewmodels.Button.link(
                     classes="btn-text", text="Unsure if you have a contactless card?", url="https://login.gov/"
                 ),

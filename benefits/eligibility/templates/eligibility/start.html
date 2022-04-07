@@ -6,19 +6,21 @@
     {{ block.super }}
     {% endblock %}
 
+    <h1 style="margin-top: 0; font-size: 24px; line-height: 30px;" class="text-center">{{title}}</h1>
+
     {% block media_list %}
     {% if media|length_is:"0" %}{% else %}
-    <div class="media-list">
+    <ul class="media-list">
     {% for item in media %}
-        <div class="media">
-            <div class="media-left">
+        <li class="media">
+            <div class="media-line">
                 {% include "core/includes/icon.html" with icon=item.icon %}
             </div>
             <div class="media-body">
-                <div class="media-body--title">
+                <div class="media-body--heading">
                     <strong>{{ item.heading }}</strong>
                 </div>
-                <div class="media-body--content">
+                <div class="media-body--details">
                     {{ item.details }}
                 </div>
                 <div class="media-body--links">
@@ -27,9 +29,9 @@
                     {% endfor %}
                 </div>
             </div>
-        </div>
+        </li>
     {% endfor %}
-    </div>
+    </ul>
     {% endif %}
     {% endblock %}
 
