@@ -267,11 +267,11 @@ msgstr "Bank card icon with contactless symbol and checkmark"
 
 #: benefits/eligibility/views.py:74
 msgid "eligibility.pages.start.items[1].title"
-msgstr "Your bank card"
+msgstr "Provide your bank card details"
 
 #: benefits/eligibility/views.py:75
 msgid "eligibility.pages.start.items[1].text"
-msgstr "A debit or credit card"
+msgstr "Must be a contactless debit or credit card issued by Visa or Mastercard."
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
@@ -381,10 +381,10 @@ msgid "eligibility.pages.confirm.dmv.content_title"
 msgstr "Let’s see if we can confirm your age with the DMV"
 
 msgid "eligibility.pages.start.dmv.items[0].title"
-msgstr "Your California ID"
+msgstr "Provide your California ID number"
 
 msgid "eligibility.pages.start.dmv.items[0].text"
-msgstr "Driver’s license or ID card"
+msgstr "You will verify your age with a driver’s license or ID card"
 
 msgid "eligibility.pages.confirm.dmv.p[0]"
 msgstr ""
