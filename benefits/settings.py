@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     "benefits.core",
+    "benefits.auth",
     "benefits.enrollment",
     "benefits.eligibility",
 ]
