@@ -1,6 +1,10 @@
 {% extends "core/page.html" %}
 {% load i18n %}
 {% load static %}
+
+{% block main_content%}
+<div class="container-fluid">
+    <div class="container content help">
 {% block container_content %}
 
 {% block icon_title %}
@@ -42,4 +46,7 @@
     {% translate "core.pages.help.foss.text" %}
     <a href="https://www.github.com/cal-itp/benefits" target="_blank" rel="noopener noreferrer">{% translate "core.pages.help.foss.link" %}</a>.
 </p>
+{% endblock %}
+    </div>
+</div>
 {% endblock %}
