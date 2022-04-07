@@ -8,6 +8,3 @@ class EligibilityAppConfig(AppConfig):
     name = "benefits.eligibility"
     label = "eligibility"
     verbose_name = "Eligibility Verification"
-
-
-default_app_config = "benefits.eligibility.EligibilityAppConfig"

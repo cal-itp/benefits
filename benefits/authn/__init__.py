@@ -8,6 +8,3 @@ class AuthAppConfig(AppConfig):
     name = "benefits.authn"
     label = "authn"
     verbose_name = "Benefits Auth"
-
-
-# default_app_config = "benefits.enrollment.AuthAppConfig"

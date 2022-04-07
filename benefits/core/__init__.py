@@ -8,6 +8,3 @@ class CoreAppConfig(AppConfig):
     name = "benefits.core"
     label = "core"
     verbose_name = "Core"
-
-
-default_app_config = "benefits.core.CoreAppConfig"
