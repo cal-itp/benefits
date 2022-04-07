@@ -200,7 +200,10 @@ footer {
   width: 100%;
   text-align: center !important;
 }
-
+.provider {
+  margin-top: 20vh;
+  font-weight: bold;
+}
 /* media queries */
 
 @media (max-width: 767px) {

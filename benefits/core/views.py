@@ -12,7 +12,7 @@ from . import middleware, models, session, viewmodels
 
 def PageTemplateResponse(request, page_vm):
     """Helper returns a TemplateResponse using the common page template."""
-    return TemplateResponse(request, "core/page.html", page_vm.context_dict())
+    return TemplateResponse(request, "core/index.html", page_vm.context_dict())
 
 
 def _index_content_title():
