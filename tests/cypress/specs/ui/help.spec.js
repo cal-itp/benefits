@@ -47,4 +47,22 @@ describe("Help page spec", () => {
     cy.should("not.contain", otherAgency.fields.long_name);
     cy.should("not.contain", otherAgency.fields.phone);
   });
+
+  it("Has headers that all have ids to be used for anchor links", () => {
+    cy.contains("Help").click();
+
+    cy.get("h2").each(($el, index, $list) => {
+      cy.wrap($el[0].attributes).its("id").should("exist");
+    });
+  });
+
+  it("Has the expected headers", () => {
+    cy.contains("Help").click();
+
+    cy.get("h2").contains("What is CAL-ITP Benefits?");
+    cy.get("h2").contains("Payment options");
+    cy.get("h2").contains("What is Login.gov?");
+    cy.get("h2").contains("What is Littlepay?");
+    cy.get("h2").contains("Questions?");
+  });
 });
