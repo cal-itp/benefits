@@ -15,21 +15,22 @@
                 {% include "core/includes/icon.html" with icon=item.icon %}
             </div>
             <div class="media-body">
-                <strong>{{ item.heading }}</strong>
-                <br />
-                {{ item.details }}
-                {% for l in item.links %}
-                    {% include "core/includes/button.html" with button=l %}
-                {% endfor %}
+                <div class="media-body--title">
+                    <strong>{{ item.heading }}</strong>
+                </div>
+                <div class="media-body--content">
+                    {{ item.details }}
+                </div>
+                <div class="media-body--links">
+                    {% for l in item.links %}
+                        {% include "core/includes/button.html" with button=l %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
     {% endfor %}
     </div>
     {% endif %}
-    {% endblock %}
-
-    {% block paragraph_content %}
-    {{ block.super }}
     {% endblock %}
 
     {% block buttons %}

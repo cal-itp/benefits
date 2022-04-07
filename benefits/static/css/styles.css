@@ -117,12 +117,6 @@ footer .footer-links a {
   color: #046b99;
 }
 
-.btn-text {
-  font-size: 12px;
-  line-height: 15px;
-  letter-spacing: 0.05em;
-}
-
 .btn-primary {
   text-transform: uppercase;
   height: 60px;
@@ -197,6 +191,16 @@ footer .footer-links a {
 
 .media-list .media .media-left img {
   height: 75px;
+}
+
+.media .media-body .media-body--links .btn-lg {
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.05em;
+  padding: 0;
+  text-align: left;
+  width: 100%;
+  margin: 0;
 }
 
 .radio-container {
