@@ -2,12 +2,17 @@
 {% if button.label %}
 <label>{{ button.label }}</label>
 {% endif %}
-<a {%if button.id %}id="{{ button.id }}"{% endif %}
-    {%if button.target %}target="{{ button.target }}"{% endif %}
-    {%if button.rel %}rel="{{ button.rel }}"{% endif %}
+<a {% if button.id %}id="{{ button.id }}"{% endif %}
+    {% if button.target %}target="{{ button.target }}"{% endif %}
+    {% if button.rel %}rel="{{ button.rel }}"{% endif %}
     class="{{ button.classes | join:" " }}"
     href="{{ button.url }}"
     role="button">
     {{ button.text }}
+    {% if "btn-external" in button.classes %}
+    {% load static %}
+    <i class="btn-external-icon" style="background: url('{% static "/img/icon/rightarrow.svg" %}') no-repeat; background-size: cover;"></i>
+    <i class="btn-external-icon-hover" style="background: url('{% static "/img/icon/rightarrow-hover.svg" %}') no-repeat; background-size: cover;"></i>
+    {% endif %}
 </a>
 {% endif %}
