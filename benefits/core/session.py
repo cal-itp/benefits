@@ -14,8 +14,9 @@ from . import models
 
 logger = logging.getLogger(__name__)
 
-# authentication is handled separately; see ../authn/
+
 _AGENCY = "agency"
+_AUTH = "auth"
 _DEBUG = "debug"
 _DID = "did"
 _ELIGIBILITY = "eligibility"
@@ -50,11 +51,18 @@ def active_agency(request):
     return a and a.active
 
 
+def auth(request):
+    """Get the auth from the request's session, or None"""
+    logger.debug("Get session auth")
+    return request.session.get(_AUTH)
+
+
 def context_dict(request):
     """The request's session context as a dict."""
     logger.debug("Get session context dict")
     return {
         _AGENCY: agency(request).slug if active_agency(request) else None,
+        _AUTH: auth(request),
         _LIMITCOUNTER: rate_limit_counter(request),
         _DEBUG: debug(request),
         _DID: did(request),
@@ -137,6 +145,7 @@ def reset(request):
     """Reset the session for the request."""
     logger.debug("Reset session")
     request.session[_AGENCY] = None
+    request.session[_AUTH] = False
     request.session[_ELIGIBILITY] = None
     request.session[_ORIGIN] = reverse("core:index")
     request.session[_TOKEN] = None
@@ -195,6 +204,7 @@ def uid(request):
 def update(
     request,
     agency=None,
+    auth=None,
     debug=None,
     eligibility_types=None,
     origin=None,
@@ -206,6 +216,9 @@ def update(
     if agency is not None and isinstance(agency, models.TransitAgency):
         logger.debug(f"Update session {_AGENCY}")
         request.session[_AGENCY] = agency.id
+    if auth is not None and type(auth) == bool:
+        logger.debug(f"Update session {_AUTH}")
+        request.session[_AUTH] = auth
     if debug is not None:
         logger.debug(f"Update session {_DEBUG}")
         request.session[_DEBUG] = debug
