@@ -13,72 +13,72 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "core.pages.help.header[0]"
+msgid "core.pages.help.about"
 msgstr "What is Cal-ITP Benefits?"
 
 #: benefits/core/templates/core/base.html:9 benefits/core/views.py:91
-msgid "core.pages.help.header[0].p[0]"
+msgid "core.pages.help.about.p[0]"
 msgstr ""
 "The Benefits tool is provided by California Integrated Travel Project "
 "(Cal-ITP), which is a new program from the California Department of "
 "Transportation dedicated to making travel simpler and cost effective for all."
 
-msgid "core.pages.help.header[0].p[1]"
+msgid "core.pages.help.about.p[1]"
 msgstr ""
 "We partner with the California DMV to confirm age for age-based discounts and "
 "local transporation agencies to confirm specific discount programs. Once verified, "
 "discounts are attached to your bank card through our payment partner, Littlepay so "
 "that when you pay for your transit ride, you get your discount automatically."
 
-msgid "core.pages.help.header[1]"
+msgid "core.pages.help.payment_options"
 msgstr "Payment options"
 
-msgid "core.pages.help.header[1].p[0]"
+msgid "core.pages.help.payment_options.p[0]"
 msgstr "In order to activate your discount, you need a bank card that has the "
 "contactless symbol on it. The contactless symbol is four curved lines that looks like this:"
 
-msgid "core.pages.help.header[1].p[1]"
+msgid "core.pages.help.payment_options.p[1]"
 msgstr "A contactless bank card can be a credit card or a debit card and must "
 "include a Visa or Mastercard logo."
 
-msgid "core.pages.help.header[1].p[2]"
+msgid "core.pages.help.payment_options.p[2]"
 msgstr "We are working to add additional options for people who do not have access "
 "to a bank card. However, you can still get your discount by going through your "
 "local transit provider's application process."
 
-msgid "core.pages.help.header[1].p[3]"
+msgid "core.pages.help.payment_options.p[3]"
 msgstr "For updates on additional options, please check back on this website, or "
 "get in touch with your local transit provider."
 
-msgid "core.pages.help.header[2]"
+msgid "core.pages.help.login_gov"
 msgstr "What is Login.gov?"
 
-msgid "core.pages.help.header[2].p[0]"
+msgid "core.pages.help.login_gov.p[0]"
 msgstr "Login.gov is a secure way to sign in to participating government agencies. "
 "You can use your Login.gov account to access all of the benefits offered through Cal-ITP."
 
-msgid "core.pages.help.header[2].p[1]"
+msgid "core.pages.help.login_gov.p[1]"
 msgstr "Creating an account is simple. You will need an email address and method for "
 "authenticating your account&mdash;which will use either a landline, mobile phone, or "
 "backup codes that must be printed or written down."
 
-msgid "core.pages.help.header[2].p[2]%(website)s"
+msgid "core.pages.help.login_gov.p[2]%(website)s"
 msgstr "For more information on Login.gov, check out <a href=\"%(website)s\">their website</a>."
 
-msgid "core.pages.help.header[3]"
+msgid "core.pages.help.littlepay"
 msgstr "What is Littlepay?"
 
-msgid "core.pages.help.header[3].p[0]"
+msgid "core.pages.help.littlepay.p[0]"
 msgstr "Our payment partner, Littlepay is a secure, end-to-end payment processing "
 "platform that allows us to seamlessly attach your transit discount to your bank card."
 
-msgid "core.pages.help.header[3].p[1]%(website)s"
+msgid "core.pages.help.littlepay.p[1]%(website)s"
 msgstr "For more information on Littlepay, check out <a href=\"%(website)s\">their website</a>."
 
-msgid "core.pages.help.header[4]"
+msgid "core.pages.help.questions"
 msgstr "Questions?"
 
-msgid "core.pages.help.header[4].p[0]"
+msgid "core.pages.help.questions.p[0]"
 msgstr "If you need assistance with this website, please reach out to the customer "
 "service team for your local transit provider."
 
