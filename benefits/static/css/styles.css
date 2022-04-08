@@ -255,6 +255,13 @@ footer .footer-links a {
   margin: 0;
 }
 
+#login {
+  width: 30%;
+  float: right;
+  padding: 1rem 0.9rem 1rem 0;
+  margin: 0 0 77px 0;
+}
+
 .radio-container {
   display: block;
   margin-left: 15%;
