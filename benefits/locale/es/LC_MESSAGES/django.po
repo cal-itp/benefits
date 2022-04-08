@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "core.pages.help.header[0]"
-msgstr "TODO: What is CAL-ITP Benefits?"
+msgstr "TODO: What is Cal-ITP Benefits?"
 
 #: benefits/core/templates/core/base.html:9 benefits/core/views.py:91
 msgid "core.pages.help.header[0].p[0]"

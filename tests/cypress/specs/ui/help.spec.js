@@ -59,7 +59,7 @@ describe("Help page spec", () => {
   it("Has the expected headers", () => {
     cy.contains("Help").click();
 
-    cy.get("h2").contains("What is CAL-ITP Benefits?");
+    cy.get("h2").contains("What is Cal-ITP Benefits?");
     cy.get("h2").contains("Payment options");
     cy.get("h2").contains("What is Login.gov?");
     cy.get("h2").contains("What is Littlepay?");
