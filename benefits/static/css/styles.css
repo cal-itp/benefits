@@ -224,6 +224,7 @@ footer .footer-links a {
   height: 128px;
   position: relative;
   display: block;
+  z-index: 10;
 }
 
 .media-list .media .media-body {
@@ -354,10 +355,6 @@ footer .footer-links a {
 
 @media (max-width: 767px) {
   /* xs and sm */
-  .media-list .media .media-body {
-    max-width: 160px;
-  }
-
   .global-footer ul li {
     width: 40%;
   }
@@ -370,6 +367,39 @@ footer .footer-links a {
   .radio-label {
     display: inline;
     margin-left: 5px;
+  }
+}
+
+@media (max-width: 992px) {
+  .media-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .media-list .media {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .media-list .media .media-body--heading {
+    margin-top: 0;
+  }
+
+  .media-list .media .media-line::before {
+    display: none;
+  }
+
+  .media-list .media .media-line::after {
+    top: 1px;
+    height: calc(100% + 40px);
+    left: -50%;
+    right: 50%;
+    z-index: 1;
+    border-right: 3px dashed #53b3e2;
+    border-top: none;
   }
 }
 
