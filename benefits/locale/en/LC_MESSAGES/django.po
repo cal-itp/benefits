@@ -63,7 +63,8 @@ msgstr "Creating an account is simple. You will need an email address and method
 "backup codes that must be printed or written down."
 
 msgid "core.pages.help.login_gov.p[2]%(website)s"
-msgstr "For more information on Login.gov, check out <a href=\"%(website)s\">their website</a>."
+msgstr "For more information on Login.gov, check out "
+"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">their website</a>."
 
 msgid "core.pages.help.littlepay"
 msgstr "What is Littlepay?"
@@ -73,7 +74,8 @@ msgstr "Our payment partner, Littlepay is a secure, end-to-end payment processin
 "platform that allows us to seamlessly attach your transit discount to your bank card."
 
 msgid "core.pages.help.littlepay.p[1]%(website)s"
-msgstr "For more information on Littlepay, check out <a href=\"%(website)s\">their website</a>."
+msgstr "For more information on Littlepay, check out "
+"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">their website</a>."
 
 msgid "core.pages.help.questions"
 msgstr "Questions?"
