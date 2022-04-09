@@ -157,6 +157,15 @@ AUTHENTICATION_BACKENDS = ["benefits.authn.backend.SessionBackend"]
 # https://docs.djangoproject.com/en/3.2/topics/auth/customizing/#substituting-a-custom-user-model
 AUTH_USER_MODEL = "authn.User"
 
+
+AUTHLIB_OAUTH_CLIENTS = {
+    "oidc": {
+        "client_id": os.environ.get("DJANGO_AUTH_OIDC_CLIENT_ID"),
+        "server_metadata_url": f"{os.environ.get('DJANGO_AUTH_OIDC_AUTHORITY')}/.well-known/openid-configuration",
+        "client_kwargs": {"code_challenge_method": "S256", "scope": os.environ.get("DJANGO_AUTH_OIDC_SCOPE")},
+    }
+}
+
 # Internationalization
 
 LANGUAGE_CODE = "en"
