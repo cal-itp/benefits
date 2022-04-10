@@ -74,9 +74,10 @@ CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_HTTPONLY = True
 CSRF_TRUSTED_ORIGINS = _filter_empty(os.environ["DJANGO_TRUSTED_ORIGINS"].split(","))
 
-SESSION_COOKIE_SAMESITE = "Strict"
+SESSION_COOKIE_SAMESITE = "Lax"
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_NAME = "_benefitssessionid"
 
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
