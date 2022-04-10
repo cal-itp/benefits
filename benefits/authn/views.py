@@ -1,23 +1,44 @@
-from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
+from django.shortcuts import redirect
+from django.urls import reverse
+from django.utils.decorators import decorator_from_middleware
+
+from authlib.integrations.django_client import OAuth
+
+from benefits.core import middleware, session
 
 
-# https://docs.djangoproject.com/en/3.2/topics/auth/default/#how-to-log-a-user-in-1
-def sign_in(request):
-    user = authenticate(request)
-    if user:
-        login(request, user)
-        response = HttpResponse("Signed in!")
+oauth = OAuth()
+
+
+@decorator_from_middleware(middleware.AgencySessionRequired)
+@decorator_from_middleware(middleware.VerifierSessionRequired)
+def login(request):
+    verifier = session.verifier(request)
+    if not verifier.requires_authentication:
+        return redirect(session.origin(request))
+
+    oauth_client = oauth.create_client(verifier.auth_provider.name)
+
+    if not oauth_client:
+        return redirect(session.origin(request))
+
+    redirect_uri = reverse("auth:verify")
+    return oauth_client.authorize_redirect(request, redirect_uri)
+
+
+@decorator_from_middleware(middleware.AgencySessionRequired)
+@decorator_from_middleware(middleware.VerifierSessionRequired)
+def verify(request):
+    verifier = session.verifier(request)
+    if not verifier.requires_authentication:
+        return redirect(session.origin(request))
+
+    oauth_client = oauth.create_client(verifier.auth_provider.name)
+
+    token = oauth_client.authorize_access_token(request)
+
+    if token is None:
+        return redirect(session.origin(request))
     else:
-        response = HttpResponse("Not signed in")
-
-    return response
-
-
-def check(request):
-    if request.user.is_authenticated:
-        response = HttpResponse("Signed in!")
-    else:
-        response = HttpResponse("Not signed in")
-
-    return response
+        session.update(request, auth=True)
+        return redirect("eligibility:confirm")
