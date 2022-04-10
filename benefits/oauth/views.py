@@ -7,7 +7,7 @@ from authlib.integrations.django_client import OAuth
 from benefits.core import middleware, session
 
 
-oauth = OAuth()
+_oauth = OAuth()
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
@@ -17,12 +17,12 @@ def login(request):
     if not verifier.requires_authentication:
         return redirect(session.origin(request))
 
-    oauth_client = oauth.create_client(verifier.auth_provider.name)
+    oauth_client = _oauth.create_client(verifier.auth_provider.name)
 
     if not oauth_client:
         return redirect(session.origin(request))
 
-    redirect_uri = reverse("auth:verify")
+    redirect_uri = reverse("oauth:verify")
     return oauth_client.authorize_redirect(request, redirect_uri)
 
 
@@ -33,7 +33,7 @@ def verify(request):
     if not verifier.requires_authentication:
         return redirect(session.origin(request))
 
-    oauth_client = oauth.create_client(verifier.auth_provider.name)
+    oauth_client = _oauth.create_client(verifier.auth_provider.name)
 
     token = oauth_client.authorize_access_token(request)
 

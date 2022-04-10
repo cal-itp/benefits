@@ -24,15 +24,13 @@ ALLOWED_HOSTS = _filter_empty(os.environ["DJANGO_ALLOWED_HOSTS"].split(","))
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
     "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     "benefits.core",
-    "benefits.authn",
     "benefits.enrollment",
     "benefits.eligibility",
+    "benefits.oauth",
 ]
 
 if ADMIN:
@@ -47,7 +45,6 @@ if ADMIN:
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "benefits.core.middleware.Healthcheck",
@@ -153,17 +150,13 @@ if ADMIN:
         ]
     )
 
-# https://docs.djangoproject.com/en/3.2/topics/auth/customizing/#specifying-authentication-backends
-AUTHENTICATION_BACKENDS = ["benefits.authn.backend.SessionBackend"]
-# https://docs.djangoproject.com/en/3.2/topics/auth/customizing/#substituting-a-custom-user-model
-AUTH_USER_MODEL = "authn.User"
-
+# OAuth configuration
 
 AUTHLIB_OAUTH_CLIENTS = {
     "oidc": {
-        "client_id": os.environ.get("DJANGO_AUTH_OIDC_CLIENT_ID"),
-        "server_metadata_url": f"{os.environ.get('DJANGO_AUTH_OIDC_AUTHORITY')}/.well-known/openid-configuration",
-        "client_kwargs": {"code_challenge_method": "S256", "scope": os.environ.get("DJANGO_AUTH_OIDC_SCOPE")},
+        "client_id": os.environ.get("DJANGO_OAUTH_OIDC_CLIENT_ID"),
+        "server_metadata_url": f"{os.environ.get('DJANGO_OAUTH_OIDC_AUTHORITY')}/.well-known/openid-configuration",
+        "client_kwargs": {"code_challenge_method": "S256", "scope": os.environ.get("DJANGO_OAUTH_OIDC_SCOPE")},
     }
 }
 

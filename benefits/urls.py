@@ -8,7 +8,7 @@ import logging
 
 from django.urls import include, path
 
-from benefits.settings import ADMIN
+from benefits.settings import ADMIN, AUTHLIB_OAUTH_CLIENTS
 
 
 logger = logging.getLogger(__name__)
@@ -20,7 +20,6 @@ handler500 = "benefits.core.views.server_error"
 
 urlpatterns = [
     path("", include("benefits.core.urls")),
-    path("auth/", include("benefits.authn.urls")),
     path("eligibility/", include("benefits.eligibility.urls")),
     path("enrollment/", include("benefits.enrollment.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
@@ -33,3 +32,9 @@ if ADMIN:
     urlpatterns.append(path("admin/", admin.site.urls))
 else:
     logger.debug("Skip url registrations for admin")
+
+if AUTHLIB_OAUTH_CLIENTS["oidc"]["client_id"]:
+    logger.info("Register oauth/ urls")
+    urlpatterns.append(path("oauth/", include("benefits.oauth.urls")))
+else:
+    logger.debug("Skip url registrations for oauth")
