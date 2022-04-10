@@ -22,13 +22,13 @@ def login(request):
     if not oauth_client:
         return redirect(session.origin(request))
 
-    redirect_uri = reverse("oauth:verify")
+    redirect_uri = reverse("oauth:authorize")
     return oauth_client.authorize_redirect(request, redirect_uri)
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
 @decorator_from_middleware(middleware.VerifierSessionRequired)
-def verify(request):
+def authorize(request):
     verifier = session.verifier(request)
     if not verifier.requires_authentication:
         return redirect(session.origin(request))
