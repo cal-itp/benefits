@@ -58,7 +58,7 @@ def index(request):
 def start(request):
     """View handler for the eligibility verification getting started screen."""
 
-    session.update(request, eligibility_types=[])
+    session.update(request, eligibility_types=[], origin=reverse("eligibility:start"))
     verifier = session.verifier(request)
 
     if verifier.requires_authentication:
