@@ -7,5 +7,5 @@ app_name = "oauth"
 urlpatterns = [
     # /oauth
     path("login", views.login, name="login"),
-    path("authorize", views.verify, name="authorize"),
+    path("authorize", views.authorize, name="authorize"),
 ]
