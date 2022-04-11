@@ -62,7 +62,8 @@ def start(request):
     verifier = session.verifier(request)
 
     if verifier.requires_authentication:
-        button = viewmodels.Button.external(text=_(verifier.sign_in_button_label), url=reverse("oauth:login"), id="login")
+        auth_provider = verifier.auth_provider
+        button = viewmodels.Button.external(text=_(auth_provider.sign_in_button_label), url=reverse("oauth:login"), id="login")
     else:
         button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm"))
 
