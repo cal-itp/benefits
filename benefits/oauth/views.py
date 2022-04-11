@@ -22,7 +22,8 @@ def login(request):
     if not oauth_client:
         return redirect(session.origin(request))
 
-    redirect_uri = reverse("oauth:authorize")
+    route = reverse("oauth:authorize")
+    redirect_uri = request.build_absolute_uri(route)
     return oauth_client.authorize_redirect(request, redirect_uri)
 
 
