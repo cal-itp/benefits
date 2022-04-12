@@ -328,6 +328,10 @@ msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
 msgstr "Bank card icon with contactless symbol and checkmark"
 
+msgctxt "image alt text"
+msgid "core.icons.idscreencheck"
+msgstr "Computer monitor with checkmark"
+
 #: benefits/eligibility/views.py:74
 msgid "eligibility.pages.start.items[1].title"
 msgstr "Provide your bank card details"
