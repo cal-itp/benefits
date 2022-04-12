@@ -152,13 +152,16 @@ if ADMIN:
 
 # OAuth configuration
 
-AUTHLIB_OAUTH_CLIENTS = {
-    "oidc": {
-        "client_id": os.environ.get("DJANGO_OAUTH_OIDC_CLIENT_ID"),
-        "server_metadata_url": f"{os.environ.get('DJANGO_OAUTH_OIDC_AUTHORITY')}/.well-known/openid-configuration",
-        "client_kwargs": {"code_challenge_method": "S256", "scope": os.environ.get("DJANGO_OAUTH_OIDC_SCOPE")},
+OAUTH_CLIENT_NAME = os.environ.get("DJANGO_OAUTH_CLIENT_NAME")
+
+if OAUTH_CLIENT_NAME:
+    AUTHLIB_OAUTH_CLIENTS = {
+        OAUTH_CLIENT_NAME: {
+            "client_id": os.environ.get("DJANGO_OAUTH_CLIENT_ID"),
+            "server_metadata_url": f"{os.environ.get('DJANGO_OAUTH_AUTHORITY')}/.well-known/openid-configuration",
+            "client_kwargs": {"code_challenge_method": "S256", "scope": os.environ.get("DJANGO_OAUTH_SCOPE")},
+        }
     }
-}
 
 # Internationalization
 

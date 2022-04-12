@@ -32,12 +32,9 @@ class PemData(models.Model):
 class AuthProvider(models.Model):
     """An entity that provides authentication for eligibility verifiers."""
 
-    # fmt: off
     id = models.AutoField(primary_key=True)
-    name = models.TextField()
     sign_in_button_label = models.TextField()
     sign_out_button_label = models.TextField()
-    # fmt: on
 
 
 class EligibilityType(models.Model):
