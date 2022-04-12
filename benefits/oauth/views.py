@@ -8,6 +8,7 @@ from benefits.core import middleware, session
 
 
 _oauth = OAuth()
+_oauth.register("oidc")
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
