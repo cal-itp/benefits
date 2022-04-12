@@ -396,6 +396,11 @@ footer .footer-links a {
     display: inline;
     margin-left: 5px;
   }
+
+  #login {
+    width: 100%;
+    float: none;
+  }
 }
 
 @media (max-width: 992px) {
