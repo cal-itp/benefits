@@ -64,6 +64,16 @@ def start(request):
     if verifier.requires_authentication:
         auth_provider = verifier.auth_provider
         button = viewmodels.Button.external(text=_(auth_provider.sign_in_button_label), url="#", id="login")
+        auth_media = dict(
+            icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
+            heading=_("Sign in to your Login.gov account"),
+            details=_("You will be able to create an account if you’re not already signed up."),
+            links=[
+                viewmodels.Button.link(
+                    classes="btn-text btn-link", text="Learn more about Login.gov", url="https://login.gov/"
+                )
+            ],
+        )
     else:
         button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm"))
 
@@ -97,16 +107,6 @@ def start(request):
     ]
 
     if verifier.requires_authentication:
-        auth_media = dict(
-            icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
-            heading=_("Sign in to your Login.gov account"),
-            details=_("You will be able to create an account if you’re not already signed up."),
-            links=[
-                viewmodels.Button.link(
-                    classes="btn-text btn-link", text="Learn more about Login.gov", url="https://login.gov/"
-                )
-            ],
-        )
         ctx["media"].insert(0, auth_media)
 
     return TemplateResponse(request, "eligibility/start.html", ctx)
