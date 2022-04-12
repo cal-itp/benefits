@@ -97,9 +97,15 @@ def start(request):
             heading=_("eligibility.pages.start.items[1].title"),
             details=_("eligibility.pages.start.items[1].text"),
             links=[
-                viewmodels.Button.link(classes="btn-text btn-link", text="Don't have a bank card?", url="https://login.gov/"),
                 viewmodels.Button.link(
-                    classes="btn-text", text="Unsure if you have a contactless card?", url="https://login.gov/"
+                    classes="btn-text btn-link",
+                    text=_("eligibility.pages.start.items[1].button[0].link"),
+                    url=_("eligibility.pages.start.items[1].button[0].url"),
+                ),
+                viewmodels.Button.link(
+                    classes="btn-text btn-link",
+                    text=_("eligibility.pages.start.items[1].button[1].link"),
+                    url=_("eligibility.pages.start.items[1].button[1].url"),
                 ),
             ],
         ),

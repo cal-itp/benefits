@@ -340,6 +340,18 @@ msgstr "Provide your bank card details"
 msgid "eligibility.pages.start.items[1].text"
 msgstr "Must be a contactless debit or credit card issued by Visa or Mastercard."
 
+msgid "eligibility.pages.start.items[1].button[0].link"
+msgstr "Don’t have a bank card?"
+
+msgid "eligibility.pages.start.items[1].button[0].url"
+msgstr "/help#payment-options"
+
+msgid "eligibility.pages.start.items[1].button[1].link"
+msgstr "Unsure if you have a contactless card?"
+
+msgid "eligibility.pages.start.items[1].button[1].url"
+msgstr "/help#payment-options"
+
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
 msgstr "Continue"
