@@ -61,7 +61,7 @@ def start(request):
     session.update(request, eligibility_types=[], origin=reverse("eligibility:start"))
     verifier = session.verifier(request)
 
-    if verifier.requires_authentication:
+    if verifier.requires_authentication and not session.auth(request):
         auth_provider = verifier.auth_provider
         button = viewmodels.Button.external(text=_(auth_provider.sign_in_button_label), url=reverse("oauth:login"), id="login")
     else:
