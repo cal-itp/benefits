@@ -8,8 +8,10 @@ from benefits.settings import OAUTH_CLIENT_NAME
 
 
 _oauth = OAuth()
-_oauth.register(OAUTH_CLIENT_NAME)
-oauth_client = _oauth.create_client(OAUTH_CLIENT_NAME)
+
+if OAUTH_CLIENT_NAME:
+    _oauth.register(OAUTH_CLIENT_NAME)
+    oauth_client = _oauth.create_client(OAUTH_CLIENT_NAME)
 
 
 def login(request):
