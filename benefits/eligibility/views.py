@@ -79,16 +79,6 @@ def start(request):
     ctx["title"] = _(verifier.start_content_title)
     ctx["media"] = [
         dict(
-            icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
-            heading=_("Sign in to your Login.gov account"),
-            details=_("You will be able to create an account if you’re not already signed up."),
-            links=[
-                viewmodels.Button.link(
-                    classes="btn-text btn-link", text="Learn more about Login.gov", url="https://login.gov/"
-                )
-            ],
-        ),
-        dict(
             icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
             heading=_(verifier.start_item_name),
             details=_(verifier.start_item_description),
@@ -105,6 +95,19 @@ def start(request):
             ],
         ),
     ]
+
+    if verifier.requires_authentication:
+        auth_media = dict(
+            icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
+            heading=_("Sign in to your Login.gov account"),
+            details=_("You will be able to create an account if you’re not already signed up."),
+            links=[
+                viewmodels.Button.link(
+                    classes="btn-text btn-link", text="Learn more about Login.gov", url="https://login.gov/"
+                )
+            ],
+        )
+        ctx["media"].insert(0, auth_media)
 
     return TemplateResponse(request, "eligibility/start.html", ctx)
 

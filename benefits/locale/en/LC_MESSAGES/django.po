@@ -484,7 +484,7 @@ msgid "eligibility.forms.confirm.mst.fields.name"
 msgstr "Last name (as it appears on Courtesy Card)"
 
 msgid "eligibility.pages.start.mst.content_title"
-msgstr "You’ll need two things before we get started:"
+msgstr "You’ll need to do two things to link your transit discount to your bank card."
 
 msgid "eligibility.pages.start.mst.items[0].title"
 msgstr "Your MST Courtesy Card"
