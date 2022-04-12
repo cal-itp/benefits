@@ -8,7 +8,7 @@ import logging
 
 from django.urls import include, path
 
-from benefits.settings import ADMIN, AUTHLIB_OAUTH_CLIENTS
+from benefits.settings import ADMIN, OAUTH_CLIENT_NAME
 
 
 logger = logging.getLogger(__name__)
@@ -28,13 +28,13 @@ urlpatterns = [
 if ADMIN:
     from django.contrib import admin
 
-    logger.debug("Register admin/ urls")
+    logger.debug("Register admin urls")
     urlpatterns.append(path("admin/", admin.site.urls))
 else:
     logger.debug("Skip url registrations for admin")
 
-if AUTHLIB_OAUTH_CLIENTS["oidc"]["client_id"]:
-    logger.info("Register oauth/ urls")
+if OAUTH_CLIENT_NAME:
+    logger.info("Register oauth urls")
     urlpatterns.append(path("oauth/", include("benefits.oauth.urls")))
 else:
     logger.debug("Skip url registrations for oauth")
