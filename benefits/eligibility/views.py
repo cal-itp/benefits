@@ -66,11 +66,11 @@ def start(request):
         button = viewmodels.Button.external(text=_(auth_provider.sign_in_button_label), url="#", id="login")
         auth_media = dict(
             icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
-            heading=_("Sign in to your Login.gov account"),
-            details=_("You will be able to create an account if you’re not already signed up."),
+            heading=_("eligibility.media.heading"),
+            details=_("eligibility.media.details"),
             links=[
                 viewmodels.Button.link(
-                    classes="btn-text btn-link", text="Learn more about Login.gov", url="https://login.gov/"
+                    classes="btn-text btn-link", text=_("eligibility.media.link_text"), url=_("eligibility.media.link_url")
                 )
             ],
         )
@@ -79,7 +79,6 @@ def start(request):
 
     page = viewmodels.Page(
         title=_("eligibility.pages.start.title"),
-        # content_title=_(verifier.start_content_title),
         noimage=True,
         paragraphs=[_(verifier.start_blurb)],
         button=button,
