@@ -63,15 +63,16 @@ describe("Multiple verifier, no AuthProvider: Eligibility confirmation form spec
     // Selecting ABC will go down the multiple verifier flow
     cy.contains(agencies[0].fields.short_name).click();
     cy.contains("Let’s do it!").click();
-    // Selecting last radio button, MST Courtesy Cardholder will go down flow without Login.gov
+    // Selecting last radio button, MST Courtesy Cardholder will go down flow without authorization step
     cy.get("input:radio").last().click();
     cy.contains("Continue").click();
-    cy.contains(
-      "You’ll need to do two things to link your transit discount to your bank card."
-    );
   });
 
   it("Has a Courtesy Card number form label and corresponding field", () => {
+    cy.contains(
+      "You’ll need to do two things to link your transit discount to your bank card."
+    );
+    cy.get(".media-list").children().should("have.length", 2);
     cy.contains("Continue").click();
     cy.get("input:focus").should("have.length", 0);
     cy.contains("MST Courtesy Card number *").click();
@@ -81,39 +82,13 @@ describe("Multiple verifier, no AuthProvider: Eligibility confirmation form spec
   });
 
   it("Has a last name form label and corresponding form field", () => {
+    cy.contains("Your MST Courtesy Card");
+    cy.contains("An active card that has not expired");
     cy.contains("Continue").click();
     cy.get("input:focus").should("have.length", 0);
     cy.contains("Last name (as it appears on Courtesy Card) *").click();
 
     cy.get("input:focus").should("have.length", 1);
     cy.url().should("include", eligibility_confirm_url);
-  });
-});
-
-describe("Multiple verifier, with AuthProvider: Eligibility start page spec", () => {
-  beforeEach(() => {
-    cy.visit("/");
-    // Selecting ABC will go down the multiple verifier flow
-    cy.contains(agencies[0].fields.short_name).click();
-    cy.contains("Let’s do it!").click();
-    // Selecting first radio button, Senior Discount Program, will go down Login.gov flow
-    cy.get("input:radio").first().click();
-    cy.contains("Continue").click();
-    cy.url().should("include", eligibility_start_url);
-    cy.contains(
-      "Great, you’ll need to do three things to link your transit discount to your bank card."
-    );
-  });
-
-  it("Has a Login.gov button explanation", () => {
-    cy.contains("Sign in to your Login.gov account");
-    cy.contains(
-      " You will be able to create an account if you’re not already signed up."
-    );
-    cy.contains("Learn  more about Login.gov");
-  });
-
-  it.skip("Has a Login.gov button", () => {
-    cy.contains("Continue with Login.gov");
   });
 });
