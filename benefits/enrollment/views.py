@@ -152,6 +152,7 @@ def success(request):
             _("enrollment.pages.success.p1"),
             _("enrollment.pages.success.p2"),
             _("enrollment.pages.success.p3"),
+            _("enrollment.pages.success.p4"),
         ],
     )
 

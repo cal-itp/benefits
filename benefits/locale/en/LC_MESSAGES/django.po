@@ -474,6 +474,9 @@ msgstr "When boarding transit, pay with this same card, and your discount will a
 msgid "enrollment.pages.success.p3"
 msgstr "For additional information on what to expect when using your connected bank card, please reach out to your transit provider, or check out our help page."
 
+msgid "enrollment.pages.success.p4"
+msgstr "Please close your browser window to sign out from Login.gov."
+
 msgid "eligibility.pages.index.dmv.label"
 msgstr "Senior Discount Program"
 
