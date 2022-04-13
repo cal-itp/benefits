@@ -108,13 +108,11 @@ def start(request):
                     classes="btn-text btn-link",
                     text=_("eligibility.pages.start.items[1].button[0].link"),
                     url=_("eligibility.pages.start.items[1].button[0].url"),
-                    target="_blank",
                 ),
                 viewmodels.Button.link(
                     classes="btn-text btn-link",
                     text=_("eligibility.pages.start.items[1].button[1].link"),
                     url=_("eligibility.pages.start.items[1].button[1].url"),
-                    target="_blank",
                 ),
             ],
         ),
