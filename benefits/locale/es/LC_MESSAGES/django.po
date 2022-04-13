@@ -330,17 +330,45 @@ msgid "core.icons.bankcardcheck"
 msgstr ""
 "Icono de tarjeta bancaria con símbolo sin contacto y marca de verificación"
 
+msgctxt "image alt text"
+msgid "core.icons.idscreencheck"
+msgstr "TODO: Computer monitor with checkmark"
+
 #: benefits/eligibility/views.py:74
 msgid "eligibility.pages.start.items[1].title"
-msgstr "Tu tarjeta bancaria"
+msgstr "TODO: Tu tarjeta bancaria"
 
 #: benefits/eligibility/views.py:75
 msgid "eligibility.pages.start.items[1].text"
-msgstr "Una tarjeta de débito o crédito"
+msgstr "TODO: Una tarjeta de débito o crédito"
+
+msgid "eligibility.pages.start.items[1].button[0].link"
+msgstr "TODO: Don’t have a bank card?"
+
+msgid "eligibility.pages.start.items[1].button[0].url"
+msgstr "TODO: /help#payment-options"
+
+msgid "eligibility.pages.start.items[1].button[1].link"
+msgstr "TODO: Unsure if you have a contactless card?"
+
+msgid "eligibility.pages.start.items[1].button[1].url"
+msgstr "TODO: /help#payment-options"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
 msgstr "Continuar"
+
+msgid "eligibility.media.heading"
+msgstr "TODO: Sign in to your Login.gov account"
+
+msgid "eligibility.media.details"
+msgstr "TODO: You will be able to create an account if you’re not already signed up."
+
+msgid "eligibility.media.link_text"
+msgstr "TODO: Learn more about Login.gov"
+
+msgid "eligibility.media.link_url"
+msgstr "https://login.gov/es/"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
@@ -460,7 +488,7 @@ msgstr ""
 "Nosotros no guardamos su información."
 
 msgid "eligibility.pages.start.dmv.content_title"
-msgstr "Genial, necesitarás dos cosas antes de comenzar..."
+msgstr "TODO: Genial, necesitarás tres cosas antes de comenzar..."
 
 msgid "eligibility.forms.confirm.dmv.fields.sub"
 msgstr "Licencia de conducir de CA o número de identificación"
@@ -490,7 +518,7 @@ msgid "eligibility.forms.confirm.mst.fields.name"
 msgstr "Apellido (como aparece en la identificación)"
 
 msgid "eligibility.pages.start.mst.content_title"
-msgstr "Genial, necesitarás dos cosas antes de empeza"
+msgstr "TODO: Genial, necesitarás dos cosas antes de empeza"
 
 msgid "eligibility.pages.start.mst.items[0].title"
 msgstr "Tu tarjeta de cortesía MST"
