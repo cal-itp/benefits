@@ -103,7 +103,6 @@ class Page:
     * noimage: bool
     * icon: core.viewmodels.Icon
     * content_title: str
-    * choose_provider: str
     * media: core.viewmodels.MediaItem[]
     * paragraphs: str[]
     * form: django.forms.Form
@@ -123,7 +122,6 @@ class Page:
         self.noimage = kwargs.get("noimage", False)
         self.icon = kwargs.get("icon")
         self.content_title = kwargs.get("content_title")
-        self.choose_provider = kwargs.get("choose_provider")
         self.media = kwargs.get("media", [])
         self.paragraphs = kwargs.get("paragraphs", [])
         self.steps = kwargs.get("steps")

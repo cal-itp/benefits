@@ -2,10 +2,9 @@
 {% load i18n %}
 {% block buttons %}
 {% if page.buttons|length_is:"0" %}{% else %}
-    <h2 class="provider">{{page.choose_provider}}</h2>
     <div class="buttons">
         {% for b in page.buttons %}
-            {% include "core/includes/button.html" with button=b %}
+            {% include "core/includes/button.html" with button=b button_label_class="provider" %}
         {% endfor %}
     </div>
 {% endif %}

@@ -202,7 +202,7 @@ footer {
 }
 .provider {
   margin-top: 20vh;
-  font-weight: bold;
+  width: 100%;
 }
 /* media queries */
 
