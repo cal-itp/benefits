@@ -461,19 +461,18 @@ msgstr "Try again"
 
 #: benefits/enrollment/views.py:147 benefits/enrollment/views.py:149
 msgid "enrollment.pages.success.title"
-msgstr "Success!"
+msgstr "Success! Your discount is now linked to your bank card."
 
 #: benefits/enrollment/views.py:150
 msgid "enrollment.pages.success.p1"
-msgstr ""
-"Your discount is now linked to your bank card. You were not charged anything "
-"today."
+msgstr "You were not charged anything today."
 
 #: benefits/enrollment/views.py:150
 msgid "enrollment.pages.success.p2"
-msgstr ""
-"When boarding transit, pay with this same card, and your discount will "
-"automatically be applied to your fare purchase."
+msgstr "When boarding transit, pay with this same card, and your discount will automatically be applied to your fare purchase."
+
+msgid "enrollment.pages.success.p3"
+msgstr "For additional information on what to expect when using your connected bank card, please reach out to your transit provider, or check out our help page."
 
 msgid "eligibility.pages.index.dmv.label"
 msgstr "Senior Discount Program"
