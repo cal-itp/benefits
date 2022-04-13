@@ -63,6 +63,12 @@ jobs:
           name: cypress-screenshots
           path: tests/cypress/screenshots
 
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-videos
+          path: tests/cypress/videos
+
       - name: Run Lighthouse tests for a11y
         uses: treosh/lighthouse-ci-action@9.3.0
         with:
