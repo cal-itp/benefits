@@ -148,7 +148,11 @@ def success(request):
         title=_("enrollment.pages.success.title"),
         icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
         content_title=_("enrollment.pages.success.title"),
-        paragraphs=[_("enrollment.pages.success.p1"), _("enrollment.pages.success.p2")],
+        paragraphs=[
+            _("enrollment.pages.success.p1"),
+            _("enrollment.pages.success.p2"),
+            _("enrollment.pages.success.p3"),
+        ],
     )
 
     return TemplateResponse(request, "enrollment/success.html", page.context_dict())
