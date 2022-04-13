@@ -63,7 +63,11 @@ def start(request):
 
     if verifier.requires_authentication:
         auth_provider = verifier.auth_provider
-        button = viewmodels.Button.external(text=_(auth_provider.sign_in_button_label), url="#", id="login")
+        button = viewmodels.Button.external(
+            text=_(auth_provider.sign_in_button_label),
+            url="http://calitp.org",  # Placeholder URL for now, for UI specs to pass
+            id="login",
+        )
         auth_media = dict(
             icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
             heading=_("eligibility.media.heading"),
