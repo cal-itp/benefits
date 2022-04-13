@@ -1,6 +1,6 @@
 const agencies = require("../../fixtures/transit-agencies");
 
-describe.skip("Single Verifier, No AuthProvider: Enrollment success page", () => {
+describe("Single Verifier, No AuthProvider: Enrollment success page", () => {
   beforeEach(() => {
     cy.visit("/");
     // Selecting DEFTl will go down the single verifier flow
@@ -30,7 +30,7 @@ describe.skip("Single Verifier, No AuthProvider: Enrollment success page", () =>
   });
 });
 
-describe("Multiple Verifier, with AuthProvider: Enrollment success page", () => {
+describe.skip("Multiple Verifier, with AuthProvider: Enrollment success page", () => {
   beforeEach(() => {
     cy.visit("/");
     // Selecting ABC will go down the multiple verifier flow
