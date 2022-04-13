@@ -78,6 +78,7 @@ def start(request):
                     text=_("eligibility.media.link_text"),
                     url=_("eligibility.media.link_url"),
                     target="_blank",
+                    rel="noopener noreferrer",
                 )
             ],
         )
