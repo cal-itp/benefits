@@ -150,6 +150,24 @@ The log level used in the application's logging configuration.
 
 By default the application sends logs to `stdout`.
 
+### `DJANGO_OAUTH_AUTHORITY`
+
+Base address of the OAuth/OIDC server to use for authorization.
+
+### `DJANGO_OAUTH_CLIENT_ID`
+
+This application's client ID, registered with the OAuth/OIDC server.
+
+### `DJANGO_OAUTH_CLIENT_NAME`
+
+The name of the OAuth/OIDC server; mostly used as an internal label within this application.
+
+### `DJANGO_OAUTH_SCOPE`
+
+Space separated list of OAuth scope(s) to request from the OAuth/OIDC server.
+
+Must include at least `openid`.
+
 ### `DJANGO_RATE_LIMIT`
 
 Number of requests allowed in the given [`DJANGO_RATE_LIMIT_PERIOD`](#djangoratelimitperiod).
