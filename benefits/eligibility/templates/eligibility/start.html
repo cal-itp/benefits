@@ -6,7 +6,7 @@
     {{ block.super }}
     {% endblock %}
 
-    <h1 style="margin-top: 0; font-size: 24px; line-height: 30px;" class="text-center">{{title}}</h1>
+    <h1 class="media-title text-center">{{title}}</h1>
 
     {% block media_list %}
     {% if media|length_is:"0" %}{% else %}
