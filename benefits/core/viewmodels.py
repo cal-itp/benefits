@@ -54,6 +54,7 @@ class Button:
         classes = kwargs.pop("classes", [])
         if isinstance(classes, str):
             classes = classes.split(" ")
+        classes.insert(0, "btn-link")
         return Button(classes=classes, **kwargs)
 
     @staticmethod
