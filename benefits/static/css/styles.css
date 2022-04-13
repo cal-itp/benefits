@@ -1,9 +1,5 @@
 /* HTML element overrides */
 
-.bg-danger {
-  display: none;
-}
-
 body {
   font-weight: 400;
   font-size: 16px;
