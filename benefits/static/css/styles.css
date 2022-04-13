@@ -319,7 +319,7 @@ footer .footer-links a {
   }
 
   .global-footer ul li {
-    width: 40%;
+    text-align: center;
   }
 
   .radio-container {
