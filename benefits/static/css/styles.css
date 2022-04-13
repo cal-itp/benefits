@@ -99,6 +99,8 @@ footer .footer-links a {
   height: 22px;
   margin-left: 8px;
   vertical-align: sub;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
 }
 
 .btn-external:hover::after {
