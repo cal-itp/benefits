@@ -273,7 +273,7 @@ msgstr "Choose your transit provider"
 
 #: benefits/core/views.py:70
 msgid "core.pages.index.continue"
-msgstr "Let’s do it!"
+msgstr "Get started"
 
 #: benefits/core/views.py:86 benefits/core/views.py:106
 msgid "core.buttons.back"

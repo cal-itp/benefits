@@ -9,7 +9,7 @@ describe("Single verifier: Eligibility confirmation page spec", () => {
     cy.visit("/");
     // Selecting DEFTl will go down the single verifier flow
     cy.contains(agencies[1].fields.short_name).click();
-    cy.contains("Let’s do it!").click();
+    cy.contains("Get started").click();
     cy.contains("Continue").click();
     cy.url().should("include", eligibility_confirm_url);
   });
@@ -20,7 +20,7 @@ describe("Multiple Verifier, no AuthProvider: Verifier selection page spec", () 
     cy.visit("/");
     // Selecting ABC will go down the multiple verifier flow
     cy.contains(agencies[0].fields.short_name).click();
-    cy.contains("Let’s do it!").click();
+    cy.contains("Get started").click();
   });
 
   it("User can navigate to the Verifier Selection page", () => {
@@ -62,7 +62,7 @@ describe("Multiple verifier, no AuthProvider: Eligibility confirmation form spec
     cy.visit("/");
     // Selecting ABC will go down the multiple verifier flow
     cy.contains(agencies[0].fields.short_name).click();
-    cy.contains("Let’s do it!").click();
+    cy.contains("Get started").click();
     // Selecting last radio button, MST Courtesy Cardholder will go down flow without authorization step
     cy.get("input:radio").last().click();
     cy.contains("Continue").click();

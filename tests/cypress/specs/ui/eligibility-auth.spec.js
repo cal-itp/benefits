@@ -7,7 +7,7 @@ describe("Multiple verifier, with AuthProvider: Eligibility start page spec", ()
     cy.visit("/");
     // Selecting ABC will go down the multiple verifier flow
     cy.contains(agencies[0].fields.short_name).click();
-    cy.contains("Let’s do it!").click();
+    cy.contains("Get started").click();
     // Selecting first radio button, Senior Discount Program, will go down Login.gov flow
     cy.get("input:radio").first().click();
     cy.contains("Continue").click();
