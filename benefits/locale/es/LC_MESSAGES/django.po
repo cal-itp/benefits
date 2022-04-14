@@ -248,6 +248,23 @@ msgstr ""
 "La nueva forma de pagar el transporte público hace que sea más fácil obtener "
 "su descuento cada vez que viaja"
 
+msgid "core.pages.agency_index.content_title"
+msgstr ""
+"TODO: Cal-ITP Benefits makes it easy to use your public transit discount "
+"every time you ride."
+
+msgid "core.pages.agency_index.p[0]%(info_link)s"
+msgstr "TODO: With new contactless payment options, you can tap "
+"your bank-issued contactless credit or debit card when you "
+"board, and your discount will automatically apply every "
+"time you ride. <a href=\"%(info-link)s\">Learn more about Cal-ITP Benefits.</a>"
+
+msgid "core.pages.agency_index.p[1]"
+msgstr "TODO: The Cal-ITP Benefits program is currently only open to those <strong>ages 65 or older</strong>."
+
+msgid "core.pages.agency_index.button.label"
+msgstr "TODO: Verify your discount and connect your bank card today!"
+
 #: benefits/core/views.py:25
 msgctxt "image alt text"
 msgid "core.pages.index.image"

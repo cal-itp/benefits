@@ -17,8 +17,8 @@ services:
       dockerfile: .devcontainer/Dockerfile
     image: benefits_client:dev
     env_file: .env
-    entrypoint: []
-    command: ["-c", "sleep infinity"]
+    # https://code.visualstudio.com/docs/remote/create-dev-container#_use-docker-compose
+    entrypoint: sleep infinity
     depends_on:
       - server
     ports:

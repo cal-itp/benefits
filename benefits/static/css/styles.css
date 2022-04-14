@@ -381,7 +381,7 @@ footer .footer-links a {
 @media (max-width: 767px) {
   /* xs and sm */
   .global-footer ul li {
-    width: 40%;
+    text-align: center;
   }
 
   .radio-container {
