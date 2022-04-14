@@ -48,18 +48,31 @@ def authorize(request):
     if token is None:
         logger.warning("Could not authorize OAuth access token")
         return redirect(ROUTE_START)
-    else:
-        # we are intentionally not storing anything about the user, including their token
-        logger.debug("OAuth access token authorized")
-        session.update(request, auth=True)
-        return redirect(ROUTE_CONFIRM)
+
+    logger.debug("OAuth access token authorized")
+
+    # we store the id_token in the user's session
+    # this is the minimal amount of information needed later to log the user out
+    session.update(request, oauth_token=token["id_token"])
+
+    return redirect(ROUTE_CONFIRM)
 
 
 def logout(request):
-    """View implementing application signout, e.g. updating the Django session."""
+    """View implementing OIDC and application sign out."""
 
-    session.update(request, auth=False)
-    return redirect(ROUTE_START)
+    # overwrite the oauth session token, the user is signed out of the app
+    token = session.oauth_token(request)
+    session.update(request, oauth_token=False)
+
+    origin = session.origin(request)
+    redirect_uri = request.build_absolute_uri(origin)
+
+    logger.debug(f"OAuth end_session_endpoint with redirect_uri: {redirect_uri}")
+
+    # send the user through the end_session_endpoint, redirecting back to
+    # their origin within the app (where they clicked the sign out button)
+    return _deauthorize_redirect(token, redirect_uri)
 
 
 def _deauthorize_redirect(token, redirect_url):
@@ -76,7 +89,7 @@ def _deauthorize_redirect(token, redirect_url):
     metadata = oauth_client.load_server_metadata()
     end_session_endpoint = metadata.get("end_session_endpoint")
 
-    params = dict(id_token_hint=token["id_token"], post_logout_redirect_uri=redirect_url)
+    params = dict(id_token_hint=token, post_logout_redirect_uri=redirect_url)
     encoded_params = urlencode(params)
     end_session_url = f"{end_session_endpoint}?{encoded_params}"
 
