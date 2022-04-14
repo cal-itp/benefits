@@ -478,7 +478,9 @@ msgstr ""
 
 msgid "enrollment.pages.success.p3"
 msgstr ""
-"Para obtener información adicional sobre qué esperar al usar su tarjeta bancaria conectada, comuníquese con su proveedor de transporte público o consulte nuestra página de ayuda."
+"Para obtener información adicional sobre qué esperar al usar su tarjeta bancaria conectada, comuníquese con su proveedor de transporte público o consulte nuestra "
+"<a "
+"href=\"/help\" rel=\"noopener noreferrer\">página de ayuda</a>."
 
 msgid "enrollment.pages.success.p4"
 msgstr "TODO: Please close your browser window to sign out from Login.gov."

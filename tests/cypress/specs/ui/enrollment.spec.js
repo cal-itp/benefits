@@ -26,7 +26,7 @@ describe("Single Verifier, No AuthProvider: Enrollment success page", () => {
   it("Does not have the Login.gov log out instructions", () => {
     cy.get("p")
       .contains("Please close your browser window to sign out from Login.gov.")
-      .should("not.exist");
+      .should("not.be.visible");
   });
 });
 

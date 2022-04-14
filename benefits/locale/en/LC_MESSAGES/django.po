@@ -472,7 +472,9 @@ msgid "enrollment.pages.success.p2"
 msgstr "When boarding transit, pay with this same card, and your discount will automatically be applied to your fare purchase."
 
 msgid "enrollment.pages.success.p3"
-msgstr "For additional information on what to expect when using your connected bank card, please reach out to your transit provider, or check out our help page."
+msgstr "For additional information on what to expect when using your connected bank card, please reach out to your transit provider, or check out our "
+"<a "
+"href=\"/help\" rel=\"noopener noreferrer\">help page</a>."
 
 msgid "enrollment.pages.success.p4"
 msgstr "Please close your browser window to sign out from Login.gov."

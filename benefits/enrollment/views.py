@@ -145,18 +145,15 @@ def success(request):
     request.path = "/enrollment/success"
     verifier = session.verifier(request)
 
-    classes = ""
-    paragraphs = [_("enrollment.pages.success.p1"), _("enrollment.pages.success.p2"), _("enrollment.pages.success.p3")]
+    classes = "without-warning"
 
     if verifier.requires_authentication:
-        paragraphs.insert(3, _("enrollment.pages.success.p4"))
         classes = "with-warning"
 
     page = viewmodels.Page(
         title=_("enrollment.pages.success.title"),
         icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
         content_title=_("enrollment.pages.success.title"),
-        paragraphs=paragraphs,
         classes=classes,
     )
 
