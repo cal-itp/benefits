@@ -52,3 +52,10 @@ def authorize(request):
         logger.debug("OAuth access token authorized")
         session.update(request, auth=True)
         return redirect(ROUTE_CONFIRM)
+
+
+def logout(request):
+    """View implementing application signout, e.g. updating the Django session."""
+
+    session.update(request, auth=False)
+    return redirect(ROUTE_START)
