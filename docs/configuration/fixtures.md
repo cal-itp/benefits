@@ -52,12 +52,12 @@ Some configuration data is not available with the samples in the repository:
 
 ## Building the configuration database
 
-If you update your local fixtures, you'll need to rebuild the configuration database.
+When local fixture files change, the configuration database needs to be rebuilt.
 
-By default this file is called `django.db` (see the [`$DJANGO_DB`][env-django-db] environment variable) and the following
+By default this file is called `django.db` (see the [`DJANGO_DB`][env-django-db] environment variable) and the following
 commands will rebuild it.
 
-Run these from within the repository root, inside the devcontainer:
+Run these commands from within the repository root, inside the devcontainer:
 
 ```bash
 rm django.db
@@ -67,8 +67,7 @@ bin/init.sh
 
 ## Fixture source
 
-The `bin/init.sh` script looks at the [`$DJANGO_INIT_PATH`][env-django-init] environment variable to determine which fixture(s)
-to load.
+The `bin/init.sh` script uses the [`DJANGO_INIT_PATH`][env-django-init] environment variable when loading fixture(s).
 
 ## Cypress test fixtures
 
