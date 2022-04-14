@@ -20,6 +20,36 @@ Agencies.
 During the [deployment](../deployment/README.md) process, environment-specific fixtures are used to build that
 environment's configuration database.
 
+## Sample data
+
+The sample data included in the repository fixtures is enough to bootstrap the application with basic functionality:
+
+* Multiple transit agency configurations
+* Multiple eligibility verification pathways
+* With and without authentication required before eligibility verification
+* In concert with the [sample eligibility server][eligibility-server], verification with test user data
+
+### Not included
+
+Some configuration data is not available with the samples in the repository:
+
+* OAuth configuration to enable authentication (read more about [OAuth configuration](oauth.md))
+* Rate Limiting configuration for eligibility
+* reCAPTCHA configuration for user-submitted forms
+* Payment processor configuration for the enrollment phase
+* Amplitude configuration for capturing analytics events
+
+### Sample transit agency: `ABC`
+
+* Presents the user a choice between two different eligibility pathways
+* One eligibility verifier requires authentication
+* One eligibility verifier does not require authentication
+
+### Sample transit agency: `DefTL`
+
+* Single eligibility pathway, no choice presented to the user
+* Eligibility verifier does not require authentication
+
 ## Building the configuration database
 
 If you update your local fixtures, you'll need to rebuild the configuration database.
@@ -48,6 +78,7 @@ more information.
 [core-models]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/models.py
 [cypress-fixtures]: https://github.com/cal-itp/benefits/tree/dev/tests/cypress/fixtures
 [django-data-fixtures]: https://docs.djangoproject.com/en/3.2/howto/initial-data/#providing-data-with-fixtures
+[eligibility-server]: https://docs.calitp.org/eligibility-server
 [env-django-db]: environment-variables.md#djangodb
 [env-django-init]: environment-variables.md#djangoinitpath
 [fixtures-sample]: https://github.com/cal-itp/benefits/tree/dev/fixtures
