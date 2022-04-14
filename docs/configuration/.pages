@@ -2,3 +2,4 @@ nav:
   - Introduction: README.md
   - Environment variables: environment-variables.md
   - Fixtures: fixtures.md
+  - OAuth: oauth.md
