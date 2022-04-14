@@ -11,6 +11,7 @@ describe("Single Verifier, No AuthProvider: Enrollment success page", () => {
   });
 
   it("Has the appropriate English copy for all flows", () => {
+    cy.screenshot({ capture: "fullPage" });
     cy.contains("Success! Your discount is now linked to your bank card.");
     cy.contains("You were not charged anything today.");
   });

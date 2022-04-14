@@ -143,12 +143,12 @@ def retry(request):
 def success(request):
     """View handler for the final success page."""
     request.path = "/enrollment/success"
-    # verifier = session.verifier(request)
+    verifier = session.verifier(request)
 
     paragraphs = [_("enrollment.pages.success.p1"), _("enrollment.pages.success.p2"), _("enrollment.pages.success.p3")]
 
-    # if verifier.requires_authentication:
-    # paragraphs.insert(3, _("enrollment.pages.success.p4"))
+    if verifier.requires_authentication:
+        paragraphs.insert(3, _("enrollment.pages.success.p4"))
 
     page = viewmodels.Page(
         title=_("enrollment.pages.success.title"),
