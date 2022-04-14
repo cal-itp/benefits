@@ -395,6 +395,10 @@ footer .footer-links a {
   text-align: center !important;
 }
 
+.with-warning .container.content p:last-child {
+  font-weight: 500;
+}
+
 /* media queries */
 
 @media (max-width: 767px) {
