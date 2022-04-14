@@ -80,46 +80,6 @@ Boolean:
 
 A list of strings representing the host/domain names that this Django site can serve.
 
-### `DJANGO_CSP_CONNECT_SRC`
-
-!!! tldr "django-csp docs"
-
-    [Configuring `django-csp`][django-csp-config]
-
-Comma-separated list of URIs. Configures the [`connect-src`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/connect-src) Content Security Policy directive.
-
-### `DJANGO_CSP_FONT_SRC`
-
-!!! tldr "django-csp docs"
-
-    [Configuring `django-csp`][django-csp-config]
-
-Comma-separated list of URIs. Configures the [`font-src`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/font-src) Content Security Policy directive.
-
-### `DJANGO_CSP_FRAME_SRC`
-
-!!! tldr "django-csp docs"
-
-    [Configuring `django-csp`][django-csp-config]
-
-Comma-separated list of URIs. Configures the [`frame-src`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src) Content Security Policy directive.
-
-### `DJANGO_CSP_SCRIPT_SRC`
-
-!!! tldr "django-csp docs"
-
-    [Configuring `django-csp`][django-csp-config]
-
-Comma-separated list of URIs. Configures the [`script-src`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src) Content Security Policy directive.
-
-### `DJANGO_CSP_STYLE_SRC`
-
-!!! tldr "django-csp docs"
-
-    [Configuring `django-csp`][django-csp-config]
-
-Comma-separated list of URIs. Configures the [`style-src`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src) Content Security Policy directive.
-
 ### `DJANGO_DB`
 
 String; names the database that Django uses for configuration.
@@ -187,6 +147,5 @@ When Cypress is running inside the devcontainer, this should be `http://localhos
 devcontainer, check the [`DJANGO_LOCAL_PORT`](#djangolocalport).
 
 [deployment]: ../deployment/README.md
-[django-csp-config]: https://django-csp.readthedocs.io/en/latest/configuration.html#configuring-django-csp
 [env-sample]: https://github.com/cal-itp/benefits/blob/dev/.devcontainer/.env.sample
 [getting-started_create-env]: ../getting-started/README.md#create-an-environment-file
