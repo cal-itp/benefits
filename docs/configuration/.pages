@@ -4,3 +4,4 @@ nav:
   - Fixtures: fixtures.md
   - OAuth: oauth.md
   - Rate Limit: rate-limit.md
+  - reCAPTCHA: recaptcha.md

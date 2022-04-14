@@ -157,38 +157,6 @@ The log level used in the application's logging configuration.
 
 By default the application sends logs to `stdout`.
 
-### `DJANGO_RECAPTCHA_API_URL`
-
-!!! tldr "reCAPTCHA docs"
-
-    [Developer's Guide][recaptcha-dev]
-
-URL to the reCAPTCHA JavaScript API.
-
-### `DJANGO_RECAPTCHA_SITE_KEY`
-
-!!! tldr "reCAPTCHA docs"
-
-    [Developer's Guide][recaptcha-dev]
-
-Site key for the reCAPTCHA configuration.
-
-### `DJANGO_RECAPTCHA_SECRET_KEY`
-
-!!! tldr "reCAPTCHA docs"
-
-    [Developer's Guide][recaptcha-dev]
-
-Secret key for the reCAPTCHA configuration.
-
-### `DJANGO_RECAPTCHA_VERIFY_URL`
-
-!!! tldr "reCAPTCHA docs"
-
-    [Verifying the user's response](https://developers.google.com/recaptcha/docs/verify)
-
-URL for the reCAPTCHA verify service.
-
 ### `DJANGO_SECRET_KEY`
 
 !!! tldr "Django docs"
@@ -222,4 +190,3 @@ devcontainer, check the [`DJANGO_LOCAL_PORT`](#djangolocalport).
 [django-csp-config]: https://django-csp.readthedocs.io/en/latest/configuration.html#configuring-django-csp
 [env-sample]: https://github.com/cal-itp/benefits/blob/dev/.devcontainer/.env.sample
 [getting-started_create-env]: ../getting-started/README.md#create-an-environment-file
-[recaptcha-dev]: https://developers.google.com/recaptcha/intro
