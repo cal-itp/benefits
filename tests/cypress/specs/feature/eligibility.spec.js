@@ -7,7 +7,7 @@ describe("Eligibility confirmation flow", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.contains(agencies[0].fields.short_name).click();
-    cy.contains("Let’s do it!").click();
+    cy.contains("Get started").click();
     cy.contains("Continue").click();
   });
 

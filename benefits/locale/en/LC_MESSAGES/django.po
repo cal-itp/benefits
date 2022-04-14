@@ -246,6 +246,23 @@ msgstr ""
 "The new way to pay for transit makes it easier to get your discount every "
 "time you ride"
 
+msgid "core.pages.agency_index.content_title"
+msgstr ""
+"Cal-ITP Benefits makes it easy to use your public transit discount "
+"every time you ride."
+
+msgid "core.pages.agency_index.p[0]%(info_link)s"
+msgstr "With new contactless payment options, you can tap "
+"your bank-issued contactless credit or debit card when you "
+"board, and your discount will automatically apply every "
+"time you ride. <a href=\"%(info_link)s\">Learn more about Cal-ITP Benefits.</a>"
+
+msgid "core.pages.agency_index.p[1]"
+msgstr "The Cal-ITP Benefits program is currently only open to those <strong>ages 65 or older</strong>."
+
+msgid "core.pages.agency_index.button.label"
+msgstr "Verify your discount and connect your bank card today!"
+
 #: benefits/core/views.py:25
 msgctxt "image alt text"
 msgid "core.pages.index.image"
@@ -273,7 +290,7 @@ msgstr "Choose your transit provider"
 
 #: benefits/core/views.py:70
 msgid "core.pages.index.continue"
-msgstr "Let’s do it!"
+msgstr "Get started"
 
 #: benefits/core/views.py:86 benefits/core/views.py:106
 msgid "core.buttons.back"

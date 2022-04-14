@@ -57,14 +57,19 @@ def agency_index(request, agency):
     session.reset(request)
     session.update(request, agency=agency, origin=agency.index_url)
 
+    button = viewmodels.Button.primary(text=_("core.pages.index.continue"), url=reverse("eligibility:index"))
+    button.label = _("core.pages.agency_index.button.label")
+
     page = viewmodels.Page(
-        content_title=_index_content_title(),
-        paragraphs=_index_paragraphs(),
-        button=viewmodels.Button.primary(text=_("core.pages.index.continue"), url=reverse("eligibility:index")),
+        content_title=_("core.pages.agency_index.content_title"),
+        button=button,
         classes="home",
     )
 
-    return PageTemplateResponse(request, page)
+    help_page = reverse("core:help")
+    context_dict = {**page.context_dict(), **{"info_link": f"{help_page}#about"}}
+
+    return TemplateResponse(request, "core/agency_index.html", context_dict)
 
 
 @middleware.pageview_decorator
