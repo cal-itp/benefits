@@ -7,6 +7,8 @@
 The first steps of the Getting Started guide have you [create an `.env` file from the sample][getting-started_create-env].
 The sections below outline the core environment variables and their purpose.
 
+See other topic pages in this section for more specific environment variable configurations.
+
 ## Docker
 
 ### `COMPOSE_PROJECT_NAME`
@@ -17,7 +19,7 @@ The sections below outline the core environment variables and their purpose.
 
 Name that Docker Compose prefixes to the project for container runs.
 
-## Ampltiude
+## Amplitude
 
 !!! tldr "Amplitude API docs"
 
@@ -134,11 +136,16 @@ Boolean; whether or not the application is launched in debug mode.
 
 The path to the fixture file(s) used to initialize the Django configuration database.
 
+See [Fixtures](fixtures.md) for more.
+
 ### `DJANGO_LOCAL_PORT`
 
-The port used to serve the Django application on your _host_ machine.
+The port used to serve the Django application from the _host_ machine (that is running the application container).
 
-Within the container, the app is always run on port `8000`.
+i.e. if you are running the app in Docker on your local machine, this is the port that the app will be accessible from at
+<http://localhost:$DJANGO_LOCAL_PORT>
+
+From inside the container, the app is always listening on port `8000`.
 
 ### `DJANGO_LOG_LEVEL`
 
