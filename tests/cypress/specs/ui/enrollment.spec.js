@@ -31,7 +31,7 @@ describe("Single Verifier, No AuthProvider: Enrollment success page", () => {
   });
 });
 
-describe.skip("Multiple Verifier, with AuthProvider: Enrollment success page", () => {
+describe("Multiple Verifier, with AuthProvider: Enrollment success page", () => {
   beforeEach(() => {
     cy.visit("/");
     // Selecting ABC will go down the multiple verifier flow
