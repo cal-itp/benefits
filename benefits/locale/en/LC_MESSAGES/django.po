@@ -344,17 +344,45 @@ msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
 msgstr "Bank card icon with contactless symbol and checkmark"
 
+msgctxt "image alt text"
+msgid "core.icons.idscreencheck"
+msgstr "Computer monitor with checkmark"
+
 #: benefits/eligibility/views.py:74
 msgid "eligibility.pages.start.items[1].title"
-msgstr "Your bank card"
+msgstr "Provide your bank card details"
 
 #: benefits/eligibility/views.py:75
 msgid "eligibility.pages.start.items[1].text"
-msgstr "A debit or credit card"
+msgstr "Must be a contactless debit or credit card issued by Visa or Mastercard."
+
+msgid "eligibility.pages.start.items[1].button[0].link"
+msgstr "Don’t have a bank card?"
+
+msgid "eligibility.pages.start.items[1].button[0].url"
+msgstr "/help#payment-options"
+
+msgid "eligibility.pages.start.items[1].button[1].link"
+msgstr "Unsure if you have a contactless card?"
+
+msgid "eligibility.pages.start.items[1].button[1].url"
+msgstr "/help#payment-options"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
 msgstr "Continue"
+
+msgid "eligibility.media.heading"
+msgstr "Sign in to your Login.gov account"
+
+msgid "eligibility.media.details"
+msgstr "You will be able to create an account if you’re not already signed up."
+
+msgid "eligibility.media.link_text"
+msgstr "Learn more about Login.gov"
+
+msgid "eligibility.media.link_url"
+msgstr "https://login.gov/"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
@@ -460,10 +488,10 @@ msgid "eligibility.pages.confirm.dmv.content_title"
 msgstr "Let’s see if we can confirm your age with the DMV"
 
 msgid "eligibility.pages.start.dmv.items[0].title"
-msgstr "Your California ID"
+msgstr "Provide your California ID number"
 
 msgid "eligibility.pages.start.dmv.items[0].text"
-msgstr "Driver’s license or ID card"
+msgstr "You will verify your age with a driver’s license or ID card"
 
 msgid "eligibility.pages.confirm.dmv.p[0]"
 msgstr ""
@@ -477,7 +505,7 @@ msgid "eligibility.forms.confirm.dmv.fields.name"
 msgstr "Last name (as it appears on ID)"
 
 msgid "eligibility.pages.start.dmv.content_title"
-msgstr "Great, you’ll need two things before we get started..."
+msgstr "Great, you’ll need to do three things to link your transit discount to your bank card."
 
 msgid "eligibility.pages.start.dmv.p[0]"
 msgstr ""
@@ -500,7 +528,7 @@ msgid "eligibility.forms.confirm.mst.fields.name"
 msgstr "Last name (as it appears on Courtesy Card)"
 
 msgid "eligibility.pages.start.mst.content_title"
-msgstr "You’ll need two things before we get started:"
+msgstr "You’ll need to do two things to link your transit discount to your bank card."
 
 msgid "eligibility.pages.start.mst.items[0].title"
 msgstr "Your MST Courtesy Card"
