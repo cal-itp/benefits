@@ -144,7 +144,7 @@ Comma-separated list of hosts which are trusted origins for unsafe requests (e.g
 The base URL for the (running) application, against which all Cypress `.visit()` etc. commands are run.
 
 When Cypress is running inside the devcontainer, this should be `http://localhost:8000`. When Cypress is running outside the
-devcontainer, check the [`DJANGO_LOCAL_PORT`](#djangolocalport).
+devcontainer, check the [`DJANGO_LOCAL_PORT`](#django_local_port).
 
 [deployment]: ../deployment/README.md
 [env-sample]: https://github.com/cal-itp/benefits/blob/dev/.devcontainer/.env.sample

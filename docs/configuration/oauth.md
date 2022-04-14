@@ -38,7 +38,7 @@ This application's client ID, as registered with the OAuth/OIDC server.
 
 The internal label of the OAuth client within this application.
 
-See the [`OAUTH_CLIENT_NAME`](#oauthclientname) setting for more.
+See the [`OAUTH_CLIENT_NAME`](#oauth_client_name) setting for more.
 
 ### `DJANGO_OAUTH_SCOPE`
 
@@ -66,7 +66,7 @@ The value is initialized from the [`DJANGO_OAUTH_CLIENT_NAME`](#django_oauth_cli
 
 A `dict` of OAuth client configurations this app may use.
 
-By default, contains a single entry, keyed by [`OAUTH_CLIENT_NAME`](#oauthclientname) and using the other
+By default, contains a single entry, keyed by [`OAUTH_CLIENT_NAME`](#oauth_client_name) and using the other
 [`DJANGO_OAUTH_*` environment variables](#environment-variables) to populate the client's settings.
 
 [benefits-settings]: https://github.com/cal-itp/benefits/blob/dev/benefits/settings.py
