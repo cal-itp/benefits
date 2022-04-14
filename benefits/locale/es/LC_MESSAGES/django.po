@@ -13,14 +13,76 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "core.pages.help.about"
+msgstr "TODO: What is Cal-ITP Benefits?"
+
 #: benefits/core/templates/core/base.html:9 benefits/core/views.py:91
-msgid "core.pages.help.p[0]"
+msgid "core.pages.help.about.p[0]"
 msgstr ""
-"Cal-ITP es un nuevo proyecto del Departamento de Transporte de California. "
-"Nos asociamos con el DMV de California para confirmar la edad para los "
-"descuentos. Nos asociamos con Littlepay para conectar el descuento con su "
-"tarjeta bancaria y así, cuando pague el transporte público, obtenga su "
-"descuento automáticamente."
+"TODO: The Benefits tool is provided by California Integrated Travel Project "
+"(Cal-ITP), which is a new program from the California Department of "
+"Transportation dedicated to making travel simpler and cost effective for all."
+
+msgid "core.pages.help.about.p[1]"
+msgstr ""
+"TODO: We partner with the California DMV to confirm age for age-based discounts and "
+"local transporation agencies to confirm specific discount programs. Once verified, "
+"discounts are attached to your bank card through our payment partner, Littlepay so "
+"that when you pay for your transit ride, you get your discount automatically."
+
+msgid "core.pages.help.payment_options"
+msgstr "TODO: Payment options"
+
+msgid "core.pages.help.payment_options.p[0]"
+msgstr "TODO: In order to activate your discount, you need a bank card that has the "
+"contactless symbol on it. The contactless symbol is four curved lines that looks like this:"
+
+msgid "core.pages.help.payment_options.p[1]"
+msgstr "TODO: A contactless bank card can be a credit card or a debit card and must "
+"include a Visa or Mastercard logo."
+
+msgid "core.pages.help.payment_options.p[2]"
+msgstr "TODO: We are working to add additional options for people who do not have access "
+"to a bank card. However, you can still get your discount by going through your "
+"local transit provider's application process."
+
+msgid "core.pages.help.payment_options.p[3]"
+msgstr "TODO: For updates on additional options, please check back on this website, or "
+"get in touch with your local transit provider."
+
+msgid "core.pages.help.login_gov"
+msgstr "TODO: What is Login.gov?"
+
+msgid "core.pages.help.login_gov.p[0]"
+msgstr "TODO: Login.gov is a secure way to sign in to participating government agencies. "
+"You can use your Login.gov account to access all of the benefits offered through Cal-ITP."
+
+msgid "core.pages.help.login_gov.p[1]"
+msgstr "TODO: Creating an account is simple. You will need an email address and method for "
+"authenticating your account&mdash;which will use either a landline, mobile phone, or "
+"backup codes that must be printed or written down."
+
+msgid "core.pages.help.login_gov.p[2]%(website)s"
+msgstr "<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">TODO</a>: "
+"For more information on Login.gov, check out their website."
+
+msgid "core.pages.help.littlepay"
+msgstr "TODO: What is Littlepay?"
+
+msgid "core.pages.help.littlepay.p[0]"
+msgstr "TODO: Our payment partner, Littlepay is a secure, end-to-end payment processing "
+"platform that allows us to seamlessly attach your transit discount to your bank card."
+
+msgid "core.pages.help.littlepay.p[1]%(website)s"
+msgstr "<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">TODO</a>: "
+"For more information on Littlepay, check out their website."
+
+msgid "core.pages.help.questions"
+msgstr "TODO: Questions?"
+
+msgid "core.pages.help.questions.p[0]"
+msgstr "TODO: If you need assistance with this website, please reach out to the customer "
+"service team for your local transit provider."
 
 #: benefits/core/templates/core/base.html:24
 msgid "core.buttons.skip"
@@ -183,8 +245,24 @@ msgstr "Espere por favor..."
 #: benefits/core/views.py:20
 msgid "core.pages.index.content_title"
 msgstr ""
-"La nueva forma de pagar el transporte público hace que sea más fácil obtener "
-"su descuento cada vez que viaja"
+"TODO: Cal-ITP Benefits makes it easy to use your public transit discount everytime you ride."
+
+msgid "core.pages.agency_index.content_title"
+msgstr ""
+"TODO: Cal-ITP Benefits makes it easy to use your public transit discount "
+"every time you ride."
+
+msgid "core.pages.agency_index.p[0]%(info_link)s"
+msgstr "TODO: With new contactless payment options, you can tap "
+"your bank-issued contactless credit or debit card when you "
+"board, and your discount will automatically apply every "
+"time you ride. <a href=\"%(info-link)s\">Learn more about Cal-ITP Benefits.</a>"
+
+msgid "core.pages.agency_index.p[1]"
+msgstr "TODO: The Cal-ITP Benefits program is currently only open to those <strong>ages 65 or older</strong>."
+
+msgid "core.pages.agency_index.button.label"
+msgstr "TODO: Verify your discount and connect your bank card today!"
 
 #: benefits/core/views.py:25
 msgctxt "image alt text"
@@ -268,17 +346,45 @@ msgid "core.icons.bankcardcheck"
 msgstr ""
 "Icono de tarjeta bancaria con símbolo sin contacto y marca de verificación"
 
+msgctxt "image alt text"
+msgid "core.icons.idscreencheck"
+msgstr "TODO: Computer monitor with checkmark"
+
 #: benefits/eligibility/views.py:74
 msgid "eligibility.pages.start.items[1].title"
-msgstr "Tu tarjeta bancaria"
+msgstr "TODO: Tu tarjeta bancaria"
 
 #: benefits/eligibility/views.py:75
 msgid "eligibility.pages.start.items[1].text"
-msgstr "Una tarjeta de débito o crédito"
+msgstr "TODO: Una tarjeta de débito o crédito"
+
+msgid "eligibility.pages.start.items[1].button[0].link"
+msgstr "TODO: Don’t have a bank card?"
+
+msgid "eligibility.pages.start.items[1].button[0].url"
+msgstr "TODO: /help#payment-options"
+
+msgid "eligibility.pages.start.items[1].button[1].link"
+msgstr "TODO: Unsure if you have a contactless card?"
+
+msgid "eligibility.pages.start.items[1].button[1].url"
+msgstr "TODO: /help#payment-options"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
 msgstr "Continuar"
+
+msgid "eligibility.media.heading"
+msgstr "TODO: Sign in to your Login.gov account"
+
+msgid "eligibility.media.details"
+msgstr "TODO: You will be able to create an account if you’re not already signed up."
+
+msgid "eligibility.media.link_text"
+msgstr "TODO: Learn more about Login.gov"
+
+msgid "eligibility.media.link_url"
+msgstr "https://login.gov/es/"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
@@ -398,7 +504,7 @@ msgstr ""
 "Nosotros no guardamos su información."
 
 msgid "eligibility.pages.start.dmv.content_title"
-msgstr "Genial, necesitarás dos cosas antes de comenzar..."
+msgstr "TODO: Genial, necesitarás tres cosas antes de comenzar..."
 
 msgid "eligibility.forms.confirm.dmv.fields.sub"
 msgstr "Licencia de conducir de CA o número de identificación"
@@ -428,7 +534,7 @@ msgid "eligibility.forms.confirm.mst.fields.name"
 msgstr "Apellido (como aparece en la identificación)"
 
 msgid "eligibility.pages.start.mst.content_title"
-msgstr "Genial, necesitarás dos cosas antes de empeza"
+msgstr "TODO: Genial, necesitarás dos cosas antes de empeza"
 
 msgid "eligibility.pages.start.mst.items[0].title"
 msgstr "Tu tarjeta de cortesía MST"

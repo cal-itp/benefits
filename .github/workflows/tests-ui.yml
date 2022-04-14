@@ -57,11 +57,17 @@ jobs:
           working-directory: tests/cypress
           wait-on: http://localhost:8000/healthcheck
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-screenshots
           path: tests/cypress/screenshots
+
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-videos
+          path: tests/cypress/videos
 
       - name: Run Lighthouse tests for a11y
         uses: treosh/lighthouse-ci-action@9.3.0

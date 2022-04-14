@@ -67,30 +67,66 @@ def start(request):
             raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
 
         auth_provider = verifier.auth_provider
-        button = viewmodels.Button.external(text=_(auth_provider.sign_in_button_label), url=reverse("oauth:login"), id="login")
+        button = viewmodels.Button.external(
+            text=_(auth_provider.sign_in_button_label),
+            url=reverse("oauth:login"),
+            id="login",
+        )
+        auth_media = dict(
+            icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
+            heading=_("eligibility.media.heading"),
+            details=_("eligibility.media.details"),
+            links=[
+                viewmodels.Button.link(
+                    classes="btn-text btn-link",
+                    text=_("eligibility.media.link_text"),
+                    url=_("eligibility.media.link_url"),
+                    target="_blank",
+                    rel="noopener noreferrer",
+                )
+            ],
+        )
     else:
         button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm"))
 
     page = viewmodels.Page(
         title=_("eligibility.pages.start.title"),
-        content_title=_(verifier.start_content_title),
-        media=[
-            viewmodels.MediaItem(
-                icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-                heading=_(verifier.start_item_name),
-                details=_(verifier.start_item_description),
-            ),
-            viewmodels.MediaItem(
-                icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-                heading=_("eligibility.pages.start.items[1].title"),
-                details=_("eligibility.pages.start.items[1].text"),
-            ),
-        ],
+        noimage=True,
         paragraphs=[_(verifier.start_blurb)],
         button=button,
     )
 
-    return TemplateResponse(request, "eligibility/start.html", page.context_dict())
+    ctx = page.context_dict()
+    ctx["title"] = _(verifier.start_content_title)
+    ctx["media"] = [
+        dict(
+            icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
+            heading=_(verifier.start_item_name),
+            details=_(verifier.start_item_description),
+        ),
+        dict(
+            icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
+            heading=_("eligibility.pages.start.items[1].title"),
+            details=_("eligibility.pages.start.items[1].text"),
+            links=[
+                viewmodels.Button.link(
+                    classes="btn-text btn-link",
+                    text=_("eligibility.pages.start.items[1].button[0].link"),
+                    url=_("eligibility.pages.start.items[1].button[0].url"),
+                ),
+                viewmodels.Button.link(
+                    classes="btn-text btn-link",
+                    text=_("eligibility.pages.start.items[1].button[1].link"),
+                    url=_("eligibility.pages.start.items[1].button[1].url"),
+                ),
+            ],
+        ),
+    ]
+
+    if verifier.requires_authentication:
+        ctx["media"].insert(0, auth_media)
+
+    return TemplateResponse(request, "eligibility/start.html", ctx)
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)

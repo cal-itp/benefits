@@ -28,6 +28,12 @@ RUN useradd --create-home --shell /bin/bash $USER && \
 
 # enter app directory
 WORKDIR /home/$USER/app
+# switch to non-root $USER
+USER $USER
+
+# install python dependencies
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
 
 # copy config files
 COPY gunicorn.conf.py gunicorn.conf.py
@@ -36,22 +42,17 @@ COPY manage.py manage.py
 # overwrite default nginx.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
+# update PATH for local pip installs
+ENV PATH "$PATH:/home/$USER/.local/bin"
+
 # copy source files
 COPY bin/ bin/
 COPY benefits/ benefits/
 
 # ensure $USER can compile messages in the locale directories
+USER root
 RUN chmod -R 777 benefits/locale
-
-# switch to non-root $USER
 USER $USER
-
-# update PATH for local pip installs
-ENV PATH "$PATH:/home/$USER/.local/bin"
-
-# install python dependencies
-COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
 
 # configure container executable
 ENTRYPOINT ["/bin/bash"]

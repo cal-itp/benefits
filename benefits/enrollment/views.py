@@ -25,6 +25,7 @@ def _index(request):
     tokenize_retry_form = forms.CardTokenizeFailForm("enrollment:retry")
     tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
+    help_page = reverse("core:help")
     page = viewmodels.Page(
         title=_("enrollment.pages.index.title"),
         content_title=_("enrollment.pages.index.content_title"),
@@ -37,7 +38,7 @@ def _index(request):
                 text=_("enrollment.buttons.payment_partner"), id=tokenize_button, url=f"#{tokenize_button}"
             ),
             viewmodels.Button.link(
-                classes="btn-sm", text=_("enrollment.buttons.payment_options"), url=reverse("core:payment_options")
+                classes="btn-sm", text=_("enrollment.buttons.payment_options"), url=f"{help_page}#payment-options"
             ),
         ],
     )

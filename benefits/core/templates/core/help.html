@@ -1,9 +1,50 @@
 {% extends "core/page.html" %}
 {% load i18n %}
+{% load static %}
+
+{% block main_content%}
+<div class="container-fluid">
+    <div class="container content help">
 {% block container_content %}
+
+<h1>{{ page.content_title }}</h1>
+
+<h2 id="what-is-cal-itp">{% translate "core.pages.help.about" %}</h2>
+<p>{% translate "core.pages.help.about.p[0]" %}</p>
+<p>{% translate "core.pages.help.about.p[1]" %}</p>
+
+<h2 id="payment-options">{% translate "core.pages.help.payment_options" %}</h2>
+<p>{% translate "core.pages.help.payment_options.p[0]" %}</p>
+
+<p class="contactless-symbol">
+    <img class="icon mx-auto d-block" src="{% static 'img/icon/contactless.svg' %}" alt="{% translate "core.icons.contactless" context "image alt text" %}" />
+</p>
+
+<p>{% translate "core.pages.help.payment_options.p[1]" %}</p>
+<p>{% translate "core.pages.help.payment_options.p[2]" %}</p>
+<p>{% translate "core.pages.help.payment_options.p[3]" %}</p>
+
+<h2 id="login-gov">{% translate "core.pages.help.login_gov" %}</h2>
+<p>{% translate "core.pages.help.login_gov.p[0]" %}</p>
+<p>{% translate "core.pages.help.login_gov.p[1]" %}</p>
+<p>{% blocktranslate with website="https://login.gov"%}core.pages.help.login_gov.p[2]{{ website }}{% endblocktranslate %}</p>
+
+<h2 id="littlepay">{% translate "core.pages.help.littlepay" %}</h2>
+<p>{% translate "core.pages.help.littlepay.p[0]" %}</p>
+<p>{% blocktranslate with website="https://littlepay.com" %}core.pages.help.littlepay.p[1]{{ website }}{% endblocktranslate %}</p>
+
+<h2 id="questions">{% translate "core.pages.help.questions" %}</h2>
+<p>{% translate "core.pages.help.questions.p[0]" %}</p>
+
+{% block buttons %}
 {{ block.super }}
+{% endblock %}
+
 <p class="mt-4">
     {% translate "core.pages.help.foss.text" %}
     <a href="https://www.github.com/cal-itp/benefits" target="_blank" rel="noopener noreferrer">{% translate "core.pages.help.foss.link" %}</a>.
 </p>
+{% endblock %}
+    </div>
+</div>
 {% endblock %}

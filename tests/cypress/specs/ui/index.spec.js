@@ -22,13 +22,9 @@ describe("Index page spec", () => {
   it("Clicking transit option link takes user to a transit provider page", () => {
     cy.contains(agencies[0].fields.short_name).click();
 
-    cy.contains("Let’s do it!").then(($e) => {
+    cy.contains("Get started").then(($e) => {
       expect($e).attr("href").to.include("/eligibility");
     });
-  });
-
-  it("Has a payment options page link", () => {
-    cy.contains("Payment Options");
   });
 
   it("Has a help page link", () => {
