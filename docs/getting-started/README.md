@@ -29,6 +29,12 @@ cp .env.sample .env
 ## Build image using Docker Compose
 
 ```bash
+docker compose build client
+```
+
+If you need all layers to rebuild, use:
+
+```bash
 docker compose build --no-cache client
 ```
 
