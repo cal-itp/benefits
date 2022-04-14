@@ -30,7 +30,7 @@ def authorize(request):
     token = oauth_client.authorize_access_token(request)
 
     if token is None:
-        return redirect(session.origin(request))
+        return redirect("eligibility:start")
     else:
         # we are intentionally not storing anything about the user, including their token
         session.update(request, auth=True)
