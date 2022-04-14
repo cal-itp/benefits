@@ -3,3 +3,4 @@ nav:
   - Environment variables: environment-variables.md
   - Fixtures: fixtures.md
   - OAuth: oauth.md
+  - Rate Limit: rate-limit.md

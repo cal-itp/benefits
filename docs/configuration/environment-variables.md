@@ -157,18 +157,6 @@ The log level used in the application's logging configuration.
 
 By default the application sends logs to `stdout`.
 
-### `DJANGO_RATE_LIMIT`
-
-Number of requests allowed in the given [`DJANGO_RATE_LIMIT_PERIOD`](#djangoratelimitperiod).
-
-### `DJANGO_RATE_LIMIT_METHODS`
-
-Comma-separated list of HTTP Methods for which requests are rate limited.
-
-### `DJANGO_RATE_LIMIT_PERIOD`
-
-Number of seconds before additional requests are denied.
-
 ### `DJANGO_RECAPTCHA_API_URL`
 
 !!! tldr "reCAPTCHA docs"
