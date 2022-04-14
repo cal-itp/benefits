@@ -13,11 +13,16 @@ if OAUTH_CLIENT_NAME:
     oauth_client = _oauth.create_client(OAUTH_CLIENT_NAME)
 
 
+ROUTE_AUTH = "oauth:authorize"
+ROUTE_START = "eligibility:start"
+ROUTE_CONFIRM = "eligibility:confirm"
+
+
 def login(request):
     if not oauth_client:
         raise Exception("No OAuth client")
 
-    route = reverse("oauth:authorize")
+    route = reverse(ROUTE_AUTH)
     redirect_uri = request.build_absolute_uri(route)
 
     return oauth_client.authorize_redirect(request, redirect_uri)
@@ -30,8 +35,8 @@ def authorize(request):
     token = oauth_client.authorize_access_token(request)
 
     if token is None:
-        return redirect("eligibility:start")
+        return redirect(ROUTE_START)
     else:
         # we are intentionally not storing anything about the user, including their token
         session.update(request, auth=True)
-        return redirect("eligibility:confirm")
+        return redirect(ROUTE_CONFIRM)
