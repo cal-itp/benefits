@@ -245,8 +245,7 @@ msgstr "Espere por favor..."
 #: benefits/core/views.py:20
 msgid "core.pages.index.content_title"
 msgstr ""
-"La nueva forma de pagar el transporte público hace que sea más fácil obtener "
-"su descuento cada vez que viaja"
+"TODO: Cal-ITP Benefits makes it easy to use your public transit discount everytime you ride."
 
 msgid "core.pages.agency_index.content_title"
 msgstr ""
