@@ -396,6 +396,7 @@ footer .footer-links a {
 }
 
 .with-warning .container.content p:last-child {
+  margin-top: 6rem;
   font-weight: 500;
 }
 
