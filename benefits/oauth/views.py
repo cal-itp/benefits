@@ -32,7 +32,7 @@ def login(request):
     route = reverse(ROUTE_AUTH)
     redirect_uri = request.build_absolute_uri(route)
 
-    logger.debug(f"OAuth authorize_redirect to: {redirect_uri}")
+    logger.debug(f"OAuth authorize_redirect with redirect_uri: {redirect_uri}")
 
     return oauth_client.authorize_redirect(request, redirect_uri)
 
