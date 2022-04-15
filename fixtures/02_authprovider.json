@@ -3,12 +3,6 @@
       "model": "core.authprovider",
       "pk": 1,
       "fields": {
-        "authority": "https://example.com",
-        "client_id": "b2c086d3-2e78-4e1f-8dde-f4b162743048",
-        "redirect_uri": "https://example.com/redirect",
-        "post_logout_redirect_uri": "https://example.com/logout",
-        "response_type": "code",
-        "scope": "openid",
         "sign_in_button_label": "eligibility.buttons.signin",
         "sign_out_button_label": "eligibility.buttons.signout"
       }

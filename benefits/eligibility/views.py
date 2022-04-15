@@ -11,6 +11,7 @@ from django.utils.translation import pgettext, gettext as _
 from benefits.core import middleware, recaptcha, session, viewmodels
 from benefits.core.models import EligibilityVerifier
 from benefits.core.views import PageTemplateResponse
+from benefits.settings import OAUTH_CLIENT_NAME
 from . import analytics, api, forms
 
 
@@ -61,11 +62,14 @@ def start(request):
     session.update(request, eligibility_types=[], origin=reverse("eligibility:start"))
     verifier = session.verifier(request)
 
-    if verifier.requires_authentication:
+    if verifier.requires_authentication and not session.auth(request):
+        if OAUTH_CLIENT_NAME is None:
+            raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
+
         auth_provider = verifier.auth_provider
         button = viewmodels.Button.external(
             text=_(auth_provider.sign_in_button_label),
-            url="http://calitp.org",  # Placeholder URL for now, for UI specs to pass
+            url=reverse("oauth:login"),
             id="login",
         )
         auth_media = dict(

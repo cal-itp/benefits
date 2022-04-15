@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "benefits.core",
     "benefits.enrollment",
     "benefits.eligibility",
+    "benefits.oauth",
 ]
 
 if ADMIN:
@@ -70,9 +71,17 @@ CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_HTTPONLY = True
 CSRF_TRUSTED_ORIGINS = _filter_empty(os.environ["DJANGO_TRUSTED_ORIGINS"].split(","))
 
-SESSION_COOKIE_SAMESITE = "Strict"
+# With `Strict`, the user loses their Django session between leaving our app to
+# sign in with OAuth, and coming back into our app from the OAuth redirect.
+# This is because `Strict` disallows our cookie being sent from an external
+# domain and so the session cookie is lost.
+#
+# `Lax` allows the cookie to travel with the user and be sent back to us by the
+# OAuth server, as long as the request is "safe" i.e. GET
+SESSION_COOKIE_SAMESITE = "Lax"
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_NAME = "_benefitssessionid"
 
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
@@ -147,6 +156,19 @@ if ADMIN:
             },
         ]
     )
+
+# OAuth configuration
+
+OAUTH_CLIENT_NAME = os.environ.get("DJANGO_OAUTH_CLIENT_NAME")
+
+if OAUTH_CLIENT_NAME:
+    AUTHLIB_OAUTH_CLIENTS = {
+        OAUTH_CLIENT_NAME: {
+            "client_id": os.environ.get("DJANGO_OAUTH_CLIENT_ID"),
+            "server_metadata_url": f"{os.environ.get('DJANGO_OAUTH_AUTHORITY')}/.well-known/openid-configuration",
+            "client_kwargs": {"code_challenge_method": "S256", "scope": os.environ.get("DJANGO_OAUTH_SCOPE")},
+        }
+    }
 
 # Internationalization
 

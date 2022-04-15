@@ -32,17 +32,9 @@ class PemData(models.Model):
 class AuthProvider(models.Model):
     """An entity that provides authentication for eligibility verifiers."""
 
-    # fmt: off
     id = models.AutoField(primary_key=True)
-    authority = models.TextField(help_text="Authorization server address")
-    client_id = models.TextField(help_text="The application ID registered with auth server")
-    redirect_uri = models.TextField(help_text="Post-login, the user is redirected here")
-    post_logout_redirect_uri = models.TextField(help_text="Post-logout, the user is redirected here")
-    response_type = models.TextField(help_text="Must be \"code\" to use the authorization-code flow")
-    scope = models.TextField(help_text="Space-delimited list. If you need refresh tokens, you must add the \"offline access\" scope")  # noqa: 503
     sign_in_button_label = models.TextField()
     sign_out_button_label = models.TextField()
-    # fmt: on
 
 
 class EligibilityType(models.Model):
