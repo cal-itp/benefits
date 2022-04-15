@@ -455,24 +455,15 @@ footer .footer-links a {
     padding-bottom: 0.138rem;
   }
 
-  h1 {
-    font-size: 36px;
-    line-height: 45px;
-  }
-
   h1.icon-title {
     text-align: center;
   }
 
-  h2 {
-    font-size: 30px;
-    line-height: 36px;
-  }
-
   .home p,
   .home label {
-    font-size: 24px;
-    line-height: 30px;
+    font-size: 18px;
+    line-height: 26px;
+    letter-spacing: 0.05em;
   }
 
   .image[class*="col-"] {
