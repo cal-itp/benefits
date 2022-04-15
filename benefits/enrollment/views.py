@@ -140,6 +140,7 @@ def retry(request):
 
 
 @middleware.pageview_decorator
+@decorator_from_middleware(middleware.VerifierSessionRequired)
 def success(request):
     """View handler for the final success page."""
     request.path = "/enrollment/success"
