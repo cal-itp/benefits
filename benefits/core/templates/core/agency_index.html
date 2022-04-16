@@ -1,5 +1,6 @@
 {% extends 'core/page.html' %}
 {% load i18n %}
+{% block classes %}{{ block.super |add:" agency-index"}}{% endblock %}
 
 {% block container_content %}
 <h1>{{ page.content_title }}</h1>
