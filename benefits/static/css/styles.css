@@ -48,6 +48,12 @@ p {
   letter-spacing: 0.05em;
 }
 
+label {
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0.05em;
+}
+
 /* making the sticky footer */
 
 html,
@@ -470,13 +476,6 @@ footer .footer-links a {
 
   h1.icon-title {
     text-align: center;
-  }
-
-  .home p,
-  .home label {
-    font-size: 18px;
-    line-height: 26px;
-    letter-spacing: 0.05em;
   }
 
   .image[class*="col-"] {
