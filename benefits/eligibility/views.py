@@ -62,45 +62,8 @@ def start(request):
     session.update(request, eligibility_types=[], origin=reverse("eligibility:start"))
     verifier = session.verifier(request)
 
-    if verifier.requires_authentication:
-        if OAUTH_CLIENT_NAME is None:
-            raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
-
-        auth_provider = verifier.auth_provider
-        auth_media = dict(
-            icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
-            heading=_("eligibility.media.heading"),
-            details=_("eligibility.media.details"),
-            links=[
-                viewmodels.Button.link(
-                    classes="btn-text btn-link",
-                    text=_("eligibility.media.link_text"),
-                    url=_("eligibility.media.link_url"),
-                    target="_blank",
-                    rel="noopener noreferrer",
-                )
-            ],
-        )
-
-        if not session.auth(request):
-            button = viewmodels.Button.external(
-                text=_(auth_provider.sign_in_button_label),
-                url=reverse("oauth:login"),
-                id="login",
-            )
-    else:
-        button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm"))
-
-    page = viewmodels.Page(
-        title=_("eligibility.pages.start.title"),
-        noimage=True,
-        paragraphs=[_(verifier.start_blurb)],
-        button=button,
-    )
-
-    ctx = page.context_dict()
-    ctx["title"] = _(verifier.start_content_title)
-    ctx["media"] = [
+    button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm"))
+    media = [
         dict(
             icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
             heading=_(verifier.start_item_name),
@@ -126,7 +89,44 @@ def start(request):
     ]
 
     if verifier.requires_authentication:
-        ctx["media"].insert(0, auth_media)
+        if OAUTH_CLIENT_NAME is None:
+            raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
+
+        media.insert(
+            0,
+            dict(
+                icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
+                heading=_("eligibility.media.heading"),
+                details=_("eligibility.media.details"),
+                links=[
+                    viewmodels.Button.link(
+                        classes="btn-text btn-link",
+                        text=_("eligibility.media.link_text"),
+                        url=_("eligibility.media.link_url"),
+                        target="_blank",
+                        rel="noopener noreferrer",
+                    )
+                ],
+            ),
+        )
+
+        if not session.auth(request):
+            button = viewmodels.Button.external(
+                text=_(verifier.auth_provider.sign_in_button_label),
+                url=reverse("oauth:login"),
+                id="login",
+            )
+
+    page = viewmodels.Page(
+        title=_("eligibility.pages.start.title"),
+        noimage=True,
+        paragraphs=[_(verifier.start_blurb)],
+        button=button,
+    )
+
+    ctx = page.context_dict()
+    ctx["title"] = _(verifier.start_content_title)
+    ctx["media"] = media
 
     return TemplateResponse(request, "eligibility/start.html", ctx)
 
