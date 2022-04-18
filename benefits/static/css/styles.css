@@ -395,15 +395,6 @@ footer .footer-links a {
   text-align: center !important;
 }
 
-.with-warning .container.content p:last-child {
-  margin-top: 6rem;
-  font-weight: 500;
-}
-
-/* .without-warning .container.content p:last-child {
-  display: none;
-} */
-
 /* media queries */
 
 @media (max-width: 767px) {
