@@ -5,14 +5,16 @@ from benefits.core import analytics as core
 
 
 class StartedEligibilityEvent(core.Event):
+    """Analytics event representing the beginning of an eligibility verification check."""
+
     def __init__(self, request):
-        """Analytics event representing the beginning of an eligibility verification check."""
         super().__init__(request, "started eligibility")
 
 
 class ReturnedEligibilityEvent(core.Event):
+    """Analytics event representing the end of an eligibility verification check."""
+
     def __init__(self, request, status, error=None):
-        """Analytics event representing the end of an eligibility verification check."""
         super().__init__(request, "returned eligibility")
         if str(status).lower() in ("error", "fail", "success"):
             self.update_event_properties(status=status, error=error)
