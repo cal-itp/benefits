@@ -482,9 +482,6 @@ msgstr ""
 "<a "
 "href=\"/help\" rel=\"noopener noreferrer\">página de ayuda</a>."
 
-msgid "enrollment.pages.success.p4"
-msgstr "TODO: Please close your browser window to sign out from Login.gov."
-
 msgid "eligibility.pages.index.dmv.label"
 msgstr "TODO: Senior Discount Program"
 
