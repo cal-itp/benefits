@@ -22,12 +22,6 @@ describe("Single Verifier, No AuthProvider: Enrollment success page", () => {
     );
     cy.contains("No te cobraron nada hoy.");
   });
-
-  it.skip("Does not have the Login.gov log out instructions", () => {
-    cy.get("p")
-      .contains("Please close your browser window to sign out from Login.gov.")
-      .should("not.be.visible");
-  });
 });
 
 describe("Multiple Verifier, with AuthProvider: Enrollment success page", () => {
@@ -46,7 +40,6 @@ describe("Multiple Verifier, with AuthProvider: Enrollment success page", () => 
   it("Has the appropriate English copy for all flows and Login.gov instructions", () => {
     cy.contains("Success! Your discount is now linked to your bank card.");
     cy.contains("You were not charged anything today.");
-    cy.contains("Please close your browser window to sign out from Login.gov.");
   });
 
   it("Has the appropriate Spanish copy for all flows and Login.gov instructions", () => {
