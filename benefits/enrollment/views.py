@@ -151,4 +151,7 @@ def success(request):
         classes="without-warning",
     )
 
-    return TemplateResponse(request, "enrollment/success.html", page.context_dict())
+    help_link = reverse("core:help")
+    context_dict = {**page.context_dict(), **{"help_link": help_link}}
+
+    return TemplateResponse(request, "enrollment/success.html", context_dict)

@@ -471,10 +471,9 @@ msgstr "You were not charged anything today."
 msgid "enrollment.pages.success.p2"
 msgstr "When boarding transit, pay with this same card, and your discount will automatically be applied to your fare purchase."
 
-msgid "enrollment.pages.success.p3"
+msgid "enrollment.pages.success.p3%(help_link)s"
 msgstr "For additional information on what to expect when using your connected bank card, please reach out to your transit provider, or check out our "
-"<a "
-"href=\"/help\" rel=\"noopener noreferrer\">help page</a>."
+"<a href=\"%(help_link)s\" rel=\"noopener noreferrer\">help page</a>."
 
 msgid "eligibility.pages.index.dmv.label"
 msgstr "Senior Discount Program"

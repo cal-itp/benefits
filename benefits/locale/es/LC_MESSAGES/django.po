@@ -476,11 +476,10 @@ msgid "enrollment.pages.success.p2"
 msgstr ""
 "Al abordar el transporte público, pague con esta misma tarjeta física y su descuento se aplicará automáticamente a la compra de su tarifa."
 
-msgid "enrollment.pages.success.p3"
+msgid "enrollment.pages.success.p3%(help_link)s"
 msgstr ""
 "Para obtener información adicional sobre qué esperar al usar su tarjeta bancaria conectada, comuníquese con su proveedor de transporte público o consulte nuestra "
-"<a "
-"href=\"/help\" rel=\"noopener noreferrer\">página de ayuda</a>."
+"<a href=\"%(help_link)s\" rel=\"noopener noreferrer\">página de ayuda</a>."
 
 msgid "eligibility.pages.index.dmv.label"
 msgstr "TODO: Senior Discount Program"
