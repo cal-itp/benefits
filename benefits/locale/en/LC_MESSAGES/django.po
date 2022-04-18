@@ -267,22 +267,6 @@ msgctxt "image alt text"
 msgid "core.pages.index.image"
 msgstr "Rider tapping a debit card to pay for their trip"
 
-#: benefits/core/views.py:30
-msgid "core.pages.index.p[0]"
-msgstr ""
-"With new contactless payment options, you can tap your bank-issued credit or "
-"debit card when you board, and your discount will automatically apply."
-
-#: benefits/core/views.py:30
-msgid "core.pages.index.p[1]"
-msgstr ""
-"We don’t save any of your information, and you don’t need to create an "
-"account!"
-
-#: benefits/core/views.py:30
-msgid "core.pages.index.p[2]"
-msgstr "Verify your discount, and connect your bank card today."
-
 #: benefits/core/views.py:47
 msgid "core.pages.index.chooseprovider"
 msgstr "Choose your transit provider"
