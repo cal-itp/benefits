@@ -454,10 +454,6 @@ footer .footer-links a {
 }
 
 @media (min-width: 992px) {
-  /* lg+ */
-  header {
-    height: 80px;
-  }
   /* undoing the sticky footer for pages with header image
        the backup plan is to color the body the same as the footer
        to avoid the floating footer look

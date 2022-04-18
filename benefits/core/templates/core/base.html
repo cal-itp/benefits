@@ -19,6 +19,9 @@
         {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
     </head>
     <body>
+        {% if debug %}
+        {% include "core/includes/debug.html" %}
+        {% endif %}
         <header role="banner" id="header" class="global-header">
             <div id="skip-to-content">
                 <a href="#main-content">{% translate "core.buttons.skip" %}</a>
@@ -36,10 +39,6 @@
             <noscript>
             {% include "core/includes/noscript.html" %}
             </noscript>
-
-            {% if debug %}
-            {% include "core/includes/debug.html" %}
-            {% endif %}
 
             <div class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-between">
                 <div class="container">
