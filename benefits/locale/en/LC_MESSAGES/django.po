@@ -243,7 +243,7 @@ msgstr "Please wait..."
 #: benefits/core/views.py:20
 msgid "core.pages.index.content_title"
 msgstr ""
-"Cal-ITP Benefits makes it easy to use your public transit discount everytime you ride. "
+"Cal-ITP Benefits makes it easy to use your public transit discount every time you ride."
 
 msgid "core.pages.agency_index.content_title"
 msgstr ""
