@@ -32,3 +32,18 @@ class SignedOutEvent(OAuthEvent):
 
     def __init__(self, request):
         super().__init__(request, "signed out")
+
+
+def started_sign_in(request):
+    """Send the "started sign in" analytics event."""
+    core.send_event(StartedSignInEvent(request))
+
+
+def finished_sign_in(request):
+    """Send the "finished sign in" analytics event."""
+    core.send_event(FinishedSignInEvent(request))
+
+
+def signed_out(request):
+    """Send the "signed out" analytics event."""
+    core.send_event(SignedOutEvent(request))
