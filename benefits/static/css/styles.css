@@ -48,6 +48,12 @@ p {
   letter-spacing: 0.05em;
 }
 
+label {
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0.05em;
+}
+
 /* making the sticky footer */
 
 html,
@@ -166,6 +172,19 @@ footer .footer-links a {
 
 .global-footer {
   background: #212121;
+}
+
+.agency-index h1 {
+  margin-bottom: 7vh;
+}
+
+.agency-index p {
+  margin-bottom: 5vh;
+}
+
+.agency-index label {
+  margin-top: 15vh;
+  margin-bottom: 7vh;
 }
 
 .media-title {
@@ -455,24 +474,8 @@ footer .footer-links a {
     padding-bottom: 0.138rem;
   }
 
-  h1 {
-    font-size: 36px;
-    line-height: 45px;
-  }
-
   h1.icon-title {
     text-align: center;
-  }
-
-  h2 {
-    font-size: 30px;
-    line-height: 36px;
-  }
-
-  .home p,
-  .home label {
-    font-size: 24px;
-    line-height: 30px;
   }
 
   .image[class*="col-"] {
