@@ -23,7 +23,7 @@ describe("Single Verifier, No AuthProvider: Enrollment success page", () => {
     cy.contains("No te cobraron nada hoy.");
   });
 
-  it("Does not have the Login.gov log out instructions", () => {
+  it.skip("Does not have the Login.gov log out instructions", () => {
     cy.get("p")
       .contains("Please close your browser window to sign out from Login.gov.")
       .should("not.be.visible");

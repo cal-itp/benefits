@@ -140,16 +140,16 @@ def retry(request):
 
 
 @middleware.pageview_decorator
-@decorator_from_middleware(middleware.VerifierSessionRequired)
+# @decorator_from_middleware(middleware.VerifierSessionRequired)
 def success(request):
     """View handler for the final success page."""
     request.path = "/enrollment/success"
-    verifier = session.verifier(request)
+    # verifier = session.verifier(request)
 
     classes = "without-warning"
 
-    if verifier.requires_authentication:
-        classes = "with-warning"
+    # if verifier.requires_authentication:
+    #     classes = "with-warning"
 
     page = viewmodels.Page(
         title=_("enrollment.pages.success.title"),
