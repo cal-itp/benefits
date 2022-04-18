@@ -123,9 +123,12 @@ class Client:
             logger.error(f"Failed to send event: {event}")
 
 
+client = Client(settings.ANALYTICS_KEY)
+
+
 def send_event(event):
     """Send an analytics event."""
     if isinstance(event, Event):
-        Client(settings.ANALYTICS_KEY).send(event)
+        client.send(event)
     else:
         raise ValueError("event must be an Event instance")
