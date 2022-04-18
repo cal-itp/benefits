@@ -10,7 +10,7 @@ from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import recaptcha, session, viewmodels
-from benefits.core.middleware import AgencySessionRequired, RateLimit, VerifierSessionRequired
+from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
 from benefits.core.views import PageTemplateResponse
 from . import analytics, api, forms
@@ -133,6 +133,7 @@ def start(request):
 
 
 @decorator_from_middleware(AgencySessionRequired)
+@decorator_from_middleware(LoginRequired)
 @decorator_from_middleware(RateLimit)
 @decorator_from_middleware(VerifierSessionRequired)
 def confirm(request):
@@ -194,6 +195,7 @@ def _verify(request, form):
 
 
 @decorator_from_middleware(AgencySessionRequired)
+@decorator_from_middleware(LoginRequired)
 def verified(request, verified_types):
     """View handler for the verified eligibility page."""
 
@@ -205,6 +207,7 @@ def verified(request, verified_types):
 
 
 @decorator_from_middleware(AgencySessionRequired)
+@decorator_from_middleware(LoginRequired)
 @decorator_from_middleware(VerifierSessionRequired)
 def unverified(request):
     """View handler for the unverified eligibility page."""

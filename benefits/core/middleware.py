@@ -5,8 +5,9 @@ import logging
 import time
 
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from django.template import loader
+from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
@@ -132,3 +133,15 @@ class ChangedLanguageEvent(MiddlewareMixin):
             event = analytics.ChangedLanguageEvent(request, new_lang)
             analytics.send_event(event)
         return None
+
+
+class LoginRequired(MiddlewareMixin):
+    """Middleware that checks whether a user is logged in."""
+
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        if session.oauth_token(request):
+            # pass through
+            return None
+
+        login_url = reverse("oauth:login")
+        return HttpResponseRedirect(login_url)
