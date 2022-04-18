@@ -55,6 +55,5 @@ describe("Multiple Verifier, with AuthProvider: Enrollment success page", () => 
       "Felicidades! Su descuento ahora está vinculado a su tarjeta bancaria."
     );
     cy.contains("No te cobraron nada hoy.");
-    cy.contains("Login.gov.");
   });
 });
