@@ -400,9 +400,9 @@ footer .footer-links a {
   font-weight: 500;
 }
 
-.without-warning .container.content p:last-child {
+/* .without-warning .container.content p:last-child {
   display: none;
-}
+} */
 
 /* media queries */
 
