@@ -269,21 +269,6 @@ msgctxt "image alt text"
 msgid "core.pages.index.image"
 msgstr "Pasajera utiliza una tarjeta de débito para pagar su paseo."
 
-#: benefits/core/views.py:30
-msgid "core.pages.index.p[0]"
-msgstr ""
-"Con las nuevas opciones de pago sin contacto, puede acercar su tarjeta "
-"bancaria de crédito o débito cuando aborde y su descuento se aplicará "
-"automáticamente."
-
-#: benefits/core/views.py:30
-msgid "core.pages.index.p[1]"
-msgstr "Nosotros no guardamos su información ¡y no necesita crear una cuenta!"
-
-#: benefits/core/views.py:30
-msgid "core.pages.index.p[2]"
-msgstr "Verifique su descuento y conecte su tarjeta de banco ahora."
-
 #: benefits/core/views.py:47
 msgid "core.pages.index.chooseprovider"
 msgstr "Elige tu proveedor de transporte público"

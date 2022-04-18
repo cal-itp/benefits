@@ -20,11 +20,6 @@ def _index_content_title():
     return _("core.pages.index.content_title")
 
 
-def _index_paragraphs():
-    """Helper returns the content paragraphs for the common index page."""
-    return [_("core.pages.index.p[0]"), _("core.pages.index.p[1]"), _("core.pages.index.p[2]")]
-
-
 def _index_url():
     """Helper computes the index url path."""
     return reverse("core:index")
@@ -43,7 +38,6 @@ def index(request):
 
     page = viewmodels.Page(
         content_title=_index_content_title(),
-        paragraphs=_index_paragraphs(),
         buttons=buttons,
         classes="home",
     )
