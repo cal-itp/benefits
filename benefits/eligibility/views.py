@@ -62,16 +62,11 @@ def start(request):
     session.update(request, eligibility_types=[], origin=reverse("eligibility:start"))
     verifier = session.verifier(request)
 
-    if verifier.requires_authentication and not session.auth(request):
+    if verifier.requires_authentication:
         if OAUTH_CLIENT_NAME is None:
             raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
 
         auth_provider = verifier.auth_provider
-        button = viewmodels.Button.external(
-            text=_(auth_provider.sign_in_button_label),
-            url=reverse("oauth:login"),
-            id="login",
-        )
         auth_media = dict(
             icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
             heading=_("eligibility.media.heading"),
@@ -86,6 +81,13 @@ def start(request):
                 )
             ],
         )
+
+        if not session.auth(request):
+            button = viewmodels.Button.external(
+                text=_(auth_provider.sign_in_button_label),
+                url=reverse("oauth:login"),
+                id="login",
+            )
     else:
         button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm"))
 
