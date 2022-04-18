@@ -256,7 +256,11 @@ msgid "core.pages.agency_index.p[0]%(info_link)s"
 msgstr "TODO: With new contactless payment options, you can tap "
 "your bank-issued contactless credit or debit card when you "
 "board, and your discount will automatically apply every "
+<<<<<<< HEAD
 "time you ride. <strong><a href=\"%(info-link)s\">Learn more about Cal-ITP Benefits.</a></strong>"
+=======
+"time you ride. <a href=\"%(info_link)s\">Learn more about Cal-ITP Benefits.</a>"
+>>>>>>> 394a5f0 (fix: fix copy)
 
 msgid "core.pages.agency_index.p[1]"
 msgstr "TODO: The Cal-ITP Benefits program is currently only open to those <strong>ages 65 or older</strong>."
