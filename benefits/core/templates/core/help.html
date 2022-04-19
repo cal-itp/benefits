@@ -36,6 +36,10 @@
 <h2 id="questions">{% translate "core.pages.help.questions" %}</h2>
 <p>{% translate "core.pages.help.questions.p[0]" %}</p>
 
+{% block links %}
+{{ block.super }}
+{% endblock %}
+
 {% block buttons %}
 {{ block.super }}
 {% endblock %}

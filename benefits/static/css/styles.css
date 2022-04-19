@@ -2,7 +2,7 @@
 
 body {
   font-weight: 400;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 22px;
   color: #000000;
 }
@@ -115,6 +115,7 @@ footer .footer-links a {
 
 .btn-link {
   color: #046b99;
+  font-weight: bold;
 }
 
 .btn-primary {
@@ -172,6 +173,12 @@ footer .footer-links a {
 
 .global-footer {
   background: #212121;
+}
+
+.links div {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  display: block;
 }
 
 .home .buttons {

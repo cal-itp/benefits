@@ -1,0 +1,15 @@
+{% if link.url %}
+<div>
+{% if link.label %}
+<label>{{ link.label }}</label>
+{% endif %}
+<a {% if link.id %}id="{{ link.id }}"{% endif %}
+    {% if link.target %}target="{{ link.target }}"{% endif %}
+    {% if link.rel %}rel="{{ link.rel }}"{% endif %}
+    class="{{ link.classes | join:" " }}"
+    href="{{ link.url }}"
+    >
+    {{ link.text }}
+</a>
+</div>
+{% endif %}

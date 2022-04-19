@@ -46,6 +46,16 @@
             {% endif %}
             {% endblock forms %}
 
+            {% block links %}
+            {% if page.links %}
+            <div class="links">
+            {% for l in page.links %}
+                {% include "core/includes/links.html" with link=l %}
+            {% endfor%}
+            </div>
+            {% endif %}
+            {% endblock %}
+
             {% block buttons %}
             {% if page.buttons|length_is:"0" %}{% else %}
                 <div class="buttons">

@@ -71,15 +71,17 @@ def help(request):
     """View handler for the help page."""
     if session.active_agency(request):
         agency = session.agency(request)
-        buttons = viewmodels.Button.agency_contact_links(agency)
+        links = viewmodels.Button.agency_contact_links(agency)
     else:
-        buttons = [btn for a in models.TransitAgency.all_active() for btn in viewmodels.Button.agency_contact_links(a)]
+        links = [btn for a in models.TransitAgency.all_active() for btn in viewmodels.Button.agency_contact_links(a)]
 
+    buttons = []
     buttons.append(viewmodels.Button.home(request, _("core.buttons.back")))
 
     page = viewmodels.Page(
         title=_("core.buttons.help"),
         content_title=_("core.buttons.help"),
+        links=links,
         buttons=buttons,
         classes="text-lg-center",
         noimage=True,

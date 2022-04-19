@@ -20,12 +20,14 @@ class Button:
     * rel: str
     """
 
+    default_classes = ["btn", "btn-lg"]
+
     def __init__(self, **kwargs):
         classes = kwargs.get("classes", [])
         if isinstance(classes, str):
             classes = classes.split()
 
-        self.classes = ["btn", "btn-lg"]
+        self.classes = list(self.default_classes)
         self.classes.extend(classes)
         self.id = kwargs.get("id")
         self.label = kwargs.get("label")
@@ -38,10 +40,7 @@ class Button:
     def agency_contact_links(agency):
         """Create link buttons for agency contact information."""
         return [
-            # fmt: off
-            Button.link(classes="agency-url", label=agency.long_name, text=agency.info_url, url=agency.info_url, target="_blank", rel="noopener noreferrer"),  # noqa: E501
-            Button.link(classes="agency-phone", text=agency.phone, url=f"tel:{agency.phone}"),
-            # fmt: on
+            Button.link(classes="agency-phone", label=agency.long_name + ": ", text=agency.phone, url=f"tel:{agency.phone}")
         ]
 
     @staticmethod
@@ -55,7 +54,12 @@ class Button:
         if isinstance(classes, str):
             classes = classes.split(" ")
         classes.insert(0, "btn-link")
-        return Button(classes=classes, **kwargs)
+        button = Button(classes=classes, **kwargs)
+
+        for default_class in Button.default_classes:
+            button.classes.remove(default_class)
+
+        return button
 
     @staticmethod
     def primary(**kwargs):
@@ -98,6 +102,7 @@ class Page:
     * paragraphs: str[]
     * form: django.forms.Form
     * forms: django.forms.Form[]
+    * links: core.viewmodels.Button
     * button: core.viewmodels.Button
     * buttons: core.viewmodels.Button[]
     * classes: str[]
@@ -121,6 +126,10 @@ class Page:
             self.forms = [self.forms]
         if "form" in kwargs:
             self.forms.append(kwargs.get("form"))
+
+        self.links = kwargs.get("links", [])
+        if not isinstance(self.links, list):
+            self.links = [self.links]
 
         self.buttons = kwargs.get("buttons", [])
         if not isinstance(self.buttons, list):
