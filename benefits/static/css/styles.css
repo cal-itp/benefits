@@ -474,10 +474,6 @@ footer .footer-links a {
     padding-bottom: 0.138rem;
   }
 
-  h1.icon-title {
-    text-align: center;
-  }
-
   .image[class*="col-"] {
     min-height: 725px;
   }

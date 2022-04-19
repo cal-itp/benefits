@@ -143,12 +143,16 @@ def retry(request):
 def success(request):
     """View handler for the final success page."""
     request.path = "/enrollment/success"
+    session.update(request, origin=reverse("enrollment:success"))
 
     page = viewmodels.Page(
         title=_("enrollment.pages.success.title"),
         icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
         content_title=_("enrollment.pages.success.title"),
-        paragraphs=[_("enrollment.pages.success.p1"), _("enrollment.pages.success.p2")],
+        classes="without-warning",
     )
 
-    return TemplateResponse(request, "enrollment/success.html", page.context_dict())
+    help_link = reverse("core:help")
+    context_dict = {**page.context_dict(), **{"help_link": help_link}}
+
+    return TemplateResponse(request, "enrollment/success.html", context_dict)

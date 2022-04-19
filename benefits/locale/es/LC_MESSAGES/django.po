@@ -450,19 +450,21 @@ msgstr "Inténtalo de nuevo"
 
 #: benefits/enrollment/views.py:147 benefits/enrollment/views.py:149
 msgid "enrollment.pages.success.title"
-msgstr "¡Éxito!"
+msgstr "Felicidades! Su descuento ahora está vinculado a su tarjeta bancaria."
 
 #: benefits/enrollment/views.py:150
 msgid "enrollment.pages.success.p1"
-msgstr ""
-"Su descuento ahora está vinculado a su tarjeta bancaria. Hoy no se le cobró "
-"nada."
+msgstr "No te cobraron nada hoy."
 
 #: benefits/enrollment/views.py:150
 msgid "enrollment.pages.success.p2"
 msgstr ""
-"Pague con esta misma tarjeta al abordar el transporte público y su descuento "
-"se aplicará automáticamente en el total de su tarifa."
+"Al abordar el transporte público, pague con esta misma tarjeta física y su descuento se aplicará automáticamente a la compra de su tarifa."
+
+msgid "enrollment.pages.success.p3%(help_link)s"
+msgstr ""
+"Para obtener información adicional sobre qué esperar al usar su tarjeta bancaria conectada, comuníquese con su proveedor de transporte público o consulte nuestra "
+"<a href=\"%(help_link)s\" rel=\"noopener noreferrer\">página de ayuda</a>."
 
 msgid "eligibility.pages.index.dmv.label"
 msgstr "TODO: Senior Discount Program"

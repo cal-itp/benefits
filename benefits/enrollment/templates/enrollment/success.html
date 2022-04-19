@@ -2,8 +2,7 @@
 {% load i18n %}
 {% load static %}
 {% block paragraph_content %}
-{{ block.super }}
-<p>
-    <img class="img-fluid" src="{% static 'img/ridertappingbankcard.png' %}" alt="{% translate "enrollment.pages.success.image" context "image alt text" %}" />
-</p>
+<p>{% translate "enrollment.pages.success.p1" %}</p>
+<p>{% translate "enrollment.pages.success.p2" %}</p>
+<p>{% blocktranslate with help_link=help_link%}enrollment.pages.success.p3{{ help_link }}{% endblocktranslate %}</p>
 {% endblock %}
