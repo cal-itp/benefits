@@ -143,6 +143,7 @@ def retry(request):
 def success(request):
     """View handler for the final success page."""
     request.path = "/enrollment/success"
+    session.update(request, origin=reverse("enrollment:success"))
 
     page = viewmodels.Page(
         title=_("enrollment.pages.success.title"),
