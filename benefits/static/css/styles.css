@@ -266,6 +266,7 @@ footer .footer-links a {
 .media-list .media .media-body--details {
   font-size: 16px;
   letter-spacing: 0.05em;
+  padding-bottom: 0.4rem;
 }
 
 .media-list .media .media-body .media-body--links .btn-lg {
