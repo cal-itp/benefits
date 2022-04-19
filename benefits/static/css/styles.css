@@ -179,7 +179,7 @@ footer .footer-links a {
 }
 
 .home .buttons {
-  margin-top: 20vh;
+  /* margin-top: 20vh; */
 }
 
 .agency-index h1 {
@@ -191,7 +191,7 @@ footer .footer-links a {
 }
 
 .agency-index label {
-  margin-top: 15vh;
+  /* margin-top: 15vh; */
   margin-bottom: 7vh;
 }
 
@@ -339,7 +339,7 @@ footer .footer-links a {
 }
 
 .image[class*="col-"] {
-  min-height: 230px;
+  /* min-height: 230px; */
 }
 
 .container.content {
@@ -470,24 +470,27 @@ footer .footer-links a {
   .with-image main {
     flex-shrink: unset;
   }
-  .with-image .container.content {
-    min-height: 800px;
+
+  .main-primary .main-row {
+    height: calc(100vh - 128px);
+    /* 128px is height of header + footer */
   }
-  .with-image footer {
+
+  footer {
     margin-top: unset;
     padding-top: 0.138rem;
     padding-bottom: 0.138rem;
   }
 
   .image[class*="col-"] {
-    min-height: 725px;
+    /* min-height: 725px; */
   }
 
   .container.content {
     padding-left: 3.5rem;
     padding-right: 3.5rem;
-    margin-top: 8rem;
-    margin-bottom: 7rem;
+    /* margin-top: 8rem;
+    margin-bottom: 7rem; */
   }
 
   .container.content input[type="submit"],
