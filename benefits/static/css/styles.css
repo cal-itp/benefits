@@ -473,7 +473,8 @@ footer .footer-links a {
   .with-image .container.content {
     min-height: 800px;
   }
-  .with-image footer {
+
+  footer {
     margin-top: unset;
     padding-top: 0.138rem;
     padding-bottom: 0.138rem;
