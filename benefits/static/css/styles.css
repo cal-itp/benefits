@@ -32,13 +32,11 @@ h6 {
   line-height: 30px;
   margin-top: 30px;
   margin-bottom: 20px;
+  letter-spacing: 0.05em;
 }
 
 h1 {
   font-weight: 700;
-  font-size: 24px;
-  line-height: 30px;
-  letter-spacing: 0.05em;
 }
 
 p {
@@ -360,14 +358,18 @@ footer .footer-links a {
 }
 
 .container.content.help h1 {
+  font-size: 36px;
+  line-height: 45px;
   text-align: center;
   margin-top: 5.5rem;
   margin-bottom: 4rem;
 }
 
 .container.content.help h2 {
+  font-size: 24px;
+  line-height: 30px;
   margin-bottom: 3rem;
-  margin-top: 3rem;
+  margin-top: 6rem;
 }
 
 .container.content.help p {
