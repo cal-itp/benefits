@@ -487,9 +487,11 @@ footer .footer-links a {
 
   .container.content input[type="submit"],
   .container.content .btn {
-    width: 70%;
-    margin-left: 15%;
-    margin-right: 15%;
+    width: fit-content;
+    min-width: 250px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
