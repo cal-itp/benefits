@@ -198,10 +198,9 @@ def verified(request, verified_types):
 
     analytics.returned_success(request)
 
-    enrollment_index = reverse("enrollment:index")
-    session.update(request, eligibility_types=verified_types, origin=enrollment_index)
+    session.update(request, eligibility_types=verified_types)
 
-    return redirect(enrollment_index)
+    return redirect("enrollment:index")
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)

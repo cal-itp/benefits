@@ -109,6 +109,8 @@ def token(request):
 @decorator_from_middleware(middleware.EligibleSessionRequired)
 def index(request):
     """View handler for the enrollment landing page."""
+    session.update(request, origin=reverse("enrollment:index"))
+
     if request.method == "POST":
         response = _enroll(request)
     else:
