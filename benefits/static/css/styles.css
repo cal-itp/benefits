@@ -178,10 +178,6 @@ footer .footer-links a {
   background: #212121;
 }
 
-.home .buttons {
-  /* margin-top: 20vh; */
-}
-
 .agency-index h1 {
   margin-bottom: 7vh;
 }
@@ -338,10 +334,6 @@ footer .footer-links a {
   width: 274px;
 }
 
-.image[class*="col-"] {
-  /* min-height: 230px; */
-}
-
 .container.content {
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -482,8 +474,8 @@ footer .footer-links a {
     padding-bottom: 0.138rem;
   }
 
-  .image[class*="col-"] {
-    /* min-height: 725px; */
+  h1.icon-title {
+    text-align: center;
   }
 
   .container.content {
