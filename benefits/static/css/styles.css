@@ -329,16 +329,23 @@ footer .footer-links a {
 
 /* context-specific overrides */
 
+/* Header */
+
+.navbar.navbar-expand-sm.navbar-dark.bg-primary {
+  padding: 8.5px 1rem;
+}
+
+.navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .navbar-brand img.sm {
   width: 120px;
 }
 
 .navbar-brand img.lg {
-  width: 274px;
-}
-
-.image[class*="col-"] {
-  min-height: 230px;
+  width: 271px;
 }
 
 .container.content {
