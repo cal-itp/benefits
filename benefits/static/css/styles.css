@@ -71,6 +71,10 @@ main {
   flex-shrink: 0 !important;
 }
 
+main .main-row {
+  min-height: calc(100vh - 120px);
+}
+
 footer {
   margin-top: auto;
   padding-top: 1rem;
