@@ -16,7 +16,6 @@ logger = logging.getLogger(__name__)
 
 
 _AGENCY = "agency"
-_AUTH = "auth"
 _DEBUG = "debug"
 _DID = "did"
 _ELIGIBILITY = "eligibility"
@@ -25,6 +24,7 @@ _ENROLLMENT_TOKEN_EXP = "enrollment_token_exp"
 _LANG = "lang"
 _LIMITCOUNTER = "limitcounter"
 _LIMITUNTIL = "limituntil"
+_OAUTH_TOKEN = "oauth_token"
 _ORIGIN = "origin"
 _START = "start"
 _UID = "uid"
@@ -48,18 +48,11 @@ def active_agency(request):
     return a and a.active
 
 
-def auth(request):
-    """Get the auth from the request's session, or None"""
-    logger.debug("Get session auth")
-    return request.session.get(_AUTH)
-
-
 def context_dict(request):
     """The request's session context as a dict."""
     logger.debug("Get session context dict")
     return {
         _AGENCY: agency(request).slug if active_agency(request) else None,
-        _AUTH: auth(request),
         _LIMITCOUNTER: rate_limit_counter(request),
         _DEBUG: debug(request),
         _DID: did(request),
@@ -67,6 +60,7 @@ def context_dict(request):
         _ENROLLMENT_TOKEN: enrollment_token(request),
         _ENROLLMENT_TOKEN_EXP: enrollment_token_expiry(request),
         _LANG: language(request),
+        _OAUTH_TOKEN: oauth_token(request),
         _ORIGIN: origin(request),
         _LIMITUNTIL: rate_limit_time(request),
         _START: start(request),
@@ -132,6 +126,12 @@ def language(request):
     return request.LANGUAGE_CODE
 
 
+def oauth_token(request):
+    """Get the oauth token from the request's session, or None"""
+    logger.debug("Get session oauth token")
+    return request.session.get(_OAUTH_TOKEN)
+
+
 def origin(request):
     """Get the origin for the request's session, or None."""
     logger.debug("Get session origin")
@@ -154,11 +154,11 @@ def reset(request):
     """Reset the session for the request."""
     logger.debug("Reset session")
     request.session[_AGENCY] = None
-    request.session[_AUTH] = False
     request.session[_ELIGIBILITY] = None
     request.session[_ORIGIN] = reverse("core:index")
     request.session[_ENROLLMENT_TOKEN] = None
     request.session[_ENROLLMENT_TOKEN_EXP] = None
+    request.session[_OAUTH_TOKEN] = None
     request.session[_VERIFIER] = None
 
     if _UID not in request.session or not request.session[_UID]:
@@ -201,11 +201,11 @@ def uid(request):
 def update(
     request,
     agency=None,
-    auth=None,
     debug=None,
     eligibility_types=None,
     enrollment_token=None,
     enrollment_token_exp=None,
+    oauth_token=None,
     origin=None,
     verifier=None,
 ):
@@ -213,9 +213,6 @@ def update(
     if agency is not None and isinstance(agency, models.TransitAgency):
         logger.debug(f"Update session {_AGENCY}")
         request.session[_AGENCY] = agency.id
-    if auth is not None and type(auth) == bool:
-        logger.debug(f"Update session {_AUTH}")
-        request.session[_AUTH] = auth
     if debug is not None:
         logger.debug(f"Update session {_DEBUG}")
         request.session[_DEBUG] = debug
@@ -235,6 +232,9 @@ def update(
         logger.debug(f"Update session {_ENROLLMENT_TOKEN}")
         request.session[_ENROLLMENT_TOKEN] = enrollment_token
         request.session[_ENROLLMENT_TOKEN_EXP] = enrollment_token_exp
+    if oauth_token is not None:
+        logger.debug(f"Update session {_OAUTH_TOKEN}")
+        request.session[_OAUTH_TOKEN] = oauth_token
     if origin is not None:
         logger.debug(f"Update session {_ORIGIN}")
         request.session[_ORIGIN] = origin

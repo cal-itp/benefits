@@ -110,7 +110,7 @@ def start(request):
             ),
         )
 
-        if not session.auth(request):
+        if not session.oauth_token(request):
             button = viewmodels.Button.external(
                 text=_(verifier.auth_provider.sign_in_button_label),
                 url=reverse("oauth:login"),
