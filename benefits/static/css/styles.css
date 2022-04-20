@@ -373,7 +373,8 @@ footer .footer-links a {
 .container.content .btn-lg {
   font-weight: 500;
   margin-bottom: 1rem;
-  padding: 1rem;
+  padding: 0.8125rem;
+  /* btn-lg height is 60px */
   width: 100%;
 }
 
