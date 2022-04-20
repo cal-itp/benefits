@@ -96,12 +96,12 @@ def _enroll(request):
 @decorator_from_middleware(middleware.EligibleSessionRequired)
 def token(request):
     """View handler for the enrollment auth token."""
-    if not session.valid_token(request):
+    if not session.valid_enrollment_token(request):
         agency = session.agency(request)
         response = api.Client(agency).access_token()
-        session.update(request, token=response.access_token, token_exp=response.expiry)
+        session.update(request, enrollment_token=response.access_token, enrollment_token_exp=response.expiry)
 
-    data = {"token": session.token(request)}
+    data = {"token": session.enrollment_token(request)}
 
     return JsonResponse(data)
 

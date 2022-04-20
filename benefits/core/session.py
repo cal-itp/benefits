@@ -20,6 +20,8 @@ _AUTH = "auth"
 _DEBUG = "debug"
 _DID = "did"
 _ELIGIBILITY = "eligibility"
+_ENROLLMENT_TOKEN = "enrollment_token"
+_ENROLLMENT_TOKEN_EXP = "enrollment_token_exp"
 _LANG = "lang"
 _LIMITCOUNTER = "limitcounter"
 _LIMITUNTIL = "limituntil"
@@ -27,11 +29,6 @@ _ORIGIN = "origin"
 _START = "start"
 _UID = "uid"
 _VERIFIER = "verifier"
-
-# ignore bandit B105:hardcoded_password_string
-# as these are not passwords, but keys for the session dict
-_TOKEN = "token"  # nosec
-_TOKEN_EXP = "token_exp"  # nosec
 
 
 def agency(request):
@@ -67,12 +64,12 @@ def context_dict(request):
         _DEBUG: debug(request),
         _DID: did(request),
         _ELIGIBILITY: eligibility(request),
+        _ENROLLMENT_TOKEN: enrollment_token(request),
+        _ENROLLMENT_TOKEN_EXP: enrollment_token_expiry(request),
         _LANG: language(request),
         _ORIGIN: origin(request),
         _LIMITUNTIL: rate_limit_time(request),
         _START: start(request),
-        _TOKEN: token(request),
-        _TOKEN_EXP: token_expiry(request),
         _UID: uid(request),
         _VERIFIER: verifier(request),
     }
@@ -108,6 +105,18 @@ def eligible(request):
     """True if the request's session is configured with an active agency and has confirmed eligibility. False otherwise."""
     logger.debug("Get session eligible flag")
     return active_agency(request) and agency(request).supports_type(eligibility(request))
+
+
+def enrollment_token(request):
+    """Get the enrollment token from the request's session, or None."""
+    logger.debug("Get session enrollment token")
+    return request.session.get(_ENROLLMENT_TOKEN)
+
+
+def enrollment_token_expiry(request):
+    """Get the enrollment token's expiry time from the request's session, or None."""
+    logger.debug("Get session enrollment token expiry")
+    return request.session.get(_ENROLLMENT_TOKEN_EXP)
 
 
 def increment_rate_limit_counter(request):
@@ -148,8 +157,8 @@ def reset(request):
     request.session[_AUTH] = False
     request.session[_ELIGIBILITY] = None
     request.session[_ORIGIN] = reverse("core:index")
-    request.session[_TOKEN] = None
-    request.session[_TOKEN_EXP] = None
+    request.session[_ENROLLMENT_TOKEN] = None
+    request.session[_ENROLLMENT_TOKEN_EXP] = None
     request.session[_VERIFIER] = None
 
     if _UID not in request.session or not request.session[_UID]:
@@ -179,18 +188,6 @@ def start(request):
     return s
 
 
-def token(request):
-    """Get the token from the request's session, or None."""
-    logger.debug("Get session token")
-    return request.session.get(_TOKEN)
-
-
-def token_expiry(request):
-    """Get the token's expiry time from the request's session, or None."""
-    logger.debug("Get session token expiry")
-    return request.session.get(_TOKEN_EXP)
-
-
 def uid(request):
     """Get the session's unique ID, generating a new one if necessary."""
     logger.debug("Get session uid")
@@ -207,9 +204,9 @@ def update(
     auth=None,
     debug=None,
     eligibility_types=None,
+    enrollment_token=None,
+    enrollment_token_exp=None,
     origin=None,
-    token=None,
-    token_exp=None,
     verifier=None,
 ):
     """Update the request's session with non-null values."""
@@ -234,31 +231,31 @@ def update(
         else:
             # empty list, clear session eligibility
             request.session[_ELIGIBILITY] = None
+    if enrollment_token is not None:
+        logger.debug(f"Update session {_ENROLLMENT_TOKEN}")
+        request.session[_ENROLLMENT_TOKEN] = enrollment_token
+        request.session[_ENROLLMENT_TOKEN_EXP] = enrollment_token_exp
     if origin is not None:
         logger.debug(f"Update session {_ORIGIN}")
         request.session[_ORIGIN] = origin
-    if token is not None:
-        logger.debug(f"Update session {_TOKEN}")
-        request.session[_TOKEN] = token
-        request.session[_TOKEN_EXP] = token_exp
     if verifier is not None and isinstance(verifier, models.EligibilityVerifier):
         logger.debug(f"Update session {_VERIFIER}")
         request.session[_VERIFIER] = verifier.id
 
 
-def valid_token(request):
+def valid_enrollment_token(request):
     """True if the request's session is configured with a valid token. False otherwise."""
-    if token(request) is not None:
-        logger.debug("Session contains a token")
-        exp = token_expiry(request)
+    if enrollment_token(request) is not None:
+        logger.debug("Session contains an enrollment token")
+        exp = enrollment_token_expiry(request)
 
         # ensure token does not expire in the next 5 seconds
         valid = exp is None or exp > (time.time() + 5)
 
-        logger.debug(f"Session token is {'valid' if valid else 'expired'}")
+        logger.debug(f"Session enrollment token is {'valid' if valid else 'expired'}")
         return valid
     else:
-        logger.debug("Session does not contain a valid token")
+        logger.debug("Session does not contain a valid enrollment token")
         return False
 
 
