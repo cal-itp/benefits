@@ -262,6 +262,7 @@ footer .footer-links a {
 .media-list .media .media-body--details {
   font-size: 16px;
   letter-spacing: 0.05em;
+  padding-bottom: 0.4rem;
 }
 
 .media-list .media .media-body .media-body--links .btn-lg {
@@ -272,6 +273,10 @@ footer .footer-links a {
   text-align: left;
   width: 100%;
   margin: 0;
+}
+
+.media-list .media .media-body .media-body--links .btn-lg:hover {
+  color: #2f4c65;
 }
 
 #login {
