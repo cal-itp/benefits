@@ -99,11 +99,6 @@ footer .footer-links a {
   position: relative;
 }
 
-.btn-external:hover {
-  background-color: #2b6597 !important;
-  border-color: #2b6597 !important;
-}
-
 .btn-external::after {
   content: url("/static/img/icon/rightarrow.svg");
   width: 25px;
