@@ -173,23 +173,6 @@ footer .footer-links a {
   background: #212121;
 }
 
-.home .buttons {
-  margin-top: 20vh;
-}
-
-.agency-index h1 {
-  margin-bottom: 7vh;
-}
-
-.agency-index p {
-  margin-bottom: 5vh;
-}
-
-.agency-index label {
-  margin-top: 15vh;
-  margin-bottom: 7vh;
-}
-
 .media-title {
   margin-top: 0;
   font-size: 24px;
@@ -283,7 +266,6 @@ footer .footer-links a {
   width: fit-content;
   float: right;
   padding: 16px 29px;
-  margin: 0 0 77px 0;
 }
 
 .radio-container {
@@ -477,9 +459,6 @@ footer .footer-links a {
   .with-image main {
     flex-shrink: unset;
   }
-  .with-image .container.content {
-    min-height: 800px;
-  }
 
   footer {
     margin-top: unset;
@@ -487,15 +466,9 @@ footer .footer-links a {
     padding-bottom: 0.138rem;
   }
 
-  .image[class*="col-"] {
-    min-height: 725px;
-  }
-
   .container.content {
     padding-left: 3.5rem;
     padding-right: 3.5rem;
-    margin-top: 8rem;
-    margin-bottom: 7rem;
   }
 
   .container.content input[type="submit"],
