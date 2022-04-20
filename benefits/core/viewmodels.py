@@ -102,7 +102,7 @@ class Page:
     * paragraphs: str[]
     * form: django.forms.Form
     * forms: django.forms.Form[]
-    * links: core.viewmodels.Button
+    * links: core.viewmodels.Button[]
     * button: core.viewmodels.Button
     * buttons: core.viewmodels.Button[]
     * classes: str[]
