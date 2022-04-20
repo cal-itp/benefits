@@ -483,8 +483,9 @@ footer .footer-links a {
     padding-bottom: 0.138rem;
   }
 
+  /* Enrollment Success page icon title */
   h1.icon-title {
-    text-align: center;
+    text-align: left;
   }
 
   .container.content {
