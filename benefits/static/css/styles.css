@@ -54,7 +54,7 @@ label {
   letter-spacing: 0.05em;
 }
 
-/* making the sticky footer */
+/* Footer: Making the sticky footer */
 
 html,
 body {
@@ -79,6 +79,10 @@ footer {
 
 footer .footer-links a {
   font-size: 16px;
+}
+
+.global-footer {
+  background: #212121;
 }
 
 /* class styles */
@@ -170,22 +174,7 @@ footer .footer-links a {
   padding-left: 1rem;
 }
 
-.global-footer {
-  background: #212121;
-}
-
-.agency-index h1 {
-  margin-bottom: 7vh;
-}
-
-.agency-index p {
-  margin-bottom: 5vh;
-}
-
-.agency-index label {
-  /* margin-top: 15vh; */
-  margin-bottom: 7vh;
-}
+/* Eligibility Start Page */
 
 .media-title {
   margin-top: 0;
@@ -278,6 +267,8 @@ footer .footer-links a {
   margin: 0 0 77px 0;
 }
 
+/* Verifier Selection Page */
+
 .radio-container {
   display: block;
   margin-left: 15%;
@@ -319,7 +310,7 @@ footer .footer-links a {
   font-weight: normal;
 }
 
-/* context-specific overrides */
+/* Header */
 
 .navbar.navbar-expand-sm.navbar-dark.bg-primary {
   padding: 8.5px 1rem;
@@ -338,16 +329,35 @@ footer .footer-links a {
   width: 271px;
 }
 
-.container.content {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
+/* Main Primary Container */
 
 .container.content h1.icon-title span.icon {
   text-align: center;
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 3.375rem;
 }
+
+.container.content h1 {
+  margin-bottom: 3rem;
+}
+
+.container.content h1 ~ p:nth-last-of-type(1) {
+  margin-bottom: 3.375rem;
+}
+
+/* All buttons, including Form Submit on Eligibility Confirm */
+.container.content .btn-lg {
+  font-weight: 500;
+  padding: 1rem;
+  width: 100%;
+}
+
+/* Does not include Eligibility Radio form, Eligibility Confirm, Help */
+.container.content .buttons .btn-lg:not(.btn-link) {
+  margin-top: 3.375rem;
+}
+
+/* Help Page */
 
 .container.content.help {
   margin-top: 4rem;
@@ -368,17 +378,6 @@ footer .footer-links a {
   margin-bottom: 2rem;
 }
 
-.container.content h1 ~ p:nth-last-of-type(1) {
-  margin-bottom: 2rem;
-}
-
-.container.content .btn-lg {
-  font-weight: 500;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  width: 100%;
-}
-
 .container.content .btn-lg.agency-url {
   margin-bottom: 0;
   padding-bottom: 0;
@@ -395,6 +394,7 @@ footer .footer-links a {
 .text-lg-center form {
   text-align: left !important;
 }
+
 .text-lg-center .buttons label {
   width: 100%;
   text-align: center !important;
@@ -420,6 +420,13 @@ footer .footer-links a {
 }
 
 @media (max-width: 992px) {
+  .container.content {
+    padding-top: 3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 2rem;
+  }
+
   .media-list {
     display: flex;
     flex-direction: column;
@@ -479,10 +486,9 @@ footer .footer-links a {
   }
 
   .container.content {
-    padding-left: 3.5rem;
-    padding-right: 3.5rem;
-    /* margin-top: 8rem;
-    margin-bottom: 7rem; */
+    padding-top: 4rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 
   .container.content input[type="submit"],
@@ -496,6 +502,7 @@ footer .footer-links a {
 @media (min-width: 1200px) {
   /* xl+ */
   .container.content {
+    padding-top: 4rem;
     padding-left: 5rem;
     padding-right: 5rem;
   }
