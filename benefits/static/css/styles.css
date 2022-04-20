@@ -326,12 +326,21 @@ footer .footer-links a {
 
 /* context-specific overrides */
 
+.navbar.navbar-expand-sm.navbar-dark.bg-primary {
+  padding: 8.5px 1rem;
+}
+
+.navbar.navbar-expand-sm.navbar-dark.bg-primary .navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .navbar-brand img.sm {
   width: 120px;
 }
 
 .navbar-brand img.lg {
-  width: 274px;
+  width: 271px;
 }
 
 .container.content {
@@ -464,7 +473,7 @@ footer .footer-links a {
   }
 
   .main-primary .main-row {
-    height: calc(100vh - 128px);
+    height: calc(100vh - 120px);
     /* 128px is height of header + footer */
   }
 
