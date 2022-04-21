@@ -24,6 +24,7 @@ if OAUTH_CLIENT_NAME:
 ROUTE_AUTH = "oauth:authorize"
 ROUTE_START = "eligibility:start"
 ROUTE_CONFIRM = "eligibility:confirm"
+ROUTE_POST_LOGOUT = "oauth:post_logout"
 
 
 def login(request):
@@ -65,14 +66,21 @@ def logout(request):
     token = session.oauth_token(request)
     session.update(request, oauth_token=False)
 
-    origin = session.origin(request)
-    redirect_uri = request.build_absolute_uri(origin)
+    route = reverse(ROUTE_POST_LOGOUT)
+    redirect_uri = request.build_absolute_uri(route)
 
     logger.debug(f"OAuth end_session_endpoint with redirect_uri: {redirect_uri}")
 
     # send the user through the end_session_endpoint, redirecting back to
-    # their origin within the app (where they clicked the sign out button)
+    # the post_logout route
     return _deauthorize_redirect(token, redirect_uri)
+
+
+def post_logout(request):
+    """View routes the user to their origin after sign out."""
+
+    origin = session.origin(request)
+    return redirect(origin)
 
 
 def _deauthorize_redirect(token, redirect_url):
