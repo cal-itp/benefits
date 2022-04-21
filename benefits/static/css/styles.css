@@ -93,7 +93,7 @@ footer .footer-links a {
 }
 
 #login {
-  background: #2b6597;
+  background: #046b99;
   border: 0;
   border-radius: 0.125rem;
   color: #ffffff;
@@ -112,15 +112,18 @@ footer .footer-links a {
 /* Sets the text `Login.gov` as transparent */
 /* With an Login.gov logo image over it */
 /* So screenreaders can read out `Login.gov` */
-.btn-login--logo-fallback {
-  color: transparent;
+#login .fallback-text {
   background: url("/static/img/login-gov-logo-rev.svg") no-repeat;
   background-size: contain;
   display: inline-block;
   position: relative;
-  width: 8rem;
+  width: 9rem;
   vertical-align: baseline;
   margin-left: 0.2rem;
+}
+
+.fallback-text {
+  color: transparent;
 }
 
 .btn-link {

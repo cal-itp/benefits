@@ -113,9 +113,7 @@ def start(request):
         if not session.auth(request):
             button = viewmodels.Button.login(
                 text=_(verifier.auth_provider.sign_in_button_label),
-                fallback_text="Login.gov",
                 url=reverse("oauth:login"),
-                id="login",
             )
 
     page = viewmodels.Page(
