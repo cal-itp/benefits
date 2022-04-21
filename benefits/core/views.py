@@ -7,7 +7,8 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
-from . import middleware, models, session, viewmodels
+from . import models, session, viewmodels
+from .middleware import pageview_decorator
 
 
 def PageTemplateResponse(request, page_vm):
@@ -25,7 +26,7 @@ def _index_url():
     return reverse("core:index")
 
 
-@middleware.pageview_decorator
+@pageview_decorator
 def index(request):
     """View handler for the main entry page."""
     session.reset(request)
@@ -45,7 +46,7 @@ def index(request):
     return PageTemplateResponse(request, page)
 
 
-@middleware.pageview_decorator
+@pageview_decorator
 def agency_index(request, agency):
     """View handler for an agency entry page."""
     session.reset(request)
@@ -66,7 +67,7 @@ def agency_index(request, agency):
     return TemplateResponse(request, "core/agency_index.html", context_dict)
 
 
-@middleware.pageview_decorator
+@pageview_decorator
 def help(request):
     """View handler for the help page."""
     if session.active_agency(request):
@@ -88,7 +89,7 @@ def help(request):
     return TemplateResponse(request, "core/help.html", page.context_dict())
 
 
-@middleware.pageview_decorator
+@pageview_decorator
 def bad_request(request, exception, template_name="400.html"):
     """View handler for HTTP 400 Bad Request responses."""
     if session.active_agency(request):
@@ -103,7 +104,7 @@ def bad_request(request, exception, template_name="400.html"):
     return HttpResponseBadRequest(t.render(page.context_dict()))
 
 
-@middleware.pageview_decorator
+@pageview_decorator
 def csrf_failure(request, reason):
     """
     View handler for CSRF_FAILURE_VIEW with custom data.
@@ -120,7 +121,7 @@ def csrf_failure(request, reason):
     return HttpResponseNotFound(t.render(page.context_dict()))
 
 
-@middleware.pageview_decorator
+@pageview_decorator
 def page_not_found(request, exception, template_name="404.html"):
     """View handler for HTTP 404 Not Found responses."""
     if session.active_agency(request):
@@ -135,7 +136,7 @@ def page_not_found(request, exception, template_name="404.html"):
     return HttpResponseNotFound(t.render(page.context_dict()))
 
 
-@middleware.pageview_decorator
+@pageview_decorator
 def server_error(request, template_name="500.html"):
     """View handler for HTTP 500 Server Error responses."""
     if session.active_agency(request):
