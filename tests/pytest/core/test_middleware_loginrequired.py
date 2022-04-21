@@ -1,11 +1,12 @@
-from unittest.mock import create_autospec
+from django.urls import reverse
+from django.utils.decorators import decorator_from_middleware
 
 import pytest
+from unittest.mock import create_autospec
+
 from benefits.core import session
 from benefits.core.middleware import LoginRequired
 from benefits.core.models import EligibilityVerifier
-from django.urls import reverse
-from django.utils.decorators import decorator_from_middleware
 
 from tests.pytest.conftest import initialize_session
 
