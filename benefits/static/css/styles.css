@@ -93,7 +93,7 @@ footer .footer-links a {
 }
 
 #login {
-  background: #046b99;
+  background: #2b6597;
   border: 0;
   border-radius: 0.125rem;
   color: #ffffff;
@@ -103,6 +103,10 @@ footer .footer-links a {
   letter-spacing: 0.05em;
   margin-right: initial;
   padding: 1.25rem 2.25rem;
+}
+
+#login:hover {
+  background: #2f4c65;
 }
 
 /* Sets the text `Login.gov` as transparent */
