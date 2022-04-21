@@ -83,7 +83,7 @@ def post_logout(request):
     return redirect(origin)
 
 
-def _deauthorize_redirect(token, redirect_url):
+def _deauthorize_redirect(token, redirect_uri):
     """Helper implements OIDC signout via the `end_session_endpoint`."""
 
     # Authlib has not yet implemented `end_session_endpoint` as the OIDC Session Management 1.0 spec is still in draft
@@ -97,7 +97,7 @@ def _deauthorize_redirect(token, redirect_url):
     metadata = oauth_client.load_server_metadata()
     end_session_endpoint = metadata.get("end_session_endpoint")
 
-    params = dict(id_token_hint=token, post_logout_redirect_uri=redirect_url)
+    params = dict(id_token_hint=token, post_logout_redirect_uri=redirect_uri)
     encoded_params = urlencode(params)
     end_session_url = f"{end_session_endpoint}?{encoded_params}"
 
