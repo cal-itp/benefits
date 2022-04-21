@@ -37,6 +37,7 @@ services:
 
   server:
     image: ghcr.io/cal-itp/eligibility-server:main
+    env_file: server/.env.server
     ports:
       - "5000"
 
