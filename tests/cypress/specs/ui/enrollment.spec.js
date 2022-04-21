@@ -33,7 +33,7 @@ describe("Multiple Verifier, with AuthProvider: Enrollment success page", () => 
     // Selecting Senior Discount will go down the auth provider flow
     cy.get("input:radio").first().click();
     cy.contains("Continue").click();
-    cy.contains("Continue with Login.gov");
+    cy.contains("Sign in with");
     cy.visit("/enrollment/success");
   });
 
