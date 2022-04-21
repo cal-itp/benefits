@@ -92,25 +92,31 @@ footer .footer-links a {
   border-width: 2px;
 }
 
-.btn-external {
-  border-radius: 0;
-  border-color: #2b6597;
-  color: #2b6597;
+#login {
+  background: #046b99;
+  border: 0;
+  border-radius: 0.125rem;
+  color: #ffffff;
+  cursor: pointer;
+  display: block;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  margin-right: initial;
+  padding: 1.25rem 2.25rem;
+}
+
+/* Sets the text `Login.gov` as transparent */
+/* With an Login.gov logo image over it */
+/* So screenreaders can read out `Login.gov` */
+.btn-login--logo-fallback {
+  color: transparent;
+  background: url("/static/img/login-gov-logo-rev.svg") no-repeat;
+  background-size: contain;
+  display: inline-block;
   position: relative;
-}
-
-.btn-external::after {
-  content: url("/static/img/icon/rightarrow.svg");
-  width: 25px;
-  height: 22px;
-  margin-left: 8px;
-  vertical-align: sub;
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s;
-}
-
-.btn-external:hover::after {
-  content: url("/static/img/icon/rightarrow-hover.svg");
+  width: 8rem;
+  vertical-align: baseline;
+  margin-left: 0.2rem;
 }
 
 .btn-link {
@@ -276,14 +282,6 @@ footer .footer-links a {
 
 .media-list .media .media-body .media-body--links .btn-lg:hover {
   color: #2f4c65;
-}
-
-#login {
-  min-width: 33%;
-  width: fit-content;
-  float: right;
-  padding: 16px 29px;
-  margin: 0 0 77px 0;
 }
 
 .radio-container {
@@ -458,7 +456,6 @@ footer .footer-links a {
 
   #login {
     width: 100%;
-    float: none;
   }
 }
 

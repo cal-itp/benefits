@@ -28,6 +28,7 @@ class Button:
         self.classes = ["btn", "btn-lg"]
         self.classes.extend(classes)
         self.id = kwargs.get("id")
+        self.fallback_text = kwargs.get("fallback_text")
         self.label = kwargs.get("label")
         self.text = kwargs.get("text", "Button")
         self.url = kwargs.get("url")
@@ -74,9 +75,10 @@ class Button:
         return Button(classes=classes, **kwargs)
 
     @staticmethod
-    def external(**kwargs):
-        btn = Button.outline_primary(**kwargs)
-        btn.classes.insert(0, "btn-external")
+    def login(**kwargs):
+        """Create a login.gov button, with a login.gov logo and fallback text"""
+        btn = Button.primary(**kwargs)
+        btn.classes.insert(0, "btn-login")
         return btn
 
 
