@@ -411,6 +411,17 @@ footer .footer-links a {
 
 /* media queries */
 
+@media (max-width: 320px) {
+  #login {
+    padding: 1.25rem 1.25rem;
+  }
+
+  /* Login.gov logo is on second line */
+  #login .fallback-text {
+    margin-top: 0.6rem;
+  }
+}
+
 @media (max-width: 767px) {
   /* xs and sm */
   .global-footer ul li {
@@ -425,6 +436,15 @@ footer .footer-links a {
   .radio-label {
     display: inline;
     margin-left: 5px;
+  }
+
+  #login {
+    padding: 1.25rem 1.25rem;
+  }
+
+  .container.content {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
