@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 
 from benefits.core import session
-from benefits.oauth.views import logout
+from benefits.oauth.views import logout, _generate_redirect_uri
 
 import pytest
 
@@ -18,7 +18,25 @@ def test_logout(mocker, session_request):
 
     result = logout(session_request)
 
-    spy.assert_called_with("token", "http://testserver/oauth/post_logout")
+    spy.assert_called_with("token", "https://testserver/oauth/post_logout")
     assert result.status_code == 200
     assert "logout successful" in str(result.content)
     assert session.oauth_token(session_request) is False
+
+
+def test_generate_redirect_uri_default(rf):
+    request = rf.get("/oauth/login")
+    path = "/test"
+
+    redirect_uri = _generate_redirect_uri(request, path)
+
+    assert redirect_uri == "https://testserver/test"
+
+
+def test_generate_redirect_uri_localhost(rf):
+    request = rf.get("/oauth/login", SERVER_NAME="localhost")
+    path = "/test"
+
+    redirect_uri = _generate_redirect_uri(request, path)
+
+    assert redirect_uri == "http://localhost/test"
