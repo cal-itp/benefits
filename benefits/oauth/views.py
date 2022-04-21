@@ -32,7 +32,7 @@ def login(request):
         raise Exception("No OAuth client")
 
     route = reverse(ROUTE_AUTH)
-    redirect_uri = request.build_absolute_uri(route)
+    redirect_uri = _generate_redirect_uri(request, route)
 
     logger.debug(f"OAuth authorize_redirect with redirect_uri: {redirect_uri}")
 
@@ -67,7 +67,7 @@ def logout(request):
     session.update(request, oauth_token=False)
 
     route = reverse(ROUTE_POST_LOGOUT)
-    redirect_uri = request.build_absolute_uri(route)
+    redirect_uri = _generate_redirect_uri(request, route)
 
     logger.debug(f"OAuth end_session_endpoint with redirect_uri: {redirect_uri}")
 
@@ -102,3 +102,15 @@ def _deauthorize_redirect(token, redirect_url):
     end_session_url = f"{end_session_endpoint}?{encoded_params}"
 
     return redirect(end_session_url)
+
+
+def _generate_redirect_uri(request, redirect_path):
+    redirect_uri = str(request.build_absolute_uri(redirect_path)).lower()
+
+    # this is a temporary hack to ensure redirect URIs are HTTPS when the app is deployed
+    # see https://github.com/cal-itp/benefits/issues/442 for more context
+    # this follow-up is needed while we address the hosting architecture
+    if not redirect_uri.startswith("http://localhost"):
+        redirect_uri = redirect_uri.replace("http://", "https://")
+
+    return redirect_uri
