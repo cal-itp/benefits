@@ -1,6 +1,7 @@
 """
 The eligibility application: view definitions for the eligibility verification flow.
 """
+from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
@@ -11,7 +12,6 @@ from django.utils.translation import pgettext, gettext as _
 from benefits.core import middleware, recaptcha, session, viewmodels
 from benefits.core.models import EligibilityVerifier
 from benefits.core.views import PageTemplateResponse
-from benefits.settings import OAUTH_CLIENT_NAME
 from . import analytics, api, forms
 
 
@@ -89,7 +89,7 @@ def start(request):
     ]
 
     if verifier.requires_authentication:
-        if OAUTH_CLIENT_NAME is None:
+        if settings.OAUTH_CLIENT_NAME is None:
             raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
 
         media.insert(

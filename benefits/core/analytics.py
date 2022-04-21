@@ -8,10 +8,10 @@ import re
 import time
 import uuid
 
+from django.conf import settings
 import requests
 
 from benefits import VERSION
-from benefits.settings import ANALYTICS_KEY
 from . import session
 
 
@@ -122,6 +122,6 @@ class Client:
 def send_event(event):
     """Send an analytics event."""
     if isinstance(event, Event):
-        Client(ANALYTICS_KEY).send(event)
+        Client(settings.ANALYTICS_KEY).send(event)
     else:
         raise ValueError("event must be an Event instance")
