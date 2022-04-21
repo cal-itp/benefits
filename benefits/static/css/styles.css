@@ -350,7 +350,7 @@ footer .footer-links a {
 }
 
 .container.content.help {
-  margin-top: 4rem;
+  margin: 4rem auto 2rem auto;
 }
 
 .container.content.help h1 {
@@ -457,6 +457,11 @@ footer .footer-links a {
     width: 100%;
     float: none;
   }
+
+  /* Override for only the Agency Index page */
+  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
+    margin-bottom: 2rem;
+  }
 }
 
 @media (min-width: 992px) {
@@ -490,6 +495,11 @@ footer .footer-links a {
     margin-left: auto;
     margin-right: auto;
   }
+
+  /* Override for only the Agency Index page */
+  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
+    margin-bottom: 4rem;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -500,5 +510,10 @@ footer .footer-links a {
     padding-top: 2rem;
     padding-bottom: 2rem;
     margin: 0;
+  }
+
+  /* Override for only the Agency Index page */
+  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
+    margin-bottom: 5rem;
   }
 }
