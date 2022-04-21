@@ -339,6 +339,10 @@ footer .footer-links a {
   margin-bottom: 2rem;
 }
 
+.container.content .buttons label {
+  margin-bottom: 2rem;
+}
+
 .container.content h1.icon-title span.icon {
   text-align: center;
   display: block;
@@ -473,6 +477,9 @@ footer .footer-links a {
   .container.content {
     padding-left: 3.5rem;
     padding-right: 3.5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin: 0;
   }
 
   .container.content input[type="submit"],
@@ -490,5 +497,8 @@ footer .footer-links a {
   .container.content {
     padding-left: 5rem;
     padding-right: 5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin: 0;
   }
 }
