@@ -2,7 +2,7 @@
 The oauth application: analytics implementation.
 """
 from benefits.core import analytics as core
-from benefits.settings import OAUTH_CLIENT_NAME
+from django.conf import settings
 
 
 class OAuthEvent(core.Event):
@@ -10,7 +10,7 @@ class OAuthEvent(core.Event):
 
     def __init__(self, request, event_type):
         super().__init__(request, event_type)
-        self.update_event_properties(auth_provider=OAUTH_CLIENT_NAME)
+        self.update_event_properties(auth_provider=settings.OAUTH_CLIENT_NAME)
 
 
 class StartedSignInEvent(OAuthEvent):
