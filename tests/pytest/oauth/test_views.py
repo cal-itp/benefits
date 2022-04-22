@@ -1,7 +1,8 @@
 from django.http import HttpResponse
+from django.urls import reverse
 
 from benefits.core import session
-from benefits.oauth.views import logout
+from benefits.oauth.views import logout, post_logout
 
 import pytest
 
@@ -24,3 +25,14 @@ def test_logout(mocker, session_request):
     assert result.status_code == 200
     assert message in str(result.content)
     assert session.oauth_token(session_request) is False
+
+
+@pytest.mark.request_path("/oauth/post_logout")
+def test_post_logout(session_request):
+    origin = reverse("core:index")
+    session.update(session_request, origin=origin)
+
+    result = post_logout(session_request)
+
+    assert result.status_code == 302
+    assert result.url == origin
