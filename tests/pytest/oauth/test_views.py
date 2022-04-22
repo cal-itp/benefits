@@ -2,10 +2,23 @@ from django.http import HttpResponse
 from django.urls import reverse
 
 from benefits.core import session
-from benefits.oauth.views import logout, post_logout, _deauthorize_redirect, _generate_redirect_uri
+from benefits.oauth.views import login, logout, post_logout, _deauthorize_redirect, _generate_redirect_uri
 import benefits.oauth.views
 
 import pytest
+
+
+@pytest.mark.request_path("/oauth/login")
+def test_login(mocker, session_request):
+    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
+    mock_client.authorize_redirect.return_value = HttpResponse("authorize redirect")
+
+    assert session.oauth_token(session_request) is None
+
+    login(session_request)
+
+    mock_client.authorize_redirect.assert_called_with(session_request, "https://testserver/oauth/authorize")
+    assert session.oauth_token(session_request) is None
 
 
 @pytest.mark.request_path("/oauth/logout")
