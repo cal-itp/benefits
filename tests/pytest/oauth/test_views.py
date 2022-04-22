@@ -25,7 +25,7 @@ def test_logout(mocker, session_request):
     spy.assert_called_with(token, "https://testserver/oauth/post_logout")
     assert result.status_code == 200
     assert message in str(result.content)
-    assert session.oauth_token(session_request) is False
+    assert not session.logged_in(session_request)
     assert session.enrollment_token(session_request) is False
 
 
