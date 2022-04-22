@@ -2,7 +2,8 @@ from django.http import HttpResponse
 from django.urls import reverse
 
 from benefits.core import session
-from benefits.oauth.views import logout, post_logout, _generate_redirect_uri
+from benefits.oauth.views import logout, post_logout, _deauthorize_redirect, _generate_redirect_uri
+import benefits.oauth.views
 
 import pytest
 
@@ -36,6 +37,20 @@ def test_post_logout(session_request):
 
     assert result.status_code == 302
     assert result.url == origin
+
+
+def test_deauthorize_redirect(mocker):
+    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
+    mock_client.load_server_metadata.return_value = {"end_session_endpoint": "https://server/endsession"}
+
+    result = _deauthorize_redirect("token", "https://localhost/redirect_uri")
+
+    mock_client.load_server_metadata.assert_called()
+    assert result.status_code == 302
+    assert (
+        result.url
+        == "https://server/endsession?id_token_hint=token&post_logout_redirect_uri=https%3A%2F%2Flocalhost%2Fredirect_uri"
+    )
 
 
 def test_generate_redirect_uri_default(rf):
