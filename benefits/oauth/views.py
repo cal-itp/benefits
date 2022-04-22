@@ -1,16 +1,13 @@
 import logging
 
 from django.conf import settings
-from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.http import urlencode
-from django.utils.decorators import decorator_from_middleware
 
 from authlib.integrations.django_client import OAuth
 
 from benefits.core import session
-from benefits.core.middleware import LoginRequired
 
 
 logger = logging.getLogger(__name__)
@@ -116,8 +113,3 @@ def _generate_redirect_uri(request, redirect_path):
         redirect_uri = redirect_uri.replace("http://", "https://")
 
     return redirect_uri
-
-
-@decorator_from_middleware(LoginRequired)
-def test(request):
-    return HttpResponse("you're logged in", content_type="text/plain")

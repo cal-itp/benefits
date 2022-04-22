@@ -80,11 +80,3 @@ def test_logged_in(rf):
 
     mocked_view(request)
     mocked_view.assert_called_once()
-
-
-@pytest.mark.django_db
-def test_login_restricted(client):
-    test_page = reverse("oauth:test")
-    response = client.get(test_page)
-    assert response.status_code == 302
-    assert response.headers["Location"] == login_path
