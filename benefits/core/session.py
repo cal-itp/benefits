@@ -6,9 +6,9 @@ import logging
 import time
 import uuid
 
+from django.conf import settings
 from django.urls import reverse
 
-from benefits.settings import RATE_LIMIT_PERIOD
 from . import models
 
 
@@ -166,7 +166,7 @@ def reset_rate_limit(request):
     logger.debug("Reset rate limit")
     request.session[_LIMITCOUNTER] = 0
     # get the current time in Unix seconds, then add RATE_LIMIT_PERIOD seconds
-    request.session[_LIMITUNTIL] = int(time.time()) + RATE_LIMIT_PERIOD
+    request.session[_LIMITUNTIL] = int(time.time()) + settings.RATE_LIMIT_PERIOD
 
 
 def start(request):

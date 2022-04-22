@@ -1,23 +1,22 @@
 import logging
 
+from django.conf import settings
 from django.shortcuts import redirect
 from django.urls import reverse
 
 from authlib.integrations.django_client import OAuth
 
 from benefits.core import session
-from benefits.settings import OAUTH_CLIENT_NAME
 
 
 logger = logging.getLogger(__name__)
 
-
-if OAUTH_CLIENT_NAME:
-    logger.debug(f"Using OAuth client configuration: {OAUTH_CLIENT_NAME}")
+if settings.OAUTH_CLIENT_NAME:
+    logger.debug(f"Using OAuth client configuration: {settings.OAUTH_CLIENT_NAME}")
 
     _oauth = OAuth()
-    _oauth.register(OAUTH_CLIENT_NAME)
-    oauth_client = _oauth.create_client(OAUTH_CLIENT_NAME)
+    _oauth.register(settings.OAUTH_CLIENT_NAME)
+    oauth_client = _oauth.create_client(settings.OAUTH_CLIENT_NAME)
 
 
 ROUTE_AUTH = "oauth:authorize"

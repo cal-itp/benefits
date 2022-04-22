@@ -38,18 +38,22 @@ are loaded for every app command and run.
 
 ## Using configuration in app code
 
-From within the application, the Django settings file and the Django models are the two interfaces for application code to
+!!! tldr "Django docs"
+
+    [Using settings in Python code][django-using-settings]
+
+From within the application, the Django settings object and the Django models are the two interfaces for application code to
 read configuration data.
 
-The settings file defines a number of "constants" (they aren't strictly _constant_, but should be treated as such) that
-can be imported directly by application code, for example:
+Rather than importing the app's settings module, Django recommends importing the `django.conf.settings` object, which provides
+an abstraction and better handles default values:
 
 ```python
-from benefits.settings import ADMIN
+from django.config import settings
 
 # ...
 
-if ADMIN:
+if settings.ADMIN:
     # do something when admin is enabled
 else:
     # do something else when admin is disabled
@@ -73,6 +77,7 @@ else:
 [benefits-wsgi]: https://github.com/cal-itp/benefits/blob/dev/benefits/wsgi.py
 [django-model]: https://docs.djangoproject.com/en/3.2/topics/db/models/
 [django-settings]: https://docs.djangoproject.com/en/3.2/topics/settings/
+[django-using-settings]: https://docs.djangoproject.com/en/3.2/topics/settings/#using-settings-in-python-code
 [env-vars]: environment-variables.md
 [fixtures]: fixtures.md
 [getting-started]: ../getting-started/README.md

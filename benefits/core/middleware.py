@@ -4,13 +4,13 @@ The core application: middleware definitions for request/response cycle.
 import logging
 import time
 
+from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.template import loader
 from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
 
-from benefits.settings import RATE_LIMIT, RATE_LIMIT_METHODS, RATE_LIMIT_PERIOD, DEBUG
 from . import analytics, session, viewmodels
 
 
@@ -32,11 +32,11 @@ class RateLimit(MiddlewareMixin):
     """Middleware checks settings and session to ensure rate limit is respected."""
 
     def process_request(self, request):
-        if any((RATE_LIMIT < 1, len(RATE_LIMIT_METHODS) < 1, RATE_LIMIT_PERIOD < 1)):
+        if any((settings.RATE_LIMIT < 1, len(settings.RATE_LIMIT_METHODS) < 1, settings.RATE_LIMIT_PERIOD < 1)):
             logger.debug("RATE_LIMIT, RATE_LIMIT_METHODS, or RATE_LIMIT_PERIOD are not configured")
             return None
 
-        if request.method in RATE_LIMIT_METHODS:
+        if request.method in settings.RATE_LIMIT_METHODS:
             session.increment_rate_limit_counter(request)
         else:
             # bail early if the request method doesn't match
@@ -46,7 +46,7 @@ class RateLimit(MiddlewareMixin):
         reset_time = session.rate_limit_time(request)
         now = int(time.time())
 
-        if counter > RATE_LIMIT:
+        if counter > settings.RATE_LIMIT:
             if reset_time > now:
                 logger.warn("Rate limit exceeded")
                 home = viewmodels.Button.home(request)
@@ -80,7 +80,7 @@ class DebugSession(MiddlewareMixin):
     """Middleware to configure debug context in the request session."""
 
     def process_request(self, request):
-        session.update(request, debug=DEBUG)
+        session.update(request, debug=settings.DEBUG)
         return None
 
 
