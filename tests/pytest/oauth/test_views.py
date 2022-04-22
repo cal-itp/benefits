@@ -31,10 +31,8 @@ def test_login(mocker, session_request):
 
 
 @pytest.mark.request_path("/oauth/login")
-def test_authorize(mocker, session_request):
+def test_authorize_fail(mocker, session_request):
     mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
-
-    # first test when the token cannot be authorized
     mock_client.authorize_access_token.return_value = None
 
     assert session.oauth_token(session_request) is None
@@ -46,7 +44,10 @@ def test_authorize(mocker, session_request):
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_START)
 
-    # next test when an id_token is returned
+
+@pytest.mark.request_path("/oauth/login")
+def test_authorize_success(mocker, session_request):
+    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
     mock_client.authorize_access_token.return_value = {"id_token": "token"}
 
     result = authorize(session_request)
