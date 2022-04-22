@@ -2,10 +2,61 @@ from django.http import HttpResponse
 from django.urls import reverse
 
 from benefits.core import session
-from benefits.oauth.views import logout, post_logout, _deauthorize_redirect, _generate_redirect_uri
+from benefits.oauth.views import (
+    ROUTE_START,
+    ROUTE_CONFIRM,
+    login,
+    authorize,
+    logout,
+    post_logout,
+    _deauthorize_redirect,
+    _generate_redirect_uri,
+)
 import benefits.oauth.views
 
 import pytest
+
+
+@pytest.mark.request_path("/oauth/login")
+def test_login(mocker, session_request):
+    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
+    mock_client.authorize_redirect.return_value = HttpResponse("authorize redirect")
+
+    assert not session.logged_in(session_request)
+
+    login(session_request)
+
+    mock_client.authorize_redirect.assert_called_with(session_request, "https://testserver/oauth/authorize")
+    assert not session.logged_in(session_request)
+
+
+@pytest.mark.request_path("/oauth/login")
+def test_authorize_fail(mocker, session_request):
+    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
+    mock_client.authorize_access_token.return_value = None
+
+    assert not session.logged_in(session_request)
+
+    result = authorize(session_request)
+
+    mock_client.authorize_access_token.assert_called_with(session_request)
+    assert not session.logged_in(session_request)
+    assert result.status_code == 302
+    assert result.url == reverse(ROUTE_START)
+
+
+@pytest.mark.request_path("/oauth/login")
+def test_authorize_success(mocker, session_request):
+    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
+    mock_client.authorize_access_token.return_value = {"id_token": "token"}
+
+    result = authorize(session_request)
+
+    mock_client.authorize_access_token.assert_called_with(session_request)
+    assert session.logged_in(session_request)
+    assert session.oauth_token(session_request) == "token"
+    assert result.status_code == 302
+    assert result.url == reverse(ROUTE_CONFIRM)
 
 
 @pytest.mark.request_path("/oauth/logout")
