@@ -1,7 +1,23 @@
 from django.urls import reverse
 import pytest
 
-from benefits.core import session
+from benefits.core import models, session
+
+
+@pytest.mark.django_db
+def test_agency(session_request):
+    session.update(session_request, agency=None)
+    assert session.agency(session_request) is None
+
+    session.update(session_request, agency="abc")
+    assert session.agency(session_request) is None
+
+    session.update(session_request, agency=1)
+    assert session.agency(session_request) is None
+
+    agency = models.TransitAgency.objects.first()
+    session.update(session_request, agency=agency)
+    assert session.agency(session_request) == agency
 
 
 @pytest.mark.django_db
