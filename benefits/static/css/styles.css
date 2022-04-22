@@ -42,7 +42,7 @@ h1 {
 }
 
 p {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   font-size: 18px;
   line-height: 27px;
   letter-spacing: 0.05em;
@@ -343,10 +343,14 @@ footer .footer-links a {
   margin-bottom: 2rem;
 }
 
+.container.content h1.icon-title {
+  padding-bottom: 1.5rem;
+}
+
 .container.content h1.icon-title span.icon {
   text-align: center;
   display: block;
-  margin-bottom: 1rem;
+  padding-bottom: 3rem;
 }
 
 .container.content.help {
