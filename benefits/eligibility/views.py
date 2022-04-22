@@ -9,13 +9,14 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
-from benefits.core import middleware, recaptcha, session, viewmodels
+from benefits.core import recaptcha, session, viewmodels
+from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
 from benefits.core.views import PageTemplateResponse
 from . import analytics, api, forms
 
 
-@decorator_from_middleware(middleware.AgencySessionRequired)
+@decorator_from_middleware(AgencySessionRequired)
 def index(request):
     """View handler for the eligibility verifier selection form."""
 
@@ -54,8 +55,8 @@ def index(request):
     return response
 
 
-@decorator_from_middleware(middleware.AgencySessionRequired)
-@decorator_from_middleware(middleware.VerifierSessionRequired)
+@decorator_from_middleware(AgencySessionRequired)
+@decorator_from_middleware(VerifierSessionRequired)
 def start(request):
     """View handler for the eligibility verification getting started screen."""
 
@@ -110,7 +111,7 @@ def start(request):
             ),
         )
 
-        if not session.oauth_token(request):
+        if not session.logged_in(request):
             button = viewmodels.Button.external(
                 text=_(verifier.auth_provider.sign_in_button_label),
                 url=reverse("oauth:login"),
@@ -131,9 +132,10 @@ def start(request):
     return TemplateResponse(request, "eligibility/start.html", ctx)
 
 
-@decorator_from_middleware(middleware.AgencySessionRequired)
-@decorator_from_middleware(middleware.RateLimit)
-@decorator_from_middleware(middleware.VerifierSessionRequired)
+@decorator_from_middleware(AgencySessionRequired)
+@decorator_from_middleware(LoginRequired)
+@decorator_from_middleware(RateLimit)
+@decorator_from_middleware(VerifierSessionRequired)
 def confirm(request):
     """View handler for the eligibility verification form."""
 
@@ -192,7 +194,8 @@ def _verify(request, form):
         return unverified(request)
 
 
-@decorator_from_middleware(middleware.AgencySessionRequired)
+@decorator_from_middleware(AgencySessionRequired)
+@decorator_from_middleware(LoginRequired)
 def verified(request, verified_types):
     """View handler for the verified eligibility page."""
 
@@ -203,8 +206,9 @@ def verified(request, verified_types):
     return redirect("enrollment:index")
 
 
-@decorator_from_middleware(middleware.AgencySessionRequired)
-@decorator_from_middleware(middleware.VerifierSessionRequired)
+@decorator_from_middleware(AgencySessionRequired)
+@decorator_from_middleware(LoginRequired)
+@decorator_from_middleware(VerifierSessionRequired)
 def unverified(request):
     """View handler for the unverified eligibility page."""
 

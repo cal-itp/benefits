@@ -9,7 +9,8 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
-from benefits.core import middleware, models, session, viewmodels
+from benefits.core import models, session, viewmodels
+from benefits.core.middleware import EligibleSessionRequired, pageview_decorator
 from benefits.core.views import PageTemplateResponse
 from . import api, forms
 
@@ -93,7 +94,7 @@ def _enroll(request):
         raise Exception("Updated customer_id does not match enrolled customer_id")
 
 
-@decorator_from_middleware(middleware.EligibleSessionRequired)
+@decorator_from_middleware(EligibleSessionRequired)
 def token(request):
     """View handler for the enrollment auth token."""
     if not session.valid_enrollment_token(request):
@@ -106,7 +107,7 @@ def token(request):
     return JsonResponse(data)
 
 
-@decorator_from_middleware(middleware.EligibleSessionRequired)
+@decorator_from_middleware(EligibleSessionRequired)
 def index(request):
     """View handler for the enrollment landing page."""
     session.update(request, origin=reverse("enrollment:index"))
@@ -119,7 +120,7 @@ def index(request):
     return response
 
 
-@decorator_from_middleware(middleware.EligibleSessionRequired)
+@decorator_from_middleware(EligibleSessionRequired)
 def retry(request):
     """View handler for a recoverable failure condition."""
     if request.method == "POST":
@@ -141,7 +142,7 @@ def retry(request):
         raise Exception("This view method only supports POST.")
 
 
-@middleware.pageview_decorator
+@pageview_decorator
 def success(request):
     """View handler for the final success page."""
     request.path = "/enrollment/success"
