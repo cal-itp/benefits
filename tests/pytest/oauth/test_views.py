@@ -2,7 +2,16 @@ from django.http import HttpResponse
 from django.urls import reverse
 
 from benefits.core import session
-from benefits.oauth.views import login, logout, post_logout, _deauthorize_redirect, _generate_redirect_uri
+from benefits.oauth.views import (
+    ROUTE_START,
+    ROUTE_CONFIRM,
+    login,
+    authorize,
+    logout,
+    post_logout,
+    _deauthorize_redirect,
+    _generate_redirect_uri,
+)
 import benefits.oauth.views
 
 import pytest
@@ -19,6 +28,33 @@ def test_login(mocker, session_request):
 
     mock_client.authorize_redirect.assert_called_with(session_request, "https://testserver/oauth/authorize")
     assert session.oauth_token(session_request) is None
+
+
+@pytest.mark.request_path("/oauth/login")
+def test_authorize(mocker, session_request):
+    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
+
+    # first test when the token cannot be authorized
+    mock_client.authorize_access_token.return_value = None
+
+    assert session.oauth_token(session_request) is None
+
+    result = authorize(session_request)
+
+    mock_client.authorize_access_token.assert_called_with(session_request)
+    assert session.oauth_token(session_request) is None
+    assert result.status_code == 302
+    assert result.url == reverse(ROUTE_START)
+
+    # next test when an id_token is returned
+    mock_client.authorize_access_token.return_value = {"id_token": "token"}
+
+    result = authorize(session_request)
+
+    mock_client.authorize_access_token.assert_called_with(session_request)
+    assert session.oauth_token(session_request) == "token"
+    assert result.status_code == 302
+    assert result.url == reverse(ROUTE_CONFIRM)
 
 
 @pytest.mark.request_path("/oauth/logout")
