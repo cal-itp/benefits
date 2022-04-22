@@ -66,6 +66,8 @@ def authorize(request):
 def logout(request):
     """View implementing OIDC and application sign out."""
 
+    analytics.started_sign_out(request)
+
     # overwrite the oauth session token, the user is signed out of the app
     token = session.oauth_token(request)
     session.logout(request)
@@ -82,6 +84,8 @@ def logout(request):
 
 def post_logout(request):
     """View routes the user to their origin after sign out."""
+
+    analytics.finished_sign_out(request)
 
     origin = session.origin(request)
     return redirect(origin)
