@@ -26,6 +26,7 @@ def test_logout(mocker, session_request):
     assert result.status_code == 200
     assert message in str(result.content)
     assert session.oauth_token(session_request) is False
+    assert session.enrollment_token(session_request) is False
 
 
 @pytest.mark.request_path("/oauth/post_logout")

@@ -66,7 +66,7 @@ def logout(request):
 
     # overwrite the oauth session token, the user is signed out of the app
     token = session.oauth_token(request)
-    session.update(request, oauth_token=False)
+    session.logout(request)
 
     route = reverse(ROUTE_POST_LOGOUT)
     redirect_uri = _generate_redirect_uri(request, route)

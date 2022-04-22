@@ -267,3 +267,7 @@ def verifier(request):
     except (KeyError, models.EligibilityVerifier.DoesNotExist):
         logger.debug("Can't get verifier from session")
         return None
+
+
+def logout(request):
+    update(request, oauth_token=False, enrollment_token=False)
