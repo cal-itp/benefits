@@ -1,7 +1,7 @@
 """
 The oauth application: analytics implementation.
 """
-from benefits.core import analytics as core
+from benefits.core import analytics as core, session
 from django.conf import settings
 
 
@@ -27,11 +27,19 @@ class FinishedSignInEvent(OAuthEvent):
         super().__init__(request, "finished sign in")
 
 
-class SignedOutEvent(OAuthEvent):
-    """Analytics event representing application sign out."""
+class StartedSignOutEvent(OAuthEvent):
+    """Analytics event representing the beginning of application sign out."""
 
     def __init__(self, request):
-        super().__init__(request, "signed out")
+        super().__init__(request, "started signed out")
+
+
+class FinishedSignOutEvent(OAuthEvent):
+    """Analytics event representing the end of application sign out."""
+
+    def __init__(self, request):
+        super().__init__(request, "finished sign out")
+        self.update_event_properties(origin=session.origin(request))
 
 
 def started_sign_in(request):
@@ -44,6 +52,11 @@ def finished_sign_in(request):
     core.send_event(FinishedSignInEvent(request))
 
 
-def signed_out(request):
-    """Send the "signed out" analytics event."""
-    core.send_event(SignedOutEvent(request))
+def started_sign_out(request):
+    """Send the "started signed out" analytics event."""
+    core.send_event(StartedSignOutEvent(request))
+
+
+def finished_sign_out(request):
+    """Send the "finished sign out" analytics event."""
+    core.send_event(FinishedSignOutEvent(request))
