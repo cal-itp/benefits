@@ -31,4 +31,4 @@ jobs:
         run: ./bin/init.sh
 
       - name: Run tests
-        run: pytest
+        run: pytest --cov=benefits
