@@ -25,10 +25,16 @@ def session_request(request, rf):
         request_path = marker.args[0]
 
     # create a request for the path, initialize session
-    # https://stackoverflow.com/a/55530933/358804
     session_request = rf.get(request_path)
-    middleware = SessionMiddleware(lambda x: x)
-    middleware.process_request(session_request)
-    session_request.session.save()
+    initialize_session(session_request)
 
     return session_request
+
+
+def initialize_session(request):
+    """Helper initializes a Django request object's session."""
+
+    # https://stackoverflow.com/a/55530933/358804
+    middleware = SessionMiddleware(lambda x: x)
+    middleware.process_request(request)
+    request.session.save()
