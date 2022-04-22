@@ -139,7 +139,9 @@ class LoginRequired(MiddlewareMixin):
     """Middleware that checks whether a user is logged in."""
 
     def process_view(self, request, view_func, view_args, view_kwargs):
-        if session.oauth_token(request):
+        # only require login if verifier requires it
+        verifier = session.verifier(request)
+        if not verifier or not verifier.requires_authentication or session.oauth_token(request):
             # pass through
             return None
 
