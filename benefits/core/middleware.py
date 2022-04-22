@@ -5,9 +5,9 @@ import logging
 import time
 
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import redirect
 from django.template import loader
-from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
@@ -145,5 +145,4 @@ class LoginRequired(MiddlewareMixin):
             # pass through
             return None
 
-        login_url = reverse("oauth:login")
-        return HttpResponseRedirect(login_url)
+        return redirect("oauth:login")
