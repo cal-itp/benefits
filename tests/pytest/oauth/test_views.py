@@ -22,12 +22,12 @@ def test_login(mocker, session_request):
     mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
     mock_client.authorize_redirect.return_value = HttpResponse("authorize redirect")
 
-    assert session.oauth_token(session_request) is None
+    assert not session.logged_in(session_request)
 
     login(session_request)
 
     mock_client.authorize_redirect.assert_called_with(session_request, "https://testserver/oauth/authorize")
-    assert session.oauth_token(session_request) is None
+    assert not session.logged_in(session_request)
 
 
 @pytest.mark.request_path("/oauth/login")
@@ -35,12 +35,12 @@ def test_authorize_fail(mocker, session_request):
     mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
     mock_client.authorize_access_token.return_value = None
 
-    assert session.oauth_token(session_request) is None
+    assert not session.logged_in(session_request)
 
     result = authorize(session_request)
 
     mock_client.authorize_access_token.assert_called_with(session_request)
-    assert session.oauth_token(session_request) is None
+    assert not session.logged_in(session_request)
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_START)
 
@@ -53,6 +53,7 @@ def test_authorize_success(mocker, session_request):
     result = authorize(session_request)
 
     mock_client.authorize_access_token.assert_called_with(session_request)
+    assert session.logged_in(session_request)
     assert session.oauth_token(session_request) == "token"
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_CONFIRM)
