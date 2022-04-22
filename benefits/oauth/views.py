@@ -8,6 +8,7 @@ from django.utils.http import urlencode
 from authlib.integrations.django_client import OAuth
 
 from benefits.core import session
+from . import analytics
 
 
 logger = logging.getLogger(__name__)
@@ -27,6 +28,8 @@ ROUTE_POST_LOGOUT = "oauth:post_logout"
 
 
 def login(request):
+    analytics.started_sign_in(request)
+
     if not oauth_client:
         raise Exception("No OAuth client")
 
@@ -54,6 +57,8 @@ def authorize(request):
     # we store the id_token in the user's session
     # this is the minimal amount of information needed later to log the user out
     session.update(request, oauth_token=token["id_token"])
+
+    analytics.finished_sign_in(request)
 
     return redirect(ROUTE_CONFIRM)
 
