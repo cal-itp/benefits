@@ -110,7 +110,7 @@ def start(request):
             ),
         )
 
-        if not session.auth(request):
+        if not session.oauth_token(request):
             button = viewmodels.Button.external(
                 text=_(verifier.auth_provider.sign_in_button_label),
                 url=reverse("oauth:login"),
@@ -198,10 +198,9 @@ def verified(request, verified_types):
 
     analytics.returned_success(request)
 
-    enrollment_index = reverse("enrollment:index")
-    session.update(request, eligibility_types=verified_types, origin=enrollment_index)
+    session.update(request, eligibility_types=verified_types)
 
-    return redirect(enrollment_index)
+    return redirect("enrollment:index")
 
 
 @decorator_from_middleware(middleware.AgencySessionRequired)
