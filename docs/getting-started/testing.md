@@ -75,5 +75,5 @@ See `tests/cypress/package.json` for more cypress scripts.
 The tests done at a request/unit level are run via [pytest-django](https://pytest-django.readthedocs.io/en/latest/index.html). To run locally, start the [Devcontainer](../development/README.md) and run:
 
 ```bash
-pytest
+pytest --cov=benefits
 ```

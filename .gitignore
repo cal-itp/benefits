@@ -6,4 +6,5 @@ fixtures/*.json
 static/
 !benefits/static
 __pycache__/
+.coverage
 .DS_Store
