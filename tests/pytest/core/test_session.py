@@ -5,6 +5,21 @@ from benefits.core import models, session
 
 
 @pytest.mark.django_db
+def test_active_agency_False(session_request):
+    session.update(session_request, agency=None)
+
+    assert not session.active_agency(session_request)
+
+
+@pytest.mark.django_db
+def test_active_agency_True(session_request):
+    agency = models.TransitAgency.objects.filter(active=True).first()
+    session.update(session_request, agency=agency)
+
+    assert session.active_agency(session_request)
+
+
+@pytest.mark.django_db
 def test_reset_agency(session_request):
     session_request.session[session._AGENCY] = "abc"
 
@@ -86,7 +101,6 @@ def test_update_agency_None(session_request):
     session.update(session_request, agency=None)
 
     assert session.agency(session_request) is None
-    assert not session.active_agency(session_request)
 
 
 @pytest.mark.django_db
@@ -94,7 +108,6 @@ def test_update_agency_str(session_request):
     session.update(session_request, agency="abc")
 
     assert session.agency(session_request) is None
-    assert not session.active_agency(session_request)
 
 
 @pytest.mark.django_db
@@ -102,7 +115,6 @@ def test_update_agency_int(session_request):
     session.update(session_request, agency=1)
 
     assert session.agency(session_request) is None
-    assert not session.active_agency(session_request)
 
 
 @pytest.mark.django_db
@@ -112,4 +124,3 @@ def test_update_agency_TransitAgency(session_request):
     session.update(session_request, agency=agency)
 
     assert session.agency(session_request) == agency
-    assert session.active_agency(session_request)
