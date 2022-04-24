@@ -20,6 +20,26 @@ def test_active_agency_True(session_request):
 
 
 @pytest.mark.django_db
+def test_debug_default(session_request):
+    assert session._DEBUG not in session_request.session
+    assert not session.debug(session_request)
+
+
+@pytest.mark.django_db
+def test_debug_False(session_request):
+    session.update(session_request, debug=False)
+
+    assert not session.debug(session_request)
+
+
+@pytest.mark.django_db
+def test_debug_True(session_request):
+    session.update(session_request, debug=True)
+
+    assert session.debug(session_request)
+
+
+@pytest.mark.django_db
 def test_reset_agency(session_request):
     session_request.session[session._AGENCY] = "abc"
 
