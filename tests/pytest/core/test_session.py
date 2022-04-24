@@ -40,6 +40,17 @@ def test_debug_True(session_request):
 
 
 @pytest.mark.django_db
+def test_did(session_request):
+    assert session._DID not in session_request.session
+
+    did = session.did(session_request)
+
+    assert did
+    assert isinstance(did, str)
+    assert session._DID in session_request.session
+
+
+@pytest.mark.django_db
 def test_reset_agency(session_request):
     session_request.session[session._AGENCY] = "abc"
 
