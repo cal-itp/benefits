@@ -122,6 +122,37 @@ def test_language_es(session_request):
 
 
 @pytest.mark.django_db
+def test_logged_in_default(session_request):
+    assert not session.logged_in(session_request)
+
+
+@pytest.mark.django_db
+def test_logged_in_False(session_request):
+    session.update(session_request, oauth_token=False)
+
+    assert not session.logged_in(session_request)
+
+
+@pytest.mark.django_db
+def test_logged_in_True(session_request):
+    session.update(session_request, oauth_token=True)
+
+    assert session.logged_in(session_request)
+
+
+@pytest.mark.django_db
+def test_logout(session_request):
+    session.update(session_request, oauth_token="oauth_token", enrollment_token="enrollment_token")
+    assert session.logged_in(session_request)
+
+    session.logout(session_request)
+
+    assert not session.logged_in(session_request)
+    assert not session.enrollment_token(session_request)
+    assert not session.oauth_token(session_request)
+
+
+@pytest.mark.django_db
 def test_reset_agency(session_request):
     session_request.session[session._AGENCY] = "abc"
 
