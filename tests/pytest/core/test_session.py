@@ -1,3 +1,5 @@
+import time
+
 from django.urls import reverse
 import pytest
 
@@ -78,6 +80,34 @@ def test_eligibile_True(session_request):
     session.update(session_request, agency=agency, eligibility_types=[eligibility.name])
 
     assert session.eligible(session_request)
+
+
+@pytest.mark.django_db
+def test_enrollment_token_default(session_request):
+    assert session._ENROLLMENT_TOKEN not in session_request.session
+    assert session.enrollment_token(session_request) is None
+    assert session._ENROLLMENT_TOKEN_EXP not in session_request.session
+    assert session.enrollment_token_expiry(session_request) is None
+
+
+@pytest.mark.django_db
+def test_enrollment_token(session_request):
+    token = "token"
+    exp = 1234567890
+    session.update(session_request, enrollment_token=token, enrollment_token_exp=exp)
+
+    assert session.enrollment_token(session_request) == token
+    assert session.enrollment_token_expiry(session_request) == exp
+
+
+@pytest.mark.django_db
+def test_enrollment_token_valid(session_request):
+    # valid token expiring in the far future
+    token = "token"
+    exp = time.time() + 10000
+    session.update(session_request, enrollment_token=token, enrollment_token_exp=exp)
+
+    assert session.enrollment_token_valid(session_request)
 
 
 @pytest.mark.django_db
