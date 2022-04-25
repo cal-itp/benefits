@@ -6,5 +6,7 @@
   "pluginsFile": "plugins/index.js",
   "screenshotsFolder": "screenshots",
   "supportFile": false,
+  "viewportWidth": 1280,
+  "viewportHeight": 960,
   "videosFolder": "videos"
 }
