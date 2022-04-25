@@ -82,7 +82,7 @@ def help(request):
         title=_("core.buttons.help"),
         content_title=_("core.buttons.help"),
         buttons=buttons,
-        classes="text-lg-center",
+        # classes="text-lg-center",
         noimage=True,
     )
 

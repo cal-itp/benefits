@@ -388,6 +388,7 @@ footer .footer-links a {
   margin-bottom: 0;
   padding-bottom: 0;
 }
+
 .container.content .btn-lg.agency-url,
 .container.content .btn-lg.agency-phone {
   padding-top: 0;
@@ -397,13 +398,14 @@ footer .footer-links a {
   text-decoration: underline;
 }
 
-.text-lg-center form {
+/* .text-lg-center form {
   text-align: left !important;
-}
-.text-lg-center .buttons label {
+} */
+
+/* .text-lg-center .buttons label {
   width: 100%;
   text-align: center !important;
-}
+} */
 
 /* media queries */
 

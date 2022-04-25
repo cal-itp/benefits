@@ -39,8 +39,8 @@ class Button:
         """Create link buttons for agency contact information."""
         return [
             # fmt: off
-            Button.link(classes="agency-url", label=agency.long_name, text=agency.info_url, url=agency.info_url, target="_blank", rel="noopener noreferrer"),  # noqa: E501
-            Button.link(classes="agency-phone", text=agency.phone, url=f"tel:{agency.phone}"),
+            Button.link(classes="agency", label=agency.long_name, text=agency.info_url, url=agency.info_url, target="_blank", rel="noopener noreferrer"),  # noqa: E501
+            Button.link(classes="agency", label="phone", text=agency.phone, url=f"tel:{agency.phone}"),
             # fmt: on
         ]
 
