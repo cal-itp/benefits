@@ -1,4 +1,4 @@
-name: Label docs
+name: Label tests
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ on:
       - '.github/workflows/tests-*.yml'
 
 jobs:
-  label-docs:
+  label-tests:
     runs-on: ubuntu-latest
     steps:
       - name: add-label
