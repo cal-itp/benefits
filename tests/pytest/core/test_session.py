@@ -210,7 +210,6 @@ def test_reset_enrollment(session_request):
 @pytest.mark.django_db
 def test_reset_oauth(session_request):
     session_request.session[session._OAUTH_TOKEN] = "oauthtoken456"
-    session_request.session[session._ORIGIN] = "/origin"
 
     session.reset(session_request)
 
