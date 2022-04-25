@@ -166,6 +166,19 @@ def test_oauth_token(session_request):
 
 
 @pytest.mark.django_db
+def test_origin_default(session_request):
+    assert session._ORIGIN not in session_request.session
+    assert not session.origin(session_request)
+
+
+@pytest.mark.django_db
+def test_origin(session_request):
+    session.update(session_request, origin="/origin")
+
+    assert session.origin(session_request) == "/origin"
+
+
+@pytest.mark.django_db
 def test_reset_agency(session_request):
     session_request.session[session._AGENCY] = "abc"
 
