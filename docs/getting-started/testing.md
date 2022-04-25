@@ -75,5 +75,14 @@ See `tests/cypress/package.json` for more cypress scripts.
 The tests done at a request/unit level are run via [pytest-django](https://pytest-django.readthedocs.io/en/latest/index.html). To run locally, start the [Devcontainer](../development/README.md) and run:
 
 ```bash
-pytest --cov=benefits
+pytest --cov=benefits --cov-branch
 ```
+
+### Coverage report
+
+Run the helper script `tests/pytest/coverage.sh` to:
+
+1. Runs the tests with `coverage`
+2. Generates an HTML report in the app's `static/` directory
+
+The report can be viewed by launching the app and navigating to `http://localhost:$DJANGO_LOCAL_PORT/static/htmlcov/index.html`
