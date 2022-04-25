@@ -135,6 +135,16 @@ def language(request):
     return request.LANGUAGE_CODE
 
 
+def logged_in(request):
+    """Check if the current session has an OAuth token."""
+    return bool(oauth_token(request))
+
+
+def logout(request):
+    """Reset the session tokens."""
+    update(request, oauth_token=False, enrollment_token=False)
+
+
 def oauth_token(request):
     """Get the oauth token from the request's session, or None"""
     logger.debug("Get session oauth token")
@@ -267,11 +277,3 @@ def verifier(request):
     except (KeyError, models.EligibilityVerifier.DoesNotExist):
         logger.debug("Can't get verifier from session")
         return None
-
-
-def logged_in(request):
-    return bool(oauth_token(request))
-
-
-def logout(request):
-    update(request, oauth_token=False, enrollment_token=False)
