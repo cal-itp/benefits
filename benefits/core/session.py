@@ -4,8 +4,10 @@ The core application: helpers to work with request sessions.
 import hashlib
 import logging
 import time
+from typing import Sequence, Union
 import uuid
 
+from django.http import HttpRequest
 from django.conf import settings
 from django.urls import reverse
 
@@ -31,7 +33,7 @@ _UID = "uid"
 _VERIFIER = "verifier"
 
 
-def agency(request):
+def agency(request: HttpRequest) -> Union[models.TransitAgency, None]:
     """Get the agency from the request's session, or None"""
     logger.debug("Get session agency")
     try:
@@ -41,14 +43,14 @@ def agency(request):
         return None
 
 
-def active_agency(request):
+def active_agency(request: HttpRequest) -> bool:
     """True if the request's session is configured with an active agency. False otherwise."""
     logger.debug("Get session active agency flag")
     a = agency(request)
     return a and a.active
 
 
-def context_dict(request):
+def context_dict(request: HttpRequest) -> dict:
     """The request's session context as a dict."""
     logger.debug("Get session context dict")
     return {
@@ -69,13 +71,13 @@ def context_dict(request):
     }
 
 
-def debug(request):
+def debug(request: HttpRequest) -> bool:
     """Get the DEBUG flag from the request's session."""
     logger.debug("Get session debug flag")
     return bool(request.session.get(_DEBUG, False))
 
 
-def did(request):
+def did(request: HttpRequest) -> str:
     """Get the session's device ID, a hashed version of the unique ID."""
     logger.debug("Get session did")
     d = request.session.get(_DID)
@@ -85,7 +87,7 @@ def did(request):
     return str(d)
 
 
-def eligibility(request):
+def eligibility(request: HttpRequest) -> Union[models.EligibilityType, None]:
     """Get the confirmed models.EligibilityType from the request's session, or None"""
     logger.debug("Get session confirmed eligibility")
     eligibility = request.session.get(_ELIGIBILITY)
@@ -95,25 +97,25 @@ def eligibility(request):
         return None
 
 
-def eligible(request):
+def eligible(request: HttpRequest) -> bool:
     """True if the request's session is configured with an active agency and has confirmed eligibility. False otherwise."""
     logger.debug("Get session eligible flag")
     return active_agency(request) and agency(request).supports_type(eligibility(request))
 
 
-def enrollment_token(request):
+def enrollment_token(request: HttpRequest) -> Union[str, bool, None]:
     """Get the enrollment token from the request's session, or None."""
     logger.debug("Get session enrollment token")
     return request.session.get(_ENROLLMENT_TOKEN)
 
 
-def enrollment_token_expiry(request):
+def enrollment_token_expiry(request: HttpRequest) -> Union[int, None]:
     """Get the enrollment token's expiry time from the request's session, or None."""
     logger.debug("Get session enrollment token expiry")
     return request.session.get(_ENROLLMENT_TOKEN_EXP)
 
 
-def enrollment_token_valid(request):
+def enrollment_token_valid(request: HttpRequest):
     """True if the request's session is configured with a valid token. False otherwise."""
     if bool(enrollment_token(request)):
         logger.debug("Session contains an enrollment token")
@@ -129,48 +131,48 @@ def enrollment_token_valid(request):
         return False
 
 
-def language(request):
+def language(request: HttpRequest) -> Union[str, None]:
     """Get the language configured for the request."""
     logger.debug("Get session language")
     return request.LANGUAGE_CODE
 
 
-def logged_in(request):
+def logged_in(request: HttpRequest) -> bool:
     """Check if the current session has an OAuth token."""
     return bool(oauth_token(request))
 
 
-def logout(request):
+def logout(request: HttpRequest):
     """Reset the session tokens."""
     update(request, oauth_token=False, enrollment_token=False)
 
 
-def oauth_token(request):
+def oauth_token(request: HttpRequest) -> Union[str, bool, None]:
     """Get the oauth token from the request's session, or None"""
     logger.debug("Get session oauth token")
     return request.session.get(_OAUTH_TOKEN)
 
 
-def origin(request):
+def origin(request: HttpRequest) -> str:
     """Get the origin for the request's session, or None."""
     logger.debug("Get session origin")
     return request.session.get(_ORIGIN)
 
 
-def rate_limit_counter(request):
+def rate_limit_counter(request: HttpRequest) -> Union[int, None]:
     """Get this session's rate limit counter."""
     logger.debug("Get rate limit counter")
     return request.session.get(_LIMITCOUNTER)
 
 
-def rate_limit_counter_increment(request):
+def rate_limit_counter_increment(request: HttpRequest):
     """Adds 1 to this session's rate limit counter."""
     logger.debug("Increment rate limit counter")
     c = rate_limit_counter(request)
     request.session[_LIMITCOUNTER] = int(c) + 1
 
 
-def rate_limit_reset(request):
+def rate_limit_reset(request: HttpRequest):
     """Reset this session's rate limit counter and time."""
     logger.debug("Reset rate limit")
     request.session[_LIMITCOUNTER] = 0
@@ -178,13 +180,13 @@ def rate_limit_reset(request):
     request.session[_LIMITUNTIL] = int(time.time()) + settings.RATE_LIMIT_PERIOD
 
 
-def rate_limit_time(request):
+def rate_limit_time(request: HttpRequest) -> Union[int, None]:
     """Get this session's rate limit time, a Unix timestamp after which the session's rate limt resets."""
     logger.debug("Get rate limit time")
     return request.session.get(_LIMITUNTIL)
 
 
-def reset(request):
+def reset(request: HttpRequest):
     """Reset the session for the request."""
     logger.debug("Reset session")
     request.session[_AGENCY] = None
@@ -204,7 +206,7 @@ def reset(request):
         rate_limit_reset(request)
 
 
-def start(request):
+def start(request: HttpRequest) -> int:
     """Get the start time from the request's session, as integer milliseconds since Epoch."""
     logger.debug("Get session time")
     s = request.session.get(_START)
@@ -214,7 +216,7 @@ def start(request):
     return s
 
 
-def uid(request):
+def uid(request: HttpRequest) -> str:
     """Get the session's unique ID, generating a new one if necessary."""
     logger.debug("Get session uid")
     u = request.session.get(_UID)
@@ -225,15 +227,15 @@ def uid(request):
 
 
 def update(
-    request,
-    agency=None,
-    debug=None,
-    eligibility_types=None,
-    enrollment_token=None,
-    enrollment_token_exp=None,
-    oauth_token=None,
-    origin=None,
-    verifier=None,
+    request: HttpRequest,
+    agency: models.TransitAgency = None,
+    debug: bool = None,
+    eligibility_types: Sequence[models.EligibilityType] = None,
+    enrollment_token: str = None,
+    enrollment_token_exp: int = None,
+    oauth_token: Union[str, bool] = None,
+    origin: str = None,
+    verifier: models.EligibilityVerifier = None,
 ):
     """Update the request's session with non-null values."""
     if agency is not None and isinstance(agency, models.TransitAgency):
@@ -241,8 +243,8 @@ def update(
         request.session[_AGENCY] = agency.id
     if debug is not None:
         logger.debug(f"Update session {_DEBUG}")
-        request.session[_DEBUG] = debug
-    if eligibility_types is not None and isinstance(eligibility_types, list):
+        request.session[_DEBUG] = bool(debug)
+    if eligibility_types is not None:
         logger.debug(f"Update session {_ELIGIBILITY}")
         if len(eligibility_types) > 1:
             raise NotImplementedError("Multiple eligibilities are not supported at this time.")
@@ -269,7 +271,7 @@ def update(
         request.session[_VERIFIER] = verifier.id
 
 
-def verifier(request):
+def verifier(request: HttpRequest) -> Union[models.EligibilityVerifier, None]:
     """Get the verifier from the request's session, or None"""
     logger.debug("Get session verifier")
     try:
