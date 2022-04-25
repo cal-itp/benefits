@@ -153,6 +153,19 @@ def test_logout(session_request):
 
 
 @pytest.mark.django_db
+def test_oauth_token_default(session_request):
+    assert session._OAUTH_TOKEN not in session_request.session
+    assert not session.oauth_token(session_request)
+
+
+@pytest.mark.django_db
+def test_oauth_token(session_request):
+    session.update(session_request, oauth_token="token")
+
+    assert session.oauth_token(session_request) == "token"
+
+
+@pytest.mark.django_db
 def test_reset_agency(session_request):
     session_request.session[session._AGENCY] = "abc"
 
