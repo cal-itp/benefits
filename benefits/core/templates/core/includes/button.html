@@ -1,7 +1,7 @@
 {% if button.url %}
-{% if button.label %}
-<label>{{ button.label }}</label>
-{% endif %}
+    {% if button.label %}
+        <label>{{ button.label }}</label>
+    {% endif %}
 <a {% if button.id %}id="{{ button.id }}"{% endif %}
     {% if button.target %}target="{{ button.target }}"{% endif %}
     {% if button.rel %}rel="{{ button.rel }}"{% endif %}
