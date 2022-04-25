@@ -173,6 +173,10 @@ footer .footer-links a {
   padding-left: 1rem;
 }
 
+.form-group.with-errors .error-message p {
+  margin-bottom: 0;
+}
+
 .global-footer {
   background: #212121;
 }
@@ -385,6 +389,7 @@ footer .footer-links a {
 }
 
 .container.content.help .button-back {
+  margin-top: 5rem;
   margin-bottom: 5rem;
 }
 

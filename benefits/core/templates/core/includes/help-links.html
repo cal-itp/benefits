@@ -12,14 +12,14 @@
                 <a href="{{ agency_button.url }}">
                     {{ agency_button.text }}
                 </a>
-                <br>
+                <div class="mb-5"></div>
             {% endif %}
         {% endif %}
     {% endfor %}
 </div>
 {% for back_button in buttons %}
     {% if "btn-primary" in back_button.classes %}
-        <div class="button-back mt-4">
+        <div class="button-back">
             {% include "core/includes/button.html" with button=back_button %}
         </div>
     {% endif %}
