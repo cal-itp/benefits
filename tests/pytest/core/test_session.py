@@ -51,6 +51,36 @@ def test_did(session_request):
 
 
 @pytest.mark.django_db
+def test_eligibility_default(session_request):
+    assert session._ELIGIBILITY not in session_request.session
+    assert session.eligibility(session_request) is None
+
+
+@pytest.mark.django_db
+def test_eligibility(session_request):
+    agency = models.TransitAgency.objects.first()
+    eligibility = agency.eligibility_types.first()
+    session.update(session_request, agency=agency, eligibility_types=[eligibility.name])
+
+    assert session.eligibility(session_request) == eligibility
+
+
+@pytest.mark.django_db
+def test_eligibile_False(session_request):
+    assert session.eligibility(session_request) is None
+    assert not session.eligible(session_request)
+
+
+@pytest.mark.django_db
+def test_eligibile_True(session_request):
+    agency = models.TransitAgency.objects.first()
+    eligibility = agency.eligibility_types.first()
+    session.update(session_request, agency=agency, eligibility_types=[eligibility.name])
+
+    assert session.eligible(session_request)
+
+
+@pytest.mark.django_db
 def test_reset_agency(session_request):
     session_request.session[session._AGENCY] = "abc"
 
