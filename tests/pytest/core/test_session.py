@@ -270,6 +270,15 @@ def test_reset_origin(session_request):
 
 
 @pytest.mark.django_db
+def test_reset_start(session_request):
+    session.reset(session_request)
+    start = session.start(session_request)
+    session.reset(session_request)
+
+    assert session.start(session_request) == start
+
+
+@pytest.mark.django_db
 def test_reset_verifier(session_request):
     session_request.session[session._VERIFIER] = "verifier"
 
@@ -293,6 +302,17 @@ def test_reset_user(session_request):
 
     assert session.uid(session_request) == uid
     assert session.did(session_request) == did
+
+
+@pytest.mark.django_db
+def test_start_default(session_request):
+    assert session._START not in session_request.session
+
+    t0 = time.time()
+    start = session.start(session_request)
+
+    assert isinstance(start, int)
+    assert start >= t0
 
 
 @pytest.mark.django_db
