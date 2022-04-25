@@ -1,0 +1,17 @@
+name: Label docs
+
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - 'tests/**'
+      - '.github/workflows/tests-*.yml'
+
+jobs:
+  label-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: add-label
+        uses: andymckay/labeler@master
+        with:
+          add-labels: "tests"
