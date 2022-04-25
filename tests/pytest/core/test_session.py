@@ -24,21 +24,11 @@ def test_active_agency_True(session_request):
 @pytest.mark.django_db
 def test_debug_default(session_request):
     assert session._DEBUG not in session_request.session
-    assert not session.debug(session_request)
 
+    debug = session.debug(session_request)
 
-@pytest.mark.django_db
-def test_debug_False(session_request):
-    session.update(session_request, debug=False)
-
-    assert not session.debug(session_request)
-
-
-@pytest.mark.django_db
-def test_debug_True(session_request):
-    session.update(session_request, debug=True)
-
-    assert session.debug(session_request)
+    assert isinstance(debug, bool)
+    assert not debug
 
 
 @pytest.mark.django_db
@@ -354,3 +344,25 @@ def test_update_agency_TransitAgency(session_request):
     session.update(session_request, agency=agency)
 
     assert session.agency(session_request) == agency
+
+
+@pytest.mark.django_db
+def test_update_debug_None(session_request):
+    debug = session.debug(session_request)
+    session.update(session_request, debug=None)
+
+    assert session.debug(session_request) == debug
+
+
+@pytest.mark.django_db
+def test_update_debug_False(session_request):
+    session.update(session_request, debug=False)
+
+    assert not session.debug(session_request)
+
+
+@pytest.mark.django_db
+def test_update_debug_True(session_request):
+    session.update(session_request, debug=True)
+
+    assert session.debug(session_request)
