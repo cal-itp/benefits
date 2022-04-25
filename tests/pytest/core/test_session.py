@@ -179,6 +179,46 @@ def test_origin(session_request):
 
 
 @pytest.mark.django_db
+def test_rate_limit_counter_default(session_request):
+    assert session._LIMITCOUNTER not in session_request.session
+    assert session.rate_limit_counter(session_request) is None
+
+
+@pytest.mark.django_db
+def test_rate_limit_counter_increment(session_request):
+    session.rate_limit_reset(session_request)
+    session.rate_limit_counter_increment(session_request)
+
+    c1 = session.rate_limit_counter(session_request)
+    assert isinstance(c1, int)
+    assert c1 > 0
+
+    session.rate_limit_counter_increment(session_request)
+
+    c2 = session.rate_limit_counter(session_request)
+    assert c2 == c1 + 1
+
+
+@pytest.mark.django_db
+def test_rate_limit_reset(mocker, session_request):
+    assert session._LIMITCOUNTER not in session_request.session
+    assert session._LIMITUNTIL not in session_request.session
+
+    mocker.patch.object(session.settings, "RATE_LIMIT_PERIOD", 100)
+    t0 = int(time.time())
+    session.rate_limit_reset(session_request)
+
+    assert session.rate_limit_counter(session_request) == 0
+    assert session.rate_limit_time(session_request) >= t0 + 100
+
+
+@pytest.mark.django_db
+def test_rate_limit_time_default(session_request):
+    assert session._LIMITUNTIL not in session_request.session
+    assert session.rate_limit_time(session_request) is None
+
+
+@pytest.mark.django_db
 def test_reset_agency(session_request):
     session_request.session[session._AGENCY] = "abc"
 
