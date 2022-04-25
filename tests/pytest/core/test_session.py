@@ -73,16 +73,6 @@ def test_enrollment_token_default(session_request):
 
 
 @pytest.mark.django_db
-def test_enrollment_token(session_request):
-    token = "token"
-    exp = 1234567890
-    session.update(session_request, enrollment_token=token, enrollment_token_exp=exp)
-
-    assert session.enrollment_token(session_request) == token
-    assert session.enrollment_token_expiry(session_request) == exp
-
-
-@pytest.mark.django_db
 def test_enrollment_token_valid(session_request):
     # valid token expiring in the far future
     token = "token"
@@ -141,23 +131,9 @@ def test_oauth_token_default(session_request):
 
 
 @pytest.mark.django_db
-def test_oauth_token(session_request):
-    session.update(session_request, oauth_token="token")
-
-    assert session.oauth_token(session_request) == "token"
-
-
-@pytest.mark.django_db
 def test_origin_default(session_request):
     assert session._ORIGIN not in session_request.session
     assert not session.origin(session_request)
-
-
-@pytest.mark.django_db
-def test_origin(session_request):
-    session.update(session_request, origin="/origin")
-
-    assert session.origin(session_request) == "/origin"
 
 
 @pytest.mark.django_db
@@ -383,3 +359,28 @@ def test_update_eligibility_single(session_request):
     session.update(session_request, agency=agency, eligibility_types=[eligibility.name])
 
     assert session.eligibility(session_request) == eligibility
+
+
+@pytest.mark.django_db
+def test_update_enrollment_token(session_request):
+    token = "token"
+    exp = 1234567890
+
+    session.update(session_request, enrollment_token=token, enrollment_token_exp=exp)
+
+    assert session.enrollment_token(session_request) == token
+    assert session.enrollment_token_expiry(session_request) == exp
+
+
+@pytest.mark.django_db
+def test_update_oauth_token(session_request):
+    session.update(session_request, oauth_token="token")
+
+    assert session.oauth_token(session_request) == "token"
+
+
+@pytest.mark.django_db
+def test_update_origin(session_request):
+    session.update(session_request, origin="/origin")
+
+    assert session.origin(session_request) == "/origin"
