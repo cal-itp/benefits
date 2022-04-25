@@ -113,11 +113,20 @@ def enrollment_token_expiry(request):
     return request.session.get(_ENROLLMENT_TOKEN_EXP)
 
 
-def increment_rate_limit_counter(request):
-    """Adds 1 to this session's rate limit counter."""
-    logger.debug("Increment rate limit counter")
-    c = rate_limit_counter(request)
-    request.session[_LIMITCOUNTER] = int(c) + 1
+def enrollment_token_valid(request):
+    """True if the request's session is configured with a valid token. False otherwise."""
+    if bool(enrollment_token(request)):
+        logger.debug("Session contains an enrollment token")
+        exp = enrollment_token_expiry(request)
+
+        # ensure token does not expire in the next 5 seconds
+        valid = exp is None or exp > (time.time() + 5)
+
+        logger.debug(f"Session enrollment token is {'valid' if valid else 'expired'}")
+        return valid
+    else:
+        logger.debug("Session does not contain a valid enrollment token")
+        return False
 
 
 def language(request):
@@ -144,6 +153,21 @@ def rate_limit_counter(request):
     return request.session.get(_LIMITCOUNTER)
 
 
+def rate_limit_counter_increment(request):
+    """Adds 1 to this session's rate limit counter."""
+    logger.debug("Increment rate limit counter")
+    c = rate_limit_counter(request)
+    request.session[_LIMITCOUNTER] = int(c) + 1
+
+
+def rate_limit_reset(request):
+    """Reset this session's rate limit counter and time."""
+    logger.debug("Reset rate limit")
+    request.session[_LIMITCOUNTER] = 0
+    # get the current time in Unix seconds, then add RATE_LIMIT_PERIOD seconds
+    request.session[_LIMITUNTIL] = int(time.time()) + settings.RATE_LIMIT_PERIOD
+
+
 def rate_limit_time(request):
     """Get this session's rate limit time, a Unix timestamp after which the session's rate limt resets."""
     logger.debug("Get rate limit time")
@@ -167,15 +191,7 @@ def reset(request):
         u = str(uuid.uuid4())
         request.session[_UID] = u
         request.session[_DID] = str(uuid.UUID(hashlib.sha512(bytes(u, "utf8")).hexdigest()[:32]))
-        reset_rate_limit(request)
-
-
-def reset_rate_limit(request):
-    """Reset this session's rate limit counter and time."""
-    logger.debug("Reset rate limit")
-    request.session[_LIMITCOUNTER] = 0
-    # get the current time in Unix seconds, then add RATE_LIMIT_PERIOD seconds
-    request.session[_LIMITUNTIL] = int(time.time()) + settings.RATE_LIMIT_PERIOD
+        rate_limit_reset(request)
 
 
 def start(request):
@@ -241,22 +257,6 @@ def update(
     if verifier is not None and isinstance(verifier, models.EligibilityVerifier):
         logger.debug(f"Update session {_VERIFIER}")
         request.session[_VERIFIER] = verifier.id
-
-
-def valid_enrollment_token(request):
-    """True if the request's session is configured with a valid token. False otherwise."""
-    if enrollment_token(request) is not None:
-        logger.debug("Session contains an enrollment token")
-        exp = enrollment_token_expiry(request)
-
-        # ensure token does not expire in the next 5 seconds
-        valid = exp is None or exp > (time.time() + 5)
-
-        logger.debug(f"Session enrollment token is {'valid' if valid else 'expired'}")
-        return valid
-    else:
-        logger.debug("Session does not contain a valid enrollment token")
-        return False
 
 
 def verifier(request):

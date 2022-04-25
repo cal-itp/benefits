@@ -38,7 +38,7 @@ class RateLimit(MiddlewareMixin):
             return None
 
         if request.method in settings.RATE_LIMIT_METHODS:
-            session.increment_rate_limit_counter(request)
+            session.rate_limit_counter_increment(request)
         else:
             # bail early if the request method doesn't match
             return None
@@ -61,7 +61,7 @@ class RateLimit(MiddlewareMixin):
                 return HttpResponseBadRequest(t.render(page.context_dict()))
             else:
                 # enough time has passed, reset the rate limit
-                session.reset_rate_limit(request)
+                session.rate_limit_reset(request)
 
         return None
 

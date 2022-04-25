@@ -108,7 +108,7 @@ def test_reset_enrollment(session_request):
 
     assert session.enrollment_token(session_request) is None
     assert session.enrollment_token_expiry(session_request) is None
-    assert not session.valid_enrollment_token(session_request)
+    assert not session.enrollment_token_valid(session_request)
 
 
 @pytest.mark.django_db
