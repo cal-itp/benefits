@@ -384,3 +384,18 @@ def test_update_origin(session_request):
     session.update(session_request, origin="/origin")
 
     assert session.origin(session_request) == "/origin"
+
+
+@pytest.mark.django_db
+def test_update_verifier(session_request):
+    verifier = models.EligibilityVerifier.objects.first()
+
+    session.update(session_request, verifier=verifier)
+
+    assert session.verifier(session_request) == verifier
+
+
+@pytest.mark.django_db
+def test_verifier_default(session_request):
+    assert session._VERIFIER not in session_request.session
+    assert session.verifier(session_request) is None
