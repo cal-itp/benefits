@@ -316,6 +316,17 @@ def test_start_default(session_request):
 
 
 @pytest.mark.django_db
+def test_uid(session_request):
+    assert session._UID not in session_request.session
+
+    uid = session.uid(session_request)
+
+    assert uid
+    assert isinstance(uid, str)
+    assert session._UID in session_request.session
+
+
+@pytest.mark.django_db
 def test_update_agency_None(session_request):
     session.update(session_request, agency=None)
 
