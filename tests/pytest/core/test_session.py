@@ -49,15 +49,6 @@ def test_eligibility_default(session_request):
 
 
 @pytest.mark.django_db
-def test_eligibility(session_request):
-    agency = models.TransitAgency.objects.first()
-    eligibility = agency.eligibility_types.first()
-    session.update(session_request, agency=agency, eligibility_types=[eligibility.name])
-
-    assert session.eligibility(session_request) == eligibility
-
-
-@pytest.mark.django_db
 def test_eligibile_False(session_request):
     assert session.eligibility(session_request) is None
     assert not session.eligible(session_request)
@@ -67,6 +58,7 @@ def test_eligibile_False(session_request):
 def test_eligibile_True(session_request):
     agency = models.TransitAgency.objects.first()
     eligibility = agency.eligibility_types.first()
+
     session.update(session_request, agency=agency, eligibility_types=[eligibility.name])
 
     assert session.eligible(session_request)
@@ -366,3 +358,28 @@ def test_update_debug_True(session_request):
     session.update(session_request, debug=True)
 
     assert session.debug(session_request)
+
+
+@pytest.mark.django_db
+def test_update_eligibility_empty(session_request):
+    session.update(session_request, eligibility_types=[])
+
+    assert session.eligibility(session_request) is None
+
+
+@pytest.mark.django_db
+def test_update_eligibility_many(session_request):
+    eligiblity = models.EligibilityType.objects.all()
+
+    with pytest.raises(NotImplementedError):
+        assert session.update(session_request, eligibility_types=[e.name for e in eligiblity])
+
+
+@pytest.mark.django_db
+def test_update_eligibility_single(session_request):
+    agency = models.TransitAgency.objects.first()
+    eligibility = agency.eligibility_types.first()
+
+    session.update(session_request, agency=agency, eligibility_types=[eligibility.name])
+
+    assert session.eligibility(session_request) == eligibility
