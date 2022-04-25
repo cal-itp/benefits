@@ -1,4 +1,5 @@
 from django.contrib.sessions.middleware import SessionMiddleware
+from django.middleware.locale import LocaleMiddleware
 
 import pytest
 
@@ -35,6 +36,9 @@ def initialize_session(request):
     """Helper initializes a Django request object's session."""
 
     # https://stackoverflow.com/a/55530933/358804
-    middleware = SessionMiddleware(lambda x: x)
-    middleware.process_request(request)
+    middleware = [SessionMiddleware(lambda x: x), LocaleMiddleware(lambda x: x)]
+
+    for m in middleware:
+        m.process_request(request)
+
     request.session.save()

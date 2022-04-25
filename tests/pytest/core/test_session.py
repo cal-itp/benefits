@@ -111,6 +111,17 @@ def test_enrollment_token_valid(session_request):
 
 
 @pytest.mark.django_db
+def test_language_default(session_request):
+    assert session.language(session_request) == "en"
+
+
+@pytest.mark.django_db
+def test_language_es(session_request):
+    session_request.LANGUAGE_CODE = "es"
+    assert session.language(session_request) == "es"
+
+
+@pytest.mark.django_db
 def test_reset_agency(session_request):
     session_request.session[session._AGENCY] = "abc"
 
