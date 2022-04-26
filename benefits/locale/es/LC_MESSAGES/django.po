@@ -466,6 +466,12 @@ msgstr ""
 "Para obtener información adicional sobre qué esperar al usar su tarjeta bancaria conectada, comuníquese con su proveedor de transporte público o consulte nuestra "
 "<a href=\"%(help_link)s\" rel=\"noopener noreferrer\">página de ayuda</a>."
 
+msgid "enrollment.pages.success.p3"
+msgstr "TODO: If you are on a public or shared computer, please sign out of your"
+
+msgid "enrollment.pages.success.p4"
+msgstr "TODO: account."
+
 msgid "eligibility.pages.index.dmv.label"
 msgstr "TODO: Senior Discount Program"
 

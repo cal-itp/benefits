@@ -15,7 +15,7 @@
 
 {% block buttons %}
     <p>
-        <span>If you are on a public or shared computer, please sign out of your</span>
+        <span>{% translate "enrollment.pages.success.p3" %}</span>
         {% for b in page.buttons %}
             <a id="{{ b.id }}"
                 class="{{ b.classes | join:" " }}"
@@ -25,6 +25,6 @@
                 <span class="fallback-text">{{ b.fallback_text }}</span>
             </a>
         {% endfor %}
-        <span>account</span>.
+        <span>{% translate "enrollment.pages.success.p4" %}</span>
     </p>
 {% endblock buttons %}
