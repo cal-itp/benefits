@@ -10,10 +10,9 @@ def make_eligibile(mocker):
     assert agency
     with_agency(mocker, agency)
 
-    mock = mocker.patch("benefits.core.session.eligibility", autospec=True)
     eligibility = EligibilityType.objects.first()
     assert eligibility
-    mock.return_value = eligibility
+    mocker.patch("benefits.core.session.eligibility", autospec=True, return_value=eligibility)
 
 
 @pytest.mark.django_db

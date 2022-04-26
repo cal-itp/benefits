@@ -55,5 +55,4 @@ def initialize_request(request):
 
 
 def with_agency(mocker, agency):
-    mock = mocker.patch("benefits.core.session.agency", autospec=True)
-    mock.return_value = agency
+    mocker.patch("benefits.core.session.agency", autospec=True, return_value=agency)
