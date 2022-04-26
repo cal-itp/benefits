@@ -1,3 +1,4 @@
+from unittest.mock import create_autospec
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.middleware.locale import LocaleMiddleware
 
@@ -31,6 +32,14 @@ def app_request(request, rf):
     return app_request
 
 
+@pytest.fixture
+def mocked_view():
+    def test_view(request):
+        pass
+
+    return create_autospec(test_view)
+
+
 def initialize_request(request):
     """Helper initializes a Django request object with session and language information."""
 
@@ -43,3 +52,8 @@ def initialize_request(request):
     request.session.save()
 
     session.reset(request)
+
+
+def with_agency(mocker, agency):
+    mock = mocker.patch("benefits.core.session.agency", autospec=True)
+    mock.return_value = agency
