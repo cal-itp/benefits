@@ -32,6 +32,17 @@ def test_login(mocker, app_request):
     assert not session.logged_in(app_request)
 
 
+def test_login_analytics(mocker, app_request):
+    spy = mocker.patch("benefits.oauth.analytics.started_sign_in")
+
+    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
+    mock_client.authorize_redirect.return_value = HttpResponse("authorize redirect")
+
+    login(app_request)
+
+    spy.assert_called_once()
+
+
 @pytest.mark.request_path("/oauth/login")
 def test_authorize_fail(mocker, app_request):
     mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
@@ -63,6 +74,17 @@ def test_authorize_success(mocker, app_request):
     assert result.url == reverse(ROUTE_CONFIRM)
 
 
+def test_authorize_analytics(mocker, app_request):
+    spy = mocker.patch("benefits.oauth.analytics.finished_sign_in")
+
+    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
+    mock_client.authorize_access_token.return_value = {"id_token": "token"}
+
+    authorize(app_request)
+
+    spy.assert_called_once()
+
+
 @pytest.mark.request_path("/oauth/logout")
 def test_logout(mocker, app_request):
     # logout internally calls _deauthorize_redirect
@@ -86,6 +108,23 @@ def test_logout(mocker, app_request):
     assert session.enrollment_token(app_request) is False
 
 
+def test_logout_analytics(mocker, app_request):
+    spy = mocker.patch("benefits.oauth.analytics.started_sign_out")
+
+    # logout internally calls _deauthorize_redirect
+    # this mocks that function and a success response
+    message = "logout successful"
+    mocker.patch("benefits.oauth.views._deauthorize_redirect", return_value=HttpResponse(message))
+
+    token = "token"
+    session.update(app_request, oauth_token=token)
+    assert session.oauth_token(app_request) == token
+
+    logout(app_request)
+
+    spy.assert_called_once()
+
+
 @pytest.mark.request_path("/oauth/post_logout")
 def test_post_logout(mocker, app_request):
     origin = reverse("core:index")
@@ -97,6 +136,14 @@ def test_post_logout(mocker, app_request):
 
     assert result.status_code == 302
     assert result.url == origin
+
+
+def test_post_logout_analytics(mocker, app_request):
+    spy = mocker.patch("benefits.oauth.analytics.finished_sign_out")
+
+    post_logout(app_request)
+
+    spy.assert_called_once()
 
 
 def test_deauthorize_redirect(mocker):
