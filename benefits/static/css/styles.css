@@ -295,6 +295,18 @@ footer .footer-links a {
   line-height: 1;
 }
 
+/* Enrollment Success */
+
+.enrollment-success #login {
+  padding: 0.2rem 0.6rem 0.1rem 0.6rem;
+  vertical-align: middle;
+}
+
+.enrollment-success #login .fallback-text {
+  width: 7rem;
+  vertical-align: inherit;
+}
+
 .radio-container {
   display: block;
   margin-left: 15%;
