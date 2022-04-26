@@ -154,12 +154,14 @@ def test_rate_limit_reset(mocker, session_request):
 
 @pytest.mark.django_db
 def test_reset_agency(session_request):
-    session_request.session[session._AGENCY] = "abc"
+    agency = models.TransitAgency.objects.first()
+    session.update(session_request, agency=agency)
+
+    assert session.agency(session_request)
 
     session.reset(session_request)
 
     assert session.agency(session_request) is None
-    assert not session.active_agency(session_request)
 
 
 @pytest.mark.django_db
