@@ -8,7 +8,7 @@ from benefits.core import session
 from benefits.core.middleware import LoginRequired
 from benefits.core.models import EligibilityVerifier
 
-from tests.pytest.conftest import initialize_session
+from tests.pytest.conftest import initialize_request
 
 login_path = reverse("oauth:login")
 
@@ -30,7 +30,7 @@ def test_login_auth_required(rf):
 
     blocked_path = "/some/blocked/path"
     request = rf.get(blocked_path)
-    initialize_session(request)
+    initialize_request(request)
     require_login(request)
 
     response = test_view(request)
@@ -51,7 +51,7 @@ def test_login_auth_not_required(rf):
 
     blocked_path = "/some/blocked/path"
     request = rf.get(blocked_path)
-    initialize_session(request)
+    initialize_request(request)
 
     verifier = EligibilityVerifier.objects.filter(auth_provider__isnull=True).first()
     assert verifier
@@ -73,7 +73,7 @@ def test_logged_in(rf):
 
     blocked_path = "/some/blocked/path"
     request = rf.get(blocked_path)
-    initialize_session(request)
+    initialize_request(request)
     require_login(request)
 
     # log in

@@ -18,49 +18,49 @@ import pytest
 
 
 @pytest.mark.request_path("/oauth/login")
-def test_login(mocker, session_request):
+def test_login(mocker, app_request):
     mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
     mock_client.authorize_redirect.return_value = HttpResponse("authorize redirect")
 
-    assert not session.logged_in(session_request)
+    assert not session.logged_in(app_request)
 
-    login(session_request)
+    login(app_request)
 
-    mock_client.authorize_redirect.assert_called_with(session_request, "https://testserver/oauth/authorize")
-    assert not session.logged_in(session_request)
+    mock_client.authorize_redirect.assert_called_with(app_request, "https://testserver/oauth/authorize")
+    assert not session.logged_in(app_request)
 
 
 @pytest.mark.request_path("/oauth/login")
-def test_authorize_fail(mocker, session_request):
+def test_authorize_fail(mocker, app_request):
     mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
     mock_client.authorize_access_token.return_value = None
 
-    assert not session.logged_in(session_request)
+    assert not session.logged_in(app_request)
 
-    result = authorize(session_request)
+    result = authorize(app_request)
 
-    mock_client.authorize_access_token.assert_called_with(session_request)
-    assert not session.logged_in(session_request)
+    mock_client.authorize_access_token.assert_called_with(app_request)
+    assert not session.logged_in(app_request)
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_START)
 
 
 @pytest.mark.request_path("/oauth/login")
-def test_authorize_success(mocker, session_request):
+def test_authorize_success(mocker, app_request):
     mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
     mock_client.authorize_access_token.return_value = {"id_token": "token"}
 
-    result = authorize(session_request)
+    result = authorize(app_request)
 
-    mock_client.authorize_access_token.assert_called_with(session_request)
-    assert session.logged_in(session_request)
-    assert session.oauth_token(session_request) == "token"
+    mock_client.authorize_access_token.assert_called_with(app_request)
+    assert session.logged_in(app_request)
+    assert session.oauth_token(app_request) == "token"
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_CONFIRM)
 
 
 @pytest.mark.request_path("/oauth/logout")
-def test_logout(mocker, session_request):
+def test_logout(mocker, app_request):
     # logout internally calls _deauthorize_redirect
     # this mocks that function and a success response
     # and returns a spy object we can use to validate calls
@@ -68,24 +68,24 @@ def test_logout(mocker, session_request):
     spy = mocker.patch("benefits.oauth.views._deauthorize_redirect", return_value=HttpResponse(message))
 
     token = "token"
-    session.update(session_request, oauth_token=token)
-    assert session.oauth_token(session_request) == token
+    session.update(app_request, oauth_token=token)
+    assert session.oauth_token(app_request) == token
 
-    result = logout(session_request)
+    result = logout(app_request)
 
     spy.assert_called_with(token, "https://testserver/oauth/post_logout")
     assert result.status_code == 200
     assert message in str(result.content)
-    assert not session.logged_in(session_request)
-    assert session.enrollment_token(session_request) is False
+    assert not session.logged_in(app_request)
+    assert session.enrollment_token(app_request) is False
 
 
 @pytest.mark.request_path("/oauth/post_logout")
-def test_post_logout(session_request):
+def test_post_logout(app_request):
     origin = reverse("core:index")
-    session.update(session_request, origin=origin)
+    session.update(app_request, origin=origin)
 
-    result = post_logout(session_request)
+    result = post_logout(app_request)
 
     assert result.status_code == 302
     assert result.url == origin
