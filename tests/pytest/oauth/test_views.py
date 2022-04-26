@@ -22,6 +22,8 @@ def test_login(mocker, app_request):
     mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
     mock_client.authorize_redirect.return_value = HttpResponse("authorize redirect")
 
+    mocker.patch.object(benefits.oauth.views, "analytics")
+
     assert not session.logged_in(app_request)
 
     login(app_request)
@@ -50,6 +52,8 @@ def test_authorize_success(mocker, app_request):
     mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
     mock_client.authorize_access_token.return_value = {"id_token": "token"}
 
+    mocker.patch.object(benefits.oauth.views, "analytics")
+
     result = authorize(app_request)
 
     mock_client.authorize_access_token.assert_called_with(app_request)
@@ -67,6 +71,8 @@ def test_logout(mocker, app_request):
     message = "logout successful"
     spy = mocker.patch("benefits.oauth.views._deauthorize_redirect", return_value=HttpResponse(message))
 
+    mocker.patch.object(benefits.oauth.views, "analytics")
+
     token = "token"
     session.update(app_request, oauth_token=token)
     assert session.oauth_token(app_request) == token
@@ -81,9 +87,11 @@ def test_logout(mocker, app_request):
 
 
 @pytest.mark.request_path("/oauth/post_logout")
-def test_post_logout(app_request):
+def test_post_logout(mocker, app_request):
     origin = reverse("core:index")
     session.update(app_request, origin=origin)
+
+    mocker.patch.object(benefits.oauth.views, "analytics")
 
     result = post_logout(app_request)
 
