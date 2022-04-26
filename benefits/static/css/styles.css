@@ -99,14 +99,14 @@ footer .footer-links a {
 #login {
   background: #046b99;
   border: 0;
-  border-radius: 0.3rem;
+  border-radius: 0;
   color: #ffffff;
   cursor: pointer;
   display: block;
   line-height: 1;
-  letter-spacing: 0.05em;
-  margin-right: initial;
-  padding: 1.25rem 2.25rem;
+  margin: 0;
+  padding: 0.5rem 1.5rem;
+  min-width: auto;
 }
 
 #login:hover {
@@ -121,9 +121,8 @@ footer .footer-links a {
   background-size: contain;
   display: inline-block;
   position: relative;
-  width: 9rem;
+  width: 9.75rem;
   vertical-align: baseline;
-  margin-left: 0.2rem;
 }
 
 .fallback-text {
@@ -189,6 +188,8 @@ footer .footer-links a {
 .global-footer {
   background: #212121;
 }
+
+/* Eligibility Start */
 
 .media-title {
   margin-top: 0;
@@ -276,6 +277,22 @@ footer .footer-links a {
 
 .media-list .media .media-body .media-body--links .btn-lg:hover {
   color: #2f4c65;
+}
+
+.eligibility-start .container.content {
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+}
+
+.eligibility-start .buttons {
+  display: flex;
+  align-items: flex-end;
+  justify-content: right;
+}
+
+.eligibility-start .container.content .buttons label {
+  margin: 0 0.8rem 0 0;
+  line-height: 1;
 }
 
 .radio-container {
@@ -415,12 +432,11 @@ footer .footer-links a {
 
 @media (max-width: 320px) {
   #login {
-    padding: 1.25rem 1.25rem;
+    padding: 1rem 1.25rem;
   }
 
-  /* Login.gov logo is on second line */
-  #login .fallback-text {
-    margin-top: 0.6rem;
+  .eligibility-start .container.content .buttons {
+    padding: 0 3rem;
   }
 }
 
@@ -440,10 +456,6 @@ footer .footer-links a {
     margin-left: 5px;
   }
 
-  #login {
-    padding: 1.25rem 1.25rem;
-  }
-
   .container.content {
     padding-left: 0;
     padding-right: 0;
@@ -451,6 +463,8 @@ footer .footer-links a {
 }
 
 @media (max-width: 992px) {
+  /* Eligibility Start */
+
   .media-list {
     display: flex;
     flex-direction: column;
@@ -483,8 +497,17 @@ footer .footer-links a {
     border-top: none;
   }
 
+  .eligibility-start .container.content .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
   #login {
-    width: 100%;
+    width: inherit;
+  }
+
+  .eligibility-start .container.content .buttons label {
+    margin: 0 0 0.8rem 0;
   }
 
   /* Override for only the Agency Index page */

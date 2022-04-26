@@ -1,5 +1,9 @@
 {% extends "core/page.html" %}
 
+{% block classes %}
+    {{ block.super |add:" eligibility-start"}}
+{% endblock %}
+
 {% block container_content %}
 
     {% block icon_title %}
