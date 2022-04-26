@@ -3,11 +3,6 @@
         {% if "agency" in agency_button.classes %}
             {% if agency_button.label != "phone" %}
                 <strong>{{agency_button.label}}:</strong>
-                {% comment %} <a target="{{ agency_button.target }}"
-                    rel="{{ agency_button.rel }}"
-                    href="{{ agency_button.url }}">
-                    {{ agency_button.label }}:
-                </a> {% endcomment %}
             {% else %}
                 <a href="{{ agency_button.url }}">
                     {{ agency_button.text }}
