@@ -12,6 +12,14 @@ def test_active_agency_False(app_request):
 
     assert not session.active_agency(app_request)
 
+    agency = models.TransitAgency.objects.first()
+    agency.active = False
+    agency.save()
+
+    session.update(app_request, agency=agency)
+
+    assert not session.active_agency(app_request)
+
 
 @pytest.mark.django_db
 def test_active_agency_True(app_request):
