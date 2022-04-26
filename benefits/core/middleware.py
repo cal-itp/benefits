@@ -49,7 +49,7 @@ class RateLimit(MiddlewareMixin):
 
         if counter > settings.RATE_LIMIT:
             if reset_time > now:
-                logger.warn("Rate limit exceeded")
+                logger.warning("Rate limit exceeded")
                 home = viewmodels.Button.home(request)
                 page = viewmodels.ErrorPage.error(
                     title="Rate limit error",
