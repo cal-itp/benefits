@@ -77,10 +77,33 @@ def test_enrollment_token_default(app_request):
 
 
 @pytest.mark.django_db
-def test_enrollment_token_valid(app_request):
+def test_enrollment_token_valid_expired(app_request):
+    # valid token expired in the far past
+    token = "token"
+    exp = time.time() - 10000
+
+    session.update(app_request, enrollment_token=token, enrollment_token_exp=exp)
+
+    assert not session.enrollment_token_valid(app_request)
+
+
+@pytest.mark.django_db
+def test_enrollment_token_valid_invalid(app_request):
+    # invalid token expiring in the far future
+    token = None
+    exp = time.time() + 10000
+
+    session.update(app_request, enrollment_token=token, enrollment_token_exp=exp)
+
+    assert not session.enrollment_token_valid(app_request)
+
+
+@pytest.mark.django_db
+def test_enrollment_token_valid_valid(app_request):
     # valid token expiring in the far future
     token = "token"
     exp = time.time() + 10000
+
     session.update(app_request, enrollment_token=token, enrollment_token_exp=exp)
 
     assert session.enrollment_token_valid(app_request)
