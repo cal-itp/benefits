@@ -156,10 +156,9 @@ def success(request):
             raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
 
         if session.logged_in(request):
-            # Logout button
             button = viewmodels.Button.login(
                 classes="logout",
-                url=reverse("oauth:login"),
+                url=reverse("oauth:logout"),
             )
             page = viewmodels.Page(
                 title=_("enrollment.pages.success.title"),
