@@ -153,6 +153,15 @@ def test_rate_limit_reset(mocker, app_request):
 
 
 @pytest.mark.django_db
+def test_rate_limit_time_default(app_request):
+    # a reset session also resets rate limit time (t0), which should have already happened coming into this test
+    t0 = session.rate_limit_time(app_request)
+    t1 = int(time.time())
+
+    assert t1 >= t0
+
+
+@pytest.mark.django_db
 def test_reset_agency(app_request):
     agency = models.TransitAgency.objects.first()
     session.update(app_request, agency=agency)
