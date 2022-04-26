@@ -44,7 +44,11 @@ def test_eligibility_default(app_request):
 
 @pytest.mark.django_db
 def test_eligibile_False(app_request):
-    assert session.eligibility(app_request) is None
+    agency = models.TransitAgency.objects.first()
+    eligibility = []
+
+    session.update(app_request, agency=agency, eligibility_types=eligibility)
+
     assert not session.eligible(app_request)
 
 
