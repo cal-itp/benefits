@@ -217,16 +217,17 @@ def unverified(request):
     # tel: link to agency phone number
     agency = session.agency(request)
     buttons = viewmodels.Button.agency_contact_links(agency)
+    buttons.append(viewmodels.Button.home(request, _("enrollment.buttons.retry")))
 
     verifier = session.verifier(request)
 
     page = viewmodels.Page(
         title=_(verifier.unverified_title),
+        classes="with-agency-links",
         content_title=_(verifier.unverified_content_title),
         icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
         paragraphs=[_(verifier.unverified_blurb), _("eligibility.pages.unverified.p[1]")],
         buttons=buttons,
-        classes="text-lg-center",
     )
 
     return PageTemplateResponse(request, page)

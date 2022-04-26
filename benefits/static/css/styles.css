@@ -382,7 +382,8 @@ footer .footer-links a {
   margin-bottom: 2rem;
 }
 
-.container.content.help .buttons-agencies {
+.container.content.help .buttons-agencies,
+.with-agency-links .buttons-agencies {
   font-size: 18px;
   letter-spacing: 0.05rem;
   margin-bottom: 3rem;
