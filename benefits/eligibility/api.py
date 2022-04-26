@@ -6,10 +6,9 @@ import json
 import logging
 import uuid
 
+from django.conf import settings
 from jwcrypto import common as jwcrypto, jwe, jws, jwt
 import requests
-
-from benefits.settings import ALLOWED_HOSTS
 
 
 logger = logging.getLogger(__name__)
@@ -39,7 +38,7 @@ class RequestToken:
         # craft the main token payload
         payload = dict(
             jti=str(uuid.uuid4()),
-            iss=ALLOWED_HOSTS[0],
+            iss=settings.ALLOWED_HOSTS[0],
             iat=int(datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).timestamp()),
             agency=agency.agency_id,
             eligibility=types,

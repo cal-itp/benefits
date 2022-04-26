@@ -42,7 +42,7 @@ h1 {
 }
 
 p {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   font-size: 18px;
   line-height: 27px;
   letter-spacing: 0.05em;
@@ -69,6 +69,10 @@ body {
 
 main {
   flex-shrink: 0 !important;
+}
+
+main .main-row {
+  min-height: calc(100vh - 120px);
 }
 
 footer {
@@ -184,23 +188,6 @@ footer .footer-links a {
 
 .global-footer {
   background: #212121;
-}
-
-.home .buttons {
-  margin-top: 20vh;
-}
-
-.agency-index h1 {
-  margin-bottom: 7vh;
-}
-
-.agency-index p {
-  margin-bottom: 5vh;
-}
-
-.agency-index label {
-  margin-top: 15vh;
-  margin-bottom: 7vh;
 }
 
 .media-title {
@@ -334,16 +321,23 @@ footer .footer-links a {
 
 /* context-specific overrides */
 
+/* Header */
+
+.navbar.navbar-expand-sm.navbar-dark.bg-primary {
+  padding: 8.5px 1rem;
+}
+
+.navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .navbar-brand img.sm {
   width: 120px;
 }
 
 .navbar-brand img.lg {
-  width: 274px;
-}
-
-.image[class*="col-"] {
-  min-height: 230px;
+  width: 271px;
 }
 
 .container.content {
@@ -351,14 +345,22 @@ footer .footer-links a {
   margin-bottom: 2rem;
 }
 
+.container.content .buttons label {
+  margin-bottom: 2rem;
+}
+
+.container.content h1.icon-title {
+  padding-bottom: 1.5rem;
+}
+
 .container.content h1.icon-title span.icon {
   text-align: center;
   display: block;
-  margin-bottom: 1rem;
+  padding-bottom: 3rem;
 }
 
 .container.content.help {
-  margin-top: 4rem;
+  margin: 4rem auto 2rem auto;
 }
 
 .container.content.help h1 {
@@ -484,6 +486,11 @@ footer .footer-links a {
   #login {
     width: 100%;
   }
+
+  /* Override for only the Agency Index page */
+  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
+    margin-bottom: 2rem;
+  }
 }
 
 @media (min-width: 992px) {
@@ -494,24 +501,19 @@ footer .footer-links a {
   .with-image main {
     flex-shrink: unset;
   }
-  .with-image .container.content {
-    min-height: 800px;
-  }
-  .with-image footer {
+
+  footer {
     margin-top: unset;
     padding-top: 0.138rem;
     padding-bottom: 0.138rem;
   }
 
-  .image[class*="col-"] {
-    min-height: 725px;
-  }
-
   .container.content {
     padding-left: 3.5rem;
     padding-right: 3.5rem;
-    margin-top: 8rem;
-    margin-bottom: 7rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin: 0;
   }
 
   .container.content input[type="submit"],
@@ -522,6 +524,11 @@ footer .footer-links a {
     margin-left: auto;
     margin-right: auto;
   }
+
+  /* Override for only the Agency Index page */
+  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
+    margin-bottom: 4rem;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -529,5 +536,13 @@ footer .footer-links a {
   .container.content {
     padding-left: 5rem;
     padding-right: 5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin: 0;
+  }
+
+  /* Override for only the Agency Index page */
+  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
+    margin-bottom: 5rem;
   }
 }

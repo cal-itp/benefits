@@ -1,10 +1,10 @@
 """
 The core application: Admin interface configuration.
 """
-from benefits.settings import ADMIN
+from django.conf import settings
 
 
-if ADMIN:
+if settings.ADMIN:
     import logging
     from django.contrib import admin
     from . import models

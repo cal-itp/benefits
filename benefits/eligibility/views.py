@@ -1,6 +1,7 @@
 """
 The eligibility application: view definitions for the eligibility verification flow.
 """
+from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
@@ -8,14 +9,14 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
-from benefits.core import middleware, recaptcha, session, viewmodels
+from benefits.core import recaptcha, session, viewmodels
+from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
 from benefits.core.views import PageTemplateResponse
-from benefits.settings import OAUTH_CLIENT_NAME
 from . import analytics, api, forms
 
 
-@decorator_from_middleware(middleware.AgencySessionRequired)
+@decorator_from_middleware(AgencySessionRequired)
 def index(request):
     """View handler for the eligibility verifier selection form."""
 
@@ -54,8 +55,8 @@ def index(request):
     return response
 
 
-@decorator_from_middleware(middleware.AgencySessionRequired)
-@decorator_from_middleware(middleware.VerifierSessionRequired)
+@decorator_from_middleware(AgencySessionRequired)
+@decorator_from_middleware(VerifierSessionRequired)
 def start(request):
     """View handler for the eligibility verification getting started screen."""
 
@@ -89,7 +90,7 @@ def start(request):
     ]
 
     if verifier.requires_authentication:
-        if OAUTH_CLIENT_NAME is None:
+        if settings.OAUTH_CLIENT_NAME is None:
             raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
 
         media.insert(
@@ -110,7 +111,7 @@ def start(request):
             ),
         )
 
-        if not session.auth(request):
+        if not session.logged_in(request):
             button = viewmodels.Button.login(
                 text=_(verifier.auth_provider.sign_in_button_label),
                 url=reverse("oauth:login"),
@@ -130,9 +131,10 @@ def start(request):
     return TemplateResponse(request, "eligibility/start.html", ctx)
 
 
-@decorator_from_middleware(middleware.AgencySessionRequired)
-@decorator_from_middleware(middleware.RateLimit)
-@decorator_from_middleware(middleware.VerifierSessionRequired)
+@decorator_from_middleware(AgencySessionRequired)
+@decorator_from_middleware(LoginRequired)
+@decorator_from_middleware(RateLimit)
+@decorator_from_middleware(VerifierSessionRequired)
 def confirm(request):
     """View handler for the eligibility verification form."""
 
@@ -191,20 +193,21 @@ def _verify(request, form):
         return unverified(request)
 
 
-@decorator_from_middleware(middleware.AgencySessionRequired)
+@decorator_from_middleware(AgencySessionRequired)
+@decorator_from_middleware(LoginRequired)
 def verified(request, verified_types):
     """View handler for the verified eligibility page."""
 
     analytics.returned_success(request)
 
-    enrollment_index = reverse("enrollment:index")
-    session.update(request, eligibility_types=verified_types, origin=enrollment_index)
+    session.update(request, eligibility_types=verified_types)
 
-    return redirect(enrollment_index)
+    return redirect("enrollment:index")
 
 
-@decorator_from_middleware(middleware.AgencySessionRequired)
-@decorator_from_middleware(middleware.VerifierSessionRequired)
+@decorator_from_middleware(AgencySessionRequired)
+@decorator_from_middleware(LoginRequired)
+@decorator_from_middleware(VerifierSessionRequired)
 def unverified(request):
     """View handler for the unverified eligibility page."""
 
