@@ -163,14 +163,14 @@ def test_rate_limit_counter_default(app_request):
 
 @pytest.mark.django_db
 def test_rate_limit_counter_increment(app_request):
-    session.rate_limit_reset(app_request)
-    session.rate_limit_counter_increment(app_request)
+    session.reset_rate_limit(app_request)
+    session.increment_rate_limit_counter(app_request)
 
     c1 = session.rate_limit_counter(app_request)
     assert isinstance(c1, int)
     assert c1 > 0
 
-    session.rate_limit_counter_increment(app_request)
+    session.increment_rate_limit_counter(app_request)
 
     c2 = session.rate_limit_counter(app_request)
     assert c2 == c1 + 1
@@ -181,7 +181,7 @@ def test_rate_limit_reset(mocker, app_request):
     mocker.patch.object(session.settings, "RATE_LIMIT_PERIOD", 100)
     t0 = int(time.time())
 
-    session.rate_limit_reset(app_request)
+    session.reset_rate_limit(app_request)
 
     assert session.rate_limit_counter(app_request) == 0
     assert session.rate_limit_time(app_request) >= t0 + 100

@@ -163,14 +163,14 @@ def rate_limit_counter(request):
     return request.session.get(_LIMITCOUNTER)
 
 
-def rate_limit_counter_increment(request):
+def increment_rate_limit_counter(request):
     """Adds 1 to this session's rate limit counter."""
     logger.debug("Increment rate limit counter")
     c = rate_limit_counter(request)
     request.session[_LIMITCOUNTER] = int(c) + 1
 
 
-def rate_limit_reset(request):
+def reset_rate_limit(request):
     """Reset this session's rate limit counter and time."""
     logger.debug("Reset rate limit")
     request.session[_LIMITCOUNTER] = 0
@@ -201,7 +201,7 @@ def reset(request):
         u = str(uuid.uuid4())
         request.session[_UID] = u
         request.session[_DID] = str(uuid.UUID(hashlib.sha512(bytes(u, "utf8")).hexdigest()[:32]))
-        rate_limit_reset(request)
+        reset_rate_limit(request)
 
 
 def start(request):
