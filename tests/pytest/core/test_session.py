@@ -23,8 +23,6 @@ def test_active_agency_True(session_request):
 
 @pytest.mark.django_db
 def test_debug_default(session_request):
-    assert session._DEBUG not in session_request.session
-
     debug = session.debug(session_request)
 
     assert isinstance(debug, bool)
@@ -33,18 +31,14 @@ def test_debug_default(session_request):
 
 @pytest.mark.django_db
 def test_did(session_request):
-    assert session._DID not in session_request.session
-
     did = session.did(session_request)
 
     assert did
     assert isinstance(did, str)
-    assert session._DID in session_request.session
 
 
 @pytest.mark.django_db
 def test_eligibility_default(session_request):
-    assert session._ELIGIBILITY not in session_request.session
     assert session.eligibility(session_request) is None
 
 
@@ -66,9 +60,7 @@ def test_eligibile_True(session_request):
 
 @pytest.mark.django_db
 def test_enrollment_token_default(session_request):
-    assert session._ENROLLMENT_TOKEN not in session_request.session
     assert session.enrollment_token(session_request) is None
-    assert session._ENROLLMENT_TOKEN_EXP not in session_request.session
     assert session.enrollment_token_expiry(session_request) is None
 
 
@@ -126,20 +118,12 @@ def test_logout(session_request):
 
 @pytest.mark.django_db
 def test_oauth_token_default(session_request):
-    assert session._OAUTH_TOKEN not in session_request.session
     assert not session.oauth_token(session_request)
 
 
 @pytest.mark.django_db
-def test_origin_default(session_request):
-    assert session._ORIGIN not in session_request.session
-    assert not session.origin(session_request)
-
-
-@pytest.mark.django_db
 def test_rate_limit_counter_default(session_request):
-    assert session._LIMITCOUNTER not in session_request.session
-    assert session.rate_limit_counter(session_request) is None
+    assert session.rate_limit_counter(session_request) == 0
 
 
 @pytest.mark.django_db
@@ -159,21 +143,13 @@ def test_rate_limit_counter_increment(session_request):
 
 @pytest.mark.django_db
 def test_rate_limit_reset(mocker, session_request):
-    assert session._LIMITCOUNTER not in session_request.session
-    assert session._LIMITUNTIL not in session_request.session
-
     mocker.patch.object(session.settings, "RATE_LIMIT_PERIOD", 100)
     t0 = int(time.time())
+
     session.rate_limit_reset(session_request)
 
     assert session.rate_limit_counter(session_request) == 0
     assert session.rate_limit_time(session_request) >= t0 + 100
-
-
-@pytest.mark.django_db
-def test_rate_limit_time_default(session_request):
-    assert session._LIMITUNTIL not in session_request.session
-    assert session.rate_limit_time(session_request) is None
 
 
 @pytest.mark.django_db
@@ -263,8 +239,6 @@ def test_reset_user(session_request):
 
 @pytest.mark.django_db
 def test_start_default(session_request):
-    assert session._START not in session_request.session
-
     t0 = time.time()
     start = session.start(session_request)
 
@@ -274,13 +248,10 @@ def test_start_default(session_request):
 
 @pytest.mark.django_db
 def test_uid(session_request):
-    assert session._UID not in session_request.session
-
     uid = session.uid(session_request)
 
     assert uid
     assert isinstance(uid, str)
-    assert session._UID in session_request.session
 
 
 @pytest.mark.django_db
@@ -396,5 +367,4 @@ def test_update_verifier(session_request):
 
 @pytest.mark.django_db
 def test_verifier_default(session_request):
-    assert session._VERIFIER not in session_request.session
     assert session.verifier(session_request) is None
