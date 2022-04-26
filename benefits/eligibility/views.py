@@ -113,7 +113,7 @@ def start(request):
 
         if not session.logged_in(request):
             button = viewmodels.Button.login(
-                label="Sign in or Create an account with",
+                label=_(verifier.auth_provider.sign_in_button_label),
                 text="",
                 url=reverse("oauth:login"),
             )
