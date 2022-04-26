@@ -16,6 +16,7 @@ from . import analytics, session, viewmodels
 
 
 logger = logging.getLogger(__name__)
+HEALTHCHECK_PATH = "/healthcheck"
 
 
 class AgencySessionRequired(MiddlewareMixin):
@@ -92,7 +93,7 @@ class Healthcheck:
         self.get_response = get_response
 
     def __call__(self, request):
-        if request.path == "/healthcheck":
+        if request.path == HEALTHCHECK_PATH:
             return HttpResponse("Healthy", content_type="text/plain")
         return self.get_response(request)
 
