@@ -1,14 +1,15 @@
 <div class="buttons-agencies">
     {% for agency_button in buttons %}
         {% if "agency" in agency_button.classes %}
-            {% if agency_button.label != "phone" %}
-                <strong>{{agency_button.label}}:</strong>
-            {% else %}
-                <a href="{{ agency_button.url }}">
-                    {{ agency_button.text }}
-                </a>
-                <div class="mb-5"></div>
+            {% if agency_button.label %}
+                <label>{{ agency_button.label }}</label>
             {% endif %}
+            <a {% if agency_button.target %}target="{{ agency_button.target }}"{% endif %}
+                {% if agency_button.rel %}rel="{{ agency_button.rel }}"{% endif %}
+                class="btn"
+                href="{{ agency_button.url }}">
+                {{ agency_button.text }}
+            </a>
         {% endif %}
     {% endfor %}
 </div>

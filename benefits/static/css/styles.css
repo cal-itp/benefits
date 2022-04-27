@@ -389,6 +389,20 @@ footer .footer-links a {
   margin-bottom: 3rem;
 }
 
+.container.content.help .buttons-agencies .btn {
+  display: block;
+  text-align: left;
+  padding: 0;
+  font-size: 18px;
+  width: auto;
+}
+
+.container.content.help .buttons-agencies label {
+  display: block;
+  margin-top: 2rem;
+  font-size: 18px;
+}
+
 .container.content.help .button-back {
   margin-top: 5rem;
   margin-bottom: 5rem;
@@ -404,16 +418,6 @@ footer .footer-links a {
   padding: 0.8125rem;
   /* btn-lg height is 60px */
   width: 100%;
-}
-
-.container.content .btn-lg.agency-url {
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
-.container.content .btn-lg.agency-url,
-.container.content .btn-lg.agency-phone {
-  padding-top: 0;
 }
 
 .container.content .btn-link {
