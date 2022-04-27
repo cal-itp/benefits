@@ -112,10 +112,10 @@ def start(request):
         )
 
         if not session.logged_in(request):
-            button = viewmodels.Button.external(
-                text=_(verifier.auth_provider.sign_in_button_label),
+            button = viewmodels.Button.login(
+                label=_(verifier.auth_provider.sign_in_button_label),
+                text="",
                 url=reverse("oauth:login"),
-                id="login",
             )
 
     page = viewmodels.Page(

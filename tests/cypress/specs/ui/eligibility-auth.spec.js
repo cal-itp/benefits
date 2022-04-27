@@ -33,7 +33,7 @@ describe("Multiple verifier, with AuthProvider: Eligibility start page spec", ()
     cy.contains("Learn more about Login.gov");
   });
 
-  it("Has a Login.gov button", () => {
-    cy.contains("Continue with Login.gov");
+  it("Has a Login.gov button label", () => {
+    cy.contains("Create an account or sign in with");
   });
 });

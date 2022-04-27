@@ -96,25 +96,37 @@ footer .footer-links a {
   border-width: 2px;
 }
 
-.btn-external {
+#login {
+  background: #046b99;
+  border: 0;
   border-radius: 0;
-  border-color: #2b6597;
-  color: #2b6597;
+  color: #ffffff;
+  cursor: pointer;
+  display: block;
+  line-height: 1;
+  margin: 0;
+  padding: 0.5rem 1.5rem;
+  min-width: auto;
+}
+
+#login:hover {
+  background: #2f4c65;
+}
+
+/* Sets the text `Login.gov` as transparent */
+/* With an Login.gov logo image over it */
+/* So screenreaders can read out `Login.gov` */
+#login .fallback-text {
+  background: url("/static/img/login-gov-logo-rev.svg") no-repeat;
+  background-size: contain;
+  display: inline-block;
   position: relative;
+  width: 9.75rem;
+  vertical-align: baseline;
 }
 
-.btn-external::after {
-  content: url("/static/img/icon/rightarrow.svg");
-  width: 25px;
-  height: 22px;
-  margin-left: 8px;
-  vertical-align: sub;
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s;
-}
-
-.btn-external:hover::after {
-  content: url("/static/img/icon/rightarrow-hover.svg");
+.fallback-text {
+  color: transparent;
 }
 
 .btn-link {
@@ -177,6 +189,8 @@ footer .footer-links a {
   background: #212121;
 }
 
+/* Eligibility Start */
+
 .media-title {
   margin-top: 0;
   font-size: 24px;
@@ -212,7 +226,7 @@ footer .footer-links a {
   content: " ";
   position: absolute;
   top: 50%;
-  width: 124px;
+  width: 142.5px;
   border-top: 3px dashed #53b3e2;
   margin-top: -1px;
   display: block;
@@ -235,7 +249,7 @@ footer .footer-links a {
 }
 
 .media-list .media .media-body {
-  padding: 0 28px;
+  padding: 0 3.4rem;
 }
 
 .media-list .media .media-body--heading {
@@ -243,6 +257,11 @@ footer .footer-links a {
   letter-spacing: 0.05em;
   margin-top: 64px;
   margin-bottom: 20px;
+}
+
+.media-list .media .media-body--heading ol {
+  font-weight: 700;
+  padding-left: 0;
 }
 
 .media-list .media .media-body--details {
@@ -265,11 +284,23 @@ footer .footer-links a {
   color: #2f4c65;
 }
 
-#login {
-  min-width: 33%;
-  width: fit-content;
-  float: right;
-  padding: 16px 29px;
+.eligibility-start .container.content {
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+  width: initial;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.eligibility-start .buttons {
+  display: flex;
+  align-items: flex-end;
+  justify-content: right;
+}
+
+.eligibility-start .container.content .buttons label {
+  margin: 0 0.8rem 0 0;
+  line-height: 1;
 }
 
 .radio-container {
@@ -407,6 +438,16 @@ footer .footer-links a {
 
 /* media queries */
 
+@media (max-width: 320px) {
+  #login {
+    padding: 1rem 1.25rem;
+  }
+
+  .eligibility-start .container.content .buttons {
+    padding: 0 3rem;
+  }
+}
+
 @media (max-width: 767px) {
   /* xs and sm */
   .global-footer ul li {
@@ -422,9 +463,16 @@ footer .footer-links a {
     display: inline;
     margin-left: 5px;
   }
+
+  .container.content {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 @media (max-width: 992px) {
+  /* Eligibility Start */
+
   .media-list {
     display: flex;
     flex-direction: column;
@@ -457,9 +505,17 @@ footer .footer-links a {
     border-top: none;
   }
 
+  .eligibility-start .container.content .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
   #login {
-    width: 100%;
-    float: none;
+    width: inherit;
+  }
+
+  .eligibility-start .container.content .buttons label {
+    margin: 0 0 0.8rem 0;
   }
 
   /* Override for only the Agency Index page */

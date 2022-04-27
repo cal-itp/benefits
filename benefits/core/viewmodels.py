@@ -10,10 +10,11 @@ from . import session
 
 class Button:
     """
-    Represents a clickable button as styled <a> element (with optional label):
-    * label: str
-    * id: str
+    Represents a clickable button as styled <a> element (with optional label, optional transparent fallback text):
     * classes: str, str[]
+    * id: str
+    * fallback_text: str
+    * label: str
     * text: str
     * url: str
     * target: str
@@ -28,6 +29,7 @@ class Button:
         self.classes = ["btn", "btn-lg"]
         self.classes.extend(classes)
         self.id = kwargs.get("id")
+        self.fallback_text = kwargs.get("fallback_text")
         self.label = kwargs.get("label")
         self.text = kwargs.get("text", "Button")
         self.url = kwargs.get("url")
@@ -74,9 +76,9 @@ class Button:
         return Button(classes=classes, **kwargs)
 
     @staticmethod
-    def external(**kwargs):
-        btn = Button.outline_primary(**kwargs)
-        btn.classes.insert(0, "btn-external")
+    def login(**kwargs):
+        """Create a login.gov button, with a login.gov logo and fallback text"""
+        btn = Button.primary(fallback_text="Login.gov", id="login", **kwargs)
         return btn
 
 

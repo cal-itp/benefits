@@ -373,7 +373,7 @@ msgstr "https://login.gov/es/"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
-msgstr "TODO: Continue with Login.gov"
+msgstr "TODO: Create an account or sign in with"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signout"
