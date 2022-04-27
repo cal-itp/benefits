@@ -308,7 +308,13 @@ footer .footer-links a {
 }
 
 .logged-out.enrollment-success .success-image {
-  text-align: center;
+  display: block;
+  margin: 0 auto;
+  padding-top: 10vh;
+}
+
+.logged-out.enrollment-success .container.content {
+  padding-top: 20vh;
 }
 
 .radio-container {
@@ -529,6 +535,14 @@ footer .footer-links a {
   /* Override for only the Agency Index page */
   .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 2rem;
+  }
+
+  .logged-out.enrollment-success .success-image {
+    padding-top: 5vh;
+  }
+
+  .logged-out.enrollment-success .container.content {
+    padding-top: 10vh;
   }
 }
 
