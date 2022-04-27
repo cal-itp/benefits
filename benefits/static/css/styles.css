@@ -389,7 +389,8 @@ footer .footer-links a {
   margin-bottom: 3rem;
 }
 
-.container.content.help .buttons-agencies .btn {
+.container.content.help .buttons-agencies .btn,
+.with-agency-links .container.content .buttons-agencies .btn {
   display: block;
   text-align: left;
   padding: 0;
@@ -397,7 +398,8 @@ footer .footer-links a {
   width: auto;
 }
 
-.container.content.help .buttons-agencies label {
+.container.content.help .buttons-agencies label,
+.with-agency-links .container.content .buttons-agencies label {
   display: block;
   margin-top: 2rem;
   font-size: 18px;
