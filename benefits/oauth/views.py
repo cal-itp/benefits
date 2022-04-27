@@ -28,10 +28,10 @@ ROUTE_POST_LOGOUT = "oauth:post_logout"
 
 
 def login(request):
-    analytics.started_sign_in(request)
-
     if not oauth_client:
         raise Exception("No OAuth client")
+
+    analytics.started_sign_in(request)
 
     route = reverse(ROUTE_AUTH)
     redirect_uri = _generate_redirect_uri(request, route)
