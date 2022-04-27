@@ -19,11 +19,12 @@ logger = logging.getLogger(__name__)
 
 
 class Event:
+    """Base analytics event of a given type, including attributes from request's session."""
+
     _counter = itertools.count()
     _domain_re = re.compile(r"^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)", re.IGNORECASE)
 
     def __init__(self, request, event_type, **kwargs):
-        """Analytics event of the given type, including attributes from request's session."""
         self.app_version = VERSION
         self.device_id = session.did(request)
         self.event_properties = {}
@@ -65,21 +66,24 @@ class Event:
 
 
 class ViewedPageEvent(Event):
+    """Analytics event representing a single page view."""
+
     def __init__(self, request):
-        """Analytics event representing a single page view."""
         super().__init__(request, "viewed page")
 
 
 class ChangedLanguageEvent(Event):
+    """Analytics event representing a change in the app's language."""
+
     def __init__(self, request, new_lang):
-        """Analytics event representing a change in the app's language."""
         super().__init__(request, "changed language")
         self.update_event_properties(language=new_lang)
 
 
 class Client:
+    """Analytics API client"""
+
     def __init__(self, api_key):
-        """Analytics API client"""
         self.api_key = api_key
         self.headers = {"Accept": "*/*", "Content-type": "application/json"}
         self.url = "https://api2.amplitude.com/2/httpapi"
@@ -119,9 +123,12 @@ class Client:
             logger.error(f"Failed to send event: {event}")
 
 
+client = Client(settings.ANALYTICS_KEY)
+
+
 def send_event(event):
     """Send an analytics event."""
     if isinstance(event, Event):
-        Client(settings.ANALYTICS_KEY).send(event)
+        client.send(event)
     else:
         raise ValueError("event must be an Event instance")

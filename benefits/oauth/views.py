@@ -8,6 +8,7 @@ from django.utils.http import urlencode
 from authlib.integrations.django_client import OAuth
 
 from benefits.core import session
+from . import analytics
 
 
 logger = logging.getLogger(__name__)
@@ -29,6 +30,8 @@ ROUTE_POST_LOGOUT = "oauth:post_logout"
 def login(request):
     if not oauth_client:
         raise Exception("No OAuth client")
+
+    analytics.started_sign_in(request)
 
     route = reverse(ROUTE_AUTH)
     redirect_uri = _generate_redirect_uri(request, route)
@@ -55,11 +58,15 @@ def authorize(request):
     # this is the minimal amount of information needed later to log the user out
     session.update(request, oauth_token=token["id_token"])
 
+    analytics.finished_sign_in(request)
+
     return redirect(ROUTE_CONFIRM)
 
 
 def logout(request):
     """View implementing OIDC and application sign out."""
+
+    analytics.started_sign_out(request)
 
     # overwrite the oauth session token, the user is signed out of the app
     token = session.oauth_token(request)
@@ -77,6 +84,8 @@ def logout(request):
 
 def post_logout(request):
     """View routes the user to their origin after sign out."""
+
+    analytics.finished_sign_out(request)
 
     origin = session.origin(request)
     return redirect(origin)
