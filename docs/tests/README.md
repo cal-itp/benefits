@@ -89,3 +89,7 @@ The helper script:
 The report can be viewed by launching the app and navigating to `http://localhost:$DJANGO_LOCAL_PORT/static/coverage/index.html`
 
 The report files include a local `.gitignore` file, so the entire directory is hidden from source control.
+
+### Latest coverage report
+
+We also make the latest (from `dev`) coverage report available online here: [Coverage report](./coverage)
