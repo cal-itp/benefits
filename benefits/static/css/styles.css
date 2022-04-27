@@ -307,6 +307,10 @@ footer .footer-links a {
   vertical-align: inherit;
 }
 
+.logged-out.enrollment-success .success-image {
+  text-align: center;
+}
+
 .radio-container {
   display: block;
   margin-left: 15%;

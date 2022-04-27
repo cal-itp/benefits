@@ -452,6 +452,9 @@ msgstr "Inténtalo de nuevo"
 msgid "enrollment.pages.success.title"
 msgstr "Felicidades! Su descuento ahora está vinculado a su tarjeta bancaria."
 
+msgid "enrollment.pages.success.logout.title"
+msgstr "TODO: You have been successfully logged out. Thank you for using Cal-ITP Benefits!"
+
 #: benefits/enrollment/views.py:150
 msgid "enrollment.pages.success.p1"
 msgstr "No te cobraron nada hoy."

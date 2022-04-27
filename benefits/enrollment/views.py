@@ -164,16 +164,21 @@ def success(request):
                 title=_("enrollment.pages.success.title"),
                 icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
                 content_title=_("enrollment.pages.success.title"),
-                classes="with-signout",
                 button=button,
+                classes="logged-in",
             )
         else:
             page = viewmodels.Page(
                 title=_("enrollment.pages.success.title"),
-                icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-                content_title=_("enrollment.pages.success.title"),
-                classes="without-signout",
+                content_title=_("enrollment.pages.success.logout.title"),
+                classes="logged-out",
             )
+    else:
+        page = viewmodels.Page(
+            title=_("enrollment.pages.success.title"),
+            icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
+            content_title=_("enrollment.pages.success.title"),
+        )
 
     help_link = reverse("core:help")
     context_dict = {**page.context_dict(), **{"help_link": help_link}}

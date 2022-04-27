@@ -447,6 +447,9 @@ msgstr "Try again"
 msgid "enrollment.pages.success.title"
 msgstr "Success! Your discount is now linked to your bank card."
 
+msgid "enrollment.pages.success.logout.title"
+msgstr "You have been successfully logged out. Thank you for using Cal-ITP Benefits!"
+
 #: benefits/enrollment/views.py:150
 msgid "enrollment.pages.success.p1"
 msgstr "You were not charged anything today."

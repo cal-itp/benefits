@@ -8,9 +8,13 @@
 {% endblock %}
 
 {% block paragraph_content %}
-    <p>{% translate "enrollment.pages.success.p1" %}</p>
-    <p>{% translate "enrollment.pages.success.p2" %}</p>
-    <p>{% blocktranslate with help_link=help_link%}enrollment.pages.success.p3{{ help_link }}{% endblocktranslate %}</p>
+    {% if "logged-out" in page.classes %}
+        <img src="/static/img/success.svg">
+    {% else %}
+        <p>{% translate "enrollment.pages.success.p1" %}</p>
+        <p>{% translate "enrollment.pages.success.p2" %}</p>
+        <p>{% blocktranslate with help_link=help_link%}enrollment.pages.success.p3{{ help_link }}{% endblocktranslate %}</p>
+    {% endif %}
 {% endblock %}
 
 {% block buttons %}
