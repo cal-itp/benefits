@@ -1,42 +1,48 @@
 {% extends "core/page.html" %}
 
+{% block classes %}
+    {{ block.super |add:" eligibility-start"}}
+{% endblock %}
+
 {% block container_content %}
 
     {% block icon_title %}
-    {{ block.super }}
+        {{ block.super }}
     {% endblock %}
 
     <h1 class="media-title text-center">{{title}}</h1>
 
     {% block media_list %}
-    {% if media|length_is:"0" %}{% else %}
-    <ul class="media-list">
-    {% for item in media %}
-        <li class="media">
-            <div class="media-line">
-                {% include "core/includes/icon.html" with icon=item.icon %}
-            </div>
-            <div class="media-body">
-                <div class="media-body--heading">
-                    <strong>{{ item.heading }}</strong>
-                </div>
-                <div class="media-body--details">
-                    {{ item.details }}
-                </div>
-                <div class="media-body--links">
-                    {% for l in item.links %}
-                        {% include "core/includes/button.html" with button=l %}
-                    {% endfor %}
-                </div>
-            </div>
-        </li>
-    {% endfor %}
-    </ul>
-    {% endif %}
+        {% if media|length_is:"0" %}{% else %}
+            <ul class="media-list">
+            {% for item in media %}
+                <li class="media">
+                    <div class="media-line">
+                        {% include "core/includes/icon.html" with icon=item.icon %}
+                    </div>
+                    <div class="media-body">
+                        <div class="media-body--heading">
+                            <ol start="{{ forloop.counter }}">
+                                <li>{{ item.heading }}</li>
+                            </ol>
+                        </div>
+                        <div class="media-body--details">
+                            {{ item.details }}
+                        </div>
+                        <div class="media-body--links">
+                            {% for l in item.links %}
+                                {% include "core/includes/button.html" with button=l %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
     {% endblock %}
 
     {% block buttons %}
-    {{ block.super }}
+        {{ block.super }}
     {% endblock %}
 
 {% endblock %}
