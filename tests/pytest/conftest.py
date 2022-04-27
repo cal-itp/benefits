@@ -22,10 +22,7 @@ def app_request(request, rf):
 
     # see if a request_path was provided via marker
     marker = request.node.get_closest_marker("request_path")
-    if marker is None:
-        request_path = "/"
-    else:
-        request_path = marker.args[0]
+    request_path = marker.args[0] if marker else "/some/arbitrary/path"
 
     # create a request for the path, initialize
     app_request = rf.get(request_path)
