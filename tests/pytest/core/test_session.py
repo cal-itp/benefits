@@ -38,11 +38,18 @@ def test_debug_default(app_request):
 
 
 @pytest.mark.django_db
-def test_did(app_request):
+def test_did_default(app_request, mocker):
+    # did() resets and returns a value when user is not configured
+    spy = mocker.spy(session, "reset")
+    app_request.session[session._DID] = None
+    app_request.session[session._UID] = None
+
     did = session.did(app_request)
 
+    spy.assert_called_once()
     assert did
     assert isinstance(did, str)
+    assert did != "None"
 
 
 @pytest.mark.django_db
@@ -282,20 +289,32 @@ def test_reset_user(app_request):
 
 
 @pytest.mark.django_db
-def test_start_default(app_request):
+def test_start_default(app_request, mocker):
+    # start() resets and returns a value when user is not configured
+    spy = mocker.spy(session, "reset")
+    app_request.session[session._START] = None
+    app_request.session[session._UID] = None
+
     t0 = time.time()
     start = session.start(app_request)
 
+    spy.assert_called_once()
     assert isinstance(start, int)
     assert start >= t0
 
 
 @pytest.mark.django_db
-def test_uid(app_request):
+def test_uid_default(app_request, mocker):
+    # uid() resets and returns a value when user is not configured
+    spy = mocker.spy(session, "reset")
+    app_request.session[session._UID] = None
+
     uid = session.uid(app_request)
 
+    spy.assert_called_once()
     assert uid
     assert isinstance(uid, str)
+    assert uid != "None"
 
 
 @pytest.mark.django_db
