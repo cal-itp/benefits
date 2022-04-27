@@ -1,4 +1,3 @@
 nav:
   - Local setup: README.md
-  - Automated tests: testing.md
   - Documentation: documentation.md

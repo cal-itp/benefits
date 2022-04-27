@@ -19,6 +19,7 @@ jobs:
           python-version: '3.9'
           cache: pip
           cache-dependency-path: '**/requirements.txt'
+
       - name: Install Python dependencies
         run: pip install -r requirements.txt -r tests/pytest/requirements.txt
 
@@ -31,4 +32,10 @@ jobs:
         run: ./bin/init.sh
 
       - name: Run tests
-        run: pytest --cov=benefits
+        run: ./tests/pytest/run.sh
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: benefits/static/coverage

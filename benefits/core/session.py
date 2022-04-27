@@ -76,7 +76,16 @@ def debug(request):
 
 
 def did(request):
-    """Get the session's device ID, a hashed version of the unique ID."""
+    """
+    Get the session's device ID, a hashed version of the unique ID. If unset,
+    the session is reset to initialize a value.
+
+    This value, like UID, is randomly generated per session and is needed for
+    Amplitude to accurately track that a sequence of events came from a unique
+    user.
+
+    See more: https://help.amplitude.com/hc/en-us/articles/115003135607-Track-unique-users-in-Amplitude
+    """
     logger.debug("Get session did")
     d = request.session.get(_DID)
     if not d:
@@ -113,17 +122,36 @@ def enrollment_token_expiry(request):
     return request.session.get(_ENROLLMENT_TOKEN_EXP)
 
 
-def increment_rate_limit_counter(request):
-    """Adds 1 to this session's rate limit counter."""
-    logger.debug("Increment rate limit counter")
-    c = rate_limit_counter(request)
-    request.session[_LIMITCOUNTER] = int(c) + 1
+def enrollment_token_valid(request):
+    """True if the request's session is configured with a valid token. False otherwise."""
+    if bool(enrollment_token(request)):
+        logger.debug("Session contains an enrollment token")
+        exp = enrollment_token_expiry(request)
+
+        # ensure token does not expire in the next 5 seconds
+        valid = exp is None or exp > (time.time() + 5)
+
+        logger.debug(f"Session enrollment token is {'valid' if valid else 'expired'}")
+        return valid
+    else:
+        logger.debug("Session does not contain a valid enrollment token")
+        return False
 
 
 def language(request):
     """Get the language configured for the request."""
     logger.debug("Get session language")
     return request.LANGUAGE_CODE
+
+
+def logged_in(request):
+    """Check if the current session has an OAuth token."""
+    return bool(oauth_token(request))
+
+
+def logout(request):
+    """Reset the session tokens."""
+    update(request, oauth_token=False, enrollment_token=False)
 
 
 def oauth_token(request):
@@ -142,6 +170,21 @@ def rate_limit_counter(request):
     """Get this session's rate limit counter."""
     logger.debug("Get rate limit counter")
     return request.session.get(_LIMITCOUNTER)
+
+
+def increment_rate_limit_counter(request):
+    """Adds 1 to this session's rate limit counter."""
+    logger.debug("Increment rate limit counter")
+    c = rate_limit_counter(request)
+    request.session[_LIMITCOUNTER] = int(c) + 1
+
+
+def reset_rate_limit(request):
+    """Reset this session's rate limit counter and time."""
+    logger.debug("Reset rate limit")
+    request.session[_LIMITCOUNTER] = 0
+    # get the current time in Unix seconds, then add RATE_LIMIT_PERIOD seconds
+    request.session[_LIMITUNTIL] = int(time.time()) + settings.RATE_LIMIT_PERIOD
 
 
 def rate_limit_time(request):
@@ -170,16 +213,17 @@ def reset(request):
         reset_rate_limit(request)
 
 
-def reset_rate_limit(request):
-    """Reset this session's rate limit counter and time."""
-    logger.debug("Reset rate limit")
-    request.session[_LIMITCOUNTER] = 0
-    # get the current time in Unix seconds, then add RATE_LIMIT_PERIOD seconds
-    request.session[_LIMITUNTIL] = int(time.time()) + settings.RATE_LIMIT_PERIOD
-
-
 def start(request):
-    """Get the start time from the request's session, as integer milliseconds since Epoch."""
+    """
+    Get the start time from the request's session, as integer milliseconds since
+    Epoch. If unset, the session is reset to initialize a value.
+
+    Once started, does not reset after subsequent calls to session.reset() or
+    session.start(). This value is needed for Amplitude to accurately track
+    sessions.
+
+    See more: https://help.amplitude.com/hc/en-us/articles/115002323627-Tracking-Sessions
+    """
     logger.debug("Get session time")
     s = request.session.get(_START)
     if not s:
@@ -189,7 +233,19 @@ def start(request):
 
 
 def uid(request):
-    """Get the session's unique ID, generating a new one if necessary."""
+    """
+    Get the session's unique ID, a randomly generated UUID4 string. If unset,
+    the session is reset to initialize a value.
+
+    This value, like DID, is needed for Amplitude to accurately track that a
+    sequence of events came from a unique user.
+
+    See more: https://help.amplitude.com/hc/en-us/articles/115003135607-Track-unique-users-in-Amplitude
+
+    Although Amplitude advises *against* setting user_id for anonymous users,
+    here a value is set on anonymous users anyway, as the users never sign-in
+    and become de-anonymized to this app / Amplitude.
+    """
     logger.debug("Get session uid")
     u = request.session.get(_UID)
     if not u:
@@ -243,22 +299,6 @@ def update(
         request.session[_VERIFIER] = verifier.id
 
 
-def valid_enrollment_token(request):
-    """True if the request's session is configured with a valid token. False otherwise."""
-    if enrollment_token(request) is not None:
-        logger.debug("Session contains an enrollment token")
-        exp = enrollment_token_expiry(request)
-
-        # ensure token does not expire in the next 5 seconds
-        valid = exp is None or exp > (time.time() + 5)
-
-        logger.debug(f"Session enrollment token is {'valid' if valid else 'expired'}")
-        return valid
-    else:
-        logger.debug("Session does not contain a valid enrollment token")
-        return False
-
-
 def verifier(request):
     """Get the verifier from the request's session, or None"""
     logger.debug("Get session verifier")
@@ -267,11 +307,3 @@ def verifier(request):
     except (KeyError, models.EligibilityVerifier.DoesNotExist):
         logger.debug("Can't get verifier from session")
         return None
-
-
-def logged_in(request):
-    return bool(oauth_token(request))
-
-
-def logout(request):
-    update(request, oauth_token=False, enrollment_token=False)

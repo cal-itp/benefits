@@ -59,7 +59,7 @@ def _index(request):
         name=f"{agency.long_name} {_('partnered with')} {agency.payment_processor.name}",
     )
     context.update(processor_vm.context_dict())
-    logger.warn(f"card_tokenize_url: {context['payment_processor'].card_tokenize_url}")
+    logger.warning(f"card_tokenize_url: {context['payment_processor'].card_tokenize_url}")
 
     # the tokenize form URLs are injected to page-generated Javascript
     context["forms"] = {
@@ -97,7 +97,7 @@ def _enroll(request):
 @decorator_from_middleware(EligibleSessionRequired)
 def token(request):
     """View handler for the enrollment auth token."""
-    if not session.valid_enrollment_token(request):
+    if not session.enrollment_token_valid(request):
         agency = session.agency(request)
         response = api.Client(agency).access_token()
         session.update(request, enrollment_token=response.access_token, enrollment_token_exp=response.expiry)
