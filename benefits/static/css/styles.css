@@ -249,7 +249,7 @@ footer .footer-links a {
 }
 
 .media-list .media .media-body {
-  padding: 0 3.8rem;
+  padding: 0 3.4rem;
 }
 
 .media-list .media .media-body--heading {
@@ -257,6 +257,11 @@ footer .footer-links a {
   letter-spacing: 0.05em;
   margin-top: 64px;
   margin-bottom: 20px;
+}
+
+.media-list .media .media-body--heading ol {
+  font-weight: 700;
+  padding-left: 0;
 }
 
 .media-list .media .media-body--details {
