@@ -25,13 +25,17 @@ class Event:
     def __init__(self, request, event_type, **kwargs):
         """Analytics event of the given type, including attributes from request's session."""
         self.app_version = VERSION
+        # device_id is generated based on the user_id, and both are set explicitly (per session)
         self.device_id = session.did(request)
         self.event_properties = {}
         self.event_type = str(event_type).lower()
         self.insert_id = str(uuid.uuid4())
         self.language = session.language(request)
+        # Amplitude tracks sessions using the start time as the session_id
         self.session_id = session.start(request)
         self.time = int(time.time() * 1000)
+        # Although Amplitude advises *against* setting user_id for anonymous users, here a value is set on anonymous
+        # users anyway, as the users never sign-in and become de-anonymized to this app / Amplitude.
         self.user_id = session.uid(request)
         self.user_properties = {}
         self.__dict__.update(kwargs)
