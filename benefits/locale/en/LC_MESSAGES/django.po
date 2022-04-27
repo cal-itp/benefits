@@ -333,39 +333,39 @@ msgid "core.icons.idscreencheck"
 msgstr "Computer monitor with checkmark"
 
 #: benefits/eligibility/views.py:74
-msgid "eligibility.pages.start.items[1].title"
+msgid "eligibility.pages.start.bankcard.title"
 msgstr "Provide your bank card details"
 
 #: benefits/eligibility/views.py:75
-msgid "eligibility.pages.start.items[1].text"
+msgid "eligibility.pages.start.bankcard.text"
 msgstr "Must be a contactless debit or credit card issued by Visa or Mastercard."
 
-msgid "eligibility.pages.start.items[1].button[0].link"
+msgid "eligibility.pages.start.bankcard.button[0].link"
 msgstr "Don’t have a bank card?"
 
-msgid "eligibility.pages.start.items[1].button[0].url"
+msgid "eligibility.pages.start.bankcard.button[0].url"
 msgstr "/help#payment-options"
 
-msgid "eligibility.pages.start.items[1].button[1].link"
+msgid "eligibility.pages.start.bankcard.button[1].link"
 msgstr "Unsure if you have a contactless card?"
 
-msgid "eligibility.pages.start.items[1].button[1].url"
+msgid "eligibility.pages.start.bankcard.button[1].url"
 msgstr "/help#payment-options"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
 msgstr "Continue"
 
-msgid "eligibility.media.heading"
+msgid "eligibility.pages.start.oauth.heading"
 msgstr "Sign in to your Login.gov account"
 
-msgid "eligibility.media.details"
+msgid "eligibility.pages.start.oauth.details"
 msgstr "You will be able to create an account if you’re not already signed up."
 
-msgid "eligibility.media.link_text"
+msgid "eligibility.pages.start.oauth.link_text"
 msgstr "Learn more about Login.gov"
 
-msgid "eligibility.media.link_url"
+msgid "eligibility.pages.start.oauth.link_url"
 msgstr "https://login.gov/"
 
 #: benefits/eligibility/views.py:80

@@ -72,18 +72,18 @@ def start(request):
         ),
         dict(
             icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-            heading=_("eligibility.pages.start.items[1].title"),
-            details=_("eligibility.pages.start.items[1].text"),
+            heading=_("eligibility.pages.start.bankcard.title"),
+            details=_("eligibility.pages.start.bankcard.text"),
             links=[
                 viewmodels.Button.link(
                     classes="btn-text btn-link",
-                    text=_("eligibility.pages.start.items[1].button[0].link"),
-                    url=_("eligibility.pages.start.items[1].button[0].url"),
+                    text=_("eligibility.pages.start.bankcard.button[0].link"),
+                    url=_("eligibility.pages.start.bankcard.button[0].url"),
                 ),
                 viewmodels.Button.link(
                     classes="btn-text btn-link",
-                    text=_("eligibility.pages.start.items[1].button[1].link"),
-                    url=_("eligibility.pages.start.items[1].button[1].url"),
+                    text=_("eligibility.pages.start.bankcard.button[1].link"),
+                    url=_("eligibility.pages.start.bankcard.button[1].url"),
                 ),
             ],
         ),
@@ -97,13 +97,13 @@ def start(request):
             0,
             dict(
                 icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
-                heading=_("eligibility.media.heading"),
-                details=_("eligibility.media.details"),
+                heading=_("eligibility.pages.start.oauth.heading"),
+                details=_("eligibility.pages.start.oauth.details"),
                 links=[
                     viewmodels.Button.link(
                         classes="btn-text btn-link",
-                        text=_("eligibility.media.link_text"),
-                        url=_("eligibility.media.link_url"),
+                        text=_("eligibility.pages.start.oauth.link_text"),
+                        url=_("eligibility.pages.start.oauth.link_url"),
                         target="_blank",
                         rel="noopener noreferrer",
                     )

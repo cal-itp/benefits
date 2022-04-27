@@ -336,39 +336,39 @@ msgid "core.icons.idscreencheck"
 msgstr "TODO: Computer monitor with checkmark"
 
 #: benefits/eligibility/views.py:74
-msgid "eligibility.pages.start.items[1].title"
+msgid "eligibility.pages.start.bankcard.title"
 msgstr "TODO: Tu tarjeta bancaria"
 
 #: benefits/eligibility/views.py:75
-msgid "eligibility.pages.start.items[1].text"
+msgid "eligibility.pages.start.bankcard.text"
 msgstr "TODO: Una tarjeta de débito o crédito"
 
-msgid "eligibility.pages.start.items[1].button[0].link"
+msgid "eligibility.pages.start.bankcard.button[0].link"
 msgstr "TODO: Don’t have a bank card?"
 
-msgid "eligibility.pages.start.items[1].button[0].url"
+msgid "eligibility.pages.start.bankcard.button[0].url"
 msgstr "TODO: /help#payment-options"
 
-msgid "eligibility.pages.start.items[1].button[1].link"
+msgid "eligibility.pages.start.bankcard.button[1].link"
 msgstr "TODO: Unsure if you have a contactless card?"
 
-msgid "eligibility.pages.start.items[1].button[1].url"
+msgid "eligibility.pages.start.bankcard.button[1].url"
 msgstr "TODO: /help#payment-options"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
 msgstr "Continuar"
 
-msgid "eligibility.media.heading"
+msgid "eligibility.pages.start.oauth.heading"
 msgstr "TODO: Sign in to your Login.gov account"
 
-msgid "eligibility.media.details"
+msgid "eligibility.pages.start.oauth.details"
 msgstr "TODO: You will be able to create an account if you’re not already signed up."
 
-msgid "eligibility.media.link_text"
+msgid "eligibility.pages.start.oauth.link_text"
 msgstr "TODO: Learn more about Login.gov"
 
-msgid "eligibility.media.link_url"
+msgid "eligibility.pages.start.oauth.link_url"
 msgstr "https://login.gov/es/"
 
 #: benefits/eligibility/views.py:80
