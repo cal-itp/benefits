@@ -19,8 +19,7 @@ import pytest
 
 @pytest.mark.request_path("/oauth/login")
 def test_login(mocker, app_request):
-    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
-    mock_client.authorize_redirect.return_value = HttpResponse("authorize redirect")
+    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client", return_value=HttpResponse("authorize redirect"))
 
     assert not session.logged_in(app_request)
 
