@@ -156,10 +156,7 @@ def success(request):
             raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
 
         if session.logged_in(request):
-            button = viewmodels.Button.login(
-                classes="logout",
-                url=reverse("oauth:logout"),
-            )
+            button = viewmodels.Button.logout()
             page = viewmodels.Page(
                 title=_("enrollment.pages.success.title"),
                 icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
