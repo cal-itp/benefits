@@ -1,6 +1,5 @@
 const agencies = require("../../fixtures/transit-agencies");
 
-const eligibility_confirm_url = "/eligibility/confirm";
 
 describe("Single Verifier, No AuthProvider: Enrollment success page", () => {
   beforeEach(() => {
