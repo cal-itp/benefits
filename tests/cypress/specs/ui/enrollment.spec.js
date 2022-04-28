@@ -1,6 +1,5 @@
 const agencies = require("../../fixtures/transit-agencies");
 
-
 describe("Single Verifier, No AuthProvider: Enrollment success page", () => {
   beforeEach(() => {
     cy.visit("/");
