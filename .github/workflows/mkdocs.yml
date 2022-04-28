@@ -5,7 +5,9 @@ on:
     branches:
       - dev
     paths:
+      - 'benefits/**'
       - 'docs/**'
+      - 'tests/pytest/**'
       - 'mkdocs.yml'
       - '.github/workflows/mkdocs.yml'
 
