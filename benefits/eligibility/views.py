@@ -64,6 +64,8 @@ def start(request):
     verifier = session.verifier(request)
 
     button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm"))
+
+    payment_options_link = f"{reverse('core:help')}#payment-options"
     media = [
         dict(
             icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
@@ -78,12 +80,12 @@ def start(request):
                 viewmodels.Button.link(
                     classes="btn-text btn-link",
                     text=_("eligibility.pages.start.bankcard.button[0].link"),
-                    url=_("eligibility.pages.start.bankcard.button[0].url"),
+                    url=payment_options_link,
                 ),
                 viewmodels.Button.link(
                     classes="btn-text btn-link",
                     text=_("eligibility.pages.start.bankcard.button[1].link"),
-                    url=_("eligibility.pages.start.bankcard.button[1].url"),
+                    url=payment_options_link,
                 ),
             ],
         ),
@@ -92,6 +94,8 @@ def start(request):
     if verifier.requires_authentication:
         if settings.OAUTH_CLIENT_NAME is None:
             raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
+
+        oauth_help_link = f"{reverse('core:help')}#login-gov"
 
         media.insert(
             0,
@@ -103,7 +107,7 @@ def start(request):
                     viewmodels.Button.link(
                         classes="btn-text btn-link",
                         text=_("eligibility.pages.start.oauth.link_text"),
-                        url=_("eligibility.pages.start.oauth.link_url"),
+                        url=oauth_help_link,
                         rel="noopener noreferrer",
                     )
                 ],

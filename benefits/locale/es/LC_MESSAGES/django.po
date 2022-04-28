@@ -346,14 +346,8 @@ msgstr "TODO: Una tarjeta de débito o crédito"
 msgid "eligibility.pages.start.bankcard.button[0].link"
 msgstr "TODO: Don’t have a bank card?"
 
-msgid "eligibility.pages.start.bankcard.button[0].url"
-msgstr "TODO: /help#payment-options"
-
 msgid "eligibility.pages.start.bankcard.button[1].link"
 msgstr "TODO: Unsure if you have a contactless card?"
-
-msgid "eligibility.pages.start.bankcard.button[1].url"
-msgstr "TODO: /help#payment-options"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
@@ -367,9 +361,6 @@ msgstr "TODO: You will be able to create an account if you’re not already sign
 
 msgid "eligibility.pages.start.oauth.link_text"
 msgstr "TODO: Learn more about Login.gov"
-
-msgid "eligibility.pages.start.oauth.link_url"
-msgstr "/help#login-gov"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
