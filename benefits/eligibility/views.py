@@ -217,7 +217,7 @@ def unverified(request):
     # tel: link to agency phone number
     agency = session.agency(request)
     buttons = viewmodels.Button.agency_contact_links(agency)
-    buttons.append(viewmodels.Button.home(request, _("enrollment.buttons.retry")))
+    buttons.append(viewmodels.Button.home(request, _("core.buttons.retry")))
 
     verifier = session.verifier(request)
 

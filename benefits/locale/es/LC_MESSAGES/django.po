@@ -445,7 +445,7 @@ msgstr ""
 "público para obtener ayuda."
 
 #: benefits/enrollment/views.py:133
-msgid "enrollment.buttons.retry"
+msgid "core.buttons.retry"
 msgstr "Inténtalo de nuevo"
 
 #: benefits/enrollment/views.py:147 benefits/enrollment/views.py:149
