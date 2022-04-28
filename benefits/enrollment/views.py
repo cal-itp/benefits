@@ -12,7 +12,6 @@ from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import models, session, viewmodels
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
-from benefits.core.views import PageTemplateResponse
 from . import api, forms
 
 
@@ -136,7 +135,7 @@ def retry(request):
                 buttons=viewmodels.Button.agency_contact_links(agency),
             )
             page.buttons.append(viewmodels.Button.primary(text=_("enrollment.buttons.retry"), url=session.origin(request)))
-            return PageTemplateResponse(request, page)
+            return TemplateResponse(request, "enrollment/retry.html", page.context_dict())
         else:
             raise Exception("Invalid retry submission.")
     else:
