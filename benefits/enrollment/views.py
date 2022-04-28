@@ -3,6 +3,7 @@ The enrollment application: view definitions for the benefits enrollment flow.
 """
 import logging
 
+from django.conf import settings
 from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
@@ -10,7 +11,7 @@ from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import models, session, viewmodels
-from benefits.core.middleware import EligibleSessionRequired, pageview_decorator
+from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
 from benefits.core.views import PageTemplateResponse
 from . import api, forms
 
@@ -143,17 +144,38 @@ def retry(request):
 
 
 @pageview_decorator
+@decorator_from_middleware(VerifierSessionRequired)
 def success(request):
     """View handler for the final success page."""
     request.path = "/enrollment/success"
     session.update(request, origin=reverse("enrollment:success"))
+    verifier = session.verifier(request)
 
-    page = viewmodels.Page(
-        title=_("enrollment.pages.success.title"),
-        icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-        content_title=_("enrollment.pages.success.title"),
-        classes="without-warning",
-    )
+    if verifier.requires_authentication:
+        if settings.OAUTH_CLIENT_NAME is None:
+            raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
+
+        if session.logged_in(request):
+            button = viewmodels.Button.logout()
+            page = viewmodels.Page(
+                title=_("enrollment.pages.success.title"),
+                icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
+                content_title=_("enrollment.pages.success.title"),
+                button=button,
+                classes="logged-in",
+            )
+        else:
+            page = viewmodels.Page(
+                title=_("enrollment.pages.success.title"),
+                content_title=_("enrollment.pages.success.logout.title"),
+                classes="logged-out",
+            )
+    else:
+        page = viewmodels.Page(
+            title=_("enrollment.pages.success.title"),
+            icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
+            content_title=_("enrollment.pages.success.title"),
+        )
 
     help_link = reverse("core:help")
     context_dict = {**page.context_dict(), **{"help_link": help_link}}

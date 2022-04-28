@@ -438,6 +438,9 @@ msgstr "Try again"
 msgid "enrollment.pages.success.title"
 msgstr "Success! Your discount is now linked to your bank card."
 
+msgid "enrollment.pages.success.logout.title"
+msgstr "You have been successfully logged out. Thank you for using Cal-ITP Benefits!"
+
 #: benefits/enrollment/views.py:150
 msgid "enrollment.pages.success.p1"
 msgstr "You were not charged anything today."
@@ -445,6 +448,12 @@ msgstr "You were not charged anything today."
 #: benefits/enrollment/views.py:150
 msgid "enrollment.pages.success.p2"
 msgstr "When boarding transit, pay with this same card, and your discount will automatically be applied to your fare purchase."
+
+msgid "enrollment.pages.success.p3"
+msgstr "If you are on a public or shared computer, please sign out of your"
+
+msgid "enrollment.pages.success.p4"
+msgstr "account."
 
 msgid "enrollment.pages.success.p3%(help_link)s"
 msgstr "For additional information on what to expect when using your connected bank card, please reach out to your transit provider, or check out our "
