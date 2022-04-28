@@ -420,13 +420,10 @@ footer .footer-links a {
   margin-bottom: 3rem;
 }
 
-.container.content.help .buttons-agencies .btn,
-.with-agency-links .container.content .buttons-agencies .btn {
-  display: block;
-  text-align: left;
-  padding: 0;
-  font-size: 18px;
-  width: auto;
+.container.content.help .buttons-agencies a,
+.with-agency-links .container.content .buttons-agencies a {
+  display: table;
+  margin-bottom: 0.2rem;
 }
 
 .container.content.help .buttons-agencies label,
