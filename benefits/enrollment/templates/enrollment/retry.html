@@ -1,1 +1,9 @@
 {% extends "core/page.html" %}
+
+{% block container_content %}
+
+    {% include "core/includes/sign-out-link.html" %}
+
+    {{ block.super }}
+
+{% endblock %}

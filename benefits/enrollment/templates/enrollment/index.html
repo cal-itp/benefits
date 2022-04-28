@@ -1,5 +1,10 @@
 {% extends "core/page.html" %}
 
+{% block icon_title %}
+{% include "core/includes/sign-out-link.html" %}
+{{ block.super }}
+{% endblock%}
+
 {% block paragraph_content %}
 {{ block.super }}
 {% if payment_processor %}
