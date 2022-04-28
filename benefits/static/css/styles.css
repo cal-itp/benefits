@@ -185,6 +185,10 @@ footer .footer-links a {
   padding-left: 1rem;
 }
 
+.form-group.with-errors .error-message p {
+  margin-bottom: 0;
+}
+
 .global-footer {
   background: #212121;
 }
@@ -389,18 +393,49 @@ footer .footer-links a {
 }
 
 .container.content.help h1 {
+  letter-spacing: 0.05rem;
+  font-weight: 700;
+  font-size: 2.25rem;
   text-align: center;
   margin-top: 5.5rem;
   margin-bottom: 4rem;
 }
 
 .container.content.help h2 {
+  letter-spacing: 0.05rem;
+  font-weight: 700;
+  font-size: 1.5rem;
   margin-bottom: 3rem;
   margin-top: 3rem;
 }
 
 .container.content.help p {
   margin-bottom: 2rem;
+}
+
+.container.content.help .buttons-agencies,
+.with-agency-links .buttons-agencies {
+  font-size: 18px;
+  letter-spacing: 0.05rem;
+  margin-bottom: 3rem;
+}
+
+.container.content.help .buttons-agencies a,
+.with-agency-links .container.content .buttons-agencies a {
+  display: table;
+  margin-bottom: 0.2rem;
+}
+
+.container.content.help .buttons-agencies label,
+.with-agency-links .container.content .buttons-agencies label {
+  display: block;
+  margin-top: 2rem;
+  font-size: 18px;
+}
+
+.container.content.help .button-back {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
 }
 
 .container.content h1 ~ p:nth-last-of-type(1) {
@@ -415,25 +450,8 @@ footer .footer-links a {
   width: 100%;
 }
 
-.container.content .btn-lg.agency-url {
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-.container.content .btn-lg.agency-url,
-.container.content .btn-lg.agency-phone {
-  padding-top: 0;
-}
-
 .container.content .btn-link {
   text-decoration: underline;
-}
-
-.text-lg-center form {
-  text-align: left !important;
-}
-.text-lg-center .buttons label {
-  width: 100%;
-  text-align: center !important;
 }
 
 /* media queries */
