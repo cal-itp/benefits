@@ -7,10 +7,12 @@ describe("Single Verifier, No AuthProvider: Enrollment success page", () => {
     cy.contains(agencies[1].fields.short_name).click();
     cy.contains("Get started").click();
     cy.contains("Continue").click();
-    cy.visit("/enrollment/success");
+    cy.url().should("include", eligibility_confirm_url);
   });
 
   it("Has the appropriate English copy for all flows", () => {
+    cy.visit("/enrollment/success");
+
     cy.contains("Success! Your discount is now linked to your bank card.");
     cy.contains("You were not charged anything today.");
   });
