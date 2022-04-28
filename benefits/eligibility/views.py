@@ -104,7 +104,6 @@ def start(request):
                         classes="btn-text btn-link",
                         text=_("eligibility.pages.start.oauth.link_text"),
                         url=_("eligibility.pages.start.oauth.link_url"),
-                        target="_blank",
                         rel="noopener noreferrer",
                     )
                 ],

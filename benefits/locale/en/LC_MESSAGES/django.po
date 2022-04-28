@@ -366,7 +366,7 @@ msgid "eligibility.pages.start.oauth.link_text"
 msgstr "Learn more about Login.gov"
 
 msgid "eligibility.pages.start.oauth.link_url"
-msgstr "https://login.gov/"
+msgstr "/help#login-gov"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
