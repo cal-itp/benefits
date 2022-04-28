@@ -302,6 +302,11 @@ footer .footer-links a {
   justify-content: right;
 }
 
+.eligibility-start .container.content .buttons .btn {
+  margin-left: initial;
+  margin-right: initial;
+}
+
 .eligibility-start .container.content .buttons label {
   margin: 0 0.8rem 0 0;
   line-height: 1;
