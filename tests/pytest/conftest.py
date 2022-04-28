@@ -1,6 +1,10 @@
+from unittest.mock import create_autospec
 from django.contrib.sessions.middleware import SessionMiddleware
+from django.middleware.locale import LocaleMiddleware
 
 import pytest
+
+from benefits.core import session
 
 
 @pytest.fixture(scope="session")
@@ -10,31 +14,45 @@ def django_db_setup():
 
 
 @pytest.fixture
-def session_request(request, rf):
+def app_request(request, rf):
     """
-    Fixture creates a new Django request object and initializes its session.
+    Fixture creates and initializes a new Django request object similar to a real application request.
 
     Optionally use @pytest.mark.request_path(path: str) to customize the request's path.
     """
 
     # see if a request_path was provided via marker
     marker = request.node.get_closest_marker("request_path")
-    if marker is None:
-        request_path = "/"
-    else:
-        request_path = marker.args[0]
+    request_path = marker.args[0] if marker else "/some/arbitrary/path"
 
-    # create a request for the path, initialize session
-    session_request = rf.get(request_path)
-    initialize_session(session_request)
+    # create a request for the path, initialize
+    app_request = rf.get(request_path)
+    initialize_request(app_request)
 
-    return session_request
+    return app_request
 
 
-def initialize_session(request):
-    """Helper initializes a Django request object's session."""
+@pytest.fixture
+def mocked_view():
+    def test_view(request):
+        pass
+
+    return create_autospec(test_view)
+
+
+def initialize_request(request):
+    """Helper initializes a Django request object with session and language information."""
 
     # https://stackoverflow.com/a/55530933/358804
-    middleware = SessionMiddleware(lambda x: x)
-    middleware.process_request(request)
+    middleware = [SessionMiddleware(lambda x: x), LocaleMiddleware(lambda x: x)]
+
+    for m in middleware:
+        m.process_request(request)
+
     request.session.save()
+
+    session.reset(request)
+
+
+def with_agency(mocker, agency):
+    mocker.patch("benefits.core.session.agency", autospec=True, return_value=agency)
