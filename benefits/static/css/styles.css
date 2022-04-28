@@ -96,6 +96,8 @@ footer .footer-links a {
   border-width: 2px;
 }
 
+/* Log In */
+
 #login {
   background: #046b99;
   border: 0;
@@ -127,6 +129,28 @@ footer .footer-links a {
 
 .fallback-text {
   color: transparent;
+}
+
+/* Sign Out */
+
+.signout-row {
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+}
+
+.signout-row .container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.signout-row .container .signout-link {
+  font-size: 12px;
+  text-decoration: underline;
+  color: #2b6597;
+  letter-spacing: 0.05rem;
+  padding-top: 18px;
+  display: block;
 }
 
 .btn-link {
@@ -620,7 +644,7 @@ footer .footer-links a {
   .container.content {
     padding-left: 5rem;
     padding-right: 5rem;
-    padding-top: 2rem;
+    padding-top: 4.5rem;
     padding-bottom: 2rem;
     margin: 0;
   }

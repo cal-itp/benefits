@@ -1,8 +1,12 @@
 {% extends "core/page.html" %}
 
+{% block main_content %}
+    {% include "core/includes/sign-out-link.html" %}
+    {{ block.super }}
+{% endblock %}
+
 {% block icon_title %}
-{% include "core/includes/sign-out-link.html" %}
-{{ block.super }}
+    {{ block.super }}
 {% endblock%}
 
 {% block paragraph_content %}
