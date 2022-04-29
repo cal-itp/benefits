@@ -41,10 +41,13 @@ msgid "core.pages.help.payment_options.p[1]"
 msgstr "A contactless bank card can be a credit card or a debit card and must "
 "include a Visa or Mastercard logo."
 
-msgid "core.pages.help.payment_options.p[2]"
+msgid "core.pages.help.payment_options.p[2][0]%(website)s"
 msgstr "Don’t have access to a bank card? You can request a contactless card "
 "from one of the companies that offer free contactless prepaid debit cards, "
-"such as the Cash App Visa debit card or the Venmo Mastercard debit card."
+"such as the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Cash App Visa Debit Card</a> "
+
+msgid "core.pages.help.payment_options.p[2][1]%(website)s"
+msgstr "or the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Venmo Mastercard Debit Card</a>."
 
 msgid "core.pages.help.payment_options.p[3]"
 msgstr "You can still get your discount by going through your local transit "
