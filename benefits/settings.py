@@ -105,7 +105,6 @@ template_ctx_processors = [
     "django.contrib.messages.context_processors.messages",
     "benefits.core.context_processors.analytics",
     "benefits.core.context_processors.authentication",
-    "benefits.core.context_processors.auth_provider",
     "benefits.core.context_processors.recaptcha",
 ]
 

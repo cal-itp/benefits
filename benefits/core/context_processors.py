@@ -17,29 +17,18 @@ def authentication(request):
     verifier = session.verifier(request)
 
     if verifier:
-        return {
-            "authentication": {
-                "required": verifier.requires_authentication,
-                "logged_in": session.logged_in(request),
-                "sign_out_route": reverse("oauth:logout"),
-            }
+        data = {
+            "required": verifier.requires_authentication,
+            "logged_in": session.logged_in(request),
+            "sign_out_route": reverse("oauth:logout"),
         }
-    else:
-        return {}
 
+        if verifier.requires_authentication:
+            auth_provider = verifier.auth_provider
+            data["sign_in_button_label"] = auth_provider.sign_in_button_label
+            data["sign_out_button_label"] = auth_provider.sign_out_button_label
 
-def auth_provider(request):
-    """Context processor adds auth_provider information to request context."""
-    verifier = session.verifier(request)
-
-    if verifier and verifier.requires_authentication:
-        auth_provider = verifier.auth_provider
-        return {
-            "auth_provider": {
-                "sign_in_button_label": auth_provider.sign_in_button_label,
-                "sign_out_button_label": auth_provider.sign_out_button_label,
-            }
-        }
+        return {"authentication": data}
     else:
         return {}
 
