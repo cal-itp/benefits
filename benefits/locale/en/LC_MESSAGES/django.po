@@ -269,7 +269,7 @@ msgid "core.pages.agency_index.p[2]"
 msgstr "The Cal-ITP Benefits program is currently only open to those ages 65 or older."
 
 msgid "core.pages.agency_index.button.label"
-msgstr "Verify your discount and connect your bank card today!"
+msgstr "Connect your bank card to your discount today!"
 
 #: benefits/core/views.py:25
 msgctxt "image alt text"
