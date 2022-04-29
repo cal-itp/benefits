@@ -34,21 +34,25 @@ msgid "core.pages.help.payment_options"
 msgstr "TODO: Payment options"
 
 msgid "core.pages.help.payment_options.p[0]"
-msgstr "TODO: In order to activate your discount, you need a bank card that has the "
+msgstr "In order to activate your discount, you need a bank card that has the "
 "contactless symbol on it. The contactless symbol is four curved lines that looks like this:"
 
 msgid "core.pages.help.payment_options.p[1]"
-msgstr "TODO: A contactless bank card can be a credit card or a debit card and must "
+msgstr "A contactless bank card can be a credit card or a debit card and must "
 "include a Visa or Mastercard logo."
 
 msgid "core.pages.help.payment_options.p[2]"
-msgstr "TODO: We are working to add additional options for people who do not have access "
-"to a bank card. However, you can still get your discount by going through your "
-"local transit provider's application process."
+msgstr "Don’t have access to a bank card? You can request a contactless card "
+"from one of the companies that offer free contactless prepaid debit cards, "
+"such as the Cash App Visa debit card or the Venmo Mastercard debit card."
 
 msgid "core.pages.help.payment_options.p[3]"
-msgstr "TODO: For updates on additional options, please check back on this website, or "
-"get in touch with your local transit provider."
+msgstr "You can still get your discount by going through your local transit "
+"provider’s application process."
+
+msgid "core.pages.help.payment_options.p[4]"
+msgstr "For updates on additional options, please check back on this website, "
+"or get in touch with your local transit provider."
 
 msgid "core.pages.help.login_gov"
 msgstr "TODO: What is Login.gov?"
