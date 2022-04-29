@@ -41,14 +41,21 @@ msgid "core.pages.help.payment_options.p[1]"
 msgstr "A contactless bank card can be a credit card or a debit card and must "
 "include a Visa or Mastercard logo."
 
-msgid "core.pages.help.payment_options.p[2]"
-msgstr "We are working to add additional options for people who do not have access "
-"to a bank card. However, you can still get your discount by going through your "
-"local transit provider's application process."
+msgid "core.pages.help.payment_options.p[2][0]%(website)s"
+msgstr "Don’t have access to a bank card? You can request a contactless card "
+"from one of the companies that offer free contactless prepaid debit cards, "
+"such as the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Cash App Visa Debit Card</a> "
+
+msgid "core.pages.help.payment_options.p[2][1]%(website)s"
+msgstr "or the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Venmo Mastercard Debit Card</a>."
 
 msgid "core.pages.help.payment_options.p[3]"
-msgstr "For updates on additional options, please check back on this website, or "
-"get in touch with your local transit provider."
+msgstr "You can still get your discount by going through your local transit "
+"provider’s application process."
+
+msgid "core.pages.help.payment_options.p[4]"
+msgstr "For updates on additional options, please check back on this website, "
+"or get in touch with your local transit provider."
 
 msgid "core.pages.help.login_gov"
 msgstr "What is Login.gov?"
