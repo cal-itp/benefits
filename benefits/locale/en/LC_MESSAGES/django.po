@@ -272,7 +272,7 @@ msgstr "Rider tapping a debit card to pay for their trip"
 
 #: benefits/core/views.py:47
 msgid "core.pages.index.chooseprovider"
-msgstr "Choose your transit provider"
+msgstr "Please choose your transit provider:"
 
 #: benefits/core/views.py:70
 msgid "core.pages.index.continue"
