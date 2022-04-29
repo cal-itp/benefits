@@ -115,9 +115,9 @@ class Page:
     def __init__(self, **kwargs):
         self.title = kwargs.get("title")
         if self.title is None:
-            self.title = _("core.pages.index.title")
+            self.title = _("core.pages.index.prefix")
         else:
-            self.title = f"{_('core.pages.index.title')}: {self.title}"
+            self.title = f"{_('core.pages.index.prefix')}: {self.title}"
 
         self.noimage = kwargs.get("noimage", False)
         self.icon = kwargs.get("icon")

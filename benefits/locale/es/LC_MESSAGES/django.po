@@ -196,9 +196,12 @@ msgstr ""
 "Aún puede obtener su descuento mediante el proceso de solicitud de su "
 "proveedor de transporte público."
 
+msgid "core.pages.index.prefix"
+msgstr "Beneficios del Tránsito"
+
 #: benefits/core/viewmodels.py:128
 msgid "core.pages.index.title"
-msgstr "Beneficios del Tránsito"
+msgstr "TODO: Choose Provider"
 
 #: benefits/core/viewmodels.py:174 benefits/core/viewmodels.py:176
 #: benefits/eligibility/forms.py:64

@@ -38,6 +38,7 @@ def index(request):
     buttons[0].label = _("core.pages.index.chooseprovider")
 
     page = viewmodels.Page(
+        title=_("core.pages.index.title"),
         content_title=_index_content_title(),
         buttons=buttons,
         classes="home",
