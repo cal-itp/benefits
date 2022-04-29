@@ -316,7 +316,7 @@ msgstr "Select the discount option that best applies to you:"
 
 #: benefits/eligibility/views.py:64
 msgid "eligibility.pages.start.title"
-msgstr "Getting started"
+msgstr "Get Started"
 
 #: benefits/eligibility/views.py:68 benefits/enrollment/views.py:31
 msgctxt "image alt text"
@@ -351,10 +351,10 @@ msgid "eligibility.buttons.continue"
 msgstr "Continue"
 
 msgid "eligibility.pages.start.oauth.heading"
-msgstr "Sign in to your Login.gov account"
+msgstr "Sign in to Login.gov"
 
 msgid "eligibility.pages.start.oauth.details"
-msgstr "You will be able to create an account if you’re not already signed up."
+msgstr "Login.gov is a safe way to sign in to government services."
 
 msgid "eligibility.pages.start.oauth.link_text"
 msgstr "Learn more about Login.gov"
@@ -475,7 +475,7 @@ msgid "eligibility.pages.start.dmv.items[0].title"
 msgstr "Provide your California ID number"
 
 msgid "eligibility.pages.start.dmv.items[0].text"
-msgstr "You will verify your age with a driver’s license or ID card"
+msgstr "You will need to verify your age with a driver license or ID card"
 
 msgid "eligibility.pages.confirm.dmv.p[0]"
 msgstr ""
@@ -489,7 +489,7 @@ msgid "eligibility.forms.confirm.dmv.fields.name"
 msgstr "Last name (as it appears on ID)"
 
 msgid "eligibility.pages.start.dmv.content_title"
-msgstr "Great, you’ll need to do three things to link your transit discount to your bank card."
+msgstr "There are three steps to link your transit discount to your bank card."
 
 msgid "eligibility.pages.start.dmv.p[0]"
 msgstr ""
