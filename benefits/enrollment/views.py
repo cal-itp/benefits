@@ -26,20 +26,16 @@ def _index(request):
     tokenize_retry_form = forms.CardTokenizeFailForm("enrollment:retry")
     tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
-    help_page = reverse("core:help")
     page = viewmodels.Page(
         title=_("enrollment.pages.index.title"),
         content_title=_("enrollment.pages.index.content_title"),
         icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-        paragraphs=[_("enrollment.pages.index.p[0]"), _("enrollment.pages.index.p[1]")],
+        paragraphs=[_("enrollment.pages.index.p[0]"), _("enrollment.pages.index.p[1]"), _("enrollment.pages.index.p[2]")],
         classes="text-lg-center",
         forms=[tokenize_retry_form, tokenize_success_form],
         buttons=[
             viewmodels.Button.primary(
                 text=_("enrollment.buttons.payment_partner"), id=tokenize_button, url=f"#{tokenize_button}"
-            ),
-            viewmodels.Button.link(
-                classes="btn-sm", text=_("enrollment.buttons.payment_options"), url=f"{help_page}#payment-options"
             ),
         ],
     )
@@ -159,7 +155,7 @@ def success(request):
             page = viewmodels.Page(
                 title=_("enrollment.pages.success.title"),
                 icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-                content_title=_("enrollment.pages.success.title"),
+                content_title=_("enrollment.pages.success.content_title"),
                 button=button,
                 classes="logged-in",
             )
@@ -172,8 +168,8 @@ def success(request):
     else:
         page = viewmodels.Page(
             title=_("enrollment.pages.success.title"),
+            content_title=_("enrollment.pages.success.content_title"),
             icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-            content_title=_("enrollment.pages.success.title"),
         )
 
     help_link = reverse("core:help")
