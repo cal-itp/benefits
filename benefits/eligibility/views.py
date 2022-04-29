@@ -167,7 +167,7 @@ def confirm(request):
         eligibility = session.eligibility(request)
         response = verified(request, [eligibility.name])
     else:
-        response = PageTemplateResponse(request, page)
+        response = TemplateResponse(request, "eligibility/confirm.html", page.context_dict())
 
     return response
 
@@ -233,4 +233,4 @@ def unverified(request):
         buttons=buttons,
     )
 
-    return PageTemplateResponse(request, page)
+    return TemplateResponse(request, "eligibility/unverified.html", page.context_dict())
