@@ -27,9 +27,7 @@ describe("Multiple verifier, with AuthProvider: Eligibility start page spec", ()
 
   it("Has the correct copy for Authorization instructions", () => {
     cy.get(".media-list").contains("Sign in to Login.gov");
-    cy.contains(
-      "You will be able to create an account if you’re not already signed up."
-    );
+    cy.contains("Login.gov is a safe way to sign in to government services.");
     cy.contains("Learn more about Login.gov");
   });
 
