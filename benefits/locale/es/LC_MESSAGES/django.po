@@ -251,7 +251,7 @@ msgstr ""
 "TODO: Cal-ITP Benefits makes it easy to use your public transit discount every time you ride."
 
 msgid "core.pages.agency_index.title"
-msgstr "Introduction"
+msgstr "TODO: Introduction"
 
 msgid "core.pages.agency_index.content_title"
 msgstr ""
