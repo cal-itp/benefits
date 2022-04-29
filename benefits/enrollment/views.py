@@ -134,7 +134,7 @@ def retry(request):
                 paragraphs=[_("enrollment.pages.retry.p[0]")],
                 buttons=viewmodels.Button.agency_contact_links(agency),
             )
-            page.buttons.append(viewmodels.Button.primary(text=_("enrollment.buttons.retry"), url=session.origin(request)))
+            page.buttons.append(viewmodels.Button.primary(text=_("core.buttons.retry"), url=session.origin(request)))
             return TemplateResponse(request, "enrollment/retry.html", page.context_dict())
         else:
             raise Exception("Invalid retry submission.")
