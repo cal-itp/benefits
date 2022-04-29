@@ -318,7 +318,7 @@ msgstr "TODO"
 
 #: benefits/eligibility/views.py:64
 msgid "eligibility.pages.start.title"
-msgstr "Preparación"
+msgstr "TODO: Preparación"
 
 #: benefits/eligibility/views.py:68 benefits/enrollment/views.py:31
 msgctxt "image alt text"
@@ -354,10 +354,10 @@ msgid "eligibility.buttons.continue"
 msgstr "Continuar"
 
 msgid "eligibility.pages.start.oauth.heading"
-msgstr "TODO: Sign in to your Login.gov account"
+msgstr "TODO: Sign in to Login.gov"
 
 msgid "eligibility.pages.start.oauth.details"
-msgstr "TODO: You will be able to create an account if you’re not already signed up."
+msgstr "TODO: Login.gov is a safe way to sign in to government services."
 
 msgid "eligibility.pages.start.oauth.link_text"
 msgstr "TODO: Learn more about Login.gov"
@@ -476,22 +476,20 @@ msgid "eligibility.pages.index.mst.description"
 msgstr "TODO: (includes MST RIDES Paratransit Eligibility cardholders)"
 
 msgid "eligibility.pages.confirm.dmv.content_title"
-msgstr "Veamos si podemos verificar su edad con el DMV"
+msgstr "Let’s see if we can confirm your age with the DMV."
 
 msgid "eligibility.pages.start.dmv.items[0].title"
 msgstr "Tu identificación de California"
 
 msgid "eligibility.pages.start.dmv.items[0].text"
-msgstr "Licencia de conducir o tarjeta de identificación"
+msgstr "TODO: You will need to verify your age with a driver’s license or ID card."
 
 msgid "eligibility.pages.confirm.dmv.p[0]"
 msgstr ""
-"Si tiene 65 años o más, podemos confirmar que es elegible para un "
-"descuento para personas mayores cuando viaja en transporte público. "
-"Nosotros no guardamos su información."
+"TODO: Please enter your license/ID number and last name below. If you’re 65 or older, we can confirm that you are eligible for a senior discount when you ride transit. We do not save the information you enter here."
 
 msgid "eligibility.pages.start.dmv.content_title"
-msgstr "TODO: Genial, necesitarás tres cosas antes de comenzar..."
+msgstr "TODO: There are three steps to link your transit discount to your bank card."
 
 msgid "eligibility.forms.confirm.dmv.fields.sub"
 msgstr "Licencia de conducir de CA o número de identificación"
@@ -507,7 +505,7 @@ msgstr ""
 "descuento disponibles."
 
 msgid "eligibility.pages.confirm.dmv.title"
-msgstr "Verificar su edad"
+msgstr "TODO: Confirm Eligibility"
 
 msgid "eligibility.pages.unverified.dmv.p[0]"
 msgstr ""

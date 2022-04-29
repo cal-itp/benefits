@@ -19,17 +19,15 @@ describe("Multiple verifier, with AuthProvider: Eligibility start page spec", ()
 
   it("Has the correct copy for Senior Discount Program instructions", () => {
     cy.contains(
-      "Great, you’ll need to do three things to link your transit discount to your bank card."
+      "There are three steps to link your transit discount to your bank card."
     );
     cy.contains("Provide your California ID number");
     cy.get(".media-list").children().should("have.length", 3);
   });
 
   it("Has the correct copy for Authorization instructions", () => {
-    cy.get(".media-list").contains("Sign in to your Login.gov account");
-    cy.contains(
-      "You will be able to create an account if you’re not already signed up."
-    );
+    cy.get(".media-list").contains("Sign in to Login.gov");
+    cy.contains("Login.gov is a safe way to sign in to government services.");
     cy.contains("Learn more about Login.gov");
   });
 
