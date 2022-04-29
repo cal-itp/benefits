@@ -265,6 +265,10 @@ msgstr "TODO: With new contactless payment options, you can tap "
 "time you ride. <strong><a href=\"%(info_link)s\">Learn more about Cal-ITP Benefits.</a></strong>"
 
 msgid "core.pages.agency_index.p[1]"
+msgstr "TODO: You will need your California driver’s license or ID "
+"card and your bank-issued contactless card to get started. "
+
+msgid "core.pages.agency_index.p[2]"
 msgstr "TODO: The Cal-ITP Benefits program is currently only open to those <strong>ages 65 or older</strong>."
 
 msgid "core.pages.agency_index.button.label"
