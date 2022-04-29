@@ -391,7 +391,7 @@ msgstr "Tapping bank card on the bus reader"
 
 #: benefits/enrollment/views.py:29
 msgid "enrollment.pages.index.title"
-msgstr "Eligibility Confirmed!"
+msgstr "Connect card"
 
 #: benefits/enrollment/views.py:30
 msgid "enrollment.pages.index.content_title"
@@ -400,17 +400,18 @@ msgstr "Great! You’re eligible for a discount!"
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[0]"
 msgstr ""
-"Next, we need to attach your discount to your bank card. We don’t store your "
-"information, and you won’t be charged. When you use this card to pay for "
-"transit, you will always receive your discount."
+"Next, we need to link your discount to your bank-issued card through our payment partner LittlePay."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[1]"
-msgstr "Use a bank-issued credit or debit card."
+msgstr "We don’t store your information, and you won’t be charged. When you use this card to pay for transit, you will always receive your discount."
+
+msgid "enrollment.pages.index.p[2]"
+msgstr "Please use a bank-issued contactless Visa or Mastercard credit or debit card."
 
 #: benefits/enrollment/views.py:37
 msgid "enrollment.buttons.payment_partner"
-msgstr "Continue to our payment partner"
+msgstr "Connect Your Card"
 
 #: benefits/enrollment/views.py:40
 msgid "enrollment.buttons.payment_options"
