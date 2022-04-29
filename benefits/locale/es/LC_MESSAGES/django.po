@@ -394,7 +394,7 @@ msgstr "Tocando la tarjeta bancaria para pagar"
 
 #: benefits/enrollment/views.py:29
 msgid "enrollment.pages.index.title"
-msgstr "¡Elegibilidad confirmada!"
+msgstr "TODO: ¡Elegibilidad confirmada!"
 
 #: benefits/enrollment/views.py:30
 msgid "enrollment.pages.index.content_title"
@@ -403,17 +403,20 @@ msgstr "¡Genial! ¡Eres elegible para un descuento!"
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[0]"
 msgstr ""
-"Ahora, tenemos que vincular su descuento a su tarjeta bancaria. Nosotros no "
+"TODO: Ahora, tenemos que vincular su descuento a su tarjeta bancaria. Nosotros no "
 "guardamos su información y no se le cobrará. Cuando utilice esta tarjeta "
 "para pagar el transporte público, siempre recibirá su descuento."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[1]"
-msgstr "Use una tarjeta de crédito o débito emitida por su banco."
+msgstr "TODO: Use una tarjeta de crédito o débito emitida por su banco."
+
+msgid "enrollment.pages.index.p[2]"
+msgstr "TODO: Please use a bank-issued contactless Visa or Mastercard credit or debit card."
 
 #: benefits/enrollment/views.py:37
 msgid "enrollment.buttons.payment_partner"
-msgstr "Continúe con nuestro socio de pago"
+msgstr "TODO: Continúe con nuestro socio de pago"
 
 #: benefits/enrollment/views.py:40
 msgid "enrollment.buttons.payment_options"
@@ -456,11 +459,11 @@ msgstr "No te cobraron nada hoy."
 #: benefits/enrollment/views.py:150
 msgid "enrollment.pages.success.p2"
 msgstr ""
-"Al abordar el transporte público, pague con esta misma tarjeta física y su descuento se aplicará automáticamente a la compra de su tarifa."
+"TODO: Al abordar el transporte público, pague con esta misma tarjeta física y su descuento se aplicará automáticamente a la compra de su tarifa."
 
 msgid "enrollment.pages.success.p3%(help_link)s"
 msgstr ""
-"Para obtener información adicional sobre qué esperar al usar su tarjeta bancaria conectada, comuníquese con su proveedor de transporte público o consulte nuestra "
+"TODO: Para obtener información adicional sobre qué esperar al usar su tarjeta bancaria conectada, comuníquese con su proveedor de transporte público o consulte nuestra "
 "<a href=\"%(help_link)s\" rel=\"noopener noreferrer\">página de ayuda</a>."
 
 msgid "enrollment.pages.success.p3"
