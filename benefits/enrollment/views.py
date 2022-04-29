@@ -159,7 +159,7 @@ def success(request):
             page = viewmodels.Page(
                 title=_("enrollment.pages.success.title"),
                 icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-                content_title=_("enrollment.pages.success.title"),
+                content_title=_("enrollment.pages.success.content_title"),
                 button=button,
                 classes="logged-in",
             )
@@ -172,8 +172,8 @@ def success(request):
     else:
         page = viewmodels.Page(
             title=_("enrollment.pages.success.title"),
+            content_title=_("enrollment.pages.success.content_title"),
             icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-            content_title=_("enrollment.pages.success.title"),
         )
 
     help_link = reverse("core:help")
