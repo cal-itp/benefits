@@ -162,7 +162,7 @@ def confirm(request):
             # form was not valid, allow for correction/resubmission
             analytics.returned_error(request, form.errors)
             page.forms = [form]
-            response = PageTemplateResponse(request, page)
+            response = TemplateResponse(request, "eligibility/confirm.html", page.context_dict())
     elif session.eligible(request):
         eligibility = session.eligibility(request)
         response = verified(request, [eligibility.name])
