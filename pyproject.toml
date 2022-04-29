@@ -23,6 +23,11 @@ use_gitignore = true
 
 # Configuration for pytest
 
+[tool.coverage.run]
+omit = [
+    "benefits/core/migrations/*"
+]
+
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "benefits.settings"
 markers = [
