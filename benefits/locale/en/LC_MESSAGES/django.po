@@ -475,7 +475,7 @@ msgid "eligibility.pages.start.dmv.items[0].title"
 msgstr "Provide your California ID number"
 
 msgid "eligibility.pages.start.dmv.items[0].text"
-msgstr "You will need to verify your age with a driver’s license or ID card"
+msgstr "You will need to verify your age with a driver’s license or ID card."
 
 msgid "eligibility.pages.confirm.dmv.p[0]"
 msgstr ""
