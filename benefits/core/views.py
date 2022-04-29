@@ -38,6 +38,7 @@ def index(request):
     buttons[0].label = _("core.pages.index.chooseprovider")
 
     page = viewmodels.Page(
+        title=_("core.pages.index.title"),
         content_title=_index_content_title(),
         buttons=buttons,
         classes="home",
@@ -56,6 +57,7 @@ def agency_index(request, agency):
     button.label = _("core.pages.agency_index.button.label")
 
     page = viewmodels.Page(
+        title=_("core.pages.agency_index.title"),
         content_title=_("core.pages.agency_index.content_title"),
         button=button,
         classes="home",

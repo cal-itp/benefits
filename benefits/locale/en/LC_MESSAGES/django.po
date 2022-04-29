@@ -197,9 +197,12 @@ msgstr ""
 "You can still get your discount by going through your local transit "
 "provider’s application process."
 
+msgid "core.pages.index.prefix"
+msgstr "Transit Benefits"
+
 #: benefits/core/viewmodels.py:128
 msgid "core.pages.index.title"
-msgstr "Transit Benefits"
+msgstr "Choose Provider"
 
 #: benefits/core/viewmodels.py:174 benefits/core/viewmodels.py:176
 #: benefits/eligibility/forms.py:64
@@ -248,22 +251,28 @@ msgid "core.pages.index.content_title"
 msgstr ""
 "Cal-ITP Benefits makes it easy to use your public transit discount every time you ride."
 
+msgid "core.pages.agency_index.title"
+msgstr "Introduction"
+
 msgid "core.pages.agency_index.content_title"
 msgstr ""
 "Cal-ITP Benefits makes it easy to use your public transit discount "
 "every time you ride."
 
 msgid "core.pages.agency_index.p[0]%(info_link)s"
-msgstr "With new contactless payment options, you can tap "
-"your bank-issued contactless credit or debit card when you "
-"board, and your discount will automatically apply every "
-"time you ride. <strong><a href=\"%(info_link)s\">Learn more about Cal-ITP Benefits.</a></strong>"
+msgstr "You can tap your credit or debit card when you board, "
+"and your discount will automatically apply every time you ride."
+" <strong><a href=\"%(info_link)s\">Learn more about Cal-ITP Benefits.</a></strong>"
 
 msgid "core.pages.agency_index.p[1]"
+msgstr "You will need your California driver’s license or ID "
+"card and your bank-issued contactless card to get started. "
+
+msgid "core.pages.agency_index.p[2]"
 msgstr "The Cal-ITP Benefits program is currently only open to those <strong>ages 65 or older</strong>."
 
 msgid "core.pages.agency_index.button.label"
-msgstr "Verify your discount and connect your bank card today!"
+msgstr "Connect your bank card to your discount today!"
 
 #: benefits/core/views.py:25
 msgctxt "image alt text"
@@ -272,7 +281,7 @@ msgstr "Rider tapping a debit card to pay for their trip"
 
 #: benefits/core/views.py:47
 msgid "core.pages.index.chooseprovider"
-msgstr "Choose your transit provider"
+msgstr "Please choose your transit provider:"
 
 #: benefits/core/views.py:70
 msgid "core.pages.index.continue"

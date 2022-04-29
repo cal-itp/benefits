@@ -6,7 +6,7 @@ describe("Index page spec", () => {
   });
 
   it("Gives user transit provider options to click", () => {
-    cy.contains("Choose your transit provider");
+    cy.contains("Please choose your transit provider:");
     cy.contains(agencies[0].fields.short_name).then(($e) => {
       expect($e)
         .attr("href")
