@@ -400,7 +400,7 @@ msgstr "Great! You’re eligible for a discount!"
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[0]"
 msgstr ""
-"Next, we need to link your discount to your bank-issued card through our payment partner LittlePay."
+"Next, we need to link your discount to your bank-issued card through our payment partner Littlepay."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[1]"
