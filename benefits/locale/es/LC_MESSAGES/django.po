@@ -62,9 +62,12 @@ msgstr "TODO: Creating an account is simple. You will need an email address and 
 "authenticating your account&mdash;which will use either a landline, mobile phone, or "
 "backup codes that must be printed or written down."
 
-msgid "core.pages.help.login_gov.p[2]%(website)s"
-msgstr "<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">TODO</a>: "
-"For more information on Login.gov, check out their website."
+msgid "core.pages.help.login_gov.p[2][0]%(website)s"
+msgstr "TODO: To learn more about Login.gov, please visit the "
+"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov website</a> "
+
+msgid "core.pages.help.login_gov.p[2][1]%(website)s"
+msgstr "TODO: or the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov Help Center</a>."
 
 msgid "core.pages.help.littlepay"
 msgstr "TODO: What is Littlepay?"
