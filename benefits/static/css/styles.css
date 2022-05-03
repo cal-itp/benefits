@@ -75,6 +75,11 @@ main .main-row {
   min-height: calc(100vh - 120px);
 }
 
+main .main-row .col-lg-6.image {
+  background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
+  background-size: cover;
+}
+
 footer {
   margin-top: auto;
   padding-top: 1rem;
@@ -540,6 +545,15 @@ footer .footer-links a {
 }
 
 @media (max-width: 992px) {
+  /* With Image */
+
+  .with-image main .main-row .col-lg-6.image {
+    background: center bottom url("/static/img/ridertappingbankcard.png")
+      no-repeat;
+    height: 300px;
+    background-size: cover;
+  }
+
   /* Eligibility Start */
 
   .media-list {
