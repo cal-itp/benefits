@@ -68,7 +68,8 @@
                     $("button[data-action='submit']", this)
                         .attr("role", "status")
                         .attr("disabled", "true")
-                        .text("{{ form.submitting_value }}");
+                        .text("{{ form.submitting_value }}")
+                        .addClass("disabled");
                 }
             });
         });
