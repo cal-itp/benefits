@@ -1,5 +1,7 @@
 # Overview
 
+The Django application gets built into a [Docker image](https://github.com/cal-itp/benefits/blob/dev/Dockerfile) with [NGINX](https://www.nginx.com/) and [Gunicorn](https://gunicorn.org/). SQLite is used within that same container to store configuration data and S3 is used for secrets; there is no external database.
+
 The application is deployed to [AWS Elastic Container Service (ECS)][ecs-welcome] using a
 [Task Definition][ecs-task-definition] generated from the template file at [`.aws/ecs-task.json`][ecs-task-definition-template].
 
@@ -9,6 +11,8 @@ rules specific to each GitHub Environment.
 
 A [GitHub Action][gh-actions] per Environment is responsible for deploying that Environment's branch to the corresponding
 AWS location.
+
+The [architecture overview from August 2021][arch-overview] goes into more detail.
 
 ## Configuration
 
@@ -73,6 +77,7 @@ docker compose run s3push
 ```
 
 [.env.sample]: https://github.com/cal-itp/benefits/tree/dev/.devcontainer/.env.sample
+[arch-overview]: https://docs.google.com/document/d/1rwYcp2ps_JNn9WmjqUfYpPeuMoj1FZu5DTUloQEQ5iQ/edit#heading=h.afetf83gz28y
 [aws-cli]: https://aws.amazon.com/cli/
 [depends-on]: https://docs.aws.amazon.com/AmazonECS/latest/userguide/task_definition_parameters.html#container_definition_dependson
 [ecs-task-definition]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html
