@@ -43,14 +43,14 @@ jobs:
 
       - name: Docker Login to Amazon ECR
         id: docker-login-ecr
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ${{ steps.aws-login-ecr.outputs.registry }}
           username: ${{ secrets.AWS_ACCESS_KEY_ID }}
           password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Docker Login to GitHub Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
