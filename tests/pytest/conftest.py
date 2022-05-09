@@ -3,8 +3,13 @@ from django.contrib.sessions.middleware import SessionMiddleware
 from django.middleware.locale import LocaleMiddleware
 
 import pytest
+from pytest_socket import disable_socket
 
 from benefits.core import session
+
+
+def pytest_runtest_setup():
+    disable_socket()
 
 
 @pytest.fixture(scope="session")
