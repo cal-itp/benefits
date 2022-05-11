@@ -1,6 +1,7 @@
 from django.urls import reverse
 import pytest
 import httpretty
+import requests
 
 import datetime
 import os
@@ -12,6 +13,7 @@ from typing import Tuple
 
 from benefits.core import session
 from benefits.core.models import TransitAgency, EligibilityVerifier
+from benefits.eligibility.api import ApiError
 from benefits.eligibility.views import confirm
 from tests.pytest.conftest import with_agency, initialize_request
 
@@ -129,3 +131,28 @@ def _make_token(payload, jws_signing_alg, server_private_key, jwe_encryption_alg
     encrypted_token = jwt.JWT(header=header, claims=signed_payload)
     encrypted_token.make_encrypted_token(client_public_key)
     return encrypted_token.serialize()
+
+
+@httpretty.activate(verbose=True, allow_net_connect=False)
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "exception", [requests.ConnectionError, requests.Timeout, requests.TooManyRedirects, requests.HTTPError]
+)
+def test_confirm_failure_error_on_request(mocker, rf, exception):
+    agency, verifier = set_verifier(mocker)
+
+    # https://stackoverflow.com/questions/28675952/mock-a-http-request-that-times-out-with-httpretty
+    def raise_exception(request, uri, headers):
+        raise exception()
+
+    httpretty.register_uri(httpretty.GET, "http://localhost/verify", status=200, body=raise_exception)
+
+    path = reverse("eligibility:confirm")
+    body = {"sub": "A7654321", "name": "Garcia"}
+    request = rf.post(path, body)
+
+    initialize_request(request)
+    session.update(request, agency=agency, verifier=verifier, oauth_token="token")
+
+    with pytest.raises(ApiError):
+        confirm(request)
