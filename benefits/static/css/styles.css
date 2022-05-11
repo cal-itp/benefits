@@ -551,7 +551,7 @@ footer .footer-links a {
     background-position: center bottom;
     height: 240px;
     background-size: cover;
-    margin-bottom: 40px;
+    margin-bottom: 60px;
   }
 
   .signout-row .container .signout-link {
@@ -569,7 +569,7 @@ footer .footer-links a {
   }
 
   .signout-row {
-    top: 368px;
+    top: 308px;
   }
 
   /* Eligibility Start */
