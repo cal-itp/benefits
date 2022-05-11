@@ -548,11 +548,10 @@ footer .footer-links a {
   /* Mobile With Image */
 
   .with-image main .main-row .col-lg-6.image {
-    background: center bottom url("/static/img/ridertappingbankcard.png")
-      no-repeat;
-    height: 300px;
+    background-position: center bottom;
+    height: 240px;
     background-size: cover;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
   }
 
   .signout-row .container .signout-link {
