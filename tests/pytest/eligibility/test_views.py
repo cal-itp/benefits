@@ -156,3 +156,21 @@ def test_confirm_failure_error_on_request(mocker, rf, exception):
 
     with pytest.raises(ApiError):
         confirm(request)
+
+
+@httpretty.activate(verbose=True, allow_net_connect=False)
+@pytest.mark.django_db
+def test_confirm_failure_unexpected_status_code(mocker, rf):
+    agency, verifier = set_verifier(mocker)
+
+    httpretty.register_uri(httpretty.GET, "http://localhost/verify", status=404)
+
+    path = reverse("eligibility:confirm")
+    body = {"sub": "A1234567", "name": "Garcia"}
+    request = rf.post(path, body)
+
+    initialize_request(request)
+    session.update(request, agency=agency, verifier=verifier, oauth_token="token")
+
+    with pytest.raises(ApiError, match=r"Unexpected eligibility"):
+        confirm(request)
