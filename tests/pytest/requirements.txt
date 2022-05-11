@@ -1,3 +1,4 @@
+httpretty
 pytest
 pytest-cov
 pytest-django
