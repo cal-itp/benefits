@@ -426,7 +426,9 @@ footer .footer-links a {
 }
 
 .container.content .buttons label {
+  display: block;
   margin-bottom: 2rem;
+  text-align: center;
 }
 
 .container.content h1.icon-title {
