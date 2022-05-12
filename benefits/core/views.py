@@ -2,6 +2,7 @@
 The core application: view definition for the root of the webapp.
 """
 from django.http import HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
+from django.shortcuts import redirect
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.urls import reverse
@@ -31,8 +32,13 @@ def index(request):
     """View handler for the main entry page."""
     session.reset(request)
 
-    # generate a button to the landing page for each active agency
     agencies = models.TransitAgency.all_active()
+
+    if len(agencies) == 1:
+        agency = agencies[0]
+        return redirect(agency.index_url)
+
+    # generate a button to the landing page for each active agency
     buttons = [viewmodels.Button.outline_primary(text=a.short_name, url=a.index_url) for a in agencies]
     buttons[0].classes.append("mt-3")
     buttons[0].label = _("core.pages.index.chooseprovider")
