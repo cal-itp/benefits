@@ -141,11 +141,10 @@ def _make_token(payload, jws_signing_alg, server_private_key, jwe_encryption_alg
 def test_confirm_failure_error_on_request(mocker, rf, exception):
     agency, verifier = set_verifier(mocker)
 
-    # https://stackoverflow.com/questions/28675952/mock-a-http-request-that-times-out-with-httpretty
-    def raise_exception(request, uri, headers):
+    def raise_exception(*args, **kwargs):
         raise exception()
 
-    httpretty.register_uri(httpretty.GET, "http://localhost/verify", status=200, body=raise_exception)
+    mocker.patch("requests.get", new=raise_exception)
 
     path = reverse("eligibility:confirm")
     body = {"sub": "A7654321", "name": "Garcia"}
