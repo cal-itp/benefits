@@ -196,34 +196,6 @@ def _tokenize_response_error_scenarios():
     return [
         pytest.param(lambda verifier: "", id='TokenError("Invalid response format")'),
         pytest.param(lambda verifier: "invalid token", id='TokenError("Invalid JWE token")'),
-        # Can't figure out the right way to cause these cases to be thrown.
-        # pytest.param(lambda verifier: _make_token(
-        #     {
-        #         "jti": str(uuid.uuid4()),
-        #         "iss": "test-server",
-        #         "iat": int(datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).timestamp()),
-        #         "eligibility": ["type1"],
-        #     },
-        #     verifier.jws_signing_alg,
-        #     verifier.jws_signing_alg,
-        #     _get_jwk("server.key"),
-        #     verifier.jwe_encryption_alg,
-        #     verifier.jwe_cek_enc,
-        #     _get_jwk("client.pub"),
-        # ), id='TokenError("JWE token decryption failed")'),
-        # pytest.param(lambda verifier: _make_token(
-        #     {
-        #         "jti": str(uuid.uuid4()),
-        #         "iss": "test-server",
-        #         "iat": int(datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).timestamp()),
-        #         "eligibility": ["type1"],
-        #     },
-        #     verifier.jws_signing_alg,
-        #     _get_jwk("server.key"),
-        #     verifier.jwe_encryption_alg,
-        #     verifier.jwe_cek_enc,
-        #     _get_jwk("client.pub"),
-        # ), id='TokenError("Invalid JWS token")'),
         pytest.param(
             lambda verifier: _make_token(
                 {
