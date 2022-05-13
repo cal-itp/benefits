@@ -13,7 +13,7 @@ from typing import Tuple
 
 from benefits.core import session
 from benefits.core.models import TransitAgency, EligibilityVerifier
-from benefits.eligibility.api import ApiError
+from benefits.eligibility.api import ApiError, TokenError
 from benefits.eligibility.views import confirm
 from tests.pytest.conftest import with_agency, initialize_request
 
@@ -172,4 +172,21 @@ def test_confirm_failure_unexpected_status_code(mocker, rf):
     session.update(request, agency=agency, verifier=verifier, oauth_token="token")
 
     with pytest.raises(ApiError, match=r"Unexpected eligibility"):
+        confirm(request)
+
+
+@httpretty.activate(verbose=True, allow_net_connect=False)
+@pytest.mark.django_db
+def test_confirm_failure_error_tokenizing_request(mocker, rf):
+    agency, verifier = set_verifier(mocker)
+    agency.jws_signing_alg = "not real"
+
+    path = reverse("eligibility:confirm")
+    body = {"sub": "A0101011", "name": "Lastname"}
+    request = rf.post(path, body)
+
+    initialize_request(request)
+    session.update(request, agency=agency, verifier=verifier, oauth_token="token")
+
+    with pytest.raises(TokenError):
         confirm(request)
