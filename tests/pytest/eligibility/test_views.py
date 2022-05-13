@@ -190,3 +190,78 @@ def test_confirm_failure_error_tokenizing_request(mocker, rf):
 
     with pytest.raises(TokenError):
         confirm(request)
+
+
+def _tokenize_response_error_scenarios():
+    return [
+        pytest.param(lambda verifier: "", id='TokenError("Invalid response format")'),
+        pytest.param(lambda verifier: "invalid token", id='TokenError("Invalid JWE token")'),
+        # Can't figure out the right way to cause these cases to be thrown.
+        # pytest.param(lambda verifier: _make_token(
+        #     {
+        #         "jti": str(uuid.uuid4()),
+        #         "iss": "test-server",
+        #         "iat": int(datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).timestamp()),
+        #         "eligibility": ["type1"],
+        #     },
+        #     verifier.jws_signing_alg,
+        #     verifier.jws_signing_alg,
+        #     _get_jwk("server.key"),
+        #     verifier.jwe_encryption_alg,
+        #     verifier.jwe_cek_enc,
+        #     _get_jwk("client.pub"),
+        # ), id='TokenError("JWE token decryption failed")'),
+        # pytest.param(lambda verifier: _make_token(
+        #     {
+        #         "jti": str(uuid.uuid4()),
+        #         "iss": "test-server",
+        #         "iat": int(datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).timestamp()),
+        #         "eligibility": ["type1"],
+        #     },
+        #     verifier.jws_signing_alg,
+        #     _get_jwk("server.key"),
+        #     verifier.jwe_encryption_alg,
+        #     verifier.jwe_cek_enc,
+        #     _get_jwk("client.pub"),
+        # ), id='TokenError("Invalid JWS token")'),
+        pytest.param(
+            lambda verifier: _make_token(
+                {
+                    "jti": str(uuid.uuid4()),
+                    "iss": "test-server",
+                    "iat": int(datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).timestamp()),
+                    "eligibility": ["type1"],
+                },
+                "RS512",  # signing algorithm that doesn't match verifier.jws_signing_alg
+                _get_jwk("server.key"),
+                verifier.jwe_encryption_alg,
+                verifier.jwe_cek_enc,
+                _get_jwk("client.pub"),
+            ),
+            id='TokenError("JWS token signature verification failed")',
+        ),
+    ]
+
+
+@httpretty.activate(verbose=True, allow_net_connect=False)
+@pytest.mark.django_db
+@pytest.mark.parametrize("body_lambda", _tokenize_response_error_scenarios())
+def test_confirm_failure_error_tokenizing_response(mocker, rf, body_lambda):
+    agency, verifier = set_verifier(mocker)
+
+    httpretty.register_uri(
+        httpretty.GET,
+        "http://localhost/verify",
+        status=200,
+        body=body_lambda(verifier),
+    )
+
+    path = reverse("eligibility:confirm")
+    body = {"sub": "A1234567", "name": "Garcia"}
+    request = rf.post(path, body)
+
+    initialize_request(request)
+    session.update(request, agency=agency, verifier=None, oauth_token="token")
+
+    with pytest.raises(TokenError):
+        confirm(request)
