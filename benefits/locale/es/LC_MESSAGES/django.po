@@ -211,7 +211,7 @@ msgstr "Beneficios del Tránsito"
 
 #: benefits/core/viewmodels.py:128
 msgid "core.pages.index.title"
-msgstr "TODO: Choose Provider"
+msgstr "Elija proveedor"
 
 #: benefits/core/viewmodels.py:174 benefits/core/viewmodels.py:176
 #: benefits/eligibility/forms.py:64
@@ -258,15 +258,15 @@ msgstr "Espere por favor..."
 #: benefits/core/views.py:20
 msgid "core.pages.index.content_title"
 msgstr ""
-"TODO: Cal-ITP Benefits makes it easy to use your public transit discount every time you ride."
+"Los beneficios de Cal-ITP facilita el uso de su descuento de transporte público cada vez que viaja."
 
 msgid "core.pages.agency_index.title"
-msgstr "TODO: Introduction"
+msgstr "Introducción"
 
 msgid "core.pages.agency_index.content_title"
 msgstr ""
-"TODO: Cal-ITP Benefits makes it easy to use your public transit discount "
-"every time you ride."
+"Los beneficios de Cal-ITP facilita el uso de su descuento de transporte público cada vez que viaja"
+
 
 msgid "core.pages.agency_index.p[0]%(info_link)s"
 msgstr "TODO: With new contactless payment options, you can tap "
@@ -291,7 +291,7 @@ msgstr "Pasajera utiliza una tarjeta de débito para pagar su paseo."
 
 #: benefits/core/views.py:47
 msgid "core.pages.index.chooseprovider"
-msgstr "Elige tu proveedor de transporte público"
+msgstr "Por favor, elija su proveedor de transporte:"
 
 #: benefits/core/views.py:70
 msgid "core.pages.index.continue"
