@@ -334,7 +334,7 @@ msgstr "TODO"
 
 #: benefits/eligibility/views.py:64
 msgid "eligibility.pages.start.title"
-msgstr "TODO: Preparación"
+msgstr "Comencemos"
 
 #: benefits/eligibility/views.py:68 benefits/enrollment/views.py:31
 msgctxt "image alt text"
@@ -353,34 +353,34 @@ msgstr "TODO: Computer monitor with checkmark"
 
 #: benefits/eligibility/views.py:74
 msgid "eligibility.pages.start.bankcard.title"
-msgstr "TODO: Tu tarjeta bancaria"
+msgstr "Proporcione los datos de su tarjeta bancaria"
 
 #: benefits/eligibility/views.py:75
 msgid "eligibility.pages.start.bankcard.text"
-msgstr "TODO: Una tarjeta de débito o crédito"
+msgstr "Debe ser una tarjeta de débito o crédito sin contacto de Visa o Mastercard."
 
 msgid "eligibility.pages.start.bankcard.button[0].link"
-msgstr "TODO: Don’t have a bank card?"
+msgstr "¿No tienes tarjeta bancaria?"
 
 msgid "eligibility.pages.start.bankcard.button[1].link"
-msgstr "TODO: Unsure if you have a contactless card?"
+msgstr "¿No está seguro si tiene una tarjeta sin contacto?"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
 msgstr "Continuar"
 
 msgid "eligibility.pages.start.oauth.heading"
-msgstr "TODO: Sign in to Login.gov"
+msgstr "Inicia sesión en Login.gov"
 
 msgid "eligibility.pages.start.oauth.details"
-msgstr "TODO: Login.gov is a safe way to sign in to government services."
+msgstr "Login.gov es una forma segura de iniciar sesión en los servicios gubernamentales."
 
 msgid "eligibility.pages.start.oauth.link_text"
-msgstr "TODO: Learn more about Login.gov"
+msgstr "Conozca más sobre Login.gov"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
-msgstr "TODO: Create an account or sign in with"
+msgstr "Crear una cuenta o iniciar sesión con"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signout"
@@ -501,17 +501,17 @@ msgid "eligibility.pages.confirm.dmv.content_title"
 msgstr "Let’s see if we can confirm your age with the DMV."
 
 msgid "eligibility.pages.start.dmv.items[0].title"
-msgstr "Tu identificación de California"
+msgstr "Proporcione su número de identificación de California"
 
 msgid "eligibility.pages.start.dmv.items[0].text"
-msgstr "TODO: You will need to verify your age with a driver’s license or ID card."
+msgstr "Deberá verificar su edad con una licencia de conducir o tarjeta de identificación."
 
 msgid "eligibility.pages.confirm.dmv.p[0]"
 msgstr ""
 "TODO: Please enter your license/ID number and last name below. If you’re 65 or older, we can confirm that you are eligible for a senior discount when you ride transit. We do not save the information you enter here."
 
 msgid "eligibility.pages.start.dmv.content_title"
-msgstr "TODO: There are three steps to link your transit discount to your bank card."
+msgstr "Hay tres pasos para vincular su descuento de tránsito a su tarjeta bancaria."
 
 msgid "eligibility.forms.confirm.dmv.fields.sub"
 msgstr "Licencia de conducir de CA o número de identificación"
