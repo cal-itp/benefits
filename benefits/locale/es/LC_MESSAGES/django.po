@@ -14,85 +14,70 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 msgid "core.pages.help.about"
-msgstr "TODO: What is Cal-ITP Benefits?"
+msgstr "¿Qué son los beneficios de Cal-ITP?"
 
 #: benefits/core/templates/core/base.html:9 benefits/core/views.py:91
 msgid "core.pages.help.about.p[0]"
 msgstr ""
-"TODO: The Benefits tool is provided by California Integrated Travel Project "
-"(Cal-ITP), which is a new program from the California Department of "
-"Transportation dedicated to making travel simpler and cost-effective for all."
+"La herramienta de Beneficios es proporcionada por California Integrated Travel Project “Proyecto de Viaje Integrado de California” (Cal-ITP), que es un nuevo programa del Departamento de Transporte de California dedicado a hacer que los viajes sean más sencillos y económicos para todos."
 
 msgid "core.pages.help.about.p[1]"
 msgstr ""
-"TODO: We partner with the California DMV to confirm age for age-based discounts and "
-"local transporation agencies to confirm specific discount programs. Once verified, "
-"discounts are attached to your bank card through our payment partner, Littlepay, so "
-"that when you pay for your transit ride, you get your discount automatically."
+"Nos asociamos con el DMV de California para confirmar la edad para los descuentos basados en la edad y las agencias de transporte locales para confirmar los programas de descuento específicos. Una vez verificados, los descuentos se adjuntan a su tarjeta bancaria a través de nuestro socio de pago, Littlepay, para que cuando pague su viaje en transporte, obtenga su descuento automáticamente.?"
 
 msgid "core.pages.help.payment_options"
-msgstr "TODO: Payment options"
+msgstr "Opciones de pago"
 
 msgid "core.pages.help.payment_options.p[0]"
-msgstr "TODO: In order to activate your discount, you need a bank card that has the "
-"contactless symbol on it. The contactless symbol is four curved lines that looks like this:"
+msgstr "Para activar su descuento, necesita una tarjeta bancaria que tenga el símbolo de sin contacto. El símbolo sin contacto son cuatro líneas curvas que se ven así:"
 
 msgid "core.pages.help.payment_options.p[1]"
-msgstr "TODO: A contactless bank card can be a credit card or a debit card and must "
-"include a Visa or Mastercard logo."
+msgstr "Una tarjeta bancaria sin contacto puede ser una tarjeta de crédito o de débito y debe incluir el logotipo de Visa o Mastercard."
 
 msgid "core.pages.help.payment_options.p[2][0]%(website)s"
-msgstr "TODO: Don’t have access to a bank card? You can request a contactless card "
-"from one of the companies that offer free contactless prepaid debit cards, "
-"such as the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Cash App Visa Debit Card</a> "
+msgstr "¿No tienes acceso a una tarjeta bancaria? Puedes solicitar una tarjeta sin contacto de una de las compañías que ofrecen tarjetas de débito prepago sin contacto gratuitas, como la tarjeta de débito "
+" <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Cash App Visa</a> "
 
 msgid "core.pages.help.payment_options.p[2][1]%(website)s"
-msgstr "TODO: or the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Venmo Mastercard Debit Card</a>."
+msgstr "o la tarjeta de débito <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Venmo Mastercard</a>."
 
 msgid "core.pages.help.payment_options.p[3]"
-msgstr "TODO: You can still get your discount by going through your local transit "
-"provider’s application process."
+msgstr "Todavía puede obtener su descuento mediante el proceso de solicitud de su proveedor de transporte local."
 
 msgid "core.pages.help.payment_options.p[4]"
-msgstr "TODO: For updates on additional options, please check back on this website, "
-"or get in touch with your local transit provider."
+msgstr "Para obtener actualizaciones sobre opciones adicionales, vuelva a consultar este sitio web o comuníquese con su proveedor de transporte local."
 
 msgid "core.pages.help.login_gov"
-msgstr "TODO: What is Login.gov?"
+msgstr "¿Qué es Login.gov?"
 
 msgid "core.pages.help.login_gov.p[0]"
-msgstr "TODO: Login.gov is a secure way to sign in to participating government agencies. "
-"You can use your Login.gov account to access all of the benefits offered through Cal-ITP."
+msgstr "Login.gov es una forma segura de iniciar sesión en las agencias gubernamentales participantes. Puede utilizar su cuenta de Login.gov para acceder a todos los beneficios ofrecidos a través de Cal-ITP."
 
 msgid "core.pages.help.login_gov.p[1]"
-msgstr "TODO: Creating an account is simple. You will need an email address and method for "
-"authenticating your account&mdash;which will use either a landline, mobile phone, or "
-"backup codes that must be printed or written down."
+msgstr "Crear una cuenta es simple. Necesitará una dirección de correo electrónico y un método para autenticar su cuenta—que utilizará un teléfono fijo o un teléfono móvil o códigos de seguridad que deben imprimirse o anotarse."
 
 msgid "core.pages.help.login_gov.p[2][0]%(website)s"
-msgstr "TODO: To learn more about Login.gov, please visit the "
-"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov website</a> "
+msgstr "Para obtener más información sobre Login.gov, visite "
+"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov</a> "
 
 msgid "core.pages.help.login_gov.p[2][1]%(website)s"
-msgstr "TODO: or the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov Help Center</a>."
+msgstr "o <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
 
 msgid "core.pages.help.littlepay"
-msgstr "TODO: What is Littlepay?"
+msgstr "¿Qué es Littlepay?"
 
 msgid "core.pages.help.littlepay.p[0]"
-msgstr "TODO: Our payment partner, Littlepay, is a secure, end-to-end payment processing "
-"platform that allows us to seamlessly attach your transit discount to your bank card."
+msgstr "Nuestro socio de pagos, Littlepay, es una plataforma de procesamiento de pagos segura e integral que nos permite adjuntar sin problemas su descuento de tránsito a su tarjeta bancaria."
 
 msgid "core.pages.help.littlepay.p[1]%(website)s"
-msgstr "TODO: For more information on Littlepay, please visit the "
-"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Littlepay website</a>."
+msgstr "Para obtener más información sobre Littlepay, visite el sitio web de "
+"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Littlepay</a>."
 
 msgid "core.pages.help.questions"
-msgstr "TODO: Questions?"
+msgstr "¿Preguntas?"
 
 msgid "core.pages.help.questions.p[0]"
-msgstr "TODO: If you need assistance with this website, please reach out to the customer "
-"service team for your local transit provider."
+msgstr "Si necesita ayuda con este sitio web, póngase en contacto con el equipo de servicio al cliente de su proveedor de transito local."
 
 #: benefits/core/templates/core/base.html:24
 msgid "core.buttons.skip"
