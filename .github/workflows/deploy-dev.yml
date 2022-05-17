@@ -96,7 +96,7 @@ jobs:
           tags: ghcr.io/${{github.repository}}:dev
 
       - name: Update image tag on the Azure Web App
-        uses: azure/webapps-container-deploy@v1
+        uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ secrets.AZURE_APP }}
           images: ghcr.io/${{github.repository}}:dev
