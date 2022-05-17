@@ -457,34 +457,33 @@ msgid "core.buttons.retry"
 msgstr "Inténtalo de nuevo"
 
 msgid "enrollment.pages.success.title"
-msgstr "TODO: Success"
+msgstr "Éxito"
 
 #: benefits/enrollment/views.py:147 benefits/enrollment/views.py:149
 msgid "enrollment.pages.success.content_title"
-msgstr "Felicidades! Su descuento ahora está vinculado a su tarjeta bancaria."
+msgstr "¡Éxito! Su descuento está ahora vinculado a su tarjeta bancaria."
 
 msgid "enrollment.pages.success.logout.title"
 msgstr "TODO: You have been successfully logged out. Thank you for using Cal-ITP Benefits!"
 
 #: benefits/enrollment/views.py:150
 msgid "enrollment.pages.success.p1"
-msgstr "No te cobraron nada hoy."
+msgstr "No se le ha cobrado nada hoy."
 
 #: benefits/enrollment/views.py:150
 msgid "enrollment.pages.success.p2"
-msgstr ""
-"TODO: Al abordar el transporte público, pague con esta misma tarjeta física y su descuento se aplicará automáticamente a la compra de su tarifa."
+msgstr "Al abordar el tránsito, pague con esta misma tarjeta física y su descuento se aplicará automáticamente a su tarifa."
 
 msgid "enrollment.pages.success.p3%(help_link)s"
 msgstr ""
-"TODO: Para obtener información adicional sobre qué esperar al usar su tarjeta bancaria conectada, comuníquese con su proveedor de transporte público o consulte nuestra "
+"Para obtener más información sobre lo que puede esperar al utilizar su tarjeta bancaria conectada, comuníquese con su proveedor de tránsito local o consulte "
 "<a href=\"%(help_link)s\" rel=\"noopener noreferrer\">página de ayuda</a>."
 
 msgid "enrollment.pages.success.p3"
-msgstr "TODO: If you are on a public or shared computer, please sign out of your"
+msgstr "Si estás en una computadora pública o compartida, no olvides hacer clic aquí para cerrar la sesión de"
 
 msgid "enrollment.pages.success.p4"
-msgstr "TODO: account."
+msgstr "."
 
 msgid "eligibility.pages.index.dmv.label"
 msgstr "TODO: Senior Discount Program"
