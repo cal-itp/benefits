@@ -310,7 +310,7 @@ msgstr "Icono de tarjeta bancaria"
 
 #: benefits/eligibility/forms.py:37
 msgid "eligibility.forms.confirm.submit"
-msgstr "Verificar"
+msgstr "Verificando estado"
 
 #: benefits/eligibility/forms.py:38
 msgid "eligibility.forms.confirm.submitting"
@@ -384,7 +384,7 @@ msgstr "Crear una cuenta o iniciar sesión con"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signout"
-msgstr "TODO: Sign out of Login.gov"
+msgstr "Cierre sesión de Login.gov"
 
 #: benefits/eligibility/views.py:170
 msgid "eligibility.pages.unverified.dmv.title"
@@ -410,7 +410,7 @@ msgstr "Tocando la tarjeta bancaria para pagar"
 
 #: benefits/enrollment/views.py:29
 msgid "enrollment.pages.index.title"
-msgstr "TODO: ¡Elegibilidad confirmada!"
+msgstr "Tarjeta de conexión"
 
 #: benefits/enrollment/views.py:30
 msgid "enrollment.pages.index.content_title"
@@ -419,20 +419,18 @@ msgstr "¡Genial! ¡Eres elegible para un descuento!"
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[0]"
 msgstr ""
-"TODO: Ahora, tenemos que vincular su descuento a su tarjeta bancaria. Nosotros no "
-"guardamos su información y no se le cobrará. Cuando utilice esta tarjeta "
-"para pagar el transporte público, siempre recibirá su descuento."
+"A continuación, tenemos que vincular su descuento a su tarjeta bancaria a través de nuestro socio de pago Littlepay."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[1]"
-msgstr "TODO: Use una tarjeta de crédito o débito emitida por su banco."
+msgstr "No almacenamos su información y no se le cobrará. Cuando utilice esta tarjeta para pagar el tránsito, siempre recibirá su descuento."
 
 msgid "enrollment.pages.index.p[2]"
-msgstr "TODO: Please use a bank-issued contactless Visa or Mastercard credit or debit card."
+msgstr "Utilice una tarjeta de crédito o débito Visa o Mastercard sin contacto emitida por un banco."
 
 #: benefits/enrollment/views.py:37
 msgid "enrollment.buttons.payment_partner"
-msgstr "TODO: Continúe con nuestro socio de pago"
+msgstr "Conecta tu tarjeta"
 
 #: benefits/enrollment/views.py:40
 msgid "enrollment.buttons.payment_options"
@@ -498,7 +496,7 @@ msgid "eligibility.pages.index.mst.description"
 msgstr "TODO: (includes MST RIDES Paratransit Eligibility cardholders)"
 
 msgid "eligibility.pages.confirm.dmv.content_title"
-msgstr "Let’s see if we can confirm your age with the DMV."
+msgstr "Veamos si podemos confirmar su edad con el DMV."
 
 msgid "eligibility.pages.start.dmv.items[0].title"
 msgstr "Proporcione su número de identificación de California"
@@ -508,16 +506,16 @@ msgstr "Deberá verificar su edad con una licencia de conducir o tarjeta de iden
 
 msgid "eligibility.pages.confirm.dmv.p[0]"
 msgstr ""
-"TODO: Please enter your license/ID number and last name below. If you’re 65 or older, we can confirm that you are eligible for a senior discount when you ride transit. We do not save the information you enter here."
+"Por favor, ingrese su número de licencia/identificación y su apellido abajo. Si tiene 65 años o más, podemos confirmar que es eligible para un descuento para personas mayores cuando viaja en transporte público. No guardamos la información que ingresa aquí."
 
 msgid "eligibility.pages.start.dmv.content_title"
 msgstr "Hay tres pasos para vincular su descuento de tránsito a su tarjeta bancaria."
 
 msgid "eligibility.forms.confirm.dmv.fields.sub"
-msgstr "Licencia de conducir de CA o número de identificación"
+msgstr "Licencia de conducir de California o número de identificación"
 
 msgid "eligibility.forms.confirm.dmv.fields.name"
-msgstr "Apellido (como aparece en la identificación)"
+msgstr "Apellido (tal como aparece en la identificación)"
 
 msgid "eligibility.pages.start.dmv.p[0]"
 msgstr ""
@@ -527,7 +525,7 @@ msgstr ""
 "descuento disponibles."
 
 msgid "eligibility.pages.confirm.dmv.title"
-msgstr "TODO: Confirm Eligibility"
+msgstr "Confirmar la elegibilidad"
 
 msgid "eligibility.pages.unverified.dmv.p[0]"
 msgstr ""
