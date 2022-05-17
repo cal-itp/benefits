@@ -75,6 +75,11 @@ main .main-row {
   min-height: calc(100vh - 120px);
 }
 
+main .main-row .col-lg-6.image {
+  background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
+  background-size: cover;
+}
+
 footer {
   margin-top: auto;
   padding-top: 1rem;
@@ -542,6 +547,33 @@ footer .footer-links a {
 }
 
 @media (max-width: 992px) {
+  /* Mobile With Image */
+
+  .with-image main .main-row .col-lg-6.image {
+    background-position: center bottom;
+    height: 240px;
+    background-size: cover;
+    margin-bottom: 60px;
+  }
+
+  .signout-row .container .signout-link {
+    font-size: 16px;
+    color: #2b6597;
+    background: none;
+    padding: 10px 30px;
+    border-radius: 3px;
+    border: 2px solid #2b6597;
+    margin-top: 20px;
+  }
+
+  .signout-row .container .signout-link:hover {
+    background: none;
+  }
+
+  .signout-row {
+    top: 308px;
+  }
+
   /* Eligibility Start */
 
   .media-list {

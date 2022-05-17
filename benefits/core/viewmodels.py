@@ -141,7 +141,6 @@ class Page:
         if not isinstance(self.classes, list):
             self.classes = self.classes.split(" ")
         if not self.noimage:
-            self.image = "img/ridertappingbankcard.png"
             self.classes.append("with-image")
 
     def context_dict(self):
