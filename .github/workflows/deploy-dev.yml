@@ -92,15 +92,6 @@ jobs:
             ghcr.io/${{github.repository}}:dev
             ghcr.io/${{github.repository}}:${{ github.sha }}
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-azure
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ secrets.AZURE_APP }}
-          slot-name: ${{ secrets.AZURE_SLOT }}
-          publish-profile: ${{ secrets.AZURE_PUBPROFILE }}
-          images: ghcr.io/${{github.repository}}:${{ github.sha }}
-
       - name: Add environment-specific config to ECS task
         env:
           AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
