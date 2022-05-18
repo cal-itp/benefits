@@ -258,23 +258,40 @@ RECAPTCHA_ENABLED = all((RECAPTCHA_API_URL, RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET
 
 CSP_DEFAULT_SRC = ["'self'"]
 
+CSP_CONNECT_SRC = ["'self'", "https://api.amplitude.com/"]
 env_connect_src = _filter_empty(os.environ.get("DJANGO_CSP_CONNECT_SRC", "").split(","))
-CSP_CONNECT_SRC = ["'self'"]
 CSP_CONNECT_SRC.extend(env_connect_src)
 
+CSP_FONT_SRC = ["https://california.azureedge.net/cdt/statetemplate/", "https://fonts.gstatic.com/"]
 env_font_src = _filter_empty(os.environ.get("DJANGO_CSP_FONT_SRC", "").split(","))
-CSP_FONT_SRC = list(env_font_src)
+CSP_FONT_SRC.extend(env_font_src)
 
 CSP_FRAME_ANCESTORS = ["'none'"]
+
 CSP_FRAME_SRC = ["'none'"]
 env_frame_src = _filter_empty(os.environ.get("DJANGO_CSP_FRAME_SRC", "").split(","))
-if any(env_frame_src):
-    CSP_FRAME_SRC = list(env_frame_src)
+CSP_FRAME_SRC.extend(env_frame_src)
+if RECAPTCHA_ENABLED:
+    CSP_FRAME_SRC.append("https://www.google.com")
 
+
+CSP_SCRIPT_SRC = [
+    "'unsafe-inline'",
+    "https://california.azureedge.net/cdt/statetemplate/",
+    "https://cdn.amplitude.com/libs/",
+    "https://code.jquery.com/",
+    "*.littlepay.com",
+]
 env_script_src = _filter_empty(os.environ.get("DJANGO_CSP_SCRIPT_SRC", "").split(","))
-CSP_SCRIPT_SRC = ["'unsafe-inline'"]
 CSP_SCRIPT_SRC.extend(env_script_src)
+if RECAPTCHA_ENABLED:
+    CSP_SCRIPT_SRC.extend(["https://www.google.com/recaptcha/", "https://www.gstatic.com/recaptcha/releases/"])
 
+CSP_STYLE_SRC = [
+    "'self'",
+    "'unsafe-inline'",
+    "https://california.azureedge.net/cdt/statetemplate/",
+    "https://fonts.googleapis.com/css",
+]
 env_style_src = _filter_empty(os.environ.get("DJANGO_CSP_STYLE_SRC", "").split(","))
-CSP_STYLE_SRC = ["'self'", "'unsafe-inline'"]
 CSP_STYLE_SRC.extend(env_style_src)
