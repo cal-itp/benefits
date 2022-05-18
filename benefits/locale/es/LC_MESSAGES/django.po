@@ -449,7 +449,7 @@ msgid "enrollment.pages.success.content_title"
 msgstr "¡Éxito! Su descuento está ahora vinculado a su tarjeta bancaria."
 
 msgid "enrollment.pages.success.logout.title"
-msgstr "TODO: You have been successfully logged out. Thank you for using Cal-ITP Benefits!"
+msgstr "Ha sido desconectado exitosamente. Gracias por utilizar los beneficios de Cal-ITP!"
 
 #: benefits/enrollment/views.py:150
 msgid "enrollment.pages.success.p1"
