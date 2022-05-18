@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "cypress": "npm test",
-    "cypress:open": "env-cmd -f ./.env.tests npx cypress open",
+    "cypress:open": "env-cmd -f ../../.devcontainer/.env.sample npx cypress open",
     "cypress:feature": "npm test -- --spec \"specs/feature/**/*\"",
     "cypress:ui": "npm test -- --spec \"specs/ui/**/*\"",
-    "test": "env-cmd -f ./.env.tests npx cypress run"
+    "test": "env-cmd -f ../../.devcontainer/.env.sample npx cypress run"
   },
   "author": "",
   "license": "AGPL-3.0-or-later",
