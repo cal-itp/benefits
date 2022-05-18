@@ -322,8 +322,8 @@ footer .footer-links a {
 }
 
 .eligibility-start .container.content {
-  padding-top: 5rem;
-  padding-bottom: 3rem;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
   width: initial;
   padding-left: 0;
   padding-right: 0;
@@ -718,6 +718,12 @@ footer .footer-links a {
   }
 }
 
+@media (max-width: 1081px) {
+  .media-list {
+    margin-top: 50px;
+  }
+}
+
 @media (min-width: 1200px) {
   /* xl+ */
   .container.content {
@@ -731,5 +737,11 @@ footer .footer-links a {
   /* Override for only the Agency Index page */
   .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 5rem;
+  }
+}
+
+@media (min-width: 1201px) {
+  .eligibility-start .container.content {
+    padding-top: 4rem;
   }
 }
