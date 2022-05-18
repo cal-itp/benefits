@@ -739,9 +739,3 @@ footer .footer-links a {
     margin-bottom: 5rem;
   }
 }
-
-@media (min-width: 1201px) {
-  .eligibility-start .container.content {
-    padding-top: 4rem;
-  }
-}
