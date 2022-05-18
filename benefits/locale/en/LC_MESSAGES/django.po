@@ -357,7 +357,7 @@ msgstr "Provide your bank card details"
 
 #: benefits/eligibility/views.py:75
 msgid "eligibility.pages.start.bankcard.text"
-msgstr "Must be a contactless debit or credit card issued by Visa or Mastercard."
+msgstr "Must be a contactless debit or credit card by Visa or Mastercard."
 
 msgid "eligibility.pages.start.bankcard.button[0].link"
 msgstr "Don’t have a bank card?"
