@@ -54,8 +54,7 @@ Some configuration data is not available with the samples in the repository:
 
 When local fixture files change, the configuration database needs to be rebuilt.
 
-By default this file is called `django.db` (see the [`DJANGO_DB`][env-django-db] environment variable) and the following
-commands will rebuild it.
+The file is called `django.db` and the following commands will rebuild it.
 
 Run these commands from within the repository root, inside the devcontainer:
 
@@ -78,7 +77,6 @@ more information.
 [cypress-fixtures]: https://github.com/cal-itp/benefits/tree/dev/tests/cypress/fixtures
 [django-data-fixtures]: https://docs.djangoproject.com/en/3.2/howto/initial-data/#providing-data-with-fixtures
 [eligibility-server]: https://docs.calitp.org/eligibility-server
-[env-django-db]: environment-variables.md#djangodb
 [env-django-init]: environment-variables.md#djangoinitpath
 [fixtures-sample]: https://github.com/cal-itp/benefits/tree/dev/fixtures
 [init]: https://github.com/cal-itp/benefits/blob/dev/bin/init.sh

@@ -20,7 +20,7 @@ background, with no additional interaction required by the user.
 
 URL to the reCAPTCHA JavaScript API library.
 
-E.g. `https://www.google.com/recaptcha/api.js`
+By default, `https://www.google.com/recaptcha/api.js`
 
 ### `DJANGO_RECAPTCHA_SITE_KEY`
 
@@ -38,7 +38,7 @@ Secret key for the reCAPTCHA configuration.
 
 URL for the reCAPTCHA verify service.
 
-E.g. `https://www.google.com/recaptcha/api/siteverify`
+By default, `https://www.google.com/recaptcha/api/siteverify`
 
 [recaptcha]: https://developers.google.com/recaptcha
 [recaptcha-intro]: https://developers.google.com/recaptcha/intro

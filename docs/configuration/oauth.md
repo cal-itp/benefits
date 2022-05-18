@@ -40,12 +40,6 @@ The internal label of the OAuth client within this application.
 
 See the [`OAUTH_CLIENT_NAME`](#oauth_client_name) setting for more.
 
-### `DJANGO_OAUTH_SCOPE`
-
-Space separated list of OAuth scope(s) to request from the OAuth/OIDC server.
-
-Must include at least `openid`.
-
 ## Django settings
 
 There are a few relevant settings defined in [`benefits/settings.py`][benefits-settings] related to OAuth.

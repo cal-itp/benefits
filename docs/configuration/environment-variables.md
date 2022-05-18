@@ -5,13 +5,19 @@
     [`.devcontainer/.env.sample`][env-sample]
 
 The first steps of the Getting Started guide have you [create an `.env` file from the sample][getting-started_create-env].
-The sections below outline the core environment variables and their purpose.
+The sample file contains only the most basic settings that you may want to override locally.
+
+The sections below outline in more detail the application environment variables and their purpose.
 
 See other topic pages in this section for more specific environment variable configurations.
 
 ## Docker
 
 ### `COMPOSE_PROJECT_NAME`
+
+!!! info "Local configuration"
+
+    This setting only affects the app running on localhost
 
 !!! tldr "Docker docs"
 
@@ -26,6 +32,10 @@ Name that Docker Compose prefixes to the project for container runs.
     Read more at <https://developers.amplitude.com/docs/http-api-v2#request-format>
 
 ### `ANALYTICS_KEY`
+
+!!! warning "Deployment configuration"
+
+    You may change this setting when deploying the app to a non-localhost domain
 
 Amplitude API key for the project where the app will direct events.
 
@@ -70,9 +80,13 @@ Mostly not used in local settings. See the docs on [Deployment][deployment] for 
 Boolean:
 
 * `True`: activates Django's built-in admin interface for content authoring.
-* `False`: skips this activation.
+* `False` (default): skips this activation.
 
 ### `DJANGO_ALLOWED_HOSTS`
+
+!!! warning "Deployment configuration"
+
+    You must change this setting when deploying the app to a non-localhost domain
 
 !!! tldr "Django docs"
 
@@ -80,25 +94,37 @@ Boolean:
 
 A list of strings representing the host/domain names that this Django site can serve.
 
-### `DJANGO_DB`
-
-String; names the database that Django uses for configuration.
-
 ### `DJANGO_DEBUG`
+
+!!! warning "Deployment configuration"
+
+    You may change this setting when deploying the app to a non-localhost domain
 
 !!! tldr "Django docs"
 
     [Settings: `DEBUG`](https://docs.djangoproject.com/en/3.2/ref/settings/#debug)
 
-Boolean; whether or not the application is launched in debug mode.
+Boolean:
+
+* `True`: the application is launched with debug mode turned on, allows pausing on breakpoints in the code, changes how static
+          files are served
+* `False` (default): the application is launched with debug mode turned off, similar to how it runs in production
 
 ### `DJANGO_INIT_PATH`
+
+!!! warning "Deployment configuration"
+
+    You may change this setting when deploying the app to a non-localhost domain
 
 The path to the fixture file(s) used to initialize the Django configuration database.
 
 See [Fixtures](fixtures.md) for more.
 
 ### `DJANGO_LOCAL_PORT`
+
+!!! info "Local configuration"
+
+    This setting only affects the app running on localhost
 
 The port used to serve the Django application from the _host_ machine (that is running the application container).
 
@@ -108,6 +134,10 @@ i.e. if you are running the app in Docker on your local machine, this is the por
 From inside the container, the app is always listening on port `8000`.
 
 ### `DJANGO_LOG_LEVEL`
+
+!!! warning "Deployment configuration"
+
+    You may change this setting when deploying the app to a non-localhost domain
 
 !!! tldr "Django docs"
 
@@ -119,6 +149,10 @@ By default the application sends logs to `stdout`.
 
 ### `DJANGO_SECRET_KEY`
 
+!!! warning "Deployment configuration"
+
+    You must change this setting when deploying the app to a non-localhost domain
+
 !!! tldr "Django docs"
 
     [Settings: `SECRET_KEY`](https://docs.djangoproject.com/en/3.2/ref/settings/#secret-key)
@@ -126,6 +160,10 @@ By default the application sends logs to `stdout`.
 Django's primary secret, keep this safe!
 
 ### `DJANGO_TRUSTED_ORIGINS`
+
+!!! warning "Deployment configuration"
+
+    You must change this setting when deploying the app to a non-localhost domain
 
 !!! tldr "Django docs"
 
