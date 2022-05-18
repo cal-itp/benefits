@@ -140,7 +140,7 @@ WSGI_APPLICATION = "benefits.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.environ.get("DJANGO_DB", "django") + ".db",
+        "NAME": "django.db",
     }
 }
 
