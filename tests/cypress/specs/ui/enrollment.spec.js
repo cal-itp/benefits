@@ -19,8 +19,8 @@ describe("Single Verifier, No AuthProvider: Enrollment success page", () => {
   it("Has the appropriate Spanish copy for all flows", () => {
     cy.contains("Español").click();
     cy.contains(
-      "Felicidades! Su descuento ahora está vinculado a su tarjeta bancaria."
+      "¡Éxito! Su descuento está ahora vinculado a su tarjeta bancaria."
     );
-    cy.contains("No te cobraron nada hoy.");
+    cy.contains("No se le ha cobrado nada hoy.");
   });
 });
