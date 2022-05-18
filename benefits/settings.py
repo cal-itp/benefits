@@ -19,7 +19,7 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
 
 ADMIN = os.environ.get("DJANGO_ADMIN", "False").lower() == "true"
 
-ALLOWED_HOSTS = _filter_empty(os.environ["DJANGO_ALLOWED_HOSTS"].split(","))
+ALLOWED_HOSTS = _filter_empty(os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(","))
 
 # Application definition
 
@@ -69,7 +69,7 @@ if DEBUG:
 CSRF_COOKIE_AGE = None
 CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_HTTPONLY = True
-CSRF_TRUSTED_ORIGINS = _filter_empty(os.environ["DJANGO_TRUSTED_ORIGINS"].split(","))
+CSRF_TRUSTED_ORIGINS = _filter_empty(os.environ.get("DJANGO_TRUSTED_ORIGINS", "http://localhost,http://127.0.0.1").split(","))
 
 # With `Strict`, the user loses their Django session between leaving our app to
 # sign in with OAuth, and coming back into our app from the OAuth redirect.
