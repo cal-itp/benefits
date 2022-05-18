@@ -34,8 +34,8 @@ class RateLimit(MiddlewareMixin):
     """Middleware checks settings and session to ensure rate limit is respected."""
 
     def process_request(self, request):
-        if any((settings.RATE_LIMIT < 1, len(settings.RATE_LIMIT_METHODS) < 1, settings.RATE_LIMIT_PERIOD < 1)):
-            logger.debug("RATE_LIMIT, RATE_LIMIT_METHODS, or RATE_LIMIT_PERIOD are not configured")
+        if not settings.RATE_LIMIT_ENABLED:
+            logger.debug("Rate Limiting is not configured")
             return None
 
         if request.method in settings.RATE_LIMIT_METHODS:
