@@ -31,7 +31,7 @@ services:
     entrypoint: mkdocs
     command: serve --dev-addr "0.0.0.0:8000"
     ports:
-      - "8000"
+      - "8001:8000"
     volumes:
       - ../:/home/calitp/app
 
