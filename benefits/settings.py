@@ -231,6 +231,25 @@ LOGGING = {
 
 ANALYTICS_KEY = os.environ.get("ANALYTICS_KEY")
 
+# rate limit configuration
+
+# number of requests allowed in the given period
+RATE_LIMIT = int(os.environ.get("DJANGO_RATE_LIMIT", 0))
+
+# HTTP request methods to rate limit
+RATE_LIMIT_METHODS = os.environ.get("DJANGO_RATE_LIMIT_METHODS", "").upper().split(",")
+
+# number of seconds before additional requests are denied
+RATE_LIMIT_PERIOD = int(os.environ.get("DJANGO_RATE_LIMIT_PERIOD", 0))
+
+# reCAPTCHA configuration
+
+RECAPTCHA_API_URL = os.environ.get("DJANGO_RECAPTCHA_API_URL")
+RECAPTCHA_SITE_KEY = os.environ.get("DJANGO_RECAPTCHA_SITE_KEY")
+RECAPTCHA_SECRET_KEY = os.environ.get("DJANGO_RECAPTCHA_SECRET_KEY")
+RECAPTCHA_VERIFY_URL = os.environ.get("DJANGO_RECAPTCHA_VERIFY_URL")
+RECAPTCHA_ENABLED = all((RECAPTCHA_API_URL, RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET_KEY, RECAPTCHA_VERIFY_URL))
+
 # Content Security Policy
 # Configuration docs at https://django-csp.readthedocs.io/en/latest/configuration.html
 
@@ -259,22 +278,3 @@ CSP_SCRIPT_SRC.extend(env_script_src)
 env_style_src = _filter_empty(os.environ.get("DJANGO_CSP_STYLE_SRC", "").split(","))
 CSP_STYLE_SRC = ["'self'", "'unsafe-inline'"]
 CSP_STYLE_SRC.extend(env_style_src)
-
-# rate limit configuration
-
-# number of requests allowed in the given period
-RATE_LIMIT = int(os.environ.get("DJANGO_RATE_LIMIT", 0))
-
-# HTTP request methods to rate limit
-RATE_LIMIT_METHODS = os.environ.get("DJANGO_RATE_LIMIT_METHODS", "").upper().split(",")
-
-# number of seconds before additional requests are denied
-RATE_LIMIT_PERIOD = int(os.environ.get("DJANGO_RATE_LIMIT_PERIOD", 0))
-
-# reCAPTCHA configuration
-
-RECAPTCHA_API_URL = os.environ.get("DJANGO_RECAPTCHA_API_URL")
-RECAPTCHA_SITE_KEY = os.environ.get("DJANGO_RECAPTCHA_SITE_KEY")
-RECAPTCHA_SECRET_KEY = os.environ.get("DJANGO_RECAPTCHA_SECRET_KEY")
-RECAPTCHA_VERIFY_URL = os.environ.get("DJANGO_RECAPTCHA_VERIFY_URL")
-RECAPTCHA_ENABLED = all((RECAPTCHA_API_URL, RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET_KEY, RECAPTCHA_VERIFY_URL))
