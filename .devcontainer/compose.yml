@@ -9,7 +9,6 @@ services:
     ports:
       - "${DJANGO_LOCAL_PORT:-8000}:8000"
     volumes:
-      - ../.aws/config:/home/calitp/app/config:ro
       - ../fixtures:/home/calitp/app/fixtures:ro
 
   dev:
