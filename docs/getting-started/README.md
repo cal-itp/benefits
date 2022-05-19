@@ -26,6 +26,8 @@ Use the sample as a template, the default values will work for now.
 cp .env.sample .env
 ```
 
+See [Configuration](../configuration) for more details on supported environment variables and their settings.
+
 ## Build image using Docker Compose
 
 ```bash
