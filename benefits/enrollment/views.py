@@ -164,6 +164,7 @@ def success(request):
                 title=_("enrollment.pages.success.title"),
                 content_title=_("enrollment.pages.success.logout.title"),
                 classes="logged-out",
+                noimage=True,
             )
     else:
         page = viewmodels.Page(
