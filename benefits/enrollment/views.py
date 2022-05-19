@@ -145,33 +145,26 @@ def success(request):
     request.path = "/enrollment/success"
     session.update(request, origin=reverse("enrollment:success"))
     verifier = session.verifier(request)
+    icon = viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck"))
+    page = viewmodels.Page(
+        title=_("enrollment.pages.success.title"),
+        content_title=_("enrollment.pages.success.content_title"),
+    )
 
     if verifier.requires_authentication:
         if settings.OAUTH_CLIENT_NAME is None:
             raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
 
         if session.logged_in(request):
-            button = viewmodels.Button.logout()
-            page = viewmodels.Page(
-                title=_("enrollment.pages.success.title"),
-                icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-                content_title=_("enrollment.pages.success.content_title"),
-                button=button,
-                classes="logged-in",
-            )
+            page.buttons = [viewmodels.Button.logout()]
+            page.classes = ["logged-in"]
+            page.icon = icon
         else:
-            page = viewmodels.Page(
-                title=_("enrollment.pages.success.title"),
-                content_title=_("enrollment.pages.success.logout.title"),
-                classes="logged-out",
-                noimage=True,
-            )
+            page.classes = ["logged-out"]
+            page.content_title = _("enrollment.pages.success.logout.title")
+            page.noimage = True
     else:
-        page = viewmodels.Page(
-            title=_("enrollment.pages.success.title"),
-            content_title=_("enrollment.pages.success.content_title"),
-            icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-        )
+        page.icon = icon
 
     help_link = reverse("core:help")
     context_dict = {**page.context_dict(), **{"help_link": help_link}}
