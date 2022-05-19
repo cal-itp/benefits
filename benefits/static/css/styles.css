@@ -363,6 +363,10 @@ footer .footer-links a {
   padding-top: 20vh;
 }
 
+.logged-out.enrollment-success .container.content h1 {
+  text-align: center;
+}
+
 .radio-container {
   display: block;
   margin-left: 15%;
