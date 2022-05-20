@@ -9,11 +9,13 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
+from eligibility_api import api
+
 from benefits.core import recaptcha, session, viewmodels
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
 from benefits.core.views import PageTemplateResponse
-from . import analytics, api, forms
+from . import analytics, forms
 
 
 @decorator_from_middleware(AgencySessionRequired)
@@ -184,7 +186,7 @@ def _verify(request, form):
 
     agency = session.agency(request)
     verifier = session.verifier(request)
-    client = api.Client(agency, verifier)
+    client = api.Client(agency, verifier, settings.ALLOWED_HOSTS[0])
 
     response = client.verify(sub, name)
 
