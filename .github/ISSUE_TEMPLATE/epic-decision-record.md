@@ -1,15 +1,16 @@
 ---
-name: Epic / Decision Record template
-about: This template provides a basic structure for epics.
+name: Epic / Decision Record
+about: A basic structure for epics
 label: epic
 ---
+
 <!-- An epic represents a group of user stories/tasks on the roadmap, to be deployed together, as a part of a new feature set. -->
 
 **Date**:
 **Writers**:
 **Status**:
 
-# Background
+## Background
 
 <!-- [Describe the context and problem statement, e.g., in free form using two to three sentences. You may want to articulate the problem in form of a question.] -->
 
@@ -27,26 +28,30 @@ label: epic
 
 <!-- Chosen option: "[option 1]", because [justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force force | … | comes out best (see below)]. You may discuss positive and negative consequences of each option considered. -->
 
-# Acceptance criteria
+## Acceptance criteria
+
+- [ ] Acceptance criteria
+
+## Definition of Done
+
+A clear and concise description of what "Done" means for this Epic.
 
 ## User Stories
 
-- [ ] This is something that can be verified to show that this epic is satisfied.
+- [ ] As a User Story, I want to be verifiable, so that this epic can be satisfied
 
 ## Tasks
 
-- [ ] This is something that can be verified to show that this epic is satisfied.
+- [ ] Code and non-code tasks that work towards a solution to to this epic
 
 ## Implementation Ready Checklist
 
 - [ ] Acceptance criteria defined
 - [ ] Team understands acceptance criteria
-- [ ] User workflows defined / designed
 - [ ] Acceptance criteria is verifiable
+- [ ] User workflows defined / designed
 - [ ] External / 3rd Party dependencies identified
 
 ## Links, resources
 
 - Other links here
-
-# Definition of Done
