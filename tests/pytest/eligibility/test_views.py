@@ -13,7 +13,7 @@ from typing import Tuple
 
 from benefits.core import session
 from benefits.core.models import TransitAgency, EligibilityVerifier
-from eligibility_api.api import ApiError, TokenError
+from eligibility_api.client import ApiError, TokenError
 from benefits.eligibility.views import confirm
 from tests.pytest.conftest import with_agency, initialize_request
 

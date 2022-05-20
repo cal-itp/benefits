@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
-from eligibility_api import api
+from eligibility_api.client import Client
 
 from benefits.core import recaptcha, session, viewmodels
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, VerifierSessionRequired
@@ -187,7 +187,7 @@ def _verify(request, form):
     agency = session.agency(request)
     verifier = session.verifier(request)
 
-    client = api.Client(
+    client = Client(
         api_url=verifier.api_url,
         api_auth_header=verifier.api_auth_header,
         api_auth_key=verifier.api_auth_key,
