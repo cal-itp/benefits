@@ -186,9 +186,24 @@ def _verify(request, form):
 
     agency = session.agency(request)
     verifier = session.verifier(request)
-    client = api.Client(agency, verifier, settings.ALLOWED_HOSTS[0])
 
-    response = client.verify(sub, name)
+    client = api.Client(
+        api_url=verifier.api_url,
+        api_auth_header=verifier.api_auth_header,
+        api_auth_key=verifier.api_auth_key,
+        issuer=settings.ALLOWED_HOSTS[0],
+        agency_identifier=agency.agency_id,
+        jws_signing_alg=agency.jws_signing_alg,
+        client_private_jwk=agency.private_jwk,
+        jwe_encryption_alg=verifier.jwe_encryption_alg,
+        jwe_cek_enc=verifier.jwe_cek_enc,
+        server_public_jwk=verifier.public_jwk,
+    )
+
+    # get the eligibility type names
+    types = list(map(lambda t: t.name, agency.types_to_verify(verifier)))
+
+    response = client.verify(sub, name, types)
 
     if response.error and any(response.error):
         form.add_api_errors(response.error)
