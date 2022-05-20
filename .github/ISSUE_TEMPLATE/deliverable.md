@@ -1,6 +1,6 @@
 ---
 name: Deliverable
-about: Create a task for a deliverable
+about: Create a task for a non-code deliverable (e.g. Google doc)
 labels: deliverable
 ---
 
