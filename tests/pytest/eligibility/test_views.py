@@ -8,12 +8,12 @@ import os
 import uuid
 
 from pathlib import Path
-from jwcrypto import jwk, jwt
-from typing import Tuple
+from jwcrypto import jwk
 
 from benefits.core import session
-from benefits.core.models import TransitAgency, EligibilityVerifier
+from benefits.core.models import TransitAgency
 from eligibility_api.client import ApiError, TokenError
+from eligibility_api.server import make_token
 from benefits.eligibility.views import confirm
 from tests.pytest.conftest import with_agency, initialize_request
 
@@ -25,7 +25,7 @@ def set_agency(mocker):
     return agency
 
 
-def set_verifier(mocker) -> Tuple[TransitAgency, EligibilityVerifier]:
+def set_verifier(mocker):
     agency = set_agency(mocker)
 
     mock = mocker.patch("benefits.core.session.verifier", autospec=True)
@@ -80,7 +80,7 @@ def test_confirm_success(mocker, rf):
         httpretty.GET,
         "http://localhost/verify",
         status=200,
-        body=_make_token(
+        body=make_token(
             {
                 "jti": str(uuid.uuid4()),
                 "iss": "test-server",
@@ -116,21 +116,6 @@ def _get_jwk(filename):
         key = jwk.JWK.from_pem(pemfile.read())
 
     return key
-
-
-# copied and pasted from eligibility-server code for now - replace with eligibility-api function when available
-def _make_token(payload, jws_signing_alg, server_private_key, jwe_encryption_alg, jwe_cek_enc, client_public_key):
-    """Wrap payload in a signed and encrypted JWT for response."""
-    # sign the payload with server's private key
-    header = {"typ": "JWS", "alg": jws_signing_alg}
-    signed_token = jwt.JWT(header=header, claims=payload)
-    signed_token.make_signed_token(server_private_key)
-    signed_payload = signed_token.serialize()
-    # encrypt the signed payload with client's public key
-    header = {"typ": "JWE", "alg": jwe_encryption_alg, "enc": jwe_cek_enc}
-    encrypted_token = jwt.JWT(header=header, claims=signed_payload)
-    encrypted_token.make_encrypted_token(client_public_key)
-    return encrypted_token.serialize()
 
 
 @httpretty.activate(verbose=True, allow_net_connect=False)
@@ -197,7 +182,7 @@ def _tokenize_response_error_scenarios():
         pytest.param(lambda verifier: "", id='TokenError("Invalid response format")'),
         pytest.param(lambda verifier: "invalid token", id='TokenError("Invalid JWE token")'),
         pytest.param(
-            lambda verifier: _make_token(
+            lambda verifier: make_token(
                 {
                     "jti": str(uuid.uuid4()),
                     "iss": "test-server",
