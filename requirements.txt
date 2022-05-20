@@ -2,7 +2,7 @@ Authlib==1.0.1
 cryptography==37.0.2
 Django==3.2.13
 django-csp==3.7
-git+https://github.com/cal-itp/eligibility-api@13500d98294d95c7019e1247efd5f5da869f143f#egg=eligibility_api # WIP: pointing at specific commit with types_to_verify fix
+git+https://github.com/cal-itp/eligibility-api@0fba429456b67a4e099e7bc28bd88a82d65ce153#egg=eligibility_api # WIP: pointing at specific commit while iterating on API
 gunicorn==20.1.0
 jwcrypto==1.2
 requests==2.27.1

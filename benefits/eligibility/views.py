@@ -188,11 +188,10 @@ def _verify(request, form):
     verifier = session.verifier(request)
 
     client = Client(
-        api_url=verifier.api_url,
-        api_auth_header=verifier.api_auth_header,
-        api_auth_key=verifier.api_auth_key,
+        verify_url=verifier.api_url,
+        headers={verifier.api_auth_header: verifier.api_auth_key},
         issuer=settings.ALLOWED_HOSTS[0],
-        agency_identifier=agency.agency_id,
+        agency=agency.agency_id,
         jws_signing_alg=agency.jws_signing_alg,
         client_private_jwk=agency.private_jwk,
         jwe_encryption_alg=verifier.jwe_encryption_alg,
