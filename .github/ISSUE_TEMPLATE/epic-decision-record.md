@@ -1,7 +1,7 @@
 ---
 name: Epic / Decision Record
 about: A basic structure for epics
-label: epic
+labels: epic
 ---
 
 <!-- An epic represents a group of user stories/tasks on the roadmap, to be deployed together, as a part of a new feature set. -->
