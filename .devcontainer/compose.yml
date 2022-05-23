@@ -29,9 +29,9 @@ services:
   docs:
     image: benefits_client:dev
     entrypoint: mkdocs
-    command: serve --dev-addr "0.0.0.0:8000"
+    command: serve --dev-addr "0.0.0.0:8001"
     ports:
-      - "8001:8000"
+      - "8001"
     volumes:
       - ../:/home/calitp/app
 
