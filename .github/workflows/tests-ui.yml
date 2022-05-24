@@ -36,7 +36,6 @@ jobs:
         run: |
           docker run \
             --detach \
-            --env-file tests/cypress/.env.tests \
             -p 8000:8000 \
             -v ${{ github.workspace }}/fixtures:/home/calitp/app/fixtures \
             benefits_client:${{ github.sha }}

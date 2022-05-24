@@ -200,7 +200,8 @@ def test_rate_limit_time_default(app_request):
     t0 = session.rate_limit_time(app_request)
     t1 = int(time.time())
 
-    assert t1 >= t0
+    # rate limit expiry time should be in the future
+    assert t0 >= t1
 
 
 @pytest.mark.django_db

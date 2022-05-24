@@ -18,13 +18,21 @@ This is where configuration for running locally is stored.
 cd benefits/.devcontainer
 ```
 
-## Create an environment file
+## (Optional) Create an environment file
 
-Use the sample as a template, the default values will work for now.
+The application is configured with defaults that allow it to run locally. Create an `.env` file to provide your own overrides:
 
 ```bash
-cp .env.sample .env
+touch .env
 ```
+
+E.g. to override the localhost port from the default `8000` to `9000`, add the following line to your `.env` file:
+
+```env
+DJANGO_LOCAL_PORT=9000
+```
+
+See [Configuration](../configuration) for more details on supported environment variables and their settings.
 
 ## Build image using Docker Compose
 
@@ -40,15 +48,19 @@ docker compose build --no-cache client
 
 ## Start the client
 
+The optional `-d` flag will start in _detatched_ mode and allow you to continue using the terminal session.
+
 ```bash
-docker compose up [-d] client
+docker compose up -d client
 ```
 
-The optional `-d` flag will start in _detatched_ mode and allow you to continue using the terminal session. Otherwise your
-terminal will be attached to the container's terminal, showing the startup and runtime output.
+Otherwise attach your terminal to the container's terminal, showing the startup and runtime output:
 
-After initialization, the client is running running on `http://localhost` at a port dynamically assigned by Docker. See
-[Docker dynamic ports](../development/docker-dynamic-ports.md) for more information on accessing the site on localhost.
+```bash
+docker compose up client
+```
+
+After initialization, the client is running running on `http://localhost:8000` by default.
 
 If `DJANGO_ADMIN=true`, the backend administrative interface can be accessed at the `/admin` route using the superuser account
 you setup as part of initialization.
@@ -56,8 +68,7 @@ you setup as part of initialization.
 By default, [sample data][sample-data] is used to initialize Django. Alternatively you may:
 
 * Modify the sample data file(s); or
-* Point `DJANGO_INIT_PATH` at different data file(s); or
-* Use production data stored in S3 (see [Deployment](../deployment)); or
+* Override the `DJANGO_INIT_PATH` environment variable with different data file(s); or
 * (If `DJANGO_ADMIN=true`) use the backend administrative interface CRUD
 
 Stop the running services with:

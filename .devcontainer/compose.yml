@@ -1,3 +1,4 @@
+name: benefits
 version: "3.8"
 
 services:
@@ -6,7 +7,7 @@ services:
     image: benefits_client:latest
     env_file: .env
     ports:
-      - "${DJANGO_LOCAL_PORT}:8000"
+      - "${DJANGO_LOCAL_PORT:-8000}:8000"
     volumes:
       - ../.aws/config:/home/calitp/app/config:ro
       - ../fixtures:/home/calitp/app/fixtures:ro
@@ -22,16 +23,16 @@ services:
     depends_on:
       - server
     ports:
-      - "${DJANGO_LOCAL_PORT}:8000"
+      - "${DJANGO_LOCAL_PORT:-8000}:8000"
     volumes:
       - ../:/home/calitp/app
 
   docs:
     image: benefits_client:dev
     entrypoint: mkdocs
-    command: serve --dev-addr "0.0.0.0:8000"
+    command: serve --dev-addr "0.0.0.0:8001"
     ports:
-      - "8000"
+      - "8001"
     volumes:
       - ../:/home/calitp/app
 

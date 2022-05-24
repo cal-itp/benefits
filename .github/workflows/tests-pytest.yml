@@ -23,11 +23,6 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r requirements.txt -r tests/pytest/requirements.txt
 
-      - name: Load environment variables
-        uses: cardinalby/export-env-action@v1
-        with:
-          envFile: .devcontainer/.env.sample
-
       - name: Run setup
         run: ./bin/init.sh
 
