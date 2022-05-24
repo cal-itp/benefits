@@ -29,8 +29,45 @@ resource "azurerm_application_insights_web_test" "dev_healthcheck" {
 XML
 
   lifecycle {
-    ignore_changes = [
-      tags,
-    ]
+    ignore_changes = [tags]
+  }
+}
+
+resource "azurerm_monitor_action_group" "dev_email" {
+  name                = "Benefits engineering team email"
+  resource_group_name = data.azurerm_resource_group.benefits.name
+  short_name          = "p0action"
+
+  email_receiver {
+    name          = "Benefits engineering team"
+    email_address = "aidan@compiler.la"
+  }
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
+}
+
+resource "azurerm_monitor_metric_alert" "uptime" {
+  name                = "uptime"
+  resource_group_name = data.azurerm_resource_group.benefits.name
+  scopes = [
+    azurerm_application_insights_web_test.dev_healthcheck.id,
+    data.azurerm_application_insights.benefits.id
+  ]
+  severity = 1
+
+  application_insights_web_test_location_availability_criteria {
+    web_test_id           = azurerm_application_insights_web_test.dev_healthcheck.id
+    component_id          = data.azurerm_application_insights.benefits.id
+    failed_location_count = 3
+  }
+
+  action {
+    action_group_id = azurerm_monitor_action_group.dev_email.id
+  }
+
+  lifecycle {
+    ignore_changes = [tags]
   }
 }
