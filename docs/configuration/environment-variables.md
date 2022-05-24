@@ -1,13 +1,8 @@
 # Environment variables
 
-!!! example "Sample file"
+The first steps of the Getting Started guide mention [creating an `.env` file][getting-started_create-env].
 
-    [`.devcontainer/.env.sample`][env-sample]
-
-The first steps of the Getting Started guide have you [create an `.env` file from the sample][getting-started_create-env].
-The sample file contains only the most basic settings that you may want to override locally.
-
-The sections below outline in more detail the application environment variables and their purpose.
+The sections below outline in more detail the application environment variables that you may want to override, and their purpose.
 
 See other topic pages in this section for more specific environment variable configurations.
 
@@ -185,5 +180,4 @@ When Cypress is running inside the devcontainer, this should be `http://localhos
 devcontainer, check the [`DJANGO_LOCAL_PORT`](#django_local_port).
 
 [deployment]: ../deployment/README.md
-[env-sample]: https://github.com/cal-itp/benefits/blob/dev/.devcontainer/.env.sample
-[getting-started_create-env]: ../getting-started/README.md#create-an-environment-file
+[getting-started_create-env]: ../getting-started/README.md#optional-create-an-environment-file
