@@ -232,7 +232,7 @@ footer .footer-links a {
 
 .media-list {
   margin-top: 100px;
-  margin-bottom: 80px;
+  margin-bottom: 68px;
   padding: 0;
   display: flex;
   justify-content: center;
@@ -283,6 +283,7 @@ footer .footer-links a {
 
 .media-list .media .media-body {
   padding: 0 3.4rem;
+  line-height: 26.1px;
 }
 
 .media-list .media .media-body--heading {
@@ -290,22 +291,25 @@ footer .footer-links a {
   letter-spacing: 0.05em;
   margin-top: 64px;
   margin-bottom: 20px;
+  line-height: 26.1px;
 }
 
 .media-list .media .media-body--heading ol {
   font-weight: 700;
   padding-left: 0;
+  line-height: 26.1px;
 }
 
 .media-list .media .media-body--details {
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.05em;
-  padding-bottom: 0.4rem;
+  padding-bottom: 1rem;
+  line-height: 26.1px;
 }
 
 .media-list .media .media-body .media-body--links .btn-lg {
-  font-size: 12px;
-  line-height: 15px;
+  font-size: 15px;
+  line-height: 20px;
   letter-spacing: 0.05em;
   padding: 0;
   text-align: left;
@@ -318,8 +322,8 @@ footer .footer-links a {
 }
 
 .eligibility-start .container.content {
-  padding-top: 5rem;
-  padding-bottom: 3rem;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
   width: initial;
   padding-left: 0;
   padding-right: 0;
@@ -715,6 +719,12 @@ footer .footer-links a {
   /* Override for only the Agency Index page */
   .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 4rem;
+  }
+}
+
+@media (max-width: 1081px) {
+  .media-list {
+    margin-top: 50px;
   }
 }
 
