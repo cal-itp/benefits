@@ -1,7 +1,7 @@
 const agencies = require("../../fixtures/transit-agencies");
 const users = require("../../fixtures/users.json");
 
-describe("Multiple verifier: Eligibility confirmation flow", () => {
+describe.skip("Multiple verifier: Eligibility confirmation flow", () => {
   beforeEach(() => {
     cy.visit("/");
     // Selecting ABC will go down the multiple verifier flow

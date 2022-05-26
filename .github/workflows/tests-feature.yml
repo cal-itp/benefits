@@ -49,8 +49,6 @@ jobs:
       - name: Set up database
         run: |
           docker container exec \
-            -it \
-            --detach \
             --env IMPORT_FILE_PATH=tests/cypress/server.csv \
             server \
             python setup.py
@@ -69,3 +67,9 @@ jobs:
         with:
           name: cypress-screenshots
           path: tests/cypress/screenshots
+
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-videos
+          path: tests/cypress/videos
