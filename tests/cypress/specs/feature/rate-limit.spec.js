@@ -5,6 +5,9 @@ const { eligibility_url, post_confirm } = require("../../plugins/eligibility");
 describe("Rate limiting feature spec", () => {
   beforeEach(() => {
     cy.visit("/" + agencies[0].fields.slug);
+    cy.contains("Get started").click();
+    cy.contains("MST Courtesy Cardholder").click();
+    cy.contains("Continue").click();
     cy.visit(eligibility_url);
   });
 
