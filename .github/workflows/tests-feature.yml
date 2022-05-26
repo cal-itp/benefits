@@ -50,6 +50,7 @@ jobs:
         run: |
           docker container exec \
             -it \
+            --detach \
             --env IMPORT_FILE_PATH=tests/cypress/server.csv \
             server \
             python setup.py
