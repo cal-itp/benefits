@@ -44,13 +44,12 @@ jobs:
             --detach \
             -p 5000:5000 \
             --name server \
+            -it \
             ghcr.io/cal-itp/eligibility-server:main
 
       - name: Set up database
         run: |
           docker container exec \
-            -it \
-            --detach \
             --env IMPORT_FILE_PATH=tests/cypress/server.csv \
             server \
             python setup.py
