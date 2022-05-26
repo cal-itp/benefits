@@ -360,7 +360,9 @@ footer .footer-links a {
 .logged-out.enrollment-success .success-image {
   display: block;
   margin: 0 auto;
-  padding-top: 10vh;
+  height: 150px;
+  width: 150px;
+  margin-top: 15%;
 }
 
 .logged-out.enrollment-success .container.content {
@@ -673,10 +675,6 @@ footer .footer-links a {
   /* Override for only the Agency Index page */
   .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 2rem;
-  }
-
-  .logged-out.enrollment-success .success-image {
-    padding-top: 5vh;
   }
 
   .logged-out.enrollment-success .container.content {
