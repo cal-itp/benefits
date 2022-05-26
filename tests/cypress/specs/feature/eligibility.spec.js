@@ -12,28 +12,34 @@ describe("Eligibility confirmation flow", () => {
   });
 
   it("Confirms an eligible user", () => {
+    cy.contains("MST Courtesy Cardholder").click();
+    cy.contains("Continue").click();
+    cy.contains("Continue").click();
     cy.get("#sub").type(users.eligible.sub);
     cy.get("#name").type(users.eligible.name);
-    cy.get("input[type='submit']").click();
+    cy.contains("Check status").click();
 
     cy.contains("Great! You’re eligible for a discount!");
   });
 
   it("Rejects an ineligible user", () => {
+    cy.contains("MST Courtesy Cardholder").click();
+    cy.contains("Continue").click();
+    cy.contains("Continue").click();
     cy.get("#sub").type(users.ineligible.sub);
     cy.get("#name").type(users.ineligible.name);
-    cy.get("input[type='submit']").click();
+    cy.contains("Check status").click();
 
-    cy.contains("We can’t confirm your age");
-    cy.contains(
-      "You may still be eligible for a discount, but we can’t verify your age"
-    );
+    cy.contains("We couldn’t locate you in our system");
   });
 
   it("Validates an invalid number/id field", () => {
+    cy.contains("MST Courtesy Cardholder").click();
+    cy.contains("Continue").click();
+    cy.contains("Continue").click();
     cy.get("#sub").type(users.invalidSub.sub);
     cy.get("#name").type(users.invalidSub.name);
-    cy.get("input[type='submit']").click();
+    cy.contains("Check status").click();
 
     cy.contains("Check your input. The format looks wrong.");
     cy.get("#id_sub").then(($e) => {
@@ -42,8 +48,11 @@ describe("Eligibility confirmation flow", () => {
   });
 
   it("Validates an empty name field", () => {
+    cy.contains("MST Courtesy Cardholder").click();
+    cy.contains("Continue").click();
+    cy.contains("Continue").click();
     cy.get("#sub").type(users.invalidSub.sub);
-    cy.get("input[type='submit']").click();
+    cy.contains("Check status").click();
 
     cy.get("input:invalid").should("have.length", 1);
   });
