@@ -49,6 +49,7 @@ jobs:
       - name: Set up database
         run: |
           docker container exec \
+            -it \
             --env IMPORT_FILE_PATH=tests/cypress/server.csv \
             server \
             python setup.py
