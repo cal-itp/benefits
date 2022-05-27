@@ -61,14 +61,14 @@
 
         <footer id="footer" class="global-footer">
             <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <ul class="footer-links">
-                            <li><a href="{% url "core:help" %}">{% translate "core.buttons.help" %}</a></li>
-                            <li><a href="https://www.dmv.ca.gov/portal/privacy-and-security/" target="_blank" rel="noopener noreferrer">{% translate "core.buttons.privacy" %}</a></li>
-                        </ul>
-                    </div>
-                </div>
+                <ul class="footer-links">
+                    <li>
+                        <a href="{% url "core:help" %}">{% translate "core.buttons.help" %}</a>
+                    </li>
+                    <li>
+                        <a href="https://www.dmv.ca.gov/portal/privacy-and-security/" target="_blank" rel="noopener noreferrer">{% translate "core.buttons.privacy" %}</a>
+                    </li>
+                </ul>
             </div>
         </footer>
 

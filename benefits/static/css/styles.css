@@ -419,7 +419,7 @@ footer .footer-links a {
 /* Header */
 
 .navbar.navbar-expand-sm.navbar-dark.bg-primary {
-  padding: 8.5px 1rem;
+  padding: 14.5px 1rem;
 }
 
 .navbar-brand {
@@ -536,8 +536,32 @@ footer .footer-links a {
 
 @media (max-width: 767px) {
   /* xs and sm */
-  .global-footer ul li {
-    text-align: center;
+  .global-footer {
+    padding: 0;
+  }
+
+  .global-footer .container {
+    padding: 0;
+  }
+
+  .global-footer ul.footer-links {
+    margin: 0 !important;
+    padding: 0;
+  }
+
+  .global-footer ul.footer-links li {
+    width: 100%;
+    line-height: 40px;
+    margin-left: 0;
+  }
+
+  .global-footer ul.footer-links li:not(:last-child) {
+    border-bottom: 2px solid white;
+  }
+
+  .global-footer ul.footer-links li a {
+    padding-left: 30px;
+    margin: 0;
   }
 
   .radio-container {
