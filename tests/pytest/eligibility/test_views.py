@@ -8,7 +8,6 @@ import os
 import uuid
 
 from pathlib import Path
-from jwcrypto import jwk
 
 from benefits.core import session
 from benefits.core.models import TransitAgency
@@ -88,10 +87,10 @@ def test_confirm_success(mocker, rf):
                 "eligibility": ["type1"],
             },
             verifier.jws_signing_alg,
-            _get_jwk("server.key"),
+            _get_key("server.key"),
             verifier.jwe_encryption_alg,
             verifier.jwe_cek_enc,
-            _get_jwk("client.pub"),
+            _get_key("client.pub"),
         ),
     )
 
@@ -108,12 +107,12 @@ def test_confirm_success(mocker, rf):
     assert response.url == reverse("enrollment:index")
 
 
-def _get_jwk(filename):
+def _get_key(filename):
     current_path = Path(os.path.dirname(os.path.realpath(__file__)))
     file_path = current_path / "keys" / filename
 
     with file_path.open(mode="rb") as pemfile:
-        key = jwk.JWK.from_pem(pemfile.read())
+        key = str(pemfile.read(), "utf-8")
 
     return key
 
@@ -190,10 +189,10 @@ def _tokenize_response_error_scenarios():
                     "eligibility": ["type1"],
                 },
                 "RS512",  # signing algorithm that doesn't match verifier.jws_signing_alg
-                _get_jwk("server.key"),
+                _get_key("server.key"),
                 verifier.jwe_encryption_alg,
                 verifier.jwe_cek_enc,
-                _get_jwk("client.pub"),
+                _get_key("client.pub"),
             ),
             id='TokenError("JWS token signature verification failed")',
         ),
