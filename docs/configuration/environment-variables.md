@@ -180,4 +180,4 @@ When Cypress is running inside the devcontainer, this should be `http://localhos
 devcontainer, check the [`DJANGO_LOCAL_PORT`](#django_local_port).
 
 [deployment]: ../deployment/README.md
-[getting-started_create-env]: ../getting-started/README.md#optional-create-an-environment-file
+[getting-started_create-env]: ../getting-started/README.md#create-an-environment-file
