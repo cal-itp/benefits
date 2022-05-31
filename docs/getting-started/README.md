@@ -18,15 +18,15 @@ This is where configuration for running locally is stored.
 cd benefits/.devcontainer
 ```
 
-## (Optional) Create an environment file
+## Create an environment file
 
-The application is configured with defaults that allow it to run locally. Create an `.env` file to provide your own overrides:
+The application is configured with defaults to run locally, but an `.env` file is required to run with Docker Compose. This file can be empty, or environment overrides can be added as needed:
 
 ```bash
 touch .env
 ```
 
-E.g. to override the localhost port from the default `8000` to `9000`, add the following line to your `.env` file:
+E.g. to change the localhost port from the default `8000` to `9000`, add the following line to your `.env` file:
 
 ```env
 DJANGO_LOCAL_PORT=9000
