@@ -193,10 +193,10 @@ def _verify(request, form):
         issuer=settings.ALLOWED_HOSTS[0],
         agency=agency.agency_id,
         jws_signing_alg=agency.jws_signing_alg,
-        client_private_jwk=agency.private_jwk,
+        client_private_key=agency.private_key_data,
         jwe_encryption_alg=verifier.jwe_encryption_alg,
         jwe_cek_enc=verifier.jwe_cek_enc,
-        server_public_jwk=verifier.public_jwk,
+        server_public_key=verifier.public_key_data,
     )
 
     # get the eligibility type names

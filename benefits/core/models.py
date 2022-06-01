@@ -6,8 +6,6 @@ import logging
 from django.db import models
 from django.urls import reverse
 
-from jwcrypto import jwk
-
 
 logger = logging.getLogger(__name__)
 
@@ -21,12 +19,6 @@ class PemData(models.Model):
 
     def __str__(self):
         return self.label
-
-    @property
-    def jwk(self):
-        """jwcrypto.jwk.JWK instance from this PemData."""
-        pem_bytes = bytes(self.text, "utf-8")
-        return jwk.JWK.from_pem(pem_bytes)
 
 
 class AuthProvider(models.Model):
@@ -100,9 +92,9 @@ class EligibilityVerifier(models.Model):
         return self.name
 
     @property
-    def public_jwk(self):
-        """jwcrypto.jwk.JWK instance of this Verifier's public key"""
-        return self.public_key.jwk
+    def public_key_data(self):
+        """This Verifier's public key as a string."""
+        return self.public_key.text
 
     @property
     def requires_authentication(self):
@@ -189,9 +181,9 @@ class TransitAgency(models.Model):
         return reverse("core:agency_index", args=[self.slug])
 
     @property
-    def private_jwk(self):
-        """jwcrypto.jwk.JWK instance of this Agency's private key"""
-        return self.private_key.jwk
+    def private_key_data(self):
+        """This Agency's private key as a string."""
+        return self.private_key.text
 
     @staticmethod
     def by_id(id):
