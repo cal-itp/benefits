@@ -542,6 +542,7 @@ footer .footer-links a {
 
   .global-footer .container {
     padding: 0;
+    max-width: 100%;
   }
 
   .global-footer ul.footer-links {
@@ -551,7 +552,7 @@ footer .footer-links a {
 
   .global-footer ul.footer-links li {
     width: 100%;
-    line-height: 40px;
+    line-height: 50px;
     margin-left: 0;
   }
 
