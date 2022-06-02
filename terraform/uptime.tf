@@ -33,21 +33,6 @@ XML
   }
 }
 
-resource "azurerm_monitor_action_group" "dev_email" {
-  name                = "Benefits engineering team email"
-  resource_group_name = data.azurerm_resource_group.benefits.name
-  short_name          = "p0action"
-
-  email_receiver {
-    name          = "Benefits engineering team"
-    email_address = "aidan@compiler.la"
-  }
-
-  lifecycle {
-    ignore_changes = [tags]
-  }
-}
-
 resource "azurerm_monitor_metric_alert" "uptime" {
   name                = "uptime"
   resource_group_name = data.azurerm_resource_group.benefits.name
