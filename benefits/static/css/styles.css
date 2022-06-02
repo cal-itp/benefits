@@ -86,8 +86,13 @@ footer {
   padding-bottom: 1rem;
 }
 
-footer .footer-links a {
+footer.global-footer .footer-links a {
   font-size: 16px;
+  color: #0590cd;
+}
+
+footer.global-footer .footer-links a:hover {
+  color: #9b74d7;
 }
 
 /* class styles */
