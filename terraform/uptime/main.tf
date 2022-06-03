@@ -21,6 +21,7 @@ resource "azurerm_application_insights_web_test" "healthcheck" {
     "us-ca-sjc-azr",  # West US
   ]
 
+  # boilerplate configuration
   configuration = <<XML
 <WebTest Name="dev-healthcheck" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="120" WorkItemIds=""
   xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="" ResultsLocale="">
