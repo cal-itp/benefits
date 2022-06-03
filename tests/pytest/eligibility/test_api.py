@@ -10,3 +10,15 @@ def form(mocker):
 
 def mock_api_client_verify(mocker, response):
     return mocker.patch("benefits.eligibility.api.Client.verify", return_value=response)
+
+
+def test_get_verified_types_error(mocker, app_request, form):
+    pass
+
+
+def test_get_verified_types_verified_types(mocker, app_request, form):
+    pass
+
+
+def test_get_verified_types_no_verified_types(mocker, app_request, form):
+    pass
