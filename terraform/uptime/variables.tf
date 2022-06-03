@@ -3,7 +3,7 @@ variable "action_group_id" {
 }
 
 variable "name" {
-  type = string
+  type        = string
   description = "What to call the ping test"
 }
 
@@ -12,8 +12,8 @@ variable "resource_group_name" {
 }
 
 variable "severity" {
-  type = number
-  default = 1
+  type        = number
+  default     = 1
   description = "https://docs.microsoft.com/en-us/azure/azure-monitor/best-practices-alerts#alert-severity"
 }
 

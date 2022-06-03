@@ -21,15 +21,7 @@ resource "azurerm_application_insights_web_test" "healthcheck" {
     "us-ca-sjc-azr",  # West US
   ]
 
-  # boilerplate configuration
-  configuration = <<XML
-<WebTest Name="dev-healthcheck" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="120" WorkItemIds=""
-  xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="" ResultsLocale="">
-  <Items>
-    <Request Method="GET" Version="1.1" Url="${var.url}" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="200" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False" />
-  </Items>
-</WebTest>
-XML
+  configuration = templatefile("${path.module}/webtest.xml", { url = var.url })
 
   lifecycle {
     ignore_changes = [tags]
@@ -46,8 +38,8 @@ resource "azurerm_monitor_metric_alert" "uptime" {
   severity = var.severity
 
   application_insights_web_test_location_availability_criteria {
-    web_test_id           = azurerm_application_insights_web_test.healthcheck.id
-    component_id          = data.azurerm_application_insights.benefits.id
+    web_test_id  = azurerm_application_insights_web_test.healthcheck.id
+    component_id = data.azurerm_application_insights.benefits.id
     # "the optimal configuration is to have the number of test locations be equal to the alert location threshold + 2"
     # https://docs.microsoft.com/en-us/azure/azure-monitor/app/monitor-web-app-availability#create-a-test
     failed_location_count = length(azurerm_application_insights_web_test.healthcheck.geo_locations) - 2
