@@ -45,5 +45,16 @@ def test_get_verified_types_verified_types(mocker, app_request, form):
     form.add_api_errors.assert_not_called()
 
 
+@pytest.mark.django_db
 def test_get_verified_types_no_verified_types(mocker, app_request, form):
-    pass
+    set_verifier(mocker)
+
+    verified_types = []
+    api_response = mocker.Mock(eligibility=verified_types, error=None)
+
+    mock_api_client_verify(mocker, api_response)
+
+    response = get_verified_types(app_request, form)
+
+    assert response == verified_types
+    form.add_api_errors.assert_not_called()
