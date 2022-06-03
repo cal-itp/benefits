@@ -1,38 +1,19 @@
+import datetime
+import os
+import uuid
+from pathlib import Path
+
 from django.urls import reverse
+
 import pytest
 import httpretty
 import requests
 
-import datetime
-import os
-import uuid
-
-from pathlib import Path
-
 from benefits.core import session
-from benefits.core.models import TransitAgency
 from eligibility_api.client import ApiError, TokenError
 from eligibility_api.server import make_token
 from benefits.eligibility.views import confirm
-from tests.pytest.conftest import with_agency, initialize_request
-
-
-def set_agency(mocker):
-    agency = TransitAgency.objects.first()
-    assert agency
-    with_agency(mocker, agency)
-    return agency
-
-
-def set_verifier(mocker):
-    agency = set_agency(mocker)
-
-    mock = mocker.patch("benefits.core.session.verifier", autospec=True)
-    verifier = agency.eligibility_verifiers.first()
-    mocker.patch.object(verifier, "api_url", "http://localhost/verify")
-    assert verifier
-    mock.return_value = verifier
-    return (agency, verifier)
+from tests.pytest.conftest import initialize_request, set_agency, set_verifier, with_agency
 
 
 @pytest.mark.django_db
