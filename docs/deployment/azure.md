@@ -12,12 +12,13 @@ flowchart LR
     benefits[Benefits application]
     style benefits stroke-width:5px
     recaptcha[Google reCAPTCHA]
-    rider((User))
+    rider((User's browser))
 
     rider --> benefits
     rider --> Login.gov
     rider --> recaptcha
     rider --> Littlepay
+    rider --> Amplitude
 
     benefits <--> Login.gov
     benefits <--> recaptcha
