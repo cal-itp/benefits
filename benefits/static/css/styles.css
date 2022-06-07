@@ -91,7 +91,9 @@ footer.global-footer .footer-links a {
   color: #0590cd;
 }
 
-footer.global-footer .footer-links a:hover {
+footer.global-footer .footer-links a:hover,
+footer.global-footer .footer-links a:focus,
+footer.global-footer .footer-links a:active {
   color: #9b74d7;
 }
 
