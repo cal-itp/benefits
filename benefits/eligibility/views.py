@@ -9,13 +9,11 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
-from eligibility_api.client import Client
-
 from benefits.core import recaptcha, session, viewmodels
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
 from benefits.core.views import PageTemplateResponse
-from . import analytics, forms
+from . import analytics, api, forms
 
 
 @decorator_from_middleware(AgencySessionRequired)
@@ -144,6 +142,7 @@ def start(request):
 def confirm(request):
     """View handler for the eligibility verification form."""
 
+    template = "eligibility/confirm.html"
     verifier = session.verifier(request)
 
     page = viewmodels.Page(
@@ -154,63 +153,42 @@ def confirm(request):
         classes="text-lg-center",
     )
 
+    # POST form submission, process form data
     if request.method == "POST":
         analytics.started_eligibility(request)
 
         form = forms.EligibilityVerificationForm(data=request.POST, verifier=verifier)
-        response = _verify(request, form)
 
-        if response is None:
-            # form was not valid, allow for correction/resubmission
+        # form was not valid, allow for correction/resubmission
+        if not form.is_valid():
+            if recaptcha.has_error(form):
+                messages.error(request, "Recaptcha failed. Please try again.")
+
+            page.forms = [form]
+            return TemplateResponse(request, template, page.context_dict())
+
+        # form is valid, make Eligibility Verification request to get the verified types
+        verified_types = api.get_verified_types(request, form)
+
+        # form was not valid, allow for correction/resubmission
+        if verified_types is None:
             analytics.returned_error(request, form.errors)
             page.forms = [form]
-            response = TemplateResponse(request, "eligibility/confirm.html", page.context_dict())
+            return TemplateResponse(request, template, page.context_dict())
+        # no types were verified
+        elif len(verified_types) == 0:
+            return unverified(request)
+        # type(s) were verified
+        else:
+            return verified(request, verified_types)
+
+    # GET from an already verified user, no need to verify again
     elif session.eligible(request):
         eligibility = session.eligibility(request)
-        response = verified(request, [eligibility.name])
+        return verified(request, [eligibility.name])
+    # GET from an unverified user, present the form
     else:
-        response = TemplateResponse(request, "eligibility/confirm.html", page.context_dict())
-
-    return response
-
-
-def _verify(request, form):
-    """Helper calls the eligibility verification API with user input."""
-
-    if not form.is_valid():
-        if recaptcha.has_error(form):
-            messages.error(request, "Recaptcha failed. Please try again.")
-        return None
-
-    sub, name = form.cleaned_data.get("sub"), form.cleaned_data.get("name")
-
-    agency = session.agency(request)
-    verifier = session.verifier(request)
-
-    client = Client(
-        verify_url=verifier.api_url,
-        headers={verifier.api_auth_header: verifier.api_auth_key},
-        issuer=settings.ALLOWED_HOSTS[0],
-        agency=agency.agency_id,
-        jws_signing_alg=agency.jws_signing_alg,
-        client_private_key=agency.private_key_data,
-        jwe_encryption_alg=verifier.jwe_encryption_alg,
-        jwe_cek_enc=verifier.jwe_cek_enc,
-        server_public_key=verifier.public_key_data,
-    )
-
-    # get the eligibility type names
-    types = list(map(lambda t: t.name, agency.types_to_verify(verifier)))
-
-    response = client.verify(sub, name, types)
-
-    if response.error and any(response.error):
-        form.add_api_errors(response.error)
-        return None
-    elif any(response.eligibility):
-        return verified(request, response.eligibility)
-    else:
-        return unverified(request)
+        return TemplateResponse(request, template, page.context_dict())
 
 
 @decorator_from_middleware(AgencySessionRequired)

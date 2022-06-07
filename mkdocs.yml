@@ -37,7 +37,7 @@ plugins:
         "getting-started/docker-dynamic-ports.md": "development/docker-dynamic-ports.md"
 
 extra_javascript:
-  - https://unpkg.com/mermaid@8.5.0/dist/mermaid.min.js
+  - https://unpkg.com/mermaid@9.1.1/dist/mermaid.min.js
 
 extra_css:
   - https://use.fontawesome.com/releases/v5.13.0/css/all.css

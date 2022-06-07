@@ -6,6 +6,7 @@ import pytest
 from pytest_socket import disable_socket
 
 from benefits.core import session
+from benefits.core.models import TransitAgency
 
 
 def pytest_runtest_setup():
@@ -57,6 +58,24 @@ def initialize_request(request):
     request.session.save()
 
     session.reset(request)
+
+
+def set_agency(mocker):
+    agency = TransitAgency.objects.first()
+    assert agency
+    with_agency(mocker, agency)
+    return agency
+
+
+def set_verifier(mocker):
+    agency = set_agency(mocker)
+
+    mock = mocker.patch("benefits.core.session.verifier", autospec=True)
+    verifier = agency.eligibility_verifiers.first()
+    mocker.patch.object(verifier, "api_url", "http://localhost/verify")
+    assert verifier
+    mock.return_value = verifier
+    return (agency, verifier)
 
 
 def with_agency(mocker, agency):
