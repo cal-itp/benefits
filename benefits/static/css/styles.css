@@ -536,6 +536,7 @@ footer .footer-links a {
 
 @media (max-width: 767px) {
   /* xs and sm */
+
   .global-footer ul li {
     text-align: center;
   }
@@ -557,6 +558,10 @@ footer .footer-links a {
 }
 
 @media (max-width: 992px) {
+  .container.content .btn-lg {
+    padding: 1.1875rem 0.813rem;
+  }
+
   /* Mobile With Image */
 
   .with-image main .main-row .col-lg-6.image {
