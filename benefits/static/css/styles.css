@@ -86,8 +86,15 @@ footer {
   padding-bottom: 1rem;
 }
 
-footer .footer-links a {
+footer.global-footer .footer-links a {
   font-size: 16px;
+  color: #0590cd;
+}
+
+footer.global-footer .footer-links a:hover,
+footer.global-footer .footer-links a:focus,
+footer.global-footer .footer-links a:active {
+  color: #9b74d7;
 }
 
 /* class styles */
@@ -419,7 +426,7 @@ footer .footer-links a {
 /* Header */
 
 .navbar.navbar-expand-sm.navbar-dark.bg-primary {
-  padding: 8.5px 1rem;
+  padding: 14.5px 1rem;
 }
 
 .navbar-brand {
@@ -536,9 +543,33 @@ footer .footer-links a {
 
 @media (max-width: 767px) {
   /* xs and sm */
+  .global-footer {
+    padding: 0;
+  }
 
-  .global-footer ul li {
-    text-align: center;
+  .global-footer .container {
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .global-footer ul.footer-links {
+    margin: 0 !important;
+    padding: 0;
+  }
+
+  .global-footer ul.footer-links li {
+    width: 100%;
+    line-height: 50px;
+    margin-left: 0;
+  }
+
+  .global-footer ul.footer-links li:not(:last-child) {
+    border-bottom: 2px solid white;
+  }
+
+  .global-footer ul.footer-links li a {
+    padding-left: 30px;
+    margin: 0;
   }
 
   .radio-container {
