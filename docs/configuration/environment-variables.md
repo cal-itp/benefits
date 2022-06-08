@@ -36,38 +36,6 @@ Amplitude API key for the project where the app will direct events.
 
 If blank or an invalid key, analytics events aren't captured (though may still be logged).
 
-## AWS
-
-### `AWS_ACCESS_KEY_ID`
-
-The AWS access key ID for a deployment environment.
-
-Mostly not used in local settings. See the docs on [Deployment][deployment] for more.
-
-### `AWS_BUCKET`
-
-The AWS bucket for a deployment environment, where the environment file and fixtures for that environment are stored.
-
-Mostly not used in local settings. See the docs on [Deployment][deployment] for more.
-
-### `AWS_DEFAULT_REGION`
-
-The AWS region for a deployment environment.
-
-Mostly not used in local settings. See the docs on [Deployment][deployment] for more.
-
-### `AWS_SECRET_ACCESS_KEY`
-
-The AWS access key ID for a deployment environment.
-
-Mostly not used in local settings. See the docs on [Deployment][deployment] for more.
-
-### `CONFIG_FILE`
-
-The (single) fixture file AWS uses for a deployment environment.
-
-Mostly not used in local settings. See the docs on [Deployment][deployment] for more.
-
 ## Django
 
 ### `DJANGO_ADMIN`
