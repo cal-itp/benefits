@@ -17,11 +17,6 @@ def PageTemplateResponse(request, page_vm):
     return TemplateResponse(request, "core/page.html", page_vm.context_dict())
 
 
-def _index_content_title():
-    """Helper returns the content title for the common index page."""
-    return _("core.pages.index.content_title")
-
-
 ROUTE_INDEX = "core:index"
 
 
@@ -43,7 +38,7 @@ def index(request):
 
     page = viewmodels.Page(
         title=_("core.pages.index.title"),
-        content_title=_index_content_title(),
+        content_title=_("core.pages.index.content_title"),
         buttons=buttons,
         classes="home",
     )
