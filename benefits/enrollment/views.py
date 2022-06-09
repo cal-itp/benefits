@@ -18,30 +18,6 @@ from . import api, forms
 logger = logging.getLogger(__name__)
 
 
-def _enroll(request):
-    """Helper calls the enrollment APIs."""
-    logger.debug("Read tokenized card")
-    form = forms.CardTokenizeSuccessForm(request.POST)
-    if not form.is_valid():
-        raise Exception("Invalid card token form")
-    card_token = form.cleaned_data.get("card_token")
-
-    eligibility = session.eligibility(request)
-    if eligibility:
-        logger.debug(f"Session contains an {models.EligibilityType.__name__}")
-    else:
-        raise Exception("Session contains no eligibility information")
-
-    agency = session.agency(request)
-
-    response = api.Client(agency).enroll(card_token, eligibility.group_id)
-
-    if response.success:
-        return success(request)
-    else:
-        raise Exception("Updated customer_id does not match enrolled customer_id")
-
-
 @decorator_from_middleware(EligibleSessionRequired)
 def token(request):
     """View handler for the enrollment auth token."""
@@ -60,11 +36,31 @@ def index(request):
     """View handler for the enrollment landing page."""
     session.update(request, origin=reverse("enrollment:index"))
 
-    if request.method == "POST":
-        return _enroll(request)
-    else:
-        agency = session.agency(request)
+    agency = session.agency(request)
 
+    # POST back after payment processor form, process card token
+    if request.method == "POST":
+        form = forms.CardTokenizeSuccessForm(request.POST)
+        if not form.is_valid():
+            raise Exception("Invalid card token form")
+
+        eligibility = session.eligibility(request)
+        if eligibility:
+            logger.debug(f"Session contains an {models.EligibilityType.__name__}")
+        else:
+            raise Exception("Session contains no eligibility information")
+
+        logger.debug("Read tokenized card")
+        card_token = form.cleaned_data.get("card_token")
+
+        response = api.Client(agency).enroll(card_token, eligibility.group_id)
+        if response.success:
+            return success(request)
+        else:
+            raise Exception(response.message)
+
+    # GET enrollment index, with button to initiate payment processor connection
+    else:
         tokenize_button = "tokenize_card"
         tokenize_retry_form = forms.CardTokenizeFailForm("enrollment:retry")
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
