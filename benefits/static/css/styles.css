@@ -71,13 +71,19 @@ main {
   flex-shrink: 0 !important;
 }
 
+/* All pages but the Start Page */
 main .main-row {
   min-height: calc(100vh - 120px);
 }
 
-main .main-row .col-lg-6.image {
+.agency-index main .main-row {
+  height: inherit;
+}
+
+.main-image {
   background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
   background-size: cover;
+  height: 292px;
 }
 
 footer {
@@ -113,14 +119,17 @@ footer.global-footer .footer-links a:active {
 #login {
   background: #046b99;
   border: 0;
-  border-radius: 0;
   color: #ffffff;
   cursor: pointer;
   display: block;
   line-height: 1;
-  margin: 0;
-  padding: 0.5rem 1.5rem;
+  padding: 12px 14px;
   min-width: auto;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-right: inherit;
+  font-size: 16px;
+  margin-bottom: 32px;
 }
 
 #login:hover {
@@ -135,7 +144,9 @@ footer.global-footer .footer-links a:active {
   background-size: contain;
   display: inline-block;
   position: relative;
-  width: 9.75rem;
+  width: 132px;
+  height: 18px;
+  margin-left: 5px;
   vertical-align: baseline;
 }
 
@@ -238,73 +249,49 @@ footer.global-footer .footer-links a:active {
 }
 
 .media-list {
-  margin-top: 100px;
-  margin-bottom: 68px;
+  margin-top: 64px;
+  margin-bottom: 80px;
   padding: 0;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  gap: 116px;
 }
 
 .media-list .media {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  width: 33%;
-}
-
-.media-list .media:first-child .media-line:before,
-.media-list .media:last-child .media-line:after {
-  border-color: transparent;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
 }
 
 .media-list .media .media-line {
   position: relative;
 }
 
-.media-list .media .media-line:before,
-.media-list .media .media-line:after {
-  content: " ";
-  position: absolute;
-  top: 50%;
-  width: 142.5px;
-  border-top: 3px dashed #53b3e2;
-  margin-top: -1px;
-  display: block;
-}
-
-.media-list .media .media-line:before {
-  right: 128px;
-}
-
-.media-list .media .media-line:after {
-  left: 128px;
-}
-
 .media-list .media .media-line .icon {
-  width: 128px;
-  height: 128px;
+  width: 115px;
+  height: 115px;
   position: relative;
   display: block;
   z-index: 10;
 }
 
 .media-list .media .media-body {
-  padding: 0 3.4rem;
+  padding: 0 60px;
   line-height: 26.1px;
 }
 
 .media-list .media .media-body--heading {
   font-size: 18px;
   letter-spacing: 0.05em;
-  margin-top: 64px;
-  margin-bottom: 20px;
   line-height: 26.1px;
 }
 
-.media-list .media .media-body--heading ol {
+.media-list .media .media-body--heading {
   font-weight: 700;
   padding-left: 0;
   line-height: 26.1px;
+  margin-bottom: 16px;
 }
 
 .media-list .media .media-body--details {
@@ -622,38 +609,6 @@ footer.global-footer .footer-links a:active {
 
   /* Eligibility Start */
 
-  .media-list {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-  }
-
-  .media-list .media {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    width: 100%;
-  }
-
-  .media-list .media .media-body--heading {
-    margin-top: 0;
-  }
-
-  .media-list .media .media-line::before {
-    display: none;
-  }
-
-  .media-list .media .media-line::after {
-    top: 1px;
-    height: calc(100% + 40px);
-    left: -50%;
-    right: 50%;
-    z-index: 1;
-    width: 100%;
-    border-right: 3px dashed #53b3e2;
-    border-top: none;
-  }
-
   .eligibility-start .container.content {
     padding-top: 0;
   }
@@ -711,6 +666,15 @@ footer.global-footer .footer-links a:active {
   /* Override for only the Agency Index page */
   .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 2rem;
+  }
+
+  .agency-index #login {
+    margin-left: inherit;
+  }
+
+  .agency-index #login .fallback-text {
+    display: block;
+    margin: 0 auto;
   }
 
   .logged-out.enrollment-success .container.content {

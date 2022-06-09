@@ -68,11 +68,6 @@ def start(request):
     payment_options_link = f"{reverse('core:help')}#payment-options"
     media = [
         dict(
-            icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-            heading=_(verifier.start_item_name),
-            details=_(verifier.start_item_description),
-        ),
-        dict(
             icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
             heading=_("eligibility.pages.start.bankcard.title"),
             details=_("eligibility.pages.start.bankcard.text"),
