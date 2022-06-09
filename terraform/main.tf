@@ -7,17 +7,20 @@ terraform {
   }
 
   backend "azurerm" {
-    resource_group_name  = "RG-CDT-PUB-VIP-CALITP-D-001"
-    storage_account_name = "sacalitpd001"
+    resource_group_name  = "RG-CDT-PUB-VIP-CALITP-P-001"
+    storage_account_name = "sacdtcalitpp001"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }
 }
 
 provider "azurerm" {
+  # temporary workaround for permissions issue
+  skip_provider_registration = true
+
   features {}
 }
 
 data "azurerm_resource_group" "benefits" {
-  name = "RG-CDT-PUB-VIP-CALITP-D-001"
+  name = "RG-CDT-PUB-VIP-CALITP-P-001"
 }

@@ -1,5 +1,5 @@
 data "azurerm_key_vault" "main" {
-  name                = "kv-cdt-pub-calitp-d-001"
+  name                = "KV-CDT-PUB-CALITP-P-001"
   resource_group_name = data.azurerm_resource_group.benefits.name
 }
 

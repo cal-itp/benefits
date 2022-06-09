@@ -1,5 +1,5 @@
 data "azurerm_application_insights" "benefits" {
-  name                = "AS-CDT-CALITP-D-001"
+  name                = "AI-CDT-PUB-VIP-CALITP-P-001"
   resource_group_name = var.resource_group_name
 }
 

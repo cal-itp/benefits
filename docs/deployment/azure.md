@@ -56,13 +56,17 @@ flowchart LR
 
 WAF: [Web Application Firewall](https://azure.microsoft.com/en-us/services/web-application-firewall/)
 
+## Monitoring
+
+We have [ping tests](https://docs.microsoft.com/en-us/azure/azure-monitor/app/monitor-web-app-availability) set up to notify about availability of the dev, test, and prod deployments. Alerts go to [#benefits-notify](https://cal-itp.slack.com/archives/C022HHSEE3F).
+
 ## Making changes
 
 1. Get access to the Azure account through the DevSecOps team.
 1. Install dependencies:
     - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
     - [Terraform](https://www.terraform.io/downloads)
-1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli).
+1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli), specifying the `CDT/ODI Production` Subscription.
 1. Outside the [dev container](../../getting-started/), navigate to the [`terraform/`][terraform-dir] directory.
 1. [Initialize Terraform.](https://www.terraform.io/cli/commands/init)
 
