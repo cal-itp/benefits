@@ -59,8 +59,6 @@ The file is called `django.db` and the following commands will rebuild it.
 Run these commands from within the repository root, inside the devcontainer:
 
 ```bash
-rm django.db
-
 bin/init.sh
 ```
 
