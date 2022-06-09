@@ -12,7 +12,6 @@ from django.utils.translation import pgettext, gettext as _
 from benefits.core import recaptcha, session, viewmodels
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
-from benefits.core.views import PageTemplateResponse
 from . import analytics, api, forms
 
 
@@ -43,14 +42,14 @@ def index(request):
         else:
             # form was not valid, allow for correction/resubmission
             page.forms = [form]
-            response = PageTemplateResponse(request, page)
+            response = TemplateResponse(request, "core/page.html", page.context_dict())
     else:
         if agency.eligibility_verifiers.count() == 1:
             verifier = agency.eligibility_verifiers.first()
             session.update(request, verifier=verifier)
             response = redirect(eligibility_start)
         else:
-            response = PageTemplateResponse(request, page)
+            response = TemplateResponse(request, "core/page.html", page.context_dict())
 
     return response
 

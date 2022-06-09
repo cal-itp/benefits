@@ -11,12 +11,6 @@ from django.utils.translation import gettext as _
 from . import models, session, viewmodels
 from .middleware import pageview_decorator
 
-
-def PageTemplateResponse(request, page_vm):
-    """Helper returns a TemplateResponse using the common page template."""
-    return TemplateResponse(request, "core/page.html", page_vm.context_dict())
-
-
 ROUTE_INDEX = "core:index"
 
 
@@ -43,7 +37,7 @@ def index(request):
         classes="home",
     )
 
-    return PageTemplateResponse(request, page)
+    return TemplateResponse(request, "core/page.html", page.context_dict())
 
 
 @pageview_decorator
