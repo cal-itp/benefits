@@ -59,6 +59,9 @@ def agency_index(request, agency):
     session.reset(request)
     session.update(request, agency=agency, origin=agency.index_url)
 
+    if len(agency.eligibility_verifiers.all()) == 1:
+        return redirect(reverse("eligibility:index"))
+
     button = viewmodels.Button.primary(text=_("core.pages.index.continue"), url=reverse("eligibility:index"))
     button.label = _("core.pages.agency_index.button.label")
 
