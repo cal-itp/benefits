@@ -22,9 +22,7 @@ def _index_content_title():
     return _("core.pages.index.content_title")
 
 
-def _index_url():
-    """Helper computes the index url path."""
-    return reverse("core:index")
+ROUTE_INDEX = "core:index"
 
 
 @pageview_decorator
@@ -105,7 +103,7 @@ def bad_request(request, exception, template_name="400.html"):
     if session.active_agency(request):
         session.update(request, origin=session.agency(request).index_url)
     else:
-        session.update(request, origin=_index_url())
+        session.update(request, origin=reverse(ROUTE_INDEX))
 
     home = viewmodels.Button.home(request)
     page = viewmodels.ErrorPage.error(button=home)
@@ -122,7 +120,7 @@ def csrf_failure(request, reason):
     if session.active_agency(request):
         session.update(request, origin=session.agency(request).index_url)
     else:
-        session.update(request, origin=_index_url())
+        session.update(request, origin=reverse(ROUTE_INDEX))
 
     home = viewmodels.Button.home(request)
     page = viewmodels.ErrorPage.not_found(button=home, path=request.path)
@@ -137,7 +135,7 @@ def page_not_found(request, exception, template_name="404.html"):
     if session.active_agency(request):
         session.update(request, origin=session.agency(request).index_url)
     else:
-        session.update(request, origin=_index_url())
+        session.update(request, origin=reverse(ROUTE_INDEX))
 
     home = viewmodels.Button.home(request)
     page = viewmodels.ErrorPage.not_found(button=home, path=request.path)
@@ -152,7 +150,7 @@ def server_error(request, template_name="500.html"):
     if session.active_agency(request):
         session.update(request, origin=session.agency(request).index_url)
     else:
-        session.update(request, origin=_index_url())
+        session.update(request, origin=reverse(ROUTE_INDEX))
 
     home = viewmodels.Button.home(request)
     page = viewmodels.ErrorPage.error(button=home)
