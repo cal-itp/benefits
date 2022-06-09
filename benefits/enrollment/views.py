@@ -18,54 +18,6 @@ from . import api, forms
 logger = logging.getLogger(__name__)
 
 
-def _index(request):
-    """Helper handles GET requests to enrollment index."""
-    agency = session.agency(request)
-
-    tokenize_button = "tokenize_card"
-    tokenize_retry_form = forms.CardTokenizeFailForm("enrollment:retry")
-    tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
-
-    page = viewmodels.Page(
-        title=_("enrollment.pages.index.title"),
-        content_title=_("enrollment.pages.index.content_title"),
-        icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-        paragraphs=[_("enrollment.pages.index.p[0]"), _("enrollment.pages.index.p[1]"), _("enrollment.pages.index.p[2]")],
-        classes="text-lg-center",
-        forms=[tokenize_retry_form, tokenize_success_form],
-        buttons=[
-            viewmodels.Button.primary(
-                text=_("enrollment.buttons.payment_partner"), id=tokenize_button, url=f"#{tokenize_button}"
-            ),
-        ],
-    )
-    context = {}
-    context.update(page.context_dict())
-
-    # add agency details
-    agency_vm = viewmodels.TransitAgency(agency)
-    context.update(agency_vm.context_dict())
-
-    # and payment processor details
-    processor_vm = viewmodels.PaymentProcessor(
-        model=agency.payment_processor,
-        access_token_url=reverse("enrollment:token"),
-        element_id=f"#{tokenize_button}",
-        color="#046b99",
-        name=f"{agency.long_name} {_('partnered with')} {agency.payment_processor.name}",
-    )
-    context.update(processor_vm.context_dict())
-    logger.warning(f"card_tokenize_url: {context['payment_processor'].card_tokenize_url}")
-
-    # the tokenize form URLs are injected to page-generated Javascript
-    context["forms"] = {
-        "tokenize_retry": reverse(tokenize_retry_form.action_url),
-        "tokenize_success": reverse(tokenize_success_form.action_url),
-    }
-
-    return TemplateResponse(request, "enrollment/index.html", context)
-
-
 def _enroll(request):
     """Helper calls the enrollment APIs."""
     logger.debug("Read tokenized card")
@@ -109,11 +61,52 @@ def index(request):
     session.update(request, origin=reverse("enrollment:index"))
 
     if request.method == "POST":
-        response = _enroll(request)
+        return _enroll(request)
     else:
-        response = _index(request)
+        agency = session.agency(request)
 
-    return response
+        tokenize_button = "tokenize_card"
+        tokenize_retry_form = forms.CardTokenizeFailForm("enrollment:retry")
+        tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
+
+        page = viewmodels.Page(
+            title=_("enrollment.pages.index.title"),
+            content_title=_("enrollment.pages.index.content_title"),
+            icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
+            paragraphs=[_("enrollment.pages.index.p[0]"), _("enrollment.pages.index.p[1]"), _("enrollment.pages.index.p[2]")],
+            classes="text-lg-center",
+            forms=[tokenize_retry_form, tokenize_success_form],
+            buttons=[
+                viewmodels.Button.primary(
+                    text=_("enrollment.buttons.payment_partner"), id=tokenize_button, url=f"#{tokenize_button}"
+                ),
+            ],
+        )
+        context = {}
+        context.update(page.context_dict())
+
+        # add agency details
+        agency_vm = viewmodels.TransitAgency(agency)
+        context.update(agency_vm.context_dict())
+
+        # and payment processor details
+        processor_vm = viewmodels.PaymentProcessor(
+            model=agency.payment_processor,
+            access_token_url=reverse("enrollment:token"),
+            element_id=f"#{tokenize_button}",
+            color="#046b99",
+            name=f"{agency.long_name} {_('partnered with')} {agency.payment_processor.name}",
+        )
+        context.update(processor_vm.context_dict())
+        logger.warning(f"card_tokenize_url: {context['payment_processor'].card_tokenize_url}")
+
+        # the tokenize form URLs are injected to page-generated Javascript
+        context["forms"] = {
+            "tokenize_retry": reverse(tokenize_retry_form.action_url),
+            "tokenize_success": reverse(tokenize_success_form.action_url),
+        }
+
+        return TemplateResponse(request, "enrollment/index.html", context)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
