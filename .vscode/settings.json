@@ -29,7 +29,7 @@
     "editor.formatOnSave": true
   },
   "python.testing.pytestArgs": [
-    "tests/pytest"
+    "tests/pytest", "--import-mode=importlib"
   ],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true
