@@ -73,6 +73,14 @@ def mocked_session_agency(mocker, first_agency):
 
 
 @pytest.fixture
+def mocked_session_eligibility(mocker, mocked_session_agency):
+    eligibility = mocked_session_agency.eligibility_types.first()
+    assert eligibility
+    mocker.patch("benefits.core.session.eligibility", autospec=True, return_value=eligibility)
+    return eligibility
+
+
+@pytest.fixture
 def mocked_session_verifier(mocker, mocked_session_agency):
     mock = mocker.patch("benefits.core.session.verifier", autospec=True)
     verifier = mocked_session_agency.eligibility_verifiers.first()

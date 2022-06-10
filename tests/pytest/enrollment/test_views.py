@@ -1,23 +1,11 @@
 from django.urls import reverse
+
 import pytest
-from benefits.core.models import EligibilityType, TransitAgency
-
-from tests.pytest.conftest import with_agency
-
-
-def make_eligibile(mocker):
-    agency = TransitAgency.objects.first()
-    assert agency
-    with_agency(mocker, agency)
-
-    eligibility = EligibilityType.objects.first()
-    assert eligibility
-    mocker.patch("benefits.core.session.eligibility", autospec=True, return_value=eligibility)
 
 
 @pytest.mark.django_db
-def test_index_eligible(mocker, client):
-    make_eligibile(mocker)
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_index_eligible(client):
     path = reverse("enrollment:index")
     response = client.get(path)
     assert response.status_code == 200
