@@ -12,7 +12,7 @@ resource "azurerm_application_insights" "dev" {
   name             = "aI-cdt-pub-vip-calitp-p-001-dev"
   application_type = "web"
   location         = data.azurerm_resource_group.prod.location
-  # for matching the value created outside of Terraform
+  # hack to match the casing of what's returned by Azure
   resource_group_name = lower(data.azurerm_resource_group.prod.name)
   sampling_percentage = 0
   workspace_id        = azurerm_log_analytics_workspace.main.id
