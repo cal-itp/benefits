@@ -100,3 +100,8 @@ def mocked_session_verifier(mocker, mocked_session_agency):
     mocker.patch.object(verifier, "api_url", "http://localhost/verify")
     mock.return_value = verifier
     return (mocked_session_agency, verifier)
+
+
+@pytest.fixture
+def mocked_session_update(mocker):
+    return mocker.patch("benefits.eligibility.views.session.update")
