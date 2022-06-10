@@ -15,9 +15,6 @@ terraform {
 }
 
 provider "azurerm" {
-  # temporary workaround for permissions issue
-  skip_provider_registration = true
-
   features {}
 }
 
