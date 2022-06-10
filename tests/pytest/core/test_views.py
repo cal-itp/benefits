@@ -2,8 +2,6 @@ import pytest
 from django.urls import reverse
 from benefits.core.models import TransitAgency
 
-from tests.pytest.conftest import with_agency
-
 
 @pytest.mark.django_db
 def test_homepage_multiple_agencies(client):
@@ -48,12 +46,8 @@ def test_help(client):
 
 
 @pytest.mark.django_db
-def test_help_with_agency(mocker, client):
-    agency = TransitAgency.objects.first()
-    assert agency
-    with_agency(mocker, agency)
-
+def test_help_with_agency(mocked_session_agency, client):
     path = reverse("core:help")
     response = client.get(path)
     assert response.status_code == 200
-    assert agency.long_name in str(response.content)
+    assert mocked_session_agency.long_name in str(response.content)
