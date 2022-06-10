@@ -96,7 +96,7 @@ def start(request):
         media.insert(
             0,
             dict(
-                icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
+                icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
                 heading=_("eligibility.pages.start.oauth.heading"),
                 details=_("eligibility.pages.start.oauth.details"),
                 links=[

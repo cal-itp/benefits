@@ -80,11 +80,12 @@ main .main-row {
   min-height: calc(100vh - 120px);
 }
 
-.eligibility-start main .main-row {
-  height: inherit;
+main .main-row .col-lg-6.image {
+  background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
+  background-size: cover;
 }
 
-.main-image {
+.one-column-image {
   background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
   background-size: cover;
   height: 292px;
@@ -247,14 +248,14 @@ footer.global-footer .footer-links a:active {
 /* Eligibility Start */
 
 .media-title {
-  margin-top: 0;
+  margin-top: 100px;
   margin-bottom: 60px;
   font-size: 24px;
   line-height: 30px;
 }
 
 .media-list {
-  margin-top: 64px;
+  margin-top: 0;
   margin-bottom: 80px;
   padding: 0;
   display: flex;
@@ -334,7 +335,7 @@ footer.global-footer .footer-links a:active {
   color: #2f4c65;
 }
 
-.eligibility-start .container.content {
+.eligibility-start .main-container {
   padding-top: 3rem;
   padding-bottom: 2rem;
   width: initial;
@@ -348,12 +349,12 @@ footer.global-footer .footer-links a:active {
   justify-content: right;
 }
 
-.eligibility-start .container.content .buttons .btn {
+.eligibility-start .main-container .buttons .btn {
   margin-left: initial;
   margin-right: initial;
 }
 
-.eligibility-start .container.content .buttons label {
+.eligibility-start .main-container .buttons label {
   margin: 0 0.8rem 0 0;
   line-height: 1;
 }
@@ -361,9 +362,10 @@ footer.global-footer .footer-links a:active {
 .eligibility-start h1.headline {
   font-size: 35px;
   line-height: 52.5px;
-  letter-spacing: 0.05;
+  letter-spacing: 0.05em;
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
+  margin-top: 64px;
 }
 
 /* Enrollment Success */
@@ -482,7 +484,7 @@ footer.global-footer .footer-links a:active {
 }
 
 .container.content.help h1 {
-  letter-spacing: 0.05rem;
+  letter-spacing: 0.05em;
   font-weight: 700;
   font-size: 2.25rem;
   text-align: center;
@@ -491,7 +493,7 @@ footer.global-footer .footer-links a:active {
 }
 
 .container.content.help h2 {
-  letter-spacing: 0.05rem;
+  letter-spacing: 0.05em;
   font-weight: 700;
   font-size: 1.5rem;
   margin-bottom: 3rem;
@@ -531,7 +533,8 @@ footer.global-footer .footer-links a:active {
   margin-bottom: 2rem;
 }
 
-.container.content .btn-lg {
+.container.content .btn-lg,
+.eligibility-start .btn-link {
   font-weight: 500;
   margin-bottom: 1rem;
   padding: 0.8125rem;
@@ -539,7 +542,8 @@ footer.global-footer .footer-links a:active {
   width: 100%;
 }
 
-.container.content .btn-link {
+.container.content .btn-link,
+.eligibility-start .btn-link {
   text-decoration: underline;
 }
 
@@ -550,7 +554,7 @@ footer.global-footer .footer-links a:active {
     padding: 1rem 1.25rem;
   }
 
-  .eligibility-start .container.content .buttons {
+  .eligibility-start .main-container .buttons {
     padding: 0 3rem;
   }
 }
@@ -636,7 +640,7 @@ footer.global-footer .footer-links a:active {
 
   /* Eligibility Start */
 
-  .eligibility-start .container.content {
+  .eligibility-start .main-content {
     padding-top: 0;
   }
 
