@@ -201,6 +201,7 @@ def confirm(request):
     elif session.eligible(request):
         eligibility = session.eligibility(request)
         return verified(request, [eligibility.name])
+
     # GET from an unverified user, present the form
     else:
         return TemplateResponse(request, template, page.context_dict())
