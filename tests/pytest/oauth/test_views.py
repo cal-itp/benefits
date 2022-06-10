@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.urls import reverse
 
+import pytest
+
 from benefits.core import session
 from benefits.oauth.views import (
     ROUTE_START,
@@ -15,78 +17,74 @@ from benefits.oauth.views import (
 import benefits.oauth.views
 
 
-def test_login(mocker, app_request):
-    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client", return_value=HttpResponse("authorize redirect"))
+@pytest.fixture
+def mocked_analytics_module(mocked_analytics_module):
+    return mocked_analytics_module(benefits.oauth.views)
 
-    mocker.patch.object(benefits.oauth.views, "analytics")
 
+@pytest.fixture
+def mocked_oauth_client(mocker):
+    return mocker.patch.object(benefits.oauth.views, "oauth_client", return_value=HttpResponse("authorize redirect"))
+
+
+@pytest.mark.usefixtures("mocked_analytics_module")
+def test_login(mocked_oauth_client, app_request):
     assert not session.logged_in(app_request)
 
     login(app_request)
 
-    mock_client.authorize_redirect.assert_called_with(app_request, "https://testserver/oauth/authorize")
+    mocked_oauth_client.authorize_redirect.assert_called_with(app_request, "https://testserver/oauth/authorize")
     assert not session.logged_in(app_request)
 
 
-def test_login_analytics(mocker, app_request):
-    spy = mocker.patch("benefits.oauth.analytics.started_sign_in")
-
-    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
-    mock_client.authorize_redirect.return_value = HttpResponse("authorize redirect")
-
+@pytest.mark.usefixtures("mocked_oauth_client")
+def test_login_analytics(mocked_analytics_module, app_request):
     login(app_request)
 
-    spy.assert_called_once()
+    mocked_analytics_module.started_sign_in.assert_called_once()
 
 
-def test_authorize_fail(mocker, app_request):
-    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
-    mock_client.authorize_access_token.return_value = None
+def test_authorize_fail(mocked_oauth_client, app_request):
+    mocked_oauth_client.authorize_access_token.return_value = None
 
     assert not session.logged_in(app_request)
 
     result = authorize(app_request)
 
-    mock_client.authorize_access_token.assert_called_with(app_request)
+    mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
     assert not session.logged_in(app_request)
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_START)
 
 
-def test_authorize_success(mocker, app_request):
-    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
-    mock_client.authorize_access_token.return_value = {"id_token": "token"}
-
-    mocker.patch.object(benefits.oauth.views, "analytics")
+@pytest.mark.usefixtures("mocked_analytics_module")
+def test_authorize_success(mocked_oauth_client, app_request):
+    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token"}
 
     result = authorize(app_request)
 
-    mock_client.authorize_access_token.assert_called_with(app_request)
+    mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
     assert session.logged_in(app_request)
     assert session.oauth_token(app_request) == "token"
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_CONFIRM)
 
 
-def test_authorize_analytics(mocker, app_request):
-    spy = mocker.patch("benefits.oauth.analytics.finished_sign_in")
-
-    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
-    mock_client.authorize_access_token.return_value = {"id_token": "token"}
+def test_authorize_analytics(mocked_analytics_module, mocked_oauth_client, app_request):
+    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token"}
 
     authorize(app_request)
 
-    spy.assert_called_once()
+    mocked_analytics_module.finished_sign_in.assert_called_once()
 
 
+@pytest.mark.usefixtures("mocked_analytics_module")
 def test_logout(mocker, app_request):
     # logout internally calls _deauthorize_redirect
     # this mocks that function and a success response
     # and returns a spy object we can use to validate calls
     message = "logout successful"
     spy = mocker.patch("benefits.oauth.views._deauthorize_redirect", return_value=HttpResponse(message))
-
-    mocker.patch.object(benefits.oauth.views, "analytics")
 
     token = "token"
     session.update(app_request, oauth_token=token)
@@ -101,9 +99,7 @@ def test_logout(mocker, app_request):
     assert session.enrollment_token(app_request) is False
 
 
-def test_logout_analytics(mocker, app_request):
-    spy = mocker.patch("benefits.oauth.analytics.started_sign_out")
-
+def test_logout_analytics(mocker, mocked_analytics_module, app_request):
     # logout internally calls _deauthorize_redirect
     # this mocks that function and a success response
     message = "logout successful"
@@ -115,14 +111,13 @@ def test_logout_analytics(mocker, app_request):
 
     logout(app_request)
 
-    spy.assert_called_once()
+    mocked_analytics_module.started_sign_out.assert_called_once()
 
 
-def test_post_logout(mocker, app_request):
+@pytest.mark.usefixtures("mocked_analytics_module")
+def test_post_logout(app_request):
     origin = reverse("core:index")
     session.update(app_request, origin=origin)
-
-    mocker.patch.object(benefits.oauth.views, "analytics")
 
     result = post_logout(app_request)
 
@@ -130,21 +125,18 @@ def test_post_logout(mocker, app_request):
     assert result.url == origin
 
 
-def test_post_logout_analytics(mocker, app_request):
-    spy = mocker.patch("benefits.oauth.analytics.finished_sign_out")
-
+def test_post_logout_analytics(mocked_analytics_module, app_request):
     post_logout(app_request)
 
-    spy.assert_called_once()
+    mocked_analytics_module.finished_sign_out.assert_called_once()
 
 
-def test_deauthorize_redirect(mocker):
-    mock_client = mocker.patch.object(benefits.oauth.views, "oauth_client")
-    mock_client.load_server_metadata.return_value = {"end_session_endpoint": "https://server/endsession"}
+def test_deauthorize_redirect(mocked_oauth_client):
+    mocked_oauth_client.load_server_metadata.return_value = {"end_session_endpoint": "https://server/endsession"}
 
     result = _deauthorize_redirect("token", "https://localhost/redirect_uri")
 
-    mock_client.load_server_metadata.assert_called()
+    mocked_oauth_client.load_server_metadata.assert_called()
     assert result.status_code == 302
     assert (
         result.url

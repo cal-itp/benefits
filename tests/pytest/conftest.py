@@ -52,6 +52,18 @@ def initialize_request():
 
 
 @pytest.fixture
+def mocked_analytics_module(mocker):
+    """
+    Fixture returns a helper function to mock the analytics module imported on another given module.
+    """
+
+    def mock(module):
+        return mocker.patch.object(module, "analytics")
+
+    return mock
+
+
+@pytest.fixture
 def mocked_view():
     def test_view(request):
         pass
