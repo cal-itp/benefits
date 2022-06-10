@@ -10,13 +10,13 @@
         {{ block.super }}
     {% endblock %}
 
-    <h1 style="font-size: 35px; line-height: 52.5px; letter-spacing: 0.05; text-align: center; margin-bottom: 60px;">{% translate "core.pages.agency_index.p[3]" %}</h1>
+    <h1 class="headline">{% translate "core.pages.agency_index.p[3]" %}</h1>
 
     <p>{% blocktranslate with info_link=info_link%}core.pages.agency_index.p[0]{{ info_link }}{% endblocktranslate %}</p>
 
     <p>{% translate "core.pages.agency_index.p[2]" %}</p>
 
-    <h1 class="media-title" style="margin-top: 60px;">{{title}}</h1>
+    <h1 class="media-title">{{title}}</h1>
 
     {% block media_list %}
         {% if media|length_is:"0" %}{% else %}

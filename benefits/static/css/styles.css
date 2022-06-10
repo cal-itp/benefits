@@ -248,6 +248,7 @@ footer.global-footer .footer-links a:active {
 
 .media-title {
   margin-top: 0;
+  margin-bottom: 60px;
   font-size: 24px;
   line-height: 30px;
 }
@@ -355,6 +356,14 @@ footer.global-footer .footer-links a:active {
 .eligibility-start .container.content .buttons label {
   margin: 0 0.8rem 0 0;
   line-height: 1;
+}
+
+.eligibility-start h1.headline {
+  font-size: 35px;
+  line-height: 52.5px;
+  letter-spacing: 0.05;
+  text-align: center;
+  margin-bottom: 60px;
 }
 
 /* Enrollment Success */
