@@ -91,6 +91,7 @@ def start(request):
             raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
 
         oauth_help_link = f"{reverse('core:help')}#login-gov"
+        oauth_help_more_link = f"{reverse('core:help')}#login-gov-verify-items"
 
         media.insert(
             0,
@@ -108,7 +109,7 @@ def start(request):
                     viewmodels.Button.link(
                         classes="btn-text btn-link",
                         text=_("eligibility.pages.start.oauth.link_text[2]"),
-                        url=oauth_help_link,
+                        url=oauth_help_more_link,
                         rel="noopener noreferrer",
                     ),
                 ],
