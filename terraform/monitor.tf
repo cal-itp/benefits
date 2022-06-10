@@ -8,6 +8,20 @@ resource "azurerm_log_analytics_workspace" "main" {
   }
 }
 
+resource "azurerm_application_insights" "dev" {
+  name             = "aI-cdt-pub-vip-calitp-p-001-dev"
+  application_type = "web"
+  location         = data.azurerm_resource_group.prod.location
+  # for matching the value created outside of Terraform
+  resource_group_name = lower(data.azurerm_resource_group.prod.name)
+  sampling_percentage = 0
+  workspace_id        = azurerm_log_analytics_workspace.main.id
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
+}
+
 resource "azurerm_application_insights" "prod" {
   name                = "AI-CDT-PUB-VIP-CALITP-P-001"
   application_type    = "web"
