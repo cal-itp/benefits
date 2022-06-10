@@ -3,8 +3,6 @@ import pytest
 from benefits.eligibility.api import get_verified_types
 from benefits.eligibility.forms import EligibilityVerificationForm
 
-from tests.pytest.conftest import set_verifier
-
 
 @pytest.fixture
 def form(mocker):
@@ -16,9 +14,8 @@ def mock_api_client_verify(mocker, response):
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier")
 def test_get_verified_types_error(mocker, app_request, form):
-    set_verifier(mocker)
-
     api_errors = {"name": "Name error"}
     api_response = mocker.Mock(error=api_errors)
 
@@ -31,9 +28,8 @@ def test_get_verified_types_error(mocker, app_request, form):
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier")
 def test_get_verified_types_verified_types(mocker, app_request, form):
-    set_verifier(mocker)
-
     verified_types = ["type1", "type2"]
     api_response = mocker.Mock(eligibility=verified_types, error=None)
 
@@ -46,9 +42,8 @@ def test_get_verified_types_verified_types(mocker, app_request, form):
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier")
 def test_get_verified_types_no_verified_types(mocker, app_request, form):
-    set_verifier(mocker)
-
     verified_types = []
     api_response = mocker.Mock(eligibility=verified_types, error=None)
 
