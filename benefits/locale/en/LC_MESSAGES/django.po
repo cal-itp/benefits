@@ -387,6 +387,15 @@ msgstr "Learn more about Login.gov"
 msgid "eligibility.pages.start.oauth.link_text[2]"
 msgstr "Don’t have access to these items?"
 
+msgid "eligibility.pages.start.oauth.required_items[0]"
+msgstr "Your state-issued ID card"
+
+msgid "eligibility.pages.start.oauth.required_items[1]"
+msgstr "Your Social Security number"
+
+msgid "eligibility.pages.start.oauth.required_items[2]"
+msgstr "Don’t have access to these items?"
+
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
 msgstr "Get started with"

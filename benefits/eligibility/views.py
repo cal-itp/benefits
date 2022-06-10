@@ -112,6 +112,11 @@ def start(request):
                         rel="noopener noreferrer",
                     ),
                 ],
+                bullets=[
+                    _("eligibility.pages.start.oauth.required_items[0]"),
+                    _("eligibility.pages.start.oauth.required_items[1]"),
+                    _("eligibility.pages.start.oauth.required_items[2]"),
+                ],
             ),
         )
 

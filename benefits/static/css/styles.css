@@ -305,11 +305,25 @@ footer.global-footer .footer-links a:active {
   line-height: 26.1px;
 }
 
+.media-list .media .media-body--details p {
+  margin-bottom: 12px;
+}
+
+.media-list .media .media-body--items {
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  line-height: 26.1px;
+}
+
+.media-list .media .media-body--items li {
+  list-style-type: disc;
+}
+
 .media-list .media .media-body .media-body--links .btn-lg {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 20px;
   letter-spacing: 0.05em;
-  padding: 0;
+  padding: 0 0 6px 0;
   text-align: left;
   width: 100%;
   margin: 0;

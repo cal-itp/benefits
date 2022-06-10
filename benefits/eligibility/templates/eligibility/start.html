@@ -31,7 +31,14 @@
                             <span>{{ item.heading }}</span>
                         </div>
                         <div class="media-body--details">
-                            {{ item.details }}
+                            <p>{{ item.details }}</p>
+                            <div class="media-body--items">
+                                <ul>
+                                    {% for l in item.bullets %}
+                                        <li>{{ l }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         </div>
                         <div class="media-body--links">
                             {% for l in item.links %}
