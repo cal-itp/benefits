@@ -278,6 +278,9 @@ msgstr "You will need your California driver’s license or ID "
 msgid "core.pages.agency_index.p[2]"
 msgstr "The Cal-ITP Benefits program is currently only open to those <strong>ages 65 or older</strong>."
 
+msgid "core.pages.agency_index.p[3]"
+msgstr "Connect your bank card to your public transit discount with Cal-ITP Benefits."
+
 msgid "core.pages.agency_index.button.label"
 msgstr "Connect your bank card to your discount today!"
 
@@ -308,6 +311,9 @@ msgstr ""
 msgctxt "image alt text"
 msgid "core.icons.bankcard"
 msgstr "Bank card icon with contactless symbol"
+
+msgid "core.pages.start.headline"
+msgstr "Connect your bank card to your public transit discount with Cal-ITP Benefits."
 
 #: benefits/eligibility/forms.py:37
 msgid "eligibility.forms.confirm.submit"
@@ -357,7 +363,7 @@ msgstr "Your bank card details"
 
 #: benefits/eligibility/views.py:75
 msgid "eligibility.pages.start.bankcard.text"
-msgstr "Must be a contactless debit or credit card by Visa or Mastercard."
+msgstr "Your card must be a contactless debit or credit card by Visa or Mastercard."
 
 msgid "eligibility.pages.start.bankcard.button[0].link"
 msgstr "Don’t have a bank card?"
@@ -377,6 +383,9 @@ msgstr "Login.gov is a safe way to sign in to government services. If you do not
 
 msgid "eligibility.pages.start.oauth.link_text"
 msgstr "Learn more about Login.gov"
+
+msgid "eligibility.pages.start.oauth.link_text[2]"
+msgstr "Don’t have access to these items?"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"

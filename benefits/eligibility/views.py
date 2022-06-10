@@ -104,7 +104,13 @@ def start(request):
                         text=_("eligibility.pages.start.oauth.link_text"),
                         url=oauth_help_link,
                         rel="noopener noreferrer",
-                    )
+                    ),
+                    viewmodels.Button.link(
+                        classes="btn-text btn-link",
+                        text=_("eligibility.pages.start.oauth.link_text[2]"),
+                        url=oauth_help_link,
+                        rel="noopener noreferrer",
+                    ),
                 ],
             ),
         )

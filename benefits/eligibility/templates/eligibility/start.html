@@ -1,5 +1,5 @@
 {% extends "core/page.html" %}
-
+{% load i18n %}
 {% block classes %}
     {{ block.super |add:" eligibility-start"}}
 {% endblock %}
@@ -10,11 +10,11 @@
         {{ block.super }}
     {% endblock %}
 
-    <h1 style="font-size: 35px; line-height: 52.5px; letter-spacing: 0.05; text-align: center; margin-bottom: 60px;">Connect your bank card to your public transit discount with Cal-ITP Benefits.</h1>
+    <h1 style="font-size: 35px; line-height: 52.5px; letter-spacing: 0.05; text-align: center; margin-bottom: 60px;">{% translate "core.pages.agency_index.p[3]" %}</h1>
 
-    <p>You can tap your credit or debit card when you board and your discount will automatically apply every time you ride. Learn more about Cal-ITP Benefits.</p>
+    <p>{% blocktranslate with info_link=info_link%}core.pages.agency_index.p[0]{{ info_link }}{% endblocktranslate %}</p>
 
-    <p>The Cal-ITP Benefits program is currently only open to those ages 65 or older.</p>
+    <p>{% translate "core.pages.agency_index.p[2]" %}</p>
 
     <h1 class="media-title" style="margin-top: 60px;">{{title}}</h1>
 
