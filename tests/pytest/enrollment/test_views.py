@@ -6,7 +6,9 @@ import pytest
 
 
 ROUTE_INDEX = "enrollment:index"
+ROUTE_RETRY = "enrollment:retry"
 ROUTE_TOKEN = "enrollment:token"
+TEMPLATE_RETRY = "enrollment/retry.html"
 
 
 @pytest.mark.django_db
@@ -66,3 +68,40 @@ def test_index_ineligible(client):
     path = reverse(ROUTE_INDEX)
     with pytest.raises(AttributeError, match=r"eligibility"):
         client.get(path)
+
+
+@pytest.mark.django_db
+def test_retry_ineligible(client):
+    path = reverse(ROUTE_RETRY)
+    with pytest.raises(AttributeError, match=r"eligibility"):
+        client.post(path)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_eligibility")
+def test_retry_get(client):
+    path = reverse(ROUTE_RETRY)
+    with pytest.raises(Exception, match=r"POST"):
+        client.get(path)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_eligibility")
+def test_retry_invalid_form(mocker, client):
+    mocker.patch("benefits.enrollment.views.forms.CardTokenizeFailForm.is_valid", return_value=False)
+
+    path = reverse(ROUTE_RETRY)
+    with pytest.raises(Exception, match=r"Invalid"):
+        client.post(path)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_retry_valid_form(mocker, client):
+    mocker.patch("benefits.enrollment.views.forms.CardTokenizeFailForm.is_valid", return_value=True)
+
+    path = reverse(ROUTE_RETRY)
+    response = client.post(path)
+
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_RETRY
