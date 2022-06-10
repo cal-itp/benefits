@@ -1,7 +1,7 @@
 resource "azurerm_key_vault" "main" {
   name                = "KV-CDT-PUB-CALITP-P-001"
-  location            = data.azurerm_resource_group.benefits.location
-  resource_group_name = data.azurerm_resource_group.benefits.name
+  location            = data.azurerm_resource_group.prod.location
+  resource_group_name = data.azurerm_resource_group.prod.name
   sku_name            = "standard"
   tenant_id           = data.azurerm_client_config.current.tenant_id
 
