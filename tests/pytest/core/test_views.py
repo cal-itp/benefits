@@ -36,7 +36,7 @@ def test_homepage_single_agency_single_verifier(mocker, client):
     # https://docs.djangoproject.com/en/3.2/topics/testing/tools/#making-requests
     assert response.redirect_chain[0] == ("/deftl", 302)
     assert response.redirect_chain[1] == ("/eligibility/", 302)
-    assert response.redirect_chain[2] == ("/eligibility/start", 302)
+    assert response.redirect_chain[-1] == ("/eligibility/start", 302)
 
 
 @pytest.mark.django_db
