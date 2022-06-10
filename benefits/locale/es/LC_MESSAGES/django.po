@@ -262,6 +262,9 @@ msgstr "Necesitará su licencia de conducir o tarjeta de identificación de Cali
 msgid "core.pages.agency_index.p[2]"
 msgstr "El programa de beneficios de Cal-ITP actualmente solo está abierto a personas de 65 años o más."
 
+msgid "core.pages.agency_index.p[3]"
+msgstr "TODO: Connect your bank card to your public transit discount with Cal-ITP Benefits."
+
 msgid "core.pages.agency_index.button.label"
 msgstr "¡Conecta tu tarjeta bancaria a tu descuento hoy!"
 
@@ -292,6 +295,9 @@ msgstr ""
 msgctxt "image alt text"
 msgid "core.icons.bankcard"
 msgstr "Icono de tarjeta bancaria"
+
+msgid "core.pages.start.headline"
+msgstr "TODO: Connect your bank card to your public transit discount with Cal-ITP Benefits."
 
 #: benefits/eligibility/forms.py:37
 msgid "eligibility.forms.confirm.submit"
@@ -362,6 +368,18 @@ msgstr "Login.gov es una forma segura de iniciar sesión en los servicios gubern
 
 msgid "eligibility.pages.start.oauth.link_text"
 msgstr "Conozca más sobre Login.gov"
+
+msgid "eligibility.pages.start.oauth.link_text[2]"
+msgstr "TODO: Don’t have access to these items?"
+
+msgid "eligibility.pages.start.oauth.required_items[0]"
+msgstr "TODO: Your state-issued ID card"
+
+msgid "eligibility.pages.start.oauth.required_items[1]"
+msgstr "TODO: Your Social Security number"
+
+msgid "eligibility.pages.start.oauth.required_items[2]"
+msgstr "TODO: Don’t have access to these items?"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
