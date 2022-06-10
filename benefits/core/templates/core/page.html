@@ -9,15 +9,14 @@
 {% endif %}
 
 {% block main_content %}
-<div class="container-fluid">
-    <div class="row main-row">
+<div class="main-row">
+    <div class="main-image"></div>
+    <div class="row">
         {% if page.noimage %}
         <div class="container">
         {% else %}
         {% load static %}
-        <div class="col-lg-6 image">
-        </div>
-        <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-0">
+        <div class="container">
         {% endif %}
             <div class="container content">
             {% block container_content %}

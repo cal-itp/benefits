@@ -353,7 +353,7 @@ msgstr "Computer monitor with checkmark"
 
 #: benefits/eligibility/views.py:74
 msgid "eligibility.pages.start.bankcard.title"
-msgstr "Provide your bank card details"
+msgstr "Your bank card details"
 
 #: benefits/eligibility/views.py:75
 msgid "eligibility.pages.start.bankcard.text"
@@ -370,17 +370,17 @@ msgid "eligibility.buttons.continue"
 msgstr "Continue"
 
 msgid "eligibility.pages.start.oauth.heading"
-msgstr "Sign in to Login.gov"
+msgstr "A Login.gov account with identity verification"
 
 msgid "eligibility.pages.start.oauth.details"
-msgstr "Login.gov is a safe way to sign in to government services."
+msgstr "Login.gov is a safe way to sign in to government services. If you do not have an account already, you will be able to create one. You will also need to provide proof of your identity. Some of the items you can use to do that include:"
 
 msgid "eligibility.pages.start.oauth.link_text"
 msgstr "Learn more about Login.gov"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
-msgstr "Create an account or sign in with"
+msgstr "Get started with"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signout"
@@ -511,7 +511,7 @@ msgid "eligibility.forms.confirm.dmv.fields.name"
 msgstr "Last name (as it appears on ID)"
 
 msgid "eligibility.pages.start.dmv.content_title"
-msgstr "There are three steps to link your transit discount to your bank card."
+msgstr "You will need a few items to connect your discount:"
 
 msgid "eligibility.pages.start.dmv.p[0]"
 msgstr ""
