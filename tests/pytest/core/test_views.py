@@ -30,15 +30,13 @@ def test_homepage_single_agency_single_verifier(mocker, client):
     agencies = TransitAgency.all_active()[1:]
     mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=agencies)
 
-    assert len(agencies) == 1
-    assert len(agencies[0].eligibility_verifiers.all()) == 1
+    response = client.get(reverse("core:index"), follow=True)
 
-    path = reverse("core:index")
-    response = client.get(path)
-
-    assert response.status_code == 302
-    assert response.url == reverse("eligibility:start")
-    # assert response.url == agencies[0].index_url
+    # Setting follow to True allows the test to go thorugh redirects and returns the redirect_chain attr
+    # https://docs.djangoproject.com/en/3.2/topics/testing/tools/#making-requests
+    assert response.redirect_chain[0] == ("/deftl", 302)
+    assert response.redirect_chain[1] == ("/eligibility/", 302)
+    assert response.redirect_chain[2] == ("/eligibility/start", 302)
 
 
 @pytest.mark.django_db
