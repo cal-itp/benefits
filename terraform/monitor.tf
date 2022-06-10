@@ -1,3 +1,26 @@
+resource "azurerm_log_analytics_workspace" "main" {
+  name                = "CDT-OET-PUB-CALITP-P-001"
+  location            = data.azurerm_resource_group.benefits.location
+  resource_group_name = data.azurerm_resource_group.benefits.name
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
+}
+
+resource "azurerm_application_insights" "prod" {
+  name                = "AI-CDT-PUB-VIP-CALITP-P-001"
+  application_type    = "web"
+  location            = data.azurerm_resource_group.benefits.location
+  resource_group_name = data.azurerm_resource_group.benefits.name
+  sampling_percentage = 0
+  workspace_id        = azurerm_log_analytics_workspace.main.id
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
+}
+
 # created manually
 # https://slack.com/help/articles/206819278-Send-emails-to-Slack
 data "azurerm_key_vault_secret" "slack_benefits_notify_email" {
