@@ -38,6 +38,13 @@ def mocked_eligibility_auth_request(mocked_eligibility_request_session, mocked_s
     pass
 
 
+@pytest.fixture(autouse=True)
+def disable_rate_limit(mocker):
+    # override session rate limit handling for all tests
+    mock_settings = mocker.patch("benefits.core.middleware.settings")
+    mock_settings.RATE_LIMIT_ENABLED = False
+
+
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency")
 def test_index_with_agency(client):
