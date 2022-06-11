@@ -79,27 +79,38 @@ def first_agency():
 
 
 @pytest.fixture
-def mocked_session_agency(mocker, first_agency):
-    mocker.patch("benefits.core.session.agency", autospec=True, return_value=first_agency)
-    return first_agency
-
-
-@pytest.fixture
-def mocked_session_eligibility(mocker, mocked_session_agency):
-    eligibility = mocked_session_agency.eligibility_types.first()
+def first_eligibility(first_agency):
+    eligibility = first_agency.eligibility_types.first()
     assert eligibility
-    mocker.patch("benefits.core.session.eligibility", autospec=True, return_value=eligibility)
     return eligibility
 
 
 @pytest.fixture
-def mocked_session_verifier(mocker, mocked_session_agency):
-    mock = mocker.patch("benefits.core.session.verifier", autospec=True)
-    verifier = mocked_session_agency.eligibility_verifiers.first()
+def first_verifier(first_agency):
+    verifier = first_agency.eligibility_verifiers.first()
     assert verifier
-    mocker.patch.object(verifier, "api_url", "http://localhost/verify")
-    mock.return_value = verifier
-    return (mocked_session_agency, verifier)
+    return verifier
+
+
+@pytest.fixture
+def mocked_session_agency(mocker, first_agency):
+    return mocker.patch("benefits.core.session.agency", autospec=True, return_value=first_agency)
+
+
+@pytest.fixture
+def mocked_session_eligibility(mocker, first_eligibility):
+    mocker.patch("benefits.core.session.eligible", autospec=True, return_value=True)
+    return mocker.patch("benefits.core.session.eligibility", autospec=True, return_value=first_eligibility)
+
+
+@pytest.fixture
+def mocked_session_oauth_token(mocker):
+    return mocker.patch("benefits.core.session.oauth_token", autospec=True, return_value="token")
+
+
+@pytest.fixture
+def mocked_session_verifier(mocker, first_verifier):
+    return mocker.patch("benefits.core.session.verifier", autospec=True, return_value=first_verifier)
 
 
 @pytest.fixture

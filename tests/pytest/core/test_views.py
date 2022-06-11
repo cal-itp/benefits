@@ -50,4 +50,7 @@ def test_help_with_agency(mocked_session_agency, client):
     path = reverse("core:help")
     response = client.get(path)
     assert response.status_code == 200
-    assert mocked_session_agency.long_name in str(response.content)
+    # mocked_session_agency is Mocked version of the session.agency() function
+    # call it (with a None request) to return the sample agency
+    agency = mocked_session_agency(None)
+    assert agency.long_name in str(response.content)
