@@ -10,15 +10,6 @@ def form(mocker):
 
 
 @pytest.fixture
-def mocked_eligibility_request_session(mocked_session_agency, mocked_session_verifier):
-    """
-    Stub fixture combines mocked_session_agency and mocked_session_verifier
-    so session behaves like in normal request to the "eligibility" app
-    """
-    pass
-
-
-@pytest.fixture
 def mock_api_client_verify(mocker):
     return mocker.patch("benefits.eligibility.api.Client.verify")
 

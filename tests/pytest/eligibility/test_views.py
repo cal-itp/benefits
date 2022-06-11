@@ -2,9 +2,8 @@ from django.urls import reverse
 
 import pytest
 
-from benefits.core import session
-from benefits.eligibility.views import confirm
 import benefits.eligibility.views
+from benefits.eligibility.forms import EligibilityVerifierSelectionForm
 
 
 ROUTE_INDEX = "eligibility:index"
@@ -16,33 +15,27 @@ TEMPLATE_UNVERIFIED = "eligibility/unverified.html"
 
 
 @pytest.fixture
+def form_data():
+    return {"sub": "A1234567", "name": "Person"}
+
+
+@pytest.fixture
+def invalid_form_data():
+    return {"invalid": "data"}
+
+
+@pytest.fixture
 def mocked_analytics_module(mocked_analytics_module):
     return mocked_analytics_module(benefits.eligibility.views)
 
 
 @pytest.fixture
-def mocked_oauth_token_request(mocker, app_request):
-    mocker.patch("benefits.core.session.oauth_token", autospec=True, return_value="token")
-    assert session.logged_in(app_request)
-    return app_request
-
-
-@pytest.fixture
-def mocked_confirm_request_invalid_form(mocked_oauth_token_request):
-    mocked_oauth_token_request.method = "POST"
-    return mocked_oauth_token_request
-
-
-@pytest.fixture
-def mocked_confirm_request_valid_form(mocked_confirm_request_invalid_form):
-    mocked_confirm_request_invalid_form.POST = {"sub": "A1234567", "name": "Person"}
-    return mocked_confirm_request_invalid_form
-
-
-@pytest.fixture
-def mocked_eligibile_request(mocked_oauth_token_request, mocked_session_eligibility):
-    assert session.eligibility(mocked_oauth_token_request) == mocked_session_eligibility
-    return mocked_oauth_token_request
+def mocked_eligibility_auth_request(mocked_eligibility_request_session, mocked_session_oauth_token):
+    """
+    Stub fixture combines mocked_eligibility_request_session and mocked_session_oauth_token
+    so that session behaves like in an authenticated request to the eligibility app
+    """
+    pass
 
 
 @pytest.mark.django_db
@@ -61,8 +54,11 @@ def test_index_without_agency(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier")
-def test_start_with_verifier(client):
+@pytest.mark.usefixtures("mocked_eligibility_request_session")
+def test_start_with_verifier(mocker, client):
+    mock_form = mocker.Mock(spec=EligibilityVerifierSelectionForm)
+    mocker.patch("benefits.eligibility.views.forms.EligibilityVerifierSelectionForm", return_value=mock_form)
+
     path = reverse(ROUTE_START)
     response = client.get(path)
     assert response.status_code == 200
@@ -77,18 +73,20 @@ def test_start_without_verifier(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier")
-def test_confirm_get_unverified(mocked_oauth_token_request):
-    response = confirm(mocked_oauth_token_request)
+@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+def test_confirm_get_unverified(client):
+    path = reverse(ROUTE_CONFIRM)
+    response = client.get(path)
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_CONFIRM
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier")
-def test_confirm_get_verified(mocked_eligibile_request, mocked_session_update):
-    response = confirm(mocked_eligibile_request)
+@pytest.mark.usefixtures("mocked_eligibility_auth_request", "mocked_session_eligibility")
+def test_confirm_get_verified(client, mocked_session_update):
+    path = reverse(ROUTE_CONFIRM)
+    response = client.get(path)
 
     assert response.status_code == 302
     assert response.url == reverse(ROUTE_ENROLLMENT)
@@ -96,9 +94,10 @@ def test_confirm_get_verified(mocked_eligibile_request, mocked_session_update):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier")
-def test_confirm_post_invalid_form(mocked_confirm_request_invalid_form, mocked_analytics_module):
-    response = confirm(mocked_confirm_request_invalid_form)
+@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+def test_confirm_post_invalid_form(client, invalid_form_data, mocked_analytics_module):
+    path = reverse(ROUTE_CONFIRM)
+    response = client.post(path, invalid_form_data)
 
     mocked_analytics_module.started_eligibility.assert_called_once()
     assert response.status_code == 200
@@ -106,22 +105,26 @@ def test_confirm_post_invalid_form(mocked_confirm_request_invalid_form, mocked_a
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier")
-def test_confirm_post_recaptcha_fail(mocker, mocked_confirm_request_invalid_form, mocked_analytics_module):
+@pytest.mark.usefixtures("mocked_analytics_module", "mocked_eligibility_auth_request")
+def test_confirm_post_recaptcha_fail(mocker, client, invalid_form_data):
     mocker.patch("benefits.eligibility.views.recaptcha.has_error", return_value=True)
     messages = mocker.spy(benefits.eligibility.views, "messages")
 
-    confirm(mocked_confirm_request_invalid_form)
+    path = reverse(ROUTE_CONFIRM)
+    response = client.post(path, invalid_form_data)
 
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_CONFIRM
     messages.error.assert_called_once()
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier")
-def test_confirm_post_valid_form_eligibility_error(mocker, mocked_confirm_request_valid_form, mocked_analytics_module):
+@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+def test_confirm_post_valid_form_eligibility_error(mocker, client, form_data, mocked_analytics_module):
     mocker.patch("benefits.eligibility.views.api.get_verified_types", return_value=None)
 
-    response = confirm(mocked_confirm_request_valid_form)
+    path = reverse(ROUTE_CONFIRM)
+    response = client.post(path, form_data)
 
     mocked_analytics_module.returned_error.assert_called_once()
     assert response.status_code == 200
@@ -129,11 +132,12 @@ def test_confirm_post_valid_form_eligibility_error(mocker, mocked_confirm_reques
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier")
-def test_confirm_post_valid_form_eligibility_unverified(mocker, mocked_confirm_request_valid_form, mocked_analytics_module):
+@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+def test_confirm_post_valid_form_eligibility_unverified(mocker, client, form_data, mocked_analytics_module):
     mocker.patch("benefits.eligibility.views.api.get_verified_types", return_value=[])
 
-    response = confirm(mocked_confirm_request_valid_form)
+    path = reverse(ROUTE_CONFIRM)
+    response = client.post(path, form_data)
 
     mocked_analytics_module.returned_fail.assert_called_once()
     assert response.status_code == 200
@@ -141,13 +145,17 @@ def test_confirm_post_valid_form_eligibility_unverified(mocker, mocked_confirm_r
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier")
+@pytest.mark.usefixtures("mocked_eligibility_auth_request")
 def test_confirm_post_valid_form_eligibility_verified(
-    mocker, mocked_confirm_request_valid_form, mocked_session_eligibility, mocked_session_update, mocked_analytics_module
+    mocker, client, form_data, mocked_session_eligibility, mocked_session_update, mocked_analytics_module
 ):
-    mocker.patch("benefits.eligibility.views.api.get_verified_types", return_value=[mocked_session_eligibility])
+    # mocked_session_eligibility is a fixture that mocks benefits.core.session.eligibility(request)
+    # call it here, passing a None request, to get the return value from the mock
+    eligibility = mocked_session_eligibility(None)
+    mocker.patch("benefits.eligibility.views.api.get_verified_types", return_value=[eligibility])
 
-    response = confirm(mocked_confirm_request_valid_form)
+    path = reverse(ROUTE_CONFIRM)
+    response = client.post(path, form_data)
 
     mocked_session_update.assert_called_once()
     mocked_analytics_module.returned_success.assert_called_once()
