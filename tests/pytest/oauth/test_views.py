@@ -27,6 +27,11 @@ def mocked_oauth_client(mocker):
     return mocker.patch.object(benefits.oauth.views, "oauth_client", return_value=HttpResponse("authorize redirect"))
 
 
+@pytest.fixture
+def no_oauth_client(mocker):
+    return mocker.patch("benefits.oauth.views.oauth_client", False)
+
+
 @pytest.mark.usefixtures("mocked_analytics_module")
 def test_login(mocked_oauth_client, app_request):
     assert not session.logged_in(app_request)
@@ -35,6 +40,13 @@ def test_login(mocked_oauth_client, app_request):
 
     mocked_oauth_client.authorize_redirect.assert_called_with(app_request, "https://testserver/oauth/authorize")
     assert not session.logged_in(app_request)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("no_oauth_client")
+def test_login_no_oauth_client(app_request):
+    with pytest.raises(Exception, match=r"client"):
+        login(app_request)
 
 
 @pytest.mark.usefixtures("mocked_oauth_client")
@@ -76,6 +88,13 @@ def test_authorize_analytics(mocked_analytics_module, mocked_oauth_client, app_r
     authorize(app_request)
 
     mocked_analytics_module.finished_sign_in.assert_called_once()
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("no_oauth_client")
+def test_authorize_no_oauth_client(app_request):
+    with pytest.raises(Exception, match=r"client"):
+        authorize(app_request)
 
 
 @pytest.mark.usefixtures("mocked_analytics_module")
@@ -142,6 +161,13 @@ def test_deauthorize_redirect(mocked_oauth_client):
         result.url
         == "https://server/endsession?id_token_hint=token&post_logout_redirect_uri=https%3A%2F%2Flocalhost%2Fredirect_uri"
     )
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("no_oauth_client")
+def test_deauthorize_redirect_no_oauth_client(mocker):
+    with pytest.raises(Exception, match=r"client"):
+        _deauthorize_redirect("token", "https://localhost/redirect_uri")
 
 
 def test_generate_redirect_uri_default(rf):
