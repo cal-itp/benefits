@@ -24,21 +24,6 @@ def invalid_form_data():
     return {"invalid": "data"}
 
 
-@pytest.fixture
-def mocked_session_verifier_auth_required(mocker, first_verifier, mocked_session_verifier):
-    mock_verifier = mocker.Mock(spec=first_verifier)
-    mock_verifier.requires_authentication = True
-    mocked_session_verifier.return_value = mock_verifier
-    return mocked_session_verifier
-
-
-@pytest.fixture
-def mocked_session_verifier_auth_not_required(mocked_session_verifier_auth_required):
-    # mocked_session_verifier_auth_required.return_value is the Mock(spec=first_verifier) from that fixture
-    mocked_session_verifier_auth_required.return_value.requires_authentication = False
-    return mocked_session_verifier_auth_required
-
-
 @pytest.mark.django_db
 def test_token_ineligibile(client):
     path = reverse(ROUTE_TOKEN)
