@@ -8,6 +8,7 @@ from benefits.eligibility.forms import EligibilityVerifierSelectionForm
 
 ROUTE_INDEX = "eligibility:index"
 ROUTE_START = "eligibility:start"
+ROUTE_LOGIN = "oauth:login"
 ROUTE_CONFIRM = "eligibility:confirm"
 ROUTE_ENROLLMENT = "enrollment:index"
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
@@ -38,6 +39,12 @@ def mocked_eligibility_auth_request(mocked_eligibility_request_session, mocked_s
     pass
 
 
+@pytest.fixture
+def mocked_verifier_form(mocker):
+    mock_form = mocker.Mock(spec=EligibilityVerifierSelectionForm)
+    mocker.patch("benefits.eligibility.views.forms.EligibilityVerifierSelectionForm", return_value=mock_form)
+
+
 @pytest.fixture(autouse=True)
 def disable_rate_limit(mocker):
     # override session rate limit handling for all tests
@@ -61,14 +68,56 @@ def test_index_without_agency(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_request_session")
-def test_start_with_verifier(mocker, client):
-    mock_form = mocker.Mock(spec=EligibilityVerifierSelectionForm)
-    mocker.patch("benefits.eligibility.views.forms.EligibilityVerifierSelectionForm", return_value=mock_form)
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_form", "mocked_session_verifier_auth_required")
+def test_start_verifier_auth_required_no_oauth_client(mocker, client):
+    mock_settings = mocker.patch("benefits.eligibility.views.settings")
+    mock_settings.OAUTH_CLIENT_NAME = None
+
+    path = reverse(ROUTE_START)
+    with pytest.raises(Exception, match=r"OAUTH_CLIENT_NAME"):
+        client.get(path)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_form", "mocked_session_verifier_auth_required")
+def test_start_verifier_auth_required_logged_in(mocker, client):
+    mock_session = mocker.patch("benefits.eligibility.views.session")
+    mock_session.logged_in.return_value = True
 
     path = reverse(ROUTE_START)
     response = client.get(path)
+
     assert response.status_code == 200
+    assert "page" in response.context_data
+    assert len(response.context_data["page"].buttons) == 1
+    assert response.context_data["page"].buttons[0].url == reverse(ROUTE_CONFIRM)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_form", "mocked_session_verifier_auth_required")
+def test_start_verifier_auth_required_not_logged_in(mocker, client):
+    mock_session = mocker.patch("benefits.eligibility.views.session")
+    mock_session.logged_in.return_value = False
+
+    path = reverse(ROUTE_START)
+    response = client.get(path)
+
+    assert response.status_code == 200
+    assert "page" in response.context_data
+    assert len(response.context_data["page"].buttons) == 1
+    assert response.context_data["page"].buttons[0].url == reverse(ROUTE_LOGIN)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_form", "mocked_session_verifier_auth_not_required")
+def test_start_verifier_auth_not_required(client):
+    path = reverse(ROUTE_START)
+    response = client.get(path)
+
+    assert response.status_code == 200
+    assert "page" in response.context_data
+    assert len(response.context_data["page"].buttons) == 1
+    assert response.context_data["page"].buttons[0].url == reverse(ROUTE_CONFIRM)
 
 
 @pytest.mark.django_db
