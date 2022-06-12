@@ -15,16 +15,16 @@ def decorated_view(mocked_view):
     return decorator_from_middleware(LoginRequired)(mocked_view)
 
 
-def require_login(request):
-    verifier = EligibilityVerifier.objects.filter(auth_provider__isnull=False).first()
-    assert verifier
-    assert verifier.requires_authentication
-    session.update(request, verifier=verifier)
+@pytest.fixture
+def require_login(mocker):
+    mock_verifier = mocker.Mock(spec=EligibilityVerifier)
+    mock_verifier.requires_authentication = True
+    mocker.patch("benefits.core.session.verifier", return_value=mock_verifier)
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("require_login")
 def test_login_auth_required(app_request, mocked_view, decorated_view):
-    require_login(app_request)
     response = decorated_view(app_request)
 
     mocked_view.assert_not_called()
@@ -46,9 +46,8 @@ def test_login_auth_not_required(app_request, mocked_view, decorated_view):
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("require_login")
 def test_logged_in(app_request, mocked_view, decorated_view):
-    require_login(app_request)
-
     # log in
     session.update(app_request, oauth_token="something")
 
