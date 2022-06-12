@@ -4,6 +4,7 @@ import pytest
 
 from benefits.core.models import TransitAgency
 import benefits.core.session
+from benefits.core.views import bad_request, csrf_failure
 
 
 ROUTE_INDEX = "core:index"
@@ -15,6 +16,15 @@ TEMPLATE_AGENCY = "core/agency_index.html"
 @pytest.fixture
 def session_reset_spy(mocker):
     return mocker.spy(benefits.core.session, "reset")
+
+
+@pytest.fixture
+def mocked_active_agency(mocker):
+    mock_agency = mocker.Mock()
+    mock_agency.index_url = "/agency"
+    mocker.patch("benefits.core.session.agency", return_value=mock_agency)
+    mocker.patch("benefits.core.session.active_agency", return_value=True)
+    return mock_agency
 
 
 @pytest.mark.django_db
@@ -88,27 +98,56 @@ def test_help_with_session_agency(mocked_session_agency, client):
 
 
 @pytest.mark.django_db
-def test_not_found_active_agency(mocker, client):
-    mock_agency = mocker.Mock()
-    mock_agency.index_url = "/agency"
-    mocker.patch("benefits.core.session.agency", return_value=mock_agency)
-    mocker.patch("benefits.core.session.active_agency", return_value=True)
-    spy_session_update = mocker.spy(benefits.core.session, "update")
+def test_bad_request_active_agency(app_request, mocked_active_agency, mocked_session_update):
+    response = bad_request(app_request, Exception())
 
-    response = client.get("/not-found")
-
-    assert response.status_code == 404
-    assert "origin" in spy_session_update.call_args.kwargs
-    assert spy_session_update.call_args.kwargs["origin"] == mock_agency.index_url
+    assert response.status_code == 400
+    assert "origin" in mocked_session_update.call_args.kwargs
+    assert mocked_session_update.call_args.kwargs["origin"] == mocked_active_agency.index_url
 
 
 @pytest.mark.django_db
-def test_not_found_no_active_agency(mocker, client):
+def test_bad_request_no_active_agency(app_request, mocked_session_update):
+    response = bad_request(app_request, Exception())
+
+    assert response.status_code == 400
+    assert "origin" in mocked_session_update.call_args.kwargs
+    assert mocked_session_update.call_args.kwargs["origin"] == reverse(ROUTE_INDEX)
+
+
+@pytest.mark.django_db
+def test_csrf_failure_active_agency(app_request, mocked_active_agency, mocked_session_update):
+    response = csrf_failure(app_request, "reason")
+
+    assert response.status_code == 404
+    assert "origin" in mocked_session_update.call_args.kwargs
+    assert mocked_session_update.call_args.kwargs["origin"] == mocked_active_agency.index_url
+
+
+@pytest.mark.django_db
+def test_csrf_failure_no_active_agency(app_request, mocked_session_update):
+    response = csrf_failure(app_request, "reason")
+
+    assert response.status_code == 404
+    assert "origin" in mocked_session_update.call_args.kwargs
+    assert mocked_session_update.call_args.kwargs["origin"] == reverse(ROUTE_INDEX)
+
+
+@pytest.mark.django_db
+def test_not_found_active_agency(mocker, client, mocked_active_agency, mocked_session_update):
+    response = client.get("/not-found")
+
+    assert response.status_code == 404
+    assert "origin" in mocked_session_update.call_args.kwargs
+    assert mocked_session_update.call_args.kwargs["origin"] == mocked_active_agency.index_url
+
+
+@pytest.mark.django_db
+def test_not_found_no_active_agency(mocker, client, mocked_session_update):
     mocker.patch("benefits.core.session.active_agency", return_value=False)
-    spy_session_update = mocker.spy(benefits.core.session, "update")
 
     response = client.get("/not-found")
 
     assert response.status_code == 404
-    assert "origin" in spy_session_update.call_args.kwargs
-    assert spy_session_update.call_args.kwargs["origin"] == reverse("core:index")
+    assert "origin" in mocked_session_update.call_args.kwargs
+    assert mocked_session_update.call_args.kwargs["origin"] == reverse(ROUTE_INDEX)
