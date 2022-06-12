@@ -45,10 +45,7 @@ def index(request):
             raise Exception("Invalid card token form")
 
         eligibility = session.eligibility(request)
-        if eligibility:
-            logger.debug(f"Session contains an {models.EligibilityType.__name__}")
-        else:
-            raise Exception("Session contains no eligibility information")
+        logger.debug(f"Session contains an {models.EligibilityType.__name__}")
 
         logger.debug("Read tokenized card")
         card_token = form.cleaned_data.get("card_token")

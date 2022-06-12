@@ -9,8 +9,19 @@ ROUTE_INDEX = "enrollment:index"
 ROUTE_RETRY = "enrollment:retry"
 ROUTE_SUCCESS = "enrollment:success"
 ROUTE_TOKEN = "enrollment:token"
+TEMPLATE_INDEX = "enrollment/index.html"
 TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SUCCESS = "enrollment/success.html"
+
+
+@pytest.fixture
+def card_tokenize_form_data():
+    return {"card_token": "tokenized_card"}
+
+
+@pytest.fixture
+def invalid_form_data():
+    return {"invalid": "data"}
 
 
 @pytest.fixture
@@ -72,10 +83,53 @@ def test_token_valid(mocker, client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
-def test_index_eligible(client):
+def test_index_eligible_get(client):
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
+
     assert response.status_code == 200
+    assert response.template_name == TEMPLATE_INDEX
+    assert "page" in response.context_data
+    assert "payment_processor" in response.context_data
+    assert "forms" in response.context_data
+    assert "tokenize_retry" in response.context_data["forms"]
+    assert "tokenize_success" in response.context_data["forms"]
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_index_eligible_post_invalid_form(client, invalid_form_data):
+    path = reverse(ROUTE_INDEX)
+
+    with pytest.raises(Exception, match=r"form"):
+        client.post(path, invalid_form_data)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_index_eligible_post_valid_form_failure(mocker, client, card_tokenize_form_data):
+    mock_response = mocker.Mock()
+    mock_response.success = False
+    mock_response.message = "Mock error message"
+    mocker.patch("benefits.enrollment.views.api.Client.enroll", return_value=mock_response)
+
+    path = reverse(ROUTE_INDEX)
+    with pytest.raises(Exception, match=mock_response.message):
+        client.post(path, card_tokenize_form_data)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+def test_index_eligible_post_valid_form_success(mocker, client, card_tokenize_form_data):
+    mock_response = mocker.Mock()
+    mock_response.success = True
+    mocker.patch("benefits.enrollment.views.api.Client.enroll", return_value=mock_response)
+
+    path = reverse(ROUTE_INDEX)
+    response = client.post(path, card_tokenize_form_data)
+
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_SUCCESS
 
 
 @pytest.mark.django_db
