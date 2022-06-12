@@ -20,35 +20,22 @@ def django_db_setup():
 
 
 @pytest.fixture
-def app_request(rf, initialize_request):
+def app_request(rf):
     """
     Fixture creates and initializes a new Django request object similar to a real application request.
     """
     # create a request for the path, initialize
     app_request = rf.get("/some/arbitrary/path")
 
-    initialize_request(app_request)
-
-    return app_request
-
-
-@pytest.fixture
-def initialize_request():
-    """
-    Fixture returns a helper function to initialize a Django request object with session and language information.
-    """
     # https://stackoverflow.com/a/55530933/358804
     middleware = [SessionMiddleware(lambda x: x), LocaleMiddleware(lambda x: x)]
+    for m in middleware:
+        m.process_request(app_request)
 
-    def init(request):
-        for m in middleware:
-            m.process_request(request)
+    app_request.session.save()
+    session.reset(app_request)
 
-        request.session.save()
-
-        session.reset(request)
-
-    return init
+    return app_request
 
 
 @pytest.fixture
