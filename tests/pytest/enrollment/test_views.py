@@ -52,8 +52,6 @@ def test_token_refresh(mocker, client):
     assert response.status_code == 200
     data = response.json()
     assert "token" in data
-    # mocked_access_token is a mocked version of the Client.access_token function
-    # call it here to get the response, which has an access_token attribute
     assert data["token"] == mock_token.access_token
 
 
