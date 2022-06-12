@@ -11,6 +11,7 @@ ROUTE_START = "eligibility:start"
 ROUTE_LOGIN = "oauth:login"
 ROUTE_CONFIRM = "eligibility:confirm"
 ROUTE_ENROLLMENT = "enrollment:index"
+TEMPLATE_INDEX = "core/page.html"
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
 TEMPLATE_UNVERIFIED = "eligibility/unverified.html"
 
@@ -54,17 +55,67 @@ def disable_rate_limit(mocker):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency")
-def test_index_with_agency(client):
+def test_index_get_agency_multiple_verifiers(mocker, first_agency, first_verifier, mocked_session_agency, client):
+    # override the mocked session agency with a mock agency that has multiple verifiers
+    mock_agency = mocker.Mock(spec=first_agency)
+    mock_agency.eligibility_verifiers.all.return_value = [first_verifier, first_verifier]
+    mock_agency.eligibility_verifiers.count.return_value = 2
+    mocked_session_agency.return_value = mock_agency
+
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
+
     assert response.status_code == 200
+    assert response.template_name == TEMPLATE_INDEX
+    assert "page" in response.context_data
+    assert len(response.context_data["page"].forms) > 0
+    assert isinstance(response.context_data["page"].forms[0], EligibilityVerifierSelectionForm)
 
 
 @pytest.mark.django_db
-def test_index_without_agency(client):
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_index_get_agency_single_verifier(mocker, first_agency, first_verifier, mocked_session_agency, client):
+    # override the mocked session agency with a mock agency that has a single verifier
+    mock_agency = mocker.Mock(spec=first_agency)
+    mock_agency.eligibility_verifiers.all.return_value = [first_verifier]
+    mock_agency.eligibility_verifiers.count.return_value = 1
+    mocked_session_agency.return_value = mock_agency
+
+    path = reverse(ROUTE_INDEX)
+    response = client.get(path)
+
+    assert response.status_code == 302
+    assert response.url == reverse(ROUTE_START)
+
+
+@pytest.mark.django_db
+def test_index_get_without_agency(client):
     path = reverse(ROUTE_INDEX)
     with pytest.raises(AttributeError, match=r"agency"):
         client.get(path)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_index_post_invalid_form(client):
+    path = reverse(ROUTE_INDEX)
+
+    response = client.post(path, {"invalid": "data"})
+
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_INDEX
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_index_post_valid_form(client, first_verifier, mocked_session_update):
+    path = reverse(ROUTE_INDEX)
+
+    response = client.post(path, {"verifier": first_verifier.id})
+
+    assert response.status_code == 302
+    assert response.url == reverse(ROUTE_START)
+    assert mocked_session_update.call_args.kwargs["verifier"] == first_verifier
 
 
 @pytest.mark.django_db
