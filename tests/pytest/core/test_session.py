@@ -4,6 +4,7 @@ from django.urls import reverse
 import pytest
 
 from benefits.core import models, session
+from benefits.core.views import ROUTE_INDEX
 
 
 @pytest.mark.django_db
@@ -252,7 +253,7 @@ def test_reset_origin(app_request):
 
     session.reset(app_request)
 
-    assert session.origin(app_request) == reverse("core:index")
+    assert session.origin(app_request) == reverse(ROUTE_INDEX)
 
 
 @pytest.mark.django_db

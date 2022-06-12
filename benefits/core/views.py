@@ -12,6 +12,12 @@ from . import models, session, viewmodels
 from .middleware import pageview_decorator
 
 ROUTE_INDEX = "core:index"
+ROUTE_ELIGIBILITY = "eligibility:index"
+ROUTE_HELP = "core:help"
+
+TEMPLATE_PAGE = "core/page.html"
+TEMPLATE_AGENCY = "core/agency_index.html"
+TEMPLATE_HELP = "core/help.html"
 
 
 @pageview_decorator
@@ -37,7 +43,7 @@ def index(request):
         classes="home",
     )
 
-    return TemplateResponse(request, "core/page.html", page.context_dict())
+    return TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
 
 
 @pageview_decorator
@@ -47,9 +53,9 @@ def agency_index(request, agency):
     session.update(request, agency=agency, origin=agency.index_url)
 
     if len(agency.eligibility_verifiers.all()) == 1:
-        return redirect(reverse("eligibility:index"))
+        return redirect(reverse(ROUTE_ELIGIBILITY))
 
-    button = viewmodels.Button.primary(text=_("core.pages.index.continue"), url=reverse("eligibility:index"))
+    button = viewmodels.Button.primary(text=_("core.pages.index.continue"), url=reverse(ROUTE_ELIGIBILITY))
     button.label = _("core.pages.agency_index.button.label")
 
     page = viewmodels.Page(
@@ -59,10 +65,10 @@ def agency_index(request, agency):
         classes="home",
     )
 
-    help_page = reverse("core:help")
+    help_page = reverse(ROUTE_HELP)
     context_dict = {**page.context_dict(), **{"info_link": f"{help_page}#about"}}
 
-    return TemplateResponse(request, "core/agency_index.html", context_dict)
+    return TemplateResponse(request, TEMPLATE_AGENCY, context_dict)
 
 
 @pageview_decorator
@@ -83,7 +89,7 @@ def help(request):
         noimage=True,
     )
 
-    return TemplateResponse(request, "core/help.html", page.context_dict())
+    return TemplateResponse(request, TEMPLATE_HELP, page.context_dict())
 
 
 @pageview_decorator

@@ -2,18 +2,20 @@ from django.urls import reverse
 
 import pytest
 
-import benefits.eligibility.views
+
 from benefits.eligibility.forms import EligibilityVerifierSelectionForm
+from benefits.eligibility.views import (
+    ROUTE_INDEX,
+    ROUTE_START,
+    ROUTE_LOGIN,
+    ROUTE_CONFIRM,
+    ROUTE_ENROLLMENT,
+    TEMPLATE_PAGE,
+    TEMPLATE_CONFIRM,
+    TEMPLATE_UNVERIFIED,
+)
 
-
-ROUTE_INDEX = "eligibility:index"
-ROUTE_START = "eligibility:start"
-ROUTE_LOGIN = "oauth:login"
-ROUTE_CONFIRM = "eligibility:confirm"
-ROUTE_ENROLLMENT = "enrollment:index"
-TEMPLATE_INDEX = "core/page.html"
-TEMPLATE_CONFIRM = "eligibility/confirm.html"
-TEMPLATE_UNVERIFIED = "eligibility/unverified.html"
+import benefits.eligibility.views
 
 
 @pytest.fixture
@@ -66,7 +68,7 @@ def test_index_get_agency_multiple_verifiers(mocker, first_agency, first_verifie
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
+    assert response.template_name == TEMPLATE_PAGE
     assert "page" in response.context_data
     assert len(response.context_data["page"].forms) > 0
     assert isinstance(response.context_data["page"].forms[0], EligibilityVerifierSelectionForm)
@@ -103,7 +105,7 @@ def test_index_post_invalid_form(client):
     response = client.post(path, {"invalid": "data"})
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
+    assert response.template_name == TEMPLATE_PAGE
 
 
 @pytest.mark.django_db

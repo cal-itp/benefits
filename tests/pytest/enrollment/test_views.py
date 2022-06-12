@@ -4,14 +4,15 @@ from django.urls import reverse
 
 import pytest
 
-
-ROUTE_INDEX = "enrollment:index"
-ROUTE_RETRY = "enrollment:retry"
-ROUTE_SUCCESS = "enrollment:success"
-ROUTE_TOKEN = "enrollment:token"
-TEMPLATE_INDEX = "enrollment/index.html"
-TEMPLATE_RETRY = "enrollment/retry.html"
-TEMPLATE_SUCCESS = "enrollment/success.html"
+from benefits.enrollment.views import (
+    ROUTE_INDEX,
+    ROUTE_TOKEN,
+    ROUTE_SUCCESS,
+    ROUTE_RETRY,
+    TEMPLATE_INDEX,
+    TEMPLATE_SUCCESS,
+    TEMPLATE_RETRY,
+)
 
 
 @pytest.fixture

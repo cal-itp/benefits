@@ -4,6 +4,8 @@ from django.urls import reverse
 import pytest
 
 from benefits.core import session
+from benefits.core.views import ROUTE_INDEX
+
 from benefits.oauth.views import (
     ROUTE_START,
     ROUTE_CONFIRM,
@@ -135,7 +137,7 @@ def test_logout_analytics(mocker, mocked_analytics_module, app_request):
 
 @pytest.mark.usefixtures("mocked_analytics_module")
 def test_post_logout(app_request):
-    origin = reverse("core:index")
+    origin = reverse(ROUTE_INDEX)
     session.update(app_request, origin=origin)
 
     result = post_logout(app_request)

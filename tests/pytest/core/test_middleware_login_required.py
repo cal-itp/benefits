@@ -7,7 +7,7 @@ from benefits.core import session
 from benefits.core.middleware import LoginRequired
 from benefits.core.models import EligibilityVerifier
 
-login_path = reverse("oauth:login")
+ROUTE_LOGIN = "oauth:login"
 
 
 @pytest.fixture
@@ -30,7 +30,7 @@ def test_login_auth_required(app_request, mocked_view, decorated_view):
     mocked_view.assert_not_called()
 
     assert response.status_code == 302
-    assert response.headers["Location"] == login_path
+    assert response.headers["Location"] == reverse(ROUTE_LOGIN)
 
 
 @pytest.mark.django_db

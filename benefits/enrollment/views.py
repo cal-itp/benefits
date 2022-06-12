@@ -12,7 +12,18 @@ from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import models, session, viewmodels
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
+from benefits.core.views import ROUTE_HELP
 from . import api, forms
+
+
+ROUTE_INDEX = "enrollment:index"
+ROUTE_RETRY = "enrollment:retry"
+ROUTE_SUCCESS = "enrollment:success"
+ROUTE_TOKEN = "enrollment:token"
+
+TEMPLATE_INDEX = "enrollment/index.html"
+TEMPLATE_RETRY = "enrollment/retry.html"
+TEMPLATE_SUCCESS = "enrollment/success.html"
 
 
 logger = logging.getLogger(__name__)
@@ -34,7 +45,7 @@ def token(request):
 @decorator_from_middleware(EligibleSessionRequired)
 def index(request):
     """View handler for the enrollment landing page."""
-    session.update(request, origin=reverse("enrollment:index"))
+    session.update(request, origin=reverse(ROUTE_INDEX))
 
     agency = session.agency(request)
 
@@ -59,7 +70,7 @@ def index(request):
     # GET enrollment index, with button to initiate payment processor connection
     else:
         tokenize_button = "tokenize_card"
-        tokenize_retry_form = forms.CardTokenizeFailForm("enrollment:retry")
+        tokenize_retry_form = forms.CardTokenizeFailForm(ROUTE_RETRY)
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
         page = viewmodels.Page(
@@ -85,7 +96,7 @@ def index(request):
         # and payment processor details
         processor_vm = viewmodels.PaymentProcessor(
             model=agency.payment_processor,
-            access_token_url=reverse("enrollment:token"),
+            access_token_url=reverse(ROUTE_TOKEN),
             element_id=f"#{tokenize_button}",
             color="#046b99",
             name=f"{agency.long_name} {_('partnered with')} {agency.payment_processor.name}",
@@ -99,7 +110,7 @@ def index(request):
             "tokenize_success": reverse(tokenize_success_form.action_url),
         }
 
-        return TemplateResponse(request, "enrollment/index.html", context)
+        return TemplateResponse(request, TEMPLATE_INDEX, context)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
@@ -117,7 +128,7 @@ def retry(request):
                 buttons=viewmodels.Button.agency_contact_links(agency),
             )
             page.buttons.append(viewmodels.Button.primary(text=_("core.buttons.retry"), url=session.origin(request)))
-            return TemplateResponse(request, "enrollment/retry.html", page.context_dict())
+            return TemplateResponse(request, TEMPLATE_RETRY, page.context_dict())
         else:
             raise Exception("Invalid retry submission.")
     else:
@@ -129,7 +140,7 @@ def retry(request):
 def success(request):
     """View handler for the final success page."""
     request.path = "/enrollment/success"
-    session.update(request, origin=reverse("enrollment:success"))
+    session.update(request, origin=reverse(ROUTE_SUCCESS))
     verifier = session.verifier(request)
     icon = viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck"))
     page = viewmodels.Page(
@@ -152,7 +163,7 @@ def success(request):
     else:
         page.icon = icon
 
-    help_link = reverse("core:help")
+    help_link = reverse(ROUTE_HELP)
     context_dict = {**page.context_dict(), **{"help_link": help_link}}
 
-    return TemplateResponse(request, "enrollment/success.html", context_dict)
+    return TemplateResponse(request, TEMPLATE_SUCCESS, context_dict)

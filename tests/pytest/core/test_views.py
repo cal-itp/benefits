@@ -4,13 +4,10 @@ import pytest
 
 from benefits.core.models import TransitAgency
 import benefits.core.session
-from benefits.core.views import bad_request, csrf_failure
+from benefits.core.views import ROUTE_INDEX, ROUTE_HELP, TEMPLATE_AGENCY, bad_request, csrf_failure
 
 
-ROUTE_INDEX = "core:index"
-ROUTE_AGENCY_INDEX = "core:agency_index"
-ROUTE_HELP = "core:help"
-TEMPLATE_AGENCY = "core/agency_index.html"
+ROUTE_AGENCY = "core:agency_index"
 
 
 @pytest.fixture
@@ -52,7 +49,7 @@ def test_index_single_agency(mocker, client, session_reset_spy):
 
 @pytest.mark.django_db
 def test_agency_index(first_agency, client, session_reset_spy):
-    path = reverse(ROUTE_AGENCY_INDEX, kwargs={"agency": first_agency.slug})
+    path = reverse(ROUTE_AGENCY, kwargs={"agency": first_agency.slug})
     response = client.get(path)
 
     assert response.status_code == 200
