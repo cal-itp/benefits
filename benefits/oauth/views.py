@@ -1,24 +1,14 @@
 import logging
 
-from django.conf import settings
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils.http import urlencode
 
-from authlib.integrations.django_client import OAuth
-
 from benefits.core import session
-from . import analytics
+from . import analytics, client
 
 
 logger = logging.getLogger(__name__)
-
-if settings.OAUTH_CLIENT_NAME:
-    logger.debug(f"Using OAuth client configuration: {settings.OAUTH_CLIENT_NAME}")
-
-    _oauth = OAuth()
-    _oauth.register(settings.OAUTH_CLIENT_NAME)
-    oauth_client = _oauth.create_client(settings.OAUTH_CLIENT_NAME)
 
 
 ROUTE_AUTH = "oauth:authorize"
@@ -28,8 +18,8 @@ ROUTE_POST_LOGOUT = "oauth:post_logout"
 
 
 def login(request):
-    if not oauth_client:
-        raise Exception("No OAuth client")
+    """View implementing OIDC authorize_redirect."""
+    oauth_client = client.instance()
 
     analytics.started_sign_in(request)
 
@@ -42,8 +32,8 @@ def login(request):
 
 
 def authorize(request):
-    if not oauth_client:
-        raise Exception("No OAuth client")
+    """View implementing OIDC token authorization."""
+    oauth_client = client.instance()
 
     logger.debug("Attempting to authorize OAuth access token")
     token = oauth_client.authorize_access_token(request)
@@ -65,7 +55,6 @@ def authorize(request):
 
 def logout(request):
     """View implementing OIDC and application sign out."""
-
     analytics.started_sign_out(request)
 
     # overwrite the oauth session token, the user is signed out of the app
@@ -98,9 +87,7 @@ def _deauthorize_redirect(token, redirect_uri):
     # See https://github.com/lepture/authlib/issues/331#issuecomment-827295954 for more
     #
     # The implementation here was adapted from the same ticket: https://github.com/lepture/authlib/issues/331#issue-838728145
-
-    if not oauth_client:
-        raise Exception("No OAuth client")
+    oauth_client = client.instance()
 
     metadata = oauth_client.load_server_metadata()
     end_session_endpoint = metadata.get("end_session_endpoint")
