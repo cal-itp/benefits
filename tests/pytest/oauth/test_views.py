@@ -1,35 +1,18 @@
 from django.http import HttpResponse
 from django.urls import reverse
 
-from authlib.integrations.django_client.apps import DjangoOAuth2App
 import pytest
 
 from benefits.core import session
 from benefits.core.views import ROUTE_INDEX
 
-from benefits.oauth.views import (
-    ROUTE_START,
-    ROUTE_CONFIRM,
-    login,
-    authorize,
-    logout,
-    post_logout,
-    _deauthorize_redirect,
-    _generate_redirect_uri,
-)
+from benefits.oauth.views import ROUTE_START, ROUTE_CONFIRM, login, authorize, logout, post_logout
 import benefits.oauth.views
 
 
 @pytest.fixture
 def mocked_analytics_module(mocked_analytics_module):
     return mocked_analytics_module(benefits.oauth.views)
-
-
-@pytest.fixture
-def mocked_oauth_client(mocker):
-    mock_client = mocker.Mock(spec=DjangoOAuth2App)
-    mocker.patch("benefits.oauth.views.client.instance", return_value=mock_client)
-    return mock_client
 
 
 @pytest.mark.usefixtures("mocked_analytics_module")
@@ -91,7 +74,7 @@ def test_logout(mocker, app_request):
     # this mocks that function and a success response
     # and returns a spy object we can use to validate calls
     message = "logout successful"
-    spy = mocker.patch("benefits.oauth.views._deauthorize_redirect", return_value=HttpResponse(message))
+    spy = mocker.patch("benefits.oauth.views.redirects.deauthorize_redirect", return_value=HttpResponse(message))
 
     token = "token"
     session.update(app_request, oauth_token=token)
@@ -110,7 +93,7 @@ def test_logout_analytics(mocker, mocked_analytics_module, app_request):
     # logout internally calls _deauthorize_redirect
     # this mocks that function and a success response
     message = "logout successful"
-    mocker.patch("benefits.oauth.views._deauthorize_redirect", return_value=HttpResponse(message))
+    mocker.patch("benefits.oauth.views.redirects.deauthorize_redirect", return_value=HttpResponse(message))
 
     token = "token"
     session.update(app_request, oauth_token=token)
@@ -136,34 +119,3 @@ def test_post_logout_analytics(mocked_analytics_module, app_request):
     post_logout(app_request)
 
     mocked_analytics_module.finished_sign_out.assert_called_once()
-
-
-def test_deauthorize_redirect(mocked_oauth_client):
-    mocked_oauth_client.load_server_metadata.return_value = {"end_session_endpoint": "https://server/endsession"}
-
-    result = _deauthorize_redirect("token", "https://localhost/redirect_uri")
-
-    mocked_oauth_client.load_server_metadata.assert_called()
-    assert result.status_code == 302
-    assert (
-        result.url
-        == "https://server/endsession?id_token_hint=token&post_logout_redirect_uri=https%3A%2F%2Flocalhost%2Fredirect_uri"
-    )
-
-
-def test_generate_redirect_uri_default(rf):
-    request = rf.get("/oauth/login")
-    path = "/test"
-
-    redirect_uri = _generate_redirect_uri(request, path)
-
-    assert redirect_uri == "https://testserver/test"
-
-
-def test_generate_redirect_uri_localhost(rf):
-    request = rf.get("/oauth/login", SERVER_NAME="localhost")
-    path = "/test"
-
-    redirect_uri = _generate_redirect_uri(request, path)
-
-    assert redirect_uri == "http://localhost/test"
