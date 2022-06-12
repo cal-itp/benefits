@@ -1,25 +1,53 @@
-import pytest
 from django.urls import reverse
+
+import pytest
+
 from benefits.core.models import TransitAgency
+import benefits.core.session
+
+
+ROUTE_INDEX = "core:index"
+ROUTE_AGENCY_INDEX = "core:agency_index"
+ROUTE_HELP = "core:help"
+TEMPLATE_AGENCY = "core/agency_index.html"
+
+
+@pytest.fixture
+def session_reset_spy(mocker):
+    return mocker.spy(benefits.core.session, "reset")
 
 
 @pytest.mark.django_db
-def test_homepage_multiple_agencies(client):
+def test_index_multiple_agencies(client):
     """Assumes that fixture data contains multiple active agencies."""
-    path = reverse("core:index")
+    path = reverse(ROUTE_INDEX)
     response = client.get(path)
+
     assert response.status_code == 200
     assert "transit" in str(response.content)
 
 
 @pytest.mark.django_db
-def test_homepage_single_agency(mocker, client):
+def test_index_single_agency(mocker, client, session_reset_spy):
     agencies = TransitAgency.all_active()[:1]
     mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=agencies)
-    path = reverse("core:index")
+
+    path = reverse(ROUTE_INDEX)
     response = client.get(path)
+
     assert response.status_code == 302
     assert response.url == agencies[0].index_url
+    session_reset_spy.assert_called_once()
+
+
+@pytest.mark.django_db
+def test_agency_index(first_agency, client, session_reset_spy):
+    path = reverse(ROUTE_AGENCY_INDEX, kwargs={"agency": first_agency.slug})
+    response = client.get(path)
+
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_AGENCY
+    session_reset_spy.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -39,16 +67,19 @@ def test_homepage_single_agency_single_verifier(mocker, client):
 
 @pytest.mark.django_db
 def test_help(client):
-    path = reverse("core:help")
+    path = reverse(ROUTE_HELP)
+
     response = client.get(path)
+
     assert response.status_code == 200
     assert "card" in str(response.content)
 
 
 @pytest.mark.django_db
-def test_help_with_agency(mocked_session_agency, client):
-    path = reverse("core:help")
+def test_help_with_session_agency(mocked_session_agency, client):
+    path = reverse(ROUTE_HELP)
     response = client.get(path)
+
     assert response.status_code == 200
     # mocked_session_agency is Mocked version of the session.agency() function
     # call it (with a None request) to return the sample agency
