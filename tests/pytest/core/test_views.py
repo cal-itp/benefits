@@ -85,3 +85,30 @@ def test_help_with_session_agency(mocked_session_agency, client):
     # call it (with a None request) to return the sample agency
     agency = mocked_session_agency(None)
     assert agency.long_name in str(response.content)
+
+
+@pytest.mark.django_db
+def test_not_found_active_agency(mocker, client):
+    mock_agency = mocker.Mock()
+    mock_agency.index_url = "/agency"
+    mocker.patch("benefits.core.session.agency", return_value=mock_agency)
+    mocker.patch("benefits.core.session.active_agency", return_value=True)
+    spy_session_update = mocker.spy(benefits.core.session, "update")
+
+    response = client.get("/not-found")
+
+    assert response.status_code == 404
+    assert "origin" in spy_session_update.call_args.kwargs
+    assert spy_session_update.call_args.kwargs["origin"] == mock_agency.index_url
+
+
+@pytest.mark.django_db
+def test_not_found_no_active_agency(mocker, client):
+    mocker.patch("benefits.core.session.active_agency", return_value=False)
+    spy_session_update = mocker.spy(benefits.core.session, "update")
+
+    response = client.get("/not-found")
+
+    assert response.status_code == 404
+    assert "origin" in spy_session_update.call_args.kwargs
+    assert spy_session_update.call_args.kwargs["origin"] == reverse("core:index")
