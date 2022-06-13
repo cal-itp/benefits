@@ -2,7 +2,7 @@ import time
 
 import pytest
 
-from benefits.enrollment.api import ApiError, AccessTokenResponse, CustomerResponse, GroupResponse
+from benefits.enrollment.api import ApiError, AccessTokenResponse, CustomerResponse, GroupResponse, Client
 
 
 def test_AccessTokenResponse_invalid_response(mocker):
@@ -167,3 +167,26 @@ def test_GroupResponse_payload_failure_response(mocker, error, payload):
 
     with pytest.raises(ApiError, match=r"response"):
         GroupResponse(mock_response, "0", payload)
+
+
+def test_Client_init_no_agency():
+    with pytest.raises(ValueError, match=r"agency"):
+        Client(None)
+
+
+def test_Client_init_no_payment_processor(mocker):
+    mock_agency = mocker.Mock()
+    mock_agency.payment_processor = None
+
+    with pytest.raises(ValueError, match=r"payment_processor"):
+        Client(mock_agency)
+
+
+def test_Client_init(mocker):
+    mock_agency = mocker.Mock()
+    mock_agency.payment_processor = mocker.Mock()
+
+    client = Client(mock_agency)
+
+    assert client.agency == mock_agency
+    assert client.payment_processor == mock_agency.payment_processor
