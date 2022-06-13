@@ -218,3 +218,19 @@ def test_Client_access_token(mocker, first_agency):
     token = client.access_token()
 
     assert token
+
+
+@pytest.mark.django_db
+def test_Client_enroll_no_customer_token(first_agency):
+    client = Client(first_agency)
+
+    with pytest.raises(ValueError, match=r"customer_token"):
+        client.enroll(None, "group_id")
+
+
+@pytest.mark.django_db
+def test_Client_enroll_no_group_id(first_agency):
+    client = Client(first_agency)
+
+    with pytest.raises(ValueError, match=r"group_id"):
+        client.enroll("customer_token", None)
