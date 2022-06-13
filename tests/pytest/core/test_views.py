@@ -48,28 +48,31 @@ def test_index_single_agency(mocker, client, session_reset_spy):
 
 
 @pytest.mark.django_db
-def test_agency_index(first_agency, client, session_reset_spy):
-    path = reverse(ROUTE_AGENCY, kwargs={"agency": first_agency.slug})
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_AGENCY
-    session_reset_spy.assert_called_once()
-
-
-@pytest.mark.django_db
-def test_homepage_single_agency_single_verifier(mocker, client):
+def test_index_single_agency_single_verifier(mocker, client):
     # Agency set to DEFTl, which only has 1 verifier
     agencies = TransitAgency.all_active()[1:]
     mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=agencies)
 
-    response = client.get(reverse("core:index"), follow=True)
+    path = reverse(ROUTE_INDEX)
+    response = client.get(path, follow=True)
 
     # Setting follow to True allows the test to go thorugh redirects and returns the redirect_chain attr
     # https://docs.djangoproject.com/en/3.2/topics/testing/tools/#making-requests
     assert response.redirect_chain[0] == ("/deftl", 302)
     assert response.redirect_chain[1] == ("/eligibility/", 302)
     assert response.redirect_chain[-1] == ("/eligibility/start", 302)
+
+
+@pytest.mark.django_db
+def test_agency_index_multiple_verifier(first_agency, client, session_reset_spy):
+    # Agency set to ABC, which has 2 verifiers
+    path = reverse(ROUTE_AGENCY, kwargs={"agency": first_agency.slug})
+
+    response = client.get(path)
+
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_AGENCY
+    session_reset_spy.assert_called_once()
 
 
 @pytest.mark.django_db
