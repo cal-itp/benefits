@@ -22,6 +22,7 @@
     "eamodio.gitlens",
     "mhutchie.git-graph",
     "ms-python.python",
+    "ms-python.black-formatter",
     "ms-python.vscode-pylance",
     "esbenp.prettier-vscode"
   ]

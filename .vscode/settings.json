@@ -8,10 +8,11 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
+  // https://github.com/microsoft/vscode-black-formatter/issues/82#issuecomment-1155492426
   "[python]": {
-    "editor.defaultFormatter": "ms-python.python"
+    "editor.defaultFormatter": "ms-python.black-formatter"
   },
-  "python.formatting.provider": "black",
+  "python.formatting.provider": "none",
   "python.languageServer": "Pylance",
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
