@@ -79,13 +79,14 @@ class GroupResponse:
                 detail = error["detail"]
 
                 failure = (
-                    customer_id is None,
-                    detail is None,
-                    customer_id not in detail,
-                    customer_id in detail and not detail.startswith("Duplicate"),
+                    customer_id is None
+                    or detail is None
+                    or customer_id not in detail
+                    or customer_id in detail
+                    and not detail.startswith("Duplicate")
                 )
 
-                if any(failure):
+                if failure:
                     raise ApiError("Invalid response format")
             except (KeyError, ValueError):
                 raise ApiError("Invalid response format")
