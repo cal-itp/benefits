@@ -9,7 +9,6 @@ describe("Single verifier: Eligibility confirmation page spec", () => {
     cy.visit("/");
     // Selecting DEFTl will go down the single verifier flow
     cy.contains(agencies[1].fields.short_name).click();
-    cy.contains("Get started").click();
     cy.contains("Continue").click();
     cy.url().should("include", eligibility_confirm_url);
   });
