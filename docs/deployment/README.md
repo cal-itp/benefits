@@ -1,5 +1,9 @@
 # Overview
 
+[dev-benefits.calitp.org][dev-benefits] is currently deployed into a Microsoft Azure account provided by [California Department of Technology (CDT)'s Office of Enterprise Technology (OET)][oet], a.k.a. the "DevSecOps" team. More specifically, it uses [custom containers][app-service-containers] on [Azure App Service][app-service]. [More about the infrastructure.](infrastructure.md)
+
+## Deployment process
+
 The Django application gets built into a [Docker image][dockerfile] with [NGINX](https://www.nginx.com/) and
 [Gunicorn](https://gunicorn.org/). SQLite is used within that same container to store configuration data and Azure Blobs are
 used for secrets; there is no external database.
@@ -18,7 +22,10 @@ Azure to restart the app and pull the latest image.
 [Configuration settings](../configuration/README.md) are stored as Application Configuration variables in Azure.
 [Fixtures](../configuration/fixtures.md) are stored as blobs in in Azure Storage, and [mounted into the Web App container][az-mount].
 
-[arch-overview]: https://docs.google.com/document/d/1rwYcp2ps_JNn9WmjqUfYpPeuMoj1FZu5DTUloQEQ5iQ/edit#heading=h.afetf83gz28y
+[dev-benefits]: https://dev-benefits.calitp.org
+[oet]: https://techblog.cdt.ca.gov/2020/06/cdt-taking-the-lead-in-digital-transformation/
+[app-service-containers]: https://docs.microsoft.com/en-us/azure/app-service/configure-custom-container
+[app-service]: https://docs.microsoft.com/en-us/azure/app-service/overview
 [dockerfile]: https://github.com/cal-itp/benefits/blob/dev/Dockerfile
 [az-webapp]: https://azure.microsoft.com/en-us/services/app-service/containers/
 [az-mount]: https://docs.microsoft.com/en-us/azure/app-service/configure-connect-to-azure-storage?tabs=portal&pivots=container-linux
