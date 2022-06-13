@@ -127,6 +127,16 @@ def start(request):
                 url=reverse("oauth:login"),
             )
 
+    else:
+        media.insert(
+            0,
+            dict(
+                icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
+                heading=_(verifier.start_item_name),
+                details=_(verifier.start_item_description),
+            ),
+        )
+
     page = viewmodels.Page(
         title=_("eligibility.pages.start.title"),
         noimage=True,
