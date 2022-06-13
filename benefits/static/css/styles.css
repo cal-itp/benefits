@@ -58,6 +58,11 @@ label {
   letter-spacing: 0.05em;
 }
 
+.main-content .main-primary a:not(.btn) {
+  background: none;
+  text-decoration: underline !important;
+}
+
 /* making the sticky footer */
 
 html,
