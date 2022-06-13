@@ -1,5 +1,7 @@
 import time
 
+import requests
+
 import pytest
 
 from benefits.enrollment.api import ApiError, AccessTokenResponse, CustomerResponse, GroupResponse, Client
@@ -190,3 +192,29 @@ def test_Client_init(mocker):
 
     assert client.agency == mock_agency
     assert client.payment_processor == mock_agency.payment_processor
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "exception", [requests.ConnectionError, requests.Timeout, requests.TooManyRedirects, requests.HTTPError]
+)
+def test_Client_access_token_exception(mocker, first_agency, exception):
+    client = Client(first_agency)
+    mock_response = mocker.Mock()
+    mock_response.raise_for_status.side_effect = exception
+    mocker.patch.object(client, "_post", return_value=mock_response)
+
+    with pytest.raises(ApiError):
+        client.access_token()
+
+
+@pytest.mark.django_db
+def test_Client_access_token(mocker, first_agency):
+    client = Client(first_agency)
+    mock_response = mocker.Mock()
+    mocker.patch.object(client, "_post", return_value=mock_response)
+    mocker.patch("benefits.enrollment.api.AccessTokenResponse")
+
+    token = client.access_token()
+
+    assert token
