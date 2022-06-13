@@ -269,7 +269,7 @@ msgstr ""
 msgid "core.pages.agency_index.p[0]%(info_link)s"
 msgstr "You can tap your credit or debit card when you board, "
 "and your discount will automatically apply every time you ride."
-" <strong><a href=\"%(info_link)s\">Learn more about Cal-ITP Benefits.</a></strong>"
+" <strong><a href=\"%(info_link)s\">Learn more about Cal-ITP Benefits</a>.</strong>"
 
 msgid "core.pages.agency_index.p[1]"
 msgstr "You will need your California driver’s license or ID "
