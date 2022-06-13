@@ -68,6 +68,8 @@ class EligibilityVerifier(models.Model):
     jwe_encryption_alg = models.TextField(help_text="The JWE-compatible encryption algorithm")
     jws_signing_alg = models.TextField(help_text="The JWS-compatible signing algorithm")
     auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True)
+    auth_scope = models.TextField(null=True)
+    auth_claim = models.TextField(null=True)
     selection_label = models.TextField()
     selection_label_description = models.TextField(null=True)
     start_content_title = models.TextField()
