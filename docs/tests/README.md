@@ -7,28 +7,9 @@ Feature and user interface tests are implemented with [`cypress`](https://www.cy
 
 See the [`cypress` Command Line](https://docs.cypress.io/guides/guides/command-line) guide for more information.
 
-### Running in the Dev Container
+### Running
 
-`cypress` is installed and available to run directly in the [devcontainer](../development/README.md#vs-code-with-devcontainers).
-
-1. Ensure your `.env` file has an updated `CYPRESS_baseUrl` variable:
-
-    ```env
-    # using localhost since we're inside the container
-    CYPRESS_baseURL=http://localhost:8000
-    ```
-
-2. Rebuild and Reopen the devcontainer
-3. Start the `benefits` app with `F5`
-4. From within the `tests/cypress` directory:
-
-    ```bash
-    npm run cypress:ui
-    ```
-
-### Running outside of the Dev Container
-
-These are instructions for running `cypress` locally on your machine, *without* the devcontainer. These steps
+These are instructions for running `cypress` locally on your machine, *without* the [devcontainer](../development/README.md#vs-code-with-devcontainers). These steps
 will install `cypress` and its dependencies on your  machine. Make sure to run these commands in a Terminal.
 
 1. Ensure you have Node.js and NPM available on your local machine:
