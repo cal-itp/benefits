@@ -166,7 +166,7 @@ def confirm(request):
         content_title=_(verifier.form_content_title),
         paragraphs=[_(verifier.form_blurb)],
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
-        classes="text-lg-center",
+        classes="text-lg-center no-image-mobile",
     )
 
     # POST form submission, process form data
@@ -236,7 +236,7 @@ def unverified(request):
 
     page = viewmodels.Page(
         title=_(verifier.unverified_title),
-        classes="with-agency-links",
+        classes="with-agency-links no-image-mobile",
         content_title=_(verifier.unverified_content_title),
         icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
         paragraphs=[_(verifier.unverified_blurb), _("eligibility.pages.unverified.p[1]")],

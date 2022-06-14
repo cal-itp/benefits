@@ -447,7 +447,7 @@ footer.global-footer .footer-links a:active {
 /* Header */
 
 .navbar.navbar-expand-sm.navbar-dark.bg-primary {
-  padding: 14.5px 1rem;
+  padding: 8.5px 1rem;
 }
 
 .navbar-brand {
@@ -617,6 +617,10 @@ footer.global-footer .footer-links a:active {
   }
 
   /* Mobile With Image */
+
+  .no-image-mobile .col-lg-6.image {
+    display: none !important;
+  }
 
   .with-image main .main-row .col-lg-6.image {
     background-position: center bottom;
