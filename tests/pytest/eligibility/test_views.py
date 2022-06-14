@@ -1,204 +1,272 @@
-import datetime
-import os
-import uuid
-from pathlib import Path
-
 from django.urls import reverse
 
 import pytest
-import httpretty
-import requests
 
-from benefits.core import session
-from eligibility_api.client import ApiError, TokenError
-from eligibility_api.server import make_token
-from benefits.eligibility.views import confirm
-from tests.pytest.conftest import initialize_request, set_agency, set_verifier, with_agency
+
+from benefits.eligibility.forms import EligibilityVerifierSelectionForm
+from benefits.eligibility.views import (
+    ROUTE_INDEX,
+    ROUTE_START,
+    ROUTE_LOGIN,
+    ROUTE_CONFIRM,
+    ROUTE_ENROLLMENT,
+    TEMPLATE_PAGE,
+    TEMPLATE_CONFIRM,
+    TEMPLATE_UNVERIFIED,
+)
+
+import benefits.eligibility.views
+
+
+@pytest.fixture
+def form_data():
+    return {"sub": "A1234567", "name": "Person"}
+
+
+@pytest.fixture
+def invalid_form_data():
+    return {"invalid": "data"}
+
+
+@pytest.fixture
+def mocked_analytics_module(mocked_analytics_module):
+    return mocked_analytics_module(benefits.eligibility.views)
+
+
+@pytest.fixture
+def mocked_eligibility_auth_request(mocked_eligibility_request_session, mocked_session_oauth_token):
+    """
+    Stub fixture combines mocked_eligibility_request_session and mocked_session_oauth_token
+    so that session behaves like in an authenticated request to the eligibility app
+    """
+    pass
+
+
+@pytest.fixture
+def mocked_verifier_form(mocker):
+    mock_form = mocker.Mock(spec=EligibilityVerifierSelectionForm)
+    mocker.patch("benefits.eligibility.views.forms.EligibilityVerifierSelectionForm", return_value=mock_form)
+
+
+@pytest.fixture(autouse=True)
+def disable_rate_limit(mocker):
+    # override session rate limit handling for all tests
+    mock_settings = mocker.patch("benefits.core.middleware.settings")
+    mock_settings.RATE_LIMIT_ENABLED = False
 
 
 @pytest.mark.django_db
-def test_index_with_agency(mocker, client):
-    set_agency(mocker)
-    path = reverse("eligibility:index")
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_index_get_agency_multiple_verifiers(mocker, first_agency, first_verifier, mocked_session_agency, client):
+    # override the mocked session agency with a mock agency that has multiple verifiers
+    mock_agency = mocker.Mock(spec=first_agency)
+    mock_agency.eligibility_verifiers.all.return_value = [first_verifier, first_verifier]
+    mock_agency.eligibility_verifiers.count.return_value = 2
+    mocked_session_agency.return_value = mock_agency
+
+    path = reverse(ROUTE_INDEX)
     response = client.get(path)
+
     assert response.status_code == 200
+    assert response.template_name == TEMPLATE_PAGE
+    assert "page" in response.context_data
+    assert len(response.context_data["page"].forms) > 0
+    assert isinstance(response.context_data["page"].forms[0], EligibilityVerifierSelectionForm)
 
 
 @pytest.mark.django_db
-def test_index_without_agency(mocker, client):
-    with_agency(mocker, None)
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_index_get_agency_single_verifier(mocker, first_agency, first_verifier, mocked_session_agency, client):
+    # override the mocked session agency with a mock agency that has a single verifier
+    mock_agency = mocker.Mock(spec=first_agency)
+    mock_agency.eligibility_verifiers.all.return_value = [first_verifier]
+    mock_agency.eligibility_verifiers.count.return_value = 1
+    mocked_session_agency.return_value = mock_agency
 
-    path = reverse("eligibility:index")
+    path = reverse(ROUTE_INDEX)
+    response = client.get(path)
+
+    assert response.status_code == 302
+    assert response.url == reverse(ROUTE_START)
+
+
+@pytest.mark.django_db
+def test_index_get_without_agency(client):
+    path = reverse(ROUTE_INDEX)
     with pytest.raises(AttributeError, match=r"agency"):
         client.get(path)
 
 
 @pytest.mark.django_db
-def test_start_with_verifier(mocker, client):
-    set_verifier(mocker)
-    path = reverse("eligibility:start")
-    response = client.get(path)
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_index_post_invalid_form(client):
+    path = reverse(ROUTE_INDEX)
+
+    response = client.post(path, {"invalid": "data"})
+
     assert response.status_code == 200
+    assert response.template_name == TEMPLATE_PAGE
 
 
 @pytest.mark.django_db
-def test_start_without_verifier(mocker, client):
-    set_agency(mocker)
-    path = reverse("eligibility:start")
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_index_post_valid_form(client, first_verifier, mocked_session_update):
+    path = reverse(ROUTE_INDEX)
+
+    response = client.post(path, {"verifier": first_verifier.id})
+
+    assert response.status_code == 302
+    assert response.url == reverse(ROUTE_START)
+    assert mocked_session_update.call_args.kwargs["verifier"] == first_verifier
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_form", "mocked_session_verifier_auth_required")
+def test_start_verifier_auth_required_no_oauth_client(mocker, client):
+    mock_settings = mocker.patch("benefits.eligibility.views.settings")
+    mock_settings.OAUTH_CLIENT_NAME = None
+
+    path = reverse(ROUTE_START)
+    with pytest.raises(Exception, match=r"OAUTH_CLIENT_NAME"):
+        client.get(path)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_form", "mocked_session_verifier_auth_required")
+def test_start_verifier_auth_required_logged_in(mocker, client):
+    mock_session = mocker.patch("benefits.eligibility.views.session")
+    mock_session.logged_in.return_value = True
+
+    path = reverse(ROUTE_START)
+    response = client.get(path)
+
+    assert response.status_code == 200
+    assert "page" in response.context_data
+    assert len(response.context_data["page"].buttons) == 1
+    assert response.context_data["page"].buttons[0].url == reverse(ROUTE_CONFIRM)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_form", "mocked_session_verifier_auth_required")
+def test_start_verifier_auth_required_not_logged_in(mocker, client):
+    mock_session = mocker.patch("benefits.eligibility.views.session")
+    mock_session.logged_in.return_value = False
+
+    path = reverse(ROUTE_START)
+    response = client.get(path)
+
+    assert response.status_code == 200
+    assert "page" in response.context_data
+    assert len(response.context_data["page"].buttons) == 1
+    assert response.context_data["page"].buttons[0].url == reverse(ROUTE_LOGIN)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_form", "mocked_session_verifier_auth_not_required")
+def test_start_verifier_auth_not_required(client):
+    path = reverse(ROUTE_START)
+    response = client.get(path)
+
+    assert response.status_code == 200
+    assert "page" in response.context_data
+    assert len(response.context_data["page"].buttons) == 1
+    assert response.context_data["page"].buttons[0].url == reverse(ROUTE_CONFIRM)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_start_without_verifier(client):
+    path = reverse(ROUTE_START)
     with pytest.raises(AttributeError, match=r"verifier"):
         client.get(path)
 
 
-@httpretty.activate(verbose=True, allow_net_connect=False)
 @pytest.mark.django_db
-def test_confirm_success(mocker, rf):
-    agency, verifier = set_verifier(mocker)
+@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+def test_confirm_get_unverified(client):
+    path = reverse(ROUTE_CONFIRM)
+    response = client.get(path)
 
-    # Mock the eligibility-server response using HTTPretty
-    # https://stackoverflow.com/questions/21877387/mocking-a-http-server-in-python
-    httpretty.register_uri(
-        httpretty.GET,
-        "http://localhost/verify",
-        status=200,
-        body=make_token(
-            {
-                "jti": str(uuid.uuid4()),
-                "iss": "test-server",
-                "iat": int(datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).timestamp()),
-                "eligibility": ["type1"],
-            },
-            verifier.jws_signing_alg,
-            _get_key("server.key"),
-            verifier.jwe_encryption_alg,
-            verifier.jwe_cek_enc,
-            _get_key("client.pub"),
-        ),
-    )
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_CONFIRM
 
-    path = reverse("eligibility:confirm")
-    body = {"sub": "A0101011", "name": "Lastname"}
-    request = rf.post(path, body)
 
-    initialize_request(request)
-    session.update(request, agency=agency, verifier=verifier, oauth_token="token")
-
-    response = confirm(request)
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_eligibility_auth_request", "mocked_session_eligibility")
+def test_confirm_get_verified(client, mocked_session_update):
+    path = reverse(ROUTE_CONFIRM)
+    response = client.get(path)
 
     assert response.status_code == 302
-    assert response.url == reverse("enrollment:index")
+    assert response.url == reverse(ROUTE_ENROLLMENT)
+    mocked_session_update.assert_called_once()
 
 
-def _get_key(filename):
-    current_path = Path(os.path.dirname(os.path.realpath(__file__)))
-    file_path = current_path / "keys" / filename
-
-    with file_path.open(mode="rb") as pemfile:
-        key = str(pemfile.read(), "utf-8")
-
-    return key
-
-
-@httpretty.activate(verbose=True, allow_net_connect=False)
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "exception", [requests.ConnectionError, requests.Timeout, requests.TooManyRedirects, requests.HTTPError]
-)
-def test_confirm_failure_error_on_request(mocker, rf, exception):
-    agency, verifier = set_verifier(mocker)
+@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+def test_confirm_post_invalid_form(client, invalid_form_data, mocked_analytics_module):
+    path = reverse(ROUTE_CONFIRM)
+    response = client.post(path, invalid_form_data)
 
-    def raise_exception(*args, **kwargs):
-        raise exception()
-
-    mocker.patch("requests.get", new=raise_exception)
-
-    path = reverse("eligibility:confirm")
-    body = {"sub": "A7654321", "name": "Garcia"}
-    request = rf.post(path, body)
-
-    initialize_request(request)
-    session.update(request, agency=agency, verifier=verifier, oauth_token="token")
-
-    with pytest.raises(ApiError):
-        confirm(request)
+    mocked_analytics_module.started_eligibility.assert_called_once()
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_CONFIRM
 
 
-@httpretty.activate(verbose=True, allow_net_connect=False)
 @pytest.mark.django_db
-def test_confirm_failure_unexpected_status_code(mocker, rf):
-    agency, verifier = set_verifier(mocker)
+@pytest.mark.usefixtures("mocked_analytics_module", "mocked_eligibility_auth_request")
+def test_confirm_post_recaptcha_fail(mocker, client, invalid_form_data):
+    mocker.patch("benefits.eligibility.views.recaptcha.has_error", return_value=True)
+    messages = mocker.spy(benefits.eligibility.views, "messages")
 
-    httpretty.register_uri(httpretty.GET, "http://localhost/verify", status=404)
+    path = reverse(ROUTE_CONFIRM)
+    response = client.post(path, invalid_form_data)
 
-    path = reverse("eligibility:confirm")
-    body = {"sub": "A1234567", "name": "Garcia"}
-    request = rf.post(path, body)
-
-    initialize_request(request)
-    session.update(request, agency=agency, verifier=verifier, oauth_token="token")
-
-    with pytest.raises(ApiError, match=r"Unexpected eligibility"):
-        confirm(request)
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_CONFIRM
+    messages.error.assert_called_once()
 
 
-@httpretty.activate(verbose=True, allow_net_connect=False)
 @pytest.mark.django_db
-def test_confirm_failure_error_tokenizing_request(mocker, rf):
-    agency, verifier = set_verifier(mocker)
-    agency.jws_signing_alg = "not real"
+@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+def test_confirm_post_valid_form_eligibility_error(mocker, client, form_data, mocked_analytics_module):
+    mocker.patch("benefits.eligibility.views.api.get_verified_types", return_value=None)
 
-    path = reverse("eligibility:confirm")
-    body = {"sub": "A0101011", "name": "Lastname"}
-    request = rf.post(path, body)
+    path = reverse(ROUTE_CONFIRM)
+    response = client.post(path, form_data)
 
-    initialize_request(request)
-    session.update(request, agency=agency, verifier=verifier, oauth_token="token")
-
-    with pytest.raises(TokenError):
-        confirm(request)
+    mocked_analytics_module.returned_error.assert_called_once()
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_CONFIRM
 
 
-def _tokenize_response_error_scenarios():
-    return [
-        pytest.param(lambda verifier: "", id='TokenError("Invalid response format")'),
-        pytest.param(lambda verifier: "invalid token", id='TokenError("Invalid JWE token")'),
-        pytest.param(
-            lambda verifier: make_token(
-                {
-                    "jti": str(uuid.uuid4()),
-                    "iss": "test-server",
-                    "iat": int(datetime.datetime.utcnow().replace(tzinfo=datetime.timezone.utc).timestamp()),
-                    "eligibility": ["type1"],
-                },
-                "RS512",  # signing algorithm that doesn't match verifier.jws_signing_alg
-                _get_key("server.key"),
-                verifier.jwe_encryption_alg,
-                verifier.jwe_cek_enc,
-                _get_key("client.pub"),
-            ),
-            id='TokenError("JWS token signature verification failed")',
-        ),
-    ]
-
-
-@httpretty.activate(verbose=True, allow_net_connect=False)
 @pytest.mark.django_db
-@pytest.mark.parametrize("body_lambda", _tokenize_response_error_scenarios())
-def test_confirm_failure_error_tokenizing_response(mocker, rf, body_lambda):
-    agency, verifier = set_verifier(mocker)
+@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+def test_confirm_post_valid_form_eligibility_unverified(mocker, client, form_data, mocked_analytics_module):
+    mocker.patch("benefits.eligibility.views.api.get_verified_types", return_value=[])
 
-    httpretty.register_uri(
-        httpretty.GET,
-        "http://localhost/verify",
-        status=200,
-        body=body_lambda(verifier),
-    )
+    path = reverse(ROUTE_CONFIRM)
+    response = client.post(path, form_data)
 
-    path = reverse("eligibility:confirm")
-    body = {"sub": "A1234567", "name": "Garcia"}
-    request = rf.post(path, body)
+    mocked_analytics_module.returned_fail.assert_called_once()
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_UNVERIFIED
 
-    initialize_request(request)
-    session.update(request, agency=agency, verifier=None, oauth_token="token")
 
-    with pytest.raises(TokenError):
-        confirm(request)
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+def test_confirm_post_valid_form_eligibility_verified(
+    mocker, client, form_data, mocked_session_eligibility, mocked_session_update, mocked_analytics_module
+):
+    # mocked_session_eligibility is a fixture that mocks benefits.core.session.eligibility(request)
+    # call it here, passing a None request, to get the return value from the mock
+    eligibility = mocked_session_eligibility(None)
+    mocker.patch("benefits.eligibility.views.api.get_verified_types", return_value=[eligibility])
+
+    path = reverse(ROUTE_CONFIRM)
+    response = client.post(path, form_data)
+
+    mocked_session_update.assert_called_once()
+    mocked_analytics_module.returned_success.assert_called_once()
+    assert response.status_code == 302
+    assert response.url == reverse(ROUTE_ENROLLMENT)
