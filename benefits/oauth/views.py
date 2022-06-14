@@ -47,9 +47,16 @@ def authorize(request):
 
     logger.debug("OAuth access token authorized")
 
-    # we store the id_token in the user's session
-    # this is the minimal amount of information needed later to log the user out
-    session.update(request, oauth_token=token["id_token"])
+    # We store the id_token in the user's session. This is the minimal amount of information needed later to log the user out.
+    id_token = token["id_token"]
+    # We store the returned claim in case it can be used later in eligibility verification.
+    verifier = session.verifier(request)
+    if verifier.auth_claim:
+        userinfo = token.get("userinfo")
+        claim_value = token.get("userinfo").get(verifier.auth_claim) if userinfo else None
+        claim = verifier.auth_claim if claim_value else None
+
+    session.update(request, oauth_token=id_token, oauth_claim=claim)
 
     analytics.finished_sign_in(request)
 
