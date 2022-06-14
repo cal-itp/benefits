@@ -26,7 +26,7 @@ def invalid_form_data():
 
 
 @pytest.mark.django_db
-def test_token_ineligibile(client):
+def test_token_ineligible(client):
     path = reverse(ROUTE_TOKEN)
     with pytest.raises(AttributeError, match=r"eligibility"):
         client.get(path)
