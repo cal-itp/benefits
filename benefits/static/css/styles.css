@@ -93,7 +93,7 @@ main .main-row .col-lg-6.image {
 .one-column-image {
   background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
   background-size: cover;
-  height: 131px;
+  height: 292px;
 }
 
 footer {
@@ -612,6 +612,10 @@ footer.global-footer .footer-links a:active {
 }
 
 @media (max-width: 992px) {
+  .one-column-image {
+    height: 131px;
+  }
+
   .container.content .btn-lg {
     padding: 1.1875rem 0.813rem;
   }
