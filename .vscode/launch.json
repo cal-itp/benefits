@@ -12,8 +12,7 @@
       "args": ["runserver", "--insecure", "0.0.0.0:8000"],
       "django": true,
       "env": {
-        "DJANGO_DEBUG": "true",
-        "CYPRESS_baseUrl": "http://localhost:8000"
+        "DJANGO_DEBUG": "true"
       }
     }
   ]
