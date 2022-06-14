@@ -1,2 +1,5 @@
 # default to benefits-admin team
 * @cal-itp/benefits-admin
+
+/docs/deployment/ @cal-itp/benefits-admin @cal-itp/cdt-devsecops
+/terraform/ @cal-itp/benefits-admin @cal-itp/cdt-devsecops
