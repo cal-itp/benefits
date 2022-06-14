@@ -57,6 +57,8 @@ def test_authorize_fail(mocked_oauth_client_instance, app_request):
     assert result.url == reverse(ROUTE_START)
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
 def test_authorize_success(mocked_oauth_client_instance, mocked_analytics_module, app_request):
     mocked_oauth_client = mocked_oauth_client_instance.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token"}
