@@ -230,7 +230,7 @@ def test_confirm_post_recaptcha_fail(mocker, client, invalid_form_data):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_eligibility_auth_request")
 def test_confirm_post_valid_form_eligibility_error(mocker, client, form_data, mocked_analytics_module):
-    mocker.patch("benefits.eligibility.views.api.get_verified_types", return_value=None)
+    mocker.patch("benefits.core.models.EligibilityVerifier.get_verified_types", return_value=None)
 
     path = reverse(ROUTE_CONFIRM)
     response = client.post(path, form_data)
@@ -243,7 +243,7 @@ def test_confirm_post_valid_form_eligibility_error(mocker, client, form_data, mo
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_eligibility_auth_request")
 def test_confirm_post_valid_form_eligibility_unverified(mocker, client, form_data, mocked_analytics_module):
-    mocker.patch("benefits.eligibility.views.api.get_verified_types", return_value=[])
+    mocker.patch("benefits.core.models.EligibilityVerifier.get_verified_types", return_value=[])
 
     path = reverse(ROUTE_CONFIRM)
     response = client.post(path, form_data)
@@ -261,7 +261,7 @@ def test_confirm_post_valid_form_eligibility_verified(
     # mocked_session_eligibility is a fixture that mocks benefits.core.session.eligibility(request)
     # call it here, passing a None request, to get the return value from the mock
     eligibility = mocked_session_eligibility(None)
-    mocker.patch("benefits.eligibility.views.api.get_verified_types", return_value=[eligibility])
+    mocker.patch("benefits.core.models.EligibilityVerifier.get_verified_types", return_value=[eligibility])
 
     path = reverse(ROUTE_CONFIRM)
     response = client.post(path, form_data)
