@@ -1,48 +1,56 @@
 {% extends "core/page.html" %}
-
+{% load i18n %}
 {% block classes %}
     {{ block.super |add:" eligibility-start"}}
 {% endblock %}
 
-{% block container_content %}
+{% block main_content %}
+    <div class="one-column-image"></div>
 
-    {% block icon_title %}
-        {{ block.super }}
-    {% endblock %}
+    <div class="container">
+        <h1 class="headline">{% translate "core.pages.agency_index.p[3]" %}</h1>
+        <p>{% blocktranslate with info_link=info_link%}core.pages.agency_index.p[0]{{ info_link }}{% endblocktranslate %}</p>
+        <p>{% translate "core.pages.agency_index.p[2]" %}</p>
 
-    <h1 class="media-title text-center">{{title}}</h1>
+        <h1 class="media-title">{{title}}</h1>
 
-    {% block media_list %}
-        {% if media|length_is:"0" %}{% else %}
-            <ul class="media-list">
-            {% for item in media %}
-                <li class="media">
-                    <div class="media-line">
-                        {% include "core/includes/icon.html" with icon=item.icon %}
-                    </div>
-                    <div class="media-body">
-                        <div class="media-body--heading">
-                            <ol start="{{ forloop.counter }}">
-                                <li>{{ item.heading }}</li>
-                            </ol>
+        {% block media_list %}
+            {% if media|length_is:"0" %}{% else %}
+                <ul class="media-list">
+                {% for item in media %}
+                    <li class="media">
+                        <div class="media-line">
+                            {% include "core/includes/icon.html" with icon=item.icon %}
                         </div>
-                        <div class="media-body--details">
-                            {{ item.details }}
+                        <div class="media-body">
+                            <div class="media-body--heading">
+                                <span>{{ item.heading }}</span>
+                            </div>
+                            <div class="media-body--details">
+                                <p>{{ item.details }}</p>
+                                <div class="media-body--items">
+                                    <ul>
+                                        {% for l in item.bullets %}
+                                            <li>{{ l }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="media-body--links">
+                                {% for l in item.links %}
+                                    {% include "core/includes/button.html" with button=l %}
+                                {% endfor %}
+                            </div>
                         </div>
-                        <div class="media-body--links">
-                            {% for l in item.links %}
-                                {% include "core/includes/button.html" with button=l %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                </li>
-            {% endfor %}
-            </ul>
-        {% endif %}
-    {% endblock %}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endblock %}
 
-    {% block buttons %}
-        {{ block.super }}
-    {% endblock %}
+        {% block buttons %}
+            {{ block.super }}
+        {% endblock %}
+    </div>
 
 {% endblock %}

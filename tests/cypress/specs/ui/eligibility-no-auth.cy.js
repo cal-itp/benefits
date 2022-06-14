@@ -76,17 +76,17 @@ describe("Multiple verifier, no AuthProvider: Eligibility confirmation form spec
     cy.get("input:focus").should("have.length", 0);
     cy.contains("MST Courtesy Card number *").click();
 
-    cy.get("input:focus").should("have.length", 1);
     cy.url().should("include", eligibility_confirm_url);
   });
 
   it("Has a last name form label and corresponding form field", () => {
     cy.contains("Your MST Courtesy Card");
     cy.contains("An active card that has not expired");
+
     cy.contains("Continue").click();
+
     cy.get("input:focus").should("have.length", 0);
     cy.contains("Last name (as it appears on Courtesy Card) *").click();
-
     cy.get("input:focus").should("have.length", 1);
     cy.url().should("include", eligibility_confirm_url);
   });

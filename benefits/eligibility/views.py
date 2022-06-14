@@ -68,11 +68,6 @@ def start(request):
     payment_options_link = f"{reverse('core:help')}#payment-options"
     media = [
         dict(
-            icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-            heading=_(verifier.start_item_name),
-            details=_(verifier.start_item_description),
-        ),
-        dict(
             icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
             heading=_("eligibility.pages.start.bankcard.title"),
             details=_("eligibility.pages.start.bankcard.text"),
@@ -96,11 +91,12 @@ def start(request):
             raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
 
         oauth_help_link = f"{reverse('core:help')}#login-gov"
+        oauth_help_more_link = f"{reverse('core:help')}#login-gov-verify-items"
 
         media.insert(
             0,
             dict(
-                icon=viewmodels.Icon("idscreencheck", pgettext("image alt text", "core.icons.idscreencheck")),
+                icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
                 heading=_("eligibility.pages.start.oauth.heading"),
                 details=_("eligibility.pages.start.oauth.details"),
                 links=[
@@ -109,17 +105,37 @@ def start(request):
                         text=_("eligibility.pages.start.oauth.link_text"),
                         url=oauth_help_link,
                         rel="noopener noreferrer",
-                    )
+                    ),
+                    viewmodels.Button.link(
+                        classes="btn-text btn-link",
+                        text=_("eligibility.pages.start.oauth.link_text[2]"),
+                        url=oauth_help_more_link,
+                        rel="noopener noreferrer",
+                    ),
+                ],
+                bullets=[
+                    _("eligibility.pages.start.oauth.required_items[0]"),
+                    _("eligibility.pages.start.oauth.required_items[1]"),
+                    _("eligibility.pages.start.oauth.required_items[2]"),
                 ],
             ),
         )
 
         if not session.logged_in(request):
             button = viewmodels.Button.login(
-                label=_(verifier.auth_provider.sign_in_button_label),
-                text="",
+                text=_(verifier.auth_provider.sign_in_button_label),
                 url=reverse("oauth:login"),
             )
+
+    else:
+        media.insert(
+            0,
+            dict(
+                icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
+                heading=_(verifier.start_item_name),
+                details=_(verifier.start_item_description),
+            ),
+        )
 
     page = viewmodels.Page(
         title=_("eligibility.pages.start.title"),

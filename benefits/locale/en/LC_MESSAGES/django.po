@@ -269,7 +269,7 @@ msgstr ""
 msgid "core.pages.agency_index.p[0]%(info_link)s"
 msgstr "You can tap your credit or debit card when you board, "
 "and your discount will automatically apply every time you ride."
-" <strong><a href=\"%(info_link)s\">Learn more about Cal-ITP Benefits.</a></strong>"
+" <strong><a href=\"%(info_link)s\">Learn more about Cal-ITP Benefits</a></strong><span class='period'>.</span>"
 
 msgid "core.pages.agency_index.p[1]"
 msgstr "You will need your California driver’s license or ID "
@@ -277,6 +277,9 @@ msgstr "You will need your California driver’s license or ID "
 
 msgid "core.pages.agency_index.p[2]"
 msgstr "The Cal-ITP Benefits program is currently only open to those <strong>ages 65 or older</strong>."
+
+msgid "core.pages.agency_index.p[3]"
+msgstr "Connect your bank card to your public transit discount with Cal-ITP Benefits."
 
 msgid "core.pages.agency_index.button.label"
 msgstr "Connect your bank card to your discount today!"
@@ -308,6 +311,9 @@ msgstr ""
 msgctxt "image alt text"
 msgid "core.icons.bankcard"
 msgstr "Bank card icon with contactless symbol"
+
+msgid "core.pages.start.headline"
+msgstr "Connect your bank card to your public transit discount with Cal-ITP Benefits."
 
 #: benefits/eligibility/forms.py:37
 msgid "eligibility.forms.confirm.submit"
@@ -353,11 +359,11 @@ msgstr "Computer monitor with checkmark"
 
 #: benefits/eligibility/views.py:74
 msgid "eligibility.pages.start.bankcard.title"
-msgstr "Provide your bank card details"
+msgstr "Your bank card details"
 
 #: benefits/eligibility/views.py:75
 msgid "eligibility.pages.start.bankcard.text"
-msgstr "Must be a contactless debit or credit card by Visa or Mastercard."
+msgstr "Your card must be a contactless debit or credit card by Visa or Mastercard."
 
 msgid "eligibility.pages.start.bankcard.button[0].link"
 msgstr "Don’t have a bank card?"
@@ -370,17 +376,29 @@ msgid "eligibility.buttons.continue"
 msgstr "Continue"
 
 msgid "eligibility.pages.start.oauth.heading"
-msgstr "Sign in to Login.gov"
+msgstr "A Login.gov account with identity verification"
 
 msgid "eligibility.pages.start.oauth.details"
-msgstr "Login.gov is a safe way to sign in to government services."
+msgstr "Login.gov is a safe way to sign in to government services. If you do not have an account already, you will be able to create one. You will also need to provide proof of your identity. Some of the items you can use to do that include:"
 
 msgid "eligibility.pages.start.oauth.link_text"
 msgstr "Learn more about Login.gov"
 
+msgid "eligibility.pages.start.oauth.link_text[2]"
+msgstr "Don’t have access to these items?"
+
+msgid "eligibility.pages.start.oauth.required_items[0]"
+msgstr "Your state-issued ID card"
+
+msgid "eligibility.pages.start.oauth.required_items[1]"
+msgstr "Your Social Security number"
+
+msgid "eligibility.pages.start.oauth.required_items[2]"
+msgstr "Don’t have access to these items?"
+
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
-msgstr "Create an account or sign in with"
+msgstr "Get started with"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signout"
@@ -511,7 +529,7 @@ msgid "eligibility.forms.confirm.dmv.fields.name"
 msgstr "Last name (as it appears on ID)"
 
 msgid "eligibility.pages.start.dmv.content_title"
-msgstr "There are three steps to link your transit discount to your bank card."
+msgstr "You will need a few items to connect your discount:"
 
 msgid "eligibility.pages.start.dmv.p[0]"
 msgstr ""

@@ -7,6 +7,10 @@ body {
   color: #000000;
 }
 
+.bg-danger {
+  display: none;
+}
+
 body,
 h1,
 h2,
@@ -54,6 +58,11 @@ label {
   letter-spacing: 0.05em;
 }
 
+.main-content .main-primary a:not(.btn) {
+  background: none;
+  text-decoration: underline !important;
+}
+
 /* making the sticky footer */
 
 html,
@@ -71,6 +80,7 @@ main {
   flex-shrink: 0 !important;
 }
 
+/* All pages but the Start Page */
 main .main-row {
   min-height: calc(100vh - 120px);
 }
@@ -78,6 +88,12 @@ main .main-row {
 main .main-row .col-lg-6.image {
   background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
   background-size: cover;
+}
+
+.one-column-image {
+  background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
+  background-size: cover;
+  height: 131px;
 }
 
 footer {
@@ -113,14 +129,17 @@ footer.global-footer .footer-links a:active {
 #login {
   background: #046b99;
   border: 0;
-  border-radius: 0;
   color: #ffffff;
   cursor: pointer;
   display: block;
   line-height: 1;
-  margin: 0;
-  padding: 0.5rem 1.5rem;
+  padding: 12px 14px;
   min-width: auto;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-right: inherit;
+  font-size: 16px;
+  margin-bottom: 32px;
 }
 
 #login:hover {
@@ -135,7 +154,9 @@ footer.global-footer .footer-links a:active {
   background-size: contain;
   display: inline-block;
   position: relative;
-  width: 9.75rem;
+  width: 132px;
+  height: 18px;
+  margin-left: 5px;
   vertical-align: baseline;
 }
 
@@ -232,79 +253,56 @@ footer.global-footer .footer-links a:active {
 /* Eligibility Start */
 
 .media-title {
-  margin-top: 0;
+  margin-top: 100px;
+  margin-bottom: 60px;
   font-size: 24px;
   line-height: 30px;
 }
 
 .media-list {
-  margin-top: 100px;
-  margin-bottom: 68px;
+  margin-top: 0;
+  margin-bottom: 80px;
   padding: 0;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  gap: 116px;
 }
 
 .media-list .media {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  width: 33%;
-}
-
-.media-list .media:first-child .media-line:before,
-.media-list .media:last-child .media-line:after {
-  border-color: transparent;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
 }
 
 .media-list .media .media-line {
   position: relative;
 }
 
-.media-list .media .media-line:before,
-.media-list .media .media-line:after {
-  content: " ";
-  position: absolute;
-  top: 50%;
-  width: 142.5px;
-  border-top: 3px dashed #53b3e2;
-  margin-top: -1px;
-  display: block;
-}
-
-.media-list .media .media-line:before {
-  right: 128px;
-}
-
-.media-list .media .media-line:after {
-  left: 128px;
-}
-
 .media-list .media .media-line .icon {
-  width: 128px;
-  height: 128px;
+  width: 115px;
+  height: 115px;
   position: relative;
   display: block;
   z-index: 10;
 }
 
 .media-list .media .media-body {
-  padding: 0 3.4rem;
+  padding: 0 60px;
   line-height: 26.1px;
 }
 
 .media-list .media .media-body--heading {
   font-size: 18px;
   letter-spacing: 0.05em;
-  margin-top: 64px;
-  margin-bottom: 20px;
   line-height: 26.1px;
 }
 
-.media-list .media .media-body--heading ol {
+.media-list .media .media-body--heading {
   font-weight: 700;
   padding-left: 0;
   line-height: 26.1px;
+  margin-bottom: 16px;
 }
 
 .media-list .media .media-body--details {
@@ -314,11 +312,25 @@ footer.global-footer .footer-links a:active {
   line-height: 26.1px;
 }
 
+.media-list .media .media-body--details p {
+  margin-bottom: 12px;
+}
+
+.media-list .media .media-body--items {
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  line-height: 26.1px;
+}
+
+.media-list .media .media-body--items li {
+  list-style-type: disc;
+}
+
 .media-list .media .media-body .media-body--links .btn-lg {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 20px;
   letter-spacing: 0.05em;
-  padding: 0;
+  padding: 0 0 6px 0;
   text-align: left;
   width: 100%;
   margin: 0;
@@ -328,7 +340,7 @@ footer.global-footer .footer-links a:active {
   color: #2f4c65;
 }
 
-.eligibility-start .container.content {
+.eligibility-start .main-container {
   padding-top: 3rem;
   padding-bottom: 2rem;
   width: initial;
@@ -342,14 +354,23 @@ footer.global-footer .footer-links a:active {
   justify-content: right;
 }
 
-.eligibility-start .container.content .buttons .btn {
+.eligibility-start .main-container .buttons .btn {
   margin-left: initial;
   margin-right: initial;
 }
 
-.eligibility-start .container.content .buttons label {
+.eligibility-start .main-container .buttons label {
   margin: 0 0.8rem 0 0;
   line-height: 1;
+}
+
+.eligibility-start h1.headline {
+  font-size: 35px;
+  line-height: 52.5px;
+  letter-spacing: 0.05em;
+  text-align: center;
+  margin-bottom: 50px;
+  margin-top: 64px;
 }
 
 /* Enrollment Success */
@@ -468,7 +489,7 @@ footer.global-footer .footer-links a:active {
 }
 
 .container.content.help h1 {
-  letter-spacing: 0.05rem;
+  letter-spacing: 0.05em;
   font-weight: 700;
   font-size: 2.25rem;
   text-align: center;
@@ -477,7 +498,7 @@ footer.global-footer .footer-links a:active {
 }
 
 .container.content.help h2 {
-  letter-spacing: 0.05rem;
+  letter-spacing: 0.05em;
   font-weight: 700;
   font-size: 1.5rem;
   margin-bottom: 3rem;
@@ -517,7 +538,8 @@ footer.global-footer .footer-links a:active {
   margin-bottom: 2rem;
 }
 
-.container.content .btn-lg {
+.container.content .btn-lg,
+.eligibility-start .btn-link {
   font-weight: 500;
   margin-bottom: 1rem;
   padding: 0.8125rem;
@@ -525,7 +547,8 @@ footer.global-footer .footer-links a:active {
   width: 100%;
 }
 
-.container.content .btn-link {
+.container.content .btn-link,
+.eligibility-start .btn-link {
   text-decoration: underline;
 }
 
@@ -536,7 +559,7 @@ footer.global-footer .footer-links a:active {
     padding: 1rem 1.25rem;
   }
 
-  .eligibility-start .container.content .buttons {
+  .eligibility-start .main-container .buttons {
     padding: 0 3rem;
   }
 }
@@ -622,40 +645,24 @@ footer.global-footer .footer-links a:active {
 
   /* Eligibility Start */
 
-  .media-list {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
+  .eligibility-start h1.headline {
+    text-align: left;
+    font-size: 24px;
+    line-height: 36px;
+    margin-top: 24px;
+    margin-bottom: 16px;
   }
 
-  .media-list .media {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    width: 100%;
+  .eligibility-start .main-content {
+    padding-top: 0;
   }
 
-  .media-list .media .media-body--heading {
-    margin-top: 0;
-  }
-
-  .media-list .media .media-line::before {
+  .eligibility-start .period {
     display: none;
   }
 
-  .media-list .media .media-line::after {
-    top: 1px;
-    height: calc(100% + 40px);
-    left: -50%;
-    right: 50%;
-    z-index: 1;
-    width: 100%;
-    border-right: 3px dashed #53b3e2;
-    border-top: none;
-  }
-
-  .eligibility-start .container.content {
-    padding-top: 0;
+  .media-list {
+    gap: 40px;
   }
 
   .media-list .media .media-line .icon {
@@ -663,39 +670,78 @@ footer.global-footer .footer-links a:active {
     height: 90px;
   }
 
+  .media-list .media {
+    flex-direction: row;
+  }
+
+  .media-list .media .media-line {
+    margin: 0 20px 0 0;
+  }
+
   .media-list .media .media-body {
-    padding: 0 0 0 40px;
+    padding: 0;
+  }
+
+  .media-list .media .media-body--heading {
+    height: 90px;
   }
 
   .media-list .media .media-body--details {
     padding-bottom: 25px;
+    margin-left: -100px;
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .media-list .media .media-body--links {
+    margin-left: -100px;
+    float: right;
+  }
+
+  .eligibility-start .main-content .container strong a {
+    display: block;
+    line-height: 15px;
+    letter-spacing: 0.05em;
+    padding: 6px;
+    text-align: left;
+    width: 100%;
+    margin: 18px 0;
+    font-size: 18px;
+    text-decoration: none !important;
+    letter-spacing: 0.2px;
+    border: 2px solid #046b99;
+    border-radius: 0.3rem;
+    font-weight: 500;
+    width: 212px;
+    line-height: 22.5px;
   }
 
   .media-list .media .media-body .media-body--links .btn-lg {
-    font-size: 12px;
-    line-height: 15px;
-    letter-spacing: 0.05em;
-    padding: 11px;
+    letter-spacing: 0.02em;
+    padding: 6px;
     text-align: left;
     width: 100%;
     margin: 0;
-    font-size: 16px;
+    font-size: 18px;
     text-decoration: none;
     letter-spacing: 0.2px;
     border: 2px solid #046b99;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
+    font-weight: 500;
+    width: 212px;
+    line-height: 22.5px;
+    border-radius: 3px;
+    display: block;
   }
 
   .media-title {
     text-align: left !important;
+    margin-top: 42px;
+    margin-bottom: 46px;
   }
 
   .eligibility-start .media-list {
     margin-bottom: 60px;
-  }
-
-  .eligibility-start .media-list li {
-    list-style: none;
   }
 
   .eligibility-start .buttons {
@@ -711,6 +757,15 @@ footer.global-footer .footer-links a:active {
   /* Override for only the Agency Index page */
   .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 2rem;
+  }
+
+  .eligibility-start #login {
+    margin-left: inherit;
+  }
+
+  .eligibility-start #login .fallback-text {
+    display: block;
+    margin: 0 auto;
   }
 
   .logged-out.enrollment-success .container.content {
