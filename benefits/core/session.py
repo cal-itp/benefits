@@ -24,6 +24,7 @@ _ENROLLMENT_TOKEN_EXP = "enrollment_token_exp"
 _LANG = "lang"
 _LIMITCOUNTER = "limitcounter"
 _LIMITUNTIL = "limituntil"
+_OAUTH_CLAIM = "oauth_claim"
 _OAUTH_TOKEN = "oauth_token"
 _ORIGIN = "origin"
 _START = "start"
@@ -61,6 +62,7 @@ def context_dict(request):
         _ENROLLMENT_TOKEN_EXP: enrollment_token_expiry(request),
         _LANG: language(request),
         _OAUTH_TOKEN: oauth_token(request),
+        _OAUTH_CLAIM: oauth_claim(request),
         _ORIGIN: origin(request),
         _LIMITUNTIL: rate_limit_time(request),
         _START: start(request),
@@ -160,6 +162,12 @@ def oauth_token(request):
     return request.session.get(_OAUTH_TOKEN)
 
 
+def oauth_claim(request):
+    """Get the oauth claim from the request's session, or None"""
+    logger.debug("Get session oauth claim")
+    return request.session.get(_OAUTH_CLAIM)
+
+
 def origin(request):
     """Get the origin for the request's session, or None."""
     logger.debug("Get session origin")
@@ -202,6 +210,7 @@ def reset(request):
     request.session[_ENROLLMENT_TOKEN] = None
     request.session[_ENROLLMENT_TOKEN_EXP] = None
     request.session[_OAUTH_TOKEN] = None
+    request.session[_OAUTH_CLAIM] = None
     request.session[_VERIFIER] = None
 
     if _UID not in request.session or not request.session[_UID]:
@@ -262,6 +271,7 @@ def update(
     enrollment_token=None,
     enrollment_token_exp=None,
     oauth_token=None,
+    oauth_claim=None,
     origin=None,
     verifier=None,
 ):
@@ -291,6 +301,9 @@ def update(
     if oauth_token is not None:
         logger.debug(f"Update session {_OAUTH_TOKEN}")
         request.session[_OAUTH_TOKEN] = oauth_token
+    if oauth_claim is not None:
+        logger.debug(f"Update session {_OAUTH_CLAIM}")
+        request.session[_OAUTH_CLAIM] = oauth_claim
     if origin is not None:
         logger.debug(f"Update session {_ORIGIN}")
         request.session[_ORIGIN] = origin
