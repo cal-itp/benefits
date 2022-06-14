@@ -654,12 +654,29 @@ footer.global-footer .footer-links a:active {
     height: 90px;
   }
 
+  .media-list .media {
+    flex-direction: row;
+  }
+
+  .media-list .media .media-line {
+    margin: 0 20px 0 0;
+  }
+
   .media-list .media .media-body {
-    padding: 0 0 0 40px;
+    padding: 0;
+  }
+
+  .media-list .media .media-body--heading {
+    height: 90px;
   }
 
   .media-list .media .media-body--details {
     padding-bottom: 25px;
+    margin-left: -100px;
+  }
+
+  .media-list .media .media-body--links {
+    margin-left: -100px;
   }
 
   .eligibility-start .main-content .container strong a {
