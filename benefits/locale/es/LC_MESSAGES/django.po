@@ -254,7 +254,7 @@ msgstr ""
 
 
 msgid "core.pages.agency_index.p[0]%(info_link)s"
-msgstr "Puede acercar su tarjeta de crédito o débito cuando aborde, y su descuento se aplicará automáticamente cada vez que viaje. <strong><a href=\"%(info_link)s\">Conozca más sobre beneficios de Cal-ITP</a></strong>."
+msgstr "Puede acercar su tarjeta de crédito o débito cuando aborde, y su descuento se aplicará automáticamente cada vez que viaje. <strong><a href=\"%(info_link)s\">Conozca más sobre beneficios de Cal-ITP</a></strong><span class='period'>.</span>"
 
 msgid "core.pages.agency_index.p[1]"
 msgstr "Necesitará su licencia de conducir o tarjeta de identificación de California y su tarjeta sin contacto emitida por el banco para comenzar."

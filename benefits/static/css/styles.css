@@ -93,7 +93,7 @@ main .main-row .col-lg-6.image {
 .one-column-image {
   background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
   background-size: cover;
-  height: 292px;
+  height: 131px;
 }
 
 footer {
@@ -645,8 +645,24 @@ footer.global-footer .footer-links a:active {
 
   /* Eligibility Start */
 
+  .eligibility-start h1.headline {
+    text-align: left;
+    font-size: 24px;
+    line-height: 36px;
+    margin-top: 24px;
+    margin-bottom: 16px;
+  }
+
   .eligibility-start .main-content {
     padding-top: 0;
+  }
+
+  .eligibility-start .period {
+    display: none;
+  }
+
+  .media-list {
+    gap: 40px;
   }
 
   .media-list .media .media-line .icon {
@@ -673,17 +689,20 @@ footer.global-footer .footer-links a:active {
   .media-list .media .media-body--details {
     padding-bottom: 25px;
     margin-left: -100px;
+    font-size: 20px;
+    line-height: 30px;
   }
 
   .media-list .media .media-body--links {
     margin-left: -100px;
+    float: right;
   }
 
   .eligibility-start .main-content .container strong a {
     display: block;
     line-height: 15px;
     letter-spacing: 0.05em;
-    padding: 11px;
+    padding: 6px;
     text-align: left;
     width: 100%;
     margin: 18px 0;
@@ -698,9 +717,8 @@ footer.global-footer .footer-links a:active {
   }
 
   .media-list .media .media-body .media-body--links .btn-lg {
-    line-height: 15px;
-    letter-spacing: 0.05em;
-    padding: 11px;
+    letter-spacing: 0.02em;
+    padding: 6px;
     text-align: left;
     width: 100%;
     margin: 0;
@@ -708,14 +726,19 @@ footer.global-footer .footer-links a:active {
     text-decoration: none;
     letter-spacing: 0.2px;
     border: 2px solid #046b99;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
     font-weight: 500;
     width: 212px;
     line-height: 22.5px;
+    float: right;
+    border-radius: 3px;
+    display: block;
   }
 
   .media-title {
     text-align: left !important;
+    margin-top: 42px;
+    margin-bottom: 46px;
   }
 
   .eligibility-start .media-list {
