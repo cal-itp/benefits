@@ -214,8 +214,15 @@ def confirm(request):
         eligibility = session.eligibility(request)
         return verified(request, [eligibility.name])
 
-    # GET from an unverified user, present the form
+    # GET from an unverified user, see if verifier can get verified types and if not, present the form
     else:
+        # TODO: move this logic into EligibilityVerifier model
+        if verifier.requires_authentication:
+            oauth_claim = session.oauth_claim(request)
+            if oauth_claim and verifier.auth_claim == oauth_claim:
+                # TODO: refactor verifier to hold single eligibility_type
+                verified_types = list(map(lambda t: t.name, verifier.eligibility_types.all()))
+                return verified(request, verified_types)
         return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
 
 
