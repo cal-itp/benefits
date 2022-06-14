@@ -124,6 +124,7 @@ def retry(request):
         if form.is_valid():
             agency = session.agency(request)
             page = viewmodels.Page(
+                classes="no-image-mobile",
                 title=_("enrollment.pages.retry.title"),
                 icon=viewmodels.Icon("bankcardquestion", pgettext("image alt text", "core.icons.bankcardquestion")),
                 content_title=_("enrollment.pages.retry.title"),
