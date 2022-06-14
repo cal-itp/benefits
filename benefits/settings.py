@@ -267,7 +267,7 @@ CSP_CONNECT_SRC = ["'self'", "https://api.amplitude.com/"]
 env_connect_src = _filter_empty(os.environ.get("DJANGO_CSP_CONNECT_SRC", "").split(","))
 CSP_CONNECT_SRC.extend(env_connect_src)
 
-CSP_FONT_SRC = ["https://california.azureedge.net/cdt/statetemplate/", "https://fonts.gstatic.com/"]
+CSP_FONT_SRC = ["'self'", "https://california.azureedge.net/cdt/statetemplate/", "https://fonts.gstatic.com/"]
 env_font_src = _filter_empty(os.environ.get("DJANGO_CSP_FONT_SRC", "").split(","))
 CSP_FONT_SRC.extend(env_font_src)
 
