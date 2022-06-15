@@ -270,3 +270,22 @@ def test_confirm_post_valid_form_eligibility_verified(
     mocked_analytics_module.returned_success.assert_called_once()
     assert response.status_code == 302
     assert response.url == reverse(ROUTE_ENROLLMENT)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+def test_confirm_get_oauth_verified(
+    mocker, client, mocked_session_eligibility, mocked_session_update, mocked_analytics_module
+):
+    # mocked_session_eligibility is a fixture that mocks benefits.core.session.eligibility(request)
+    # call it here, passing a None request, to get the return value from the mock
+    eligibility = mocked_session_eligibility(None)
+    mocker.patch("benefits.eligibility.verify.eligibility_from_oauth", return_value=[eligibility])
+
+    path = reverse(ROUTE_CONFIRM)
+    response = client.get(path)
+
+    mocked_session_update.assert_called_once()
+    mocked_analytics_module.returned_success.assert_called_once()
+    assert response.status_code == 302
+    assert response.url == reverse(ROUTE_ENROLLMENT)
