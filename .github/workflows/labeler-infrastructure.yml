@@ -1,0 +1,18 @@
+name: Label infrastructure
+
+on:
+  pull_request:
+    branches: [dev]
+    types: [opened]
+    paths:
+      - 'docs/deployment/**'
+      - 'terraform/**'
+
+jobs:
+  label-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: add-label
+        uses: andymckay/labeler@master
+        with:
+          add-labels: "infrastructure"
