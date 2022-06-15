@@ -7,6 +7,13 @@ body {
   color: #000000;
 }
 
+@font-face {
+  font-family: "Public Sans";
+  font-weight: 700;
+  font-style: normal;
+  src: local("PublicSans"), url("../fonts/PublicSans-Bold.woff") format("woff");
+}
+
 .bg-danger {
   display: none;
 }
@@ -133,13 +140,14 @@ footer.global-footer .footer-links a:active {
   cursor: pointer;
   display: block;
   line-height: 1;
-  padding: 12px 14px;
+  padding: 11.999px 13.4px;
   min-width: auto;
   text-transform: none;
   letter-spacing: 0;
   margin-right: inherit;
   font-size: 16px;
   margin-bottom: 32px;
+  font-family: "Public Sans", Roboto, system-ui;
 }
 
 #login:hover {
@@ -157,10 +165,8 @@ footer.global-footer .footer-links a:active {
   width: 132px;
   height: 18px;
   margin-left: 5px;
+  padding-top: 1px;
   vertical-align: baseline;
-}
-
-.fallback-text {
   color: transparent;
 }
 
@@ -744,28 +750,23 @@ footer.global-footer .footer-links a:active {
     margin-bottom: 60px;
   }
 
-  .eligibility-start .buttons {
-    width: 66%;
-    margin: 0 auto;
+  #login .fallback-text {
+    padding-top: 14px;
+    margin: 8px auto 0 auto;
     display: block;
   }
 
-  .eligibility-start #login {
-    width: 100%;
+  #login {
+    line-height: unset;
+    padding: 12px 67.5px;
+    font-size: 20px;
+    margin: 30px auto;
+    display: inline-block;
   }
 
   /* Override for only the Agency Index page */
   .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 2rem;
-  }
-
-  .eligibility-start #login {
-    margin-left: inherit;
-  }
-
-  .eligibility-start #login .fallback-text {
-    display: block;
-    margin: 0 auto;
   }
 
   .logged-out.enrollment-success .container.content {
