@@ -158,6 +158,7 @@ def start(request):
     ctx = page.context_dict()
     ctx["title"] = _(verifier.start_content_title)
     ctx["media"] = media
+    ctx["info_link"] = f"{reverse(ROUTE_HELP)}#about"
 
     return TemplateResponse(request, TEMPLATE_START, ctx)
 
