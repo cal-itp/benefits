@@ -3,10 +3,8 @@ The core application: Common model definitions.
 """
 import logging
 
-from django.conf import settings
 from django.db import models
 from django.urls import reverse
-from eligibility_api.client import Client
 
 
 logger = logging.getLogger(__name__)
@@ -109,43 +107,6 @@ class EligibilityVerifier(models.Model):
         """Get an EligibilityVerifier instance by its ID."""
         logger.debug(f"Get {EligibilityVerifier.__name__} by id: {id}")
         return EligibilityVerifier.objects.get(id=id)
-
-    def get_verified_types(self, form=None, agency=None, oauth_claim=None):
-        if form is not None and agency is not None:
-            return self._get_api_verified_types(form, agency)
-        elif oauth_claim is not None and self.requires_authentication and self.auth_claim == oauth_claim:
-            # TODO: refactor verifier to hold single eligibility_type
-            return list(map(lambda t: t.name, self.eligibility_types.all()))
-        else:
-            return []
-
-    def _get_api_verified_types(self, form, agency):
-        sub, name = form.cleaned_data.get("sub"), form.cleaned_data.get("name")
-
-        client = Client(
-            verify_url=self.api_url,
-            headers={self.api_auth_header: self.api_auth_key},
-            issuer=settings.ALLOWED_HOSTS[0],
-            agency=agency.agency_id,
-            jws_signing_alg=agency.jws_signing_alg,
-            client_private_key=agency.private_key_data,
-            jwe_encryption_alg=self.jwe_encryption_alg,
-            jwe_cek_enc=self.jwe_cek_enc,
-            server_public_key=self.public_key_data,
-        )
-
-        # get the eligibility type names to check
-        types = list(map(lambda t: t.name, agency.types_to_verify(self)))
-
-        response = client.verify(sub, name, types)
-
-        if response.error and any(response.error):
-            form.add_api_errors(response.error)
-            return None
-        elif any(response.eligibility):
-            return list(response.eligibility)
-        else:
-            return []
 
 
 class PaymentProcessor(models.Model):
