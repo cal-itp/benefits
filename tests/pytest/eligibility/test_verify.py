@@ -1,7 +1,7 @@
 import pytest
 
 from benefits.eligibility.forms import EligibilityVerificationForm
-from benefits.eligibility.verify import eligibility_from_api
+from benefits.eligibility.verify import eligibility_from_api, eligibility_from_oauth
 
 
 @pytest.fixture
@@ -48,3 +48,39 @@ def test_eligibility_from_api_no_verified_types(mocker, first_agency, first_veri
 
     assert response == verified_types
     form.add_api_errors.assert_not_called()
+
+
+@pytest.mark.django_db
+def test_eligibility_from_oauth_auth_not_required(mocked_session_verifier_auth_not_required):
+    # mocked_session_verifier_auth_not_required is Mocked version of the session.verifier() function
+    # call it (with a None request) to return a verifier object
+    verifier = mocked_session_verifier_auth_not_required(None)
+
+    types = eligibility_from_oauth(verifier, "claim")
+
+    assert types == []
+
+
+@pytest.mark.django_db
+def test_eligibility_from_oauth_auth_claim_mismatch(mocked_session_verifier_auth_required):
+    # mocked_session_verifier_auth_required is Mocked version of the session.verifier() function
+    # call it (with a None request) to return a verifier object
+    verifier = mocked_session_verifier_auth_required(None)
+    verifier.auth_claim = "claim"
+
+    types = eligibility_from_oauth(verifier, "some_other_claim")
+
+    assert types == []
+
+
+@pytest.mark.django_db
+def test_eligibility_from_oauth_auth_claim_match(mocked_session_verifier_auth_required, first_eligibility):
+    # mocked_session_verifier_auth_required is Mocked version of the session.verifier() function
+    # call it (with a None request) to return a verifier object
+    verifier = mocked_session_verifier_auth_required(None)
+    verifier.auth_claim = "claim"
+    verifier.eligibility_types.all.return_value = [first_eligibility]
+
+    types = eligibility_from_oauth(verifier, "claim")
+
+    assert types == [first_eligibility.name]
