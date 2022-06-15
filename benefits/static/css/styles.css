@@ -704,22 +704,8 @@ footer.global-footer .footer-links a:active {
     float: right;
   }
 
-  .eligibility-start .main-content .container strong a {
-    display: block;
-    line-height: 15px;
-    letter-spacing: 0.05em;
-    padding: 6px;
-    text-align: left;
-    width: 100%;
-    margin: 18px 0;
-    font-size: 18px;
-    text-decoration: none !important;
-    letter-spacing: 0.2px;
-    border: 2px solid #046b99;
-    border-radius: 0.3rem;
-    font-weight: 500;
-    width: 212px;
-    line-height: 22.5px;
+  .eligibility-start .main-content .container strong .info-link {
+    display: none;
   }
 
   .media-list .media .media-body .media-body--links .btn-lg {
