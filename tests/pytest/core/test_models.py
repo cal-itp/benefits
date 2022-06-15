@@ -14,49 +14,36 @@ def mock_api_client_verify(mocker):
 
 
 @pytest.mark.django_db
-def test_get_verified_types_error(mocker, mocked_session_agency, mocked_session_verifier, mock_api_client_verify, form):
+def test_get_verified_types_error(mocker, first_agency, first_verifier, mock_api_client_verify, form):
     api_errors = {"name": "Name error"}
     api_response = mocker.Mock(error=api_errors)
     mock_api_client_verify.return_value = api_response
 
-    agency = mocked_session_agency(None)
-    verifier = mocked_session_verifier(None)
-
-    response = verifier.get_verified_types(form, agency)
+    response = first_verifier.get_verified_types(form, first_agency)
 
     assert response is None
     form.add_api_errors.assert_called_once_with(api_errors)
 
 
 @pytest.mark.django_db
-def test_get_verified_types_verified_types(
-    mocker, mocked_session_agency, mocked_session_verifier, mock_api_client_verify, form
-):
+def test_get_verified_types_verified_types(mocker, first_agency, first_verifier, mock_api_client_verify, form):
     verified_types = ["type1", "type2"]
     api_response = mocker.Mock(eligibility=verified_types, error=None)
     mock_api_client_verify.return_value = api_response
 
-    agency = mocked_session_agency(None)
-    verifier = mocked_session_verifier(None)
-
-    response = verifier.get_verified_types(form, agency)
+    response = first_verifier.get_verified_types(form, first_agency)
 
     assert response == verified_types
     form.add_api_errors.assert_not_called()
 
 
 @pytest.mark.django_db
-def test_get_verified_types_no_verified_types(
-    mocker, mocked_session_agency, mocked_session_verifier, mock_api_client_verify, form
-):
+def test_get_verified_types_no_verified_types(mocker, first_agency, first_verifier, mock_api_client_verify, form):
     verified_types = []
     api_response = mocker.Mock(eligibility=verified_types, error=None)
     mock_api_client_verify.return_value = api_response
 
-    agency = mocked_session_agency(None)
-    verifier = mocked_session_verifier(None)
-
-    response = verifier.get_verified_types(form, agency)
+    response = first_verifier.get_verified_types(form, first_agency)
 
     assert response == verified_types
     form.add_api_errors.assert_not_called()
