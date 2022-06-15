@@ -34,16 +34,16 @@ flowchart LR
 ```mermaid
 flowchart LR
     internet[Public internet]
-    WAF
+    frontdoor[Front Door]
     django[Django application]
     interconnections[Other system interconnections]
 
     internet --> Cloudflare
-    Cloudflare --> WAF
+    Cloudflare --> frontdoor
     django <--> interconnections
 
     subgraph Azure
-        WAF --> NGINX
+        frontdoor --> NGINX
 
         subgraph App Service
             subgraph Custom container
@@ -54,7 +54,7 @@ flowchart LR
     end
 ```
 
-WAF: [Web Application Firewall](https://azure.microsoft.com/en-us/services/web-application-firewall/)
+[Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview). Both are managed by the DevSecOps team.
 
 ## Monitoring
 

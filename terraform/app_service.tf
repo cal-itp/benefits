@@ -46,11 +46,9 @@ resource "azurerm_linux_web_app" "main" {
 }
 
 resource "azurerm_linux_web_app_slot" "dev" {
-  name       = "dev"
-  https_only = true
-
-  # hack to match the casing of what's returned by Azure
-  app_service_id = replace(replace(azurerm_linux_web_app.main.id, azurerm_linux_web_app.main.name, lower(azurerm_linux_web_app.main.name)), data.azurerm_resource_group.prod.name, lower(data.azurerm_resource_group.prod.name))
+  name           = "dev"
+  https_only     = true
+  app_service_id = azurerm_linux_web_app.main.id
 
   site_config {
     ftps_state             = "AllAllowed"
@@ -77,4 +75,46 @@ resource "azurerm_linux_web_app_slot" "dev" {
   lifecycle {
     ignore_changes = [app_settings, storage_account, tags]
   }
+}
+
+resource "azurerm_app_service_slot_custom_hostname_binding" "dev" {
+  app_service_slot_id = azurerm_linux_web_app_slot.dev.id
+  hostname            = "dev-benefits.calitp.org"
+}
+
+resource "azurerm_linux_web_app_slot" "test" {
+  name           = "test"
+  https_only     = true
+  app_service_id = azurerm_linux_web_app.main.id
+
+  site_config {
+    ftps_state             = "AllAllowed"
+    vnet_route_all_enabled = true
+  }
+
+  identity {
+    identity_ids = []
+    type         = "SystemAssigned"
+  }
+
+  logs {
+    detailed_error_messages = false
+    failed_request_tracing  = false
+
+    http_logs {
+      file_system {
+        retention_in_days = 99999
+        retention_in_mb   = 100
+      }
+    }
+  }
+
+  lifecycle {
+    ignore_changes = [app_settings, storage_account, tags]
+  }
+}
+
+resource "azurerm_app_service_slot_custom_hostname_binding" "test" {
+  app_service_slot_id = azurerm_linux_web_app_slot.test.id
+  hostname            = "test-benefits.calitp.org"
 }
