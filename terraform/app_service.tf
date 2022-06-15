@@ -20,7 +20,7 @@ resource "azurerm_linux_web_app" "main" {
   https_only          = true
 
   site_config {
-    ftps_state = "AllAllowed"
+    ftps_state = "Disabled"
   }
 
   identity {
@@ -51,7 +51,7 @@ resource "azurerm_linux_web_app_slot" "dev" {
   app_service_id = azurerm_linux_web_app.main.id
 
   site_config {
-    ftps_state             = "AllAllowed"
+    ftps_state             = "Disabled"
     vnet_route_all_enabled = true
   }
 
@@ -88,7 +88,7 @@ resource "azurerm_linux_web_app_slot" "test" {
   app_service_id = azurerm_linux_web_app.main.id
 
   site_config {
-    ftps_state             = "AllAllowed"
+    ftps_state             = "Disabled"
     vnet_route_all_enabled = true
   }
 
