@@ -110,9 +110,12 @@ class EligibilityVerifier(models.Model):
         logger.debug(f"Get {EligibilityVerifier.__name__} by id: {id}")
         return EligibilityVerifier.objects.get(id=id)
 
-    def get_verified_types(self, form=None, agency=None):
+    def get_verified_types(self, form=None, agency=None, oauth_claim=None):
         if form is not None and agency is not None:
             return self._get_api_verified_types(form, agency)
+        elif oauth_claim is not None and self.requires_authentication and self.auth_claim == oauth_claim:
+            # TODO: refactor verifier to hold single eligibility_type
+            return list(map(lambda t: t.name, self.eligibility_types.all()))
         else:
             return []
 
