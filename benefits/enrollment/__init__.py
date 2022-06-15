@@ -8,6 +8,3 @@ class EnrollmentAppConfig(AppConfig):
     name = "benefits.enrollment"
     label = "enrollment"
     verbose_name = "Benefits Enrollment"
-
-
-default_app_config = "benefits.enrollment.EnrollmentAppConfig"

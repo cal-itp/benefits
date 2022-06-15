@@ -10,7 +10,10 @@
       "request": "launch",
       "program": "${workspaceFolder}/manage.py",
       "args": ["runserver", "--insecure", "0.0.0.0:8000"],
-      "django": true
+      "django": true,
+      "env": {
+        "DJANGO_DEBUG": "true"
+      }
     }
   ]
 }

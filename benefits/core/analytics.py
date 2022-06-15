@@ -8,10 +8,10 @@ import re
 import time
 import uuid
 
+from django.conf import settings
 import requests
 
 from benefits import VERSION
-from benefits.settings import ANALYTICS_KEY
 from . import session
 
 
@@ -19,19 +19,24 @@ logger = logging.getLogger(__name__)
 
 
 class Event:
+    """Base analytics event of a given type, including attributes from request's session."""
+
     _counter = itertools.count()
     _domain_re = re.compile(r"^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)", re.IGNORECASE)
 
     def __init__(self, request, event_type, **kwargs):
-        """Analytics event of the given type, including attributes from request's session."""
         self.app_version = VERSION
+        # device_id is generated based on the user_id, and both are set explicitly (per session)
         self.device_id = session.did(request)
         self.event_properties = {}
         self.event_type = str(event_type).lower()
         self.insert_id = str(uuid.uuid4())
         self.language = session.language(request)
+        # Amplitude tracks sessions using the start time as the session_id
         self.session_id = session.start(request)
         self.time = int(time.time() * 1000)
+        # Although Amplitude advises *against* setting user_id for anonymous users, here a value is set on anonymous
+        # users anyway, as the users never sign-in and become de-anonymized to this app / Amplitude.
         self.user_id = session.uid(request)
         self.user_properties = {}
         self.__dict__.update(kwargs)
@@ -65,21 +70,24 @@ class Event:
 
 
 class ViewedPageEvent(Event):
+    """Analytics event representing a single page view."""
+
     def __init__(self, request):
-        """Analytics event representing a single page view."""
         super().__init__(request, "viewed page")
 
 
 class ChangedLanguageEvent(Event):
+    """Analytics event representing a change in the app's language."""
+
     def __init__(self, request, new_lang):
-        """Analytics event representing a change in the app's language."""
         super().__init__(request, "changed language")
         self.update_event_properties(language=new_lang)
 
 
 class Client:
+    """Analytics API client"""
+
     def __init__(self, api_key):
-        """Analytics API client"""
         self.api_key = api_key
         self.headers = {"Accept": "*/*", "Content-type": "application/json"}
         self.url = "https://api2.amplitude.com/2/httpapi"
@@ -119,9 +127,12 @@ class Client:
             logger.error(f"Failed to send event: {event}")
 
 
+client = Client(settings.ANALYTICS_KEY)
+
+
 def send_event(event):
     """Send an analytics event."""
     if isinstance(event, Event):
-        Client(ANALYTICS_KEY).send(event)
+        client.send(event)
     else:
         raise ValueError("event must be an Event instance")

@@ -6,10 +6,30 @@ import logging
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from benefits.core import recaptcha, widgets
+from benefits.core import models, recaptcha, widgets
 
 
 logger = logging.getLogger(__name__)
+
+
+class EligibilityVerifierSelectionForm(forms.Form):
+    """Form to capture eligibility verifier selection."""
+
+    action_url = "eligibility:index"
+    method = "POST"
+
+    verifier = forms.ChoiceField(label="", widget=widgets.RadioSelect)
+
+    submit_value = _("eligibility.buttons.continue")
+
+    def __init__(self, agency: models.TransitAgency, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        verifiers = agency.eligibility_verifiers.all()
+
+        self.fields["verifier"].choices = [(v.id, _(v.selection_label)) for v in verifiers]
+        self.fields["verifier"].widget.choice_descriptions = {
+            v.id: _(v.selection_label_description) for v in verifiers if v.selection_label_description
+        }
 
 
 class EligibilityVerificationForm(forms.Form):
@@ -18,20 +38,34 @@ class EligibilityVerificationForm(forms.Form):
     action_url = "eligibility:confirm"
     method = "POST"
 
-    sub = forms.CharField(label=_("eligibility.form.id"), widget=widgets.FormControlTextInput(placeholder="A1234567"))
+    submit_value = _("eligibility.forms.confirm.submit")
+    submitting_value = _("eligibility.forms.confirm.submitting")
 
-    name = forms.CharField(label=_("eligibility.form.name"), widget=widgets.FormControlTextInput(placeholder="Rodriguez"))
+    _error_messages = {
+        "invalid": _("eligibility.forms.confirm.errors.invalid"),
+        "missing": _("eligibility.forms.confirm.errors.missing"),
+    }
 
-    submit_value = _("eligibility.form.submit")
-    submitting_value = _("eligibility.form.submitting")
+    def __init__(self, verifier: models.EligibilityVerifier, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-    _error_messages = {"invalid": _("eligibility.form.error.invalid"), "missing": _("eligibility.form.error.missing")}
+        sub_widget = widgets.FormControlTextInput(placeholder=verifier.form_sub_placeholder)
+        if verifier.form_sub_pattern:
+            sub_widget.attrs.update({"pattern": verifier.form_sub_pattern})
+
+        self.fields["sub"] = forms.CharField(label=_(verifier.form_sub_label), widget=sub_widget)
+
+        name_widget = widgets.FormControlTextInput(placeholder=verifier.form_name_placeholder)
+        if verifier.form_name_max_length:
+            name_widget.attrs.update({"maxlength": verifier.form_name_max_length})
+
+        self.fields["name"] = forms.CharField(label=_(verifier.form_name_label), widget=name_widget)
 
     def add_api_errors(self, form_errors):
         """Handle errors passed back from API server related to submitted form values."""
 
         validation_errors = {
-            field: forms.ValidationError(self._error_messages.get(code, _("core.error")), code=code)
+            field: forms.ValidationError(self._error_messages.get(code, _("core.pages.error.title")), code=code)
             for (field, code) in form_errors.items()
             if field in self.fields
         }

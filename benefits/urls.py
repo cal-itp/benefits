@@ -6,10 +6,8 @@ The `urlpatterns` list routes URLs to views. For more information please see:
 """
 import logging
 
+from django.conf import settings
 from django.urls import include, path
-
-from benefits.settings import ADMIN
-
 
 logger = logging.getLogger(__name__)
 
@@ -25,10 +23,16 @@ urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
 ]
 
-if ADMIN:
+if settings.ADMIN:
     from django.contrib import admin
 
-    logger.debug("Register admin/ urls")
+    logger.debug("Register admin urls")
     urlpatterns.append(path("admin/", admin.site.urls))
 else:
     logger.debug("Skip url registrations for admin")
+
+if settings.OAUTH_CLIENT_NAME:
+    logger.info("Register oauth urls")
+    urlpatterns.append(path("oauth/", include("benefits.oauth.urls")))
+else:
+    logger.debug("Skip url registrations for oauth")

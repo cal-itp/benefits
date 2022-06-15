@@ -2,6 +2,7 @@
 The core application: view model definitions for the root of the webapp.
 """
 from django.utils.translation import pgettext, gettext as _
+from django.urls import reverse
 
 from benefits.core import models
 
@@ -10,10 +11,11 @@ from . import session
 
 class Button:
     """
-    Represents a clickable button as styled <a> element (with optional label):
-    * label: str
-    * id: str
+    Represents a clickable button as styled <a> element (with optional label, optional transparent fallback text):
     * classes: str, str[]
+    * id: str
+    * fallback_text: str
+    * label: str
     * text: str
     * url: str
     * target: str
@@ -28,6 +30,7 @@ class Button:
         self.classes = ["btn", "btn-lg"]
         self.classes.extend(classes)
         self.id = kwargs.get("id")
+        self.fallback_text = kwargs.get("fallback_text")
         self.label = kwargs.get("label")
         self.text = kwargs.get("text", "Button")
         self.url = kwargs.get("url")
@@ -38,14 +41,14 @@ class Button:
     def agency_contact_links(agency):
         """Create link buttons for agency contact information."""
         return [
-            # fmt: off
-            Button.link(classes="agency-url", label=agency.long_name, text=agency.info_url, url=agency.info_url, target="_blank", rel="noopener noreferrer"),  # noqa: E501
-            Button.link(classes="agency-phone", text=agency.phone, url=f"tel:{agency.phone}"),
-            # fmt: on
+            Button.link(classes="agency", label=agency.long_name, text=agency.phone, url=f"tel:{agency.phone}"),
+            Button.link(
+                classes="agency", text=agency.info_url, url=agency.info_url, target="_blank", rel="noopener noreferrer"
+            ),
         ]
 
     @staticmethod
-    def home(request, text=_("core.buttons.home")):
+    def home(request, text=_("core.buttons.return_home")):
         """Create a button back to this session's origin."""
         return Button.primary(text=text, url=session.origin(request))
 
@@ -73,47 +76,34 @@ class Button:
         classes.insert(0, "btn-outline-primary")
         return Button(classes=classes, **kwargs)
 
+    @staticmethod
+    def login(**kwargs):
+        """Create a login.gov button, with a login.gov logo and fallback text"""
+        btn = Button.primary(fallback_text="Login.gov", id="login", **kwargs)
+        return btn
 
-class Image:
-    """Represents a generic image."""
-
-    def __init__(self, src, alt):
-        self.src = src
-        if not self.src.startswith("http"):
-            self.src = f"img/{self.src}"
-
-        self.alt = alt
+    @staticmethod
+    def logout(**kwargs):
+        """Create a button that logs user out, with a login.gov button, with a login.gov logo and fallback text"""
+        btn = Button.primary(fallback_text="Login.gov", id="login", url=reverse("oauth:logout"), text="", **kwargs)
+        return btn
 
 
-class Icon(Image):
+class Icon:
     """Represents an icon."""
 
     def __init__(self, icon, alt):
-        super().__init__(src=f"icon/{icon}.svg", alt=alt)
-
-
-class MediaItem:
-    """
-    Represents a list item:
-    * icon: core.viewmodels.Icon
-    * heading: str
-    * details: str
-    """
-
-    def __init__(self, icon, heading, details):
-        self.icon = icon
-        self.heading = heading
-        self.details = details
+        self.src = f"img/icon/{icon}.svg"
+        self.alt = alt
 
 
 class Page:
     """
     Represents a page of content:
     * title: str
-    * image: core.viewmodels.Image
+    * noimage: bool
     * icon: core.viewmodels.Icon
     * content_title: str
-    * media: core.viewmodels.MediaItem[]
     * paragraphs: str[]
     * form: django.forms.Form
     * forms: django.forms.Form[]
@@ -125,14 +115,13 @@ class Page:
     def __init__(self, **kwargs):
         self.title = kwargs.get("title")
         if self.title is None:
-            self.title = _("core.page.title")
+            self.title = _("core.pages.index.prefix")
         else:
-            self.title = f"{_('core.page.title')}: {self.title}"
+            self.title = f"{_('core.pages.index.prefix')}: {self.title}"
 
-        self.image = kwargs.get("image")
+        self.noimage = kwargs.get("noimage", False)
         self.icon = kwargs.get("icon")
         self.content_title = kwargs.get("content_title")
-        self.media = kwargs.get("media", [])
         self.paragraphs = kwargs.get("paragraphs", [])
         self.steps = kwargs.get("steps")
 
@@ -151,7 +140,7 @@ class Page:
         self.classes = kwargs.get("classes", [])
         if not isinstance(self.classes, list):
             self.classes = self.classes.split(" ")
-        if isinstance(self.image, Image):
+        if not self.noimage:
             self.classes.append("with-image")
 
     def context_dict(self):
@@ -171,18 +160,18 @@ class ErrorPage(Page):
 
     def __init__(self, **kwargs):
         super().__init__(
-            title=kwargs.get("title", _("core.error")),
+            title=kwargs.get("title", _("core.pages.error.title")),
             icon=kwargs.get("icon", Icon("sadbus", pgettext("image alt text", "core.icons.sadbus"))),
-            content_title=kwargs.get("content_title", _("core.error")),
-            paragraphs=kwargs.get("paragraphs", [_("core.error.server.content_title")]),
+            content_title=kwargs.get("content_title", _("core.pages.error.title")),
+            paragraphs=kwargs.get("paragraphs", [_("core.pages.server_error.content_title")]),
             button=kwargs.get("button"),
         )
 
     @staticmethod
     def error(
-        title=_("core.error.server.title"),
-        content_title=_("core.error.server.title"),
-        paragraphs=[_("core.error.server.p1"), _("core.error.server.p2")],
+        title=_("core.pages.server_error.title"),
+        content_title=_("core.pages.server_error.title"),
+        paragraphs=[_("core.pages.server_error.p[0]"), _("core.pages.server_error.p[1]")],
         **kwargs,
     ):
         """Create a new core.viewmodels.ErrorPage instance with defaults for a generic error."""
@@ -190,9 +179,9 @@ class ErrorPage(Page):
 
     @staticmethod
     def not_found(
-        title=_("core.error.notfound.title"),
-        content_title=_("core.error.notfound.content_title"),
-        paragraphs=[_("core.error.notfound.p1")],
+        title=_("core.pages.not_found.title"),
+        content_title=_("core.pages.not_found.content_title"),
+        paragraphs=[_("core.pages.not_found.p[0]")],
         **kwargs,
     ):
         """Create a new core.viewmodels.ErrorPage with defaults for a 404."""

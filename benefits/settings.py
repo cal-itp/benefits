@@ -12,14 +12,14 @@ def _filter_empty(ls):
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ["DJANGO_SECRET_KEY"]
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "secret")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
 
 ADMIN = os.environ.get("DJANGO_ADMIN", "False").lower() == "true"
 
-ALLOWED_HOSTS = _filter_empty(os.environ["DJANGO_ALLOWED_HOSTS"].split(","))
+ALLOWED_HOSTS = _filter_empty(os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(","))
 
 # Application definition
 
@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "benefits.core",
     "benefits.enrollment",
     "benefits.eligibility",
+    "benefits.oauth",
 ]
 
 if ADMIN:
@@ -68,11 +69,19 @@ if DEBUG:
 CSRF_COOKIE_AGE = None
 CSRF_COOKIE_SAMESITE = "Strict"
 CSRF_COOKIE_HTTPONLY = True
-CSRF_TRUSTED_ORIGINS = _filter_empty(os.environ["DJANGO_TRUSTED_ORIGINS"].split(","))
+CSRF_TRUSTED_ORIGINS = _filter_empty(os.environ.get("DJANGO_TRUSTED_ORIGINS", "http://localhost,http://127.0.0.1").split(","))
 
-SESSION_COOKIE_SAMESITE = "Strict"
+# With `Strict`, the user loses their Django session between leaving our app to
+# sign in with OAuth, and coming back into our app from the OAuth redirect.
+# This is because `Strict` disallows our cookie being sent from an external
+# domain and so the session cookie is lost.
+#
+# `Lax` allows the cookie to travel with the user and be sent back to us by the
+# OAuth server, as long as the request is "safe" i.e. GET
+SESSION_COOKIE_SAMESITE = "Lax"
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_NAME = "_benefitssessionid"
 
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
@@ -81,12 +90,21 @@ if not DEBUG:
 
 SECURE_BROWSER_XSS_FILTER = True
 
+# the NGINX reverse proxy sits in front of the application in deployed environments
+# SSL terminates before getting to Django, and NGINX adds this header to indicate
+# if the original request was secure or not
+#
+# See https://docs.djangoproject.com/en/3.2/ref/settings/#secure-proxy-ssl-header
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 ROOT_URLCONF = "benefits.urls"
 
 template_ctx_processors = [
     "django.template.context_processors.request",
     "django.contrib.messages.context_processors.messages",
     "benefits.core.context_processors.analytics",
+    "benefits.core.context_processors.authentication",
     "benefits.core.context_processors.recaptcha",
 ]
 
@@ -122,7 +140,7 @@ WSGI_APPLICATION = "benefits.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.environ.get("DJANGO_DB", "django") + ".db",
+        "NAME": "django.db",
     }
 }
 
@@ -147,6 +165,21 @@ if ADMIN:
             },
         ]
     )
+
+# OAuth configuration
+
+OAUTH_AUTHORITY = os.environ.get("DJANGO_OAUTH_AUTHORITY", "http://example.com")
+OAUTH_CLIENT_NAME = os.environ.get("DJANGO_OAUTH_CLIENT_NAME", "benefits-oauth-client-name")
+OAUTH_CLIENT_ID = os.environ.get("DJANGO_OAUTH_CLIENT_ID", "benefits-oauth-client-id")
+
+if OAUTH_CLIENT_NAME:
+    AUTHLIB_OAUTH_CLIENTS = {
+        OAUTH_CLIENT_NAME: {
+            "client_id": OAUTH_CLIENT_ID,
+            "server_metadata_url": f"{OAUTH_AUTHORITY}/.well-known/openid-configuration",
+            "client_kwargs": {"code_challenge_method": "S256", "scope": "openid"},
+        }
+    }
 
 # Internationalization
 
@@ -200,6 +233,28 @@ LOGGING = {
 
 ANALYTICS_KEY = os.environ.get("ANALYTICS_KEY")
 
+# rate limit configuration
+
+# number of requests allowed in the given period
+RATE_LIMIT = int(os.environ.get("DJANGO_RATE_LIMIT", 5))
+
+# HTTP request methods to rate limit
+RATE_LIMIT_METHODS = os.environ.get("DJANGO_RATE_LIMIT_METHODS", "POST").upper().split(",")
+
+# number of seconds before additional requests are denied
+RATE_LIMIT_PERIOD = int(os.environ.get("DJANGO_RATE_LIMIT_PERIOD", 60))
+
+# Rate Limit feature flag
+RATE_LIMIT_ENABLED = all((RATE_LIMIT > 0, len(RATE_LIMIT_METHODS) > 0, RATE_LIMIT_PERIOD > 0))
+
+# reCAPTCHA configuration
+
+RECAPTCHA_API_URL = os.environ.get("DJANGO_RECAPTCHA_API_URL", "https://www.google.com/recaptcha/api.js")
+RECAPTCHA_SITE_KEY = os.environ.get("DJANGO_RECAPTCHA_SITE_KEY")
+RECAPTCHA_SECRET_KEY = os.environ.get("DJANGO_RECAPTCHA_SECRET_KEY")
+RECAPTCHA_VERIFY_URL = os.environ.get("DJANGO_RECAPTCHA_VERIFY_URL", "https://www.google.com/recaptcha/api/siteverify")
+RECAPTCHA_ENABLED = all((RECAPTCHA_API_URL, RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET_KEY, RECAPTCHA_VERIFY_URL))
+
 # Content Security Policy
 # Configuration docs at https://django-csp.readthedocs.io/en/latest/configuration.html
 
@@ -208,42 +263,40 @@ ANALYTICS_KEY = os.environ.get("ANALYTICS_KEY")
 
 CSP_DEFAULT_SRC = ["'self'"]
 
+CSP_CONNECT_SRC = ["'self'", "https://api.amplitude.com/"]
 env_connect_src = _filter_empty(os.environ.get("DJANGO_CSP_CONNECT_SRC", "").split(","))
-CSP_CONNECT_SRC = ["'self'"]
 CSP_CONNECT_SRC.extend(env_connect_src)
 
+CSP_FONT_SRC = ["'self'", "https://california.azureedge.net/cdt/statetemplate/", "https://fonts.gstatic.com/"]
 env_font_src = _filter_empty(os.environ.get("DJANGO_CSP_FONT_SRC", "").split(","))
-CSP_FONT_SRC = list(env_font_src)
+CSP_FONT_SRC.extend(env_font_src)
 
 CSP_FRAME_ANCESTORS = ["'none'"]
+
 CSP_FRAME_SRC = ["'none'"]
 env_frame_src = _filter_empty(os.environ.get("DJANGO_CSP_FRAME_SRC", "").split(","))
-if any(env_frame_src):
-    CSP_FRAME_SRC = list(env_frame_src)
+CSP_FRAME_SRC.extend(env_frame_src)
+if RECAPTCHA_ENABLED:
+    CSP_FRAME_SRC.append("https://www.google.com")
 
+
+CSP_SCRIPT_SRC = [
+    "'unsafe-inline'",
+    "https://california.azureedge.net/cdt/statetemplate/",
+    "https://cdn.amplitude.com/libs/",
+    "https://code.jquery.com/",
+    "*.littlepay.com",
+]
 env_script_src = _filter_empty(os.environ.get("DJANGO_CSP_SCRIPT_SRC", "").split(","))
-CSP_SCRIPT_SRC = ["'unsafe-inline'"]
 CSP_SCRIPT_SRC.extend(env_script_src)
+if RECAPTCHA_ENABLED:
+    CSP_SCRIPT_SRC.extend(["https://www.google.com/recaptcha/", "https://www.gstatic.com/recaptcha/releases/"])
 
+CSP_STYLE_SRC = [
+    "'self'",
+    "'unsafe-inline'",
+    "https://california.azureedge.net/cdt/statetemplate/",
+    "https://fonts.googleapis.com/css",
+]
 env_style_src = _filter_empty(os.environ.get("DJANGO_CSP_STYLE_SRC", "").split(","))
-CSP_STYLE_SRC = ["'self'", "'unsafe-inline'"]
 CSP_STYLE_SRC.extend(env_style_src)
-
-# rate limit configuration
-
-# number of requests allowed in the given period
-RATE_LIMIT = int(os.environ.get("DJANGO_RATE_LIMIT", 0))
-
-# HTTP request methods to rate limit
-RATE_LIMIT_METHODS = os.environ.get("DJANGO_RATE_LIMIT_METHODS", "").upper().split(",")
-
-# number of seconds before additional requests are denied
-RATE_LIMIT_PERIOD = int(os.environ.get("DJANGO_RATE_LIMIT_PERIOD", 0))
-
-# reCAPTCHA configuration
-
-RECAPTCHA_API_URL = os.environ.get("DJANGO_RECAPTCHA_API_URL")
-RECAPTCHA_SITE_KEY = os.environ.get("DJANGO_RECAPTCHA_SITE_KEY")
-RECAPTCHA_SECRET_KEY = os.environ.get("DJANGO_RECAPTCHA_SECRET_KEY")
-RECAPTCHA_VERIFY_URL = os.environ.get("DJANGO_RECAPTCHA_VERIFY_URL")
-RECAPTCHA_ENABLED = all((RECAPTCHA_API_URL, RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET_KEY, RECAPTCHA_VERIFY_URL))

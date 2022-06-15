@@ -10,14 +10,14 @@
 
 {% block main_content %}
 <div class="container-fluid">
-    <div class="row">
-        {% if page.image %}
+    <div class="row main-row">
+        {% if page.noimage %}
+        <div class="container">
+        {% else %}
         {% load static %}
-        <div class="col-lg-6 image" style="background: 48% 75% url('{% static page.image.src %}') no-repeat; background-size: cover;">
+        <div class="col-lg-6 image">
         </div>
         <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-0">
-        {% else %}
-        <div class="col-md-8 offset-md-2 col-xl-6 offset-xl-3">
         {% endif %}
             <div class="container content">
             {% block container_content %}
@@ -31,12 +31,6 @@
                 {% endif %}
             {% endif %}
             {% endblock icon_title %}
-
-            {% block media_list %}
-            {% if page.media|length_is:"0" %}{% else %}
-                {% include "core/includes/media-list.html" with items=page.media %}
-            {% endif %}
-            {% endblock media_list %}
 
             {% block paragraph_content %}
             {% for p in page.paragraphs %}
@@ -54,11 +48,15 @@
 
             {% block buttons %}
             {% if page.buttons|length_is:"0" %}{% else %}
-                <div class="buttons">
-                    {% for b in page.buttons %}
-                        {% include "core/includes/button.html" with button=b %}
-                    {% endfor %}
-                </div>
+                {% if "with-agency-links" in page.classes %}
+                    {% include "core/includes/agency-links.html" with buttons=page.buttons %}
+                {% else %}
+                    <div class="buttons">
+                        {% for b in page.buttons %}
+                            {% include "core/includes/button.html" with button=b %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
             {% endif %}
             {% endblock buttons %}
 

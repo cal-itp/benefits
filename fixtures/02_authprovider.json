@@ -1,0 +1,10 @@
+[
+    {
+      "model": "core.authprovider",
+      "pk": 1,
+      "fields": {
+        "sign_in_button_label": "eligibility.buttons.signin",
+        "sign_out_button_label": "eligibility.buttons.signout"
+      }
+    }
+]

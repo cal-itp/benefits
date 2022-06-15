@@ -1,84 +1,35 @@
 # Overview
 
-The application is deployed to [AWS Elastic Container Service (ECS)][ecs-welcome] using a
-[Task Definition][ecs-task-definition] generated from the template file at [`.aws/ecs-task.json`][ecs-task-definition-template].
+[dev-benefits.calitp.org][dev-benefits] is currently deployed into a Microsoft Azure account provided by [California Department of Technology (CDT)'s Office of Enterprise Technology (OET)][oet], a.k.a. the "DevSecOps" team. More specifically, it uses [custom containers][app-service-containers] on [Azure App Service][app-service]. [More about the infrastructure.](infrastructure.md)
 
-The application is deployed into three separate AWS environments for `dev`, `test`, and `prod`.
-[GitHub Environments][gh-environments] exist corresponding to each AWS deployment environment, with secrets and protection
-rules specific to each GitHub Environment.
+## Deployment process
 
-A [GitHub Action][gh-actions] per Environment is responsible for deploying that Environment's branch to the corresponding
-AWS location.
+The Django application gets built into a [Docker image][dockerfile] with [NGINX](https://www.nginx.com/) and
+[Gunicorn](https://gunicorn.org/). SQLite is used within that same container to store configuration data and Azure Blobs are
+used for secrets; there is no external database.
+
+The application is deployed to an [Azure Web App Container][az-webapp] using three separate environments for `dev`, `test`,
+and `prod`.
+
+A [GitHub Action][gh-actions] per environment is responsible for building that branch's image and pushing to [GitHub Container
+Registry (GHCR)][ghcr].
+
+GitHub POSTs a [webhook][gh-webhooks] to the Azure Web App when an [image is published to GHCR][gh-webhook-event], telling
+Azure to restart the app and pull the latest image.
 
 ## Configuration
 
-Configuration data (based on [`.devcontainer/.env.sample`][.env.sample] and [`fixtures/`][fixtures]) is stored
-in AWS S3 buckets for each deployment environment.
+[Configuration settings](../configuration/README.md) are stored as Application Configuration variables in Azure.
+[Fixtures](../configuration/fixtures.md) are stored as blobs in in Azure Storage, and [mounted into the Web App container][az-mount].
 
-### ECS runtime
-
-The ECS Task Definition includes a `containerDefinition`, using the [AWS CLI][aws-cli] Docker image, to pull the fixture data
-from the corresponding S3 bucket during service (re)start. This configuration is copied into a volume that is also mounted
-into the main application container.
-
-The main application `containerDefinition` uses [`dependsOn`][depends-on] to ensure that the AWS CLI container task has
-completed successfully, before starting itself.
-
-Both containers use the [`environmentFiles`][env-files] setting to load an `.env` file from their deploy environment's S3
-bucket.
-
-### Local AWS
-
-!!! warning
-
-    The following command will decrypt and download the `benefits` configuration from S3 into the `.aws/config` directory on
-    your local computer. Be sure this is what you want to do.
-
-To copy the AWS configuration locally, fill in the appropriate values in your local `.env` file:
-
-- for the AWS connection:
-
-  ```console
-  AWS_DEFAULT_REGION=us-west-2
-  AWS_ACCESS_KEY_ID=access-key-id
-  AWS_SECRET_ACCESS_KEY=secret-access-key
-  AWS_BUCKET=bucket-name
-  ```
-
-- and to ensure Django uses the downloaded configuration:
-
-  ```console
-  DJANGO_INIT_PATH=config/<file>.json
-  ```
-
-and then pull the files down to your local computer:
-
-```bash
-docker compose run s3pull
-```
-
-### Update AWS
-
-!!! warning
-
-    The following command will send the **entire contents** of the `.aws/config` directory from your local computer into the
-    `benefits` S3 bucket for the configured environment. Be sure this is what you want to do.
-
-A Docker Compose service can also be used to push updates to the configuration data into S3 for the given deploy environment:
-
-Ensure you have content (e.g. an `.env` or `config.json` file) inside `.aws/config` in your local repository and then run:
-
-```bash
-docker compose run s3push
-```
-
-[.env.sample]: https://github.com/cal-itp/benefits/tree/dev/.devcontainer/.env.sample
-[aws-cli]: https://aws.amazon.com/cli/
-[depends-on]: https://docs.aws.amazon.com/AmazonECS/latest/userguide/task_definition_parameters.html#container_definition_dependson
-[ecs-task-definition]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definitions.html
-[ecs-task-definition-template]: https://github.com/cal-itp/benefits/blob/dev/.aws/ecs-task.json
-[ecs-welcome]: https://docs.aws.amazon.com/AmazonECS/latest/developerguide/Welcome.html
-[env-files]: https://docs.aws.amazon.com/AmazonECS/latest/userguide/taskdef-envfiles.html
-[fixtures]: https://github.com/cal-itp/benefits/tree/dev/fixtures/
+[dev-benefits]: https://dev-benefits.calitp.org
+[oet]: https://techblog.cdt.ca.gov/2020/06/cdt-taking-the-lead-in-digital-transformation/
+[app-service-containers]: https://docs.microsoft.com/en-us/azure/app-service/configure-custom-container
+[app-service]: https://docs.microsoft.com/en-us/azure/app-service/overview
+[dockerfile]: https://github.com/cal-itp/benefits/blob/dev/Dockerfile
+[az-webapp]: https://azure.microsoft.com/en-us/services/app-service/containers/
+[az-mount]: https://docs.microsoft.com/en-us/azure/app-service/configure-connect-to-azure-storage?tabs=portal&pivots=container-linux
 [gh-actions]: https://docs.github.com/en/actions
-[gh-environments]: https://docs.github.com/en/actions/reference/environments
+[gh-webhook-event]: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#package
+[gh-webhooks]: https://docs.github.com/en/github-ae@latest/developers/webhooks-and-events/webhooks
+[ghcr]: https://github.com/features/packages

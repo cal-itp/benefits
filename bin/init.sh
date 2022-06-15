@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 set -eu
 
+# remove existing (old) database file
+# -f forces the delete (and avoids an error when the file doesn't exist)
+
+rm -f django.db
+
 # run database migrations
 
 python manage.py migrate
 
 # load config data
 
-python manage.py loaddata ${DJANGO_INIT_PATH}
+python manage.py loaddata ${DJANGO_INIT_PATH:-fixtures/??_*.json}
 
 # create a superuser account for backend admin access
 # check DJANGO_ADMIN = true, default to false if empty or unset

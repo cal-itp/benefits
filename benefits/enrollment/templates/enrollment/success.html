@@ -1,9 +1,36 @@
 {% extends "core/page.html" %}
+
 {% load i18n %}
 {% load static %}
-{% block paragraph_content %}
-{{ block.super }}
-<p>
-    <img class="img-fluid" src="{% static 'img/ridertappingbankcard.png' %}" alt="{% translate "enrollment.success.image" context "image alt text" %}" />
-</p>
+
+{% block classes %}
+    {{ block.super |add:" enrollment-success"}}
 {% endblock %}
+
+{% block paragraph_content %}
+    {% if "logged-out" in page.classes %}
+        <img class="success-image" src="/static/img/icon/happybus.svg">
+    {% else %}
+        <p>{% translate "enrollment.pages.success.p1" %}</p>
+        <p>{% translate "enrollment.pages.success.p2" %}</p>
+        <p>{% blocktranslate with help_link=help_link%}enrollment.pages.success.p3{{ help_link }}{% endblocktranslate %}</p>
+    {% endif %}
+{% endblock %}
+
+{% block buttons %}
+    {% if page.buttons|length_is:"1" %}
+        <p>
+            <span>{% translate "enrollment.pages.success.p3" %}</span>
+            {% for b in page.buttons %}
+                <a id="{{ b.id }}"
+                    class="{{ b.classes | join:" " }}"
+                    style="display: inline-block;"
+                    href="{{ b.url }}"
+                    role="b">
+                    <span class="fallback-text">{{ b.fallback_text }}</span>
+                </a>
+            {% endfor %}
+            <span>{% translate "enrollment.pages.success.p4" %}</span>
+        </p>
+    {% endif %}
+{% endblock buttons %}

@@ -6,84 +6,165 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues\n"
-"POT-Creation-Date: 2021-05-20 19:20+0000\n"
+"POT-Creation-Date: 2022-03-25 15:00+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: benefits/core/templates/core/base.html:25
-msgid "core.skip"
+msgid "core.pages.help.about"
+msgstr "What is Cal-ITP Benefits?"
+
+#: benefits/core/templates/core/base.html:9 benefits/core/views.py:91
+msgid "core.pages.help.about.p[0]"
+msgstr ""
+"The Benefits tool is provided by California Integrated Travel Project "
+"(Cal-ITP), which is a new program from the California Department of "
+"Transportation dedicated to making travel simpler and cost-effective for all."
+
+msgid "core.pages.help.about.p[1]"
+msgstr ""
+"We partner with the California DMV to confirm age for age-based discounts and "
+"local transporation agencies to confirm specific discount programs. Once verified, "
+"discounts are attached to your bank card through our payment partner, Littlepay, so "
+"that when you pay for your transit ride, you get your discount automatically."
+
+msgid "core.pages.help.payment_options"
+msgstr "Payment options"
+
+msgid "core.pages.help.payment_options.p[0]"
+msgstr "In order to activate your discount, you need a bank card that has the "
+"contactless symbol on it. The contactless symbol is four curved lines that looks like this:"
+
+msgid "core.pages.help.payment_options.p[1]"
+msgstr "A contactless bank card can be a credit card or a debit card and must "
+"include a Visa or Mastercard logo."
+
+msgid "core.pages.help.payment_options.p[2][0]%(website)s"
+msgstr "Don’t have access to a bank card? You can request a contactless card "
+"from one of the companies that offer free contactless prepaid debit cards, "
+"such as the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Cash App Visa Debit Card</a> "
+
+msgid "core.pages.help.payment_options.p[2][1]%(website)s"
+msgstr "or the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Venmo Mastercard Debit Card</a>."
+
+msgid "core.pages.help.payment_options.p[3]"
+msgstr "You can still get your discount by going through your local transit "
+"provider’s application process."
+
+msgid "core.pages.help.payment_options.p[4]"
+msgstr "For updates on additional options, please check back on this website, "
+"or get in touch with your local transit provider."
+
+msgid "core.pages.help.login_gov"
+msgstr "What is Login.gov?"
+
+msgid "core.pages.help.login_gov.p[0]"
+msgstr "Login.gov is a secure way to sign in to participating government agencies. "
+"You can use your Login.gov account to access all of the benefits offered through Cal-ITP."
+
+msgid "core.pages.help.login_gov.p[1]"
+msgstr "Creating an account is simple. You will need an email address and method for "
+"authenticating your account&mdash;which will use either a landline, mobile phone, or "
+"backup codes that must be printed or written down."
+
+msgid "core.pages.help.login_gov.p[2][0]%(website)s"
+msgstr "To learn more about Login.gov, please visit the "
+"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov website</a> "
+
+msgid "core.pages.help.login_gov.p[2][1]%(website)s"
+msgstr "or the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov Help Center</a>."
+
+msgid "core.pages.help.littlepay"
+msgstr "What is Littlepay?"
+
+msgid "core.pages.help.littlepay.p[0]"
+msgstr "Our payment partner, Littlepay, is a secure, end-to-end payment processing "
+"platform that allows us to seamlessly attach your transit discount to your bank card."
+
+msgid "core.pages.help.littlepay.p[1]%(website)s"
+msgstr "For more information on Littlepay, please visit the "
+"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Littlepay website</a>."
+
+msgid "core.pages.help.questions"
+msgstr "Questions?"
+
+msgid "core.pages.help.questions.p[0]"
+msgstr "If you need assistance with this website, please reach out to the customer "
+"service team for your local transit provider."
+
+#: benefits/core/templates/core/base.html:24
+msgid "core.buttons.skip"
 msgstr "Skip to Main Content"
 
-#: benefits/core/templates/core/base.html:43
+#: benefits/core/templates/core/base.html:47
 msgctxt "image alt text"
-msgid "core.logo.small"
+msgid "core.logos.small"
 msgstr "California Integrated Travel Project: Benefits logo (small)"
 
-#: benefits/core/templates/core/base.html:44
+#: benefits/core/templates/core/base.html:48
 msgctxt "image alt text"
-msgid "core.logo.large"
+msgid "core.logos.large"
 msgstr "California Integrated Travel Project: Benefits logo (large)"
 
-#: benefits/core/templates/core/base.html:64 benefits/core/views.py:103
+#: benefits/core/templates/core/base.html:68 benefits/core/views.py:103
 #: benefits/core/views.py:105
-msgid "core.payment-options"
+msgid "core.buttons.payment_options"
 msgstr "Payment Options"
 
-#: benefits/core/templates/core/base.html:65 benefits/core/views.py:89
+#: benefits/core/templates/core/base.html:69 benefits/core/views.py:89
 #: benefits/core/views.py:90
-msgid "core.help"
+msgid "core.buttons.help"
 msgstr "Help"
 
-#: benefits/core/templates/core/base.html:66
-msgid "core.privacy"
+#: benefits/core/templates/core/base.html:70
+msgid "core.buttons.privacy"
 msgstr "Privacy Policy"
 
 #: benefits/core/templates/core/help.html:6
-msgid "core.help.foss.text"
+msgid "core.pages.help.foss.text"
 msgstr ""
 "This application is Free and Open Source Software. You may obtain the source "
 "code from"
 
-#: benefits/core/templates/core/help.html:8
-msgid "core.help.foss.link"
+#: benefits/core/templates/core/help.html:7
+msgid "core.pages.help.foss.link"
 msgstr "GitHub"
 
 #: benefits/core/templates/core/includes/nocookies.html:6
-msgid "core.nocookies.brand"
+msgid "core.includes.nocookies.brand"
 msgstr "Cookies are disabled"
 
 #: benefits/core/templates/core/includes/nocookies.html:8
-msgid "core.nocookies.text"
+msgid "core.includes.nocookies.text"
 msgstr ""
 "To function properly, this website requires a browser that supports cookies. "
 "Please enable cookies for this website and"
 
 #: benefits/core/templates/core/includes/nocookies.html:8
 #: benefits/core/templates/core/includes/noscript.html:8
-#: benefits/core/viewmodels.py:42
-msgid "core.buttons.home"
+#: benefits/core/viewmodels.py:48
+msgid "core.buttons.return_home"
 msgstr "Return home"
 
 #: benefits/core/templates/core/includes/noscript.html:6
-msgid "core.noscript.brand"
+msgid "core.includes.noscript.brand"
 msgstr "JavaScript is disabled"
 
 #: benefits/core/templates/core/includes/noscript.html:8
-msgid "core.noscript.text"
+msgid "core.includes.noscript.text"
 msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
 
 #: benefits/core/templates/core/payment-options.html:5
-msgid "core.payments.p1"
+msgid "core.pages.payment_options.p[0]"
 msgstr ""
 "Cal-ITP is a new program serving all Californians. In order to activate your "
 "discount, you need a contactless-enabled bank card. Cards that are "
-"contactless-enabled have the following symbol (four curved lines) "
-"on the front or the back of them:"
+"contactless-enabled have the following symbol (four curved lines) on the "
+"front or the back of them:"
 
 #: benefits/core/templates/core/payment-options.html:7
 msgctxt "image alt text"
@@ -91,133 +172,137 @@ msgid "core.icons.contactless"
 msgstr "Four curved lines on contactless-enabled cards"
 
 #: benefits/core/templates/core/payment-options.html:9
-msgid "core.payments.p3"
+msgid "core.pages.payment_options.p[1]"
 msgstr "A contactless bank card can be"
 
 #: benefits/core/templates/core/payment-options.html:11
-msgid "core.payments.option.creditcard"
+msgid "core.pages.payment_options.options.creditcard"
 msgstr "A credit card"
 
 #: benefits/core/templates/core/payment-options.html:12
-msgid "core.payments.option.debitcard"
+msgid "core.pages.payment_options.options.debitcard"
 msgstr "A debit card"
 
-#: benefits/core/templates/core/payment-options.html:15
-msgid "core.payments.p4"
+#: benefits/core/templates/core/payment-options.html:14
+msgid "core.pages.payment_options.p[2]"
 msgstr "Note: Must include a Visa or Mastercard logo."
 
 #: benefits/core/templates/core/payment-options.html:15
-msgid "core.payments.p5"
+msgid "core.pages.payment_options.p[3]"
 msgstr ""
-"Don't have access to a bank card? You can request a contactless card "
-"from one of the companies that offer free contactless prepaid debit "
-"cards, such as the "
+"Don't have access to a bank card? You can request a contactless card from "
+"one of the companies that offer free contactless prepaid debit cards, such "
+"as the "
 
 #: benefits/core/templates/core/payment-options.html:17
-msgid "core.payments.or"
+msgid "core.pages.payment_options.or"
 msgstr "or the"
 
 #: benefits/core/templates/core/payment-options.html:19
-msgid "core.payments.p6"
+msgid "core.pages.payment_options.p[4]"
 msgstr ""
 "You can still get your discount by going through your local transit "
 "provider’s application process."
 
-#: benefits/core/viewmodels.py:122
-msgid "core.page.title"
+msgid "core.pages.index.prefix"
 msgstr "Transit Benefits"
 
-#: benefits/core/viewmodels.py:168 benefits/core/viewmodels.py:170
-#: benefits/eligibility/forms.py:34
-msgid "core.error"
+#: benefits/core/viewmodels.py:128
+msgid "core.pages.index.title"
+msgstr "Choose Provider"
+
+#: benefits/core/viewmodels.py:174 benefits/core/viewmodels.py:176
+#: benefits/eligibility/forms.py:64
+msgid "core.pages.error.title"
 msgstr "Error"
 
-#: benefits/core/viewmodels.py:169
+#: benefits/core/viewmodels.py:175
 msgctxt "image alt text"
 msgid "core.icons.sadbus"
 msgstr "Bus icon with flat tire"
 
-#: benefits/core/viewmodels.py:171
-msgid "core.error.server.content_title"
+#: benefits/core/viewmodels.py:177
+msgid "core.pages.server_error.content_title"
 msgstr "Unfortunately, our system is having a problem right now."
 
-#: benefits/core/viewmodels.py:177 benefits/core/viewmodels.py:178
-msgid "core.error.server.title"
+#: benefits/core/viewmodels.py:183 benefits/core/viewmodels.py:184
+msgid "core.pages.server_error.title"
 msgstr "Service is down"
 
-#: benefits/core/viewmodels.py:179
-msgid "core.error.server.p1"
+#: benefits/core/viewmodels.py:185
+msgid "core.pages.server_error.p[0]"
 msgstr "We should be back in operation soon!"
 
-#: benefits/core/viewmodels.py:179
-msgid "core.error.server.p2"
+#: benefits/core/viewmodels.py:185
+msgid "core.pages.server_error.p[1]"
 msgstr "Please check back later."
 
-#: benefits/core/viewmodels.py:187
-msgid "core.error.notfound.title"
+#: benefits/core/viewmodels.py:193
+msgid "core.pages.not_found.title"
 msgstr "Page not found"
 
-#: benefits/core/viewmodels.py:188
-msgid "core.error.notfound.content_title"
+#: benefits/core/viewmodels.py:194
+msgid "core.pages.not_found.content_title"
 msgstr "We can’t find that page"
 
-#: benefits/core/viewmodels.py:189
-msgid "core.error.notfound.p1"
+#: benefits/core/viewmodels.py:195
+msgid "core.pages.not_found.p[0]"
 msgstr "It looks like that page doesn’t exist or it was moved."
 
-#: benefits/core/viewmodels.py:212
+#: benefits/core/viewmodels.py:218
 msgid "core.buttons.wait"
 msgstr "Please wait..."
 
 #: benefits/core/views.py:20
-msgid "core.index.content_title"
+msgid "core.pages.index.content_title"
 msgstr ""
-"The new way to pay for transit makes it easier to get your discount every "
-"time you ride"
+"Cal-ITP Benefits makes it easy to use your public transit discount every time you ride."
+
+msgid "core.pages.agency_index.title"
+msgstr "Introduction"
+
+msgid "core.pages.agency_index.content_title"
+msgstr ""
+"Cal-ITP Benefits makes it easy to use your public transit discount "
+"every time you ride."
+
+msgid "core.pages.agency_index.p[0]%(info_link)s"
+msgstr "You can tap your credit or debit card when you board, "
+"and your discount will automatically apply every time you ride."
+" <strong><a href=\"%(info_link)s\">Learn more about Cal-ITP Benefits</a></strong><span class='period'>.</span>"
+
+msgid "core.pages.agency_index.p[1]"
+msgstr "You will need your California driver’s license or ID "
+"card and your bank-issued contactless card to get started. "
+
+msgid "core.pages.agency_index.p[2]"
+msgstr "The Cal-ITP Benefits program is currently only open to those <strong>ages 65 or older</strong>."
+
+msgid "core.pages.agency_index.p[3]"
+msgstr "Connect your bank card to your public transit discount with Cal-ITP Benefits."
+
+msgid "core.pages.agency_index.button.label"
+msgstr "Connect your bank card to your discount today!"
 
 #: benefits/core/views.py:25
 msgctxt "image alt text"
-msgid "core.index.image"
+msgid "core.pages.index.image"
 msgstr "Rider tapping a debit card to pay for their trip"
 
-#: benefits/core/views.py:30
-msgid "core.index.p1"
-msgstr ""
-"With new contactless payment options, you can tap your bank-issued credit or "
-"debit card when you board, and your discount will automatically apply."
-
-#: benefits/core/views.py:30
-msgid "core.index.p2"
-msgstr ""
-"We don’t save any of your information, and you don’t need to create an "
-"account!"
-
-#: benefits/core/views.py:30
-msgid "core.index.p3"
-msgstr "Verify your discount, and connect your bank card today."
-
 #: benefits/core/views.py:47
-msgid "core.index.chooseprovider"
-msgstr "Choose your transit provider"
+msgid "core.pages.index.chooseprovider"
+msgstr "Please choose your transit provider:"
 
 #: benefits/core/views.py:70
-msgid "core.index.continue"
-msgstr "Let’s do it!"
+msgid "core.pages.index.continue"
+msgstr "Get started"
 
 #: benefits/core/views.py:86 benefits/core/views.py:106
 msgid "core.buttons.back"
 msgstr "Go back"
 
 #: benefits/core/views.py:91
-msgid "core.help.p1"
-msgstr ""
-"Cal-ITP is a new project from the California Department of Transportation. "
-"We partner with the California DMV to confirm age for age-based discounts. "
-"We partner with Littlepay to attach your discount to your bank card so that "
-"when you pay for your transit ride, you get your discount automatically."
-
-#: benefits/core/views.py:91
-msgid "core.help.p2"
+msgid "core.pages.help.p[1]"
 msgstr ""
 "If you need assistance with the site, please reach out to the customer "
 "service team for your local transit provider."
@@ -227,174 +312,279 @@ msgctxt "image alt text"
 msgid "core.icons.bankcard"
 msgstr "Bank card icon with contactless symbol"
 
-#: benefits/eligibility/forms.py:21
-msgid "eligibility.form.id"
-msgstr "CA driver’s license or ID number"
+msgid "core.pages.start.headline"
+msgstr "Connect your bank card to your public transit discount with Cal-ITP Benefits."
 
-#: benefits/eligibility/forms.py:23
-msgid "eligibility.form.name"
-msgstr "Last name (as it appears on ID)"
-
-#: benefits/eligibility/forms.py:25
-msgid "eligibility.form.submit"
+#: benefits/eligibility/forms.py:37
+msgid "eligibility.forms.confirm.submit"
 msgstr "Check status"
 
-#: benefits/eligibility/forms.py:26
-msgid "eligibility.form.submitting"
+#: benefits/eligibility/forms.py:38
+msgid "eligibility.forms.confirm.submitting"
 msgstr "Checking"
 
-#: benefits/eligibility/forms.py:28
-msgid "eligibility.form.error.invalid"
+#: benefits/eligibility/forms.py:41
+msgid "eligibility.forms.confirm.errors.invalid"
 msgstr "Check your input. The format looks wrong."
 
-#: benefits/eligibility/forms.py:28
-msgid "eligibility.form.error.missing"
+#: benefits/eligibility/forms.py:42
+msgid "eligibility.forms.confirm.errors.missing"
 msgstr "This field is required."
 
-#: benefits/eligibility/views.py:21
-msgid "eligibility.index.title"
-msgstr "Getting started"
+#: benefits/eligibility/views.py:26
+msgid "eligibility.pages.index.title"
+msgstr "Select a discount option"
 
-#: benefits/eligibility/views.py:22
-msgid "eligibility.index.content_title"
-msgstr "Great, you’ll need two things before we get started..."
+#: benefits/eligibility/views.py:27
+msgid "eligibility.pages.index.content_title"
+msgstr "Select the discount option that best applies to you:"
 
-#: benefits/eligibility/views.py:25 benefits/enrollment/views.py:41
+#: benefits/eligibility/views.py:64
+msgid "eligibility.pages.start.title"
+msgstr "Get Started"
+
+#: benefits/eligibility/views.py:68 benefits/enrollment/views.py:31
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Identification card icon with checkmark"
 
-#: benefits/eligibility/views.py:26
-msgid "eligibility.index.item1.title"
-msgstr "Your California ID"
-
-#: benefits/eligibility/views.py:27
-msgid "eligibility.index.item1.text"
-msgstr "Driver’s license or ID card"
-
-#: benefits/eligibility/views.py:30 benefits/enrollment/views.py:150
+#: benefits/eligibility/views.py:73 benefits/enrollment/views.py:148
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
 msgstr "Bank card icon with contactless symbol and checkmark"
 
-#: benefits/eligibility/views.py:31
-msgid "eligibility.index.item2.title"
-msgstr "Your bank card"
+msgctxt "image alt text"
+msgid "core.icons.idscreencheck"
+msgstr "Computer monitor with checkmark"
 
-#: benefits/eligibility/views.py:32
-msgid "eligibility.index.item2.text"
-msgstr "A debit or credit card"
+#: benefits/eligibility/views.py:74
+msgid "eligibility.pages.start.bankcard.title"
+msgstr "Your bank card details"
 
-#: benefits/eligibility/views.py:35
-msgid "eligibility.index.p1"
+#: benefits/eligibility/views.py:75
+msgid "eligibility.pages.start.bankcard.text"
+msgstr "Your card must be a contactless debit or credit card by Visa or Mastercard."
+
+msgid "eligibility.pages.start.bankcard.button[0].link"
+msgstr "Don’t have a bank card?"
+
+msgid "eligibility.pages.start.bankcard.button[1].link"
+msgstr "Unsure if you have a contactless card?"
+
+#: benefits/eligibility/views.py:80
+msgid "eligibility.buttons.continue"
+msgstr "Continue"
+
+msgid "eligibility.pages.start.oauth.heading"
+msgstr "A Login.gov account with identity verification"
+
+msgid "eligibility.pages.start.oauth.details"
+msgstr "Login.gov is a safe way to sign in to government services. If you do not have an account already, you will be able to create one. You will also need to provide proof of your identity. Some of the items you can use to do that include:"
+
+msgid "eligibility.pages.start.oauth.link_text"
+msgstr "Learn more about Login.gov"
+
+msgid "eligibility.pages.start.oauth.link_text[2]"
+msgstr "Don’t have access to these items?"
+
+msgid "eligibility.pages.start.oauth.required_items[0]"
+msgstr "Your state-issued ID card"
+
+msgid "eligibility.pages.start.oauth.required_items[1]"
+msgstr "Your Social Security number"
+
+msgid "eligibility.pages.start.oauth.required_items[2]"
+msgstr "Don’t have access to these items?"
+
+#: benefits/eligibility/views.py:80
+msgid "eligibility.buttons.signin"
+msgstr "Get started with"
+
+#: benefits/eligibility/views.py:80
+msgid "eligibility.buttons.signout"
+msgstr "Sign out of Login.gov"
+
+#: benefits/eligibility/views.py:170
+msgid "eligibility.pages.unverified.dmv.title"
+msgstr "Age not confirmed"
+
+#: benefits/eligibility/views.py:171
+msgid "eligibility.pages.unverified.dmv.content_title"
+msgstr "We can’t confirm your age"
+
+#: benefits/eligibility/views.py:172
+msgctxt "image alt text"
+msgid "core.icons.idcardquestion"
+msgstr "Identification card icon with question mark"
+
+#: benefits/eligibility/views.py:173
+msgid "eligibility.pages.unverified.p[1]"
+msgstr "Reach out to your transit provider for assistance."
+
+#: benefits/enrollment/templates/enrollment/success.html:7
+msgctxt "image alt text"
+msgid "enrollment.pages.success.image"
+msgstr "Tapping bank card on the bus reader"
+
+#: benefits/enrollment/views.py:29
+msgid "enrollment.pages.index.title"
+msgstr "Connect Card"
+
+#: benefits/enrollment/views.py:30
+msgid "enrollment.pages.index.content_title"
+msgstr "Great! You’re eligible for a discount!"
+
+#: benefits/enrollment/views.py:32
+msgid "enrollment.pages.index.p[0]"
+msgstr ""
+"Next, we need to link your discount to your bank-issued card through our payment partner Littlepay."
+
+#: benefits/enrollment/views.py:32
+msgid "enrollment.pages.index.p[1]"
+msgstr "We don’t store your information, and you won’t be charged. When you use this card to pay for transit, you will always receive your discount."
+
+msgid "enrollment.pages.index.p[2]"
+msgstr "Please use a bank-issued contactless Visa or Mastercard credit or debit card."
+
+#: benefits/enrollment/views.py:37
+msgid "enrollment.buttons.payment_partner"
+msgstr "Connect Your Card"
+
+#: benefits/enrollment/views.py:40
+msgid "enrollment.buttons.payment_options"
+msgstr "What if I don’t have a bank card?"
+
+#: benefits/enrollment/views.py:127 benefits/enrollment/views.py:129
+msgid "enrollment.pages.retry.title"
+msgstr "We couldn’t connect your bank card"
+
+#: benefits/enrollment/views.py:128
+msgctxt "image alt text"
+msgid "core.icons.bankcardquestion"
+msgstr "Bank card icon with contactless symbol and question mark"
+
+#: benefits/enrollment/views.py:130
+msgid "enrollment.pages.retry.p[0]"
+msgstr ""
+"You can try again or reach out to your transit provider for assistance."
+
+#: benefits/enrollment/views.py:133
+msgid "core.buttons.retry"
+msgstr "Try again"
+
+msgid "enrollment.pages.success.title"
+msgstr "Success"
+
+#: benefits/enrollment/views.py:147 benefits/enrollment/views.py:149
+msgid "enrollment.pages.success.content_title"
+msgstr "Success! Your discount is now linked to your bank card."
+
+msgid "enrollment.pages.success.logout.title"
+msgstr "You have been successfully logged out. Thank you for using Cal-ITP Benefits!"
+
+#: benefits/enrollment/views.py:150
+msgid "enrollment.pages.success.p1"
+msgstr "You were not charged anything today."
+
+#: benefits/enrollment/views.py:150
+msgid "enrollment.pages.success.p2"
+msgstr "When boarding transit, pay with this same physical card and your discount will automatically be applied to your fare purchase."
+
+msgid "enrollment.pages.success.p3"
+msgstr "If you are on a public or shared computer, please sign out of your"
+
+msgid "enrollment.pages.success.p4"
+msgstr "account."
+
+msgid "enrollment.pages.success.p3%(help_link)s"
+msgstr "For more information on what to expect when using your connected bank card please reach out to your local transit provider or check out our "
+"<a href=\"%(help_link)s\" rel=\"noopener noreferrer\">help page</a>."
+
+msgid "eligibility.pages.index.dmv.label"
+msgstr "Senior Discount Program"
+
+msgid "eligibility.pages.index.mst.label"
+msgstr "MST Courtesy Cardholder"
+
+msgid "eligibility.pages.index.mst.description"
+msgstr "(includes MST RIDES Paratransit Eligibility cardholders)"
+
+msgid "eligibility.pages.confirm.dmv.content_title"
+msgstr "Let’s see if we can confirm your age with the DMV."
+
+msgid "eligibility.pages.start.dmv.items[0].title"
+msgstr "Provide your California ID number"
+
+msgid "eligibility.pages.start.dmv.items[0].text"
+msgstr "You will need to verify your age with a driver’s license or ID card."
+
+msgid "eligibility.pages.confirm.dmv.p[0]"
+msgstr ""
+"Please enter your license/ID number and last name below. If you’re 65 or older, we can confirm that you are eligible for a senior discount when you ride transit. We do not save the information you enter here."
+
+msgid "eligibility.forms.confirm.dmv.fields.sub"
+msgstr "CA driver’s license or ID number"
+
+msgid "eligibility.forms.confirm.dmv.fields.name"
+msgstr "Last name (as it appears on ID)"
+
+msgid "eligibility.pages.start.dmv.content_title"
+msgstr "You will need a few items to connect your discount:"
+
+msgid "eligibility.pages.start.dmv.p[0]"
 msgstr ""
 "This program is currently open to those who are 65 or older. Not over 65? "
 "Get in touch with your transit provider to learn about other available "
 "discount programs."
 
-#: benefits/eligibility/views.py:37
-msgid "eligibility.index.button"
-msgstr "Ready to continue"
+msgid "eligibility.pages.confirm.dmv.title"
+msgstr "Confirm Eligibility"
 
-#: benefits/eligibility/views.py:48
-msgid "eligibility.confirm.title"
-msgstr "Confirm your age"
-
-#: benefits/eligibility/views.py:49
-msgid "eligibility.confirm.content_title"
-msgstr "Let’s see if we can confirm your age with the DMV"
-
-#: benefits/eligibility/views.py:50
-msgid "eligibility.confirm.p1"
+msgid "eligibility.pages.unverified.dmv.p[0]"
 msgstr ""
-"If you’re 65 or older, we can confirm you are eligible for a senior discount "
-"when you ride transit. We don’t save your information."
+"You may still be eligible for a discount, but we can’t verify your age "
+"with the DMV."
 
-#: benefits/eligibility/views.py:119
-msgid "eligibility.unverified.title"
-msgstr "Age not confirmed"
+msgid "eligibility.forms.confirm.mst.fields.sub"
+msgstr "MST Courtesy Card number"
 
-#: benefits/eligibility/views.py:120
-msgid "eligibility.unverified.content_title"
-msgstr "We can’t confirm your age"
+msgid "eligibility.forms.confirm.mst.fields.name"
+msgstr "Last name (as it appears on Courtesy Card)"
 
-#: benefits/eligibility/views.py:121
-msgctxt "image alt text"
-msgid "core.icons.idcardquestion"
-msgstr "Identification card icon with question mark"
+msgid "eligibility.pages.start.mst.content_title"
+msgstr "You’ll need to do two things to link your transit discount to your bank card."
 
-#: benefits/eligibility/views.py:122
-msgid "eligibility.unverified.p1"
+msgid "eligibility.pages.start.mst.items[0].title"
+msgstr "Your MST Courtesy Card"
+
+msgid "eligibility.pages.start.mst.items[0].text"
+msgstr "An active card that has not expired"
+
+msgid "eligibility.pages.start.mst.p[0]"
 msgstr ""
-"You may still be eligible for a discount, but we can’t verify your age with "
-"the DMV."
+"This program is currently open to all MST Courtesy Cardholders. Not a "
+"Courtesy Cardholder? Get in touch with your transit provider to learn "
+"about other available discount programs at"
 
-#: benefits/eligibility/views.py:122
-msgid "eligibility.unverified.p2"
-msgstr "Reach out to your transit provider for assistance."
+msgid "eligibility.pages.confirm.mst.title"
+msgstr "Confirm your Courtesy Card"
 
-#: benefits/enrollment/templates/enrollment/success.html:7
-msgctxt "image alt text"
-msgid "enrollment.success.image"
-msgstr "Tapping bank card on the bus reader"
+msgid "eligibility.pages.confirm.mst.content_title"
+msgstr "Let’s see if we can find you in our system"
 
-#: benefits/enrollment/views.py:39
-msgid "enrollment.index.title"
-msgstr "Eligibility Confirmed!"
-
-#: benefits/enrollment/views.py:40
-msgid "enrollment.index.content_title"
-msgstr "Great! You’re eligible for a discount!"
-
-#: benefits/enrollment/views.py:42
-msgid "enrollment.index.p1"
+msgid "eligibility.pages.confirm.mst.p[0]"
 msgstr ""
-"Next, we need to attach your discount to your bank card. We don’t store your "
-"information, and you won’t be charged. When you use this card to pay for "
-"transit, you will always receive your discount."
+"Please input your Courtesy Card number and last name below. If you're a "
+"current MST Courtesy Cardholder, we can confirm that you are eligible for "
+"a discount. We do not save your information."
 
-#: benefits/enrollment/views.py:42
-msgid "enrollment.index.p2"
-msgstr "Use a bank-issued credit or debit card."
+msgid "eligibility.pages.unverified.mst.title"
+msgstr "Courtesy Card not located"
 
-#: benefits/enrollment/views.py:47
-msgid "enrollment.buttons.paymentpartner"
-msgstr "Continue to our payment partner"
+msgid "eligibility.pages.unverified.mst.content_title"
+msgstr "We couldn’t locate you in our system"
 
-#: benefits/enrollment/views.py:50
-msgid "enrollment.buttons.paymentoptions"
-msgstr "What if I don’t have a bank card?"
-
-#: benefits/enrollment/views.py:129 benefits/enrollment/views.py:131
-msgid "enrollment.retry.title"
-msgstr "We couldn’t connect your bank card"
-
-#: benefits/enrollment/views.py:130
-msgctxt "image alt text"
-msgid "core.icons.bankcardquestion"
-msgstr "Bank card icon with contactless symbol and question mark"
-
-#: benefits/enrollment/views.py:132
-msgid "enrollment.retry.p1"
+msgid "eligibility.pages.unverified.mst.p[0]"
 msgstr ""
-"You can try again or reach out to your transit provider for assistance."
-
-#: benefits/enrollment/views.py:135
-msgid "enrollment.retry.button"
-msgstr "Try again"
-
-#: benefits/enrollment/views.py:149 benefits/enrollment/views.py:151
-msgid "enrollment.success.title"
-msgstr "Success!"
-
-#: benefits/enrollment/views.py:152
-msgid "enrollment.success.p1"
-msgstr ""
-"Your discount is now linked to your bank card. You were not charged anything "
-"today."
-
-#: benefits/enrollment/views.py:152
-msgid "enrollment.success.p2"
-msgstr ""
-"When boarding transit, pay with this same card, and your discount will "
-"automatically be applied to your fare purchase."
+"That’s okay! You may still be eligible for our program. Please reach out "
+"to Monterey-Salinas Transit for assistance."

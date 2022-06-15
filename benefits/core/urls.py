@@ -46,6 +46,5 @@ app_name = "core"
 urlpatterns = [
     path("", views.index, name="index"),
     path("help", views.help, name="help"),
-    path("payment-options", views.payment_options, name="payment_options"),
     path("<agency:agency>", views.agency_index, name="agency_index"),
 ]

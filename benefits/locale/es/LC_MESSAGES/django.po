@@ -6,86 +6,152 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues\n"
-"POT-Creation-Date: 2021-05-20 19:20+0000\n"
+"POT-Creation-Date: 2022-03-25 15:00+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: benefits/core/templates/core/base.html:25
-msgid "core.skip"
+msgid "core.pages.help.about"
+msgstr "¿Qué son los beneficios de Cal-ITP?"
+
+#: benefits/core/templates/core/base.html:9 benefits/core/views.py:91
+msgid "core.pages.help.about.p[0]"
+msgstr ""
+"La herramienta de Beneficios es proporcionada por California Integrated Travel Project “Proyecto de Viaje Integrado de California” (Cal-ITP), que es un nuevo programa del Departamento de Transporte de California dedicado a hacer que los viajes sean más sencillos y económicos para todos."
+
+msgid "core.pages.help.about.p[1]"
+msgstr ""
+"Nos asociamos con el DMV de California para confirmar la edad para los descuentos basados en la edad y las agencias de transporte locales para confirmar los programas de descuento específicos. Una vez verificados, los descuentos se adjuntan a su tarjeta bancaria a través de nuestro socio de pago, Littlepay, para que cuando pague su viaje en transporte, obtenga su descuento automáticamente.?"
+
+msgid "core.pages.help.payment_options"
+msgstr "Opciones de pago"
+
+msgid "core.pages.help.payment_options.p[0]"
+msgstr "Para activar su descuento, necesita una tarjeta bancaria que tenga el símbolo de sin contacto. El símbolo sin contacto son cuatro líneas curvas que se ven así:"
+
+msgid "core.pages.help.payment_options.p[1]"
+msgstr "Una tarjeta bancaria sin contacto puede ser una tarjeta de crédito o de débito y debe incluir el logotipo de Visa o Mastercard."
+
+msgid "core.pages.help.payment_options.p[2][0]%(website)s"
+msgstr "¿No tienes acceso a una tarjeta bancaria? Puedes solicitar una tarjeta sin contacto de una de las compañías que ofrecen tarjetas de débito prepago sin contacto gratuitas, como la tarjeta de débito "
+" <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Cash App Visa</a> "
+
+msgid "core.pages.help.payment_options.p[2][1]%(website)s"
+msgstr "o la tarjeta de débito <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Venmo Mastercard</a>."
+
+msgid "core.pages.help.payment_options.p[3]"
+msgstr "Todavía puede obtener su descuento mediante el proceso de solicitud de su proveedor de transporte local."
+
+msgid "core.pages.help.payment_options.p[4]"
+msgstr "Para obtener actualizaciones sobre opciones adicionales, vuelva a consultar este sitio web o comuníquese con su proveedor de transporte local."
+
+msgid "core.pages.help.login_gov"
+msgstr "¿Qué es Login.gov?"
+
+msgid "core.pages.help.login_gov.p[0]"
+msgstr "Login.gov es una forma segura de iniciar sesión en las agencias gubernamentales participantes. Puede utilizar su cuenta de Login.gov para acceder a todos los beneficios ofrecidos a través de Cal-ITP."
+
+msgid "core.pages.help.login_gov.p[1]"
+msgstr "Crear una cuenta es simple. Necesitará una dirección de correo electrónico y un método para autenticar su cuenta—que utilizará un teléfono fijo o un teléfono móvil o códigos de seguridad que deben imprimirse o anotarse."
+
+msgid "core.pages.help.login_gov.p[2][0]%(website)s"
+msgstr "Para obtener más información sobre Login.gov, visite "
+"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov</a> "
+
+msgid "core.pages.help.login_gov.p[2][1]%(website)s"
+msgstr "o <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
+
+msgid "core.pages.help.littlepay"
+msgstr "¿Qué es Littlepay?"
+
+msgid "core.pages.help.littlepay.p[0]"
+msgstr "Nuestro socio de pagos, Littlepay, es una plataforma de procesamiento de pagos segura e integral que nos permite adjuntar sin problemas su descuento de tránsito a su tarjeta bancaria."
+
+msgid "core.pages.help.littlepay.p[1]%(website)s"
+msgstr "Para obtener más información sobre Littlepay, visite el sitio web de "
+"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Littlepay</a>."
+
+msgid "core.pages.help.questions"
+msgstr "¿Preguntas?"
+
+msgid "core.pages.help.questions.p[0]"
+msgstr "Si necesita ayuda con este sitio web, póngase en contacto con el equipo de servicio al cliente de su proveedor de transito local."
+
+#: benefits/core/templates/core/base.html:24
+msgid "core.buttons.skip"
 msgstr "Saltar al contenido principal"
 
-#: benefits/core/templates/core/base.html:43
+#: benefits/core/templates/core/base.html:47
 msgctxt "image alt text"
-msgid "core.logo.small"
+msgid "core.logos.small"
 msgstr ""
 "Proyecto de viaje integrado de California: logotipo de beneficios (pequeño)"
 
-#: benefits/core/templates/core/base.html:44
+#: benefits/core/templates/core/base.html:48
 msgctxt "image alt text"
-msgid "core.logo.large"
+msgid "core.logos.large"
 msgstr ""
 "Proyecto de viaje integrado de California: logotipo de beneficios (grande)"
 
-#: benefits/core/templates/core/base.html:64 benefits/core/views.py:103
+#: benefits/core/templates/core/base.html:68 benefits/core/views.py:103
 #: benefits/core/views.py:105
-msgid "core.payment-options"
+msgid "core.buttons.payment_options"
 msgstr "Opciones de Pago"
 
-#: benefits/core/templates/core/base.html:65 benefits/core/views.py:89
+#: benefits/core/templates/core/base.html:69 benefits/core/views.py:89
 #: benefits/core/views.py:90
-msgid "core.help"
+msgid "core.buttons.help"
 msgstr "Ayuda"
 
-#: benefits/core/templates/core/base.html:66
-msgid "core.privacy"
+#: benefits/core/templates/core/base.html:70
+msgid "core.buttons.privacy"
 msgstr "Póliza de Privacidad"
 
 #: benefits/core/templates/core/help.html:6
-msgid "core.help.foss.text"
+msgid "core.pages.help.foss.text"
 msgstr ""
 "Esta aplicación es un software libre y de código abierto. Puede obtener el "
 "código fuente de"
 
-#: benefits/core/templates/core/help.html:8
-msgid "core.help.foss.link"
+#: benefits/core/templates/core/help.html:7
+msgid "core.pages.help.foss.link"
 msgstr "GitHub"
 
 #: benefits/core/templates/core/includes/nocookies.html:6
-msgid "core.nocookies.brand"
+msgid "core.includes.nocookies.brand"
 msgstr "Cookies están inactivos"
 
 #: benefits/core/templates/core/includes/nocookies.html:8
-msgid "core.nocookies.text"
+msgid "core.includes.nocookies.text"
 msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita cookies. Por favor, active cookies por este sitio web y"
 
 #: benefits/core/templates/core/includes/nocookies.html:8
 #: benefits/core/templates/core/includes/noscript.html:8
-#: benefits/core/viewmodels.py:42
-msgid "core.buttons.home"
+#: benefits/core/viewmodels.py:48
+msgid "core.buttons.return_home"
 msgstr "Regresar a la pantalla de inicio"
 
 #: benefits/core/templates/core/includes/noscript.html:6
-msgid "core.noscript.brand"
+msgid "core.includes.noscript.brand"
 msgstr "JavaScript está inactivo"
 
 #: benefits/core/templates/core/includes/noscript.html:8
-msgid "core.noscript.text"
+msgid "core.includes.noscript.text"
 msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita JavaScript. Por favor, active JavaScript por este sitio web y"
 
 #: benefits/core/templates/core/payment-options.html:5
-msgid "core.payments.p1"
+msgid "core.pages.payment_options.p[0]"
 msgstr ""
 "Cal-ITP es un nuevo programa que sirve a todos los Californianos. Para "
-"activar su descuento, necesita una tarjeta bancaria habilitada sin "
-"contacto. Las tarjetas habilitadas sin contacto tienen el siguiente símbolo "
-"(cuatro líneas curvas) en la parte delantera o trasera de la tarjeta:"
+"activar su descuento, necesita una tarjeta bancaria habilitada sin contacto. "
+"Las tarjetas habilitadas sin contacto tienen el siguiente símbolo (cuatro "
+"líneas curvas) en la parte delantera o trasera de la tarjeta:"
 
 #: benefits/core/templates/core/payment-options.html:7
 msgctxt "image alt text"
@@ -93,133 +159,134 @@ msgid "core.icons.contactless"
 msgstr "Cuatro líneas curvas en las tarjetas habilitadas sin contacto"
 
 #: benefits/core/templates/core/payment-options.html:9
-msgid "core.payments.p3"
+msgid "core.pages.payment_options.p[1]"
 msgstr "Una tarjeta de banco sin contacto puede ser"
 
 #: benefits/core/templates/core/payment-options.html:11
-msgid "core.payments.option.creditcard"
+msgid "core.pages.payment_options.options.creditcard"
 msgstr "Una tarjeta de crédito"
 
 #: benefits/core/templates/core/payment-options.html:12
-msgid "core.payments.option.debitcard"
+msgid "core.pages.payment_options.options.debitcard"
 msgstr "Una tarjeta de débito"
 
-#: benefits/core/templates/core/payment-options.html:15
-msgid "core.payments.p4"
+#: benefits/core/templates/core/payment-options.html:14
+msgid "core.pages.payment_options.p[2]"
 msgstr "Nota: Debe incluir un logo de Visa o Mastercard"
 
 #: benefits/core/templates/core/payment-options.html:15
-msgid "core.payments.p5"
+msgid "core.pages.payment_options.p[3]"
 msgstr ""
-"¿No tienes acceso a una tarjeta bancaria? Puede solicitar una tarjeta "
-"sin contacto a una de las compañías que ofrecen tarjetas de débito "
-"prepagas sin contacto gratuitas, como la tarjeta de "
+"¿No tienes acceso a una tarjeta bancaria? Puede solicitar una tarjeta sin "
+"contacto a una de las compañías que ofrecen tarjetas de débito prepagas sin "
+"contacto gratuitas, como la tarjeta de "
 
 #: benefits/core/templates/core/payment-options.html:17
-msgid "core.payments.or"
+msgid "core.pages.payment_options.or"
 msgstr "o la"
 
 #: benefits/core/templates/core/payment-options.html:19
-msgid "core.payments.p6"
+msgid "core.pages.payment_options.p[4]"
 msgstr ""
 "Aún puede obtener su descuento mediante el proceso de solicitud de su "
 "proveedor de transporte público."
 
-#: benefits/core/viewmodels.py:122
-msgid "core.page.title"
+msgid "core.pages.index.prefix"
 msgstr "Beneficios del Tránsito"
 
-#: benefits/core/viewmodels.py:168 benefits/core/viewmodels.py:170
-#: benefits/eligibility/forms.py:34
-msgid "core.error"
+#: benefits/core/viewmodels.py:128
+msgid "core.pages.index.title"
+msgstr "Elija proveedor"
+
+#: benefits/core/viewmodels.py:174 benefits/core/viewmodels.py:176
+#: benefits/eligibility/forms.py:64
+msgid "core.pages.error.title"
 msgstr "Error"
 
-#: benefits/core/viewmodels.py:169
+#: benefits/core/viewmodels.py:175
 msgctxt "image alt text"
 msgid "core.icons.sadbus"
 msgstr "Icono de autobus con llanta ponchada"
 
-#: benefits/core/viewmodels.py:171
-msgid "core.error.server.content_title"
+#: benefits/core/viewmodels.py:177
+msgid "core.pages.server_error.content_title"
 msgstr "El servicio no está funcionando"
 
-#: benefits/core/viewmodels.py:177 benefits/core/viewmodels.py:178
-msgid "core.error.server.title"
+#: benefits/core/viewmodels.py:183 benefits/core/viewmodels.py:184
+msgid "core.pages.server_error.title"
 msgstr "El servicio no está funcionando"
 
-#: benefits/core/viewmodels.py:179
-msgid "core.error.server.p1"
+#: benefits/core/viewmodels.py:185
+msgid "core.pages.server_error.p[0]"
 msgstr "¡Pronto volveremos a estar en funcionamiento!"
 
-#: benefits/core/viewmodels.py:179
-msgid "core.error.server.p2"
+#: benefits/core/viewmodels.py:185
+msgid "core.pages.server_error.p[1]"
 msgstr "Por favor, vuelva más tarde."
 
-#: benefits/core/viewmodels.py:187
-msgid "core.error.notfound.title"
+#: benefits/core/viewmodels.py:193
+msgid "core.pages.not_found.title"
 msgstr "No podemos encontrar esa página"
 
-#: benefits/core/viewmodels.py:188
-msgid "core.error.notfound.content_title"
+#: benefits/core/viewmodels.py:194
+msgid "core.pages.not_found.content_title"
 msgstr "No podemos encontrar esa página"
 
-#: benefits/core/viewmodels.py:189
-msgid "core.error.notfound.p1"
+#: benefits/core/viewmodels.py:195
+msgid "core.pages.not_found.p[0]"
 msgstr "Parece que esa página no existe o se ha movido."
 
-#: benefits/core/viewmodels.py:212
+#: benefits/core/viewmodels.py:218
 msgid "core.buttons.wait"
 msgstr "Espere por favor..."
 
 #: benefits/core/views.py:20
-msgid "core.index.content_title"
+msgid "core.pages.index.content_title"
 msgstr ""
-"La nueva forma de pagar el transporte público hace que sea más fácil obtener "
-"su descuento cada vez que viaja"
+"Los beneficios de Cal-ITP facilita el uso de su descuento de transporte público cada vez que viaja."
+
+msgid "core.pages.agency_index.title"
+msgstr "Introducción"
+
+msgid "core.pages.agency_index.content_title"
+msgstr ""
+"Los beneficios de Cal-ITP facilita el uso de su descuento de transporte público cada vez que viaja"
+
+
+msgid "core.pages.agency_index.p[0]%(info_link)s"
+msgstr "Puede acercar su tarjeta de crédito o débito cuando aborde, y su descuento se aplicará automáticamente cada vez que viaje. <strong><a href=\"%(info_link)s\">Conozca más sobre beneficios de Cal-ITP</a></strong><span class='period'>.</span>"
+
+msgid "core.pages.agency_index.p[1]"
+msgstr "Necesitará su licencia de conducir o tarjeta de identificación de California y su tarjeta sin contacto emitida por el banco para comenzar."
+
+msgid "core.pages.agency_index.p[2]"
+msgstr "El programa de beneficios de Cal-ITP actualmente solo está abierto a personas de 65 años o más."
+
+msgid "core.pages.agency_index.p[3]"
+msgstr "TODO: Connect your bank card to your public transit discount with Cal-ITP Benefits."
+
+msgid "core.pages.agency_index.button.label"
+msgstr "¡Conecta tu tarjeta bancaria a tu descuento hoy!"
 
 #: benefits/core/views.py:25
 msgctxt "image alt text"
-msgid "core.index.image"
+msgid "core.pages.index.image"
 msgstr "Pasajera utiliza una tarjeta de débito para pagar su paseo."
 
-#: benefits/core/views.py:30
-msgid "core.index.p1"
-msgstr ""
-"Con las nuevas opciones de pago sin contacto, puede acercar su tarjeta "
-"bancaria de crédito o débito cuando aborde y su descuento se aplicará "
-"automáticamente."
-
-#: benefits/core/views.py:30
-msgid "core.index.p2"
-msgstr "Nosotros no guardamos su información ¡y no necesita crear una cuenta!"
-
-#: benefits/core/views.py:30
-msgid "core.index.p3"
-msgstr "Verifique su descuento y conecte su tarjeta de banco ahora."
-
 #: benefits/core/views.py:47
-msgid "core.index.chooseprovider"
-msgstr "Elige tu proveedor de transporte público"
+msgid "core.pages.index.chooseprovider"
+msgstr "Por favor, elija su proveedor de transporte:"
 
 #: benefits/core/views.py:70
-msgid "core.index.continue"
-msgstr "¡Hagámoslo!"
+msgid "core.pages.index.continue"
+msgstr "Comencemos"
 
 #: benefits/core/views.py:86 benefits/core/views.py:106
 msgid "core.buttons.back"
 msgstr "Regresar"
 
 #: benefits/core/views.py:91
-msgid "core.help.p1"
-msgstr ""
-"Cal-ITP es un nuevo proyecto del Departamento de Transporte de California. "
-"Nos asociamos con el DMV de California para confirmar la edad para los "
-"descuentos. Nos asociamos con Littlepay para conectar el descuento con su "
-"tarjeta bancaria y así, cuando pague el transporte público, obtenga su "
-"descuento automáticamente."
-
-#: benefits/core/views.py:91
-msgid "core.help.p2"
+msgid "core.pages.help.p[1]"
 msgstr ""
 "Si necesita ayuda con el sitio web, comuníquese con el equipo de servicio al "
 "cliente de su proveedor de transporte público."
@@ -229,179 +296,281 @@ msgctxt "image alt text"
 msgid "core.icons.bankcard"
 msgstr "Icono de tarjeta bancaria"
 
-#: benefits/eligibility/forms.py:21
-msgid "eligibility.form.id"
-msgstr "Licencia de conducir de CA o número de identificación"
+msgid "core.pages.start.headline"
+msgstr "TODO: Connect your bank card to your public transit discount with Cal-ITP Benefits."
 
-#: benefits/eligibility/forms.py:23
-msgid "eligibility.form.name"
-msgstr "Apellido (como aparece en la identificación)"
+#: benefits/eligibility/forms.py:37
+msgid "eligibility.forms.confirm.submit"
+msgstr "Verificando estado"
 
-#: benefits/eligibility/forms.py:25
-msgid "eligibility.form.submit"
-msgstr "Verificar"
-
-#: benefits/eligibility/forms.py:26
-msgid "eligibility.form.submitting"
+#: benefits/eligibility/forms.py:38
+msgid "eligibility.forms.confirm.submitting"
 msgstr "Verificando"
 
-#: benefits/eligibility/forms.py:28
-msgid "eligibility.form.error.invalid"
+#: benefits/eligibility/forms.py:41
+msgid "eligibility.forms.confirm.errors.invalid"
 msgstr "Verifique su entrada. El formato parece incorrecto."
 
-#: benefits/eligibility/forms.py:28
-msgid "eligibility.form.error.missing"
+#: benefits/eligibility/forms.py:42
+msgid "eligibility.forms.confirm.errors.missing"
 msgstr "Este campo es requerido."
 
-#: benefits/eligibility/views.py:21
-msgid "eligibility.index.title"
-msgstr "Preparación"
+#: benefits/eligibility/views.py:26
+msgid "eligibility.pages.index.title"
+msgstr "TODO"
 
-#: benefits/eligibility/views.py:22
-msgid "eligibility.index.content_title"
-msgstr "Genial, necesitarás dos cosas antes de comenzar..."
+#: benefits/eligibility/views.py:27
+msgid "eligibility.pages.index.content_title"
+msgstr "TODO"
 
-#: benefits/eligibility/views.py:25 benefits/enrollment/views.py:41
+#: benefits/eligibility/views.py:64
+msgid "eligibility.pages.start.title"
+msgstr "Comencemos"
+
+#: benefits/eligibility/views.py:68 benefits/enrollment/views.py:31
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Icono de tarjeta de identificación con marca de verificación"
 
-#: benefits/eligibility/views.py:26
-msgid "eligibility.index.item1.title"
-msgstr "Tu identificación de California"
-
-#: benefits/eligibility/views.py:27
-msgid "eligibility.index.item1.text"
-msgstr "Licencia de conducir o tarjeta de identificación"
-
-#: benefits/eligibility/views.py:30 benefits/enrollment/views.py:150
+#: benefits/eligibility/views.py:73 benefits/enrollment/views.py:148
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
 msgstr ""
 "Icono de tarjeta bancaria con símbolo sin contacto y marca de verificación"
 
-#: benefits/eligibility/views.py:31
-msgid "eligibility.index.item2.title"
-msgstr "Tu tarjeta bancaria"
+msgctxt "image alt text"
+msgid "core.icons.idscreencheck"
+msgstr "TODO: Computer monitor with checkmark"
 
-#: benefits/eligibility/views.py:32
-msgid "eligibility.index.item2.text"
-msgstr "Una tarjeta de débito o crédito"
+#: benefits/eligibility/views.py:74
+msgid "eligibility.pages.start.bankcard.title"
+msgstr "Proporcione los datos de su tarjeta bancaria"
 
-#: benefits/eligibility/views.py:35
-msgid "eligibility.index.p1"
-msgstr ""
-"Este programa actualmente está disponible para personas de 65 años o más. "
-"¿No tienes más de 65 años? Póngase en contacto con su proveedor de "
-"transporte público para obtener información sobre los programas de descuento "
-"disponibles."
+#: benefits/eligibility/views.py:75
+msgid "eligibility.pages.start.bankcard.text"
+msgstr "Debe ser una tarjeta de débito o crédito sin contacto de Visa o Mastercard."
 
-#: benefits/eligibility/views.py:37
-msgid "eligibility.index.button"
-msgstr "Listo para continuar"
+msgid "eligibility.pages.start.bankcard.button[0].link"
+msgstr "¿No tienes tarjeta bancaria?"
 
-#: benefits/eligibility/views.py:48
-msgid "eligibility.confirm.title"
-msgstr "Verificar su edad"
+msgid "eligibility.pages.start.bankcard.button[1].link"
+msgstr "¿No está seguro si tiene una tarjeta sin contacto?"
 
-#: benefits/eligibility/views.py:49
-msgid "eligibility.confirm.content_title"
-msgstr "Veamos si podemos verificar su edad con el DMV"
+#: benefits/eligibility/views.py:80
+msgid "eligibility.buttons.continue"
+msgstr "Continuar"
 
-#: benefits/eligibility/views.py:50
-msgid "eligibility.confirm.p1"
-msgstr ""
-"Si tiene 65 años o más, podemos confirmar que es elegible para un descuento "
-"para personas mayores cuando viaja en transporte público. Nosotros no "
-"guardamos su información."
+msgid "eligibility.pages.start.oauth.heading"
+msgstr "Inicia sesión en Login.gov"
 
-#: benefits/eligibility/views.py:119
-msgid "eligibility.unverified.title"
+msgid "eligibility.pages.start.oauth.details"
+msgstr "Login.gov es una forma segura de iniciar sesión en los servicios gubernamentales."
+
+msgid "eligibility.pages.start.oauth.link_text"
+msgstr "Conozca más sobre Login.gov"
+
+msgid "eligibility.pages.start.oauth.link_text[2]"
+msgstr "TODO: Don’t have access to these items?"
+
+msgid "eligibility.pages.start.oauth.required_items[0]"
+msgstr "TODO: Your state-issued ID card"
+
+msgid "eligibility.pages.start.oauth.required_items[1]"
+msgstr "TODO: Your Social Security number"
+
+msgid "eligibility.pages.start.oauth.required_items[2]"
+msgstr "TODO: Don’t have access to these items?"
+
+#: benefits/eligibility/views.py:80
+msgid "eligibility.buttons.signin"
+msgstr "Crear una cuenta o iniciar sesión con"
+
+#: benefits/eligibility/views.py:80
+msgid "eligibility.buttons.signout"
+msgstr "Cierre sesión de Login.gov"
+
+#: benefits/eligibility/views.py:170
+msgid "eligibility.pages.unverified.dmv.title"
 msgstr "Edad no confirmada"
 
-#: benefits/eligibility/views.py:120
-msgid "eligibility.unverified.content_title"
+#: benefits/eligibility/views.py:171
+msgid "eligibility.pages.unverified.dmv.content_title"
 msgstr "No podemos confirmar su edad"
 
-#: benefits/eligibility/views.py:121
+#: benefits/eligibility/views.py:172
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Icono de tarjeta de identificación con signo de interrogación"
 
-#: benefits/eligibility/views.py:122
-msgid "eligibility.unverified.p1"
-msgstr ""
-"Usted todavía puede ser elegible para un descuento, pero no podemos "
-"verificar su edad con el DMV."
-
-#: benefits/eligibility/views.py:122
-msgid "eligibility.unverified.p2"
+#: benefits/eligibility/views.py:173
+msgid "eligibility.pages.unverified.p[1]"
 msgstr "Comuníquese con su proveedor de transporte público para obtener ayuda."
 
 #: benefits/enrollment/templates/enrollment/success.html:7
 msgctxt "image alt text"
-msgid "enrollment.success.image"
+msgid "enrollment.pages.success.image"
 msgstr "Tocando la tarjeta bancaria para pagar"
 
-#: benefits/enrollment/views.py:39
-msgid "enrollment.index.title"
-msgstr "¡Elegibilidad confirmada!"
+#: benefits/enrollment/views.py:29
+msgid "enrollment.pages.index.title"
+msgstr "Tarjeta de conexión"
 
-#: benefits/enrollment/views.py:40
-msgid "enrollment.index.content_title"
+#: benefits/enrollment/views.py:30
+msgid "enrollment.pages.index.content_title"
 msgstr "¡Genial! ¡Eres elegible para un descuento!"
 
-#: benefits/enrollment/views.py:42
-msgid "enrollment.index.p1"
+#: benefits/enrollment/views.py:32
+msgid "enrollment.pages.index.p[0]"
 msgstr ""
-"Ahora, tenemos que vincular su descuento a su tarjeta bancaria. Nosotros no "
-"guardamos su información y no se le cobrará. Cuando utilice esta tarjeta "
-"para pagar el transporte público, siempre recibirá su descuento."
+"A continuación, tenemos que vincular su descuento a su tarjeta bancaria a través de nuestro socio de pago Littlepay."
 
-#: benefits/enrollment/views.py:42
-msgid "enrollment.index.p2"
-msgstr "Use una tarjeta de crédito o débito emitida por su banco."
+#: benefits/enrollment/views.py:32
+msgid "enrollment.pages.index.p[1]"
+msgstr "No almacenamos su información y no se le cobrará. Cuando utilice esta tarjeta para pagar el tránsito, siempre recibirá su descuento."
 
-#: benefits/enrollment/views.py:47
-msgid "enrollment.buttons.paymentpartner"
-msgstr "Continúe con nuestro socio de pago"
+msgid "enrollment.pages.index.p[2]"
+msgstr "Utilice una tarjeta de crédito o débito Visa o Mastercard sin contacto emitida por un banco."
 
-#: benefits/enrollment/views.py:50
-msgid "enrollment.buttons.paymentoptions"
+#: benefits/enrollment/views.py:37
+msgid "enrollment.buttons.payment_partner"
+msgstr "Conecta tu tarjeta"
+
+#: benefits/enrollment/views.py:40
+msgid "enrollment.buttons.payment_options"
 msgstr "¿Qué pasa si no tengo una tarjeta bancaria?"
 
-#: benefits/enrollment/views.py:129 benefits/enrollment/views.py:131
-msgid "enrollment.retry.title"
+#: benefits/enrollment/views.py:127 benefits/enrollment/views.py:129
+msgid "enrollment.pages.retry.title"
 msgstr "No pudimos conectar tu tarjeta bancaria"
 
-#: benefits/enrollment/views.py:130
+#: benefits/enrollment/views.py:128
 msgctxt "image alt text"
 msgid "core.icons.bankcardquestion"
 msgstr ""
 "Icono de tarjeta bancaria con símbolo sin contacto y signo de interrogación"
 
-#: benefits/enrollment/views.py:132
-msgid "enrollment.retry.p1"
+#: benefits/enrollment/views.py:130
+msgid "enrollment.pages.retry.p[0]"
 msgstr ""
 "Puede intentarlo de nuevo o puede comunicarse con su proveedor de transporte "
 "público para obtener ayuda."
 
-#: benefits/enrollment/views.py:135
-msgid "enrollment.retry.button"
+#: benefits/enrollment/views.py:133
+msgid "core.buttons.retry"
 msgstr "Inténtalo de nuevo"
 
-#: benefits/enrollment/views.py:149 benefits/enrollment/views.py:151
-msgid "enrollment.success.title"
-msgstr "¡Éxito!"
+msgid "enrollment.pages.success.title"
+msgstr "Éxito"
 
-#: benefits/enrollment/views.py:152
-msgid "enrollment.success.p1"
-msgstr ""
-"Su descuento ahora está vinculado a su tarjeta bancaria. Hoy no se le cobró "
-"nada."
+#: benefits/enrollment/views.py:147 benefits/enrollment/views.py:149
+msgid "enrollment.pages.success.content_title"
+msgstr "¡Éxito! Su descuento está ahora vinculado a su tarjeta bancaria."
 
-#: benefits/enrollment/views.py:152
-msgid "enrollment.success.p2"
+msgid "enrollment.pages.success.logout.title"
+msgstr "Ha sido desconectado exitosamente. Gracias por utilizar los beneficios de Cal-ITP!"
+
+#: benefits/enrollment/views.py:150
+msgid "enrollment.pages.success.p1"
+msgstr "No se le ha cobrado nada hoy."
+
+#: benefits/enrollment/views.py:150
+msgid "enrollment.pages.success.p2"
+msgstr "Al abordar el tránsito, pague con esta misma tarjeta física y su descuento se aplicará automáticamente a su tarifa."
+
+msgid "enrollment.pages.success.p3%(help_link)s"
 msgstr ""
-"Pague con esta misma tarjeta al abordar el transporte público y su descuento "
-"se aplicará automáticamente en el total de su tarifa."
+"Para obtener más información sobre lo que puede esperar al utilizar su tarjeta bancaria conectada, comuníquese con su proveedor de tránsito local o consulte "
+"<a href=\"%(help_link)s\" rel=\"noopener noreferrer\">página de ayuda</a>."
+
+msgid "enrollment.pages.success.p3"
+msgstr "Si estás en una computadora pública o compartida, no olvides hacer clic aquí para cerrar la sesión de"
+
+msgid "enrollment.pages.success.p4"
+msgstr "."
+
+msgid "eligibility.pages.index.dmv.label"
+msgstr "TODO: Senior Discount Program"
+
+msgid "eligibility.pages.index.mst.label"
+msgstr "TODO: MST Courtesy Cardholder"
+
+msgid "eligibility.pages.index.mst.description"
+msgstr "TODO: (includes MST RIDES Paratransit Eligibility cardholders)"
+
+msgid "eligibility.pages.confirm.dmv.content_title"
+msgstr "Veamos si podemos confirmar su edad con el DMV."
+
+msgid "eligibility.pages.start.dmv.items[0].title"
+msgstr "Proporcione su número de identificación de California"
+
+msgid "eligibility.pages.start.dmv.items[0].text"
+msgstr "Deberá verificar su edad con una licencia de conducir o tarjeta de identificación."
+
+msgid "eligibility.pages.confirm.dmv.p[0]"
+msgstr ""
+"Por favor, ingrese su número de licencia/identificación y su apellido abajo. Si tiene 65 años o más, podemos confirmar que es eligible para un descuento para personas mayores cuando viaja en transporte público. No guardamos la información que ingresa aquí."
+
+msgid "eligibility.pages.start.dmv.content_title"
+msgstr "Hay tres pasos para vincular su descuento de tránsito a su tarjeta bancaria."
+
+msgid "eligibility.forms.confirm.dmv.fields.sub"
+msgstr "Licencia de conducir de California o número de identificación"
+
+msgid "eligibility.forms.confirm.dmv.fields.name"
+msgstr "Apellido (tal como aparece en la identificación)"
+
+msgid "eligibility.pages.start.dmv.p[0]"
+msgstr ""
+"Este programa actualmente está disponible para personas de 65 años o más. "
+"¿No tienes más de 65 años? Póngase en contacto con su proveedor de "
+"transporte público para obtener información sobre los programas de "
+"descuento disponibles."
+
+msgid "eligibility.pages.confirm.dmv.title"
+msgstr "Confirmar la elegibilidad"
+
+msgid "eligibility.pages.unverified.dmv.p[0]"
+msgstr ""
+"Usted todavía puede ser elegible para un descuento, pero no podemos "
+"verificar su edad con el DMV."
+
+msgid "eligibility.forms.confirm.mst.fields.sub"
+msgstr "Número de tarjeta cortesía MST"
+
+msgid "eligibility.forms.confirm.mst.fields.name"
+msgstr "Apellido (como aparece en la identificación)"
+
+msgid "eligibility.pages.start.mst.content_title"
+msgstr "TODO: Genial, necesitarás dos cosas antes de empeza"
+
+msgid "eligibility.pages.start.mst.items[0].title"
+msgstr "Tu tarjeta de cortesía MST"
+
+msgid "eligibility.pages.start.mst.items[0].text"
+msgstr "Una tarjeta activa que no ha caducado"
+
+msgid "eligibility.pages.start.mst.p[0]"
+msgstr ""
+"Este programa está actualmente abierto a todas los titulares de tarjetas "
+"de cortesía MST. ¿No es titular de una tarjeta de cortesía? Póngase en "
+"contacto con su proveedor de transporte público para obtener información "
+"sobre los programas de descuento disponibles"
+
+msgid "eligibility.pages.confirm.mst.title"
+msgstr "Verificar su tarjeta de cortesía MST"
+
+msgid "eligibility.pages.confirm.mst.content_title"
+msgstr "Veamos si podemos encontrarle en nuestra sistema"
+
+msgid "eligibility.pages.confirm.mst.p[0]"
+msgstr ""
+"Por favor ingrese su número de tarjeta cortesía y apellido a "
+"continuación. Si eres titular de una tarjeta de cortesía MST, podemos "
+"confirmar que ere elegible para un descuento. Nosotros no guardamos su "
+"información."
+
+msgid "eligibility.pages.unverified.mst.title"
+msgstr "Tarjeta de cortesía MST no confirmada"
+
+msgid "eligibility.pages.unverified.mst.content_title"
+msgstr "No podemos confirmar su tarjeta de cortesía MST"
