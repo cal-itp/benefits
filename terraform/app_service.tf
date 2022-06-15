@@ -77,6 +77,11 @@ resource "azurerm_linux_web_app_slot" "dev" {
   }
 }
 
+resource "azurerm_app_service_slot_custom_hostname_binding" "dev" {
+  app_service_slot_id = azurerm_linux_web_app_slot.dev.id
+  hostname            = "dev-benefits.calitp.org"
+}
+
 resource "azurerm_linux_web_app_slot" "test" {
   name           = "test"
   https_only     = true
@@ -107,4 +112,9 @@ resource "azurerm_linux_web_app_slot" "test" {
   lifecycle {
     ignore_changes = [app_settings, storage_account, tags]
   }
+}
+
+resource "azurerm_app_service_slot_custom_hostname_binding" "test" {
+  app_service_slot_id = azurerm_linux_web_app_slot.test.id
+  hostname            = "test-benefits.calitp.org"
 }
