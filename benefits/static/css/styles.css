@@ -338,8 +338,9 @@ footer.global-footer .footer-links a:active {
   letter-spacing: 0.05em;
   padding: 0 0 6px 0;
   text-align: left;
-  width: 100%;
   margin: 0;
+  display: block;
+  width: fit-content;
 }
 
 .media-list .media .media-body .media-body--links .btn-lg:hover {
