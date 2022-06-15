@@ -46,11 +46,9 @@ resource "azurerm_linux_web_app" "main" {
 }
 
 resource "azurerm_linux_web_app_slot" "dev" {
-  name       = "dev"
-  https_only = true
-
-  # hack to match the casing of what's returned by Azure
-  app_service_id = replace(replace(azurerm_linux_web_app.main.id, azurerm_linux_web_app.main.name, lower(azurerm_linux_web_app.main.name)), data.azurerm_resource_group.prod.name, lower(data.azurerm_resource_group.prod.name))
+  name           = "dev"
+  https_only     = true
+  app_service_id = azurerm_linux_web_app.main.id
 
   site_config {
     ftps_state             = "AllAllowed"
