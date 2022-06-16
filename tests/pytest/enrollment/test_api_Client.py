@@ -60,6 +60,20 @@ def test_headers(api_client):
 
 
 @pytest.mark.django_db
+def test_make_url(api_client):
+    part1, part2, part3 = "part1", "part2", "part3"
+    agency = api_client.agency
+
+    url = api_client._make_url(part1, part2, part3)
+
+    assert agency.payment_processor.api_base_url in url
+    assert agency.merchant_id in url
+    assert part1 in url
+    assert part2 in url
+    assert part3 in url
+
+
+@pytest.mark.django_db
 def test_get_customer_no_token(api_client):
     with pytest.raises(ValueError, match=r"token"):
         api_client._get_customer(None)
