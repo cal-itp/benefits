@@ -387,11 +387,14 @@ footer.global-footer .footer-links a:active {
   padding-top: 0;
   margin: 0;
   width: inherit;
+  border-radius: 0;
 }
 
 .enrollment-success #login .fallback-text {
+  padding-top: 14px;
+  margin: 8px auto 0 auto;
+  display: block;
   width: 7rem;
-  vertical-align: inherit;
 }
 
 .logged-out.enrollment-success .success-image {
