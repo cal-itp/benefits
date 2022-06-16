@@ -10,7 +10,7 @@ resource "azurerm_service_plan" "main" {
   }
 }
 
-# app_settings, sticky_settings, and storage_account are managed manually through the portal since they contain secrets
+# app_settings and storage_account are managed manually through the portal since they contain secrets
 
 resource "azurerm_linux_web_app" "main" {
   name                = "AS-CDT-PUB-VIP-CALITP-P-001"
@@ -40,8 +40,30 @@ resource "azurerm_linux_web_app" "main" {
     }
   }
 
+  sticky_settings {
+    app_setting_names = [
+      "APPINSIGHTS_INSTRUMENTATIONKEY",
+      "APPINSIGHTS_PROFILERFEATURE_VERSION",
+      "APPINSIGHTS_SNAPSHOTFEATURE_VERSION",
+      "APPLICATIONINSIGHTS_CONFIGURATION_CONTENT",
+      "APPLICATIONINSIGHTS_CONNECTION_STRING",
+      "ApplicationInsightsAgent_EXTENSION_VERSION",
+      "DJANGO_INIT_PATH",
+      "DJANGO_OAUTH_CLIENT_ID",
+      "DJANGO_OAUTH_CLIENT_NAME",
+      "DiagnosticServices_EXTENSION_VERSION",
+      "InstrumentationEngine_EXTENSION_VERSION",
+      "SnapshotDebugger_EXTENSION_VERSION",
+      "XDT_MicrosoftApplicationInsightsJava",
+      "XDT_MicrosoftApplicationInsights_BaseExtensions",
+      "XDT_MicrosoftApplicationInsights_Mode",
+      "XDT_MicrosoftApplicationInsights_NodeJS",
+      "XDT_MicrosoftApplicationInsights_PreemptSdk",
+    ]
+  }
+
   lifecycle {
-    ignore_changes = [app_settings, sticky_settings, tags]
+    ignore_changes = [app_settings, tags]
   }
 }
 
