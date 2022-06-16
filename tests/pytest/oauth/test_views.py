@@ -15,9 +15,10 @@ def mocked_analytics_module(mocked_analytics_module):
     return mocked_analytics_module(benefits.oauth.views)
 
 
-def test_login(mocked_oauth_client, mocked_analytics_module, app_request):
+def test_login(mocked_oauth_client_instance, mocked_analytics_module, app_request):
     assert not session.logged_in(app_request)
 
+    mocked_oauth_client = mocked_oauth_client_instance.return_value
     mocked_oauth_client.authorize_redirect.return_value = HttpResponse("authorize redirect")
 
     login(app_request)
@@ -27,7 +28,8 @@ def test_login(mocked_oauth_client, mocked_analytics_module, app_request):
     assert not session.logged_in(app_request)
 
 
-def test_authorize_fail(mocked_oauth_client, app_request):
+def test_authorize_fail(mocked_oauth_client_instance, app_request):
+    mocked_oauth_client = mocked_oauth_client_instance.return_value
     mocked_oauth_client.authorize_access_token.return_value = None
 
     assert not session.logged_in(app_request)
@@ -40,7 +42,8 @@ def test_authorize_fail(mocked_oauth_client, app_request):
     assert result.url == reverse(ROUTE_START)
 
 
-def test_authorize_success(mocked_oauth_client, mocked_analytics_module, app_request):
+def test_authorize_success(mocked_oauth_client_instance, mocked_analytics_module, app_request):
+    mocked_oauth_client = mocked_oauth_client_instance.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token"}
 
     result = authorize(app_request)

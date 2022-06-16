@@ -1,7 +1,8 @@
 from benefits.oauth.redirects import deauthorize_redirect, generate_redirect_uri
 
 
-def test_deauthorize_redirect(mocked_oauth_client):
+def test_deauthorize_redirect(mocked_oauth_client_instance):
+    mocked_oauth_client = mocked_oauth_client_instance.return_value
     mocked_oauth_client.load_server_metadata.return_value = {"end_session_endpoint": "https://server/endsession"}
 
     result = deauthorize_redirect("token", "https://localhost/redirect_uri")
