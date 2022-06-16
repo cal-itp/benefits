@@ -51,36 +51,36 @@ def test_eligibility_from_api_no_verified_types(mocker, first_agency, first_veri
 
 
 @pytest.mark.django_db
-def test_eligibility_from_oauth_auth_not_required(mocked_session_verifier_auth_not_required):
+def test_eligibility_from_oauth_auth_not_required(mocked_session_verifier_auth_not_required, first_agency):
     # mocked_session_verifier_auth_not_required is Mocked version of the session.verifier() function
     # call it (with a None request) to return a verifier object
     verifier = mocked_session_verifier_auth_not_required(None)
 
-    types = eligibility_from_oauth(verifier, "claim")
+    types = eligibility_from_oauth(verifier, "claim", first_agency)
 
     assert types == []
 
 
 @pytest.mark.django_db
-def test_eligibility_from_oauth_auth_claim_mismatch(mocked_session_verifier_auth_required):
+def test_eligibility_from_oauth_auth_claim_mismatch(mocked_session_verifier_auth_required, first_agency):
     # mocked_session_verifier_auth_required is Mocked version of the session.verifier() function
     # call it (with a None request) to return a verifier object
     verifier = mocked_session_verifier_auth_required(None)
     verifier.auth_claim = "claim"
 
-    types = eligibility_from_oauth(verifier, "some_other_claim")
+    types = eligibility_from_oauth(verifier, "some_other_claim", first_agency)
 
     assert types == []
 
 
 @pytest.mark.django_db
-def test_eligibility_from_oauth_auth_claim_match(mocked_session_verifier_auth_required, first_eligibility):
+def test_eligibility_from_oauth_auth_claim_match(mocked_session_verifier_auth_required, first_eligibility, first_agency):
     # mocked_session_verifier_auth_required is Mocked version of the session.verifier() function
     # call it (with a None request) to return a verifier object
     verifier = mocked_session_verifier_auth_required(None)
     verifier.auth_claim = "claim"
     verifier.eligibility_type = first_eligibility
 
-    types = eligibility_from_oauth(verifier, "claim")
+    types = eligibility_from_oauth(verifier, "claim", first_agency)
 
     assert types == [first_eligibility.name]

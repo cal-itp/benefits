@@ -216,7 +216,7 @@ def confirm(request):
 
     # GET from an unverified user, see if verifier can get verified types and if not, present the form
     else:
-        verified_types = verify.eligibility_from_oauth(verifier, session.oauth_claim(request))
+        verified_types = verify.eligibility_from_oauth(verifier, session.oauth_claim(request), session.agency(request))
         if verified_types:
             return verified(request, verified_types)
         else:

@@ -32,8 +32,8 @@ def eligibility_from_api(verifier, form, agency):
         return []
 
 
-def eligibility_from_oauth(verifier, oauth_claim):
+def eligibility_from_oauth(verifier, oauth_claim, agency):
     if verifier.requires_authentication and verifier.auth_claim == oauth_claim:
-        return [verifier.eligibility_type.name]
+        return list(map(lambda t: t.name, agency.types_to_verify(verifier)))
     else:
         return []
