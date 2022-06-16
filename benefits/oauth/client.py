@@ -5,25 +5,32 @@ from django.conf import settings
 from authlib.integrations.django_client import OAuth
 
 
-_OAUTH_CLIENT = None
-
-
 logger = logging.getLogger(__name__)
 
 
-def instance():
-    """
-    Get the OAuth client instance using the OAUTH_CLIENT_NAME setting.
-    """
-    global _OAUTH_CLIENT
-    if not _OAUTH_CLIENT:
-        if settings.OAUTH_CLIENT_NAME:
-            logger.debug(f"Using OAuth client configuration: {settings.OAUTH_CLIENT_NAME}")
+_OPENID_SCOPE = "openid"
 
-            _oauth = OAuth()
-            _oauth.register(settings.OAUTH_CLIENT_NAME)
-            _OAUTH_CLIENT = _oauth.create_client(settings.OAUTH_CLIENT_NAME)
-        else:
-            raise Exception("OAUTH_CLIENT_NAME is not configured")
 
-    return _OAUTH_CLIENT
+def instance(scope=None):
+    """
+    Get an OAuth client instance using the OAUTH_CLIENT_NAME setting.
+
+    Optionally configure with a (space-separated) scope.
+    """
+    if settings.OAUTH_CLIENT_NAME:
+        logger.debug(f"Using OAuth client configuration: {settings.OAUTH_CLIENT_NAME}")
+
+        oauth = OAuth()
+        oauth.register(settings.OAUTH_CLIENT_NAME)
+        client = oauth.create_client(settings.OAUTH_CLIENT_NAME)
+    else:
+        raise Exception("OAUTH_CLIENT_NAME is not configured")
+
+    scopes = [_OPENID_SCOPE]
+
+    if scope:
+        scopes.append(scope)
+
+    client.client_kwargs["scope"] = " ".join(scopes)
+
+    return client
