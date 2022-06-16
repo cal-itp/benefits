@@ -13,7 +13,7 @@ from benefits.core import recaptcha, session, viewmodels
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
 from benefits.core.views import ROUTE_HELP, TEMPLATE_PAGE
-from . import analytics, api, forms
+from . import analytics, forms, verify
 
 
 ROUTE_INDEX = "eligibility:index"
@@ -195,7 +195,7 @@ def confirm(request):
             return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
 
         # form is valid, make Eligibility Verification request to get the verified types
-        verified_types = api.get_verified_types(request, form)
+        verified_types = verify.eligibility_from_api(verifier, form, session.agency(request))
 
         # form was not valid, allow for correction/resubmission
         if verified_types is None:
@@ -214,9 +214,13 @@ def confirm(request):
         eligibility = session.eligibility(request)
         return verified(request, [eligibility.name])
 
-    # GET from an unverified user, present the form
+    # GET from an unverified user, see if verifier can get verified types and if not, present the form
     else:
-        return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
+        verified_types = verify.eligibility_from_oauth(verifier, session.oauth_claim(request), session.agency(request))
+        if verified_types:
+            return verified(request, verified_types)
+        else:
+            return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
 
 
 @decorator_from_middleware(AgencySessionRequired)

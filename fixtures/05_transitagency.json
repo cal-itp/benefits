@@ -12,7 +12,8 @@
       "phone": "800-555-5555",
       "active": true,
       "eligibility_types": [
-        1
+        1,
+        2
       ],
       "eligibility_verifiers": [
         1,
