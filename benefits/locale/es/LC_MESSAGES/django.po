@@ -63,6 +63,21 @@ msgstr "Para obtener más información sobre Login.gov, visite "
 msgid "core.pages.help.login_gov.p[2][1]%(website)s"
 msgstr "o <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
 
+msgid "core.pages.help.login_gov_verify"
+msgstr "TODO"
+
+msgid "core.pages.help.login_gov_verify.p[0]"
+msgstr "TODO"
+
+msgid "core.pages.help.login_gov_verify.p[1]"
+msgstr "TODO"
+
+msgid "core.pages.help.login_gov_verify.p[2]"
+msgstr "TODO"
+
+msgid "core.pages.help.login_gov_verify.p[3]%(website)s"
+msgstr "TODO"
+
 msgid "core.pages.help.littlepay"
 msgstr "¿Qué es Littlepay?"
 
