@@ -7,6 +7,9 @@ import pytest
 from benefits.enrollment.api import ApiError, AccessTokenResponse, CustomerResponse, GroupResponse, Client
 
 
+REQUESTS_ERRORS = [requests.ConnectionError, requests.Timeout, requests.TooManyRedirects, requests.HTTPError]
+
+
 def test_AccessTokenResponse_invalid_response(mocker):
     mock_response = mocker.Mock()
     mock_response.json.side_effect = ValueError
@@ -195,9 +198,7 @@ def test_Client_init(mocker):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "exception", [requests.ConnectionError, requests.Timeout, requests.TooManyRedirects, requests.HTTPError]
-)
+@pytest.mark.parametrize("exception", REQUESTS_ERRORS)
 def test_Client_access_token_exception(mocker, first_agency, exception):
     client = Client(first_agency)
     mock_response = mocker.Mock()
