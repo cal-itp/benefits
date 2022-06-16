@@ -41,6 +41,22 @@ def test_init(mocker):
 
     assert client.agency == mock_agency
     assert client.payment_processor == mock_agency.payment_processor
+    assert isinstance(client.headers, dict)
+
+
+@pytest.mark.django_db
+def test_headers_none(api_client):
+    headers = api_client._headers()
+
+    assert headers == api_client.headers
+
+
+@pytest.mark.django_db
+def test_headers(api_client):
+    headers = api_client._headers({"header": "value"})
+
+    assert "header" in headers
+    assert headers["header"] == "value"
 
 
 @pytest.mark.django_db
