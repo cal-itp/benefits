@@ -55,6 +55,8 @@ def authorize(request):
         userinfo = token.get("userinfo")
         claim_value = token.get("userinfo").get(verifier.auth_claim) if userinfo else None
         claim = verifier.auth_claim if claim_value else None
+    else:
+        claim = None
 
     session.update(request, oauth_token=id_token, oauth_claim=claim)
 
