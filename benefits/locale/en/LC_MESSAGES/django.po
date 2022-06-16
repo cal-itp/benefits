@@ -25,8 +25,8 @@ msgstr ""
 
 msgid "core.pages.help.about.p[1]"
 msgstr ""
-"We partner with the California DMV to confirm age for age-based discounts and "
-"local transporation agencies to confirm specific discount programs. Once verified, "
+"We partner with Login.gov to confirm age for age-based discounts, and we "
+"partner with local transporation agencies to confirm specific discount programs. Once verified, "
 "discounts are attached to your bank card through our payment partner, Littlepay, so "
 "that when you pay for your transit ride, you get your discount automatically."
 
