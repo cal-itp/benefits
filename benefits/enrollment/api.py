@@ -167,17 +167,17 @@ class Client:
 
         try:
             r = self._get(url, payload)
-            if r.status_code == 200:
-                logger.debug("Customer record exists")
-                customer = CustomerResponse(r)
-                if customer.is_registered:
-                    logger.debug("Customer is registered, skip update")
-                    return customer
-                else:
-                    logger.debug("Customer is not registered, update")
-                    return self._update_customer(customer.id)
+            r.raise_for_status()
+
+            logger.debug("Customer record exists")
+            customer = CustomerResponse(r)
+            if customer.is_registered:
+                logger.debug("Customer is registered, skip update")
+                return customer
             else:
-                r.raise_for_status()
+                logger.debug("Customer is not registered, update")
+                return self._update_customer(customer.id)
+
         except requests.ConnectionError:
             raise ApiError("Connection to enrollment server failed")
         except requests.Timeout:

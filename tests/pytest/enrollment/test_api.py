@@ -246,10 +246,20 @@ def test_Client_get_customer_no_token(first_agency):
 
 
 @pytest.mark.django_db
+def test_Client_get_customer_status_not_OK(mocker, first_agency):
+    client = Client(first_agency)
+    mock_response = mocker.Mock()
+    mock_response.raise_for_status.side_effect = requests.HTTPError()
+    mocker.patch.object(client, "_get", return_value=mock_response)
+
+    with pytest.raises(ApiError):
+        client._get_customer("token")
+
+
+@pytest.mark.django_db
 def test_Client_get_customer_is_registered(mocker, first_agency):
     client = Client(first_agency)
     mock_get_response = mocker.Mock()
-    mock_get_response.status_code = 200
     mocker.patch.object(client, "_get", return_value=mock_get_response)
 
     mock_customer = mocker.Mock(spec=CustomerResponse)
@@ -266,7 +276,6 @@ def test_Client_get_customer_is_registered(mocker, first_agency):
 def test_Client_get_customer_is_not_registered(mocker, first_agency):
     client = Client(first_agency)
     mock_get_response = mocker.Mock()
-    mock_get_response.status_code = 200
     mocker.patch.object(client, "_get", return_value=mock_get_response)
 
     mock_customer = mocker.Mock(spec=CustomerResponse)
@@ -279,19 +288,6 @@ def test_Client_get_customer_is_not_registered(mocker, first_agency):
     client._get_customer("token")
 
     update_spy.assert_called_once_with(mock_customer.id)
-
-
-@pytest.mark.django_db
-@pytest.mark.parametrize("status", [400, 403, 404, 500])
-def test_Client_get_customer_not_200(mocker, first_agency, status):
-    client = Client(first_agency)
-    mock_response = mocker.Mock()
-    mock_response.status_code = status
-    mock_response.raise_for_status.side_effect = requests.HTTPError()
-    mocker.patch.object(client, "_get", return_value=mock_response)
-
-    with pytest.raises(ApiError):
-        client._get_customer("token")
 
 
 @pytest.mark.django_db
