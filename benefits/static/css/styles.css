@@ -67,7 +67,6 @@ label {
 
 .main-content .main-primary a:not(.btn) {
   background: none;
-  text-decoration: underline !important;
 }
 
 /* making the sticky footer */
@@ -656,6 +655,14 @@ footer.global-footer .footer-links a:active {
 
   .signout-row {
     top: 308px;
+  }
+
+  .no-image-mobile .signout-row {
+    top: 68px;
+  }
+
+  .no-image-mobile .main-primary .container-fluid {
+    margin-top: 72px;
   }
 
   /* Eligibility Start */
