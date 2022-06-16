@@ -2,8 +2,10 @@ import logging
 
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.utils.decorators import decorator_from_middleware
 
 from benefits.core import session
+from benefits.core.middleware import VerifierSessionRequired
 from . import analytics, client, redirects
 
 
@@ -16,16 +18,18 @@ ROUTE_CONFIRM = "eligibility:confirm"
 ROUTE_POST_LOGOUT = "oauth:post_logout"
 
 
+@decorator_from_middleware(VerifierSessionRequired)
 def login(request):
     """View implementing OIDC authorize_redirect."""
-    oauth_client = client.instance()
-
-    analytics.started_sign_in(request)
+    verifier = session.verifier(request)
+    oauth_client = client.instance(verifier.auth_scope)
 
     route = reverse(ROUTE_AUTH)
     redirect_uri = redirects.generate_redirect_uri(request, route)
 
     logger.debug(f"OAuth authorize_redirect with redirect_uri: {redirect_uri}")
+
+    analytics.started_sign_in(request)
 
     return oauth_client.authorize_redirect(request, redirect_uri)
 

@@ -15,6 +15,8 @@ def mocked_analytics_module(mocked_analytics_module):
     return mocked_analytics_module(benefits.oauth.views)
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
 def test_login(mocked_oauth_client_instance, mocked_analytics_module, app_request):
     assert not session.logged_in(app_request)
 
@@ -26,6 +28,19 @@ def test_login(mocked_oauth_client_instance, mocked_analytics_module, app_reques
     mocked_oauth_client.authorize_redirect.assert_called_with(app_request, "https://testserver/oauth/authorize")
     mocked_analytics_module.started_sign_in.assert_called_once()
     assert not session.logged_in(app_request)
+
+
+@pytest.mark.django_db
+def test_login_scope(mocked_oauth_client_instance, mocked_session_verifier_auth_required, app_request):
+    mocked_oauth_client = mocked_oauth_client_instance.return_value
+    mocked_oauth_client.authorize_redirect.return_value = HttpResponse("authorize redirect")
+
+    mocked_verifier = mocked_session_verifier_auth_required.return_value
+    mocked_verifier.auth_scope = "scope"
+
+    login(app_request)
+
+    mocked_oauth_client_instance.assert_called_once_with(mocked_verifier.auth_scope)
 
 
 def test_authorize_fail(mocked_oauth_client_instance, app_request):
