@@ -177,7 +177,7 @@ if OAUTH_CLIENT_NAME:
         OAUTH_CLIENT_NAME: {
             "client_id": OAUTH_CLIENT_ID,
             "server_metadata_url": f"{OAUTH_AUTHORITY}/.well-known/openid-configuration",
-            "client_kwargs": {"code_challenge_method": "S256", "scope": "openid"},
+            "client_kwargs": {"code_challenge_method": "S256"},
         }
     }
 
