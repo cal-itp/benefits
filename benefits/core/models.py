@@ -62,7 +62,7 @@ class EligibilityVerifier(models.Model):
     api_url = models.TextField()
     api_auth_header = models.TextField()
     api_auth_key = models.TextField()
-    eligibility_types = models.ManyToManyField(EligibilityType)
+    eligibility_type = models.ForeignKey(EligibilityType, on_delete=models.PROTECT)
     public_key = models.ForeignKey(PemData, help_text="The Verifier's public key, used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier.", related_name="+", on_delete=models.PROTECT)  # noqa: 503
     jwe_cek_enc = models.TextField(help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode")
     jwe_encryption_alg = models.TextField(help_text="The JWE-compatible encryption algorithm")
@@ -173,7 +173,7 @@ class TransitAgency(models.Model):
         """List of eligibility types to verify for this agency."""
         # compute set intersection of agency and verifier type ids
         agency_types = set(self.eligibility_types.values_list("id", flat=True))
-        verifier_types = set(eligibility_verifier.eligibility_types.values_list("id", flat=True))
+        verifier_types = {eligibility_verifier.eligibility_type.id}
         supported_types = list(agency_types & verifier_types)
         return EligibilityType.get_many(supported_types)
 

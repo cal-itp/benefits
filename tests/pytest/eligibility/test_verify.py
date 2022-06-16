@@ -79,7 +79,7 @@ def test_eligibility_from_oauth_auth_claim_match(mocked_session_verifier_auth_re
     # call it (with a None request) to return a verifier object
     verifier = mocked_session_verifier_auth_required(None)
     verifier.auth_claim = "claim"
-    verifier.eligibility_types.all.return_value = [first_eligibility]
+    verifier.eligibility_type = first_eligibility
 
     types = eligibility_from_oauth(verifier, "claim")
 
