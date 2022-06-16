@@ -379,7 +379,7 @@ msgid "eligibility.pages.start.oauth.required_items[1]"
 msgstr "TODO: Your Social Security number"
 
 msgid "eligibility.pages.start.oauth.required_items[2]"
-msgstr "TODO: Don’t have access to these items?"
+msgstr "TODO: A phone number with a phone plan associated with your name"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
