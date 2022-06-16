@@ -77,8 +77,8 @@ def test_eligibility_from_oauth_auth_claim_mismatch(mocked_session_verifier_auth
 def test_eligibility_from_oauth_auth_claim_match(mocked_session_verifier_auth_required, first_eligibility, first_agency):
     # mocked_session_verifier_auth_required is Mocked version of the session.verifier() function
     # call it (with a None request) to return a verifier object
-    verifier = mocked_session_verifier_auth_required(None)
-    verifier.auth_claim = "claim"
+    verifier = mocked_session_verifier_auth_required.return_value
+    verifier.auth_provider.claim = "claim"
     verifier.eligibility_type = first_eligibility
 
     types = eligibility_from_oauth(verifier, "claim", first_agency)

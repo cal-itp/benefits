@@ -29,6 +29,8 @@ class AuthProvider(models.Model):
     id = models.AutoField(primary_key=True)
     sign_in_button_label = models.TextField()
     sign_out_button_label = models.TextField()
+    scope = models.TextField(null=True)
+    claim = models.TextField(null=True)
 
 
 class EligibilityType(models.Model):
@@ -73,8 +75,6 @@ class EligibilityVerifier(models.Model):
     # The JWS-compatible signing algorithm
     jws_signing_alg = models.TextField()
     auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True)
-    auth_scope = models.TextField(null=True)
-    auth_claim = models.TextField(null=True)
     selection_label = models.TextField()
     selection_label_description = models.TextField(null=True)
     start_content_title = models.TextField()

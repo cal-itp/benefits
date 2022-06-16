@@ -22,7 +22,7 @@ ROUTE_POST_LOGOUT = "oauth:post_logout"
 def login(request):
     """View implementing OIDC authorize_redirect."""
     verifier = session.verifier(request)
-    oauth_client = client.instance(verifier.auth_scope)
+    oauth_client = client.instance(verifier.auth_provider.scope)
 
     route = reverse(ROUTE_AUTH)
     redirect_uri = redirects.generate_redirect_uri(request, route)
@@ -49,16 +49,20 @@ def authorize(request):
 
     # We store the id_token in the user's session. This is the minimal amount of information needed later to log the user out.
     id_token = token["id_token"]
+
     # We store the returned claim in case it can be used later in eligibility verification.
     verifier = session.verifier(request)
-    if verifier.auth_claim:
-        userinfo = token.get("userinfo")
-        claim_value = token.get("userinfo").get(verifier.auth_claim) if userinfo else None
-        claim = verifier.auth_claim if claim_value else None
-    else:
-        claim = None
+    verifier_claim = verifier.auth_provider.claim
+    stored_claim = None
 
-    session.update(request, oauth_token=id_token, oauth_claim=claim)
+    if verifier_claim:
+        userinfo = token.get("userinfo")
+        # the claim comes back in userinfo like { claim: True | False }
+        claim_flag = userinfo.get(verifier_claim) if userinfo else None
+        # if userinfo contains our claim and the flag is true, store the *claim*
+        stored_claim = verifier_claim if claim_flag else None
+
+    session.update(request, oauth_token=id_token, oauth_claim=stored_claim)
 
     analytics.finished_sign_in(request)
 

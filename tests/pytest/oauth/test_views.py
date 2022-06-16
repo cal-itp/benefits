@@ -36,11 +36,11 @@ def test_login_scope(mocked_oauth_client_instance, mocked_session_verifier_auth_
     mocked_oauth_client.authorize_redirect.return_value = HttpResponse("authorize redirect")
 
     mocked_verifier = mocked_session_verifier_auth_required.return_value
-    mocked_verifier.auth_scope = "scope"
+    mocked_verifier.auth_provider.scope = "scope"
 
     login(app_request)
 
-    mocked_oauth_client_instance.assert_called_once_with(mocked_verifier.auth_scope)
+    mocked_oauth_client_instance.assert_called_once_with(mocked_verifier.auth_provider.scope)
 
 
 def test_authorize_fail(mocked_oauth_client_instance, app_request):
@@ -75,10 +75,8 @@ def test_authorize_success(mocked_oauth_client_instance, mocked_analytics_module
 
 @pytest.mark.django_db
 def test_authorize_success_with_claim(mocked_session_verifier_auth_required, mocked_oauth_client_instance, app_request):
-    # mocked_session_verifier_auth_required is a fixture that mocks benefits.core.session.verifier(request)
-    # call it here, passing a None request, to get the return value from the mock
-    verifier = mocked_session_verifier_auth_required(None)
-    verifier.auth_claim = "claim"
+    verifier = mocked_session_verifier_auth_required.return_value
+    verifier.auth_provider.claim = "claim"
     mocked_oauth_client = mocked_oauth_client_instance.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "True"}}
 
