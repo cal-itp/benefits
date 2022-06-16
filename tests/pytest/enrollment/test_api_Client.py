@@ -74,6 +74,19 @@ def test_make_url(api_client):
 
 
 @pytest.mark.django_db
+def test_cert_request(mocker, api_client):
+    temp_file = mocker.patch("benefits.enrollment.api.NamedTemporaryFile")
+    request_func = mocker.Mock()
+
+    api_client._cert_request(request_func)
+
+    temp_file.assert_called()
+    request_func.assert_called_once()
+    assert "verify" in request_func.call_args.kwargs
+    assert "cert" in request_func.call_args.kwargs
+
+
+@pytest.mark.django_db
 def test_get_customer_no_token(api_client):
     with pytest.raises(ValueError, match=r"token"):
         api_client._get_customer(None)
