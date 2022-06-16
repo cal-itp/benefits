@@ -2,6 +2,7 @@
 Django settings for benefits project.
 """
 import os
+import benefits.logging
 
 
 def _filter_empty(ls):
@@ -192,27 +193,8 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesSto
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Logging configuration
-
 LOG_LEVEL = os.environ.get("DJANGO_LOG_LEVEL", "DEBUG" if DEBUG else "WARNING")
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "default": {
-            "format": "[{asctime}] {levelname} {name}:{lineno} {message}",
-            "datefmt": "%d/%b/%Y %H:%M:%S",
-            "style": "{",
-        },
-    },
-    "handlers": {
-        "default": {"class": "logging.StreamHandler", "formatter": "default"},
-    },
-    "root": {
-        "handlers": ["default"],
-        "level": LOG_LEVEL,
-    },
-    "loggers": {"django": {"handlers": ["default"], "propagate": False}},
-}
+LOGGING = benefits.logging.get_config(LOG_LEVEL)
 
 # Analytics configuration
 
