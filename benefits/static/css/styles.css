@@ -382,8 +382,11 @@ footer.global-footer .footer-links a:active {
 /* Enrollment Success */
 
 .enrollment-success #login {
-  padding: 0.3rem 0.6rem 0.1rem 0.6rem;
-  vertical-align: middle;
+  padding: 0.1rem 0.5rem 0.3rem 0.6rem;
+  display: inline-block;
+  padding-top: 0;
+  margin: 0;
+  width: inherit;
 }
 
 .enrollment-success #login .fallback-text {
