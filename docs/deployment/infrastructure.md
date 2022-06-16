@@ -1,6 +1,9 @@
 # Infrastructure
 
-The infrastructure is configured as code via [Terraform](https://www.terraform.io/), for [various reasons](https://techcommunity.microsoft.com/t5/fasttrack-for-azure/the-benefits-of-infrastructure-as-code/ba-p/2069350). All Azure resources under the `RG-CDT-PUB-VIP-CALITP-P-001` [resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal) should be represented in this repository. The exception is secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) and [App Service application settings](https://docs.microsoft.com/en-us/azure/app-service/configure-common#configure-app-settings).
+The infrastructure is configured as code via [Terraform](https://www.terraform.io/), for [various reasons](https://techcommunity.microsoft.com/t5/fasttrack-for-azure/the-benefits-of-infrastructure-as-code/ba-p/2069350). There are two subscriptions, with a single [resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal) under each:
+
+- `CDT/ODI Development` - Meant for experimentation with short-lived resources
+- `CDT/ODI Production` - All resources in here should be reflected in Terraform in this repository. The exception is secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) and [App Service application settings](https://docs.microsoft.com/en-us/azure/app-service/configure-common#configure-app-settings).
 
 For browsing the [Azure portal](https://portal.azure.com), [switching your `Default subscription filter`](https://docs.microsoft.com/en-us/azure/azure-portal/set-preferences) to only `CDT/ODI Production` is recommended.
 
@@ -34,16 +37,16 @@ flowchart LR
 ```mermaid
 flowchart LR
     internet[Public internet]
-    WAF
+    frontdoor[Front Door]
     django[Django application]
     interconnections[Other system interconnections]
 
     internet --> Cloudflare
-    Cloudflare --> WAF
+    Cloudflare --> frontdoor
     django <--> interconnections
 
     subgraph Azure
-        WAF --> NGINX
+        frontdoor --> NGINX
 
         subgraph App Service
             subgraph Custom container
@@ -54,7 +57,7 @@ flowchart LR
     end
 ```
 
-WAF: [Web Application Firewall](https://azure.microsoft.com/en-us/services/web-application-firewall/)
+[Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview). Both are managed by the DevSecOps team.
 
 ## Monitoring
 

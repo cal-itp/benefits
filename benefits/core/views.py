@@ -11,20 +11,13 @@ from django.utils.translation import gettext as _
 from . import models, session, viewmodels
 from .middleware import pageview_decorator
 
+ROUTE_INDEX = "core:index"
+ROUTE_ELIGIBILITY = "eligibility:index"
+ROUTE_HELP = "core:help"
 
-def PageTemplateResponse(request, page_vm):
-    """Helper returns a TemplateResponse using the common page template."""
-    return TemplateResponse(request, "core/page.html", page_vm.context_dict())
-
-
-def _index_content_title():
-    """Helper returns the content title for the common index page."""
-    return _("core.pages.index.content_title")
-
-
-def _index_url():
-    """Helper computes the index url path."""
-    return reverse("core:index")
+TEMPLATE_PAGE = "core/page.html"
+TEMPLATE_AGENCY = "core/agency_index.html"
+TEMPLATE_HELP = "core/help.html"
 
 
 @pageview_decorator
@@ -45,12 +38,12 @@ def index(request):
 
     page = viewmodels.Page(
         title=_("core.pages.index.title"),
-        content_title=_index_content_title(),
+        content_title=_("core.pages.index.content_title"),
         buttons=buttons,
         classes="home",
     )
 
-    return PageTemplateResponse(request, page)
+    return TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
 
 
 @pageview_decorator
@@ -60,9 +53,9 @@ def agency_index(request, agency):
     session.update(request, agency=agency, origin=agency.index_url)
 
     if len(agency.eligibility_verifiers.all()) == 1:
-        return redirect(reverse("eligibility:index"))
+        return redirect(reverse(ROUTE_ELIGIBILITY))
 
-    button = viewmodels.Button.primary(text=_("core.pages.index.continue"), url=reverse("eligibility:index"))
+    button = viewmodels.Button.primary(text=_("core.pages.index.continue"), url=reverse(ROUTE_ELIGIBILITY))
     button.label = _("core.pages.agency_index.button.label")
 
     page = viewmodels.Page(
@@ -72,10 +65,10 @@ def agency_index(request, agency):
         classes="home",
     )
 
-    help_page = reverse("core:help")
+    help_page = reverse(ROUTE_HELP)
     context_dict = {**page.context_dict(), **{"info_link": f"{help_page}#about"}}
 
-    return TemplateResponse(request, "core/agency_index.html", context_dict)
+    return TemplateResponse(request, TEMPLATE_AGENCY, context_dict)
 
 
 @pageview_decorator
@@ -96,7 +89,7 @@ def help(request):
         noimage=True,
     )
 
-    return TemplateResponse(request, "core/help.html", page.context_dict())
+    return TemplateResponse(request, TEMPLATE_HELP, page.context_dict())
 
 
 @pageview_decorator
@@ -105,7 +98,7 @@ def bad_request(request, exception, template_name="400.html"):
     if session.active_agency(request):
         session.update(request, origin=session.agency(request).index_url)
     else:
-        session.update(request, origin=_index_url())
+        session.update(request, origin=reverse(ROUTE_INDEX))
 
     home = viewmodels.Button.home(request)
     page = viewmodels.ErrorPage.error(button=home)
@@ -122,7 +115,7 @@ def csrf_failure(request, reason):
     if session.active_agency(request):
         session.update(request, origin=session.agency(request).index_url)
     else:
-        session.update(request, origin=_index_url())
+        session.update(request, origin=reverse(ROUTE_INDEX))
 
     home = viewmodels.Button.home(request)
     page = viewmodels.ErrorPage.not_found(button=home, path=request.path)
@@ -137,7 +130,7 @@ def page_not_found(request, exception, template_name="404.html"):
     if session.active_agency(request):
         session.update(request, origin=session.agency(request).index_url)
     else:
-        session.update(request, origin=_index_url())
+        session.update(request, origin=reverse(ROUTE_INDEX))
 
     home = viewmodels.Button.home(request)
     page = viewmodels.ErrorPage.not_found(button=home, path=request.path)
@@ -152,7 +145,7 @@ def server_error(request, template_name="500.html"):
     if session.active_agency(request):
         session.update(request, origin=session.agency(request).index_url)
     else:
-        session.update(request, origin=_index_url())
+        session.update(request, origin=reverse(ROUTE_INDEX))
 
     home = viewmodels.Button.home(request)
     page = viewmodels.ErrorPage.error(button=home)

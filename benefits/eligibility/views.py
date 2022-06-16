@@ -12,18 +12,29 @@ from django.utils.translation import pgettext, gettext as _
 from benefits.core import recaptcha, session, viewmodels
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
-from benefits.core.views import PageTemplateResponse
+from benefits.core.views import ROUTE_HELP, TEMPLATE_PAGE
 from . import analytics, api, forms
+
+
+ROUTE_INDEX = "eligibility:index"
+ROUTE_START = "eligibility:start"
+ROUTE_LOGIN = "oauth:login"
+ROUTE_CONFIRM = "eligibility:confirm"
+ROUTE_ENROLLMENT = "enrollment:index"
+
+TEMPLATE_START = "eligibility/start.html"
+TEMPLATE_CONFIRM = "eligibility/confirm.html"
+TEMPLATE_UNVERIFIED = "eligibility/unverified.html"
 
 
 @decorator_from_middleware(AgencySessionRequired)
 def index(request):
     """View handler for the eligibility verifier selection form."""
 
-    session.update(request, eligibility_types=[], origin=reverse("eligibility:index"))
+    session.update(request, eligibility_types=[], origin=reverse(ROUTE_INDEX))
     agency = session.agency(request)
 
-    eligibility_start = reverse("eligibility:start")
+    eligibility_start = reverse(ROUTE_START)
 
     page = viewmodels.Page(
         title=_("eligibility.pages.index.title"),
@@ -43,14 +54,14 @@ def index(request):
         else:
             # form was not valid, allow for correction/resubmission
             page.forms = [form]
-            response = PageTemplateResponse(request, page)
+            response = TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
     else:
         if agency.eligibility_verifiers.count() == 1:
             verifier = agency.eligibility_verifiers.first()
             session.update(request, verifier=verifier)
             response = redirect(eligibility_start)
         else:
-            response = PageTemplateResponse(request, page)
+            response = TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
 
     return response
 
@@ -60,12 +71,12 @@ def index(request):
 def start(request):
     """View handler for the eligibility verification getting started screen."""
 
-    session.update(request, eligibility_types=[], origin=reverse("eligibility:start"))
+    session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))
     verifier = session.verifier(request)
 
-    button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse("eligibility:confirm"))
+    button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse(ROUTE_CONFIRM))
 
-    payment_options_link = f"{reverse('core:help')}#payment-options"
+    payment_options_link = f"{reverse(ROUTE_HELP)}#payment-options"
     media = [
         dict(
             icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
@@ -90,8 +101,8 @@ def start(request):
         if settings.OAUTH_CLIENT_NAME is None:
             raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
 
-        oauth_help_link = f"{reverse('core:help')}#login-gov"
-        oauth_help_more_link = f"{reverse('core:help')}#login-gov-verify-items"
+        oauth_help_link = f"{reverse(ROUTE_HELP)}#login-gov"
+        oauth_help_more_link = f"{reverse(ROUTE_HELP)}#login-gov-verify-items"
 
         media.insert(
             0,
@@ -124,7 +135,7 @@ def start(request):
         if not session.logged_in(request):
             button = viewmodels.Button.login(
                 text=_(verifier.auth_provider.sign_in_button_label),
-                url=reverse("oauth:login"),
+                url=reverse(ROUTE_LOGIN),
             )
 
     else:
@@ -147,8 +158,9 @@ def start(request):
     ctx = page.context_dict()
     ctx["title"] = _(verifier.start_content_title)
     ctx["media"] = media
+    ctx["info_link"] = f"{reverse(ROUTE_HELP)}#about"
 
-    return TemplateResponse(request, "eligibility/start.html", ctx)
+    return TemplateResponse(request, TEMPLATE_START, ctx)
 
 
 @decorator_from_middleware(AgencySessionRequired)
@@ -158,7 +170,6 @@ def start(request):
 def confirm(request):
     """View handler for the eligibility verification form."""
 
-    template = "eligibility/confirm.html"
     verifier = session.verifier(request)
 
     page = viewmodels.Page(
@@ -181,7 +192,7 @@ def confirm(request):
                 messages.error(request, "Recaptcha failed. Please try again.")
 
             page.forms = [form]
-            return TemplateResponse(request, template, page.context_dict())
+            return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
 
         # form is valid, make Eligibility Verification request to get the verified types
         verified_types = api.get_verified_types(request, form)
@@ -190,7 +201,7 @@ def confirm(request):
         if verified_types is None:
             analytics.returned_error(request, form.errors)
             page.forms = [form]
-            return TemplateResponse(request, template, page.context_dict())
+            return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
         # no types were verified
         elif len(verified_types) == 0:
             return unverified(request)
@@ -202,9 +213,10 @@ def confirm(request):
     elif session.eligible(request):
         eligibility = session.eligibility(request)
         return verified(request, [eligibility.name])
+
     # GET from an unverified user, present the form
     else:
-        return TemplateResponse(request, template, page.context_dict())
+        return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
 
 
 @decorator_from_middleware(AgencySessionRequired)
@@ -216,7 +228,7 @@ def verified(request, verified_types):
 
     session.update(request, eligibility_types=verified_types)
 
-    return redirect("enrollment:index")
+    return redirect(ROUTE_ENROLLMENT)
 
 
 @decorator_from_middleware(AgencySessionRequired)
@@ -243,4 +255,4 @@ def unverified(request):
         buttons=buttons,
     )
 
-    return TemplateResponse(request, "eligibility/unverified.html", page.context_dict())
+    return TemplateResponse(request, TEMPLATE_UNVERIFIED, page.context_dict())

@@ -93,6 +93,7 @@ class GroupResponse:
         self.customer_ids = list(payload)
         self.updated_customer_id = self.customer_ids[0] if len(self.customer_ids) == 1 else None
         self.success = requested_id == self.updated_customer_id
+        self.message = "Updated customer_id does not match enrolled customer_id" if not self.success else ""
 
 
 class Client:
