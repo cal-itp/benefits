@@ -16,14 +16,10 @@ def test_instance_no_oauth_client_name():
 
 
 @pytest.mark.django_db
-def test_instance_oauth_client_name():
-    assert not client._OAUTH_CLIENT
-
+def test_instance():
     oauth_client = client.instance()
-
-    assert oauth_client
-    assert client._OAUTH_CLIENT is oauth_client
-
     oauth_client2 = client.instance()
 
-    assert oauth_client is oauth_client2
+    assert oauth_client
+    assert oauth_client2
+    assert oauth_client is not oauth_client2
