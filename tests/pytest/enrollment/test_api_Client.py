@@ -126,3 +126,19 @@ def test_get_customer_exception(mocker, api_client, exception):
 
     with pytest.raises(ApiError):
         api_client._get_customer("token")
+
+
+@pytest.mark.django_db
+def test_update_customer_no_customer_id(api_client):
+    with pytest.raises(ValueError):
+        api_client._update_customer(None)
+
+
+@pytest.mark.django_db
+def test_update_customer(mocker, api_client, mocked_customer):
+    mock_response = mocker.Mock()
+    mocker.patch.object(api_client, "_patch", return_value=mock_response)
+
+    updated_customer = api_client._update_customer("id")
+
+    assert updated_customer == mocked_customer
