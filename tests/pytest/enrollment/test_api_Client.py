@@ -44,40 +44,6 @@ def test_init(mocker):
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("exception", REQUESTS_ERRORS)
-def test_access_token_exception(mocker, api_client, exception):
-    mock_response = mocker.Mock()
-    mock_response.raise_for_status.side_effect = exception
-    mocker.patch.object(api_client, "_post", return_value=mock_response)
-
-    with pytest.raises(ApiError):
-        api_client.access_token()
-
-
-@pytest.mark.django_db
-def test_access_token(mocker, api_client):
-    mock_response = mocker.Mock()
-    mocker.patch.object(api_client, "_post", return_value=mock_response)
-    mocker.patch("benefits.enrollment.api.AccessTokenResponse")
-
-    token = api_client.access_token()
-
-    assert token
-
-
-@pytest.mark.django_db
-def test_enroll_no_customer_token(api_client):
-    with pytest.raises(ValueError, match=r"customer_token"):
-        api_client.enroll(None, "group_id")
-
-
-@pytest.mark.django_db
-def test_enroll_no_group_id(api_client):
-    with pytest.raises(ValueError, match=r"group_id"):
-        api_client.enroll("customer_token", None)
-
-
-@pytest.mark.django_db
 def test_get_customer_no_token(api_client):
     with pytest.raises(ValueError, match=r"token"):
         api_client._get_customer(None)
@@ -142,3 +108,37 @@ def test_update_customer(mocker, api_client, mocked_customer):
     updated_customer = api_client._update_customer("id")
 
     assert updated_customer == mocked_customer
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("exception", REQUESTS_ERRORS)
+def test_access_token_exception(mocker, api_client, exception):
+    mock_response = mocker.Mock()
+    mock_response.raise_for_status.side_effect = exception
+    mocker.patch.object(api_client, "_post", return_value=mock_response)
+
+    with pytest.raises(ApiError):
+        api_client.access_token()
+
+
+@pytest.mark.django_db
+def test_access_token(mocker, api_client):
+    mock_response = mocker.Mock()
+    mocker.patch.object(api_client, "_post", return_value=mock_response)
+    mocker.patch("benefits.enrollment.api.AccessTokenResponse")
+
+    token = api_client.access_token()
+
+    assert token
+
+
+@pytest.mark.django_db
+def test_enroll_no_customer_token(api_client):
+    with pytest.raises(ValueError, match=r"customer_token"):
+        api_client.enroll(None, "group_id")
+
+
+@pytest.mark.django_db
+def test_enroll_no_group_id(api_client):
+    with pytest.raises(ValueError, match=r"group_id"):
+        api_client.enroll("customer_token", None)
