@@ -1,0 +1,16 @@
+name: Label i18n
+
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - 'benefits/locale/**'
+
+jobs:
+  label-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: add-label
+        uses: andymckay/labeler@master
+        with:
+          add-labels: "i18n"
