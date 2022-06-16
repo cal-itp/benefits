@@ -1,0 +1,16 @@
+name: Label back-end
+
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - 'benefits/**/*.py'
+
+jobs:
+  label-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: add-label
+        uses: andymckay/labeler@master
+        with:
+          add-labels: "back-end"
