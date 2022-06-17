@@ -156,10 +156,10 @@ def success(request):
 
         if session.logged_in(request):
             page.buttons = [viewmodels.Button.logout()]
-            page.classes = ["logged-in"]
+            page.classes = ["no-image-mobile", "logged-in"]
             page.icon = icon
         else:
-            page.classes = ["logged-out"]
+            page.classes = ["no-image-mobile", "logged-out"]
             page.content_title = _("enrollment.pages.success.logout.title")
             page.noimage = True
     else:
