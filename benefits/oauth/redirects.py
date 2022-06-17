@@ -1,18 +1,14 @@
 from django.shortcuts import redirect
 from django.utils.http import urlencode
 
-from . import client
 
-
-def deauthorize_redirect(token, redirect_uri):
+def deauthorize_redirect(oauth_client, token, redirect_uri):
     """Helper implements OIDC signout via the `end_session_endpoint`."""
 
     # Authlib has not yet implemented `end_session_endpoint` as the OIDC Session Management 1.0 spec is still in draft
     # See https://github.com/lepture/authlib/issues/331#issuecomment-827295954 for more
     #
     # The implementation here was adapted from the same ticket: https://github.com/lepture/authlib/issues/331#issue-838728145
-    oauth_client = client.instance()
-
     metadata = oauth_client.load_server_metadata()
     end_session_endpoint = metadata.get("end_session_endpoint")
 

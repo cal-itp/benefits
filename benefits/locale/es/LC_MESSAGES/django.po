@@ -23,7 +23,7 @@ msgstr ""
 
 msgid "core.pages.help.about.p[1]"
 msgstr ""
-"Nos asociamos con el DMV de California para confirmar la edad para los descuentos basados en la edad y las agencias de transporte locales para confirmar los programas de descuento específicos. Una vez verificados, los descuentos se adjuntan a su tarjeta bancaria a través de nuestro socio de pago, Littlepay, para que cuando pague su viaje en transporte, obtenga su descuento automáticamente.?"
+"Nos asociamos con Login.gov para confirmar la edad para los descuentos basados en la edad y las agencias de transporte locales para confirmar los programas de descuento específicos. Una vez verificados, los descuentos se adjuntan a su tarjeta bancaria a través de nuestro socio de pago, Littlepay, para que cuando pague su viaje en transporte, obtenga su descuento automáticamente."
 
 msgid "core.pages.help.payment_options"
 msgstr "Opciones de pago"
@@ -62,6 +62,21 @@ msgstr "Para obtener más información sobre Login.gov, visite "
 
 msgid "core.pages.help.login_gov.p[2][1]%(website)s"
 msgstr "o <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
+
+msgid "core.pages.help.login_gov_verify"
+msgstr "TODO"
+
+msgid "core.pages.help.login_gov_verify.p[0]"
+msgstr "TODO"
+
+msgid "core.pages.help.login_gov_verify.p[1]"
+msgstr "TODO"
+
+msgid "core.pages.help.login_gov_verify.p[2]"
+msgstr "TODO"
+
+msgid "core.pages.help.login_gov_verify.p[3]%(website)s"
+msgstr "TODO"
 
 msgid "core.pages.help.littlepay"
 msgstr "¿Qué es Littlepay?"
@@ -364,7 +379,7 @@ msgid "eligibility.pages.start.oauth.heading"
 msgstr "Inicia sesión en Login.gov"
 
 msgid "eligibility.pages.start.oauth.details"
-msgstr "Login.gov es una forma segura de iniciar sesión en los servicios gubernamentales."
+msgstr "TODO: Login.gov is a safe way to sign in to government services. Benefits uses Login.gov to verify your age. If you do not have an account already, you will be able to create one. You will also need to verify your identity, which will require these items:"
 
 msgid "eligibility.pages.start.oauth.link_text"
 msgstr "TODO: Conozca más sobre Login.gov"

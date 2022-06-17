@@ -166,21 +166,6 @@ if ADMIN:
         ]
     )
 
-# OAuth configuration
-
-OAUTH_AUTHORITY = os.environ.get("DJANGO_OAUTH_AUTHORITY", "http://example.com")
-OAUTH_CLIENT_NAME = os.environ.get("DJANGO_OAUTH_CLIENT_NAME", "benefits-oauth-client-name")
-OAUTH_CLIENT_ID = os.environ.get("DJANGO_OAUTH_CLIENT_ID", "benefits-oauth-client-id")
-
-if OAUTH_CLIENT_NAME:
-    AUTHLIB_OAUTH_CLIENTS = {
-        OAUTH_CLIENT_NAME: {
-            "client_id": OAUTH_CLIENT_ID,
-            "server_metadata_url": f"{OAUTH_AUTHORITY}/.well-known/openid-configuration",
-            "client_kwargs": {"code_challenge_method": "S256"},
-        }
-    }
-
 # Internationalization
 
 LANGUAGE_CODE = "en"

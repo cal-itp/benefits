@@ -25,8 +25,8 @@ msgstr ""
 
 msgid "core.pages.help.about.p[1]"
 msgstr ""
-"We partner with the California DMV to confirm age for age-based discounts and "
-"local transporation agencies to confirm specific discount programs. Once verified, "
+"We partner with Login.gov to confirm age for age-based discounts, and we "
+"partner with local transporation agencies to confirm specific discount programs. Once verified, "
 "discounts are attached to your bank card through our payment partner, Littlepay, so "
 "that when you pay for your transit ride, you get your discount automatically."
 
@@ -75,6 +75,21 @@ msgstr "To learn more about Login.gov, please visit the "
 
 msgid "core.pages.help.login_gov.p[2][1]%(website)s"
 msgstr "or the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov Help Center</a>."
+
+msgid "core.pages.help.login_gov_verify"
+msgstr "How do I verify my identity on Login.gov?"
+
+msgid "core.pages.help.login_gov_verify.p[0]"
+msgstr "To verify your identity, Login.gov asks that you upload a photograph of your state-issued ID and share your phone number and other personal information, which is then verified against authoritative sources. These requirements are in addition to meeting the requirements for two-factor authentication."
+
+msgid "core.pages.help.login_gov_verify.p[1]"
+msgstr "You cannot verify your identity on Login.gov without a state-issued ID, which can be either a driver’s license or non-driver’s license state-issued ID card."
+
+msgid "core.pages.help.login_gov_verify.p[2]"
+msgstr "If you do not have a phone plan that is in your name, Login.gov can send you the verification code by mail which takes approximately 3-5 days."
+
+msgid "core.pages.help.login_gov_verify.p[3]%(website)s"
+msgstr "Verifying your identity makes sure the right person has access to the right information. We are using Login.gov’s simple and secure process to keep your sensitive information safe. To learn more about identity verification on Login.gov, please visit their <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Help Center.</a>"
 
 msgid "core.pages.help.littlepay"
 msgstr "What is Littlepay?"
@@ -379,7 +394,7 @@ msgid "eligibility.pages.start.oauth.heading"
 msgstr "A Login.gov account with identity verification"
 
 msgid "eligibility.pages.start.oauth.details"
-msgstr "Login.gov is a safe way to sign in to government services. If you do not have an account already, you will be able to create one. You will also need to provide proof of your identity. Some of the items you can use to do that include:"
+msgstr "Login.gov is a safe way to sign in to government services. Benefits uses Login.gov to verify your age. If you do not have an account already, you will be able to create one. You will also need to verify your identity, which will require these items:"
 
 msgid "eligibility.pages.start.oauth.link_text"
 msgstr "Learn more about Login.gov and providing proof of identity"
