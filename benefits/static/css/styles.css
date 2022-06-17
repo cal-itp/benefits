@@ -67,7 +67,6 @@ label {
 
 .main-content .main-primary a:not(.btn) {
   background: none;
-  text-decoration: underline !important;
 }
 
 /* making the sticky footer */
@@ -100,7 +99,7 @@ main .main-row .col-lg-6.image {
 .one-column-image {
   background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
   background-size: cover;
-  height: 131px;
+  height: 292px;
 }
 
 footer {
@@ -383,13 +382,19 @@ footer.global-footer .footer-links a:active {
 /* Enrollment Success */
 
 .enrollment-success #login {
-  padding: 0.3rem 0.6rem 0.1rem 0.6rem;
-  vertical-align: middle;
+  padding: 0.1rem 0.5rem 0.3rem 0.6rem;
+  display: inline-block;
+  padding-top: 0;
+  margin: 0;
+  width: inherit;
+  border-radius: 0;
 }
 
 .enrollment-success #login .fallback-text {
+  padding-top: 14px;
+  margin: 8px auto 0 auto;
+  display: block;
   width: 7rem;
-  vertical-align: inherit;
 }
 
 .logged-out.enrollment-success .success-image {
@@ -454,7 +459,7 @@ footer.global-footer .footer-links a:active {
 /* Header */
 
 .navbar.navbar-expand-sm.navbar-dark.bg-primary {
-  padding: 14.5px 1rem;
+  padding: 8.5px 1rem;
 }
 
 .navbar-brand {
@@ -619,11 +624,19 @@ footer.global-footer .footer-links a:active {
 }
 
 @media (max-width: 992px) {
+  .one-column-image {
+    height: 131px;
+  }
+
   .container.content .btn-lg {
     padding: 1.1875rem 0.813rem;
   }
 
   /* Mobile With Image */
+
+  .no-image-mobile .col-lg-6.image {
+    display: none !important;
+  }
 
   .with-image main .main-row .col-lg-6.image {
     background-position: center bottom;
@@ -648,6 +661,14 @@ footer.global-footer .footer-links a:active {
 
   .signout-row {
     top: 308px;
+  }
+
+  .no-image-mobile .signout-row {
+    top: 68px;
+  }
+
+  .no-image-mobile .main-primary .container-fluid {
+    margin-top: 72px;
   }
 
   /* Eligibility Start */
