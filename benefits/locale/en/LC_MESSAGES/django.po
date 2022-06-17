@@ -394,7 +394,7 @@ msgid "eligibility.pages.start.oauth.heading"
 msgstr "A Login.gov account with identity verification"
 
 msgid "eligibility.pages.start.oauth.details"
-msgstr "Login.gov is a safe way to sign in to government services. If you do not have an account already, you will be able to create one. You will also need to provide proof of your identity. Some of the items you can use to do that include:"
+msgstr "Login.gov is a safe way to sign in to government services. Benefits uses Login.gov to verify your age. If you do not have an account already, you will be able to create one. You will also need to verify your identity, which will require these items:"
 
 msgid "eligibility.pages.start.oauth.link_text"
 msgstr "Learn more about Login.gov"
