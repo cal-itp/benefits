@@ -1,5 +1,5 @@
 import benefits
-from benefits.oauth import OAuthAppConfig
+from benefits.oauth.apps import OAuthAppConfig
 
 
 def test_ready_registers_clients(mocker):
