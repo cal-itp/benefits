@@ -6,7 +6,8 @@ from django.utils.decorators import decorator_from_middleware
 
 from benefits.core import session
 from benefits.core.middleware import VerifierSessionRequired
-from . import analytics, client, redirects
+from . import analytics, redirects
+from .client import oauth
 
 
 logger = logging.getLogger(__name__)
@@ -22,7 +23,7 @@ ROUTE_POST_LOGOUT = "oauth:post_logout"
 def login(request):
     """View implementing OIDC authorize_redirect."""
     verifier = session.verifier(request)
-    oauth_client = client.instance(verifier.auth_provider.scope)
+    oauth_client = oauth.create_client(verifier.auth_provider.client_name)
 
     route = reverse(ROUTE_AUTH)
     redirect_uri = redirects.generate_redirect_uri(request, route)
@@ -34,9 +35,11 @@ def login(request):
     return oauth_client.authorize_redirect(request, redirect_uri)
 
 
+@decorator_from_middleware(VerifierSessionRequired)
 def authorize(request):
     """View implementing OIDC token authorization."""
-    oauth_client = client.instance()
+    verifier = session.verifier(request)
+    oauth_client = oauth.create_client(verifier.auth_provider.client_name)
 
     logger.debug("Attempting to authorize OAuth access token")
     token = oauth_client.authorize_access_token(request)
@@ -51,7 +54,6 @@ def authorize(request):
     id_token = token["id_token"]
 
     # We store the returned claim in case it can be used later in eligibility verification.
-    verifier = session.verifier(request)
     verifier_claim = verifier.auth_provider.claim
     stored_claim = None
 
@@ -69,8 +71,12 @@ def authorize(request):
     return redirect(ROUTE_CONFIRM)
 
 
+@decorator_from_middleware(VerifierSessionRequired)
 def logout(request):
     """View implementing OIDC and application sign out."""
+    verifier = session.verifier(request)
+    oauth_client = oauth.create_client(verifier.auth_provider.client_name)
+
     analytics.started_sign_out(request)
 
     # overwrite the oauth session token, the user is signed out of the app
@@ -84,7 +90,7 @@ def logout(request):
 
     # send the user through the end_session_endpoint, redirecting back to
     # the post_logout route
-    return redirects.deauthorize_redirect(token, redirect_uri)
+    return redirects.deauthorize_redirect(oauth_client, token, redirect_uri)
 
 
 def post_logout(request):

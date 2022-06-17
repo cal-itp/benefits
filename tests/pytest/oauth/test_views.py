@@ -16,35 +16,25 @@ def mocked_analytics_module(mocked_analytics_module):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_login(mocked_oauth_client_instance, mocked_analytics_module, app_request):
+def test_login(mocked_oauth_create_client, mocked_session_verifier_auth_required, mocked_analytics_module, app_request):
     assert not session.logged_in(app_request)
 
-    mocked_oauth_client = mocked_oauth_client_instance.return_value
+    mocked_oauth_client = mocked_oauth_create_client.return_value
     mocked_oauth_client.authorize_redirect.return_value = HttpResponse("authorize redirect")
 
     login(app_request)
 
+    mocked_verifier = mocked_session_verifier_auth_required.return_value
+    mocked_oauth_create_client.assert_called_once_with(mocked_verifier.auth_provider.client_name)
     mocked_oauth_client.authorize_redirect.assert_called_with(app_request, "https://testserver/oauth/authorize")
     mocked_analytics_module.started_sign_in.assert_called_once()
     assert not session.logged_in(app_request)
 
 
 @pytest.mark.django_db
-def test_login_scope(mocked_oauth_client_instance, mocked_session_verifier_auth_required, app_request):
-    mocked_oauth_client = mocked_oauth_client_instance.return_value
-    mocked_oauth_client.authorize_redirect.return_value = HttpResponse("authorize redirect")
-
-    mocked_verifier = mocked_session_verifier_auth_required.return_value
-    mocked_verifier.auth_provider.scope = "scope"
-
-    login(app_request)
-
-    mocked_oauth_client_instance.assert_called_once_with(mocked_verifier.auth_provider.scope)
-
-
-def test_authorize_fail(mocked_oauth_client_instance, app_request):
-    mocked_oauth_client = mocked_oauth_client_instance.return_value
+@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
+def test_authorize_fail(mocked_oauth_create_client, app_request):
+    mocked_oauth_client = mocked_oauth_create_client.return_value
     mocked_oauth_client.authorize_access_token.return_value = None
 
     assert not session.logged_in(app_request)
@@ -59,8 +49,8 @@ def test_authorize_fail(mocked_oauth_client_instance, app_request):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_authorize_success(mocked_oauth_client_instance, mocked_analytics_module, app_request):
-    mocked_oauth_client = mocked_oauth_client_instance.return_value
+def test_authorize_success(mocked_oauth_create_client, mocked_analytics_module, app_request):
+    mocked_oauth_client = mocked_oauth_create_client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token"}
 
     result = authorize(app_request)
@@ -74,10 +64,10 @@ def test_authorize_success(mocked_oauth_client_instance, mocked_analytics_module
 
 
 @pytest.mark.django_db
-def test_authorize_success_with_claim(mocked_session_verifier_auth_required, mocked_oauth_client_instance, app_request):
+def test_authorize_success_with_claim(mocked_session_verifier_auth_required, mocked_oauth_create_client, app_request):
     verifier = mocked_session_verifier_auth_required.return_value
     verifier.auth_provider.claim = "claim"
-    mocked_oauth_client = mocked_oauth_client_instance.return_value
+    mocked_oauth_client = mocked_oauth_create_client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "True"}}
 
     result = authorize(app_request)
@@ -89,12 +79,10 @@ def test_authorize_success_with_claim(mocked_session_verifier_auth_required, moc
 
 
 @pytest.mark.django_db
-def test_authorize_success_without_claim(mocked_session_verifier_auth_required, mocked_oauth_client_instance, app_request):
-    # mocked_session_verifier_auth_required is a fixture that mocks benefits.core.session.verifier(request)
-    # call it here, passing a None request, to get the return value from the mock
-    verifier = mocked_session_verifier_auth_required(None)
-    verifier.auth_claim = ""
-    mocked_oauth_client = mocked_oauth_client_instance.return_value
+def test_authorize_success_without_claim(mocked_session_verifier_auth_required, mocked_oauth_create_client, app_request):
+    verifier = mocked_session_verifier_auth_required.return_value
+    verifier.auth_provider.claim = ""
+    mocked_oauth_client = mocked_oauth_create_client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "True"}}
 
     result = authorize(app_request)
@@ -105,12 +93,15 @@ def test_authorize_success_without_claim(mocked_session_verifier_auth_required, 
     assert result.url == reverse(ROUTE_CONFIRM)
 
 
-def test_logout(mocker, mocked_analytics_module, app_request):
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
+def test_logout(mocker, mocked_oauth_create_client, mocked_analytics_module, app_request):
     # logout internally calls deauthorize_redirect
     # this mocks that function and a success response
     # and returns a spy object we can use to validate calls
     message = "logout successful"
-    spy = mocker.patch("benefits.oauth.views.redirects.deauthorize_redirect", return_value=HttpResponse(message))
+    mocked_oauth_client = mocked_oauth_create_client.return_value
+    mocked_redirect = mocker.patch("benefits.oauth.views.redirects.deauthorize_redirect", return_value=HttpResponse(message))
 
     token = "token"
     session.update(app_request, oauth_token=token)
@@ -118,7 +109,7 @@ def test_logout(mocker, mocked_analytics_module, app_request):
 
     result = logout(app_request)
 
-    spy.assert_called_with(token, "https://testserver/oauth/post_logout")
+    mocked_redirect.assert_called_with(mocked_oauth_client, token, "https://testserver/oauth/post_logout")
     mocked_analytics_module.started_sign_out.assert_called_once()
     assert result.status_code == 200
     assert message in str(result.content)
