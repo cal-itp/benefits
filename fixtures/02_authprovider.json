@@ -5,8 +5,11 @@
       "fields": {
         "sign_in_button_label": "eligibility.buttons.signin",
         "sign_out_button_label": "eligibility.buttons.signout",
-        "scope": "",
-        "claim": ""
+        "client_name": "benefits-oauth-client-name",
+        "client_id": "benefits-oauth-client-id",
+        "authority": "https://example.com",
+        "scope": "verify:type1",
+        "claim": "type1"
       }
     }
 ]
