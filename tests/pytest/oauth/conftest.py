@@ -1,6 +1,17 @@
+from authlib.integrations.django_client import OAuth
 from authlib.integrations.django_client.apps import DjangoOAuth2App
 
 import pytest
+
+
+@pytest.fixture
+def mocked_oauth_registry(mocker):
+    return mocker.Mock(spec=OAuth)
+
+
+@pytest.fixture
+def mocked_oauth_client_registry(mocker, mocked_oauth_registry):
+    return mocker.patch("benefits.oauth.client.oauth", mocked_oauth_registry)
 
 
 @pytest.fixture
