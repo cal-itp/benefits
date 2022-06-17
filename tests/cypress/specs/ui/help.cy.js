@@ -62,6 +62,7 @@ describe("Help page spec", () => {
     cy.get("h2").contains("What is Cal-ITP Benefits?");
     cy.get("h2").contains("Payment options");
     cy.get("h2").contains("What is Login.gov?");
+    cy.get("h2").contains("How do I verify my identity on Login.gov?");
     cy.get("h2").contains("What is Littlepay?");
     cy.get("h2").contains("Questions?");
   });
