@@ -97,8 +97,10 @@ main .main-row .col-lg-6.image {
 }
 
 .one-column-image {
-  background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
+  background: url("/static/img/rider-tapping-bank-card-horizontal.png");
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
   height: 292px;
 }
 
