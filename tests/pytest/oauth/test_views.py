@@ -64,11 +64,15 @@ def test_authorize_success(mocked_oauth_create_client, mocked_analytics_module, 
 
 
 @pytest.mark.django_db
-def test_authorize_success_with_claim(mocked_session_verifier_auth_required, mocked_oauth_create_client, app_request):
+@pytest.mark.usefixtures("mocked_analytics_module")
+@pytest.mark.parametrize("flag", ["true", "True", "tRuE"])
+def test_authorize_success_with_claim_true(
+    mocked_session_verifier_auth_required, mocked_oauth_create_client, app_request, flag
+):
     verifier = mocked_session_verifier_auth_required.return_value
     verifier.auth_provider.claim = "claim"
     mocked_oauth_client = mocked_oauth_create_client.return_value
-    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "True"}}
+    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": flag}}
 
     result = authorize(app_request)
 
@@ -79,6 +83,26 @@ def test_authorize_success_with_claim(mocked_session_verifier_auth_required, moc
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_analytics_module")
+@pytest.mark.parametrize("flag", ["false", "False", "fAlSe"])
+def test_authorize_success_with_claim_false(
+    mocked_session_verifier_auth_required, mocked_oauth_create_client, app_request, flag
+):
+    verifier = mocked_session_verifier_auth_required.return_value
+    verifier.auth_provider.claim = "claim"
+    mocked_oauth_client = mocked_oauth_create_client.return_value
+    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": flag}}
+
+    result = authorize(app_request)
+
+    mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
+    assert session.oauth_claim(app_request) is None
+    assert result.status_code == 302
+    assert result.url == reverse(ROUTE_CONFIRM)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_analytics_module")
 def test_authorize_success_without_claim(mocked_session_verifier_auth_required, mocked_oauth_create_client, app_request):
     verifier = mocked_session_verifier_auth_required.return_value
     verifier.auth_provider.claim = ""
