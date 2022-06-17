@@ -122,17 +122,6 @@ def test_index_post_valid_form(client, first_verifier, mocked_session_update):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_form", "mocked_session_verifier_auth_required")
-def test_start_verifier_auth_required_no_oauth_client(mocker, client):
-    mock_settings = mocker.patch("benefits.eligibility.views.settings")
-    mock_settings.OAUTH_CLIENT_NAME = None
-
-    path = reverse(ROUTE_START)
-    with pytest.raises(Exception, match=r"OAUTH_CLIENT_NAME"):
-        client.get(path)
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_form", "mocked_session_verifier_auth_required")
 def test_start_verifier_auth_required_logged_in(mocker, client):
     mock_session = mocker.patch("benefits.eligibility.views.session")
     mock_session.logged_in.return_value = True

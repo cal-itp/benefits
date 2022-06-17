@@ -1,7 +1,6 @@
 """
 The eligibility application: view definitions for the eligibility verification flow.
 """
-from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
@@ -98,9 +97,6 @@ def start(request):
     ]
 
     if verifier.requires_authentication:
-        if settings.OAUTH_CLIENT_NAME is None:
-            raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
-
         oauth_help_link = f"{reverse(ROUTE_HELP)}#login-gov"
         oauth_help_more_link = f"{reverse(ROUTE_HELP)}#login-gov-verify-items"
 

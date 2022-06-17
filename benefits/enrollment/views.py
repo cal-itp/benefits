@@ -3,7 +3,6 @@ The enrollment application: view definitions for the benefits enrollment flow.
 """
 import logging
 
-from django.conf import settings
 from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
@@ -151,9 +150,6 @@ def success(request):
     )
 
     if verifier.requires_authentication:
-        if settings.OAUTH_CLIENT_NAME is None:
-            raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
-
         if session.logged_in(request):
             page.buttons = [viewmodels.Button.logout()]
             page.classes = ["logged-in"]
