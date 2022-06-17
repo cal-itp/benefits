@@ -106,7 +106,7 @@ def test_authorize_success_without_claim(mocked_session_verifier_auth_required, 
 
 
 def test_logout(mocker, mocked_analytics_module, app_request):
-    # logout internally calls _deauthorize_redirect
+    # logout internally calls deauthorize_redirect
     # this mocks that function and a success response
     # and returns a spy object we can use to validate calls
     message = "logout successful"
