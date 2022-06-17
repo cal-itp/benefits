@@ -33,7 +33,7 @@ def eligibility_from_api(verifier, form, agency):
 
 
 def eligibility_from_oauth(verifier, oauth_claim, agency):
-    if verifier.requires_authentication and verifier.auth_provider.claim == oauth_claim:
+    if verifier.uses_auth_verification and verifier.auth_provider.claim == oauth_claim:
         return list(map(lambda t: t.name, agency.types_to_verify(verifier)))
     else:
         return []

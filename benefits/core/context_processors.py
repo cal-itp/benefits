@@ -18,12 +18,12 @@ def authentication(request):
 
     if verifier:
         data = {
-            "required": verifier.requires_authentication,
+            "required": verifier.is_auth_required,
             "logged_in": session.logged_in(request),
             "sign_out_route": reverse("oauth:logout"),
         }
 
-        if verifier.requires_authentication:
+        if verifier.is_auth_required:
             auth_provider = verifier.auth_provider
             data["sign_in_button_label"] = auth_provider.sign_in_button_label
             data["sign_out_button_label"] = auth_provider.sign_out_button_label

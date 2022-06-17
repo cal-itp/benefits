@@ -108,8 +108,14 @@ class EligibilityVerifier(models.Model):
         return self.public_key.text
 
     @property
-    def requires_authentication(self):
+    def is_auth_required(self):
+        """True if this Verifier requires authentication. False otherwise."""
         return self.auth_provider is not None
+
+    @property
+    def uses_auth_verification(self):
+        """True if this Verifier verifies via the auth provider. False otherwise."""
+        return all((self.is_auth_required, self.auth_provider.scope, self.auth_provider.claim))
 
     @staticmethod
     def by_id(id):

@@ -90,7 +90,7 @@ def start(request):
         ),
     ]
 
-    if verifier.requires_authentication:
+    if verifier.is_auth_required:
         media.insert(
             0,
             dict(
