@@ -25,6 +25,9 @@ def login(request):
     verifier = session.verifier(request)
     oauth_client = oauth.create_client(verifier.auth_provider.client_name)
 
+    if not oauth_client:
+        raise Exception(f"oauth_client not registered: {verifier.auth_provider.client_name}")
+
     route = reverse(ROUTE_AUTH)
     redirect_uri = redirects.generate_redirect_uri(request, route)
 
@@ -40,6 +43,9 @@ def authorize(request):
     """View implementing OIDC token authorization."""
     verifier = session.verifier(request)
     oauth_client = oauth.create_client(verifier.auth_provider.client_name)
+
+    if not oauth_client:
+        raise Exception(f"oauth_client not registered: {verifier.auth_provider.client_name}")
 
     logger.debug("Attempting to authorize OAuth access token")
     token = oauth_client.authorize_access_token(request)
@@ -76,6 +82,9 @@ def logout(request):
     """View implementing OIDC and application sign out."""
     verifier = session.verifier(request)
     oauth_client = oauth.create_client(verifier.auth_provider.client_name)
+
+    if not oauth_client:
+        raise Exception(f"oauth_client not registered: {verifier.auth_provider.client_name}")
 
     analytics.started_sign_out(request)
 

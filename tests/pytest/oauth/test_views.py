@@ -16,6 +16,15 @@ def mocked_analytics_module(mocked_analytics_module):
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
+def test_login_no_oauth_client(mocked_oauth_create_client, app_request):
+    mocked_oauth_create_client.return_value = None
+
+    with pytest.raises(Exception, match=r"oauth_client"):
+        login(app_request)
+
+
+@pytest.mark.django_db
 def test_login(mocked_oauth_create_client, mocked_session_verifier_auth_required, mocked_analytics_module, app_request):
     assert not session.logged_in(app_request)
 
@@ -29,6 +38,15 @@ def test_login(mocked_oauth_create_client, mocked_session_verifier_auth_required
     mocked_oauth_client.authorize_redirect.assert_called_with(app_request, "https://testserver/oauth/authorize")
     mocked_analytics_module.started_sign_in.assert_called_once()
     assert not session.logged_in(app_request)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
+def test_authorize_no_oauth_client(mocked_oauth_create_client, app_request):
+    mocked_oauth_create_client.return_value = None
+
+    with pytest.raises(Exception, match=r"oauth_client"):
+        authorize(app_request)
 
 
 @pytest.mark.django_db
@@ -115,6 +133,15 @@ def test_authorize_success_without_claim(mocked_session_verifier_auth_required, 
     assert session.oauth_claim(app_request) is None
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_CONFIRM)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
+def test_logout_no_oauth_client(mocked_oauth_create_client, app_request):
+    mocked_oauth_create_client.return_value = None
+
+    with pytest.raises(Exception, match=r"oauth_client"):
+        logout(app_request)
 
 
 @pytest.mark.django_db
