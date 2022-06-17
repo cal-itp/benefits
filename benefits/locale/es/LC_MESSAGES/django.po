@@ -351,7 +351,7 @@ msgid "eligibility.pages.start.bankcard.text"
 msgstr "Debe ser una tarjeta de débito o crédito sin contacto de Visa o Mastercard."
 
 msgid "eligibility.pages.start.bankcard.button[0].link"
-msgstr "¿No tienes tarjeta bancaria?"
+msgstr "TODO: ¿No tienes tarjeta bancaria?"
 
 msgid "eligibility.pages.start.bankcard.button[1].link"
 msgstr "¿No está seguro si tiene una tarjeta sin contacto?"
@@ -367,10 +367,10 @@ msgid "eligibility.pages.start.oauth.details"
 msgstr "Login.gov es una forma segura de iniciar sesión en los servicios gubernamentales."
 
 msgid "eligibility.pages.start.oauth.link_text"
-msgstr "Conozca más sobre Login.gov"
+msgstr "TODO: Conozca más sobre Login.gov"
 
 msgid "eligibility.pages.start.oauth.link_text[2]"
-msgstr "TODO: Don’t have access to these items?"
+msgstr "Don’t have access to these items?"
 
 msgid "eligibility.pages.start.oauth.required_items[0]"
 msgstr "TODO: Your state-issued ID card"
@@ -383,7 +383,7 @@ msgstr "TODO: A phone number with a phone plan associated with your name"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
-msgstr "Crear una cuenta o iniciar sesión con"
+msgstr "TODO: Crear una cuenta o iniciar sesión con"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signout"

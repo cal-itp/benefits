@@ -76,7 +76,6 @@ def start(request):
 
     button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse(ROUTE_CONFIRM))
 
-    payment_options_link = f"{reverse(ROUTE_HELP)}#payment-options"
     media = [
         dict(
             icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
@@ -86,12 +85,7 @@ def start(request):
                 viewmodels.Button.link(
                     classes="btn-text btn-link",
                     text=_("eligibility.pages.start.bankcard.button[0].link"),
-                    url=payment_options_link,
-                ),
-                viewmodels.Button.link(
-                    classes="btn-text btn-link",
-                    text=_("eligibility.pages.start.bankcard.button[1].link"),
-                    url=payment_options_link,
+                    url=f"{reverse(ROUTE_HELP)}#payment-options",
                 ),
             ],
         ),
@@ -100,9 +94,6 @@ def start(request):
     if verifier.requires_authentication:
         if settings.OAUTH_CLIENT_NAME is None:
             raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
-
-        oauth_help_link = f"{reverse(ROUTE_HELP)}#login-gov"
-        oauth_help_more_link = f"{reverse(ROUTE_HELP)}#login-gov-verify-items"
 
         media.insert(
             0,
@@ -114,14 +105,7 @@ def start(request):
                     viewmodels.Button.link(
                         classes="btn-text btn-link",
                         text=_("eligibility.pages.start.oauth.link_text"),
-                        url=oauth_help_link,
-                        rel="noopener noreferrer",
-                    ),
-                    viewmodels.Button.link(
-                        classes="btn-text btn-link",
-                        text=_("eligibility.pages.start.oauth.link_text[2]"),
-                        url=oauth_help_more_link,
-                        rel="noopener noreferrer",
+                        url=f"{reverse(ROUTE_HELP)}#login-gov",
                     ),
                 ],
                 bullets=[

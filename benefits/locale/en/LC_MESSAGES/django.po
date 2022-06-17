@@ -190,7 +190,7 @@ msgstr "Note: Must include a Visa or Mastercard logo."
 #: benefits/core/templates/core/payment-options.html:15
 msgid "core.pages.payment_options.p[3]"
 msgstr ""
-"Don't have access to a bank card? You can request a contactless card from "
+"Don’t have access to a bank card? You can request a contactless card from "
 "one of the companies that offer free contactless prepaid debit cards, such "
 "as the "
 
@@ -366,7 +366,7 @@ msgid "eligibility.pages.start.bankcard.text"
 msgstr "Your card must be a contactless debit or credit card by Visa or Mastercard."
 
 msgid "eligibility.pages.start.bankcard.button[0].link"
-msgstr "Don’t have a bank card?"
+msgstr "Don’t have a bank card or unsure if your card is contactless?"
 
 msgid "eligibility.pages.start.bankcard.button[1].link"
 msgstr "Unsure if you have a contactless card?"
@@ -382,7 +382,7 @@ msgid "eligibility.pages.start.oauth.details"
 msgstr "Login.gov is a safe way to sign in to government services. If you do not have an account already, you will be able to create one. You will also need to provide proof of your identity. Some of the items you can use to do that include:"
 
 msgid "eligibility.pages.start.oauth.link_text"
-msgstr "Learn more about Login.gov"
+msgstr "Learn more about Login.gov and providing proof of identity"
 
 msgid "eligibility.pages.start.oauth.link_text[2]"
 msgstr "Don’t have access to these items?"
@@ -574,7 +574,7 @@ msgstr "Let’s see if we can find you in our system"
 
 msgid "eligibility.pages.confirm.mst.p[0]"
 msgstr ""
-"Please input your Courtesy Card number and last name below. If you're a "
+"Please input your Courtesy Card number and last name below. If youre a "
 "current MST Courtesy Cardholder, we can confirm that you are eligible for "
 "a discount. We do not save your information."
 
