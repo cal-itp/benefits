@@ -171,17 +171,6 @@ def test_success_no_verifier(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_success_no_oauth_client(mocker, client):
-    mock_settings = mocker.patch("benefits.enrollment.views.settings")
-    mock_settings.OAUTH_CLIENT_NAME = None
-
-    path = reverse(ROUTE_SUCCESS)
-    with pytest.raises(Exception, match=r"OAUTH_CLIENT_NAME"):
-        client.get(path)
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
 def test_success_authentication_logged_in(mocker, client):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = True
