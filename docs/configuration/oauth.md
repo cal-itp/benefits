@@ -14,53 +14,49 @@ This section describes the related settings and how to configure the application
 Benefits uses the open-source [Authlib](https://authlib.org/) for OAuth and OIDC client implementation. See the Authlib docs
 for more details about what features are available. Specifically, from Authlib we:
 
-1. Register an OAuth `client` using the configured [Django settings](#django-settings)
+1. Create an OAuth client using the [Django configuration](#django-configuration)
 1. Call `client.authorize_redirect()` to send the user into the OIDC server's authentication flow, with our authorization
    callback URL
 1. Upon the user returning from the OIDC Server with an access token, call `client.authorize_access_token()` to get a validated
    id token from the OIDC server
 
-## Environment variables
+## Django configuration
 
-!!! warning
+OAuth settings are configured as instances of the [`AuthProvider` model](../development/models-migrations.md).
 
-    The following environment variables are all required for OAuth configuration
+The [sample fixtures](./fixtures.md) contain example `AuthProvider` configurations; create new entries to integrate with
+real Open ID Connect providers.
 
-### `DJANGO_OAUTH_AUTHORITY`
+Authlib's [Django OpenID Connect Client example][authlib-django-oidc] for Google could be adapted into a Benefits fixture,
+(with extraneous fields omitted) like:
 
-Base address of the OAuth/OIDC server to use for authorization.
+```json
+{
+    "model": "core.authprovider",
+    "pk": 1,
+    "fields": {
+        "client_name": "google",
+        "client_id": "google-client-id",
+        "authority": "https://accounts.google.com",
+        "scope": "profile email",
+    }
+}
+```
 
-### `DJANGO_OAUTH_CLIENT_ID`
+## Django usage
 
-This application's client ID, as registered with the OAuth/OIDC server.
+The [`benefits.oauth.client`][oauth-client] module defines helpers for registering OAuth clients, and creating instances for
+use in e.g. views.
 
-### `DJANGO_OAUTH_CLIENT_NAME`
+* `register_providers(oauth_registry)` uses data from `AuthProvider` instances to register clients into the given registry
+* `oauth` is an `authlib.integrations.django_client.OAuth` instance
 
-The internal label of the OAuth client within this application.
+Providers are registered into this instance once in the [`OAuthAppConfig.ready()`][oauth-app-ready] function at application
+startup.
 
-See the [`OAUTH_CLIENT_NAME`](#oauth_client_name) setting for more.
+Consumers call `oauth.create_client(client_name)` with the name of a previously registered client to obtain an Authlib client
+instance.
 
-## Django settings
-
-There are a few relevant settings defined in [`benefits/settings.py`][benefits-settings] related to OAuth.
-
-### `OAUTH_CLIENT_NAME`
-
-A `str` defining the application's internal label for the OAuth client that is used.
-
-The app uses the value of this variable to further configure the OAuth feature, or skip that configuration for empty or `None`.
-
-The value is initialized from the [`DJANGO_OAUTH_CLIENT_NAME`](#django_oauth_client_name) environment variable.
-
-### `AUTHLIB_OAUTH_CLIENTS`
-
-!!! tldr "Authlib docs"
-
-    Read more about [configuring Authlib for Django](https://docs.authlib.org/en/latest/client/django.html#configuration)
-
-A `dict` of OAuth client configurations this app may use.
-
-By default, contains a single entry, keyed by [`OAUTH_CLIENT_NAME`](#oauth_client_name) and using the other
-[`DJANGO_OAUTH_*` environment variables](#environment-variables) to populate the client's settings.
-
-[benefits-settings]: https://github.com/cal-itp/benefits/blob/dev/benefits/settings.py
+[authlib-django-oidc]: https://docs.authlib.org/en/latest/client/django.html#django-openid-connect-client
+[oauth-app-ready]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/__init__.py
+[oauth-client]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/client.py
