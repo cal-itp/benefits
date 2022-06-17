@@ -356,6 +356,7 @@ footer.global-footer .footer-links a:active {
   display: flex;
   align-items: flex-end;
   justify-content: right;
+  margin-bottom: 30px;
 }
 
 .eligibility-start .main-container .buttons .btn {
