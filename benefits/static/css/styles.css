@@ -14,10 +14,6 @@ body {
   src: local("PublicSans"), url("../fonts/PublicSans-Bold.woff") format("woff");
 }
 
-.bg-danger {
-  display: none;
-}
-
 body,
 h1,
 h2,
@@ -97,8 +93,10 @@ main .main-row .col-lg-6.image {
 }
 
 .one-column-image {
-  background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
+  background: url("/static/img/rider-tapping-bank-card-horizontal.png");
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
   height: 292px;
 }
 
@@ -109,14 +107,16 @@ footer {
 }
 
 footer.global-footer .footer-links a {
-  font-size: 16px;
+  font-size: 18px;
   color: #73b3e7;
+  text-decoration: underline;
 }
 
 footer.global-footer .footer-links a:hover,
 footer.global-footer .footer-links a:focus,
 footer.global-footer .footer-links a:active {
   color: #9b74d7;
+  text-decoration: none;
 }
 
 /* class styles */
@@ -261,7 +261,7 @@ footer.global-footer .footer-links a:active {
   margin-top: 100px;
   margin-bottom: 60px;
   font-size: 24px;
-  line-height: 30px;
+  line-height: 36px;
 }
 
 .media-list {
@@ -301,12 +301,8 @@ footer.global-footer .footer-links a:active {
   font-size: 18px;
   letter-spacing: 0.05em;
   line-height: 26.1px;
-}
-
-.media-list .media .media-body--heading {
   font-weight: 700;
   padding-left: 0;
-  line-height: 26.1px;
   margin-bottom: 16px;
 }
 
@@ -358,6 +354,7 @@ footer.global-footer .footer-links a:active {
   display: flex;
   align-items: flex-end;
   justify-content: right;
+  margin-bottom: 30px;
 }
 
 .eligibility-start .main-container .buttons .btn {
@@ -382,9 +379,8 @@ footer.global-footer .footer-links a:active {
 /* Enrollment Success */
 
 .enrollment-success #login {
-  padding: 0.1rem 0.5rem 0.3rem 0.6rem;
+  padding: 0 0.5rem 0.3rem 0.6rem;
   display: inline-block;
-  padding-top: 0;
   margin: 0;
   width: inherit;
   border-radius: 0;
@@ -488,6 +484,7 @@ footer.global-footer .footer-links a:active {
 
 .container.content h1.icon-title {
   padding-bottom: 1.5rem;
+  line-height: 36px;
 }
 
 .container.content h1.icon-title span.icon {
@@ -628,6 +625,10 @@ footer.global-footer .footer-links a:active {
     height: 131px;
   }
 
+  .navbar.navbar-expand-sm.navbar-dark.bg-primary {
+    padding: 14.5px 1rem;
+  }
+
   .container.content .btn-lg {
     padding: 1.1875rem 0.813rem;
   }
@@ -646,13 +647,15 @@ footer.global-footer .footer-links a:active {
   }
 
   .signout-row .container .signout-link {
-    font-size: 16px;
+    font-size: 18px;
     color: #2b6597;
     background: none;
-    padding: 10px 30px;
+    padding: 5px 10px;
     border-radius: 3px;
     border: 2px solid #2b6597;
     margin-top: 20px;
+    letter-spacing: 0.02em;
+    font-weight: 500;
   }
 
   .signout-row .container .signout-link:hover {
@@ -664,7 +667,7 @@ footer.global-footer .footer-links a:active {
   }
 
   .no-image-mobile .signout-row {
-    top: 68px;
+    top: 80px;
   }
 
   .no-image-mobile .main-primary .container-fluid {
@@ -694,12 +697,13 @@ footer.global-footer .footer-links a:active {
   }
 
   .media-list .media .media-line .icon {
-    width: 90px;
-    height: 90px;
+    width: 92px;
+    height: 92px;
+    margin: 0 auto 42px auto;
   }
 
   .media-list .media {
-    flex-direction: row;
+    flex-direction: column;
   }
 
   .media-list .media .media-line {
@@ -711,18 +715,19 @@ footer.global-footer .footer-links a:active {
   }
 
   .media-list .media .media-body--heading {
-    height: 90px;
+    font-size: 20px;
+    line-height: 30px;
   }
 
   .media-list .media .media-body--details {
     padding-bottom: 25px;
-    margin-left: -100px;
+    margin-left: 0;
     font-size: 20px;
     line-height: 30px;
   }
 
   .media-list .media .media-body--links {
-    margin-left: -100px;
+    margin-left: 0;
     float: right;
   }
 

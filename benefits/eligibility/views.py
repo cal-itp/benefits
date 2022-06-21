@@ -75,7 +75,6 @@ def start(request):
 
     button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse(ROUTE_CONFIRM))
 
-    payment_options_link = f"{reverse(ROUTE_HELP)}#payment-options"
     media = [
         dict(
             icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
@@ -85,21 +84,13 @@ def start(request):
                 viewmodels.Button.link(
                     classes="btn-text btn-link",
                     text=_("eligibility.pages.start.bankcard.button[0].link"),
-                    url=payment_options_link,
-                ),
-                viewmodels.Button.link(
-                    classes="btn-text btn-link",
-                    text=_("eligibility.pages.start.bankcard.button[1].link"),
-                    url=payment_options_link,
+                    url=f"{reverse(ROUTE_HELP)}#payment-options",
                 ),
             ],
         ),
     ]
 
     if verifier.requires_authentication:
-        oauth_help_link = f"{reverse(ROUTE_HELP)}#login-gov"
-        oauth_help_more_link = f"{reverse(ROUTE_HELP)}#login-gov-verify-items"
-
         media.insert(
             0,
             dict(
@@ -110,14 +101,7 @@ def start(request):
                     viewmodels.Button.link(
                         classes="btn-text btn-link",
                         text=_("eligibility.pages.start.oauth.link_text"),
-                        url=oauth_help_link,
-                        rel="noopener noreferrer",
-                    ),
-                    viewmodels.Button.link(
-                        classes="btn-text btn-link",
-                        text=_("eligibility.pages.start.oauth.link_text[2]"),
-                        url=oauth_help_more_link,
-                        rel="noopener noreferrer",
+                        url=f"{reverse(ROUTE_HELP)}#login-gov",
                     ),
                 ],
                 bullets=[

@@ -366,10 +366,7 @@ msgid "eligibility.pages.start.bankcard.text"
 msgstr "Debe ser una tarjeta de débito o crédito sin contacto de Visa o Mastercard."
 
 msgid "eligibility.pages.start.bankcard.button[0].link"
-msgstr "¿No tienes tarjeta bancaria?"
-
-msgid "eligibility.pages.start.bankcard.button[1].link"
-msgstr "¿No está seguro si tiene una tarjeta sin contacto?"
+msgstr "TODO: ¿No tienes tarjeta bancaria?"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
@@ -382,10 +379,10 @@ msgid "eligibility.pages.start.oauth.details"
 msgstr "TODO: Login.gov is a safe way to sign in to government services. Benefits uses Login.gov to verify your age. If you do not have an account already, you will be able to create one. You will also need to verify your identity, which will require these items:"
 
 msgid "eligibility.pages.start.oauth.link_text"
-msgstr "Conozca más sobre Login.gov"
+msgstr "TODO: Conozca más sobre Login.gov"
 
 msgid "eligibility.pages.start.oauth.link_text[2]"
-msgstr "TODO: Don’t have access to these items?"
+msgstr "Don’t have access to these items?"
 
 msgid "eligibility.pages.start.oauth.required_items[0]"
 msgstr "TODO: Your state-issued ID card"
@@ -394,11 +391,11 @@ msgid "eligibility.pages.start.oauth.required_items[1]"
 msgstr "TODO: Your Social Security number"
 
 msgid "eligibility.pages.start.oauth.required_items[2]"
-msgstr "TODO: Don’t have access to these items?"
+msgstr "TODO: A phone number with a phone plan associated with your name"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
-msgstr "Crear una cuenta o iniciar sesión con"
+msgstr "TODO: Crear una cuenta o iniciar sesión con"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signout"
