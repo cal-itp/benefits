@@ -368,9 +368,6 @@ msgstr "Debe ser una tarjeta de débito o crédito sin contacto de Visa o Master
 msgid "eligibility.pages.start.bankcard.button[0].link"
 msgstr "TODO: ¿No tienes tarjeta bancaria?"
 
-msgid "eligibility.pages.start.bankcard.button[1].link"
-msgstr "¿No está seguro si tiene una tarjeta sin contacto?"
-
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
 msgstr "Continuar"
