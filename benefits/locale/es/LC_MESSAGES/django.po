@@ -298,7 +298,7 @@ msgstr "Comencemos"
 
 #: benefits/core/views.py:86 benefits/core/views.py:106
 msgid "core.buttons.back"
-msgstr "Regresar"
+msgstr "Regresar a la página principal"
 
 #: benefits/core/views.py:91
 msgid "core.pages.help.p[1]"
@@ -453,7 +453,7 @@ msgstr "¿Qué pasa si no tengo una tarjeta bancaria?"
 
 #: benefits/enrollment/views.py:127 benefits/enrollment/views.py:129
 msgid "enrollment.pages.retry.title"
-msgstr "No pudimos conectar tu tarjeta bancaria"
+msgstr "No pudimos conectar tú tarjeta bancaria"
 
 #: benefits/enrollment/views.py:128
 msgctxt "image alt text"
@@ -464,12 +464,11 @@ msgstr ""
 #: benefits/enrollment/views.py:130
 msgid "enrollment.pages.retry.p[0]"
 msgstr ""
-"Puede intentarlo de nuevo o puede comunicarse con su proveedor de transporte "
-"público para obtener ayuda."
+"Puede intentarlo de nuevo o comunicarse con su proveedor de transporte local para obtener ayuda."
 
 #: benefits/enrollment/views.py:133
 msgid "core.buttons.retry"
-msgstr "Inténtalo de nuevo"
+msgstr "Intentar otra vez"
 
 msgid "enrollment.pages.success.title"
 msgstr "Cierre sesión"
