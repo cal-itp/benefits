@@ -238,7 +238,7 @@ msgstr "Bus icon with flat tire"
 
 #: benefits/core/viewmodels.py:177
 msgid "core.pages.server_error.content_title"
-msgstr "Unfortunately, our system is having a problem right now."
+msgstr "Sorry! Service for this site is down."
 
 #: benefits/core/viewmodels.py:183 benefits/core/viewmodels.py:184
 msgid "core.pages.server_error.title"
@@ -246,11 +246,11 @@ msgstr "Service is down"
 
 #: benefits/core/viewmodels.py:185
 msgid "core.pages.server_error.p[0]"
-msgstr "We should be back in operation soon!"
+msgstr "We should be back in operation soon."
 
 #: benefits/core/viewmodels.py:185
 msgid "core.pages.server_error.p[1]"
-msgstr "Please check back later."
+msgstr "Please refresh the page in a few minutes."
 
 #: benefits/core/viewmodels.py:193
 msgid "core.pages.not_found.title"

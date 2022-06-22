@@ -225,7 +225,7 @@ msgstr "Icono de autobus con llanta ponchada"
 
 #: benefits/core/viewmodels.py:177
 msgid "core.pages.server_error.content_title"
-msgstr "¡Lo sentimos! No podemos encontrar esa página"
+msgstr "¡Lo sentimos! El servicio para este sitio está caído."
 
 #: benefits/core/viewmodels.py:183 benefits/core/viewmodels.py:184
 msgid "core.pages.server_error.title"
@@ -233,11 +233,11 @@ msgstr "El servicio no está funcionando"
 
 #: benefits/core/viewmodels.py:185
 msgid "core.pages.server_error.p[0]"
-msgstr "¡Pronto volveremos a estar en funcionamiento!"
+msgstr "Deberíamos volver a funcionar pronto."
 
 #: benefits/core/viewmodels.py:185
 msgid "core.pages.server_error.p[1]"
-msgstr "Por favor, vuelva más tarde."
+msgstr "Por favor, actualice la página en unos minutos."
 
 #: benefits/core/viewmodels.py:193
 msgid "core.pages.not_found.title"
