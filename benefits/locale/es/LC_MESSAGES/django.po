@@ -278,7 +278,7 @@ msgid "core.pages.agency_index.p[2]"
 msgstr "El programa de beneficios de Cal-ITP actualmente solo está abierto a personas de 65 años o más."
 
 msgid "core.pages.agency_index.p[3]"
-msgstr "TODO: Connect your bank card to your public transit discount with Cal-ITP Benefits."
+msgstr "Conecta tu tarjeta bancaria para tu descuento en el transporte público con Cal-ITP Benefits."
 
 msgid "core.pages.agency_index.button.label"
 msgstr "¡Conecta tu tarjeta bancaria a tu descuento hoy!"
@@ -312,7 +312,7 @@ msgid "core.icons.bankcard"
 msgstr "Icono de tarjeta bancaria"
 
 msgid "core.pages.start.headline"
-msgstr "TODO: Connect your bank card to your public transit discount with Cal-ITP Benefits."
+msgstr "Conecta tu tarjeta bancaria para tu descuento en el transporte público con Cal-ITP Benefits."
 
 #: benefits/eligibility/forms.py:37
 msgid "eligibility.forms.confirm.submit"
@@ -359,43 +359,43 @@ msgstr "TODO: Computer monitor with checkmark"
 
 #: benefits/eligibility/views.py:74
 msgid "eligibility.pages.start.bankcard.title"
-msgstr "Proporcione los datos de su tarjeta bancaria"
+msgstr "Los datos de su tarjeta bancaria"
 
 #: benefits/eligibility/views.py:75
 msgid "eligibility.pages.start.bankcard.text"
-msgstr "Debe ser una tarjeta de débito o crédito sin contacto de Visa o Mastercard."
+msgstr "Su tarjeta debe ser una tarjeta de débito o crédito sin contacto de Visa o Mastercard."
 
 msgid "eligibility.pages.start.bankcard.button[0].link"
-msgstr "TODO: ¿No tienes tarjeta bancaria?"
+msgstr "¿No tienes tarjeta bancaria o no está seguro si tiene una tarjeta sin contacto?"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
 msgstr "Continuar"
 
 msgid "eligibility.pages.start.oauth.heading"
-msgstr "Inicia sesión en Login.gov"
+msgstr "Una cuenta de Login.gov con verificación de identidad"
 
 msgid "eligibility.pages.start.oauth.details"
-msgstr "TODO: Login.gov is a safe way to sign in to government services. Benefits uses Login.gov to verify your age. If you do not have an account already, you will be able to create one. You will also need to verify your identity, which will require these items:"
+msgstr "Login.gov es una forma segura de iniciar sesión en servicios gubernamentales. Benefits utiliza Login.gov para verificar su edad. Si aún no tiene una cuenta, podrá crear una. También deberá verificar su identidad, lo que requerirá estos artículos:"
 
 msgid "eligibility.pages.start.oauth.link_text"
-msgstr "TODO: Conozca más sobre Login.gov"
+msgstr "Conozca más sobre Login.gov y cómo proporcionar una prueba de identidad."
 
 msgid "eligibility.pages.start.oauth.link_text[2]"
 msgstr "Don’t have access to these items?"
 
 msgid "eligibility.pages.start.oauth.required_items[0]"
-msgstr "TODO: Your state-issued ID card"
+msgstr "Su tarjeta de identificación emitida por el estado"
 
 msgid "eligibility.pages.start.oauth.required_items[1]"
-msgstr "TODO: Your Social Security number"
+msgstr "Su número de Seguro Social"
 
 msgid "eligibility.pages.start.oauth.required_items[2]"
-msgstr "TODO: A phone number with a phone plan associated with your name"
+msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
-msgstr "TODO: Crear una cuenta o iniciar sesión con"
+msgstr "Comencemos con"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signout"
@@ -429,12 +429,12 @@ msgstr "Tarjeta de conexión"
 
 #: benefits/enrollment/views.py:30
 msgid "enrollment.pages.index.content_title"
-msgstr "¡Genial! ¡Eres elegible para un descuento!"
+msgstr "Vamos a vincular su tarjeta con su descuento."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[0]"
 msgstr ""
-"A continuación, tenemos que vincular su descuento a su tarjeta bancaria a través de nuestro socio de pago Littlepay."
+"Ahora que ha iniciado sesión, podemos vincular su descuento de tránsito a su tarjeta a través de nuestro socio de pagos, LittlePay."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[1]"
@@ -472,14 +472,14 @@ msgid "core.buttons.retry"
 msgstr "Inténtalo de nuevo"
 
 msgid "enrollment.pages.success.title"
-msgstr "Éxito"
+msgstr "Cierre sesión"
 
 #: benefits/enrollment/views.py:147 benefits/enrollment/views.py:149
 msgid "enrollment.pages.success.content_title"
 msgstr "¡Éxito! Su descuento está ahora vinculado a su tarjeta bancaria."
 
 msgid "enrollment.pages.success.logout.title"
-msgstr "Ha sido desconectado exitosamente. Gracias por utilizar los beneficios de Cal-ITP!"
+msgstr "Ha cerrado la sesión correctamente. ¡Gracias por usar los beneficios de Cal-ITP!"
 
 #: benefits/enrollment/views.py:150
 msgid "enrollment.pages.success.p1"
@@ -491,7 +491,7 @@ msgstr "Al abordar el tránsito, pague con esta misma tarjeta física y su descu
 
 msgid "enrollment.pages.success.p3%(help_link)s"
 msgstr ""
-"Para obtener más información sobre lo que puede esperar al utilizar su tarjeta bancaria conectada, comuníquese con su proveedor de tránsito local o consulte "
+"Para más información, consulte nuestro "
 "<a href=\"%(help_link)s\" rel=\"noopener noreferrer\">página de ayuda</a>."
 
 msgid "enrollment.pages.success.p3"
@@ -523,7 +523,7 @@ msgstr ""
 "Por favor, ingrese su número de licencia/identificación y su apellido abajo. Si tiene 65 años o más, podemos confirmar que es eligible para un descuento para personas mayores cuando viaja en transporte público. No guardamos la información que ingresa aquí."
 
 msgid "eligibility.pages.start.dmv.content_title"
-msgstr "Hay tres pasos para vincular su descuento de tránsito a su tarjeta bancaria."
+msgstr "Necesitará algunos artículos para conectar su descuento:"
 
 msgid "eligibility.forms.confirm.dmv.fields.sub"
 msgstr "Licencia de conducir de California o número de identificación"
