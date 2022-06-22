@@ -381,9 +381,6 @@ msgstr "Login.gov es una forma segura de iniciar sesión en servicios gubernamen
 msgid "eligibility.pages.start.oauth.link_text"
 msgstr "Conozca más sobre Login.gov y cómo proporcionar una prueba de identidad."
 
-msgid "eligibility.pages.start.oauth.link_text[2]"
-msgstr "Don’t have access to these items?"
-
 msgid "eligibility.pages.start.oauth.required_items[0]"
 msgstr "Su tarjeta de identificación emitida por el estado"
 
@@ -392,6 +389,9 @@ msgstr "Su número de Seguro Social"
 
 msgid "eligibility.pages.start.oauth.required_items[2]"
 msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
+
+msgid "eligibility.pages.start.oauth.content_title"
+msgstr "TODO: You will need a few items to connect your discount:"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
@@ -402,12 +402,17 @@ msgid "eligibility.buttons.signout"
 msgstr "Cierre sesión de Login.gov"
 
 #: benefits/eligibility/views.py:170
-msgid "eligibility.pages.unverified.dmv.title"
+msgid "eligibility.pages.unverified.oauth.title"
 msgstr "Error de elegibilidad"
 
 #: benefits/eligibility/views.py:171
-msgid "eligibility.pages.unverified.dmv.content_title"
+msgid "eligibility.pages.unverified.oauth.content_title"
 msgstr "No se pudo verificar su elegibilidad."
+
+msgid "eligibility.pages.unverified.oauth.p[0]"
+msgstr ""
+"TODO: You may still be eligible for a discount, but we can’t verify your age "
+"with Login.gov."
 
 #: benefits/eligibility/views.py:172
 msgctxt "image alt text"
@@ -499,7 +504,7 @@ msgstr "Si estás en una computadora pública o compartida, no olvides hacer cli
 msgid "enrollment.pages.success.p4"
 msgstr "."
 
-msgid "eligibility.pages.index.dmv.label"
+msgid "eligibility.pages.index.oauth.label"
 msgstr "TODO: Senior Discount Program"
 
 msgid "eligibility.pages.index.mst.label"

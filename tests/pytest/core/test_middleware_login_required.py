@@ -18,7 +18,7 @@ def decorated_view(mocked_view):
 @pytest.fixture
 def require_login(mocker):
     mock_verifier = mocker.Mock(spec=EligibilityVerifier)
-    mock_verifier.requires_authentication = True
+    mock_verifier.is_auth_required = True
     mocker.patch("benefits.core.session.verifier", return_value=mock_verifier)
 
 
@@ -37,7 +37,7 @@ def test_login_auth_required(app_request, mocked_view, decorated_view):
 def test_login_auth_not_required(app_request, mocked_view, decorated_view):
     verifier = EligibilityVerifier.objects.filter(auth_provider__isnull=True).first()
     assert verifier
-    assert not verifier.requires_authentication
+    assert not verifier.is_auth_required
     session.update(app_request, verifier=verifier)
 
     decorated_view(app_request)

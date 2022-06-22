@@ -149,7 +149,7 @@ def success(request):
         content_title=_("enrollment.pages.success.content_title"),
     )
 
-    if verifier.requires_authentication:
+    if verifier.is_auth_required:
         if session.logged_in(request):
             page.buttons = [viewmodels.Button.logout()]
             page.classes = ["no-image-mobile", "logged-in"]
