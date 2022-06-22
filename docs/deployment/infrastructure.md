@@ -63,6 +63,17 @@ flowchart LR
 
 We have [ping tests](https://docs.microsoft.com/en-us/azure/azure-monitor/app/monitor-web-app-availability) set up to notify about availability of the dev, test, and prod deployments. Alerts go to [#benefits-notify](https://cal-itp.slack.com/archives/C022HHSEE3F).
 
+## Logs
+
+We send application logs to [Azure Monitor Logs](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-platform-logs). To find them:
+
+1. [Open Application Insights.](https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/microsoft.insights%2Fcomponents)
+1. Click the resource corresponding to the environment.
+1. In the navigation, under `Monitoring`, click `Logs`.
+1. In the Query Editor, type `traces`, and click `Run`.
+
+You should see recent log output. Note [there is some latency](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-ingestion-time).
+
 ## Making changes
 
 1. Get access to the Azure account through the DevSecOps team.

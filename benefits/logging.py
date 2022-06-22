@@ -1,5 +1,8 @@
+import os
+
+
 def get_config(level):
-    return {
+    config = {
         "version": 1,
         "disable_existing_loggers": False,
         "formatters": {
@@ -10,19 +13,38 @@ def get_config(level):
             },
         },
         "handlers": {
-            "default": {
+            "console": {
                 "class": "logging.StreamHandler",
                 "formatter": "default",
             },
         },
         "root": {
-            "handlers": ["default"],
+            "handlers": ["console"],
             "level": level,
         },
         "loggers": {
             "django": {
-                "handlers": ["default"],
+                "handlers": ["console"],
                 "propagate": False,
             },
         },
     }
+
+    if "APPLICATIONINSIGHTS_CONNECTION_STRING" in os.environ:
+        # enable Azure Insights logging
+
+        # https://docs.microsoft.com/en-us/azure/azure-monitor/app/opencensus-python#configure-logging-for-django-applications
+        config["handlers"]["azure"] = {
+            "class": "opencensus.ext.azure.log_exporter.AzureLogHandler",
+            # send all logs
+            "logging_sampling_rate": 1.0,
+        }
+
+        # create custom logger
+        # https://github.com/census-instrumentation/opencensus-python/issues/1130#issuecomment-1161898856
+        config["loggers"]["azure"] = {
+            "handlers": ["azure"],
+            "level": "INFO",
+        }
+
+    return config
