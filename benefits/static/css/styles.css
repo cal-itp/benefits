@@ -82,6 +82,10 @@ main {
   flex-shrink: 0 !important;
 }
 
+main#main-content.main-content {
+  position: relative;
+}
+
 /* All pages but the Start Page */
 main .main-row {
   min-height: calc(100vh - 120px);
@@ -663,11 +667,11 @@ footer.global-footer .footer-links a:active {
   }
 
   .signout-row {
-    top: 308px;
+    top: 240px;
   }
 
   .no-image-mobile .signout-row {
-    top: 80px;
+    top: 0;
   }
 
   .no-image-mobile .main-primary .container-fluid {
