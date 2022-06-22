@@ -103,7 +103,7 @@ def mocked_session_verifier(mocker, first_verifier):
 @pytest.fixture
 def mocked_session_verifier_auth_required(mocker, first_verifier, mocked_session_verifier):
     mock_verifier = mocker.Mock(spec=first_verifier)
-    mock_verifier.requires_authentication = True
+    mock_verifier.is_auth_required = True
     mocked_session_verifier.return_value = mock_verifier
     return mocked_session_verifier
 
@@ -111,7 +111,8 @@ def mocked_session_verifier_auth_required(mocker, first_verifier, mocked_session
 @pytest.fixture
 def mocked_session_verifier_auth_not_required(mocked_session_verifier_auth_required):
     # mocked_session_verifier_auth_required.return_value is the Mock(spec=first_verifier) from that fixture
-    mocked_session_verifier_auth_required.return_value.requires_authentication = False
+    mocked_session_verifier_auth_required.return_value.is_auth_required = False
+    mocked_session_verifier_auth_required.return_value.uses_auth_verification = False
     return mocked_session_verifier_auth_required
 
 

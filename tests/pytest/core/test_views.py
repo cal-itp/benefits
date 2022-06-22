@@ -4,7 +4,7 @@ import pytest
 
 from benefits.core.models import TransitAgency
 import benefits.core.session
-from benefits.core.views import ROUTE_INDEX, ROUTE_HELP, TEMPLATE_AGENCY, bad_request, csrf_failure
+from benefits.core.views import ROUTE_ELIGIBILITY, ROUTE_INDEX, ROUTE_HELP, TEMPLATE_AGENCY, bad_request, csrf_failure
 
 
 ROUTE_AGENCY = "core:agency_index"
@@ -36,43 +36,45 @@ def test_index_multiple_agencies(client):
 
 @pytest.mark.django_db
 def test_index_single_agency(mocker, client, session_reset_spy):
-    agencies = TransitAgency.all_active()[:1]
-    mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=agencies)
+    # all_active set to ABC
+    agency = TransitAgency.by_slug("abc")
+    mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=[agency])
 
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
+
+    session_reset_spy.assert_called_once()
+    assert response.status_code == 302
+    assert response.url == agency.index_url
+
+
+@pytest.mark.django_db
+def test_agency_index_single_verifier(mocker, client, session_reset_spy, mocked_session_update):
+    # Agency set to DEFTl, which only has 1 verifier
+    agency = TransitAgency.by_slug("deftl")
+    mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=[agency])
+
+    response = client.get(agency.index_url)
+
+    session_reset_spy.assert_called_once()
+    mocked_session_update.assert_called_once()
 
     assert response.status_code == 302
-    assert response.url == agencies[0].index_url
-    session_reset_spy.assert_called_once()
+    assert response.url == reverse(ROUTE_ELIGIBILITY)
 
 
 @pytest.mark.django_db
-def test_index_single_agency_single_verifier(mocker, client):
-    # Agency set to DEFTl, which only has 1 verifier
-    agencies = TransitAgency.all_active()[1:]
-    mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=agencies)
-
-    path = reverse(ROUTE_INDEX)
-    response = client.get(path, follow=True)
-
-    # Setting follow to True allows the test to go thorugh redirects and returns the redirect_chain attr
-    # https://docs.djangoproject.com/en/3.2/topics/testing/tools/#making-requests
-    assert response.redirect_chain[0] == ("/deftl", 302)
-    assert response.redirect_chain[1] == ("/eligibility/", 302)
-    assert response.redirect_chain[-1] == ("/eligibility/start", 302)
-
-
-@pytest.mark.django_db
-def test_agency_index_multiple_verifier(first_agency, client, session_reset_spy):
+def test_agency_index_multiple_verifier(mocker, client, session_reset_spy, mocked_session_update):
     # Agency set to ABC, which has 2 verifiers
-    path = reverse(ROUTE_AGENCY, kwargs={"agency": first_agency.slug})
+    agency = TransitAgency.by_slug("abc")
+    mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=[agency])
 
-    response = client.get(path)
+    response = client.get(agency.index_url)
 
+    session_reset_spy.assert_called_once()
+    mocked_session_update.assert_called_once()
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_AGENCY
-    session_reset_spy.assert_called_once()
 
 
 @pytest.mark.django_db

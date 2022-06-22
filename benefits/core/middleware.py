@@ -142,7 +142,7 @@ class LoginRequired(MiddlewareMixin):
     def process_view(self, request, view_func, view_args, view_kwargs):
         # only require login if verifier requires it
         verifier = session.verifier(request)
-        if not verifier or not verifier.requires_authentication or session.logged_in(request):
+        if not verifier or not verifier.is_auth_required or session.logged_in(request):
             # pass through
             return None
 

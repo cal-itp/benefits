@@ -396,9 +396,6 @@ msgstr "Login.gov is a safe way to sign in to government services. Benefits uses
 msgid "eligibility.pages.start.oauth.link_text"
 msgstr "Learn more about Login.gov and providing proof of identity"
 
-msgid "eligibility.pages.start.oauth.link_text[2]"
-msgstr "Don’t have access to these items?"
-
 msgid "eligibility.pages.start.oauth.required_items[0]"
 msgstr "Your state-issued ID card"
 
@@ -417,12 +414,17 @@ msgid "eligibility.buttons.signout"
 msgstr "Sign out of Login.gov"
 
 #: benefits/eligibility/views.py:170
-msgid "eligibility.pages.unverified.dmv.title"
+msgid "eligibility.pages.unverified.oauth.title"
 msgstr "Age not confirmed"
 
 #: benefits/eligibility/views.py:171
-msgid "eligibility.pages.unverified.dmv.content_title"
+msgid "eligibility.pages.unverified.oauth.content_title"
 msgstr "We can’t confirm your age"
+
+msgid "eligibility.pages.unverified.oauth.p[0]"
+msgstr ""
+"You may still be eligible for a discount, but we can’t verify your age "
+"with Login.gov."
 
 #: benefits/eligibility/views.py:172
 msgctxt "image alt text"
@@ -512,7 +514,7 @@ msgid "enrollment.pages.success.p3%(help_link)s"
 msgstr "For more information on what to expect when using your connected bank card please reach out to your local transit provider or check out our "
 "<a href=\"%(help_link)s\" rel=\"noopener noreferrer\">help page</a>."
 
-msgid "eligibility.pages.index.dmv.label"
+msgid "eligibility.pages.index.oauth.label"
 msgstr "Senior Discount Program"
 
 msgid "eligibility.pages.index.mst.label"
@@ -540,6 +542,9 @@ msgstr "CA driver’s license or ID number"
 msgid "eligibility.forms.confirm.dmv.fields.name"
 msgstr "Last name (as it appears on ID)"
 
+msgid "eligibility.pages.start.oauth.content_title"
+msgstr "You will need a few items to connect your discount:"
+
 msgid "eligibility.pages.start.dmv.content_title"
 msgstr "You will need a few items to connect your discount:"
 
@@ -551,6 +556,7 @@ msgstr ""
 
 msgid "eligibility.pages.confirm.dmv.title"
 msgstr "Confirm Eligibility"
+
 
 msgid "eligibility.pages.unverified.dmv.p[0]"
 msgstr ""

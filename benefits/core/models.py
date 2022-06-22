@@ -65,18 +65,18 @@ class EligibilityVerifier(models.Model):
 
     id = models.AutoField(primary_key=True)
     name = models.TextField()
-    api_url = models.TextField()
-    api_auth_header = models.TextField()
-    api_auth_key = models.TextField()
+    api_url = models.TextField(null=True)
+    api_auth_header = models.TextField(null=True)
+    api_auth_key = models.TextField(null=True)
     eligibility_type = models.ForeignKey(EligibilityType, on_delete=models.PROTECT)
     # public key is used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier
-    public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
+    public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT, null=True)
     # The JWE-compatible Content Encryption Key (CEK) key-length and mode
-    jwe_cek_enc = models.TextField()
+    jwe_cek_enc = models.TextField(null=True)
     # The JWE-compatible encryption algorithm
-    jwe_encryption_alg = models.TextField()
+    jwe_encryption_alg = models.TextField(null=True)
     # The JWS-compatible signing algorithm
-    jws_signing_alg = models.TextField()
+    jws_signing_alg = models.TextField(null=True)
     auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True)
     selection_label = models.TextField()
     selection_label_description = models.TextField(null=True)
@@ -84,15 +84,15 @@ class EligibilityVerifier(models.Model):
     start_item_name = models.TextField()
     start_item_description = models.TextField()
     start_blurb = models.TextField()
-    form_title = models.TextField()
-    form_content_title = models.TextField()
-    form_blurb = models.TextField()
-    form_sub_label = models.TextField()
-    form_sub_placeholder = models.TextField()
+    form_title = models.TextField(null=True)
+    form_content_title = models.TextField(null=True)
+    form_blurb = models.TextField(null=True)
+    form_sub_label = models.TextField(null=True)
+    form_sub_placeholder = models.TextField(null=True)
     # A regular expression used to validate the 'sub' API field before sending to this verifier
     form_sub_pattern = models.TextField(null=True)
-    form_name_label = models.TextField()
-    form_name_placeholder = models.TextField()
+    form_name_label = models.TextField(null=True)
+    form_name_placeholder = models.TextField(null=True)
     # The maximum length accepted for the 'name' API field before sending to this verifier
     form_name_max_length = models.PositiveSmallIntegerField(null=True)
     unverified_title = models.TextField()
@@ -108,8 +108,14 @@ class EligibilityVerifier(models.Model):
         return self.public_key.text
 
     @property
-    def requires_authentication(self):
+    def is_auth_required(self):
+        """True if this Verifier requires authentication. False otherwise."""
         return self.auth_provider is not None
+
+    @property
+    def uses_auth_verification(self):
+        """True if this Verifier verifies via the auth provider. False otherwise."""
+        return self.is_auth_required and self.auth_provider.scope and self.auth_provider.claim
 
     @staticmethod
     def by_id(id):

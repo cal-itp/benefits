@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 ROUTE_AUTH = "oauth:authorize"
 ROUTE_START = "eligibility:start"
 ROUTE_CONFIRM = "eligibility:confirm"
+ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_POST_LOGOUT = "oauth:post_logout"
 
 
@@ -75,6 +76,11 @@ def authorize(request):
     analytics.finished_sign_in(request)
 
     return redirect(ROUTE_CONFIRM)
+
+
+def cancel(request):
+    """View implementing cancellation of OIDC authorization."""
+    return redirect(ROUTE_UNVERIFIED)
 
 
 @decorator_from_middleware(VerifierSessionRequired)
