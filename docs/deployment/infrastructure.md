@@ -70,7 +70,8 @@ We send application logs to [Azure Monitor Logs](https://docs.microsoft.com/en-u
 1. [Open Application Insights.](https://portal.azure.com/#view/HubsExtension/BrowseResource/resourceType/microsoft.insights%2Fcomponents)
 1. Click the resource corresponding to the environment.
 1. In the navigation, under `Monitoring`, click `Logs`.
-1. In the Query Editor, type `traces`, and click `Run`.
+1. In the Query Editor, type `requests` or `traces`, and click `Run`.
+    - [What each means](https://docs.microsoft.com/en-us/azure/azure-monitor/app/opencensus-python#telemetry-type-mappings)
 
 You should see recent log output. Note [there is some latency](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-ingestion-time).
 

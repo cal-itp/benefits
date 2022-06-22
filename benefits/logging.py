@@ -1,7 +1,4 @@
-import os
-
-
-def get_config(level):
+def get_config(level="INFO", enable_azure=False):
     config = {
         "version": 1,
         "disable_existing_loggers": False,
@@ -30,7 +27,7 @@ def get_config(level):
         },
     }
 
-    if "APPLICATIONINSIGHTS_CONNECTION_STRING" in os.environ:
+    if enable_azure:
         # enable Azure Insights logging
 
         # https://docs.microsoft.com/en-us/azure/azure-monitor/app/opencensus-python#configure-logging-for-django-applications
@@ -44,7 +41,7 @@ def get_config(level):
         # https://github.com/census-instrumentation/opencensus-python/issues/1130#issuecomment-1161898856
         config["loggers"]["azure"] = {
             "handlers": ["azure"],
-            "level": "INFO",
+            "level": level,
         }
 
     return config
