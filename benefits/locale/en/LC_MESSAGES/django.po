@@ -258,11 +258,11 @@ msgstr "Page not found"
 
 #: benefits/core/viewmodels.py:194
 msgid "core.pages.not_found.content_title"
-msgstr "We can’t find that page"
+msgstr "Sorry! We can’t find that page."
 
 #: benefits/core/viewmodels.py:195
 msgid "core.pages.not_found.p[0]"
-msgstr "It looks like that page doesn’t exist or it was moved."
+msgstr "The page you are looking for might be somewhere else or may not exist anymore."
 
 #: benefits/core/viewmodels.py:218
 msgid "core.buttons.wait"
