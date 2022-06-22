@@ -418,11 +418,11 @@ msgstr "Sign out of Login.gov"
 
 #: benefits/eligibility/views.py:170
 msgid "eligibility.pages.unverified.dmv.title"
-msgstr "Age not confirmed"
+msgstr "Eligibility Error"
 
 #: benefits/eligibility/views.py:171
 msgid "eligibility.pages.unverified.dmv.content_title"
-msgstr "We can’t confirm your age"
+msgstr "Your eligibility could not be verified."
 
 #: benefits/eligibility/views.py:172
 msgctxt "image alt text"
@@ -431,7 +431,7 @@ msgstr "Identification card icon with question mark"
 
 #: benefits/eligibility/views.py:173
 msgid "eligibility.pages.unverified.p[1]"
-msgstr "Reach out to your transit provider for assistance."
+msgstr "That’s okay! You may still be eligible for our program. Please reach out to your local transit provider for assistance."
 
 #: benefits/enrollment/templates/enrollment/success.html:7
 msgctxt "image alt text"

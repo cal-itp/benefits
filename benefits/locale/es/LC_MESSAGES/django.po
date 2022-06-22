@@ -403,11 +403,11 @@ msgstr "Cierre sesión de Login.gov"
 
 #: benefits/eligibility/views.py:170
 msgid "eligibility.pages.unverified.dmv.title"
-msgstr "Edad no confirmada"
+msgstr "Error de elegibilidad"
 
 #: benefits/eligibility/views.py:171
 msgid "eligibility.pages.unverified.dmv.content_title"
-msgstr "No podemos confirmar su edad"
+msgstr "No se pudo verificar su elegibilidad."
 
 #: benefits/eligibility/views.py:172
 msgctxt "image alt text"
@@ -416,7 +416,7 @@ msgstr "Icono de tarjeta de identificación con signo de interrogación"
 
 #: benefits/eligibility/views.py:173
 msgid "eligibility.pages.unverified.p[1]"
-msgstr "Comuníquese con su proveedor de transporte público para obtener ayuda."
+msgstr "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su proveedor de tránsito local para obtener asistencia."
 
 #: benefits/enrollment/templates/enrollment/success.html:7
 msgctxt "image alt text"
