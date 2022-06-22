@@ -115,7 +115,7 @@ class EligibilityVerifier(models.Model):
     @property
     def uses_auth_verification(self):
         """True if this Verifier verifies via the auth provider. False otherwise."""
-        return all((self.is_auth_required, self.auth_provider.scope, self.auth_provider.claim))
+        return self.is_auth_required and self.auth_provider.scope and self.auth_provider.claim
 
     @staticmethod
     def by_id(id):
