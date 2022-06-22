@@ -23,7 +23,7 @@ msgstr ""
 
 msgid "core.pages.help.about.p[1]"
 msgstr ""
-"Nos asociamos con Login.gov para confirmar la edad para los descuentos basados en la edad y las agencias de transporte locales para confirmar los programas de descuento específicos. Una vez verificados, los descuentos se adjuntan a su tarjeta bancaria a través de nuestro socio de pago, Littlepay, para que cuando pague su viaje en transporte, obtenga su descuento automáticamente."
+"Nos asociamos con Login.gov para confirmar la edad para los descuentos basados en la edad y  nos asociamos con las agencias de transporte locales para confirmar los programas de descuento específicos. Una vez verificados, los descuentos se adjuntan a su tarjeta bancaria a través de nuestro socio de pago, Littlepay, para que cuando pague su viaje en transporte, obtenga su descuento automáticamente."
 
 msgid "core.pages.help.payment_options"
 msgstr "Opciones de pago"
@@ -64,19 +64,19 @@ msgid "core.pages.help.login_gov.p[2][1]%(website)s"
 msgstr "o <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
 
 msgid "core.pages.help.login_gov_verify"
-msgstr "TODO"
+msgstr "¿Cómo verifico mi identidad en Login.gov?"
 
 msgid "core.pages.help.login_gov_verify.p[0]"
-msgstr "TODO"
+msgstr "​​Para verificar su identidad, Login.gov le pide que suba una fotografía de su identificación emitida por el estado y comparta su número de teléfono y otra información personal, que luego se verificara con fuentes autorizadas. Estos requisitos son adicionales para cumplir con los requisitos para la autentificación de dos factores."
 
 msgid "core.pages.help.login_gov_verify.p[1]"
-msgstr "TODO"
+msgstr "No puede verificar su identidad en Login.gov sin una identificación emitida por el estado, que puede ser una licencia de conducir o una tarjeta de identificación emitida por el estado que no sea una licencia de conducir."
 
 msgid "core.pages.help.login_gov_verify.p[2]"
-msgstr "TODO"
+msgstr "Si no tiene un plan telefónico que esté a su nombre, Login.gov puede enviarle el código de verificación por correo, lo que toma aproximadamente de 3 a 5 días."
 
 msgid "core.pages.help.login_gov_verify.p[3]%(website)s"
-msgstr "TODO"
+msgstr "Verificar su identidad asegura que la persona adecuada tenga acceso a la información correcta. Estamos utilizando el proceso simple y seguro de Login.gov’s para mantener segura su información confidencial. Para obtener más información sobre la verificación de identidad en Login.gov, visite su <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
 
 msgid "core.pages.help.littlepay"
 msgstr "¿Qué es Littlepay?"
