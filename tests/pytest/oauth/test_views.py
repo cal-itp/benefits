@@ -6,7 +6,7 @@ import pytest
 from benefits.core import session
 from benefits.core.views import ROUTE_INDEX
 
-from benefits.oauth.views import ROUTE_START, ROUTE_CONFIRM, login, authorize, logout, post_logout
+from benefits.oauth.views import ROUTE_START, ROUTE_CONFIRM, ROUTE_UNVERIFIED, login, authorize, cancel, logout, post_logout
 import benefits.oauth.views
 
 
@@ -133,6 +133,15 @@ def test_authorize_success_without_claim(mocked_session_verifier_auth_required, 
     assert session.oauth_claim(app_request) is None
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_CONFIRM)
+
+
+def test_cancel(app_request):
+    unverified_route = reverse(ROUTE_UNVERIFIED)
+
+    result = cancel(app_request)
+
+    assert result.status_code == 302
+    assert result.url == unverified_route
 
 
 @pytest.mark.django_db
