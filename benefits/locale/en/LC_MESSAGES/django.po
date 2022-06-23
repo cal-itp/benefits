@@ -69,12 +69,9 @@ msgstr "Creating an account is simple. You will need an email address and method
 "authenticating your account&mdash;which will use either a landline, mobile phone, or "
 "backup codes that must be printed or written down."
 
-msgid "core.pages.help.login_gov.p[2][0]%(website)s"
+msgid "core.pages.help.login_gov.p[2]"
 msgstr "To learn more about Login.gov, please visit the "
-"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov website</a> "
-
-msgid "core.pages.help.login_gov.p[2][1]%(website)s"
-msgstr "or the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov Help Center</a>."
+"<a href='https://login.gov/' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov website</a> or the <a href='https://login.gov/help/' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov Help Center</a>."
 
 msgid "core.pages.help.login_gov_verify"
 msgstr "How do I verify my identity on Login.gov?"
@@ -88,8 +85,8 @@ msgstr "You cannot verify your identity on Login.gov without a state-issued ID, 
 msgid "core.pages.help.login_gov_verify.p[2]"
 msgstr "If you do not have a phone plan that is in your name, Login.gov can send you the verification code by mail which takes approximately 3-5 days."
 
-msgid "core.pages.help.login_gov_verify.p[3]%(website)s"
-msgstr "Verifying your identity makes sure the right person has access to the right information. We are using Login.gov’s simple and secure process to keep your sensitive information safe. To learn more about identity verification on Login.gov, please visit their <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Help Center.</a>"
+msgid "core.pages.help.login_gov_verify.p[3]"
+msgstr "Verifying your identity makes sure the right person has access to the right information. We are using Login.gov’s simple and secure process to keep your sensitive information safe. To learn more about identity verification on Login.gov, please visit their <a href='https://login.gov/help/verify-your-identity/how-to-verify-your-identity/' target=\"_blank\" rel=\"noopener noreferrer\">Help Center.</a>"
 
 msgid "core.pages.help.littlepay"
 msgstr "What is Littlepay?"

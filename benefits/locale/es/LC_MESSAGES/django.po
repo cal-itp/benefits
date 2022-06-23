@@ -56,12 +56,9 @@ msgstr "Login.gov es una forma segura de iniciar sesión en las agencias guberna
 msgid "core.pages.help.login_gov.p[1]"
 msgstr "Crear una cuenta es simple. Necesitará una dirección de correo electrónico y un método para autenticar su cuenta—que utilizará un teléfono fijo o un teléfono móvil o códigos de seguridad que deben imprimirse o anotarse."
 
-msgid "core.pages.help.login_gov.p[2][0]%(website)s"
+msgid "core.pages.help.login_gov.p[2]"
 msgstr "Para obtener más información sobre Login.gov, visite "
-"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov</a> "
-
-msgid "core.pages.help.login_gov.p[2][1]%(website)s"
-msgstr "o <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
+"<a href='https://login.gov/es' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov</a> o <a href='https://login.gov/es/help/' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
 
 msgid "core.pages.help.login_gov_verify"
 msgstr "¿Cómo verifico mi identidad en Login.gov?"
@@ -75,8 +72,8 @@ msgstr "No puede verificar su identidad en Login.gov sin una identificación emi
 msgid "core.pages.help.login_gov_verify.p[2]"
 msgstr "Si no tiene un plan telefónico que esté a su nombre, Login.gov puede enviarle el código de verificación por correo, lo que toma aproximadamente de 3 a 5 días."
 
-msgid "core.pages.help.login_gov_verify.p[3]%(website)s"
-msgstr "Verificar su identidad asegura que la persona adecuada tenga acceso a la información correcta. Estamos utilizando el proceso simple y seguro de Login.gov’s para mantener segura su información confidencial. Para obtener más información sobre la verificación de identidad en Login.gov, visite su <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
+msgid "core.pages.help.login_gov_verify.p[3]"
+msgstr "Verificar su identidad asegura que la persona adecuada tenga acceso a la información correcta. Estamos utilizando el proceso simple y seguro de Login.gov’s para mantener segura su información confidencial. Para obtener más información sobre la verificación de identidad en Login.gov, visite su <a href='https://login.gov/es/help/verify-your-identity/how-to-verify-your-identity/' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
 
 msgid "core.pages.help.littlepay"
 msgstr "¿Qué es Littlepay?"
