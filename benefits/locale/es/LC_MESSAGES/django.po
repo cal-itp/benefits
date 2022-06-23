@@ -23,7 +23,7 @@ msgstr ""
 
 msgid "core.pages.help.about.p[1]"
 msgstr ""
-"Nos asociamos con Login.gov para confirmar la edad para los descuentos basados en la edad y  nos asociamos con las agencias de transporte locales para confirmar los programas de descuento específicos. Una vez verificados, los descuentos se adjuntan a su tarjeta bancaria a través de nuestro socio de pago, Littlepay, para que cuando pague su viaje en transporte, obtenga su descuento automáticamente."
+"Nos asociamos con Login.gov para confirmar la edad para los descuentos basados en la edad y nos asociamos con las agencias de transporte locales para confirmar los programas de descuento específicos. Una vez verificados, los descuentos se adjuntan a su tarjeta bancaria a través de nuestro socio de pago, Littlepay, para que cuando pague su viaje en transporte, obtenga su descuento automáticamente."
 
 msgid "core.pages.help.payment_options"
 msgstr "Opciones de pago"
