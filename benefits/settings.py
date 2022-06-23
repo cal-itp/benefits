@@ -73,7 +73,12 @@ if DEBUG:
 
 ENABLE_AZURE_INSIGHTS = "APPLICATIONINSIGHTS_CONNECTION_STRING" in os.environ
 if ENABLE_AZURE_INSIGHTS:
-    MIDDLEWARE.append("opencensus.ext.django.middleware.OpencensusMiddleware")
+    MIDDLEWARE.extend(
+        [
+            "opencensus.ext.django.middleware.OpencensusMiddleware",
+            "benefits.core.middleware.LogErrorToAzure",
+        ]
+    )
 
 # only used if enabled above
 OPENCENSUS = {

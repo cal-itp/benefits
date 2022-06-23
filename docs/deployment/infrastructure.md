@@ -75,6 +75,8 @@ We send application logs to [Azure Monitor Logs](https://docs.microsoft.com/en-u
 
 You should see recent log output. Note [there is some latency](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-ingestion-time).
 
+See [`Failures`](https://docs.microsoft.com/en-us/azure/azure-monitor/app/asp-net-exceptions#diagnose-failures-using-the-azure-portal) in the sidebar (or `exceptions` under `Logs`) for application errors/exceptions.
+
 ## Making changes
 
 1. Get access to the Azure account through the DevSecOps team.
