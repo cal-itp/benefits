@@ -446,12 +446,12 @@ msgstr "Connect Card"
 
 #: benefits/enrollment/views.py:30
 msgid "enrollment.pages.index.content_title"
-msgstr "Great! You’re eligible for a discount!"
+msgstr "Let’s link your card to your discount."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[0]"
 msgstr ""
-"Next, we need to link your discount to your bank-issued card through our payment partner Littlepay."
+"Now that you are logged in we can link your transit discount to your card through our payment partner, Littlepay."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[1]"
