@@ -48,6 +48,7 @@ resource "azurerm_linux_web_app" "main" {
     # The APPINSIGHTS_* ones get populated through auto-instrumentation.
     # https://docs.microsoft.com/en-us/azure/azure-monitor/app/azure-web-apps#enable-application-insights
     app_setting_names = [
+      "ANALYTICS_KEY",
       "APPINSIGHTS_INSTRUMENTATIONKEY",
       "APPINSIGHTS_PROFILERFEATURE_VERSION",
       "APPINSIGHTS_SNAPSHOTFEATURE_VERSION",
@@ -55,8 +56,6 @@ resource "azurerm_linux_web_app" "main" {
       "APPLICATIONINSIGHTS_CONNECTION_STRING",
       "ApplicationInsightsAgent_EXTENSION_VERSION",
       "DJANGO_INIT_PATH",
-      "DJANGO_OAUTH_CLIENT_ID",
-      "DJANGO_OAUTH_CLIENT_NAME",
       "DiagnosticServices_EXTENSION_VERSION",
       "InstrumentationEngine_EXTENSION_VERSION",
       "SnapshotDebugger_EXTENSION_VERSION",
