@@ -72,8 +72,8 @@ msgstr "No puede verificar su identidad en Login.gov sin una identificación emi
 msgid "core.pages.help.login_gov_verify.p[2]"
 msgstr "Si no tiene un plan telefónico que esté a su nombre, Login.gov puede enviarle el código de verificación por correo, lo que toma aproximadamente de 3 a 5 días."
 
-msgid "core.pages.help.login_gov_verify.p[3]%(website)s"
-msgstr "Verificar su identidad asegura que la persona adecuada tenga acceso a la información correcta. Estamos utilizando el proceso simple y seguro de Login.gov’s para mantener segura su información confidencial. Para obtener más información sobre la verificación de identidad en Login.gov, visite su <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
+msgid "core.pages.help.login_gov_verify.p[3]"
+msgstr "Verificar su identidad asegura que la persona adecuada tenga acceso a la información correcta. Estamos utilizando el proceso simple y seguro de Login.gov’s para mantener segura su información confidencial. Para obtener más información sobre la verificación de identidad en Login.gov, visite su <a href='https://login.gov/es/help/verify-your-identity/how-to-verify-your-identity/' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
 
 msgid "core.pages.help.littlepay"
 msgstr "¿Qué es Littlepay?"
