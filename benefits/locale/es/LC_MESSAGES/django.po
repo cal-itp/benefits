@@ -438,7 +438,7 @@ msgstr "Vamos a vincular su tarjeta con su descuento."
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[0]"
 msgstr ""
-"Ahora que ha iniciado sesión, podemos vincular su descuento de tránsito a su tarjeta a través de nuestro socio de pagos, LittlePay."
+"Ahora que ha iniciado sesión, podemos vincular su descuento de tránsito a su tarjeta a través de nuestro socio de pagos, Littlepay."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[1]"
