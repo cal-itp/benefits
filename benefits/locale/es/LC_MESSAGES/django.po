@@ -23,7 +23,7 @@ msgstr ""
 
 msgid "core.pages.help.about.p[1]"
 msgstr ""
-"Nos asociamos con Login.gov para confirmar la edad para los descuentos basados en la edad y las agencias de transporte locales para confirmar los programas de descuento específicos. Una vez verificados, los descuentos se adjuntan a su tarjeta bancaria a través de nuestro socio de pago, Littlepay, para que cuando pague su viaje en transporte, obtenga su descuento automáticamente."
+"Nos asociamos con Login.gov para confirmar la edad para los descuentos basados en la edad y nos asociamos con las agencias de transporte locales para confirmar los programas de descuento específicos. Una vez verificados, los descuentos se adjuntan a su tarjeta bancaria a través de nuestro socio de pago, Littlepay, para que cuando pague su viaje en transporte, obtenga su descuento automáticamente."
 
 msgid "core.pages.help.payment_options"
 msgstr "Opciones de pago"
@@ -64,19 +64,19 @@ msgid "core.pages.help.login_gov.p[2][1]%(website)s"
 msgstr "o <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
 
 msgid "core.pages.help.login_gov_verify"
-msgstr "TODO"
+msgstr "¿Cómo verifico mi identidad en Login.gov?"
 
 msgid "core.pages.help.login_gov_verify.p[0]"
-msgstr "TODO"
+msgstr "​​Para verificar su identidad, Login.gov le pide que suba una fotografía de su identificación emitida por el estado y comparta su número de teléfono y otra información personal, que luego se verificara con fuentes autorizadas. Estos requisitos son adicionales para cumplir con los requisitos para la autentificación de dos factores."
 
 msgid "core.pages.help.login_gov_verify.p[1]"
-msgstr "TODO"
+msgstr "No puede verificar su identidad en Login.gov sin una identificación emitida por el estado, que puede ser una licencia de conducir o una tarjeta de identificación emitida por el estado que no sea una licencia de conducir."
 
 msgid "core.pages.help.login_gov_verify.p[2]"
-msgstr "TODO"
+msgstr "Si no tiene un plan telefónico que esté a su nombre, Login.gov puede enviarle el código de verificación por correo, lo que toma aproximadamente de 3 a 5 días."
 
 msgid "core.pages.help.login_gov_verify.p[3]%(website)s"
-msgstr "TODO"
+msgstr "Verificar su identidad asegura que la persona adecuada tenga acceso a la información correcta. Estamos utilizando el proceso simple y seguro de Login.gov’s para mantener segura su información confidencial. Para obtener más información sobre la verificación de identidad en Login.gov, visite su <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
 
 msgid "core.pages.help.littlepay"
 msgstr "¿Qué es Littlepay?"
@@ -225,7 +225,7 @@ msgstr "Icono de autobus con llanta ponchada"
 
 #: benefits/core/viewmodels.py:177
 msgid "core.pages.server_error.content_title"
-msgstr "El servicio no está funcionando"
+msgstr "¡Lo sentimos! El servicio para este sitio está caído."
 
 #: benefits/core/viewmodels.py:183 benefits/core/viewmodels.py:184
 msgid "core.pages.server_error.title"
@@ -233,11 +233,11 @@ msgstr "El servicio no está funcionando"
 
 #: benefits/core/viewmodels.py:185
 msgid "core.pages.server_error.p[0]"
-msgstr "¡Pronto volveremos a estar en funcionamiento!"
+msgstr "Deberíamos volver a funcionar pronto."
 
 #: benefits/core/viewmodels.py:185
 msgid "core.pages.server_error.p[1]"
-msgstr "Por favor, vuelva más tarde."
+msgstr "Por favor, actualice la página en unos minutos."
 
 #: benefits/core/viewmodels.py:193
 msgid "core.pages.not_found.title"
@@ -245,11 +245,11 @@ msgstr "No podemos encontrar esa página"
 
 #: benefits/core/viewmodels.py:194
 msgid "core.pages.not_found.content_title"
-msgstr "No podemos encontrar esa página"
+msgstr "¡Lo sentimos! No podemos encontrar esa página."
 
 #: benefits/core/viewmodels.py:195
 msgid "core.pages.not_found.p[0]"
-msgstr "Parece que esa página no existe o se ha movido."
+msgstr "La página que estás buscando puede estar en otro lugar o puede que ya no exista."
 
 #: benefits/core/viewmodels.py:218
 msgid "core.buttons.wait"
@@ -278,7 +278,7 @@ msgid "core.pages.agency_index.p[2]"
 msgstr "El programa de beneficios de Cal-ITP actualmente solo está abierto a personas de 65 años o más."
 
 msgid "core.pages.agency_index.p[3]"
-msgstr "TODO: Connect your bank card to your public transit discount with Cal-ITP Benefits."
+msgstr "Conecta tu tarjeta bancaria para tu descuento en el transporte público con Cal-ITP Benefits."
 
 msgid "core.pages.agency_index.button.label"
 msgstr "¡Conecta tu tarjeta bancaria a tu descuento hoy!"
@@ -298,7 +298,7 @@ msgstr "Comencemos"
 
 #: benefits/core/views.py:86 benefits/core/views.py:106
 msgid "core.buttons.back"
-msgstr "Regresar"
+msgstr "Regresar a la página principal"
 
 #: benefits/core/views.py:91
 msgid "core.pages.help.p[1]"
@@ -312,7 +312,7 @@ msgid "core.icons.bankcard"
 msgstr "Icono de tarjeta bancaria"
 
 msgid "core.pages.start.headline"
-msgstr "TODO: Connect your bank card to your public transit discount with Cal-ITP Benefits."
+msgstr "Conecta tu tarjeta bancaria para tu descuento en el transporte público con Cal-ITP Benefits."
 
 #: benefits/eligibility/forms.py:37
 msgid "eligibility.forms.confirm.submit"
@@ -359,43 +359,43 @@ msgstr "TODO: Computer monitor with checkmark"
 
 #: benefits/eligibility/views.py:74
 msgid "eligibility.pages.start.bankcard.title"
-msgstr "Proporcione los datos de su tarjeta bancaria"
+msgstr "Los datos de su tarjeta bancaria"
 
 #: benefits/eligibility/views.py:75
 msgid "eligibility.pages.start.bankcard.text"
-msgstr "Debe ser una tarjeta de débito o crédito sin contacto de Visa o Mastercard."
+msgstr "Su tarjeta debe ser una tarjeta de débito o crédito sin contacto de Visa o Mastercard."
 
 msgid "eligibility.pages.start.bankcard.button[0].link"
-msgstr "TODO: ¿No tienes tarjeta bancaria?"
+msgstr "¿No tienes tarjeta bancaria o no está seguro si tiene una tarjeta sin contacto?"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
 msgstr "Continuar"
 
 msgid "eligibility.pages.start.oauth.heading"
-msgstr "Inicia sesión en Login.gov"
+msgstr "Una cuenta de Login.gov con verificación de identidad"
 
 msgid "eligibility.pages.start.oauth.details"
-msgstr "TODO: Login.gov is a safe way to sign in to government services. Benefits uses Login.gov to verify your age. If you do not have an account already, you will be able to create one. You will also need to verify your identity, which will require these items:"
+msgstr "Login.gov es una forma segura de iniciar sesión en servicios gubernamentales. Benefits utiliza Login.gov para verificar su edad. Si aún no tiene una cuenta, podrá crear una. También deberá verificar su identidad, lo que requerirá estos artículos:"
 
 msgid "eligibility.pages.start.oauth.link_text"
-msgstr "TODO: Conozca más sobre Login.gov"
+msgstr "Conozca más sobre Login.gov y cómo proporcionar una prueba de identidad."
 
 msgid "eligibility.pages.start.oauth.required_items[0]"
-msgstr "TODO: Your state-issued ID card"
+msgstr "Su tarjeta de identificación emitida por el estado"
 
 msgid "eligibility.pages.start.oauth.required_items[1]"
-msgstr "TODO: Your Social Security number"
+msgstr "Su número de Seguro Social"
 
 msgid "eligibility.pages.start.oauth.required_items[2]"
-msgstr "TODO: A phone number with a phone plan associated with your name"
+msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
 
 msgid "eligibility.pages.start.oauth.content_title"
-msgstr "TODO: You will need a few items to connect your discount:"
+msgstr "Necesitará algunos artículos para conectar su descuento:"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
-msgstr "TODO: Crear una cuenta o iniciar sesión con"
+msgstr "Comencemos con"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signout"
@@ -403,16 +403,15 @@ msgstr "Cierre sesión de Login.gov"
 
 #: benefits/eligibility/views.py:170
 msgid "eligibility.pages.unverified.oauth.title"
-msgstr "Edad no confirmada"
+msgstr "Error de elegibilidad"
 
 #: benefits/eligibility/views.py:171
 msgid "eligibility.pages.unverified.oauth.content_title"
-msgstr "No podemos confirmar su edad"
+msgstr "No se pudo verificar su elegibilidad."
 
 msgid "eligibility.pages.unverified.oauth.p[0]"
 msgstr ""
-"TODO: You may still be eligible for a discount, but we can’t verify your age "
-"with Login.gov."
+"¡Esta bien! Aún puede ser elegible para nuestro programa. "
 
 #: benefits/eligibility/views.py:172
 msgctxt "image alt text"
@@ -421,7 +420,7 @@ msgstr "Icono de tarjeta de identificación con signo de interrogación"
 
 #: benefits/eligibility/views.py:173
 msgid "eligibility.pages.unverified.p[1]"
-msgstr "Comuníquese con su proveedor de transporte público para obtener ayuda."
+msgstr "Comuníquese con su proveedor de tránsito local para obtener asistencia."
 
 #: benefits/enrollment/templates/enrollment/success.html:7
 msgctxt "image alt text"
@@ -434,12 +433,12 @@ msgstr "Tarjeta de conexión"
 
 #: benefits/enrollment/views.py:30
 msgid "enrollment.pages.index.content_title"
-msgstr "¡Genial! ¡Eres elegible para un descuento!"
+msgstr "Vamos a vincular su tarjeta con su descuento."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[0]"
 msgstr ""
-"A continuación, tenemos que vincular su descuento a su tarjeta bancaria a través de nuestro socio de pago Littlepay."
+"Ahora que ha iniciado sesión, podemos vincular su descuento de tránsito a su tarjeta a través de nuestro socio de pagos, Littlepay."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[1]"
@@ -458,7 +457,7 @@ msgstr "¿Qué pasa si no tengo una tarjeta bancaria?"
 
 #: benefits/enrollment/views.py:127 benefits/enrollment/views.py:129
 msgid "enrollment.pages.retry.title"
-msgstr "No pudimos conectar tu tarjeta bancaria"
+msgstr "No pudimos conectar tú tarjeta bancaria"
 
 #: benefits/enrollment/views.py:128
 msgctxt "image alt text"
@@ -469,22 +468,21 @@ msgstr ""
 #: benefits/enrollment/views.py:130
 msgid "enrollment.pages.retry.p[0]"
 msgstr ""
-"Puede intentarlo de nuevo o puede comunicarse con su proveedor de transporte "
-"público para obtener ayuda."
+"Puede intentarlo de nuevo o comunicarse con su proveedor de transporte local para obtener ayuda."
 
 #: benefits/enrollment/views.py:133
 msgid "core.buttons.retry"
-msgstr "Inténtalo de nuevo"
+msgstr "Intentar otra vez"
 
 msgid "enrollment.pages.success.title"
-msgstr "Éxito"
+msgstr "Cierre sesión"
 
 #: benefits/enrollment/views.py:147 benefits/enrollment/views.py:149
 msgid "enrollment.pages.success.content_title"
 msgstr "¡Éxito! Su descuento está ahora vinculado a su tarjeta bancaria."
 
 msgid "enrollment.pages.success.logout.title"
-msgstr "Ha sido desconectado exitosamente. Gracias por utilizar los beneficios de Cal-ITP!"
+msgstr "Ha cerrado la sesión correctamente. ¡Gracias por usar los beneficios de Cal-ITP!"
 
 #: benefits/enrollment/views.py:150
 msgid "enrollment.pages.success.p1"
@@ -496,7 +494,7 @@ msgstr "Al abordar el tránsito, pague con esta misma tarjeta física y su descu
 
 msgid "enrollment.pages.success.p3%(help_link)s"
 msgstr ""
-"Para obtener más información sobre lo que puede esperar al utilizar su tarjeta bancaria conectada, comuníquese con su proveedor de tránsito local o consulte "
+"Para más información, consulte nuestro "
 "<a href=\"%(help_link)s\" rel=\"noopener noreferrer\">página de ayuda</a>."
 
 msgid "enrollment.pages.success.p3"
@@ -528,7 +526,7 @@ msgstr ""
 "Por favor, ingrese su número de licencia/identificación y su apellido abajo. Si tiene 65 años o más, podemos confirmar que es eligible para un descuento para personas mayores cuando viaja en transporte público. No guardamos la información que ingresa aquí."
 
 msgid "eligibility.pages.start.dmv.content_title"
-msgstr "Hay tres pasos para vincular su descuento de tránsito a su tarjeta bancaria."
+msgstr "Necesitará algunos artículos para conectar su descuento:"
 
 msgid "eligibility.forms.confirm.dmv.fields.sub"
 msgstr "Licencia de conducir de California o número de identificación"

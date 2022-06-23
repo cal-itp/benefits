@@ -238,7 +238,7 @@ msgstr "Bus icon with flat tire"
 
 #: benefits/core/viewmodels.py:177
 msgid "core.pages.server_error.content_title"
-msgstr "Unfortunately, our system is having a problem right now."
+msgstr "Sorry! Service for this site is down."
 
 #: benefits/core/viewmodels.py:183 benefits/core/viewmodels.py:184
 msgid "core.pages.server_error.title"
@@ -246,11 +246,11 @@ msgstr "Service is down"
 
 #: benefits/core/viewmodels.py:185
 msgid "core.pages.server_error.p[0]"
-msgstr "We should be back in operation soon!"
+msgstr "We should be back in operation soon."
 
 #: benefits/core/viewmodels.py:185
 msgid "core.pages.server_error.p[1]"
-msgstr "Please check back later."
+msgstr "Please refresh the page in a few minutes."
 
 #: benefits/core/viewmodels.py:193
 msgid "core.pages.not_found.title"
@@ -258,11 +258,11 @@ msgstr "Page not found"
 
 #: benefits/core/viewmodels.py:194
 msgid "core.pages.not_found.content_title"
-msgstr "We can’t find that page"
+msgstr "Sorry! We can’t find that page."
 
 #: benefits/core/viewmodels.py:195
 msgid "core.pages.not_found.p[0]"
-msgstr "It looks like that page doesn’t exist or it was moved."
+msgstr "The page you are looking for might be somewhere else or may not exist anymore."
 
 #: benefits/core/viewmodels.py:218
 msgid "core.buttons.wait"
@@ -415,11 +415,11 @@ msgstr "Sign out of Login.gov"
 
 #: benefits/eligibility/views.py:170
 msgid "eligibility.pages.unverified.oauth.title"
-msgstr "Age not confirmed"
+msgstr "Eligibility Error"
 
 #: benefits/eligibility/views.py:171
 msgid "eligibility.pages.unverified.oauth.content_title"
-msgstr "We can’t confirm your age"
+msgstr "Your eligibility could not be verified."
 
 msgid "eligibility.pages.unverified.oauth.p[0]"
 msgstr ""
@@ -433,7 +433,7 @@ msgstr "Identification card icon with question mark"
 
 #: benefits/eligibility/views.py:173
 msgid "eligibility.pages.unverified.p[1]"
-msgstr "Reach out to your transit provider for assistance."
+msgstr "That’s okay! You may still be eligible for our program. Please reach out to your local transit provider for assistance."
 
 #: benefits/enrollment/templates/enrollment/success.html:7
 msgctxt "image alt text"
@@ -446,12 +446,12 @@ msgstr "Connect Card"
 
 #: benefits/enrollment/views.py:30
 msgid "enrollment.pages.index.content_title"
-msgstr "Great! You’re eligible for a discount!"
+msgstr "Let’s link your card to your discount."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[0]"
 msgstr ""
-"Next, we need to link your discount to your bank-issued card through our payment partner Littlepay."
+"Now that you are logged in we can link your transit discount to your card through our payment partner, Littlepay."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[1]"
