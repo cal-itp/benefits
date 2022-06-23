@@ -2,6 +2,7 @@
 Django settings for benefits project.
 """
 import os
+import benefits.logging
 
 
 def _filter_empty(ls):
@@ -64,7 +65,24 @@ if ADMIN:
     )
 
 if DEBUG:
-    MIDDLEWARE.extend(["benefits.core.middleware.DebugSession"])
+    MIDDLEWARE.append("benefits.core.middleware.DebugSession")
+
+
+# Azure Insights
+# https://docs.microsoft.com/en-us/azure/azure-monitor/app/opencensus-python-request#tracking-django-applications
+
+ENABLE_AZURE_INSIGHTS = "APPLICATIONINSIGHTS_CONNECTION_STRING" in os.environ
+if ENABLE_AZURE_INSIGHTS:
+    MIDDLEWARE.append("opencensus.ext.django.middleware.OpencensusMiddleware")
+
+# only used if enabled above
+OPENCENSUS = {
+    "TRACE": {
+        "SAMPLER": "opencensus.trace.samplers.ProbabilitySampler(rate=1)",
+        "EXPORTER": "opencensus.ext.azure.trace_exporter.AzureExporter()",
+    }
+}
+
 
 CSRF_COOKIE_AGE = None
 CSRF_COOKIE_SAMESITE = "Strict"
@@ -192,27 +210,8 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesSto
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Logging configuration
-
 LOG_LEVEL = os.environ.get("DJANGO_LOG_LEVEL", "DEBUG" if DEBUG else "WARNING")
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "default": {
-            "format": "[{asctime}] {levelname} {name}:{lineno} {message}",
-            "datefmt": "%d/%b/%Y %H:%M:%S",
-            "style": "{",
-        },
-    },
-    "handlers": {
-        "default": {"class": "logging.StreamHandler", "formatter": "default"},
-    },
-    "root": {
-        "handlers": ["default"],
-        "level": LOG_LEVEL,
-    },
-    "loggers": {"django": {"handlers": ["default"], "propagate": False}},
-}
+LOGGING = benefits.logging.get_config(LOG_LEVEL, enable_azure=ENABLE_AZURE_INSIGHTS)
 
 # Analytics configuration
 

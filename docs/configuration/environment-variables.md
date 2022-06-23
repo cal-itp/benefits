@@ -149,3 +149,13 @@ devcontainer, check the [`DJANGO_LOCAL_PORT`](#django_local_port).
 
 [deployment]: ../deployment/README.md
 [getting-started_create-env]: ../getting-started/README.md#create-an-environment-file
+
+## Azure
+
+### `APPLICATIONINSIGHTS_CONNECTION_STRING`
+
+!!! tldr "Azure docs"
+
+    [Azure Monitor connection strings](https://docs.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string)
+
+Enables [log collection](../../deployment/infrastructure/#logs). Set the value in quotes, e.g. `APPLICATIONINSIGHTS_CONNECTION_STRING="InstrumentationKey=…"`.
