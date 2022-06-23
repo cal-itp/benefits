@@ -391,7 +391,7 @@ msgid "eligibility.pages.start.oauth.required_items[2]"
 msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
 
 msgid "eligibility.pages.start.oauth.content_title"
-msgstr "TODO: You will need a few items to connect your discount:"
+msgstr "Necesitará algunos artículos para conectar su descuento:"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
@@ -411,8 +411,7 @@ msgstr "No se pudo verificar su elegibilidad."
 
 msgid "eligibility.pages.unverified.oauth.p[0]"
 msgstr ""
-"TODO: You may still be eligible for a discount, but we can’t verify your age "
-"with Login.gov."
+"¡Esta bien! Aún puede ser elegible para nuestro programa. "
 
 #: benefits/eligibility/views.py:172
 msgctxt "image alt text"
@@ -421,7 +420,7 @@ msgstr "Icono de tarjeta de identificación con signo de interrogación"
 
 #: benefits/eligibility/views.py:173
 msgid "eligibility.pages.unverified.p[1]"
-msgstr "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su proveedor de tránsito local para obtener asistencia."
+msgstr "Comuníquese con su proveedor de tránsito local para obtener asistencia."
 
 #: benefits/enrollment/templates/enrollment/success.html:7
 msgctxt "image alt text"
