@@ -21,6 +21,19 @@ resource "azurerm_application_insights" "dev" {
   }
 }
 
+resource "azurerm_application_insights" "test" {
+  name                = "AI-CDT-PUB-VIP-CALITP-P-001-test"
+  application_type    = "web"
+  location            = data.azurerm_resource_group.prod.location
+  resource_group_name = data.azurerm_resource_group.prod.name
+  sampling_percentage = 0
+  workspace_id        = azurerm_log_analytics_workspace.main.id
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
+}
+
 resource "azurerm_application_insights" "prod" {
   name                = "AI-CDT-PUB-VIP-CALITP-P-001"
   application_type    = "web"
