@@ -56,12 +56,9 @@ msgstr "Login.gov es una forma segura de iniciar sesión en las agencias guberna
 msgid "core.pages.help.login_gov.p[1]"
 msgstr "Crear una cuenta es simple. Necesitará una dirección de correo electrónico y un método para autenticar su cuenta—que utilizará un teléfono fijo o un teléfono móvil o códigos de seguridad que deben imprimirse o anotarse."
 
-msgid "core.pages.help.login_gov.p[2][0]%(website)s"
+msgid "core.pages.help.login_gov.p[2]"
 msgstr "Para obtener más información sobre Login.gov, visite "
-"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov</a> "
-
-msgid "core.pages.help.login_gov.p[2][1]%(website)s"
-msgstr "o <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
+"<a href='https://login.gov/es' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov</a> o <a href='https://login.gov/es/help/' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro de ayuda</a>."
 
 msgid "core.pages.help.login_gov_verify"
 msgstr "¿Cómo verifico mi identidad en Login.gov?"
