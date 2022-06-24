@@ -10,10 +10,35 @@ resource "azurerm_service_plan" "main" {
   }
 }
 
-# app_settings and storage_account are managed manually through the portal since they contain secrets
+# storage_account is managed manually through the portal since it contains secrets
+
+locals {
+  # none of these should appear under sticky_settings
+  base_app_settings = {
+    "DJANGO_INIT_PATH" = "config/fixtures.json"
+
+    "DOCKER_ENABLE_CI"           = "true"
+    "DOCKER_REGISTRY_SERVER_URL" = "https://ghcr.io/"
+
+    "WEBSITE_HEALTHCHECK_MAXPINGFAILURES" = "10"
+    "WEBSITE_HTTPLOGGING_RETENTION_DAYS"  = "99999"
+    "WEBSITE_TIME_ZONE"                   = "America/Los_Angeles"
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
+    "WEBSITES_PORT"                       = "8000"
+  }
+
+  web_app_name = "AS-CDT-PUB-VIP-CALITP-P-001"
+  allowed_hosts_prod = [
+    "${lower(local.web_app_name)}.azurewebsites.net"
+  ]
+}
+
+resource "random_password" "secret_key_prod" {
+  length = 36
+}
 
 resource "azurerm_linux_web_app" "main" {
-  name                = "AS-CDT-PUB-VIP-CALITP-P-001"
+  name                = local.web_app_name
   location            = data.azurerm_resource_group.prod.location
   resource_group_name = data.azurerm_resource_group.prod.name
   service_plan_id     = azurerm_service_plan.main.id
@@ -40,6 +65,14 @@ resource "azurerm_linux_web_app" "main" {
     }
   }
 
+  app_settings = merge(local.base_app_settings, {
+    "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.prod.connection_string
+
+    "DJANGO_ALLOWED_HOSTS"   = join(",", local.allowed_hosts_prod)
+    "DJANGO_SECRET_KEY"      = random_password.secret_key_prod.result
+    "DJANGO_TRUSTED_ORIGINS" = join(",", [for host in local.allowed_hosts_prod : "https://${host}"])
+  })
+
   sticky_settings {
     # Confusingly named argument; these are settings / environment variables that should be unique to each slot. Also known as "deployment slot settings".
     # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app#app_setting_names
@@ -55,7 +88,7 @@ resource "azurerm_linux_web_app" "main" {
   }
 
   lifecycle {
-    ignore_changes = [app_settings, tags]
+    ignore_changes = [tags]
   }
 }
 
@@ -79,24 +112,14 @@ resource "azurerm_linux_web_app_slot" "dev" {
   https_only     = true
   app_service_id = azurerm_linux_web_app.main.id
 
-  app_settings = {
+  app_settings = merge(local.base_app_settings, {
     "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.dev.connection_string
 
     "DJANGO_ALLOWED_HOSTS"   = join(",", local.allowed_hosts_dev)
-    "DJANGO_INIT_PATH"       = "config/fixtures.json"
     "DJANGO_LOG_LEVEL"       = "DEBUG"
     "DJANGO_SECRET_KEY"      = random_password.secret_key_dev.result
     "DJANGO_TRUSTED_ORIGINS" = join(",", [for host in local.allowed_hosts_dev : "https://${host}"])
-
-    "DOCKER_ENABLE_CI"           = "true"
-    "DOCKER_REGISTRY_SERVER_URL" = "https://ghcr.io/"
-
-    "WEBSITE_HEALTHCHECK_MAXPINGFAILURES" = "10"
-    "WEBSITE_HTTPLOGGING_RETENTION_DAYS"  = "99999"
-    "WEBSITE_TIME_ZONE"                   = "America/Los_Angeles"
-    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
-    "WEBSITES_PORT"                       = "8000"
-  }
+  })
 
   site_config {
     ftps_state             = "Disabled"
