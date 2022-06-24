@@ -72,6 +72,7 @@ if DEBUG:
 # https://docs.microsoft.com/en-us/azure/azure-monitor/app/opencensus-python-request#tracking-django-applications
 
 ENABLE_AZURE_INSIGHTS = "APPLICATIONINSIGHTS_CONNECTION_STRING" in os.environ
+print("ENABLE_AZURE_INSIGHTS: ", ENABLE_AZURE_INSIGHTS)
 if ENABLE_AZURE_INSIGHTS:
     MIDDLEWARE.extend(
         [
