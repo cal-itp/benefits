@@ -59,10 +59,44 @@ resource "azurerm_linux_web_app" "main" {
   }
 }
 
+resource "random_password" "secret_key_dev" {
+  length = 36
+}
+
+locals {
+  custom_domain_dev = "dev-benefits.calitp.org"
+
+  allowed_hosts_dev = [
+    local.custom_domain_dev,
+    # slot hostname
+    "${lower(azurerm_linux_web_app.main.name)}-dev.azurewebsites.net",
+    azurerm_linux_web_app.main.default_hostname,
+  ]
+}
+
 resource "azurerm_linux_web_app_slot" "dev" {
   name           = "dev"
   https_only     = true
   app_service_id = azurerm_linux_web_app.main.id
+
+  app_settings = {
+    "APPLICATIONINSIGHTS_CONNECTION_STRING" = azurerm_application_insights.dev.connection_string
+
+    "DJANGO_ALLOWED_HOSTS"   = join(",", local.allowed_hosts_dev)
+    "DJANGO_INIT_PATH"       = "config/fixtures.json"
+    "DJANGO_LOG_LEVEL"       = "DEBUG"
+    "DJANGO_SECRET_KEY"      = random_password.secret_key_dev.result
+    "DJANGO_TRUSTED_ORIGINS" = join(",", [for host in local.allowed_hosts_dev : "https://${host}"])
+
+    "DOCKER_ENABLE_CI"           = "true"
+    "DOCKER_REGISTRY_SERVER_URL" = "https://ghcr.io/"
+
+    "WEBSITE_HEALTHCHECK_MAXPINGFAILURES" = "10"
+    "WEBSITE_HTTPLOGGING_RETENTION_DAYS"  = "99999"
+    "WEBSITE_TIME_ZONE"                   = "America/Los_Angeles"
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
+    "WEBSITES_PORT"                       = "8000"
+  }
 
   site_config {
     ftps_state             = "Disabled"
@@ -87,13 +121,13 @@ resource "azurerm_linux_web_app_slot" "dev" {
   }
 
   lifecycle {
-    ignore_changes = [app_settings, storage_account, tags]
+    ignore_changes = [storage_account, tags]
   }
 }
 
 resource "azurerm_app_service_slot_custom_hostname_binding" "dev" {
   app_service_slot_id = azurerm_linux_web_app_slot.dev.id
-  hostname            = "dev-benefits.calitp.org"
+  hostname            = local.custom_domain_dev
 }
 
 resource "azurerm_linux_web_app_slot" "test" {
