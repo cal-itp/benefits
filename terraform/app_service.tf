@@ -40,17 +40,34 @@ resource "azurerm_linux_web_app" "main" {
     }
   }
 
+  # Confusingly named argument; these are settings / environment variables that should be unique to each slot. Also known as "deployment slot settings".
+  # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app#app_setting_names
+  # https://docs.microsoft.com/en-us/azure/app-service/deploy-staging-slots#which-settings-are-swapped
   sticky_settings {
-    # Confusingly named argument; these are settings / environment variables that should be unique to each slot. Also known as "deployment slot settings".
-    # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app#app_setting_names
-    # https://docs.microsoft.com/en-us/azure/app-service/deploy-staging-slots#which-settings-are-swapped
     app_setting_names = [
+      # custom config
       "ANALYTICS_KEY",
-      "APPLICATIONINSIGHTS_CONNECTION_STRING",
       "DJANGO_ALLOWED_HOSTS",
       "DJANGO_INIT_PATH",
       "DJANGO_LOG_LEVEL",
       "DJANGO_TRUSTED_ORIGINS",
+
+      # populated through auto-instrumentation
+      # https://docs.microsoft.com/en-us/azure/azure-monitor/app/azure-web-apps#enable-application-insights
+      "APPINSIGHTS_INSTRUMENTATIONKEY",
+      "APPINSIGHTS_PROFILERFEATURE_VERSION",
+      "APPINSIGHTS_SNAPSHOTFEATURE_VERSION",
+      "APPLICATIONINSIGHTS_CONFIGURATION_CONTENT",
+      "APPLICATIONINSIGHTS_CONNECTION_STRING",
+      "ApplicationInsightsAgent_EXTENSION_VERSION",
+      "DiagnosticServices_EXTENSION_VERSION",
+      "InstrumentationEngine_EXTENSION_VERSION",
+      "SnapshotDebugger_EXTENSION_VERSION",
+      "XDT_MicrosoftApplicationInsights_BaseExtensions",
+      "XDT_MicrosoftApplicationInsights_Mode",
+      "XDT_MicrosoftApplicationInsights_NodeJS",
+      "XDT_MicrosoftApplicationInsights_PreemptSdk",
+      "XDT_MicrosoftApplicationInsightsJava",
     ]
   }
 
