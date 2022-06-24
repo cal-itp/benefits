@@ -1,10 +1,12 @@
-name: Deploy (test)
+name: Deploy
 
 on:
   workflow_dispatch:
   push:
     branches:
+      - dev
       - test
+      - prod
 
 defaults:
   run:
@@ -13,8 +15,8 @@ defaults:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: test
-    concurrency: test
+    environment: ${{ github.ref_name }}
+    concurrency: ${{ github.ref_name }}
 
     steps:
       - name: Checkout
@@ -35,10 +37,11 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           builder: ${{ steps.buildx.outputs.name }}
+          build-args: GIT-SHA=${{ github.sha }}
           cache-from: type=gha,scope=cal-itp
           cache-to: type=gha,scope=cal-itp,mode=max
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:test
+            ghcr.io/${{ github.repository }}:${{ github.ref_name }}
             ghcr.io/${{ github.repository }}:${{ github.sha }}
