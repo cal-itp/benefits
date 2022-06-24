@@ -27,6 +27,8 @@ def get_config(level="INFO", enable_azure=False):
         },
     }
 
+    print("ENABLE AZURE: ", enable_azure)
+
     if enable_azure:
         # enable Azure Insights logging
 
