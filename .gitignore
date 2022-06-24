@@ -5,6 +5,7 @@ fixtures/*.json
 !fixtures/??_*.json
 static/
 !benefits/static
+benefits/static/sha.txt
 __pycache__/
 .coverage
 .DS_Store
