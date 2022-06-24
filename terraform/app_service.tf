@@ -41,7 +41,14 @@ resource "azurerm_linux_web_app" "main" {
   }
 
   sticky_settings {
+    # Confusingly named argument; these are settings / environment variables that should be unique to each slot. Also known as "deployment slot settings".
+    # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app#app_setting_names
+    # https://docs.microsoft.com/en-us/azure/app-service/deploy-staging-slots#which-settings-are-swapped
+    #
+    # The APPINSIGHTS_* ones get populated through auto-instrumentation.
+    # https://docs.microsoft.com/en-us/azure/azure-monitor/app/azure-web-apps#enable-application-insights
     app_setting_names = [
+      "ANALYTICS_KEY",
       "APPINSIGHTS_INSTRUMENTATIONKEY",
       "APPINSIGHTS_PROFILERFEATURE_VERSION",
       "APPINSIGHTS_SNAPSHOTFEATURE_VERSION",
@@ -49,8 +56,6 @@ resource "azurerm_linux_web_app" "main" {
       "APPLICATIONINSIGHTS_CONNECTION_STRING",
       "ApplicationInsightsAgent_EXTENSION_VERSION",
       "DJANGO_INIT_PATH",
-      "DJANGO_OAUTH_CLIENT_ID",
-      "DJANGO_OAUTH_CLIENT_NAME",
       "DiagnosticServices_EXTENSION_VERSION",
       "InstrumentationEngine_EXTENSION_VERSION",
       "SnapshotDebugger_EXTENSION_VERSION",
