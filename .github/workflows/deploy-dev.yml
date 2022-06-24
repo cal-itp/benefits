@@ -5,14 +5,6 @@ on:
   push:
     branches:
       - dev
-    paths:
-      - '.github/workflows/deploy-*.yml'
-      - 'benefits/**'
-      - 'bin/**'
-      - Dockerfile
-      - gunicorn.conf.py
-      - nginx.conf
-      - requirements.txt
 
 defaults:
   run:
@@ -43,6 +35,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           builder: ${{ steps.buildx.outputs.name }}
+          build-args: GIT-SHA=${{ github.sha }}
           cache-from: type=gha,scope=cal-itp
           cache-to: type=gha,scope=cal-itp,mode=max
           context: .
