@@ -2,63 +2,71 @@
 {% load static %}
 {% get_current_language as LANGUAGE_CODE %}
 <!doctype html>
-<html lang="{{ LANGUAGE_CODE }}" class="{% block classes %}{% endblock %}">
+<html lang="{{ LANGUAGE_CODE }}"
+      class="{% block classes %}{% endblock classes %}">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="{% translate "core.pages.help.about.p[0]" %}">
-        <title>{% block page_title %}{% endblock  %}Cal-ITP</title>
-
-        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css">
-        <link href="https://california.azureedge.net/cdt/statetemplate/6.0.2/css/cagov.core.min.css" rel="stylesheet">
-        <link href="{% static "css/styles.css" %}" rel="stylesheet">
+        <meta charset="utf-8" />
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <meta name="description"
+              content="{% translate "core.pages.help.about.p[0]" %}"/>
+        <meta name="keywords"
+              content="California Integrated Travel Project"/>
+        <title>
+            {% block page_title %}
+            {% endblock page_title %}
+        Cal-ITP</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700"
+              rel="stylesheet"
+              type="text/css" />
+        <link href="https://california.azureedge.net/cdt/statetemplate/6.0.2/css/cagov.core.min.css"
+              rel="stylesheet" />
+        <link href="{% static "css/styles.css" %}" rel="stylesheet" />
         <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
-
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
         {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
     </head>
     <body>
         {% if debug %}
-        {% include "core/includes/debug.html" %}
+            {% include "core/includes/debug.html" %}
         {% endif %}
         <header role="banner" id="header" class="global-header">
             <div id="skip-to-content">
                 <a href="#main-content">{% translate "core.buttons.skip" %}</a>
             </div>
             {% if messages %}
-            {% for message in messages %}
-            {% include "core/includes/alert.html" with message=message %}
-            {% endfor %}
+                {% for message in messages %}
+                    {% include "core/includes/alert.html" with message=message %}
+                {% endfor %}
             {% endif %}
-
-            <div class="nocookies d-none" >
-            {% include "core/includes/nocookies.html" %}
-            </div>
-
+            <div class="nocookies d-none">{% include "core/includes/nocookies.html" %}</div>
             <noscript>
-            {% include "core/includes/noscript.html" %}
+                {% include "core/includes/noscript.html" %}
             </noscript>
-
             <div class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-between">
                 <div class="container">
                     <span class="navbar-brand">
-                        <img class="sm d-lg-none" src="{% static "img/logo-sm.svg" %}" alt="{% translate "core.logos.small" context "image alt text" %}" />
-                        <img class="lg d-none d-lg-block" src="{% static "img/logo-lg.svg" %}"  alt="{% translate "core.logos.large" context "image alt text" %}" />
+                        <img class="sm d-lg-none"
+                             width="120"
+                             height="51"
+                             src="{% static "img/logo-sm.svg" %}"
+                             alt="{% translate "core.logos.small" context "image alt text" %}"/>
+                        <img class="lg d-none d-lg-block"
+                             width="271"
+                             height="63"
+                             src="{% static "img/logo-lg.svg" %}"
+                             alt="{% translate "core.logos.large" context "image alt text" %}"/>
                     </span>
-                    <span class="form-inline">
-                        {% include "core/includes/lang-selector.html" %}
-                    </span>
+                    <span class="form-inline">{% include "core/includes/lang-selector.html" %}</span>
                 </div>
             </div>
         </header>
-
         <main id="main-content" class="main-content" role="main">
             <div class="main-primary">
-                {% block main_content %}{% endblock %}
+                {% block main_content %}
+                {% endblock main_content %}
             </div>
         </main>
-
         <footer id="footer" class="global-footer">
             <div class="container">
                 <ul class="footer-links">
@@ -66,12 +74,13 @@
                         <a href="{% url "core:help" %}">{% translate "core.buttons.help" %}</a>
                     </li>
                     <li>
-                        <a href="https://cdt.ca.gov/privacy-policy/" target="_blank" rel="noopener noreferrer">{% translate "core.buttons.privacy" %}</a>
+                        <a href="https://cdt.ca.gov/privacy-policy/"
+                           target="_blank"
+                           rel="noopener noreferrer">{% translate "core.buttons.privacy" %}</a>
                     </li>
                 </ul>
             </div>
         </footer>
-
         <script src="https://california.azureedge.net/cdt/statetemplate/6.0.2/js/cagov.core.js"></script>
         <script>
             $(function() {
