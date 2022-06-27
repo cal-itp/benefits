@@ -8,7 +8,16 @@ resource "azurerm_storage_account" "main" {
   blob_properties {
     last_access_time_enabled = true
     versioning_enabled       = true
+
+    container_delete_retention_policy {
+      days = 7
+    }
+
+    delete_retention_policy {
+      days = 7
+    }
   }
+
 
   lifecycle {
     ignore_changes = [tags]
