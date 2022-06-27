@@ -3,7 +3,6 @@ The enrollment application: view definitions for the benefits enrollment flow.
 """
 import logging
 
-from django.conf import settings
 from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
@@ -78,7 +77,7 @@ def index(request):
             content_title=_("enrollment.pages.index.content_title"),
             icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
             paragraphs=[_("enrollment.pages.index.p[0]"), _("enrollment.pages.index.p[1]"), _("enrollment.pages.index.p[2]")],
-            classes="text-lg-center",
+            classes="text-lg-center no-image-mobile",
             forms=[tokenize_retry_form, tokenize_success_form],
             buttons=[
                 viewmodels.Button.primary(
@@ -121,6 +120,7 @@ def retry(request):
         if form.is_valid():
             agency = session.agency(request)
             page = viewmodels.Page(
+                classes="no-image-mobile",
                 title=_("enrollment.pages.retry.title"),
                 icon=viewmodels.Icon("bankcardquestion", pgettext("image alt text", "core.icons.bankcardquestion")),
                 content_title=_("enrollment.pages.retry.title"),
@@ -144,20 +144,18 @@ def success(request):
     verifier = session.verifier(request)
     icon = viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck"))
     page = viewmodels.Page(
+        classes="no-image-mobile",
         title=_("enrollment.pages.success.title"),
         content_title=_("enrollment.pages.success.content_title"),
     )
 
-    if verifier.requires_authentication:
-        if settings.OAUTH_CLIENT_NAME is None:
-            raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
-
+    if verifier.is_auth_required:
         if session.logged_in(request):
             page.buttons = [viewmodels.Button.logout()]
-            page.classes = ["logged-in"]
+            page.classes = ["no-image-mobile", "logged-in"]
             page.icon = icon
         else:
-            page.classes = ["logged-out"]
+            page.classes = ["no-image-mobile", "logged-out"]
             page.content_title = _("enrollment.pages.success.logout.title")
             page.noimage = True
     else:

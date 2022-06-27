@@ -1,25 +1,10 @@
-"""
-The eligibility application: Eligibility Verification API helpers.
-"""
-
 from django.conf import settings
 
 from eligibility_api.client import Client
 
-from benefits.core import session
 
-
-def get_verified_types(request, form):
-    """
-    Helper calls the eligibility verification API with user input.
-    Returns None and updates form with user input error(s).
-    Returns a list of verified eligibility types, or an empty list when no types were verified.
-    """
-
+def eligibility_from_api(verifier, form, agency):
     sub, name = form.cleaned_data.get("sub"), form.cleaned_data.get("name")
-
-    agency = session.agency(request)
-    verifier = session.verifier(request)
 
     client = Client(
         verify_url=verifier.api_url,
@@ -43,5 +28,12 @@ def get_verified_types(request, form):
         return None
     elif any(response.eligibility):
         return list(response.eligibility)
+    else:
+        return []
+
+
+def eligibility_from_oauth(verifier, oauth_claim, agency):
+    if verifier.uses_auth_verification and verifier.auth_provider.claim == oauth_claim:
+        return list(map(lambda t: t.name, agency.types_to_verify(verifier)))
     else:
         return []

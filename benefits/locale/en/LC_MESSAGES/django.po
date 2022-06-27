@@ -25,8 +25,8 @@ msgstr ""
 
 msgid "core.pages.help.about.p[1]"
 msgstr ""
-"We partner with the California DMV to confirm age for age-based discounts and "
-"local transporation agencies to confirm specific discount programs. Once verified, "
+"We partner with Login.gov to confirm age for age-based discounts, and we "
+"partner with local transporation agencies to confirm specific discount programs. Once verified, "
 "discounts are attached to your bank card through our payment partner, Littlepay, so "
 "that when you pay for your transit ride, you get your discount automatically."
 
@@ -69,12 +69,24 @@ msgstr "Creating an account is simple. You will need an email address and method
 "authenticating your account&mdash;which will use either a landline, mobile phone, or "
 "backup codes that must be printed or written down."
 
-msgid "core.pages.help.login_gov.p[2][0]%(website)s"
+msgid "core.pages.help.login_gov.p[2]"
 msgstr "To learn more about Login.gov, please visit the "
-"<a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov website</a> "
+"<a href='https://login.gov/' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov website</a> or the <a href='https://login.gov/help/' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov Help Center</a>."
 
-msgid "core.pages.help.login_gov.p[2][1]%(website)s"
-msgstr "or the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov Help Center</a>."
+msgid "core.pages.help.login_gov_verify"
+msgstr "How do I verify my identity on Login.gov?"
+
+msgid "core.pages.help.login_gov_verify.p[0]"
+msgstr "To verify your identity, Login.gov asks that you upload a photograph of your state-issued ID and share your phone number and other personal information, which is then verified against authoritative sources. These requirements are in addition to meeting the requirements for two-factor authentication."
+
+msgid "core.pages.help.login_gov_verify.p[1]"
+msgstr "You cannot verify your identity on Login.gov without a state-issued ID, which can be either a driver’s license or non-driver’s license state-issued ID card."
+
+msgid "core.pages.help.login_gov_verify.p[2]"
+msgstr "If you do not have a phone plan that is in your name, Login.gov can send you the verification code by mail which takes approximately 3-5 days."
+
+msgid "core.pages.help.login_gov_verify.p[3]"
+msgstr "Verifying your identity makes sure the right person has access to the right information. We are using Login.gov’s simple and secure process to keep your sensitive information safe. To learn more about identity verification on Login.gov, please visit their <a href='https://login.gov/help/verify-your-identity/how-to-verify-your-identity/' target=\"_blank\" rel=\"noopener noreferrer\">Help Center.</a>"
 
 msgid "core.pages.help.littlepay"
 msgstr "What is Littlepay?"
@@ -190,7 +202,7 @@ msgstr "Note: Must include a Visa or Mastercard logo."
 #: benefits/core/templates/core/payment-options.html:15
 msgid "core.pages.payment_options.p[3]"
 msgstr ""
-"Don't have access to a bank card? You can request a contactless card from "
+"Don’t have access to a bank card? You can request a contactless card from "
 "one of the companies that offer free contactless prepaid debit cards, such "
 "as the "
 
@@ -223,7 +235,7 @@ msgstr "Bus icon with flat tire"
 
 #: benefits/core/viewmodels.py:177
 msgid "core.pages.server_error.content_title"
-msgstr "Unfortunately, our system is having a problem right now."
+msgstr "Sorry! Service for this site is down."
 
 #: benefits/core/viewmodels.py:183 benefits/core/viewmodels.py:184
 msgid "core.pages.server_error.title"
@@ -231,11 +243,11 @@ msgstr "Service is down"
 
 #: benefits/core/viewmodels.py:185
 msgid "core.pages.server_error.p[0]"
-msgstr "We should be back in operation soon!"
+msgstr "We should be back in operation soon."
 
 #: benefits/core/viewmodels.py:185
 msgid "core.pages.server_error.p[1]"
-msgstr "Please check back later."
+msgstr "Please refresh the page in a few minutes."
 
 #: benefits/core/viewmodels.py:193
 msgid "core.pages.not_found.title"
@@ -243,11 +255,11 @@ msgstr "Page not found"
 
 #: benefits/core/viewmodels.py:194
 msgid "core.pages.not_found.content_title"
-msgstr "We can’t find that page"
+msgstr "Sorry! We can’t find that page."
 
 #: benefits/core/viewmodels.py:195
 msgid "core.pages.not_found.p[0]"
-msgstr "It looks like that page doesn’t exist or it was moved."
+msgstr "The page you are looking for might be somewhere else or may not exist anymore."
 
 #: benefits/core/viewmodels.py:218
 msgid "core.buttons.wait"
@@ -269,7 +281,7 @@ msgstr ""
 msgid "core.pages.agency_index.p[0]%(info_link)s"
 msgstr "You can tap your credit or debit card when you board, "
 "and your discount will automatically apply every time you ride."
-" <strong><a href=\"%(info_link)s\">Learn more about Cal-ITP Benefits</a></strong><span class='period'>.</span>"
+" <strong><a class='info-link' href=\"%(info_link)s\">Learn more about Cal-ITP Benefits</a></strong><span class='period'>.</span>"
 
 msgid "core.pages.agency_index.p[1]"
 msgstr "You will need your California driver’s license or ID "
@@ -366,10 +378,7 @@ msgid "eligibility.pages.start.bankcard.text"
 msgstr "Your card must be a contactless debit or credit card by Visa or Mastercard."
 
 msgid "eligibility.pages.start.bankcard.button[0].link"
-msgstr "Don’t have a bank card?"
-
-msgid "eligibility.pages.start.bankcard.button[1].link"
-msgstr "Unsure if you have a contactless card?"
+msgstr "Don’t have a bank card or unsure if your card is contactless?"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.continue"
@@ -379,13 +388,10 @@ msgid "eligibility.pages.start.oauth.heading"
 msgstr "A Login.gov account with identity verification"
 
 msgid "eligibility.pages.start.oauth.details"
-msgstr "Login.gov is a safe way to sign in to government services. If you do not have an account already, you will be able to create one. You will also need to provide proof of your identity. Some of the items you can use to do that include:"
+msgstr "Login.gov is a safe way to sign in to government services. Benefits uses Login.gov to verify your age. If you do not have an account already, you will be able to create one. You will also need to verify your identity, which will require these items:"
 
 msgid "eligibility.pages.start.oauth.link_text"
-msgstr "Learn more about Login.gov"
-
-msgid "eligibility.pages.start.oauth.link_text[2]"
-msgstr "Don’t have access to these items?"
+msgstr "Learn more about Login.gov and providing proof of identity"
 
 msgid "eligibility.pages.start.oauth.required_items[0]"
 msgstr "Your state-issued ID card"
@@ -394,7 +400,7 @@ msgid "eligibility.pages.start.oauth.required_items[1]"
 msgstr "Your Social Security number"
 
 msgid "eligibility.pages.start.oauth.required_items[2]"
-msgstr "Don’t have access to these items?"
+msgstr "A phone number with a phone plan associated with your name"
 
 #: benefits/eligibility/views.py:80
 msgid "eligibility.buttons.signin"
@@ -405,12 +411,17 @@ msgid "eligibility.buttons.signout"
 msgstr "Sign out of Login.gov"
 
 #: benefits/eligibility/views.py:170
-msgid "eligibility.pages.unverified.dmv.title"
-msgstr "Age not confirmed"
+msgid "eligibility.pages.unverified.oauth.title"
+msgstr "Eligibility Error"
 
 #: benefits/eligibility/views.py:171
-msgid "eligibility.pages.unverified.dmv.content_title"
-msgstr "We can’t confirm your age"
+msgid "eligibility.pages.unverified.oauth.content_title"
+msgstr "Your eligibility could not be verified."
+
+msgid "eligibility.pages.unverified.oauth.p[0]"
+msgstr ""
+"You may still be eligible for a discount, but we can’t verify your age "
+"with Login.gov."
 
 #: benefits/eligibility/views.py:172
 msgctxt "image alt text"
@@ -419,7 +430,7 @@ msgstr "Identification card icon with question mark"
 
 #: benefits/eligibility/views.py:173
 msgid "eligibility.pages.unverified.p[1]"
-msgstr "Reach out to your transit provider for assistance."
+msgstr "That’s okay! You may still be eligible for our program. Please reach out to your local transit provider for assistance."
 
 #: benefits/enrollment/templates/enrollment/success.html:7
 msgctxt "image alt text"
@@ -432,12 +443,12 @@ msgstr "Connect Card"
 
 #: benefits/enrollment/views.py:30
 msgid "enrollment.pages.index.content_title"
-msgstr "Great! You’re eligible for a discount!"
+msgstr "Let’s link your card to your discount."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[0]"
 msgstr ""
-"Next, we need to link your discount to your bank-issued card through our payment partner Littlepay."
+"Now that you are logged in we can link your transit discount to your card through our payment partner, Littlepay."
 
 #: benefits/enrollment/views.py:32
 msgid "enrollment.pages.index.p[1]"
@@ -500,7 +511,7 @@ msgid "enrollment.pages.success.p3%(help_link)s"
 msgstr "For more information on what to expect when using your connected bank card please reach out to your local transit provider or check out our "
 "<a href=\"%(help_link)s\" rel=\"noopener noreferrer\">help page</a>."
 
-msgid "eligibility.pages.index.dmv.label"
+msgid "eligibility.pages.index.oauth.label"
 msgstr "Senior Discount Program"
 
 msgid "eligibility.pages.index.mst.label"
@@ -528,6 +539,9 @@ msgstr "CA driver’s license or ID number"
 msgid "eligibility.forms.confirm.dmv.fields.name"
 msgstr "Last name (as it appears on ID)"
 
+msgid "eligibility.pages.start.oauth.content_title"
+msgstr "You will need a few items to connect your discount:"
+
 msgid "eligibility.pages.start.dmv.content_title"
 msgstr "You will need a few items to connect your discount:"
 
@@ -539,6 +553,7 @@ msgstr ""
 
 msgid "eligibility.pages.confirm.dmv.title"
 msgstr "Confirm Eligibility"
+
 
 msgid "eligibility.pages.unverified.dmv.p[0]"
 msgstr ""
@@ -574,7 +589,7 @@ msgstr "Let’s see if we can find you in our system"
 
 msgid "eligibility.pages.confirm.mst.p[0]"
 msgstr ""
-"Please input your Courtesy Card number and last name below. If you're a "
+"Please input your Courtesy Card number and last name below. If you’re a "
 "current MST Courtesy Cardholder, we can confirm that you are eligible for "
 "a discount. We do not save your information."
 

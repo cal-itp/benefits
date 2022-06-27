@@ -1,7 +1,6 @@
 """
 The eligibility application: view definitions for the eligibility verification flow.
 """
-from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
@@ -13,7 +12,7 @@ from benefits.core import recaptcha, session, viewmodels
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
 from benefits.core.views import ROUTE_HELP, TEMPLATE_PAGE
-from . import analytics, api, forms
+from . import analytics, forms, verify
 
 
 ROUTE_INDEX = "eligibility:index"
@@ -76,7 +75,6 @@ def start(request):
 
     button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse(ROUTE_CONFIRM))
 
-    payment_options_link = f"{reverse(ROUTE_HELP)}#payment-options"
     media = [
         dict(
             icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
@@ -86,24 +84,13 @@ def start(request):
                 viewmodels.Button.link(
                     classes="btn-text btn-link",
                     text=_("eligibility.pages.start.bankcard.button[0].link"),
-                    url=payment_options_link,
-                ),
-                viewmodels.Button.link(
-                    classes="btn-text btn-link",
-                    text=_("eligibility.pages.start.bankcard.button[1].link"),
-                    url=payment_options_link,
+                    url=f"{reverse(ROUTE_HELP)}#payment-options",
                 ),
             ],
         ),
     ]
 
-    if verifier.requires_authentication:
-        if settings.OAUTH_CLIENT_NAME is None:
-            raise Exception("EligibilityVerifier requires authentication, but OAUTH_CLIENT_NAME is None")
-
-        oauth_help_link = f"{reverse(ROUTE_HELP)}#login-gov"
-        oauth_help_more_link = f"{reverse(ROUTE_HELP)}#login-gov-verify-items"
-
+    if verifier.is_auth_required:
         media.insert(
             0,
             dict(
@@ -114,14 +101,7 @@ def start(request):
                     viewmodels.Button.link(
                         classes="btn-text btn-link",
                         text=_("eligibility.pages.start.oauth.link_text"),
-                        url=oauth_help_link,
-                        rel="noopener noreferrer",
-                    ),
-                    viewmodels.Button.link(
-                        classes="btn-text btn-link",
-                        text=_("eligibility.pages.start.oauth.link_text[2]"),
-                        url=oauth_help_more_link,
-                        rel="noopener noreferrer",
+                        url=f"{reverse(ROUTE_HELP)}#login-gov",
                     ),
                 ],
                 bullets=[
@@ -158,6 +138,7 @@ def start(request):
     ctx = page.context_dict()
     ctx["title"] = _(verifier.start_content_title)
     ctx["media"] = media
+    ctx["info_link"] = f"{reverse(ROUTE_HELP)}#about"
 
     return TemplateResponse(request, TEMPLATE_START, ctx)
 
@@ -169,53 +150,63 @@ def start(request):
 def confirm(request):
     """View handler for the eligibility verification form."""
 
-    verifier = session.verifier(request)
-
-    page = viewmodels.Page(
-        title=_(verifier.form_title),
-        content_title=_(verifier.form_content_title),
-        paragraphs=[_(verifier.form_blurb)],
-        form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
-        classes="text-lg-center",
-    )
-
-    # POST form submission, process form data
-    if request.method == "POST":
-        analytics.started_eligibility(request)
-
-        form = forms.EligibilityVerificationForm(data=request.POST, verifier=verifier)
-
-        # form was not valid, allow for correction/resubmission
-        if not form.is_valid():
-            if recaptcha.has_error(form):
-                messages.error(request, "Recaptcha failed. Please try again.")
-
-            page.forms = [form]
-            return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
-
-        # form is valid, make Eligibility Verification request to get the verified types
-        verified_types = api.get_verified_types(request, form)
-
-        # form was not valid, allow for correction/resubmission
-        if verified_types is None:
-            analytics.returned_error(request, form.errors)
-            page.forms = [form]
-            return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
-        # no types were verified
-        elif len(verified_types) == 0:
-            return unverified(request)
-        # type(s) were verified
-        else:
-            return verified(request, verified_types)
-
     # GET from an already verified user, no need to verify again
-    elif session.eligible(request):
+    if request.method == "GET" and session.eligible(request):
         eligibility = session.eligibility(request)
         return verified(request, [eligibility.name])
 
-    # GET from an unverified user, present the form
+    verifier = session.verifier(request)
+
+    # GET for OAuth verification
+    if request.method == "GET" and verifier.uses_auth_verification:
+        analytics.started_eligibility(request)
+
+        verified_types = verify.eligibility_from_oauth(verifier, session.oauth_claim(request), session.agency(request))
+        if verified_types:
+            return verified(request, verified_types)
+        else:
+            return unverified(request)
+
+    # GET/POST for Eligibility API verification
     else:
-        return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
+        page = viewmodels.Page(
+            title=_(verifier.form_title),
+            content_title=_(verifier.form_content_title),
+            paragraphs=[_(verifier.form_blurb)],
+            form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
+            classes="text-lg-center",
+        )
+
+        # POST form submission, process form data
+        if request.method == "POST":
+            analytics.started_eligibility(request)
+
+            form = forms.EligibilityVerificationForm(data=request.POST, verifier=verifier)
+            # form was not valid, allow for correction/resubmission
+            if not form.is_valid():
+                if recaptcha.has_error(form):
+                    messages.error(request, "Recaptcha failed. Please try again.")
+
+                page.forms = [form]
+                return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
+
+            # form is valid, make Eligibility Verification request to get the verified types
+            verified_types = verify.eligibility_from_api(verifier, form, session.agency(request))
+
+            # form was not valid, allow for correction/resubmission
+            if verified_types is None:
+                analytics.returned_error(request, form.errors)
+                page.forms = [form]
+                return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
+            # no types were verified
+            elif len(verified_types) == 0:
+                return unverified(request)
+            # type(s) were verified
+            else:
+                return verified(request, verified_types)
+        # GET from an unverified user, see if verifier can get verified types and if not, present the form
+        else:
+            return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
 
 
 @decorator_from_middleware(AgencySessionRequired)
@@ -231,7 +222,6 @@ def verified(request, verified_types):
 
 
 @decorator_from_middleware(AgencySessionRequired)
-@decorator_from_middleware(LoginRequired)
 @decorator_from_middleware(VerifierSessionRequired)
 def unverified(request):
     """View handler for the unverified eligibility page."""

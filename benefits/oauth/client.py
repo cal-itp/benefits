@@ -1,29 +1,54 @@
-import logging
+"""
+The oauth application: helpers for working with OAuth clients.
+"""
 
-from django.conf import settings
+import logging
 
 from authlib.integrations.django_client import OAuth
 
-
-_OAUTH_CLIENT = None
+from benefits.core.models import AuthProvider
 
 
 logger = logging.getLogger(__name__)
 
+oauth = OAuth()
 
-def instance():
+
+def _client_kwargs(scope=None):
     """
-    Get the OAuth client instance using the OAUTH_CLIENT_NAME setting.
+    Generate the OpenID Connect client_kwargs, with optional extra scope(s).
+
+    `scope` should be a space-separated list of scopes to add.
     """
-    global _OAUTH_CLIENT
-    if not _OAUTH_CLIENT:
-        if settings.OAUTH_CLIENT_NAME:
-            logger.debug(f"Using OAuth client configuration: {settings.OAUTH_CLIENT_NAME}")
+    scopes = ["openid", scope] if scope else ["openid"]
+    return {"code_challenge_method": "S256", "scope": " ".join(scopes)}
 
-            _oauth = OAuth()
-            _oauth.register(settings.OAUTH_CLIENT_NAME)
-            _OAUTH_CLIENT = _oauth.create_client(settings.OAUTH_CLIENT_NAME)
-        else:
-            raise Exception("OAUTH_CLIENT_NAME is not configured")
 
-    return _OAUTH_CLIENT
+def _server_metadata_url(authority):
+    """
+    Generate the OpenID Connect server_metadata_url for an OAuth authority server.
+
+    `authority` should be a fully qualified HTTPS domain name, e.g. https://example.com.
+    """
+    return f"{authority}/.well-known/openid-configuration"
+
+
+def register_providers(oauth_registry):
+    """
+    Register OAuth clients into the given registry, using configuration from AuthProvider models.
+
+    Adapted from https://stackoverflow.com/a/64174413.
+    """
+    logger.info("Registering OAuth clients")
+
+    providers = AuthProvider.objects.all()
+
+    for provider in providers:
+        logger.debug(f"Registering OAuth client: {provider.client_name}")
+
+        oauth_registry.register(
+            provider.client_name,
+            client_id=provider.client_id,
+            server_metadata_url=_server_metadata_url(provider.authority),
+            client_kwargs=_client_kwargs(provider.scope),
+        )

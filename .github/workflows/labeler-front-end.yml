@@ -1,0 +1,17 @@
+name: Label front-end
+
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - 'benefits/**/templates/**'
+      - 'benefits/static/**'
+
+jobs:
+  label-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: add-label
+        uses: andymckay/labeler@master
+        with:
+          add-labels: "front-end"

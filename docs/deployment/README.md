@@ -17,6 +17,8 @@ Registry (GHCR)][ghcr].
 GitHub POSTs a [webhook][gh-webhooks] to the Azure Web App when an [image is published to GHCR][gh-webhook-event], telling
 Azure to restart the app and pull the latest image.
 
+You can view what Git commit is deployed for a given environment by visitng the URL path `/static/sha.txt`.
+
 ## Configuration
 
 [Configuration settings](../configuration/README.md) are stored as Application Configuration variables in Azure.

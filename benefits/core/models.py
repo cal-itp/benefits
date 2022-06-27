@@ -14,8 +14,10 @@ class PemData(models.Model):
     """API Certificate or Key in PEM format."""
 
     id = models.AutoField(primary_key=True)
-    text = models.TextField(help_text="The data in utf-8 encoded PEM text format.")
-    label = models.TextField(help_text="Human description of the PEM data.")
+    # The data in utf-8 encoded PEM text format
+    text = models.TextField()
+    # Human description of the PEM data
+    label = models.TextField()
 
     def __str__(self):
         return self.label
@@ -27,6 +29,11 @@ class AuthProvider(models.Model):
     id = models.AutoField(primary_key=True)
     sign_in_button_label = models.TextField()
     sign_out_button_label = models.TextField()
+    client_name = models.TextField()
+    client_id = models.TextField()
+    authority = models.TextField()
+    scope = models.TextField(null=True)
+    claim = models.TextField(null=True)
 
 
 class EligibilityType(models.Model):
@@ -56,39 +63,41 @@ class EligibilityType(models.Model):
 class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""
 
-    # fmt: off
     id = models.AutoField(primary_key=True)
     name = models.TextField()
-    api_url = models.TextField()
-    api_auth_header = models.TextField()
-    api_auth_key = models.TextField()
-    eligibility_types = models.ManyToManyField(EligibilityType)
-    public_key = models.ForeignKey(PemData, help_text="The Verifier's public key, used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier.", related_name="+", on_delete=models.PROTECT)  # noqa: 503
-    jwe_cek_enc = models.TextField(help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode")
-    jwe_encryption_alg = models.TextField(help_text="The JWE-compatible encryption algorithm")
-    jws_signing_alg = models.TextField(help_text="The JWS-compatible signing algorithm")
+    api_url = models.TextField(null=True)
+    api_auth_header = models.TextField(null=True)
+    api_auth_key = models.TextField(null=True)
+    eligibility_type = models.ForeignKey(EligibilityType, on_delete=models.PROTECT)
+    # public key is used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier
+    public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT, null=True)
+    # The JWE-compatible Content Encryption Key (CEK) key-length and mode
+    jwe_cek_enc = models.TextField(null=True)
+    # The JWE-compatible encryption algorithm
+    jwe_encryption_alg = models.TextField(null=True)
+    # The JWS-compatible signing algorithm
+    jws_signing_alg = models.TextField(null=True)
     auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True)
-    auth_scope = models.TextField(null=True)
-    auth_claim = models.TextField(null=True)
     selection_label = models.TextField()
     selection_label_description = models.TextField(null=True)
     start_content_title = models.TextField()
     start_item_name = models.TextField()
     start_item_description = models.TextField()
     start_blurb = models.TextField()
-    form_title = models.TextField()
-    form_content_title = models.TextField()
-    form_blurb = models.TextField()
-    form_sub_label = models.TextField()
-    form_sub_placeholder = models.TextField()
-    form_sub_pattern = models.TextField(null=True, help_text="A regular expression used to validate the 'sub' API field before sending to this verifier")  # noqa: 503
-    form_name_label = models.TextField()
-    form_name_placeholder = models.TextField()
-    form_name_max_length = models.PositiveSmallIntegerField(null=True, help_text="The maximum length accepted for the 'name' API field before sending to this verifier")  # noqa: 503
+    form_title = models.TextField(null=True)
+    form_content_title = models.TextField(null=True)
+    form_blurb = models.TextField(null=True)
+    form_sub_label = models.TextField(null=True)
+    form_sub_placeholder = models.TextField(null=True)
+    # A regular expression used to validate the 'sub' API field before sending to this verifier
+    form_sub_pattern = models.TextField(null=True)
+    form_name_label = models.TextField(null=True)
+    form_name_placeholder = models.TextField(null=True)
+    # The maximum length accepted for the 'name' API field before sending to this verifier
+    form_name_max_length = models.PositiveSmallIntegerField(null=True)
     unverified_title = models.TextField()
     unverified_content_title = models.TextField()
     unverified_blurb = models.TextField()
-    # fmt: on
 
     def __str__(self):
         return self.name
@@ -99,8 +108,14 @@ class EligibilityVerifier(models.Model):
         return self.public_key.text
 
     @property
-    def requires_authentication(self):
+    def is_auth_required(self):
+        """True if this Verifier requires authentication. False otherwise."""
         return self.auth_provider is not None
+
+    @property
+    def uses_auth_verification(self):
+        """True if this Verifier verifies via the auth provider. False otherwise."""
+        return self.is_auth_required and self.auth_provider.scope and self.auth_provider.claim
 
     @staticmethod
     def by_id(id):
@@ -112,7 +127,6 @@ class EligibilityVerifier(models.Model):
 class PaymentProcessor(models.Model):
     """An entity that processes payments for transit agencies."""
 
-    # fmt: off
     id = models.AutoField(primary_key=True)
     name = models.TextField()
     api_base_url = models.TextField()
@@ -122,13 +136,15 @@ class PaymentProcessor(models.Model):
     card_tokenize_url = models.TextField()
     card_tokenize_func = models.TextField()
     card_tokenize_env = models.TextField()
-    client_cert = models.ForeignKey(PemData, help_text="The certificate used for client certificate authentication to the API.", related_name="+", on_delete=models.PROTECT)  # noqa: 503
-    client_cert_private_key = models.ForeignKey(PemData, help_text="The private key, used to sign the certificate.", related_name="+", on_delete=models.PROTECT)  # noqa: 503
-    client_cert_root_ca = models.ForeignKey(PemData, help_text="The root CA bundle, used to verify the server.", related_name="+", on_delete=models.PROTECT)  # noqa: 503
+    # The certificate used for client certificate authentication to the API
+    client_cert = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
+    # The private key, used to sign the certificate
+    client_cert_private_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
+    # The root CA bundle, used to verify the server.
+    client_cert_root_ca = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
     customer_endpoint = models.TextField()
     customers_endpoint = models.TextField()
     group_endpoint = models.TextField()
-    # fmt: on
 
     def __str__(self):
         return self.name
@@ -137,7 +153,6 @@ class PaymentProcessor(models.Model):
 class TransitAgency(models.Model):
     """An agency offering transit service."""
 
-    # fmt: off
     id = models.AutoField(primary_key=True)
     slug = models.TextField()
     short_name = models.TextField()
@@ -150,9 +165,10 @@ class TransitAgency(models.Model):
     eligibility_types = models.ManyToManyField(EligibilityType)
     eligibility_verifiers = models.ManyToManyField(EligibilityVerifier)
     payment_processor = models.ForeignKey(PaymentProcessor, on_delete=models.PROTECT)
-    private_key = models.ForeignKey(PemData, help_text="The Agency's private key, used to sign tokens created on behalf of this Agency.", related_name="+", on_delete=models.PROTECT)  # noqa: 503
-    jws_signing_alg = models.TextField(help_text="The JWS-compatible signing algorithm.")
-    # fmt: on
+    # The Agency's private key, used to sign tokens created on behalf of this Agency
+    private_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
+    # The JWS-compatible signing algorithm
+    jws_signing_alg = models.TextField()
 
     def __str__(self):
         return self.long_name
@@ -173,7 +189,7 @@ class TransitAgency(models.Model):
         """List of eligibility types to verify for this agency."""
         # compute set intersection of agency and verifier type ids
         agency_types = set(self.eligibility_types.values_list("id", flat=True))
-        verifier_types = set(eligibility_verifier.eligibility_types.values_list("id", flat=True))
+        verifier_types = {eligibility_verifier.eligibility_type.id}
         supported_types = list(agency_types & verifier_types)
         return EligibilityType.get_many(supported_types)
 

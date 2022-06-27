@@ -142,8 +142,23 @@ class LoginRequired(MiddlewareMixin):
     def process_view(self, request, view_func, view_args, view_kwargs):
         # only require login if verifier requires it
         verifier = session.verifier(request)
-        if not verifier or not verifier.requires_authentication or session.logged_in(request):
+        if not verifier or not verifier.is_auth_required or session.logged_in(request):
             # pass through
             return None
 
         return redirect("oauth:login")
+
+
+# https://github.com/census-instrumentation/opencensus-python/issues/766
+class LogErrorToAzure(MiddlewareMixin):
+    def __init__(self, get_response):
+        self.get_response = get_response
+        # wait to do this here to be sure the handler is initialized
+        self.azure_logger = logging.getLogger("azure")
+
+    def process_exception(self, request, exception):
+        # https://stackoverflow.com/a/45532289
+        msg = getattr(exception, "message", repr(exception))
+        self.azure_logger.exception(msg, exc_info=exception)
+
+        return None

@@ -12,7 +12,8 @@
       "phone": "800-555-5555",
       "active": true,
       "eligibility_types": [
-        1
+        1,
+        2
       ],
       "eligibility_verifiers": [
         1,
@@ -35,10 +36,8 @@
       "info_url": "https://www.example.com/help",
       "phone": "321-555-5555",
       "active": true,
-      "eligibility_types": [
-        2
-      ],
-      "eligibility_verifiers": [2],
+      "eligibility_types": [1],
+      "eligibility_verifiers": [1],
       "private_key": 2,
       "jws_signing_alg": "RS256",
       "payment_processor": 1

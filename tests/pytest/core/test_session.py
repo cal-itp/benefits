@@ -241,10 +241,12 @@ def test_reset_enrollment(app_request):
 @pytest.mark.django_db
 def test_reset_oauth(app_request):
     app_request.session[session._OAUTH_TOKEN] = "oauthtoken456"
+    app_request.session[session._OAUTH_CLAIM] = "claim"
 
     session.reset(app_request)
 
     assert session.oauth_token(app_request) is None
+    assert session.oauth_claim(app_request) is None
 
 
 @pytest.mark.django_db

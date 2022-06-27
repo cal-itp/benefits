@@ -1,29 +1,57 @@
 import pytest
 
-import benefits.oauth.client as client
+from benefits.core.models import AuthProvider
+from benefits.oauth.client import _client_kwargs, _server_metadata_url, register_providers
 
 
-@pytest.fixture
-def no_oauth_client_name(mocker):
-    return mocker.patch("benefits.oauth.client.settings.OAUTH_CLIENT_NAME", None)
+def test_client_kwargs():
+    kwargs = _client_kwargs()
+
+    assert kwargs["code_challenge_method"] == "S256"
+    assert "openid" in kwargs["scope"]
+
+
+def test_client_kwargs_scope():
+    kwargs = _client_kwargs("scope1")
+
+    assert kwargs["code_challenge_method"] == "S256"
+    assert "openid" in kwargs["scope"]
+    assert "scope1" in kwargs["scope"]
+
+
+def test_server_metadata_url():
+    url = _server_metadata_url("https://example.com")
+
+    assert url.startswith("https://example.com")
+    assert url.endswith("openid-configuration")
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("no_oauth_client_name")
-def test_instance_no_oauth_client_name():
-    with pytest.raises(Exception, match=r"OAUTH_CLIENT_NAME"):
-        client.instance()
+def test_register_providers(mocker, mocked_oauth_registry):
+    mock_providers = []
 
+    for i in range(3):
+        p = mocker.Mock(spec=AuthProvider)
+        p.client_name = f"client_name_{i}"
+        p.client_id = f"client_id_{i}"
+        mock_providers.append(p)
 
-@pytest.mark.django_db
-def test_instance_oauth_client_name():
-    assert not client._OAUTH_CLIENT
+    mocked_client_provider = mocker.patch("benefits.oauth.client.AuthProvider")
+    mocked_client_provider.objects.all.return_value = mock_providers
 
-    oauth_client = client.instance()
+    mocker.patch("benefits.oauth.client._client_kwargs", return_value={"client": "kwargs"})
+    mocker.patch("benefits.oauth.client._server_metadata_url", return_value="https://metadata.url")
 
-    assert oauth_client
-    assert client._OAUTH_CLIENT is oauth_client
+    register_providers(mocked_oauth_registry)
 
-    oauth_client2 = client.instance()
+    mocked_client_provider.objects.all.assert_called_once()
 
-    assert oauth_client is oauth_client2
+    for provider in mock_providers:
+        i = mock_providers.index(provider)
+
+        mocked_oauth_registry.register.assert_any_call(
+            f"client_name_{i}",
+            client_id=f"client_id_{i}",
+            server_metadata_url="https://metadata.url",
+            client_kwargs={"client": "kwargs"},
+        )

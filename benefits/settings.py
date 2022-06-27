@@ -2,6 +2,7 @@
 Django settings for benefits project.
 """
 import os
+import benefits.logging
 
 
 def _filter_empty(ls):
@@ -64,7 +65,30 @@ if ADMIN:
     )
 
 if DEBUG:
-    MIDDLEWARE.extend(["benefits.core.middleware.DebugSession"])
+    MIDDLEWARE.append("benefits.core.middleware.DebugSession")
+
+
+# Azure Insights
+# https://docs.microsoft.com/en-us/azure/azure-monitor/app/opencensus-python-request#tracking-django-applications
+
+ENABLE_AZURE_INSIGHTS = "APPLICATIONINSIGHTS_CONNECTION_STRING" in os.environ
+print("ENABLE_AZURE_INSIGHTS: ", ENABLE_AZURE_INSIGHTS)
+if ENABLE_AZURE_INSIGHTS:
+    MIDDLEWARE.extend(
+        [
+            "opencensus.ext.django.middleware.OpencensusMiddleware",
+            "benefits.core.middleware.LogErrorToAzure",
+        ]
+    )
+
+# only used if enabled above
+OPENCENSUS = {
+    "TRACE": {
+        "SAMPLER": "opencensus.trace.samplers.ProbabilitySampler(rate=1)",
+        "EXPORTER": "opencensus.ext.azure.trace_exporter.AzureExporter()",
+    }
+}
+
 
 CSRF_COOKIE_AGE = None
 CSRF_COOKIE_SAMESITE = "Strict"
@@ -166,21 +190,6 @@ if ADMIN:
         ]
     )
 
-# OAuth configuration
-
-OAUTH_AUTHORITY = os.environ.get("DJANGO_OAUTH_AUTHORITY", "http://example.com")
-OAUTH_CLIENT_NAME = os.environ.get("DJANGO_OAUTH_CLIENT_NAME", "benefits-oauth-client-name")
-OAUTH_CLIENT_ID = os.environ.get("DJANGO_OAUTH_CLIENT_ID", "benefits-oauth-client-id")
-
-if OAUTH_CLIENT_NAME:
-    AUTHLIB_OAUTH_CLIENTS = {
-        OAUTH_CLIENT_NAME: {
-            "client_id": OAUTH_CLIENT_ID,
-            "server_metadata_url": f"{OAUTH_AUTHORITY}/.well-known/openid-configuration",
-            "client_kwargs": {"code_challenge_method": "S256", "scope": "openid"},
-        }
-    }
-
 # Internationalization
 
 LANGUAGE_CODE = "en"
@@ -207,27 +216,8 @@ STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesSto
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Logging configuration
-
 LOG_LEVEL = os.environ.get("DJANGO_LOG_LEVEL", "DEBUG" if DEBUG else "WARNING")
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "default": {
-            "format": "[{asctime}] {levelname} {name}:{lineno} {message}",
-            "datefmt": "%d/%b/%Y %H:%M:%S",
-            "style": "{",
-        },
-    },
-    "handlers": {
-        "default": {"class": "logging.StreamHandler", "formatter": "default"},
-    },
-    "root": {
-        "handlers": ["default"],
-        "level": LOG_LEVEL,
-    },
-    "loggers": {"django": {"handlers": ["default"], "propagate": False}},
-}
+LOGGING = benefits.logging.get_config(LOG_LEVEL, enable_azure=ENABLE_AZURE_INSIGHTS)
 
 # Analytics configuration
 
