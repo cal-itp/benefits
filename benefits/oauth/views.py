@@ -80,6 +80,9 @@ def authorize(request):
 
 def cancel(request):
     """View implementing cancellation of OIDC authorization."""
+
+    analytics.canceled_sign_in(request)
+
     return redirect(ROUTE_UNVERIFIED)
 
 
