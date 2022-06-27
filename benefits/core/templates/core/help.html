@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load static %}
 
-{% block main_content%}
+{% block main_content %}
     <div class="container-fluid">
         <div class="container content help">
             {% block container_content %}
@@ -16,7 +16,7 @@
                 <p>{% translate "core.pages.help.payment_options.p[0]" %}</p>
 
                 <p class="contactless-symbol">
-                    <img class="icon mx-auto d-block" src="{% static 'img/icon/contactless.svg' %}" alt="{% translate "core.icons.contactless" context "image alt text" %}" />
+                    <img class="icon mx-auto d-block" width="40" height="50" src="{% static 'img/icon/contactless.svg' %}" alt="{% translate "core.icons.contactless" context "image alt text" %}" />
                 </p>
 
                 <p>{% translate "core.pages.help.payment_options.p[1]" %}</p>
@@ -53,7 +53,7 @@
                     {% translate "core.pages.help.foss.text" %}
                     <a href="https://www.github.com/cal-itp/benefits" target="_blank" rel="noopener noreferrer">{% translate "core.pages.help.foss.link" %}</a>.
                 </p>
-            {% endblock %}
+            {% endblock container_content %}
         </div>
     </div>
-{% endblock %}
+{% endblock main_content %}
