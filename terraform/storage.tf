@@ -5,6 +5,11 @@ resource "azurerm_storage_account" "main" {
   account_tier             = "Standard"
   account_replication_type = "RAGRS"
 
+  blob_properties {
+    last_access_time_enabled = true
+    versioning_enabled       = true
+  }
+
   lifecycle {
     ignore_changes = [tags]
   }
