@@ -17,10 +17,10 @@ A new release implies a new version.
 `benefits` uses the [CalVer](https://calver.org/) versioning scheme, where
 version numbers look like: `YYYY.0M.R`
 
-* `YYYY` is the 4-digit year of the release; e.g. `2021`, `2022`
-* `0M` is the 2-digit, 0-padded month of the release; e.g. `02` is February, `12`
+- `YYYY` is the 4-digit year of the release; e.g. `2021`, `2022`
+- `0M` is the 2-digit, 0-padded month of the release; e.g. `02` is February, `12`
   is December.
-* `R` is the 1-based release counter for the given year and month;
+- `R` is the 1-based release counter for the given year and month;
   e.g. `1` for the first release of the month, `2` for the second, and so on.
 
 ## 1. Prepare release in a branch
@@ -90,3 +90,7 @@ git tag YYYY.0M.R
 
 git push --tags
 ```
+
+## 6. [Generate release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
+
+Also add a written description, and include screenshots/animations of new/updated pages/workflows.
