@@ -1,8 +1,8 @@
 {% extends "core/page.html" %}
 {% load i18n %}
 {% block classes %}
-    {{ block.super |add:" eligibility-start"}}
-{% endblock %}
+    {{ block.super |add:" eligibility-start" }}
+{% endblock classes %}
 
 {% block main_content %}
     <div class="one-column-image"></div>
@@ -12,7 +12,7 @@
         <p>{% blocktranslate with info_link=info_link%}core.pages.agency_index.p[0]{{ info_link }}{% endblocktranslate %}</p>
         <p>{% translate "core.pages.agency_index.p[2]" %}</p>
 
-        <h2 class="media-title">{{title}}</h2>
+        <h2 class="media-title">{{ title }}</h2>
 
         {% block media_list %}
             {% if media|length_is:"0" %}{% else %}
@@ -44,11 +44,11 @@
                 {% endfor %}
                 </ul>
             {% endif %}
-        {% endblock %}
+        {% endblock media_list %}
 
         {% block buttons %}
             {{ block.super }}
-        {% endblock %}
+        {% endblock buttons %}
     </div>
 
-{% endblock %}
+{% endblock main_content %}
