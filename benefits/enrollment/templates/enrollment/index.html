@@ -1,99 +1,92 @@
 {% extends "core/page.html" %}
-
 {% block main_content %}
     {% include "core/includes/sign-out-link.html" %}
     {{ block.super }}
-{% endblock %}
+{% endblock main_content %}
+{% block icon_title %}{{ block.super }}{% endblock icon_title %}
+    {% block paragraph_content %}
+        {{ block.super }}
+        {% if payment_processor %}
+            <button type="button"
+                    class="btn btn-primary btn-lg loading"
+                    role="status"
+                    disabled>
+                {{ payment_processor.loading_text }}
+            </button>
+            <script>
+                var startedEvent = "started payment connection", closedEvent = "closed payment connection";
 
-{% block icon_title %}
-    {{ block.super }}
-{% endblock%}
+            $.getScript("{{ payment_processor.card_tokenize_url }}")
+                .done(function() {
+                    $.get("{{ payment_processor.access_token_url }}", function(data) {
+                        $(".loading").remove();
+                        $(".invisible").removeClass("invisible");
 
-{% block paragraph_content %}
-{{ block.super }}
-{% if payment_processor %}
-    <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
-        {{ payment_processor.loading_text }}
-    </button>
-    <script>
-        var startedEvent = "started payment connection", closedEvent = "closed payment connection";
-
-        $.getScript("{{ payment_processor.card_tokenize_url }}")
-            .done(function() {
-                $.get("{{ payment_processor.access_token_url }}", function(data) {
-                    $(".loading").remove();
-                    $(".invisible").removeClass("invisible");
-
-                    $("{{ payment_processor.element_id }}").on("click", function() {
-                        amplitude.getInstance().logEvent(startedEvent, {
-                            card_tokenize_url: "{{ payment_processor.card_tokenize_url }}",
-                            card_tokenize_func: "{{ payment_processor.card_tokenize_func }}"
+                        $("{{ payment_processor.element_id }}").on("click", function() {
+                            amplitude.getInstance().logEvent(startedEvent, {
+                                card_tokenize_url: "{{ payment_processor.card_tokenize_url }}",
+                                card_tokenize_func: "{{ payment_processor.card_tokenize_func }}"
+                            });
+                            $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ payment_processor.loading_text }}");
                         });
-                        $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ payment_processor.loading_text }}");
+
+                        {{ payment_processor.card_tokenize_func }}({
+                            authorization: data.token,
+                            element: '{{ payment_processor.element_id }}',
+                            envUrl: '{{ payment_processor.card_tokenize_env }}',
+                            options: {
+                                name: '{{ payment_processor.name }}',
+                                color: '{{ payment_processor.color }}'
+                            },
+                            onTokenize: function (response) {
+                                /* This function executes when the
+                                /* card/address verification returns
+                                /* successfully with a token from enrollment server */
+                                amplitude.getInstance().logEvent(closedEvent, {status: "success"});
+
+                                var form = $("form[action='{{ forms.tokenize_success }}']");
+                                $("#card_token", form).val(response.token);
+                                form.submit();
+                            },
+                            onVerificationFailure: function (response) {
+                                /* This function executes when the
+                                /* card/address verification fails and server
+                                /* return verification failure message */
+                                amplitude.getInstance().logEvent(closedEvent, {status: "fail"});
+
+                                var form = $("form[action='{{ forms.tokenize_retry }}']");
+                                form.submit();
+                            },
+                            onError: function (response) {
+                                /* This function executes when the
+                                /* server returns error or token is invalid.
+                                /* 400 or 500 will return. */
+                                amplitude.getInstance().logEvent(closedEvent, {status: "error", error: response});
+
+                                var form = $("form[action='{{ forms.tokenize_retry }}']");
+                                form.submit();
+                            },
+                            onCancel: function () {
+                                /* This function executes when the
+                                /* user cancels and closes the window
+                                /* and returns to home page. */
+                                amplitude.getInstance().logEvent(closedEvent, {status: "cancel"});
+
+                                return location.reload();
+                            }
+                        });
                     });
-
-                    {{ payment_processor.card_tokenize_func }}({
-                        authorization: data.token,
-                        element: '{{ payment_processor.element_id }}',
-                        envUrl: '{{ payment_processor.card_tokenize_env }}',
-                        options: {
-                            name: '{{ payment_processor.name }}',
-                            color: '{{ payment_processor.color }}'
-                        },
-                        onTokenize: function (response) {
-                            /* This function executes when the
-                            /* card/address verification returns
-                            /* successfully with a token from enrollment server */
-                            amplitude.getInstance().logEvent(closedEvent, {status: "success"});
-
-                            var form = $("form[action='{{ forms.tokenize_success }}']");
-                            $("#card_token", form).val(response.token);
-                            form.submit();
-                        },
-                        onVerificationFailure: function (response) {
-                            /* This function executes when the
-                            /* card/address verification fails and server
-                            /* return verification failure message */
-                            amplitude.getInstance().logEvent(closedEvent, {status: "fail"});
-
-                            var form = $("form[action='{{ forms.tokenize_retry }}']");
-                            form.submit();
-                        },
-                        onError: function (response) {
-                            /* This function executes when the
-                            /* server returns error or token is invalid.
-                            /* 400 or 500 will return. */
-                            amplitude.getInstance().logEvent(closedEvent, {status: "error", error: response});
-
-                            var form = $("form[action='{{ forms.tokenize_retry }}']");
-                            form.submit();
-                        },
-                        onCancel: function () {
-                            /* This function executes when the
-                            /* user cancels and closes the window
-                            /* and returns to home page. */
-                            amplitude.getInstance().logEvent(closedEvent, {status: "cancel"});
-
-                            return location.reload();
-                        }
-                    });
+                })
+                .fail(function(jqxhr, settings, exception) {
+                    $(".loading").remove();
+                    console.log(exception);
                 });
-            })
-            .fail(function(jqxhr, settings, exception) {
-                $(".loading").remove();
-                console.log(exception);
-            });
-    </script>
-{% else %}
-    <h2>Error!</h2>
-    <p>No access token configured</p>
-{% endif %}
-{% endblock %}
-
-{% block buttons %}
-{% if payment_processor %}
-<div class="invisible">
-{{ block.super }}
-</div>
-{% endif %}
-{% endblock %}
+                </script>
+        {% else %}
+            <h2>Error!</h2>
+            <p>No access token configured</p>
+        {% endif %}
+    {% endblock paragraph_content %}
+    {% block buttons %}
+        {% if payment_processor %}<div class="invisible">{{ block.super }}</div>{% endif %}
+    {% endblock buttons %}
