@@ -236,6 +236,7 @@ def unverified(request):
     verifier = session.verifier(request)
 
     page = viewmodels.Page(
+        noimage=True,
         title=_(verifier.unverified_title),
         classes="with-agency-links",
         content_title=_(verifier.unverified_content_title),
