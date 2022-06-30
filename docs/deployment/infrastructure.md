@@ -13,23 +13,28 @@ For browsing the [Azure portal](https://portal.azure.com), [switching your `Defa
 
 ```mermaid
 flowchart LR
-    dmv[DMV Eligibility Verification API]
+    %% DMV integration is currently disabled, hence the lines commented out below
+
+    %% dmv[DMV Eligibility Verification API]
     benefits[Benefits application]
     style benefits stroke-width:5px
-    recaptcha[Google reCAPTCHA]
+    %% recaptcha[Google reCAPTCHA]
     rider((User's browser))
+    auth[auth server]
 
     rider --> benefits
     rider --> Login.gov
-    rider --> recaptcha
+    %% rider --> recaptcha
     rider --> Littlepay
     rider --> Amplitude
 
-    benefits <--> Login.gov
-    benefits <--> recaptcha
-    benefits --> dmv
+    benefits <--> auth
+    %% benefits <--> recaptcha
+    %% benefits --> dmv
     benefits --> Amplitude
     benefits <--> Littlepay
+
+    auth <--> Login.gov
 ```
 
 ### Benefits application
