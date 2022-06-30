@@ -50,4 +50,3 @@ repos:
     rev: 'v1.5.1'  # replace with the latest tag on GitHub
     hooks:
       - id: djhtml
-      - id: djcss
