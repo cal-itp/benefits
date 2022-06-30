@@ -145,7 +145,7 @@ msgstr ""
 #: benefits/core/templates/core/includes/noscript.html:8
 #: benefits/core/viewmodels.py:48
 msgid "core.buttons.return_home"
-msgstr "Regresar a la pantalla de inicio"
+msgstr "Regresar a la página principal"
 
 #: benefits/core/templates/core/includes/noscript.html:6
 msgid "core.includes.noscript.brand"
