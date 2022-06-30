@@ -408,16 +408,12 @@ msgstr "No se pudo verificar su elegibilidad."
 
 msgid "eligibility.pages.unverified.oauth.p[0]"
 msgstr ""
-"¡Esta bien! Aún puede ser elegible para nuestro programa. "
+"¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su proveedor de tránsito local para obtener asistencia."
 
 #: benefits/eligibility/views.py:172
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Icono de tarjeta de identificación con signo de interrogación"
-
-#: benefits/eligibility/views.py:173
-msgid "eligibility.pages.unverified.p[1]"
-msgstr "Comuníquese con su proveedor de tránsito local para obtener asistencia."
 
 #: benefits/enrollment/templates/enrollment/success.html:7
 msgctxt "image alt text"

@@ -241,7 +241,7 @@ def unverified(request):
         classes="with-agency-links",
         content_title=_(verifier.unverified_content_title),
         icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
-        paragraphs=[_(verifier.unverified_blurb), _("eligibility.pages.unverified.p[1]")],
+        paragraphs=[_(verifier.unverified_blurb)],
         buttons=buttons,
     )
 
