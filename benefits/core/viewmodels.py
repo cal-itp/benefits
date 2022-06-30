@@ -48,8 +48,11 @@ class Button:
         ]
 
     @staticmethod
-    def home(request, text=_("core.buttons.return_home")):
+    def home(request, text=None):
         """Create a button back to this session's origin."""
+        if text is None:
+            text = _("core.buttons.return_home")
+
         return Button.primary(text=text, url=session.origin(request))
 
     @staticmethod
