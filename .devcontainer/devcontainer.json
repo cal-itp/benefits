@@ -19,6 +19,7 @@
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
     "batisteo.vscode-django",
+    "bpruitt-goddard.mermaid-markdown-syntax-highlighting",
     "eamodio.gitlens",
     "mhutchie.git-graph",
     "ms-python.python",
