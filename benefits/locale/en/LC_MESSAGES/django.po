@@ -420,17 +420,12 @@ msgstr "Your eligibility could not be verified."
 
 msgid "eligibility.pages.unverified.oauth.p[0]"
 msgstr ""
-"You may still be eligible for a discount, but we can’t verify your age "
-"with Login.gov."
+"That’s okay! You may still be eligible for our program. Please reach out to your local transit provider for assistance."
 
 #: benefits/eligibility/views.py:172
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Identification card icon with question mark"
-
-#: benefits/eligibility/views.py:173
-msgid "eligibility.pages.unverified.p[1]"
-msgstr "That’s okay! You may still be eligible for our program. Please reach out to your local transit provider for assistance."
 
 #: benefits/enrollment/templates/enrollment/success.html:7
 msgctxt "image alt text"
