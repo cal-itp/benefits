@@ -1,5 +1,5 @@
 Authlib==1.0.1
-Django==3.2.13
+Django==3.2.14
 django-csp==3.7
 git+https://github.com/cal-itp/eligibility-api#egg=eligibility_api
 gunicorn==20.1.0
