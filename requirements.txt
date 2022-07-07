@@ -3,7 +3,7 @@ Django==3.2.13
 django-csp==3.7
 git+https://github.com/cal-itp/eligibility-api#egg=eligibility_api
 gunicorn==20.1.0
-opencensus-ext-azure==1.1.4
+opencensus-ext-azure==1.1.5
 opencensus-ext-django==0.7.6
 requests==2.28.1
 six==1.16.0
