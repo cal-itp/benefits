@@ -185,3 +185,15 @@ def test_enroll_no_customer_token(api_client):
 def test_enroll_no_group_id(api_client):
     with pytest.raises(ValueError, match=r"group_id"):
         api_client.enroll("customer_token", None)
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("exception", REQUESTS_ERRORS)
+def test_enroll_exception(mocker, api_client, exception):
+    mock_response = mocker.Mock()
+    mock_response.raise_for_status.side_effect = exception
+    mocker.patch.object(api_client, "_patch", return_value=mock_response)
+    mocker.patch.object(api_client, "_get_customer", return_value=mocker.Mock(id="customer_id"))
+
+    with pytest.raises(ApiError):
+        api_client.enroll("token", "group")
