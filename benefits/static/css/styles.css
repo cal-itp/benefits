@@ -266,6 +266,8 @@ footer.global-footer .footer-links a:active {
   margin-bottom: 60px;
   font-size: 24px;
   line-height: 36px;
+  letter-spacing: 0.05em;
+  font-weight: 700;
 }
 
 .media-list {
@@ -307,6 +309,7 @@ footer.global-footer .footer-links a:active {
   line-height: 26.1px;
   font-weight: 700;
   padding-left: 0;
+  margin-top: 0;
   margin-bottom: 16px;
 }
 
@@ -486,12 +489,27 @@ footer.global-footer .footer-links a:active {
 .container.content h1.icon-title {
   padding-bottom: 1.5rem;
   line-height: 36px;
+  text-align: center;
 }
 
 .container.content h1.icon-title span.icon {
   text-align: center;
   display: block;
   padding-bottom: 3rem;
+}
+
+.container.content h1.icon-title img.icon {
+  width: 150px;
+  height: 150px;
+}
+
+.with-image .container.content h1.icon-title img.icon {
+  width: 92px;
+  height: 92px;
+}
+
+.with-image .container.content h1.icon-title {
+  text-align: left;
 }
 
 .container.content.help {

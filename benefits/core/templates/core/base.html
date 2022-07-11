@@ -20,24 +20,24 @@
     </head>
     <body>
         {% if debug %}
-        {% include "core/includes/debug.html" %}
+            {% include "core/includes/debug.html" %}
         {% endif %}
         <header role="banner" id="header" class="global-header">
             <div id="skip-to-content">
                 <a href="#main-content">{% translate "core.buttons.skip" %}</a>
             </div>
             {% if messages %}
-            {% for message in messages %}
-            {% include "core/includes/alert.html" with message=message %}
-            {% endfor %}
+                {% for message in messages %}
+                    {% include "core/includes/alert.html" with message=message %}
+                {% endfor %}
             {% endif %}
 
             <div class="nocookies d-none" >
-            {% include "core/includes/nocookies.html" %}
+                {% include "core/includes/nocookies.html" %}
             </div>
 
             <noscript>
-            {% include "core/includes/noscript.html" %}
+                {% include "core/includes/noscript.html" %}
             </noscript>
 
             <div class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-between">

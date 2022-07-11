@@ -10,7 +10,8 @@ resource "azurerm_service_plan" "main" {
   }
 }
 
-# app_settings and storage_account are managed manually through the portal since they contain secrets
+# app_settings and storage_account are managed manually through the portal since they contain secrets. Issue to move the latter in:
+# https://github.com/cal-itp/benefits/issues/686
 
 resource "azurerm_linux_web_app" "main" {
   name                = "AS-CDT-PUB-VIP-CALITP-P-001"
@@ -20,7 +21,8 @@ resource "azurerm_linux_web_app" "main" {
   https_only          = true
 
   site_config {
-    ftps_state = "Disabled"
+    ftps_state             = "Disabled"
+    vnet_route_all_enabled = true
   }
 
   identity {
@@ -72,7 +74,7 @@ resource "azurerm_linux_web_app" "main" {
   }
 
   lifecycle {
-    ignore_changes = [app_settings, tags]
+    ignore_changes = [app_settings, storage_account, tags]
   }
 }
 

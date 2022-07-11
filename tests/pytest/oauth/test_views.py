@@ -135,11 +135,12 @@ def test_authorize_success_without_claim(mocked_session_verifier_auth_required, 
     assert result.url == reverse(ROUTE_CONFIRM)
 
 
-def test_cancel(app_request):
+def test_cancel(mocked_analytics_module, app_request):
     unverified_route = reverse(ROUTE_UNVERIFIED)
 
     result = cancel(app_request)
 
+    mocked_analytics_module.canceled_sign_in.assert_called_once()
     assert result.status_code == 302
     assert result.url == unverified_route
 

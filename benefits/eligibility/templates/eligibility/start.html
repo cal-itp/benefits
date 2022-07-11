@@ -12,38 +12,36 @@
         <p>{% blocktranslate with info_link=info_link%}core.pages.agency_index.p[0]{{ info_link }}{% endblocktranslate %}</p>
         <p>{% translate "core.pages.agency_index.p[2]" %}</p>
 
-        <h1 class="media-title">{{title}}</h1>
+        <h2 class="media-title">{{title}}</h2>
 
         {% block media_list %}
             {% if media|length_is:"0" %}{% else %}
                 <ul class="media-list">
-                {% for item in media %}
-                    <li class="media">
-                        <div class="media-line">
-                            {% include "core/includes/icon.html" with icon=item.icon %}
-                        </div>
-                        <div class="media-body">
-                            <div class="media-body--heading">
-                                <span>{{ item.heading }}</span>
+                    {% for item in media %}
+                        <li class="media">
+                            <div class="media-line">
+                                {% include "core/includes/icon.html" with icon=item.icon %}
                             </div>
-                            <div class="media-body--details">
-                                <p>{{ item.details }}</p>
-                                <div class="media-body--items">
-                                    <ul>
-                                        {% for l in item.bullets %}
-                                            <li>{{ l }}</li>
-                                        {% endfor %}
-                                    </ul>
+                            <div class="media-body">
+                                <h3 class="media-body--heading">{{ item.heading }}</h3>
+                                <div class="media-body--details">
+                                    <p>{{ item.details }}</p>
+                                    <div class="media-body--items">
+                                        <ul>
+                                            {% for l in item.bullets %}
+                                                <li>{{ l }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="media-body--links">
+                                    {% for l in item.links %}
+                                        {% include "core/includes/button.html" with button=l %}
+                                    {% endfor %}
                                 </div>
                             </div>
-                            <div class="media-body--links">
-                                {% for l in item.links %}
-                                    {% include "core/includes/button.html" with button=l %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </li>
-                {% endfor %}
+                        </li>
+                    {% endfor %}
                 </ul>
             {% endif %}
         {% endblock %}
