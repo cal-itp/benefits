@@ -197,3 +197,29 @@ def test_enroll_exception(mocker, api_client, exception):
 
     with pytest.raises(ApiError):
         api_client.enroll("token", "group")
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("status_code", [200, 201])
+def test_enroll_customer_enrolled(mocker, api_client, status_code):
+    mock_response = mocker.Mock(status_code=status_code)
+    mocker.patch.object(api_client, "_patch", return_value=mock_response)
+    mocker.patch.object(api_client, "_get_customer", return_value=mocker.Mock(id="customer_id"))
+    mocker.patch("benefits.enrollment.api.GroupResponse")
+
+    response = api_client.enroll("customer_id", "group_id")
+
+    assert response
+
+
+@pytest.mark.django_db
+def test_enroll_customer_exists(mocker, api_client):
+    # the enrollment API uses a 500 response code (!!!) to indicate the customer already exists
+    mock_response = mocker.Mock(status_code=500)
+    mocker.patch.object(api_client, "_patch", return_value=mock_response)
+    mocker.patch.object(api_client, "_get_customer", return_value=mocker.Mock(id="customer_id"))
+    mocker.patch("benefits.enrollment.api.GroupResponse")
+
+    response = api_client.enroll("customer_id", "group_id")
+
+    assert response
