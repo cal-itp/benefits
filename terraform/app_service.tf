@@ -21,7 +21,8 @@ resource "azurerm_linux_web_app" "main" {
   https_only          = true
 
   site_config {
-    ftps_state = "Disabled"
+    ftps_state             = "Disabled"
+    vnet_route_all_enabled = true
   }
 
   identity {

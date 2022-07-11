@@ -114,11 +114,21 @@ https://as-cdt-pub-vip-calitp-p-001-dev.scm.azurewebsites.net/api/logs/docker
 ## Making changes
 
 1. Get access to the Azure account through the DevSecOps team.
+
 1. Install dependencies:
-   - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
-   - [Terraform](https://www.terraform.io/downloads)
+    - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+    - [Terraform](https://www.terraform.io/downloads)
+
 1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli), specifying the `CDT/ODI Production` Subscription.
+
+   ```sh
+   az login
+
+   az account set --subscription="CDT/ODI Production"
+   ```
+
 1. Outside the [dev container](../../getting-started/), navigate to the [`terraform/`][terraform-dir] directory.
+
 1. [Initialize Terraform.](https://www.terraform.io/cli/commands/init)
 
    ```sh
@@ -126,6 +136,7 @@ https://as-cdt-pub-vip-calitp-p-001-dev.scm.azurewebsites.net/api/logs/docker
    ```
 
 1. Make changes to Terraform files.
+
 1. [Plan](https://www.terraform.io/cli/commands/plan)/[apply](https://www.terraform.io/cli/commands/apply) the changes, as necessary.
 
    ```sh
