@@ -1,0 +1,75 @@
+trigger:
+  branches:
+    include:
+    - terraform
+stages:
+- stage: __default
+  jobs:
+  - job: Job
+    pool:
+      vmImage: windows-latest
+    steps:
+    - task: AzurePowerShell@3
+      displayName: 'Azure PowerShell script to get the storage key'
+      inputs:
+        azureSubscription: dev
+        ScriptType: InlineScript
+        Inline: |
+          # Using this script we will fetch storage key which is required in terraform file to authenticate backend storage account
+
+          $key=(Get-AzureRmStorageAccountKey -ResourceGroupName $(terraformstoragerg) -AccountName $(terraformstorageaccount)).Value[0]
+
+          Write-Host "##vso[task.setvariable variable=storagekey]$key"
+        azurePowerShellVersion: LatestVersion
+    - task: replacetokens@5
+      inputs:
+        targetFiles: '**/*.tf'
+        encoding: 'auto'
+        tokenPattern: 'custom'
+        tokenPrefix: '__'
+        tokenSuffix: '__'
+        writeBOM: true
+        escapeType: 'none'
+        actionOnMissing: 'warn'
+        keepToken: false
+        actionOnNoFiles: 'continue'
+        enableTransforms: false
+        enableRecursion: false
+        useLegacyPattern: false
+        enableTelemetry: true
+    - task: TerraformInstaller@0
+      inputs:
+        terraformVersion: 1.2.1
+    - task: TerraformTaskV3@3
+      displayName: 'Terraform : init'
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/Terraform'
+        backendServiceArm: '$(backendServiceArm)'
+        backendAzureRmResourceGroupName: '$(terraformstoragerg)'
+        backendAzureRmStorageAccountName: '$(terraformstorageaccount)'
+        backendAzureRmContainerName: '$(storagecontainername)'
+        backendAzureRmKey: '$(rmstoragekey)'
+    - task: TerraformTaskV3@3
+      displayName: 'Terraform : plan'
+      inputs:
+        command: plan
+        workingDirectory: '$(System.DefaultWorkingDirectory)/Terraform'
+        environmentServiceNameAzureRM: '$(backendServiceArm)'
+        backendAzureRmResourceGroupName: '$(terraformstoragerg)'
+        backendAzureRmStorageAccountName: '$(terraformstorageaccount) '
+        backendAzureRmContainerName: '$(storagecontainername)'
+        backendAzureRmKey: '$(rmstoragekey)'
+    - task: TerraformTaskV3@3
+      displayName: 'Terraform : apply-auto-approve'
+      inputs:
+        command: apply
+        workingDirectory: '$(System.DefaultWorkingDirectory)/Terraform'
+        commandOptions: '-auto-approve'
+        environmentServiceNameAzureRM: '$(backendServiceArm)'
+        backendAzureRmResourceGroupName: '$(terraformstoragerg)'
+        backendAzureRmStorageAccountName: '$(terraformstorageaccount) '
+        backendAzureRmContainerName: '$(storagecontainername)'
+        backendAzureRmKey: '$(rmstoragekey)'
+
