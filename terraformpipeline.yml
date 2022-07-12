@@ -41,35 +41,12 @@ stages:
       inputs:
         terraformVersion: 1.2.1
     - task: TerraformTaskV3@3
-      displayName: 'Terraform : init'
       inputs:
         provider: 'azurerm'
         command: 'init'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/Terraform'
-        backendServiceArm: '$(backendServiceArm)'
-        backendAzureRmResourceGroupName: '$(terraformstoragerg)'
-        backendAzureRmStorageAccountName: '$(terraformstorageaccount)'
-        backendAzureRmContainerName: '$(storagecontainername)'
-        backendAzureRmKey: '$(rmstoragekey)'
-    - task: TerraformTaskV3@3
-      displayName: 'Terraform : plan'
-      inputs:
-        command: plan
-        workingDirectory: '$(System.DefaultWorkingDirectory)/Terraform'
-        environmentServiceNameAzureRM: '$(backendServiceArm)'
-        backendAzureRmResourceGroupName: '$(terraformstoragerg)'
-        backendAzureRmStorageAccountName: '$(terraformstorageaccount) '
-        backendAzureRmContainerName: '$(storagecontainername)'
-        backendAzureRmKey: '$(rmstoragekey)'
-    - task: TerraformTaskV3@3
-      displayName: 'Terraform : apply-auto-approve'
-      inputs:
-        command: apply
-        workingDirectory: '$(System.DefaultWorkingDirectory)/Terraform'
-        commandOptions: '-auto-approve'
-        environmentServiceNameAzureRM: '$(backendServiceArm)'
-        backendAzureRmResourceGroupName: '$(terraformstoragerg)'
-        backendAzureRmStorageAccountName: '$(terraformstorageaccount) '
-        backendAzureRmContainerName: '$(storagecontainername)'
-        backendAzureRmKey: '$(rmstoragekey)'
+        backendServiceArm: 'Production'
+        backendAzureRmResourceGroupName: 'RG-CDT-PUB-VIP-CALITP-P-001'
+        backendAzureRmStorageAccountName: 'sacdtcalitpp001'
+        backendAzureRmContainerName: 'tfstate'
+        backendAzureRmKey: 'erraform.tfstate'
 
