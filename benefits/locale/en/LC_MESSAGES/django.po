@@ -518,20 +518,3 @@ msgstr "Success! Your discount is now linked to your bank card."
 msgid "enrollment.pages.success.logout.title"
 msgstr ""
 "You have been successfully logged out. Thank you for using Cal-ITP Benefits!"
-
-#~ msgid "eligibility.pages.start.oauth.content_title"
-#~ msgstr "You will need a few items to connect your discount:"
-
-#~ msgid "eligibility.pages.unverified.oauth.title"
-#~ msgstr "Eligibility Error"
-
-#~ msgid "eligibility.pages.unverified.oauth.content_title"
-#~ msgstr "Your eligibility could not be verified."
-
-#~ msgid "eligibility.pages.unverified.oauth.p[0]"
-#~ msgstr ""
-#~ "That’s okay! You may still be eligible for our program. Please reach out "
-#~ "to your local transit provider for assistance."
-
-#~ msgid "eligibility.pages.index.oauth.label"
-#~ msgstr "Senior Discount Program"
