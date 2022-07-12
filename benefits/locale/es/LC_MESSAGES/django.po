@@ -537,65 +537,6 @@ msgstr ""
 "Ha cerrado la sesión correctamente. ¡Gracias por usar los beneficios de Cal-"
 "ITP!"
 
-#~ msgid "core.buttons.payment_options"
-#~ msgstr "Opciones de Pago"
-
-#~ msgid "core.pages.payment_options.p[0]"
-#~ msgstr ""
-#~ "Cal-ITP es un nuevo programa que sirve a todos los Californianos. Para "
-#~ "activar su descuento, necesita una tarjeta bancaria habilitada sin "
-#~ "contacto. Las tarjetas habilitadas sin contacto tienen el siguiente "
-#~ "símbolo (cuatro líneas curvas) en la parte delantera o trasera de la "
-#~ "tarjeta:"
-
-#~ msgid "core.pages.payment_options.p[1]"
-#~ msgstr "Una tarjeta de banco sin contacto puede ser"
-
-#~ msgid "core.pages.payment_options.options.creditcard"
-#~ msgstr "Una tarjeta de crédito"
-
-#~ msgid "core.pages.payment_options.options.debitcard"
-#~ msgstr "Una tarjeta de débito"
-
-#~ msgid "core.pages.payment_options.p[2]"
-#~ msgstr "Nota: Debe incluir un logo de Visa o Mastercard"
-
-#~ msgid "core.pages.payment_options.p[3]"
-#~ msgstr ""
-#~ "¿No tienes acceso a una tarjeta bancaria? Puede solicitar una tarjeta sin "
-#~ "contacto a una de las compañías que ofrecen tarjetas de débito prepagas "
-#~ "sin contacto gratuitas, como la tarjeta de "
-
-#~ msgid "core.pages.payment_options.or"
-#~ msgstr "o la"
-
-#~ msgid "core.pages.payment_options.p[4]"
-#~ msgstr ""
-#~ "Aún puede obtener su descuento mediante el proceso de solicitud de su "
-#~ "proveedor de transporte público."
-
-#~ msgctxt "image alt text"
-#~ msgid "core.pages.index.image"
-#~ msgstr "Pasajera utiliza una tarjeta de débito para pagar su paseo."
-
-#~ msgid "core.pages.help.p[1]"
-#~ msgstr ""
-#~ "Si necesita ayuda con el sitio web, comuníquese con el equipo de servicio "
-#~ "al cliente de su proveedor de transporte público."
-
-#~ msgctxt "image alt text"
-#~ msgid "core.icons.bankcard"
-#~ msgstr "Icono de tarjeta bancaria"
-
-#~ msgid "core.pages.start.headline"
-#~ msgstr ""
-#~ "Conecta tu tarjeta bancaria para tu descuento en el transporte público "
-#~ "con Cal-ITP Benefits."
-
-#~ msgctxt "image alt text"
-#~ msgid "core.icons.idscreencheck"
-#~ msgstr "TODO: Computer monitor with checkmark"
-
 #~ msgid "eligibility.pages.start.oauth.content_title"
 #~ msgstr "Necesitará algunos artículos para conectar su descuento:"
 
@@ -615,13 +556,6 @@ msgstr ""
 #~ msgstr ""
 #~ "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con "
 #~ "su proveedor de tránsito local para obtener asistencia."
-
-#~ msgctxt "image alt text"
-#~ msgid "enrollment.pages.success.image"
-#~ msgstr "Tocando la tarjeta bancaria para pagar"
-
-#~ msgid "enrollment.buttons.payment_options"
-#~ msgstr "¿Qué pasa si no tengo una tarjeta bancaria?"
 
 #~ msgid "eligibility.pages.index.oauth.label"
 #~ msgstr "TODO: Senior Discount Program"
