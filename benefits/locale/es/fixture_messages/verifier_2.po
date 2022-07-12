@@ -1,0 +1,46 @@
+msgid "eligibility.pages.index.mst.label"
+msgstr "TODO: MST Courtesy Cardholder"
+
+msgid "eligibility.pages.index.mst.description"
+msgstr "TODO: (includes MST RIDES Paratransit Eligibility cardholders)"
+
+msgid "eligibility.forms.confirm.mst.fields.sub"
+msgstr "Número de tarjeta cortesía MST"
+
+msgid "eligibility.forms.confirm.mst.fields.name"
+msgstr "Apellido (como aparece en la identificación)"
+
+msgid "eligibility.pages.start.mst.content_title"
+msgstr "TODO: Genial, necesitarás dos cosas antes de empeza"
+
+msgid "eligibility.pages.start.mst.items[0].title"
+msgstr "Tu tarjeta de cortesía MST"
+
+msgid "eligibility.pages.start.mst.items[0].text"
+msgstr "Una tarjeta activa que no ha caducado"
+
+msgid "eligibility.pages.start.mst.p[0]"
+msgstr ""
+"Este programa está actualmente abierto a todas los titulares de tarjetas "
+"de cortesía MST. ¿No es titular de una tarjeta de cortesía? Póngase en "
+"contacto con su proveedor de transporte público para obtener información "
+"sobre los programas de descuento disponibles"
+
+msgid "eligibility.pages.confirm.mst.title"
+msgstr "Verificar su tarjeta de cortesía MST"
+
+msgid "eligibility.pages.confirm.mst.content_title"
+msgstr "Veamos si podemos encontrarle en nuestra sistema"
+
+msgid "eligibility.pages.confirm.mst.p[0]"
+msgstr ""
+"Por favor ingrese su número de tarjeta cortesía y apellido a "
+"continuación. Si eres titular de una tarjeta de cortesía MST, podemos "
+"confirmar que ere elegible para un descuento. Nosotros no guardamos su "
+"información."
+
+msgid "eligibility.pages.unverified.mst.title"
+msgstr "Tarjeta de cortesía MST no confirmada"
+
+msgid "eligibility.pages.unverified.mst.content_title"
+msgstr "No podemos confirmar su tarjeta de cortesía MST"
