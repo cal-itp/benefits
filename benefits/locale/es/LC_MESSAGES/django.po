@@ -566,48 +566,6 @@ msgstr ""
 #~ msgid "eligibility.pages.index.mst.description"
 #~ msgstr "TODO: (includes MST RIDES Paratransit Eligibility cardholders)"
 
-#~ msgid "eligibility.pages.confirm.dmv.content_title"
-#~ msgstr "Veamos si podemos confirmar su edad con el DMV."
-
-#~ msgid "eligibility.pages.start.dmv.items[0].title"
-#~ msgstr "Proporcione su número de identificación de California"
-
-#~ msgid "eligibility.pages.start.dmv.items[0].text"
-#~ msgstr ""
-#~ "Deberá verificar su edad con una licencia de conducir o tarjeta de "
-#~ "identificación."
-
-#~ msgid "eligibility.pages.confirm.dmv.p[0]"
-#~ msgstr ""
-#~ "Por favor, ingrese su número de licencia/identificación y su apellido "
-#~ "abajo. Si tiene 65 años o más, podemos confirmar que es eligible para un "
-#~ "descuento para personas mayores cuando viaja en transporte público. No "
-#~ "guardamos la información que ingresa aquí."
-
-#~ msgid "eligibility.pages.start.dmv.content_title"
-#~ msgstr "Necesitará algunos artículos para conectar su descuento:"
-
-#~ msgid "eligibility.forms.confirm.dmv.fields.sub"
-#~ msgstr "Licencia de conducir de California o número de identificación"
-
-#~ msgid "eligibility.forms.confirm.dmv.fields.name"
-#~ msgstr "Apellido (tal como aparece en la identificación)"
-
-#~ msgid "eligibility.pages.start.dmv.p[0]"
-#~ msgstr ""
-#~ "Este programa actualmente está disponible para personas de 65 años o más. "
-#~ "¿No tienes más de 65 años? Póngase en contacto con su proveedor de "
-#~ "transporte público para obtener información sobre los programas de "
-#~ "descuento disponibles."
-
-#~ msgid "eligibility.pages.confirm.dmv.title"
-#~ msgstr "Confirmar la elegibilidad"
-
-#~ msgid "eligibility.pages.unverified.dmv.p[0]"
-#~ msgstr ""
-#~ "Usted todavía puede ser elegible para un descuento, pero no podemos "
-#~ "verificar su edad con el DMV."
-
 #~ msgid "eligibility.forms.confirm.mst.fields.sub"
 #~ msgstr "Número de tarjeta cortesía MST"
 
