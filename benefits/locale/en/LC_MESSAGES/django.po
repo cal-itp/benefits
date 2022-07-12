@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-07-12 20:12+0000\n"
+"POT-Creation-Date: 2022-07-13 21:10+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -518,3 +518,123 @@ msgstr "Success! Your discount is now linked to your bank card."
 msgid "enrollment.pages.success.logout.title"
 msgstr ""
 "You have been successfully logged out. Thank you for using Cal-ITP Benefits!"
+
+# Fixture messages - entries below are copied from files in this language's fixture_messages directory.
+# !! Any edits you make here will be overwritten when bin/makemessages.sh is run. !!
+
+# Copied from ./benefits/locale/en/fixture_messages/auth_provider.po
+msgid "eligibility.buttons.signin"
+msgstr "Get started with"
+
+msgid "eligibility.buttons.signout"
+msgstr "Sign out of Login.gov"
+
+# Copied from ./benefits/locale/en/fixture_messages/oauth_verifier.po
+msgid "eligibility.pages.start.oauth.content_title"
+msgstr "You will need a few items to connect your discount:"
+
+msgid "eligibility.pages.unverified.oauth.title"
+msgstr "Eligibility Error"
+
+msgid "eligibility.pages.unverified.oauth.content_title"
+msgstr "Your eligibility could not be verified."
+
+msgid "eligibility.pages.unverified.oauth.p[0]"
+msgstr ""
+"That’s okay! You may still be eligible for our program. Please reach out "
+"to your local transit provider for assistance."
+
+msgid "eligibility.pages.index.oauth.label"
+msgstr "Senior Discount Program"
+
+# Copied from ./benefits/locale/en/fixture_messages/verifier_1.po
+msgid "eligibility.pages.start.dmv.content_title"
+msgstr "You will need a few items to connect your discount:"
+
+msgid "eligibility.pages.start.dmv.items[0].title"
+msgstr "Provide your California ID number"
+
+msgid "eligibility.pages.start.dmv.items[0].text"
+msgstr "You will need to verify your age with a driver’s license or ID card."
+
+msgid "eligibility.pages.start.dmv.p[0]"
+msgstr ""
+"This program is currently open to those who are 65 or older. Not over 65? "
+"Get in touch with your transit provider to learn about other available "
+"discount programs."
+
+msgid "eligibility.pages.confirm.dmv.title"
+msgstr "Confirm Eligibility"
+
+msgid "eligibility.pages.confirm.dmv.content_title"
+msgstr "Let’s see if we can confirm your age with the DMV."
+
+msgid "eligibility.pages.confirm.dmv.p[0]"
+msgstr ""
+"Please enter your license/ID number and last name below. If you’re 65 or "
+"older, we can confirm that you are eligible for a senior discount when "
+"you ride transit. We do not save the information you enter here."
+
+msgid "eligibility.forms.confirm.dmv.fields.sub"
+msgstr "CA driver’s license or ID number"
+
+msgid "eligibility.forms.confirm.dmv.fields.name"
+msgstr "Last name (as it appears on ID)"
+
+msgid "eligibility.pages.unverified.dmv.p[0]"
+msgstr ""
+"You may still be eligible for a discount, but we can’t verify your age "
+"with the DMV."
+
+# Copied from ./benefits/locale/en/fixture_messages/verifier_2.po
+msgid "eligibility.pages.index.mst.label"
+msgstr "MST Courtesy Cardholder"
+
+msgid "eligibility.pages.index.mst.description"
+msgstr "(includes MST RIDES Paratransit Eligibility cardholders)"
+
+msgid "eligibility.forms.confirm.mst.fields.sub"
+msgstr "MST Courtesy Card number"
+
+msgid "eligibility.forms.confirm.mst.fields.name"
+msgstr "Last name (as it appears on Courtesy Card)"
+
+msgid "eligibility.pages.start.mst.content_title"
+msgstr ""
+"You’ll need to do two things to link your transit discount to your bank "
+"card."
+
+msgid "eligibility.pages.start.mst.items[0].title"
+msgstr "Your MST Courtesy Card"
+
+msgid "eligibility.pages.start.mst.items[0].text"
+msgstr "An active card that has not expired"
+
+msgid "eligibility.pages.start.mst.p[0]"
+msgstr ""
+"This program is currently open to all MST Courtesy Cardholders. Not a "
+"Courtesy Cardholder? Get in touch with your transit provider to learn "
+"about other available discount programs at"
+
+msgid "eligibility.pages.confirm.mst.title"
+msgstr "Confirm your Courtesy Card"
+
+msgid "eligibility.pages.confirm.mst.content_title"
+msgstr "Let’s see if we can find you in our system"
+
+msgid "eligibility.pages.confirm.mst.p[0]"
+msgstr ""
+"Please input your Courtesy Card number and last name below. If you’re a "
+"current MST Courtesy Cardholder, we can confirm that you are eligible for "
+"a discount. We do not save your information."
+
+msgid "eligibility.pages.unverified.mst.title"
+msgstr "Courtesy Card not located"
+
+msgid "eligibility.pages.unverified.mst.content_title"
+msgstr "We couldn’t locate you in our system"
+
+msgid "eligibility.pages.unverified.mst.p[0]"
+msgstr ""
+"That’s okay! You may still be eligible for our program. Please reach out "
+"to Monterey-Salinas Transit for assistance."
