@@ -26,6 +26,7 @@
     "mhutchie.git-graph",
     "monosans.djlint",
     "ms-python.python",
-    "ms-python.vscode-pylance"
+    "ms-python.vscode-pylance",
+    "mrorz.language-gettext"
   ]
 }
