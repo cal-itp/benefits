@@ -519,6 +519,9 @@ msgid "enrollment.pages.success.logout.title"
 msgstr ""
 "You have been successfully logged out. Thank you for using Cal-ITP Benefits!"
 
+#~ msgid "eligibility.pages.start.oauth.content_title"
+#~ msgstr "You will need a few items to connect your discount:"
+
 #~ msgid "eligibility.buttons.signin"
 #~ msgstr "Get started with"
 
@@ -538,58 +541,3 @@ msgstr ""
 
 #~ msgid "eligibility.pages.index.oauth.label"
 #~ msgstr "Senior Discount Program"
-
-#~ msgid "eligibility.pages.index.mst.label"
-#~ msgstr "MST Courtesy Cardholder"
-
-#~ msgid "eligibility.pages.index.mst.description"
-#~ msgstr "(includes MST RIDES Paratransit Eligibility cardholders)"
-
-#~ msgid "eligibility.pages.start.oauth.content_title"
-#~ msgstr "You will need a few items to connect your discount:"
-
-#~ msgid "eligibility.forms.confirm.mst.fields.sub"
-#~ msgstr "MST Courtesy Card number"
-
-#~ msgid "eligibility.forms.confirm.mst.fields.name"
-#~ msgstr "Last name (as it appears on Courtesy Card)"
-
-#~ msgid "eligibility.pages.start.mst.content_title"
-#~ msgstr ""
-#~ "You’ll need to do two things to link your transit discount to your bank "
-#~ "card."
-
-#~ msgid "eligibility.pages.start.mst.items[0].title"
-#~ msgstr "Your MST Courtesy Card"
-
-#~ msgid "eligibility.pages.start.mst.items[0].text"
-#~ msgstr "An active card that has not expired"
-
-#~ msgid "eligibility.pages.start.mst.p[0]"
-#~ msgstr ""
-#~ "This program is currently open to all MST Courtesy Cardholders. Not a "
-#~ "Courtesy Cardholder? Get in touch with your transit provider to learn "
-#~ "about other available discount programs at"
-
-#~ msgid "eligibility.pages.confirm.mst.title"
-#~ msgstr "Confirm your Courtesy Card"
-
-#~ msgid "eligibility.pages.confirm.mst.content_title"
-#~ msgstr "Let’s see if we can find you in our system"
-
-#~ msgid "eligibility.pages.confirm.mst.p[0]"
-#~ msgstr ""
-#~ "Please input your Courtesy Card number and last name below. If you’re a "
-#~ "current MST Courtesy Cardholder, we can confirm that you are eligible for "
-#~ "a discount. We do not save your information."
-
-#~ msgid "eligibility.pages.unverified.mst.title"
-#~ msgstr "Courtesy Card not located"
-
-#~ msgid "eligibility.pages.unverified.mst.content_title"
-#~ msgstr "We couldn’t locate you in our system"
-
-#~ msgid "eligibility.pages.unverified.mst.p[0]"
-#~ msgstr ""
-#~ "That’s okay! You may still be eligible for our program. Please reach out "
-#~ "to Monterey-Salinas Transit for assistance."
