@@ -522,12 +522,6 @@ msgstr ""
 #~ msgid "eligibility.pages.start.oauth.content_title"
 #~ msgstr "You will need a few items to connect your discount:"
 
-#~ msgid "eligibility.buttons.signin"
-#~ msgstr "Get started with"
-
-#~ msgid "eligibility.buttons.signout"
-#~ msgstr "Sign out of Login.gov"
-
 #~ msgid "eligibility.pages.unverified.oauth.title"
 #~ msgstr "Eligibility Error"
 
