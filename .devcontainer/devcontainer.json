@@ -24,6 +24,7 @@
     "mhutchie.git-graph",
     "ms-python.python",
     "ms-python.vscode-pylance",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "mrorz.language-gettext"
   ]
 }
