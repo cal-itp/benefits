@@ -36,5 +36,10 @@ stages:
         backendAzureRmResourceGroupName: 'RG-CDT-PUB-VIP-CALITP-P-001'
         backendAzureRmStorageAccountName: 'sacdtcalitpp001'
         backendAzureRmContainerName: 'tfstate'
-        backendAzureRmKey: 'erraform.tfstate'
-
+        backendAzureRmKey: 'terraform.tfstate'
+    - task: TerraformTaskV3@3
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        environmentServiceNameAzureRM: 'Production'
+    
