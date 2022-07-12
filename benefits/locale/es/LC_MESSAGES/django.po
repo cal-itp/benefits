@@ -540,12 +540,6 @@ msgstr ""
 #~ msgid "eligibility.pages.start.oauth.content_title"
 #~ msgstr "Necesitará algunos artículos para conectar su descuento:"
 
-#~ msgid "eligibility.buttons.signin"
-#~ msgstr "Comencemos con"
-
-#~ msgid "eligibility.buttons.signout"
-#~ msgstr "Cierre sesión de Login.gov"
-
 #~ msgid "eligibility.pages.unverified.oauth.title"
 #~ msgstr "Error de elegibilidad"
 

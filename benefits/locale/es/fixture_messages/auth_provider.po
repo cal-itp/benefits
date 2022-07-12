@@ -1,0 +1,5 @@
+msgid "eligibility.buttons.signin"
+msgstr "Comencemos con"
+
+msgid "eligibility.buttons.signout"
+msgstr "Cierre sesión de Login.gov"
