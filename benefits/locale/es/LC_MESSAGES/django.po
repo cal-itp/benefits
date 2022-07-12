@@ -536,20 +536,3 @@ msgid "enrollment.pages.success.logout.title"
 msgstr ""
 "Ha cerrado la sesión correctamente. ¡Gracias por usar los beneficios de Cal-"
 "ITP!"
-
-#~ msgid "eligibility.pages.start.oauth.content_title"
-#~ msgstr "Necesitará algunos artículos para conectar su descuento:"
-
-#~ msgid "eligibility.pages.unverified.oauth.title"
-#~ msgstr "Error de elegibilidad"
-
-#~ msgid "eligibility.pages.unverified.oauth.content_title"
-#~ msgstr "No se pudo verificar su elegibilidad."
-
-#~ msgid "eligibility.pages.unverified.oauth.p[0]"
-#~ msgstr ""
-#~ "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con "
-#~ "su proveedor de tránsito local para obtener asistencia."
-
-#~ msgid "eligibility.pages.index.oauth.label"
-#~ msgstr "TODO: Senior Discount Program"
