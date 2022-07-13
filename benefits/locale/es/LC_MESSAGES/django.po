@@ -583,18 +583,6 @@ msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Icono de tarjeta de identificación con marca de verificación"
 
-#: benefits/eligibility/views.py:98
-msgid "eligibility.pages.start.oauth.heading"
-msgstr "Una cuenta de Login.gov con verificación de identidad"
-
-#: benefits/eligibility/views.py:99
-msgid "eligibility.pages.start.oauth.details"
-msgstr ""
-"Login.gov es una forma segura de iniciar sesión en servicios "
-"gubernamentales. Benefits utiliza Login.gov para verificar su edad. Si aún "
-"no tiene una cuenta, podrá crear una. También deberá verificar su identidad, "
-"lo que requerirá estos artículos:"
-
 #: benefits/eligibility/views.py:103
 msgid "eligibility.pages.start.oauth.link_text"
 msgstr ""

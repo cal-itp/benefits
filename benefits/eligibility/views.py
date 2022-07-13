@@ -95,8 +95,8 @@ def start(request):
             0,
             dict(
                 icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-                heading=_("eligibility.pages.start.oauth.heading"),
-                details=_("eligibility.pages.start.oauth.details"),
+                heading=_(verifier.start_item_name),
+                details=_(verifier.start_item_description),
                 links=[
                     viewmodels.Button.link(
                         classes="btn-text btn-link",
