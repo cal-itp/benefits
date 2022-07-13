@@ -83,18 +83,19 @@ def start(request):
     )
 
     if verifier.is_auth_required:
-        identity_item["links"] = [
-            viewmodels.Button.link(
-                classes="btn-text btn-link",
-                text=_("eligibility.pages.start.oauth.link_text"),
-                url=f"{reverse(ROUTE_HELP)}#login-gov",
-            ),
-        ]
-        identity_item["bullets"] = [
-            _("eligibility.pages.start.oauth.required_items[0]"),
-            _("eligibility.pages.start.oauth.required_items[1]"),
-            _("eligibility.pages.start.oauth.required_items[2]"),
-        ]
+        if verifier.uses_auth_verification:
+            identity_item["links"] = [
+                viewmodels.Button.link(
+                    classes="btn-text btn-link",
+                    text=_("eligibility.pages.start.oauth.link_text"),
+                    url=f"{reverse(ROUTE_HELP)}#login-gov",
+                ),
+            ]
+            identity_item["bullets"] = [
+                _("eligibility.pages.start.oauth.required_items[0]"),
+                _("eligibility.pages.start.oauth.required_items[1]"),
+                _("eligibility.pages.start.oauth.required_items[2]"),
+            ]
 
         if not session.logged_in(request):
             button = viewmodels.Button.login(
