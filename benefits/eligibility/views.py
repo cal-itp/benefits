@@ -75,42 +75,26 @@ def start(request):
 
     button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse(ROUTE_CONFIRM))
 
-    media = [
-        dict(
-            icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-            heading=_("eligibility.pages.start.bankcard.title"),
-            details=_("eligibility.pages.start.bankcard.text"),
-            links=[
-                viewmodels.Button.link(
-                    classes="btn-text btn-link",
-                    text=_("eligibility.pages.start.bankcard.button[0].link"),
-                    url=f"{reverse(ROUTE_HELP)}#payment-options",
-                ),
-            ],
-        ),
-    ]
+    # define the verifier-specific required item
+    identity_item = dict(
+        icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
+        heading=_(verifier.start_item_name),
+        details=_(verifier.start_item_description),
+    )
 
     if verifier.is_auth_required:
-        media.insert(
-            0,
-            dict(
-                icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-                heading=_(verifier.start_item_name),
-                details=_(verifier.start_item_description),
-                links=[
-                    viewmodels.Button.link(
-                        classes="btn-text btn-link",
-                        text=_("eligibility.pages.start.oauth.link_text"),
-                        url=f"{reverse(ROUTE_HELP)}#login-gov",
-                    ),
-                ],
-                bullets=[
-                    _("eligibility.pages.start.oauth.required_items[0]"),
-                    _("eligibility.pages.start.oauth.required_items[1]"),
-                    _("eligibility.pages.start.oauth.required_items[2]"),
-                ],
+        identity_item["links"] = [
+            viewmodels.Button.link(
+                classes="btn-text btn-link",
+                text=_("eligibility.pages.start.oauth.link_text"),
+                url=f"{reverse(ROUTE_HELP)}#login-gov",
             ),
-        )
+        ]
+        identity_item["bullets"] = [
+            _("eligibility.pages.start.oauth.required_items[0]"),
+            _("eligibility.pages.start.oauth.required_items[1]"),
+            _("eligibility.pages.start.oauth.required_items[2]"),
+        ]
 
         if not session.logged_in(request):
             button = viewmodels.Button.login(
@@ -118,15 +102,21 @@ def start(request):
                 url=reverse(ROUTE_LOGIN),
             )
 
-    else:
-        media.insert(
-            0,
-            dict(
-                icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-                heading=_(verifier.start_item_name),
-                details=_(verifier.start_item_description),
+    # define the bank card item
+    bank_card_item = dict(
+        icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
+        heading=_("eligibility.pages.start.bankcard.title"),
+        details=_("eligibility.pages.start.bankcard.text"),
+        links=[
+            viewmodels.Button.link(
+                classes="btn-text btn-link",
+                text=_("eligibility.pages.start.bankcard.button[0].link"),
+                url=f"{reverse(ROUTE_HELP)}#payment-options",
             ),
-        )
+        ],
+    )
+
+    media = [identity_item, bank_card_item]
 
     page = viewmodels.Page(
         title=_("eligibility.pages.start.title"),

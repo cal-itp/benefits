@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-07-25 22:59+0000\n"
+"POT-Creation-Date: 2022-08-03 23:18+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -555,56 +555,55 @@ msgstr "TODO"
 msgid "eligibility.pages.index.content_title"
 msgstr "TODO"
 
-#: benefits/eligibility/views.py:80 benefits/enrollment/views.py:145
+#: benefits/eligibility/views.py:80 benefits/enrollment/views.py:78
+msgctxt "image alt text"
+msgid "core.icons.idcardcheck"
+msgstr "Icono de tarjeta de identificación con marca de verificación"
+
+#: benefits/eligibility/views.py:89
+msgid "eligibility.pages.start.oauth.link_text"
+msgstr ""
+"Conozca más sobre Login.gov y cómo proporcionar una prueba de identidad."
+
+#: benefits/eligibility/views.py:94
+msgid "eligibility.pages.start.oauth.required_items[0]"
+msgstr "Su tarjeta de identificación emitida por el estado"
+
+#: benefits/eligibility/views.py:95
+msgid "eligibility.pages.start.oauth.required_items[1]"
+msgstr "Su número de Seguro Social"
+
+#: benefits/eligibility/views.py:96
+msgid "eligibility.pages.start.oauth.required_items[2]"
+msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
+
+#: benefits/eligibility/views.py:107 benefits/enrollment/views.py:145
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
 msgstr ""
 "Icono de tarjeta bancaria con símbolo sin contacto y marca de verificación"
 
-#: benefits/eligibility/views.py:81
+#: benefits/eligibility/views.py:108
 msgid "eligibility.pages.start.bankcard.title"
 msgstr "Los datos de su tarjeta bancaria"
 
-#: benefits/eligibility/views.py:82
+#: benefits/eligibility/views.py:109
 msgid "eligibility.pages.start.bankcard.text"
 msgstr ""
 "Su tarjeta debe ser una tarjeta de débito o crédito sin contacto de Visa o "
 "Mastercard."
 
-#: benefits/eligibility/views.py:86
+#: benefits/eligibility/views.py:113
 msgid "eligibility.pages.start.bankcard.button[0].link"
 msgstr ""
 "¿No tienes tarjeta bancaria o no está seguro si tiene una tarjeta sin "
 "contacto?"
 
-#: benefits/eligibility/views.py:97 benefits/eligibility/views.py:125
-#: benefits/enrollment/views.py:78
-msgctxt "image alt text"
-msgid "core.icons.idcardcheck"
-msgstr "Icono de tarjeta de identificación con marca de verificación"
-
-#: benefits/eligibility/views.py:103
-msgid "eligibility.pages.start.oauth.link_text"
-msgstr ""
-"Conozca más sobre Login.gov y cómo proporcionar una prueba de identidad."
-
-#: benefits/eligibility/views.py:108
-msgid "eligibility.pages.start.oauth.required_items[0]"
-msgstr "Su tarjeta de identificación emitida por el estado"
-
-#: benefits/eligibility/views.py:109
-msgid "eligibility.pages.start.oauth.required_items[1]"
-msgstr "Su número de Seguro Social"
-
-#: benefits/eligibility/views.py:110
-msgid "eligibility.pages.start.oauth.required_items[2]"
-msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
-
-#: benefits/eligibility/views.py:132
+#: benefits/eligibility/views.py:122
 msgid "eligibility.pages.start.title"
 msgstr "Comencemos"
 
-#: benefits/eligibility/views.py:243
+#: benefits/eligibility/views.py:233
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Icono de tarjeta de identificación con signo de interrogación"
