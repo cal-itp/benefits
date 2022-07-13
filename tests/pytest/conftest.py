@@ -62,6 +62,15 @@ def model_AuthProvider():
 
 
 @pytest.fixture
+def model_AuthProvider_with_verification(model_AuthProvider):
+    model_AuthProvider.scope = "scope"
+    model_AuthProvider.claim = "claim"
+    model_AuthProvider.save()
+
+    return model_AuthProvider
+
+
+@pytest.fixture
 def model_EligibilityType():
     eligibility = EligibilityType(id=999, name="test", label="Test Eligibility Type", group_id="1234")
     eligibility.save()
@@ -98,6 +107,14 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
     verifier.save()
 
     return verifier
+
+
+@pytest.fixture
+def model_EligibilityVerifier_AuthProvider_with_verification(model_AuthProvider_with_verification, model_EligibilityVerifier):
+    model_EligibilityVerifier.auth_provider = model_AuthProvider_with_verification
+    model_EligibilityVerifier.save()
+
+    return model_EligibilityVerifier
 
 
 @pytest.fixture
@@ -189,6 +206,13 @@ def mocked_session_oauth_token(mocker):
 @pytest.fixture
 def mocked_session_verifier(mocker, model_EligibilityVerifier):
     return mocker.patch("benefits.core.session.verifier", autospec=True, return_value=model_EligibilityVerifier)
+
+
+@pytest.fixture
+def mocked_session_verifier_oauth(mocker, model_EligibilityVerifier_AuthProvider_with_verification):
+    return mocker.patch(
+        "benefits.core.session.verifier", autospec=True, return_value=model_EligibilityVerifier_AuthProvider_with_verification
+    )
 
 
 @pytest.fixture

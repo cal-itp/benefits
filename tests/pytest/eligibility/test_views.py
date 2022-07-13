@@ -199,7 +199,7 @@ def test_confirm_get_verified(client, mocked_session_update):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_oauth_token")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier_oauth", "mocked_session_oauth_token")
 def test_confirm_get_oauth_verified(mocker, client, model_EligibilityType, mocked_session_update, mocked_analytics_module):
     mocker.patch("benefits.eligibility.verify.eligibility_from_oauth", return_value=[model_EligibilityType])
 
@@ -214,7 +214,7 @@ def test_confirm_get_oauth_verified(mocker, client, model_EligibilityType, mocke
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures(
-    "mocked_session_agency", "mocked_session_verifier", "mocked_session_oauth_token", "mocked_session_update"
+    "mocked_session_agency", "mocked_session_verifier_oauth", "mocked_session_oauth_token", "mocked_session_update"
 )
 def test_confirm_get_oauth_unverified(mocker, client, mocked_analytics_module):
     mocker.patch("benefits.eligibility.verify.eligibility_from_oauth", return_value=[])
