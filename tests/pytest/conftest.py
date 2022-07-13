@@ -6,7 +6,7 @@ import pytest
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import TransitAgency
+from benefits.core.models import AuthProvider, EligibilityType, EligibilityVerifier, PaymentProcessor, PemData, TransitAgency
 
 
 def pytest_runtest_setup():
@@ -36,6 +36,118 @@ def app_request(rf):
     session.reset(app_request)
 
     return app_request
+
+
+@pytest.fixture
+def model_PemData():
+    data = PemData(id=999, text="-----BEGIN PUBLIC KEY-----\nPEM DATA\n-----END PUBLIC KEY-----\n", label="Test public key")
+    data.save()
+
+    return data
+
+
+@pytest.fixture
+def model_AuthProvider():
+    auth_provider = AuthProvider(
+        id=999,
+        sign_in_button_label="Sign in",
+        sign_out_button_label="Sign out",
+        client_name="Client",
+        client_id="1234",
+        authority="https://example.com",
+    )
+    auth_provider.save()
+
+    return auth_provider
+
+
+@pytest.fixture
+def model_EligibilityType():
+    eligibility = EligibilityType(id=999, name="test", label="Test Eligibility Type", group_id="1234")
+    eligibility.save()
+
+    return eligibility
+
+
+@pytest.fixture
+def model_EligibilityVerifier(model_PemData, model_EligibilityType):
+    verifier = EligibilityVerifier(
+        id=999,
+        name="Test Verifier",
+        api_url="https://example.com/verify",
+        api_auth_header="X-API-AUTH",
+        api_auth_key="secret-key",
+        eligibility_type=model_EligibilityType,
+        public_key=model_PemData,
+        selection_label="Select",
+        start_content_title="Start",
+        start_item_name="Start Item",
+        start_item_description="Start Item Description",
+        start_blurb="Start Blurb",
+        form_title="Form",
+        form_content_title="Form",
+        form_blurb="Form Blurb",
+        form_sub_label="Sub",
+        form_sub_placeholder="Sub",
+        form_name_label="Name",
+        form_name_placeholder="Name",
+        unverified_title="Unverified",
+        unverified_content_title="Unverified",
+        unverified_blurb="Unverified Blurb",
+    )
+    verifier.save()
+
+    return verifier
+
+
+@pytest.fixture
+def model_PaymentProcessor(model_PemData):
+    payment_processor = PaymentProcessor(
+        id=999,
+        name="Test Payment Processor",
+        api_base_url="https://example.com/payments",
+        api_access_token_endpoint="token",
+        api_access_token_request_key="X-API-TOKEN",
+        api_access_token_request_val="secret-value",
+        card_tokenize_url="https://example.com/payments/tokenize.js",
+        card_tokenize_func="tokenize",
+        card_tokenize_env="test",
+        client_cert=model_PemData,
+        client_cert_private_key=model_PemData,
+        client_cert_root_ca=model_PemData,
+        customer_endpoint="customer",
+        customers_endpoint="customers",
+        group_endpoint="group",
+    )
+    payment_processor.save()
+
+    return payment_processor
+
+
+@pytest.fixture
+def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityVerifier, model_PaymentProcessor):
+    agency = TransitAgency(
+        id=999,
+        slug="test",
+        short_name="TEST",
+        long_name="Test Transit Agency",
+        agency_id="test123",
+        merchant_id="test",
+        info_url="https://example.com/test-agency",
+        phone="800-555-5555",
+        active=True,
+        payment_processor=model_PaymentProcessor,
+        private_key=model_PemData,
+        jws_signing_alg="alg",
+    )
+    # save first before adding many-to-many relationships, need ID on both sides
+    agency.save()
+
+    agency.eligibility_types.add(model_EligibilityType)
+    agency.eligibility_verifiers.add(model_EligibilityVerifier)
+    agency.save()
+
+    return agency
 
 
 @pytest.fixture
