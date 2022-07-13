@@ -171,35 +171,14 @@ def mocked_view():
 
 
 @pytest.fixture
-def first_agency():
-    agency = TransitAgency.objects.first()
-    assert agency
-    return agency
+def mocked_session_agency(mocker, model_TransitAgency):
+    return mocker.patch("benefits.core.session.agency", autospec=True, return_value=model_TransitAgency)
 
 
 @pytest.fixture
-def first_eligibility(first_agency):
-    eligibility = first_agency.eligibility_types.first()
-    assert eligibility
-    return eligibility
-
-
-@pytest.fixture
-def first_verifier(first_agency):
-    verifier = first_agency.eligibility_verifiers.first()
-    assert verifier
-    return verifier
-
-
-@pytest.fixture
-def mocked_session_agency(mocker, first_agency):
-    return mocker.patch("benefits.core.session.agency", autospec=True, return_value=first_agency)
-
-
-@pytest.fixture
-def mocked_session_eligibility(mocker, first_eligibility):
+def mocked_session_eligibility(mocker, model_EligibilityType):
     mocker.patch("benefits.core.session.eligible", autospec=True, return_value=True)
-    return mocker.patch("benefits.core.session.eligibility", autospec=True, return_value=first_eligibility)
+    return mocker.patch("benefits.core.session.eligibility", autospec=True, return_value=model_EligibilityType)
 
 
 @pytest.fixture
@@ -208,13 +187,13 @@ def mocked_session_oauth_token(mocker):
 
 
 @pytest.fixture
-def mocked_session_verifier(mocker, first_verifier):
-    return mocker.patch("benefits.core.session.verifier", autospec=True, return_value=first_verifier)
+def mocked_session_verifier(mocker, model_EligibilityVerifier):
+    return mocker.patch("benefits.core.session.verifier", autospec=True, return_value=model_EligibilityVerifier)
 
 
 @pytest.fixture
-def mocked_session_verifier_auth_required(mocker, first_verifier, mocked_session_verifier):
-    mock_verifier = mocker.Mock(spec=first_verifier)
+def mocked_session_verifier_auth_required(mocker, model_EligibilityVerifier, mocked_session_verifier):
+    mock_verifier = mocker.Mock(spec=model_EligibilityVerifier)
     mock_verifier.is_auth_required = True
     mocked_session_verifier.return_value = mock_verifier
     return mocked_session_verifier
@@ -222,7 +201,7 @@ def mocked_session_verifier_auth_required(mocker, first_verifier, mocked_session
 
 @pytest.fixture
 def mocked_session_verifier_auth_not_required(mocked_session_verifier_auth_required):
-    # mocked_session_verifier_auth_required.return_value is the Mock(spec=first_verifier) from that fixture
+    # mocked_session_verifier_auth_required.return_value is the Mock(spec=model_EligibilityVerifier) from that fixture
     mocked_session_verifier_auth_required.return_value.is_auth_required = False
     mocked_session_verifier_auth_required.return_value.uses_auth_verification = False
     return mocked_session_verifier_auth_required
