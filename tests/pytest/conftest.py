@@ -71,6 +71,15 @@ def model_AuthProvider_with_verification(model_AuthProvider):
 
 
 @pytest.fixture
+def model_AuthProvider_without_verification(model_AuthProvider):
+    model_AuthProvider.scope = None
+    model_AuthProvider.claim = None
+    model_AuthProvider.save()
+
+    return model_AuthProvider
+
+
+@pytest.fixture
 def model_EligibilityType():
     eligibility = EligibilityType(id=999, name="test", label="Test Eligibility Type", group_id="1234")
     eligibility.save()
