@@ -19,10 +19,9 @@ def test_active_agency_False(app_request, model_TransitAgency_inactive):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("model_TransitAgency")
-def test_active_agency_True(app_request):
-    agency = models.TransitAgency.objects.filter(active=True).first()
-    session.update(app_request, agency=agency)
+def test_active_agency_True(model_TransitAgency, app_request):
+    assert model_TransitAgency.active
+    session.update(app_request, agency=model_TransitAgency)
 
     assert session.active_agency(app_request)
 
