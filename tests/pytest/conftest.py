@@ -34,15 +34,16 @@ def app_request(rf):
 
 @pytest.fixture
 def model_PemData():
-    data = PemData(id=999, text="-----BEGIN PUBLIC KEY-----\nPEM DATA\n-----END PUBLIC KEY-----\n", label="Test public key")
-    data.save()
+    data = PemData.objects.create(
+        id=999, text="-----BEGIN PUBLIC KEY-----\nPEM DATA\n-----END PUBLIC KEY-----\n", label="Test public key"
+    )
 
     return data
 
 
 @pytest.fixture
 def model_AuthProvider():
-    auth_provider = AuthProvider(
+    auth_provider = AuthProvider.objects.create(
         id=999,
         sign_in_button_label="Sign in",
         sign_out_button_label="Sign out",
@@ -50,7 +51,6 @@ def model_AuthProvider():
         client_id="1234",
         authority="https://example.com",
     )
-    auth_provider.save()
 
     return auth_provider
 
@@ -75,15 +75,14 @@ def model_AuthProvider_without_verification(model_AuthProvider):
 
 @pytest.fixture
 def model_EligibilityType():
-    eligibility = EligibilityType(id=999, name="test", label="Test Eligibility Type", group_id="1234")
-    eligibility.save()
+    eligibility = EligibilityType.objects.create(id=999, name="test", label="Test Eligibility Type", group_id="1234")
 
     return eligibility
 
 
 @pytest.fixture
 def model_EligibilityVerifier(model_PemData, model_EligibilityType):
-    verifier = EligibilityVerifier(
+    verifier = EligibilityVerifier.objects.create(
         id=999,
         name="Test Verifier",
         api_url="https://example.com/verify",
@@ -107,7 +106,6 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         unverified_content_title="Unverified",
         unverified_blurb="Unverified Blurb",
     )
-    verifier.save()
 
     return verifier
 
@@ -122,7 +120,7 @@ def model_EligibilityVerifier_AuthProvider_with_verification(model_AuthProvider_
 
 @pytest.fixture
 def model_PaymentProcessor(model_PemData):
-    payment_processor = PaymentProcessor(
+    payment_processor = PaymentProcessor.objects.create(
         id=999,
         name="Test Payment Processor",
         api_base_url="https://example.com/payments",
@@ -139,14 +137,13 @@ def model_PaymentProcessor(model_PemData):
         customers_endpoint="customers",
         group_endpoint="group",
     )
-    payment_processor.save()
 
     return payment_processor
 
 
 @pytest.fixture
 def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityVerifier, model_PaymentProcessor):
-    agency = TransitAgency(
+    agency = TransitAgency.objects.create(
         id=999,
         slug="test",
         short_name="TEST",
@@ -160,9 +157,8 @@ def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityV
         private_key=model_PemData,
         jws_signing_alg="alg",
     )
-    # save first before adding many-to-many relationships, need ID on both sides
-    agency.save()
 
+    # add many-to-many relationships after creation, need ID on both sides
     agency.eligibility_types.add(model_EligibilityType)
     agency.eligibility_verifiers.add(model_EligibilityVerifier)
     agency.save()
