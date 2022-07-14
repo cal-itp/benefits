@@ -8,16 +8,12 @@ from benefits.core.views import ROUTE_INDEX
 
 
 @pytest.mark.django_db
-def test_active_agency_False(app_request):
+def test_active_agency_False(app_request, model_TransitAgency_inactive):
     session.update(app_request, agency=None)
 
     assert not session.active_agency(app_request)
 
-    agency = models.TransitAgency.objects.first()
-    agency.active = False
-    agency.save()
-
-    session.update(app_request, agency=agency)
+    session.update(app_request, agency=model_TransitAgency_inactive)
 
     assert not session.active_agency(app_request)
 

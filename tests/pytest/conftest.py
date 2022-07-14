@@ -177,6 +177,14 @@ def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityV
 
 
 @pytest.fixture
+def model_TransitAgency_inactive(model_TransitAgency):
+    model_TransitAgency.active = False
+    model_TransitAgency.save()
+
+    return model_TransitAgency
+
+
+@pytest.fixture
 def mocked_analytics_module(mocker):
     """
     Fixture returns a helper function to mock the analytics module imported on another given module.
