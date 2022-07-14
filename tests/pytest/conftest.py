@@ -13,12 +13,6 @@ def pytest_runtest_setup():
     disable_socket()
 
 
-@pytest.fixture(scope="session")
-def django_db_setup():
-    # use existing database since it's read-only
-    pass
-
-
 @pytest.fixture
 def app_request(rf):
     """
