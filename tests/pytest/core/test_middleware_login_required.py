@@ -34,12 +34,10 @@ def test_login_auth_required(app_request, mocked_view, decorated_view):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("model_EligibilityVerifier")
-def test_login_auth_not_required(app_request, mocked_view, decorated_view):
-    verifier = EligibilityVerifier.objects.filter(auth_provider__isnull=True).first()
-    assert verifier
-    assert not verifier.is_auth_required
-    session.update(app_request, verifier=verifier)
+def test_login_auth_not_required(app_request, model_EligibilityVerifier, mocked_view, decorated_view):
+    model_EligibilityVerifier.auth_provider = None
+    assert not model_EligibilityVerifier.is_auth_required
+    session.update(app_request, verifier=model_EligibilityVerifier)
 
     decorated_view(app_request)
 
