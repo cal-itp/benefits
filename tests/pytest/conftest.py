@@ -35,7 +35,7 @@ def app_request(rf):
 @pytest.fixture
 def model_PemData():
     data = PemData.objects.create(
-        id=999, text="-----BEGIN PUBLIC KEY-----\nPEM DATA\n-----END PUBLIC KEY-----\n", label="Test public key"
+        text="-----BEGIN PUBLIC KEY-----\nPEM DATA\n-----END PUBLIC KEY-----\n", label="Test public key"
     )
 
     return data
@@ -44,7 +44,6 @@ def model_PemData():
 @pytest.fixture
 def model_AuthProvider():
     auth_provider = AuthProvider.objects.create(
-        id=999,
         sign_in_button_label="Sign in",
         sign_out_button_label="Sign out",
         client_name="Client",
@@ -75,7 +74,7 @@ def model_AuthProvider_without_verification(model_AuthProvider):
 
 @pytest.fixture
 def model_EligibilityType():
-    eligibility = EligibilityType.objects.create(id=999, name="test", label="Test Eligibility Type", group_id="1234")
+    eligibility = EligibilityType.objects.create(name="test", label="Test Eligibility Type", group_id="1234")
 
     return eligibility
 
@@ -83,7 +82,6 @@ def model_EligibilityType():
 @pytest.fixture
 def model_EligibilityVerifier(model_PemData, model_EligibilityType):
     verifier = EligibilityVerifier.objects.create(
-        id=999,
         name="Test Verifier",
         api_url="https://example.com/verify",
         api_auth_header="X-API-AUTH",
@@ -121,7 +119,6 @@ def model_EligibilityVerifier_AuthProvider_with_verification(model_AuthProvider_
 @pytest.fixture
 def model_PaymentProcessor(model_PemData):
     payment_processor = PaymentProcessor.objects.create(
-        id=999,
         name="Test Payment Processor",
         api_base_url="https://example.com/payments",
         api_access_token_endpoint="token",
@@ -144,7 +141,6 @@ def model_PaymentProcessor(model_PemData):
 @pytest.fixture
 def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityVerifier, model_PaymentProcessor):
     agency = TransitAgency.objects.create(
-        id=999,
         slug="test",
         short_name="TEST",
         long_name="Test Transit Agency",
