@@ -19,6 +19,7 @@ def test_active_agency_False(app_request, model_TransitAgency_inactive):
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("model_TransitAgency")
 def test_active_agency_True(app_request):
     agency = models.TransitAgency.objects.filter(active=True).first()
     session.update(app_request, agency=agency)
@@ -65,11 +66,10 @@ def test_eligibile_False(app_request):
 
 
 @pytest.mark.django_db
-def test_eligibile_True(app_request):
-    agency = models.TransitAgency.objects.first()
-    eligibility = agency.eligibility_types.first()
+def test_eligibile_True(model_TransitAgency, app_request):
+    eligibility = model_TransitAgency.eligibility_types.first()
 
-    session.update(app_request, agency=agency, eligibility_types=[eligibility.name])
+    session.update(app_request, agency=model_TransitAgency, eligibility_types=[eligibility.name])
 
     assert session.eligible(app_request)
 
@@ -202,9 +202,8 @@ def test_rate_limit_time_default(app_request):
 
 
 @pytest.mark.django_db
-def test_reset_agency(app_request):
-    agency = models.TransitAgency.objects.first()
-    session.update(app_request, agency=agency)
+def test_reset_agency(model_TransitAgency, app_request):
+    session.update(app_request, agency=model_TransitAgency)
 
     assert session.agency(app_request)
 
@@ -377,19 +376,16 @@ def test_update_eligibility_empty(app_request):
 
 
 @pytest.mark.django_db
-def test_update_eligibility_many(app_request):
-    eligiblity = models.EligibilityType.objects.all()
-
+def test_update_eligibility_many(model_EligibilityType, app_request):
     with pytest.raises(NotImplementedError):
-        assert session.update(app_request, eligibility_types=[e.name for e in eligiblity])
+        assert session.update(app_request, eligibility_types=[model_EligibilityType, model_EligibilityType])
 
 
 @pytest.mark.django_db
-def test_update_eligibility_single(app_request):
-    agency = models.TransitAgency.objects.first()
-    eligibility = agency.eligibility_types.first()
+def test_update_eligibility_single(model_TransitAgency, app_request):
+    eligibility = model_TransitAgency.eligibility_types.first()
 
-    session.update(app_request, agency=agency, eligibility_types=[eligibility.name])
+    session.update(app_request, agency=model_TransitAgency, eligibility_types=[eligibility.name])
 
     assert session.eligibility(app_request) == eligibility
 

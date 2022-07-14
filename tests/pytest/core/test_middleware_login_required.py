@@ -34,6 +34,7 @@ def test_login_auth_required(app_request, mocked_view, decorated_view):
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("model_EligibilityVerifier")
 def test_login_auth_not_required(app_request, mocked_view, decorated_view):
     verifier = EligibilityVerifier.objects.filter(auth_provider__isnull=True).first()
     assert verifier
