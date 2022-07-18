@@ -5,8 +5,8 @@ run the app locally. But further configuration is required before many of the in
 
 There are two primary components of the application configuration include:
 
-* Overall app settings in [environment variables][env-vars]
-* Content and more specific configurations in [fixtures][fixtures]
+- Overall app settings in [environment variables][env-vars]
+- Content and more specific configurations in [fixtures][fixtures]
 
 The majority (but not all) of the environment variables are read into [Django settings](#django-settings) during application
 startup.
@@ -75,9 +75,9 @@ else:
 [benefits-manage]: https://github.com/cal-itp/benefits/blob/dev/manage.py
 [benefits-settings]: https://github.com/cal-itp/benefits/blob/dev/benefits/settings.py
 [benefits-wsgi]: https://github.com/cal-itp/benefits/blob/dev/benefits/wsgi.py
-[django-model]: https://docs.djangoproject.com/en/3.2/topics/db/models/
-[django-settings]: https://docs.djangoproject.com/en/3.2/topics/settings/
-[django-using-settings]: https://docs.djangoproject.com/en/3.2/topics/settings/#using-settings-in-python-code
+[django-model]: https://docs.djangoproject.com/en/4.0/topics/db/models/
+[django-settings]: https://docs.djangoproject.com/en/4.0/topics/settings/
+[django-using-settings]: https://docs.djangoproject.com/en/4.0/topics/settings/#using-settings-in-python-code
 [env-vars]: environment-variables.md
 [fixtures]: fixtures.md
 [getting-started]: ../getting-started/README.md

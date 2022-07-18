@@ -42,8 +42,8 @@ If blank or an invalid key, analytics events aren't captured (though may still b
 
 Boolean:
 
-* `True`: activates Django's built-in admin interface for content authoring.
-* `False` (default): skips this activation.
+- `True`: activates Django's built-in admin interface for content authoring.
+- `False` (default): skips this activation.
 
 ### `DJANGO_ALLOWED_HOSTS`
 
@@ -53,7 +53,7 @@ Boolean:
 
 !!! tldr "Django docs"
 
-    [Settings: `ALLOWS_HOSTS`](https://docs.djangoproject.com/en/3.2/ref/settings/#allowed-hosts)
+    [Settings: `ALLOWS_HOSTS`](https://docs.djangoproject.com/en/4.0/ref/settings/#allowed-hosts)
 
 A list of strings representing the host/domain names that this Django site can serve.
 
@@ -65,13 +65,13 @@ A list of strings representing the host/domain names that this Django site can s
 
 !!! tldr "Django docs"
 
-    [Settings: `DEBUG`](https://docs.djangoproject.com/en/3.2/ref/settings/#debug)
+    [Settings: `DEBUG`](https://docs.djangoproject.com/en/4.0/ref/settings/#debug)
 
 Boolean:
 
-* `True`: the application is launched with debug mode turned on, allows pausing on breakpoints in the code, changes how static
-          files are served
-* `False` (default): the application is launched with debug mode turned off, similar to how it runs in production
+- `True`: the application is launched with debug mode turned on, allows pausing on breakpoints in the code, changes how static
+  files are served
+- `False` (default): the application is launched with debug mode turned off, similar to how it runs in production
 
 ### `DJANGO_INIT_PATH`
 
@@ -104,7 +104,7 @@ From inside the container, the app is always listening on port `8000`.
 
 !!! tldr "Django docs"
 
-    [Settings: `LOGGING_CONFIG`](https://docs.djangoproject.com/en/3.2/ref/settings/#logging-config)
+    [Settings: `LOGGING_CONFIG`](https://docs.djangoproject.com/en/4.0/ref/settings/#logging-config)
 
 The log level used in the application's logging configuration.
 
@@ -118,7 +118,7 @@ By default the application sends logs to `stdout`.
 
 !!! tldr "Django docs"
 
-    [Settings: `SECRET_KEY`](https://docs.djangoproject.com/en/3.2/ref/settings/#secret-key)
+    [Settings: `SECRET_KEY`](https://docs.djangoproject.com/en/4.0/ref/settings/#secret-key)
 
 Django's primary secret, keep this safe!
 
@@ -130,7 +130,7 @@ Django's primary secret, keep this safe!
 
 !!! tldr "Django docs"
 
-    [Settings: `CSRF_TRUSTED_ORIGINS`](https://docs.djangoproject.com/en/3.2/ref/settings/#csrf-trusted-origins)
+    [Settings: `CSRF_TRUSTED_ORIGINS`](https://docs.djangoproject.com/en/4.0/ref/settings/#csrf-trusted-origins)
 
 Comma-separated list of hosts which are trusted origins for unsafe requests (e.g. POST)
 

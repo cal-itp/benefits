@@ -122,7 +122,7 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 # SSL terminates before getting to Django, and NGINX adds this header to indicate
 # if the original request was secure or not
 #
-# See https://docs.djangoproject.com/en/3.2/ref/settings/#secure-proxy-ssl-header
+# See https://docs.djangoproject.com/en/4.0/ref/settings/#secure-proxy-ssl-header
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
