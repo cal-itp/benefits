@@ -20,7 +20,7 @@ The application is accessible to the public at [benefits.calitp.org](https://ben
 
 ## Technical details
 
-`benefits` is a [Django 3][django] web application. The application talks to one or more [Eligibility Verification APIs](https://docs.calitp.org/eligibility-api/specification) or authentication providers. These APIs and the application are
+`benefits` is a [Django 4][django] web application. The application talks to one or more [Eligibility Verification APIs](https://docs.calitp.org/eligibility-api/specification) or authentication providers. These APIs and the application are
 designed for privacy and security of user information:
 
 - The API communicates with signed and encrypted JSON Web Tokens containing only the most necessary of user data for the purpose of eligibility verification
@@ -64,4 +64,4 @@ sequenceDiagram
 [interconnections]: deployment/infrastructure/#system-interconnections
 [hosting]: deployment/
 [littlepay]: https://littlepay.com/
-[i18n]: https://docs.djangoproject.com/en/3.2/topics/i18n/
+[i18n]: https://docs.djangoproject.com/en/4.0/topics/i18n/
