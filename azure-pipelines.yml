@@ -1,13 +1,18 @@
 trigger:
+  # run on all branches
   branches:
     include:
-      - terraform
+      - "*"
+  # only run for changes to Terraform files
+  paths:
+    include:
+      - terraform/*
 stages:
   - stage: __default
+    pool:
+      vmImage: ubuntu-latest
     jobs:
       - job: Job
-        pool:
-          vmImage: ubuntu-latest
         steps:
           - task: replacetokens@5
             inputs:
