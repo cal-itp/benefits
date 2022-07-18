@@ -27,7 +27,8 @@ If you do not receive a prompt, or when you feel like starting from a fresh envi
 
 1. `Ctrl/Cmd+Shift+P` to bring up the command palette in Visual Studio Code
 1. Type `Remote-Containers` to filter the commands
-1. Select `Rebuild and Reopen in Container`
+1. Select `Rebuild and Reopen in Container` to completely rebuild the devcontainer
+1. Select `Reopen in Container` to reopen the most recent devcontainer build
 
 ## Attach a debugger
 
