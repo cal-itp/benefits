@@ -24,9 +24,8 @@ RUN useradd --create-home --shell /bin/bash $USER && \
     chown -R $USER /home/$USER && \
     # install server components
     apt-get update && \
-    apt-get install -qq --no-install-recommends gettext nginx && \
     # install git for use when installing dependencies from VCS (https://pip.pypa.io/en/stable/topics/vcs-support/)
-    apt-get install -qq --no-install-recommends git
+    apt-get install -qq --no-install-recommends build-essential gettext git nginx
 
 # enter app directory
 WORKDIR /home/$USER/app
