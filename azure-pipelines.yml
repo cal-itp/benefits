@@ -1,8 +1,9 @@
 trigger:
-  # run on all branches
+  # automatically runs on pull requests; this runs the pipeline after merge
+  # https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#pr-triggers
   branches:
     include:
-      - "*"
+      - dev
   # only run for changes to Terraform files
   paths:
     include:
