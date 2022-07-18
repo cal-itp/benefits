@@ -42,3 +42,13 @@ stages:
               workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
               # service connection
               environmentServiceNameAzureRM: Production
+          - task: TerraformTaskV3@3
+            displayName: Terraform apply
+            inputs:
+              provider: azurerm
+              command: apply
+              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
+              # service connection
+              environmentServiceNameAzureRM: Production
+            # only run on dev
+            condition: eq(variables['Build.SourceBranch'], 'refs/heads/dev')
