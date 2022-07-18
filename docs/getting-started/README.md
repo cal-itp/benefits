@@ -10,14 +10,6 @@ The following commands should be run in a terminal program like `bash`.
 git clone https://github.com/cal-itp/benefits
 ```
 
-## Change into the .devcontainer dir
-
-This is where configuration for running locally is stored.
-
-```bash
-cd benefits/.devcontainer
-```
-
 ## Create an environment file
 
 The application is configured with defaults to run locally, but an `.env` file is required to run with Docker Compose. This file can be empty, or environment overrides can be added as needed:
@@ -34,10 +26,12 @@ DJANGO_LOCAL_PORT=9000
 
 See [Configuration](../configuration) for more details on supported environment variables and their settings.
 
-## Build image using Docker Compose
+## Run the build script
+
+This builds the runtime and devcontainer images:
 
 ```bash
-docker compose build client
+bin/build.sh
 ```
 
 If you need all layers to rebuild, use:
@@ -67,9 +61,9 @@ you setup as part of initialization.
 
 By default, [sample data][sample-data] is used to initialize Django. Alternatively you may:
 
-* Modify the sample data file(s); or
-* Override the `DJANGO_INIT_PATH` environment variable with different data file(s); or
-* (If `DJANGO_ADMIN=true`) use the backend administrative interface CRUD
+- Modify the sample data file(s); or
+- Override the `DJANGO_INIT_PATH` environment variable with different data file(s); or
+- (If `DJANGO_ADMIN=true`) use the backend administrative interface CRUD
 
 Stop the running services with:
 
