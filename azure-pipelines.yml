@@ -7,7 +7,7 @@ stages:
     jobs:
       - job: Job
         pool:
-          vmImage: windows-latest
+          vmImage: ubuntu-latest
         steps:
           - task: replacetokens@5
             inputs:
@@ -27,12 +27,12 @@ stages:
               enableTelemetry: true
           - task: TerraformInstaller@0
             inputs:
-              terraformVersion: 1.2.1
+              terraformVersion: 1.2.4
           - task: TerraformTaskV3@3
             inputs:
               provider: "azurerm"
               command: "init"
-              workingDirectory: '$(System.DefaultWorkingDirectory)\terraform'
+              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
               backendServiceArm: "Production"
               backendAzureRmResourceGroupName: "RG-CDT-PUB-VIP-CALITP-P-001"
               backendAzureRmStorageAccountName: "sacdtcalitpp001"
@@ -42,5 +42,5 @@ stages:
             inputs:
               provider: "azurerm"
               command: "plan"
-              workingDirectory: '$(System.DefaultWorkingDirectory)\terraform'
+              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
               environmentServiceNameAzureRM: "Production"
