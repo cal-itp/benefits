@@ -2,7 +2,7 @@ from django.urls import reverse
 
 import pytest
 
-from benefits.core.models import TransitAgency
+from benefits.core.models import EligibilityVerifier, TransitAgency
 import benefits.core.session
 from benefits.core.views import ROUTE_ELIGIBILITY, ROUTE_INDEX, ROUTE_HELP, TEMPLATE_AGENCY, bad_request, csrf_failure
 
@@ -25,8 +25,13 @@ def mocked_active_agency(mocker):
 
 
 @pytest.mark.django_db
-def test_index_multiple_agencies(client):
-    """Assumes that fixture data contains multiple active agencies."""
+def test_index_multiple_agencies(model_TransitAgency, client):
+    # create another Transit Agency by cloning the original to ensure there are multiple
+    # https://stackoverflow.com/a/48149675/453168
+    new_agency = TransitAgency.objects.get(pk=model_TransitAgency.id)
+    new_agency.pk = None
+    new_agency.save()
+
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
 
@@ -35,26 +40,22 @@ def test_index_multiple_agencies(client):
 
 
 @pytest.mark.django_db
-def test_index_single_agency(mocker, client, session_reset_spy):
-    # all_active set to ABC
-    agency = TransitAgency.by_slug("abc")
-    mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=[agency])
+def test_index_single_agency(mocker, model_TransitAgency, client, session_reset_spy):
+    mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=[model_TransitAgency])
 
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
 
     session_reset_spy.assert_called_once()
     assert response.status_code == 302
-    assert response.url == agency.index_url
+    assert response.url == model_TransitAgency.index_url
 
 
 @pytest.mark.django_db
-def test_agency_index_single_verifier(mocker, client, session_reset_spy, mocked_session_update):
-    # Agency set to DEFTl, which only has 1 verifier
-    agency = TransitAgency.by_slug("deftl")
-    mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=[agency])
+def test_agency_index_single_verifier(mocker, model_TransitAgency, client, session_reset_spy, mocked_session_update):
+    mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=[model_TransitAgency])
 
-    response = client.get(agency.index_url)
+    response = client.get(model_TransitAgency.index_url)
 
     session_reset_spy.assert_called_once()
     mocked_session_update.assert_called_once()
@@ -64,12 +65,19 @@ def test_agency_index_single_verifier(mocker, client, session_reset_spy, mocked_
 
 
 @pytest.mark.django_db
-def test_agency_index_multiple_verifier(mocker, client, session_reset_spy, mocked_session_update):
-    # Agency set to ABC, which has 2 verifiers
-    agency = TransitAgency.by_slug("abc")
-    mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=[agency])
+def test_agency_index_multiple_verifier(
+    mocker, model_TransitAgency, model_EligibilityVerifier, client, session_reset_spy, mocked_session_update
+):
+    # add another to the list of verifiers by cloning the original
+    # https://stackoverflow.com/a/48149675/453168
+    new_verifier = EligibilityVerifier.objects.get(pk=model_EligibilityVerifier.id)
+    new_verifier.pk = None
+    new_verifier.save()
 
-    response = client.get(agency.index_url)
+    model_TransitAgency.eligibility_verifiers.add(new_verifier)
+    mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=[model_TransitAgency])
+
+    response = client.get(model_TransitAgency.index_url)
 
     session_reset_spy.assert_called_once()
     mocked_session_update.assert_called_once()

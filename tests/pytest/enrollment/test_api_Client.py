@@ -9,8 +9,8 @@ REQUESTS_ERRORS = [requests.ConnectionError, requests.Timeout, requests.TooManyR
 
 
 @pytest.fixture
-def api_client(first_agency):
-    return Client(first_agency)
+def api_client(model_TransitAgency):
+    return Client(model_TransitAgency)
 
 
 @pytest.fixture
