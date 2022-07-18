@@ -1,47 +1,46 @@
 trigger:
   branches:
     include:
-    - terraform
+      - terraform
 stages:
-- stage: __default
-  jobs:
-  - job: Job
-    pool:
-      vmImage: windows-latest
-    steps:
-    - task: replacetokens@5
-      inputs:
-        targetFiles: '**/*.tf'
-        encoding: 'auto'
-        tokenPattern: 'custom'
-        tokenPrefix: '__'
-        tokenSuffix: '__'
-        writeBOM: true
-        escapeType: 'none'
-        actionOnMissing: 'warn'
-        keepToken: false
-        actionOnNoFiles: 'continue'
-        enableTransforms: false
-        enableRecursion: false
-        useLegacyPattern: false
-        enableTelemetry: true
-    - task: TerraformInstaller@0
-      inputs:
-        terraformVersion: 1.2.1
-    - task: TerraformTaskV3@3
-      inputs:
-        provider: 'azurerm'
-        command: 'init'
-        workingDirectory: '$(System.DefaultWorkingDirectory)\terraform'
-        backendServiceArm: 'Production'
-        backendAzureRmResourceGroupName: 'RG-CDT-PUB-VIP-CALITP-P-001'
-        backendAzureRmStorageAccountName: 'sacdtcalitpp001'
-        backendAzureRmContainerName: 'tfstate'
-        backendAzureRmKey: 'terraform.tfstate'
-    - task: TerraformTaskV3@3
-      inputs:
-        provider: 'azurerm'
-        command: 'plan'
-        workingDirectory: '$(System.DefaultWorkingDirectory)\terraform'
-        environmentServiceNameAzureRM: 'Production'
-    
+  - stage: __default
+    jobs:
+      - job: Job
+        pool:
+          vmImage: windows-latest
+        steps:
+          - task: replacetokens@5
+            inputs:
+              targetFiles: "**/*.tf"
+              encoding: "auto"
+              tokenPattern: "custom"
+              tokenPrefix: "__"
+              tokenSuffix: "__"
+              writeBOM: true
+              escapeType: "none"
+              actionOnMissing: "warn"
+              keepToken: false
+              actionOnNoFiles: "continue"
+              enableTransforms: false
+              enableRecursion: false
+              useLegacyPattern: false
+              enableTelemetry: true
+          - task: TerraformInstaller@0
+            inputs:
+              terraformVersion: 1.2.1
+          - task: TerraformTaskV3@3
+            inputs:
+              provider: "azurerm"
+              command: "init"
+              workingDirectory: '$(System.DefaultWorkingDirectory)\terraform'
+              backendServiceArm: "Production"
+              backendAzureRmResourceGroupName: "RG-CDT-PUB-VIP-CALITP-P-001"
+              backendAzureRmStorageAccountName: "sacdtcalitpp001"
+              backendAzureRmContainerName: "tfstate"
+              backendAzureRmKey: "terraform.tfstate"
+          - task: TerraformTaskV3@3
+            inputs:
+              provider: "azurerm"
+              command: "plan"
+              workingDirectory: '$(System.DefaultWorkingDirectory)\terraform'
+              environmentServiceNameAzureRM: "Production"
