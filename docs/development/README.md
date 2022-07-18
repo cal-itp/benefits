@@ -45,6 +45,6 @@ To close out of the container and re-open the directory locally in Visual Studio
 1. Type `Remote-Containers` to filter the commands
 1. Select `Reopen Locally`
 
-[config-file]: https://github.com/cal-itp/benefits/blob/dev/.devcontainer.json
+[config-file]: https://github.com/cal-itp/benefits/blob/dev/.devcontainer/devcontainer.json
 [vscode]: https://code.visualstudio.com/
 [vscode-containers]: https://code.visualstudio.com/docs/remote/containers
