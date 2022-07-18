@@ -111,13 +111,22 @@ az webapp log tail --resource-group RG-CDT-PUB-VIP-CALITP-P-001 --name AS-CDT-PU
 
 https://as-cdt-pub-vip-calitp-p-001-dev.scm.azurewebsites.net/api/logs/docker
 
+## Continuous integration (CI)
+
+[![Build Status](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_apis/build/status/cal-itp.benefits%20Infra?branchName=dev)](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_build/latest?definitionId=828&branchName=dev)
+
+The Terraform configuration is `plan`'d through an Azure Pipeline. It's done there rather than GitHub Actions for a couple of reasons:
+
+- Easier authentication with the Azure API using a service connnection
+- Log output is hidden, avoiding accidentally leaking secrets
+
 ## Making changes
 
 1. Get access to the Azure account through the DevSecOps team.
-
 1. Install dependencies:
-    - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
-    - [Terraform](https://www.terraform.io/downloads)
+
+   - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+   - [Terraform](https://www.terraform.io/downloads)
 
 1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli), specifying the `CDT/ODI Production` Subscription.
 

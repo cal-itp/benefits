@@ -8,44 +8,36 @@ trigger:
     include:
       - terraform/*
 stages:
-  - stage: __default
+  - stage: plan
     pool:
       vmImage: ubuntu-latest
     jobs:
-      - job: Job
+      - job: plan
         steps:
-          - task: replacetokens@5
-            inputs:
-              targetFiles: "**/*.tf"
-              encoding: "auto"
-              tokenPattern: "custom"
-              tokenPrefix: "__"
-              tokenSuffix: "__"
-              writeBOM: true
-              escapeType: "none"
-              actionOnMissing: "warn"
-              keepToken: false
-              actionOnNoFiles: "continue"
-              enableTransforms: false
-              enableRecursion: false
-              useLegacyPattern: false
-              enableTelemetry: true
+          # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformInstaller#readme
           - task: TerraformInstaller@0
+            displayName: Install Terraform
             inputs:
               terraformVersion: 1.2.4
+          # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformTask/TerraformTaskV3#readme
           - task: TerraformTaskV3@3
+            displayName: Terraform init
             inputs:
               provider: "azurerm"
               command: "init"
               workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
+              # service connection
               backendServiceArm: "Production"
+              # needs to match main.tf
               backendAzureRmResourceGroupName: "RG-CDT-PUB-VIP-CALITP-P-001"
               backendAzureRmStorageAccountName: "sacdtcalitpp001"
               backendAzureRmContainerName: "tfstate"
               backendAzureRmKey: "terraform.tfstate"
           - task: TerraformTaskV3@3
+            displayName: Terraform plan
             inputs:
               provider: "azurerm"
               command: "plan"
               workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
+              # service connection
               environmentServiceNameAzureRM: "Production"
