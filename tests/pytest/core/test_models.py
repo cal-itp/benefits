@@ -153,3 +153,17 @@ def test_TransitAgency_by_id_matching(model_TransitAgency):
 def test_TransitAgency_by_id_nonmatching():
     with pytest.raises(TransitAgency.DoesNotExist):
         TransitAgency.by_id(99999)
+
+
+@pytest.mark.django_db
+def test_TransitAgency_by_slug_matching(model_TransitAgency):
+    result = TransitAgency.by_slug(model_TransitAgency.slug)
+
+    assert result == model_TransitAgency
+
+
+@pytest.mark.django_db
+def test_TransitAgency_by_slug_nonmatching():
+    result = TransitAgency.by_slug("nope")
+
+    assert not result
