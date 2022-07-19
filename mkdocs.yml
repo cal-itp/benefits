@@ -6,6 +6,7 @@ site_url: https://docs.calitp.org/benefits
 theme:
   name: material
   features:
+    - navigation.expand
     - navigation.tabs
   palette:
     - media: "(prefers-color-scheme: light)"
