@@ -1,6 +1,6 @@
 import pytest
 
-from benefits.core.models import EligibilityType, EligibilityVerifier
+from benefits.core.models import EligibilityType, EligibilityVerifier, TransitAgency
 
 
 @pytest.mark.django_db
@@ -140,3 +140,16 @@ def test_TransitAgency_index_url(model_TransitAgency):
     result = model_TransitAgency.index_url
 
     assert result.endswith(model_TransitAgency.slug)
+
+
+@pytest.mark.django_db
+def test_TransitAgency_by_id_matching(model_TransitAgency):
+    result = TransitAgency.by_id(model_TransitAgency.id)
+
+    assert result == model_TransitAgency
+
+
+@pytest.mark.django_db
+def test_TransitAgency_by_id_nonmatching():
+    with pytest.raises(TransitAgency.DoesNotExist):
+        TransitAgency.by_id(99999)
