@@ -83,3 +83,29 @@ def test_EligibilityVerifier_without_AuthProvider(model_EligibilityVerifier):
 
     assert not model_EligibilityVerifier.is_auth_required
     assert not model_EligibilityVerifier.uses_auth_verification
+
+
+@pytest.mark.django_db
+def test_TransitAgency_get_type_id_matching(model_TransitAgency):
+    eligibility = model_TransitAgency.eligibility_types.first()
+    result = model_TransitAgency.get_type_id(eligibility.name)
+
+    assert result == eligibility.id
+
+
+@pytest.mark.django_db
+def test_TransitAgency_get_type_id_manymatching(model_TransitAgency):
+    eligibility = model_TransitAgency.eligibility_types.first()
+    new_eligibility = EligibilityType.get(eligibility.id)
+    new_eligibility.pk = None
+    new_eligibility.save()
+    model_TransitAgency.eligibility_types.add(new_eligibility)
+
+    with pytest.raises(Exception, match=r"name"):
+        model_TransitAgency.get_type_id(eligibility.name)
+
+
+@pytest.mark.django_db
+def test_TransitAgency_get_type_id_nonmatching(model_TransitAgency):
+    with pytest.raises(Exception, match=r"name"):
+        model_TransitAgency.get_type_id("something")
