@@ -14,11 +14,12 @@ resource "azurerm_service_plan" "main" {
 # https://github.com/cal-itp/benefits/issues/686
 
 resource "azurerm_linux_web_app" "main" {
-  name                = "AS-CDT-PUB-VIP-CALITP-P-001"
-  location            = data.azurerm_resource_group.prod.location
-  resource_group_name = data.azurerm_resource_group.prod.name
-  service_plan_id     = azurerm_service_plan.main.id
-  https_only          = true
+  name                      = "AS-CDT-PUB-VIP-CALITP-P-001"
+  location                  = data.azurerm_resource_group.prod.location
+  resource_group_name       = data.azurerm_resource_group.prod.name
+  service_plan_id           = azurerm_service_plan.main.id
+  https_only                = true
+  virtual_network_subnet_id = data.azurerm_subnet.main.id
 
   site_config {
     ftps_state             = "Disabled"
@@ -79,9 +80,10 @@ resource "azurerm_linux_web_app" "main" {
 }
 
 resource "azurerm_linux_web_app_slot" "dev" {
-  name           = "dev"
-  https_only     = true
-  app_service_id = azurerm_linux_web_app.main.id
+  name                      = "dev"
+  https_only                = true
+  app_service_id            = azurerm_linux_web_app.main.id
+  virtual_network_subnet_id = data.azurerm_subnet.main.id
 
   site_config {
     ftps_state             = "Disabled"
@@ -116,9 +118,10 @@ resource "azurerm_app_service_slot_custom_hostname_binding" "dev" {
 }
 
 resource "azurerm_linux_web_app_slot" "test" {
-  name           = "test"
-  https_only     = true
-  app_service_id = azurerm_linux_web_app.main.id
+  name                      = "test"
+  https_only                = true
+  app_service_id            = azurerm_linux_web_app.main.id
+  virtual_network_subnet_id = data.azurerm_subnet.main.id
 
   site_config {
     ftps_state             = "Disabled"
