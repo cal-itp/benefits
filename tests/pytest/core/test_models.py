@@ -109,3 +109,27 @@ def test_TransitAgency_get_type_id_manymatching(model_TransitAgency):
 def test_TransitAgency_get_type_id_nonmatching(model_TransitAgency):
     with pytest.raises(Exception, match=r"name"):
         model_TransitAgency.get_type_id("something")
+
+
+@pytest.mark.django_db
+def test_TransitAgency_supports_type_matching(model_TransitAgency):
+    eligibility = model_TransitAgency.eligibility_types.first()
+
+    assert model_TransitAgency.supports_type(eligibility)
+
+
+@pytest.mark.django_db
+def test_TransitAgency_supports_type_nonmatching(model_TransitAgency):
+    eligibility = model_TransitAgency.eligibility_types.first()
+    new_eligibility = EligibilityType.get(eligibility.id)
+    new_eligibility.pk = None
+    new_eligibility.save()
+
+    assert not model_TransitAgency.supports_type(new_eligibility)
+
+
+@pytest.mark.django_db
+def test_TransitAgency_supports_type_wrongtype(model_TransitAgency):
+    eligibility = model_TransitAgency.eligibility_types.first()
+
+    assert not model_TransitAgency.supports_type(eligibility.name)
