@@ -24,21 +24,31 @@ stages:
           - task: TerraformTaskV3@3
             displayName: Terraform init
             inputs:
-              provider: "azurerm"
-              command: "init"
+              provider: azurerm
+              command: init
               workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
               # service connection
-              backendServiceArm: "Production"
+              backendServiceArm: Production
               # needs to match main.tf
-              backendAzureRmResourceGroupName: "RG-CDT-PUB-VIP-CALITP-P-001"
-              backendAzureRmStorageAccountName: "sacdtcalitpp001"
-              backendAzureRmContainerName: "tfstate"
-              backendAzureRmKey: "terraform.tfstate"
+              backendAzureRmResourceGroupName: RG-CDT-PUB-VIP-CALITP-P-001
+              backendAzureRmStorageAccountName: sacdtcalitpp001
+              backendAzureRmContainerName: tfstate
+              backendAzureRmKey: terraform.tfstate
           - task: TerraformTaskV3@3
             displayName: Terraform plan
             inputs:
-              provider: "azurerm"
-              command: "plan"
+              provider: azurerm
+              command: plan
               workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
               # service connection
-              environmentServiceNameAzureRM: "Production"
+              environmentServiceNameAzureRM: Production
+          - task: TerraformTaskV3@3
+            displayName: Terraform apply
+            inputs:
+              provider: azurerm
+              command: apply
+              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
+              # service connection
+              environmentServiceNameAzureRM: Production
+            # only run on dev
+            condition: eq(variables['Build.SourceBranch'], 'refs/heads/dev')
