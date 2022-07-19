@@ -45,8 +45,12 @@ extra_css:
 
 markdown_extensions:
   - admonition
+  - attr_list
   - codehilite:
       linenums: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
   - pymdownx.inlinehilite
   - pymdownx.tasklist:
       custom_checkbox: true
@@ -55,11 +59,10 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_div_format
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.smartsymbols
   - meta
   - toc:
       # insert a blank space before the character
       permalink: " ¶"
   - smarty
-  - fontawesome_markdown
