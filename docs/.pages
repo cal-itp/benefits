@@ -1,5 +1,7 @@
 nav:
-  - Home: README.md
+  - Home:
+    - Overview: README.md
+    - Students: students.md
   - Getting started: getting-started
   - Development: development
   - Tests: tests
