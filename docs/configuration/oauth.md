@@ -32,14 +32,14 @@ Authlib's [Django OpenID Connect Client example][authlib-django-oidc] for Google
 
 ```json
 {
-    "model": "core.authprovider",
-    "pk": 1,
-    "fields": {
-        "client_name": "google",
-        "client_id": "google-client-id",
-        "authority": "https://accounts.google.com",
-        "scope": "profile email",
-    }
+  "model": "core.authprovider",
+  "pk": 1,
+  "fields": {
+    "client_name": "google",
+    "client_id": "google-client-id",
+    "authority": "https://accounts.google.com",
+    "scope": "profile email"
+  }
 }
 ```
 
@@ -48,8 +48,8 @@ Authlib's [Django OpenID Connect Client example][authlib-django-oidc] for Google
 The [`benefits.oauth.client`][oauth-client] module defines helpers for registering OAuth clients, and creating instances for
 use in e.g. views.
 
-* `register_providers(oauth_registry)` uses data from `AuthProvider` instances to register clients into the given registry
-* `oauth` is an `authlib.integrations.django_client.OAuth` instance
+- `register_providers(oauth_registry)` uses data from `AuthProvider` instances to register clients into the given registry
+- `oauth` is an `authlib.integrations.django_client.OAuth` instance
 
 Providers are registered into this instance once in the [`OAuthAppConfig.ready()`][oauth-app-ready] function at application
 startup.
