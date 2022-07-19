@@ -1,7 +1,7 @@
 nav:
   - Home:
     - Overview: README.md
-    - Students: students.md
+    - Use Cases: use-cases
   - Getting started: getting-started
   - Development: development
   - Tests: tests
