@@ -86,7 +86,7 @@ resource "azurerm_linux_web_app_slot" "dev" {
   virtual_network_subnet_id = data.azurerm_subnet.main.id
 
   site_config {
-    ftps_state             = "FtpsOnly"
+    ftps_state             = "Disabled"
     vnet_route_all_enabled = true
   }
 
