@@ -1,4 +1,4 @@
-# Home
+# Project overview
 
 This website provides technical documentation for the [`benefits`][benefits-repo] application from the
 [California Integrated Travel Project (Cal-ITP)][calitp].

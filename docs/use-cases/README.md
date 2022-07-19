@@ -1,4 +1,8 @@
-# Introduction
+---
+title: Introduction
+---
+
+# Use Cases
 
 This section describes in more detail some of the use cases with current or planned support in the Benefits application.
 
