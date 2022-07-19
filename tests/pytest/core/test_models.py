@@ -167,3 +167,20 @@ def test_TransitAgency_by_slug_nonmatching():
     result = TransitAgency.by_slug("nope")
 
     assert not result
+
+
+@pytest.mark.django_db
+def test_TransitAgency_all_active(model_TransitAgency):
+    assert TransitAgency.objects.count() == 1
+
+    inactive_agency = TransitAgency.by_id(model_TransitAgency.id)
+    inactive_agency.pk = None
+    inactive_agency.active = False
+    inactive_agency.save()
+
+    assert TransitAgency.objects.count() == 2
+
+    result = TransitAgency.all_active()
+
+    assert len(result) == 1
+    assert model_TransitAgency in result
