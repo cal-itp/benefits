@@ -4,6 +4,16 @@ from benefits.core.models import EligibilityType, EligibilityVerifier, TransitAg
 
 
 @pytest.mark.django_db
+def test_PemData_str(model_PemData):
+    assert str(model_PemData) == model_PemData.label
+
+
+@pytest.mark.django_db
+def test_EligibilityType_str(model_EligibilityType):
+    assert str(model_EligibilityType) == model_EligibilityType.label
+
+
+@pytest.mark.django_db
 def test_EligibilityType_get_matching(model_EligibilityType):
     eligibility = EligibilityType.get(model_EligibilityType.id)
 
@@ -45,6 +55,11 @@ def test_EligibilityType_get_many_somematching(model_EligibilityType):
 
 
 @pytest.mark.django_db
+def test_EligibilityVerifier_str(model_EligibilityVerifier):
+    assert str(model_EligibilityVerifier) == model_EligibilityVerifier.name
+
+
+@pytest.mark.django_db
 def test_EligibilityVerifier_by_id_matching(model_EligibilityVerifier):
     verifier = EligibilityVerifier.by_id(model_EligibilityVerifier.id)
 
@@ -83,6 +98,16 @@ def test_EligibilityVerifier_without_AuthProvider(model_EligibilityVerifier):
 
     assert not model_EligibilityVerifier.is_auth_required
     assert not model_EligibilityVerifier.uses_auth_verification
+
+
+@pytest.mark.django_db
+def test_PaymentProcessor_str(model_PaymentProcessor):
+    assert str(model_PaymentProcessor) == model_PaymentProcessor.name
+
+
+@pytest.mark.django_db
+def test_TransitAgency_str(model_TransitAgency):
+    assert str(model_TransitAgency) == model_TransitAgency.long_name
 
 
 @pytest.mark.django_db
