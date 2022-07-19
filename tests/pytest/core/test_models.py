@@ -1,5 +1,20 @@
 import pytest
 
+from benefits.core.models import EligibilityVerifier
+
+
+@pytest.mark.django_db
+def test_EligibilityVerifier_by_id_matching(model_EligibilityVerifier):
+    verifier = EligibilityVerifier.by_id(model_EligibilityVerifier.id)
+
+    assert verifier == model_EligibilityVerifier
+
+
+@pytest.mark.django_db
+def test_EligibilityVerifier_by_id_nonmatching():
+    with pytest.raises(EligibilityVerifier.DoesNotExist):
+        EligibilityVerifier.by_id(99999)
+
 
 @pytest.mark.django_db
 def test_EligibilityVerifier_with_AuthProvider_with_verification(
