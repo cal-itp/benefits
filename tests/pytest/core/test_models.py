@@ -133,3 +133,10 @@ def test_TransitAgency_supports_type_wrongtype(model_TransitAgency):
     eligibility = model_TransitAgency.eligibility_types.first()
 
     assert not model_TransitAgency.supports_type(eligibility.name)
+
+
+@pytest.mark.django_db
+def test_TransitAgency_index_url(model_TransitAgency):
+    result = model_TransitAgency.index_url
+
+    assert result.endswith(model_TransitAgency.slug)
