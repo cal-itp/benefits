@@ -136,6 +136,26 @@ def test_TransitAgency_supports_type_wrongtype(model_TransitAgency):
 
 
 @pytest.mark.django_db
+def test_TransitAgency_types_to_verify(model_TransitAgency):
+    eligibility = model_TransitAgency.eligibility_types.first()
+    new_eligibility = EligibilityType.get(eligibility.id)
+    new_eligibility.pk = None
+    new_eligibility.save()
+
+    assert eligibility != new_eligibility
+
+    model_TransitAgency.eligibility_types.add(new_eligibility)
+    assert model_TransitAgency.eligibility_types.count() == 2
+
+    verifier = model_TransitAgency.eligibility_verifiers.first()
+    assert verifier.eligibility_type == eligibility
+
+    result = model_TransitAgency.types_to_verify(verifier)
+    assert len(result) == 1
+    assert eligibility in result
+
+
+@pytest.mark.django_db
 def test_TransitAgency_index_url(model_TransitAgency):
     result = model_TransitAgency.index_url
 
