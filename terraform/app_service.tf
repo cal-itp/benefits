@@ -84,7 +84,7 @@ resource "azurerm_linux_web_app_slot" "dev" {
   app_service_id = azurerm_linux_web_app.main.id
 
   site_config {
-    ftps_state             = "Disabled"
+    ftps_state             = "FtpsOnly"
     vnet_route_all_enabled = true
   }
 
