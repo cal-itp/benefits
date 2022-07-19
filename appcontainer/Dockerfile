@@ -33,15 +33,15 @@ WORKDIR /home/$USER/app
 USER $USER
 
 # install python dependencies
-COPY requirements.txt requirements.txt
+COPY appcontainer/requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 # copy config files
-COPY gunicorn.conf.py gunicorn.conf.py
+COPY appcontainer/gunicorn.conf.py gunicorn.conf.py
 COPY manage.py manage.py
 
 # overwrite default nginx.conf
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY appcontainer/nginx.conf /etc/nginx/nginx.conf
 
 # update PATH for local pip installs
 ENV PATH "$PATH:/home/$USER/.local/bin"

@@ -3,7 +3,9 @@ version: "3.8"
 
 services:
   client:
-    build: .
+    build:
+      context: .
+      dockerfile: appcontainer/Dockerfile
     image: benefits_client:latest
     env_file: .env
     ports:
