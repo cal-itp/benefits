@@ -1,6 +1,19 @@
 import pytest
 
-from benefits.core.models import EligibilityVerifier
+from benefits.core.models import EligibilityType, EligibilityVerifier
+
+
+@pytest.mark.django_db
+def test_EligibilityType_get_matching(model_EligibilityType):
+    eligibility = EligibilityType.get(model_EligibilityType.id)
+
+    assert eligibility == model_EligibilityType
+
+
+@pytest.mark.django_db
+def test_EligibilityType_get_nonmatching():
+    with pytest.raises(EligibilityType.DoesNotExist):
+        EligibilityType.get(99999)
 
 
 @pytest.mark.django_db
