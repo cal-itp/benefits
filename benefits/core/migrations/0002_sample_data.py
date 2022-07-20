@@ -2,7 +2,7 @@ from django.db import migrations
 from django.utils.translation import gettext_lazy as _
 
 
-def create_model(app, *args, **kwargs):
+def load_initial_data(app, *args, **kwargs):
     AuthProvider = app.get_model("core", "AuthProvider")
 
     AuthProvider.objects.create(
@@ -23,5 +23,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(create_model),
+        migrations.RunPython(load_initial_data),
     ]
