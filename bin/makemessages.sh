@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 set -eu
 
-# ensure script runs from correct location
-
-cd /home/calitp/app
-
 # generate initial .PO files from msgids in template and view files
 
 python manage.py makemessages -a --no-obsolete
