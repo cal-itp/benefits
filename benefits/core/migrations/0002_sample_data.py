@@ -5,12 +5,12 @@ from django.utils.translation import gettext_lazy as _
 def load_initial_data(app, *args, **kwargs):
     EligibilityType = app.get_model("core", "EligibilityType")
 
-    EligibilityType.objects.create(name="type1", label="Eligibility Type 1", group_id="group1")
-    EligibilityType.objects.create(name="type2", label="Eligibility Type 2", group_id="group2")
+    type1 = EligibilityType.objects.create(name="type1", label="Eligibility Type 1", group_id="group1")
+    type2 = EligibilityType.objects.create(name="type2", label="Eligibility Type 2", group_id="group2")
 
     PemData = app.get_model("core", "PemData")
 
-    PemData.objects.create(
+    server_public_key = PemData.objects.create(
         text="""
 -----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyYo6Pe9OSfPGX0oQXyLA
@@ -44,12 +44,12 @@ fxYLOtMBAoGBAP1jxjHDJngZ1N+ymw9MIpRgr3HeuMP5phiSTbY2tu9lPzQd+TMX
 fhr1bQh2Fd/vU0u7X0yPnTWtUrLlCdGnWPpXivx95GNGgUUIk2HStFdrRx+f2Qvk
 G8vtLgmSbjQ26UiHzxi9Wa0a41PWIA3TixkcFrS2X29Qc4yd6pVHmicfAoGBANjR
 Z8aaDkSKLkq5Nk1T7I0E1+mtPoH1tPV/FJClXjJrvfDuYHBeOyUpipZddnZuPGWA
-IW2tFIsMgJQtgpvgs52NFI7pQGJRUPK/fTG+Ycocxo78TkLr/RIj8Kj5brXsbZ9P
-3/WBX5GAISTSp1ab8xVgK/Tm07hGupKVqnY2lCAVAoGAIql0YjhE2ecGtLcU+Qm8
+IW2tFIsMgJQtgpvgs52NFI7pQGJR/fTG+Ycocxo78TkLr/RIj8Kj5brXsbZ9P
+3/WBX5GAISTSp1ab8xVgK/Tm07hGVqnY2lCAVAoGAIql0YjhE2ecGtLcU+Qm8
 LTnwpg4GjmBnNTNGSCfB7IuYEsQK489R49Qw3xhwM5rkdRajmbCHm+Eiz+/+4NwY
 kt5I1/NMu7vYUR40MwyEuPSm3Q+bvEGu/71pL8wFIUVlshNJ5CN60fA8qqo+5kVK
 4Ntzy7Kq6WpC9Dhh75vE3ZcCgYEAty99uXtxsJD6+aEwcvcENkUwUztPQ6ggAwci
-je9Z/cmwCj6s9mN3HzfQ4qgGrZsHpk4ycCK655xhilBFOIQJ3YRUKUaDYk4H0YDe
+je9Z/cmwCj6s9mN3HzfQ4qgGrZs4ycCK655xhilBFOIQJ3YRUKUaDYk4H0YDe
 Osf6gTP8wtQDH2GZSNlavLk5w7UFDYQD2b47y4fw+NaOEYvjPl0p5lmb6ebAPZb8
 FbKZRd0CgYBC1HTbA+zMEqDdY4MWJJLC6jZsjdxOGhzjrCtWcIWEGMDF7oDDEoix
 W3j2hwm4C6vaNkH9XX1dr5+q6gq8vJQdbYoExl22BGMiNbfI3+sLRk0zBYL//W6c
@@ -70,7 +70,7 @@ PEM DATA
 
     AuthProvider = app.get_model("core", "AuthProvider")
 
-    AuthProvider.objects.create(
+    auth_provider = AuthProvider.objects.create(
         sign_in_button_label=_("eligibility.buttons.signin"),
         sign_out_button_label=_("eligibility.buttons.signout"),
         client_name="benefits-oauth-client-name",
@@ -78,6 +78,85 @@ PEM DATA
         authority="https://example.com",
         scope="verify:type1",
         claim="type1",
+    )
+
+    EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
+
+    EligibilityVerifier.objects.create(
+        name="Test Eligibility Verifier 1",
+        api_url="http://server:5000/verify",
+        api_auth_header="X-Server-API-Key",
+        api_auth_key="server-auth-token",
+        eligibility_type=type1,
+        public_key=server_public_key,
+        jwe_cek_enc="A256CBC-HS512",
+        jwe_encryption_alg="RSA-OAEP",
+        jws_signing_alg="RS256",
+        auth_provider=auth_provider,
+        selection_label="eligibility.pages.index.dmv.label",
+        selection_label_description=None,
+        start_content_title="eligibility.pages.start.dmv.content_title",
+        start_item_name="eligibility.pages.start.dmv.items[0].title",
+        start_item_description="eligibility.pages.start.dmv.items[0].text",
+        start_blurb="eligibility.pages.start.dmv.p[0]",
+        form_title="eligibility.pages.confirm.dmv.title",
+        form_content_title="eligibility.pages.confirm.dmv.content_title",
+        form_blurb="eligibility.pages.confirm.dmv.p[0]",
+        form_sub_label="eligibility.forms.confirm.dmv.fields.sub",
+        form_sub_placeholder="A1234567",
+        form_sub_pattern=".+",
+        form_name_label="eligibility.forms.confirm.dmv.fields.name",
+        form_name_placeholder="Rodriguez",
+        form_name_max_length=255,
+        unverified_title="eligibility.pages.unverified.dmv.title",
+        unverified_content_title="eligibility.pages.unverified.dmv.content_title",
+        unverified_blurb="eligibility.pages.unverified.dmv.p[0]",
+    )
+
+    EligibilityVerifier.objects.create(
+        name="Test Eligibility Verifier 2",
+        api_url="http://server:5000/verify",
+        api_auth_header="X-Server-API-Key",
+        api_auth_key="server-auth-token",
+        eligibility_type=type2,
+        public_key=server_public_key,
+        jwe_cek_enc="A256CBC-HS512",
+        jwe_encryption_alg="RSA-OAEP",
+        jws_signing_alg="RS256",
+        auth_provider=None,
+        selection_label="eligibility.pages.index.mst.label",
+        selection_label_description="eligibility.pages.index.mst.description",
+        start_content_title="eligibility.pages.start.mst.content_title",
+        start_item_name="eligibility.pages.start.mst.items[0].title",
+        start_item_description="eligibility.pages.start.mst.items[0].text",
+        start_blurb="eligibility.pages.start.mst.p[0]",
+        form_title="eligibility.pages.confirm.mst.title",
+        form_content_title="eligibility.pages.confirm.mst.content_title",
+        form_blurb="eligibility.pages.confirm.mst.p[0]",
+        form_sub_label="eligibility.forms.confirm.mst.fields.sub",
+        form_sub_placeholder="B1234567",
+        form_sub_pattern=".+",
+        form_name_label="eligibility.forms.confirm.mst.fields.name",
+        form_name_placeholder="Garcia",
+        form_name_max_length=255,
+        unverified_title="eligibility.pages.unverified.mst.title",
+        unverified_content_title="eligibility.pages.unverified.mst.content_title",
+        unverified_blurb="eligibility.pages.unverified.mst.p[0]",
+    )
+
+    EligibilityVerifier.objects.create(
+        name="OAuth claims via Login.gov",
+        eligibility_type=type1,
+        auth_provider=auth_provider,
+        selection_label="eligibility.pages.index.oauth.label",
+        selection_label_description=None,
+        start_content_title="eligibility.pages.start.oauth.content_title",
+        start_item_name="eligibility.pages.start.oauth.items[0].title",
+        start_item_description="eligibility.pages.start.oauth.items[0].text",
+        start_blurb="eligibility.pages.start.oauth.p[0]",
+        unverified_title="eligibility.pages.unverified.oauth.title",
+        unverified_content_title="eligibility.pages.unverified.oauth.content_title",
+        unverified_blurb="eligibility.pages.unverified.oauth.p[0]",
     )
 
 
