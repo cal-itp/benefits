@@ -46,7 +46,7 @@ repos:
       - id: prettier
         types_or: [javascript, css]
 
-  - repo: https://github.com/rtts/djhtml
-    rev: 'v1.5.1'  # replace with the latest tag on GitHub
+  - repo: https://github.com/Riverside-Healthcare/djLint
+    rev: v1.7.0
     hooks:
-      - id: djhtml
+      - id: djlint-django
