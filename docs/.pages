@@ -1,9 +1,9 @@
 nav:
   - Home:
-    - Overview: README.md
-    - Students: students.md
-  - Getting started: getting-started
-  - Development: development
-  - Tests: tests
-  - Configuration: configuration
-  - Deployment: deployment
+      - README.md
+      - use-cases
+  - getting-started
+  - development
+  - tests
+  - configuration
+  - deployment

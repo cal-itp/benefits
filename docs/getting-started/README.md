@@ -67,9 +67,9 @@ you setup as part of initialization.
 
 By default, [sample data][sample-data] is used to initialize Django. Alternatively you may:
 
-* Modify the sample data file(s); or
-* Override the `DJANGO_INIT_PATH` environment variable with different data file(s); or
-* (If `DJANGO_ADMIN=true`) use the backend administrative interface CRUD
+- Modify the sample data file(s); or
+- Override the `DJANGO_INIT_PATH` environment variable with different data file(s); or
+- (If `DJANGO_ADMIN=true`) use the backend administrative interface CRUD
 
 Stop the running services with:
 

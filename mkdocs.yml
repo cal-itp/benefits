@@ -6,6 +6,7 @@ site_url: https://docs.calitp.org/benefits
 theme:
   name: material
   features:
+    - navigation.expand
     - navigation.tabs
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -33,6 +34,7 @@ plugins:
   - awesome-pages
   - redirects:
       redirect_maps:
+        "students.md": "use-cases/students.md"
         "deployment/azure.md": "deployment/infrastructure.md"
         "getting-started/development.md": "development/README.md"
         "getting-started/docker-dynamic-ports.md": "development/docker-dynamic-ports.md"
