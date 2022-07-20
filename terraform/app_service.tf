@@ -1,9 +1,10 @@
 resource "azurerm_service_plan" "main" {
-  name                = "ASP-CDT-PUB-VIP-CALITP-P-001"
-  location            = data.azurerm_resource_group.prod.location
-  resource_group_name = data.azurerm_resource_group.prod.name
-  os_type             = "Linux"
-  sku_name            = "P2v2"
+  name                       = "ASP-CDT-PUB-VIP-CALITP-P-001"
+  location                   = data.azurerm_resource_group.prod.location
+  resource_group_name        = data.azurerm_resource_group.prod.name
+  os_type                    = "Linux"
+  sku_name                   = "P2v2"
+  app_service_environment_id = azurerm_app_service_environment_v3.main.id
 
   lifecycle {
     ignore_changes = [tags]
