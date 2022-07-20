@@ -6,20 +6,187 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-07-14 22:30+0000\n"
+"POT-Creation-Date: 2022-07-20 22:38+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: benefits/core/migrations/0002_auth_provider_oauth.py:9
+#: benefits/core/migrations/0002_sample_data.py:74
 msgid "eligibility.buttons.signin"
 msgstr "Comencemos con"
 
-#: benefits/core/migrations/0002_auth_provider_oauth.py:10
+#: benefits/core/migrations/0002_sample_data.py:75
 msgid "eligibility.buttons.signout"
 msgstr "Cierre sesión de Login.gov"
+
+#: benefits/core/migrations/0002_sample_data.py:96
+msgid "eligibility.pages.index.dmv.label"
+msgstr "TODO: Senior Discount Program"
+
+#: benefits/core/migrations/0002_sample_data.py:98
+msgid "eligibility.pages.start.dmv.content_title"
+msgstr "Necesitará algunos artículos para conectar su descuento:"
+
+#: benefits/core/migrations/0002_sample_data.py:99
+msgid "eligibility.pages.start.dmv.items[0].title"
+msgstr "Proporcione su número de identificación de California"
+
+#: benefits/core/migrations/0002_sample_data.py:100
+msgid "eligibility.pages.start.dmv.items[0].text"
+msgstr ""
+"Deberá verificar su edad con una licencia de conducir o tarjeta de "
+"identificación."
+
+#: benefits/core/migrations/0002_sample_data.py:101
+msgid "eligibility.pages.start.dmv.p[0]"
+msgstr ""
+"Este programa actualmente está disponible para personas de 65 años o más. "
+"¿No tienes más de 65 años? Póngase en contacto con su proveedor de "
+"transporte público para obtener información sobre los programas de descuento "
+"disponibles."
+
+#: benefits/core/migrations/0002_sample_data.py:102
+msgid "eligibility.pages.confirm.dmv.title"
+msgstr "Confirmar la elegibilidad"
+
+#: benefits/core/migrations/0002_sample_data.py:103
+msgid "eligibility.pages.confirm.dmv.content_title"
+msgstr "Veamos si podemos confirmar su edad con el DMV."
+
+#: benefits/core/migrations/0002_sample_data.py:104
+msgid "eligibility.pages.confirm.dmv.p[0]"
+msgstr ""
+"Por favor, ingrese su número de licencia/identificación y su apellido abajo. "
+"Si tiene 65 años o más, podemos confirmar que es eligible para un descuento "
+"para personas mayores cuando viaja en transporte público. No guardamos la "
+"información que ingresa aquí."
+
+#: benefits/core/migrations/0002_sample_data.py:105
+msgid "eligibility.forms.confirm.dmv.fields.sub"
+msgstr "Licencia de conducir de California o número de identificación"
+
+#: benefits/core/migrations/0002_sample_data.py:108
+msgid "eligibility.forms.confirm.dmv.fields.name"
+msgstr "Apellido (tal como aparece en la identificación)"
+
+#: benefits/core/migrations/0002_sample_data.py:111
+msgid "eligibility.pages.unverified.dmv.title"
+msgstr "Error de elegibilidad"
+
+#: benefits/core/migrations/0002_sample_data.py:112
+msgid "eligibility.pages.unverified.dmv.content_title"
+msgstr "No se pudo verificar su elegibilidad."
+
+#: benefits/core/migrations/0002_sample_data.py:113
+msgid "eligibility.pages.unverified.dmv.p[0]"
+msgstr ""
+"Usted todavía puede ser elegible para un descuento, pero no podemos "
+"verificar su edad con el DMV."
+
+#: benefits/core/migrations/0002_sample_data.py:127
+msgid "eligibility.pages.index.mst.label"
+msgstr "TODO: MST Courtesy Cardholder"
+
+#: benefits/core/migrations/0002_sample_data.py:128
+msgid "eligibility.pages.index.mst.description"
+msgstr "TODO: (includes MST RIDES Paratransit Eligibility cardholders)"
+
+#: benefits/core/migrations/0002_sample_data.py:129
+msgid "eligibility.pages.start.mst.content_title"
+msgstr "TODO: Genial, necesitarás dos cosas antes de empeza"
+
+#: benefits/core/migrations/0002_sample_data.py:130
+msgid "eligibility.pages.start.mst.items[0].title"
+msgstr "Tu tarjeta de cortesía MST"
+
+#: benefits/core/migrations/0002_sample_data.py:131
+msgid "eligibility.pages.start.mst.items[0].text"
+msgstr "Una tarjeta activa que no ha caducado"
+
+#: benefits/core/migrations/0002_sample_data.py:132
+msgid "eligibility.pages.start.mst.p[0]"
+msgstr ""
+"Este programa está actualmente abierto a todas los titulares de tarjetas de "
+"cortesía MST. ¿No es titular de una tarjeta de cortesía? Póngase en contacto "
+"con su proveedor de transporte público para obtener información sobre los "
+"programas de descuento disponibles"
+
+#: benefits/core/migrations/0002_sample_data.py:133
+msgid "eligibility.pages.confirm.mst.title"
+msgstr "Verificar su tarjeta de cortesía MST"
+
+#: benefits/core/migrations/0002_sample_data.py:134
+msgid "eligibility.pages.confirm.mst.content_title"
+msgstr "Veamos si podemos encontrarle en nuestra sistema"
+
+#: benefits/core/migrations/0002_sample_data.py:135
+msgid "eligibility.pages.confirm.mst.p[0]"
+msgstr ""
+"Por favor ingrese su número de tarjeta cortesía y apellido a continuación. "
+"Si eres titular de una tarjeta de cortesía MST, podemos confirmar que ere "
+"elegible para un descuento. Nosotros no guardamos su información."
+
+#: benefits/core/migrations/0002_sample_data.py:136
+msgid "eligibility.forms.confirm.mst.fields.sub"
+msgstr "Número de tarjeta cortesía MST"
+
+#: benefits/core/migrations/0002_sample_data.py:139
+msgid "eligibility.forms.confirm.mst.fields.name"
+msgstr "Apellido (como aparece en la identificación)"
+
+#: benefits/core/migrations/0002_sample_data.py:142
+msgid "eligibility.pages.unverified.mst.title"
+msgstr "Tarjeta de cortesía MST no confirmada"
+
+#: benefits/core/migrations/0002_sample_data.py:143
+msgid "eligibility.pages.unverified.mst.content_title"
+msgstr "No podemos confirmar su tarjeta de cortesía MST"
+
+#: benefits/core/migrations/0002_sample_data.py:144
+msgid "eligibility.pages.unverified.mst.p[0]"
+msgstr ""
+"TODO: That’s okay! You may still be eligible for our program. Please reach "
+"out to Monterey-Salinas Transit for assistance."
+
+#: benefits/core/migrations/0002_sample_data.py:151
+msgid "eligibility.pages.index.oauth.label"
+msgstr "TODO: Senior Discount Program"
+
+#: benefits/core/migrations/0002_sample_data.py:153
+msgid "eligibility.pages.start.oauth.content_title"
+msgstr "Necesitará algunos artículos para conectar su descuento:"
+
+#: benefits/core/migrations/0002_sample_data.py:154
+msgid "eligibility.pages.start.oauth.items[0].title"
+msgstr "Una cuenta de Login.gov con verificación de identidad"
+
+#: benefits/core/migrations/0002_sample_data.py:155
+msgid "eligibility.pages.start.oauth.items[0].text"
+msgstr ""
+"Login.gov es una forma segura de iniciar sesión en servicios "
+"gubernamentales. Benefits utiliza Login.gov para verificar su edad. Si aún "
+"no tiene una cuenta, podrá crear una. También deberá verificar su identidad, "
+"lo que requerirá estos artículos:"
+
+#: benefits/core/migrations/0002_sample_data.py:156
+msgid "eligibility.pages.start.oauth.p[0]"
+msgstr ""
+
+#: benefits/core/migrations/0002_sample_data.py:157
+msgid "eligibility.pages.unverified.oauth.title"
+msgstr "Error de elegibilidad"
+
+#: benefits/core/migrations/0002_sample_data.py:158
+msgid "eligibility.pages.unverified.oauth.content_title"
+msgstr "No se pudo verificar su elegibilidad."
+
+#: benefits/core/migrations/0002_sample_data.py:159
+msgid "eligibility.pages.unverified.oauth.p[0]"
+msgstr ""
+"¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
+"proveedor de tránsito local para obtener asistencia."
 
 #: benefits/core/templates/core/agency_index.html:8
 #: benefits/eligibility/templates/eligibility/start.html:12
@@ -544,115 +711,3 @@ msgid "enrollment.pages.success.logout.title"
 msgstr ""
 "Ha cerrado la sesión correctamente. ¡Gracias por usar los beneficios de Cal-"
 "ITP!"
-
-# Fixture messages - entries below are copied from files in this language's fixture_messages directory.
-# !! Any edits you make here will be overwritten when bin/makemessages.sh is run. !!
-
-# Copied from ./benefits/locale/es/fixture_messages/oauth_verifier.po
-msgid "eligibility.pages.start.oauth.content_title"
-msgstr "Necesitará algunos artículos para conectar su descuento:"
-
-msgid "eligibility.pages.unverified.oauth.title"
-msgstr "Error de elegibilidad"
-
-msgid "eligibility.pages.unverified.oauth.content_title"
-msgstr "No se pudo verificar su elegibilidad."
-
-msgid "eligibility.pages.unverified.oauth.p[0]"
-msgstr ""
-"¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con "
-"su proveedor de tránsito local para obtener asistencia."
-
-msgid "eligibility.pages.index.oauth.label"
-msgstr "TODO: Senior Discount Program"
-
-# Copied from ./benefits/locale/es/fixture_messages/verifier_1.po
-msgid "eligibility.pages.start.dmv.content_title"
-msgstr "Necesitará algunos artículos para conectar su descuento:"
-
-msgid "eligibility.pages.start.dmv.items[0].title"
-msgstr "Proporcione su número de identificación de California"
-
-msgid "eligibility.pages.start.dmv.items[0].text"
-msgstr ""
-"Deberá verificar su edad con una licencia de conducir o tarjeta de "
-"identificación."
-
-msgid "eligibility.pages.start.dmv.p[0]"
-msgstr ""
-"Este programa actualmente está disponible para personas de 65 años o más. "
-"¿No tienes más de 65 años? Póngase en contacto con su proveedor de "
-"transporte público para obtener información sobre los programas de "
-"descuento disponibles."
-
-msgid "eligibility.pages.confirm.dmv.title"
-msgstr "Confirmar la elegibilidad"
-
-msgid "eligibility.pages.confirm.dmv.content_title"
-msgstr "Veamos si podemos confirmar su edad con el DMV."
-
-msgid "eligibility.pages.confirm.dmv.p[0]"
-msgstr ""
-"Por favor, ingrese su número de licencia/identificación y su apellido "
-"abajo. Si tiene 65 años o más, podemos confirmar que es eligible para un "
-"descuento para personas mayores cuando viaja en transporte público. No "
-"guardamos la información que ingresa aquí."
-
-msgid "eligibility.forms.confirm.dmv.fields.sub"
-msgstr "Licencia de conducir de California o número de identificación"
-
-msgid "eligibility.forms.confirm.dmv.fields.name"
-msgstr "Apellido (tal como aparece en la identificación)"
-
-msgid "eligibility.pages.unverified.dmv.p[0]"
-msgstr ""
-"Usted todavía puede ser elegible para un descuento, pero no podemos "
-"verificar su edad con el DMV."
-
-# Copied from ./benefits/locale/es/fixture_messages/verifier_2.po
-msgid "eligibility.pages.index.mst.label"
-msgstr "TODO: MST Courtesy Cardholder"
-
-msgid "eligibility.pages.index.mst.description"
-msgstr "TODO: (includes MST RIDES Paratransit Eligibility cardholders)"
-
-msgid "eligibility.forms.confirm.mst.fields.sub"
-msgstr "Número de tarjeta cortesía MST"
-
-msgid "eligibility.forms.confirm.mst.fields.name"
-msgstr "Apellido (como aparece en la identificación)"
-
-msgid "eligibility.pages.start.mst.content_title"
-msgstr "TODO: Genial, necesitarás dos cosas antes de empeza"
-
-msgid "eligibility.pages.start.mst.items[0].title"
-msgstr "Tu tarjeta de cortesía MST"
-
-msgid "eligibility.pages.start.mst.items[0].text"
-msgstr "Una tarjeta activa que no ha caducado"
-
-msgid "eligibility.pages.start.mst.p[0]"
-msgstr ""
-"Este programa está actualmente abierto a todas los titulares de tarjetas "
-"de cortesía MST. ¿No es titular de una tarjeta de cortesía? Póngase en "
-"contacto con su proveedor de transporte público para obtener información "
-"sobre los programas de descuento disponibles"
-
-msgid "eligibility.pages.confirm.mst.title"
-msgstr "Verificar su tarjeta de cortesía MST"
-
-msgid "eligibility.pages.confirm.mst.content_title"
-msgstr "Veamos si podemos encontrarle en nuestra sistema"
-
-msgid "eligibility.pages.confirm.mst.p[0]"
-msgstr ""
-"Por favor ingrese su número de tarjeta cortesía y apellido a "
-"continuación. Si eres titular de una tarjeta de cortesía MST, podemos "
-"confirmar que ere elegible para un descuento. Nosotros no guardamos su "
-"información."
-
-msgid "eligibility.pages.unverified.mst.title"
-msgstr "Tarjeta de cortesía MST no confirmada"
-
-msgid "eligibility.pages.unverified.mst.content_title"
-msgstr "No podemos confirmar su tarjeta de cortesía MST"
