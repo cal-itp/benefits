@@ -82,7 +82,7 @@ PEM DATA
 
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
 
-    EligibilityVerifier.objects.create(
+    verifier1 = EligibilityVerifier.objects.create(
         name="Test Eligibility Verifier 1",
         api_url="http://server:5000/verify",
         api_auth_header="X-Server-API-Key",
@@ -113,7 +113,7 @@ PEM DATA
         unverified_blurb=_("eligibility.pages.unverified.dmv.p[0]"),
     )
 
-    EligibilityVerifier.objects.create(
+    verifier2 = EligibilityVerifier.objects.create(
         name="Test Eligibility Verifier 2",
         api_url="http://server:5000/verify",
         api_auth_header="X-Server-API-Key",
@@ -161,7 +161,7 @@ PEM DATA
 
     PaymentProcessor = app.get_model("core", "PaymentProcessor")
 
-    PaymentProcessor.objects.create(
+    payment_processor = PaymentProcessor.objects.create(
         name="Test Payment Processor",
         api_base_url="http://server:5000",
         api_access_token_endpoint="access-token",
@@ -177,6 +177,40 @@ PEM DATA
         customers_endpoint="customers",
         group_endpoint="group",
     )
+
+    TransitAgency = app.get_model("core", "TransitAgency")
+
+    transit_agency1 = TransitAgency.objects.create(
+        slug="abc",
+        short_name="ABC",
+        long_name="ABC Transit Company",
+        agency_id="abc123",
+        merchant_id="abc",
+        info_url="https://www.example.com/help",
+        phone="800-555-5555",
+        active=True,
+        private_key=client_private_key,
+        jws_signing_alg="RS256",
+        payment_processor=payment_processor,
+    )
+    transit_agency1.eligibility_types.set([type1, type2])
+    transit_agency1.eligibility_verifiers.set([verifier1, verifier2])
+
+    transit_agency2 = TransitAgency.objects.create(
+        slug="deftl",
+        short_name="DefTL",
+        long_name="DEF Transit Lines",
+        agency_id="def456",
+        merchant_id="deftl",
+        info_url="https://www.example.com/help",
+        phone="321-555-5555",
+        active=True,
+        private_key=client_private_key,
+        jws_signing_alg="RS256",
+        payment_processor=payment_processor,
+    )
+    transit_agency2.eligibility_types.set([type1])
+    transit_agency2.eligibility_verifiers.set([verifier1])
 
 
 class Migration(migrations.Migration):
