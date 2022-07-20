@@ -21,9 +21,10 @@
     "batisteo.vscode-django",
     "bpruitt-goddard.mermaid-markdown-syntax-highlighting",
     "eamodio.gitlens",
+    "esbenp.prettier-vscode",
     "mhutchie.git-graph",
+    "monosans.djlint",
     "ms-python.python",
-    "ms-python.vscode-pylance",
-    "esbenp.prettier-vscode"
+    "ms-python.vscode-pylance"
   ]
 }
