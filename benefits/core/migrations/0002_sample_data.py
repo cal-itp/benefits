@@ -3,6 +3,11 @@ from django.utils.translation import gettext_lazy as _
 
 
 def load_initial_data(app, *args, **kwargs):
+    EligibilityType = app.get_model("core", "EligibilityType")
+
+    EligibilityType.objects.create(name="type1", label="Eligibility Type 1", group_id="group1")
+    EligibilityType.objects.create(name="type2", label="Eligibility Type 2", group_id="group2")
+
     PemData = app.get_model("core", "PemData")
 
     PemData.objects.create(
