@@ -26,7 +26,7 @@ JwIDAQAB
         label="Eligibility server public key",
     )
 
-    PemData.objects.create(
+    client_private_key = PemData.objects.create(
         text="""
 -----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEA1pt0ZoOuPEVPJJS+5r884zcjZLkZZ2GcPwr79XOLDbOi46on
@@ -59,7 +59,7 @@ tSREgR4EjosqQfbkceLJ2JT1wuNjInI0eR9H3cRugvlDTeWtbdJ5qA==
         label="Benefits client private key",
     )
 
-    PemData.objects.create(
+    dummy_cert = PemData.objects.create(
         text="""
 -----BEGIN CERTIFICATE-----
 PEM DATA
@@ -157,6 +157,25 @@ PEM DATA
         unverified_title=_("eligibility.pages.unverified.oauth.title"),
         unverified_content_title=_("eligibility.pages.unverified.oauth.content_title"),
         unverified_blurb=_("eligibility.pages.unverified.oauth.p[0]"),
+    )
+
+    PaymentProcessor = app.get_model("core", "PaymentProcessor")
+
+    PaymentProcessor.objects.create(
+        name="Test Payment Processor",
+        api_base_url="http://server:5000",
+        api_access_token_endpoint="access-token",
+        api_access_token_request_key="request_access",
+        api_access_token_request_val="REQUEST_ACCESS",
+        card_tokenize_url="http://localhost:5000/static/tokenize.js",
+        card_tokenize_func="tokenize",
+        card_tokenize_env="test",
+        client_cert=dummy_cert,
+        client_cert_private_key=client_private_key,
+        client_cert_root_ca=dummy_cert,
+        customer_endpoint="customer",
+        customers_endpoint="customers",
+        group_endpoint="group",
     )
 
 
