@@ -1,9 +1,9 @@
 resource "azurerm_service_plan" "main" {
-  name                       = "ASP-CDT-PUB-VIP-CALITP-P-001"
-  location                   = data.azurerm_resource_group.prod.location
-  resource_group_name        = data.azurerm_resource_group.prod.name
-  os_type                    = "Linux"
-  sku_name                   = "P2v2"
+  name                = "ASP-CDT-PUB-VIP-CALITP-P-001"
+  location            = data.azurerm_resource_group.prod.location
+  resource_group_name = data.azurerm_resource_group.prod.name
+  os_type             = "Linux"
+  sku_name            = "P2v2"
 
   lifecycle {
     ignore_changes = [tags]
@@ -79,6 +79,12 @@ resource "azurerm_linux_web_app" "main" {
   }
 }
 
+# Uploaded manually
+data "azurerm_key_vault_certificate" "main" {
+  name         = "KV-CDT-PUB-CALITP-P-001-calitp-org-wildcard-cert"
+  key_vault_id = azurerm_key_vault.main.id
+}
+
 resource "azurerm_linux_web_app_slot" "dev" {
   name                      = "dev"
   https_only                = true
@@ -115,6 +121,8 @@ resource "azurerm_linux_web_app_slot" "dev" {
 resource "azurerm_app_service_slot_custom_hostname_binding" "dev" {
   app_service_slot_id = azurerm_linux_web_app_slot.dev.id
   hostname            = "dev-benefits.calitp.org"
+  ssl_state           = "SniEnabled"
+  thumbprint          = data.azurerm_key_vault_certificate.main.thumbprint
 }
 
 resource "azurerm_linux_web_app_slot" "test" {
@@ -153,4 +161,6 @@ resource "azurerm_linux_web_app_slot" "test" {
 resource "azurerm_app_service_slot_custom_hostname_binding" "test" {
   app_service_slot_id = azurerm_linux_web_app_slot.test.id
   hostname            = "test-benefits.calitp.org"
+  ssl_state           = "SniEnabled"
+  thumbprint          = data.azurerm_key_vault_certificate.main.thumbprint
 }
