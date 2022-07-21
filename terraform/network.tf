@@ -4,7 +4,7 @@ locals {
 }
 
 data "azurerm_subnet" "main" {
-  name                 = "SNET-CDT-PUB-CALITP-P-002"
+  name                 = "SNET-CDT-PUB-CALITP-P-001"
   virtual_network_name = "VNET-CDT-PUB-SHRD-W-P-001"
   resource_group_name  = local.network_resource_group_name
 }
