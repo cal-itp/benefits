@@ -1,21 +1,21 @@
 {% extends "core/page.html" %}
 
 {% block main_content %}
-    {% include "core/includes/sign-out-link.html" %}
-    {{ block.super }}
-{% endblock %}
+  {% include "core/includes/sign-out-link.html" %}
+  {{ block.super }}
+{% endblock main_content %}
 
 {% block icon_title %}
-    {{ block.super }}
-{% endblock%}
+  {{ block.super }}
+{% endblock icon_title %}
 
 {% block paragraph_content %}
-    {{ block.super }}
-    {% if payment_processor %}
-        <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
-            {{ payment_processor.loading_text }}
-        </button>
-        <script>
+  {{ block.super }}
+  {% if payment_processor %}
+    <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
+      {{ payment_processor.loading_text }}
+    </button>
+    <script>
             var startedEvent = "started payment connection", closedEvent = "closed payment connection";
 
             $.getScript("{{ payment_processor.card_tokenize_url }}")
@@ -83,17 +83,13 @@
                 $(".loading").remove();
                 console.log(exception);
             });
-        </script>
-    {% else %}
-        <h2>Error!</h2>
-        <p>No access token configured</p>
-    {% endif %}
-{% endblock %}
+    </script>
+  {% else %}
+    <h2>Error!</h2>
+    <p>No access token configured</p>
+  {% endif %}
+{% endblock paragraph_content %}
 
 {% block buttons %}
-    {% if payment_processor %}
-        <div class="invisible">
-            {{ block.super }}
-        </div>
-    {% endif %}
-{% endblock %}
+  {% if payment_processor %}<div class="invisible">{{ block.super }}</div>{% endif %}
+{% endblock buttons %}
