@@ -1,64 +1,61 @@
+
 {% if form.action_url %}
 
-    {% url form.action_url as form_action %}
+  {% url form.action_url as form_action %}
 
-    <form action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
-        {% csrf_token %}
+  <form action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
+    {% csrf_token %}
 
-        {% for field in form %}
-            {% if field.errors %}
-                <div class="form-group with-errors">
-            {% else %}
-                <div class="form-group">
-            {% endif %}
+    {% for field in form %}
+      {% if field.errors %}
+        <div class="form-group with-errors">
+        {% else %}
+          <div class="form-group">
+          {% endif %}
 
-            {% if field.label %}
-                <label for="{{ field.id_for_label }}" class="form-control-label">
-                    {{ field.label }}
-                    {% if field.field.required %}<span class="required-label">*</span>{% endif %}
-                </label>
-            {% endif %}
+          {% if field.label %}
+            <label for="{{ field.id_for_label }}" class="form-control-label">
+              {{ field.label }}
+              {% if field.field.required %}<span class="required-label">*</span>{% endif %}
+            </label>
+          {% endif %}
 
-            {{ field }}
+          {{ field }}
 
-            {% if field.help_text %}
-                <small class="form-text text-muted">
-                    {{ field.help_text }}
-                </small>
-            {% endif %}
+          {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
 
-            {% if field.errors %}
-                <div class="error-message">
-                    {% for error in field.errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
+          {% if field.errors %}
+            <div class="error-message">
+              {% for error in field.errors %}<p>{{ error }}</p>{% endfor %}
             </div>
-        {% endfor %}
+          {% endif %}
+        </div>
+      {% endfor %}
 
-        {% if form.submit_value %}
-            <div class="form-group">
-                {% if recaptcha.enabled %}
-                    <button class="btn btn-lg btn-primary g-recaptcha"
-                        data-sitekey="{{ recaptcha.site_key }}"
-                        data-callback="onSubmit"
-                        data-action="submit">{{ form.submit_value }}</button>
-                {% else %}
-                    <button class="btn btn-lg btn-primary">{{ form.submit_value }}</button>
-                {% endif %}
-            </div>
-        {% endif %}
+      {% if form.submit_value %}
+        <div class="form-group">
+          {% if recaptcha.enabled %}
+            <button class="btn btn-lg btn-primary g-recaptcha"
+                    data-sitekey="{{ recaptcha.site_key }}"
+                    data-callback="onSubmit"
+                    data-action="submit">
+              {{ form.submit_value }}
+            </button>
+          {% else %}
+            <button class="btn btn-lg btn-primary">{{ form.submit_value }}</button>
+          {% endif %}
+        </div>
+      {% endif %}
 
-        {% if recaptcha.enabled %}
-            <script src="{{ recaptcha.api_url }}"></script>
-            <script>
+      {% if recaptcha.enabled %}
+        <script src="{{ recaptcha.api_url }}"></script>
+        <script>
                 function onSubmit(token) {
                     $("form[action='{{form_action}}']").submit();
                 }
-            </script>
-        {% endif %}
-        <script>
+        </script>
+      {% endif %}
+      <script>
             $(function(){
                 $("form[action='{{form_action}}']").on("submit", function(e) {
                     $(".form-group", this).removeClass("with-errors");
@@ -73,7 +70,7 @@
                     }
                 });
             });
-        </script>
+      </script>
     </form>
 
-{% endif %}
+  {% endif %}

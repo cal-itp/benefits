@@ -8,7 +8,7 @@ RUN apt-get install -qq curl jq ssh
 USER $USER
 
 RUN python -m pip install --upgrade pip && \
-    pip install black flake8 pre-commit
+    pip install black djlint flake8 pre-commit
 
 COPY docs/requirements.txt docs/requirements.txt
 RUN pip install -r docs/requirements.txt

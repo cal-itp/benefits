@@ -1,16 +1,13 @@
+
 {% if button.url %}
-    {% if button.label %}
-        <label>{{ button.label }}</label>
-    {% endif %}
-    <a {% if button.id %}id="{{ button.id }}"{% endif %}
-        {% if button.target %}target="{{ button.target }}"{% endif %}
-        {% if button.rel %}rel="{{ button.rel }}"{% endif %}
-        class="{{ button.classes | join:" " }}"
-        href="{{ button.url }}"
-        role="button">
-        {{ button.text }}
-        {% if button.fallback_text %}
-            <span class="fallback-text">{{ button.fallback_text }}</span>
-        {% endif %}
-    </a>
+  {% if button.label %}<label>{{ button.label }}</label>{% endif %}
+  <a {% if button.id %}id="{{ button.id }}"{% endif %}
+     {% if button.target %}target="{{ button.target }}"{% endif %}
+     {% if button.rel %}rel="{{ button.rel }}"{% endif %}
+     class="{{ button.classes | join:" " }}"
+     href="{{ button.url }}"
+     role="button">
+    {{ button.text }}
+    {% if button.fallback_text %}<span class="fallback-text">{{ button.fallback_text }}</span>{% endif %}
+  </a>
 {% endif %}

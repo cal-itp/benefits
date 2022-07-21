@@ -2,10 +2,10 @@
 {% load i18n %}
 
 {% block content %}
-    <div class="text-left">
-        <span class="navbar-brand">{% translate "core.includes.noscript.brand" %}</span>
-        <span class="navbar-text">
-            {% translate "core.includes.noscript.text" %} <a href="/">{% translate "core.buttons.return_home" %}</a>.
-        </span>
-    </div>
-{% endblock %}
+  <div class="text-left">
+    <span class="navbar-brand">{% translate "core.includes.noscript.brand" %}</span>
+    <span class="navbar-text">
+      {% translate "core.includes.noscript.text" %} <a href="{% url "core:index" %}">{% translate "core.buttons.return_home" %}</a>.
+    </span>
+  </div>
+{% endblock content %}

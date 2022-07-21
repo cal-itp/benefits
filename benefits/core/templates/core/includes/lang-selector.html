@@ -1,3 +1,4 @@
+
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 {% get_available_languages as LANGUAGES %}
@@ -9,12 +10,12 @@ If more language support is added, the hidden input can be replaced by a select
 {% endcomment %}
 
 {% for code, lang in LANGUAGES %}
-    {% if code != LANGUAGE_CODE %}
-        <form method="POST" action="{% url "set_language" %}">
-            {% csrf_token %}
-            {% get_language_info for code as langinfo %}
-            <input name="language" type="hidden" value="{{ code }}" />
-            <button class="btn btn-lg btn-outline-light" type="submit">{{ langinfo.name_local | capfirst }}</button>
-        </form>
-    {% endif %}
+  {% if code != LANGUAGE_CODE %}
+    <form method="post" action="{% url "set_language" %}">
+      {% csrf_token %}
+      {% get_language_info for code as langinfo %}
+      <input name="language" type="hidden" value="{{ code }}" />
+      <button class="btn btn-lg btn-outline-light" type="submit">{{ langinfo.name_local | capfirst }}</button>
+    </form>
+  {% endif %}
 {% endfor %}
