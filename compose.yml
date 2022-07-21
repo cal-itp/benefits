@@ -3,17 +3,19 @@ version: "3.8"
 
 services:
   client:
-    build: ..
+    build:
+      context: .
+      dockerfile: appcontainer/Dockerfile
     image: benefits_client:latest
     env_file: .env
     ports:
       - "${DJANGO_LOCAL_PORT:-8000}:8000"
     volumes:
-      - ../fixtures:/home/calitp/app/fixtures:ro
+      - ./fixtures:/home/calitp/app/fixtures:ro
 
   dev:
     build:
-      context: ..
+      context: .
       dockerfile: .devcontainer/Dockerfile
     image: benefits_client:dev
     env_file: .env
@@ -24,7 +26,7 @@ services:
     ports:
       - "${DJANGO_LOCAL_PORT:-8000}:8000"
     volumes:
-      - ../:/home/calitp/app
+      - ./:/home/calitp/app
 
   docs:
     image: benefits_client:dev
@@ -33,7 +35,7 @@ services:
     ports:
       - "8001"
     volumes:
-      - ../:/home/calitp/app
+      - ./:/home/calitp/app
 
   server:
     image: ghcr.io/cal-itp/eligibility-server@sha256:337d5b2beb1e458980be49a778efd4a47f8daa8decc5e8329c0d528596e2f196

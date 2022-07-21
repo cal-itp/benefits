@@ -4,9 +4,10 @@ on:
   pull_request:
     types: [opened]
     paths:
-      - '.devcontainer/**'
-      - '.dockerignore'
-      - 'Dockerfile'
+      - ".devcontainer/**"
+      - "appcontainer/**"
+      - ".dockerignore"
+      - "compose.yml"
 
 jobs:
   label-actions:

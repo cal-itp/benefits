@@ -28,6 +28,7 @@ jobs:
           cache-from: type=gha,scope=cal-itp
           cache-to: type=gha,scope=cal-itp,mode=max
           context: .
+          file: appcontainer/Dockerfile
           push: false
           load: true
           tags: benefits_client:${{ github.sha }}

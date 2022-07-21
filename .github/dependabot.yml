@@ -6,7 +6,7 @@
 version: 2
 updates:
   - package-ecosystem: "pip"
-    directory: "/" # requirements.txt
+    directory: "/appcontainer" # main requirements.txt
     schedule:
       interval: "daily"
     commit-message:
