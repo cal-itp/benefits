@@ -73,6 +73,19 @@ Boolean:
   files are served
 - `False` (default): the application is launched with debug mode turned off, similar to how it runs in production
 
+### `DJANGO_LOAD_SAMPLE_DATA`
+
+!!! warning "Deployment configuration"
+
+    You may change this setting when deploying the app to a non-localhost domain
+
+Boolean:
+
+- `True` (default): The sample data in `benefits/core/migrations/0002_sample_data.py` is used to initialize the Django configuration database.
+- `False`: The sample data from `benefits/core/migrations/0002_sample_data.py` will not be loaded.
+
+See [Configuration data](data.md) for more.
+
 ### `DJANGO_LOCAL_PORT`
 
 !!! info "Local configuration"
