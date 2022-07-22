@@ -9,7 +9,7 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    migrations_directory = settings.BASE_DIR + "/benefits/core/migrations"
+    migrations_directory = os.path.join(settings.BASE_DIR, "benefits", "core", "migrations")
     dependencies = [("core", file.replace(".py", "")) for file in os.listdir(migrations_directory) if file.startswith("0002")]
 
     operations = []
