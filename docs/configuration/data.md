@@ -65,5 +65,5 @@ bin/init.sh
 [core-models]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/models.py
 [django-load-initial-data]: https://docs.djangoproject.com/en/4.0/howto/initial-data/
 [eligibility-server]: https://docs.calitp.org/eligibility-server
-[data-sample]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations
+[data-sample]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations/0002_sample_data.py
 [init]: https://github.com/cal-itp/benefits/blob/dev/bin/init.sh

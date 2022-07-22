@@ -9,7 +9,7 @@
 Cal-ITP Benefits defines a number of [models][core-models] in the core application, used throughout the codebase to configure
 different parts of the UI and logic.
 
-The Cal-ITP Benefits database is a simple read-only Sqlite database, initialized from the [fixture configuration](../configuration/fixtures.md) files.
+The Cal-ITP Benefits database is a simple read-only Sqlite database, initialized from the [data migration](../configuration/data.md) files.
 
 ## Migrations
 
