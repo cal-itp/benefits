@@ -2,11 +2,12 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.10.0"
+      version = "~> 3.14.0"
     }
   }
 
   backend "azurerm" {
+    # needs to match azure-pipelines.yml
     resource_group_name  = "RG-CDT-PUB-VIP-CALITP-P-001"
     storage_account_name = "sacdtcalitpp001"
     container_name       = "tfstate"

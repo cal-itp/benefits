@@ -1,16 +1,18 @@
-{% extends 'core/page.html' %}
+{% extends "core/page.html" %}
 {% load i18n %}
-{% block classes %}{{ block.super |add:" agency-index"}}{% endblock %}
+{% block classes %}
+  {{ block.super |add:" agency-index" }}
+{% endblock classes %}
 
 {% block container_content %}
-    <h1>{{ page.content_title }}</h1>
+  <h1>{{ page.content_title }}</h1>
 
-    <p>{% blocktranslate with info_link=info_link%}core.pages.agency_index.p[0]{{ info_link }}{% endblocktranslate %}</p>
-    <p>{% translate "core.pages.agency_index.p[1]" %}</p>
-    <p>{% translate "core.pages.agency_index.p[2]" %}</p>
+  <p>{% blocktranslate with info_link=info_link%}core.pages.agency_index.p[0]{{ info_link }}{% endblocktranslate %}</p>
+  <p>{% translate "core.pages.agency_index.p[1]" %}</p>
+  <p>{% translate "core.pages.agency_index.p[2]" %}</p>
 
-    {% block buttons%}
-        {{ block.super }}
-    {% endblock buttons %}
+  {% block buttons %}
+    {{ block.super }}
+  {% endblock buttons %}
 
 {% endblock container_content %}

@@ -3,7 +3,7 @@ default_install_hook_types:
   - commit-msg
 repos:
   - repo: https://github.com/compilerla/conventional-pre-commit
-    rev: v1.2.0
+    rev: v1.4.0
     hooks:
       - id: conventional-pre-commit
         stages: [commit-msg]
@@ -46,7 +46,7 @@ repos:
       - id: prettier
         types_or: [javascript, css]
 
-  - repo: https://github.com/rtts/djhtml
-    rev: 'v1.5.1'  # replace with the latest tag on GitHub
+  - repo: https://github.com/Riverside-Healthcare/djLint
+    rev: v1.7.0
     hooks:
-      - id: djhtml
+      - id: djlint-django

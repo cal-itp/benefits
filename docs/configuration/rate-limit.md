@@ -44,4 +44,4 @@ Comma-separated list of HTTP Methods for which requests are rate limited.
 Number of seconds before additional requests are denied.
 
 [benefits-middleware]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/middleware.py
-[django-middleware]: https://docs.djangoproject.com/en/3.2/ref/settings/#std:setting-MIDDLEWARE
+[django-middleware]: https://docs.djangoproject.com/en/4.0/ref/settings/#std:setting-MIDDLEWARE

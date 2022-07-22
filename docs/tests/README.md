@@ -9,8 +9,8 @@ See the [`cypress` Command Line](https://docs.cypress.io/guides/guides/command-l
 
 ### Running
 
-These are instructions for running `cypress` locally on your machine, *without* the [devcontainer](../development/README.md#vs-code-with-devcontainers). These steps
-will install `cypress` and its dependencies on your  machine. Make sure to run these commands in a Terminal.
+These are instructions for running `cypress` locally on your machine, _without_ the [devcontainer](../development/README.md#vs-code-with-devcontainers). These steps
+will install `cypress` and its dependencies on your machine. Make sure to run these commands in a Terminal.
 
 1. Ensure you have Node.js and NPM available on your local machine:
 

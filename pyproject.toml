@@ -1,14 +1,27 @@
-# Configuration for Black.
-
 # NOTE: you have to use single-quoted strings in TOML for regular expressions.
 # It's the equivalent of r-strings in Python.  Multiline strings are treated as
 # verbose regular expressions by Black.  Use [ ] to denote a significant space
 # character.
 
+# Configuration for black
+
 [tool.black]
 line-length = 127
 target-version = ['py38']
 include = '\.pyi?$'
+
+# Configuration for djlint
+
+[tool.djlint]
+ignore = "H006,H017,H021,H025,H031"
+indent = 2
+max_attribute_length = 127
+max_line_length = 127
+profile = "django"
+preserve_blank_lines = true
+use_gitignore = true
+
+# Configuration for pytest
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "benefits.settings"

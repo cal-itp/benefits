@@ -1,7 +1,12 @@
 {
+  "djlint.guessProfile": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
   "[html]": {
-    "editor.formatOnSave": false
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  "[django-html]": {
+    "editor.defaultFormatter": "monosans.djlint"
   },
   "files.encoding": "utf8",
   "files.eol": "\n",
@@ -17,5 +22,8 @@
   "python.linting.flake8Enabled": true,
   "python.testing.pytestArgs": ["tests/pytest", "--import-mode=importlib"],
   "python.testing.pytestEnabled": true,
-  "python.testing.unittestEnabled": false
+  "python.testing.unittestEnabled": false,
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform"
+  }
 }

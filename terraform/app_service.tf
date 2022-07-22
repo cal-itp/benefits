@@ -1,9 +1,9 @@
 resource "azurerm_service_plan" "main" {
-  name                = "ASP-CDT-PUB-VIP-CALITP-P-001"
-  location            = data.azurerm_resource_group.prod.location
-  resource_group_name = data.azurerm_resource_group.prod.name
-  os_type             = "Linux"
-  sku_name            = "P2v2"
+  name                       = "ASP-CDT-PUB-VIP-CALITP-P-001"
+  location                   = data.azurerm_resource_group.prod.location
+  resource_group_name        = data.azurerm_resource_group.prod.name
+  os_type                    = "Linux"
+  sku_name                   = "P2v2"
 
   lifecycle {
     ignore_changes = [tags]
@@ -14,11 +14,12 @@ resource "azurerm_service_plan" "main" {
 # https://github.com/cal-itp/benefits/issues/686
 
 resource "azurerm_linux_web_app" "main" {
-  name                = "AS-CDT-PUB-VIP-CALITP-P-001"
-  location            = data.azurerm_resource_group.prod.location
-  resource_group_name = data.azurerm_resource_group.prod.name
-  service_plan_id     = azurerm_service_plan.main.id
-  https_only          = true
+  name                      = "AS-CDT-PUB-VIP-CALITP-P-001"
+  location                  = data.azurerm_resource_group.prod.location
+  resource_group_name       = data.azurerm_resource_group.prod.name
+  service_plan_id           = azurerm_service_plan.main.id
+  https_only                = true
+  virtual_network_subnet_id = data.azurerm_subnet.main.id
 
   site_config {
     ftps_state             = "Disabled"
@@ -79,13 +80,18 @@ resource "azurerm_linux_web_app" "main" {
 }
 
 resource "azurerm_linux_web_app_slot" "dev" {
-  name           = "dev"
-  https_only     = true
-  app_service_id = azurerm_linux_web_app.main.id
+  name                      = "dev"
+  https_only                = true
+  app_service_id            = azurerm_linux_web_app.main.id
+  virtual_network_subnet_id = data.azurerm_subnet.main.id
 
   site_config {
     ftps_state             = "Disabled"
     vnet_route_all_enabled = true
+    application_stack {
+      docker_image     = "ghcr.io/cal-itp/benefits"
+      docker_image_tag = "dev"
+    }
   }
 
   identity {
@@ -106,7 +112,17 @@ resource "azurerm_linux_web_app_slot" "dev" {
   }
 
   lifecycle {
-    ignore_changes = [app_settings, storage_account, tags]
+    ignore_changes = [app_settings, tags]
+  }
+
+  storage_account {
+    access_key   = azurerm_storage_account.main.primary_access_key
+    account_name = azurerm_storage_account.main.name
+    # use the same name
+    name       = azurerm_storage_container.config_dev.name
+    type       = "AzureBlob"
+    share_name = azurerm_storage_container.config_dev.name
+    mount_path = "/home/calitp/app/config"
   }
 }
 
@@ -116,13 +132,18 @@ resource "azurerm_app_service_slot_custom_hostname_binding" "dev" {
 }
 
 resource "azurerm_linux_web_app_slot" "test" {
-  name           = "test"
-  https_only     = true
-  app_service_id = azurerm_linux_web_app.main.id
+  name                      = "test"
+  https_only                = true
+  app_service_id            = azurerm_linux_web_app.main.id
+  virtual_network_subnet_id = data.azurerm_subnet.main.id
 
   site_config {
     ftps_state             = "Disabled"
     vnet_route_all_enabled = true
+    application_stack {
+      docker_image     = "ghcr.io/cal-itp/benefits"
+      docker_image_tag = "test"
+    }
   }
 
   identity {
@@ -143,7 +164,17 @@ resource "azurerm_linux_web_app_slot" "test" {
   }
 
   lifecycle {
-    ignore_changes = [app_settings, storage_account, tags]
+    ignore_changes = [app_settings, tags]
+  }
+
+  storage_account {
+    access_key   = azurerm_storage_account.main.primary_access_key
+    account_name = azurerm_storage_account.main.name
+    # use the same name
+    name       = azurerm_storage_container.config_test.name
+    type       = "AzureBlob"
+    share_name = azurerm_storage_container.config_test.name
+    mount_path = "/home/calitp/app/config"
   }
 }
 

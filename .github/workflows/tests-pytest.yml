@@ -18,10 +18,10 @@ jobs:
         with:
           python-version-file: .github/workflows/.python-version
           cache: pip
-          cache-dependency-path: '**/requirements.txt'
+          cache-dependency-path: "**/requirements.txt"
 
       - name: Install Python dependencies
-        run: pip install -r requirements.txt -r tests/pytest/requirements.txt
+        run: pip install -r appcontainer/requirements.txt -r tests/pytest/requirements.txt
 
       - name: Run setup
         run: ./bin/init.sh

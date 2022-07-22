@@ -1,27 +1,15 @@
-<div class="alert
 
-    {% if message.level_tag == "error" %}
-        alert-danger
-    {% elif message.level_tag == "warning" %}
-        alert-warning
-    {% elif message.level_tag == "success" %}
-        alert-success
-    {% elif message.level_tag == "info" %}
-        alert-info
-    {% elif message.level_tag == "debug" %}
-        alert-severe
-    {% endif %}
+<div class="alert {% if message.level_tag == "error" %} alert-danger {% elif message.level_tag == "warning" %} alert-warning {% elif message.level_tag == "success" %} alert-success {% elif message.level_tag == "info" %} alert-info {% elif message.level_tag == "debug" %} alert-severe {% endif %} alert-dismissible alert-banner"
+     role="alert">
 
-    alert-dismissible alert-banner" role="alert">
-
-    <div class="container">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span class="ca-gov-icon-close-mark" aria-hidden="true"></span>
-        </button>
-        <span class="alert-level">
-            <span class="ca-gov-icon-important" aria-hidden="true"></span>
-            {{ message.level_tag | upper}}
-        </span>
-        <span class="alert-text">{{ message }}</span>
-    </div>
+  <div class="container">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span class="ca-gov-icon-close-mark" aria-hidden="true"></span>
+    </button>
+    <span class="alert-level">
+      <span class="ca-gov-icon-important" aria-hidden="true"></span>
+      {{ message.level_tag | upper }}
+    </span>
+    <span class="alert-text">{{ message }}</span>
+  </div>
 </div>

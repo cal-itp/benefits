@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json
 {
   "name": "cal-itp/benefits",
-  "dockerComposeFile": ["compose.yml"],
+  "dockerComposeFile": ["../compose.yml"],
   "service": "dev",
   "runServices": ["dev", "docs", "server"],
   "workspaceFolder": "/home/calitp/app",
@@ -21,9 +21,11 @@
     "batisteo.vscode-django",
     "bpruitt-goddard.mermaid-markdown-syntax-highlighting",
     "eamodio.gitlens",
+    "esbenp.prettier-vscode",
+    "hashicorp.terraform",
     "mhutchie.git-graph",
+    "monosans.djlint",
     "ms-python.python",
-    "ms-python.vscode-pylance",
-    "esbenp.prettier-vscode"
+    "ms-python.vscode-pylance"
   ]
 }

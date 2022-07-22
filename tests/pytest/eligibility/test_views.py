@@ -57,10 +57,12 @@ def disable_rate_limit(mocker):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency")
-def test_index_get_agency_multiple_verifiers(mocker, first_agency, first_verifier, mocked_session_agency, client):
+def test_index_get_agency_multiple_verifiers(
+    mocker, model_TransitAgency, model_EligibilityVerifier, mocked_session_agency, client
+):
     # override the mocked session agency with a mock agency that has multiple verifiers
-    mock_agency = mocker.Mock(spec=first_agency)
-    mock_agency.eligibility_verifiers.all.return_value = [first_verifier, first_verifier]
+    mock_agency = mocker.Mock(spec=model_TransitAgency)
+    mock_agency.eligibility_verifiers.all.return_value = [model_EligibilityVerifier, model_EligibilityVerifier]
     mock_agency.eligibility_verifiers.count.return_value = 2
     mocked_session_agency.return_value = mock_agency
 
@@ -76,10 +78,12 @@ def test_index_get_agency_multiple_verifiers(mocker, first_agency, first_verifie
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency")
-def test_index_get_agency_single_verifier(mocker, first_agency, first_verifier, mocked_session_agency, client):
+def test_index_get_agency_single_verifier(
+    mocker, model_TransitAgency, model_EligibilityVerifier, mocked_session_agency, client
+):
     # override the mocked session agency with a mock agency that has a single verifier
-    mock_agency = mocker.Mock(spec=first_agency)
-    mock_agency.eligibility_verifiers.all.return_value = [first_verifier]
+    mock_agency = mocker.Mock(spec=model_TransitAgency)
+    mock_agency.eligibility_verifiers.all.return_value = [model_EligibilityVerifier]
     mock_agency.eligibility_verifiers.count.return_value = 1
     mocked_session_agency.return_value = mock_agency
 
@@ -110,14 +114,14 @@ def test_index_post_invalid_form(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency")
-def test_index_post_valid_form(client, first_verifier, mocked_session_update):
+def test_index_post_valid_form(client, model_EligibilityVerifier, mocked_session_update):
     path = reverse(ROUTE_INDEX)
 
-    response = client.post(path, {"verifier": first_verifier.id})
+    response = client.post(path, {"verifier": model_EligibilityVerifier.id})
 
     assert response.status_code == 302
     assert response.url == reverse(ROUTE_START)
-    assert mocked_session_update.call_args.kwargs["verifier"] == first_verifier
+    assert mocked_session_update.call_args.kwargs["verifier"] == model_EligibilityVerifier
 
 
 @pytest.mark.django_db
@@ -195,9 +199,9 @@ def test_confirm_get_verified(client, mocked_session_update):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request")
-def test_confirm_get_oauth_verified(mocker, client, first_eligibility, mocked_session_update, mocked_analytics_module):
-    mocker.patch("benefits.eligibility.verify.eligibility_from_oauth", return_value=[first_eligibility])
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier_oauth", "mocked_session_oauth_token")
+def test_confirm_get_oauth_verified(mocker, client, model_EligibilityType, mocked_session_update, mocked_analytics_module):
+    mocker.patch("benefits.eligibility.verify.eligibility_from_oauth", return_value=[model_EligibilityType])
 
     path = reverse(ROUTE_CONFIRM)
     response = client.get(path)
@@ -209,7 +213,9 @@ def test_confirm_get_oauth_verified(mocker, client, first_eligibility, mocked_se
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request", "mocked_session_update")
+@pytest.mark.usefixtures(
+    "mocked_session_agency", "mocked_session_verifier_oauth", "mocked_session_oauth_token", "mocked_session_update"
+)
 def test_confirm_get_oauth_unverified(mocker, client, mocked_analytics_module):
     mocker.patch("benefits.eligibility.verify.eligibility_from_oauth", return_value=[])
 

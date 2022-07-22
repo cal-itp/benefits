@@ -1,8 +1,8 @@
 nav:
-  - Introduction: README.md
-  - Environment variables: environment-variables.md
-  - Fixtures: fixtures.md
-  - Content Security Policy: content-security-policy.md
-  - OAuth: oauth.md
-  - Rate Limit: rate-limit.md
-  - reCAPTCHA: recaptcha.md
+  - README.md
+  - environment-variables.md
+  - fixtures.md
+  - content-security-policy.md
+  - oauth.md
+  - rate-limit.md
+  - recaptcha.md

@@ -113,11 +113,20 @@ https://as-cdt-pub-vip-calitp-p-001-dev.scm.azurewebsites.net/api/logs/docker
 
 ## Making changes
 
-1. Get access to the Azure account through the DevSecOps team.
+[![Build Status](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_apis/build/status/cal-itp.benefits%20Infra?branchName=dev)](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_build/latest?definitionId=828&branchName=dev)
 
+Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is pushed to any branch on GitHub, then [`apply`](https://www.terraform.io/cli/commands/apply)'d when merged to `dev`. While other automation for this project is done through GitHub Actions, we use an Azure Pipeline (above) for a couple of reasons:
+
+- Easier authentication with the Azure API using a service connnection
+- Log output is hidden, avoiding accidentally leaking secrets
+
+### Local development
+
+1. Get access to the Azure account through the DevSecOps team.
 1. Install dependencies:
-    - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
-    - [Terraform](https://www.terraform.io/downloads)
+
+   - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+   - [Terraform](https://www.terraform.io/downloads)
 
 1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli), specifying the `CDT/ODI Production` Subscription.
 
@@ -127,8 +136,7 @@ https://as-cdt-pub-vip-calitp-p-001-dev.scm.azurewebsites.net/api/logs/docker
    az account set --subscription="CDT/ODI Production"
    ```
 
-1. Outside the [dev container](../../getting-started/), navigate to the [`terraform/`][terraform-dir] directory.
-
+1. Outside the [dev container](../../getting-started/), navigate to the [`terraform/`](https://github.com/cal-itp/benefits/tree/dev/terraform) directory.
 1. [Initialize Terraform.](https://www.terraform.io/cli/commands/init)
 
    ```sh
@@ -136,14 +144,13 @@ https://as-cdt-pub-vip-calitp-p-001-dev.scm.azurewebsites.net/api/logs/docker
    ```
 
 1. Make changes to Terraform files.
-
-1. [Plan](https://www.terraform.io/cli/commands/plan)/[apply](https://www.terraform.io/cli/commands/apply) the changes, as necessary.
+1. Preview the changes, as necessary.
 
    ```sh
-   terraform apply
+   terraform plan
    ```
 
-1. [Submit the changes via pull request.](../development/commits-branches-merging/) Be sure to specify whether they've been applied, i.e. whether they're live or not.
+1. [Submit the changes via pull request.](../development/commits-branches-merging/)
 
 For Azure resources, you need to [ignore changes](https://www.terraform.io/language/meta-arguments/lifecycle#ignore_changes) to tags, since they are [automatically created by Azure Policy](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/tag-policies).
 
@@ -152,5 +159,3 @@ lifecycle {
   ignore_changes = [tags]
 }
 ```
-
-[terraform-dir]: https://github.com/cal-itp/benefits/tree/dev/terraform

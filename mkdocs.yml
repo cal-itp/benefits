@@ -6,6 +6,7 @@ site_url: https://docs.calitp.org/benefits
 theme:
   name: material
   features:
+    - navigation.expand
     - navigation.tabs
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -33,20 +34,22 @@ plugins:
   - awesome-pages
   - redirects:
       redirect_maps:
+        "students.md": "use-cases/students.md"
         "deployment/azure.md": "deployment/infrastructure.md"
         "getting-started/development.md": "development/README.md"
         "getting-started/docker-dynamic-ports.md": "development/docker-dynamic-ports.md"
-
-extra_javascript:
-  - https://unpkg.com/mermaid@9.1.1/dist/mermaid.min.js
 
 extra_css:
   - https://use.fontawesome.com/releases/v5.13.0/css/all.css
 
 markdown_extensions:
   - admonition
+  - attr_list
   - codehilite:
       linenums: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
   - pymdownx.inlinehilite
   - pymdownx.tasklist:
       custom_checkbox: true
@@ -55,11 +58,10 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_div_format
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.smartsymbols
   - meta
   - toc:
       # insert a blank space before the character
       permalink: " ¶"
   - smarty
-  - fontawesome_markdown

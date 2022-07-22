@@ -6,17 +6,11 @@ import pytest
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import TransitAgency
+from benefits.core.models import AuthProvider, EligibilityType, EligibilityVerifier, PaymentProcessor, PemData, TransitAgency
 
 
 def pytest_runtest_setup():
     disable_socket()
-
-
-@pytest.fixture(scope="session")
-def django_db_setup():
-    # use existing database since it's read-only
-    pass
 
 
 @pytest.fixture
@@ -36,6 +30,144 @@ def app_request(rf):
     session.reset(app_request)
 
     return app_request
+
+
+@pytest.fixture
+def model_PemData():
+    data = PemData.objects.create(
+        text="-----BEGIN PUBLIC KEY-----\nPEM DATA\n-----END PUBLIC KEY-----\n", label="Test public key"
+    )
+
+    return data
+
+
+@pytest.fixture
+def model_AuthProvider():
+    auth_provider = AuthProvider.objects.create(
+        sign_in_button_label="Sign in",
+        sign_out_button_label="Sign out",
+        client_name="Client",
+        client_id="1234",
+        authority="https://example.com",
+    )
+
+    return auth_provider
+
+
+@pytest.fixture
+def model_AuthProvider_with_verification(model_AuthProvider):
+    model_AuthProvider.scope = "scope"
+    model_AuthProvider.claim = "claim"
+    model_AuthProvider.save()
+
+    return model_AuthProvider
+
+
+@pytest.fixture
+def model_AuthProvider_without_verification(model_AuthProvider):
+    model_AuthProvider.scope = None
+    model_AuthProvider.claim = None
+    model_AuthProvider.save()
+
+    return model_AuthProvider
+
+
+@pytest.fixture
+def model_EligibilityType():
+    eligibility = EligibilityType.objects.create(name="test", label="Test Eligibility Type", group_id="1234")
+
+    return eligibility
+
+
+@pytest.fixture
+def model_EligibilityVerifier(model_PemData, model_EligibilityType):
+    verifier = EligibilityVerifier.objects.create(
+        name="Test Verifier",
+        api_url="https://example.com/verify",
+        api_auth_header="X-API-AUTH",
+        api_auth_key="secret-key",
+        eligibility_type=model_EligibilityType,
+        public_key=model_PemData,
+        selection_label="Select",
+        start_content_title="Start",
+        start_item_name="Start Item",
+        start_item_description="Start Item Description",
+        start_blurb="Start Blurb",
+        form_title="Form",
+        form_content_title="Form",
+        form_blurb="Form Blurb",
+        form_sub_label="Sub",
+        form_sub_placeholder="Sub",
+        form_name_label="Name",
+        form_name_placeholder="Name",
+        unverified_title="Unverified",
+        unverified_content_title="Unverified",
+        unverified_blurb="Unverified Blurb",
+    )
+
+    return verifier
+
+
+@pytest.fixture
+def model_EligibilityVerifier_AuthProvider_with_verification(model_AuthProvider_with_verification, model_EligibilityVerifier):
+    model_EligibilityVerifier.auth_provider = model_AuthProvider_with_verification
+    model_EligibilityVerifier.save()
+
+    return model_EligibilityVerifier
+
+
+@pytest.fixture
+def model_PaymentProcessor(model_PemData):
+    payment_processor = PaymentProcessor.objects.create(
+        name="Test Payment Processor",
+        api_base_url="https://example.com/payments",
+        api_access_token_endpoint="token",
+        api_access_token_request_key="X-API-TOKEN",
+        api_access_token_request_val="secret-value",
+        card_tokenize_url="https://example.com/payments/tokenize.js",
+        card_tokenize_func="tokenize",
+        card_tokenize_env="test",
+        client_cert=model_PemData,
+        client_cert_private_key=model_PemData,
+        client_cert_root_ca=model_PemData,
+        customer_endpoint="customer",
+        customers_endpoint="customers",
+        group_endpoint="group",
+    )
+
+    return payment_processor
+
+
+@pytest.fixture
+def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityVerifier, model_PaymentProcessor):
+    agency = TransitAgency.objects.create(
+        slug="test",
+        short_name="TEST",
+        long_name="Test Transit Agency",
+        agency_id="test123",
+        merchant_id="test",
+        info_url="https://example.com/test-agency",
+        phone="800-555-5555",
+        active=True,
+        payment_processor=model_PaymentProcessor,
+        private_key=model_PemData,
+        jws_signing_alg="alg",
+    )
+
+    # add many-to-many relationships after creation, need ID on both sides
+    agency.eligibility_types.add(model_EligibilityType)
+    agency.eligibility_verifiers.add(model_EligibilityVerifier)
+    agency.save()
+
+    return agency
+
+
+@pytest.fixture
+def model_TransitAgency_inactive(model_TransitAgency):
+    model_TransitAgency.active = False
+    model_TransitAgency.save()
+
+    return model_TransitAgency
 
 
 @pytest.fixture
@@ -59,35 +191,14 @@ def mocked_view():
 
 
 @pytest.fixture
-def first_agency():
-    agency = TransitAgency.objects.first()
-    assert agency
-    return agency
+def mocked_session_agency(mocker, model_TransitAgency):
+    return mocker.patch("benefits.core.session.agency", autospec=True, return_value=model_TransitAgency)
 
 
 @pytest.fixture
-def first_eligibility(first_agency):
-    eligibility = first_agency.eligibility_types.first()
-    assert eligibility
-    return eligibility
-
-
-@pytest.fixture
-def first_verifier(first_agency):
-    verifier = first_agency.eligibility_verifiers.first()
-    assert verifier
-    return verifier
-
-
-@pytest.fixture
-def mocked_session_agency(mocker, first_agency):
-    return mocker.patch("benefits.core.session.agency", autospec=True, return_value=first_agency)
-
-
-@pytest.fixture
-def mocked_session_eligibility(mocker, first_eligibility):
+def mocked_session_eligibility(mocker, model_EligibilityType):
     mocker.patch("benefits.core.session.eligible", autospec=True, return_value=True)
-    return mocker.patch("benefits.core.session.eligibility", autospec=True, return_value=first_eligibility)
+    return mocker.patch("benefits.core.session.eligibility", autospec=True, return_value=model_EligibilityType)
 
 
 @pytest.fixture
@@ -96,13 +207,20 @@ def mocked_session_oauth_token(mocker):
 
 
 @pytest.fixture
-def mocked_session_verifier(mocker, first_verifier):
-    return mocker.patch("benefits.core.session.verifier", autospec=True, return_value=first_verifier)
+def mocked_session_verifier(mocker, model_EligibilityVerifier):
+    return mocker.patch("benefits.core.session.verifier", autospec=True, return_value=model_EligibilityVerifier)
 
 
 @pytest.fixture
-def mocked_session_verifier_auth_required(mocker, first_verifier, mocked_session_verifier):
-    mock_verifier = mocker.Mock(spec=first_verifier)
+def mocked_session_verifier_oauth(mocker, model_EligibilityVerifier_AuthProvider_with_verification):
+    return mocker.patch(
+        "benefits.core.session.verifier", autospec=True, return_value=model_EligibilityVerifier_AuthProvider_with_verification
+    )
+
+
+@pytest.fixture
+def mocked_session_verifier_auth_required(mocker, model_EligibilityVerifier, mocked_session_verifier):
+    mock_verifier = mocker.Mock(spec=model_EligibilityVerifier)
     mock_verifier.is_auth_required = True
     mocked_session_verifier.return_value = mock_verifier
     return mocked_session_verifier
@@ -110,7 +228,7 @@ def mocked_session_verifier_auth_required(mocker, first_verifier, mocked_session
 
 @pytest.fixture
 def mocked_session_verifier_auth_not_required(mocked_session_verifier_auth_required):
-    # mocked_session_verifier_auth_required.return_value is the Mock(spec=first_verifier) from that fixture
+    # mocked_session_verifier_auth_required.return_value is the Mock(spec=model_EligibilityVerifier) from that fixture
     mocked_session_verifier_auth_required.return_value.is_auth_required = False
     mocked_session_verifier_auth_required.return_value.uses_auth_verification = False
     return mocked_session_verifier_auth_required

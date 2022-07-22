@@ -24,9 +24,8 @@ RUN useradd --create-home --shell /bin/bash $USER && \
     chown -R $USER /home/$USER && \
     # install server components
     apt-get update && \
-    apt-get install -qq --no-install-recommends gettext nginx && \
     # install git for use when installing dependencies from VCS (https://pip.pypa.io/en/stable/topics/vcs-support/)
-    apt-get install -qq --no-install-recommends git
+    apt-get install -qq --no-install-recommends build-essential gettext git nginx
 
 # enter app directory
 WORKDIR /home/$USER/app
@@ -34,15 +33,15 @@ WORKDIR /home/$USER/app
 USER $USER
 
 # install python dependencies
-COPY requirements.txt requirements.txt
+COPY appcontainer/requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
 # copy config files
-COPY gunicorn.conf.py gunicorn.conf.py
+COPY appcontainer/gunicorn.conf.py gunicorn.conf.py
 COPY manage.py manage.py
 
 # overwrite default nginx.conf
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY appcontainer/nginx.conf /etc/nginx/nginx.conf
 
 # update PATH for local pip installs
 ENV PATH "$PATH:/home/$USER/.local/bin"
