@@ -172,7 +172,7 @@ DATABASES = {
     }
 }
 
-LOAD_SAMPLE_DATA = os.environ.get("DJANGO_LOAD_SAMPLE_DATA", "true").lower() == "false"
+LOAD_SAMPLE_DATA = os.environ.get("DJANGO_LOAD_SAMPLE_DATA", "true").lower() != "false"
 
 # Password validation
 
