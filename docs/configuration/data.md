@@ -4,6 +4,12 @@
 
     [`benefits/core/migrations/0002_sample_data.py`][data-sample]
 
+!!! example "Helper migration file to define data migration order"
+
+    [`benefits/core/migrations/0003_data_migration_order.py`][helper-migration]
+
+    Since our initial data migration files are assumed to start with `0002` and depend only on `0001_initial`, this migration file ensures the migration graph has a defined order (which is required for the migration to run). It looks in the `benefits/core/migrations` directory for migration files starting with `0002` and declares them in its dependencies list.
+
 !!! tldr "Django docs"
 
     [How to provide initial data for models][django-load-initial-data]
@@ -66,4 +72,5 @@ bin/init.sh
 [django-load-initial-data]: https://docs.djangoproject.com/en/4.0/howto/initial-data/
 [eligibility-server]: https://docs.calitp.org/eligibility-server
 [data-sample]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations/0002_sample_data.py
+[helper-migration]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations/0003_data_migration_order.py
 [init]: https://github.com/cal-itp/benefits/blob/dev/bin/init.sh
