@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eu
+set -eux
 
 # remove existing (old) database file
 # -f forces the delete (and avoids an error when the file doesn't exist)
