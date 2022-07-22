@@ -5,8 +5,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-07-20 22:38+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-22 19:42+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -188,7 +188,7 @@ msgstr ""
 "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
 "proveedor de tránsito local para obtener asistencia."
 
-#: benefits/core/templates/core/agency_index.html:8
+#: benefits/core/templates/core/agency_index.html:10
 #: benefits/eligibility/templates/eligibility/start.html:12
 #, python-format
 msgid "core.pages.agency_index.p[0]%(info_link)s"
@@ -198,20 +198,20 @@ msgstr ""
 "href=\"%(info_link)s\">Conozca más sobre beneficios de Cal-ITP</a></"
 "strong><span class='period'>.</span>"
 
-#: benefits/core/templates/core/agency_index.html:9
+#: benefits/core/templates/core/agency_index.html:11
 msgid "core.pages.agency_index.p[1]"
 msgstr ""
 "Necesitará su licencia de conducir o tarjeta de identificación de California "
 "y su tarjeta sin contacto emitida por el banco para comenzar."
 
-#: benefits/core/templates/core/agency_index.html:10
+#: benefits/core/templates/core/agency_index.html:12
 #: benefits/eligibility/templates/eligibility/start.html:13
 msgid "core.pages.agency_index.p[2]"
 msgstr ""
 "El programa de beneficios de Cal-ITP actualmente solo está abierto a "
 "personas de 65 años o más."
 
-#: benefits/core/templates/core/base.html:9
+#: benefits/core/templates/core/base.html:10
 #: benefits/core/templates/core/help.html:12
 msgid "core.pages.help.about.p[0]"
 msgstr ""
@@ -220,28 +220,28 @@ msgstr ""
 "un nuevo programa del Departamento de Transporte de California dedicado a "
 "hacer que los viajes sean más sencillos y económicos para todos."
 
-#: benefits/core/templates/core/base.html:27
+#: benefits/core/templates/core/base.html:32
 msgid "core.buttons.skip"
 msgstr "Saltar al contenido principal"
 
-#: benefits/core/templates/core/base.html:46
+#: benefits/core/templates/core/base.html:49
 msgctxt "image alt text"
 msgid "core.logos.small"
 msgstr ""
 "Proyecto de viaje integrado de California: logotipo de beneficios (pequeño)"
 
-#: benefits/core/templates/core/base.html:47
+#: benefits/core/templates/core/base.html:52
 msgctxt "image alt text"
 msgid "core.logos.large"
 msgstr ""
 "Proyecto de viaje integrado de California: logotipo de beneficios (grande)"
 
-#: benefits/core/templates/core/base.html:66 benefits/core/views.py:86
+#: benefits/core/templates/core/base.html:70 benefits/core/views.py:86
 #: benefits/core/views.py:87
 msgid "core.buttons.help"
 msgstr "Ayuda"
 
-#: benefits/core/templates/core/base.html:69
+#: benefits/core/templates/core/base.html:73
 msgid "core.buttons.privacy"
 msgstr "Póliza de Privacidad"
 
@@ -270,18 +270,18 @@ msgstr ""
 "símbolo de sin contacto. El símbolo sin contacto son cuatro líneas curvas "
 "que se ven así:"
 
-#: benefits/core/templates/core/help.html:19
+#: benefits/core/templates/core/help.html:21
 msgctxt "image alt text"
 msgid "core.icons.contactless"
 msgstr "Cuatro líneas curvas en las tarjetas habilitadas sin contacto"
 
-#: benefits/core/templates/core/help.html:22
+#: benefits/core/templates/core/help.html:24
 msgid "core.pages.help.payment_options.p[1]"
 msgstr ""
 "Una tarjeta bancaria sin contacto puede ser una tarjeta de crédito o de "
 "débito y debe incluir el logotipo de Visa o Mastercard."
 
-#: benefits/core/templates/core/help.html:24
+#: benefits/core/templates/core/help.html:26
 #, python-format
 msgid "core.pages.help.payment_options.p[2][0]%(website)s"
 msgstr ""
@@ -290,44 +290,44 @@ msgstr ""
 "contacto gratuitas, como la tarjeta de débito  <a href=\"%(website)s\" "
 "target=\"_blank\" rel=\"noopener noreferrer\">Cash App Visa</a> "
 
-#: benefits/core/templates/core/help.html:25
+#: benefits/core/templates/core/help.html:27
 #, python-format
 msgid "core.pages.help.payment_options.p[2][1]%(website)s"
 msgstr ""
 "o la tarjeta de débito <a href=\"%(website)s\" target=\"_blank\" rel="
 "\"noopener noreferrer\">Venmo Mastercard</a>."
 
-#: benefits/core/templates/core/help.html:27
+#: benefits/core/templates/core/help.html:29
 msgid "core.pages.help.payment_options.p[3]"
 msgstr ""
 "Todavía puede obtener su descuento mediante el proceso de solicitud de su "
 "proveedor de transporte local."
 
-#: benefits/core/templates/core/help.html:28
+#: benefits/core/templates/core/help.html:30
 msgid "core.pages.help.payment_options.p[4]"
 msgstr ""
 "Para obtener actualizaciones sobre opciones adicionales, vuelva a consultar "
 "este sitio web o comuníquese con su proveedor de transporte local."
 
-#: benefits/core/templates/core/help.html:30
+#: benefits/core/templates/core/help.html:32
 msgid "core.pages.help.login_gov"
 msgstr "¿Qué es Login.gov?"
 
-#: benefits/core/templates/core/help.html:31
+#: benefits/core/templates/core/help.html:33
 msgid "core.pages.help.login_gov.p[0]"
 msgstr ""
 "Login.gov es una forma segura de iniciar sesión en las agencias "
 "gubernamentales participantes. Puede utilizar su cuenta de Login.gov para "
 "acceder a todos los beneficios ofrecidos a través de Cal-ITP."
 
-#: benefits/core/templates/core/help.html:32
+#: benefits/core/templates/core/help.html:34
 msgid "core.pages.help.login_gov.p[1]"
 msgstr ""
 "Crear una cuenta es simple. Necesitará una dirección de correo electrónico y "
 "un método para autenticar su cuenta—que utilizará un teléfono fijo o un "
 "teléfono móvil o códigos de seguridad que deben imprimirse o anotarse."
 
-#: benefits/core/templates/core/help.html:33
+#: benefits/core/templates/core/help.html:35
 msgid "core.pages.help.login_gov.p[2]"
 msgstr ""
 "Para obtener más información sobre Login.gov, visite <a href='https://login."
@@ -335,11 +335,11 @@ msgstr ""
 "href='https://login.gov/es/help/' target=\"_blank\" rel=\"noopener noreferrer"
 "\">Login.gov: Centro de ayuda</a>."
 
-#: benefits/core/templates/core/help.html:35
+#: benefits/core/templates/core/help.html:37
 msgid "core.pages.help.login_gov_verify"
 msgstr "¿Cómo verifico mi identidad en Login.gov?"
 
-#: benefits/core/templates/core/help.html:36
+#: benefits/core/templates/core/help.html:38
 msgid "core.pages.help.login_gov_verify.p[0]"
 msgstr ""
 "​​Para verificar su identidad, Login.gov le pide que suba una fotografía de su "
@@ -348,21 +348,21 @@ msgstr ""
 "requisitos son adicionales para cumplir con los requisitos para la "
 "autentificación de dos factores."
 
-#: benefits/core/templates/core/help.html:37
+#: benefits/core/templates/core/help.html:39
 msgid "core.pages.help.login_gov_verify.p[1]"
 msgstr ""
 "No puede verificar su identidad en Login.gov sin una identificación emitida "
 "por el estado, que puede ser una licencia de conducir o una tarjeta de "
 "identificación emitida por el estado que no sea una licencia de conducir."
 
-#: benefits/core/templates/core/help.html:38
+#: benefits/core/templates/core/help.html:40
 msgid "core.pages.help.login_gov_verify.p[2]"
 msgstr ""
 "Si no tiene un plan telefónico que esté a su nombre, Login.gov puede "
 "enviarle el código de verificación por correo, lo que toma aproximadamente "
 "de 3 a 5 días."
 
-#: benefits/core/templates/core/help.html:39
+#: benefits/core/templates/core/help.html:41
 msgid "core.pages.help.login_gov_verify.p[3]"
 msgstr ""
 "Verificar su identidad asegura que la persona adecuada tenga acceso a la "
@@ -373,41 +373,41 @@ msgstr ""
 "identity/' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro "
 "de ayuda</a>."
 
-#: benefits/core/templates/core/help.html:41
+#: benefits/core/templates/core/help.html:43
 msgid "core.pages.help.littlepay"
 msgstr "¿Qué es Littlepay?"
 
-#: benefits/core/templates/core/help.html:42
+#: benefits/core/templates/core/help.html:44
 msgid "core.pages.help.littlepay.p[0]"
 msgstr ""
 "Nuestro socio de pagos, Littlepay, es una plataforma de procesamiento de "
 "pagos segura e integral que nos permite adjuntar sin problemas su descuento "
 "de tránsito a su tarjeta bancaria."
 
-#: benefits/core/templates/core/help.html:43
+#: benefits/core/templates/core/help.html:46
 #, python-format
 msgid "core.pages.help.littlepay.p[1]%(website)s"
 msgstr ""
 "Para obtener más información sobre Littlepay, visite el sitio web de <a href="
 "\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Littlepay</a>."
 
-#: benefits/core/templates/core/help.html:45
+#: benefits/core/templates/core/help.html:49
 msgid "core.pages.help.questions"
 msgstr "¿Preguntas?"
 
-#: benefits/core/templates/core/help.html:46
+#: benefits/core/templates/core/help.html:50
 msgid "core.pages.help.questions.p[0]"
 msgstr ""
 "Si necesita ayuda con este sitio web, póngase en contacto con el equipo de "
 "servicio al cliente de su proveedor de transito local."
 
-#: benefits/core/templates/core/help.html:53
+#: benefits/core/templates/core/help.html:57
 msgid "core.pages.help.foss.text"
 msgstr ""
 "Esta aplicación es un software libre y de código abierto. Puede obtener el "
 "código fuente de"
 
-#: benefits/core/templates/core/help.html:54
+#: benefits/core/templates/core/help.html:58
 msgid "core.pages.help.foss.link"
 msgstr "GitHub"
 
@@ -644,7 +644,7 @@ msgstr ""
 "Si estás en una computadora pública o compartida, no olvides hacer clic aquí "
 "para cerrar la sesión de"
 
-#: benefits/enrollment/templates/enrollment/success.html:33
+#: benefits/enrollment/templates/enrollment/success.html:29
 msgid "enrollment.pages.success.p4"
 msgstr "."
 
