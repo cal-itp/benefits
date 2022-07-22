@@ -7,4 +7,4 @@ python manage.py makemessages -a --no-obsolete
 
 # put back bug-report link
 
-sed -i 's/Report-Msgid-Bugs-To\:/Report-Msgid-Bugs-To\: https\:\/\/github.com\/cal-itp\/benefits\/issues/g' benefits/locale/**/**/**.po
+sed -i 's/Report-Msgid-Bugs-To\:/Report-Msgid-Bugs-To\: https\:\/\/github.com\/cal-itp\/benefits\/issues/g' benefits/locale/*/*/*.po
