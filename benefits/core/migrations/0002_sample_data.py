@@ -8,7 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 def load_sample_data(app, *args, **kwargs):
-    if os.environ.get("DJANGO_LOAD_SAMPLE_DATA", "false").lower() == "false":
+    if os.environ.get("DJANGO_LOAD_SAMPLE_DATA", "true").lower() == "false":
         print("  DJANGO_LOAD_SAMPLE_DATA is set to False, skipping sample data")
         return
 
