@@ -93,7 +93,7 @@ class Migration(migrations.Migration):
         migrations.RunPython(load_data),
     ]
 ```
-1. Put this file in the core app's `migrations` module
+1. Put this file under `benefits/core/migrations`
 1. If `DJANGO_LOAD_SAMPLE_DATA` is `false`, you can also set [`DJANGO_MIGRATIONS_DIR`](../environment-variables/#django_migrations_dir) to a directory path, and put your data migration there.
 
 
