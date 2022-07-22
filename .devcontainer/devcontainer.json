@@ -22,6 +22,7 @@
     "bpruitt-goddard.mermaid-markdown-syntax-highlighting",
     "eamodio.gitlens",
     "esbenp.prettier-vscode",
+    "hashicorp.terraform",
     "mhutchie.git-graph",
     "monosans.djlint",
     "ms-python.python",
