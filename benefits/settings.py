@@ -172,6 +172,8 @@ DATABASES = {
     }
 }
 
+LOAD_SAMPLE_DATA = os.environ.get("DJANGO_LOAD_SAMPLE_DATA", "true").lower() == "false"
+
 # Password validation
 
 AUTH_PASSWORD_VALIDATORS = []

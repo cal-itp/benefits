@@ -1,15 +1,14 @@
 """Data migration which loads sample data.
 Set environment variable DJANGO_LOAD_SAMPLE_DATA to False to skip loading sample data.
 """
-import os
-
+from django.conf import settings
 from django.db import migrations
 from django.utils.translation import gettext_lazy as _
 
 
 def load_sample_data(app, *args, **kwargs):
-    if os.environ.get("DJANGO_LOAD_SAMPLE_DATA", "true").lower() == "false":
-        print("  DJANGO_LOAD_SAMPLE_DATA is set to False, skipping sample data")
+    if settings.LOAD_SAMPLE_DATA:
+        print("  LOAD_SAMPLE_DATA is set to False, skipping sample data")
         return
 
     EligibilityType = app.get_model("core", "EligibilityType")
