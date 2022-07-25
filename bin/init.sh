@@ -12,7 +12,7 @@ if [[ ${DJANGO_LOAD_SAMPLE_DATA:-true} = false ]]; then
     if [[ -d ${DJANGO_MIGRATIONS_DIR:-false} ]]; then
         cp ${DJANGO_MIGRATIONS_DIR}/0002_*.py ./benefits/core/migrations/
     else
-        echo "Warning: DJANGO_MIGRATION_DIR needs to be a directory... not loading any data"
+        echo "DJANGO_MIGRATIONS_DIR is either unset or not a directory"
     fi
 fi
 
