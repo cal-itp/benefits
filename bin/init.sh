@@ -10,6 +10,7 @@ rm -f django.db
 
 if [[ ${DJANGO_LOAD_SAMPLE_DATA:-true} = false ]]; then
     if [[ -d ${DJANGO_MIGRATIONS_DIR:-false} ]]; then
+        echo "Copying migrations from ${DJANGO_MIGRATIONS_DIR}"
         cp ${DJANGO_MIGRATIONS_DIR}/0002_*.py ./benefits/core/migrations/
     else
         echo "DJANGO_MIGRATIONS_DIR is either unset or not a directory"
