@@ -2,9 +2,9 @@
 
 The first steps of the Getting Started guide mention [creating an `.env` file][getting-started_create-env].
 
-The sections below outline in more detail the application environment variables that you may want to override, and their purpose.
+The sections below outline in more detail the application environment variables that you may want to override, and their purpose. In App Service, this is more generally called the ["configuration"][app-service-config].
 
-See other topic pages in this section for more specific environment variable configurations.
+See other topic pages in this section for more specific environment variable configurations. See [benefits-secrets][benefits-secrets] for values.
 
 ## Docker
 
@@ -147,9 +147,6 @@ The base URL for the (running) application, against which all Cypress `.visit()`
 When Cypress is running inside the devcontainer, this should be `http://localhost:8000`. When Cypress is running outside the
 devcontainer, check the [`DJANGO_LOCAL_PORT`](#django_local_port).
 
-[deployment]: ../deployment/README.md
-[getting-started_create-env]: ../getting-started/README.md#create-an-environment-file
-
 ## Azure
 
 ### `APPLICATIONINSIGHTS_CONNECTION_STRING`
@@ -159,3 +156,8 @@ devcontainer, check the [`DJANGO_LOCAL_PORT`](#django_local_port).
     [Azure Monitor connection strings](https://docs.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string)
 
 Enables [log collection](../../deployment/infrastructure/#logs). Set the value in quotes, e.g. `APPLICATIONINSIGHTS_CONNECTION_STRING="InstrumentationKey=…"`.
+
+[app-service-config]: https://docs.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal
+[benefits-secrets]: https://github.com/cal-itp/benefits-secrets
+[deployment]: ../deployment/README.md
+[getting-started_create-env]: ../getting-started/README.md#create-an-environment-file

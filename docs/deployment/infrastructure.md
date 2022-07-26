@@ -159,3 +159,13 @@ lifecycle {
   ignore_changes = [tags]
 }
 ```
+
+## Azure environment setup
+
+The following steps are required to set up the environment, with linked issues to automate them:
+
+- `terraform apply`
+- Set required [App Service configuration](../configuration/environment-variables.md)
+- Bind the certificates to the slots - [#704](https://github.com/cal-itp/benefits/issues/704)
+
+This is not a complete step-by-step guide; more a list of things to remember. This may be useful as part of incident response.
