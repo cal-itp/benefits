@@ -61,8 +61,7 @@ you setup as part of initialization.
 
 By default, [sample data][sample-data] is used to initialize Django. Alternatively you may:
 
-- Modify the sample data file(s); or
-- Override the `DJANGO_INIT_PATH` environment variable with different data file(s); or
+- Modify the [migration file][data-migration] that handles data migration
 - (If `DJANGO_ADMIN=true`) use the backend administrative interface CRUD
 
 Stop the running services with:
@@ -72,4 +71,6 @@ docker compose down
 ```
 
 [docker]: https://www.docker.com/products/docker-desktop
-[sample-data]: https://github.com/cal-itp/benefits/tree/dev/fixtures
+[sample-data]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations/0002_sample_data.py
+
+[data-migration](https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations)

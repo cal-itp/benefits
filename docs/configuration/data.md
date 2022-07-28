@@ -1,28 +1,28 @@
-# Fixtures
+# Configuration data
 
-!!! example "Sample files"
+!!! example "Sample data provided by data migration"
 
-    [`fixtures/*.json`][fixtures-sample]
+    [`benefits/core/migrations/0002_sample_data.py`][data-sample]
 
 !!! tldr "Django docs"
 
-    [Providing data with fixtures][django-data-fixtures]
+    [How to provide initial data for models][django-load-initial-data]
 
 ## Introduction
 
-Fixtures are simply JSON representations of the app's model classes, defined in [`benefits/core/models.py`][core-models].
+Django [data migrations](https://docs.djangoproject.com/en/4.0/topics/migrations/#data-migrations) can be used to load the database with instances of the app's model classes, defined in [`benefits/core/models.py`][core-models].
 
-Fixture files are loaded as the application starts up and seed the configuration database. See the [`bin/init.sh`][init] script.
+Migrations are run as the application starts up. See the [`bin/init.sh`][init] script.
 
-The fixture samples provided in the repository are sufficient to run the app locally and interact with e.g. the sample Transit
+The sample data provided in the repository is sufficient to run the app locally and interact with e.g. the sample Transit
 Agencies.
 
-During the [deployment](../deployment/README.md) process, environment-specific fixtures are used to build that
+During the [deployment](../deployment/README.md) process, an environment-specific data migration is used to build that
 environment's configuration database.
 
 ## Sample data
 
-The sample data included in the repository fixtures is enough to bootstrap the application with basic functionality:
+The sample data included in the repository is enough to bootstrap the application with basic functionality:
 
 - Multiple transit agency configurations
 - Multiple eligibility verification pathways
@@ -52,7 +52,7 @@ Some configuration data is not available with the samples in the repository:
 
 ## Building the configuration database
 
-When local fixture files change, the configuration database needs to be rebuilt.
+When the data migration changes, the configuration database needs to be rebuilt.
 
 The file is called `django.db` and the following commands will rebuild it.
 
@@ -62,19 +62,8 @@ Run these commands from within the repository root, inside the devcontainer:
 bin/init.sh
 ```
 
-## Fixture source
-
-The `bin/init.sh` script uses the [`DJANGO_INIT_PATH`][env-django-init] environment variable when loading fixture(s).
-
-## Cypress test fixtures
-
-Some of the tests also make use of the sample fixtures in the repository. See [`tests/cypress/fixtures/`][cypress-fixtures] for
-more information.
-
 [core-models]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/models.py
-[cypress-fixtures]: https://github.com/cal-itp/benefits/tree/dev/tests/cypress/fixtures
-[django-data-fixtures]: https://docs.djangoproject.com/en/4.0/howto/initial-data/#providing-data-with-fixtures
+[django-load-initial-data]: https://docs.djangoproject.com/en/4.0/howto/initial-data/
 [eligibility-server]: https://docs.calitp.org/eligibility-server
-[env-django-init]: environment-variables.md#djangoinitpath
-[fixtures-sample]: https://github.com/cal-itp/benefits/tree/dev/fixtures
+[data-sample]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations/0002_sample_data.py
 [init]: https://github.com/cal-itp/benefits/blob/dev/bin/init.sh

@@ -73,16 +73,6 @@ Boolean:
   files are served
 - `False` (default): the application is launched with debug mode turned off, similar to how it runs in production
 
-### `DJANGO_INIT_PATH`
-
-!!! warning "Deployment configuration"
-
-    You may change this setting when deploying the app to a non-localhost domain
-
-The path to the fixture file(s) used to initialize the Django configuration database.
-
-See [Fixtures](fixtures.md) for more.
-
 ### `DJANGO_LOCAL_PORT`
 
 !!! info "Local configuration"
