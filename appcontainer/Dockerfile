@@ -50,9 +50,10 @@ ENV PATH "$PATH:/home/$USER/.local/bin"
 COPY bin/ bin/
 COPY benefits/ benefits/
 
-# ensure $USER can compile messages in the locale directories
+# ensure $USER can compile messages in the locale directories and copy migration files from $DJANGO_MIGRATIONS_DIR
 USER root
 RUN chmod -R 777 benefits/locale
+RUN chmod -R 777 benefits/core/migrations
 USER $USER
 
 # configure container executable
