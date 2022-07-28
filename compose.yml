@@ -10,8 +10,6 @@ services:
     env_file: .env
     ports:
       - "${DJANGO_LOCAL_PORT:-8000}:8000"
-    volumes:
-      - ./fixtures:/home/calitp/app/fixtures:ro
 
   dev:
     build:
