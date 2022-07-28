@@ -73,6 +73,19 @@ Boolean:
   files are served
 - `False` (default): the application is launched with debug mode turned off, similar to how it runs in production
 
+### `DJANGO_LOAD_SAMPLE_DATA`
+
+!!! warning "Deployment configuration"
+
+    You may change this setting when deploying the app to a non-localhost domain
+
+Boolean:
+
+- `True` (default): The sample data in `benefits/core/migrations/0002_sample_data.py` is used to initialize the Django configuration database.
+- `False`: The sample data from `benefits/core/migrations/0002_sample_data.py` will not be loaded.
+
+See [Configuration data](data.md) for more.
+
 ### `DJANGO_LOCAL_PORT`
 
 !!! info "Local configuration"
@@ -99,6 +112,15 @@ From inside the container, the app is always listening on port `8000`.
 The log level used in the application's logging configuration.
 
 By default the application sends logs to `stdout`.
+
+
+### `DJANGO_MIGRATIONS_DIR`
+
+!!! warning "Deployment configuration"
+
+    You may change this setting when deploying the app to a non-localhost domain
+
+If [`DJANGO_LOAD_SAMPLE_DATA`](#django_load_sample_data) is `false`, then you can set `DJANGO_MIGRATIONS_DIR` to the path of a directory containing data migrations that you want to be run. Those data migration files need to be prefixed with `0002` so that the [helper migration file](data.md)) can find it. See [Configuration data](./data.md) for more on loading data for different environments.
 
 ### `DJANGO_SECRET_KEY`
 

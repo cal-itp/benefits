@@ -8,6 +8,15 @@ rm -f django.db
 
 # run database migrations
 
+if [[ ${DJANGO_LOAD_SAMPLE_DATA:-true} = false ]]; then
+    if [[ -d ${DJANGO_MIGRATIONS_DIR:-false} ]]; then
+        echo "Copying migrations from ${DJANGO_MIGRATIONS_DIR}"
+        cp ${DJANGO_MIGRATIONS_DIR}/0002_*.py ./benefits/core/migrations/
+    else
+        echo "DJANGO_MIGRATIONS_DIR is either unset or not a directory"
+    fi
+fi
+
 python manage.py migrate
 
 # create a superuser account for backend admin access
