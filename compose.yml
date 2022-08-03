@@ -40,3 +40,5 @@ services:
     env_file: .devcontainer/server/.env.server
     ports:
       - "5000"
+    volumes:
+      - ./.devcontainer:/.devcontainer
