@@ -28,8 +28,12 @@ RUN useradd --create-home --shell /bin/bash $USER && \
 
 # enter app directory
 WORKDIR /home/$USER/app
+
 # switch to non-root $USER
 USER $USER
+
+# update PATH for local pip installs
+ENV PATH "$PATH:/home/$USER/.local/bin"
 
 # install python dependencies
 COPY appcontainer/requirements.txt requirements.txt
@@ -41,9 +45,6 @@ COPY manage.py manage.py
 
 # overwrite default nginx.conf
 COPY appcontainer/nginx.conf /etc/nginx/nginx.conf
-
-# update PATH for local pip installs
-ENV PATH "$PATH:/home/$USER/.local/bin"
 
 # copy source files
 COPY bin/ bin/
