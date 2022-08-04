@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-07-25 22:59+0000\n"
+"POT-Creation-Date: 2022-08-04 01:13+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -543,63 +543,50 @@ msgstr "Select a discount option"
 msgid "eligibility.pages.index.content_title"
 msgstr "Select the discount option that best applies to you:"
 
-#: benefits/eligibility/views.py:80 benefits/enrollment/views.py:145
-msgctxt "image alt text"
-msgid "core.icons.bankcardcheck"
-msgstr "Bank card icon with contactless symbol and checkmark"
-
-#: benefits/eligibility/views.py:81
-msgid "eligibility.pages.start.bankcard.title"
-msgstr "Your bank card details"
-
-#: benefits/eligibility/views.py:82
-msgid "eligibility.pages.start.bankcard.text"
-msgstr ""
-"Your card must be a contactless debit or credit card by Visa or Mastercard."
-
-#: benefits/eligibility/views.py:86
-msgid "eligibility.pages.start.bankcard.button[0].link"
-msgstr "Don’t have a bank card or unsure if your card is contactless?"
-
-#: benefits/eligibility/views.py:97 benefits/eligibility/views.py:125
-#: benefits/enrollment/views.py:78
+#: benefits/eligibility/views.py:80 benefits/enrollment/views.py:78
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Identification card icon with checkmark"
 
-#: benefits/eligibility/views.py:98
-msgid "eligibility.pages.start.oauth.heading"
-msgstr "A Login.gov account with identity verification"
-
-#: benefits/eligibility/views.py:99
-msgid "eligibility.pages.start.oauth.details"
-msgstr ""
-"Login.gov is a safe way to sign in to government services. Benefits uses "
-"Login.gov to verify your age. If you do not have an account already, you "
-"will be able to create one. You will also need to verify your identity, "
-"which will require these items:"
-
-#: benefits/eligibility/views.py:103
+#: benefits/eligibility/views.py:90
 msgid "eligibility.pages.start.oauth.link_text"
 msgstr "Learn more about Login.gov and providing proof of identity"
 
-#: benefits/eligibility/views.py:108
+#: benefits/eligibility/views.py:95
 msgid "eligibility.pages.start.oauth.required_items[0]"
 msgstr "Your state-issued ID card"
 
-#: benefits/eligibility/views.py:109
+#: benefits/eligibility/views.py:96
 msgid "eligibility.pages.start.oauth.required_items[1]"
 msgstr "Your Social Security number"
 
-#: benefits/eligibility/views.py:110
+#: benefits/eligibility/views.py:97
 msgid "eligibility.pages.start.oauth.required_items[2]"
 msgstr "A phone number with a phone plan associated with your name"
 
-#: benefits/eligibility/views.py:132
+#: benefits/eligibility/views.py:108 benefits/enrollment/views.py:145
+msgctxt "image alt text"
+msgid "core.icons.bankcardcheck"
+msgstr "Bank card icon with contactless symbol and checkmark"
+
+#: benefits/eligibility/views.py:109
+msgid "eligibility.pages.start.bankcard.title"
+msgstr "Your bank card details"
+
+#: benefits/eligibility/views.py:110
+msgid "eligibility.pages.start.bankcard.text"
+msgstr ""
+"Your card must be a contactless debit or credit card by Visa or Mastercard."
+
+#: benefits/eligibility/views.py:114
+msgid "eligibility.pages.start.bankcard.button[0].link"
+msgstr "Don’t have a bank card or unsure if your card is contactless?"
+
+#: benefits/eligibility/views.py:123
 msgid "eligibility.pages.start.title"
 msgstr "Get Started"
 
-#: benefits/eligibility/views.py:243
+#: benefits/eligibility/views.py:234
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Identification card icon with question mark"
