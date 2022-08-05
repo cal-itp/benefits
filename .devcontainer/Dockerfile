@@ -1,14 +1,8 @@
 FROM benefits_client:latest
 
-USER root
-
-# install Linux CLI tools for development
-RUN apt-get install -qq curl jq ssh
-
-USER $USER
-
-RUN python -m pip install --upgrade pip && \
-    pip install black djlint flake8 pre-commit
+# install devcontainer requirements
+COPY .devcontainer/requirements.txt .devcontainer/requirements.txt
+RUN pip install -r .devcontainer/requirements.txt
 
 COPY docs/requirements.txt docs/requirements.txt
 RUN pip install -r docs/requirements.txt
