@@ -1,6 +1,11 @@
+ci:
+  autofix_commit_msg: "chore(pre-commit): autofix run"
+  autoupdate_commit_msg: "chore(pre-commit): autoupdate hooks"
+
 default_install_hook_types:
   - pre-commit
   - commit-msg
+
 repos:
   - repo: https://github.com/compilerla/conventional-pre-commit
     rev: v2.0.0
