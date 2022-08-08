@@ -20,7 +20,11 @@
   "python.languageServer": "Pylance",
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
-  "python.testing.pytestArgs": ["tests/pytest", "--import-mode=importlib"],
+  "python.testing.pytestArgs": [
+    "tests/pytest",
+    "--import-mode=importlib",
+    "--no-migrations"
+  ],
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": false,
   "[terraform]": {

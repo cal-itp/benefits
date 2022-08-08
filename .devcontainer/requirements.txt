@@ -1,0 +1,4 @@
+black
+djlint
+flake8
+pre-commit

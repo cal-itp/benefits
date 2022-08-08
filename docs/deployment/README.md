@@ -22,7 +22,7 @@ You can view what Git commit is deployed for a given environment by visitng the 
 ## Configuration
 
 [Configuration settings](../configuration/README.md) are stored as Application Configuration variables in Azure.
-[Fixtures](../configuration/fixtures.md) are stored as blobs in in Azure Storage, and [mounted into the Web App container][az-mount].
+[Data](../configuration/data.md) is loaded via Django data migrations. The migration files can be stored as blobs in in Azure Storage, and [mounted into the Web App container][az-mount].
 
 [dev-benefits]: https://dev-benefits.calitp.org
 [oet]: https://techblog.cdt.ca.gov/2020/06/cdt-taking-the-lead-in-digital-transformation/

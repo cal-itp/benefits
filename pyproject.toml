@@ -7,7 +7,7 @@
 
 [tool.black]
 line-length = 127
-target-version = ['py38']
+target-version = ['py310']
 include = '\.pyi?$'
 
 # Configuration for djlint
@@ -22,6 +22,11 @@ preserve_blank_lines = true
 use_gitignore = true
 
 # Configuration for pytest
+
+[tool.coverage.run]
+omit = [
+    "benefits/core/migrations/*"
+]
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "benefits.settings"

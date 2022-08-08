@@ -6,12 +6,12 @@ run the app locally. But further configuration is required before many of the in
 There are two primary components of the application configuration include:
 
 - Overall app settings in [environment variables][env-vars]
-- Content and more specific configurations in [fixtures][fixtures]
+- Content and more specific configurations in [sample models][data]
 
 The majority (but not all) of the environment variables are read into [Django settings](#django-settings) during application
 startup.
 
-The fixtures are also loaded into and seed Django's database at application startup time.
+The sample models are also loaded into and seed Django's database at application startup time.
 
 ## Django settings
 
@@ -59,7 +59,7 @@ else:
     # do something else when admin is disabled
 ```
 
-Through the [Django model][django-model] framework, `benefits.core.models` instances are used to access the fixture data:
+Through the [Django model][django-model] framework, `benefits.core.models` instances are used to access the configuration data:
 
 ```python
 from benefits.core.models import TransitAgency
@@ -79,5 +79,5 @@ else:
 [django-settings]: https://docs.djangoproject.com/en/4.0/topics/settings/
 [django-using-settings]: https://docs.djangoproject.com/en/4.0/topics/settings/#using-settings-in-python-code
 [env-vars]: environment-variables.md
-[fixtures]: fixtures.md
+[data]: data.md
 [getting-started]: ../getting-started/README.md

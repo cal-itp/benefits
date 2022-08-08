@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.10
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -24,13 +24,16 @@ RUN useradd --create-home --shell /bin/bash $USER && \
     chown -R $USER /home/$USER && \
     # install server components
     apt-get update && \
-    # install git for use when installing dependencies from VCS (https://pip.pypa.io/en/stable/topics/vcs-support/)
-    apt-get install -qq --no-install-recommends build-essential gettext git nginx
+    apt-get install -qq --no-install-recommends build-essential gettext nginx
 
 # enter app directory
 WORKDIR /home/$USER/app
+
 # switch to non-root $USER
 USER $USER
+
+# update PATH for local pip installs
+ENV PATH "$PATH:/home/$USER/.local/bin"
 
 # install python dependencies
 COPY appcontainer/requirements.txt requirements.txt
@@ -43,16 +46,14 @@ COPY manage.py manage.py
 # overwrite default nginx.conf
 COPY appcontainer/nginx.conf /etc/nginx/nginx.conf
 
-# update PATH for local pip installs
-ENV PATH "$PATH:/home/$USER/.local/bin"
-
 # copy source files
 COPY bin/ bin/
 COPY benefits/ benefits/
 
-# ensure $USER can compile messages in the locale directories
+# ensure $USER can compile messages in the locale directories and copy migration files from $DJANGO_MIGRATIONS_DIR
 USER root
 RUN chmod -R 777 benefits/locale
+RUN chmod -R 777 benefits/core/migrations
 USER $USER
 
 # configure container executable

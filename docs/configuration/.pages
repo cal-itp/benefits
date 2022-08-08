@@ -1,7 +1,7 @@
 nav:
   - README.md
   - environment-variables.md
-  - fixtures.md
+  - data.md
   - content-security-policy.md
   - oauth.md
   - rate-limit.md

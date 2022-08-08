@@ -1,9 +1,9 @@
 resource "azurerm_service_plan" "main" {
-  name                       = "ASP-CDT-PUB-VIP-CALITP-P-001"
-  location                   = data.azurerm_resource_group.prod.location
-  resource_group_name        = data.azurerm_resource_group.prod.name
-  os_type                    = "Linux"
-  sku_name                   = "P2v2"
+  name                = "ASP-CDT-PUB-VIP-CALITP-P-001"
+  location            = data.azurerm_resource_group.prod.location
+  resource_group_name = data.azurerm_resource_group.prod.name
+  os_type             = "Linux"
+  sku_name            = "P2v2"
 
   lifecycle {
     ignore_changes = [tags]
@@ -51,7 +51,6 @@ resource "azurerm_linux_web_app" "main" {
       # custom config
       "ANALYTICS_KEY",
       "DJANGO_ALLOWED_HOSTS",
-      "DJANGO_INIT_PATH",
       "DJANGO_LOG_LEVEL",
       "DJANGO_TRUSTED_ORIGINS",
 
@@ -115,6 +114,7 @@ resource "azurerm_linux_web_app_slot" "dev" {
     ignore_changes = [app_settings, tags]
   }
 
+  # setup files
   storage_account {
     access_key   = azurerm_storage_account.main.primary_access_key
     account_name = azurerm_storage_account.main.name
@@ -167,6 +167,7 @@ resource "azurerm_linux_web_app_slot" "test" {
     ignore_changes = [app_settings, tags]
   }
 
+  # setup files
   storage_account {
     access_key   = azurerm_storage_account.main.primary_access_key
     account_name = azurerm_storage_account.main.name
