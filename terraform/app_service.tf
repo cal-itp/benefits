@@ -24,6 +24,10 @@ resource "azurerm_linux_web_app" "main" {
   site_config {
     ftps_state             = "Disabled"
     vnet_route_all_enabled = true
+    application_stack {
+      docker_image     = "ghcr.io/cal-itp/benefits"
+      docker_image_tag = "prod"
+    }
   }
 
   identity {
