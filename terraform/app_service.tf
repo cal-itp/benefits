@@ -51,7 +51,9 @@ resource "azurerm_linux_web_app" "main" {
       # custom config
       "ANALYTICS_KEY",
       "DJANGO_ALLOWED_HOSTS",
+      "DJANGO_LOAD_SAMPLE_DATA",
       "DJANGO_LOG_LEVEL",
+      "DJANGO_MIGRATIONS_DIR",
       "DJANGO_TRUSTED_ORIGINS",
 
       # populated through auto-instrumentation
