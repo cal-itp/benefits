@@ -24,6 +24,10 @@ resource "azurerm_linux_web_app" "main" {
   site_config {
     ftps_state             = "Disabled"
     vnet_route_all_enabled = true
+    application_stack {
+      docker_image     = "ghcr.io/cal-itp/benefits"
+      docker_image_tag = "prod"
+    }
   }
 
   identity {
@@ -51,7 +55,9 @@ resource "azurerm_linux_web_app" "main" {
       # custom config
       "ANALYTICS_KEY",
       "DJANGO_ALLOWED_HOSTS",
+      "DJANGO_LOAD_SAMPLE_DATA",
       "DJANGO_LOG_LEVEL",
+      "DJANGO_MIGRATIONS_DIR",
       "DJANGO_TRUSTED_ORIGINS",
 
       # populated through auto-instrumentation
@@ -76,6 +82,12 @@ resource "azurerm_linux_web_app" "main" {
   lifecycle {
     ignore_changes = [app_settings, storage_account, tags]
   }
+}
+
+resource "azurerm_app_service_custom_hostname_binding" "main" {
+  hostname            = "benefits.calitp.org"
+  app_service_name    = azurerm_linux_web_app.main.name
+  resource_group_name = data.azurerm_resource_group.prod.name
 }
 
 resource "azurerm_linux_web_app_slot" "dev" {
