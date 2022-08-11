@@ -84,6 +84,12 @@ resource "azurerm_linux_web_app" "main" {
   }
 }
 
+resource "azurerm_app_service_custom_hostname_binding" "main" {
+  hostname            = "benefits.calitp.org"
+  app_service_name    = azurerm_linux_web_app.main.name
+  resource_group_name = data.azurerm_resource_group.prod.name
+}
+
 resource "azurerm_linux_web_app_slot" "dev" {
   name                      = "dev"
   https_only                = true
