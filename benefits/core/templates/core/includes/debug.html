@@ -1,10 +1,15 @@
 {% extends "core/includes/alert-bar.html" %}
 
 {% block content %}
-<span class="navbar-brand">DEBUG MODE</span>
-{% if debug %}
-    <code class="navbar-text">
-    { {% for key, value in debug.items %}"{{ key }}": "{{ value }}"{% if not forloop.last %}, {% endif %}{% endfor %} }
+  <span class="navbar-brand">DEBUG MODE</span>
+  {% if debug %}
+    <code class="navbar-text text-white text-break">
+      {
+      {% for key, value in debug.items %}
+        "{{ key }}": "{{ value }}"
+        {% if not forloop.last %},{% endif %}
+      {% endfor %}
+      }
     </code>
-{% endif %}
-{% endblock %}
+  {% endif %}
+{% endblock content %}

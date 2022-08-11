@@ -7,6 +7,13 @@ body {
   color: #000000;
 }
 
+@font-face {
+  font-family: "Public Sans";
+  font-weight: 700;
+  font-style: normal;
+  src: local("PublicSans"), url("../fonts/PublicSans-Bold.woff") format("woff");
+}
+
 body,
 h1,
 h2,
@@ -36,10 +43,26 @@ h6 {
 
 h1 {
   font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  letter-spacing: 0.05em;
 }
 
 p {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.05em;
+}
+
+label {
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0.05em;
+}
+
+.main-content .main-primary a:not(.btn) {
+  background: none;
 }
 
 /* making the sticky footer */
@@ -59,25 +82,132 @@ main {
   flex-shrink: 0 !important;
 }
 
+main#main-content.main-content {
+  position: relative;
+}
+
+/* All pages but the Start Page */
+main .main-row {
+  min-height: calc(100vh - 120px);
+}
+
+main .main-row .col-lg-6.image {
+  background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
+  background-size: cover;
+}
+
+.one-column-image {
+  background: url("/static/img/rider-tapping-bank-card-horizontal.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 292px;
+}
+
 footer {
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
+footer.global-footer .footer-links a {
+  font-size: 18px;
+  color: #73b3e7;
+  text-decoration: underline;
+}
+
+footer.global-footer .footer-links a:hover,
+footer.global-footer .footer-links a:focus,
+footer.global-footer .footer-links a:active {
+  color: #9b74d7;
+  text-decoration: none;
+}
+
 /* class styles */
 
 .bg-p2,
 .bg-primary {
-  background-color: #046b99 !important;
+  background-color: #2b6597 !important;
 }
 
 .btn-lg {
   border-width: 2px;
 }
 
+/* Log In */
+
+#login {
+  background: #046b99;
+  border: 0;
+  color: #ffffff;
+  cursor: pointer;
+  display: block;
+  line-height: 1;
+  padding: 11.999px 13.4px;
+  min-width: auto;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-right: inherit;
+  font-size: 16px;
+  margin-bottom: 32px;
+  font-family: "Public Sans", Roboto, system-ui;
+}
+
+#login:hover {
+  background: #2f4c65;
+}
+
+/* Sets the text `Login.gov` as transparent */
+/* With an Login.gov logo image over it */
+/* So screenreaders can read out `Login.gov` */
+#login .fallback-text {
+  background: url("/static/img/login-gov-logo-rev.svg") no-repeat;
+  background-size: contain;
+  display: inline-block;
+  position: relative;
+  width: 132px;
+  height: 18px;
+  margin-left: 5px;
+  padding-top: 1px;
+  vertical-align: baseline;
+  color: transparent;
+}
+
+/* Sign Out */
+
+.signout-row {
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+}
+
+.signout-row .container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.signout-row .container .signout-link {
+  font-size: 12px;
+  text-decoration: underline;
+  color: #2b6597;
+  letter-spacing: 0.05rem;
+  padding-top: 18px;
+  display: block;
+}
+
 .btn-link {
   color: #046b99;
+}
+
+.btn-primary {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn-outline-light {
+  width: 126px;
+  height: 38px;
+  padding: 0px !important;
 }
 
 .form-control {
@@ -121,41 +251,228 @@ footer {
   padding-left: 1rem;
 }
 
+.form-group.with-errors .error-message p {
+  margin-bottom: 0;
+}
+
 .global-footer {
-  background: #222;
+  background: #212121;
+}
+
+/* Eligibility Start */
+
+.media-title {
+  margin-top: 100px;
+  margin-bottom: 60px;
+  font-size: 24px;
+  line-height: 36px;
+  letter-spacing: 0.05em;
+  font-weight: 700;
 }
 
 .media-list {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  margin-top: 0;
+  margin-bottom: 80px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 116px;
 }
 
 .media-list .media {
-  margin-bottom: 2rem;
   display: flex;
-  align-items: center;
+  align-items: stretch;
+  width: 100%;
 }
 
-.media-list .media .media-left {
-  margin-right: 18px;
+.media-list .media .media-line {
+  position: relative;
 }
 
-.media-list .media .media-left img {
-  height: 75px;
+.media-list .media .media-line .icon {
+  width: 115px;
+  height: 115px;
+  position: relative;
+  display: block;
+  z-index: 10;
+}
+
+.media-list .media .media-body {
+  padding: 0 60px;
+  line-height: 26.1px;
+}
+
+.media-list .media .media-body--heading {
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  line-height: 26.1px;
+  font-weight: 700;
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.media-list .media .media-body--details {
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  padding-bottom: 1rem;
+  line-height: 26.1px;
+}
+
+.media-list .media .media-body--details p {
+  margin-bottom: 12px;
+}
+
+.media-list .media .media-body--items {
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  line-height: 26.1px;
+}
+
+.media-list .media .media-body--items li {
+  list-style-type: disc;
+}
+
+.media-list .media .media-body .media-body--links .btn-lg {
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  padding: 0 0 6px 0;
+  text-align: left;
+  width: fit-content;
+}
+
+.media-list .media .media-body .media-body--links .btn-lg:hover {
+  color: #2f4c65;
+}
+
+.eligibility-start .main-container {
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  width: initial;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.eligibility-start .buttons {
+  display: flex;
+  align-items: flex-end;
+  justify-content: right;
+  margin-bottom: 30px;
+}
+
+.eligibility-start .main-container .buttons .btn {
+  margin-left: initial;
+  margin-right: initial;
+}
+
+.eligibility-start .main-container .buttons label {
+  margin: 0 0.8rem 0 0;
+  line-height: 1;
+}
+
+.eligibility-start h1.headline {
+  font-size: 35px;
+  line-height: 52.5px;
+  letter-spacing: 0.05em;
+  text-align: center;
+  margin-bottom: 50px;
+  margin-top: 64px;
+}
+
+/* Enrollment Success */
+
+.enrollment-success #login {
+  padding: 0 0.5rem 0.3rem 0.6rem;
+  display: inline-block;
+  margin: 0;
+  width: inherit;
+  border-radius: 0;
+}
+
+.enrollment-success #login .fallback-text {
+  padding-top: 14px;
+  margin: 8px auto 0 auto;
+  display: block;
+  width: 7rem;
+}
+
+.logged-out.enrollment-success .success-image {
+  display: block;
+  margin: 0 auto;
+  height: 150px;
+  width: 150px;
+  margin-top: 15%;
+}
+
+.logged-out.enrollment-success .container.content {
+  padding-top: 20vh;
+}
+
+.logged-out.enrollment-success .container.content h1 {
+  text-align: center;
+}
+
+.radio-container {
+  display: block;
+  margin-left: 15%;
+}
+
+.radio-label {
+  cursor: pointer;
+  display: inline;
+  margin-left: 15px;
+}
+
+.radio-input {
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+
+  border: 3px solid #000;
+  margin-right: 5px;
+  margin-top: 20px;
+
+  position: relative;
+  top: 7px;
+}
+
+.radio-input:checked {
+  background-color: #046b99;
+  box-shadow: inset 0 0 0 2px white;
+}
+
+.radio-label-description {
+  display: block;
+  font-size: 0.75rem;
+  margin-left: 2rem;
+  font-weight: normal;
 }
 
 /* context-specific overrides */
+
+/* Header */
+
+.navbar.navbar-expand-sm.navbar-dark.bg-primary {
+  padding: 8.5px 1rem;
+}
+
+.navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
+}
 
 .navbar-brand img.sm {
   width: 120px;
 }
 
 .navbar-brand img.lg {
-  width: 274px;
-}
-
-.image[class*="col-"] {
-  min-height: 230px;
+  width: 271px;
 }
 
 .container.content {
@@ -163,60 +480,330 @@ footer {
   margin-bottom: 2rem;
 }
 
+.container.content .buttons label {
+  display: block;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.container.content h1.icon-title {
+  padding-bottom: 1.5rem;
+  line-height: 36px;
+  text-align: center;
+}
+
 .container.content h1.icon-title span.icon {
   text-align: center;
   display: block;
-  margin-bottom: 1rem;
+  padding-bottom: 3rem;
+}
+
+.container.content h1.icon-title img.icon {
+  width: 150px;
+  height: 150px;
+}
+
+.with-image .container.content h1.icon-title img.icon {
+  width: 92px;
+  height: 92px;
+}
+
+.with-image .container.content h1.icon-title {
+  text-align: left;
+}
+
+.container.content.help {
+  margin: 4rem auto 2rem auto;
+}
+
+.container.content.help h1 {
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  font-size: 2.25rem;
+  text-align: center;
+  margin-top: 5.5rem;
+  margin-bottom: 4rem;
+}
+
+.container.content.help h2 {
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+}
+
+.container.content.help p {
+  margin-bottom: 2rem;
+}
+
+.container.content.help .buttons-agencies,
+.with-agency-links .buttons-agencies {
+  font-size: 18px;
+  letter-spacing: 0.05rem;
+  margin-bottom: 3rem;
+}
+
+.container.content.help .buttons-agencies a,
+.with-agency-links .container.content .buttons-agencies a {
+  display: table;
+  margin-bottom: 0.2rem;
+}
+
+.container.content.help .buttons-agencies label,
+.with-agency-links .container.content .buttons-agencies label {
+  display: block;
+  margin-top: 2rem;
+  font-size: 18px;
+}
+
+.container.content.help .button-back {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
 }
 
 .container.content h1 ~ p:nth-last-of-type(1) {
   margin-bottom: 2rem;
 }
 
-.container.content .btn-lg {
+.container.content .btn-lg,
+.eligibility-start .btn-link {
   font-weight: 500;
   margin-bottom: 1rem;
-  padding: 1rem;
+  padding: 0.8125rem;
+  /* btn-lg height is 60px */
   width: 100%;
 }
 
-.container.content .btn-lg.agency-url {
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-.container.content .btn-lg.agency-url,
-.container.content .btn-lg.agency-phone {
-  padding-top: 0;
-}
-
-.container.content .btn-link {
+.container.content .btn-link,
+.eligibility-start .btn-link {
   text-decoration: underline;
-}
-
-.text-lg-center form {
-  text-align: left !important;
-}
-.text-lg-center .buttons label {
-  width: 100%;
-  text-align: center !important;
 }
 
 /* media queries */
 
-@media (max-width: 767px) {
-  /* xs and sm */
-  .media-list .media .media-body {
-    max-width: 160px;
+@media (max-width: 320px) {
+  #login {
+    padding: 1rem 1.25rem;
   }
 
-  .global-footer ul li {
-    width: 40%;
+  .eligibility-start .main-container .buttons {
+    padding: 0 3rem;
+  }
+}
+
+@media (max-width: 767px) {
+  /* xs and sm */
+  .global-footer {
+    padding: 0;
+  }
+
+  .global-footer .container {
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .global-footer ul.footer-links {
+    margin: 0 !important;
+    padding: 0;
+  }
+
+  .global-footer ul.footer-links li {
+    width: 100%;
+    line-height: 50px;
+    margin-left: 0;
+  }
+
+  .global-footer ul.footer-links li:not(:last-child) {
+    border-bottom: 2px solid white;
+  }
+
+  .global-footer ul.footer-links li a {
+    padding-left: 30px;
+    margin: 0;
+  }
+
+  .radio-container {
+    display: block;
+    margin-left: 0%;
+  }
+
+  .radio-label {
+    display: inline;
+    margin-left: 5px;
+  }
+
+  .container.content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 992px) {
+  .one-column-image {
+    height: 131px;
+  }
+
+  .navbar.navbar-expand-sm.navbar-dark.bg-primary {
+    padding: 14.5px 1rem;
+  }
+
+  .container.content .btn-lg {
+    padding: 1.1875rem 0.813rem;
+  }
+
+  /* Mobile With Image */
+
+  .no-image-mobile .col-lg-6.image {
+    display: none !important;
+  }
+
+  .with-image main .main-row .col-lg-6.image {
+    background-position: center bottom;
+    height: 240px;
+    background-size: cover;
+    margin-bottom: 60px;
+  }
+
+  .signout-row .container .signout-link {
+    font-size: 18px;
+    color: #2b6597;
+    background: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: 2px solid #2b6597;
+    margin-top: 20px;
+    letter-spacing: 0.02em;
+    font-weight: 500;
+  }
+
+  .signout-row .container .signout-link:hover {
+    background: none;
+  }
+
+  .signout-row {
+    top: 240px;
+  }
+
+  .no-image-mobile .signout-row {
+    top: 0;
+  }
+
+  .no-image-mobile .main-primary .container-fluid {
+    margin-top: 72px;
+  }
+
+  /* Eligibility Start */
+
+  .eligibility-start h1.headline {
+    text-align: left;
+    font-size: 24px;
+    line-height: 36px;
+    margin-top: 24px;
+    margin-bottom: 16px;
+  }
+
+  .eligibility-start .main-content {
+    padding-top: 0;
+  }
+
+  .eligibility-start .period {
+    display: none;
+  }
+
+  .media-list {
+    gap: 40px;
+  }
+
+  .media-list .media .media-line .icon {
+    width: 92px;
+    height: 92px;
+    margin: 0 auto 42px auto;
+  }
+
+  .media-list .media {
+    flex-direction: column;
+  }
+
+  .media-list .media .media-line {
+    margin: 0 20px 0 0;
+  }
+
+  .media-list .media .media-body {
+    padding: 0;
+  }
+
+  .media-list .media .media-body--heading {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .media-list .media .media-body--details p {
+    padding-bottom: 25px;
+    margin-left: 0;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0.05em;
+  }
+
+  .media-list .media .media-body--items li {
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0.05em;
+  }
+
+  .media-list .media .media-body--links {
+    margin-left: 0;
+    float: right;
+  }
+
+  .eligibility-start .main-content .container strong .info-link {
+    display: none;
+  }
+
+  .media-list .media .media-body .media-body--links .btn-lg {
+    font-size: 18px;
+    line-height: 27px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    display: block;
+  }
+
+  .media-title {
+    text-align: left !important;
+    margin-top: 42px;
+    margin-bottom: 46px;
+  }
+
+  .eligibility-start .media-list {
+    margin-bottom: 60px;
+  }
+
+  #login .fallback-text {
+    padding-top: 14px;
+    margin: 8px auto 0 auto;
+    display: block;
+  }
+
+  #login {
+    line-height: unset;
+    padding: 12px 67.5px;
+    font-size: 20px;
+    margin: 30px auto;
+    display: inline-block;
+  }
+
+  /* Override for only the Agency Index page */
+  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
+    margin-bottom: 2rem;
+  }
+
+  .logged-out.enrollment-success .container.content {
+    padding-top: 10vh;
   }
 }
 
 @media (min-width: 992px) {
-  /* lg+ */
-
   /* undoing the sticky footer for pages with header image
        the backup plan is to color the body the same as the footer
        to avoid the floating footer look
@@ -224,51 +811,39 @@ footer {
   .with-image main {
     flex-shrink: unset;
   }
-  .with-image .container.content {
-    min-height: 800px;
-  }
-  .with-image footer {
+
+  footer {
     margin-top: unset;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
-
-  h1 {
-    font-size: 36px;
-    line-height: 45px;
-  }
-
-  h1.icon-title {
-    text-align: center;
-  }
-
-  h2 {
-    font-size: 30px;
-    line-height: 36px;
-  }
-
-  .home p,
-  .home label {
-    font-size: 24px;
-    line-height: 30px;
-  }
-
-  .image[class*="col-"] {
-    min-height: 725px;
+    padding-top: 0.138rem;
+    padding-bottom: 0.138rem;
   }
 
   .container.content {
     padding-left: 3.5rem;
     padding-right: 3.5rem;
-    margin-top: 8rem;
-    margin-bottom: 7rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin: 0;
   }
 
   .container.content input[type="submit"],
   .container.content .btn {
-    width: 70%;
-    margin-left: 15%;
-    margin-right: 15%;
+    width: fit-content;
+    min-width: 250px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Override for only the Agency Index page */
+  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
+    margin-bottom: 4rem;
+  }
+}
+
+@media (max-width: 1081px) {
+  .media-list {
+    margin-top: 50px;
   }
 }
 
@@ -277,5 +852,13 @@ footer {
   .container.content {
     padding-left: 5rem;
     padding-right: 5rem;
+    padding-top: 4.5rem;
+    padding-bottom: 2rem;
+    margin: 0;
+  }
+
+  /* Override for only the Agency Index page */
+  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
+    margin-bottom: 5rem;
   }
 }

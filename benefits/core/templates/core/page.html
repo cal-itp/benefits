@@ -1,70 +1,70 @@
 {% extends "core/base.html" %}
 
 {% if page.title %}
-{% block classes %}{{ page.classes|join:" " }}{% endblock %}
+  {% block classes %}
+    {{ page.classes|join:" " }}
+  {% endblock classes %}
 {% endif %}
 
 {% if page.title %}
-{% block page_title %}{{ page.title }} | {% endblock page_title %}
+  {% block page_title %}
+    {{ page.title }} |
+  {% endblock page_title %}
 {% endif %}
 
 {% block main_content %}
-<div class="container-fluid">
-    <div class="row">
-        {% if page.image %}
-        {% load static %}
-        <div class="col-lg-6 image" style="background: 48% 75% url('{% static page.image.src %}') no-repeat; background-size: cover;">
-        </div>
-        <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-0">
+  <div class="container-fluid">
+    <div class="row main-row">
+      {% if page.noimage %}
+        <div class="container">
         {% else %}
-        <div class="col-md-8 offset-md-2 col-xl-6 offset-xl-3">
-        {% endif %}
-            <div class="container content">
+          {% load static %}
+          <div class="col-lg-6 image"></div>
+          <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-0">
+          {% endif %}
+          <div class="container content">
             {% block container_content %}
 
-            {% block icon_title %}
-            {% if page.content_title %}
-                {% if page.icon %}
+              {% block icon_title %}
+                {% if page.content_title %}
+                  {% if page.icon %}
                     {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon %}
-                {% else %}
+                  {% else %}
                     <h1>{{ page.content_title }}</h1>
+                  {% endif %}
                 {% endif %}
-            {% endif %}
-            {% endblock icon_title %}
+              {% endblock icon_title %}
 
-            {% block media_list %}
-            {% if page.media|length_is:"0" %}{% else %}
-                {% include "core/includes/media-list.html" with items=page.media %}
-            {% endif %}
-            {% endblock media_list %}
+              {% block paragraph_content %}
+                {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
+              {% endblock paragraph_content %}
 
-            {% block paragraph_content %}
-            {% for p in page.paragraphs %}
-                <p>{{ p }}</p>
-            {% endfor %}
-            {% endblock paragraph_content %}
+              {% block forms %}
+                {% if page.forms %}
+                  {% for f in page.forms %}
+                    {% include "core/includes/form.html" with form=f %}
+                  {% endfor %}
+                {% endif %}
+              {% endblock forms %}
 
-            {% block forms %}
-            {% if page.forms %}
-            {% for f in page.forms %}
-                {% include "core/includes/form.html" with form=f %}
-            {% endfor %}
-            {% endif %}
-            {% endblock forms %}
-
-            {% block buttons %}
-            {% if page.buttons|length_is:"0" %}{% else %}
-                <div class="buttons">
-                    {% for b in page.buttons %}
+              {% block buttons %}
+                {% if page.buttons|length_is:"0" %}
+                {% else %}
+                  {% if "with-agency-links" in page.classes %}
+                    {% include "core/includes/agency-links.html" with buttons=page.buttons %}
+                  {% else %}
+                    <div class="buttons">
+                      {% for b in page.buttons %}
                         {% include "core/includes/button.html" with button=b %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-            {% endblock buttons %}
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                {% endif %}
+              {% endblock buttons %}
 
             {% endblock container_content %}
-            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-{% endblock main_content %}
+  {% endblock main_content %}

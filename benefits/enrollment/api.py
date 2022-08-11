@@ -79,13 +79,14 @@ class GroupResponse:
                 detail = error["detail"]
 
                 failure = (
-                    customer_id is None,
-                    detail is None,
-                    customer_id not in detail,
-                    customer_id in detail and not detail.startswith("Duplicate"),
+                    customer_id is None
+                    or detail is None
+                    or customer_id not in detail
+                    or customer_id in detail
+                    and not detail.startswith("Duplicate")
                 )
 
-                if any(failure):
+                if failure:
                     raise ApiError("Invalid response format")
             except (KeyError, ValueError):
                 raise ApiError("Invalid response format")
@@ -93,6 +94,7 @@ class GroupResponse:
         self.customer_ids = list(payload)
         self.updated_customer_id = self.customer_ids[0] if len(self.customer_ids) == 1 else None
         self.success = requested_id == self.updated_customer_id
+        self.message = "Updated customer_id does not match enrolled customer_id" if not self.success else ""
 
 
 class Client:
@@ -165,17 +167,17 @@ class Client:
 
         try:
             r = self._get(url, payload)
-            if r.status_code == 200:
-                logger.debug("Customer record exists")
-                customer = CustomerResponse(r)
-                if customer.is_registered:
-                    logger.debug("Customer is registered, skip update")
-                    return customer
-                else:
-                    logger.debug("Customer is not registered, update")
-                    return self._update_customer(customer.id)
+            r.raise_for_status()
+
+            logger.debug("Customer record exists")
+            customer = CustomerResponse(r)
+            if customer.is_registered:
+                logger.debug("Customer is registered, skip update")
+                return customer
             else:
-                r.raise_for_status()
+                logger.debug("Customer is not registered, update")
+                return self._update_customer(customer.id)
+
         except requests.ConnectionError:
             raise ApiError("Connection to enrollment server failed")
         except requests.Timeout:

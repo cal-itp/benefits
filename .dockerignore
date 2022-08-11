@@ -1,5 +1,3 @@
-.aws/
-.devcontainer/
 .git/
 .github/
 .vscode/
@@ -7,4 +5,3 @@
 .flake8
 .*ignore
 *.db
-Dockerfile*

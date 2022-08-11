@@ -1,3 +1,3 @@
-const agencies = require("../../../fixtures/04_transitagency.json");
+const agencies = require("../../../fixtures/05_transitagency.json");
 
 export default agencies;

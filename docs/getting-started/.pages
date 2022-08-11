@@ -1,6 +1,3 @@
 nav:
-  - Local setup: README.md
-  - Development: development.md
-  - ...
-  - Documentation: documentation.md
-  - Docker dynamic ports: docker-dynamic-ports.md
+  - README.md
+  - documentation.md

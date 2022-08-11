@@ -1,8 +1,11 @@
 *.db
 *.env
 *.mo
-fixtures/*.json
-!fixtures/??_*.json
+benefits/core/migrations/0002_*.py
+!benefits/core/migrations/0002_sample_data.py
 static/
 !benefits/static
+benefits/static/sha.txt
 __pycache__/
+.coverage
+.DS_Store

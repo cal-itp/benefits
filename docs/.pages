@@ -1,4 +1,9 @@
 nav:
-  - Home: README.md
-  - Getting started: getting-started
-  - ...
+  - Home:
+      - README.md
+      - use-cases
+  - getting-started
+  - development
+  - tests
+  - configuration
+  - deployment

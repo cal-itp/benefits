@@ -1,31 +1,33 @@
 {
-  "[css]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "editor.defaultFormatter": null,
-  "editor.formatOnSave": false,
+  "djlint.guessProfile": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
   "[html]": {
-    "editor.formatOnSave": false
+    "editor.defaultFormatter": "monosans.djlint"
+  },
+  "[django-html]": {
+    "editor.defaultFormatter": "monosans.djlint"
   },
   "files.encoding": "utf8",
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
-  "[javascript]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
   },
   "python.formatting.provider": "black",
-  "python.linting.flake8Enabled": true,
-  "python.linting.enabled": true,
   "python.languageServer": "Pylance",
-  "[python]": {
-    "editor.formatOnSave": true
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": true,
+  "python.testing.pytestArgs": [
+    "tests/pytest",
+    "--import-mode=importlib",
+    "--no-migrations"
+  ],
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform"
   }
 }

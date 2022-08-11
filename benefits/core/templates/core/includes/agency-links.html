@@ -1,0 +1,19 @@
+
+<div class="buttons-agencies">
+  {% for agency_button in buttons %}
+    {% if "agency" in agency_button.classes %}
+      {% if agency_button.label %}<label>{{ agency_button.label }}</label>{% endif %}
+      <a {% if agency_button.target %}target="{{ agency_button.target }}"{% endif %}
+         {% if agency_button.rel %}rel="{{ agency_button.rel }}"{% endif %}
+         href="{{ agency_button.url }}">
+        {{ agency_button.text }}
+      </a>
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% for back_button in buttons %}
+  {% if "btn-primary" in back_button.classes %}
+    <div class="button-back">{% include "core/includes/button.html" with button=back_button %}</div>
+  {% endif %}
+{% endfor %}

@@ -1,0 +1,19 @@
+name: Label docker
+
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - ".devcontainer/**"
+      - "appcontainer/**"
+      - ".dockerignore"
+      - "compose.yml"
+
+jobs:
+  label-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: add-label
+        uses: andymckay/labeler@master
+        with:
+          add-labels: "docker"

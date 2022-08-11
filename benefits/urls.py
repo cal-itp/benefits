@@ -2,14 +2,12 @@
 benefits URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.1/topics/http/urls/
+    https://docs.djangoproject.com/en/4.0/topics/http/urls/
 """
 import logging
 
+from django.conf import settings
 from django.urls import include, path
-
-from benefits.settings import ADMIN
-
 
 logger = logging.getLogger(__name__)
 
@@ -23,12 +21,13 @@ urlpatterns = [
     path("eligibility/", include("benefits.eligibility.urls")),
     path("enrollment/", include("benefits.enrollment.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("oauth/", include("benefits.oauth.urls")),
 ]
 
-if ADMIN:
+if settings.ADMIN:
     from django.contrib import admin
 
-    logger.debug("Register admin/ urls")
+    logger.debug("Register admin urls")
     urlpatterns.append(path("admin/", admin.site.urls))
 else:
     logger.debug("Skip url registrations for admin")

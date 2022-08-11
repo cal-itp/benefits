@@ -1,0 +1,44 @@
+name: benefits
+version: "3.8"
+
+services:
+  client:
+    build:
+      context: .
+      dockerfile: appcontainer/Dockerfile
+    image: benefits_client:latest
+    env_file: .env
+    ports:
+      - "${DJANGO_LOCAL_PORT:-8000}:8000"
+
+  dev:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    image: benefits_client:dev
+    env_file: .env
+    # https://code.visualstudio.com/docs/remote/create-dev-container#_use-docker-compose
+    entrypoint: sleep infinity
+    depends_on:
+      - server
+    ports:
+      - "${DJANGO_LOCAL_PORT:-8000}:8000"
+    volumes:
+      - ./:/home/calitp/app
+
+  docs:
+    image: benefits_client:dev
+    entrypoint: mkdocs
+    command: serve --dev-addr "0.0.0.0:8001"
+    ports:
+      - "8001"
+    volumes:
+      - ./:/home/calitp/app
+
+  server:
+    image: ghcr.io/cal-itp/eligibility-server:main
+    env_file: .devcontainer/server/.env.server
+    ports:
+      - "5000"
+    volumes:
+      - ./.devcontainer:/.devcontainer

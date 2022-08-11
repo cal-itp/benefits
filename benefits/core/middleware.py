@@ -4,17 +4,19 @@ The core application: middleware definitions for request/response cycle.
 import logging
 import time
 
+from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import redirect
 from django.template import loader
 from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
 
-from benefits.settings import RATE_LIMIT, RATE_LIMIT_METHODS, RATE_LIMIT_PERIOD, DEBUG
 from . import analytics, session, viewmodels
 
 
 logger = logging.getLogger(__name__)
+HEALTHCHECK_PATH = "/healthcheck"
 
 
 class AgencySessionRequired(MiddlewareMixin):
@@ -32,11 +34,11 @@ class RateLimit(MiddlewareMixin):
     """Middleware checks settings and session to ensure rate limit is respected."""
 
     def process_request(self, request):
-        if any((RATE_LIMIT < 1, len(RATE_LIMIT_METHODS) < 1, RATE_LIMIT_PERIOD < 1)):
-            logger.debug("RATE_LIMIT, RATE_LIMIT_METHODS, or RATE_LIMIT_PERIOD are not configured")
+        if not settings.RATE_LIMIT_ENABLED:
+            logger.debug("Rate Limiting is not configured")
             return None
 
-        if request.method in RATE_LIMIT_METHODS:
+        if request.method in settings.RATE_LIMIT_METHODS:
             session.increment_rate_limit_counter(request)
         else:
             # bail early if the request method doesn't match
@@ -46,9 +48,9 @@ class RateLimit(MiddlewareMixin):
         reset_time = session.rate_limit_time(request)
         now = int(time.time())
 
-        if counter > RATE_LIMIT:
+        if counter > settings.RATE_LIMIT:
             if reset_time > now:
-                logger.warn("Rate limit exceeded")
+                logger.warning("Rate limit exceeded")
                 home = viewmodels.Button.home(request)
                 page = viewmodels.ErrorPage.error(
                     title="Rate limit error",
@@ -80,7 +82,7 @@ class DebugSession(MiddlewareMixin):
     """Middleware to configure debug context in the request session."""
 
     def process_request(self, request):
-        session.update(request, debug=DEBUG)
+        session.update(request, debug=settings.DEBUG)
         return None
 
 
@@ -91,9 +93,20 @@ class Healthcheck:
         self.get_response = get_response
 
     def __call__(self, request):
-        if request.path == "/healthcheck":
+        if request.path == HEALTHCHECK_PATH:
             return HttpResponse("Healthy", content_type="text/plain")
         return self.get_response(request)
+
+
+class VerifierSessionRequired(MiddlewareMixin):
+    """Middleware raises an exception for sessions lacking an eligibility verifier configuration."""
+
+    def process_request(self, request):
+        if session.verifier(request):
+            logger.debug("Session configured with eligibility verifier")
+            return None
+        else:
+            raise AttributeError("Session not configured with eligibility verifier")
 
 
 class ViewedPageEvent(MiddlewareMixin):
@@ -120,4 +133,32 @@ class ChangedLanguageEvent(MiddlewareMixin):
             new_lang = request.POST["language"]
             event = analytics.ChangedLanguageEvent(request, new_lang)
             analytics.send_event(event)
+        return None
+
+
+class LoginRequired(MiddlewareMixin):
+    """Middleware that checks whether a user is logged in."""
+
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        # only require login if verifier requires it
+        verifier = session.verifier(request)
+        if not verifier or not verifier.is_auth_required or session.logged_in(request):
+            # pass through
+            return None
+
+        return redirect("oauth:login")
+
+
+# https://github.com/census-instrumentation/opencensus-python/issues/766
+class LogErrorToAzure(MiddlewareMixin):
+    def __init__(self, get_response):
+        self.get_response = get_response
+        # wait to do this here to be sure the handler is initialized
+        self.azure_logger = logging.getLogger("azure")
+
+    def process_exception(self, request, exception):
+        # https://stackoverflow.com/a/45532289
+        msg = getattr(exception, "message", repr(exception))
+        self.azure_logger.exception(msg, exc_info=exception)
+
         return None

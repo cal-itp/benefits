@@ -1,6 +1,13 @@
 name: Publish docs
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows:
+      - Pytest
+    types:
+      - completed
+    branches:
+      - dev
   push:
     branches:
       - dev
@@ -13,9 +20,19 @@ jobs:
   docs:
     name: Publish docs
     runs-on: ubuntu-latest
+    if: github.event.workflow_run == null || github.event.workflow_run.conclusion == 'success'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Download coverage report
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          workflow: tests-pytest.yml
+          branch: dev
+          event: push
+          name: coverage-report
+          path: docs/tests/coverage
 
       - name: Deploy docs
         uses: mhausenblas/mkdocs-deploy-gh-pages@master

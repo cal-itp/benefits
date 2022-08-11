@@ -6,9 +6,9 @@ import logging
 import time
 import uuid
 
+from django.conf import settings
 from django.urls import reverse
 
-from benefits.settings import RATE_LIMIT_PERIOD
 from . import models
 
 
@@ -19,17 +19,17 @@ _AGENCY = "agency"
 _DEBUG = "debug"
 _DID = "did"
 _ELIGIBILITY = "eligibility"
+_ENROLLMENT_TOKEN = "enrollment_token"
+_ENROLLMENT_TOKEN_EXP = "enrollment_token_exp"
 _LANG = "lang"
 _LIMITCOUNTER = "limitcounter"
 _LIMITUNTIL = "limituntil"
+_OAUTH_CLAIM = "oauth_claim"
+_OAUTH_TOKEN = "oauth_token"
 _ORIGIN = "origin"
 _START = "start"
 _UID = "uid"
-
-# ignore bandit B105:hardcoded_password_string
-# as these are not passwords, but keys for the session dict
-_TOKEN = "token"  # nosec
-_TOKEN_EXP = "token_exp"  # nosec
+_VERIFIER = "verifier"
 
 
 def agency(request):
@@ -58,13 +58,16 @@ def context_dict(request):
         _DEBUG: debug(request),
         _DID: did(request),
         _ELIGIBILITY: eligibility(request),
+        _ENROLLMENT_TOKEN: enrollment_token(request),
+        _ENROLLMENT_TOKEN_EXP: enrollment_token_expiry(request),
         _LANG: language(request),
+        _OAUTH_TOKEN: oauth_token(request),
+        _OAUTH_CLAIM: oauth_claim(request),
         _ORIGIN: origin(request),
         _LIMITUNTIL: rate_limit_time(request),
         _START: start(request),
-        _TOKEN: token(request),
-        _TOKEN_EXP: token_expiry(request),
         _UID: uid(request),
+        _VERIFIER: verifier(request),
     }
 
 
@@ -75,7 +78,16 @@ def debug(request):
 
 
 def did(request):
-    """Get the session's device ID, a hashed version of the unique ID."""
+    """
+    Get the session's device ID, a hashed version of the unique ID. If unset,
+    the session is reset to initialize a value.
+
+    This value, like UID, is randomly generated per session and is needed for
+    Amplitude to accurately track that a sequence of events came from a unique
+    user.
+
+    See more: https://help.amplitude.com/hc/en-us/articles/115003135607-Track-unique-users-in-Amplitude
+    """
     logger.debug("Get session did")
     d = request.session.get(_DID)
     if not d:
@@ -100,17 +112,60 @@ def eligible(request):
     return active_agency(request) and agency(request).supports_type(eligibility(request))
 
 
-def increment_rate_limit_counter(request):
-    """Adds 1 to this session's rate limit counter."""
-    logger.debug("Increment rate limit counter")
-    c = rate_limit_counter(request)
-    request.session[_LIMITCOUNTER] = int(c) + 1
+def enrollment_token(request):
+    """Get the enrollment token from the request's session, or None."""
+    logger.debug("Get session enrollment token")
+    return request.session.get(_ENROLLMENT_TOKEN)
+
+
+def enrollment_token_expiry(request):
+    """Get the enrollment token's expiry time from the request's session, or None."""
+    logger.debug("Get session enrollment token expiry")
+    return request.session.get(_ENROLLMENT_TOKEN_EXP)
+
+
+def enrollment_token_valid(request):
+    """True if the request's session is configured with a valid token. False otherwise."""
+    if bool(enrollment_token(request)):
+        logger.debug("Session contains an enrollment token")
+        exp = enrollment_token_expiry(request)
+
+        # ensure token does not expire in the next 5 seconds
+        valid = exp is None or exp > (time.time() + 5)
+
+        logger.debug(f"Session enrollment token is {'valid' if valid else 'expired'}")
+        return valid
+    else:
+        logger.debug("Session does not contain a valid enrollment token")
+        return False
 
 
 def language(request):
     """Get the language configured for the request."""
     logger.debug("Get session language")
     return request.LANGUAGE_CODE
+
+
+def logged_in(request):
+    """Check if the current session has an OAuth token."""
+    return bool(oauth_token(request))
+
+
+def logout(request):
+    """Reset the session tokens."""
+    update(request, oauth_token=False, enrollment_token=False)
+
+
+def oauth_token(request):
+    """Get the oauth token from the request's session, or None"""
+    logger.debug("Get session oauth token")
+    return request.session.get(_OAUTH_TOKEN)
+
+
+def oauth_claim(request):
+    """Get the oauth claim from the request's session, or None"""
+    logger.debug("Get session oauth claim")
+    return request.session.get(_OAUTH_CLAIM)
 
 
 def origin(request):
@@ -125,6 +180,21 @@ def rate_limit_counter(request):
     return request.session.get(_LIMITCOUNTER)
 
 
+def increment_rate_limit_counter(request):
+    """Adds 1 to this session's rate limit counter."""
+    logger.debug("Increment rate limit counter")
+    c = rate_limit_counter(request)
+    request.session[_LIMITCOUNTER] = int(c) + 1
+
+
+def reset_rate_limit(request):
+    """Reset this session's rate limit counter and time."""
+    logger.debug("Reset rate limit")
+    request.session[_LIMITCOUNTER] = 0
+    # get the current time in Unix seconds, then add RATE_LIMIT_PERIOD seconds
+    request.session[_LIMITUNTIL] = int(time.time()) + settings.RATE_LIMIT_PERIOD
+
+
 def rate_limit_time(request):
     """Get this session's rate limit time, a Unix timestamp after which the session's rate limt resets."""
     logger.debug("Get rate limit time")
@@ -137,8 +207,11 @@ def reset(request):
     request.session[_AGENCY] = None
     request.session[_ELIGIBILITY] = None
     request.session[_ORIGIN] = reverse("core:index")
-    request.session[_TOKEN] = None
-    request.session[_TOKEN_EXP] = None
+    request.session[_ENROLLMENT_TOKEN] = None
+    request.session[_ENROLLMENT_TOKEN_EXP] = None
+    request.session[_OAUTH_TOKEN] = None
+    request.session[_OAUTH_CLAIM] = None
+    request.session[_VERIFIER] = None
 
     if _UID not in request.session or not request.session[_UID]:
         logger.debug("Reset session time and uid")
@@ -149,16 +222,17 @@ def reset(request):
         reset_rate_limit(request)
 
 
-def reset_rate_limit(request):
-    """Reset this session's rate limit counter and time."""
-    logger.debug("Reset rate limit")
-    request.session[_LIMITCOUNTER] = 0
-    # get the current time in Unix seconds, then add RATE_LIMIT_PERIOD seconds
-    request.session[_LIMITUNTIL] = int(time.time()) + RATE_LIMIT_PERIOD
-
-
 def start(request):
-    """Get the start time from the request's session, as integer milliseconds since Epoch."""
+    """
+    Get the start time from the request's session, as integer milliseconds since
+    Epoch. If unset, the session is reset to initialize a value.
+
+    Once started, does not reset after subsequent calls to session.reset() or
+    session.start(). This value is needed for Amplitude to accurately track
+    sessions.
+
+    See more: https://help.amplitude.com/hc/en-us/articles/115002323627-Tracking-Sessions
+    """
     logger.debug("Get session time")
     s = request.session.get(_START)
     if not s:
@@ -167,20 +241,20 @@ def start(request):
     return s
 
 
-def token(request):
-    """Get the token from the request's session, or None."""
-    logger.debug("Get session token")
-    return request.session.get(_TOKEN)
-
-
-def token_expiry(request):
-    """Get the token's expiry time from the request's session, or None."""
-    logger.debug("Get session token expiry")
-    return request.session.get(_TOKEN_EXP)
-
-
 def uid(request):
-    """Get the session's unique ID, generating a new one if necessary."""
+    """
+    Get the session's unique ID, a randomly generated UUID4 string. If unset,
+    the session is reset to initialize a value.
+
+    This value, like DID, is needed for Amplitude to accurately track that a
+    sequence of events came from a unique user.
+
+    See more: https://help.amplitude.com/hc/en-us/articles/115003135607-Track-unique-users-in-Amplitude
+
+    Although Amplitude advises *against* setting user_id for anonymous users,
+    here a value is set on anonymous users anyway, as the users never sign-in
+    and become de-anonymized to this app / Amplitude.
+    """
     logger.debug("Get session uid")
     u = request.session.get(_UID)
     if not u:
@@ -189,7 +263,18 @@ def uid(request):
     return u
 
 
-def update(request, agency=None, debug=None, eligibility_types=None, origin=None, token=None, token_exp=None):
+def update(
+    request,
+    agency=None,
+    debug=None,
+    eligibility_types=None,
+    enrollment_token=None,
+    enrollment_token_exp=None,
+    oauth_token=None,
+    oauth_claim=None,
+    origin=None,
+    verifier=None,
+):
     """Update the request's session with non-null values."""
     if agency is not None and isinstance(agency, models.TransitAgency):
         logger.debug(f"Update session {_AGENCY}")
@@ -206,26 +291,32 @@ def update(request, agency=None, debug=None, eligibility_types=None, origin=None
             a = models.TransitAgency.by_id(request.session[_AGENCY])
             t = str(eligibility_types[0]).strip()
             request.session[_ELIGIBILITY] = a.get_type_id(t)
+        else:
+            # empty list, clear session eligibility
+            request.session[_ELIGIBILITY] = None
+    if enrollment_token is not None:
+        logger.debug(f"Update session {_ENROLLMENT_TOKEN}")
+        request.session[_ENROLLMENT_TOKEN] = enrollment_token
+        request.session[_ENROLLMENT_TOKEN_EXP] = enrollment_token_exp
+    if oauth_token is not None:
+        logger.debug(f"Update session {_OAUTH_TOKEN}")
+        request.session[_OAUTH_TOKEN] = oauth_token
+    if oauth_claim is not None:
+        logger.debug(f"Update session {_OAUTH_CLAIM}")
+        request.session[_OAUTH_CLAIM] = oauth_claim
     if origin is not None:
         logger.debug(f"Update session {_ORIGIN}")
         request.session[_ORIGIN] = origin
-    if token is not None:
-        logger.debug(f"Update session {_TOKEN}")
-        request.session[_TOKEN] = token
-        request.session[_TOKEN_EXP] = token_exp
+    if verifier is not None and isinstance(verifier, models.EligibilityVerifier):
+        logger.debug(f"Update session {_VERIFIER}")
+        request.session[_VERIFIER] = verifier.id
 
 
-def valid_token(request):
-    """True if the request's session is configured with a valid token. False otherwise."""
-    if token(request) is not None:
-        logger.debug("Session contains a token")
-        exp = token_expiry(request)
-
-        # ensure token does not expire in the next 5 seconds
-        valid = exp is None or exp > (time.time() + 5)
-
-        logger.debug(f"Session token is {'valid' if valid else 'expired'}")
-        return valid
-    else:
-        logger.debug("Session does not contain a valid token")
-        return False
+def verifier(request):
+    """Get the verifier from the request's session, or None"""
+    logger.debug("Get session verifier")
+    try:
+        return models.EligibilityVerifier.by_id(request.session[_VERIFIER])
+    except (KeyError, models.EligibilityVerifier.DoesNotExist):
+        logger.debug("Can't get verifier from session")
+        return None

@@ -1,0 +1,16 @@
+name: "Project triage: Dependabot"
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  add-to-project-dependabot:
+    runs-on: ubuntu-latest
+    # see https://docs.github.com/en/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions#responding-to-events
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - uses: actions/add-to-project@main
+        with:
+          project-url: https://github.com/orgs/cal-itp/projects/${{ secrets.GH_PROJECT }}
+          github-token: ${{ secrets.GH_PROJECTS_TOKEN }}
