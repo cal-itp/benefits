@@ -67,9 +67,10 @@ def authorize(request):
     if verifier_claim:
         userinfo = token.get("userinfo")
 
-        if userinfo and userinfo.get(verifier_claim) is not None:
+        if userinfo:
+            claim_value = userinfo.get(verifier_claim)
             # the claim comes back in userinfo like { "claim": "True" | "False" }
-            if userinfo.get(verifier_claim).lower() == "true":
+            if claim_value is not None and claim_value.lower() == "true":
                 # if userinfo contains our claim and the flag is true, store the *claim*
                 stored_claim = verifier_claim
 
