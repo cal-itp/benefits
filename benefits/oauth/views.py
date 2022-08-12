@@ -70,7 +70,9 @@ def authorize(request):
         if userinfo:
             claim_value = userinfo.get(verifier_claim)
             # the claim comes back in userinfo like { "claim": "True" | "False" }
-            if claim_value is not None and claim_value.lower() == "true":
+            if claim_value is None:
+                logger.warning(f"userinfo did not contain: {verifier_claim}")
+            elif claim_value.lower() == "true":
                 # if userinfo contains our claim and the flag is true, store the *claim*
                 stored_claim = verifier_claim
 
