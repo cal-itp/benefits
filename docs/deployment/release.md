@@ -10,6 +10,8 @@ can be found under [Workflows](./workflows.md).
 The list of releases can be found on the [repository Releases page](https://github.com/cal-itp/benefits/tags)
 on GitHub.
 
+[Start a new Release on Github](https://github.com/cal-itp/benefits/issues/new?labels=release&template=release.yml&title=Make+a+Release){ .md-button }
+
 ## 0. Decide on the new version number
 
 A new release implies a new version.
