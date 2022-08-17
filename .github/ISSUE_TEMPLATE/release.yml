@@ -53,13 +53,13 @@ body:
       label: Release checklist
       description: Complete these items in sequence as the release progresses
       options:
-        - Create a branch called release/version from the source branch
-        - Bump the application version
-        - Open a PR for the release branch into the staging target, merge
-        - "(If applicable): open another PR from dev to test"
-        - QA the app in test
-        - Open a PR to for the test branch into prod, merge
-        - QA the app in prod
-        - Tag the release on the prod branch, push the tag to GitHub
-        - Create a release in GitHub for the tag, generating release notes
-        - Edit release notes with additional context, images, animations, etc. as-needed
+        - label: Create a branch called release/version from the source branch
+        - label: Bump the application version
+        - label: Open a PR for the release branch into the staging target, merge
+        - label: "(If applicable): open another PR from dev to test"
+        - label: QA the app in test
+        - label: Open a PR to for the test branch into prod, merge
+        - label: QA the app in prod
+        - label: Tag the release on the prod branch, push the tag to GitHub
+        - label: Create a release in GitHub for the tag, generating release notes
+        - label: Edit release notes with additional context, images, animations, etc. as-needed
