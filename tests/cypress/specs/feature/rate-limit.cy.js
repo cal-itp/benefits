@@ -39,7 +39,7 @@ describe("Rate limiting feature spec", () => {
 
         // now wait for the rate limit to refresh
         const RATE_LIMIT_PERIOD = parseInt(
-          Cypress.env("DJANGO_RATE_LIMIT_PERIOD")
+          Cypress.env("DJANGO_RATE_LIMIT_PERIOD"),
         );
         // Cypress expects milliseconds, the rate limit period is expressed in seconds
         cy.wait(RATE_LIMIT_PERIOD * 1000);
