@@ -69,7 +69,7 @@ describe("Multiple verifier, no AuthProvider: Eligibility confirmation form spec
 
   it("Has a Courtesy Card number form label and corresponding field", () => {
     cy.contains(
-      "You’ll need to do two things to link your transit discount to your bank card."
+      "You’ll need to do two things to link your transit discount to your bank card.",
     );
     cy.get(".media-list").children().should("have.length", 2);
     cy.contains("Continue").click();
