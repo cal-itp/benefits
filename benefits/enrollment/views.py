@@ -64,6 +64,7 @@ def index(request):
         if response.success:
             return success(request)
         else:
+            analytics.returned_error(request, response.message)
             raise Exception(response.message)
 
     # GET enrollment index, with button to initiate payment processor connection
@@ -131,8 +132,10 @@ def retry(request):
             page.buttons.append(viewmodels.Button.primary(text=_("core.buttons.retry"), url=session.origin(request)))
             return TemplateResponse(request, TEMPLATE_RETRY, page.context_dict())
         else:
+            analytics.returned_error(request, "Invalid retry submission.")
             raise Exception("Invalid retry submission.")
     else:
+        analytics.returned_error(request, "This view method only supports POST.")
         raise Exception("This view method only supports POST.")
 
 

@@ -9,12 +9,17 @@ class ReturnedEnrollmentEvent(core.Event):
 
     def __init__(self, request, status, error=None):
         super().__init__(request, "returned enrollment")
-        if str(status).lower() in ("retry", "success"):
+        if str(status).lower() in ("error", "retry", "success"):
             self.update_event_properties(status=status, error=error)
 
 
+def returned_error(request, error):
+    """Send the "returned enrollment" analytics event with an error status and message."""
+    core.send_event(ReturnedEnrollmentEvent(request, status="error", error=error))
+
+
 def returned_retry(request):
-    """Send the "returned enrollment" analyrics event with a retry status."""
+    """Send the "returned enrollment" analytics event with a retry status."""
     core.send_event(ReturnedEnrollmentEvent(request, status="retry"))
 
 
