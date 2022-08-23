@@ -139,6 +139,8 @@ def retry(request):
 @decorator_from_middleware(VerifierSessionRequired)
 def success(request):
     """View handler for the final success page."""
+    analytics.returned_success(request)
+
     request.path = "/enrollment/success"
     session.update(request, origin=reverse(ROUTE_SUCCESS))
     verifier = session.verifier(request)
@@ -163,7 +165,5 @@ def success(request):
 
     help_link = reverse(ROUTE_HELP)
     context_dict = {**page.context_dict(), **{"help_link": help_link}}
-
-    analytics.returned_success(request)
 
     return TemplateResponse(request, TEMPLATE_SUCCESS, context_dict)
