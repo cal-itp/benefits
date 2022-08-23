@@ -14,5 +14,5 @@ class ReturnedEnrollmentEvent(core.Event):
 
 
 def returned_success(request):
-    """Send the "completed enrollment" analytics event."""
+    """Send the "returned enrollment" analytics event with a success status."""
     core.send_event(ReturnedEnrollmentEvent(request, status="success"))

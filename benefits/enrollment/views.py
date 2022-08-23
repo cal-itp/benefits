@@ -62,7 +62,6 @@ def index(request):
 
         response = api.Client(agency).enroll(card_token, eligibility.group_id)
         if response.success:
-            analytics.completed_enrollment(request)
             return success(request)
         else:
             raise Exception(response.message)
@@ -164,5 +163,7 @@ def success(request):
 
     help_link = reverse(ROUTE_HELP)
     context_dict = {**page.context_dict(), **{"help_link": help_link}}
+
+    analytics.returned_success(request)
 
     return TemplateResponse(request, TEMPLATE_SUCCESS, context_dict)
