@@ -12,7 +12,7 @@ from django.utils.translation import pgettext, gettext as _
 from benefits.core import models, session, viewmodels
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
 from benefits.core.views import ROUTE_HELP
-from . import api, forms
+from . import analytics, api, forms
 
 
 ROUTE_INDEX = "enrollment:index"
@@ -62,6 +62,7 @@ def index(request):
 
         response = api.Client(agency).enroll(card_token, eligibility.group_id)
         if response.success:
+            analytics.completed_enrollment(request)
             return success(request)
         else:
             raise Exception(response.message)
