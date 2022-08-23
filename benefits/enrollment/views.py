@@ -116,6 +116,7 @@ def index(request):
 def retry(request):
     """View handler for a recoverable failure condition."""
     if request.method == "POST":
+        analytics.returned_retry(request)
         form = forms.CardTokenizeFailForm(request.POST)
         if form.is_valid():
             agency = session.agency(request)
