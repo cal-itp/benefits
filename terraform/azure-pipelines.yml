@@ -39,6 +39,9 @@ stages:
             inputs:
               provider: azurerm
               command: plan
+              # wait for lock to be released, in case being used by another pipeline run
+              # https://discuss.hashicorp.com/t/terraform-plan-wait-for-lock-to-be-released/6870/2
+              commandOptions: -lock-timeout=2m
               workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
               # service connection
               environmentServiceNameAzureRM: Production
@@ -47,6 +50,8 @@ stages:
             inputs:
               provider: azurerm
               command: apply
+              # (ditto the lock comment above)
+              commandOptions: -lock-timeout=2m
               workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
               # service connection
               environmentServiceNameAzureRM: Production
