@@ -12,11 +12,11 @@ class EligibilityEvent(core.Event):
         self.update_event_properties(eligibility_types=eligibility_types)
 
 
-class StartedEligibilityEvent(core.Event):
+class StartedEligibilityEvent(EligibilityEvent):
     """Analytics event representing the beginning of an eligibility verification check."""
 
-    def __init__(self, request):
-        super().__init__(request, "started eligibility")
+    def __init__(self, request, eligibility_types):
+        super().__init__(request, "started eligibility", eligibility_types)
 
 
 class ReturnedEligibilityEvent(core.Event):
@@ -28,9 +28,9 @@ class ReturnedEligibilityEvent(core.Event):
             self.update_event_properties(status=status, error=error)
 
 
-def started_eligibility(request):
+def started_eligibility(request, eligibility_types):
     """Send the "started eligibility" analytics event."""
-    core.send_event(StartedEligibilityEvent(request))
+    core.send_event(StartedEligibilityEvent(request, eligibility_types))
 
 
 def returned_error(request, error):
