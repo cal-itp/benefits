@@ -190,7 +190,7 @@ def confirm(request):
 
         # form was not valid, allow for correction/resubmission
         if verified_types is None:
-            analytics.returned_error(request, form.errors)
+            analytics.returned_error(request, types_to_verify, form.errors)
             page.forms = [form]
             return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
         # no types were verified
@@ -206,7 +206,7 @@ def confirm(request):
 def verified(request, verified_types):
     """View handler for the verified eligibility page."""
 
-    analytics.returned_success(request)
+    analytics.returned_success(request, verified_types)
 
     session.update(request, eligibility_types=verified_types)
 
@@ -218,14 +218,15 @@ def verified(request, verified_types):
 def unverified(request):
     """View handler for the unverified eligibility page."""
 
-    analytics.returned_fail(request)
+    agency = session.agency(request)
+    verifier = session.verifier(request)
+    types_to_verify = verify.typenames_to_verify(agency, verifier)
+
+    analytics.returned_fail(request, types_to_verify)
 
     # tel: link to agency phone number
-    agency = session.agency(request)
     buttons = viewmodels.Button.agency_contact_links(agency)
     buttons.append(viewmodels.Button.home(request))
-
-    verifier = session.verifier(request)
 
     page = viewmodels.Page(
         noimage=True,
