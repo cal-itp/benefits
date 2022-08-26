@@ -6,6 +6,8 @@ import logging
 from django.db import models
 from django.urls import reverse
 
+import requests
+
 
 logger = logging.getLogger(__name__)
 
@@ -14,13 +16,25 @@ class PemData(models.Model):
     """API Certificate or Key in PEM format."""
 
     id = models.AutoField(primary_key=True)
-    # The data in utf-8 encoded PEM text format
-    text = models.TextField()
     # Human description of the PEM data
     label = models.TextField()
+    # The data in utf-8 encoded PEM text format
+    text = models.TextField(null=True)
+    # Public URL hosting the utf-8 encoded PEM text
+    remote_url = models.TextField(null=True)
 
     def __str__(self):
         return self.label
+
+    @property
+    def data(self):
+        if self.text:
+            return self.text
+        elif self.remote_url:
+            self.text = requests.get(self.remote_url).text
+
+        self.save()
+        return self.text
 
 
 class AuthProvider(models.Model):
@@ -105,7 +119,7 @@ class EligibilityVerifier(models.Model):
     @property
     def public_key_data(self):
         """This Verifier's public key as a string."""
-        return self.public_key.text
+        return self.public_key.data
 
     @property
     def is_auth_required(self):
@@ -208,12 +222,12 @@ class TransitAgency(models.Model):
     @property
     def private_key_data(self):
         """This Agency's private key as a string."""
-        return self.private_key.text
+        return self.private_key.data
 
     @property
     def public_key_data(self):
         """This Agency's public key as a string."""
-        return self.public_key.text
+        return self.public_key.data
 
     @staticmethod
     def by_id(id):
