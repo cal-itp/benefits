@@ -67,6 +67,21 @@ tSREgR4EjosqQfbkceLJ2JT1wuNjInI0eR9H3cRugvlDTeWtbdJ5qA==
         label="Benefits client private key",
     )
 
+    client_public_key = PemData.objects.create(
+        text="""
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1pt0ZoOuPEVPJJS+5r88
+4zcjZLkZZ2GcPwr79XOLDbOi46onCa79kjRnhS0VUK96SwUPS0z9J5mDA5LSNL2R
+oxFb5QGaevnJY828NupzTNdUd0sYJK3kRjKUggHWuB55hwJcH/Dx7I3DNH4NL68U
+AlK+VjwJkfYPrhq/bl5z8ZiurvBa5C1mDxhFpcTZlCfxQoas7D1d+uPACF6mEMbQ
+Nd3RaIaSREO50NvNywXIIt/OmCiRqI7JtOcn4eyh1I4j9WtlbMhRJLfwPMAgY5ep
+TsWcURmhVofF2wVoFbib3JGCfA7tz/gmP5YoEKnf/cumKmF3e9LrZb8zwm7bTHUV
+iwIDAQAB
+-----END PUBLIC KEY-----
+""",
+        label="Benefits client public key",
+    )
+
     dummy_cert = PemData.objects.create(
         text="""
 -----BEGIN CERTIFICATE-----
@@ -198,6 +213,7 @@ PEM DATA
         phone="800-555-5555",
         active=True,
         private_key=client_private_key,
+        public_key=client_public_key,
         jws_signing_alg="RS256",
         payment_processor=payment_processor,
     )
@@ -214,6 +230,7 @@ PEM DATA
         phone="321-555-5555",
         active=True,
         private_key=client_private_key,
+        public_key=client_public_key,
         jws_signing_alg="RS256",
         payment_processor=payment_processor,
     )

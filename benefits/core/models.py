@@ -167,6 +167,8 @@ class TransitAgency(models.Model):
     payment_processor = models.ForeignKey(PaymentProcessor, on_delete=models.PROTECT)
     # The Agency's private key, used to sign tokens created on behalf of this Agency
     private_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
+    # The public key corresponding to the Agency's private key, used by Eligibility Verification servers to encrypt responses
+    public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
     # The JWS-compatible signing algorithm
     jws_signing_alg = models.TextField()
 
@@ -202,6 +204,11 @@ class TransitAgency(models.Model):
     def private_key_data(self):
         """This Agency's private key as a string."""
         return self.private_key.text
+
+    @property
+    def public_key_data(self):
+        """This Agency's public key as a string."""
+        return self.public_key.text
 
     @staticmethod
     def by_id(id):
