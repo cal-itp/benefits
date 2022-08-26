@@ -197,8 +197,13 @@ class TransitAgency(models.Model):
 
     @property
     def index_url(self):
-        """Url to the TransitAgency's landing page."""
+        """Public-facing URL to the TransitAgency's landing page."""
         return reverse("core:agency_index", args=[self.slug])
+
+    @property
+    def public_key_url(self):
+        """Public-facing URL to the TransitAgency's public key."""
+        return reverse("core:agency_public_key", args=[self.slug])
 
     @property
     def private_key_data(self):

@@ -1,7 +1,7 @@
 """
 The core application: view definition for the root of the webapp.
 """
-from django.http import HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
 from django.shortcuts import redirect
 from django.template import loader
 from django.template.response import TemplateResponse
@@ -69,6 +69,12 @@ def agency_index(request, agency):
     context_dict = {**page.context_dict(), **{"info_link": f"{help_page}#about"}}
 
     return TemplateResponse(request, TEMPLATE_AGENCY, context_dict)
+
+
+@pageview_decorator
+def agency_public_key(request, agency):
+    """View handler returns an agency's public key as plain text."""
+    return HttpResponse(agency.public_key_data, content_type="text/plain")
 
 
 @pageview_decorator
