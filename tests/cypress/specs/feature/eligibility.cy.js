@@ -26,7 +26,7 @@ describe("Eligibility confirmation flow", () => {
 
     cy.contains("We can’t confirm your age");
     cy.contains(
-      "You may still be eligible for a discount, but we can’t verify your age"
+      "You may still be eligible for a discount, but we can’t verify your age",
     );
   });
 

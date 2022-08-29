@@ -12,7 +12,7 @@ from django.utils.translation import pgettext, gettext as _
 from benefits.core import models, session, viewmodels
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
 from benefits.core.views import ROUTE_HELP
-from . import api, forms
+from . import analytics, api, forms
 
 
 ROUTE_INDEX = "enrollment:index"
@@ -64,6 +64,7 @@ def index(request):
         if response.success:
             return success(request)
         else:
+            analytics.returned_error(request, response.message)
             raise Exception(response.message)
 
     # GET enrollment index, with button to initiate payment processor connection
@@ -116,6 +117,7 @@ def index(request):
 def retry(request):
     """View handler for a recoverable failure condition."""
     if request.method == "POST":
+        analytics.returned_retry(request)
         form = forms.CardTokenizeFailForm(request.POST)
         if form.is_valid():
             agency = session.agency(request)
@@ -130,8 +132,10 @@ def retry(request):
             page.buttons.append(viewmodels.Button.primary(text=_("core.buttons.retry"), url=session.origin(request)))
             return TemplateResponse(request, TEMPLATE_RETRY, page.context_dict())
         else:
+            analytics.returned_error(request, "Invalid retry submission.")
             raise Exception("Invalid retry submission.")
     else:
+        analytics.returned_error(request, "This view method only supports POST.")
         raise Exception("This view method only supports POST.")
 
 
@@ -139,6 +143,8 @@ def retry(request):
 @decorator_from_middleware(VerifierSessionRequired)
 def success(request):
     """View handler for the final success page."""
+    analytics.returned_success(request)
+
     request.path = "/enrollment/success"
     session.update(request, origin=reverse(ROUTE_SUCCESS))
     verifier = session.verifier(request)

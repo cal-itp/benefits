@@ -1,0 +1,65 @@
+name: New Release
+description: Publish a new release of the Benefits app
+title: Make a Release
+labels:
+  - release
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Prepare a new release
+
+        Use the form below to prepare a new release of the Benefits app.
+
+        Each release is coordinated by a **Release Manager**. The release manager may assign sub-tasks or ask for help
+        as-needed, but is otherwise responsible for all aspects of the release.
+
+        After this issue is created, use the checklist to manage the steps
+        of the release process, marking items as completed. [Read more about the
+        release process](https://docs.calitp.org/benefits/deployment/release/).
+
+        Close this issue when the checklist is complete.
+  - type: input
+    id: manager
+    attributes:
+      label: Release manager
+      description: GitHub handle of who is responsible for this release; assign this issue to this user
+      placeholder: "@cal-itp-bot"
+  - type: input
+    id: version
+    attributes:
+      label: Release version
+      description: Calver-formatted version for this release
+      placeholder: YYYY.0M.R
+  - type: markdown
+    attributes:
+      value: |
+        ## Release type
+
+        Reference the diagram and discussion on [the release process docs](https://docs.calitp.org/benefits/deployment/release/).
+
+        * `Regular` release: propogates from `dev` to `test`, and then `test` to `prod`. Only possible if `dev` is ready to deploy.
+        * `Hotfix` release: propogates from `test` to `prod`, skipping `dev`.
+  - type: dropdown
+    id: type
+    attributes:
+      label: What type of release is this?
+      options:
+        - "Regular"
+        - "Hotfix"
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Release checklist
+      description: Complete these items in sequence as the release progresses
+      options:
+        - label: Create a branch called release/version from the source branch
+        - label: Bump the application version
+        - label: Open a PR for the release branch into the staging target, merge
+        - label: "(If applicable): open another PR from dev to test"
+        - label: QA the app in test
+        - label: Open a PR to for the test branch into prod, merge
+        - label: QA the app in prod
+        - label: Tag the release on the prod branch, push the tag to GitHub
+        - label: Create a release in GitHub for the tag, generating release notes
+        - label: Edit release notes with additional context, images, animations, etc. as-needed
