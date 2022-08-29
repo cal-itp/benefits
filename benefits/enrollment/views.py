@@ -62,6 +62,7 @@ def index(request):
 
         response = api.Client(agency).enroll(card_token, eligibility.group_id)
         if response.success:
+            analytics.returned_success(request)
             return success(request)
         else:
             analytics.returned_error(request, response.message)
@@ -143,8 +144,6 @@ def retry(request):
 @decorator_from_middleware(VerifierSessionRequired)
 def success(request):
     """View handler for the final success page."""
-    analytics.returned_success(request)
-
     request.path = "/enrollment/success"
     session.update(request, origin=reverse(ROUTE_SUCCESS))
     verifier = session.verifier(request)

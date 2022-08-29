@@ -121,6 +121,7 @@ def test_index_eligible_post_valid_form_success(mocker, client, card_tokenize_fo
     path = reverse(ROUTE_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
+    mocked_analytics_module.returned_success.assert_called_once()
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
     mocked_analytics_module.returned_success.assert_called_once()
@@ -180,14 +181,13 @@ def test_success_no_verifier(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_success_authentication_logged_in(mocker, client, mocked_analytics_module):
+def test_success_authentication_logged_in(mocker, client):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = True
 
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
-    mocked_analytics_module.returned_success.assert_called_once()
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
     assert "page" in response.context_data
@@ -196,14 +196,13 @@ def test_success_authentication_logged_in(mocker, client, mocked_analytics_modul
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_success_authentication_not_logged_in(mocker, client, mocked_analytics_module):
+def test_success_authentication_not_logged_in(mocker, client):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = False
 
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
-    mocked_analytics_module.returned_success.assert_called_once()
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
     assert "page" in response.context_data
@@ -212,11 +211,10 @@ def test_success_authentication_not_logged_in(mocker, client, mocked_analytics_m
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_auth_not_required")
-def test_success_no_authentication(mocker, client, mocked_analytics_module):
+def test_success_no_authentication(client):
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
-    mocked_analytics_module.returned_success.assert_called_once()
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
     assert "page" in response.context_data
