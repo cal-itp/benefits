@@ -14,6 +14,8 @@ from benefits.enrollment.views import (
     TEMPLATE_RETRY,
 )
 
+import benefits.enrollment.views
+
 
 @pytest.fixture
 def card_tokenize_form_data():
@@ -23,6 +25,11 @@ def card_tokenize_form_data():
 @pytest.fixture
 def invalid_form_data():
     return {"invalid": "data"}
+
+
+@pytest.fixture
+def mocked_analytics_module(mocked_analytics_module):
+    return mocked_analytics_module(benefits.enrollment.views)
 
 
 @pytest.mark.django_db
@@ -106,7 +113,7 @@ def test_index_eligible_post_valid_form_failure(mocker, client, card_tokenize_fo
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
-def test_index_eligible_post_valid_form_success(mocker, client, card_tokenize_form_data):
+def test_index_eligible_post_valid_form_success(mocker, client, card_tokenize_form_data, mocked_analytics_module):
     mock_response = mocker.Mock()
     mock_response.success = True
     mocker.patch("benefits.enrollment.views.api.Client.enroll", return_value=mock_response)
@@ -114,8 +121,10 @@ def test_index_eligible_post_valid_form_success(mocker, client, card_tokenize_fo
     path = reverse(ROUTE_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
+    mocked_analytics_module.returned_success.assert_called_once()
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
+    mocked_analytics_module.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -152,7 +161,7 @@ def test_retry_invalid_form(mocker, client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
-def test_retry_valid_form(mocker, client):
+def test_retry_valid_form(mocker, client, mocked_analytics_module):
     mocker.patch("benefits.enrollment.views.forms.CardTokenizeFailForm.is_valid", return_value=True)
 
     path = reverse(ROUTE_RETRY)
@@ -160,6 +169,7 @@ def test_retry_valid_form(mocker, client):
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_RETRY
+    mocked_analytics_module.returned_retry.assert_called_once()
 
 
 @pytest.mark.django_db
