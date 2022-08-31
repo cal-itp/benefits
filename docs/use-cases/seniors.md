@@ -1,6 +1,6 @@
 # Seniors
 
-One Benefits application use case is for riders age 65 years and older. The Benefits application verifies the person's age to confirm eligibililty and allows those eligible to enroll their contactless payment card for their transit benefit.
+One Benefits application use case is for riders age 65 years and older. The Benefits application verifies the person's age to confirm eligibility and allows those eligible to enroll their contactless payment card for their transit benefit.
 
 Currently, the app uses [Login.gov's Identity Assurance Level 2 (IAL2)](https://developers.login.gov/attributes/) to confirm age, which requires a person to have a Social Security number, a valid state-issued ID card and a phone number with a phone plan associated with the person's name. Adding ways to confirm eligibility for people without a Social Security number, for people who are part of of a transit agency benefit program are on the roadmap.
 
