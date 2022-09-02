@@ -32,7 +32,7 @@ Running the application locally is possible with [Docker and Docker Compose][doc
 The user interface and content is available in both English and Spanish. Additional language support is possible via Django's
 [i18n and l10n features][i18n].
 
-The application communicates with external services like [Littlepay][littlepay] via API calls and others like the [authentication server](https://dev.auth.cdt.ca.gov) via redirects, both over the public internet. See [all the system interconnections][interconnections].
+The application communicates with external services like [Littlepay][littlepay] via API calls and others like the [Identity Gateway](https://dev.auth.cdt.ca.gov) via redirects, both over the public internet. See [all the system interconnections][interconnections].
 
 ## Enrollment process
 
@@ -42,16 +42,16 @@ Success path:
 sequenceDiagram
     actor rider
     participant Benefits as Benefits app
-    participant auth as authorization server
+    participant IG as Identity Gateway
     participant Login.gov
     participant Littlepay
 
     rider->>Benefits: visits site
-    Benefits-->>auth: identity proofing
-    auth-->>Login.gov: identity proofing
+    Benefits-->>IG: identity proofing
+    IG-->>Login.gov: identity proofing
     rider->>Login.gov: enters SSN and ID
-    Login.gov-->>auth: eligibility verification
-    auth-->>Benefits: eligibility verification
+    Login.gov-->>IG: eligibility verification
+    IG-->>Benefits: eligibility verification
     Benefits-->>Littlepay: enrollment start
     rider->>Littlepay: enters payment card details
     Littlepay-->>Benefits: enrollment complete
