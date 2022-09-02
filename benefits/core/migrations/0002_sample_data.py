@@ -92,7 +92,7 @@ PEM DATA
 
     verifier1 = EligibilityVerifier.objects.create(
         name="Test Eligibility Verifier 1",
-        api_url="http://server:5000/verify",
+        api_url="http://server:8000/verify",
         api_auth_header="X-Server-API-Key",
         api_auth_key="server-auth-token",
         eligibility_type=type1,
@@ -123,7 +123,7 @@ PEM DATA
 
     verifier2 = EligibilityVerifier.objects.create(
         name="Test Eligibility Verifier 2",
-        api_url="http://server:5000/verify",
+        api_url="http://server:8000/verify",
         api_auth_header="X-Server-API-Key",
         api_auth_key="server-auth-token",
         eligibility_type=type2,
@@ -171,11 +171,11 @@ PEM DATA
 
     payment_processor = PaymentProcessor.objects.create(
         name="Test Payment Processor",
-        api_base_url="http://server:5000",
+        api_base_url="http://server:8000",
         api_access_token_endpoint="access-token",
         api_access_token_request_key="request_access",
         api_access_token_request_val="REQUEST_ACCESS",
-        card_tokenize_url="http://localhost:5000/static/tokenize.js",
+        card_tokenize_url="http://server:8000/static/tokenize.js",
         card_tokenize_func="tokenize",
         card_tokenize_env="test",
         client_cert=dummy_cert,

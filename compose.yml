@@ -39,6 +39,6 @@ services:
     image: ghcr.io/cal-itp/eligibility-server:main
     env_file: .devcontainer/server/.env.server
     ports:
-      - "5000"
+      - "8000"
     volumes:
       - ./.devcontainer:/.devcontainer
