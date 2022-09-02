@@ -19,19 +19,8 @@ def load_sample_data(app, *args, **kwargs):
     PemData = app.get_model("core", "PemData")
 
     server_public_key = PemData.objects.create(
-        text="""
------BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyYo6Pe9OSfPGX0oQXyLA
-blOwrMgc/j1JlF07b1ahq1lc3FH0XEk3Dzqbt9NuQs8hz6493vBNtNWTpVmvbGe4
-VX3UjhpEARhN3m4jf/Z2OEuDt2A9q19NLSjgeyhieLkYLwN1ezYXrkn7cfOngcJM
-nGDXp45CaA+g3DzasrjETnKUdqecCzJ3FJ/RRwfibrju7eS/8s6H03nvydzeAJzT
-kEv7Fic2JJEUhh2rJhyLxt+qKkIYeBG+5fBri4miaS8FPnD/yjZzEAFsQc7n0dGq
-DAhSJS8tYNmXFmGlaCfRUBNV3mvOx0vFPuH21WQ5KKZxZP0e64/uQdotbPIImiyR
-JwIDAQAB
------END PUBLIC KEY-----
-
-""",
         label="Eligibility server public key",
+        remote_url="https://raw.githubusercontent.com/cal-itp/eligibility-server/main/keys/server.pub",
     )
 
     client_private_key = PemData.objects.create(
