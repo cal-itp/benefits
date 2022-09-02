@@ -34,29 +34,6 @@ The user interface and content is available in both English and Spanish. Additio
 
 The application communicates with external services like [Littlepay][littlepay] via API calls and others like the [Identity Gateway](https://dev.auth.cdt.ca.gov) via redirects, both over the public internet. See [all the system interconnections][interconnections].
 
-## Enrollment process
-
-Success path:
-
-```mermaid
-sequenceDiagram
-    actor rider
-    participant Benefits as Benefits app
-    participant IG as Identity Gateway
-    participant Login.gov
-    participant Littlepay
-
-    rider->>Benefits: visits site
-    Benefits-->>IG: identity proofing
-    IG-->>Login.gov: identity proofing
-    rider->>Login.gov: enters SSN and ID
-    Login.gov-->>IG: eligibility verification
-    IG-->>Benefits: eligibility verification
-    Benefits-->>Littlepay: enrollment start
-    rider->>Littlepay: enters payment card details
-    Littlepay-->>Benefits: enrollment complete
-```
-
 [benefits-repo]: https://github.com/cal-itp/benefits
 [calitp]: https://calitp.org
 [django]: https://docs.djangoproject.com/en/

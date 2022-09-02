@@ -16,16 +16,16 @@ Here's a clickable prototype that shows what the flow looks like, having seniors
 sequenceDiagram
     actor rider
     participant Benefits as Benefits app
-    participant IG as Identity Gateway
+    participant IdG as Identity Gateway
     participant Login.gov
     participant Littlepay
 
     rider->>Benefits: visits site
-    Benefits-->>IG: identity proofing
-    IG-->>Login.gov: identity proofing
+    Benefits-->>IdG: identity proofing
+    IdG-->>Login.gov: identity proofing
     rider->>Login.gov: enters SSN and ID
-    Login.gov-->>IG: eligibility verification
-    IG-->>Benefits: eligibility verification
+    Login.gov-->>IdG: eligibility verification
+    IdG-->>Benefits: eligibility verification
     Benefits-->>Littlepay: enrollment start
     rider->>Littlepay: enters payment card details
     Littlepay-->>Benefits: enrollment complete

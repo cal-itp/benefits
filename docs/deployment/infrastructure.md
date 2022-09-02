@@ -20,7 +20,7 @@ flowchart LR
     style benefits stroke-width:5px
     %% recaptcha[Google reCAPTCHA]
     rider((User's browser))
-    ig[Identity Gateway]
+    idg[Identity Gateway]
 
     rider --> benefits
     rider --> Login.gov
@@ -28,13 +28,13 @@ flowchart LR
     rider --> Littlepay
     rider --> Amplitude
 
-    benefits <--> ig
+    benefits <--> idg
     %% benefits <--> recaptcha
     %% benefits --> dmv
     benefits --> Amplitude
     benefits <--> Littlepay
 
-    ig <--> Login.gov
+    idg <--> Login.gov
 ```
 
 ### Benefits application
