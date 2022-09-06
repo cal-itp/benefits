@@ -126,7 +126,7 @@ def test_index_eligible_post_valid_form_success(
     path = reverse(ROUTE_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
-    mocked_analytics_module.returned_success
+    mocked_analytics_module.returned_success.assert_called_once()
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
     mocked_analytics_module.returned_success.assert_called_once()
