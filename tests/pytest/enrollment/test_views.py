@@ -125,7 +125,7 @@ def test_index_eligible_post_valid_form_success(
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
-    mocked_analytics_module.returned_success.assert_called_once
+    mocked_analytics_module.returned_success.assert_called_once()
     assert model_EligibilityType.group_id in mocked_analytics_module.returned_success.call_args.args
 
 
