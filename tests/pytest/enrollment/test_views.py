@@ -129,6 +129,7 @@ def test_index_eligible_post_valid_form_success(
     mocked_analytics_module.returned_success
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
+    mocked_analytics_module.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
