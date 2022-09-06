@@ -23,6 +23,6 @@ def returned_retry(request):
     core.send_event(ReturnedEnrollmentEvent(request, status="retry"))
 
 
-def returned_success(request):
+def returned_success(request, payment_group):
     """Send the "returned enrollment" analytics event with a success status."""
-    core.send_event(ReturnedEnrollmentEvent(request, status="success"))
+    core.send_event(ReturnedEnrollmentEvent(request, status="success", payment_group=payment_group))
