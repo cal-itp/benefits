@@ -7,10 +7,12 @@ from benefits.core import analytics as core
 class ReturnedEnrollmentEvent(core.Event):
     """Analytics event representing the end of payment processor enrollment request."""
 
-    def __init__(self, request, status, error=None):
+    def __init__(self, request, status, error=None, payment_group=None):
         super().__init__(request, "returned enrollment")
         if str(status).lower() in ("error", "retry", "success"):
             self.update_event_properties(status=status, error=error)
+        if payment_group is not None:
+            self.update_event_properties(payment_group=payment_group)
 
 
 def returned_error(request, error):
