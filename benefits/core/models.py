@@ -6,6 +6,8 @@ import logging
 from django.db import models
 from django.urls import reverse
 
+import requests
+
 
 logger = logging.getLogger(__name__)
 
@@ -14,13 +16,25 @@ class PemData(models.Model):
     """API Certificate or Key in PEM format."""
 
     id = models.AutoField(primary_key=True)
-    # The data in utf-8 encoded PEM text format
-    text = models.TextField()
     # Human description of the PEM data
     label = models.TextField()
+    # The data in utf-8 encoded PEM text format
+    text = models.TextField(null=True)
+    # Public URL hosting the utf-8 encoded PEM text
+    remote_url = models.TextField(null=True)
 
     def __str__(self):
         return self.label
+
+    @property
+    def data(self):
+        if self.text:
+            return self.text
+        elif self.remote_url:
+            self.text = requests.get(self.remote_url).text
+
+        self.save()
+        return self.text
 
 
 class AuthProvider(models.Model):
@@ -105,7 +119,7 @@ class EligibilityVerifier(models.Model):
     @property
     def public_key_data(self):
         """This Verifier's public key as a string."""
-        return self.public_key.text
+        return self.public_key.data
 
     @property
     def is_auth_required(self):
@@ -167,6 +181,8 @@ class TransitAgency(models.Model):
     payment_processor = models.ForeignKey(PaymentProcessor, on_delete=models.PROTECT)
     # The Agency's private key, used to sign tokens created on behalf of this Agency
     private_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
+    # The public key corresponding to the Agency's private key, used by Eligibility Verification servers to encrypt responses
+    public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
     # The JWS-compatible signing algorithm
     jws_signing_alg = models.TextField()
 
@@ -195,13 +211,23 @@ class TransitAgency(models.Model):
 
     @property
     def index_url(self):
-        """Url to the TransitAgency's landing page."""
+        """Public-facing URL to the TransitAgency's landing page."""
         return reverse("core:agency_index", args=[self.slug])
+
+    @property
+    def public_key_url(self):
+        """Public-facing URL to the TransitAgency's public key."""
+        return reverse("core:agency_public_key", args=[self.slug])
 
     @property
     def private_key_data(self):
         """This Agency's private key as a string."""
-        return self.private_key.text
+        return self.private_key.data
+
+    @property
+    def public_key_data(self):
+        """This Agency's public key as a string."""
+        return self.public_key.data
 
     @staticmethod
     def by_id(id):
