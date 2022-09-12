@@ -53,6 +53,6 @@ repos:
         types_or: [javascript, css]
 
   - repo: https://github.com/Riverside-Healthcare/djLint
-    rev: v1.12.1
+    rev: v1.14.0
     hooks:
       - id: djlint-django
