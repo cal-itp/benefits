@@ -23,7 +23,7 @@ msgstr "Cierre sesión de Login.gov"
 
 #: benefits/core/migrations/0002_sample_data.py:104
 msgid "eligibility.pages.index.dmv.label"
-msgstr "TODO: Senior Discount Program"
+msgstr "Programa de descuentos para personas mayores"
 
 #: benefits/core/migrations/0002_sample_data.py:106
 msgid "eligibility.pages.start.dmv.content_title"
@@ -87,23 +87,23 @@ msgstr ""
 
 #: benefits/core/migrations/0002_sample_data.py:135
 msgid "eligibility.pages.index.mst.label"
-msgstr "TODO: MST Courtesy Cardholder"
+msgstr "Titular de la tarjeta de cortesía MST"
 
 #: benefits/core/migrations/0002_sample_data.py:136
 msgid "eligibility.pages.index.mst.description"
-msgstr "TODO: (includes MST RIDES Paratransit Eligibility cardholders)"
+msgstr "(Incluye a los titulares de tarjetas de elegibilidad de MST RIDES Paratransit)"
 
 #: benefits/core/migrations/0002_sample_data.py:137
 msgid "eligibility.pages.start.mst.content_title"
-msgstr "TODO: Genial, necesitarás dos cosas antes de empeza"
+msgstr "Necesitarás dos cosas antes de empezar:"
 
 #: benefits/core/migrations/0002_sample_data.py:138
 msgid "eligibility.pages.start.mst.items[0].title"
-msgstr "Tu tarjeta de cortesía MST"
+msgstr "Su tarjeta de cortesía MST"
 
 #: benefits/core/migrations/0002_sample_data.py:139
 msgid "eligibility.pages.start.mst.items[0].text"
-msgstr "Una tarjeta activa que no ha caducado"
+msgstr "Una tarjeta válida que no ha caducado"
 
 #: benefits/core/migrations/0002_sample_data.py:140
 msgid "eligibility.pages.start.mst.p[0]"
@@ -124,17 +124,15 @@ msgstr "Veamos si podemos encontrarle en nuestra sistema"
 #: benefits/core/migrations/0002_sample_data.py:143
 msgid "eligibility.pages.confirm.mst.p[0]"
 msgstr ""
-"Por favor ingrese su número de tarjeta cortesía y apellido a continuación. "
-"Si eres titular de una tarjeta de cortesía MST, podemos confirmar que ere "
-"elegible para un descuento. Nosotros no guardamos su información."
+"Por favor, ingrese su número de tarjeta de cortesía y apellido a continuación. Si usted es un titular de tarjeta de cortesía de MST actual, podemos confirmar que es elegible para un descuento. No guardamos su información."
 
 #: benefits/core/migrations/0002_sample_data.py:144
 msgid "eligibility.forms.confirm.mst.fields.sub"
-msgstr "Número de tarjeta cortesía MST"
+msgstr "Número de tarjeta de cortesía de MST"
 
 #: benefits/core/migrations/0002_sample_data.py:147
 msgid "eligibility.forms.confirm.mst.fields.name"
-msgstr "Apellido (como aparece en la identificación)"
+msgstr "Apellido (como aparece en la tarjeta de cortesía)"
 
 #: benefits/core/migrations/0002_sample_data.py:150
 msgid "eligibility.pages.unverified.mst.title"
@@ -525,7 +523,7 @@ msgstr "Continuar"
 
 #: benefits/eligibility/forms.py:41
 msgid "eligibility.forms.confirm.submit"
-msgstr "Verificando estado"
+msgstr "Verificación de estatus"
 
 #: benefits/eligibility/forms.py:42
 msgid "eligibility.forms.confirm.submitting"
@@ -565,7 +563,7 @@ msgstr "TODO"
 
 #: benefits/eligibility/views.py:40
 msgid "eligibility.pages.index.content_title"
-msgstr "TODO"
+msgstr "Seleccione la opción de descuento que mejor se aplique a usted:"
 
 #: benefits/eligibility/views.py:80 benefits/enrollment/views.py:78
 msgctxt "image alt text"
@@ -597,19 +595,17 @@ msgstr ""
 
 #: benefits/eligibility/views.py:109
 msgid "eligibility.pages.start.bankcard.title"
-msgstr "Los datos de su tarjeta bancaria"
+msgstr "Tu tarjeta bancaria sin contacto"
 
 #: benefits/eligibility/views.py:110
 msgid "eligibility.pages.start.bankcard.text"
 msgstr ""
-"Su tarjeta debe ser una tarjeta de débito o crédito sin contacto de Visa o "
-"Mastercard."
+"Una tarjeta de débito o crédito (debe tener el logotipo de Visa o Mastercard)"
 
 #: benefits/eligibility/views.py:114
 msgid "eligibility.pages.start.bankcard.button[0].link"
 msgstr ""
-"¿No tienes tarjeta bancaria o no está seguro si tiene una tarjeta sin "
-"contacto?"
+"¿Cómo sé si tengo una tarjeta bancaria sin contacto?"
 
 #: benefits/eligibility/views.py:123
 msgid "eligibility.pages.start.title"
