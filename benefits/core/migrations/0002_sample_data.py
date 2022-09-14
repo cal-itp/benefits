@@ -19,19 +19,8 @@ def load_sample_data(app, *args, **kwargs):
     PemData = app.get_model("core", "PemData")
 
     server_public_key = PemData.objects.create(
-        text="""
------BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyYo6Pe9OSfPGX0oQXyLA
-blOwrMgc/j1JlF07b1ahq1lc3FH0XEk3Dzqbt9NuQs8hz6493vBNtNWTpVmvbGe4
-VX3UjhpEARhN3m4jf/Z2OEuDt2A9q19NLSjgeyhieLkYLwN1ezYXrkn7cfOngcJM
-nGDXp45CaA+g3DzasrjETnKUdqecCzJ3FJ/RRwfibrju7eS/8s6H03nvydzeAJzT
-kEv7Fic2JJEUhh2rJhyLxt+qKkIYeBG+5fBri4miaS8FPnD/yjZzEAFsQc7n0dGq
-DAhSJS8tYNmXFmGlaCfRUBNV3mvOx0vFPuH21WQ5KKZxZP0e64/uQdotbPIImiyR
-JwIDAQAB
------END PUBLIC KEY-----
-
-""",
         label="Eligibility server public key",
+        remote_url="https://raw.githubusercontent.com/cal-itp/eligibility-server/main/keys/server.pub",
     )
 
     client_private_key = PemData.objects.create(
@@ -67,6 +56,21 @@ tSREgR4EjosqQfbkceLJ2JT1wuNjInI0eR9H3cRugvlDTeWtbdJ5qA==
         label="Benefits client private key",
     )
 
+    client_public_key = PemData.objects.create(
+        text="""
+-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1pt0ZoOuPEVPJJS+5r88
+4zcjZLkZZ2GcPwr79XOLDbOi46onCa79kjRnhS0VUK96SwUPS0z9J5mDA5LSNL2R
+oxFb5QGaevnJY828NupzTNdUd0sYJK3kRjKUggHWuB55hwJcH/Dx7I3DNH4NL68U
+AlK+VjwJkfYPrhq/bl5z8ZiurvBa5C1mDxhFpcTZlCfxQoas7D1d+uPACF6mEMbQ
+Nd3RaIaSREO50NvNywXIIt/OmCiRqI7JtOcn4eyh1I4j9WtlbMhRJLfwPMAgY5ep
+TsWcURmhVofF2wVoFbib3JGCfA7tz/gmP5YoEKnf/cumKmF3e9LrZb8zwm7bTHUV
+iwIDAQAB
+-----END PUBLIC KEY-----
+""",
+        label="Benefits client public key",
+    )
+
     dummy_cert = PemData.objects.create(
         text="""
 -----BEGIN CERTIFICATE-----
@@ -92,7 +96,7 @@ PEM DATA
 
     verifier1 = EligibilityVerifier.objects.create(
         name="Test Eligibility Verifier 1",
-        api_url="http://server:5000/verify",
+        api_url="http://server:8000/verify",
         api_auth_header="X-Server-API-Key",
         api_auth_key="server-auth-token",
         eligibility_type=type1,
@@ -123,7 +127,7 @@ PEM DATA
 
     verifier2 = EligibilityVerifier.objects.create(
         name="Test Eligibility Verifier 2",
-        api_url="http://server:5000/verify",
+        api_url="http://server:8000/verify",
         api_auth_header="X-Server-API-Key",
         api_auth_key="server-auth-token",
         eligibility_type=type2,
@@ -171,11 +175,11 @@ PEM DATA
 
     payment_processor = PaymentProcessor.objects.create(
         name="Test Payment Processor",
-        api_base_url="http://server:5000",
+        api_base_url="http://server:8000",
         api_access_token_endpoint="access-token",
         api_access_token_request_key="request_access",
         api_access_token_request_val="REQUEST_ACCESS",
-        card_tokenize_url="http://localhost:5000/static/tokenize.js",
+        card_tokenize_url="http://server:8000/static/tokenize.js",
         card_tokenize_func="tokenize",
         card_tokenize_env="test",
         client_cert=dummy_cert,
@@ -198,6 +202,7 @@ PEM DATA
         phone="800-555-5555",
         active=True,
         private_key=client_private_key,
+        public_key=client_public_key,
         jws_signing_alg="RS256",
         payment_processor=payment_processor,
     )
@@ -214,6 +219,7 @@ PEM DATA
         phone="321-555-5555",
         active=True,
         private_key=client_private_key,
+        public_key=client_public_key,
         jws_signing_alg="RS256",
         payment_processor=payment_processor,
     )

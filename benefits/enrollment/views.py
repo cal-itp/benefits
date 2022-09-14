@@ -62,7 +62,7 @@ def index(request):
 
         response = api.Client(agency).enroll(card_token, eligibility.group_id)
         if response.success:
-            analytics.returned_success(request)
+            analytics.returned_success(request, eligibility.group_id)
             return success(request)
         else:
             analytics.returned_error(request, response.message)

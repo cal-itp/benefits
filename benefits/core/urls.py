@@ -47,4 +47,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("help", views.help, name="help"),
     path("<agency:agency>", views.agency_index, name="agency_index"),
+    path("<agency:agency>/publickey", views.agency_public_key, name="agency_public_key"),
 ]

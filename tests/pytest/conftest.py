@@ -151,6 +151,7 @@ def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityV
         active=True,
         payment_processor=model_PaymentProcessor,
         private_key=model_PemData,
+        public_key=model_PemData,
         jws_signing_alg="alg",
     )
 
