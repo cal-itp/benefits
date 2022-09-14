@@ -9,6 +9,30 @@ def test_PemData_str(model_PemData):
 
 
 @pytest.mark.django_db
+def test_PemData_data_text(model_PemData):
+    assert model_PemData.text
+    assert model_PemData.data == model_PemData.text
+
+
+@pytest.mark.django_db
+def test_PemData_data_remote(model_PemData, mocker):
+    model_PemData.text = None
+    model_PemData.remote_url = "http://localhost/publickey"
+
+    # intercept and spy on the GET request
+    requests_spy = mocker.patch("benefits.core.models.requests.get", return_value=mocker.Mock(text="PEM text"))
+
+    assert not model_PemData.text
+
+    data = model_PemData.data
+
+    assert model_PemData.text
+    assert data == "PEM text"
+    assert data == model_PemData.text
+    requests_spy.assert_called_once_with(model_PemData.remote_url)
+
+
+@pytest.mark.django_db
 def test_EligibilityType_str(model_EligibilityType):
     assert str(model_EligibilityType) == model_EligibilityType.label
 

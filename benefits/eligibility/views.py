@@ -146,58 +146,59 @@ def confirm(request):
         eligibility = session.eligibility(request)
         return verified(request, [eligibility.name])
 
+    agency = session.agency(request)
     verifier = session.verifier(request)
+    types_to_verify = verify.typenames_to_verify(agency, verifier)
 
     # GET for OAuth verification
     if request.method == "GET" and verifier.uses_auth_verification:
-        analytics.started_eligibility(request)
+        analytics.started_eligibility(request, types_to_verify)
 
-        verified_types = verify.eligibility_from_oauth(verifier, session.oauth_claim(request), session.agency(request))
+        verified_types = verify.eligibility_from_oauth(verifier, session.oauth_claim(request), agency)
         if verified_types:
             return verified(request, verified_types)
         else:
             return unverified(request)
 
     # GET/POST for Eligibility API verification
-    else:
-        page = viewmodels.Page(
-            title=_(verifier.form_title),
-            content_title=_(verifier.form_content_title),
-            paragraphs=[_(verifier.form_blurb)],
-            form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
-            classes="text-lg-center",
-        )
+    page = viewmodels.Page(
+        title=_(verifier.form_title),
+        content_title=_(verifier.form_content_title),
+        paragraphs=[_(verifier.form_blurb)],
+        form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
+        classes="text-lg-center",
+    )
 
-        # POST form submission, process form data
-        if request.method == "POST":
-            analytics.started_eligibility(request)
+    # GET from an unverified user, present the form
+    if request.method == "GET":
+        return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
+    # POST form submission, process form data, make Eligibility Verification API call
+    elif request.method == "POST":
+        analytics.started_eligibility(request, types_to_verify)
 
-            form = forms.EligibilityVerificationForm(data=request.POST, verifier=verifier)
-            # form was not valid, allow for correction/resubmission
-            if not form.is_valid():
-                if recaptcha.has_error(form):
-                    messages.error(request, "Recaptcha failed. Please try again.")
+        form = forms.EligibilityVerificationForm(data=request.POST, verifier=verifier)
+        # form was not valid, allow for correction/resubmission
+        if not form.is_valid():
+            if recaptcha.has_error(form):
+                messages.error(request, "Recaptcha failed. Please try again.")
 
-                page.forms = [form]
-                return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
-
-            # form is valid, make Eligibility Verification request to get the verified types
-            verified_types = verify.eligibility_from_api(verifier, form, session.agency(request))
-
-            # form was not valid, allow for correction/resubmission
-            if verified_types is None:
-                analytics.returned_error(request, form.errors)
-                page.forms = [form]
-                return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
-            # no types were verified
-            elif len(verified_types) == 0:
-                return unverified(request)
-            # type(s) were verified
-            else:
-                return verified(request, verified_types)
-        # GET from an unverified user, see if verifier can get verified types and if not, present the form
-        else:
+            page.forms = [form]
             return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
+
+        # form is valid, make Eligibility Verification request to get the verified types
+        verified_types = verify.eligibility_from_api(verifier, form, agency)
+
+        # form was not valid, allow for correction/resubmission
+        if verified_types is None:
+            analytics.returned_error(request, types_to_verify, form.errors)
+            page.forms = [form]
+            return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
+        # no types were verified
+        elif len(verified_types) == 0:
+            return unverified(request)
+        # type(s) were verified
+        else:
+            return verified(request, verified_types)
 
 
 @decorator_from_middleware(AgencySessionRequired)
@@ -205,7 +206,7 @@ def confirm(request):
 def verified(request, verified_types):
     """View handler for the verified eligibility page."""
 
-    analytics.returned_success(request)
+    analytics.returned_success(request, verified_types)
 
     session.update(request, eligibility_types=verified_types)
 
@@ -217,14 +218,15 @@ def verified(request, verified_types):
 def unverified(request):
     """View handler for the unverified eligibility page."""
 
-    analytics.returned_fail(request)
+    agency = session.agency(request)
+    verifier = session.verifier(request)
+    types_to_verify = verify.typenames_to_verify(agency, verifier)
+
+    analytics.returned_fail(request, types_to_verify)
 
     # tel: link to agency phone number
-    agency = session.agency(request)
     buttons = viewmodels.Button.agency_contact_links(agency)
     buttons.append(viewmodels.Button.home(request))
-
-    verifier = session.verifier(request)
 
     page = viewmodels.Page(
         noimage=True,

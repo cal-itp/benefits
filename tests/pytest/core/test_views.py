@@ -86,6 +86,15 @@ def test_agency_index_multiple_verifier(
 
 
 @pytest.mark.django_db
+def test_agency_public_key(client, model_TransitAgency):
+    response = client.get(model_TransitAgency.public_key_url)
+
+    assert response.status_code == 200
+    assert response.headers["Content-Type"] == "text/plain"
+    assert response.content.decode("utf-8") == model_TransitAgency.public_key_data
+
+
+@pytest.mark.django_db
 def test_help(client):
     path = reverse(ROUTE_HELP)
 
