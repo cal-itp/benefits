@@ -1,13 +1,5 @@
 FROM ghcr.io/cal-itp/docker-python-web:main
 
-USER root
-
-# install gettext for use with Django
-RUN apt-get update && \
-    apt-get install -qq --no-install-recommends gettext
-
-USER $USER
-
 # install python dependencies
 COPY appcontainer/requirements.txt requirements.txt
 RUN pip install -r requirements.txt
