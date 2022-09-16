@@ -2,7 +2,7 @@ Authlib==1.0.1
 Django==4.1.1
 django-csp==3.7
 git+https://github.com/cal-itp/eligibility-api#egg=eligibility_api
-opencensus-ext-azure==1.1.6
+opencensus-ext-azure==1.1.7
 opencensus-ext-django==0.7.6
 requests==2.28.1
 six==1.16.0
