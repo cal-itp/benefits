@@ -11,7 +11,7 @@ SUB_FORMAT_REGEX = r".+"
 
 # Data settings
 
-IMPORT_FILE_PATH = "/.devcontainer/server/data.csv"
+IMPORT_FILE_PATH = "https://raw.githubusercontent.com/cal-itp/eligibility-server/main/data/server.csv"
 INPUT_HASH_ALGO = ""
 
 # CSV-specific settings
