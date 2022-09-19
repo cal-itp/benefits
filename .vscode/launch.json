@@ -14,6 +14,18 @@
       "env": {
         "DJANGO_DEBUG": "true"
       }
+    },
+    {
+      "name": "Django: Benefits Client, Debug=False",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/manage.py",
+      "args": ["runserver", "--insecure", "0.0.0.0:8000"],
+      "django": true,
+      "env": {
+        "DJANGO_DEBUG": "false",
+        "DJANGO_STATICFILES_STORAGE": "django.contrib.staticfiles.storage.StaticFilesStorage"
+      }
     }
   ]
 }
