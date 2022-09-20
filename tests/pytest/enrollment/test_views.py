@@ -4,6 +4,7 @@ from django.urls import reverse
 
 import pytest
 
+from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.enrollment.views import (
     ROUTE_INDEX,
     ROUTE_TOKEN,
@@ -35,8 +36,11 @@ def mocked_analytics_module(mocked_analytics_module):
 @pytest.mark.django_db
 def test_token_ineligible(client):
     path = reverse(ROUTE_TOKEN)
-    with pytest.raises(AttributeError, match=r"eligibility"):
-        client.get(path)
+
+    response = client.get(path)
+
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
@@ -132,15 +136,21 @@ def test_index_eligible_post_valid_form_success(
 @pytest.mark.django_db
 def test_index_ineligible(client):
     path = reverse(ROUTE_INDEX)
-    with pytest.raises(AttributeError, match=r"eligibility"):
-        client.get(path)
+
+    response = client.get(path)
+
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
 def test_retry_ineligible(client):
     path = reverse(ROUTE_RETRY)
-    with pytest.raises(AttributeError, match=r"eligibility"):
-        client.post(path)
+
+    response = client.post(path)
+
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
@@ -177,8 +187,11 @@ def test_retry_valid_form(mocker, client, mocked_analytics_module):
 @pytest.mark.django_db
 def test_success_no_verifier(client):
     path = reverse(ROUTE_SUCCESS)
-    with pytest.raises(AttributeError, match=r"verifier"):
-        client.get(path)
+
+    response = client.get(path)
+
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
