@@ -168,6 +168,7 @@ class ErrorPage(Page):
             content_title=kwargs.get("content_title", _("core.pages.error.title")),
             paragraphs=kwargs.get("paragraphs", [_("core.pages.server_error.content_title")]),
             button=kwargs.get("button"),
+            noimage=True,
         )
 
     @staticmethod
