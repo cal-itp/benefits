@@ -222,6 +222,7 @@ def mocked_session_verifier_oauth(mocker, model_EligibilityVerifier_AuthProvider
 @pytest.fixture
 def mocked_session_verifier_auth_required(mocker, model_EligibilityVerifier, mocked_session_verifier):
     mock_verifier = mocker.Mock(spec=model_EligibilityVerifier)
+    mock_verifier.name = model_EligibilityVerifier.name
     mock_verifier.is_auth_required = True
     mocked_session_verifier.return_value = mock_verifier
     return mocked_session_verifier

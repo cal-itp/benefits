@@ -43,8 +43,10 @@ class Event:
 
         agency = session.agency(request)
         agency_name = agency.long_name if agency else None
+        verifier = session.verifier(request)
+        verifier_name = verifier.name if verifier else None
 
-        self.update_event_properties(path=request.path, transit_agency=agency_name)
+        self.update_event_properties(path=request.path, transit_agency=agency_name, eligibility_verifier=verifier_name)
 
         uagent = request.headers.get("user-agent")
 
@@ -52,7 +54,13 @@ class Event:
         match = Event._domain_re.match(ref) if ref else None
         refdom = match.group(1) if match else None
 
-        self.update_user_properties(referrer=ref, referring_domain=refdom, user_agent=uagent, transit_agency=agency_name)
+        self.update_user_properties(
+            referrer=ref,
+            referring_domain=refdom,
+            user_agent=uagent,
+            transit_agency=agency_name,
+            eligibility_verifier=verifier_name,
+        )
 
         # event is initialized, consume next counter
         self.event_id = next(Event._counter)
