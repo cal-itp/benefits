@@ -185,7 +185,7 @@ class ErrorPage(Page):
     def server_error(
         title=_("core.pages.server_error.title"),
         content_title=_("core.pages.server_error.title"),
-        paragraphs=[_("core.pages.server_error.p[0]"), _("core.pages.server_error.p[1]")],
+        paragraphs=[_("core.pages.server_error.p[0]")],
         **kwargs,
     ):
         """Create a new core.viewmodels.ErrorPage instance with defaults for a generic server error."""
