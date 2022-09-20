@@ -4,10 +4,10 @@ from django.utils.translation import gettext as _
 from benefits.core.viewmodels import ErrorPage
 
 
-def test_ErrorPage_error_translations():
+def test_ErrorPage_server_error_translations():
     translation.activate("en")
 
-    error_page = ErrorPage.error()
+    error_page = ErrorPage.server_error()
     english_title = f"{_('core.pages.index.prefix')}: {_('core.pages.server_error.title')}"
     english_content_title = _("core.pages.server_error.title")
     english_paragraphs = [_("core.pages.server_error.p[0]"), _("core.pages.server_error.p[1]")]
@@ -18,7 +18,7 @@ def test_ErrorPage_error_translations():
 
     translation.activate("es")
 
-    error_page = ErrorPage.error()
+    error_page = ErrorPage.server_error()
     spanish_title = f"{_('core.pages.index.prefix')}: {_('core.pages.server_error.title')}"
     spanish_content_title = _("core.pages.server_error.title")
     spanish_paragraphs = [_("core.pages.server_error.p[0]"), _("core.pages.server_error.p[1]")]

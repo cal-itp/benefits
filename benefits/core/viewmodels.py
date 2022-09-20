@@ -172,13 +172,23 @@ class ErrorPage(Page):
         )
 
     @staticmethod
-    def error(
+    def user_error(
+        title=_("core.pages.user_error.title"),
+        content_title=_("core.pages.user_error.content_title"),
+        paragraphs=[_("core.pages.user_error.p[0]")],
+        **kwargs,
+    ):
+        """Create a new core.viewmodels.ErrorPage instance with defaults for a user error."""
+        return ErrorPage(title=title, content_title=content_title, paragraphs=paragraphs, **kwargs)
+
+    @staticmethod
+    def server_error(
         title=_("core.pages.server_error.title"),
         content_title=_("core.pages.server_error.title"),
         paragraphs=[_("core.pages.server_error.p[0]"), _("core.pages.server_error.p[1]")],
         **kwargs,
     ):
-        """Create a new core.viewmodels.ErrorPage instance with defaults for a generic error."""
+        """Create a new core.viewmodels.ErrorPage instance with defaults for a generic server error."""
         return ErrorPage(title=title, content_title=content_title, paragraphs=paragraphs, **kwargs)
 
     @staticmethod

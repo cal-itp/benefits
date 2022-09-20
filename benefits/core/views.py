@@ -107,7 +107,7 @@ def bad_request(request, exception, template_name="400.html"):
         session.update(request, origin=reverse(ROUTE_INDEX))
 
     home = viewmodels.Button.home(request)
-    page = viewmodels.ErrorPage.error(button=home)
+    page = viewmodels.ErrorPage.server_error(button=home)
     t = loader.get_template(template_name)
 
     return HttpResponseBadRequest(t.render(page.context_dict()))
@@ -154,7 +154,7 @@ def server_error(request, template_name="500.html"):
         session.update(request, origin=reverse(ROUTE_INDEX))
 
     home = viewmodels.Button.home(request)
-    page = viewmodels.ErrorPage.error(button=home)
+    page = viewmodels.ErrorPage.server_error(button=home)
     t = loader.get_template(template_name)
 
     return HttpResponseServerError(t.render(page.context_dict()))
