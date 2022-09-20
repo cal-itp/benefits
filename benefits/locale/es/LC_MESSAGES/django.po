@@ -464,7 +464,7 @@ msgstr "TODO: You may have reached this page on accident."
 #: benefits/core/viewmodels.py:178
 msgid "core.pages.user_error.p[0]"
 msgstr ""
-"TODO: To get started with Cal-ITP Benefits please click the button below and "
+"TODO: To get started with Cal-ITP Benefits please click the button below, and "
 "you will be directed to the beginning of the enrollment process. "
 
 #: benefits/core/viewmodels.py:186 benefits/core/viewmodels.py:187

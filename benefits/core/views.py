@@ -139,7 +139,8 @@ def page_not_found(request, exception, template_name="404.html"):
         session.update(request, origin=reverse(ROUTE_INDEX))
 
     home = viewmodels.Button.home(request)
-    page = viewmodels.ErrorPage.not_found(button=home, path=request.path)
+    # show a more user-friendly message instead of not_found
+    page = viewmodels.ErrorPage.user_error(button=home, path=request.path)
     t = loader.get_template(template_name)
 
     return HttpResponseNotFound(t.render(page.context_dict()))
