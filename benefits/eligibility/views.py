@@ -39,6 +39,7 @@ def index(request):
         title=_("eligibility.pages.index.title"),
         content_title=_("eligibility.pages.index.content_title"),
         forms=forms.EligibilityVerifierSelectionForm(agency=agency),
+        noimage=True,
     )
 
     if request.method == "POST":
@@ -167,6 +168,7 @@ def confirm(request):
         paragraphs=[_(verifier.form_blurb)],
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
         classes="text-lg-center",
+        noimage=True,
     )
 
     # GET from an unverified user, present the form

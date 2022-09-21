@@ -86,6 +86,7 @@ def index(request):
                     text=_("enrollment.buttons.payment_partner"), id=tokenize_button, url=f"#{tokenize_button}"
                 ),
             ],
+            noimage=True,
         )
         context = {}
         context.update(page.context_dict())
@@ -129,6 +130,7 @@ def retry(request):
                 content_title=_("enrollment.pages.retry.title"),
                 paragraphs=[_("enrollment.pages.retry.p[0]")],
                 buttons=viewmodels.Button.agency_contact_links(agency),
+                noimage=True,
             )
             page.buttons.append(viewmodels.Button.primary(text=_("core.buttons.retry"), url=session.origin(request)))
             return TemplateResponse(request, TEMPLATE_RETRY, page.context_dict())
@@ -152,6 +154,7 @@ def success(request):
         classes="no-image-mobile",
         title=_("enrollment.pages.success.title"),
         content_title=_("enrollment.pages.success.content_title"),
+        noimage=True,
     )
 
     if verifier.is_auth_required:
