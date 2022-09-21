@@ -3,6 +3,7 @@ from django.urls import reverse
 import pytest
 
 
+from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.eligibility.forms import EligibilityVerifierSelectionForm
 from benefits.eligibility.views import (
     ROUTE_INDEX,
@@ -97,8 +98,11 @@ def test_index_get_agency_single_verifier(
 @pytest.mark.django_db
 def test_index_get_without_agency(client):
     path = reverse(ROUTE_INDEX)
-    with pytest.raises(AttributeError, match=r"agency"):
-        client.get(path)
+
+    response = client.get(path)
+
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
@@ -170,8 +174,10 @@ def test_start_verifier_auth_not_required(client):
 @pytest.mark.usefixtures("mocked_session_agency")
 def test_start_without_verifier(client):
     path = reverse(ROUTE_START)
-    with pytest.raises(AttributeError, match=r"verifier"):
-        client.get(path)
+
+    response = client.get(path)
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db

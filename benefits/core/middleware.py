@@ -8,6 +8,7 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import redirect
 from django.template import loader
+from django.template.response import TemplateResponse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
@@ -17,6 +18,14 @@ from . import analytics, session, viewmodels
 
 logger = logging.getLogger(__name__)
 HEALTHCHECK_PATH = "/healthcheck"
+TEMPLATE_USER_ERROR = "200_user_error.html"
+
+
+def user_error(request):
+    home = viewmodels.Button.home(request)
+    page = viewmodels.ErrorPage.user_error(button=home)
+
+    return TemplateResponse(request, TEMPLATE_USER_ERROR, page.context_dict())
 
 
 class AgencySessionRequired(MiddlewareMixin):
@@ -27,7 +36,8 @@ class AgencySessionRequired(MiddlewareMixin):
             logger.debug("Session configured with agency")
             return None
         else:
-            raise AttributeError("Session not configured with agency")
+            logger.debug("Session not configured with agency")
+            return user_error(request)
 
 
 class RateLimit(MiddlewareMixin):
@@ -52,7 +62,7 @@ class RateLimit(MiddlewareMixin):
             if reset_time > now:
                 logger.warning("Rate limit exceeded")
                 home = viewmodels.Button.home(request)
-                page = viewmodels.ErrorPage.error(
+                page = viewmodels.ErrorPage.server_error(
                     title="Rate limit error",
                     content_title="Rate limit error",
                     paragraphs=["You have reached the rate limit. Please try again."],
@@ -75,7 +85,8 @@ class EligibleSessionRequired(MiddlewareMixin):
             logger.debug("Session has confirmed eligibility")
             return None
         else:
-            raise AttributeError("Session has no confirmed eligibility")
+            logger.debug("Session has no confirmed eligibility")
+            return user_error(request)
 
 
 class DebugSession(MiddlewareMixin):
@@ -106,7 +117,8 @@ class VerifierSessionRequired(MiddlewareMixin):
             logger.debug("Session configured with eligibility verifier")
             return None
         else:
-            raise AttributeError("Session not configured with eligibility verifier")
+            logger.debug("Session not configured with eligibility verifier")
+            return user_error(request)
 
 
 class ViewedPageEvent(MiddlewareMixin):
