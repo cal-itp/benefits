@@ -96,14 +96,6 @@ main .main-row .col-lg-6.image {
   background-size: cover;
 }
 
-.one-column-image {
-  background: url("/static/img/rider-tapping-bank-card-horizontal.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  height: 292px;
-}
-
 footer {
   margin-top: auto;
   padding-top: 1rem;
@@ -640,10 +632,6 @@ footer.global-footer .footer-links a:active {
 }
 
 @media (max-width: 992px) {
-  .one-column-image {
-    height: 131px;
-  }
-
   .navbar.navbar-expand-sm.navbar-dark.bg-primary {
     padding: 14.5px 1rem;
   }
