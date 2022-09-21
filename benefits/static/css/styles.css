@@ -61,10 +61,6 @@ label {
   letter-spacing: 0.05em;
 }
 
-.main-content .main-primary a:not(.btn) {
-  background: none;
-}
-
 /* making the sticky footer */
 
 html,
@@ -675,10 +671,6 @@ footer.global-footer .footer-links a:active {
 
   .no-image-mobile .signout-row {
     top: 0;
-  }
-
-  .no-image-mobile .main-primary .container-fluid {
-    margin-top: 72px;
   }
 
   /* Eligibility Start */
