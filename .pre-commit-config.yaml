@@ -24,6 +24,7 @@ repos:
       - id: check-yaml
         args: ["--unsafe"]
       - id: check-added-large-files
+        args: ["--maxkb=1500"]
 
   - repo: https://github.com/psf/black
     rev: 22.8.0
