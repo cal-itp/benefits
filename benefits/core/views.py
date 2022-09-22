@@ -64,10 +64,7 @@ def agency_index(request, agency):
         classes="home",
     )
 
-    help_page = reverse(ROUTE_HELP)
-    context_dict = {**page.context_dict(), **{"info_link": f"{help_page}#about"}}
-
-    return TemplateResponse(request, TEMPLATE_AGENCY, context_dict)
+    return TemplateResponse(request, TEMPLATE_AGENCY, page.context_dict())
 
 
 @pageview_decorator
