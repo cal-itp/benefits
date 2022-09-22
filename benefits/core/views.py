@@ -56,7 +56,6 @@ def agency_index(request, agency):
         return redirect(reverse(ROUTE_ELIGIBILITY))
 
     button = viewmodels.Button.primary(text=_("core.pages.index.continue"), url=reverse(ROUTE_ELIGIBILITY))
-    button.label = _("core.pages.agency_index.button.label")
 
     page = viewmodels.Page(
         title=_("core.pages.agency_index.title"),
