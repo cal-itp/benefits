@@ -200,7 +200,7 @@ footer.global-footer .footer-links a:active {
 }
 
 .btn-primary {
-  text-transform: uppercase;
+  text-transform: capitalize;
   letter-spacing: 0.05em;
 }
 
