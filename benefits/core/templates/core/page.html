@@ -19,51 +19,48 @@
         <div class="container">
         {% else %}
           {% load static %}
-          <div class="col-lg-6 image"></div>
-          <div class="col-md-8 offset-md-2 col-lg-6 offset-lg-0">
-          {% endif %}
-          <div class="container content">
-            {% block container_content %}
+        {% endif %}
+        <div class="container content">
+          {% block container_content %}
 
-              {% block icon_title %}
-                {% if page.content_title %}
-                  {% if page.icon %}
-                    {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon %}
-                  {% else %}
-                    <h1>{{ page.content_title }}</h1>
-                  {% endif %}
-                {% endif %}
-              {% endblock icon_title %}
-
-              {% block paragraph_content %}
-                {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
-              {% endblock paragraph_content %}
-
-              {% block forms %}
-                {% if page.forms %}
-                  {% for f in page.forms %}
-                    {% include "core/includes/form.html" with form=f %}
-                  {% endfor %}
-                {% endif %}
-              {% endblock forms %}
-
-              {% block buttons %}
-                {% if page.buttons|length_is:"0" %}
+            {% block icon_title %}
+              {% if page.content_title %}
+                {% if page.icon %}
+                  {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon %}
                 {% else %}
-                  {% if "with-agency-links" in page.classes %}
-                    {% include "core/includes/agency-links.html" with buttons=page.buttons %}
-                  {% else %}
-                    <div class="buttons">
-                      {% for b in page.buttons %}
-                        {% include "core/includes/button.html" with button=b %}
-                      {% endfor %}
-                    </div>
-                  {% endif %}
+                  <h1>{{ page.content_title }}</h1>
                 {% endif %}
-              {% endblock buttons %}
+              {% endif %}
+            {% endblock icon_title %}
 
-            {% endblock container_content %}
-          </div>
+            {% block paragraph_content %}
+              {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
+            {% endblock paragraph_content %}
+
+            {% block forms %}
+              {% if page.forms %}
+                {% for f in page.forms %}
+                  {% include "core/includes/form.html" with form=f %}
+                {% endfor %}
+              {% endif %}
+            {% endblock forms %}
+
+            {% block buttons %}
+              {% if page.buttons|length_is:"0" %}
+              {% else %}
+                {% if "with-agency-links" in page.classes %}
+                  {% include "core/includes/agency-links.html" with buttons=page.buttons %}
+                {% else %}
+                  <div class="buttons">
+                    {% for b in page.buttons %}
+                      {% include "core/includes/button.html" with button=b %}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              {% endif %}
+            {% endblock buttons %}
+
+          {% endblock container_content %}
         </div>
       </div>
     </div>

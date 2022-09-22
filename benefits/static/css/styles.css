@@ -491,15 +491,6 @@ footer.global-footer .footer-links a:active {
   height: 150px;
 }
 
-.with-image .container.content h1.icon-title img.icon {
-  width: 92px;
-  height: 92px;
-}
-
-.with-image .container.content h1.icon-title {
-  text-align: left;
-}
-
 .container.content.help {
   margin: 4rem auto 2rem auto;
 }
@@ -642,13 +633,6 @@ footer.global-footer .footer-links a:active {
     display: none !important;
   }
 
-  .with-image main .main-row .col-lg-6.image {
-    background-position: center bottom;
-    height: 240px;
-    background-size: cover;
-    margin-bottom: 60px;
-  }
-
   .signout-row .container .signout-link {
     font-size: 18px;
     color: #2b6597;
@@ -784,14 +768,6 @@ footer.global-footer .footer-links a:active {
 }
 
 @media (min-width: 992px) {
-  /* undoing the sticky footer for pages with header image
-       the backup plan is to color the body the same as the footer
-       to avoid the floating footer look
-    */
-  .with-image main {
-    flex-shrink: unset;
-  }
-
   footer {
     margin-top: unset;
     padding-top: 0.138rem;
