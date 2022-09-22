@@ -498,10 +498,9 @@ msgid "core.pages.agency_index.title"
 msgstr "Introduction"
 
 #: benefits/core/views.py:63
-msgid "core.pages.agency_index.content_title"
+msgid "core.pages.agency_index.mst_cc.content_title"
 msgstr ""
-"Cal-ITP Benefits makes it easy to use your public transit discount every "
-"time you ride."
+"Connect your MST Benefit to your Contactless Card"
 
 #: benefits/core/views.py:89
 msgid "core.buttons.back"

@@ -59,7 +59,7 @@ def agency_index(request, agency):
 
     page = viewmodels.Page(
         title=_("core.pages.agency_index.title"),
-        content_title=_("core.pages.agency_index.content_title"),
+        content_title=_("core.pages.agency_index.mst_cc.content_title"),
         button=button,
         classes="home",
     )
