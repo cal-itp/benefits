@@ -188,26 +188,10 @@ msgstr ""
 "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
 "proveedor de tránsito local para obtener asistencia."
 
-#: benefits/core/templates/core/agency_index.html:10
-#, python-format
-msgid "core.pages.agency_index.p[0]%(info_link)s"
-msgstr ""
-"Puede acercar su tarjeta de crédito o débito cuando aborde, y su descuento "
-"se aplicará automáticamente cada vez que viaje. <strong><a class='info-link' "
-"href=\"%(info_link)s\">Conozca más sobre beneficios de Cal-ITP</a></"
-"strong><span class='period'>.</span>"
-
 #: benefits/core/templates/core/agency_index.html:11
-msgid "core.pages.agency_index.p[1]"
+msgid "core.pages.agency_index.h2"
 msgstr ""
-"Necesitará su licencia de conducir o tarjeta de identificación de California "
-"y su tarjeta sin contacto emitida por el banco para comenzar."
-
-#: benefits/core/templates/core/agency_index.html:12
-msgid "core.pages.agency_index.p[2]"
-msgstr ""
-"El programa de beneficios de Cal-ITP actualmente solo está abierto a "
-"personas de 65 años o más."
+"TODO: Your benefit applies every time you tap to ride."
 
 #: benefits/core/templates/core/base.html:10
 #: benefits/core/templates/core/help.html:12
