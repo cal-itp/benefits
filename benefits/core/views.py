@@ -41,7 +41,6 @@ def index(request):
         content_title=_("core.pages.index.content_title"),
         buttons=buttons,
         classes="home",
-        noimage=True,
     )
 
     return TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
@@ -64,7 +63,6 @@ def agency_index(request, agency):
         content_title=_("core.pages.agency_index.content_title"),
         button=button,
         classes="home",
-        noimage=True,
     )
 
     help_page = reverse(ROUTE_HELP)
@@ -94,7 +92,6 @@ def help(request):
         title=_("core.buttons.help"),
         content_title=_("core.buttons.help"),
         buttons=buttons,
-        noimage=True,
     )
 
     return TemplateResponse(request, TEMPLATE_HELP, page.context_dict())

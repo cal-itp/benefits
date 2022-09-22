@@ -39,7 +39,6 @@ def index(request):
         title=_("eligibility.pages.index.title"),
         content_title=_("eligibility.pages.index.content_title"),
         forms=forms.EligibilityVerifierSelectionForm(agency=agency),
-        noimage=True,
     )
 
     if request.method == "POST":
@@ -122,7 +121,6 @@ def start(request):
 
     page = viewmodels.Page(
         title=_("eligibility.pages.start.title"),
-        noimage=True,
         paragraphs=[_(verifier.start_blurb)],
         button=button,
     )
@@ -168,7 +166,6 @@ def confirm(request):
         paragraphs=[_(verifier.form_blurb)],
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
         classes="text-lg-center",
-        noimage=True,
     )
 
     # GET from an unverified user, present the form
@@ -231,7 +228,6 @@ def unverified(request):
     buttons.append(viewmodels.Button.home(request))
 
     page = viewmodels.Page(
-        noimage=True,
         title=_(verifier.unverified_title),
         classes="with-agency-links",
         content_title=_(verifier.unverified_content_title),
