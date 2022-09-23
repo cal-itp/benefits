@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-09-20 19:06+0000\n"
+"POT-Creation-Date: 2022-09-20 22:16+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -458,15 +458,11 @@ msgstr ""
 
 #: benefits/core/viewmodels.py:186 benefits/core/viewmodels.py:187
 msgid "core.pages.server_error.title"
-msgstr "Service is down"
+msgstr "Sorry! Service for this site is down."
 
 #: benefits/core/viewmodels.py:188
 msgid "core.pages.server_error.p[0]"
-msgstr "We should be back in operation soon."
-
-#: benefits/core/viewmodels.py:188
-msgid "core.pages.server_error.p[1]"
-msgstr "Please refresh the page in a few minutes."
+msgstr "We should be back in operation soon. Please refresh the page in a few minutes."
 
 #: benefits/core/viewmodels.py:196
 msgid "core.pages.not_found.title"

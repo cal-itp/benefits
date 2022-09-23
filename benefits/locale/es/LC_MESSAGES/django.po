@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-09-20 19:06+0000\n"
+"POT-Creation-Date: 2022-09-20 22:16+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -464,20 +464,16 @@ msgstr "TODO: You may have reached this page on accident."
 #: benefits/core/viewmodels.py:178
 msgid "core.pages.user_error.p[0]"
 msgstr ""
-"TODO: To get started with Cal-ITP Benefits please click the button below, and "
-"you will be directed to the beginning of the enrollment process. "
+"TODO: To get started with Cal-ITP Benefits please click the button below, "
+"and you will be directed to the beginning of the enrollment process. "
 
 #: benefits/core/viewmodels.py:186 benefits/core/viewmodels.py:187
 msgid "core.pages.server_error.title"
-msgstr "El servicio no está funcionando"
+msgstr "¡Lo sentimos! El servicio no está funcionando"
 
 #: benefits/core/viewmodels.py:188
 msgid "core.pages.server_error.p[0]"
-msgstr "Deberíamos volver a funcionar pronto."
-
-#: benefits/core/viewmodels.py:188
-msgid "core.pages.server_error.p[1]"
-msgstr "Por favor, actualice la página en unos minutos."
+msgstr "Deberíamos volver a funcionar pronto. Por favor, actualice la página en unos minutos."
 
 #: benefits/core/viewmodels.py:196
 msgid "core.pages.not_found.title"

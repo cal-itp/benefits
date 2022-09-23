@@ -12,7 +12,7 @@ from benefits.core.viewmodels import ErrorPage
             ErrorPage.server_error,
             "core.pages.server_error.title",
             "core.pages.server_error.title",
-            ["core.pages.server_error.p[0]", "core.pages.server_error.p[1]"],
+            ["core.pages.server_error.p[0]"],
             id="server_error",
         ),
         pytest.param(
