@@ -23,7 +23,7 @@ msgstr "Sign out of Login.gov"
 
 #: benefits/core/migrations/0002_sample_data.py:108
 msgid "eligibility.pages.index.dmv.label"
-msgstr "Senior Discount Program"
+msgstr "I am 65 years of age or older"
 
 #: benefits/core/migrations/0002_sample_data.py:110
 msgid "eligibility.pages.start.dmv.content_title"
@@ -83,11 +83,15 @@ msgstr ""
 
 #: benefits/core/migrations/0002_sample_data.py:139
 msgid "eligibility.pages.index.mst.label"
-msgstr "MST Courtesy Cardholder"
+msgstr "I have an MST Courtesy Card"
 
 #: benefits/core/migrations/0002_sample_data.py:140
 msgid "eligibility.pages.index.mst.description"
-msgstr "(includes MST RIDES Paratransit Eligibility cardholders)"
+msgstr "You must be 65 years or older. This benefit does not expire, but you may need to renew. Using this benefit means your new transit fare is half of the standard fare."
+
+#: benefits/core/migrations/0002_sample_data.py:140
+msgid "eligibility.pages.index.dmv.description"
+msgstr "This option is for people who have a current Courtesy Card (includes MST RIDES asdfasdfasdf Eligibility cardholders). This benefit is part of a demonstration tool and may need to be renewed in the future. Using this benefit means your new transit fare is half of the standard fare."
 
 #: benefits/core/migrations/0002_sample_data.py:141
 msgid "eligibility.pages.start.mst.content_title"
@@ -568,7 +572,10 @@ msgstr "Select a discount option"
 
 #: benefits/eligibility/views.py:40
 msgid "eligibility.pages.index.content_title"
-msgstr "Select the discount option that best applies to you:"
+msgstr "Connect your bank card to your public transit discount with Cal-ITP Benefits"
+
+msgid "eligibility.pages.index.p[0]"
+msgstr "You can tap your credit or debit card when you board an MST bus and your discounted fare will automatically apply every time you ride. Cal-ITP doesn’t save any of your information, and you don’t need to create an account. Verify for your benefit, and connect your bank card today. Learn more about Cal-ITP Benefits."
 
 #: benefits/eligibility/views.py:80 benefits/enrollment/views.py:80
 msgctxt "image alt text"

@@ -38,6 +38,7 @@ def index(request):
     page = viewmodels.Page(
         title=_("eligibility.pages.index.title"),
         content_title=_("eligibility.pages.index.content_title"),
+        paragraphs=[_("eligibility.pages.index.p[0]")],
         forms=forms.EligibilityVerifierSelectionForm(agency=agency),
     )
 

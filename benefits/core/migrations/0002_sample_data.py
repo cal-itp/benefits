@@ -106,7 +106,7 @@ PEM DATA
         jws_signing_alg="RS256",
         auth_provider=auth_provider,
         selection_label=_("eligibility.pages.index.dmv.label"),
-        selection_label_description=None,
+        selection_label_description=_("eligibility.pages.index.dmv.description"),
         start_content_title=_("eligibility.pages.start.dmv.content_title"),
         start_item_name=_("eligibility.pages.start.dmv.items[0].title"),
         start_item_description=_("eligibility.pages.start.dmv.items[0].text"),
