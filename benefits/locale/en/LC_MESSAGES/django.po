@@ -528,7 +528,10 @@ msgstr "Go back"
 
 #: benefits/eligibility/forms.py:23 benefits/eligibility/views.py:76
 msgid "eligibility.buttons.continue"
-msgstr "Choose This Benefit"
+msgstr "Continue"
+
+msgid "eligibility.buttons.choose"
+msgstr "Choose this Benefit"
 
 #: benefits/eligibility/forms.py:41
 msgid "eligibility.forms.confirm.submit"
@@ -576,6 +579,9 @@ msgstr "Connect your bank card to your public transit discount with Cal-ITP Bene
 
 msgid "eligibility.pages.index.p[0]"
 msgstr "You can tap your credit or debit card when you board an MST bus and your discounted fare will automatically apply every time you ride. Cal-ITP doesn’t save any of your information, and you don’t need to create an account. Verify for your benefit, and connect your bank card today. Learn more about Cal-ITP Benefits."
+
+msgid "eligibility.pages.index.label"
+msgstr "Select the option that best applies to you:"
 
 #: benefits/eligibility/views.py:80 benefits/enrollment/views.py:80
 msgctxt "image alt text"

@@ -18,9 +18,9 @@ class EligibilityVerifierSelectionForm(forms.Form):
     action_url = "eligibility:index"
     method = "POST"
 
-    verifier = forms.ChoiceField(label="", widget=widgets.RadioSelect)
+    verifier = forms.ChoiceField(label=_("eligibility.pages.index.label"), widget=widgets.RadioSelect)
 
-    submit_value = _("eligibility.buttons.continue")
+    submit_value = _("eligibility.buttons.choose")
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
