@@ -528,7 +528,7 @@ msgstr "Go back"
 
 #: benefits/eligibility/forms.py:23 benefits/eligibility/views.py:76
 msgid "eligibility.buttons.continue"
-msgstr "Continue"
+msgstr "Choose This Benefit"
 
 #: benefits/eligibility/forms.py:41
 msgid "eligibility.forms.confirm.submit"
@@ -568,7 +568,7 @@ msgstr ""
 
 #: benefits/eligibility/views.py:39
 msgid "eligibility.pages.index.title"
-msgstr "Select a discount option"
+msgstr "Select a benefit option"
 
 #: benefits/eligibility/views.py:40
 msgid "eligibility.pages.index.content_title"
