@@ -38,9 +38,12 @@ def index(request):
     page = viewmodels.Page(
         title=_("eligibility.pages.index.title"),
         content_title=_("eligibility.pages.index.content_title"),
-        paragraphs=[_("eligibility.pages.index.p[0]")],
+        paragraphs=[_("eligibility.pages.index.p[0]%(info_link)s")],
         forms=forms.EligibilityVerifierSelectionForm(agency=agency),
     )
+
+    help_page = reverse(ROUTE_HELP)
+    context_dict = {**page.context_dict(), **{"info_link": f"{help_page}#about"}}
 
     if request.method == "POST":
         form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency)
@@ -54,14 +57,14 @@ def index(request):
         else:
             # form was not valid, allow for correction/resubmission
             page.forms = [form]
-            response = TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
+            response = TemplateResponse(request, TEMPLATE_PAGE, context_dict)
     else:
         if agency.eligibility_verifiers.count() == 1:
             verifier = agency.eligibility_verifiers.first()
             session.update(request, verifier=verifier)
             response = redirect(eligibility_start)
         else:
-            response = TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
+            response = TemplateResponse(request, TEMPLATE_PAGE, context_dict)
 
     return response
 
