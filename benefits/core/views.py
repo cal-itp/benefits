@@ -88,7 +88,6 @@ def help(request):
         title=_("core.buttons.help"),
         content_title=_("core.buttons.help"),
         buttons=buttons,
-        noimage=True,
     )
 
     return TemplateResponse(request, TEMPLATE_HELP, page.context_dict())

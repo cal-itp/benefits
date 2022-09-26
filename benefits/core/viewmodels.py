@@ -104,7 +104,6 @@ class Page:
     """
     Represents a page of content:
     * title: str
-    * noimage: bool
     * icon: core.viewmodels.Icon
     * content_title: str
     * paragraphs: str[]
@@ -122,7 +121,6 @@ class Page:
         else:
             self.title = f"{_('core.pages.index.prefix')}: {self.title}"
 
-        self.noimage = kwargs.get("noimage", False)
         self.icon = kwargs.get("icon")
         self.content_title = kwargs.get("content_title")
         self.paragraphs = kwargs.get("paragraphs", [])
@@ -143,8 +141,6 @@ class Page:
         self.classes = kwargs.get("classes", [])
         if not isinstance(self.classes, list):
             self.classes = self.classes.split(" ")
-        if not self.noimage:
-            self.classes.append("with-image")
 
     def context_dict(self):
         """Return a context dict for a Page."""
@@ -168,7 +164,6 @@ class ErrorPage(Page):
             content_title=kwargs.get("content_title", _("core.pages.error.title")),
             paragraphs=kwargs.get("paragraphs", [_("core.pages.server_error.content_title")]),
             button=kwargs.get("button"),
-            noimage=True,
         )
 
     @staticmethod
@@ -185,7 +180,7 @@ class ErrorPage(Page):
     def server_error(
         title=_("core.pages.server_error.title"),
         content_title=_("core.pages.server_error.title"),
-        paragraphs=[_("core.pages.server_error.p[0]"), _("core.pages.server_error.p[1]")],
+        paragraphs=[_("core.pages.server_error.p[0]")],
         **kwargs,
     ):
         """Create a new core.viewmodels.ErrorPage instance with defaults for a generic server error."""

@@ -121,7 +121,6 @@ def start(request):
 
     page = viewmodels.Page(
         title=_("eligibility.pages.start.title"),
-        noimage=True,
         paragraphs=[_(verifier.start_blurb)],
         button=button,
     )
@@ -229,7 +228,6 @@ def unverified(request):
     buttons.append(viewmodels.Button.home(request))
 
     page = viewmodels.Page(
-        noimage=True,
         title=_(verifier.unverified_title),
         classes="with-agency-links",
         content_title=_(verifier.unverified_content_title),

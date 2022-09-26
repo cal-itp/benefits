@@ -162,7 +162,6 @@ def success(request):
         else:
             page.classes = ["no-image-mobile", "logged-out"]
             page.content_title = _("enrollment.pages.success.logout.title")
-            page.noimage = True
     else:
         page.icon = icon
 
