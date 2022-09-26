@@ -94,6 +94,7 @@ class EligibilityVerifier(models.Model):
     auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True)
     selection_label = models.TextField()
     selection_label_description = models.TextField(null=True)
+    start_title = models.TextField()
     start_content_title = models.TextField()
     start_item_name = models.TextField()
     start_item_description = models.TextField()

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-09-26 22:17+0000\n"
+"POT-Creation-Date: 2022-09-28 00:10+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,146 +26,160 @@ msgid "eligibility.pages.index.dmv.label"
 msgstr "Senior Discount Program"
 
 #: benefits/core/migrations/0002_sample_data.py:110
-msgid "eligibility.pages.start.dmv.content_title"
-msgstr "You will need a few items to connect your discount:"
+msgid "eligibility.pages.start.dmv.title"
+msgstr "You selected an Older Adult Benefit with MST."
 
 #: benefits/core/migrations/0002_sample_data.py:111
+msgid "eligibility.pages.start.dmv.content_title"
+msgstr "You will need a few items to connect your benefit:"
+
+#: benefits/core/migrations/0002_sample_data.py:112
 msgid "eligibility.pages.start.dmv.items[0].title"
 msgstr "Provide your California ID number"
 
-#: benefits/core/migrations/0002_sample_data.py:112
+#: benefits/core/migrations/0002_sample_data.py:113
 msgid "eligibility.pages.start.dmv.items[0].text"
 msgstr "You will need to verify your age with a driver’s license or ID card."
 
-#: benefits/core/migrations/0002_sample_data.py:113
+#: benefits/core/migrations/0002_sample_data.py:114
 msgid "eligibility.pages.start.dmv.p[0]"
 msgstr ""
 "This program is currently open to those who are 65 or older. Not over 65? "
 "Get in touch with your transit provider to learn about other available "
 "discount programs."
 
-#: benefits/core/migrations/0002_sample_data.py:114
+#: benefits/core/migrations/0002_sample_data.py:115
 msgid "eligibility.pages.confirm.dmv.title"
 msgstr "Confirm Eligibility"
 
-#: benefits/core/migrations/0002_sample_data.py:115
+#: benefits/core/migrations/0002_sample_data.py:116
 msgid "eligibility.pages.confirm.dmv.content_title"
 msgstr "Let’s see if we can confirm your age with the DMV."
 
-#: benefits/core/migrations/0002_sample_data.py:116
+#: benefits/core/migrations/0002_sample_data.py:117
 msgid "eligibility.pages.confirm.dmv.p[0]"
 msgstr ""
 "Please enter your license/ID number and last name below. If you’re 65 or "
 "older, we can confirm that you are eligible for a senior discount when you "
 "ride transit. We do not save the information you enter here."
 
-#: benefits/core/migrations/0002_sample_data.py:117
+#: benefits/core/migrations/0002_sample_data.py:118
 msgid "eligibility.forms.confirm.dmv.fields.sub"
 msgstr "CA driver’s license or ID number"
 
-#: benefits/core/migrations/0002_sample_data.py:120
+#: benefits/core/migrations/0002_sample_data.py:121
 msgid "eligibility.forms.confirm.dmv.fields.name"
 msgstr "Last name (as it appears on ID)"
 
-#: benefits/core/migrations/0002_sample_data.py:123
+#: benefits/core/migrations/0002_sample_data.py:124
 msgid "eligibility.pages.unverified.dmv.title"
 msgstr "Eligibility Error"
 
-#: benefits/core/migrations/0002_sample_data.py:124
+#: benefits/core/migrations/0002_sample_data.py:125
 msgid "eligibility.pages.unverified.dmv.content_title"
 msgstr "Your eligibility could not be verified."
 
-#: benefits/core/migrations/0002_sample_data.py:125
+#: benefits/core/migrations/0002_sample_data.py:126
 msgid "eligibility.pages.unverified.dmv.p[0]"
 msgstr ""
 "You may still be eligible for a discount, but we can’t verify your age with "
 "the DMV."
 
-#: benefits/core/migrations/0002_sample_data.py:139
+#: benefits/core/migrations/0002_sample_data.py:140
 msgid "eligibility.pages.index.mst.label"
 msgstr "MST Courtesy Cardholder"
 
-#: benefits/core/migrations/0002_sample_data.py:140
+#: benefits/core/migrations/0002_sample_data.py:141
 msgid "eligibility.pages.index.mst.description"
 msgstr "(includes MST RIDES Paratransit Eligibility cardholders)"
 
-#: benefits/core/migrations/0002_sample_data.py:141
+#: benefits/core/migrations/0002_sample_data.py:142
+msgid "eligibility.pages.start.mst.title"
+msgstr "You selected a Courtesy Card Benefit."
+
+#: benefits/core/migrations/0002_sample_data.py:143
 msgid "eligibility.pages.start.mst.content_title"
 msgstr "You will need a few items to connect your benefit:"
 
-#: benefits/core/migrations/0002_sample_data.py:142
+#: benefits/core/migrations/0002_sample_data.py:144
 msgid "eligibility.pages.start.mst.items[0].title"
 msgstr "Your current Courtesy Card number"
 
-#: benefits/core/migrations/0002_sample_data.py:143
+#: benefits/core/migrations/0002_sample_data.py:145
 msgid "eligibility.pages.start.mst.items[0].text"
 msgstr ""
 "You do not need to have your physical card, but you will need to know the "
 "number. It is five digits and starts with a #.  "
 
-#: benefits/core/migrations/0002_sample_data.py:144
+#: benefits/core/migrations/0002_sample_data.py:146
 msgid "eligibility.pages.start.mst.p[0]"
 msgstr ""
 "This program is currently open to all MST Courtesy Cardholders. Not a "
 "Courtesy Cardholder? Get in touch with your transit provider to learn about "
 "other available discount programs at"
 
-#: benefits/core/migrations/0002_sample_data.py:145
+#: benefits/core/migrations/0002_sample_data.py:147
 msgid "eligibility.pages.confirm.mst.title"
 msgstr "Confirm your Courtesy Card"
 
-#: benefits/core/migrations/0002_sample_data.py:146
+#: benefits/core/migrations/0002_sample_data.py:148
 msgid "eligibility.pages.confirm.mst.content_title"
 msgstr "Let’s see if we can find you in our system"
 
-#: benefits/core/migrations/0002_sample_data.py:147
+#: benefits/core/migrations/0002_sample_data.py:149
 msgid "eligibility.pages.confirm.mst.p[0]"
 msgstr ""
 "Please input your Courtesy Card number and last name below. If you’re a "
 "current MST Courtesy Cardholder, we can confirm that you are eligible for a "
 "benefit. We do not save your information."
 
-#: benefits/core/migrations/0002_sample_data.py:148
+#: benefits/core/migrations/0002_sample_data.py:150
 msgid "eligibility.forms.confirm.mst.fields.sub"
 msgstr "MST Courtesy Card number"
 
+#: benefits/core/migrations/0002_sample_data.py:151
 msgid "eligibility.forms.confirm.mst.fields.sub.help_text"
 msgstr "This is a 5-digit number on the front and back of your card."
 
-#: benefits/core/migrations/0002_sample_data.py:151
+#: benefits/core/migrations/0002_sample_data.py:154
 msgid "eligibility.forms.confirm.mst.fields.name"
 msgstr "Last name (as it appears on Courtesy Card)"
 
+#: benefits/core/migrations/0002_sample_data.py:155
 msgid "eligibility.forms.confirm.mst.fields.name.help_text"
 msgstr "We use this to help confirm your Courtesy Card."
 
-#: benefits/core/migrations/0002_sample_data.py:154
+#: benefits/core/migrations/0002_sample_data.py:158
 msgid "eligibility.pages.unverified.mst.title"
 msgstr "Courtesy Card not located"
 
-#: benefits/core/migrations/0002_sample_data.py:155
+#: benefits/core/migrations/0002_sample_data.py:159
 msgid "eligibility.pages.unverified.mst.content_title"
 msgstr "We couldn’t locate you in our system"
 
-#: benefits/core/migrations/0002_sample_data.py:156
+#: benefits/core/migrations/0002_sample_data.py:160
 msgid "eligibility.pages.unverified.mst.p[0]"
 msgstr ""
 "That’s okay! You may still be eligible for our program. Please reach out to "
 "Monterey-Salinas Transit for assistance."
 
-#: benefits/core/migrations/0002_sample_data.py:163
+#: benefits/core/migrations/0002_sample_data.py:167
 msgid "eligibility.pages.index.oauth.label"
 msgstr "Senior Discount Program"
 
-#: benefits/core/migrations/0002_sample_data.py:165
-msgid "eligibility.pages.start.oauth.content_title"
-msgstr "You will need a few items to connect your discount:"
+#: benefits/core/migrations/0002_sample_data.py:169
+msgid "eligibility.pages.start.oauth.title"
+msgstr "You selected an Older Adult Benefit with MST."
 
-#: benefits/core/migrations/0002_sample_data.py:166
+#: benefits/core/migrations/0002_sample_data.py:170
+msgid "eligibility.pages.start.oauth.content_title"
+msgstr "You will need a few items to connect your benefit:"
+
+#: benefits/core/migrations/0002_sample_data.py:171
 msgid "eligibility.pages.start.oauth.items[0].title"
 msgstr "A Login.gov account with identity verification"
 
-#: benefits/core/migrations/0002_sample_data.py:167
+#: benefits/core/migrations/0002_sample_data.py:172
 msgid "eligibility.pages.start.oauth.items[0].text"
 msgstr ""
 "Login.gov is a safe way to sign in to government services. Benefits uses "
@@ -173,19 +187,19 @@ msgstr ""
 "will be able to create one. You will also need to verify your identity, "
 "which will require these items:"
 
-#: benefits/core/migrations/0002_sample_data.py:168
+#: benefits/core/migrations/0002_sample_data.py:173
 msgid "eligibility.pages.start.oauth.p[0]"
 msgstr ""
 
-#: benefits/core/migrations/0002_sample_data.py:169
+#: benefits/core/migrations/0002_sample_data.py:174
 msgid "eligibility.pages.unverified.oauth.title"
 msgstr "Eligibility Error"
 
-#: benefits/core/migrations/0002_sample_data.py:170
+#: benefits/core/migrations/0002_sample_data.py:175
 msgid "eligibility.pages.unverified.oauth.content_title"
 msgstr "Your eligibility could not be verified."
 
-#: benefits/core/migrations/0002_sample_data.py:171
+#: benefits/core/migrations/0002_sample_data.py:176
 msgid "eligibility.pages.unverified.oauth.p[0]"
 msgstr ""
 "That’s okay! You may still be eligible for our program. Please reach out to "
@@ -419,7 +433,7 @@ msgid "core.pages.index.prefix"
 msgstr "Transit Benefits"
 
 #: benefits/core/viewmodels.py:162 benefits/core/viewmodels.py:164
-#: benefits/eligibility/forms.py:68
+#: benefits/eligibility/forms.py:74
 msgid "core.pages.error.title"
 msgstr "Error"
 
@@ -524,10 +538,6 @@ msgstr "Check your input. The format looks wrong."
 msgid "eligibility.forms.confirm.errors.missing"
 msgstr "This field is required."
 
-#: benefits/eligibility/templates/eligibility/start.html:9
-msgid "eligibility.pages.start.content_title"
-msgstr "You selected a Courtesy Card Benefit."
-
 #: benefits/eligibility/views.py:39
 msgid "eligibility.pages.index.title"
 msgstr "Select a discount option"
@@ -575,7 +585,7 @@ msgstr ""
 msgid "eligibility.pages.start.title"
 msgstr "Get Started"
 
-#: benefits/eligibility/views.py:226
+#: benefits/eligibility/views.py:227
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Identification card icon with question mark"
