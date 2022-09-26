@@ -551,11 +551,11 @@ msgstr ""
 
 #: benefits/eligibility/views.py:39
 msgid "eligibility.pages.index.title"
-msgstr "TODO"
+msgstr "TODO: Select a benefit option"
 
 #: benefits/eligibility/views.py:40
 msgid "eligibility.pages.index.content_title"
-msgstr "TODO"
+msgstr "TODO: Connect your bank card to your public transit discount with Cal-ITP Benefits"
 
 #: benefits/eligibility/views.py:80 benefits/enrollment/views.py:80
 msgctxt "image alt text"
