@@ -59,19 +59,15 @@ def agency_index(request, agency):
         return redirect(reverse(ROUTE_ELIGIBILITY))
 
     button = viewmodels.Button.primary(text=_("core.pages.index.continue"), url=reverse(ROUTE_ELIGIBILITY))
-    button.label = _("core.pages.agency_index.button.label")
 
     page = viewmodels.Page(
         title=_("core.pages.agency_index.title"),
-        content_title=_("core.pages.agency_index.content_title"),
+        content_title=_("core.pages.agency_index.mst_cc.content_title"),
         button=button,
         classes="home",
     )
 
-    help_page = reverse(ROUTE_HELP)
-    context_dict = {**page.context_dict(), **{"info_link": f"{help_page}#about"}}
-
-    return TemplateResponse(request, TEMPLATE_AGENCY, context_dict)
+    return TemplateResponse(request, TEMPLATE_AGENCY, page.context_dict())
 
 
 @pageview_decorator

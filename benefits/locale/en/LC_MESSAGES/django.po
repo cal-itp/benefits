@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-09-20 19:06+0000\n"
+"POT-Creation-Date: 2022-09-26 21:07+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -189,25 +189,8 @@ msgstr ""
 "your local transit provider for assistance."
 
 #: benefits/core/templates/core/agency_index.html:10
-#, python-format
-msgid "core.pages.agency_index.p[0]%(info_link)s"
-msgstr ""
-"You can tap your credit or debit card when you board, and your discount will "
-"automatically apply every time you ride. <strong><a class='info-link' href="
-"\"%(info_link)s\">Learn more about Cal-ITP Benefits</a></strong><span "
-"class='period'>.</span>"
-
-#: benefits/core/templates/core/agency_index.html:11
-msgid "core.pages.agency_index.p[1]"
-msgstr ""
-"You will need your California driver’s license or ID card and your bank-"
-"issued contactless card to get started. "
-
-#: benefits/core/templates/core/agency_index.html:12
-msgid "core.pages.agency_index.p[2]"
-msgstr ""
-"The Cal-ITP Benefits program is currently only open to those <strong>ages 65 "
-"or older</strong>."
+msgid "core.pages.agency_index.h2"
+msgstr "Your benefit applies every time you tap to ride."
 
 #: benefits/core/templates/core/base.html:10
 #: benefits/core/templates/core/help.html:12
@@ -231,12 +214,12 @@ msgctxt "image alt text"
 msgid "core.logos.large"
 msgstr "California Integrated Travel Project: Benefits logo (large)"
 
-#: benefits/core/templates/core/base.html:70 benefits/core/views.py:92
-#: benefits/core/views.py:93
+#: benefits/core/templates/core/base.html:68 benefits/core/views.py:88
+#: benefits/core/views.py:89
 msgid "core.buttons.help"
 msgstr "Help"
 
-#: benefits/core/templates/core/base.html:73
+#: benefits/core/templates/core/base.html:71
 msgid "core.buttons.privacy"
 msgstr "Privacy Policy"
 
@@ -428,65 +411,63 @@ msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
 
-#: benefits/core/viewmodels.py:121
+#: benefits/core/viewmodels.py:120
 msgid "core.pages.index.prefix"
 msgstr "Transit Benefits"
 
-#: benefits/core/viewmodels.py:166 benefits/core/viewmodels.py:168
+#: benefits/core/viewmodels.py:162 benefits/core/viewmodels.py:164
 #: benefits/eligibility/forms.py:68
 msgid "core.pages.error.title"
 msgstr "Error"
 
-#: benefits/core/viewmodels.py:167
+#: benefits/core/viewmodels.py:163
 msgctxt "image alt text"
 msgid "core.icons.sadbus"
 msgstr "Bus icon with flat tire"
 
-#: benefits/core/viewmodels.py:169
+#: benefits/core/viewmodels.py:165
 msgid "core.pages.server_error.content_title"
 msgstr "Sorry! Service for this site is down."
 
-#: benefits/core/viewmodels.py:176
+#: benefits/core/viewmodels.py:171
 msgid "core.pages.user_error.title"
 msgstr "Invalid state"
 
-#: benefits/core/viewmodels.py:177
+#: benefits/core/viewmodels.py:172
 msgid "core.pages.user_error.content_title"
 msgstr "You may have reached this page on accident."
 
-#: benefits/core/viewmodels.py:178
+#: benefits/core/viewmodels.py:173
 msgid "core.pages.user_error.p[0]"
 msgstr ""
 "To get started with Cal-ITP Benefits please click the button below, and you "
 "will be directed to the beginning of the enrollment process. "
 
-#: benefits/core/viewmodels.py:186 benefits/core/viewmodels.py:187
+#: benefits/core/viewmodels.py:181 benefits/core/viewmodels.py:182
 msgid "core.pages.server_error.title"
-msgstr "Service is down"
+msgstr "Sorry! Service for this site is down."
 
-#: benefits/core/viewmodels.py:188
+#: benefits/core/viewmodels.py:183
 msgid "core.pages.server_error.p[0]"
-msgstr "We should be back in operation soon."
+msgstr ""
+"We should be back in operation soon. Please refresh the page in a few "
+"minutes."
 
-#: benefits/core/viewmodels.py:188
-msgid "core.pages.server_error.p[1]"
-msgstr "Please refresh the page in a few minutes."
-
-#: benefits/core/viewmodels.py:196
+#: benefits/core/viewmodels.py:191
 msgid "core.pages.not_found.title"
 msgstr "Page not found"
 
-#: benefits/core/viewmodels.py:197
+#: benefits/core/viewmodels.py:192
 msgid "core.pages.not_found.content_title"
 msgstr "Sorry! We can’t find that page."
 
-#: benefits/core/viewmodels.py:198
+#: benefits/core/viewmodels.py:193
 msgid "core.pages.not_found.p[0]"
 msgstr ""
 "The page you are looking for might be somewhere else or may not exist "
 "anymore."
 
-#: benefits/core/viewmodels.py:221
+#: benefits/core/viewmodels.py:216
 msgid "core.buttons.wait"
 msgstr "Please wait..."
 
@@ -508,21 +489,15 @@ msgstr ""
 msgid "core.pages.index.continue"
 msgstr "Get started"
 
-#: benefits/core/views.py:59
-msgid "core.pages.agency_index.button.label"
-msgstr "Connect your bank card to your discount today!"
-
-#: benefits/core/views.py:62
+#: benefits/core/views.py:61
 msgid "core.pages.agency_index.title"
 msgstr "Introduction"
 
-#: benefits/core/views.py:63
-msgid "core.pages.agency_index.content_title"
-msgstr ""
-"Cal-ITP Benefits makes it easy to use your public transit discount every "
-"time you ride."
+#: benefits/core/views.py:62
+msgid "core.pages.agency_index.mst_cc.content_title"
+msgstr "Connect your MST Benefit to your Contactless Card"
 
-#: benefits/core/views.py:89
+#: benefits/core/views.py:85
 msgid "core.buttons.back"
 msgstr "Go back"
 
@@ -549,12 +524,12 @@ msgstr "Check your input. The format looks wrong."
 msgid "eligibility.forms.confirm.errors.missing"
 msgstr "This field is required."
 
-#: benefits/eligibility/templates/eligibility/start.html:11
+#: benefits/eligibility/templates/eligibility/start.html:9
 msgid "eligibility.pages.start.content_title"
 msgstr ""
 "Connect your bank card to your public transit discount with Cal-ITP Benefits."
 
-#: benefits/eligibility/templates/eligibility/start.html:12
+#: benefits/eligibility/templates/eligibility/start.html:10
 #, python-format
 msgid "eligibility.pages.start.p[0]%(info_link)s"
 msgstr ""
@@ -563,7 +538,7 @@ msgstr ""
 "\"%(info_link)s\">Learn more about Cal-ITP Benefits</a></strong><span "
 "class='period'>.</span>"
 
-#: benefits/eligibility/templates/eligibility/start.html:13
+#: benefits/eligibility/templates/eligibility/start.html:11
 msgid "eligibility.pages.start.p[1]"
 msgstr ""
 "The Cal-ITP Benefits program is currently only open to those <strong>ages 65 "
@@ -631,7 +606,7 @@ msgstr "Don’t have a bank card or unsure if your card is contactless?"
 msgid "eligibility.pages.start.title"
 msgstr "Get Started"
 
-#: benefits/eligibility/views.py:236
+#: benefits/eligibility/views.py:234
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Identification card icon with question mark"
