@@ -108,13 +108,6 @@ def start(request):
         icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
         heading=_("eligibility.pages.start.bankcard.title"),
         details=_("eligibility.pages.start.bankcard.text"),
-        links=[
-            viewmodels.Button.link(
-                classes="btn-text btn-link",
-                text=_("eligibility.pages.start.bankcard.button[0].link"),
-                url=f"{reverse(ROUTE_HELP)}#payment-options",
-            ),
-        ],
     )
 
     media = [identity_item, bank_card_item]
@@ -128,7 +121,6 @@ def start(request):
     ctx = page.context_dict()
     ctx["title"] = _(verifier.start_content_title)
     ctx["media"] = media
-    ctx["info_link"] = f"{reverse(ROUTE_HELP)}#about"
 
     return TemplateResponse(request, TEMPLATE_START, ctx)
 
