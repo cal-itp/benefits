@@ -91,7 +91,7 @@ msgstr "You must be 65 years or older. This benefit does not expire, but you may
 
 #: benefits/core/migrations/0002_sample_data.py:140
 msgid "eligibility.pages.index.dmv.description"
-msgstr "This option is for people who have a current Courtesy Card (includes MST RIDES asdfasdfasdf Eligibility cardholders). This benefit is part of a demonstration tool and may need to be renewed in the future. Using this benefit means your new transit fare is half of the standard fare."
+msgstr "This option is for people who have a current Courtesy Card (includes MST RIDES Eligibility cardholders). This benefit is part of a demonstration tool and may need to be renewed in the future. Using this benefit means your new transit fare is half of the standard fare."
 
 #: benefits/core/migrations/0002_sample_data.py:141
 msgid "eligibility.pages.start.mst.content_title"
