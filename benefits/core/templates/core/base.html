@@ -15,10 +15,20 @@
     </title>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css">
-    <link href="https://california.azureedge.net/cdt/statetemplate/6.0.2/css/cagov.core.min.css" rel="stylesheet">
+
+    {% comment%}
+        CA State Template v6.0.7 comes with Bootstrap v5.1.3
+        See https://github.com/Office-of-Digital-Services/California-State-Web-Template/releases/tag/v6.0.7
+    {% endcomment %}
+    <link href="https://california.azureedge.net/cdt/statetemplate/6.0.7/css/cagov.core.min.css" rel="stylesheet">
+
     <link href="{% static "css/styles.css" %}" rel="stylesheet">
     <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
 
+    {% comment %}
+        CA State Template v6.0.7 does not include jQuery
+        See https://github.com/Office-of-Digital-Services/California-State-Web-Template/releases/tag/v6.0.7
+    {% endcomment %}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
@@ -74,7 +84,12 @@
       </div>
     </footer>
 
-    <script src="https://california.azureedge.net/cdt/statetemplate/6.0.2/js/cagov.core.js"></script>
+    {% comment%}
+        CA State Template v6.0.7 comes with Bootstrap v5.1.3
+        see https://github.com/Office-of-Digital-Services/California-State-Web-Template/releases/tag/v6.0.7
+    {% endcomment %}
+    <script src="https://california.azureedge.net/cdt/statetemplate/6.0.7/js/cagov.core.min.js"></script>
+
     <script>
             $(function() {
                 document.cookie = "testcookie"
