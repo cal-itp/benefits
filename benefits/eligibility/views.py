@@ -119,8 +119,8 @@ def start(request):
     )
 
     ctx = page.context_dict()
-    ctx["start_title"] = _(verifier.start_title)
-    ctx["start_content_title"] = _(verifier.start_content_title)
+    ctx["start_headline"] = _(verifier.start_headline)
+    ctx["start_sub_headline"] = _(verifier.start_sub_headline)
     ctx["media"] = media
 
     return TemplateResponse(request, TEMPLATE_START, ctx)

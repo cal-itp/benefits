@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-09-28 00:10+0000\n"
+"POT-Creation-Date: 2022-09-28 00:12+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -100,13 +100,13 @@ msgid "eligibility.pages.index.mst.description"
 msgstr "TODO: (includes MST RIDES Paratransit Eligibility cardholders)"
 
 #: benefits/core/migrations/0002_sample_data.py:142
-msgid "eligibility.pages.start.mst.title"
+msgid "eligibility.pages.start.mst.headline"
 msgstr ""
 "Conecta tu tarjeta bancaria para tu descuento en el transporte público con "
 "Cal-ITP Benefits."
 
 #: benefits/core/migrations/0002_sample_data.py:143
-msgid "eligibility.pages.start.mst.content_title"
+msgid "eligibility.pages.start.mst.sub_headline"
 msgstr "TODO: Genial, necesitarás dos cosas antes de empeza"
 
 #: benefits/core/migrations/0002_sample_data.py:144
@@ -175,13 +175,13 @@ msgid "eligibility.pages.index.oauth.label"
 msgstr "TODO: Senior Discount Program"
 
 #: benefits/core/migrations/0002_sample_data.py:169
-msgid "eligibility.pages.start.oauth.title"
+msgid "eligibility.pages.start.oauth.headline"
 msgstr ""
 "Conecta tu tarjeta bancaria para tu descuento en el transporte público con "
 "Cal-ITP Benefits."
 
 #: benefits/core/migrations/0002_sample_data.py:170
-msgid "eligibility.pages.start.oauth.content_title"
+msgid "eligibility.pages.start.oauth.sub_headline"
 msgstr "Necesitará algunos artículos para conectar su descuento:"
 
 #: benefits/core/migrations/0002_sample_data.py:171

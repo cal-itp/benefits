@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-09-28 00:10+0000\n"
+"POT-Creation-Date: 2022-09-28 00:12+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -94,11 +94,11 @@ msgid "eligibility.pages.index.mst.description"
 msgstr "(includes MST RIDES Paratransit Eligibility cardholders)"
 
 #: benefits/core/migrations/0002_sample_data.py:142
-msgid "eligibility.pages.start.mst.title"
+msgid "eligibility.pages.start.mst.headline"
 msgstr "You selected a Courtesy Card Benefit."
 
 #: benefits/core/migrations/0002_sample_data.py:143
-msgid "eligibility.pages.start.mst.content_title"
+msgid "eligibility.pages.start.mst.sub_headline"
 msgstr "You will need a few items to connect your benefit:"
 
 #: benefits/core/migrations/0002_sample_data.py:144
@@ -168,11 +168,11 @@ msgid "eligibility.pages.index.oauth.label"
 msgstr "Senior Discount Program"
 
 #: benefits/core/migrations/0002_sample_data.py:169
-msgid "eligibility.pages.start.oauth.title"
+msgid "eligibility.pages.start.oauth.headline"
 msgstr "You selected an Older Adult Benefit with MST."
 
 #: benefits/core/migrations/0002_sample_data.py:170
-msgid "eligibility.pages.start.oauth.content_title"
+msgid "eligibility.pages.start.oauth.sub_headline"
 msgstr "You will need a few items to connect your benefit:"
 
 #: benefits/core/migrations/0002_sample_data.py:171

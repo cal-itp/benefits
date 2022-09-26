@@ -6,9 +6,9 @@
 
 {% block main_content %}
   <div class="container">
-    <h1 class="headline">{{ start_title }}</h1>
+    <h1 class="headline">{{ start_headline }}</h1>
 
-    <h2 class="media-title">{{ start_content_title }}</h2>
+    <h2 class="media-title">{{ start_sub_headline }}</h2>
 
     {% block media_list %}
       {% if media|length_is:"0" %}
