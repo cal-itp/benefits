@@ -565,6 +565,9 @@ msgstr ""
 "\"%(info_link)s\">Learn more about Cal-ITP Benefits</a></strong><span "
 "class='period'>.</span>"
 
+msgid "eligibility.pages.index.label"
+msgstr "Select the option that best applies to you:"
+
 #: benefits/eligibility/views.py:80 benefits/enrollment/views.py:80
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
