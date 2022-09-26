@@ -557,6 +557,14 @@ msgstr "TODO: Select a benefit option"
 msgid "eligibility.pages.index.content_title"
 msgstr "TODO: Connect your bank card to your public transit discount with Cal-ITP Benefits"
 
+#, python-format
+msgid "eligibility.pages.index.p[0]%(info_link)s"
+msgstr ""
+"TODO: You can tap your credit or debit card when you board, and your discount will "
+"automatically apply every time you ride. Cal-ITP doesn’t save any of your information, and you don’t need to create an account. Verify for your benefit, and connect your bank card today. <strong><a class='info-link' href="
+"\"%(info_link)s\">Learn more about Cal-ITP Benefits</a></strong><span "
+"class='period'>.</span>"
+
 #: benefits/eligibility/views.py:80 benefits/enrollment/views.py:80
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
