@@ -122,7 +122,7 @@ msgid "eligibility.pages.confirm.mst.p[0]"
 msgstr ""
 "Please input your Courtesy Card number and last name below. If you’re a "
 "current MST Courtesy Cardholder, we can confirm that you are eligible for a "
-"discount. We do not save your information."
+"benefit. We do not save your information."
 
 #: benefits/core/migrations/0002_sample_data.py:148
 msgid "eligibility.forms.confirm.mst.fields.sub"

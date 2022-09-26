@@ -59,7 +59,7 @@ msgstr "Veamos si podemos confirmar su edad con el DMV."
 msgid "eligibility.pages.confirm.dmv.p[0]"
 msgstr ""
 "Por favor, ingrese su número de licencia/identificación y su apellido abajo. "
-"Si tiene 65 años o más, podemos confirmar que es eligible para un descuento "
+"Si tiene 65 años o más, podemos confirmar que es eligible para un beneficio "
 "para personas mayores cuando viaja en transporte público. No guardamos la "
 "información que ingresa aquí."
 
