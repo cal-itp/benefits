@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-09-28 00:13+0000\n"
+"POT-Creation-Date: 2022-09-28 02:50+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,31 +22,31 @@ msgid "eligibility.buttons.signout"
 msgstr "Cierre sesión de Login.gov"
 
 #: benefits/core/migrations/0002_sample_data.py:108
-msgid "eligibility.pages.index.dmv.label"
+msgid "eligibility.pages.index.sample.label"
 msgstr "TODO: Senior Discount Program"
 
 #: benefits/core/migrations/0002_sample_data.py:110
-msgid "eligibility.pages.start.dmv.title"
+msgid "eligibility.pages.start.sample.title"
 msgstr ""
 "Conecta tu tarjeta bancaria para tu descuento en el transporte público con "
 "Cal-ITP Benefits."
 
 #: benefits/core/migrations/0002_sample_data.py:111
-msgid "eligibility.pages.start.dmv.content_title"
+msgid "eligibility.pages.start.sample.content_title"
 msgstr "Necesitará algunos artículos para conectar su descuento:"
 
 #: benefits/core/migrations/0002_sample_data.py:112
-msgid "eligibility.pages.start.dmv.items[0].title"
+msgid "eligibility.pages.start.sample.items[0].title"
 msgstr "Proporcione su número de identificación de California"
 
 #: benefits/core/migrations/0002_sample_data.py:113
-msgid "eligibility.pages.start.dmv.items[0].text"
+msgid "eligibility.pages.start.sample.items[0].text"
 msgstr ""
 "Deberá verificar su edad con una licencia de conducir o tarjeta de "
 "identificación."
 
 #: benefits/core/migrations/0002_sample_data.py:114
-msgid "eligibility.pages.start.dmv.p[0]"
+msgid "eligibility.pages.start.sample.p[0]"
 msgstr ""
 "Este programa actualmente está disponible para personas de 65 años o más. "
 "¿No tienes más de 65 años? Póngase en contacto con su proveedor de "
@@ -54,15 +54,15 @@ msgstr ""
 "disponibles."
 
 #: benefits/core/migrations/0002_sample_data.py:115
-msgid "eligibility.pages.confirm.dmv.title"
+msgid "eligibility.pages.confirm.sample.title"
 msgstr "Confirmar la elegibilidad"
 
 #: benefits/core/migrations/0002_sample_data.py:116
-msgid "eligibility.pages.confirm.dmv.content_title"
-msgstr "Veamos si podemos confirmar su edad con el DMV."
+msgid "eligibility.pages.confirm.sample.content_title"
+msgstr "Veamos si podemos confirmar su edad con el sample server."
 
 #: benefits/core/migrations/0002_sample_data.py:117
-msgid "eligibility.pages.confirm.dmv.p[0]"
+msgid "eligibility.pages.confirm.sample.p[0]"
 msgstr ""
 "Por favor, ingrese su número de licencia/identificación y su apellido abajo. "
 "Si tiene 65 años o más, podemos confirmar que es eligible para un beneficio "
@@ -70,26 +70,26 @@ msgstr ""
 "información que ingresa aquí."
 
 #: benefits/core/migrations/0002_sample_data.py:118
-msgid "eligibility.forms.confirm.dmv.fields.sub"
+msgid "eligibility.forms.confirm.sample.fields.sub"
 msgstr "Licencia de conducir de California o número de identificación"
 
 #: benefits/core/migrations/0002_sample_data.py:121
-msgid "eligibility.forms.confirm.dmv.fields.name"
+msgid "eligibility.forms.confirm.sample.fields.name"
 msgstr "Apellido (tal como aparece en la identificación)"
 
 #: benefits/core/migrations/0002_sample_data.py:124
-msgid "eligibility.pages.unverified.dmv.title"
+msgid "eligibility.pages.unverified.sample.title"
 msgstr "Error de elegibilidad"
 
 #: benefits/core/migrations/0002_sample_data.py:125
-msgid "eligibility.pages.unverified.dmv.content_title"
+msgid "eligibility.pages.unverified.sample.content_title"
 msgstr "No se pudo verificar su elegibilidad."
 
 #: benefits/core/migrations/0002_sample_data.py:126
-msgid "eligibility.pages.unverified.dmv.p[0]"
+msgid "eligibility.pages.unverified.sample.p[0]"
 msgstr ""
 "Usted todavía puede ser elegible para un descuento, pero no podemos "
-"verificar su edad con el DMV."
+"verificar su edad con el sample."
 
 #: benefits/core/migrations/0002_sample_data.py:140
 msgid "eligibility.pages.index.mst_cc.label"
