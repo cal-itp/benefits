@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-09-28 00:12+0000\n"
+"POT-Creation-Date: 2022-09-28 00:13+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -171,25 +171,25 @@ msgstr ""
 "out to Monterey-Salinas Transit for assistance."
 
 #: benefits/core/migrations/0002_sample_data.py:167
-msgid "eligibility.pages.index.oauth.label"
+msgid "eligibility.pages.index.mst_login.label"
 msgstr "TODO: Senior Discount Program"
 
 #: benefits/core/migrations/0002_sample_data.py:169
-msgid "eligibility.pages.start.oauth.headline"
+msgid "eligibility.pages.start.mst_login.headline"
 msgstr ""
 "Conecta tu tarjeta bancaria para tu descuento en el transporte público con "
 "Cal-ITP Benefits."
 
 #: benefits/core/migrations/0002_sample_data.py:170
-msgid "eligibility.pages.start.oauth.sub_headline"
+msgid "eligibility.pages.start.mst_login.sub_headline"
 msgstr "Necesitará algunos artículos para conectar su descuento:"
 
 #: benefits/core/migrations/0002_sample_data.py:171
-msgid "eligibility.pages.start.oauth.items[0].title"
+msgid "eligibility.pages.start.mst_login.items[0].title"
 msgstr "Una cuenta de Login.gov con verificación de identidad"
 
 #: benefits/core/migrations/0002_sample_data.py:172
-msgid "eligibility.pages.start.oauth.items[0].text"
+msgid "eligibility.pages.start.mst_login.items[0].text"
 msgstr ""
 "Login.gov es una forma segura de iniciar sesión en servicios "
 "gubernamentales. Benefits utiliza Login.gov para verificar su edad. Si aún "
@@ -197,19 +197,19 @@ msgstr ""
 "lo que requerirá estos artículos:"
 
 #: benefits/core/migrations/0002_sample_data.py:173
-msgid "eligibility.pages.start.oauth.p[0]"
+msgid "eligibility.pages.start.mst_login.p[0]"
 msgstr ""
 
 #: benefits/core/migrations/0002_sample_data.py:174
-msgid "eligibility.pages.unverified.oauth.title"
+msgid "eligibility.pages.unverified.mst_login.title"
 msgstr "Error de elegibilidad"
 
 #: benefits/core/migrations/0002_sample_data.py:175
-msgid "eligibility.pages.unverified.oauth.content_title"
+msgid "eligibility.pages.unverified.mst_login.content_title"
 msgstr "No se pudo verificar su elegibilidad."
 
 #: benefits/core/migrations/0002_sample_data.py:176
-msgid "eligibility.pages.unverified.oauth.p[0]"
+msgid "eligibility.pages.unverified.mst_login.p[0]"
 msgstr ""
 "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
 "proveedor de tránsito local para obtener asistencia."
@@ -568,20 +568,20 @@ msgid "core.icons.idcardcheck"
 msgstr "Icono de tarjeta de identificación con marca de verificación"
 
 #: benefits/eligibility/views.py:90
-msgid "eligibility.pages.start.oauth.link_text"
+msgid "eligibility.pages.start.mst_login.link_text"
 msgstr ""
 "Conozca más sobre Login.gov y cómo proporcionar una prueba de identidad."
 
 #: benefits/eligibility/views.py:95
-msgid "eligibility.pages.start.oauth.required_items[0]"
+msgid "eligibility.pages.start.mst_login.required_items[0]"
 msgstr "Su tarjeta de identificación emitida por el estado"
 
 #: benefits/eligibility/views.py:96
-msgid "eligibility.pages.start.oauth.required_items[1]"
+msgid "eligibility.pages.start.mst_login.required_items[1]"
 msgstr "Su número de Seguro Social"
 
 #: benefits/eligibility/views.py:97
-msgid "eligibility.pages.start.oauth.required_items[2]"
+msgid "eligibility.pages.start.mst_login.required_items[2]"
 msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
 
 #: benefits/eligibility/views.py:108 benefits/enrollment/views.py:150
