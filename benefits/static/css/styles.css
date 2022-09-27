@@ -1,3 +1,28 @@
+/* making the sticky footer */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
 /* HTML element overrides */
 
 body {
@@ -59,23 +84,6 @@ label {
   font-size: 18px;
   line-height: 26px;
   letter-spacing: 0.05em;
-}
-
-/* making the sticky footer */
-
-html,
-body {
-  height: 100%;
-  overflow-y: unset;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-}
-
-main {
-  flex-shrink: 0 !important;
 }
 
 main#main-content.main-content {
