@@ -86,79 +86,79 @@ msgstr ""
 "the DMV."
 
 #: benefits/core/migrations/0002_sample_data.py:140
-msgid "eligibility.pages.index.mst.label"
+msgid "eligibility.pages.index.mst_cc.label"
 msgstr "MST Courtesy Cardholder"
 
 #: benefits/core/migrations/0002_sample_data.py:141
-msgid "eligibility.pages.index.mst.description"
+msgid "eligibility.pages.index.mst_cc.description"
 msgstr "(includes MST RIDES Paratransit Eligibility cardholders)"
 
 #: benefits/core/migrations/0002_sample_data.py:142
-msgid "eligibility.pages.start.mst.headline"
+msgid "eligibility.pages.start.mst_cc.headline"
 msgstr "You selected a Courtesy Card benefit."
 
 #: benefits/core/migrations/0002_sample_data.py:143
-msgid "eligibility.pages.start.mst.sub_headline"
+msgid "eligibility.pages.start.mst_cc.sub_headline"
 msgstr "You will need a few items to connect your benefit:"
 
 #: benefits/core/migrations/0002_sample_data.py:144
-msgid "eligibility.pages.start.mst.items[0].title"
+msgid "eligibility.pages.start.mst_cc.items[0].title"
 msgstr "Your current Courtesy Card number"
 
 #: benefits/core/migrations/0002_sample_data.py:145
-msgid "eligibility.pages.start.mst.items[0].text"
+msgid "eligibility.pages.start.mst_cc.items[0].text"
 msgstr ""
 "You do not need to have your physical card, but you will need to know the "
 "number. It is five digits and starts with a #.  "
 
 #: benefits/core/migrations/0002_sample_data.py:146
-msgid "eligibility.pages.start.mst.p[0]"
+msgid "eligibility.pages.start.mst_cc.p[0]"
 msgstr ""
 "This program is currently open to all MST Courtesy Cardholders. Not a "
 "Courtesy Cardholder? Get in touch with your transit provider to learn about "
 "other available discount programs at"
 
 #: benefits/core/migrations/0002_sample_data.py:147
-msgid "eligibility.pages.confirm.mst.title"
+msgid "eligibility.pages.confirm.mst_cc.title"
 msgstr "Confirm your Courtesy Card"
 
 #: benefits/core/migrations/0002_sample_data.py:148
-msgid "eligibility.pages.confirm.mst.content_title"
+msgid "eligibility.pages.confirm.mst_cc.content_title"
 msgstr "Let’s see if we can find you in our system"
 
 #: benefits/core/migrations/0002_sample_data.py:149
-msgid "eligibility.pages.confirm.mst.p[0]"
+msgid "eligibility.pages.confirm.mst_cc.p[0]"
 msgstr ""
 "Please input your Courtesy Card number and last name below. If you’re a "
 "current MST Courtesy Cardholder, we can confirm that you are eligible for a "
 "benefit. We do not save your information."
 
 #: benefits/core/migrations/0002_sample_data.py:150
-msgid "eligibility.forms.confirm.mst.fields.sub"
+msgid "eligibility.forms.confirm.mst_cc.fields.sub"
 msgstr "MST Courtesy Card number"
 
 #: benefits/core/migrations/0002_sample_data.py:151
-msgid "eligibility.forms.confirm.mst.fields.sub.help_text"
+msgid "eligibility.forms.confirm.mst_cc.fields.sub.help_text"
 msgstr "This is a 5-digit number on the front and back of your card."
 
 #: benefits/core/migrations/0002_sample_data.py:154
-msgid "eligibility.forms.confirm.mst.fields.name"
+msgid "eligibility.forms.confirm.mst_cc.fields.name"
 msgstr "Last name (as it appears on Courtesy Card)"
 
 #: benefits/core/migrations/0002_sample_data.py:155
-msgid "eligibility.forms.confirm.mst.fields.name.help_text"
+msgid "eligibility.forms.confirm.mst_cc.fields.name.help_text"
 msgstr "We use this to help confirm your Courtesy Card."
 
 #: benefits/core/migrations/0002_sample_data.py:158
-msgid "eligibility.pages.unverified.mst.title"
+msgid "eligibility.pages.unverified.mst_cc.title"
 msgstr "Courtesy Card not located"
 
 #: benefits/core/migrations/0002_sample_data.py:159
-msgid "eligibility.pages.unverified.mst.content_title"
+msgid "eligibility.pages.unverified.mst_cc.content_title"
 msgstr "We couldn’t locate you in our system"
 
 #: benefits/core/migrations/0002_sample_data.py:160
-msgid "eligibility.pages.unverified.mst.p[0]"
+msgid "eligibility.pages.unverified.mst_cc.p[0]"
 msgstr ""
 "That’s okay! You may still be eligible for our program. Please reach out to "
 "Monterey-Salinas Transit for assistance."
