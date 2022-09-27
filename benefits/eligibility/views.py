@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
+from django.utils.html import format_html
 from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import recaptcha, session, viewmodels
@@ -35,15 +36,14 @@ def index(request):
 
     eligibility_start = reverse(ROUTE_START)
 
+    help_page = reverse(ROUTE_HELP)
+
     page = viewmodels.Page(
         title=_("eligibility.pages.index.title"),
         content_title=_("eligibility.pages.index.content_title"),
-        paragraphs=[_("eligibility.pages.index.p[0]%(info_link)s")],
+        paragraphs=[format_html(_("eligibility.pages.index.p[0]%(info_link)s") % {"info_link": help_page})],
         forms=forms.EligibilityVerifierSelectionForm(agency=agency),
     )
-
-    help_page = reverse(ROUTE_HELP)
-    context_dict = {**page.context_dict(), **{"info_link": f"{help_page}#about"}}
 
     if request.method == "POST":
         form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency)
@@ -57,14 +57,14 @@ def index(request):
         else:
             # form was not valid, allow for correction/resubmission
             page.forms = [form]
-            response = TemplateResponse(request, TEMPLATE_PAGE, context_dict)
+            response = TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
     else:
         if agency.eligibility_verifiers.count() == 1:
             verifier = agency.eligibility_verifiers.first()
             session.update(request, verifier=verifier)
             response = redirect(eligibility_start)
         else:
-            response = TemplateResponse(request, TEMPLATE_PAGE, context_dict)
+            response = TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
 
     return response
 
