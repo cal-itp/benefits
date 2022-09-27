@@ -41,7 +41,9 @@ def index(request):
     page = viewmodels.Page(
         title=_("eligibility.pages.index.title"),
         content_title=_("eligibility.pages.index.content_title"),
-        paragraphs=[format_html(_("eligibility.pages.index.p[0]%(info_link)s") % {"info_link": help_page})],
+        paragraphs=[
+            format_html(_("eligibility.pages.index.p[0]%(info_link)s") % {"info_link": f"{help_page}#what-is-cal-itp"})
+        ],
         forms=forms.EligibilityVerifierSelectionForm(agency=agency),
     )
 
