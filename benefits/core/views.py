@@ -43,10 +43,7 @@ def index(request):
         classes="home",
     )
 
-    help_page = reverse(ROUTE_HELP)
-    context_dict = {**page.context_dict(), **{"info_link": f"{help_page}#about"}}
-
-    return TemplateResponse(request, TEMPLATE_PAGE, context_dict)
+    return TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
 
 
 @pageview_decorator
