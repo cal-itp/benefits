@@ -27,7 +27,7 @@ msgstr "Senior Discount Program"
 
 #: benefits/core/migrations/0002_sample_data.py:110
 msgid "eligibility.pages.start.dmv.title"
-msgstr "You selected an Older Adult Benefit with MST."
+msgstr "You selected an Older Adult benefit with MST."
 
 #: benefits/core/migrations/0002_sample_data.py:111
 msgid "eligibility.pages.start.dmv.content_title"
@@ -95,7 +95,7 @@ msgstr "(includes MST RIDES Paratransit Eligibility cardholders)"
 
 #: benefits/core/migrations/0002_sample_data.py:142
 msgid "eligibility.pages.start.mst.headline"
-msgstr "You selected a Courtesy Card Benefit."
+msgstr "You selected a Courtesy Card benefit."
 
 #: benefits/core/migrations/0002_sample_data.py:143
 msgid "eligibility.pages.start.mst.sub_headline"
@@ -169,7 +169,7 @@ msgstr "Senior Discount Program"
 
 #: benefits/core/migrations/0002_sample_data.py:169
 msgid "eligibility.pages.start.mst_login.headline"
-msgstr "You selected an Older Adult Benefit with MST."
+msgstr "You selected an Older Adult benefit with MST."
 
 #: benefits/core/migrations/0002_sample_data.py:170
 msgid "eligibility.pages.start.mst_login.sub_headline"
