@@ -106,7 +106,7 @@ PEM DATA
         start_item_description=_("eligibility.pages.start.mst_login.items[0].text"),
         start_blurb=_("eligibility.pages.start.mst_login.p[0]"),
         unverified_title=_("eligibility.pages.unverified.mst_login.title"),
-        unverified_content_title=_("eligibility.pages.unverified.mst_login.content_title"),
+        unverified_headline=_("eligibility.pages.unverified.mst_login.headline"),
         unverified_blurb=_("eligibility.pages.unverified.mst_login.p[0]"),
     )
 
@@ -129,7 +129,7 @@ PEM DATA
         start_item_description=_("eligibility.pages.start.mst_cc.items[0].text"),
         start_blurb=_("eligibility.pages.start.mst_cc.p[0]"),
         form_title=_("eligibility.pages.confirm.mst_cc.title"),
-        form_content_title=_("eligibility.pages.confirm.mst_cc.content_title"),
+        form_headline=_("eligibility.pages.confirm.mst_cc.headline"),
         form_blurb=_("eligibility.pages.confirm.mst_cc.p[0]"),
         form_sub_label=_("eligibility.forms.confirm.mst_cc.fields.sub"),
         form_sub_help_text=_("eligibility.forms.confirm.mst_cc.fields.sub.help_text"),
@@ -140,7 +140,7 @@ PEM DATA
         form_name_placeholder="Garcia",
         form_name_max_length=255,
         unverified_title=_("eligibility.pages.unverified.mst_cc.title"),
-        unverified_content_title=_("eligibility.pages.unverified.mst_cc.content_title"),
+        unverified_headline=_("eligibility.pages.unverified.mst_cc.headline"),
         unverified_blurb=_("eligibility.pages.unverified.mst_cc.p[0]"),
     )
 

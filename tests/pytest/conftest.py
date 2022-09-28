@@ -95,7 +95,7 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         start_item_description="Start Item Description",
         start_blurb="Start Blurb",
         form_title="Form",
-        form_content_title="Form",
+        form_headline="Form",
         form_blurb="Form Blurb",
         form_sub_label="Sub",
         form_sub_help_text="Sub Help Text",
@@ -104,7 +104,7 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         form_name_help_text="Name Help Text",
         form_name_placeholder="Name",
         unverified_title="Unverified",
-        unverified_content_title="Unverified",
+        unverified_headline="Unverified",
         unverified_blurb="Unverified Blurb",
     )
 

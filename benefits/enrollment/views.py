@@ -76,7 +76,7 @@ def index(request):
 
         page = viewmodels.Page(
             title=_("enrollment.pages.index.title"),
-            content_title=_("enrollment.pages.index.content_title"),
+            headline=_("enrollment.pages.index.headline"),
             icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
             paragraphs=[_("enrollment.pages.index.p[0]"), _("enrollment.pages.index.p[1]"), _("enrollment.pages.index.p[2]")],
             classes="text-lg-center no-image-mobile",
@@ -126,7 +126,7 @@ def retry(request):
                 classes="no-image-mobile",
                 title=_("enrollment.pages.retry.title"),
                 icon=viewmodels.Icon("bankcardquestion", pgettext("image alt text", "core.icons.bankcardquestion")),
-                content_title=_("enrollment.pages.retry.title"),
+                headline=_("enrollment.pages.retry.title"),
                 paragraphs=[_("enrollment.pages.retry.p[0]")],
                 buttons=viewmodels.Button.agency_contact_links(agency),
             )
@@ -151,7 +151,7 @@ def success(request):
     page = viewmodels.Page(
         classes="no-image-mobile",
         title=_("enrollment.pages.success.title"),
-        content_title=_("enrollment.pages.success.content_title"),
+        headline=_("enrollment.pages.success.headline"),
     )
 
     if verifier.is_auth_required:
@@ -161,7 +161,7 @@ def success(request):
             page.icon = icon
         else:
             page.classes = ["no-image-mobile", "logged-out"]
-            page.content_title = _("enrollment.pages.success.logout.title")
+            page.headline = _("enrollment.pages.success.logout.title")
     else:
         page.icon = icon
 

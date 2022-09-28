@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
                 ("start_item_description", models.TextField()),
                 ("start_blurb", models.TextField()),
                 ("form_title", models.TextField(null=True)),
-                ("form_content_title", models.TextField(null=True)),
+                ("form_headline", models.TextField(null=True)),
                 ("form_blurb", models.TextField(null=True)),
                 ("form_sub_label", models.TextField(null=True)),
                 ("form_sub_help_text", models.TextField(null=True)),
@@ -63,7 +63,7 @@ class Migration(migrations.Migration):
                 ("form_name_placeholder", models.TextField(null=True)),
                 ("form_name_max_length", models.PositiveSmallIntegerField(null=True)),
                 ("unverified_title", models.TextField()),
-                ("unverified_content_title", models.TextField()),
+                ("unverified_headline", models.TextField()),
                 ("unverified_blurb", models.TextField()),
                 (
                     "auth_provider",

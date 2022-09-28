@@ -40,7 +40,7 @@ def index(request):
 
     page = viewmodels.Page(
         title=_("eligibility.pages.index.title"),
-        content_title=_("eligibility.pages.index.content_title"),
+        headline=_("eligibility.pages.index.headline"),
         paragraphs=[
             format_html(_("eligibility.pages.index.p[0]%(info_link)s") % {"info_link": f"{help_page}#what-is-cal-itp"})
         ],
@@ -161,7 +161,7 @@ def confirm(request):
     # GET/POST for Eligibility API verification
     page = viewmodels.Page(
         title=_(verifier.form_title),
-        content_title=_(verifier.form_content_title),
+        headline=_(verifier.form_headline),
         paragraphs=[_(verifier.form_blurb)],
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
         classes="text-lg-center",
@@ -229,7 +229,7 @@ def unverified(request):
     page = viewmodels.Page(
         title=_(verifier.unverified_title),
         classes="with-agency-links",
-        content_title=_(verifier.unverified_content_title),
+        headline=_(verifier.unverified_headline),
         icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
         paragraphs=[_(verifier.unverified_blurb)],
         buttons=buttons,

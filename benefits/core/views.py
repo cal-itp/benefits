@@ -38,7 +38,7 @@ def index(request):
 
     page = viewmodels.Page(
         title=_("core.pages.index.title"),
-        content_title=_("core.pages.index.content_title"),
+        headline=_("core.pages.index.headline"),
         buttons=buttons,
         classes="home",
     )
@@ -59,7 +59,7 @@ def agency_index(request, agency):
 
     page = viewmodels.Page(
         title=_("core.pages.agency_index.title"),
-        content_title=_("core.pages.agency_index.mst_cc.content_title"),
+        headline=_("core.pages.agency_index.mst_cc.headline"),
         button=button,
         classes="home",
     )
@@ -86,7 +86,7 @@ def help(request):
 
     page = viewmodels.Page(
         title=_("core.buttons.help"),
-        content_title=_("core.buttons.help"),
+        headline=_("core.buttons.help"),
         buttons=buttons,
     )
 
