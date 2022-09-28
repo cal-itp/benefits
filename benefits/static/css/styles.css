@@ -74,30 +74,8 @@ label {
   letter-spacing: 0.05em;
 }
 
-/* making the sticky footer */
-
-html,
-body {
-  height: 100%;
-  overflow-y: unset;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-}
-
-main {
-  flex-shrink: 0 !important;
-}
-
-main#main-content.main-content {
-  position: relative;
-}
-
-/* All pages but the Start Page */
 main .main-row {
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 118px);
 }
 
 footer {
@@ -460,8 +438,8 @@ footer.global-footer .footer-links a:active {
 }
 
 .container.content {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  padding: 0;
+  margin: 0;
 }
 
 .container.content .buttons label {
@@ -606,11 +584,6 @@ footer.global-footer .footer-links a:active {
   .radio-label {
     display: inline;
     margin-left: 5px;
-  }
-
-  .container.content {
-    padding-left: 0;
-    padding-right: 0;
   }
 }
 
@@ -764,14 +737,6 @@ footer.global-footer .footer-links a:active {
     padding-bottom: 0.138rem;
   }
 
-  .container.content {
-    padding-left: 3.5rem;
-    padding-right: 3.5rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    margin: 0;
-  }
-
   .container.content input[type="submit"],
   .container.content .btn {
     width: fit-content;
@@ -794,15 +759,6 @@ footer.global-footer .footer-links a:active {
 }
 
 @media (min-width: 1200px) {
-  /* xl+ */
-  .container.content {
-    padding-left: 5rem;
-    padding-right: 5rem;
-    padding-top: 4.5rem;
-    padding-bottom: 2rem;
-    margin: 0;
-  }
-
   /* Override for only the Agency Index page */
   .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 5rem;
