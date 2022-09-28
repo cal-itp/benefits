@@ -75,7 +75,7 @@ def index(request):
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
         confirmed_benefit_item = dict(
-            icon=viewmodels.Icon("happybus", "core.icons.happybus"),
+            icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
             heading=_("enrollment.pages.index.confirmed_benefit.title"),
             details=_("enrollment.pages.index.confirmed_benefit.text"),
         )
