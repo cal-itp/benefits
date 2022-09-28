@@ -158,7 +158,6 @@ def confirm(request):
         content_title=_(verifier.form_content_title),
         paragraphs=[_(verifier.form_blurb)],
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
-        classes="text-lg-center",
     )
 
     # GET from an unverified user, present the form
