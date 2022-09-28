@@ -634,11 +634,11 @@ footer.global-footer .footer-links a:active {
 
   .signout-row .container .signout-link {
     font-size: 18px;
-    color: #2b6597;
+    color: var(--primary-color);
     background: none;
     padding: 5px 10px;
     border-radius: 3px;
-    border: 2px solid #2b6597;
+    border: 2px solid var(--primary-color);
     margin-top: 20px;
     letter-spacing: 0.02em;
     font-weight: 500;
