@@ -13,8 +13,8 @@ def load_sample_data(app, *args, **kwargs):
 
     EligibilityType = app.get_model("core", "EligibilityType")
 
-    type1 = EligibilityType.objects.create(name="type1", label="Eligibility Type 1", group_id="group1")
-    type2 = EligibilityType.objects.create(name="type2", label="Eligibility Type 2", group_id="group2")
+    senior_type = EligibilityType.objects.create(name="senior", label="Senior", group_id="group1")
+    courtesy_card_type = EligibilityType.objects.create(name="courtesy_card", label="Courtesy Card", group_id="group2")
 
     PemData = app.get_model("core", "PemData")
 
@@ -88,42 +88,26 @@ PEM DATA
         client_name="benefits-oauth-client-name",
         client_id="benefits-oauth-client-id",
         authority="https://example.com",
-        scope="verify:type1",
-        claim="type1",
+        scope="verify:senior",
+        claim="senior",
     )
 
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
 
     verifier1 = EligibilityVerifier.objects.create(
-        name="Test Eligibility Verifier 1",
-        api_url="http://server:8000/verify",
-        api_auth_header="X-Server-API-Key",
-        api_auth_key="server-auth-token",
-        eligibility_type=type1,
-        public_key=server_public_key,
-        jwe_cek_enc="A256CBC-HS512",
-        jwe_encryption_alg="RSA-OAEP",
-        jws_signing_alg="RS256",
+        name="OAuth claims via Login.gov",
+        eligibility_type=senior_type,
         auth_provider=auth_provider,
-        selection_label=_("eligibility.pages.index.sample.label"),
-        selection_label_description=_("eligibility.pages.index.sample.description"),
-        start_headline=_("eligibility.pages.start.sample.title"),
-        start_sub_headline=_("eligibility.pages.start.sample.content_title"),
-        start_item_name=_("eligibility.pages.start.sample.items[0].title"),
-        start_item_description=_("eligibility.pages.start.sample.items[0].text"),
-        start_blurb=_("eligibility.pages.start.sample.p[0]"),
-        form_title=_("eligibility.pages.confirm.sample.title"),
-        form_content_title=_("eligibility.pages.confirm.sample.content_title"),
-        form_blurb=_("eligibility.pages.confirm.sample.p[0]"),
-        form_sub_label=_("eligibility.forms.confirm.sample.fields.sub"),
-        form_sub_placeholder="A1234567",
-        form_sub_pattern=".+",
-        form_name_label=_("eligibility.forms.confirm.sample.fields.name"),
-        form_name_placeholder="Rodriguez",
-        form_name_max_length=255,
-        unverified_title=_("eligibility.pages.unverified.sample.title"),
-        unverified_content_title=_("eligibility.pages.unverified.sample.content_title"),
-        unverified_blurb=_("eligibility.pages.unverified.sample.p[0]"),
+        selection_label=_("eligibility.pages.index.mst_login.label"),
+        selection_label_description=_("eligibility.pages.index.mst_login.description"),
+        start_headline=_("eligibility.pages.start.mst_login.headline"),
+        start_sub_headline=_("eligibility.pages.start.mst_login.sub_headline"),
+        start_item_name=_("eligibility.pages.start.mst_login.items[0].title"),
+        start_item_description=_("eligibility.pages.start.mst_login.items[0].text"),
+        start_blurb=_("eligibility.pages.start.mst_login.p[0]"),
+        unverified_title=_("eligibility.pages.unverified.mst_login.title"),
+        unverified_content_title=_("eligibility.pages.unverified.mst_login.content_title"),
+        unverified_blurb=_("eligibility.pages.unverified.mst_login.p[0]"),
     )
 
     verifier2 = EligibilityVerifier.objects.create(
@@ -131,7 +115,7 @@ PEM DATA
         api_url="http://server:8000/verify",
         api_auth_header="X-Server-API-Key",
         api_auth_key="server-auth-token",
-        eligibility_type=type2,
+        eligibility_type=courtesy_card_type,
         public_key=server_public_key,
         jwe_cek_enc="A256CBC-HS512",
         jwe_encryption_alg="RSA-OAEP",
@@ -160,22 +144,6 @@ PEM DATA
         unverified_blurb=_("eligibility.pages.unverified.mst_cc.p[0]"),
     )
 
-    EligibilityVerifier.objects.create(
-        name="OAuth claims via Login.gov",
-        eligibility_type=type1,
-        auth_provider=auth_provider,
-        selection_label=_("eligibility.pages.index.mst_login.label"),
-        selection_label_description=None,
-        start_headline=_("eligibility.pages.start.mst_login.headline"),
-        start_sub_headline=_("eligibility.pages.start.mst_login.sub_headline"),
-        start_item_name=_("eligibility.pages.start.mst_login.items[0].title"),
-        start_item_description=_("eligibility.pages.start.mst_login.items[0].text"),
-        start_blurb=_("eligibility.pages.start.mst_login.p[0]"),
-        unverified_title=_("eligibility.pages.unverified.mst_login.title"),
-        unverified_content_title=_("eligibility.pages.unverified.mst_login.content_title"),
-        unverified_blurb=_("eligibility.pages.unverified.mst_login.p[0]"),
-    )
-
     PaymentProcessor = app.get_model("core", "PaymentProcessor")
 
     payment_processor = PaymentProcessor.objects.create(
@@ -197,39 +165,22 @@ PEM DATA
 
     TransitAgency = app.get_model("core", "TransitAgency")
 
-    transit_agency1 = TransitAgency.objects.create(
-        slug="abc",
-        short_name="ABC",
-        long_name="ABC Transit Company",
-        agency_id="abc123",
-        merchant_id="abc",
-        info_url="https://www.example.com/help",
-        phone="800-555-5555",
+    mst_agency = TransitAgency.objects.create(
+        slug="mst",
+        short_name="MST (sample)",
+        long_name="Monterey-Salinas Transit (sample)",
+        agency_id="mst",
+        merchant_id="mst",
+        info_url="https://mst.org/benefits",
+        phone="888-678-2871",
         active=True,
         private_key=client_private_key,
         public_key=client_public_key,
         jws_signing_alg="RS256",
         payment_processor=payment_processor,
     )
-    transit_agency1.eligibility_types.set([type1, type2])
-    transit_agency1.eligibility_verifiers.set([verifier1, verifier2])
-
-    transit_agency2 = TransitAgency.objects.create(
-        slug="deftl",
-        short_name="DefTL",
-        long_name="DEF Transit Lines",
-        agency_id="def456",
-        merchant_id="deftl",
-        info_url="https://www.example.com/help",
-        phone="321-555-5555",
-        active=True,
-        private_key=client_private_key,
-        public_key=client_public_key,
-        jws_signing_alg="RS256",
-        payment_processor=payment_processor,
-    )
-    transit_agency2.eligibility_types.set([type1])
-    transit_agency2.eligibility_verifiers.set([verifier1])
+    mst_agency.eligibility_types.set([senior_type, courtesy_card_type])
+    mst_agency.eligibility_verifiers.set([verifier1, verifier2])
 
 
 class Migration(migrations.Migration):
