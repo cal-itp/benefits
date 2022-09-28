@@ -165,39 +165,22 @@ PEM DATA
 
     TransitAgency = app.get_model("core", "TransitAgency")
 
-    transit_agency1 = TransitAgency.objects.create(
-        slug="abc",
-        short_name="ABC",
-        long_name="ABC Transit Company",
-        agency_id="abc123",
-        merchant_id="abc",
-        info_url="https://www.example.com/help",
-        phone="800-555-5555",
+    mst_agency = TransitAgency.objects.create(
+        slug="mst",
+        short_name="MST (sample)",
+        long_name="Monterey-Salinas Transit (sample)",
+        agency_id="mst",
+        merchant_id="mst",
+        info_url="https://mst.org/benefits",
+        phone="888-678-2871",
         active=True,
         private_key=client_private_key,
         public_key=client_public_key,
         jws_signing_alg="RS256",
         payment_processor=payment_processor,
     )
-    transit_agency1.eligibility_types.set([type1, type2])
-    transit_agency1.eligibility_verifiers.set([verifier1, verifier2])
-
-    transit_agency2 = TransitAgency.objects.create(
-        slug="deftl",
-        short_name="DefTL",
-        long_name="DEF Transit Lines",
-        agency_id="def456",
-        merchant_id="deftl",
-        info_url="https://www.example.com/help",
-        phone="321-555-5555",
-        active=True,
-        private_key=client_private_key,
-        public_key=client_public_key,
-        jws_signing_alg="RS256",
-        payment_processor=payment_processor,
-    )
-    transit_agency2.eligibility_types.set([type1])
-    transit_agency2.eligibility_verifiers.set([verifier1])
+    mst_agency.eligibility_types.set([type1, type2])
+    mst_agency.eligibility_verifiers.set([verifier1, verifier2])
 
 
 class Migration(migrations.Migration):
