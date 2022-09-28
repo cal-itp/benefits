@@ -9,6 +9,9 @@
   --bs-body-text-align: left;
   --bs-body-font-weight: 400;
   --bs-body-font-size: 16px;
+  --bs-font-sans-serif: Roboto, system-ui, -apple-system, "Segoe UI", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-body-font-family: var(--bs-font-sans-serif);
 }
 
 @font-face {
@@ -29,7 +32,7 @@ p,
 a,
 span,
 li {
-  font-family: "Roboto", sans-serif;
+  font-family: var(--bs-body-font-family);
 }
 
 h1,
@@ -124,9 +127,6 @@ footer.global-footer .footer-links a:active {
 /* Log In */
 
 #login {
-  background: var(--primary-color);
-  border: 0;
-  color: #ffffff;
   cursor: pointer;
   display: block;
   line-height: 1;
