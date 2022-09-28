@@ -164,7 +164,6 @@ def confirm(request):
         headline=_(verifier.form_headline),
         paragraphs=[_(verifier.form_blurb)],
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
-        classes="text-lg-center",
     )
 
     # GET from an unverified user, present the form
