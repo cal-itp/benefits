@@ -74,11 +74,24 @@ def index(request):
         tokenize_retry_form = forms.CardTokenizeFailForm(ROUTE_RETRY)
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
+        confirmed_benefit_item = dict(
+            icon=viewmodels.Icon("happybus", "core.icons.happybus"),
+            heading=_("enrollment.pages.index.confirmed_benefit.title"),
+            details=_("enrollment.pages.index.confirmed_benefit.text"),
+        )
+
+        link_card_item = dict(
+            icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
+            heading=_("enrollment.pages.index.link_card.title"),
+            details=_("enrollment.pages.index.link_card.text"),
+        )
+
+        media = [confirmed_benefit_item, link_card_item]
+
         page = viewmodels.Page(
             title=_("enrollment.pages.index.title"),
             headline=_("enrollment.pages.index.headline"),
-            icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-            paragraphs=[_("enrollment.pages.index.p[0]"), _("enrollment.pages.index.p[1]"), _("enrollment.pages.index.p[2]")],
+            paragraphs=[_("enrollment.pages.index.p[0]")],
             forms=[tokenize_retry_form, tokenize_success_form],
             buttons=[
                 viewmodels.Button.primary(
@@ -87,6 +100,7 @@ def index(request):
             ],
         )
         context = {}
+        context["media"] = media
         context.update(page.context_dict())
 
         # add agency details
