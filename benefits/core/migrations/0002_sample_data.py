@@ -106,7 +106,7 @@ PEM DATA
         jws_signing_alg="RS256",
         auth_provider=auth_provider,
         selection_label=_("eligibility.pages.index.sample.label"),
-        selection_label_description=None,
+        selection_label_description=_("eligibility.pages.index.sample.description"),
         start_headline=_("eligibility.pages.start.sample.title"),
         start_sub_headline=_("eligibility.pages.start.sample.content_title"),
         start_item_name=_("eligibility.pages.start.sample.items[0].title"),

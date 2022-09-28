@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-09-28 02:50+0000\n"
+"POT-Creation-Date: 2022-09-28 20:50+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +23,14 @@ msgstr "Sign out of Login.gov"
 
 #: benefits/core/migrations/0002_sample_data.py:108
 msgid "eligibility.pages.index.sample.label"
-msgstr "Senior Discount Program"
+msgstr "I am 65 years of age or older"
+
+#: benefits/core/migrations/0002_sample_data.py:109
+msgid "eligibility.pages.index.sample.description"
+msgstr ""
+"You must be 65 years or older. This benefit does not expire, but you may "
+"need to renew. Using this benefit means your new transit fare is half of the "
+"standard fare."
 
 #: benefits/core/migrations/0002_sample_data.py:110
 msgid "eligibility.pages.start.sample.title"
@@ -87,11 +94,15 @@ msgstr ""
 
 #: benefits/core/migrations/0002_sample_data.py:140
 msgid "eligibility.pages.index.mst_cc.label"
-msgstr "MST Courtesy Cardholder"
+msgstr "I have an MST Courtesy Card"
 
 #: benefits/core/migrations/0002_sample_data.py:141
 msgid "eligibility.pages.index.mst_cc.description"
-msgstr "(includes MST RIDES Paratransit Eligibility cardholders)"
+msgstr ""
+"This option is for people who have a current Courtesy Card (includes MST "
+"RIDES Eligibility cardholders). This benefit is part of a demonstration tool "
+"and may need to be renewed in the future. Using this benefit means your new "
+"transit fare is half of the standard fare.the sample."
 
 #: benefits/core/migrations/0002_sample_data.py:142
 msgid "eligibility.pages.start.mst_cc.headline"
@@ -518,9 +529,13 @@ msgstr "Connect your MST Benefit to your Contactless Card"
 msgid "core.buttons.back"
 msgstr "Go back"
 
-#: benefits/eligibility/forms.py:23 benefits/eligibility/views.py:76
-msgid "eligibility.buttons.continue"
-msgstr "Continue"
+#: benefits/eligibility/forms.py:21
+msgid "eligibility.pages.index.label"
+msgstr "Select the option that best applies to you:"
+
+#: benefits/eligibility/forms.py:23
+msgid "eligibility.buttons.choose"
+msgstr "Choose this Benefit"
 
 #: benefits/eligibility/forms.py:41
 msgid "eligibility.forms.confirm.submit"
@@ -538,54 +553,70 @@ msgstr "Check your input. The format looks wrong."
 msgid "eligibility.forms.confirm.errors.missing"
 msgstr "This field is required."
 
-#: benefits/eligibility/views.py:39
+#: benefits/eligibility/views.py:42
 msgid "eligibility.pages.index.title"
-msgstr "Select a discount option"
+msgstr "Select a benefit option"
 
-#: benefits/eligibility/views.py:40
+#: benefits/eligibility/views.py:43
 msgid "eligibility.pages.index.content_title"
-msgstr "Select the discount option that best applies to you:"
+msgstr ""
+"Connect your bank card to your public transit discount with Cal-ITP Benefits"
 
-#: benefits/eligibility/views.py:80 benefits/enrollment/views.py:80
+#: benefits/eligibility/views.py:45
+#, python-format
+msgid "eligibility.pages.index.p[0]%(info_link)s"
+msgstr ""
+"You can tap your credit or debit card when you board, and your discount will "
+"automatically apply every time you ride. Cal-ITP doesn’t save any of your "
+"information, and you don’t need to create an account. Verify for your "
+"benefit, and connect your bank card today. <strong><a class='info-link' href="
+"\"%(info_link)s\">Learn more about Cal-ITP Benefits</a></strong><span "
+"class='period'>.</span>"
+
+#: benefits/eligibility/views.py:82
+msgid "eligibility.buttons.continue"
+msgstr "Continue"
+
+#: benefits/eligibility/views.py:86 benefits/enrollment/views.py:80
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Identification card icon with checkmark"
 
-#: benefits/eligibility/views.py:90
+#: benefits/eligibility/views.py:96
 msgid "eligibility.pages.start.mst_login.link_text"
 msgstr "Learn more about Login.gov and providing proof of identity"
 
-#: benefits/eligibility/views.py:95
+#: benefits/eligibility/views.py:101
 msgid "eligibility.pages.start.mst_login.required_items[0]"
 msgstr "Your state-issued ID card"
 
-#: benefits/eligibility/views.py:96
+#: benefits/eligibility/views.py:102
 msgid "eligibility.pages.start.mst_login.required_items[1]"
 msgstr "Your Social Security number"
 
-#: benefits/eligibility/views.py:97
+#: benefits/eligibility/views.py:103
 msgid "eligibility.pages.start.mst_login.required_items[2]"
 msgstr "A phone number with a phone plan associated with your name"
 
-#: benefits/eligibility/views.py:108 benefits/enrollment/views.py:150
+#: benefits/eligibility/views.py:114 benefits/enrollment/views.py:150
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
 msgstr "Bank card icon with contactless symbol and checkmark"
 
-#: benefits/eligibility/views.py:109
+#: benefits/eligibility/views.py:115
 msgid "eligibility.pages.start.bankcard.title"
 msgstr "Your bank card details"
 
-#: benefits/eligibility/views.py:110
+#: benefits/eligibility/views.py:116
 msgid "eligibility.pages.start.bankcard.text"
 msgstr ""
 "Your card must be a contactless debit or credit card by Visa or Mastercard."
 
-#: benefits/eligibility/views.py:116
+#: benefits/eligibility/views.py:122
 msgid "eligibility.pages.start.title"
 msgstr "Get Started"
 
-#: benefits/eligibility/views.py:227
+#: benefits/eligibility/views.py:234
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Identification card icon with question mark"
