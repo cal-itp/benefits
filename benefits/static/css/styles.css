@@ -100,11 +100,6 @@ main .main-row {
   min-height: calc(100vh - 120px);
 }
 
-main .main-row .col-lg-6.image {
-  background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
-  background-size: cover;
-}
-
 footer {
   margin-top: auto;
   padding-top: 1rem;
