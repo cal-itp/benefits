@@ -6,11 +6,9 @@
 
 {% block main_content %}
   <div class="container">
-    <h1 class="headline">{% translate "eligibility.pages.start.content_title" %}</h1>
-    <p>{% blocktranslate with info_link=info_link%}eligibility.pages.start.p[0]{{ info_link }}{% endblocktranslate %}</p>
-    <p>{% translate "eligibility.pages.start.p[1]" %}</p>
+    <h1 class="headline">{{ start_headline }}</h1>
 
-    <h2 class="media-title">{{ title }}</h2>
+    <h2 class="media-title">{{ start_sub_headline }}</h2>
 
     {% block media_list %}
       {% if media|length_is:"0" %}
@@ -28,11 +26,6 @@
                       {% for l in item.bullets %}<li>{{ l }}</li>{% endfor %}
                     </ul>
                   </div>
-                </div>
-                <div class="media-body--links">
-                  {% for l in item.links %}
-                    {% include "core/includes/button.html" with button=l %}
-                  {% endfor %}
                 </div>
               </div>
             </li>

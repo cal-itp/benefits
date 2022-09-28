@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-09-26 23:28+0000\n"
+"POT-Creation-Date: 2022-09-28 02:50+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,179 +22,205 @@ msgid "eligibility.buttons.signout"
 msgstr "Cierre sesión de Login.gov"
 
 #: benefits/core/migrations/0002_sample_data.py:108
-msgid "eligibility.pages.index.dmv.label"
+msgid "eligibility.pages.index.sample.label"
 msgstr "TODO: I am 65 years of age or older"
 
 #: benefits/core/migrations/0002_sample_data.py:109
-msgid "eligibility.pages.index.dmv.description"
+msgid "eligibility.pages.index.sample.description"
 msgstr ""
 "TODO: You must be 65 years or older. This benefit does not expire, but you "
 "may need to renew. Using this benefit means your new transit fare is half of "
 "the standard fare."
 
 #: benefits/core/migrations/0002_sample_data.py:110
-msgid "eligibility.pages.start.dmv.content_title"
-msgstr "Necesitará algunos artículos para conectar su descuento:"
+msgid "eligibility.pages.start.sample.title"
+msgstr ""
+"Conecta tu tarjeta bancaria para tu descuento en el transporte público con "
+"Cal-ITP Benefits."
 
 #: benefits/core/migrations/0002_sample_data.py:111
-msgid "eligibility.pages.start.dmv.items[0].title"
-msgstr "Proporcione su número de identificación de California"
+msgid "eligibility.pages.start.sample.content_title"
+msgstr "Necesitará algunos artículos para conectar su descuento:"
 
 #: benefits/core/migrations/0002_sample_data.py:112
-msgid "eligibility.pages.start.dmv.items[0].text"
+msgid "eligibility.pages.start.sample.items[0].title"
+msgstr "Proporcione su número de identificación de California"
+
+#: benefits/core/migrations/0002_sample_data.py:113
+msgid "eligibility.pages.start.sample.items[0].text"
 msgstr ""
 "Deberá verificar su edad con una licencia de conducir o tarjeta de "
 "identificación."
 
-#: benefits/core/migrations/0002_sample_data.py:113
-msgid "eligibility.pages.start.dmv.p[0]"
+#: benefits/core/migrations/0002_sample_data.py:114
+msgid "eligibility.pages.start.sample.p[0]"
 msgstr ""
 "Este programa actualmente está disponible para personas de 65 años o más. "
 "¿No tienes más de 65 años? Póngase en contacto con su proveedor de "
 "transporte público para obtener información sobre los programas de descuento "
 "disponibles."
 
-#: benefits/core/migrations/0002_sample_data.py:114
-msgid "eligibility.pages.confirm.dmv.title"
+#: benefits/core/migrations/0002_sample_data.py:115
+msgid "eligibility.pages.confirm.sample.title"
 msgstr "Confirmar la elegibilidad"
 
-#: benefits/core/migrations/0002_sample_data.py:115
-msgid "eligibility.pages.confirm.dmv.content_title"
-msgstr "Veamos si podemos confirmar su edad con el DMV."
-
 #: benefits/core/migrations/0002_sample_data.py:116
-msgid "eligibility.pages.confirm.dmv.p[0]"
+msgid "eligibility.pages.confirm.sample.content_title"
+msgstr "Veamos si podemos confirmar su edad con el sample server."
+
+#: benefits/core/migrations/0002_sample_data.py:117
+msgid "eligibility.pages.confirm.sample.p[0]"
 msgstr ""
 "Por favor, ingrese su número de licencia/identificación y su apellido abajo. "
-"Si tiene 65 años o más, podemos confirmar que es eligible para un descuento "
+"Si tiene 65 años o más, podemos confirmar que es eligible para un beneficio "
 "para personas mayores cuando viaja en transporte público. No guardamos la "
 "información que ingresa aquí."
 
-#: benefits/core/migrations/0002_sample_data.py:117
-msgid "eligibility.forms.confirm.dmv.fields.sub"
+#: benefits/core/migrations/0002_sample_data.py:118
+msgid "eligibility.forms.confirm.sample.fields.sub"
 msgstr "Licencia de conducir de California o número de identificación"
 
-#: benefits/core/migrations/0002_sample_data.py:120
-msgid "eligibility.forms.confirm.dmv.fields.name"
+#: benefits/core/migrations/0002_sample_data.py:121
+msgid "eligibility.forms.confirm.sample.fields.name"
 msgstr "Apellido (tal como aparece en la identificación)"
 
-#: benefits/core/migrations/0002_sample_data.py:123
-msgid "eligibility.pages.unverified.dmv.title"
+#: benefits/core/migrations/0002_sample_data.py:124
+msgid "eligibility.pages.unverified.sample.title"
 msgstr "Error de elegibilidad"
 
-#: benefits/core/migrations/0002_sample_data.py:124
-msgid "eligibility.pages.unverified.dmv.content_title"
+#: benefits/core/migrations/0002_sample_data.py:125
+msgid "eligibility.pages.unverified.sample.content_title"
 msgstr "No se pudo verificar su elegibilidad."
 
-#: benefits/core/migrations/0002_sample_data.py:125
-msgid "eligibility.pages.unverified.dmv.p[0]"
+#: benefits/core/migrations/0002_sample_data.py:126
+msgid "eligibility.pages.unverified.sample.p[0]"
 msgstr ""
 "Usted todavía puede ser elegible para un descuento, pero no podemos "
-"verificar su edad con el DMV."
+"verificar su edad con el sample."
 
 #: benefits/core/migrations/0002_sample_data.py:139
-msgid "eligibility.pages.index.mst.label"
+msgid "eligibility.pages.index.mst_cc.label"
 msgstr "TODO: I have an MST Courtesy Card"
 
 #: benefits/core/migrations/0002_sample_data.py:140
-msgid "eligibility.pages.index.mst.description"
+msgid "eligibility.pages.index.mst_cc.description"
 msgstr ""
 "TODO: This option is for people who have a current Courtesy Card (includes "
 "MST RIDES Eligibility cardholders). This benefit is part of a demonstration "
 "tool and may need to be renewed in the future. Using this benefit means your "
 "new transit fare is half of the standard fare."
 
-#: benefits/core/migrations/0002_sample_data.py:141
-msgid "eligibility.pages.start.mst.content_title"
-msgstr "TODO: Genial, necesitarás dos cosas antes de empeza"
-
 #: benefits/core/migrations/0002_sample_data.py:142
-msgid "eligibility.pages.start.mst.items[0].title"
-msgstr "Tu tarjeta de cortesía MST"
+msgid "eligibility.pages.start.mst_cc.headline"
+msgstr ""
+"Conecta tu tarjeta bancaria para tu descuento en el transporte público con "
+"Cal-ITP Benefits."
 
 #: benefits/core/migrations/0002_sample_data.py:143
-msgid "eligibility.pages.start.mst.items[0].text"
-msgstr "Una tarjeta activa que no ha caducado"
+msgid "eligibility.pages.start.mst_cc.sub_headline"
+msgstr "TODO: Genial, necesitarás dos cosas antes de empeza"
 
 #: benefits/core/migrations/0002_sample_data.py:144
-msgid "eligibility.pages.start.mst.p[0]"
+msgid "eligibility.pages.start.mst_cc.items[0].title"
+msgstr "Tu tarjeta de cortesía MST"
+
+#: benefits/core/migrations/0002_sample_data.py:145
+msgid "eligibility.pages.start.mst_cc.items[0].text"
+msgstr "Una tarjeta activa que no ha caducado"
+
+#: benefits/core/migrations/0002_sample_data.py:146
+msgid "eligibility.pages.start.mst_cc.p[0]"
 msgstr ""
 "Este programa está actualmente abierto a todas los titulares de tarjetas de "
 "cortesía MST. ¿No es titular de una tarjeta de cortesía? Póngase en contacto "
 "con su proveedor de transporte público para obtener información sobre los "
 "programas de descuento disponibles"
 
-#: benefits/core/migrations/0002_sample_data.py:145
-msgid "eligibility.pages.confirm.mst.title"
+#: benefits/core/migrations/0002_sample_data.py:147
+msgid "eligibility.pages.confirm.mst_cc.title"
 msgstr "Verificar su tarjeta de cortesía MST"
 
-#: benefits/core/migrations/0002_sample_data.py:146
-msgid "eligibility.pages.confirm.mst.content_title"
+#: benefits/core/migrations/0002_sample_data.py:148
+msgid "eligibility.pages.confirm.mst_cc.content_title"
 msgstr "Veamos si podemos encontrarle en nuestra sistema"
 
-#: benefits/core/migrations/0002_sample_data.py:147
-msgid "eligibility.pages.confirm.mst.p[0]"
+#: benefits/core/migrations/0002_sample_data.py:149
+msgid "eligibility.pages.confirm.mst_cc.p[0]"
 msgstr ""
 "Por favor ingrese su número de tarjeta cortesía y apellido a continuación. "
 "Si eres titular de una tarjeta de cortesía MST, podemos confirmar que ere "
 "elegible para un descuento. Nosotros no guardamos su información."
 
-#: benefits/core/migrations/0002_sample_data.py:148
-msgid "eligibility.forms.confirm.mst.fields.sub"
+#: benefits/core/migrations/0002_sample_data.py:150
+msgid "eligibility.forms.confirm.mst_cc.fields.sub"
 msgstr "Número de tarjeta cortesía MST"
 
 #: benefits/core/migrations/0002_sample_data.py:151
-msgid "eligibility.forms.confirm.mst.fields.name"
-msgstr "Apellido (como aparece en la identificación)"
+msgid "eligibility.forms.confirm.mst_cc.fields.sub.help_text"
+msgstr "TODO: This is a 5-digit number on the front and back of your card."
 
 #: benefits/core/migrations/0002_sample_data.py:154
-msgid "eligibility.pages.unverified.mst.title"
-msgstr "Tarjeta de cortesía MST no confirmada"
+msgid "eligibility.forms.confirm.mst_cc.fields.name"
+msgstr "Apellido (como aparece en la identificación)"
 
 #: benefits/core/migrations/0002_sample_data.py:155
-msgid "eligibility.pages.unverified.mst.content_title"
+msgid "eligibility.forms.confirm.mst_cc.fields.name.help_text"
+msgstr "TODO: We use this to help confirm your Courtesy Card."
+
+#: benefits/core/migrations/0002_sample_data.py:158
+msgid "eligibility.pages.unverified.mst_cc.title"
+msgstr "Tarjeta de cortesía MST no confirmada"
+
+#: benefits/core/migrations/0002_sample_data.py:159
+msgid "eligibility.pages.unverified.mst_cc.content_title"
 msgstr "No podemos confirmar su tarjeta de cortesía MST"
 
-#: benefits/core/migrations/0002_sample_data.py:156
-msgid "eligibility.pages.unverified.mst.p[0]"
+#: benefits/core/migrations/0002_sample_data.py:160
+msgid "eligibility.pages.unverified.mst_cc.p[0]"
 msgstr ""
 "TODO: That’s okay! You may still be eligible for our program. Please reach "
 "out to Monterey-Salinas Transit for assistance."
 
-#: benefits/core/migrations/0002_sample_data.py:163
-msgid "eligibility.pages.index.oauth.label"
+#: benefits/core/migrations/0002_sample_data.py:167
+msgid "eligibility.pages.index.mst_login.label"
 msgstr "TODO: Senior Discount Program"
 
-#: benefits/core/migrations/0002_sample_data.py:165
-msgid "eligibility.pages.start.oauth.content_title"
+#: benefits/core/migrations/0002_sample_data.py:169
+msgid "eligibility.pages.start.mst_login.headline"
+msgstr ""
+"Conecta tu tarjeta bancaria para tu descuento en el transporte público con "
+"Cal-ITP Benefits."
+
+#: benefits/core/migrations/0002_sample_data.py:170
+msgid "eligibility.pages.start.mst_login.sub_headline"
 msgstr "Necesitará algunos artículos para conectar su descuento:"
 
-#: benefits/core/migrations/0002_sample_data.py:166
-msgid "eligibility.pages.start.oauth.items[0].title"
+#: benefits/core/migrations/0002_sample_data.py:171
+msgid "eligibility.pages.start.mst_login.items[0].title"
 msgstr "Una cuenta de Login.gov con verificación de identidad"
 
-#: benefits/core/migrations/0002_sample_data.py:167
-msgid "eligibility.pages.start.oauth.items[0].text"
+#: benefits/core/migrations/0002_sample_data.py:172
+msgid "eligibility.pages.start.mst_login.items[0].text"
 msgstr ""
 "Login.gov es una forma segura de iniciar sesión en servicios "
 "gubernamentales. Benefits utiliza Login.gov para verificar su edad. Si aún "
 "no tiene una cuenta, podrá crear una. También deberá verificar su identidad, "
 "lo que requerirá estos artículos:"
 
-#: benefits/core/migrations/0002_sample_data.py:168
-msgid "eligibility.pages.start.oauth.p[0]"
+#: benefits/core/migrations/0002_sample_data.py:173
+msgid "eligibility.pages.start.mst_login.p[0]"
 msgstr ""
 
-#: benefits/core/migrations/0002_sample_data.py:169
-msgid "eligibility.pages.unverified.oauth.title"
+#: benefits/core/migrations/0002_sample_data.py:174
+msgid "eligibility.pages.unverified.mst_login.title"
 msgstr "Error de elegibilidad"
 
-#: benefits/core/migrations/0002_sample_data.py:170
-msgid "eligibility.pages.unverified.oauth.content_title"
+#: benefits/core/migrations/0002_sample_data.py:175
+msgid "eligibility.pages.unverified.mst_login.content_title"
 msgstr "No se pudo verificar su elegibilidad."
 
-#: benefits/core/migrations/0002_sample_data.py:171
-msgid "eligibility.pages.unverified.oauth.p[0]"
+#: benefits/core/migrations/0002_sample_data.py:176
+msgid "eligibility.pages.unverified.mst_login.p[0]"
 msgstr ""
 "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
 "proveedor de tránsito local para obtener asistencia."
@@ -228,8 +254,8 @@ msgid "core.logos.large"
 msgstr ""
 "Proyecto de viaje integrado de California: logotipo de beneficios (grande)"
 
-#: benefits/core/templates/core/base.html:80 benefits/core/views.py:91
-#: benefits/core/views.py:92
+#: benefits/core/templates/core/base.html:80 benefits/core/views.py:88
+#: benefits/core/views.py:89
 msgid "core.buttons.help"
 msgstr "Ayuda"
 
@@ -434,7 +460,7 @@ msgid "core.pages.index.prefix"
 msgstr "Beneficios del Tránsito"
 
 #: benefits/core/viewmodels.py:162 benefits/core/viewmodels.py:164
-#: benefits/eligibility/forms.py:68
+#: benefits/eligibility/forms.py:74
 msgid "core.pages.error.title"
 msgstr "Error"
 
@@ -543,27 +569,6 @@ msgstr "Verifique su entrada. El formato parece incorrecto."
 msgid "eligibility.forms.confirm.errors.missing"
 msgstr "Este campo es requerido."
 
-#: benefits/eligibility/templates/eligibility/start.html:9
-msgid "eligibility.pages.start.content_title"
-msgstr ""
-"Conecta tu tarjeta bancaria para tu descuento en el transporte público con "
-"Cal-ITP Benefits."
-
-#: benefits/eligibility/templates/eligibility/start.html:10
-#, python-format
-msgid "eligibility.pages.start.p[0]%(info_link)s"
-msgstr ""
-"Puede acercar su tarjeta de crédito o débito cuando aborde, y su descuento "
-"se aplicará automáticamente cada vez que viaje. <strong><a class='info-link' "
-"href=\"%(info_link)s\">Conozca más sobre beneficios de Cal-ITP</a></"
-"strong><span class='period'>.</span>"
-
-#: benefits/eligibility/templates/eligibility/start.html:11
-msgid "eligibility.pages.start.p[1]"
-msgstr ""
-"El programa de beneficios de Cal-ITP actualmente solo está abierto a "
-"personas de 65 años o más."
-
 #: benefits/eligibility/views.py:39
 msgid "eligibility.pages.index.title"
 msgstr "TODO: Select a benefit option"
@@ -594,21 +599,21 @@ msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Icono de tarjeta de identificación con marca de verificación"
 
-#: benefits/eligibility/views.py:94
-msgid "eligibility.pages.start.oauth.link_text"
+#: benefits/eligibility/views.py:90
+msgid "eligibility.pages.start.mst_login.link_text"
 msgstr ""
 "Conozca más sobre Login.gov y cómo proporcionar una prueba de identidad."
 
-#: benefits/eligibility/views.py:99
-msgid "eligibility.pages.start.oauth.required_items[0]"
+#: benefits/eligibility/views.py:95
+msgid "eligibility.pages.start.mst_login.required_items[0]"
 msgstr "Su tarjeta de identificación emitida por el estado"
 
-#: benefits/eligibility/views.py:100
-msgid "eligibility.pages.start.oauth.required_items[1]"
+#: benefits/eligibility/views.py:96
+msgid "eligibility.pages.start.mst_login.required_items[1]"
 msgstr "Su número de Seguro Social"
 
-#: benefits/eligibility/views.py:101
-msgid "eligibility.pages.start.oauth.required_items[2]"
+#: benefits/eligibility/views.py:97
+msgid "eligibility.pages.start.mst_login.required_items[2]"
 msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
 
 #: benefits/eligibility/views.py:112 benefits/enrollment/views.py:150
@@ -627,17 +632,11 @@ msgstr ""
 "Su tarjeta debe ser una tarjeta de débito o crédito sin contacto de Visa o "
 "Mastercard."
 
-#: benefits/eligibility/views.py:118
-msgid "eligibility.pages.start.bankcard.button[0].link"
-msgstr ""
-"¿No tienes tarjeta bancaria o no está seguro si tiene una tarjeta sin "
-"contacto?"
-
-#: benefits/eligibility/views.py:127
+#: benefits/eligibility/views.py:116
 msgid "eligibility.pages.start.title"
 msgstr "Comencemos"
 
-#: benefits/eligibility/views.py:238
+#: benefits/eligibility/views.py:227
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Icono de tarjeta de identificación con signo de interrogación"

@@ -94,7 +94,8 @@ class EligibilityVerifier(models.Model):
     auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True)
     selection_label = models.TextField()
     selection_label_description = models.TextField(null=True)
-    start_content_title = models.TextField()
+    start_headline = models.TextField()
+    start_sub_headline = models.TextField()
     start_item_name = models.TextField()
     start_item_description = models.TextField()
     start_blurb = models.TextField()
@@ -102,10 +103,12 @@ class EligibilityVerifier(models.Model):
     form_content_title = models.TextField(null=True)
     form_blurb = models.TextField(null=True)
     form_sub_label = models.TextField(null=True)
+    form_sub_help_text = models.TextField(null=True)
     form_sub_placeholder = models.TextField(null=True)
     # A regular expression used to validate the 'sub' API field before sending to this verifier
     form_sub_pattern = models.TextField(null=True)
     form_name_label = models.TextField(null=True)
+    form_name_help_text = models.TextField(null=True)
     form_name_placeholder = models.TextField(null=True)
     # The maximum length accepted for the 'name' API field before sending to this verifier
     form_name_max_length = models.PositiveSmallIntegerField(null=True)

@@ -10,9 +10,9 @@ Documentation for the `dev` (default) branch is available online at: <https://do
 Cal-ITP Benefits is an application that enables automated eligibility verification and enrollment for transit
 benefits onto customers' existing contactless bank (credit/debit) cards.
 
-The development of this publicly-accessible client is being managed by Caltrans’ California Integrated Travel Project (Cal-ITP), in partnership with the Department of Motor Vehicles (DMV) and the California Department of Technology (CDT). From the [Cal-ITP site](https://www.calitp.org/):
+The development of this publicly-accessible client is being managed by Caltrans’ California Integrated Travel Project (Cal-ITP), in partnership with the California Department of Technology (CDT). From the [Cal-ITP site](https://www.calitp.org/):
 
-> Our Cal-ITP Benefits web application streamlines the process for transit riders to instantly qualify for and receive discounts, starting with Monterey-Salinas Transit (MST), which offers a half-price Senior Fare. Now older adults (65+) with a California DMV–issued ID are able to access MST's reduced fares without the hassle of paperwork.
+> Our Cal-ITP Benefits web application streamlines the process for transit riders to instantly qualify for and receive discounts, starting with Monterey-Salinas Transit (MST), which offers a half-price Senior Fare. Now older adults (65+) who are able to electronically verify their identity are able to access MST's reduced fares without the hassle of paperwork.
 >
 > We worked with state partners on this product launch, and next we're working to bring youth, lower-income riders, veterans, people with disabilities, and others the same instant access to free or reduced fares across all California transit providers, without having to prove eligibility to each agency.
 

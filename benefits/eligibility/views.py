@@ -93,14 +93,14 @@ def start(request):
             identity_item["links"] = [
                 viewmodels.Button.link(
                     classes="btn-text btn-link",
-                    text=_("eligibility.pages.start.oauth.link_text"),
+                    text=_("eligibility.pages.start.mst_login.link_text"),
                     url=f"{reverse(ROUTE_HELP)}#login-gov",
                 ),
             ]
             identity_item["bullets"] = [
-                _("eligibility.pages.start.oauth.required_items[0]"),
-                _("eligibility.pages.start.oauth.required_items[1]"),
-                _("eligibility.pages.start.oauth.required_items[2]"),
+                _("eligibility.pages.start.mst_login.required_items[0]"),
+                _("eligibility.pages.start.mst_login.required_items[1]"),
+                _("eligibility.pages.start.mst_login.required_items[2]"),
             ]
 
         if not session.logged_in(request):
@@ -114,13 +114,6 @@ def start(request):
         icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
         heading=_("eligibility.pages.start.bankcard.title"),
         details=_("eligibility.pages.start.bankcard.text"),
-        links=[
-            viewmodels.Button.link(
-                classes="btn-text btn-link",
-                text=_("eligibility.pages.start.bankcard.button[0].link"),
-                url=f"{reverse(ROUTE_HELP)}#payment-options",
-            ),
-        ],
     )
 
     media = [identity_item, bank_card_item]
@@ -132,7 +125,8 @@ def start(request):
     )
 
     ctx = page.context_dict()
-    ctx["title"] = _(verifier.start_content_title)
+    ctx["start_headline"] = _(verifier.start_headline)
+    ctx["start_sub_headline"] = _(verifier.start_sub_headline)
     ctx["media"] = media
     ctx["info_link"] = f"{reverse(ROUTE_HELP)}#what-is-cal-itp"
 

@@ -53,13 +53,19 @@ class EligibilityVerificationForm(forms.Form):
         if verifier.form_sub_pattern:
             sub_widget.attrs.update({"pattern": verifier.form_sub_pattern})
 
-        self.fields["sub"] = forms.CharField(label=_(verifier.form_sub_label), widget=sub_widget)
+        self.fields["sub"] = forms.CharField(
+            label=_(verifier.form_sub_label),
+            widget=sub_widget,
+            help_text=_(verifier.form_sub_help_text),
+        )
 
         name_widget = widgets.FormControlTextInput(placeholder=verifier.form_name_placeholder)
         if verifier.form_name_max_length:
             name_widget.attrs.update({"maxlength": verifier.form_name_max_length})
 
-        self.fields["name"] = forms.CharField(label=_(verifier.form_name_label), widget=name_widget)
+        self.fields["name"] = forms.CharField(
+            label=_(verifier.form_name_label), widget=name_widget, help_text=_(verifier.form_name_help_text)
+        )
 
     def add_api_errors(self, form_errors):
         """Handle errors passed back from API server related to submitted form values."""
