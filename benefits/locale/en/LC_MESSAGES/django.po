@@ -90,7 +90,7 @@ msgstr "Your eligibility could not be verified."
 msgid "eligibility.pages.unverified.sample.p[0]"
 msgstr ""
 "You may still be eligible for a discount, but we can’t verify your age with "
-"the DMV."
+"the sample."
 
 #: benefits/core/migrations/0002_sample_data.py:140
 msgid "eligibility.pages.index.mst_cc.label"
