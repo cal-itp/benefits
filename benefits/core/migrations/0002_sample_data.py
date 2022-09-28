@@ -95,35 +95,19 @@ PEM DATA
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
 
     verifier1 = EligibilityVerifier.objects.create(
-        name="Test Eligibility Verifier 1",
-        api_url="http://server:8000/verify",
-        api_auth_header="X-Server-API-Key",
-        api_auth_key="server-auth-token",
+        name="OAuth claims via Login.gov",
         eligibility_type=type1,
-        public_key=server_public_key,
-        jwe_cek_enc="A256CBC-HS512",
-        jwe_encryption_alg="RSA-OAEP",
-        jws_signing_alg="RS256",
         auth_provider=auth_provider,
-        selection_label=_("eligibility.pages.index.sample.label"),
-        selection_label_description=_("eligibility.pages.index.sample.description"),
-        start_headline=_("eligibility.pages.start.sample.title"),
-        start_sub_headline=_("eligibility.pages.start.sample.content_title"),
-        start_item_name=_("eligibility.pages.start.sample.items[0].title"),
-        start_item_description=_("eligibility.pages.start.sample.items[0].text"),
-        start_blurb=_("eligibility.pages.start.sample.p[0]"),
-        form_title=_("eligibility.pages.confirm.sample.title"),
-        form_content_title=_("eligibility.pages.confirm.sample.content_title"),
-        form_blurb=_("eligibility.pages.confirm.sample.p[0]"),
-        form_sub_label=_("eligibility.forms.confirm.sample.fields.sub"),
-        form_sub_placeholder="A1234567",
-        form_sub_pattern=".+",
-        form_name_label=_("eligibility.forms.confirm.sample.fields.name"),
-        form_name_placeholder="Rodriguez",
-        form_name_max_length=255,
-        unverified_title=_("eligibility.pages.unverified.sample.title"),
-        unverified_content_title=_("eligibility.pages.unverified.sample.content_title"),
-        unverified_blurb=_("eligibility.pages.unverified.sample.p[0]"),
+        selection_label=_("eligibility.pages.index.mst_login.label"),
+        selection_label_description=_("eligibility.pages.index.mst_login.description"),
+        start_headline=_("eligibility.pages.start.mst_login.headline"),
+        start_sub_headline=_("eligibility.pages.start.mst_login.sub_headline"),
+        start_item_name=_("eligibility.pages.start.mst_login.items[0].title"),
+        start_item_description=_("eligibility.pages.start.mst_login.items[0].text"),
+        start_blurb=_("eligibility.pages.start.mst_login.p[0]"),
+        unverified_title=_("eligibility.pages.unverified.mst_login.title"),
+        unverified_content_title=_("eligibility.pages.unverified.mst_login.content_title"),
+        unverified_blurb=_("eligibility.pages.unverified.mst_login.p[0]"),
     )
 
     verifier2 = EligibilityVerifier.objects.create(
@@ -158,22 +142,6 @@ PEM DATA
         unverified_title=_("eligibility.pages.unverified.mst_cc.title"),
         unverified_content_title=_("eligibility.pages.unverified.mst_cc.content_title"),
         unverified_blurb=_("eligibility.pages.unverified.mst_cc.p[0]"),
-    )
-
-    EligibilityVerifier.objects.create(
-        name="OAuth claims via Login.gov",
-        eligibility_type=type1,
-        auth_provider=auth_provider,
-        selection_label=_("eligibility.pages.index.mst_login.label"),
-        selection_label_description=None,
-        start_headline=_("eligibility.pages.start.mst_login.headline"),
-        start_sub_headline=_("eligibility.pages.start.mst_login.sub_headline"),
-        start_item_name=_("eligibility.pages.start.mst_login.items[0].title"),
-        start_item_description=_("eligibility.pages.start.mst_login.items[0].text"),
-        start_blurb=_("eligibility.pages.start.mst_login.p[0]"),
-        unverified_title=_("eligibility.pages.unverified.mst_login.title"),
-        unverified_content_title=_("eligibility.pages.unverified.mst_login.content_title"),
-        unverified_blurb=_("eligibility.pages.unverified.mst_login.p[0]"),
     )
 
     PaymentProcessor = app.get_model("core", "PaymentProcessor")
