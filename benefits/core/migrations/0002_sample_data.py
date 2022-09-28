@@ -13,8 +13,8 @@ def load_sample_data(app, *args, **kwargs):
 
     EligibilityType = app.get_model("core", "EligibilityType")
 
-    type1 = EligibilityType.objects.create(name="type1", label="Eligibility Type 1", group_id="group1")
-    type2 = EligibilityType.objects.create(name="type2", label="Eligibility Type 2", group_id="group2")
+    senior_type = EligibilityType.objects.create(name="senior", label="Senior", group_id="group1")
+    courtesy_card_type = EligibilityType.objects.create(name="courtesy_card", label="Courtesy Card", group_id="group2")
 
     PemData = app.get_model("core", "PemData")
 
@@ -88,15 +88,15 @@ PEM DATA
         client_name="benefits-oauth-client-name",
         client_id="benefits-oauth-client-id",
         authority="https://example.com",
-        scope="verify:type1",
-        claim="type1",
+        scope="verify:senior",
+        claim="senior",
     )
 
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
 
     verifier1 = EligibilityVerifier.objects.create(
         name="OAuth claims via Login.gov",
-        eligibility_type=type1,
+        eligibility_type=senior_type,
         auth_provider=auth_provider,
         selection_label=_("eligibility.pages.index.mst_login.label"),
         selection_label_description=_("eligibility.pages.index.mst_login.description"),
@@ -115,7 +115,7 @@ PEM DATA
         api_url="http://server:8000/verify",
         api_auth_header="X-Server-API-Key",
         api_auth_key="server-auth-token",
-        eligibility_type=type2,
+        eligibility_type=courtesy_card_type,
         public_key=server_public_key,
         jwe_cek_enc="A256CBC-HS512",
         jwe_encryption_alg="RSA-OAEP",
@@ -179,7 +179,7 @@ PEM DATA
         jws_signing_alg="RS256",
         payment_processor=payment_processor,
     )
-    mst_agency.eligibility_types.set([type1, type2])
+    mst_agency.eligibility_types.set([senior_type, courtesy_card_type])
     mst_agency.eligibility_verifiers.set([verifier1, verifier2])
 
 
