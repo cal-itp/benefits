@@ -128,7 +128,6 @@ def start(request):
     ctx["start_headline"] = _(verifier.start_headline)
     ctx["start_sub_headline"] = _(verifier.start_sub_headline)
     ctx["media"] = media
-    ctx["info_link"] = f"{reverse(ROUTE_HELP)}#what-is-cal-itp"
 
     return TemplateResponse(request, TEMPLATE_START, ctx)
 
