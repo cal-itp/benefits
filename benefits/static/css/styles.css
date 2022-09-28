@@ -12,6 +12,8 @@
   --bs-font-sans-serif: Roboto, system-ui, -apple-system, "Segoe UI", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-body-font-family: var(--bs-font-sans-serif);
+  --dark-color: #212121;
+  --footer-background-color: var(--dark-color);
 }
 
 @font-face {
@@ -199,13 +201,9 @@ footer.global-footer .footer-links a:active {
 
 .form-control {
   border-radius: 0.25rem;
-  border-color: #212121;
+  border-color: var(--primary-color);
   border-width: 2px;
-  color: #212121;
-}
-
-.form-control:focus-within {
-  color: #212121;
+  color: var(--text-primary-color);
 }
 
 .form-control-lg {
@@ -243,7 +241,7 @@ footer.global-footer .footer-links a:active {
 }
 
 .global-footer {
-  background: #212121;
+  background: var(--footer-background-color);
 }
 
 /* Eligibility Start */
