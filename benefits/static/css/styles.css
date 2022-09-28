@@ -623,12 +623,6 @@ footer.global-footer .footer-links a:active {
     padding: 1.1875rem 0.813rem;
   }
 
-  /* Mobile With Image */
-
-  .no-image-mobile .col-lg-6.image {
-    display: none !important;
-  }
-
   .signout-row .container .signout-link {
     font-size: 18px;
     color: var(--primary-color);
