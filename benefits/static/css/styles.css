@@ -1,10 +1,17 @@
+:root {
+  --primary-color: #046b99;
+  --primary-color-rgb: 4, 107, 153;
+  --bs-blue: var(--primary-color);
+  --bs-primary-rgb: var(--primary-color-rgb);
+}
+
 /* HTML element overrides */
 
 body {
   font-weight: 400;
   font-size: 16px;
   line-height: 22px;
-  color: #000000;
+  color: var(--text-primary-color);
 }
 
 @font-face {
@@ -113,11 +120,6 @@ footer.global-footer .footer-links a:active {
 
 /* class styles */
 
-.bg-p2,
-.bg-primary {
-  background-color: #2b6597 !important;
-}
-
 .btn-lg {
   border-width: 2px;
 }
@@ -125,7 +127,7 @@ footer.global-footer .footer-links a:active {
 /* Log In */
 
 #login {
-  background: #046b99;
+  background: var(--primary-color);
   border: 0;
   color: #ffffff;
   cursor: pointer;
@@ -184,7 +186,7 @@ footer.global-footer .footer-links a:active {
 }
 
 .btn-link {
-  color: #046b99;
+  color: var(--primary-color);
 }
 
 .btn-primary {
@@ -431,7 +433,7 @@ footer.global-footer .footer-links a:active {
 }
 
 .radio-input:checked {
-  background-color: #046b99;
+  background-color: var(--primary-color);
   box-shadow: inset 0 0 0 2px white;
 }
 
