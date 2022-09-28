@@ -16,6 +16,7 @@
   --footer-background-color: var(--dark-color);
   --footer-link-color: #73b3e7;
   --footer-link-hover-color: #9b74d7;
+  --footer-mobile-underline-color: var(--bs-white);
   --hover-color: #2f4c65;
   --error-color: #ea1010;
   --error-color-rgb: 234, 16, 16;
@@ -600,7 +601,7 @@ footer.global-footer .footer-links a:active {
   }
 
   .global-footer ul.footer-links li:not(:last-child) {
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid var(--footer-mobile-underline-color);
   }
 
   .global-footer ul.footer-links li a {
