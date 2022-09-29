@@ -342,12 +342,6 @@ footer.global-footer .footer-links a:active {
   margin-bottom: 12px;
 }
 
-.media-list .media .media-body--items {
-  font-size: 18px;
-  letter-spacing: 0.05em;
-  line-height: 26.1px;
-}
-
 .media-list .media .media-body--items li {
   list-style-type: disc;
 }
