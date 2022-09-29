@@ -454,9 +454,7 @@ footer.global-footer .footer-links a:active {
 
 .radio-label-description {
   display: block;
-  font-size: 0.75rem;
   margin-left: 2rem;
-  font-weight: normal;
 }
 
 /* context-specific overrides */
