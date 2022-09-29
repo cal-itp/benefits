@@ -339,8 +339,6 @@ footer.global-footer .footer-links a:active {
 }
 
 .eligibility-start h1.headline {
-  font-size: 35px;
-  line-height: 52.5px;
   margin-bottom: 50px;
   margin-top: 64px;
 }
@@ -465,14 +463,11 @@ footer.global-footer .footer-links a:active {
 }
 
 .container.content.help h1 {
-  font-weight: 700;
-  font-size: 2.25rem;
   margin-top: 5.5rem;
   margin-bottom: 4rem;
 }
 
 .container.content.help h2 {
-  font-weight: 700;
   font-size: 1.5rem;
   margin-bottom: 3rem;
   margin-top: 3rem;
