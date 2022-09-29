@@ -64,7 +64,7 @@ class RateLimit(MiddlewareMixin):
                 home = viewmodels.Button.home(request)
                 page = viewmodels.ErrorPage.server_error(
                     title="Rate limit error",
-                    content_title="Rate limit error",
+                    headline="Rate limit error",
                     paragraphs=["You have reached the rate limit. Please try again."],
                     button=home,
                 )

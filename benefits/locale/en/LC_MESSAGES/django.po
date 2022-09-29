@@ -50,7 +50,7 @@ msgstr ""
 msgid "eligibility.pages.unverified.mst_login.title"
 msgstr "Eligibility Error"
 
-msgid "eligibility.pages.unverified.mst_login.content_title"
+msgid "eligibility.pages.unverified.mst_login.headline"
 msgstr "Your eligibility could not be verified."
 
 msgid "eligibility.pages.unverified.mst_login.p[0]"
@@ -91,7 +91,7 @@ msgstr ""
 msgid "eligibility.pages.confirm.mst_cc.title"
 msgstr "Confirm your Courtesy Card"
 
-msgid "eligibility.pages.confirm.mst_cc.content_title"
+msgid "eligibility.pages.confirm.mst_cc.headline"
 msgstr "Let’s see if we can find you in our system"
 
 msgid "eligibility.pages.confirm.mst_cc.p[0]"
@@ -115,7 +115,7 @@ msgstr "We use this to help confirm your Courtesy Card."
 msgid "eligibility.pages.unverified.mst_cc.title"
 msgstr "Courtesy Card not located"
 
-msgid "eligibility.pages.unverified.mst_cc.content_title"
+msgid "eligibility.pages.unverified.mst_cc.headline"
 msgstr "We couldn’t locate you in our system"
 
 msgid "eligibility.pages.unverified.mst_cc.p[0]"
@@ -314,13 +314,13 @@ msgctxt "image alt text"
 msgid "core.icons.sadbus"
 msgstr "Bus icon with flat tire"
 
-msgid "core.pages.server_error.content_title"
+msgid "core.pages.server_error.headline"
 msgstr "Sorry! Service for this site is down."
 
 msgid "core.pages.user_error.title"
 msgstr "Invalid state"
 
-msgid "core.pages.user_error.content_title"
+msgid "core.pages.user_error.headline"
 msgstr "You may have reached this page on accident."
 
 msgid "core.pages.user_error.p[0]"
@@ -339,7 +339,7 @@ msgstr ""
 msgid "core.pages.not_found.title"
 msgstr "Page not found"
 
-msgid "core.pages.not_found.content_title"
+msgid "core.pages.not_found.headline"
 msgstr "Sorry! We can’t find that page."
 
 msgid "core.pages.not_found.p[0]"
@@ -356,7 +356,7 @@ msgstr "Please choose your transit provider:"
 msgid "core.pages.index.title"
 msgstr "Choose Provider"
 
-msgid "core.pages.index.content_title"
+msgid "core.pages.index.headline"
 msgstr ""
 "Cal-ITP Benefits makes it easy to use your public transit discount every "
 "time you ride."
@@ -367,7 +367,7 @@ msgstr "Get started"
 msgid "core.pages.agency_index.title"
 msgstr "Introduction"
 
-msgid "core.pages.agency_index.mst_cc.content_title"
+msgid "core.pages.agency_index.mst_cc.headline"
 msgstr "Connect your MST Benefit to your Contactless Card"
 
 msgid "core.buttons.back"
@@ -394,7 +394,7 @@ msgstr "This field is required."
 msgid "eligibility.pages.index.title"
 msgstr "Select a benefit option"
 
-msgid "eligibility.pages.index.content_title"
+msgid "eligibility.pages.index.headline"
 msgstr ""
 "Connect your bank card to your public transit discount with Cal-ITP Benefits"
 
@@ -469,7 +469,7 @@ msgstr "account."
 msgid "enrollment.pages.index.title"
 msgstr "Connect Card"
 
-msgid "enrollment.pages.index.content_title"
+msgid "enrollment.pages.index.headline"
 msgstr "Let’s link your card to your discount."
 
 msgid "enrollment.pages.index.p[0]"
@@ -506,7 +506,8 @@ msgstr "Try again"
 msgid "enrollment.pages.success.title"
 msgstr "Success"
 
-msgid "enrollment.pages.success.content_title"
+#: benefits/enrollment/views.py:154
+msgid "enrollment.pages.success.headline"
 msgstr "Success! Your discount is now linked to your bank card."
 
 msgid "enrollment.pages.success.logout.title"

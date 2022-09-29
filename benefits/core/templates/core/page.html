@@ -19,11 +19,11 @@
         {% block container_content %}
 
           {% block icon_title %}
-            {% if page.content_title %}
+            {% if page.headline %}
               {% if page.icon %}
-                {% include "core/includes/icon-title.html" with title=page.content_title icon=page.icon %}
+                {% include "core/includes/icon-title.html" with title=page.headline icon=page.icon %}
               {% else %}
-                <h1>{{ page.content_title }}</h1>
+                <h1>{{ page.headline }}</h1>
               {% endif %}
             {% endif %}
           {% endblock icon_title %}

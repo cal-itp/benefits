@@ -105,7 +105,7 @@ class Page:
     Represents a page of content:
     * title: str
     * icon: core.viewmodels.Icon
-    * content_title: str
+    * headline: str
     * paragraphs: str[]
     * form: django.forms.Form
     * forms: django.forms.Form[]
@@ -122,7 +122,7 @@ class Page:
             self.title = f"{_('core.pages.index.prefix')}: {self.title}"
 
         self.icon = kwargs.get("icon")
-        self.content_title = kwargs.get("content_title")
+        self.headline = kwargs.get("headline")
         self.paragraphs = kwargs.get("paragraphs", [])
         self.steps = kwargs.get("steps")
 
@@ -152,7 +152,7 @@ class ErrorPage(Page):
     Represents an error page:
     * title: str
     * icon: core.viewmodels.Icon
-    * content_title: str
+    * headline: str
     * paragraphs: str[]
     * button: core.viewmodels.Button
     """
@@ -161,35 +161,35 @@ class ErrorPage(Page):
         super().__init__(
             title=kwargs.get("title", _("core.pages.error.title")),
             icon=kwargs.get("icon", Icon("sadbus", pgettext("image alt text", "core.icons.sadbus"))),
-            content_title=kwargs.get("content_title", _("core.pages.error.title")),
-            paragraphs=kwargs.get("paragraphs", [_("core.pages.server_error.content_title")]),
+            headline=kwargs.get("headline", _("core.pages.error.title")),
+            paragraphs=kwargs.get("paragraphs", [_("core.pages.server_error.headline")]),
             button=kwargs.get("button"),
         )
 
     @staticmethod
     def user_error(
         title=_("core.pages.user_error.title"),
-        content_title=_("core.pages.user_error.content_title"),
+        headline=_("core.pages.user_error.headline"),
         paragraphs=[_("core.pages.user_error.p[0]")],
         **kwargs,
     ):
         """Create a new core.viewmodels.ErrorPage instance with defaults for a user error."""
-        return ErrorPage(title=title, content_title=content_title, paragraphs=paragraphs, **kwargs)
+        return ErrorPage(title=title, headline=headline, paragraphs=paragraphs, **kwargs)
 
     @staticmethod
     def server_error(
         title=_("core.pages.server_error.title"),
-        content_title=_("core.pages.server_error.title"),
+        headline=_("core.pages.server_error.title"),
         paragraphs=[_("core.pages.server_error.p[0]")],
         **kwargs,
     ):
         """Create a new core.viewmodels.ErrorPage instance with defaults for a generic server error."""
-        return ErrorPage(title=title, content_title=content_title, paragraphs=paragraphs, **kwargs)
+        return ErrorPage(title=title, headline=headline, paragraphs=paragraphs, **kwargs)
 
     @staticmethod
     def not_found(
         title=_("core.pages.not_found.title"),
-        content_title=_("core.pages.not_found.content_title"),
+        headline=_("core.pages.not_found.headline"),
         paragraphs=[_("core.pages.not_found.p[0]")],
         **kwargs,
     ):
@@ -199,7 +199,7 @@ class ErrorPage(Page):
             title = f"{title}: {path}"
         elif path and not title:
             title = path
-        return ErrorPage(title=title, content_title=content_title, paragraphs=paragraphs, **kwargs)
+        return ErrorPage(title=title, headline=headline, paragraphs=paragraphs, **kwargs)
 
 
 class PaymentProcessor:
