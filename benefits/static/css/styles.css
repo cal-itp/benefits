@@ -40,7 +40,11 @@ body,
 h1,
 h2,
 h3,
+.h1,
+.h2,
+.h3,
 p,
+.p,
 a,
 span,
 li {
@@ -50,30 +54,35 @@ li {
 }
 
 h1,
+.h1,
 h2,
-h3 {
+.h2,
+h3,
+.h3 {
   font-weight: var(--bold-font-weight);
 }
 
-h1 {
+h1,
+.h1 {
   font-size: 35px;
   text-align: center;
+  margin-top: 70px;
+  margin-bottom: 24px;
 }
 
-h2 {
+h2,
+.h2 {
   font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 24px;
 }
 
-p {
+p,
+.p {
   font-weight: var(--bs-body-font-weight);
   font-size: var(--bs-body-font-size);
+  margin-bottom: 24px;
 }
-
-/* label {
-  font-size: 18px;
-  line-height: 26px;
-  letter-spacing: 0.05em;
-} */
 
 main .main-row {
   min-height: calc(100vh - 118px);
@@ -408,9 +417,7 @@ footer.global-footer .footer-links a:active {
 
 .radio-label-description {
   display: block;
-  font-size: 0.75rem;
   margin-left: 2rem;
-  font-weight: normal;
 }
 
 /* context-specific overrides */
