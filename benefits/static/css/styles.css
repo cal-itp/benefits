@@ -8,10 +8,12 @@
   --bs-body-color: var(--text-primary-color);
   --bs-body-text-align: left;
   --bs-body-font-weight: 400;
-  --bs-body-font-size: 16px;
+  --bs-body-font-size: 18px;
   --bs-font-sans-serif: Roboto, system-ui, -apple-system, "Segoe UI", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-body-line-height: 1.5;
+  --body-letter-spacing: 0.05em;
   --dark-color: #212121;
   --footer-background-color: var(--dark-color);
   --footer-link-color: #73b3e7;
@@ -33,7 +35,6 @@
   src: local("PublicSans"), url("../fonts/PublicSans-Bold.woff") format("woff");
 }
 
-body,
 h1,
 h2,
 h3,
@@ -42,9 +43,19 @@ h5,
 h6,
 p,
 a,
+label,
 span,
 li {
   font-family: var(--bs-body-font-family);
+}
+
+/* Paragraph: Body Text */
+/* Same sizes for all screen widths */
+p {
+  font-size: var(--bs-body-font-size);
+  font-weight: var(--bs-body-font-weight);
+  line-height: var(--bs-body-line-height);
+  letter-spacing: var(--body-letter-spacing);
 }
 
 h1,
@@ -64,13 +75,6 @@ h1 {
   font-weight: 700;
   font-size: 24px;
   line-height: 30px;
-  letter-spacing: 0.05em;
-}
-
-p {
-  margin-bottom: 1.5rem;
-  font-size: 18px;
-  line-height: 27px;
   letter-spacing: 0.05em;
 }
 
