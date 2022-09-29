@@ -8,6 +8,7 @@
   --bs-body-color: var(--text-primary-color);
   --bs-body-text-align: left;
   --bs-body-font-weight: 400;
+  --bold-font-weight: 700;
   --bs-body-font-size: 18px;
   --bs-font-sans-serif: Roboto, system-ui, -apple-system, "Segoe UI", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -21,6 +22,7 @@
   --footer-mobile-underline-color: var(--bs-white);
   --hover-color: #2f4c65;
   --error-color: #ea1010;
+  --selected-color: #562b97;
   --error-color-rgb: 234, 16, 16;
   --bs-danger: var(--error-color);
   --bs-danger-rgb: var(--error-color-rgb);
@@ -64,6 +66,24 @@ span,
   letter-spacing: var(--body-letter-spacing);
 }
 
+/* Links */
+/* Same sizes for all screen widths */
+a:not(.btn) {
+  color: var(--primary-color);
+  text-decoration: underline;
+  text-decoration-style: solid;
+  font-weight: var(--bold-font-weight);
+}
+
+a:hover:not(.btn) {
+  color: var(--hover-color);
+  text-decoration: underline;
+}
+
+a:visited:not(.btn) {
+  color: var(--selected-color);
+}
+
 h1,
 h2,
 h3,
@@ -81,12 +101,6 @@ h1 {
   font-weight: 700;
   font-size: 24px;
   line-height: 30px;
-  letter-spacing: 0.05em;
-}
-
-label {
-  font-size: 18px;
-  line-height: 26px;
   letter-spacing: 0.05em;
 }
 
@@ -128,8 +142,8 @@ footer {
 }
 
 footer.global-footer .footer-links a {
-  font-size: 18px;
   color: var(--footer-link-color);
+  font-weight: var(--bs-body-font-weight);
   text-decoration: underline;
 }
 
@@ -137,7 +151,6 @@ footer.global-footer .footer-links a:hover,
 footer.global-footer .footer-links a:focus,
 footer.global-footer .footer-links a:active {
   color: var(--footer-link-hover-color);
-  text-decoration: none;
 }
 
 /* class styles */
