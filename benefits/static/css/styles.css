@@ -45,13 +45,19 @@ p,
 a,
 label,
 span,
+button,
+input,
+small,
 li {
   font-family: var(--bs-body-font-family);
 }
 
 /* Paragraph: Body Text */
 /* Same sizes for all screen widths */
-p {
+p,
+.p,
+span,
+.span {
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
   line-height: var(--bs-body-line-height);
