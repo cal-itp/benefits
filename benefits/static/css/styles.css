@@ -178,7 +178,6 @@ footer.global-footer .footer-links a:active {
 
 .btn-primary {
   text-transform: capitalize;
-  letter-spacing: 0.05em;
 }
 
 .btn-outline-light {
@@ -239,7 +238,6 @@ footer.global-footer .footer-links a:active {
   margin-bottom: 60px;
   font-size: 24px;
   line-height: 36px;
-  letter-spacing: 0.05em;
   font-weight: 700;
 }
 
@@ -278,7 +276,6 @@ footer.global-footer .footer-links a:active {
 
 .media-list .media .media-body--heading {
   font-size: 18px;
-  letter-spacing: 0.05em;
   line-height: 26.1px;
   font-weight: 700;
   padding-left: 0;
@@ -288,7 +285,6 @@ footer.global-footer .footer-links a:active {
 
 .media-list .media .media-body--details {
   font-size: 18px;
-  letter-spacing: 0.05em;
   padding-bottom: 1rem;
   line-height: 26.1px;
 }
@@ -299,7 +295,6 @@ footer.global-footer .footer-links a:active {
 
 .media-list .media .media-body--items {
   font-size: 18px;
-  letter-spacing: 0.05em;
   line-height: 26.1px;
 }
 
@@ -309,7 +304,6 @@ footer.global-footer .footer-links a:active {
 
 .media-list .media .media-body .media-body--links .btn-lg {
   font-size: 16px;
-  letter-spacing: 0.05em;
   padding: 0 0 6px 0;
   text-align: left;
   width: fit-content;
@@ -347,7 +341,6 @@ footer.global-footer .footer-links a:active {
 .eligibility-start h1.headline {
   font-size: 35px;
   line-height: 52.5px;
-  letter-spacing: 0.05em;
   margin-bottom: 50px;
   margin-top: 64px;
 }
@@ -472,7 +465,6 @@ footer.global-footer .footer-links a:active {
 }
 
 .container.content.help h1 {
-  letter-spacing: 0.05em;
   font-weight: 700;
   font-size: 2.25rem;
   margin-top: 5.5rem;
@@ -480,7 +472,6 @@ footer.global-footer .footer-links a:active {
 }
 
 .container.content.help h2 {
-  letter-spacing: 0.05em;
   font-weight: 700;
   font-size: 1.5rem;
   margin-bottom: 3rem;
@@ -671,13 +662,11 @@ footer.global-footer .footer-links a:active {
     margin-left: 0;
     font-size: 20px;
     line-height: 30px;
-    letter-spacing: 0.05em;
   }
 
   .media-list .media .media-body--items li {
     font-size: 20px;
     line-height: 30px;
-    letter-spacing: 0.05em;
   }
 
   .media-list .media .media-body--links {
@@ -693,7 +682,6 @@ footer.global-footer .footer-links a:active {
     font-size: 18px;
     line-height: 27px;
     font-weight: 700;
-    letter-spacing: 0.05em;
     display: block;
   }
 
