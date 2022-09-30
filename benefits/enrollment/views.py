@@ -6,6 +6,7 @@ import logging
 from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.utils.html import format_html
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
@@ -81,10 +82,11 @@ def index(request):
             details=_(verifier.enrollment_confirmed_message),
         )
 
+        help_link = reverse(ROUTE_HELP)
         link_card_item = dict(
             icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
             heading=_("enrollment.pages.index.link_card.title"),
-            details=_("enrollment.pages.index.link_card.text"),
+            details=format_html(_("enrollment.pages.index.link_card.text%(link)s") % {"link": f"{help_link}#littlepay"}),
         )
 
         media = [confirmed_benefit_item, link_card_item]
