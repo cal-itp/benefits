@@ -175,10 +175,6 @@ footer.global-footer .footer-links a:active {
   font-family: "Public Sans", Roboto, system-ui;
 }
 
-#login:hover {
-  background: var(--hover-color);
-}
-
 /* Sets the text `Login.gov` as transparent */
 /* With an Login.gov logo image over it */
 /* So screenreaders can read out `Login.gov` */
@@ -193,6 +189,9 @@ footer.global-footer .footer-links a:active {
   padding-top: 1px;
   vertical-align: baseline;
   color: transparent;
+  font-size: 16px;
+  font-weight: var(--bold-font-weight);
+  line-height: 1;
 }
 
 /* Sign Out */
