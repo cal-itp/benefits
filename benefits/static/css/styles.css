@@ -708,22 +708,12 @@ footer.global-footer .footer-links a:active {
   }
 
   .media-list .media .media-body--heading {
-    font-size: 20px;
     line-height: 30px;
   }
 
   .media-list .media .media-body--details p {
     padding-bottom: 25px;
     margin-left: 0;
-    font-size: 20px;
-    line-height: 30px;
-    letter-spacing: 0.05em;
-  }
-
-  .media-list .media .media-body--items li {
-    font-size: 20px;
-    line-height: 30px;
-    letter-spacing: 0.05em;
   }
 
   .media-list .media .media-body--links {
