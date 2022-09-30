@@ -78,8 +78,8 @@ def index(request):
 
         confirmed_benefit_item = dict(
             icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
-            heading=_(verifier.enrollment_confirmed_header),
-            details=_(verifier.enrollment_confirmed_message),
+            heading=_(verifier.enrollment_start_header),
+            details=_(verifier.enrollment_start_message),
         )
 
         help_link = reverse(ROUTE_HELP)

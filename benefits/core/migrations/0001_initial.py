@@ -65,8 +65,8 @@ class Migration(migrations.Migration):
                 ("unverified_title", models.TextField()),
                 ("unverified_headline", models.TextField()),
                 ("unverified_blurb", models.TextField()),
-                ("enrollment_confirmed_header", models.TextField()),
-                ("enrollment_confirmed_message", models.TextField()),
+                ("enrollment_start_header", models.TextField()),
+                ("enrollment_start_message", models.TextField()),
                 (
                     "auth_provider",
                     models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to="core.authprovider"),

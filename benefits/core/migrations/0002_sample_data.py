@@ -108,8 +108,8 @@ PEM DATA
         unverified_title=_("eligibility.pages.unverified.mst_login.title"),
         unverified_headline=_("eligibility.pages.unverified.mst_login.headline"),
         unverified_blurb=_("eligibility.pages.unverified.mst_login.p[0]"),
-        enrollment_confirmed_header=_("enrollment.pages.index.mst_login.confirmed.header"),
-        enrollment_confirmed_message=_("enrollment.pages.index.mst_login.confirmed.message"),
+        enrollment_start_header=_("enrollment.pages.index.mst_login.start.header"),
+        enrollment_start_message=_("enrollment.pages.index.mst_login.start.message"),
     )
 
     verifier2 = EligibilityVerifier.objects.create(
@@ -144,8 +144,8 @@ PEM DATA
         unverified_title=_("eligibility.pages.unverified.mst_cc.title"),
         unverified_headline=_("eligibility.pages.unverified.mst_cc.headline"),
         unverified_blurb=_("eligibility.pages.unverified.mst_cc.p[0]"),
-        enrollment_confirmed_header=_("enrollment.pages.index.mst_cc.confirmed.header"),
-        enrollment_confirmed_message=_("enrollment.pages.index.mst_cc.confirmed.message"),
+        enrollment_start_header=_("enrollment.pages.index.mst_cc.start.header"),
+        enrollment_start_message=_("enrollment.pages.index.mst_cc.start.message"),
     )
 
     PaymentProcessor = app.get_model("core", "PaymentProcessor")
