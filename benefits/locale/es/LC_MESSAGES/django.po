@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-09-29 19:44+0000\n"
+"POT-Creation-Date: 2022-09-30 00:43+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -59,6 +59,14 @@ msgid "eligibility.pages.unverified.mst_login.p[0]"
 msgstr ""
 "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
 "proveedor de tránsito local para obtener asistencia."
+
+msgid "enrollment.pages.index.mst_login.confirmed.header"
+msgstr "TODO: Your eligibility is confirmed for an Older Adult benefit"
+
+msgid "enrollment.pages.index.mst_login.confirmed.message"
+msgstr ""
+"TODO: Your eligibility has been verified by Login.gov. This benefit will "
+"give you a half price fare on public transportation with MST."
 
 msgid "eligibility.pages.index.mst_cc.label"
 msgstr "TODO: I have an MST Courtesy Card"
@@ -125,6 +133,15 @@ msgid "eligibility.pages.unverified.mst_cc.p[0]"
 msgstr ""
 "TODO: That’s okay! You may still be eligible for our program. Please reach "
 "out to Monterey-Salinas Transit for assistance."
+
+msgid "enrollment.pages.index.mst_cc.confirmed.header"
+msgstr "TODO: Your eligibility is confirmed for a Courtesy Card benefit"
+
+msgid "enrollment.pages.index.mst_cc.confirmed.message"
+msgstr ""
+"TODO: Your eligibility has been verified by MST through your Courtesy Card "
+"account. This benefit will give you a half price fare on public "
+"transportation with MST."
 
 msgid "core.pages.agency_index.h2"
 msgstr "TODO: Your benefit applies every time you tap to ride."
@@ -484,15 +501,6 @@ msgstr ""
 
 msgid "enrollment.pages.success.p4"
 msgstr "."
-
-msgid "enrollment.pages.index.confirmed_benefit.title"
-msgstr "TODO: Your eligibility is confirmed for a Courtesy Card benefit"
-
-msgid "enrollment.pages.index.confirmed_benefit.text"
-msgstr ""
-"TODO: Your eligibility has been verified by MST through your Courtesy Card "
-"account. This benefit will give you a half price fare on public "
-"transportation with MST. "
 
 msgid "enrollment.pages.index.link_card.title"
 msgstr "TODO: The next step is to link your bank card"

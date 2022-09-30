@@ -47,6 +47,7 @@ def index(request):
     session.update(request, origin=reverse(ROUTE_INDEX))
 
     agency = session.agency(request)
+    verifier = session.verifier(request)
 
     # POST back after payment processor form, process card token
     if request.method == "POST":
@@ -76,8 +77,8 @@ def index(request):
 
         confirmed_benefit_item = dict(
             icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
-            heading=_("enrollment.pages.index.confirmed_benefit.title"),
-            details=_("enrollment.pages.index.confirmed_benefit.text"),
+            heading=_(verifier.enrollment_confirmed_header),
+            details=_(verifier.enrollment_confirmed_message),
         )
 
         link_card_item = dict(
