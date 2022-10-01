@@ -50,6 +50,7 @@ h1,
 h2,
 .h2,
 h3,
+.h3,
 h4,
 h5,
 h6,
@@ -69,7 +70,8 @@ li {
 p,
 .p,
 span,
-.span {
+.span,
+li {
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
   letter-spacing: var(--body-letter-spacing);
@@ -77,7 +79,7 @@ span,
 }
 
 /* Links */
-/* Same sizes for all screen widths */
+/* Same sizes for all screen widths: 18px */
 a:not(.btn) {
   color: var(--primary-color);
   text-decoration: underline;
@@ -100,6 +102,7 @@ h1,
 h2,
 .h2,
 h3,
+.h3,
 h4 {
   font-weight: var(--bold-font-weight);
   letter-spacing: var(--body-letter-spacing);
@@ -121,6 +124,13 @@ h1 {
 h2,
 .h2 {
   font-size: 24px;
+}
+
+/* H3 */
+/* Same sizes for all screen widths: 20px */
+h3,
+.h3 {
+  font-size: 20px;
 }
 
 /* making the sticky footer */
@@ -297,7 +307,6 @@ footer.global-footer .footer-links a:active {
 /* Eligibility Start */
 
 .media-title {
-  margin-top: 100px;
   margin-bottom: 60px;
 }
 
@@ -331,24 +340,15 @@ footer.global-footer .footer-links a:active {
 
 .media-list .media .media-body {
   padding: 0 60px;
-  line-height: 26.1px;
 }
 
 .media-list .media .media-body--heading {
-  font-size: 18px;
-  letter-spacing: 0.05em;
-  line-height: 26.1px;
-  font-weight: 700;
   padding-left: 0;
   margin-top: 0;
-  margin-bottom: 16px;
 }
 
 .media-list .media .media-body--details {
-  font-size: 18px;
-  letter-spacing: 0.05em;
   padding-bottom: 1rem;
-  line-height: 26.1px;
 }
 
 .media-list .media .media-body--details p {
@@ -357,26 +357,6 @@ footer.global-footer .footer-links a:active {
 
 .media-list .media .media-body--items li {
   list-style-type: disc;
-}
-
-.media-list .media .media-body .media-body--links .btn-lg {
-  font-size: 16px;
-  letter-spacing: 0.05em;
-  padding: 0 0 6px 0;
-  text-align: left;
-  width: fit-content;
-}
-
-.media-list .media .media-body .media-body--links .btn-lg:hover {
-  color: var(--hover-color);
-}
-
-.eligibility-start .main-container {
-  padding-top: 3rem;
-  padding-bottom: 2rem;
-  width: initial;
-  padding-left: 0;
-  padding-right: 0;
 }
 
 .eligibility-start .buttons {
@@ -398,7 +378,6 @@ footer.global-footer .footer-links a:active {
 
 .eligibility-start h1.headline {
   margin-bottom: 50px;
-  margin-top: 64px;
 }
 
 /* Enrollment Success */
@@ -696,10 +675,6 @@ footer.global-footer .footer-links a:active {
     padding: 0;
   }
 
-  .media-list .media .media-body--heading {
-    line-height: 30px;
-  }
-
   .media-list .media .media-body--details p {
     padding-bottom: 25px;
     margin-left: 0;
@@ -710,20 +685,7 @@ footer.global-footer .footer-links a:active {
     float: right;
   }
 
-  .eligibility-start .main-content .container strong .info-link {
-    display: none;
-  }
-
-  .media-list .media .media-body .media-body--links .btn-lg {
-    font-size: 18px;
-    line-height: 27px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    display: block;
-  }
-
   .media-title {
-    text-align: left !important;
     margin-top: 42px;
     margin-bottom: 46px;
   }
