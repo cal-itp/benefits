@@ -28,6 +28,15 @@
   --bs-danger-rgb: var(--error-color-rgb);
   --standout-color: #323a45;
   --radio-input-color: var(--standout-color);
+  --h1-font-size: 24px;
+  --h1-text-align: left;
+}
+
+@media (min-width: 992px) {
+  :root {
+    --h1-font-size: 35px;
+    --h1-text-align: center;
+  }
 }
 
 @font-face {
@@ -93,13 +102,22 @@ h2,
 h3,
 h4 {
   font-weight: var(--bold-font-weight);
-  line-height: var(--bs-body-line-height);
   letter-spacing: var(--body-letter-spacing);
   line-height: var(--bs-body-line-height);
+  margin: 0;
+}
+
+/* H1 */
+/* Mobile first: Screen width up to 992px - 24px and left-aligned */
+/* Screen width above 992px - 35px and centered */
+h1 {
+  font-size: var(--h1-font-size);
+  text-align: var(--h1-text-align);
+  padding-top: 70px;
 }
 
 /* H2 */
-/* Same sizes for all screen widths */
+/* Same sizes for all screen widths: 24px; */
 h2,
 .h2 {
   font-size: 24px;
@@ -379,10 +397,6 @@ footer.global-footer .footer-links a:active {
 }
 
 .eligibility-start h1.headline {
-  font-size: 35px;
-  line-height: 52.5px;
-  letter-spacing: 0.05em;
-  text-align: center;
   margin-bottom: 50px;
   margin-top: 64px;
 }
@@ -414,10 +428,6 @@ footer.global-footer .footer-links a:active {
 
 .logged-out.enrollment-success .container.content {
   padding-top: 20vh;
-}
-
-.logged-out.enrollment-success .container.content h1 {
-  text-align: center;
 }
 
 .radio-label {
@@ -474,11 +484,6 @@ footer.global-footer .footer-links a:active {
   width: 271px;
 }
 
-.container.content {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
 .container.content .buttons label {
   display: block;
   margin-bottom: 2rem;
@@ -487,8 +492,6 @@ footer.global-footer .footer-links a:active {
 
 .container.content h1.icon-title {
   padding-bottom: 1.5rem;
-  line-height: 36px;
-  text-align: center;
 }
 
 .container.content h1.icon-title span.icon {
@@ -507,10 +510,6 @@ footer.global-footer .footer-links a:active {
 }
 
 .container.content.help h1 {
-  letter-spacing: 0.05em;
-  font-weight: 700;
-  font-size: 2.25rem;
-  text-align: center;
   margin-top: 5.5rem;
   margin-bottom: 4rem;
 }
@@ -663,9 +662,6 @@ footer.global-footer .footer-links a:active {
   /* Eligibility Start */
 
   .eligibility-start h1.headline {
-    text-align: left;
-    font-size: 24px;
-    line-height: 36px;
     margin-top: 24px;
     margin-bottom: 16px;
   }
@@ -767,14 +763,6 @@ footer.global-footer .footer-links a:active {
     padding-bottom: 0.138rem;
   }
 
-  .container.content {
-    padding-left: 3.5rem;
-    padding-right: 3.5rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    margin: 0;
-  }
-
   .container.content input[type="submit"],
   .container.content .btn {
     width: fit-content;
@@ -797,15 +785,6 @@ footer.global-footer .footer-links a:active {
 }
 
 @media (min-width: 1200px) {
-  /* xl+ */
-  .container.content {
-    padding-left: 5rem;
-    padding-right: 5rem;
-    padding-top: 4.5rem;
-    padding-bottom: 2rem;
-    margin: 0;
-  }
-
   /* Override for only the Agency Index page */
   .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 5rem;
