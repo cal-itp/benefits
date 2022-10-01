@@ -74,7 +74,7 @@ msgstr ""
 "This option is for people who have a current Courtesy Card (includes MST "
 "RIDES Eligibility cardholders). This benefit is part of a demonstration tool "
 "and may need to be renewed in the future. Using this benefit means your new "
-"transit fare is half of the standard fare.the sample."
+"transit fare is half of the standard fare."
 
 msgid "eligibility.pages.start.mst_cc.headline"
 msgstr "You selected a Courtesy Card benefit."
