@@ -39,6 +39,7 @@
 
 h1,
 h2,
+.h2,
 h3,
 h4,
 h5,
@@ -62,8 +63,8 @@ span,
 .span {
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
-  line-height: var(--bs-body-line-height);
   letter-spacing: var(--body-letter-spacing);
+  line-height: var(--bs-body-line-height);
 }
 
 /* Links */
@@ -84,28 +85,27 @@ a:visited:not(.btn) {
   color: var(--selected-color);
 }
 
+/* Headlines */
+
 h1,
 h2,
+.h2,
 h3,
-h4,
-h5,
-h6 {
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 30px;
-  margin-top: 30px;
-  margin-bottom: 20px;
+h4 {
+  font-weight: var(--bold-font-weight);
+  line-height: var(--bs-body-line-height);
+  letter-spacing: var(--body-letter-spacing);
+  line-height: var(--bs-body-line-height);
 }
 
-h1 {
-  font-weight: 700;
+/* H2 */
+/* Same sizes for all screen widths */
+h2,
+.h2 {
   font-size: 24px;
-  line-height: 30px;
-  letter-spacing: 0.05em;
 }
 
 /* making the sticky footer */
-
 html,
 body {
   height: 100%;
@@ -281,10 +281,6 @@ footer.global-footer .footer-links a:active {
 .media-title {
   margin-top: 100px;
   margin-bottom: 60px;
-  font-size: 24px;
-  line-height: 36px;
-  letter-spacing: 0.05em;
-  font-weight: 700;
 }
 
 .media-list {
@@ -520,9 +516,6 @@ footer.global-footer .footer-links a:active {
 }
 
 .container.content.help h2 {
-  letter-spacing: 0.05em;
-  font-weight: 700;
-  font-size: 1.5rem;
   margin-bottom: 3rem;
   margin-top: 3rem;
 }
