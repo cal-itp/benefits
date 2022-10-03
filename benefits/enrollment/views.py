@@ -76,14 +76,14 @@ def index(request):
         tokenize_retry_form = forms.CardTokenizeFailForm(ROUTE_RETRY)
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
-        confirmed_benefit_item = dict(
+        confirmed_eligibility_item = viewmodels.MediaItem(
             icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
             heading=_(verifier.eligibility_confirmed_item_heading),
             details=_(verifier.eligibility_confirmed_item_details),
         )
 
         help_link = reverse(ROUTE_HELP)
-        link_card_item = dict(
+        link_card_item = viewmodels.MediaItem(
             icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
             heading=_("enrollment.pages.index.link_card_item.heading"),
             details=format_html(
@@ -91,7 +91,7 @@ def index(request):
             ),
         )
 
-        media = [confirmed_benefit_item, link_card_item]
+        media = [confirmed_eligibility_item, link_card_item]
 
         page = viewmodels.Page(
             title=_("enrollment.pages.index.title"),
@@ -104,8 +104,7 @@ def index(request):
                 ),
             ],
         )
-        context = {}
-        context["media"] = media
+        context = {"media": media}
         context.update(page.context_dict())
 
         # add agency details
