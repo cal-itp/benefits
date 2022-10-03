@@ -502,11 +502,11 @@ msgstr ""
 msgid "enrollment.pages.success.p4"
 msgstr "."
 
-msgid "enrollment.pages.index.link_card.title"
+msgid "enrollment.pages.index.link_card_item.heading"
 msgstr "TODO: The next step is to link your bank card"
 
 #, python-format
-msgid "enrollment.pages.index.link_card.text%(link)s"
+msgid "enrollment.pages.index.link_card_item.details%(link)s"
 msgstr ""
 "TODO: Now that your eligibility has been verified we can link your transit "
 "discount to your card through our payment partner, <a href=\"%(link)s"

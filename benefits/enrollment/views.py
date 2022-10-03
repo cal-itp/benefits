@@ -85,8 +85,10 @@ def index(request):
         help_link = reverse(ROUTE_HELP)
         link_card_item = dict(
             icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-            heading=_("enrollment.pages.index.link_card.title"),
-            details=format_html(_("enrollment.pages.index.link_card.text%(link)s") % {"link": f"{help_link}#littlepay"}),
+            heading=_("enrollment.pages.index.link_card_item.heading"),
+            details=format_html(
+                _("enrollment.pages.index.link_card_item.details%(link)s") % {"link": f"{help_link}#littlepay"}
+            ),
         )
 
         media = [confirmed_benefit_item, link_card_item]
