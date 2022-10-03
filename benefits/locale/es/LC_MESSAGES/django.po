@@ -60,10 +60,10 @@ msgstr ""
 "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
 "proveedor de tránsito local para obtener asistencia."
 
-msgid "enrollment.pages.index.mst_login.start.header"
+msgid "enrollment.pages.index.mst_login.eligibility_confirmed_item.header"
 msgstr "TODO: Your eligibility is confirmed for an Older Adult benefit"
 
-msgid "enrollment.pages.index.mst_login.start.message"
+msgid "enrollment.pages.index.mst_login.eligibility_confirmed_item.message"
 msgstr ""
 "TODO: Your eligibility has been verified by Login.gov. This benefit will "
 "give you a half price fare on public transportation with MST."
