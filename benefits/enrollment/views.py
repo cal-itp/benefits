@@ -79,7 +79,6 @@ def index(request):
             headline=_("enrollment.pages.index.headline"),
             icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
             paragraphs=[_("enrollment.pages.index.p[0]"), _("enrollment.pages.index.p[1]"), _("enrollment.pages.index.p[2]")],
-            classes="text-lg-center no-image-mobile",
             forms=[tokenize_retry_form, tokenize_success_form],
             buttons=[
                 viewmodels.Button.primary(

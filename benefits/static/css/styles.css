@@ -1,10 +1,29 @@
-/* HTML element overrides */
-
-body {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 22px;
-  color: #000000;
+:root {
+  --primary-color: #046b99;
+  --primary-color-rgb: 4, 107, 153;
+  --bs-blue: var(--primary-color);
+  --bs-primary: var(--primary-color);
+  --bs-primary-rgb: var(--primary-color-rgb);
+  --text-primary-color: #000000;
+  --bs-body-color: var(--text-primary-color);
+  --bs-body-text-align: left;
+  --bs-body-font-weight: 400;
+  --bs-body-font-size: 16px;
+  --bs-font-sans-serif: Roboto, system-ui, -apple-system, "Segoe UI", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-body-font-family: var(--bs-font-sans-serif);
+  --dark-color: #212121;
+  --footer-background-color: var(--dark-color);
+  --footer-link-color: #73b3e7;
+  --footer-link-hover-color: #9b74d7;
+  --footer-mobile-underline-color: var(--bs-white);
+  --hover-color: #2f4c65;
+  --error-color: #ea1010;
+  --error-color-rgb: 234, 16, 16;
+  --bs-danger: var(--error-color);
+  --bs-danger-rgb: var(--error-color-rgb);
+  --standout-color: #323a45;
+  --radio-input-color: var(--standout-color);
 }
 
 @font-face {
@@ -25,7 +44,7 @@ p,
 a,
 span,
 li {
-  font-family: "Roboto", sans-serif;
+  font-family: var(--bs-body-font-family);
 }
 
 h1,
@@ -100,23 +119,18 @@ footer {
 
 footer.global-footer .footer-links a {
   font-size: 18px;
-  color: #73b3e7;
+  color: var(--footer-link-color);
   text-decoration: underline;
 }
 
 footer.global-footer .footer-links a:hover,
 footer.global-footer .footer-links a:focus,
 footer.global-footer .footer-links a:active {
-  color: #9b74d7;
+  color: var(--footer-link-hover-color);
   text-decoration: none;
 }
 
 /* class styles */
-
-.bg-p2,
-.bg-primary {
-  background-color: #2b6597 !important;
-}
 
 .btn-lg {
   border-width: 2px;
@@ -125,9 +139,6 @@ footer.global-footer .footer-links a:active {
 /* Log In */
 
 #login {
-  background: #046b99;
-  border: 0;
-  color: #ffffff;
   cursor: pointer;
   display: block;
   line-height: 1;
@@ -142,7 +153,7 @@ footer.global-footer .footer-links a:active {
 }
 
 #login:hover {
-  background: #2f4c65;
+  background: var(--hover-color);
 }
 
 /* Sets the text `Login.gov` as transparent */
@@ -177,14 +188,14 @@ footer.global-footer .footer-links a:active {
 .signout-row .container .signout-link {
   font-size: 12px;
   text-decoration: underline;
-  color: #2b6597;
+  color: var(--primary-color);
   letter-spacing: 0.05rem;
   padding-top: 18px;
   display: block;
 }
 
 .btn-link {
-  color: #046b99;
+  color: var(--primary-color);
 }
 
 .btn-primary {
@@ -200,13 +211,9 @@ footer.global-footer .footer-links a:active {
 
 .form-control {
   border-radius: 0.25rem;
-  border-color: #212121;
+  border-color: var(--primary-color);
   border-width: 2px;
-  color: #212121;
-}
-
-.form-control:focus-within {
-  color: #212121;
+  color: var(--text-primary-color);
 }
 
 .form-control-lg {
@@ -214,7 +221,7 @@ footer.global-footer .footer-links a:active {
 }
 
 .required-label {
-  color: #000;
+  color: var(--text-primary-color);
 }
 
 .form-group:not(.with-errors) {
@@ -227,11 +234,11 @@ footer.global-footer .footer-links a:active {
 
 .form-group.with-errors label,
 .form-group.with-errors .required-label {
-  color: #de0c0c;
+  color: var(--error-color);
 }
 
 .form-group.with-errors .form-control {
-  border-color: #de0c0c;
+  border-color: var(--error-color);
 }
 
 .form-group.with-errors .error-message {
@@ -244,7 +251,7 @@ footer.global-footer .footer-links a:active {
 }
 
 .global-footer {
-  background: #212121;
+  background: var(--footer-background-color);
 }
 
 /* Eligibility Start */
@@ -331,7 +338,7 @@ footer.global-footer .footer-links a:active {
 }
 
 .media-list .media .media-body .media-body--links .btn-lg:hover {
-  color: #2f4c65;
+  color: var(--hover-color);
 }
 
 .eligibility-start .main-container {
@@ -422,7 +429,7 @@ footer.global-footer .footer-links a:active {
   width: 25px;
   height: 25px;
 
-  border: 3px solid #000;
+  border: 3px solid var(--radio-input-color);
   margin-right: 5px;
   margin-top: 20px;
 
@@ -431,8 +438,8 @@ footer.global-footer .footer-links a:active {
 }
 
 .radio-input:checked {
-  background-color: #046b99;
-  box-shadow: inset 0 0 0 2px white;
+  background-color: var(--radio-input-color);
+  box-shadow: inset 0 0 0 2px var(--bs-white);
 }
 
 .radio-label-description {
@@ -594,7 +601,7 @@ footer.global-footer .footer-links a:active {
   }
 
   .global-footer ul.footer-links li:not(:last-child) {
-    border-bottom: 2px solid white;
+    border-bottom: 2px solid var(--footer-mobile-underline-color);
   }
 
   .global-footer ul.footer-links li a {
@@ -635,11 +642,11 @@ footer.global-footer .footer-links a:active {
 
   .signout-row .container .signout-link {
     font-size: 18px;
-    color: #2b6597;
+    color: var(--primary-color);
     background: none;
     padding: 5px 10px;
     border-radius: 3px;
-    border: 2px solid #2b6597;
+    border: 2px solid var(--primary-color);
     margin-top: 20px;
     letter-spacing: 0.02em;
     font-weight: 500;
