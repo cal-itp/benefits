@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-10-03 23:02+0000\n"
+"POT-Creation-Date: 2022-10-03 23:29+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -566,6 +566,10 @@ msgstr ""
 
 msgid "core.buttons.retry"
 msgstr "Intentar otra vez"
+
+msgctxt "image alt text"
+msgid "core.icons.calendarcheck"
+msgstr "TODO: A calendar page icon with a check mark"
 
 msgid "enrollment.pages.success.title"
 msgstr "Cierre sesión"

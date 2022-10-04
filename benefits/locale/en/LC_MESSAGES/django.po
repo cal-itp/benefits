@@ -546,6 +546,10 @@ msgstr ""
 msgid "core.buttons.retry"
 msgstr "Try again"
 
+msgctxt "image alt text"
+msgid "core.icons.calendarcheck"
+msgstr "A calendar page icon with a check mark"
+
 msgid "enrollment.pages.success.title"
 msgstr "Success"
 
