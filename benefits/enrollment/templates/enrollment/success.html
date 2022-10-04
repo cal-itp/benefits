@@ -12,7 +12,7 @@
     <p>
       <span>{% translate "enrollment.pages.success.logout[0]" %}</span>
       {% for b in page.buttons %}
-        <a id="{{ b.id }}" class="{{ b.classes | join:" " }}" style="display: inline-block;" href="{{ b.url }}" role="b">
+        <a id="{{ b.id }}" class="{{ b.classes | join:" " }}" style="display: inline-block;" href="{{ b.url }}" role="button">
           <span class="fallback-text">{{ b.fallback_text }}</span>
         </a>
       {% endfor %}
