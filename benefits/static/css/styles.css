@@ -28,13 +28,14 @@
   --bs-danger-rgb: var(--error-color-rgb);
   --standout-color: #323a45;
   --radio-input-color: var(--standout-color);
-  --h1-font-size: 24px;
+  --h1-font-size: 1.5em;
   --h1-text-align: left;
 }
 
 @media (min-width: 992px) {
   :root {
-    --h1-font-size: 35px;
+    --h1-font-size: 2.1875em;
+    /* 2.1875em = 35px */
     --h1-text-align: center;
   }
 }
@@ -44,6 +45,10 @@
   font-weight: 700;
   font-style: normal;
   src: local("PublicSans"), url("../fonts/PublicSans-Bold.woff") format("woff");
+}
+
+body {
+  font-size: 100%;
 }
 
 h1,
@@ -126,7 +131,8 @@ h1 {
 /* Also has a class which can be applied to non-headline elements */
 h2,
 .h2 {
-  font-size: 24px;
+  font-size: 1.5em;
+  /* 1.25em = 24px */
 }
 
 /* H3 */
@@ -134,7 +140,8 @@ h2,
 /* Also has a class which can be applied to non-headline elements */
 h3,
 .h3 {
-  font-size: 20px;
+  font-size: 1.25em;
+  /* 1.25em = 20px */
 }
 
 /* making the sticky footer */
