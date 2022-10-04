@@ -396,6 +396,10 @@ footer .footer-links li a:visited {
 
 /* Media List */
 
+.eligibility-start h1 {
+  padding-bottom: 64px;
+}
+
 .media-title {
   margin-bottom: 24px;
 }
@@ -448,6 +452,14 @@ footer .footer-links li a:visited {
 }
 
 @media (max-width: 992px) {
+  .eligibility-start h1 {
+    padding-bottom: 24px;
+  }
+
+  .media-title {
+    margin-bottom: 24px;
+  }
+
   .media-list {
     gap: 24px;
     margin-bottom: 64px;
@@ -471,10 +483,6 @@ footer .footer-links li a:visited {
     margin-left: 0;
     float: right;
   }
-
-  .media-title {
-    margin-bottom: 46px;
-  }
 }
 
 /* Eligibility Start */
@@ -491,10 +499,6 @@ footer .footer-links li a:visited {
 .eligibility-start .main-container .buttons label {
   margin: 0 0.8rem 0 0;
   line-height: 1;
-}
-
-.eligibility-start h1 {
-  padding-bottom: 64px;
 }
 
 /* Enrollment Success */
