@@ -78,6 +78,7 @@ li {
   font-weight: var(--bs-body-font-weight);
   letter-spacing: var(--body-letter-spacing);
   line-height: var(--bs-body-line-height);
+  margin: 0;
 }
 
 /* Links */
@@ -396,93 +397,49 @@ footer .footer-links li a:visited {
 
 /* Media List */
 
-.eligibility-start h1 {
-  padding-bottom: 64px;
+:root {
+  --media-item-icon-size: 64px;
+  --media-item-gap: 24px;
+  --media-item-icon-margin: 24px;
+}
+
+@media (min-width: 992px) {
+  :root {
+    --media-item-icon-size: 90px;
+    --media-item-gap: 62px;
+    --media-item-icon-margin: 32px;
+  }
 }
 
 .media-title {
+  margin-top: 24px;
   margin-bottom: 24px;
 }
 
-.media-list {
-  margin-top: 0;
-  margin-bottom: 64px;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 62px;
+@media (min-width: 992px) {
+  .media-title {
+    margin-top: 64px;
+  }
 }
 
-.media-list .media {
-  display: flex;
-  align-items: stretch;
-  width: 100%;
+.media-list {
+  gap: var(--media-item-gap);
+  margin-bottom: 64px;
 }
 
 .media-list .media .media-line .icon {
-  width: 90px;
-  height: 90px;
+  width: var(--media-item-icon-size);
+  height: var(--media-item-icon-size);
+  margin-right: var(--media-item-icon-margin);
 }
 
-.media-list .media .media-body {
-  padding: 0 60px;
-}
-
-.media-list .media .media-body--heading {
-  padding-left: 0;
-  margin-top: 0;
-}
-
-.media-list .media .media-body--details {
+.media-list .media .media-body--details,
+.media-list .media .media-body--items li:first-child {
   padding-top: 5px;
-  padding-bottom: 0;
-}
-
-.media-list .media .media-body--details p {
-  margin-bottom: 0;
 }
 
 .media-list .media .media-body--items li {
   list-style-type: disc;
-}
-
-.media-list .media .media-body--items li:first-child {
-  padding-top: 4px;
-}
-
-@media (max-width: 992px) {
-  .eligibility-start h1 {
-    padding-bottom: 24px;
-  }
-
-  .media-title {
-    margin-bottom: 24px;
-  }
-
-  .media-list {
-    gap: 24px;
-    margin-bottom: 64px;
-  }
-
-  .media-list .media .media-line .icon {
-    width: 64px;
-    height: 64px;
-    margin-right: 24px;
-  }
-
-  .media-list .media .media-body {
-    padding: 0;
-  }
-
-  .media-list .media .media-body--details p {
-    margin-left: 0;
-  }
-
-  .media-list .media .media-body--links {
-    margin-left: 0;
-    float: right;
-  }
 }
 
 /* Eligibility Start */
@@ -490,11 +447,6 @@ footer .footer-links li a:visited {
 .eligibility-start .buttons .btn {
   width: 100%;
 }
-
-/* .eligibility-start .main-container .buttons .btn {
-  margin-left: initial;
-  margin-right: initial;
-} */
 
 .eligibility-start .main-container .buttons label {
   margin: 0 0.8rem 0 0;
@@ -675,22 +627,4 @@ footer .footer-links li a:visited {
     margin-left: auto;
     margin-right: auto;
   }
-
-  /* Override for only the Agency Index page */
-  /* .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
-    margin-bottom: 4rem;
-  } */
 }
-
-/* @media (max-width: 1081px) {
-  .media-list {
-    margin-top: 50px;
-  }
-} */
-
-/* @media (min-width: 1200px) { */
-/* Override for only the Agency Index page */
-/* .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
-    margin-bottom: 5rem;
-  } */
-/* } */
