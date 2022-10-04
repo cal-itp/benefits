@@ -71,14 +71,14 @@
       {% endblock main_content %}
     </main>
 
-    <footer id="footer" class="global-footer">
+    <footer id="footer">
       <div class="container">
-        <ul class="footer-links">
+        <ul class="footer-links m-0 p-0 list-unstyled d-lg-flex gap-lg-4">
           <li>
-            <a href="{% url "core:help" %}">{% translate "core.buttons.help" %}</a>
+            <a class="m-0 ps-5 ps-lg-0" href="{% url "core:help" %}">{% translate "core.buttons.help" %}</a>
           </li>
           <li>
-            <a href="https://cdt.ca.gov/privacy-policy/" target="_blank" rel="noopener noreferrer">{% translate "core.buttons.privacy" %}</a>
+            <a class="m-0 ps-5 ps-lg-0" href="https://cdt.ca.gov/privacy-policy/" target="_blank" rel="noopener noreferrer">{% translate "core.buttons.privacy" %}</a>
           </li>
         </ul>
       </div>
