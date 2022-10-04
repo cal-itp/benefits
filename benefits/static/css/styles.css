@@ -392,6 +392,7 @@ footer .footer-links li a:visited {
   --media-item-icon-size: 64px;
   --media-item-gap: 24px;
   --media-item-icon-margin: 24px;
+  --media-title-margin-top: 24px;
 }
 
 @media (min-width: 992px) {
@@ -399,18 +400,13 @@ footer .footer-links li a:visited {
     --media-item-icon-size: 90px;
     --media-item-gap: 62px;
     --media-item-icon-margin: 32px;
+    --media-title-margin-top: 64px;
   }
 }
 
 .media-title {
-  margin-top: 24px;
+  margin-top: var(--media-title-margin-top);
   margin-bottom: 24px;
-}
-
-@media (min-width: 992px) {
-  .media-title {
-    margin-top: 64px;
-  }
 }
 
 .media-list {
