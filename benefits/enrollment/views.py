@@ -166,6 +166,18 @@ def success(request):
 
     verifier = session.verifier(request)
 
+    page = viewmodels.Page(title=_("enrollment.pages.success.title"), headline=_("enrollment.pages.success.headline"))
+
+    if verifier.is_auth_required:
+        if session.logged_in(request):
+            page.buttons = [viewmodels.Button.logout()]
+            page.classes = ["logged-in"]
+        else:
+            page.classes = ["logged-out"]
+            page.headline = _("enrollment.pages.success.logged_out.headline")
+            page.icon = (viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),)
+            return TemplateResponse(request, TEMPLATE_SUCCESS, page.context_dict())
+
     success_item = viewmodels.MediaItem(
         icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
         details=[
@@ -188,16 +200,6 @@ def success(request):
             details=details,
         )
         media.insert(0, expiry_item)
-
-    page = viewmodels.Page(title=_("enrollment.pages.success.title"), headline=_("enrollment.pages.success.headline"))
-
-    if verifier.is_auth_required:
-        if session.logged_in(request):
-            page.buttons = [viewmodels.Button.logout()]
-            page.classes = ["logged-in"]
-        else:
-            page.classes = ["logged-out"]
-            page.headline = _("enrollment.pages.success.logout.headline")
 
     context = {"media": media}
     context.update(page.context_dict())

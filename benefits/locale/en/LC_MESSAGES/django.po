@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-10-04 21:14+0000\n"
+"POT-Creation-Date: 2022-10-04 22:38+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -531,6 +531,16 @@ msgstr ""
 msgid "core.buttons.retry"
 msgstr "Try again"
 
+msgid "enrollment.pages.success.title"
+msgstr "Success"
+
+msgid "enrollment.pages.success.headline"
+msgstr "Success! Your discount is now linked to your bank card."
+
+msgid "enrollment.pages.success.logged_out.headline"
+msgstr ""
+"You have successfully logged out. Thank you for using Cal-ITP Benefits!"
+
 #, python-format
 msgid "enrollment.pages.success.helplink%(link)s"
 msgstr ""
@@ -540,13 +550,3 @@ msgstr ""
 msgctxt "image alt text"
 msgid "core.icons.calendarcheck"
 msgstr "A calendar page icon with a check mark"
-
-msgid "enrollment.pages.success.title"
-msgstr "Success"
-
-msgid "enrollment.pages.success.headline"
-msgstr "Success! Your discount is now linked to your bank card."
-
-msgid "enrollment.pages.success.logout.headline"
-msgstr ""
-"You have successfully logged out. Thank you for using Cal-ITP Benefits!"
