@@ -86,9 +86,10 @@ def index(request):
         link_card_item = viewmodels.MediaItem(
             icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
             heading=_("enrollment.pages.index.link_card_item.heading"),
-            details=format_html(
-                _("enrollment.pages.index.link_card_item.details%(link)s") % {"link": f"{help_link}#littlepay"}
-            ),
+            details=[
+                format_html(_("enrollment.pages.index.link_card_item.p[0]%(link)s") % {"link": f"{help_link}#littlepay"}),
+                _("enrollment.pages.index.link_card_item.p[1]"),
+            ],
         )
 
         media = [confirmed_eligibility_item, link_card_item]
@@ -96,7 +97,6 @@ def index(request):
         page = viewmodels.Page(
             title=_("enrollment.pages.index.title"),
             headline=_("enrollment.pages.index.headline"),
-            paragraphs=[_("enrollment.pages.index.p[0]")],
             forms=[tokenize_retry_form, tokenize_success_form],
             buttons=[
                 viewmodels.Button.primary(

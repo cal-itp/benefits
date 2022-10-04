@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-10-04 00:35+0000\n"
+"POT-Creation-Date: 2022-10-04 21:14+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -498,21 +498,21 @@ msgid "enrollment.pages.index.link_card_item.heading"
 msgstr "The next step is to link your bank card"
 
 #, python-format
-msgid "enrollment.pages.index.link_card_item.details%(link)s"
+msgid "enrollment.pages.index.link_card_item.p[0]%(link)s"
 msgstr ""
 "Now that your eligibility has been verified we can link your transit "
 "discount to your card through our payment partner, <a href=\"%(link)s"
 "\">Littlepay</a>. We don’t store your information, and you won’t be charged."
+
+msgid "enrollment.pages.index.link_card_item.p[1]"
+msgstr ""
+"Please use a bank-issued contactless Visa or Mastercard credit or debit card."
 
 msgid "enrollment.pages.index.title"
 msgstr "Connect your card"
 
 msgid "enrollment.pages.index.headline"
 msgstr "We have located you in our system!"
-
-msgid "enrollment.pages.index.p[0]"
-msgstr ""
-"Please use a bank-issued contactless Visa or Mastercard credit or debit card."
 
 msgid "enrollment.buttons.payment_partner"
 msgstr "Connect Your Card"
