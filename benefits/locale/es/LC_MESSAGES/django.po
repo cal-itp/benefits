@@ -511,7 +511,7 @@ msgid "enrollment.pages.index.link_card_item.details%(link)s"
 msgstr ""
 "TODO: Now that your eligibility has been verified we can link your transit "
 "discount to your card through our payment partner, <a href=\"%(link)s"
-"\">LittlePay</a>. We don’t store your information, and you won’t be charged."
+"\">Littlepay</a>. We don’t store your information, and you won’t be charged."
 
 msgid "enrollment.pages.index.title"
 msgstr "Tarjeta de conexión"
