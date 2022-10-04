@@ -29,8 +29,7 @@
           {% endblock icon_title %}
 
           {% block media_list %}
-            {% if media|length_is:"0" %}
-            {% else %}
+            {% if media|length %}
               {% include "core/includes/media-list.html" with media=media %}
             {% endif %}
           {% endblock media_list %}
