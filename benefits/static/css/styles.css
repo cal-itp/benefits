@@ -32,12 +32,21 @@
   --h1-text-align: left;
   --h2-font-size: calc(24rem / 16);
   --h3-font-size: calc(20rem / 16);
+  --main-content-min-height: calc(100vh - 182px);
+  /* 182px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) */
 }
 
 @media (min-width: 992px) {
   :root {
     --h1-font-size: calc(35rem / 16);
     --h1-text-align: center;
+  }
+}
+
+@media (min-width: 767px) {
+  :root {
+    --main-content-min-height: calc(100vh - 130px);
+    /* 130px = Header Height (80px) + Footer Height (50px) */
   }
 }
 
@@ -143,52 +152,59 @@ h3,
   font-size: var(--h3-font-size);
 }
 
-/* making the sticky footer */
-html,
-body {
-  height: 100%;
-  overflow-y: unset;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-}
-
+/* Main */
+/* The minimum height is calculated by 100 viewport height minus Header and Footer height */
 main {
-  flex-shrink: 0 !important;
+  min-height: var(--main-content-min-height);
 }
 
-main#main-content.main-content {
-  position: relative;
+/* Footer */
+/* Footer has same font styles on all screen widths */
+/* Mobile first: One link per row, each link is 50px height */
+/* Screen width above 767 - Footer is 50px height */
+footer.global-footer {
+  background: var(--footer-background-color);
+  padding: 0;
 }
 
-/* All pages but the Start Page */
-main .main-row {
-  min-height: calc(100vh - 120px);
+footer.global-footer .footer-links {
+  margin: 0 !important;
+  padding: 0;
 }
 
-main .main-row .col-lg-6.image {
-  background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
-  background-size: cover;
-}
-
-footer {
-  margin-top: auto;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-footer.global-footer .footer-links a {
+footer.global-footer .footer-links li a {
   color: var(--footer-link-color);
   font-weight: var(--bs-body-font-weight);
+  font-size: var(--bs-body-font-size);
   text-decoration: underline;
+  letter-spacing: 0;
+  line-height: 50px;
 }
 
-footer.global-footer .footer-links a:hover,
-footer.global-footer .footer-links a:focus,
-footer.global-footer .footer-links a:active {
+footer.global-footer .footer-links li a:hover,
+footer.global-footer .footer-links li a:focus,
+footer.global-footer .footer-links li a:active {
   color: var(--footer-link-hover-color);
+}
+
+@media (max-width: 757px) {
+  footer.global-footer .container {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  footer.global-footer .footer-links li {
+    width: 100%;
+  }
+
+  footer.global-footer .footer-links li a {
+    margin: 0;
+    padding-left: 30px;
+  }
+
+  footer.global-footer .footer-links li:not(:last-child) {
+    border-bottom: 2px solid var(--footer-mobile-underline-color);
+  }
 }
 
 /* class styles */
@@ -308,10 +324,6 @@ footer.global-footer .footer-links a:active {
 
 .form-group.with-errors .error-message p {
   margin-bottom: 0;
-}
-
-.global-footer {
-  background: var(--footer-background-color);
 }
 
 /* Eligibility Start */
@@ -566,36 +578,6 @@ footer.global-footer .footer-links a:active {
 }
 
 @media (max-width: 767px) {
-  /* xs and sm */
-  .global-footer {
-    padding: 0;
-  }
-
-  .global-footer .container {
-    padding: 0;
-    max-width: 100%;
-  }
-
-  .global-footer ul.footer-links {
-    margin: 0 !important;
-    padding: 0;
-  }
-
-  .global-footer ul.footer-links li {
-    width: 100%;
-    line-height: 50px;
-    margin-left: 0;
-  }
-
-  .global-footer ul.footer-links li:not(:last-child) {
-    border-bottom: 2px solid var(--footer-mobile-underline-color);
-  }
-
-  .global-footer ul.footer-links li a {
-    padding-left: 30px;
-    margin: 0;
-  }
-
   .radio-label {
     display: inline;
     margin-left: 5px;
@@ -614,12 +596,6 @@ footer.global-footer .footer-links a:active {
 
   .container.content .btn-lg {
     padding: 1.1875rem 0.813rem;
-  }
-
-  /* Mobile With Image */
-
-  .no-image-mobile .col-lg-6.image {
-    display: none !important;
   }
 
   .signout-row .container .signout-link {
@@ -725,12 +701,6 @@ footer.global-footer .footer-links a:active {
 }
 
 @media (min-width: 992px) {
-  footer {
-    margin-top: unset;
-    padding-top: 0.138rem;
-    padding-bottom: 0.138rem;
-  }
-
   .container.content input[type="submit"],
   .container.content .btn {
     width: fit-content;
