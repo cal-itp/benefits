@@ -30,12 +30,12 @@
                 {% endif %}
               {% endblock icon_title %}
 
-              {% block media_list %}
+              {% comment %} {% block media_list %}
                 {% if media|length_is:"0" %}
                 {% else %}
                   {% include "core/includes/media-list.html" with media=media %}
                 {% endif %}
-              {% endblock media_list %}
+              {% endblock media_list %} {% endcomment %}
 
               {% block paragraph_content %}
                 {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
@@ -43,15 +43,13 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-12">
-              {% block forms %}
-                {% if page.forms %}
-                  {% for f in page.forms %}
-                    {% include "core/includes/form.html" with form=f %}
-                  {% endfor %}
-                {% endif %}
-              {% endblock forms %}
-            </div>
+            {% block forms %}
+              {% if page.forms %}
+                {% for f in page.forms %}
+                  {% include "core/includes/form.html" with form=f %}
+                {% endfor %}
+              {% endif %}
+            {% endblock forms %}
           </div>
         </div>
         <div class="row">

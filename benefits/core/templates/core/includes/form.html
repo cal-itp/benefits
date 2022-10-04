@@ -7,52 +7,51 @@
     {% csrf_token %}
 
     {% for field in form %}
-      <div class="row">
-        {% if field.errors %}
-          <div class="offset-lg-1 col-lg-9">
-            <div class="form-group with-errors">
-            {% else %}
-              <div class="form-group offset-lg-1 col-lg-9">
-              {% endif %}
+      {% if field.errors %}
+        <div class="offset-lg-1 col-lg-9">
+          <div class="form-group with-errors">
+          {% else %}
+            <div class="form-group offset-lg-1 col-lg-9">
+            {% endif %}
 
-              {% if field.label %}
-                <label for="{{ field.id_for_label }}" class="form-control-label h2">
-                  {{ field.label }}
-                  {% if field.field.required %}<span class="required-label">*</span>{% endif %}
-                </label>
-              {% endif %}
+            {% if field.label %}
+              <label for="{{ field.id_for_label }}" class="form-control-label h2">
+                {{ field.label }}
+                {% if field.field.required %}<span class="required-label">*</span>{% endif %}
+              </label>
+            {% endif %}
 
-              {{ field }}
+            {{ field }}
 
-              {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
+            {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
 
-              {% if field.errors %}
-                <div class="error-message">
-                  {% for error in field.errors %}<p>{{ error }}</p>{% endfor %}
-                </div>
-              {% endif %}
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-      {% if form.submit_value %}
-        <div class="form-group row d-flex flex-column-reverse justify-content-lg-end flex-lg-row">
-          <div class="col-lg-7 d-flex align-items-end flex-row-reverse">
-            <p>Not sure which option is right for you? Please visit our Help Page.</p>
-          </div>
-          <div class="col-lg-3">
-            {% if recaptcha.enabled %}
-              <button class="btn btn-lg btn-primary g-recaptcha w-100"
-                      data-sitekey="{{ recaptcha.site_key }}"
-                      data-callback="onSubmit"
-                      data-action="submit">
-                {{ form.submit_value }}
-              </button>
-            {% else %}
-              <button class="btn btn-lg btn-primary w-100">{{ form.submit_value }}</button>
+            {% if field.errors %}
+              <div class="error-message">
+                {% for error in field.errors %}<p>{{ error }}</p>{% endfor %}
+              </div>
             {% endif %}
           </div>
         </div>
+      {% endfor %}
+    </div>
+    {% if form.submit_value %}
+      <div class="form-group row d-flex flex-column-reverse justify-content-lg-end flex-lg-row">
+        <div class="col-lg-7 d-flex align-items-end flex-row-reverse">
+          <p>Not sure which option is right for you? Please visit our Help Page.</p>
+        </div>
+        <div class="col-lg-3">
+          {% if recaptcha.enabled %}
+            <button class="btn btn-lg btn-primary g-recaptcha w-100"
+                    data-sitekey="{{ recaptcha.site_key }}"
+                    data-callback="onSubmit"
+                    data-action="submit">
+              {{ form.submit_value }}
+            </button>
+          {% else %}
+            <button class="btn btn-lg btn-primary w-100">{{ form.submit_value }}</button>
+          {% endif %}
+        </div>
+        {% comment %} </div> {% endcomment %}
       {% endif %}
 
       {% if recaptcha.enabled %}
