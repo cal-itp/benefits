@@ -4,7 +4,7 @@ import pytest
 
 from benefits.core.models import EligibilityVerifier, TransitAgency
 import benefits.core.session
-from benefits.core.views import ROUTE_ELIGIBILITY, ROUTE_INDEX, ROUTE_HELP, TEMPLATE_AGENCY, bad_request, csrf_failure
+from benefits.core.views import ROUTE_INDEX, ROUTE_HELP, TEMPLATE_AGENCY, bad_request, csrf_failure
 
 
 ROUTE_AGENCY = "core:agency_index"
@@ -60,8 +60,8 @@ def test_agency_index_single_verifier(mocker, model_TransitAgency, client, sessi
     session_reset_spy.assert_called_once()
     mocked_session_update.assert_called_once()
 
-    assert response.status_code == 302
-    assert response.url == reverse(ROUTE_ELIGIBILITY)
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_AGENCY
 
 
 @pytest.mark.django_db
