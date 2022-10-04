@@ -388,17 +388,17 @@ footer .footer-links li a:visited {
 /* Media List */
 
 .media-title {
-  margin-bottom: 60px;
+  margin-bottom: 24px;
 }
 
 .media-list {
   margin-top: 0;
-  margin-bottom: 80px;
+  margin-bottom: 64px;
   padding: 0;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  gap: 116px;
+  gap: 62px;
 }
 
 .media-list .media {
@@ -407,16 +407,9 @@ footer .footer-links li a:visited {
   width: 100%;
 }
 
-.media-list .media .media-line {
-  position: relative;
-}
-
 .media-list .media .media-line .icon {
-  width: 115px;
-  height: 115px;
-  position: relative;
-  display: block;
-  z-index: 10;
+  width: 90px;
+  height: 90px;
 }
 
 .media-list .media .media-body {
@@ -429,30 +422,62 @@ footer .footer-links li a:visited {
 }
 
 .media-list .media .media-body--details {
-  padding-bottom: 1rem;
+  padding-top: 5px;
+  padding-bottom: 0;
 }
 
 .media-list .media .media-body--details p {
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 .media-list .media .media-body--items li {
   list-style-type: disc;
 }
 
+.media-list .media .media-body--items li:first-child {
+  padding-top: 4px;
+}
+
+@media (max-width: 992px) {
+  .media-list {
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+
+  .media-list .media .media-line .icon {
+    width: 64px;
+    height: 64px;
+    margin-right: 24px;
+  }
+
+  .media-list .media .media-body {
+    padding: 0;
+  }
+
+  .media-list .media .media-body--details p {
+    margin-left: 0;
+  }
+
+  .media-list .media .media-body--links {
+    margin-left: 0;
+    float: right;
+  }
+
+  .media-title {
+    margin-bottom: 46px;
+  }
+}
+
 /* Eligibility Start */
 
-.eligibility-start .buttons {
-  display: flex;
-  align-items: flex-end;
-  justify-content: right;
-  margin-bottom: 30px;
+.eligibility-start .buttons .btn {
+  width: 100%;
 }
 
-.eligibility-start .main-container .buttons .btn {
+/* .eligibility-start .main-container .buttons .btn {
   margin-left: initial;
   margin-right: initial;
-}
+} */
 
 .eligibility-start .main-container .buttons label {
   margin: 0 0.8rem 0 0;
@@ -576,21 +601,12 @@ footer .footer-links li a:visited {
   #login {
     padding: 1rem 1.25rem;
   }
-
-  .eligibility-start .main-container .buttons {
-    padding: 0 3rem;
-  }
 }
 
 @media (max-width: 767px) {
   .radio-label {
     display: inline;
     margin-left: 5px;
-  }
-
-  .container.content {
-    padding-left: 0;
-    padding-right: 0;
   }
 }
 
@@ -629,58 +645,6 @@ footer .footer-links li a:visited {
 
   /* Eligibility Start */
 
-  .eligibility-start h1 {
-    padding-bottom: 24px;
-  }
-
-  .eligibility-start .main-content {
-    padding-top: 0;
-  }
-
-  .eligibility-start .period {
-    display: none;
-  }
-
-  .media-list {
-    gap: 40px;
-  }
-
-  .media-list .media .media-line .icon {
-    width: 92px;
-    height: 92px;
-    margin: 0 auto 42px auto;
-  }
-
-  .media-list .media {
-    flex-direction: column;
-  }
-
-  .media-list .media .media-line {
-    margin: 0 20px 0 0;
-  }
-
-  .media-list .media .media-body {
-    padding: 0;
-  }
-
-  .media-list .media .media-body--details p {
-    padding-bottom: 25px;
-    margin-left: 0;
-  }
-
-  .media-list .media .media-body--links {
-    margin-left: 0;
-    float: right;
-  }
-
-  .media-title {
-    margin-bottom: 46px;
-  }
-
-  .eligibility-start .media-list {
-    margin-bottom: 60px;
-  }
-
   #login .fallback-text {
     padding-top: 14px;
     margin: 8px auto 0 auto;
@@ -695,10 +659,10 @@ footer .footer-links li a:visited {
     display: inline-block;
   }
 
-  /* Override for only the Agency Index page */
+  /* Override for only the Agency Index page
   .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 2rem;
-  }
+  } */
 
   .logged-out.enrollment-success .container.content {
     padding-top: 10vh;
@@ -716,20 +680,20 @@ footer .footer-links li a:visited {
   }
 
   /* Override for only the Agency Index page */
-  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
+  /* .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 4rem;
-  }
+  } */
 }
 
-@media (max-width: 1081px) {
+/* @media (max-width: 1081px) {
   .media-list {
     margin-top: 50px;
   }
-}
+} */
 
-@media (min-width: 1200px) {
-  /* Override for only the Agency Index page */
-  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
+/* @media (min-width: 1200px) { */
+/* Override for only the Agency Index page */
+/* .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 5rem;
-  }
-}
+  } */
+/* } */
