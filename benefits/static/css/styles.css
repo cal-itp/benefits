@@ -548,14 +548,14 @@ footer.global-footer .footer-links li a:active {
   margin-bottom: 2rem;
 }
 
-.container.content .btn-lg,
+/* .container.content .btn-lg,
 .eligibility-start .btn-link {
   font-weight: 500;
   margin-bottom: 1rem;
-  padding: 0.8125rem;
-  /* btn-lg height is 60px */
-  width: 100%;
-}
+  padding: 0.8125rem; */
+/* btn-lg height is 60px */
+/* width: 100%; */
+/* } */
 
 .container.content .btn-link,
 .eligibility-start .btn-link {
@@ -631,7 +631,7 @@ footer.global-footer .footer-links li a:active {
   }
 }
 
-@media (min-width: 992px) {
+/* @media (min-width: 992px) {
   .container.content input[type="submit"],
   .container.content .btn {
     width: fit-content;
@@ -640,4 +640,4 @@ footer.global-footer .footer-links li a:active {
     margin-left: auto;
     margin-right: auto;
   }
-}
+} */

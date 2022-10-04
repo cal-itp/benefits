@@ -18,35 +18,43 @@
       <div class="container content">
         {% block container_content %}
 
-          {% block icon_title %}
-            {% if page.headline %}
-              {% if page.icon %}
-                {% include "core/includes/icon-title.html" with title=page.headline icon=page.icon %}
-              {% else %}
-                <h1>{{ page.headline }}</h1>
-              {% endif %}
-            {% endif %}
-          {% endblock icon_title %}
+          <div class="row justify-content-center">
+            <div class="col-lg-10">
+              {% block icon_title %}
+                {% if page.headline %}
+                  {% if page.icon %}
+                    {% include "core/includes/icon-title.html" with title=page.headline icon=page.icon %}
+                  {% else %}
+                    <h1>{{ page.headline }}</h1>
+                  {% endif %}
+                {% endif %}
+              {% endblock icon_title %}
 
-          {% block media_list %}
-            {% if media|length_is:"0" %}
-            {% else %}
-              {% include "core/includes/media-list.html" with media=media %}
-            {% endif %}
-          {% endblock media_list %}
+              {% block media_list %}
+                {% if media|length_is:"0" %}
+                {% else %}
+                  {% include "core/includes/media-list.html" with media=media %}
+                {% endif %}
+              {% endblock media_list %}
 
-          {% block paragraph_content %}
-            {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
-          {% endblock paragraph_content %}
-
-          {% block forms %}
-            {% if page.forms %}
-              {% for f in page.forms %}
-                {% include "core/includes/form.html" with form=f %}
-              {% endfor %}
-            {% endif %}
-          {% endblock forms %}
-
+              {% block paragraph_content %}
+                {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
+              {% endblock paragraph_content %}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12">
+              {% block forms %}
+                {% if page.forms %}
+                  {% for f in page.forms %}
+                    {% include "core/includes/form.html" with form=f %}
+                  {% endfor %}
+                {% endif %}
+              {% endblock forms %}
+            </div>
+          </div>
+        </div>
+        <div class="row">
           {% block buttons %}
             {% if page.buttons|length_is:"0" %}
             {% else %}
@@ -61,9 +69,10 @@
               {% endif %}
             {% endif %}
           {% endblock buttons %}
+        </div>
 
-        {% endblock container_content %}
-      </div>
+      {% endblock container_content %}
     </div>
   </div>
+</div>
 {% endblock main_content %}
