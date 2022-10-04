@@ -7,26 +7,16 @@
   {{ block.super |add:" enrollment-success" }}
 {% endblock classes %}
 
-{% block paragraph_content %}
-  {% if "logged-out" in page.classes %}
-    <img class="success-image" src="{% static "img/icon/happybus.svg" %}" alt="{% translate "core.icons.happybus" context "image alt text" %}">
-  {% else %}
-    <p>{% translate "enrollment.pages.success.p1" %}</p>
-    <p>{% translate "enrollment.pages.success.p2" %}</p>
-    <p>{% blocktranslate with help_link=help_link%}enrollment.pages.success.p3{{ help_link }}{% endblocktranslate %}</p>
-  {% endif %}
-{% endblock paragraph_content %}
-
 {% block buttons %}
   {% if page.buttons|length_is:"1" %}
     <p>
-      <span>{% translate "enrollment.pages.success.p3" %}</span>
+      <span>{% translate "enrollment.pages.success.logout[0]" %}</span>
       {% for b in page.buttons %}
         <a id="{{ b.id }}" class="{{ b.classes | join:" " }}" style="display: inline-block;" href="{{ b.url }}" role="b">
           <span class="fallback-text">{{ b.fallback_text }}</span>
         </a>
       {% endfor %}
-      <span>{% translate "enrollment.pages.success.p4" %}</span>
+      <span>{% translate "enrollment.pages.success.logout[1]" %}</span>
     </p>
   {% endif %}
 {% endblock buttons %}

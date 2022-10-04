@@ -163,26 +163,43 @@ def success(request):
     """View handler for the final success page."""
     request.path = "/enrollment/success"
     session.update(request, origin=reverse(ROUTE_SUCCESS))
+
     verifier = session.verifier(request)
-    icon = viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck"))
-    page = viewmodels.Page(
-        classes="no-image-mobile",
-        title=_("enrollment.pages.success.title"),
-        headline=_("enrollment.pages.success.headline"),
+
+    success_item = viewmodels.MediaItem(
+        icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
+        details=[
+            _(verifier.enrollment_success_confirm_item_details),
+            format_html(_("enrollment.pages.success.helplink%(link)s") % {"link": f"{reverse(ROUTE_HELP)}"}),
+        ],
     )
+    media = [success_item]
+
+    if verifier.enrollment_success_expiry_item_heading or verifier.enrollment_success_expiry_item_details:
+        heading = (
+            _(verifier.enrollment_success_expiry_item_heading) if verifier.enrollment_success_expiry_item_heading else None
+        )
+        details = (
+            _(verifier.enrollment_success_expiry_item_details) if verifier.enrollment_success_expiry_item_details else None
+        )
+        expiry_item = viewmodels.MediaItem(
+            icon=viewmodels.Icon("calendarcheck", pgettext("image alt text", "core.icons.calendarcheck")),
+            heading=heading,
+            details=details,
+        )
+        media.insert(0, expiry_item)
+
+    page = viewmodels.Page(title=_("enrollment.pages.success.title"), headline=_("enrollment.pages.success.headline"))
 
     if verifier.is_auth_required:
         if session.logged_in(request):
             page.buttons = [viewmodels.Button.logout()]
-            page.classes = ["no-image-mobile", "logged-in"]
-            page.icon = icon
+            page.classes = ["logged-in"]
         else:
-            page.classes = ["no-image-mobile", "logged-out"]
-            page.headline = _("enrollment.pages.success.logout.title")
-    else:
-        page.icon = icon
+            page.classes = ["logged-out"]
+            page.headline = _("enrollment.pages.success.logout.headline")
 
-    help_link = reverse(ROUTE_HELP)
-    context_dict = {**page.context_dict(), **{"help_link": help_link}}
+    context = {"media": media}
+    context.update(page.context_dict())
 
-    return TemplateResponse(request, TEMPLATE_SUCCESS, context_dict)
+    return TemplateResponse(request, TEMPLATE_SUCCESS, context)

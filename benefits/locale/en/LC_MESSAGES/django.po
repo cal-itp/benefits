@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-10-03 23:02+0000\n"
+"POT-Creation-Date: 2022-10-04 00:35+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -484,30 +484,15 @@ msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Identification card icon with question mark"
 
+msgid "enrollment.pages.success.logout[0]"
+msgstr "If you are on a public or shared computer, please sign out of your"
+
+msgid "enrollment.pages.success.logout[1]"
+msgstr "account."
+
 msgctxt "image alt text"
 msgid "core.icons.happybus"
 msgstr "Bus icon with smiley face"
-
-msgid "enrollment.pages.success.p1"
-msgstr "You were not charged anything today."
-
-msgid "enrollment.pages.success.p2"
-msgstr ""
-"When boarding transit, pay with this same physical card and your discount "
-"will automatically be applied to your fare purchase."
-
-#, python-format
-msgid "enrollment.pages.success.p3%(help_link)s"
-msgstr ""
-"For more information on what to expect when using your connected bank card "
-"please reach out to your local transit provider or check out our <a href="
-"\"%(help_link)s\" rel=\"noopener noreferrer\">help page</a>."
-
-msgid "enrollment.pages.success.p3"
-msgstr "If you are on a public or shared computer, please sign out of your"
-
-msgid "enrollment.pages.success.p4"
-msgstr "account."
 
 msgid "enrollment.pages.index.link_card_item.heading"
 msgstr "The next step is to link your bank card"
@@ -546,6 +531,12 @@ msgstr ""
 msgid "core.buttons.retry"
 msgstr "Try again"
 
+#, python-format
+msgid "enrollment.pages.success.helplink%(link)s"
+msgstr ""
+"Thank you for using Cal-ITP Benefits! For more information check out our <a "
+"href=\"%(link)s\" rel=\"noopener noreferrer\">Help Page</a>."
+
 msgctxt "image alt text"
 msgid "core.icons.calendarcheck"
 msgstr "A calendar page icon with a check mark"
@@ -556,6 +547,6 @@ msgstr "Success"
 msgid "enrollment.pages.success.headline"
 msgstr "Success! Your discount is now linked to your bank card."
 
-msgid "enrollment.pages.success.logout.title"
+msgid "enrollment.pages.success.logout.headline"
 msgstr ""
-"You have been successfully logged out. Thank you for using Cal-ITP Benefits!"
+"You have successfully logged out. Thank you for using Cal-ITP Benefits!"
