@@ -380,8 +380,8 @@ footer.global-footer .footer-links a:active {
   line-height: 1;
 }
 
-.eligibility-start h1.headline {
-  margin-bottom: 50px;
+.eligibility-start h1 {
+  padding-bottom: 64px;
 }
 
 /* Enrollment Success */
@@ -642,9 +642,8 @@ footer.global-footer .footer-links a:active {
 
   /* Eligibility Start */
 
-  .eligibility-start h1.headline {
-    margin-top: 24px;
-    margin-bottom: 16px;
+  .eligibility-start h1 {
+    padding-bottom: 24px;
   }
 
   .eligibility-start .main-content {
@@ -688,7 +687,6 @@ footer.global-footer .footer-links a:active {
   }
 
   .media-title {
-    margin-top: 42px;
     margin-bottom: 46px;
   }
 
