@@ -74,16 +74,17 @@
             <div id="headline" class="col-lg-10 text-sm-start text-lg-center">
               <h1>{{ page.headline }}</h1>
             </div>
-            <div id="sub-headline" class="col-lg-10">
-              {% block sub-headline %}
-              {% endblock sub-headline %}
-            </div>
-            <div id="explanatory-text" class="col-lg-10">
+            <div class="col-lg-10">
               {% block explanatory-text %}
               {% endblock explanatory-text %}
             </div>
           </div>
-          <div class="row justify-content-center"></div>
+          <div class="row justify-content-center">
+            <div class="col-lg-6">
+              {% block inner-content %}
+              {% endblock inner-content %}
+            </div>
+          </div>
           <div class="row justify-content-end"></div>
         </div>
       {% endblock main_content %}
