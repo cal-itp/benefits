@@ -207,13 +207,53 @@ footer.global-footer .footer-links li a:active {
   }
 }
 
-/* class styles */
+/* Header */
+
+.navbar.navbar-expand-sm.navbar-dark.bg-primary {
+  padding: 8.5px 1rem;
+}
+
+.navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.navbar-brand img.sm {
+  width: 120px;
+}
+
+.navbar-brand img.lg {
+  width: 271px;
+}
+
+/* Buttons */
 
 .btn-lg {
   border-width: 2px;
 }
 
-/* Log In */
+.btn-link {
+  color: var(--primary-color);
+}
+
+.btn-primary {
+  text-transform: capitalize;
+  letter-spacing: 0.05em;
+}
+
+.btn-outline-light {
+  width: 126px;
+  height: 38px;
+  padding: 0px !important;
+}
+
+.container.content .buttons label {
+  display: block;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Custom button: Log In */
 
 #login {
   cursor: pointer;
@@ -248,7 +288,7 @@ footer.global-footer .footer-links li a:active {
   line-height: 1;
 }
 
-/* Sign Out */
+/* Custom button: Sign Out */
 
 .signout-row {
   position: absolute;
@@ -270,20 +310,7 @@ footer.global-footer .footer-links li a:active {
   display: block;
 }
 
-.btn-link {
-  color: var(--primary-color);
-}
-
-.btn-primary {
-  text-transform: capitalize;
-  letter-spacing: 0.05em;
-}
-
-.btn-outline-light {
-  width: 126px;
-  height: 38px;
-  padding: 0px !important;
-}
+/* Forms: Inputs */
 
 .form-control {
   border-radius: 0.25rem;
@@ -326,7 +353,42 @@ footer.global-footer .footer-links li a:active {
   margin-bottom: 0;
 }
 
-/* Eligibility Start */
+/* Forms: Radio Buttons */
+
+.radio-label {
+  cursor: pointer;
+  display: inline;
+  margin-left: 15px;
+}
+
+.radio-input {
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+
+  border: 3px solid var(--radio-input-color);
+  margin-right: 5px;
+  margin-top: 20px;
+
+  position: relative;
+  top: 7px;
+}
+
+.radio-input:checked {
+  background-color: var(--radio-input-color);
+  box-shadow: inset 0 0 0 2px var(--bs-white);
+}
+
+.radio-label-description {
+  margin-left: 2rem;
+}
+
+/* Media List */
 
 .media-title {
   margin-bottom: 60px;
@@ -381,6 +443,8 @@ footer.global-footer .footer-links li a:active {
   list-style-type: disc;
 }
 
+/* Eligibility Start */
+
 .eligibility-start .buttons {
   display: flex;
   align-items: flex-end;
@@ -431,65 +495,7 @@ footer.global-footer .footer-links li a:active {
   padding-top: 20vh;
 }
 
-.radio-label {
-  cursor: pointer;
-  display: inline;
-  margin-left: 15px;
-}
-
-.radio-input {
-  cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-
-  border: 3px solid var(--radio-input-color);
-  margin-right: 5px;
-  margin-top: 20px;
-
-  position: relative;
-  top: 7px;
-}
-
-.radio-input:checked {
-  background-color: var(--radio-input-color);
-  box-shadow: inset 0 0 0 2px var(--bs-white);
-}
-
-.radio-label-description {
-  margin-left: 2rem;
-}
-
-/* context-specific overrides */
-
-/* Header */
-
-.navbar.navbar-expand-sm.navbar-dark.bg-primary {
-  padding: 8.5px 1rem;
-}
-
-.navbar-brand {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-.navbar-brand img.sm {
-  width: 120px;
-}
-
-.navbar-brand img.lg {
-  width: 271px;
-}
-
-.container.content .buttons label {
-  display: block;
-  margin-bottom: 2rem;
-  text-align: center;
-}
+/* 404 Page */
 
 .container.content h1.icon-title {
   padding-bottom: 1.5rem;
@@ -504,6 +510,8 @@ footer.global-footer .footer-links li a:active {
   width: 150px;
   height: 150px;
 }
+
+/* Help */
 
 .container.content.help {
   margin: 4rem auto 2rem auto;
