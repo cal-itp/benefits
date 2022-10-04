@@ -79,7 +79,7 @@ def test_token_valid(mocker, client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
 def test_index_eligible_get(client):
     path = reverse(ROUTE_INDEX)
     response = client.get(path)

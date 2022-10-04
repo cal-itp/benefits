@@ -115,6 +115,8 @@ class EligibilityVerifier(models.Model):
     unverified_title = models.TextField()
     unverified_headline = models.TextField()
     unverified_blurb = models.TextField()
+    eligibility_confirmed_item_heading = models.TextField()
+    eligibility_confirmed_item_details = models.TextField()
 
     def __str__(self):
         return self.name

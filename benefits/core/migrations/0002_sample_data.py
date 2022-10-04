@@ -108,6 +108,8 @@ PEM DATA
         unverified_title=_("eligibility.pages.unverified.mst_login.title"),
         unverified_headline=_("eligibility.pages.unverified.mst_login.headline"),
         unverified_blurb=_("eligibility.pages.unverified.mst_login.p[0]"),
+        eligibility_confirmed_item_heading=_("enrollment.pages.index.mst_login.eligibility_confirmed_item.heading"),
+        eligibility_confirmed_item_details=_("enrollment.pages.index.mst_login.eligibility_confirmed_item.details"),
     )
 
     verifier2 = EligibilityVerifier.objects.create(
@@ -142,6 +144,8 @@ PEM DATA
         unverified_title=_("eligibility.pages.unverified.mst_cc.title"),
         unverified_headline=_("eligibility.pages.unverified.mst_cc.headline"),
         unverified_blurb=_("eligibility.pages.unverified.mst_cc.p[0]"),
+        eligibility_confirmed_item_heading=_("enrollment.pages.index.mst_cc.eligibility_confirmed_item.heading"),
+        eligibility_confirmed_item_details=_("enrollment.pages.index.mst_cc.eligibility_confirmed_item.details"),
     )
 
     PaymentProcessor = app.get_model("core", "PaymentProcessor")

@@ -28,6 +28,13 @@
             {% endif %}
           {% endblock icon_title %}
 
+          {% block media_list %}
+            {% if media|length_is:"0" %}
+            {% else %}
+              {% include "core/includes/media-list.html" with media=media %}
+            {% endif %}
+          {% endblock media_list %}
+
           {% block paragraph_content %}
             {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
           {% endblock paragraph_content %}

@@ -6,6 +6,7 @@ import logging
 from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.utils.html import format_html
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
@@ -47,6 +48,7 @@ def index(request):
     session.update(request, origin=reverse(ROUTE_INDEX))
 
     agency = session.agency(request)
+    verifier = session.verifier(request)
 
     # POST back after payment processor form, process card token
     if request.method == "POST":
@@ -74,11 +76,27 @@ def index(request):
         tokenize_retry_form = forms.CardTokenizeFailForm(ROUTE_RETRY)
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
+        confirmed_benefit_item = dict(
+            icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
+            heading=_(verifier.eligibility_confirmed_item_heading),
+            details=_(verifier.eligibility_confirmed_item_details),
+        )
+
+        help_link = reverse(ROUTE_HELP)
+        link_card_item = dict(
+            icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
+            heading=_("enrollment.pages.index.link_card_item.heading"),
+            details=format_html(
+                _("enrollment.pages.index.link_card_item.details%(link)s") % {"link": f"{help_link}#littlepay"}
+            ),
+        )
+
+        media = [confirmed_benefit_item, link_card_item]
+
         page = viewmodels.Page(
             title=_("enrollment.pages.index.title"),
             headline=_("enrollment.pages.index.headline"),
-            icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-            paragraphs=[_("enrollment.pages.index.p[0]"), _("enrollment.pages.index.p[1]"), _("enrollment.pages.index.p[2]")],
+            paragraphs=[_("enrollment.pages.index.p[0]")],
             forms=[tokenize_retry_form, tokenize_success_form],
             buttons=[
                 viewmodels.Button.primary(
@@ -87,6 +105,7 @@ def index(request):
             ],
         )
         context = {}
+        context["media"] = media
         context.update(page.context_dict())
 
         # add agency details
