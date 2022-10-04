@@ -70,7 +70,19 @@
       {% block main_content %}
         <div class="container main-row">
           <div class="row justify-content-between"></div>
-          <div class="row justify-content-center"></div>
+          <div class="row justify-content-center">
+            <div id="headline" class="col-lg-10 text-sm-start text-lg-center">
+              <h1>{{ page.headline }}</h1>
+            </div>
+            <div id="sub-headline" class="col-lg-10">
+              {% block sub-headline %}
+              {% endblock sub-headline %}
+            </div>
+            <div id="explanatory-text" class="col-lg-10">
+              {% block explanatory-text %}
+              {% endblock explanatory-text %}
+            </div>
+          </div>
           <div class="row justify-content-center"></div>
           <div class="row justify-content-end"></div>
         </div>
