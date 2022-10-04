@@ -85,7 +85,18 @@
               {% endblock inner-content %}
             </div>
           </div>
-          <div class="row justify-content-end"></div>
+          <div class="row justify-content-end">
+            {% block call-to-action %}
+              <div class="col-lg-7 text-end">
+                {% block call-to-action-text %}
+                {% endblock call-to-action-text %}
+              </div>
+              <div class="col-lg-3">
+                {% block call-to-action-button %}
+                {% endblock call-to-action-button %}
+              </div>
+            {% endblock call-to-action %}
+          </div>
         </div>
       {% endblock main_content %}
     </main>
