@@ -16,10 +16,6 @@
   --bs-body-line-height: 1.5;
   --body-letter-spacing: 0.05em;
   --dark-color: #212121;
-  --footer-background-color: var(--dark-color);
-  --footer-link-color: #73b3e7;
-  --footer-link-hover-color: #9b74d7;
-  --footer-mobile-underline-color: var(--bs-white);
   --hover-color: #2f4c65;
   --error-color: #ea1010;
   --selected-color: #562b97;
@@ -40,11 +36,6 @@
   :root {
     --h1-font-size: 1.944444em;
     --h1-text-align: center;
-  }
-}
-
-@media (min-width: 767px) {
-  :root {
     --main-content-min-height: calc(100vh - 130px);
     /* 130px = Header Height (80px) + Footer Height (50px) */
   }
@@ -162,18 +153,31 @@ main {
 /* Footer */
 /* Footer has same font styles on all screen widths */
 /* Mobile first: One link per row, each link is 50px height */
-/* Screen width above 767 - Footer is 50px height */
-footer.global-footer {
+/* Screen width above 992px - Footer is 50px height */
+
+:root {
+  --footer-background-color: var(--dark-color);
+  --footer-link-color: #73b3e7;
+  --footer-link-width: 100%;
+  --footer-link-hover-color: #9b74d7;
+  --footer-mobile-underline-color: var(--bs-white);
+}
+
+@media (min-width: 767px) {
+  :root {
+    --footer-link-width: auto;
+  }
+}
+
+footer {
   background: var(--footer-background-color);
-  padding: 0;
 }
 
-footer.global-footer .footer-links {
-  margin: 0 !important;
-  padding: 0;
+footer .footer-links li {
+  width: var(--footer-link-width);
 }
 
-footer.global-footer .footer-links li a {
+footer .footer-links li a {
   color: var(--footer-link-color);
   font-weight: var(--bs-body-font-weight);
   font-size: var(--bs-body-font-size);
@@ -182,28 +186,20 @@ footer.global-footer .footer-links li a {
   line-height: 50px;
 }
 
-footer.global-footer .footer-links li a:hover,
-footer.global-footer .footer-links li a:focus,
-footer.global-footer .footer-links li a:active {
+footer .footer-links li a:hover,
+footer .footer-links li a:focus,
+footer .footer-links li a:active,
+footer .footer-links li a:visited {
   color: var(--footer-link-hover-color);
 }
 
-@media (max-width: 757px) {
-  footer.global-footer .container {
+@media (max-width: 992px) {
+  footer .container {
     max-width: 100%;
     padding: 0;
   }
 
-  footer.global-footer .footer-links li {
-    width: 100%;
-  }
-
-  footer.global-footer .footer-links li a {
-    margin: 0;
-    padding-left: 30px;
-  }
-
-  footer.global-footer .footer-links li:not(:last-child) {
+  footer .footer-links li:not(:last-child) {
     border-bottom: 2px solid var(--footer-mobile-underline-color);
   }
 }
