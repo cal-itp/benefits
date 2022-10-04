@@ -30,12 +30,13 @@
   --radio-input-color: var(--standout-color);
   --h1-font-size: 1.5em;
   --h1-text-align: left;
+  --h2-font-size: 1.3333333em;
+  --h3-font-size: 1.1111111em;
 }
 
 @media (min-width: 992px) {
   :root {
-    --h1-font-size: 2.1875em;
-    /* 2.1875em = 35px */
+    --h1-font-size: 1.944444em;
     --h1-text-align: center;
   }
 }
@@ -48,7 +49,8 @@
 }
 
 body {
-  font-size: 100%;
+  font-size: 1.125em;
+  /* 18px/16px = 1.125em */
 }
 
 h1,
@@ -117,8 +119,8 @@ h4 {
 }
 
 /* H1 */
-/* Mobile first: Screen width up to 992px - 24px and left-aligned */
-/* Screen width above 992px - 35px and centered */
+/* Mobile first: Screen width up to 992px - 24px (24px/18 = 1.333em) and left */
+/* Screen width above 992px - 35px (35px/18 = 1.9444) and centered */
 /* Does not have a class. Do not apply to non-headline elements. */
 h1 {
   font-size: var(--h1-font-size);
@@ -127,21 +129,19 @@ h1 {
 }
 
 /* H2 */
-/* Same sizes for all screen widths: 24px; */
+/* Same sizes for all screen widths: 24px (24px/18px = 1.333em) */
 /* Also has a class which can be applied to non-headline elements */
 h2,
 .h2 {
-  font-size: 1.5em;
-  /* 1.25em = 24px */
+  font-size: var(--h2-font-size);
 }
 
 /* H3 */
-/* Same sizes for all screen widths: 20px */
+/* Same sizes for all screen widths: 20px (20px/18px = 1.111em) */
 /* Also has a class which can be applied to non-headline elements */
 h3,
 .h3 {
-  font-size: 1.25em;
-  /* 1.25em = 20px */
+  font-size: var(--h3-font-size);
 }
 
 /* making the sticky footer */
