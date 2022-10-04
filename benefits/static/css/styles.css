@@ -95,6 +95,17 @@ li {
   margin: 0;
 }
 
+@media (max-width: 992px) {
+  /* Paragraph: Body Text, up to Small width */
+  .p-sm {
+    font-size: var(--bs-body-font-size);
+    font-weight: var(--bs-body-font-weight);
+    letter-spacing: var(--body-letter-spacing);
+    line-height: var(--bs-body-line-height);
+    margin: 0;
+  }
+}
+
 /* Links */
 /* Same sizes for all screen widths: 18px */
 a:not(.btn) {
