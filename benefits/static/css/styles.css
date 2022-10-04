@@ -159,6 +159,7 @@ main {
   --footer-link-color: #73b3e7;
   --footer-link-width: 100%;
   --footer-link-hover-color: #9b74d7;
+  --footer-link-font-weight: 500;
   --footer-mobile-underline-color: var(--bs-white);
 }
 
@@ -178,7 +179,7 @@ footer .footer-links li {
 
 footer .footer-links li a {
   color: var(--footer-link-color);
-  font-weight: var(--bs-body-font-weight);
+  font-weight: var(--footer-link-font-weight);
   font-size: var(--bs-body-font-size);
   text-decoration: underline;
   letter-spacing: 0;
