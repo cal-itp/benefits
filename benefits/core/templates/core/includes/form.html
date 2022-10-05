@@ -18,12 +18,6 @@
         {{ field }}
 
         {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
-
-        {% if field.errors %}
-          <div class="error-message">
-            {% for error in field.errors %}<p>{{ error }}</p>{% endfor %}
-          </div>
-        {% endif %}
       </div>
     {% endfor %}
 
