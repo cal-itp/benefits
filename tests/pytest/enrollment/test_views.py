@@ -5,6 +5,7 @@ from django.urls import reverse
 import pytest
 
 from benefits.core.middleware import TEMPLATE_USER_ERROR
+from benefits.core.views import ROUTE_LOGGED_OUT
 from benefits.enrollment.views import (
     ROUTE_INDEX,
     ROUTE_TOKEN,
@@ -206,7 +207,7 @@ def test_success_authentication_logged_in(mocker, client):
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
     assert "page" in response.context_data
-    assert "logged-in" in response.context_data["page"].classes
+    assert {"origin": reverse(ROUTE_LOGGED_OUT)} in mock_session.update.call_args
 
 
 @pytest.mark.django_db
@@ -221,7 +222,6 @@ def test_success_authentication_not_logged_in(mocker, client):
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
     assert "page" in response.context_data
-    assert "logged-out" in response.context_data["page"].classes
 
 
 @pytest.mark.django_db
@@ -233,4 +233,3 @@ def test_success_no_authentication(client):
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
     assert "page" in response.context_data
-    assert "logged-in" not in response.context_data["page"].classes

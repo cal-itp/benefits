@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.utils.translation import gettext as _
+from django.utils.translation import pgettext, gettext as _
 
 from . import models, session, viewmodels
 from .middleware import pageview_decorator
@@ -14,6 +14,7 @@ from .middleware import pageview_decorator
 ROUTE_INDEX = "core:index"
 ROUTE_ELIGIBILITY = "eligibility:index"
 ROUTE_HELP = "core:help"
+ROUTE_LOGGED_OUT = "core:logged_out"
 
 TEMPLATE_PAGE = "core/page.html"
 TEMPLATE_AGENCY = "core/agency_index.html"
@@ -151,3 +152,14 @@ def server_error(request, template_name="500.html"):
     t = loader.get_template(template_name)
 
     return HttpResponseServerError(t.render(page.context_dict()))
+
+
+def logged_out(request):
+    """View handler for the final log out confirmation message."""
+    page = viewmodels.Page(
+        title=_("core.pages.logged_out.title"),
+        headline=_("core.pages.logged_out.headline"),
+        icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
+    )
+
+    return TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())

@@ -537,7 +537,10 @@ msgstr "Success"
 msgid "enrollment.pages.success.headline"
 msgstr "Success! Your discount is now linked to your bank card."
 
-msgid "enrollment.pages.success.logged_out.headline"
+msgid "core.pages.logged_out.title"
+msgstr "Logged out"
+
+msgid "core.pages.logged_out.headline"
 msgstr ""
 "You have successfully logged out. Thank you for using Cal-ITP Benefits!"
 
