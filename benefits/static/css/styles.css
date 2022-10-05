@@ -28,16 +28,12 @@
   --h1-text-align: left;
   --h2-font-size: calc(24rem / 16);
   --h3-font-size: calc(20rem / 16);
-  --main-content-min-height: calc(100vh - 182px);
-  /* 182px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) */
 }
 
 @media (min-width: 992px) {
   :root {
     --h1-font-size: calc(35rem / 16);
     --h1-text-align: center;
-    --main-content-min-height: calc(100vh - 130px);
-    /* 130px = Header Height (80px) + Footer Height (50px) */
   }
 }
 
@@ -153,6 +149,9 @@ main {
 /* Footer has same font styles on all screen widths */
 /* Mobile first: One link per row, each link is 50px height */
 /* Screen width above 992px - Footer is 50px height */
+/* Total footer height is 50px on Desktop */
+/* And 102 on Mobile */
+/* Footer breakpoint set to 992px */
 /* Note: Not all Footer styles are written in mobile-first */
 /* to style the full-width line on mobile */
 /* and the desktop container-width sizing */
@@ -164,11 +163,15 @@ main {
   --footer-link-hover-color: #9b74d7;
   --footer-link-font-weight: 500;
   --footer-mobile-underline-color: var(--bs-white);
+  --main-content-min-height: calc(100vh - 182px);
+  /* 182px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) */
 }
 
-@media (min-width: 767px) {
+@media (min-width: 992px) {
   :root {
     --footer-link-width: auto;
+    --main-content-min-height: calc(100vh - 130px);
+    /* 130px = Header Height (80px) + Footer Height (50px) */
   }
 }
 
