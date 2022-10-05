@@ -3,18 +3,19 @@
         <li class="media">
             <div class="media-line">{% include "core/includes/icon.html" with icon=item.icon %}</div>
             <div class="media-body">
-                <h3 class="media-body--heading">{{ item.heading }}</h3>
-                <div class="media-body--details">
-                    <p>{{ item.details }}</p>
-                    {% if item.bullets|length %}
-                        <div class="media-body--items">
-                            <ul>
-                                {% for l in item.bullets %}<li>{{ l }}</li>{% endfor %}
-                            </ul>
-                        </div>
-                    {% else %}
-                    {% endif %}
-                </div>
+                {% if item.heading %}<h3 class="media-body--heading">{{ item.heading }}</h3>{% endif %}
+                {% if item.details|length %}
+                    <div class="media-body--details">
+                        {% for d in item.details %}<p>{{ d }}</p>{% endfor %}
+                        {% if item.bullets|length %}
+                            <div class="media-body--items">
+                                <ul>
+                                    {% for l in item.bullets %}<li>{{ l }}</li>{% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
         </li>
     {% endfor %}

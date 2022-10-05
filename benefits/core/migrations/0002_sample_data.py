@@ -110,6 +110,9 @@ PEM DATA
         unverified_blurb=_("eligibility.pages.unverified.mst_login.p[0]"),
         eligibility_confirmed_item_heading=_("enrollment.pages.index.mst_login.eligibility_confirmed_item.heading"),
         eligibility_confirmed_item_details=_("enrollment.pages.index.mst_login.eligibility_confirmed_item.details"),
+        enrollment_success_confirm_item_details=_("enrollment.pages.success.mst_login.confirm_item.details"),
+        enrollment_success_expiry_item_heading=None,
+        enrollment_success_expiry_item_details=None,
     )
 
     verifier2 = EligibilityVerifier.objects.create(
@@ -146,6 +149,9 @@ PEM DATA
         unverified_blurb=_("eligibility.pages.unverified.mst_cc.p[0]"),
         eligibility_confirmed_item_heading=_("enrollment.pages.index.mst_cc.eligibility_confirmed_item.heading"),
         eligibility_confirmed_item_details=_("enrollment.pages.index.mst_cc.eligibility_confirmed_item.details"),
+        enrollment_success_confirm_item_details=_("enrollment.pages.success.mst_cc.confirm_item.details"),
+        enrollment_success_expiry_item_heading=_("enrollment.pages.success.mst_cc.expiry_item.heading"),
+        enrollment_success_expiry_item_details=_("enrollment.pages.success.mst_cc.expiry_item.details"),
     )
 
     PaymentProcessor = app.get_model("core", "PaymentProcessor")
