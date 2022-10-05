@@ -1,6 +1,6 @@
-<ul class="media-list">
+<ul class="media-list mt-0 p-0 d-flex justify-content-center flex-column">
     {% for item in media %}
-        <li class="media">
+        <li class="media d-flex align-items-stretch w-auto">
             <div class="media-line">{% include "core/includes/icon.html" with icon=item.icon %}</div>
             <div class="media-body">
                 {% if item.heading %}<h3 class="media-body--heading">{{ item.heading }}</h3>{% endif %}
