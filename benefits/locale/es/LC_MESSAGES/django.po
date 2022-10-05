@@ -559,7 +559,10 @@ msgstr "TODO: Success"
 msgid "enrollment.pages.success.headline"
 msgstr "¡Éxito! Su descuento está ahora vinculado a su tarjeta bancaria."
 
-msgid "enrollment.pages.success.logged_out.headline"
+msgid "core.pages.logged_out.title"
+msgstr "Cierre sesión"
+
+msgid "core.pages.logged_out.headline"
 msgstr ""
 "Ha cerrado la sesión correctamente. ¡Gracias por usar los beneficios de Cal-"
 "ITP!"
