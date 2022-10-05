@@ -70,7 +70,8 @@
       {% block main_content %}
         <div class="container main-row">
           <div class="row justify-content-between">
-            {% block nav-buttons %}{% endblock nav-buttons %}
+            {% block nav-buttons %}
+            {% endblock nav-buttons %}
           </div>
           <div class="row justify-content-center">
             <div id="headline" class="col-lg-10 text-sm-start text-lg-center">
@@ -82,8 +83,8 @@
             </div>
           </div>
           <div class="row justify-content-center">
-              {% block inner-content %}
-              {% endblock inner-content %}
+            {% block inner-content %}
+            {% endblock inner-content %}
           </div>
           <div class="row d-flex flex-column-reverse justify-content-lg-end flex-lg-row">
             {% block call-to-action %}
