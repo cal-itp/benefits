@@ -345,30 +345,12 @@ footer .footer-links li a:visited {
   color: var(--text-primary-color);
 }
 
-.form-group:not(.with-errors) {
+.form-group {
   margin-bottom: 2.375rem;
 }
 
-.form-group:not(.with-errors):nth-last-of-type(2) {
+.form-group:nth-last-of-type(2) {
   margin-bottom: 3.375rem;
-}
-
-.form-group.with-errors label,
-.form-group.with-errors .required-label {
-  color: var(--error-color);
-}
-
-.form-group.with-errors .form-control {
-  border-color: var(--error-color);
-}
-
-.form-group.with-errors .error-message {
-  font-size: 14px;
-  padding-left: 1rem;
-}
-
-.form-group.with-errors .error-message p {
-  margin-bottom: 0;
 }
 
 /* Forms: Radio Buttons */
