@@ -26,7 +26,6 @@ def eligibility_from_api(verifier, form, agency):
     response = client.verify(sub, name, typenames_to_verify(agency, verifier))
 
     if response.error and any(response.error):
-        form.add_api_errors(response.error)
         return None
     elif any(response.eligibility):
         return list(response.eligibility)
