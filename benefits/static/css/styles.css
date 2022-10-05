@@ -153,6 +153,7 @@ main {
 /* Footer has same font styles on all screen widths */
 /* Mobile first: One link per row, each link is 50px height */
 /* Screen width above 992px - Footer is 50px height */
+/* Note: Not all Footer styles are written in mobile-first */
 
 :root {
   --footer-background-color: var(--dark-color);
