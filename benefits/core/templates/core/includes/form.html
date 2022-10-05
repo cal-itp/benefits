@@ -7,49 +7,44 @@
     {% csrf_token %}
 
     {% for field in form %}
-      {% if field.errors %}
-        <div class="form-group with-errors">
+      <div class="form-group">
+        {% if field.label %}
+          <label for="{{ field.id_for_label }}" class="form-control-label h2">
+            {{ field.label }}
+            {% if field.field.required %}<span class="required-label">*</span>{% endif %}
+          </label>
+        {% endif %}
+
+        {{ field }}
+
+        {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
+      </div>
+    {% endfor %}
+
+    {% if form.submit_value %}
+      <div class="form-group">
+        {% if recaptcha.enabled %}
+          <button class="btn btn-lg btn-primary g-recaptcha"
+                  data-sitekey="{{ recaptcha.site_key }}"
+                  data-callback="onSubmit"
+                  data-action="submit">
+            {{ form.submit_value }}
+          </button>
         {% else %}
-          <div class="form-group">
-          {% endif %}
+          <button class="btn btn-lg btn-primary">{{ form.submit_value }}</button>
+        {% endif %}
+      </div>
+    {% endif %}
 
-          {% if field.label %}
-            <label for="{{ field.id_for_label }}" class="form-control-label h2">
-              {{ field.label }}
-              {% if field.field.required %}<span class="required-label">*</span>{% endif %}
-            </label>
-          {% endif %}
-
-          {{ field }}
-
-          {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
-        </div>
-      {% endfor %}
-
-      {% if form.submit_value %}
-        <div class="form-group">
-          {% if recaptcha.enabled %}
-            <button class="btn btn-lg btn-primary g-recaptcha"
-                    data-sitekey="{{ recaptcha.site_key }}"
-                    data-callback="onSubmit"
-                    data-action="submit">
-              {{ form.submit_value }}
-            </button>
-          {% else %}
-            <button class="btn btn-lg btn-primary">{{ form.submit_value }}</button>
-          {% endif %}
-        </div>
-      {% endif %}
-
-      {% if recaptcha.enabled %}
-        <script src="{{ recaptcha.api_url }}"></script>
-        <script>
+    {% if recaptcha.enabled %}
+      <script src="{{ recaptcha.api_url }}"></script>
+      <script>
                 function onSubmit(token) {
                     $("form[action='{{form_action}}']").submit();
                 }
-        </script>
-      {% endif %}
-      <script>
+      </script>
+    {% endif %}
+    <script>
             $(function(){
                 $("form[action='{{form_action}}']").on("submit", function(e) {
                     $(".form-group", this).removeClass("with-errors");
@@ -64,7 +59,7 @@
                     }
                 });
             });
-      </script>
-    </form>
+    </script>
+  </form>
 
-  {% endif %}
+{% endif %}
