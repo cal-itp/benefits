@@ -44,10 +44,10 @@
               }
       </script>
     {% endif %}
+
     <script>
           $(function(){
               $("form[action='{{form_action}}']").on("submit", function(e) {
-
                   if ("{{ form.submitting_value }}" !== "") {
                       $("button[data-action='submit']", this)
                           .attr("role", "status")
