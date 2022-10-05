@@ -126,7 +126,7 @@ Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is
 1. Install dependencies:
 
    - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
-   - [Terraform](https://www.terraform.io/downloads)
+   - [Terraform](https://www.terraform.io/downloads) - see exact version in [`azure-pipelines.yml`](https://github.com/cal-itp/benefits/blob/dev/terraform/azure-pipelines.yml)
 
 1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli), specifying the `CDT/ODI Production` Subscription.
 
