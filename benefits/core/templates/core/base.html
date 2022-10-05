@@ -132,17 +132,6 @@
                     $(".nocookies").addClass("d-none");
                 }
 
-                var doc = document.documentElement;
-                if ($(doc).hasClass("with-image")) {
-                    var top = localStorage.getItem("scroll");
-                    if (top !== null) {
-                        doc.scrollTop = parseInt(top, 10);
-                    }
-                    window.addEventListener("visibilitychange", () => {
-                        localStorage.setItem("scroll", doc.scrollTop);
-                    });
-                }
-
                 $("a[href^='https'], a[href^='tel'], [href*='#']").on("click", function(e) {
                     amplitude.getInstance().logEvent('clicked link', {'href': e.target.href, 'path': window.location.pathname});
                 });
