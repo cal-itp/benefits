@@ -78,6 +78,18 @@ li {
   font-weight: var(--bs-body-font-weight);
   letter-spacing: var(--body-letter-spacing);
   line-height: var(--bs-body-line-height);
+  margin: 0;
+}
+
+@media (max-width: 992px) {
+  /* Paragraph: Body Text, up to Small width */
+  .p-sm {
+    font-size: var(--bs-body-font-size);
+    font-weight: var(--bs-body-font-weight);
+    letter-spacing: var(--body-letter-spacing);
+    line-height: var(--bs-body-line-height);
+    margin: 0;
+  }
 }
 
 /* Links */
@@ -396,53 +408,41 @@ footer .footer-links li a:visited {
 
 /* Media List */
 
+:root {
+  --media-item-icon-size: 64px;
+  --media-item-gap: 24px;
+  --media-item-icon-margin: 24px;
+  --media-title-margin-top: 24px;
+}
+
+@media (min-width: 992px) {
+  :root {
+    --media-item-icon-size: 90px;
+    --media-item-gap: 62px;
+    --media-item-icon-margin: 32px;
+    --media-title-margin-top: 64px;
+  }
+}
+
 .media-title {
-  margin-bottom: 60px;
+  margin-top: var(--media-title-margin-top);
+  margin-bottom: 24px;
 }
 
 .media-list {
-  margin-top: 0;
-  margin-bottom: 80px;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 116px;
-}
-
-.media-list .media {
-  display: flex;
-  align-items: stretch;
-  width: 100%;
-}
-
-.media-list .media .media-line {
-  position: relative;
+  gap: var(--media-item-gap);
+  margin-bottom: 64px;
 }
 
 .media-list .media .media-line .icon {
-  width: 115px;
-  height: 115px;
-  position: relative;
-  display: block;
-  z-index: 10;
+  width: var(--media-item-icon-size);
+  height: var(--media-item-icon-size);
+  margin-right: var(--media-item-icon-margin);
 }
 
-.media-list .media .media-body {
-  padding: 0 60px;
-}
-
-.media-list .media .media-body--heading {
-  padding-left: 0;
-  margin-top: 0;
-}
-
-.media-list .media .media-body--details {
-  padding-bottom: 1rem;
-}
-
-.media-list .media .media-body--details p {
-  margin-bottom: 12px;
+.media-list .media .media-body--details,
+.media-list .media .media-body--items li:first-child {
+  padding-top: 5px;
 }
 
 .media-list .media .media-body--items li {
@@ -451,25 +451,13 @@ footer .footer-links li a:visited {
 
 /* Eligibility Start */
 
-.eligibility-start .buttons {
-  display: flex;
-  align-items: flex-end;
-  justify-content: right;
-  margin-bottom: 30px;
-}
-
-.eligibility-start .main-container .buttons .btn {
-  margin-left: initial;
-  margin-right: initial;
+.eligibility-start .buttons .btn {
+  width: 100%;
 }
 
 .eligibility-start .main-container .buttons label {
   margin: 0 0.8rem 0 0;
   line-height: 1;
-}
-
-.eligibility-start h1 {
-  padding-bottom: 64px;
 }
 
 /* Enrollment Success */
@@ -573,21 +561,12 @@ footer .footer-links li a:visited {
   #login {
     padding: 1rem 1.25rem;
   }
-
-  .eligibility-start .main-container .buttons {
-    padding: 0 3rem;
-  }
 }
 
 @media (max-width: 767px) {
   .radio-label {
     display: inline;
     margin-left: 5px;
-  }
-
-  .container.content {
-    padding-left: 0;
-    padding-right: 0;
   }
 }
 
@@ -626,58 +605,6 @@ footer .footer-links li a:visited {
 
   /* Eligibility Start */
 
-  .eligibility-start h1 {
-    padding-bottom: 24px;
-  }
-
-  .eligibility-start .main-content {
-    padding-top: 0;
-  }
-
-  .eligibility-start .period {
-    display: none;
-  }
-
-  .media-list {
-    gap: 40px;
-  }
-
-  .media-list .media .media-line .icon {
-    width: 92px;
-    height: 92px;
-    margin: 0 auto 42px auto;
-  }
-
-  .media-list .media {
-    flex-direction: column;
-  }
-
-  .media-list .media .media-line {
-    margin: 0 20px 0 0;
-  }
-
-  .media-list .media .media-body {
-    padding: 0;
-  }
-
-  .media-list .media .media-body--details p {
-    padding-bottom: 25px;
-    margin-left: 0;
-  }
-
-  .media-list .media .media-body--links {
-    margin-left: 0;
-    float: right;
-  }
-
-  .media-title {
-    margin-bottom: 46px;
-  }
-
-  .eligibility-start .media-list {
-    margin-bottom: 60px;
-  }
-
   #login .fallback-text {
     padding-top: 14px;
     margin: 8px auto 0 auto;
@@ -692,10 +619,10 @@ footer .footer-links li a:visited {
     display: inline-block;
   }
 
-  /* Override for only the Agency Index page */
+  /* Override for only the Agency Index page
   .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 2rem;
-  }
+  } */
 }
 
 @media (min-width: 992px) {
@@ -706,23 +633,5 @@ footer .footer-links li a:visited {
     display: block;
     margin-left: auto;
     margin-right: auto;
-  }
-
-  /* Override for only the Agency Index page */
-  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
-    margin-bottom: 4rem;
-  }
-}
-
-@media (max-width: 1081px) {
-  .media-list {
-    margin-top: 50px;
-  }
-}
-
-@media (min-width: 1200px) {
-  /* Override for only the Agency Index page */
-  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
-    margin-bottom: 5rem;
   }
 }
