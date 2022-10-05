@@ -16,10 +16,6 @@
   --bs-body-line-height: 1.5;
   --body-letter-spacing: 0.05em;
   --dark-color: #212121;
-  --footer-background-color: var(--dark-color);
-  --footer-link-color: #73b3e7;
-  --footer-link-hover-color: #9b74d7;
-  --footer-mobile-underline-color: var(--bs-white);
   --hover-color: #2f4c65;
   --error-color: #ea1010;
   --selected-color: #562b97;
@@ -143,61 +139,127 @@ h3,
   font-size: var(--h3-font-size);
 }
 
-/* making the sticky footer */
-html,
-body {
-  height: 100%;
-  overflow-y: unset;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-}
-
+/* Main */
+/* The minimum height is calculated by 100 viewport height minus Header and Footer height */
 main {
-  flex-shrink: 0 !important;
+  min-height: var(--main-content-min-height);
 }
 
-main#main-content.main-content {
-  position: relative;
+/* Footer */
+/* Footer has same font styles on all screen widths */
+/* Mobile first: One link per row, each link is 50px height */
+/* Screen width above 992px - Footer is 50px height */
+/* Total footer height is 50px on Desktop */
+/* And 102 on Mobile */
+/* Footer breakpoint set to 992px */
+/* Note: Not all Footer styles are written in mobile-first */
+/* to style the full-width line on mobile */
+/* and the desktop container-width sizing */
+
+:root {
+  --footer-background-color: var(--dark-color);
+  --footer-link-color: #73b3e7;
+  --footer-link-width: 100%;
+  --footer-link-hover-color: #9b74d7;
+  --footer-link-font-weight: 500;
+  --footer-mobile-underline-color: var(--bs-white);
+  --main-content-min-height: calc(100vh - 182px);
+  /* 182px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) */
 }
 
-/* All pages but the Start Page */
-main .main-row {
-  min-height: calc(100vh - 120px);
-}
-
-main .main-row .col-lg-6.image {
-  background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
-  background-size: cover;
+@media (min-width: 992px) {
+  :root {
+    --footer-link-width: auto;
+    --main-content-min-height: calc(100vh - 130px);
+    /* 130px = Header Height (80px) + Footer Height (50px) */
+  }
 }
 
 footer {
-  margin-top: auto;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  background: var(--footer-background-color);
 }
 
-footer.global-footer .footer-links a {
+footer .footer-links li {
+  width: var(--footer-link-width);
+}
+
+footer .footer-links li a {
   color: var(--footer-link-color);
-  font-weight: var(--bs-body-font-weight);
+  font-weight: var(--footer-link-font-weight);
+  font-size: var(--bs-body-font-size);
   text-decoration: underline;
+  letter-spacing: 0;
+  line-height: 50px;
 }
 
-footer.global-footer .footer-links a:hover,
-footer.global-footer .footer-links a:focus,
-footer.global-footer .footer-links a:active {
+footer .footer-links li a:hover,
+footer .footer-links li a:focus,
+footer .footer-links li a:active,
+footer .footer-links li a:visited {
   color: var(--footer-link-hover-color);
 }
 
-/* class styles */
+/* Custom non-mobile-first code to */
+/* allow the mobile footer to have a */
+/* full-width line beyond container-fluid width */
+@media (max-width: 992px) {
+  footer .container {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  footer .footer-links li:not(:last-child) {
+    border-bottom: 2px solid var(--footer-mobile-underline-color);
+  }
+}
+
+/* Header */
+
+.navbar.navbar-expand-sm.navbar-dark.bg-primary {
+  padding: 8.5px 1rem;
+}
+
+.navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.navbar-brand img.sm {
+  width: 120px;
+}
+
+.navbar-brand img.lg {
+  width: 271px;
+}
+
+/* Buttons */
 
 .btn-lg {
   border-width: 2px;
 }
 
-/* Log In */
+.btn-link {
+  color: var(--primary-color);
+}
+
+.btn-primary {
+  text-transform: capitalize;
+  letter-spacing: 0.05em;
+}
+
+.btn-outline-light {
+  width: 126px;
+  height: 38px;
+  padding: 0px !important;
+}
+
+.container.content .buttons label {
+  display: block;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Custom button: Log In */
 
 #login {
   cursor: pointer;
@@ -232,7 +294,7 @@ footer.global-footer .footer-links a:active {
   line-height: 1;
 }
 
-/* Sign Out */
+/* Custom button: Sign Out */
 
 .signout-row {
   position: absolute;
@@ -254,20 +316,7 @@ footer.global-footer .footer-links a:active {
   display: block;
 }
 
-.btn-link {
-  color: var(--primary-color);
-}
-
-.btn-primary {
-  text-transform: capitalize;
-  letter-spacing: 0.05em;
-}
-
-.btn-outline-light {
-  width: 126px;
-  height: 38px;
-  padding: 0px !important;
-}
+/* Forms: Inputs */
 
 .form-control {
   border-radius: 0.25rem;
@@ -310,11 +359,42 @@ footer.global-footer .footer-links a:active {
   margin-bottom: 0;
 }
 
-.global-footer {
-  background: var(--footer-background-color);
+/* Forms: Radio Buttons */
+
+.radio-label {
+  cursor: pointer;
+  display: inline;
+  margin-left: 15px;
 }
 
-/* Eligibility Start */
+.radio-input {
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+
+  border: 3px solid var(--radio-input-color);
+  margin-right: 5px;
+  margin-top: 20px;
+
+  position: relative;
+  top: 7px;
+}
+
+.radio-input:checked {
+  background-color: var(--radio-input-color);
+  box-shadow: inset 0 0 0 2px var(--bs-white);
+}
+
+.radio-label-description {
+  margin-left: 2rem;
+}
+
+/* Media List */
 
 .media-title {
   margin-bottom: 60px;
@@ -369,6 +449,8 @@ footer.global-footer .footer-links a:active {
   list-style-type: disc;
 }
 
+/* Eligibility Start */
+
 .eligibility-start .buttons {
   display: flex;
   align-items: flex-end;
@@ -407,65 +489,7 @@ footer.global-footer .footer-links a:active {
   width: 7rem;
 }
 
-.radio-label {
-  cursor: pointer;
-  display: inline;
-  margin-left: 15px;
-}
-
-.radio-input {
-  cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-
-  border: 3px solid var(--radio-input-color);
-  margin-right: 5px;
-  margin-top: 20px;
-
-  position: relative;
-  top: 7px;
-}
-
-.radio-input:checked {
-  background-color: var(--radio-input-color);
-  box-shadow: inset 0 0 0 2px var(--bs-white);
-}
-
-.radio-label-description {
-  margin-left: 2rem;
-}
-
-/* context-specific overrides */
-
-/* Header */
-
-.navbar.navbar-expand-sm.navbar-dark.bg-primary {
-  padding: 8.5px 1rem;
-}
-
-.navbar-brand {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-.navbar-brand img.sm {
-  width: 120px;
-}
-
-.navbar-brand img.lg {
-  width: 271px;
-}
-
-.container.content .buttons label {
-  display: block;
-  margin-bottom: 2rem;
-  text-align: center;
-}
+/* 404 Page */
 
 .container.content h1.icon-title {
   padding-bottom: 1.5rem;
@@ -480,6 +504,8 @@ footer.global-footer .footer-links a:active {
   width: 150px;
   height: 150px;
 }
+
+/* Help */
 
 .container.content.help {
   margin: 4rem auto 2rem auto;
@@ -554,36 +580,6 @@ footer.global-footer .footer-links a:active {
 }
 
 @media (max-width: 767px) {
-  /* xs and sm */
-  .global-footer {
-    padding: 0;
-  }
-
-  .global-footer .container {
-    padding: 0;
-    max-width: 100%;
-  }
-
-  .global-footer ul.footer-links {
-    margin: 0 !important;
-    padding: 0;
-  }
-
-  .global-footer ul.footer-links li {
-    width: 100%;
-    line-height: 50px;
-    margin-left: 0;
-  }
-
-  .global-footer ul.footer-links li:not(:last-child) {
-    border-bottom: 2px solid var(--footer-mobile-underline-color);
-  }
-
-  .global-footer ul.footer-links li a {
-    padding-left: 30px;
-    margin: 0;
-  }
-
   .radio-label {
     display: inline;
     margin-left: 5px;
@@ -602,12 +598,6 @@ footer.global-footer .footer-links a:active {
 
   .container.content .btn-lg {
     padding: 1.1875rem 0.813rem;
-  }
-
-  /* Mobile With Image */
-
-  .no-image-mobile .col-lg-6.image {
-    display: none !important;
   }
 
   .signout-row .container .signout-link {
@@ -709,12 +699,6 @@ footer.global-footer .footer-links a:active {
 }
 
 @media (min-width: 992px) {
-  footer {
-    margin-top: unset;
-    padding-top: 0.138rem;
-    padding-bottom: 0.138rem;
-  }
-
   .container.content input[type="submit"],
   .container.content .btn {
     width: fit-content;
