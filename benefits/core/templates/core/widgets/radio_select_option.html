@@ -6,7 +6,7 @@
        {% include "django/forms/widgets/attrs.html" %}>
 
 {% if widget.wrap_label %}
-  <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}" class="radio-label"{% endif %}>
+  <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}" class="radio-label h3"{% endif %}>
     {{ widget.label }}
     {% if widget.description %}<p class="radio-label-description">{{ widget.description }}</p>{% endif %}
   </label>

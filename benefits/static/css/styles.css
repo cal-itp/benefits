@@ -28,6 +28,17 @@
   --bs-danger-rgb: var(--error-color-rgb);
   --standout-color: #323a45;
   --radio-input-color: var(--standout-color);
+  --h1-font-size: calc(24rem / 16);
+  --h1-text-align: left;
+  --h2-font-size: calc(24rem / 16);
+  --h3-font-size: calc(20rem / 16);
+}
+
+@media (min-width: 992px) {
+  :root {
+    --h1-font-size: calc(35rem / 16);
+    --h1-text-align: center;
+  }
 }
 
 @font-face {
@@ -37,9 +48,15 @@
   src: local("PublicSans"), url("../fonts/PublicSans-Bold.woff") format("woff");
 }
 
+body {
+  font-size: 100%;
+}
+
 h1,
 h2,
+.h2,
 h3,
+.h3,
 h4,
 h5,
 h6,
@@ -59,15 +76,16 @@ li {
 p,
 .p,
 span,
-.span {
+.span,
+li {
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
-  line-height: var(--bs-body-line-height);
   letter-spacing: var(--body-letter-spacing);
+  line-height: var(--bs-body-line-height);
 }
 
 /* Links */
-/* Same sizes for all screen widths */
+/* Same sizes for all screen widths: 18px */
 a:not(.btn) {
   color: var(--primary-color);
   text-decoration: underline;
@@ -84,28 +102,48 @@ a:visited:not(.btn) {
   color: var(--selected-color);
 }
 
+/* Headlines */
+/* All headlines */
+/* All headlines share font-weight, letter-spacing, line-height and margin */
 h1,
 h2,
+.h2,
 h3,
-h4,
-h5,
-h6 {
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 30px;
-  margin-top: 30px;
-  margin-bottom: 20px;
+.h3,
+h4 {
+  font-weight: var(--bold-font-weight);
+  letter-spacing: var(--body-letter-spacing);
+  line-height: var(--bs-body-line-height);
+  margin: 0;
 }
 
+/* H1 */
+/* Mobile first: Screen width up to 992px - 24px (24rem/16 = 1.5rem) and left */
+/* Screen width above 992px - 35px (35rem/16 = 2.1875rem) and centered */
+/* Does not have a class. Do not apply to non-headline elements. */
 h1 {
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 30px;
-  letter-spacing: 0.05em;
+  font-size: var(--h1-font-size);
+  text-align: var(--h1-text-align);
+  padding-top: 70px;
+}
+
+/* H2 */
+/* Same sizes for all screen widths: 24px (24rem/16 = 1.5rem) */
+/* Also has a class which can be applied to non-headline elements */
+h2,
+.h2 {
+  font-size: var(--h2-font-size);
+}
+
+/* H3 */
+/* Same sizes for all screen widths: 20px (20rem/16 = 1.25rem) */
+/* Also has a class which can be applied to non-headline elements */
+h3,
+.h3 {
+  font-size: var(--h3-font-size);
 }
 
 /* making the sticky footer */
-
 html,
 body {
   height: 100%;
@@ -279,12 +317,7 @@ footer.global-footer .footer-links a:active {
 /* Eligibility Start */
 
 .media-title {
-  margin-top: 100px;
   margin-bottom: 60px;
-  font-size: 24px;
-  line-height: 36px;
-  letter-spacing: 0.05em;
-  font-weight: 700;
 }
 
 .media-list {
@@ -317,24 +350,15 @@ footer.global-footer .footer-links a:active {
 
 .media-list .media .media-body {
   padding: 0 60px;
-  line-height: 26.1px;
 }
 
 .media-list .media .media-body--heading {
-  font-size: 18px;
-  letter-spacing: 0.05em;
-  line-height: 26.1px;
-  font-weight: 700;
   padding-left: 0;
   margin-top: 0;
-  margin-bottom: 16px;
 }
 
 .media-list .media .media-body--details {
-  font-size: 18px;
-  letter-spacing: 0.05em;
   padding-bottom: 1rem;
-  line-height: 26.1px;
 }
 
 .media-list .media .media-body--details p {
@@ -343,26 +367,6 @@ footer.global-footer .footer-links a:active {
 
 .media-list .media .media-body--items li {
   list-style-type: disc;
-}
-
-.media-list .media .media-body .media-body--links .btn-lg {
-  font-size: 16px;
-  letter-spacing: 0.05em;
-  padding: 0 0 6px 0;
-  text-align: left;
-  width: fit-content;
-}
-
-.media-list .media .media-body .media-body--links .btn-lg:hover {
-  color: var(--hover-color);
-}
-
-.eligibility-start .main-container {
-  padding-top: 3rem;
-  padding-bottom: 2rem;
-  width: initial;
-  padding-left: 0;
-  padding-right: 0;
 }
 
 .eligibility-start .buttons {
@@ -382,13 +386,8 @@ footer.global-footer .footer-links a:active {
   line-height: 1;
 }
 
-.eligibility-start h1.headline {
-  font-size: 35px;
-  line-height: 52.5px;
-  letter-spacing: 0.05em;
-  text-align: center;
-  margin-bottom: 50px;
-  margin-top: 64px;
+.eligibility-start h1 {
+  padding-bottom: 64px;
 }
 
 /* Enrollment Success */
@@ -418,10 +417,6 @@ footer.global-footer .footer-links a:active {
 
 .logged-out.enrollment-success .container.content {
   padding-top: 20vh;
-}
-
-.logged-out.enrollment-success .container.content h1 {
-  text-align: center;
 }
 
 .radio-label {
@@ -478,11 +473,6 @@ footer.global-footer .footer-links a:active {
   width: 271px;
 }
 
-.container.content {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
 .container.content .buttons label {
   display: block;
   margin-bottom: 2rem;
@@ -491,12 +481,9 @@ footer.global-footer .footer-links a:active {
 
 .container.content h1.icon-title {
   padding-bottom: 1.5rem;
-  line-height: 36px;
-  text-align: center;
 }
 
 .container.content h1.icon-title span.icon {
-  text-align: center;
   display: block;
   padding-bottom: 3rem;
 }
@@ -511,18 +498,10 @@ footer.global-footer .footer-links a:active {
 }
 
 .container.content.help h1 {
-  letter-spacing: 0.05em;
-  font-weight: 700;
-  font-size: 2.25rem;
-  text-align: center;
-  margin-top: 5.5rem;
   margin-bottom: 4rem;
 }
 
 .container.content.help h2 {
-  letter-spacing: 0.05em;
-  font-weight: 700;
-  font-size: 1.5rem;
   margin-bottom: 3rem;
   margin-top: 3rem;
 }
@@ -669,12 +648,8 @@ footer.global-footer .footer-links a:active {
 
   /* Eligibility Start */
 
-  .eligibility-start h1.headline {
-    text-align: left;
-    font-size: 24px;
-    line-height: 36px;
-    margin-top: 24px;
-    margin-bottom: 16px;
+  .eligibility-start h1 {
+    padding-bottom: 24px;
   }
 
   .eligibility-start .main-content {
@@ -707,10 +682,6 @@ footer.global-footer .footer-links a:active {
     padding: 0;
   }
 
-  .media-list .media .media-body--heading {
-    line-height: 30px;
-  }
-
   .media-list .media .media-body--details p {
     padding-bottom: 25px;
     margin-left: 0;
@@ -721,21 +692,7 @@ footer.global-footer .footer-links a:active {
     float: right;
   }
 
-  .eligibility-start .main-content .container strong .info-link {
-    display: none;
-  }
-
-  .media-list .media .media-body .media-body--links .btn-lg {
-    font-size: 18px;
-    line-height: 27px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    display: block;
-  }
-
   .media-title {
-    text-align: left !important;
-    margin-top: 42px;
     margin-bottom: 46px;
   }
 
@@ -774,14 +731,6 @@ footer.global-footer .footer-links a:active {
     padding-bottom: 0.138rem;
   }
 
-  .container.content {
-    padding-left: 3.5rem;
-    padding-right: 3.5rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    margin: 0;
-  }
-
   .container.content input[type="submit"],
   .container.content .btn {
     width: fit-content;
@@ -804,15 +753,6 @@ footer.global-footer .footer-links a:active {
 }
 
 @media (min-width: 1200px) {
-  /* xl+ */
-  .container.content {
-    padding-left: 5rem;
-    padding-right: 5rem;
-    padding-top: 4.5rem;
-    padding-bottom: 2rem;
-    margin: 0;
-  }
-
   /* Override for only the Agency Index page */
   .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 5rem;
