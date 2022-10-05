@@ -1,24 +1,17 @@
-{% extends "core/page.html" %}
+{% extends "core/base.html" %}
 
-{% block main_content %}
-  {% include "core/includes/sign-out-link.html" %}
-  {{ block.super }}
-{% endblock main_content %}
+{% block nav-buttons %}
+  <div class="d-flex justify-content-end">{% include "core/includes/sign-out-link.html" %}</div>
+{% endblock nav-buttons %}
 
-{% block icon_title %}
-  {{ block.super }}
-{% endblock icon_title %}
+{% block inner-content %}
+  <div class="col-12 col-sm-12 col-lg-10">
+    <h2 class="media-title"></h2>
+    {% include "core/includes/media-list.html" with media=media %}
+  </div>
 
-{% block paragraph_content %}
-  {{ block.super }}
+  {% comment %} This Javascript code must be before the forms. {% endcomment %}
   {% if payment_processor %}
-    <div class="row justify-content-center justify-content-lg-end">
-      <div class="col-lg-3 col-8">
-        <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
-          {{ payment_processor.loading_text }}
-        </button>
-      </div>
-    </div>
     <script>
             var startedEvent = "started payment connection", closedEvent = "closed payment connection";
 
@@ -92,14 +85,21 @@
     <h2>Error!</h2>
     <p>No access token configured</p>
   {% endif %}
-{% endblock paragraph_content %}
 
-{% block buttons %}
+  {% for f in page.forms %}
+    {% include "core/includes/form.html" with form=f %}
+  {% endfor %}
+{% endblock inner-content %}
+
+{% block call-to-action-button %}
   {% if payment_processor %}
+    <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
+      {{ payment_processor.loading_text }}
+    </button>
     <div class="invisible">
-      <div class="row justify-content-center justify-content-lg-end">
-        <div class="col-lg-3 col-8">{{ block.super }}</div>
-      </div>
+      {% for b in page.buttons %}
+        {% include "core/includes/button.html" with button=b %}
+      {% endfor %}
     </div>
   {% endif %}
-{% endblock buttons %}
+{% endblock call-to-action-button %}
