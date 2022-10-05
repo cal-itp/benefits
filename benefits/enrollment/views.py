@@ -175,7 +175,7 @@ def success(request):
         else:
             page.classes = ["logged-out"]
             page.headline = _("enrollment.pages.success.logged_out.headline")
-            page.icon = (viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),)
+            page.icon = viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus"))
             return TemplateResponse(request, TEMPLATE_SUCCESS, page.context_dict())
 
     success_item = viewmodels.MediaItem(
