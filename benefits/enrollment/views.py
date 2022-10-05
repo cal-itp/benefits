@@ -12,7 +12,7 @@ from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import models, session, viewmodels
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
-from benefits.core.views import ROUTE_HELP
+from benefits.core.views import ROUTE_HELP, ROUTE_LOGGED_OUT
 from . import analytics, api, forms
 
 
@@ -168,15 +168,11 @@ def success(request):
 
     page = viewmodels.Page(title=_("enrollment.pages.success.title"), headline=_("enrollment.pages.success.headline"))
 
-    if verifier.is_auth_required:
-        if session.logged_in(request):
-            page.buttons = [viewmodels.Button.logout()]
-            page.classes = ["logged-in"]
-        else:
-            page.classes = ["logged-out"]
-            page.headline = _("enrollment.pages.success.logged_out.headline")
-            page.icon = viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus"))
-            return TemplateResponse(request, TEMPLATE_SUCCESS, page.context_dict())
+    if verifier.is_auth_required and session.logged_in(request):
+        # overwrite origin for a logged in user
+        # if they click the logout button, they are taken to the new route
+        session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
+        page.buttons = [viewmodels.Button.logout()]
 
     success_item = viewmodels.MediaItem(
         icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
