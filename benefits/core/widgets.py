@@ -11,7 +11,7 @@ class FormControlTextInput(widgets.TextInput):
     def __init__(self, pattern=None, placeholder=None, **kwargs):
         super().__init__(**kwargs)
 
-        self.attrs.update({"class": "form-control form-control-lg"})
+        self.attrs.update({"class": "form-control"})
         if pattern:
             self.attrs.update({"pattern": pattern})
         if placeholder:
