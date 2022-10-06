@@ -8,6 +8,7 @@
   --bs-body-color: var(--text-primary-color);
   --bs-body-text-align: left;
   --bs-body-font-weight: 400;
+  --medium-font-weight: 500;
   --bold-font-weight: 700;
   --bs-body-font-size: 18px;
   --bs-font-sans-serif: Roboto, system-ui, -apple-system, "Segoe UI", sans-serif,
@@ -28,6 +29,8 @@
   --h1-text-align: left;
   --h2-font-size: calc(24rem / 16);
   --h3-font-size: calc(20rem / 16);
+  --font-size-24px: calc(24rem / 16);
+  --font-size-14px: calc(14rem / 16);
 }
 
 @media (min-width: 992px) {
@@ -173,7 +176,7 @@ main {
   --footer-link-color: #73b3e7;
   --footer-link-width: 100%;
   --footer-link-hover-color: #9b74d7;
-  --footer-link-font-weight: 500;
+  --footer-link-font-weight: var(--medium-font-weight);
   --footer-mobile-underline-color: var(--bs-white);
   --main-content-min-height: calc(100vh - 182px);
   /* 182px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) */
@@ -322,29 +325,42 @@ footer .footer-links li a:visited {
   display: block;
 }
 
-/* Forms: Inputs */
+/* Forms: Text Inputs */
+/* Form Container: */
 
-.form-control {
-  border-radius: 0.25rem;
-  border-color: var(--primary-color);
+:root {
+  --form-input-gap: 22px;
+}
+
+@media (min-width: 992px) {
+  :root {
+    --form-input-gap: 42px;
+  }
+}
+
+.form-container .form-group:not(:first-child) {
+  padding-top: var(--form-input-gap);
+}
+
+.form-container .form-control-label {
+  font-size: var(--bs-body-font-size);
+  font-weight: var(--medium-font-weight);
+  letter-spacing: var(--body-letter-spacing);
+  padding-bottom: 12px;
+}
+
+.form-container .form-control {
   border-width: 2px;
+  border-radius: 3px;
+  border-color: var(--primary-color);
   color: var(--text-primary-color);
+  font-size: var(--font-size-24px);
+  padding: 0.625rem 0.75rem;
+  /* Input height should be 60px */
 }
 
-.form-control-lg {
-  border-radius: 0.3rem;
-}
-
-.required-label {
-  color: var(--text-primary-color);
-}
-
-.form-group {
-  margin-bottom: 2.375rem;
-}
-
-.form-group:nth-last-of-type(2) {
-  margin-bottom: 3.375rem;
+.form-text {
+  font-size: var(--font-size-14px);
 }
 
 /* Forms: Radio Buttons */

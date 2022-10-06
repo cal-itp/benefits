@@ -6,22 +6,22 @@
   <form action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form" style="padding-top: 64px;">
     {% csrf_token %}
 
-    <div class="row">
+    <div class="row form-container">
       <div class="offset-lg-3 col-lg-6">
         {% comment %} <div class="offset-lg-1 col-lg-9"> {% endcomment %}
         {% for field in form %}
-          <div class="row">
+          <div class="row form-group mb-0">
             <div class="col-12">
               {% if field.label %}
-                <label for="{{ field.id_for_label }}" class="form-control-label h2">
+                <label for="{{ field.id_for_label }}" class="form-control-label">
                   {{ field.label }}
-                  {% if field.field.required %}<span class="required-label">*</span>{% endif %}
+                  {% if field.field.required %}<span class="required-label text-body">*</span>{% endif %}
                 </label>
               {% endif %}
 
               {{ field }}
 
-              {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
+              {% if field.help_text %}<small class="form-text text-body">{{ field.help_text }}</small>{% endif %}
             </div>
           </div>
         {% endfor %}
