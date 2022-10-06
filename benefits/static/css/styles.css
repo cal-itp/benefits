@@ -343,6 +343,12 @@ footer .footer-links li a:visited {
   letter-spacing: 0.05rem;
 }
 
+@media (min-width: 992px) {
+  #previous-page {
+    border: none;
+  }
+}
+
 #previous-page::before {
   background: url("/static/img/left-arrow.svg") no-repeat;
   content: "";
