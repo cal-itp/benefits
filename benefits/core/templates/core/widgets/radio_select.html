@@ -9,7 +9,7 @@
           {% endif %}
 
           {% for option in options %}
-            <div>{% include option.template_name with widget=option %}</div>
+            <div class="radio-input-group">{% include option.template_name with widget=option %}</div>
           {% endfor %}
 
           {% if group %}

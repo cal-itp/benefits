@@ -24,7 +24,6 @@
   --bs-danger: var(--error-color);
   --bs-danger-rgb: var(--error-color-rgb);
   --standout-color: #323a45;
-  --radio-input-color: var(--standout-color);
   --h1-font-size: calc(24rem / 16);
   --h1-text-align: left;
   --h2-font-size: calc(24rem / 16);
@@ -365,10 +364,27 @@ footer .footer-links li a:visited {
 
 /* Forms: Radio Buttons */
 
+:root {
+  --var-radio-button-size: 24px;
+  --radio-input-color: var(--standout-color);
+  --radio-input-margin-right: 42px;
+  --radio-label-desc-margin-left: 70px;
+}
+
+@media (min-width: 992px) {
+  :root {
+    --var-radio-button-size: 24px;
+    --radio-input-margin-right: 15px;
+    --radio-label-desc-margin-left: 42px;
+  }
+}
+
 .radio-label {
   cursor: pointer;
-  display: inline;
-  margin-left: 15px;
+}
+
+.radio-input-group:not(:first-child) {
+  padding-top: 24px;
 }
 
 .radio-input {
@@ -376,17 +392,12 @@ footer .footer-links li a:visited {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-
-  border: 3px solid var(--radio-input-color);
-  margin-right: 5px;
-  margin-top: 20px;
-
+  width: var(--var-radio-button-size);
+  height: var(--var-radio-button-size);
+  border: 2px solid var(--radio-input-color);
   position: relative;
   top: 7px;
+  margin-right: var(--radio-input-margin-right);
 }
 
 .radio-input:checked {
@@ -395,7 +406,7 @@ footer .footer-links li a:visited {
 }
 
 .radio-label-description {
-  margin-left: 2rem;
+  margin-left: var(--radio-label-desc-margin-left);
 }
 
 /* Media List */
@@ -552,13 +563,6 @@ footer .footer-links li a:visited {
 @media (max-width: 320px) {
   #login {
     padding: 1rem 1.25rem;
-  }
-}
-
-@media (max-width: 767px) {
-  .radio-label {
-    display: inline;
-    margin-left: 5px;
   }
 }
 

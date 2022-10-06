@@ -1,12 +1,12 @@
 
-<input class="radio-input"
+<input class="radio-input rounded-circle"
        type="{{ widget.type }}"
        name="{{ widget.name }}"
        {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
        {% include "django/forms/widgets/attrs.html" %}>
 
 {% if widget.wrap_label %}
-  <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}" class="radio-label h3"{% endif %}>
+  <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}" class="radio-label h3 d-inline"{% endif %}>
     {{ widget.label }}
     {% if widget.description %}<p class="radio-label-description">{{ widget.description }}</p>{% endif %}
   </label>
