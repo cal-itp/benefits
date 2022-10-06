@@ -29,6 +29,7 @@
   --h2-font-size: calc(24rem / 16);
   --h3-font-size: calc(20rem / 16);
   --font-size-24px: calc(24rem / 16);
+  --font-size-16px: calc(16rem / 16);
   --font-size-14px: calc(14rem / 16);
 }
 
@@ -217,6 +218,10 @@ footer .footer-links li a:visited {
 /* allow the mobile footer to have a */
 /* full-width line beyond container-fluid width */
 @media (max-width: 992px) {
+  footer {
+    margin-top: 64px;
+  }
+
   footer .container {
     max-width: 100%;
     padding: 0;
@@ -247,40 +252,67 @@ footer .footer-links li a:visited {
 }
 
 /* Buttons */
+/* Primary Button: Use all three classes: btn btn-lg btn-primary */
+/* Set button width in parent with Bootstrap column */
+/* Height: 60px on Desktop; 72 on mobile*/
 
-.btn-lg {
-  border-width: 2px;
+:root {
+  --primary-button-padding: 19px 0;
 }
 
+@media (min-width: 992px) {
+  :root {
+    --primary-button-padding: 13px 0;
+  }
+}
+
+.btn-lg.btn-primary.btn-lg {
+  border-width: 2px;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  font-weight: var(--medium-font-weight);
+  font-size: calc(20rem / 16);
+  width: 100%;
+  padding: var(--primary-button-padding);
+}
+
+/* A button that actually is a text link */
+/* TODO: Check if this is actually really used anymore */
 .btn-link {
   color: var(--primary-color);
+  text-decoration: underline;
 }
 
-.btn-primary {
-  text-transform: capitalize;
-  letter-spacing: 0.05em;
-}
-
+/* Language button in Header */
 .btn-outline-light {
   width: 126px;
   height: 38px;
   padding: 0px !important;
 }
 
-/* Custom button: Log In */
+/* Custom button: Login.gov Button with text and SVG */
+/* Used on Eligibility Start */
+
+:root {
+  --login-gov-button-font-size: var(--h3-font-size);
+  --login-gov-button-padding: 11px 0;
+}
+
+@media (min-width: 992px) {
+  :root {
+    --login-gov-button-font-size: var(--font-size-16px);
+    --login-gov-button-padding: var(--primary-button-padding);
+  }
+}
 
 #login {
   cursor: pointer;
-  display: block;
   line-height: 1;
-  padding: 11.999px 13.4px;
-  min-width: auto;
   text-transform: none;
   letter-spacing: 0;
-  margin-right: inherit;
-  font-size: 16px;
-  margin-bottom: 32px;
+  font-size: var(--login-gov-button-font-size);
   font-family: "Public Sans", Roboto, system-ui;
+  padding: var(--login-gov-button-padding);
 }
 
 /* Sets the text `Login.gov` as transparent */
@@ -289,17 +321,24 @@ footer .footer-links li a:visited {
 #login .fallback-text {
   background: url("/static/img/login-gov-logo-rev.svg") no-repeat;
   background-size: contain;
-  display: inline-block;
+  display: block;
+  margin: 8px auto 0 auto;
   position: relative;
   width: 132px;
   height: 18px;
-  margin-left: 5px;
   padding-top: 1px;
-  vertical-align: baseline;
   color: transparent;
-  font-size: 16px;
+  font-size: var(--font-size-16px);
   font-weight: var(--bold-font-weight);
   line-height: 1;
+}
+
+@media (min-width: 992px) {
+  #login .fallback-text {
+    margin: 0 0 0 5px;
+    display: inline-block;
+    vertical-align: baseline;
+  }
 }
 
 /* Custom button: Sign Out */
@@ -325,7 +364,7 @@ footer .footer-links li a:visited {
 }
 
 /* Forms: Text Inputs */
-/* Form Container: */
+/* Form Container: Must use .form-container parent to use these styles */
 
 :root {
   --form-input-gap: 22px;
@@ -452,18 +491,8 @@ footer .footer-links li a:visited {
   list-style-type: disc;
 }
 
-/* Eligibility Start */
-
-/* .eligibility-start .buttons .btn {
-  width: 100%;
-} */
-
-/* .eligibility-start .main-container .buttons label {
-  margin: 0 0.8rem 0 0;
-  line-height: 1;
-} */
-
 /* Enrollment Success */
+/* Custom in-line log out button for Enrollment Success, in paragraph */
 
 .enrollment-success #login {
   padding: 0 0.5rem 0.3rem 0.6rem;
@@ -540,40 +569,12 @@ footer .footer-links li a:visited {
   margin-bottom: 5rem;
 }
 
-/* .container.content h1 ~ p:nth-last-of-type(1) {
-  margin-bottom: 2rem;
-} */
-
-/* .container.content .btn-lg,
-.eligibility-start .btn-link { */
-/* font-weight: 500;
-  margin-bottom: 1rem;
-  padding: 0.8125rem; */
-/* btn-lg height is 60px */
-/* width: 100%; */
-/* } */
-
-/* .container.content .btn-link,
-.eligibility-start .btn-link {
-  text-decoration: underline;
-} */
-
 /* media queries */
-
-@media (max-width: 320px) {
-  #login {
-    padding: 1rem 1.25rem;
-  }
-}
 
 @media (max-width: 992px) {
   .navbar.navbar-expand-sm.navbar-dark.bg-primary {
     padding: 14.5px 1rem;
   }
-
-  /* .container.content .btn-lg {
-    padding: 1.1875rem 0.813rem;
-  } */
 
   .signout-row .container .signout-link {
     font-size: 18px;
@@ -598,25 +599,4 @@ footer .footer-links li a:visited {
   .no-image-mobile .signout-row {
     top: 0;
   }
-
-  /* Eligibility Start */
-
-  #login .fallback-text {
-    padding-top: 14px;
-    margin: 8px auto 0 auto;
-    display: block;
-  }
-
-  #login {
-    line-height: unset;
-    padding: 12px 67.5px;
-    font-size: 20px;
-    margin: 30px auto;
-    display: inline-block;
-  }
-
-  /* Override for only the Agency Index page
-  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
-    margin-bottom: 2rem;
-  } */
 }
