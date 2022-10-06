@@ -31,19 +31,21 @@
     {% if form.submit_value %}
       <div style="padding-top: 64px; padding-bottom: 64px;" class="row d-flex flex-column-reverse justify-content-lg-end flex-lg-row">
         {% comment %} TODO: Make this text div optional {% endcomment %}
-        <div class="col-lg-9 d-flex align-items-end flex-row-reverse col-sm-8 offset-sm-2 offset-lg-0">
-          <p>Not sure which option is right for you? Please visit our Help Page.</p>
+        <div class="col-lg-9 d-flex align-items-end flex-row-reverse col-sm-8 offset-sm-2 offset-lg-0 offset-2 col-8">
+          <p class="pt-4 pt-lg-0">
+            <a href="">Not sure which option is right for you? Please visit our Help Page.</a>
+          </p>
         </div>
-        <div class="col-lg-3 offset-sm-2 offset-lg-0 col-sm-8">
+        <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
           {% if recaptcha.enabled %}
-            <button class="btn btn-lg btn-primary w-100 g-recaptcha"
+            <button class="btn btn-lg btn-primary g-recaptcha"
                     data-sitekey="{{ recaptcha.site_key }}"
                     data-callback="onSubmit"
                     data-action="submit">
               {{ form.submit_value }}
             </button>
           {% else %}
-            <button class="btn btn-lg btn-primary w-100">{{ form.submit_value }}</button>
+            <button class="btn btn-lg btn-primary" data-action="submit">{{ form.submit_value }}</button>
           {% endif %}
         </div>
       </div>
