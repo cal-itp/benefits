@@ -40,6 +40,7 @@ def index(request):
     help_page = reverse(ROUTE_HELP)
 
     page = viewmodels.Page(
+        classes="offset-lg-1 col-lg-9",
         title=_("eligibility.pages.index.title"),
         headline=_("eligibility.pages.index.headline"),
         paragraphs=[
@@ -161,6 +162,7 @@ def confirm(request):
 
     # GET/POST for Eligibility API verification
     page = viewmodels.Page(
+        classes="offset-lg-3 col-lg-6",
         title=_(verifier.form_title),
         headline=_(verifier.form_headline),
         paragraphs=[_(verifier.form_blurb)],

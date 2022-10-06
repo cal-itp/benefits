@@ -9,7 +9,7 @@
                 {% endblock icon_title %}
 
                 {% block paragraph_content %}
-                    {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
+                    {% for p in page.paragraphs %}<p style="padding-top: 24px;">{{ p }}</p>{% endfor %}
                 {% endblock paragraph_content %}
             </div>
         </div>
@@ -17,7 +17,7 @@
         <div class="row">
             {% block forms %}
                 {% for f in page.forms %}
-                    {% include "core/includes/form.html" with classes="TODO: variable" form=f %}
+                    {% include "core/includes/form.html" with classes=page.classes form=f %}
                 {% endfor %}
             {% endblock forms %}
         </div>
