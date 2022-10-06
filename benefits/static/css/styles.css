@@ -178,20 +178,21 @@ main {
   --footer-link-hover-color: #9b74d7;
   --footer-link-font-weight: var(--medium-font-weight);
   --footer-mobile-underline-color: var(--bs-white);
-  --main-content-min-height: calc(100vh - 182px);
-  /* 182px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) */
+  --main-content-min-height: calc(100vh - 246px);
+  /* 182px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) + Footer Margin Top (64px) */
 }
 
 @media (min-width: 992px) {
   :root {
     --footer-link-width: auto;
-    --main-content-min-height: calc(100vh - 130px);
-    /* 130px = Header Height (80px) + Footer Height (50px) */
+    --main-content-min-height: calc(100vh - 194px);
+    /* 130px = Header Height (80px) + Footer Height (50px) + Footer Margin Top (64px) */
   }
 }
 
 footer {
   background: var(--footer-background-color);
+  margin-top: 64px;
 }
 
 footer .footer-links li {
