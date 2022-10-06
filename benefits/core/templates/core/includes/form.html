@@ -47,9 +47,6 @@
     <script>
             $(function(){
                 $("form[action='{{form_action}}']").on("submit", function(e) {
-                    $(".form-group", this).removeClass("with-errors");
-                    $(".error-message", this).remove();
-
                     if ("{{ form.submitting_value }}" !== "") {
                         $("button[data-action='submit']", this)
                             .attr("role", "status")
