@@ -544,21 +544,18 @@ footer .footer-links li a:visited {
   margin-bottom: 2rem;
 }
 
-.container.content.help .buttons-agencies,
-.with-agency-links .buttons-agencies {
+.container.content.help .buttons-agencies {
   font-size: 18px;
   letter-spacing: 0.05rem;
   margin-bottom: 3rem;
 }
 
-.container.content.help .buttons-agencies a,
-.with-agency-links .container.content .buttons-agencies a {
+.container.content.help .buttons-agencies a {
   display: table;
   margin-bottom: 0.2rem;
 }
 
-.container.content.help .buttons-agencies label,
-.with-agency-links .container.content .buttons-agencies label {
+.container.content.help .buttons-agencies label {
   display: block;
   margin-top: 2rem;
   font-size: 18px;
