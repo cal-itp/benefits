@@ -3,12 +3,12 @@
 
   {% url form.action_url as form_action %}
 
-  <form action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
+  <form action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form" style="padding-top: 64px;">
     {% csrf_token %}
 
     <div class="row">
-      {% comment %} <div class="offset-lg-3 col-lg-6"> {% endcomment %}
-      <div class="offset-lg-1 col-lg-9">
+      <div class="offset-lg-3 col-lg-6">
+        {% comment %} <div class="offset-lg-1 col-lg-9"> {% endcomment %}
         {% for field in form %}
           <div class="row">
             <div class="col-12">
@@ -29,11 +29,12 @@
     </div>
 
     {% if form.submit_value %}
-      <div class="row d-flex flex-column-reverse justify-content-lg-end flex-lg-row">
-        <div class="col-lg-7 d-flex align-items-end flex-row-reverse">
+      <div style="padding-top: 64px; padding-bottom: 64px;" class="row d-flex flex-column-reverse justify-content-lg-end flex-lg-row">
+        {% comment %} TODO: Make this text div optional {% endcomment %}
+        <div class="col-lg-9 d-flex align-items-end flex-row-reverse col-sm-8 offset-sm-2 offset-lg-0">
           <p>Not sure which option is right for you? Please visit our Help Page.</p>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-3 offset-sm-2 offset-lg-0 col-sm-8">
           {% if recaptcha.enabled %}
             <button class="btn btn-lg btn-primary w-100 g-recaptcha"
                     data-sitekey="{{ recaptcha.site_key }}"
