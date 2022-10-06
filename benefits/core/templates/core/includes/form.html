@@ -3,7 +3,7 @@
 
   {% url form.action_url as form_action %}
 
-  <form action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form" style="padding-top: 64px;">
+  <form action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
     {% csrf_token %}
 
     <div class="row form-container">
@@ -28,7 +28,7 @@
     </div>
 
     {% if form.submit_value %}
-      <div style="padding-top: 64px; padding-bottom: 64px;" class="row d-flex flex-column-reverse justify-content-lg-end flex-lg-row">
+      <div class="row d-flex flex-column-reverse justify-content-lg-end flex-lg-row">
         {% if show_help_text %}
           <div class="col-lg-9 d-flex align-items-end flex-row-reverse col-sm-8 offset-sm-2 offset-lg-0 offset-2 col-8">
             <p class="pt-4 pt-lg-0">
