@@ -76,9 +76,7 @@ def index(request):
 def start(request):
     """View handler for the eligibility verification getting started screen."""
 
-    session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))
     verifier = session.verifier(request)
-
     button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse(ROUTE_CONFIRM))
 
     # define the verifier-specific required item
@@ -125,9 +123,13 @@ def start(request):
     )
 
     ctx = page.context_dict()
+    ctx["previous_page"] = viewmodels.Button.previous_page(request)
     ctx["start_headline"] = _(verifier.start_headline)
     ctx["start_sub_headline"] = _(verifier.start_sub_headline)
     ctx["media"] = media
+
+    # update origin now, after we've saved the previous page
+    session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))
 
     return TemplateResponse(request, TEMPLATE_START, ctx)
 
