@@ -59,7 +59,6 @@ def agency_index(request, agency):
         title=_("core.pages.agency_index.title"),
         headline=_("core.pages.agency_index.mst_cc.headline"),
         button=button,
-        classes="home",
     )
 
     return TemplateResponse(request, TEMPLATE_AGENCY, page.context_dict())
