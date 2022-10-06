@@ -19,8 +19,9 @@ class FormControlTextInput(widgets.TextInput):
 
 
 class RadioSelect(widgets.RadioSelect):
-    template_name = "core/widgets/radio_select.html"
-    option_template_name = "core/widgets/radio_select_option.html"
+    template_name = "core/widgets/verifier_radio_select.html"
+    option_template_name = "core/widgets/verifier_radio_select_option.html"
+    # Note: the templates are specific to the Eligibility Verifier
 
     def __init__(self, choice_descriptions=(), *args, **kwargs):
         super().__init__(*args, **kwargs)
