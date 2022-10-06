@@ -1,4 +1,4 @@
-
+{% load i18n %}
 {% if form.action_url %}
 
   {% url form.action_url as form_action %}
@@ -32,7 +32,7 @@
         {% comment %} TODO: Make this text div optional {% endcomment %}
         <div class="col-lg-9 d-flex align-items-end flex-row-reverse col-sm-8 offset-sm-2 offset-lg-0 offset-2 col-8">
           <p class="pt-4 pt-lg-0">
-            <a href="">Not sure which option is right for you? Please visit our Help Page.</a>
+            {% blocktranslate with help_link=help_link%}eligibility.pages.index.help_text{{ help_link }}{% endblocktranslate %}
           </p>
         </div>
         <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">

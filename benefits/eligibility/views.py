@@ -49,6 +49,9 @@ def index(request):
         forms=forms.EligibilityVerifierSelectionForm(agency=agency),
     )
 
+    ctx = page.context_dict()
+    ctx["help_page"] = help_page
+
     if request.method == "POST":
         form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency)
 
@@ -61,14 +64,14 @@ def index(request):
         else:
             # form was not valid, allow for correction/resubmission
             page.forms = [form]
-            response = TemplateResponse(request, TEMPLATE_INDEX, page.context_dict())
+            response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
     else:
         if agency.eligibility_verifiers.count() == 1:
             verifier = agency.eligibility_verifiers.first()
             session.update(request, verifier=verifier)
             response = redirect(eligibility_start)
         else:
-            response = TemplateResponse(request, TEMPLATE_INDEX, page.context_dict())
+            response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
 
     return response
 
