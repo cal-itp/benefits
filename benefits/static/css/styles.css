@@ -334,7 +334,7 @@ footer .footer-links li a:visited {
   margin-top: 19px;
 }
 
-#previous-page {
+#previous-page-button {
   border-color: var(--text-primary-color);
   color: var(--text-primary-color);
   font-weight: 500;
@@ -344,12 +344,12 @@ footer .footer-links li a:visited {
 }
 
 @media (min-width: 992px) {
-  #previous-page {
+  #previous-page-button {
     border: none;
   }
 }
 
-#previous-page::before {
+#previous-page-button::before {
   background: url("/static/img/left-arrow.svg") no-repeat;
   content: "";
   display: inline-block;
