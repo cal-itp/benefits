@@ -346,8 +346,10 @@ footer .footer-links li a:visited {
 }
 
 @media (min-width: 992px) {
-  #previous-page-button {
+  #previous-page-button,
+  #previous-page-button:hover {
     border: none;
+    background: none;
   }
 }
 
