@@ -174,6 +174,9 @@ msgstr ""
 msgid "core.buttons.skip"
 msgstr "Skip to Main Content"
 
+msgid "core.buttons.previous_page"
+msgstr "Previous Page"
+
 msgctxt "image alt text"
 msgid "core.logos.small"
 msgstr "California Integrated Travel Project: Benefits logo (small)"
