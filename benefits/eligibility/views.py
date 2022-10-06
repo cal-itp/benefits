@@ -51,6 +51,7 @@ def index(request):
 
     ctx = page.context_dict()
     ctx["help_page"] = help_page
+    ctx["show_help_text"] = True
 
     if request.method == "POST":
         form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency)
