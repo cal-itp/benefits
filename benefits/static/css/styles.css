@@ -331,7 +331,9 @@ footer .footer-links li a:visited {
 /* Custom button: Previous Page */
 
 .previous-page-row {
-  margin-top: 19px;
+  position: absolute;
+  z-index: 100;
+  height: 70px;
 }
 
 #previous-page-button {
@@ -339,8 +341,8 @@ footer .footer-links li a:visited {
   color: var(--text-primary-color);
   font-weight: 500;
   font-size: calc(14rem / 16); /* 14px */
-  line-height: calc(17.5rem / 16); /* 17.5px */
-  letter-spacing: 0.05rem;
+  letter-spacing: var(--body-letter-spacing);
+  padding: 4.5px 2.65px; /* button dimensions are 130 x 32 */
 }
 
 @media (min-width: 992px) {
@@ -354,7 +356,6 @@ footer .footer-links li a:visited {
   content: "";
   display: inline-block;
   height: calc(18rem / 16);
-  line-height: calc(18rem / 16);
   position: relative;
   vertical-align: middle;
   width: calc(18rem / 16);
