@@ -544,18 +544,18 @@ footer .footer-links li a:visited {
   margin-bottom: 2rem;
 }
 
-.container.content.help .buttons-agencies {
+.container.content .buttons-agencies {
   font-size: 18px;
   letter-spacing: 0.05rem;
   margin-bottom: 3rem;
 }
 
-.container.content.help .buttons-agencies a {
+.container.content .buttons-agencies a {
   display: table;
   margin-bottom: 0.2rem;
 }
 
-.container.content.help .buttons-agencies label {
+.container.content .buttons-agencies label {
   display: block;
   margin-top: 2rem;
   font-size: 18px;
