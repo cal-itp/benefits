@@ -265,12 +265,6 @@ footer .footer-links li a:visited {
   padding: 0px !important;
 }
 
-.container.content .buttons label {
-  display: block;
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
 /* Custom button: Log In */
 
 #login {
@@ -433,14 +427,14 @@ footer .footer-links li a:visited {
 
 /* Eligibility Start */
 
-.eligibility-start .buttons .btn {
+/* .eligibility-start .buttons .btn {
   width: 100%;
-}
+} */
 
-.eligibility-start .main-container .buttons label {
+/* .eligibility-start .main-container .buttons label {
   margin: 0 0.8rem 0 0;
   line-height: 1;
-}
+} */
 
 /* Enrollment Success */
 
@@ -519,23 +513,23 @@ footer .footer-links li a:visited {
   margin-bottom: 5rem;
 }
 
-.container.content h1 ~ p:nth-last-of-type(1) {
+/* .container.content h1 ~ p:nth-last-of-type(1) {
   margin-bottom: 2rem;
-}
+} */
 
-.container.content .btn-lg,
-.eligibility-start .btn-link {
-  font-weight: 500;
+/* .container.content .btn-lg,
+.eligibility-start .btn-link { */
+/* font-weight: 500;
   margin-bottom: 1rem;
-  padding: 0.8125rem;
-  /* btn-lg height is 60px */
-  width: 100%;
-}
+  padding: 0.8125rem; */
+/* btn-lg height is 60px */
+/* width: 100%; */
+/* } */
 
-.container.content .btn-link,
+/* .container.content .btn-link,
 .eligibility-start .btn-link {
   text-decoration: underline;
-}
+} */
 
 /* media queries */
 
@@ -557,9 +551,9 @@ footer .footer-links li a:visited {
     padding: 14.5px 1rem;
   }
 
-  .container.content .btn-lg {
+  /* .container.content .btn-lg {
     padding: 1.1875rem 0.813rem;
-  }
+  } */
 
   .signout-row .container .signout-link {
     font-size: 18px;
@@ -605,15 +599,4 @@ footer .footer-links li a:visited {
   .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
     margin-bottom: 2rem;
   } */
-}
-
-@media (min-width: 992px) {
-  .container.content input[type="submit"],
-  .container.content .btn {
-    width: fit-content;
-    min-width: 250px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
 }
