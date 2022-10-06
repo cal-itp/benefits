@@ -32,7 +32,6 @@ def test_eligibility_from_api_error(mocker, model_TransitAgency, model_Eligibili
     response = eligibility_from_api(model_EligibilityVerifier, form, model_TransitAgency)
 
     assert response is None
-    form.add_api_errors.assert_called_once_with(api_errors)
 
 
 @pytest.mark.django_db
@@ -46,7 +45,6 @@ def test_eligibility_from_api_verified_types(
     response = eligibility_from_api(model_EligibilityVerifier, form, model_TransitAgency)
 
     assert response == verified_types
-    form.add_api_errors.assert_not_called()
 
 
 @pytest.mark.django_db
@@ -60,7 +58,6 @@ def test_eligibility_from_api_no_verified_types(
     response = eligibility_from_api(model_EligibilityVerifier, form, model_TransitAgency)
 
     assert response == verified_types
-    form.add_api_errors.assert_not_called()
 
 
 @pytest.mark.django_db
