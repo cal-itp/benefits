@@ -92,10 +92,10 @@ class Button:
         return btn
 
     @staticmethod
-    def previous_page(request, **kwargs):
+    def previous_page(url, **kwargs):
         kwargs["id"] = "previous-page-button"
         kwargs["text"] = _("core.buttons.previous_page")
-        kwargs["url"] = session.origin(request)
+        kwargs["url"] = url
         return Button.outline_primary(**kwargs)
 
 

@@ -123,7 +123,7 @@ def start(request):
     )
 
     ctx = page.context_dict()
-    ctx["previous_page_button"] = viewmodels.Button.previous_page(request)
+    ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_INDEX))
     ctx["start_headline"] = _(verifier.start_headline)
     ctx["start_sub_headline"] = _(verifier.start_sub_headline)
     ctx["media"] = media
@@ -169,7 +169,7 @@ def confirm(request):
     )
 
     ctx = page.context_dict()
-    ctx["previous_page_button"] = viewmodels.Button.previous_page(request)
+    ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_START))
 
     # GET from an unverified user, present the form
     if request.method == "GET":
