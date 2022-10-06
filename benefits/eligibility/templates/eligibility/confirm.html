@@ -1,6 +1,27 @@
 {% extends "core/page.html" %}
 
 {% block main_content %}
-  {% include "core/includes/sign-out-link.html" %}
-  {{ block.super }}
+  <div class="container">
+    {% include "core/includes/sign-out-link.html" %}
+
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        {% block icon_title %}
+          <h1>{{ page.headline }}</h1>
+        {% endblock icon_title %}
+
+        {% block paragraph_content %}
+          {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
+        {% endblock paragraph_content %}
+      </div>
+    </div>
+
+    <div class="row">
+      {% block forms %}
+        {% for f in page.forms %}
+          {% include "core/includes/form.html" with classes="TODO: variable" form=f %}
+        {% endfor %}
+      {% endblock forms %}
+    </div>
+  </div>
 {% endblock main_content %}

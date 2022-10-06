@@ -12,7 +12,7 @@ from django.utils.translation import pgettext, gettext as _
 from benefits.core import recaptcha, session, viewmodels
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
-from benefits.core.views import ROUTE_HELP, TEMPLATE_PAGE
+from benefits.core.views import ROUTE_HELP
 from . import analytics, forms, verify
 
 
@@ -22,6 +22,7 @@ ROUTE_LOGIN = "oauth:login"
 ROUTE_CONFIRM = "eligibility:confirm"
 ROUTE_ENROLLMENT = "enrollment:index"
 
+TEMPLATE_INDEX = "eligibility/index.html"
 TEMPLATE_START = "eligibility/start.html"
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
 TEMPLATE_UNVERIFIED = "eligibility/unverified.html"
@@ -59,14 +60,14 @@ def index(request):
         else:
             # form was not valid, allow for correction/resubmission
             page.forms = [form]
-            response = TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
+            response = TemplateResponse(request, TEMPLATE_INDEX, page.context_dict())
     else:
         if agency.eligibility_verifiers.count() == 1:
             verifier = agency.eligibility_verifiers.first()
             session.update(request, verifier=verifier)
             response = redirect(eligibility_start)
         else:
-            response = TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
+            response = TemplateResponse(request, TEMPLATE_INDEX, page.context_dict())
 
     return response
 
