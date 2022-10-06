@@ -6,6 +6,8 @@
 
 {% block main_content %}
   <div class="container">
+    {% include "core/includes/previous-page-link.html" with previous_page_button=previous_page_button %}
+
     <div class="row justify-content-center">
       <div class="col-12 col-sm-12 col-lg-10">
         <h1>{{ start_headline }}</h1>
