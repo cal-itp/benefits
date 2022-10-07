@@ -8,7 +8,7 @@ Currently, the app uses [Login.gov's Identity Assurance Level 2 (IAL2)](https://
 
 Here's a GIF showing what the flow looks like, having seniors confirm eligibility via Login.gov and enroll via LittlePay:
 
-![Demonstration of the sign-up process for a senior confirming eligibility via Login.gov and enrolling via Littlepay](img/senior-success.gif){ height="800" }
+![Demonstration of the sign-up process for a senior confirming eligibility via Login.gov and enrolling via Littlepay](img/senior-success.gif){ width="350" }
 
 ## Process
 
