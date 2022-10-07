@@ -4,20 +4,12 @@
   {{ page.title }} |
 {% endblock page_title %}
 
-{% block main_content %}
+{% block explanatory-text %}
+  {% for p in page.paragraphs %}<p class="pt-4 pb-4 pb-lg-8">{{ p }}</p>{% endfor %}
+{% endblock explanatory-text %}
+
+{% block inner-content %}
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        {% block icon_title %}
-          <h1>{{ page.headline }}</h1>
-        {% endblock icon_title %}
-
-        {% block paragraph_content %}
-          {% for p in page.paragraphs %}<p class="pt-4 pb-4 pb-lg-8">{{ p }}</p>{% endfor %}
-        {% endblock paragraph_content %}
-      </div>
-    </div>
-
     <div class="row">
       {% block forms %}
         {% for f in page.forms %}
@@ -26,4 +18,4 @@
       {% endblock forms %}
     </div>
   </div>
-{% endblock main_content %}
+{% endblock inner-content %}
