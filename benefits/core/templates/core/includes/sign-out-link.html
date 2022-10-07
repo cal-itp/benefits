@@ -3,7 +3,6 @@
 
 {% if authentication %}
   {% if authentication.required and authentication.logged_in %}
-    {% endcomment %}
     <div class="w-100 position-absolute">
       <div class="container">
         <div class="row nav-button-row">
@@ -14,4 +13,4 @@
       </div>
     </div>
   {% endif %}
-  {% endcomment %}
+{% endif %}
