@@ -1,30 +1,26 @@
-{% extends "core/page.html" %}
+{% extends "core/base.html" %}
 {% load i18n %}
 {% block classes %}
   {{ block.super |add:" eligibility-start" }}
 {% endblock classes %}
 
-{% block main_content %}
-  <div class="container">
-    {% include "core/includes/previous-page-link.html" with previous_page_button=previous_page_button %}
+{% block nav-buttons %}
+  {% include "core/includes/previous-page-link.html" with previous_page_button=previous_page_button %}
+{% endblock nav-buttons %}
 
-    <div class="row justify-content-center">
-      <div class="col-12 col-sm-12 col-lg-10">
-        <h1>{{ start_headline }}</h1>
-
-        <h2 class="media-title p-sm">{{ start_sub_headline }}</h2>
-
-        {% include "core/includes/media-list.html" %}
-      </div>
-    </div>
-
-    <div class="row justify-content-center justify-content-lg-end">
-      <div class="col-8 col-sm-8 col-lg-3">
-        {% block buttons %}
-          {{ block.super }}
-        {% endblock buttons %}
-      </div>
-    </div>
+{% block inner-content %}
+  <div class="col-12 col-sm-12 col-lg-10">
+    <h2 class="media-title p-sm">{{ start_sub_headline }}</h2>
+    {% include "core/includes/media-list.html" with media=media %}
   </div>
+{% endblock inner-content %}
 
-{% endblock main_content %}
+{% block call-to-action-text %}
+  <p>{% blocktranslate with help_link=help_link%}eligibility.pages.start.help_text{{ help_link }}{% endblocktranslate %}</p>
+{% endblock call-to-action-text %}
+
+{% block call-to-action-button %}
+  {% for b in page.buttons %}
+    {% include "core/includes/button.html" with button=b %}
+  {% endfor %}
+{% endblock call-to-action-button %}

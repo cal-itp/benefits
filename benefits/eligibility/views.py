@@ -125,15 +125,16 @@ def start(request):
 
     page = viewmodels.Page(
         title=_("eligibility.pages.start.title"),
+        headline=_(verifier.start_headline),
         paragraphs=[_(verifier.start_blurb)],
         button=button,
     )
 
     ctx = page.context_dict()
     ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_INDEX))
-    ctx["start_headline"] = _(verifier.start_headline)
     ctx["start_sub_headline"] = _(verifier.start_sub_headline)
     ctx["media"] = media
+    ctx["help_link"] = reverse(ROUTE_HELP)
 
     # update origin now, after we've saved the previous page
     session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))
