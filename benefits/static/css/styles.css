@@ -345,11 +345,14 @@ footer .footer-links li a:visited {
   padding: 4.5px 2.65px; /* button dimensions are 130 x 32 */
 }
 
+#previous-page-button:hover {
+  background: none;
+}
+
 @media (min-width: 992px) {
   #previous-page-button,
   #previous-page-button:hover {
     border: none;
-    background: none;
   }
 }
 
