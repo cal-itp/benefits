@@ -90,7 +90,7 @@ def start(request):
     identity_item = dict(
         icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
         heading=_(verifier.start_item_name),
-        details=_(verifier.start_item_description),
+        details=[_(verifier.start_item_description)],
     )
 
     if verifier.is_auth_required:
@@ -118,7 +118,7 @@ def start(request):
     bank_card_item = dict(
         icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
         heading=_("eligibility.pages.start.bankcard.title"),
-        details=_("eligibility.pages.start.bankcard.text"),
+        details=[_("eligibility.pages.start.bankcard.text")],
     )
 
     media = [identity_item, bank_card_item]
