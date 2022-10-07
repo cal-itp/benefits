@@ -45,7 +45,7 @@ def index(request):
         paragraphs=[
             format_html(_("eligibility.pages.index.p[0]%(info_link)s") % {"info_link": f"{help_page}#what-is-cal-itp"})
         ],
-        forms=forms.EligibilityVerifierSelectionForm(agency=agency, classes="offset-lg-1 col-lg-9"),
+        forms=forms.EligibilityVerifierSelectionForm(agency=agency),
     )
 
     ctx = page.context_dict()
@@ -53,7 +53,7 @@ def index(request):
     ctx["show_help_text"] = True
 
     if request.method == "POST":
-        form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency, classes="offset-lg-1 col-lg-9")
+        form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency)
 
         if form.is_valid():
             verifier_id = form.cleaned_data.get("verifier")
@@ -170,9 +170,7 @@ def confirm(request):
         title=_(verifier.form_title),
         headline=_(verifier.form_headline),
         paragraphs=[_(verifier.form_blurb)],
-        form=forms.EligibilityVerificationForm(
-            auto_id=True, classes="offset-lg-3 col-lg-6", label_suffix="", verifier=verifier
-        ),
+        form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
     )
 
     ctx = page.context_dict()
@@ -185,7 +183,7 @@ def confirm(request):
     elif request.method == "POST":
         analytics.started_eligibility(request, types_to_verify)
 
-        form = forms.EligibilityVerificationForm(data=request.POST, classes="offset-lg-3 col-lg-6", verifier=verifier)
+        form = forms.EligibilityVerificationForm(data=request.POST, verifier=verifier)
         # form was not valid, allow for correction/resubmission
         if not form.is_valid():
             if recaptcha.has_error(form):
