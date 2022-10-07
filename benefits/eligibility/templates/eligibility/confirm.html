@@ -23,7 +23,7 @@
     <div class="row">
       {% block forms %}
         {% for f in page.forms %}
-          {% include "core/includes/form.html" with classes=page.classes form=f %}
+          {% include "core/includes/form.html" with form=f %}
         {% endfor %}
       {% endblock forms %}
     </div>

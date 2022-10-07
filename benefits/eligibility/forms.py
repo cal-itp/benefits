@@ -22,10 +22,11 @@ class EligibilityVerifierSelectionForm(forms.Form):
     # sets label to empty string so the radio_select template can override the label style
     submit_value = _("eligibility.buttons.choose")
 
-    def __init__(self, agency: models.TransitAgency, *args, **kwargs):
+    def __init__(self, agency: models.TransitAgency, classes, *args, **kwargs):
         super().__init__(*args, **kwargs)
         verifiers = agency.eligibility_verifiers.all()
 
+        self.classes = classes
         self.fields["verifier"].choices = [(v.id, _(v.selection_label)) for v in verifiers]
         self.fields["verifier"].widget.choice_descriptions = {
             v.id: _(v.selection_label_description) for v in verifiers if v.selection_label_description
@@ -46,9 +47,10 @@ class EligibilityVerificationForm(forms.Form):
         "missing": _("eligibility.forms.confirm.errors.missing"),
     }
 
-    def __init__(self, verifier: models.EligibilityVerifier, *args, **kwargs):
+    def __init__(self, verifier: models.EligibilityVerifier, classes, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.classes = classes
         sub_widget = widgets.FormControlTextInput(placeholder=verifier.form_sub_placeholder)
         if verifier.form_sub_pattern:
             sub_widget.attrs.update({"pattern": verifier.form_sub_pattern})

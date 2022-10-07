@@ -7,7 +7,7 @@
     {% csrf_token %}
 
     <div class="row form-container">
-      <div class="{{ classes|join:" " }}">
+      <div class="{{ form.classes }}">
         {% for field in form %}
           <div class="row form-group mb-0">
             <div class="col-12">
