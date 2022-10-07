@@ -357,7 +357,7 @@ footer .footer-links li a:visited {
 
 .signout-link,
 .signout-link:visited {
-  font-size: 18px;
+  font-size: var(--bs-body-font-size);
   color: var(--primary-color) !important;
   padding: 2px 4px;
   border-radius: 3px;
@@ -372,7 +372,7 @@ footer .footer-links li a:visited {
   .signout-link:visited {
     font-size: 12px;
     text-decoration: underline !important;
-    letter-spacing: 0.05em;
+    letter-spacing: var(--body-letter-spacing);
     border: none;
   }
 }
