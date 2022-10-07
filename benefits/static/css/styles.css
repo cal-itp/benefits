@@ -95,6 +95,14 @@ li {
   }
 }
 
+@media (min-width: 992px) {
+  /* Utility Class: Padding bottom 64px on Desktop */
+  /* Pair with pb-4 on Form pages to get 24px on Mobile, 64px on Desktop */
+  .pb-lg-8 {
+    padding-bottom: 64px !important;
+  }
+}
+
 /* Links */
 /* Same sizes for all screen widths: 18px */
 a:not(.btn) {
