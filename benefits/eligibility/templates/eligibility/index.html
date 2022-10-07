@@ -1,9 +1,5 @@
 {% extends "core/base.html" %}
 
-{% block page_title %}
-  {{ page.title }} |
-{% endblock page_title %}
-
 {% block explanatory-text %}
   {% for p in page.paragraphs %}<p class="pt-4 pb-4 pb-lg-8">{{ p }}</p>{% endfor %}
 {% endblock explanatory-text %}
