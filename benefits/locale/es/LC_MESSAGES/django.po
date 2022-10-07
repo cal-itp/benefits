@@ -181,6 +181,9 @@ msgstr ""
 msgid "core.buttons.skip"
 msgstr "Saltar al contenido principal"
 
+msgid "core.buttons.previous_page"
+msgstr "TODO: Previous Page"
+
 msgctxt "image alt text"
 msgid "core.logos.small"
 msgstr ""

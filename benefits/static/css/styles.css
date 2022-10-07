@@ -372,6 +372,41 @@ footer .footer-links li a:visited {
   display: block;
 }
 
+/* Custom button: Previous Page */
+
+.previous-page-row {
+  position: absolute;
+  z-index: 100;
+  height: 70px;
+}
+
+#previous-page-button {
+  border-color: var(--text-primary-color);
+  color: var(--text-primary-color);
+  font-weight: 500;
+  font-size: calc(14rem / 16); /* 14px */
+  letter-spacing: var(--body-letter-spacing);
+  padding: 4.5px 2.65px; /* button dimensions are 130 x 32 */
+}
+
+@media (min-width: 992px) {
+  #previous-page-button,
+  #previous-page-button:hover {
+    border: none;
+    background: none;
+  }
+}
+
+#previous-page-button::before {
+  background: url("/static/img/left-arrow.svg") no-repeat;
+  content: "";
+  display: inline-block;
+  height: calc(18rem / 16);
+  position: relative;
+  vertical-align: middle;
+  width: calc(18rem / 16);
+}
+
 /* Forms: Text Inputs */
 /* Form Container: Must use .form-container parent to use these styles */
 

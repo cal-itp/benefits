@@ -68,6 +68,37 @@
 
     <main id="main-content" role="main">
       {% block main_content %}
+        <div class="container main-row">
+          <div class="row">
+            {% block nav-buttons %}
+            {% endblock nav-buttons %}
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-lg-10">
+              <h1>{{ page.headline }}</h1>
+            </div>
+            <div class="col-lg-10">
+              {% block explanatory-text %}
+              {% endblock explanatory-text %}
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            {% block inner-content %}
+            {% endblock inner-content %}
+          </div>
+          <div class="row d-flex flex-column-reverse justify-content-lg-end flex-lg-row">
+            {% block call-to-action %}
+              <div class="col-lg-7 d-flex align-items-end flex-row-reverse">
+                {% block call-to-action-text %}
+                {% endblock call-to-action-text %}
+              </div>
+              <div class="col-lg-3">
+                {% block call-to-action-button %}
+                {% endblock call-to-action-button %}
+              </div>
+            {% endblock call-to-action %}
+          </div>
+        </div>
       {% endblock main_content %}
     </main>
 
@@ -99,17 +130,6 @@
                 else {
                     document.cookie = "testcookie; expires=Thu, 01-Jan-1970 00:00:01 GMT";
                     $(".nocookies").addClass("d-none");
-                }
-
-                var doc = document.documentElement;
-                if ($(doc).hasClass("with-image")) {
-                    var top = localStorage.getItem("scroll");
-                    if (top !== null) {
-                        doc.scrollTop = parseInt(top, 10);
-                    }
-                    window.addEventListener("visibilitychange", () => {
-                        localStorage.setItem("scroll", doc.scrollTop);
-                    });
                 }
 
                 $("a[href^='https'], a[href^='tel'], [href*='#']").on("click", function(e) {

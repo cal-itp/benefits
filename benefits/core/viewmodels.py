@@ -91,6 +91,13 @@ class Button:
         btn = Button.primary(fallback_text="Login.gov", id="login", url=reverse("oauth:logout"), text="", **kwargs)
         return btn
 
+    @staticmethod
+    def previous_page(url):
+        kwargs = {"id": "previous-page-button", "text": _("core.buttons.previous_page"), "url": url}
+        btn = Button(**kwargs)
+        btn.classes.append("btn-outline-dark")
+        return btn
+
 
 class Icon:
     """Represents an icon."""

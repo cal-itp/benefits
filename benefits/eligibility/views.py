@@ -82,9 +82,7 @@ def index(request):
 def start(request):
     """View handler for the eligibility verification getting started screen."""
 
-    session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))
     verifier = session.verifier(request)
-
     button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse(ROUTE_CONFIRM))
 
     # define the verifier-specific required item
@@ -131,9 +129,13 @@ def start(request):
     )
 
     ctx = page.context_dict()
+    ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_INDEX))
     ctx["start_headline"] = _(verifier.start_headline)
     ctx["start_sub_headline"] = _(verifier.start_sub_headline)
     ctx["media"] = media
+
+    # update origin now, after we've saved the previous page
+    session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))
 
     return TemplateResponse(request, TEMPLATE_START, ctx)
 
@@ -173,9 +175,12 @@ def confirm(request):
         form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
     )
 
+    ctx = page.context_dict()
+    ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_START))
+
     # GET from an unverified user, present the form
     if request.method == "GET":
-        return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
+        return TemplateResponse(request, TEMPLATE_CONFIRM, ctx)
     # POST form submission, process form data, make Eligibility Verification API call
     elif request.method == "POST":
         analytics.started_eligibility(request, types_to_verify)
@@ -187,7 +192,8 @@ def confirm(request):
                 messages.error(request, "Recaptcha failed. Please try again.")
 
             page.forms = [form]
-            return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
+            ctx.update(page.context_dict())
+            return TemplateResponse(request, TEMPLATE_CONFIRM, ctx)
 
         # form is valid, make Eligibility Verification request to get the verified types
         verified_types = verify.eligibility_from_api(verifier, form, agency)
@@ -196,7 +202,8 @@ def confirm(request):
         if verified_types is None:
             analytics.returned_error(request, types_to_verify, form.errors)
             page.forms = [form]
-            return TemplateResponse(request, TEMPLATE_CONFIRM, page.context_dict())
+            ctx.update(page.context_dict())
+            return TemplateResponse(request, TEMPLATE_CONFIRM, ctx)
         # no types were verified
         elif len(verified_types) == 0:
             return unverified(request)
