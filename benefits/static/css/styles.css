@@ -103,6 +103,10 @@ li {
   }
 }
 
+.pt-8 {
+  padding-top: 64px;
+}
+
 /* Links */
 /* Same sizes for all screen widths: 18px */
 a:not(.btn) {
