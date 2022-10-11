@@ -12,9 +12,13 @@
 {% block paragraph_content %}
   {{ block.super }}
   {% if payment_processor %}
-    <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
-      {{ payment_processor.loading_text }}
-    </button>
+    <div class="row justify-content-center justify-content-lg-end">
+      <div class="col-lg-3 col-8">
+        <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
+          {{ payment_processor.loading_text }}
+        </button>
+      </div>
+    </div>
     <script>
             var startedEvent = "started payment connection", closedEvent = "closed payment connection";
 
@@ -91,5 +95,11 @@
 {% endblock paragraph_content %}
 
 {% block buttons %}
-  {% if payment_processor %}<div class="invisible">{{ block.super }}</div>{% endif %}
+  {% if payment_processor %}
+    <div class="invisible">
+      <div class="row justify-content-center justify-content-lg-end">
+        <div class="col-lg-3 col-8">{{ block.super }}</div>
+      </div>
+    </div>
+  {% endif %}
 {% endblock buttons %}

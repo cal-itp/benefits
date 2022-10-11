@@ -18,14 +18,15 @@ class EligibilityVerifierSelectionForm(forms.Form):
     action_url = "eligibility:index"
     method = "POST"
 
-    verifier = forms.ChoiceField(label=_("eligibility.pages.index.label"), widget=widgets.RadioSelect)
-
+    verifier = forms.ChoiceField(label="", widget=widgets.VerifierRadioSelect)
+    # sets label to empty string so the radio_select template can override the label style
     submit_value = _("eligibility.buttons.choose")
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
         verifiers = agency.eligibility_verifiers.all()
 
+        self.classes = "offset-lg-1 col-lg-9"
         self.fields["verifier"].choices = [(v.id, _(v.selection_label)) for v in verifiers]
         self.fields["verifier"].widget.choice_descriptions = {
             v.id: _(v.selection_label_description) for v in verifiers if v.selection_label_description
@@ -49,6 +50,7 @@ class EligibilityVerificationForm(forms.Form):
     def __init__(self, verifier: models.EligibilityVerifier, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.classes = "offset-lg-3 col-lg-6"
         sub_widget = widgets.FormControlTextInput(placeholder=verifier.form_sub_placeholder)
         if verifier.form_sub_pattern:
             sub_widget.attrs.update({"pattern": verifier.form_sub_pattern})

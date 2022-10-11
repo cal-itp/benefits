@@ -8,6 +8,7 @@
   --bs-body-color: var(--text-primary-color);
   --bs-body-text-align: left;
   --bs-body-font-weight: 400;
+  --medium-font-weight: 500;
   --bold-font-weight: 700;
   --bs-body-font-size: 18px;
   --bs-font-sans-serif: Roboto, system-ui, -apple-system, "Segoe UI", sans-serif,
@@ -23,11 +24,13 @@
   --bs-danger: var(--error-color);
   --bs-danger-rgb: var(--error-color-rgb);
   --standout-color: #323a45;
-  --radio-input-color: var(--standout-color);
   --h1-font-size: calc(24rem / 16);
   --h1-text-align: left;
   --h2-font-size: calc(24rem / 16);
   --h3-font-size: calc(20rem / 16);
+  --font-size-24px: calc(24rem / 16);
+  --font-size-16px: calc(16rem / 16);
+  --font-size-14px: calc(14rem / 16);
 }
 
 @media (min-width: 992px) {
@@ -90,6 +93,18 @@ li {
     line-height: var(--bs-body-line-height);
     margin: 0;
   }
+}
+
+@media (min-width: 992px) {
+  /* Utility Class: Padding bottom 64px on Desktop */
+  /* Pair with pb-4 on Form pages to get 24px on Mobile, 64px on Desktop */
+  .pb-lg-8 {
+    padding-bottom: 64px !important;
+  }
+}
+
+.pt-8 {
+  padding-top: 64px;
 }
 
 /* Links */
@@ -173,22 +188,23 @@ main {
   --footer-link-color: #73b3e7;
   --footer-link-width: 100%;
   --footer-link-hover-color: #9b74d7;
-  --footer-link-font-weight: 500;
+  --footer-link-font-weight: var(--medium-font-weight);
   --footer-mobile-underline-color: var(--bs-white);
-  --main-content-min-height: calc(100vh - 182px);
-  /* 182px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) */
+  --main-content-min-height: calc(100vh - 246px);
+  /* 182px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) + Footer Margin Top (64px) */
 }
 
 @media (min-width: 992px) {
   :root {
     --footer-link-width: auto;
-    --main-content-min-height: calc(100vh - 130px);
-    /* 130px = Header Height (80px) + Footer Height (50px) */
+    --main-content-min-height: calc(100vh - 194px);
+    /* 130px = Header Height (80px) + Footer Height (50px) + Footer Margin Top (64px) */
   }
 }
 
 footer {
   background: var(--footer-background-color);
+  margin-top: 64px;
 }
 
 footer .footer-links li {
@@ -215,6 +231,10 @@ footer .footer-links li a:visited {
 /* allow the mobile footer to have a */
 /* full-width line beyond container-fluid width */
 @media (max-width: 992px) {
+  footer {
+    margin-top: 64px;
+  }
+
   footer .container {
     max-width: 100%;
     padding: 0;
@@ -245,46 +265,73 @@ footer .footer-links li a:visited {
 }
 
 /* Buttons */
+/* Primary Button: Use all three classes: btn btn-lg btn-primary */
+/* Set button width in parent with Bootstrap column */
+/* Height: 60px on Desktop; 72 on mobile*/
 
-.btn-lg {
+:root {
+  --primary-button-padding: 19px 0;
+}
+
+@media (min-width: 992px) {
+  :root {
+    --primary-button-padding: 13px 0;
+  }
+}
+
+.btn.btn-lg.btn-primary {
+  border-width: 2px;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  font-weight: var(--medium-font-weight);
+  font-size: calc(20rem / 16);
+  width: 100%;
+  padding: var(--primary-button-padding);
+}
+
+/* A button that actually is a text link */
+/* TODO: Check if this is actually really used anymore */
+.btn-link {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+/* Previous Button, Language Button */
+.btn-outline-dark,
+.btn-outline-light {
   border-width: 2px;
 }
 
-.btn-link {
-  color: var(--primary-color);
-}
-
-.btn-primary {
-  text-transform: capitalize;
-  letter-spacing: 0.05em;
-}
-
+/* Language button in Header */
 .btn-outline-light {
   width: 126px;
   height: 38px;
   padding: 0px !important;
 }
 
-.container.content .buttons label {
-  display: block;
-  margin-bottom: 2rem;
-  text-align: center;
+/* Custom button: Login.gov Button with text and SVG */
+/* Used on Eligibility Start */
+
+:root {
+  --login-gov-button-font-size: var(--h3-font-size);
+  --login-gov-button-padding: 11px 0;
 }
 
-/* Custom button: Log In */
+@media (min-width: 992px) {
+  :root {
+    --login-gov-button-font-size: var(--font-size-16px);
+    --login-gov-button-padding: var(--primary-button-padding);
+  }
+}
 
 #login {
   cursor: pointer;
-  display: block;
   line-height: 1;
-  padding: 11.999px 13.4px;
-  min-width: auto;
   text-transform: none;
   letter-spacing: 0;
-  margin-right: inherit;
-  font-size: 16px;
-  margin-bottom: 32px;
+  font-size: var(--login-gov-button-font-size);
   font-family: "Public Sans", Roboto, system-ui;
+  padding: var(--login-gov-button-padding);
 }
 
 /* Sets the text `Login.gov` as transparent */
@@ -293,17 +340,24 @@ footer .footer-links li a:visited {
 #login .fallback-text {
   background: url("/static/img/login-gov-logo-rev.svg") no-repeat;
   background-size: contain;
-  display: inline-block;
+  display: block;
+  margin: 8px auto 0 auto;
   position: relative;
   width: 132px;
   height: 18px;
-  margin-left: 5px;
   padding-top: 1px;
-  vertical-align: baseline;
   color: transparent;
-  font-size: 16px;
+  font-size: var(--font-size-16px);
   font-weight: var(--bold-font-weight);
   line-height: 1;
+}
+
+@media (min-width: 992px) {
+  #login .fallback-text {
+    margin: 0 0 0 5px;
+    display: inline-block;
+    vertical-align: baseline;
+  }
 }
 
 /* Custom button: Sign Out */
@@ -339,8 +393,8 @@ footer .footer-links li a:visited {
 #previous-page-button {
   border-color: var(--text-primary-color);
   color: var(--text-primary-color);
-  font-weight: 500;
-  font-size: calc(14rem / 16); /* 14px */
+  font-weight: var(--medium-font-weight);
+  font-size: var(--font-size-14px);
   letter-spacing: var(--body-letter-spacing);
   padding: 4.5px 2.65px; /* button dimensions are 130 x 32 */
 }
@@ -366,37 +420,67 @@ footer .footer-links li a:visited {
   width: calc(18rem / 16);
 }
 
-/* Forms: Inputs */
+/* Forms: Text Inputs */
+/* Form Container: Must use .form-container parent to use these styles */
 
-.form-control {
-  border-radius: 0.25rem;
-  border-color: var(--primary-color);
+:root {
+  --form-input-gap: 22px;
+}
+
+@media (min-width: 992px) {
+  :root {
+    --form-input-gap: 42px;
+  }
+}
+
+.form-container .form-group:not(:first-child) {
+  padding-top: var(--form-input-gap);
+}
+
+.form-container .form-control-label {
+  font-size: var(--bs-body-font-size);
+  font-weight: var(--medium-font-weight);
+  letter-spacing: var(--body-letter-spacing);
+  padding-bottom: 12px;
+}
+
+.form-container .form-control {
   border-width: 2px;
+  border-radius: 3px;
+  border-color: var(--primary-color);
   color: var(--text-primary-color);
+  font-size: var(--font-size-24px);
+  padding: 0.625rem 0.75rem;
+  /* Input height should be 60px */
 }
 
-.form-control-lg {
-  border-radius: 0.3rem;
-}
-
-.required-label {
-  color: var(--text-primary-color);
-}
-
-.form-group {
-  margin-bottom: 2.375rem;
-}
-
-.form-group:nth-last-of-type(2) {
-  margin-bottom: 3.375rem;
+.form-text {
+  font-size: var(--font-size-14px);
 }
 
 /* Forms: Radio Buttons */
 
+:root {
+  --var-radio-button-size: 24px;
+  --radio-input-color: var(--standout-color);
+  --radio-input-margin-right: 42px;
+  --radio-label-desc-margin-left: 70px;
+}
+
+@media (min-width: 992px) {
+  :root {
+    --var-radio-button-size: 24px;
+    --radio-input-margin-right: 15px;
+    --radio-label-desc-margin-left: 42px;
+  }
+}
+
 .radio-label {
   cursor: pointer;
-  display: inline;
-  margin-left: 15px;
+}
+
+.radio-input-group:not(:first-child) {
+  padding-top: 24px;
 }
 
 .radio-input {
@@ -404,17 +488,12 @@ footer .footer-links li a:visited {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-
-  border: 3px solid var(--radio-input-color);
-  margin-right: 5px;
-  margin-top: 20px;
-
+  width: var(--var-radio-button-size);
+  height: var(--var-radio-button-size);
+  border: 2px solid var(--radio-input-color);
   position: relative;
   top: 7px;
+  margin-right: var(--radio-input-margin-right);
 }
 
 .radio-input:checked {
@@ -423,7 +502,7 @@ footer .footer-links li a:visited {
 }
 
 .radio-label-description {
-  margin-left: 2rem;
+  margin-left: var(--radio-label-desc-margin-left);
 }
 
 /* Media List */
@@ -469,18 +548,8 @@ footer .footer-links li a:visited {
   list-style-type: disc;
 }
 
-/* Eligibility Start */
-
-.eligibility-start .buttons .btn {
-  width: 100%;
-}
-
-.eligibility-start .main-container .buttons label {
-  margin: 0 0.8rem 0 0;
-  line-height: 1;
-}
-
 /* Enrollment Success */
+/* Custom in-line log out button for Enrollment Success, in paragraph */
 
 .enrollment-success #login {
   padding: 0 0.5rem 0.3rem 0.6rem;
@@ -532,21 +601,18 @@ footer .footer-links li a:visited {
   margin-bottom: 2rem;
 }
 
-.container.content.help .buttons-agencies,
-.with-agency-links .buttons-agencies {
+.container.content .buttons-agencies {
   font-size: 18px;
   letter-spacing: 0.05rem;
   margin-bottom: 3rem;
 }
 
-.container.content.help .buttons-agencies a,
-.with-agency-links .container.content .buttons-agencies a {
+.container.content .buttons-agencies a {
   display: table;
   margin-bottom: 0.2rem;
 }
 
-.container.content.help .buttons-agencies label,
-.with-agency-links .container.content .buttons-agencies label {
+.container.content .buttons-agencies label {
   display: block;
   margin-top: 2rem;
   font-size: 18px;
@@ -557,46 +623,11 @@ footer .footer-links li a:visited {
   margin-bottom: 5rem;
 }
 
-.container.content h1 ~ p:nth-last-of-type(1) {
-  margin-bottom: 2rem;
-}
-
-.container.content .btn-lg,
-.eligibility-start .btn-link {
-  font-weight: 500;
-  margin-bottom: 1rem;
-  padding: 0.8125rem;
-  /* btn-lg height is 60px */
-  width: 100%;
-}
-
-.container.content .btn-link,
-.eligibility-start .btn-link {
-  text-decoration: underline;
-}
-
 /* media queries */
-
-@media (max-width: 320px) {
-  #login {
-    padding: 1rem 1.25rem;
-  }
-}
-
-@media (max-width: 767px) {
-  .radio-label {
-    display: inline;
-    margin-left: 5px;
-  }
-}
 
 @media (max-width: 992px) {
   .navbar.navbar-expand-sm.navbar-dark.bg-primary {
     padding: 14.5px 1rem;
-  }
-
-  .container.content .btn-lg {
-    padding: 1.1875rem 0.813rem;
   }
 
   .signout-row .container .signout-link {
@@ -621,37 +652,5 @@ footer .footer-links li a:visited {
 
   .no-image-mobile .signout-row {
     top: 0;
-  }
-
-  /* Eligibility Start */
-
-  #login .fallback-text {
-    padding-top: 14px;
-    margin: 8px auto 0 auto;
-    display: block;
-  }
-
-  #login {
-    line-height: unset;
-    padding: 12px 67.5px;
-    font-size: 20px;
-    margin: 30px auto;
-    display: inline-block;
-  }
-
-  /* Override for only the Agency Index page
-  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
-    margin-bottom: 2rem;
-  } */
-}
-
-@media (min-width: 992px) {
-  .container.content input[type="submit"],
-  .container.content .btn {
-    width: fit-content;
-    min-width: 250px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
   }
 }

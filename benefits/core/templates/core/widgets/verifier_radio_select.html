@@ -1,5 +1,12 @@
+{% load i18n %}
 
 {% with id=widget.attrs.id %}
+
+  <label for="{{ id }}" class="pb-4 h2">
+    {% translate "eligibility.pages.index.label" %}
+    <span class="required-label text-body">*</span>
+  </label>
+
   <div{% if id %} id="{{ id }}"{% endif %} class="radio-container">
     {% for group, options, index in widget.optgroups %}
       {% if group %}
@@ -9,7 +16,7 @@
           {% endif %}
 
           {% for option in options %}
-            <div>{% include option.template_name with widget=option %}</div>
+            <div class="radio-input-group">{% include option.template_name with widget=option %}</div>
           {% endfor %}
 
           {% if group %}

@@ -1,9 +1,5 @@
 {% extends "core/base.html" %}
 
-{% block nav-buttons %}
-  {% include "core/includes/previous-page-link.html" %}
-{% endblock nav-buttons %}
-
 {% block explanatory-text %}
   {% for p in page.paragraphs %}<p class="pt-4 pb-4 pb-lg-8">{{ p }}</p>{% endfor %}
 {% endblock explanatory-text %}

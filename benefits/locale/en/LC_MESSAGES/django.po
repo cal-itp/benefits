@@ -418,6 +418,11 @@ msgstr "Go back"
 msgid "eligibility.pages.index.label"
 msgstr "Select the option that best applies to you:"
 
+msgid "eligibility.pages.index.help_text%(help_link)s"
+msgstr ""
+"Not sure which option is right for you? Please visit our <a href=\"%(help_link)s"
+"\">Help Page</a>."
+
 msgid "eligibility.buttons.choose"
 msgstr "Choose this Benefit"
 

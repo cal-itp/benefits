@@ -431,6 +431,11 @@ msgstr "Regresar a la página principal"
 msgid "eligibility.pages.index.label"
 msgstr "TODO: Select the option that best applies to you:"
 
+msgid "eligibility.pages.index.help_text%(help_link)s"
+msgstr ""
+"TODO: Not sure which option is right for you? Please visit our <a href=\"%(help_link)s"
+"\">Help Page</a>."
+
 msgid "eligibility.buttons.choose"
 msgstr "TODO: Choose this Benefit"
 
