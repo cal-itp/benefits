@@ -614,23 +614,33 @@ footer .footer-links li a:visited {
 
 /* Agency Index */
 
-.agency-index main {
+.agency-index main#main-content .container .row {
+  height: calc(100vh - 182px);
+  min-height: calc(100vh - 182px);
+}
+
+.agency-index main#main-content {
   min-height: calc(100vh - 182px);
   background: url("/static/img/benefits-bg-mobile.jpg") no-repeat;
   background-size: cover;
 }
 
 @media (min-width: 992px) {
-  .agency-index main {
-    min-height: calc(100vh - 130px);
+  .agency-index main#main-content .container .row {
+    height: calc(100vh - 130px);
+  }
+
+  .agency-index main#main-content {
+    height: calc(100vh - 130px);
     background: url("/static/img/benefits-bg-desktop.jpg") no-repeat;
     background-size: cover;
   }
 }
 
 .agency-index .box {
-  background: white;
+  background: #ffffff;
   border-top: 12px solid var(--primary-color);
+  margin-bottom: 32px;
 }
 
 .agency-index footer {
