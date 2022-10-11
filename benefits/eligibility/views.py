@@ -108,10 +108,10 @@ def start(request):
             )
 
     # define the bank card item
-    bank_card_item = dict(
+    bank_card_item = viewmodels.MediaItem(
         icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
         heading=_("eligibility.pages.start.bankcard.title"),
-        details=[_("eligibility.pages.start.bankcard.text")],
+        details=_("eligibility.pages.start.bankcard.text"),
     )
 
     media = [identity_item, bank_card_item]
