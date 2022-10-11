@@ -18,7 +18,7 @@ class EligibilityVerifierSelectionForm(forms.Form):
     action_url = "eligibility:index"
     method = "POST"
 
-    verifier = forms.ChoiceField(label="", widget=widgets.RadioSelect)
+    verifier = forms.ChoiceField(label="", widget=widgets.VerifierRadioSelect)
     # sets label to empty string so the radio_select template can override the label style
     submit_value = _("eligibility.buttons.choose")
 
