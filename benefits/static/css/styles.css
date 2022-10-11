@@ -254,7 +254,6 @@ footer .footer-links li a:visited {
 /* Language button */
 #header-container .btn-outline-light {
   font-size: var(--bs-body-font-size);
-  border-width: 2px;
   padding: 3.5px 29.01px; /* 126 x 38px, all screen sizes  */
 }
 
