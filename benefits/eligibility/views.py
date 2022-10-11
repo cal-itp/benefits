@@ -50,7 +50,9 @@ def index(request):
 
     ctx = page.context_dict()
     ctx["help_page"] = help_page
-    ctx["show_help_text"] = True
+    ctx["help_text"] = format_html(
+        _("eligibility.pages.index.help_text%(help_link)s") % {"help_link": f"{help_page}#what-is-cal-itp"}
+    )
 
     if request.method == "POST":
         form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency)
