@@ -618,9 +618,9 @@ footer .footer-links li a:visited {
   --agency-index-main-height: calc(100vh - 182px);
   --agency-index-background: url("/static/img/benefits-bg-mobile.jpg") no-repeat
     var(--primary-color);
-  --agency-index-box-background: #ffffff;
+  --agency-index-box-background: var(--bs-white);
   --agency-index-box-border: 12px solid var(--primary-color);
-  --agency-index-text-color: #000000;
+  --agency-index-text-color: var(--text-primary-color);
 }
 
 @media (min-width: 992px) {
@@ -630,7 +630,7 @@ footer .footer-links li a:visited {
       no-repeat;
     --agency-index-box-background: transparent;
     --agency-index-box-border: none;
-    --agency-index-text-color: #ffffff;
+    --agency-index-text-color: var(--bs-white);
   }
 }
 
