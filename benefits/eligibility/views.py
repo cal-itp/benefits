@@ -95,13 +95,6 @@ def start(request):
 
     if verifier.is_auth_required:
         if verifier.uses_auth_verification:
-            identity_item["links"] = [
-                viewmodels.Button.link(
-                    classes="btn-text btn-link",
-                    text=_("eligibility.pages.start.mst_login.link_text"),
-                    url=f"{reverse(ROUTE_HELP)}#login-gov",
-                ),
-            ]
             identity_item["bullets"] = [
                 _("eligibility.pages.start.mst_login.required_items[0]"),
                 _("eligibility.pages.start.mst_login.required_items[1]"),

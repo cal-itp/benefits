@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-10-11 21:30+0000\n"
+"POT-Creation-Date: 2022-10-11 23:36+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -470,9 +470,6 @@ msgstr "Continue"
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Identification card icon with checkmark"
-
-msgid "eligibility.pages.start.mst_login.link_text"
-msgstr "Learn more about Login.gov and providing proof of identity"
 
 msgid "eligibility.pages.start.mst_login.required_items[0]"
 msgstr "Your state-issued ID card"
