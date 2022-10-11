@@ -76,11 +76,17 @@ def index(request):
         tokenize_retry_form = forms.CardTokenizeFailForm(ROUTE_RETRY)
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
-        confirmed_eligibility_item = viewmodels.MediaItem(
-            icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
-            heading=_(verifier.eligibility_confirmed_item_heading),
-            details=_(verifier.eligibility_confirmed_item_details),
-        )
+        media = []
+
+        if verifier.eligibility_confirmed_item_heading or verifier.eligibility_confirmed_item_details:
+            heading = _(verifier.eligibility_confirmed_item_heading) if verifier.eligibility_confirmed_item_heading else None
+            details = _(verifier.eligibility_confirmed_item_details) if verifier.eligibility_confirmed_item_details else None
+            confirmed_eligibility_item = viewmodels.MediaItem(
+                icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
+                heading=heading,
+                details=details,
+            )
+            media.append(confirmed_eligibility_item)
 
         help_link = reverse(ROUTE_HELP)
         link_card_item = viewmodels.MediaItem(
@@ -91,12 +97,11 @@ def index(request):
                 _("enrollment.pages.index.link_card_item.p[1]"),
             ],
         )
-
-        media = [confirmed_eligibility_item, link_card_item]
+        media.append(link_card_item)
 
         page = viewmodels.Page(
             title=_("enrollment.pages.index.title"),
-            headline=_("enrollment.pages.index.headline"),
+            headline=format_html(_("enrollment.pages.index.headline")),
             forms=[tokenize_retry_form, tokenize_success_form],
             buttons=[
                 viewmodels.Button.primary(
