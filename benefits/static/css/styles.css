@@ -247,21 +247,14 @@ footer .footer-links li a:visited {
 
 /* Header */
 
-.navbar.navbar-expand-sm.navbar-dark.bg-primary {
-  padding: 8.5px 1rem;
+#header-container {
+  height: 80px;
 }
 
-.navbar-brand {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-.navbar-brand img.sm {
-  width: 120px;
-}
-
-.navbar-brand img.lg {
-  width: 271px;
+/* Language button */
+#header-container .btn-outline-light {
+  font-size: var(--bs-body-font-size);
+  padding: 3.5px 29.01px; /* 126 x 38px, all screen sizes  */
 }
 
 /* Buttons */
@@ -300,13 +293,6 @@ footer .footer-links li a:visited {
 .btn-outline-dark,
 .btn-outline-light {
   border-width: 2px;
-}
-
-/* Language button in Header */
-.btn-outline-light {
-  width: 126px;
-  height: 38px;
-  padding: 0px !important;
 }
 
 /* Custom button: Login.gov Button with text and SVG */
@@ -626,10 +612,6 @@ footer .footer-links li a:visited {
 /* media queries */
 
 @media (max-width: 992px) {
-  .navbar.navbar-expand-sm.navbar-dark.bg-primary {
-    padding: 14.5px 1rem;
-  }
-
   .signout-row .container .signout-link {
     font-size: 18px;
     color: var(--primary-color);
