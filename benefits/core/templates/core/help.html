@@ -4,7 +4,11 @@
 
 {% block main_content %}
   <div class="container">
-    <h1>{{ page.headline }}</h1>
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <h1>{{ page.headline }}</h1>
+      </div>
+    </div>
 
     <div class="row justify-content-center">
       <div class="col-10">
@@ -54,7 +58,7 @@
     {% include "core/includes/agency-links.html" with buttons=page.buttons %}
 
     <div class="row justify-content-center">
-      <div class="col-lg-10 mt-4">
+      <div class="col-8 col-lg-10 mt-4">
         <p class="pt-4">
           {% translate "core.pages.help.foss.text" %}
           <a href="https://www.github.com/cal-itp/benefits" target="_blank" rel="noopener noreferrer">{% translate "core.pages.help.foss.link" %}</a>.
