@@ -16,7 +16,9 @@
 {% endblock inner-content %}
 
 {% block call-to-action-text %}
-  <p>{% blocktranslate with help_link=help_link%}eligibility.pages.start.help_text{{ help_link }}{% endblocktranslate %}</p>
+  <p class="pt-4 pt-lg-0">
+    {% blocktranslate with help_link=help_link%}eligibility.pages.start.help_text{{ help_link }}{% endblocktranslate %}
+  </p>
 {% endblock call-to-action-text %}
 
 {% block call-to-action-button %}
