@@ -191,14 +191,14 @@ main {
   --footer-link-font-weight: var(--medium-font-weight);
   --footer-mobile-underline-color: var(--bs-white);
   --main-content-min-height: calc(100vh - 246px);
-  /* 182px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) + Footer Margin Top (64px) */
+  /* 246px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) + Footer Margin Top (64px) */
 }
 
 @media (min-width: 992px) {
   :root {
     --footer-link-width: auto;
     --main-content-min-height: calc(100vh - 194px);
-    /* 130px = Header Height (80px) + Footer Height (50px) + Footer Margin Top (64px) */
+    /* 194px = Header Height (80px) + Footer Height (50px) + Footer Margin Top (64px) */
   }
 }
 
@@ -613,9 +613,12 @@ footer .footer-links li a:visited {
 }
 
 /* Agency Index */
+/* This page has a full-width and full-height background image, creating the need to re-set the Footer margin top to 0 */
 
 :root {
-  --agency-index-main-height: calc(100vh - 182px);
+  --agency-index-main-height: calc(
+    100vh - 182px
+  ); /* 182px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) */
   --agency-index-background: url("/static/img/benefits-bg-mobile.jpg") no-repeat
     var(--primary-color);
   --agency-index-box-background: var(--bs-white);
@@ -625,7 +628,9 @@ footer .footer-links li a:visited {
 
 @media (min-width: 992px) {
   :root {
-    --agency-index-main-height: calc(100vh - 130px);
+    --agency-index-main-height: calc(
+      100vh - 130px
+    ); /* 130px = Header Height (80px) + (Footer Link (50px) */
     --agency-index-background: url("/static/img/benefits-bg-desktop.jpg")
       no-repeat;
     --agency-index-box-background: transparent;
@@ -634,19 +639,14 @@ footer .footer-links li a:visited {
   }
 }
 
-.agency-index footer {
-  margin-top: 0;
-}
-
-.agency-index main#main-content .container .row:first-child {
-  height: var(--agency-index-main-height);
-  min-height: var(--agency-index-main-height);
-}
-
 .agency-index main#main-content {
   min-height: var(--agency-index-main-height);
   background: var(--agency-index-background);
   background-size: cover;
+}
+
+.agency-index main#main-content .container .row:first-child {
+  min-height: var(--agency-index-main-height);
 }
 
 .agency-index .box {
@@ -661,4 +661,8 @@ footer .footer-links li a:visited {
   display: block;
   margin: 0 auto; /* Center the button */
   padding: 19px 0; /* Button is 250 x 72 */
+}
+
+.agency-index footer {
+  margin-top: 0;
 }
