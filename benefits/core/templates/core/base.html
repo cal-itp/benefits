@@ -79,9 +79,11 @@
           {% block nav-buttons %}
           {% endblock nav-buttons %}
           <div class="row justify-content-center">
-            <div class="col-lg-10">
-              <h1>{{ page.headline }}</h1>
-            </div>
+            {% block headline %}
+              <div class="col-lg-10">
+                <h1>{{ page.headline }}</h1>
+              </div>
+            {% endblock headline %}
             <div class="col-lg-10">
               {% block explanatory-text %}
               {% endblock explanatory-text %}

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-10-11 23:36+0000\n"
+"POT-Creation-Date: 2022-10-12 15:19+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -542,7 +542,7 @@ msgid "enrollment.pages.index.title"
 msgstr "Tarjeta de conexión"
 
 msgid "enrollment.pages.index.headline"
-msgstr "TODO: Your eligibility is confirmed!<br/>You’re nearly there."
+msgstr "TODO: Your eligibility is confirmed! You’re nearly there."
 
 msgid "enrollment.buttons.payment_partner"
 msgstr "Conecta tu tarjeta"

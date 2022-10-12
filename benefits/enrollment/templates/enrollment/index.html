@@ -4,6 +4,12 @@
   <div class="d-flex justify-content-end">{% include "core/includes/sign-out-link.html" %}</div>
 {% endblock nav-buttons %}
 
+{% block headline %}
+<div class="col-lg-5">
+  <h1>{{ page.headline }}</h1>
+</div>
+{% endblock headline %}
+
 {% block inner-content %}
   <div class="col-12 col-sm-12 col-lg-10">
     {% include "core/includes/media-list.html" with media=media %}
