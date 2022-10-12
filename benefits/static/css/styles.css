@@ -150,16 +150,6 @@ h1 {
   padding-top: 70px;
 }
 
-/* First paragraph immediately after an H1 gets padding-top
-h1 + p:first-of-type {
-  padding-top: 24px;
-} */
-
-/* Last paragraph after an H1 gets padding bottom
-h1 ~ p:nth-last-of-type(1) {
-  padding-bottom: 24px;
-} */
-
 /* H2 */
 /* Same sizes for all screen widths: 24px (24rem/16 = 1.5rem) */
 /* Also has a class which can be applied to non-headline elements */
