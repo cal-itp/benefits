@@ -1,4 +1,4 @@
-{% extends "core/page.html" %}
+{% extends "core/base.html" %}
 
 {% load i18n %}
 {% load static %}
@@ -6,6 +6,16 @@
 {% block classes %}
   {{ block.super |add:" enrollment-success" }}
 {% endblock classes %}
+
+{% block headline %}
+  <div class="col-lg-10">
+    <h1 class="pb-lg-8 pb-4">{{ page.headline }}</h1>
+  </div>
+{% endblock headline %}
+
+{% block inner-content %}
+  <div class="col-12 col-sm-12 col-lg-10">{% include "core/includes/media-list.html" with media=media %}</div>
+{% endblock inner-content %}
 
 {% block buttons %}
   {% if page.buttons|length_is:"1" %}
