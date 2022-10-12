@@ -512,8 +512,9 @@ footer .footer-links li a:visited {
   }
 }
 
-h1 + .media-list,
+h1 + .media-list, /* A .media-list immediately following the h1: Enrollment, Enrollment Success, but not Eligibility Start */
 .media-body--details p:not(:first-of-type) {
+  /* All the p within .media-body--details, except for the first p - Any media item with more than one p */
   padding-top: 24px;
 }
 
