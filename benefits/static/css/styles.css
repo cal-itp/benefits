@@ -611,3 +611,28 @@ footer .footer-links li a:visited {
   margin-top: 5rem;
   margin-bottom: 5rem;
 }
+
+/* Agency Index */
+
+.agency-index main {
+  min-height: calc(100vh - 182px);
+  background: url("/static/img/benefits-bg-mobile.jpg") no-repeat;
+  background-size: cover;
+}
+
+@media (min-width: 992px) {
+  .agency-index main {
+    min-height: calc(100vh - 130px);
+    background: url("/static/img/benefits-bg-desktop.jpg") no-repeat;
+    background-size: cover;
+  }
+}
+
+.agency-index .box {
+  background: white;
+  border-top: 12px solid var(--primary-color);
+}
+
+.agency-index footer {
+  margin-top: 0;
+}

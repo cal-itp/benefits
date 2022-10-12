@@ -1,16 +1,23 @@
-{% extends "core/page.html" %}
+{% extends "core/base.html" %}
 {% load i18n %}
 {% block classes %}
   {{ block.super |add:" agency-index" }}
 {% endblock classes %}
 
-{% block container_content %}
-  <h1>{{ page.headline }}</h1>
-
-  <h2>{% translate "core.pages.agency_index.h2" %}</h2>
-
-  {% block buttons %}
-    {{ block.super }}
-  {% endblock buttons %}
-
-{% endblock container_content %}
+{% block main_content %}
+  <div class="container-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5">
+          <div class="box px-4 py-3">
+            <h1 class="text-left p-0">{{ page.headline }}</h1>
+            <h2 class="p-sm">{% translate "core.pages.agency_index.h2" %}</h2>
+            {% for b in page.buttons %}
+              {% include "core/includes/button.html" with button=b %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock main_content %}
