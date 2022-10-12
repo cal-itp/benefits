@@ -235,7 +235,6 @@ def unverified(request):
 
     page = viewmodels.Page(
         title=_(verifier.unverified_title),
-        classes="with-agency-links",
         headline=_(verifier.unverified_headline),
         icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
         paragraphs=[_(verifier.unverified_blurb)],
