@@ -10,9 +10,9 @@
       </div>
     </div>
 
-    <div class="row pt-8">
+    <div class="row pt-8 justify-content-center">
       {% for b in page.buttons %}
-        <div class="col-lg-3 offset-lg-8 col-8 offset-2">{% include "core/includes/button.html" with button=b %}</div>
+        <div class="col-lg-3 col-8">{% include "core/includes/button.html" with button=b %}</div>
       {% endfor %}
     </div>
   </div>
