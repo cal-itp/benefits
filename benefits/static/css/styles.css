@@ -282,6 +282,12 @@ footer .footer-links li a:visited {
   padding: var(--primary-button-padding);
 }
 
+.btn-text {
+  letter-spacing: 0.02em;
+  font-weight: var(--medium-font-weight);
+  font-size: calc(20rem / 16);
+}
+
 /* A button that actually is a text link */
 /* TODO: Check if this is actually really used anymore */
 .btn-link {
@@ -293,6 +299,12 @@ footer .footer-links li a:visited {
 .btn-outline-dark,
 .btn-outline-light {
   border-width: 2px;
+}
+
+/* Custom button: Loading spinner */
+
+.spinner-hidden .spinner-border {
+  display: none;
 }
 
 /* Custom button: Login.gov Button with text and SVG */
