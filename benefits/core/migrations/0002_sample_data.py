@@ -147,6 +147,8 @@ PEM DATA
         unverified_title=_("eligibility.pages.unverified.mst_cc.title"),
         unverified_headline=_("eligibility.pages.unverified.mst_cc.headline"),
         unverified_blurb=_("eligibility.pages.unverified.mst_cc.p[0]"),
+        eligibility_confirmed_item_heading=None,
+        eligibility_confirmed_item_details=None,
         enrollment_success_confirm_item_details=_("enrollment.pages.success.mst_cc.confirm_item.details"),
         enrollment_success_expiry_item_heading=_("enrollment.pages.success.mst_cc.expiry_item.heading"),
         enrollment_success_expiry_item_details=_("enrollment.pages.success.mst_cc.expiry_item.details"),
