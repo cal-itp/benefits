@@ -93,10 +93,7 @@ class Button:
 
     @staticmethod
     def previous_page(url):
-        kwargs = {"id": "previous-page-button", "text": _("core.buttons.previous_page"), "url": url}
-        btn = Button(**kwargs)
-        btn.classes.append("btn-outline-dark")
-        return btn
+        return Button(text=_("core.buttons.previous_page"), url=url)
 
 
 class Icon:

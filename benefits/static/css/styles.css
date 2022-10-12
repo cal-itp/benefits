@@ -399,16 +399,6 @@ footer .footer-links li a:visited {
   }
 }
 
-#previous-page-button::before {
-  background: url("/static/img/left-arrow.svg") no-repeat;
-  content: "";
-  display: inline-block;
-  height: calc(18rem / 16);
-  position: relative;
-  vertical-align: middle;
-  width: calc(18rem / 16);
-}
-
 /* Forms: Text Inputs */
 /* Form Container: Must use .form-container parent to use these styles */
 
