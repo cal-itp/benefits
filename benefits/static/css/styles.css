@@ -390,6 +390,8 @@ footer .footer-links li a:visited {
 
 #previous-page-button:hover {
   background: none;
+  color: var(--hover-color);
+  border-color: var(--hover-color);
 }
 
 @media (min-width: 992px) {
