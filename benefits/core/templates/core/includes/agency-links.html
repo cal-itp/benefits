@@ -1,23 +1,23 @@
-<div class="row buttons-agencies">
-  {% for agency_button in buttons %}
-    {% if "agency" in agency_button.classes %}
-      {% if agency_button.label %}<label class="mt-4 d-block fs-base ls-base">{{ agency_button.label }}</label>{% endif %}
-      <a class="d-table fs-base ls-base"
-         {% if agency_button.target %}target="{{ agency_button.target }}"{% endif %}
-         {% if agency_button.rel %}rel="{{ agency_button.rel }}"{% endif %}
-         href="{{ agency_button.url }}">
-        {{ agency_button.text }}
-      </a>
-    {% endif %}
-  {% endfor %}
+<div class="row justify-content-center">
+  <div class="col-10">
+    {% for agency_button in buttons %}
+      {% if "agency" in agency_button.classes %}
+        {% if agency_button.label %}<label class="mt-4 d-block fs-base ls-base">{{ agency_button.label }}</label>{% endif %}
+        <a class="d-table fs-base ls-base"
+           {% if agency_button.target %}target="{{ agency_button.target }}"{% endif %}
+           {% if agency_button.rel %}rel="{{ agency_button.rel }}"{% endif %}
+           href="{{ agency_button.url }}">
+          {{ agency_button.text }}
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
 </div>
 
 {% for back_button in buttons %}
   {% if "btn-primary" in back_button.classes %}
-    <div class="row row d-flex justify-content-lg-end pt-8">
-      <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
-        {% include "core/includes/button.html" with button=back_button %}
-      </div>
+    <div class="row pt-8">
+      <div class="col-lg-3 offset-lg-8 col-8 offset-2">{% include "core/includes/button.html" with button=back_button %}</div>
     </div>
   {% endif %}
 {% endfor %}
