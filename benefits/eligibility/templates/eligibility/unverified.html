@@ -1,9 +1,9 @@
 {% extends "core/base.html" %}
 
 {% block main_content %}
-  <div class="container">
-    {% include "core/includes/sign-out-link.html" %}
+  {% include "core/includes/sign-out-link.html" %}
 
+  <div class="container">
     {% include "core/includes/icon-title.html" with title=page.headline icon=page.icon %}
 
     <div class="row justify-content-center">
