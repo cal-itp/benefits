@@ -33,13 +33,6 @@
   --font-size-14px: calc(14rem / 16);
 }
 
-@media (min-width: 992px) {
-  :root {
-    --h1-font-size: calc(35rem / 16);
-    --h1-text-align: center;
-  }
-}
-
 @font-face {
   font-family: "Public Sans";
   font-weight: 700;
@@ -144,6 +137,14 @@ h4 {
 /* Mobile first: Screen width up to 992px - 24px (24rem/16 = 1.5rem) and left */
 /* Screen width above 992px - 35px (35rem/16 = 2.1875rem) and centered */
 /* Does not have a class. Do not apply to non-headline elements. */
+
+@media (min-width: 992px) {
+  :root {
+    --h1-font-size: calc(35rem / 16);
+    --h1-text-align: center;
+  }
+}
+
 h1 {
   font-size: var(--h1-font-size);
   text-align: var(--h1-text-align);
@@ -251,24 +252,23 @@ footer .footer-links li a:visited {
   height: 80px;
 }
 
-/* Language button */
+/* Language button in Header */
 #header-container .btn-outline-light {
   font-size: var(--bs-body-font-size);
-  padding: 3.5px 29.01px; /* 126 x 38px, all screen sizes  */
+  padding: 3.5px 29.01px; /* Button dimensions are 126 x 38px, all screen sizes  */
 }
 
 /* Buttons */
 /* Primary Button: Use all three classes: btn btn-lg btn-primary */
 /* Set button width in parent with Bootstrap column */
-/* Height: 60px on Desktop; 72 on mobile*/
 
 :root {
-  --primary-button-padding: 19px 0;
+  --primary-button-padding: 19px 0; /* Button height is 60px on Desktop; 72 on mobile*/
 }
 
 @media (min-width: 992px) {
   :root {
-    --primary-button-padding: 13px 0;
+    --primary-button-padding: 13px 0; /* Button height is 60px on Desktop; 72 on mobile*/
   }
 }
 
@@ -282,14 +282,13 @@ footer .footer-links li a:visited {
   padding: var(--primary-button-padding);
 }
 
-/* A button that actually is a text link */
-/* TODO: Check if this is actually really used anymore */
+/* Link buttons: A button that actually is a text link: Used for agency links */
 .btn-link {
   color: var(--primary-color);
   text-decoration: underline;
 }
 
-/* Previous Button, Language Button */
+/* Outline buttons: Previous Button, Language Button */
 .btn-outline-dark,
 .btn-outline-light {
   border-width: 2px;
@@ -385,7 +384,7 @@ footer .footer-links li a:visited {
   font-weight: var(--medium-font-weight);
   font-size: var(--font-size-14px);
   letter-spacing: var(--body-letter-spacing);
-  padding: 4.5px 2.65px; /* button dimensions are 130 x 32 */
+  padding: 4.5px 2.65px; /* Button dimensions are 130 x 32 */
 }
 
 #previous-page-button:hover {
@@ -439,8 +438,7 @@ footer .footer-links li a:visited {
   border-color: var(--primary-color);
   color: var(--text-primary-color);
   font-size: var(--font-size-24px);
-  padding: 0.625rem 0.75rem;
-  /* Input height should be 60px */
+  padding: 0.625rem 0.75rem; /* Input height should be 60px */
 }
 
 .form-text {
@@ -543,8 +541,7 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment, Enr
   list-style-type: disc;
 }
 
-/* Enrollment Success */
-/* Custom in-line log out button for Enrollment Success, in paragraph */
+/* Custom button: In-line Login.gov button for Enrollment Success, in paragraph */
 
 .enrollment-success #login {
   padding: 0 0.5rem 0.3rem 0.6rem;
