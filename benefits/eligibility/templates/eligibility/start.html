@@ -17,7 +17,7 @@
         {% block media_list %}
           {% if media|length_is:"0" %}
           {% else %}
-            <ul class="media-list mt-0 p-0 d-flex justify-content-center flex-column">
+            <ul class="media-list m-0 px-0 d-flex justify-content-center flex-column">
               {% for item in media %}
                 <li class="media d-flex align-items-stretch w-auto">
                   <div class="media-line">{% include "core/includes/icon.html" with icon=item.icon %}</div>
