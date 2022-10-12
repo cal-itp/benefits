@@ -5,15 +5,13 @@
 {% endblock nav-buttons %}
 
 {% block headline %}
-<div class="col-lg-5">
-  <h1>{{ page.headline }}</h1>
-</div>
+  <div class="col-lg-5">
+    <h1 class="pb-lg-8 pb-4">{{ page.headline }}</h1>
+  </div>
 {% endblock headline %}
 
 {% block inner-content %}
-  <div class="col-12 col-sm-12 col-lg-10">
-    {% include "core/includes/media-list.html" with media=media %}
-  </div>
+  <div class="col-12 col-sm-12 col-lg-10">{% include "core/includes/media-list.html" with media=media %}</div>
 
   {% comment %} This Javascript code must be before the forms. {% endcomment %}
   {% if payment_processor %}
