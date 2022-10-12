@@ -347,34 +347,37 @@ footer .footer-links li a:visited {
 }
 
 /* Custom button: Sign Out */
+/* Nav Buttons: Previous Page, Sign Out */
 
-.signout-row {
-  position: absolute;
-  width: 100%;
-  z-index: 100;
+.nav-button-row {
+  height: 70px;
 }
 
-.signout-row .container {
-  display: flex;
-  justify-content: flex-end;
+/* Custom button: Sign Out */
+
+.signout-link,
+.signout-link:visited {
+  font-size: 18px;
+  color: var(--primary-color) !important;
+  padding: 2px 4px;
+  border-radius: 3px;
+  border: 2px solid var(--primary-color);
+  letter-spacing: 0.02em;
+  font-weight: 500 !important;
+  text-decoration: none !important;
 }
 
-.signout-row .container .signout-link {
-  font-size: 12px;
-  text-decoration: underline;
-  color: var(--primary-color);
-  letter-spacing: 0.05rem;
-  padding-top: 18px;
-  display: block;
+@media (min-width: 992px) {
+  .signout-link,
+  .signout-link:visited {
+    font-size: 12px;
+    text-decoration: underline !important;
+    letter-spacing: 0.05em;
+    border: none;
+  }
 }
 
 /* Custom button: Previous Page */
-
-.previous-page-row {
-  position: absolute;
-  z-index: 100;
-  height: 70px;
-}
 
 #previous-page-button {
   border-color: var(--text-primary-color);
@@ -612,27 +615,7 @@ footer .footer-links li a:visited {
 /* media queries */
 
 @media (max-width: 992px) {
-  .signout-row .container .signout-link {
-    font-size: 18px;
-    color: var(--primary-color);
-    background: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    border: 2px solid var(--primary-color);
-    margin-top: 20px;
-    letter-spacing: 0.02em;
-    font-weight: 500;
-  }
-
-  .signout-row .container .signout-link:hover {
-    background: none;
-  }
-
-  .signout-row {
-    top: 240px;
-  }
-
-  .no-image-mobile .signout-row {
-    top: 0;
+  .navbar.navbar-expand-sm.navbar-dark.bg-primary {
+    padding: 14.5px 0;
   }
 }
