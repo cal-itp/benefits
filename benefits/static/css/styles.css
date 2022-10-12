@@ -385,7 +385,7 @@ footer .footer-links li a:visited {
   font-weight: var(--medium-font-weight);
   font-size: var(--font-size-14px);
   letter-spacing: var(--body-letter-spacing);
-  padding: 4.5px 2.65px; /* button dimensions are 130 x 32 */
+  padding: 3.5px 2.35px; /* button dimensions are 130 x 32 */
 }
 
 #previous-page-button:hover {
