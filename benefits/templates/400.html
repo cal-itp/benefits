@@ -1,1 +1,19 @@
-{% extends "core/page.html" %}
+{% extends "core/base.html" %}
+
+{% block main_content %}
+    <div class="container">
+        {% include "core/includes/icon-title.html" with title=page.headline icon=page.icon %}
+
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
+            </div>
+        </div>
+
+        <div class="row pt-8">
+            {% for b in page.buttons %}
+                <div class="col-lg-3 offset-lg-8 col-8 offset-2">{% include "core/includes/button.html" with button=b %}</div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock main_content %}
