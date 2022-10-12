@@ -3,9 +3,13 @@
 
 {% if authentication %}
   {% if authentication.required and authentication.logged_in %}
-    <div class="signout-row">
+    <div class="w-100 position-absolute">
       <div class="container">
-        <a class="signout-link" href="{{ authentication.sign_out_route }}">{% translate authentication.sign_out_button_label %}</a>
+        <div class="row nav-button-row">
+          <div class="col-12 d-flex align-items-center justify-content-end">
+            <a class="signout-link" href="{{ authentication.sign_out_route }}">{% translate authentication.sign_out_button_label %}</a>
+          </div>
+        </div>
       </div>
     </div>
   {% endif %}
