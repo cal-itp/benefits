@@ -611,11 +611,3 @@ footer .footer-links li a:visited {
   margin-top: 5rem;
   margin-bottom: 5rem;
 }
-
-/* media queries */
-
-@media (max-width: 992px) {
-  .navbar.navbar-expand-sm.navbar-dark.bg-primary {
-    padding: 14.5px 0;
-  }
-}
