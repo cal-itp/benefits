@@ -113,9 +113,10 @@ class MediaItem:
     * icon: core.viewmodels.Icon
     * details: str, str[]
     * heading: str
+    * bullets: str, str[]
     """
 
-    def __init__(self, icon: Icon, details, heading=None):
+    def __init__(self, icon: Icon, details, heading=None, bullets=None):
         self.icon = icon
         if isinstance(details, str):
             self.details = [details]
@@ -124,6 +125,10 @@ class MediaItem:
         else:
             self.details = [str(details)]
         self.heading = heading
+        if isinstance(bullets, str):
+            self.bullets = [bullets]
+        elif isinstance(bullets, list):
+            self.bullets = bullets
 
 
 class Page:

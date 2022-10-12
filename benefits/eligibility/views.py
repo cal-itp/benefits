@@ -87,15 +87,15 @@ def start(request):
     button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse(ROUTE_CONFIRM))
 
     # define the verifier-specific required item
-    identity_item = dict(
+    identity_item = viewmodels.MediaItem(
         icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
         heading=_(verifier.start_item_name),
-        details=[_(verifier.start_item_description)],
+        details=_(verifier.start_item_description),
     )
 
     if verifier.is_auth_required:
         if verifier.uses_auth_verification:
-            identity_item["bullets"] = [
+            identity_item.bullets = [
                 _("eligibility.pages.start.mst_login.required_items[0]"),
                 _("eligibility.pages.start.mst_login.required_items[1]"),
                 _("eligibility.pages.start.mst_login.required_items[2]"),
