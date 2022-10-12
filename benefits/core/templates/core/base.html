@@ -10,7 +10,7 @@
     <meta name="description" content="{% translate "core.pages.help.about.p[0]" %}">
     <title>
       {% block page_title %}
-        {{ page.title }} |
+        {% if page.title %}{{ page.title }} |{% endif %}
       {% endblock page_title %}
       Cal-ITP
     </title>
@@ -79,9 +79,11 @@
           {% block nav-buttons %}
           {% endblock nav-buttons %}
           <div class="row justify-content-center">
-            <div class="col-lg-10">
-              <h1>{{ page.headline }}</h1>
-            </div>
+            {% block headline %}
+              <div class="col-lg-10">
+                <h1>{{ page.headline }}</h1>
+              </div>
+            {% endblock headline %}
             <div class="col-lg-10">
               {% block explanatory-text %}
               {% endblock explanatory-text %}
@@ -93,11 +95,11 @@
           </div>
           <div class="row d-flex flex-column-reverse justify-content-lg-end flex-lg-row">
             {% block call-to-action %}
-              <div class="col-lg-7 d-flex align-items-end flex-row-reverse">
+              <div class="col-lg-9 d-flex align-items-end flex-row-reverse col-sm-8 offset-sm-2 offset-lg-0 offset-2 col-8">
                 {% block call-to-action-text %}
                 {% endblock call-to-action-text %}
               </div>
-              <div class="col-lg-3">
+              <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
                 {% block call-to-action-button %}
                 {% endblock call-to-action-button %}
               </div>

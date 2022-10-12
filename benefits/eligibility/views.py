@@ -87,7 +87,7 @@ def start(request):
     button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse(ROUTE_CONFIRM))
 
     # define the verifier-specific required item
-    identity_item = dict(
+    identity_item = viewmodels.MediaItem(
         icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
         heading=_(verifier.start_item_name),
         details=_(verifier.start_item_description),
@@ -95,14 +95,7 @@ def start(request):
 
     if verifier.is_auth_required:
         if verifier.uses_auth_verification:
-            identity_item["links"] = [
-                viewmodels.Button.link(
-                    classes="btn-text btn-link",
-                    text=_("eligibility.pages.start.mst_login.link_text"),
-                    url=f"{reverse(ROUTE_HELP)}#login-gov",
-                ),
-            ]
-            identity_item["bullets"] = [
+            identity_item.bullets = [
                 _("eligibility.pages.start.mst_login.required_items[0]"),
                 _("eligibility.pages.start.mst_login.required_items[1]"),
                 _("eligibility.pages.start.mst_login.required_items[2]"),
@@ -115,7 +108,7 @@ def start(request):
             )
 
     # define the bank card item
-    bank_card_item = dict(
+    bank_card_item = viewmodels.MediaItem(
         icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
         heading=_("eligibility.pages.start.bankcard.title"),
         details=_("eligibility.pages.start.bankcard.text"),
@@ -125,15 +118,16 @@ def start(request):
 
     page = viewmodels.Page(
         title=_("eligibility.pages.start.title"),
+        headline=_(verifier.start_headline),
         paragraphs=[_(verifier.start_blurb)],
         button=button,
     )
 
     ctx = page.context_dict()
     ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_INDEX))
-    ctx["start_headline"] = _(verifier.start_headline)
     ctx["start_sub_headline"] = _(verifier.start_sub_headline)
     ctx["media"] = media
+    ctx["help_link"] = reverse(ROUTE_HELP)
 
     # update origin now, after we've saved the previous page
     session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))

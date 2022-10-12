@@ -115,8 +115,8 @@ class EligibilityVerifier(models.Model):
     unverified_title = models.TextField()
     unverified_headline = models.TextField()
     unverified_blurb = models.TextField()
-    eligibility_confirmed_item_heading = models.TextField()
-    eligibility_confirmed_item_details = models.TextField()
+    eligibility_confirmed_item_heading = models.TextField(null=True)
+    eligibility_confirmed_item_details = models.TextField(null=True)
     # Fields for the dynamic enrollment success message
     enrollment_success_confirm_item_details = models.TextField()
     enrollment_success_expiry_item_heading = models.TextField(null=True)
