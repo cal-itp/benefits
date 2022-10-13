@@ -64,6 +64,9 @@ def index(request):
             verifier = EligibilityVerifier.objects.get(id=verifier_id)
             session.update(request, verifier=verifier)
 
+            types_to_verify = EligibilityType.get_names_to_verify(agency, verifier)
+            analytics.selected_verifier(request, verifier.name, types_to_verify)
+
             response = redirect(eligibility_start)
         else:
             # form was not valid, allow for correction/resubmission
