@@ -572,22 +572,6 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
   margin-left: var(--logout-paragraph-margin-left);
 }
 
-/* 404 Page */
-
-h1.icon-title {
-  padding-bottom: 1.5rem;
-}
-
-h1.icon-title span.icon {
-  display: block;
-  padding-bottom: 3rem;
-}
-
-h1.icon-title img.icon {
-  width: 150px;
-  height: 150px;
-}
-
 /* Agency Index */
 /* This page has a full-width and full-height background image, creating the need to re-set the Footer margin top to 0 */
 
