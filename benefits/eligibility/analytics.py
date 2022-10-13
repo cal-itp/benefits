@@ -25,8 +25,11 @@ class ReturnedEligibilityEvent(EligibilityEvent):
 
     def __init__(self, request, eligibility_types, status, error=None):
         super().__init__(request, "returned eligibility", eligibility_types)
-        if str(status).lower() in ("error", "fail", "success"):
+        status = str(status).lower()
+        if status in ("error", "fail", "success"):
             self.update_event_properties(status=status, error=error)
+        if status == "success":
+            self.update_user_properties(eligibility_types=eligibility_types)
 
 
 def started_eligibility(request, eligibility_types):
