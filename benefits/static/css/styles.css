@@ -316,6 +316,11 @@ footer .footer-links li a:visited {
   display: none;
 }
 
+.spinner-border {
+  border-width: 3px;
+  margin-left: 15px;
+}
+
 /* Custom button: Login.gov Button with text and SVG */
 /* Used on Eligibility Start */
 
