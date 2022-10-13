@@ -54,8 +54,8 @@ class EligibilityVerificationForm(forms.Form):
         sub_widget = widgets.FormControlTextInput(placeholder=verifier.form_sub_placeholder)
         if verifier.form_sub_pattern:
             sub_widget.attrs.update({"pattern": verifier.form_sub_pattern})
-        if verifier.form_inputmode:
-            sub_widget.attrs.update({"inputmode": verifier.form_inputmode})
+        if verifier.form_input_mode:
+            sub_widget.attrs.update({"inputmode": verifier.form_input_mode})
         if verifier.form_max_length:
             sub_widget.attrs.update({"maxlength": verifier.form_max_length})
 
