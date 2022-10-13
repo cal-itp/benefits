@@ -1,9 +1,13 @@
 {% extends "core/base.html" %}
+{% load i18n %}
 
 {% block main_content %}
     <div class="container">
         <div class="row justify-content-lg-center">
-            <h1 class="h2 pb-5">{{ page.headline }}</h1>
+            <h1 class="pb-lg-8 pb-5">
+                <span class="h2 d-block d-lg-inline mb-4">{% translate "core.pages.logged_out.headline[0]" %}</span>
+                <span class="h2">{% translate "core.pages.logged_out.headline[1]" %}</span>
+            </h1>
             {% include "core/includes/icon.html" with icon=page.icon %}
         </div>
     </div>

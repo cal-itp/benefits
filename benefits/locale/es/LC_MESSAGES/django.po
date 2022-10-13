@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-10-13 00:27+0000\n"
+"POT-Creation-Date: 2022-10-13 20:46+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -347,6 +347,12 @@ msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita JavaScript. Por favor, active JavaScript por este sitio web y"
 
+msgid "core.pages.logged_out.headline[0]"
+msgstr "Ha cerrado la sesión correctamente."
+
+msgid "core.pages.logged_out.headline[1]"
+msgstr "¡Gracias por usar los beneficios de Cal-ITP!"
+
 msgid "eligibility.pages.index.label"
 msgstr "TODO: Select the option that best applies to you:"
 
@@ -424,11 +430,6 @@ msgstr "Regresar a la página principal"
 
 msgid "core.pages.logged_out.title"
 msgstr "Cierre sesión"
-
-msgid "core.pages.logged_out.headline"
-msgstr ""
-"Ha cerrado la sesión correctamente. ¡Gracias por usar los beneficios de Cal-"
-"ITP!"
 
 msgctxt "image alt text"
 msgid "core.icons.happybus"

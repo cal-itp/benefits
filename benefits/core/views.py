@@ -159,7 +159,6 @@ def logged_out(request):
     """View handler for the final log out confirmation message."""
     page = viewmodels.Page(
         title=_("core.pages.logged_out.title"),
-        headline=_("core.pages.logged_out.headline"),
         icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
     )
 
