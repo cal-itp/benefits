@@ -1,0 +1,10 @@
+{% extends "core/base.html" %}
+
+{% block main_content %}
+    <div class="container">
+        <div class="row justify-content-lg-center">
+            <h1 class="h2 pb-5">{{ page.headline }}</h1>
+            {% include "core/includes/icon.html" with icon=page.icon %}
+        </div>
+    </div>
+{% endblock main_content %}

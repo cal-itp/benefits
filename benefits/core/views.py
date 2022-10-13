@@ -19,6 +19,7 @@ ROUTE_LOGGED_OUT = "core:logged_out"
 TEMPLATE_PAGE = "core/page.html"
 TEMPLATE_AGENCY = "core/agency_index.html"
 TEMPLATE_HELP = "core/help.html"
+TEMPLATE_LOGGED_OUT = "core/logged_out.html"
 
 
 @pageview_decorator
@@ -162,4 +163,4 @@ def logged_out(request):
         icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
     )
 
-    return TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
+    return TemplateResponse(request, TEMPLATE_LOGGED_OUT, page.context_dict())
