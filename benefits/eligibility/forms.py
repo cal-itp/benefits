@@ -54,6 +54,8 @@ class EligibilityVerificationForm(forms.Form):
         sub_widget = widgets.FormControlTextInput(placeholder=verifier.form_sub_placeholder)
         if verifier.form_sub_pattern:
             sub_widget.attrs.update({"pattern": verifier.form_sub_pattern})
+            sub_widget.attrs.update({"inputmode": "numeric"})
+            sub_widget.attrs.update({"maxlength": 5})
 
         self.fields["sub"] = forms.CharField(
             label=_(verifier.form_sub_label),
