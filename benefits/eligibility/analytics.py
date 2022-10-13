@@ -9,6 +9,7 @@ class EligibilityEvent(core.Event):
 
     def __init__(self, request, event_type, eligibility_types):
         super().__init__(request, event_type)
+        # overwrite core.Event eligibility_types
         self.update_event_properties(eligibility_types=eligibility_types)
 
 
