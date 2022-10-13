@@ -17,16 +17,19 @@
   <div class="col-12 col-sm-12 col-lg-10">{% include "core/includes/media-list.html" with media=media %}</div>
 {% endblock inner-content %}
 
-{% block buttons %}
+{% block call-to-action %}
   {% if page.buttons|length_is:"1" %}
-    <p>
-      <span>{% translate "enrollment.pages.success.logout[0]" %}</span>
-      {% for b in page.buttons %}
-        <a id="{{ b.id }}" class="{{ b.classes | join:" " }}" style="display: inline-block;" href="{{ b.url }}" role="button">
-          <span class="fallback-text">{{ b.fallback_text }}</span>
-        </a>
-      {% endfor %}
-      <span>{% translate "enrollment.pages.success.logout[1]" %}</span>
-    </p>
+    <div class="row d-flex justify-content-lg-center flex-lg-row">
+      <div class="col-lg-10 d-flex justify-content-end">
+        <p>
+          <span>{% translate "enrollment.pages.success.logout[0]" %}</span>
+          {% for b in page.buttons %}
+            <a id="{{ b.id }}" class="{{ b.classes | join:" " }}" href="{{ b.url }}" role="button">
+              <span class="fallback-text">{{ b.fallback_text }}</span>
+            </a>
+          {% endfor %}
+        </p>
+      </div>
+    </div>
   {% endif %}
-{% endblock buttons %}
+{% endblock call-to-action %}
