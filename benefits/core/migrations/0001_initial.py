@@ -58,6 +58,8 @@ class Migration(migrations.Migration):
                 ("form_sub_help_text", models.TextField(null=True)),
                 ("form_sub_placeholder", models.TextField(null=True)),
                 ("form_sub_pattern", models.TextField(null=True)),
+                ("form_inputmode", models.TextField(null=True)),
+                ("form_max_length", models.PositiveSmallIntegerField(null=True)),
                 ("form_name_label", models.TextField(null=True)),
                 ("form_name_help_text", models.TextField(null=True)),
                 ("form_name_placeholder", models.TextField(null=True)),
