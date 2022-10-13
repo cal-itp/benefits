@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-10-12 15:19+0000\n"
+"POT-Creation-Date: 2022-10-13 20:46+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -334,6 +334,12 @@ msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
 
+msgid "core.pages.logged_out.headline[0]"
+msgstr "You have successfully logged out."
+
+msgid "core.pages.logged_out.headline[1]"
+msgstr "Thank you for using Cal-ITP Benefits!"
+
 msgid "eligibility.pages.index.label"
 msgstr "Select the option that best applies to you:"
 
@@ -411,10 +417,6 @@ msgstr "Go back"
 
 msgid "core.pages.logged_out.title"
 msgstr "Logged out"
-
-msgid "core.pages.logged_out.headline"
-msgstr ""
-"You have successfully logged out. Thank you for using Cal-ITP Benefits!"
 
 msgctxt "image alt text"
 msgid "core.icons.happybus"
@@ -499,10 +501,8 @@ msgid "core.icons.idcardquestion"
 msgstr "Identification card icon with question mark"
 
 msgid "enrollment.pages.success.logout[0]"
-msgstr "If you are on a public or shared computer, please sign out of your"
-
-msgid "enrollment.pages.success.logout[1]"
-msgstr "account."
+msgstr ""
+"If you are on a public or shared computer, don't forget to sign out of "
 
 msgid "enrollment.pages.index.link_card_item.heading"
 msgstr "The next step is to link your bank card"

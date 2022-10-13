@@ -533,6 +533,18 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 /* Enrollment Success */
 /* Custom in-line log out button for Enrollment Success, in paragraph */
 
+:root {
+  --logout-paragraph-margin-left: calc(
+    var(--media-item-icon-margin) + var(--media-item-icon-size)
+  );
+}
+
+@media (min-width: 992px) {
+  :root {
+    --logout-paragraph-margin-left: 0;
+  }
+}
+
 .enrollment-success #login {
   padding: 0 0.5rem 0.3rem 0.6rem;
   display: inline-block;
@@ -546,6 +558,10 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
   margin: 8px auto 0 auto;
   display: block;
   width: 7rem;
+}
+
+.enrollment-success .logout-paragraph {
+  margin-left: var(--logout-paragraph-margin-left);
 }
 
 /* 404 Page */
