@@ -442,22 +442,23 @@ footer .footer-links li a:visited {
 /* Forms: Radio Buttons */
 
 :root {
-  --var-radio-button-size: 24px;
+  --radio-button-size: 24px;
   --radio-input-color: var(--standout-color);
-  --radio-input-margin-right: 42px;
-  --radio-label-desc-margin-left: 70px;
+  --radio-input-gap: 40px;
 }
 
 @media (min-width: 992px) {
   :root {
-    --var-radio-button-size: 24px;
-    --radio-input-margin-right: 15px;
-    --radio-label-desc-margin-left: 42px;
+    --radio-input-gap: 15px;
   }
 }
 
 .radio-label {
   cursor: pointer;
+}
+
+.radio-input-group {
+  gap: var(--radio-input-gap);
 }
 
 .radio-input-group:not(:first-child) {
@@ -469,21 +470,15 @@ footer .footer-links li a:visited {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  width: var(--var-radio-button-size);
-  height: var(--var-radio-button-size);
+  width: var(--radio-button-size);
+  height: var(--radio-button-size);
   border: 2px solid var(--radio-input-color);
-  position: relative;
-  top: 7px;
-  margin-right: var(--radio-input-margin-right);
+  margin: 3px 0;
 }
 
 .radio-input:checked {
   background-color: var(--radio-input-color);
   box-shadow: inset 0 0 0 2px var(--bs-white);
-}
-
-.radio-label-description {
-  margin-left: var(--radio-label-desc-margin-left);
 }
 
 /* Media List */
