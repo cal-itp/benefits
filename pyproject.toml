@@ -13,7 +13,7 @@ include = '\.pyi?$'
 # Configuration for djlint
 
 [tool.djlint]
-ignore = "H006,H017,H021,H025,H031"
+ignore = "H017,H025,H031"
 indent = 2
 max_attribute_length = 127
 max_line_length = 127
