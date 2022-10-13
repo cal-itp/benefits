@@ -79,6 +79,24 @@ def test_EligibilityType_get_many_somematching(model_EligibilityType):
 
 
 @pytest.mark.django_db
+def test_EligibilityType_get_names(model_EligibilityType):
+    expected = [model_EligibilityType.name]
+
+    result = EligibilityType.get_names([model_EligibilityType])
+
+    assert result == expected
+
+
+@pytest.mark.django_db
+def test_EligibilityType_get_names_to_verify(model_TransitAgency, model_EligibilityVerifier):
+    expected = [t.name for t in model_TransitAgency.types_to_verify(model_EligibilityVerifier)]
+
+    result = EligibilityType.get_names_to_verify(model_TransitAgency, model_EligibilityVerifier)
+
+    assert result == expected
+
+
+@pytest.mark.django_db
 def test_EligibilityVerifier_str(model_EligibilityVerifier):
     assert str(model_EligibilityVerifier) == model_EligibilityVerifier.name
 
