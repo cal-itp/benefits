@@ -50,7 +50,6 @@
     {% endif %}
 
     {% if form.recaptcha_enabled %}
-      <script src="{{ recaptcha.api_url }}"></script>
       <script>
         function onSubmit(token) {
           $("#{{ form.id }}").submit();
