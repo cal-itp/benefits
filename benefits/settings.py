@@ -274,10 +274,10 @@ CSP_FRAME_ANCESTORS = ["'none'"]
 
 CSP_FRAME_SRC = ["'none'"]
 env_frame_src = _filter_empty(os.environ.get("DJANGO_CSP_FRAME_SRC", "").split(","))
-CSP_FRAME_SRC.extend(env_frame_src)
 if RECAPTCHA_ENABLED:
-    CSP_FRAME_SRC.append("https://www.google.com")
-
+    env_frame_src.append("https://www.google.com")
+if len(env_frame_src) > 0:
+    CSP_FRAME_SRC = env_frame_src
 
 CSP_SCRIPT_SRC = [
     "'unsafe-inline'",
