@@ -75,9 +75,9 @@
 
     <main id="main-content" role="main">
       {% block main_content %}
+        {% block nav-buttons %}
+        {% endblock nav-buttons %}
         <div class="container main-row">
-          {% block nav-buttons %}
-          {% endblock nav-buttons %}
           <div class="row justify-content-center">
             {% block headline %}
               <div class="col-lg-10">
