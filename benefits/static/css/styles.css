@@ -10,7 +10,7 @@
   --bs-body-font-weight: 400;
   --medium-font-weight: 500;
   --bold-font-weight: 700;
-  --bs-body-font-size: 18px;
+  --bs-body-font-size: calc(18rem / 16);
   --bs-font-sans-serif: Roboto, system-ui, -apple-system, "Segoe UI", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-body-font-family: var(--bs-font-sans-serif);
