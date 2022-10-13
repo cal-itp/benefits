@@ -108,7 +108,7 @@ class EligibilityVerifier(models.Model):
     # A regular expression used to validate the 'sub' API field before sending to this verifier
     form_sub_pattern = models.TextField(null=True)
     # Input mode can be "numeric", "tel", "search", etc. to override default "text" keyboard on mobile devices
-    form_inputmode = models.TextField(null=True)
+    form_input_mode = models.TextField(null=True)
     # The maximum length accepted for the 'sub' API field before sending to this verifier
     form_max_length = models.PositiveSmallIntegerField(null=True)
     form_name_label = models.TextField(null=True)
