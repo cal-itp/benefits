@@ -3,7 +3,7 @@
 
   {% url form.action_url as form_action %}
 
-  <form action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
+  <form id="{{ form.id }}" action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
     {% csrf_token %}
 
     <div class="row form-container">
@@ -52,24 +52,24 @@
     {% if recaptcha.enabled %}
       <script src="{{ recaptcha.api_url }}"></script>
       <script>
-                function onSubmit(token) {
-                    $("form[action='{{form_action}}']").submit();
-                }
+        function onSubmit(token) {
+          $("#{{ form.id }}").submit();
+        }
       </script>
     {% endif %}
 
     <script>
-            $(function(){
-                $("form[action='{{form_action}}']").on("submit", function(e) {
-                    if ("{{ form.submitting_value }}" !== "") {
-                        $("button[data-action='submit']", this)
-                            .attr("role", "status")
-                            .attr("disabled", "true")
-                            .text("{{ form.submitting_value }}")
-                            .addClass("disabled");
-                    }
-                });
-            });
+      $(function(){
+        $("#{{ form.id }}").on("submit", function(e) {
+          if ("{{ form.submitting_value }}" !== "") {
+            $("button[data-action='submit']", this)
+              .attr("role", "status")
+              .attr("disabled", "true")
+              .text("{{ form.submitting_value }}")
+              .addClass("disabled");
+          }
+        });
+      });
     </script>
   </form>
 
