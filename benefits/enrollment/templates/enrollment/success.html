@@ -20,7 +20,7 @@
 {% block call-to-action %}
   {% if page.buttons|length_is:"1" %}
     <div class="row d-flex justify-content-lg-center flex-lg-row">
-      <div class="col-lg-10 d-flex justify-content-end">
+      <div class="col-9 col-lg-10 d-flex justify-content-end logout-paragraph">
         <p>
           <span>{% translate "enrollment.pages.success.logout[0]" %}</span>
           {% for b in page.buttons %}
