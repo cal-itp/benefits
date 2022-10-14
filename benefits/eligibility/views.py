@@ -141,6 +141,7 @@ def start(request):
 @decorator_from_middleware(AgencySessionRequired)
 @decorator_from_middleware(LoginRequired)
 @decorator_from_middleware(RateLimit)
+@decorator_from_middleware(RecaptchaEnabled)
 @decorator_from_middleware(VerifierSessionRequired)
 def confirm(request):
     """View handler for the eligibility verification form."""
