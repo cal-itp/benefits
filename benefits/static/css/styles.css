@@ -107,6 +107,14 @@ li {
   padding-top: 64px;
 }
 
+.fs-base {
+  font-size: var(--bs-body-font-size);
+}
+
+.ls-base {
+  letter-spacing: var(--body-letter-spacing);
+}
+
 /* Links */
 /* Same sizes for all screen widths: 18px */
 a:not(.btn) {
@@ -562,63 +570,6 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 
 .enrollment-success .logout-paragraph {
   margin-left: var(--logout-paragraph-margin-left);
-}
-
-/* 404 Page */
-
-.container.content h1.icon-title {
-  padding-bottom: 1.5rem;
-}
-
-.container.content h1.icon-title span.icon {
-  display: block;
-  padding-bottom: 3rem;
-}
-
-.container.content h1.icon-title img.icon {
-  width: 150px;
-  height: 150px;
-}
-
-/* Help */
-
-.container.content.help {
-  margin: 4rem auto 2rem auto;
-}
-
-.container.content.help h1 {
-  margin-bottom: 4rem;
-}
-
-.container.content.help h2 {
-  margin-bottom: 3rem;
-  margin-top: 3rem;
-}
-
-.container.content.help p {
-  margin-bottom: 2rem;
-}
-
-.container.content .buttons-agencies {
-  font-size: 18px;
-  letter-spacing: 0.05rem;
-  margin-bottom: 3rem;
-}
-
-.container.content .buttons-agencies a {
-  display: table;
-  margin-bottom: 0.2rem;
-}
-
-.container.content .buttons-agencies label {
-  display: block;
-  margin-top: 2rem;
-  font-size: 18px;
-}
-
-.container.content.help .button-back {
-  margin-top: 5rem;
-  margin-bottom: 5rem;
 }
 
 /* Agency Index */
