@@ -35,16 +35,9 @@
           </div>
         {% endif %}
         <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
-          {% if form.recaptcha_enabled %}
-            <button class="btn btn-lg btn-primary g-recaptcha"
-                    data-sitekey="{{ recaptcha.site_key }}"
-                    data-callback="onSubmit"
-                    data-action="submit">
+          <button class="btn btn-lg btn-primary" form="{{ form.id }}" data-action="submit" type="submit">
               {{ form.submit_value }}
             </button>
-          {% else %}
-            <button class="btn btn-lg btn-primary" data-action="submit">{{ form.submit_value }}</button>
-          {% endif %}
         </div>
       </div>
     {% endif %}
@@ -61,7 +54,7 @@
       $(function(){
         $("#{{ form.id }}").on("submit", function(e) {
           if ("{{ form.submitting_value }}" !== "") {
-            $("button[data-action='submit']", this)
+            $("button[type=submit]", this)
               .attr("role", "status")
               .attr("disabled", "true")
               .text("{{ form.submitting_value }}")
