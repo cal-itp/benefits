@@ -452,7 +452,7 @@ footer .footer-links li a:visited {
 :root {
   --radio-button-size: 24px;
   --radio-input-color: var(--standout-color);
-  --radio-input-gap: 40px;
+  --radio-input-gap: 24px;
 }
 
 @media (min-width: 992px) {
