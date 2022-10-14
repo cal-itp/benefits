@@ -133,7 +133,6 @@ template_ctx_processors = [
     "django.contrib.messages.context_processors.messages",
     "benefits.core.context_processors.analytics",
     "benefits.core.context_processors.authentication",
-    "benefits.core.context_processors.recaptcha",
 ]
 
 if DEBUG:
@@ -250,6 +249,7 @@ RATE_LIMIT_ENABLED = all((RATE_LIMIT > 0, len(RATE_LIMIT_METHODS) > 0, RATE_LIMI
 
 RECAPTCHA_API_URL = os.environ.get("DJANGO_RECAPTCHA_API_URL", "https://www.google.com/recaptcha/api.js")
 RECAPTCHA_SITE_KEY = os.environ.get("DJANGO_RECAPTCHA_SITE_KEY")
+RECAPTCHA_API_KEY_URL = f"{RECAPTCHA_API_URL}?render={RECAPTCHA_SITE_KEY}"
 RECAPTCHA_SECRET_KEY = os.environ.get("DJANGO_RECAPTCHA_SECRET_KEY")
 RECAPTCHA_VERIFY_URL = os.environ.get("DJANGO_RECAPTCHA_VERIFY_URL", "https://www.google.com/recaptcha/api/siteverify")
 RECAPTCHA_ENABLED = all((RECAPTCHA_API_URL, RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET_KEY, RECAPTCHA_VERIFY_URL))
