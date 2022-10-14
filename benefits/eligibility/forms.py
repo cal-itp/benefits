@@ -4,7 +4,6 @@ The eligibility application: Form definition for the eligibility verification fl
 import logging
 
 from django import forms
-from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from benefits.core import models, recaptcha, widgets
@@ -19,8 +18,6 @@ class EligibilityVerifierSelectionForm(forms.Form):
     action_url = "eligibility:index"
     id = "verifier-selection"
     method = "POST"
-    # we want recaptcha enabled on this form if configured globally
-    recaptcha_enabled = settings.RECAPTCHA_ENABLED
 
     verifier = forms.ChoiceField(label="", widget=widgets.VerifierRadioSelect)
     # sets label to empty string so the radio_select template can override the label style
@@ -43,8 +40,6 @@ class EligibilityVerificationForm(forms.Form):
     action_url = "eligibility:confirm"
     id = "eligibility-verification"
     method = "POST"
-    # we want recaptcha enabled on this form if configured globally
-    recaptcha_enabled = settings.RECAPTCHA_ENABLED
 
     submit_value = _("eligibility.forms.confirm.submit")
     submitting_value = _("eligibility.forms.confirm.submitting")

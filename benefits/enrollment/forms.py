@@ -10,9 +10,6 @@ class CardTokenizeSuccessForm(forms.Form):
     action_url = "enrollment:index"
     id = "card-tokenize-success"
     method = "POST"
-    # we don't need recaptcha on this form, it is a single hidden field submitted
-    # by a javascript callback
-    recaptcha_enabled = False
 
     # hidden input with no label
     card_token = forms.CharField(widget=forms.HiddenInput(), label="")
@@ -23,9 +20,6 @@ class CardTokenizeFailForm(forms.Form):
 
     id = "card-tokenize-fail"
     method = "POST"
-    # we don't need recaptcha on this form, it is a single hidden field submitted
-    # by a javascript callback
-    recaptcha_enabled = False
 
     def __init__(self, action_url, *args, **kwargs):
         # init super with an empty data dict

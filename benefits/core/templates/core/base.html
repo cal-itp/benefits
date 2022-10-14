@@ -145,6 +145,6 @@
             });
     </script>
 
-    {% if recaptcha.enabled %}<script src="{{ recaptcha.api_url }}?render={{ recaptcha.site_key }}"></script>{% endif %}
+    {% if request.recaptcha %}<script src="{{ request.recaptcha.script_api }}"></script>{% endif %}
   </body>
 </html>

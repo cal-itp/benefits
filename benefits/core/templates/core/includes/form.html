@@ -56,11 +56,15 @@
       });
     </script>
 
-    {% if form.recaptcha_enabled %}
-      <!-- Adapted from https://stackoverflow.com/a/63290578/453168 -->
+    {% if request.recaptcha %}
+      {% comment %}
+        Adapted from https://stackoverflow.com/a/63290578/453168
+      {% endcomment %}
 
-      <!-- hidden input field will later send g-recaptcha token back to our server -->
-      <input type="hidden" name="g-recaptcha-response" value="">
+      {% comment %}
+        hidden input field will later send g-recaptcha token back to server
+      {% endcomment %}
+      <input type="hidden" name="{{ request.recaptcha.data_field }}" value="">
 
       <script>
         function recaptchaSubmit($event) {
@@ -68,13 +72,13 @@
           if (!$event.target.form.checkValidity()) {
             return;
           }
-          // Form is client-side valid; taking over the remainder of processing
+          // form is client-side valid; taking over the remainder of processing
           $event.preventDefault();
 
           grecaptcha.ready(function() {
-            grecaptcha.execute("{{ recaptcha.site_key }}", { action: "submit" }).then(function(token) {
+            grecaptcha.execute("{{ request.recaptcha.site_key }}", { action: "submit" }).then(function(token) {
                 // Add the token to hidden form element
-                $event.target.form.elements['g-recaptcha-response'].value = token;
+                $event.target.form.elements["{{ request.recaptcha.data_field }}"].value = token;
                 // submit the form to server
                 $event.target.form.submit();
             });
@@ -87,5 +91,4 @@
     {% endif %}
 
   </form>
-
 {% endif %}
