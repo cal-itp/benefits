@@ -33,6 +33,10 @@ class EligibilityVerifierSelectionForm(forms.Form):
             v.id: _(v.selection_label_description) for v in verifiers if v.selection_label_description
         }
 
+    def clean(self):
+        if not recaptcha.verify(self.data):
+            raise forms.ValidationError("reCAPTCHA failed")
+
 
 class EligibilityVerificationForm(forms.Form):
     """Form to collect eligibility verification details."""

@@ -10,7 +10,7 @@ from django.utils.html import format_html
 from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import recaptcha, session, viewmodels
-from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, VerifierSessionRequired
+from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, RecaptchaEnabled, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
 from benefits.core.views import ROUTE_HELP
 from . import analytics, forms, verify
@@ -29,6 +29,7 @@ TEMPLATE_UNVERIFIED = "eligibility/unverified.html"
 
 
 @decorator_from_middleware(AgencySessionRequired)
+@decorator_from_middleware(RecaptchaEnabled)
 def index(request):
     """View handler for the eligibility verifier selection form."""
 
@@ -65,6 +66,8 @@ def index(request):
             response = redirect(eligibility_start)
         else:
             # form was not valid, allow for correction/resubmission
+            if recaptcha.has_error(form):
+                messages.error(request, "Recaptcha failed. Please try again.")
             page.forms = [form]
             response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
     else:
