@@ -20,6 +20,7 @@ ROUTE_INDEX = "eligibility:index"
 ROUTE_START = "eligibility:start"
 ROUTE_LOGIN = "oauth:login"
 ROUTE_CONFIRM = "eligibility:confirm"
+ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_ENROLLMENT = "enrollment:index"
 
 TEMPLATE_INDEX = "eligibility/index.html"
@@ -151,6 +152,8 @@ def confirm(request):
         eligibility = session.eligibility(request)
         return verified(request, [eligibility.name])
 
+    unverified_view = reverse(ROUTE_UNVERIFIED)
+
     agency = session.agency(request)
     verifier = session.verifier(request)
     types_to_verify = verify.typenames_to_verify(agency, verifier)
@@ -163,7 +166,7 @@ def confirm(request):
         if verified_types:
             return verified(request, verified_types)
         else:
-            return unverified(request)
+            return redirect(unverified_view)
 
     # GET/POST for Eligibility API verification
     page = viewmodels.Page(
@@ -204,7 +207,7 @@ def confirm(request):
             return TemplateResponse(request, TEMPLATE_CONFIRM, ctx)
         # no types were verified
         elif len(verified_types) == 0:
-            return unverified(request)
+            return redirect(unverified_view)
         # type(s) were verified
         else:
             return verified(request, verified_types)
