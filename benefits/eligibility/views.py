@@ -89,8 +89,8 @@ def start(request):
     # define the verifier-specific required item
     identity_item = viewmodels.MediaItem(
         icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-        heading=_(verifier.start_item_name),
-        details=_(verifier.start_item_description),
+        heading=_(verifier.start_item_heading),
+        details=_(verifier.start_item_details),
     )
 
     if verifier.is_auth_required:
