@@ -1,7 +1,7 @@
 resource "azurerm_storage_account" "main" {
   name                     = "sacdtcalitpp001"
-  location                 = data.azurerm_resource_group.prod.location
-  resource_group_name      = data.azurerm_resource_group.prod.name
+  location                 = data.azurerm_resource_group.main.location
+  resource_group_name      = data.azurerm_resource_group.main.name
   account_tier             = "Standard"
   account_replication_type = "RAGRS"
 
@@ -24,8 +24,8 @@ resource "azurerm_storage_account" "main" {
   }
 }
 
-resource "azurerm_storage_container" "config_dev" {
-  name                  = "benefits-config-dev"
+resource "azurerm_storage_container" "config" {
+  name                  = "benefits-config-${local.env_name}"
   storage_account_name  = azurerm_storage_account.main.name
   container_access_type = "private"
 
@@ -34,22 +34,9 @@ resource "azurerm_storage_container" "config_dev" {
   }
 }
 
-resource "azurerm_storage_container" "config_test" {
-  name                  = "benefits-config-test"
-  storage_account_name  = azurerm_storage_account.main.name
-  container_access_type = "private"
+# migrations
 
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
-resource "azurerm_storage_container" "config_prod" {
-  name                  = "benefits-config-prod"
-  storage_account_name  = azurerm_storage_account.main.name
-  container_access_type = "private"
-
-  lifecycle {
-    prevent_destroy = true
-  }
+moved {
+  from = azurerm_storage_container.config_prod
+  to   = azurerm_storage_container.config
 }

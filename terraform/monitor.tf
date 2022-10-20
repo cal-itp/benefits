@@ -1,44 +1,19 @@
 resource "azurerm_log_analytics_workspace" "main" {
   name                = "CDT-OET-PUB-CALITP-${local.env_letter}-001"
-  location            = data.azurerm_resource_group.prod.location
-  resource_group_name = data.azurerm_resource_group.prod.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
 
   lifecycle {
     ignore_changes = [tags]
   }
 }
 
-resource "azurerm_application_insights" "dev" {
-  name                = "aI-cdt-pub-vip-calitp-${lower(local.env_letter)}-001-dev"
-  application_type    = "web"
-  location            = data.azurerm_resource_group.prod.location
-  resource_group_name = data.azurerm_resource_group.prod.name
-  sampling_percentage = 0
-  workspace_id        = azurerm_log_analytics_workspace.main.id
 
-  lifecycle {
-    ignore_changes = [tags]
-  }
-}
-
-resource "azurerm_application_insights" "test" {
-  name                = "AI-CDT-PUB-VIP-CALITP-${local.env_letter}-001-test"
-  application_type    = "web"
-  location            = data.azurerm_resource_group.prod.location
-  resource_group_name = data.azurerm_resource_group.prod.name
-  sampling_percentage = 0
-  workspace_id        = azurerm_log_analytics_workspace.main.id
-
-  lifecycle {
-    ignore_changes = [tags]
-  }
-}
-
-resource "azurerm_application_insights" "prod" {
+resource "azurerm_application_insights" "main" {
   name                = "AI-CDT-PUB-VIP-CALITP-${local.env_letter}-001"
   application_type    = "web"
-  location            = data.azurerm_resource_group.prod.location
-  resource_group_name = data.azurerm_resource_group.prod.name
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
   sampling_percentage = 0
   workspace_id        = azurerm_log_analytics_workspace.main.id
 
@@ -56,7 +31,7 @@ data "azurerm_key_vault_secret" "slack_benefits_notify_email" {
 
 resource "azurerm_monitor_action_group" "eng_email" {
   name                = "benefits-notify Slack channel email"
-  resource_group_name = data.azurerm_resource_group.prod.name
+  resource_group_name = data.azurerm_resource_group.main.name
   short_name          = "slack-notify"
 
   email_receiver {
@@ -74,4 +49,9 @@ resource "azurerm_monitor_action_group" "eng_email" {
 moved {
   from = azurerm_monitor_action_group.dev_email
   to   = azurerm_monitor_action_group.eng_email
+}
+
+moved {
+  from = azurerm_application_insights.prod
+  to   = azurerm_application_insights.main
 }

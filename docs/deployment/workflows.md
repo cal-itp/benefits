@@ -29,7 +29,7 @@ Push this image:tag into [GHCR][ghcr].
 
 ### 4. App Service deploy
 
-Each Azure App Service slot is configured to [listen to a webhook from GitHub, then deploy the image][webhook].
+Each Azure App Service instance is configured to [listen to a webhook from GitHub, then deploy the image][webhook].
 
 [deploy]: https://github.com/cal-itp/benefits/blob/dev/.github/workflows/deploy.yml
 [dockerfile]: https://github.com/cal-itp/benefits/blob/dev/Dockerfile
