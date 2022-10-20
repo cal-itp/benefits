@@ -59,8 +59,6 @@ flowchart LR
 
 [Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview) and handles TLS termination. Front Door is managed by the DevSecOps team.
 
-On this page, "slot" will refer to the true [App Service slots](https://docs.microsoft.com/en-us/azure/app-service/deploy-staging-slots) for the different environments, or the overarching App Service resource for `production`. The latter is basically an implicit slot.
-
 ## Ownership
 
 The following things in Azure are managed by the California Department of Technology (CDT)'s DevSecOps (OET) team:
@@ -74,19 +72,22 @@ The following things in Azure are managed by the California Department of Techno
 
 ## Environments
 
-Within the `CDT Digital CA` directory ([how to switch](https://learn.microsoft.com/en-us/azure/devtest/offer/how-to-change-directory-tenants-visual-studio-azure)), there are two subscriptions, with a single [resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal) under each:
+Within the `CDT Digital CA` directory ([how to switch](https://learn.microsoft.com/en-us/azure/devtest/offer/how-to-change-directory-tenants-visual-studio-azure)), there are two [Subscriptions](https://learn.microsoft.com/en-us/microsoft-365/enterprise/subscriptions-licenses-accounts-and-tenants-for-microsoft-cloud-offerings?view=o365-worldwide#subscriptions), with Resource Groups under each. Each environment corresponds to a single Resource Group, [Terraform Workspace](https://developer.hashicorp.com/terraform/language/state/workspaces), and branch.
 
-- `CDT/ODI Development` - Meant for experimentation with short-lived resources
-- `CDT/ODI Production` - Used for the `dev`, `test`, and `prod` environments, which are [slots in App Service](#benefits-application)
+| Environment | Subscription          | Resource Group                | Workspace | Branch |
+| ----------- | --------------------- | ----------------------------- | --------- | ------ |
+| Dev         | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-D-001` | `dev`     | `dev`  |
+| Test        | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-T-001` | `test`    | `test` |
+| Prod        | `CDT/ODI Production`  | `RG-CDT-PUB-VIP-CALITP-P-001` | `default` | `prod` |
 
-All resources in the `CDT/ODI Production` Resource Group should be reflected in Terraform in this repository. The exceptions are:
+All resources in these Resource Groups should be reflected in Terraform in this repository. The exceptions are:
 
 - Secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) and [App Service application settings](https://docs.microsoft.com/en-us/azure/app-service/configure-common#configure-app-settings). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
 - [Things managed by DevSecOps](#ownership)
 
 You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources).
 
-For browsing the [Azure portal](https://portal.azure.com), [switching your `Default subscription filter`](https://docs.microsoft.com/en-us/azure/azure-portal/set-preferences) to only `CDT/ODI Production` is recommended.
+For browsing the [Azure portal](https://portal.azure.com), you can [switch your `Default subscription filter`](https://docs.microsoft.com/en-us/azure/azure-portal/set-preferences).
 
 ## Making changes
 
@@ -105,19 +106,17 @@ Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is
    - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
    - [Terraform](https://www.terraform.io/downloads) - see exact version in [`azure-pipelines.yml`](https://github.com/cal-itp/benefits/blob/dev/terraform/azure-pipelines.yml)
 
-1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli), specifying the `CDT/ODI Production` Subscription.
+1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli).
 
    ```sh
    az login
-
-   az account set --subscription="CDT/ODI Production"
    ```
 
 1. Outside the [dev container](../../getting-started/), navigate to the [`terraform/`](https://github.com/cal-itp/benefits/tree/dev/terraform) directory.
-1. [Initialize Terraform.](https://www.terraform.io/cli/commands/init)
+1. [Initialize Terraform.](https://www.terraform.io/cli/commands/init) You can also use this script later to switch between [environments](#environments).
 
    ```sh
-   terraform init
+   ./init.sh <env>
    ```
 
 1. Make changes to Terraform files.
