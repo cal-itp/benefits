@@ -1,5 +1,5 @@
 resource "azurerm_service_plan" "main" {
-  name                = "ASP-CDT-PUB-VIP-CALITP-P-001"
+  name                = "ASP-CDT-PUB-VIP-CALITP-${local.env_letter}-001"
   location            = data.azurerm_resource_group.prod.location
   resource_group_name = data.azurerm_resource_group.prod.name
   os_type             = "Linux"
@@ -13,7 +13,7 @@ resource "azurerm_service_plan" "main" {
 # app_settings are managed manually through the portal since they contain secrets
 
 resource "azurerm_linux_web_app" "main" {
-  name                      = "AS-CDT-PUB-VIP-CALITP-P-001"
+  name                      = "AS-CDT-PUB-VIP-CALITP-${local.env_letter}-001"
   location                  = data.azurerm_resource_group.prod.location
   resource_group_name       = data.azurerm_resource_group.prod.name
   service_plan_id           = azurerm_service_plan.main.id

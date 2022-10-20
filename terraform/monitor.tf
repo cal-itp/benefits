@@ -1,5 +1,5 @@
 resource "azurerm_log_analytics_workspace" "main" {
-  name                = "CDT-OET-PUB-CALITP-P-001"
+  name                = "CDT-OET-PUB-CALITP-${local.env_letter}-001"
   location            = data.azurerm_resource_group.prod.location
   resource_group_name = data.azurerm_resource_group.prod.name
 
@@ -9,7 +9,7 @@ resource "azurerm_log_analytics_workspace" "main" {
 }
 
 resource "azurerm_application_insights" "dev" {
-  name                = "aI-cdt-pub-vip-calitp-p-001-dev"
+  name                = "aI-cdt-pub-vip-calitp-${lower(local.env_letter)}-001-dev"
   application_type    = "web"
   location            = data.azurerm_resource_group.prod.location
   resource_group_name = data.azurerm_resource_group.prod.name
@@ -22,7 +22,7 @@ resource "azurerm_application_insights" "dev" {
 }
 
 resource "azurerm_application_insights" "test" {
-  name                = "AI-CDT-PUB-VIP-CALITP-P-001-test"
+  name                = "AI-CDT-PUB-VIP-CALITP-${local.env_letter}-001-test"
   application_type    = "web"
   location            = data.azurerm_resource_group.prod.location
   resource_group_name = data.azurerm_resource_group.prod.name
@@ -35,7 +35,7 @@ resource "azurerm_application_insights" "test" {
 }
 
 resource "azurerm_application_insights" "prod" {
-  name                = "AI-CDT-PUB-VIP-CALITP-P-001"
+  name                = "AI-CDT-PUB-VIP-CALITP-${local.env_letter}-001"
   application_type    = "web"
   location            = data.azurerm_resource_group.prod.location
   resource_group_name = data.azurerm_resource_group.prod.name
