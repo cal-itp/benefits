@@ -14,6 +14,15 @@ stages:
       vmImage: ubuntu-latest
     jobs:
       - job: plan
+        # https://learn.microsoft.com/en-us/azure/devops/pipelines/process/expressions?view=azure-devops#conditional-insertion
+        variables:
+          # on pull requests, base on target branch; otherwise base on the source branch
+          ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), in(variables['System.PullRequest.TargetBranch'], 'test', 'prod')) }}:
+            workspace: "${{variables['System.PullRequest.TargetBranch']}}"
+          ${{ elseif in(variables['Build.SourceBranchName'], 'test', 'prod') }}:
+            workspace: "${{variables['Build.SourceBranchName']}}"
+          ${{ else }}:
+            workspace: dev
         steps:
           # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformInstaller#readme
           - task: TerraformInstaller@0
@@ -34,6 +43,16 @@ stages:
               backendAzureRmStorageAccountName: sacdtcalitpp001
               backendAzureRmContainerName: tfstate
               backendAzureRmKey: terraform.tfstate
+          - task: TerraformTaskV3@3
+            displayName: Select environment
+            inputs:
+              provider: azurerm
+              command: custom
+              customCommand: workspace
+              commandOptions: select ${{variables.workspace}}
+              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
+              # service connection
+              environmentServiceNameAzureRM: Production
           - task: TerraformTaskV3@3
             displayName: Terraform plan
             inputs:
@@ -56,4 +75,4 @@ stages:
               # service connection
               environmentServiceNameAzureRM: Production
             # only run on dev
-            condition: eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+            condition: eq(variables['Build.SourceBranchName'], 'dev')
