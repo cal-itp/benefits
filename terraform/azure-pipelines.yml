@@ -29,11 +29,6 @@ stages:
               workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
               # service connection
               backendServiceArm: Production
-              # needs to match main.tf
-              backendAzureRmResourceGroupName: RG-CDT-PUB-VIP-CALITP-P-001
-              backendAzureRmStorageAccountName: sacdtcalitpp001
-              backendAzureRmContainerName: tfstate
-              backendAzureRmKey: terraform.tfstate
           - task: TerraformTaskV3@3
             displayName: Terraform plan
             inputs:
@@ -56,4 +51,4 @@ stages:
               # service connection
               environmentServiceNameAzureRM: Production
             # only run on dev
-            condition: eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+            condition: eq(variables['Build.SourceBranchName'], 'dev')
