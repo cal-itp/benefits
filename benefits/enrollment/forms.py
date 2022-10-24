@@ -8,7 +8,7 @@ class CardTokenizeSuccessForm(forms.Form):
     """Form to bring client card token back to server."""
 
     action_url = "enrollment:index"
-    id = "card-tokenize-success"
+    id = "form-card-tokenize-success"
     method = "POST"
 
     # hidden input with no label
@@ -18,7 +18,7 @@ class CardTokenizeSuccessForm(forms.Form):
 class CardTokenizeFailForm(forms.Form):
     """Form to indicate card tokenization failure to server."""
 
-    id = "card-tokenize-fail"
+    id = "form-card-tokenize-fail"
     method = "POST"
 
     def __init__(self, action_url, *args, **kwargs):

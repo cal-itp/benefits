@@ -16,7 +16,7 @@ class EligibilityVerifierSelectionForm(forms.Form):
     """Form to capture eligibility verifier selection."""
 
     action_url = "eligibility:index"
-    id = "verifier-selection"
+    id = "form-verifier-selection"
     method = "POST"
 
     verifier = forms.ChoiceField(label="", widget=widgets.VerifierRadioSelect)
@@ -42,7 +42,7 @@ class EligibilityVerificationForm(forms.Form):
     """Form to collect eligibility verification details."""
 
     action_url = "eligibility:confirm"
-    id = "eligibility-verification"
+    id = "form-eligibility-verification"
     method = "POST"
 
     submit_value = _("eligibility.forms.confirm.submit")
