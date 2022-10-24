@@ -80,11 +80,6 @@ class EligibilityType(models.Model):
             eligibility_types = [eligibility_types]
         return [t.name for t in eligibility_types if isinstance(t, EligibilityType)]
 
-    @staticmethod
-    def get_names_to_verify(agency, verifier):
-        """Get the names of the eligibility types to check for the agency/verifier pair."""
-        return EligibilityType.get_names(agency.types_to_verify(verifier))
-
 
 class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""
@@ -233,6 +228,10 @@ class TransitAgency(models.Model):
         verifier_types = {eligibility_verifier.eligibility_type.id}
         supported_types = list(agency_types & verifier_types)
         return EligibilityType.get_many(supported_types)
+
+    def type_names_to_verify(self, verifier):
+        """List of names of the eligibility types to check for this agency."""
+        return EligibilityType.get_names(self.types_to_verify(verifier))
 
     @property
     def index_url(self):

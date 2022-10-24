@@ -88,15 +88,6 @@ def test_EligibilityType_get_names(model_EligibilityType):
 
 
 @pytest.mark.django_db
-def test_EligibilityType_get_names_to_verify(model_TransitAgency, model_EligibilityVerifier):
-    expected = [t.name for t in model_TransitAgency.types_to_verify(model_EligibilityVerifier)]
-
-    result = EligibilityType.get_names_to_verify(model_TransitAgency, model_EligibilityVerifier)
-
-    assert result == expected
-
-
-@pytest.mark.django_db
 def test_EligibilityVerifier_str(model_EligibilityVerifier):
     assert str(model_EligibilityVerifier) == model_EligibilityVerifier.name
 
@@ -220,6 +211,15 @@ def test_TransitAgency_types_to_verify(model_TransitAgency):
     result = model_TransitAgency.types_to_verify(verifier)
     assert len(result) == 1
     assert eligibility in result
+
+
+@pytest.mark.django_db
+def test_TransitAgency_type_names_to_verify(model_TransitAgency, model_EligibilityVerifier):
+    expected = [t.name for t in model_TransitAgency.types_to_verify(model_EligibilityVerifier)]
+
+    result = model_TransitAgency.type_names_to_verify(model_EligibilityVerifier)
+
+    assert result == expected
 
 
 @pytest.mark.django_db

@@ -11,7 +11,7 @@ from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import recaptcha, session, viewmodels
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, RecaptchaEnabled, VerifierSessionRequired
-from benefits.core.models import EligibilityType, EligibilityVerifier
+from benefits.core.models import EligibilityVerifier
 from benefits.core.views import ROUTE_HELP
 from . import analytics, forms, verify
 
@@ -64,7 +64,7 @@ def index(request):
             verifier = EligibilityVerifier.objects.get(id=verifier_id)
             session.update(request, verifier=verifier)
 
-            types_to_verify = EligibilityType.get_names_to_verify(agency, verifier)
+            types_to_verify = agency.type_names_to_verify(verifier)
             analytics.selected_verifier(request, verifier.name, types_to_verify)
 
             response = redirect(eligibility_start)
@@ -159,7 +159,7 @@ def confirm(request):
 
     agency = session.agency(request)
     verifier = session.verifier(request)
-    types_to_verify = EligibilityType.get_names_to_verify(agency, verifier)
+    types_to_verify = agency.type_names_to_verify(verifier)
 
     # GET for OAuth verification
     if request.method == "GET" and verifier.uses_auth_verification:
@@ -235,7 +235,7 @@ def unverified(request):
 
     agency = session.agency(request)
     verifier = session.verifier(request)
-    types_to_verify = EligibilityType.get_names_to_verify(agency, verifier)
+    types_to_verify = agency.type_names_to_verify(verifier)
 
     analytics.returned_fail(request, types_to_verify)
 
