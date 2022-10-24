@@ -64,7 +64,7 @@ flowchart LR
 The following things in Azure are managed by the California Department of Technology (CDT)'s DevSecOps (OET) team:
 
 - Subcriptions
-- Resource Groups
+- [Resource Groups](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal)
 - Networking
 - Front Door
 - IAM
@@ -72,13 +72,11 @@ The following things in Azure are managed by the California Department of Techno
 
 ## Environments
 
-There is a one-to-one mapping between Azure Subscriptions, [Resource Groups](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal), [Terraform workspaces](https://developer.hashicorp.com/terraform/language/state/workspaces), and branches. We refer to each as "an environment".
-
-| Subscription          | Resource Group                | Workspace | Branch |
-| --------------------- | ----------------------------- | --------- | ------ |
-| `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-D-001` | `dev`     | `dev`  |
-| `CDT/ODI Test`        | `RG-CDT-PUB-VIP-CALITP-T-001` | `test`    | `test` |
-| `CDT/ODI Production`  | `RG-CDT-PUB-VIP-CALITP-P-001` | `default` | `prod` |
+| Environment | Subscription          | Resource Group                | Workspace | Branch |
+| ----------- | --------------------- | ----------------------------- | --------- | ------ |
+| Dev         | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-D-001` | `dev`     | `dev`  |
+| Test        | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-T-001` | `test`    | `test` |
+| Prod        | `CDT/ODI Production`  | `RG-CDT-PUB-VIP-CALITP-P-001` | `default` | `prod` |
 
 All resources in these Resource Groups should be reflected in Terraform in this repository. The exceptions are:
 
