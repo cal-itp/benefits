@@ -13,7 +13,7 @@ from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
 
-from . import analytics, session, viewmodels
+from . import analytics, recaptcha, session, viewmodels
 
 
 logger = logging.getLogger(__name__)
@@ -173,4 +173,17 @@ class LogErrorToAzure(MiddlewareMixin):
         msg = getattr(exception, "message", repr(exception))
         self.azure_logger.exception(msg, exc_info=exception)
 
+        return None
+
+
+class RecaptchaEnabled(MiddlewareMixin):
+    """Middleware configures the request with required reCAPTCHA settings."""
+
+    def process_request(self, request):
+        if settings.RECAPTCHA_ENABLED:
+            request.recaptcha = {
+                "data_field": recaptcha.DATA_FIELD,
+                "script_api": settings.RECAPTCHA_API_KEY_URL,
+                "site_key": settings.RECAPTCHA_SITE_KEY,
+            }
         return None

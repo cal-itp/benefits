@@ -10,7 +10,7 @@ from django.utils.html import format_html
 from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import recaptcha, session, viewmodels
-from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, VerifierSessionRequired
+from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, RecaptchaEnabled, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
 from benefits.core.views import ROUTE_HELP
 from . import analytics, forms, verify
@@ -20,6 +20,7 @@ ROUTE_INDEX = "eligibility:index"
 ROUTE_START = "eligibility:start"
 ROUTE_LOGIN = "oauth:login"
 ROUTE_CONFIRM = "eligibility:confirm"
+ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_ENROLLMENT = "enrollment:index"
 
 TEMPLATE_INDEX = "eligibility/index.html"
@@ -29,6 +30,7 @@ TEMPLATE_UNVERIFIED = "eligibility/unverified.html"
 
 
 @decorator_from_middleware(AgencySessionRequired)
+@decorator_from_middleware(RecaptchaEnabled)
 def index(request):
     """View handler for the eligibility verifier selection form."""
 
@@ -65,6 +67,8 @@ def index(request):
             response = redirect(eligibility_start)
         else:
             # form was not valid, allow for correction/resubmission
+            if recaptcha.has_error(form):
+                messages.error(request, "Recaptcha failed. Please try again.")
             page.forms = [form]
             response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
     else:
@@ -138,6 +142,7 @@ def start(request):
 @decorator_from_middleware(AgencySessionRequired)
 @decorator_from_middleware(LoginRequired)
 @decorator_from_middleware(RateLimit)
+@decorator_from_middleware(RecaptchaEnabled)
 @decorator_from_middleware(VerifierSessionRequired)
 def confirm(request):
     """View handler for the eligibility verification form."""
@@ -146,6 +151,8 @@ def confirm(request):
     if request.method == "GET" and session.eligible(request):
         eligibility = session.eligibility(request)
         return verified(request, [eligibility.name])
+
+    unverified_view = reverse(ROUTE_UNVERIFIED)
 
     agency = session.agency(request)
     verifier = session.verifier(request)
@@ -159,7 +166,7 @@ def confirm(request):
         if verified_types:
             return verified(request, verified_types)
         else:
-            return unverified(request)
+            return redirect(unverified_view)
 
     # GET/POST for Eligibility API verification
     page = viewmodels.Page(
@@ -200,7 +207,7 @@ def confirm(request):
             return TemplateResponse(request, TEMPLATE_CONFIRM, ctx)
         # no types were verified
         elif len(verified_types) == 0:
-            return unverified(request)
+            return redirect(unverified_view)
         # type(s) were verified
         else:
             return verified(request, verified_types)

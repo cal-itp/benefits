@@ -36,14 +36,3 @@ def authentication(request):
 def debug(request):
     """Context processor adds debug information to request context."""
     return {"debug": session.context_dict(request)}
-
-
-def recaptcha(request):
-    """Context processor adds recaptcha information to request context."""
-    return {
-        "recaptcha": {
-            "api_url": settings.RECAPTCHA_API_URL,
-            "enabled": settings.RECAPTCHA_ENABLED,
-            "site_key": settings.RECAPTCHA_SITE_KEY,
-        }
-    }

@@ -129,20 +129,22 @@
     <script src="https://california.azureedge.net/cdt/statetemplate/6.0.7/js/cagov.core.min.js"></script>
 
     <script>
-            $(function() {
-                document.cookie = "testcookie"
-                if (document.cookie.indexOf("testcookie") < 0) {
-                    $(".nocookies").removeClass("d-none");
-                }
-                else {
-                    document.cookie = "testcookie; expires=Thu, 01-Jan-1970 00:00:01 GMT";
-                    $(".nocookies").addClass("d-none");
-                }
+      $(function() {
+        document.cookie = "testcookie"
+        if (document.cookie.indexOf("testcookie") < 0) {
+          $(".nocookies").removeClass("d-none");
+        }
+        else {
+          document.cookie = "testcookie; expires=Thu, 01-Jan-1970 00:00:01 GMT";
+          $(".nocookies").addClass("d-none");
+        }
 
-                $("a[href^='https'], a[href^='tel'], [href*='#']").on("click", function(e) {
-                    amplitude.getInstance().logEvent('clicked link', {'href': e.target.href, 'path': window.location.pathname});
-                });
-            });
+        $("a[href^='https'], a[href^='tel'], [href*='#']").on("click", function(e) {
+          amplitude.getInstance().logEvent('clicked link', {'href': e.target.href, 'path': window.location.pathname});
+        });
+      });
     </script>
+
+    {% if request.recaptcha %}<script src="{{ request.recaptcha.script_api }}"></script>{% endif %}
   </body>
 </html>

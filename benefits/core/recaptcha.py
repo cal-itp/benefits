@@ -6,7 +6,7 @@ import requests
 from django.conf import settings
 
 
-_POST_DATA = "g-recaptcha-response"
+DATA_FIELD = "g-recaptcha-response"
 
 
 def has_error(form) -> bool:
@@ -22,10 +22,10 @@ def verify(form_data: dict) -> bool:
     if not settings.RECAPTCHA_ENABLED:
         return True
 
-    if not form_data or _POST_DATA not in form_data:
+    if not form_data or DATA_FIELD not in form_data:
         return False
 
-    payload = dict(secret=settings.RECAPTCHA_SECRET_KEY, response=form_data[_POST_DATA])
+    payload = dict(secret=settings.RECAPTCHA_SECRET_KEY, response=form_data[DATA_FIELD])
     response = requests.post(settings.RECAPTCHA_VERIFY_URL, payload).json()
 
     return bool(response["success"])

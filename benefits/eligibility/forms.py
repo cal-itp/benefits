@@ -16,6 +16,7 @@ class EligibilityVerifierSelectionForm(forms.Form):
     """Form to capture eligibility verifier selection."""
 
     action_url = "eligibility:index"
+    id = "form-verifier-selection"
     method = "POST"
 
     verifier = forms.ChoiceField(label="", widget=widgets.VerifierRadioSelect)
@@ -32,11 +33,16 @@ class EligibilityVerifierSelectionForm(forms.Form):
             v.id: _(v.selection_label_description) for v in verifiers if v.selection_label_description
         }
 
+    def clean(self):
+        if not recaptcha.verify(self.data):
+            raise forms.ValidationError("reCAPTCHA failed")
+
 
 class EligibilityVerificationForm(forms.Form):
     """Form to collect eligibility verification details."""
 
     action_url = "eligibility:confirm"
+    id = "form-eligibility-verification"
     method = "POST"
 
     submit_value = _("eligibility.forms.confirm.submit")

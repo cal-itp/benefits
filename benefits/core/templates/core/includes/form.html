@@ -3,7 +3,7 @@
 
   {% url form.action_url as form_action %}
 
-  <form action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
+  <form id="{{ form.id }}" action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
     {% csrf_token %}
 
     <div class="row form-container">
@@ -35,42 +35,60 @@
           </div>
         {% endif %}
         <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
-          {% if recaptcha.enabled %}
-            <button class="btn btn-lg btn-primary g-recaptcha"
-                    data-sitekey="{{ recaptcha.site_key }}"
-                    data-callback="onSubmit"
-                    data-action="submit">
-              {{ form.submit_value }}
-            </button>
-          {% else %}
-            <button class="btn btn-lg btn-primary" data-action="submit">{{ form.submit_value }}</button>
-          {% endif %}
+          <button class="btn btn-lg btn-primary" form="{{ form.id }}" data-action="submit" type="submit">
+            {{ form.submit_value }}
+          </button>
         </div>
       </div>
     {% endif %}
 
-    {% if recaptcha.enabled %}
-      <script src="{{ recaptcha.api_url }}"></script>
+    <script>
+      $(function(){
+        $("#{{ form.id }}").on("submit", function(e) {
+          if ("{{ form.submitting_value }}" !== "") {
+            $("button[type=submit]", this)
+              .attr("role", "status")
+              .attr("disabled", "true")
+              .text("{{ form.submitting_value }}")
+              .addClass("disabled");
+          }
+        });
+      });
+    </script>
+
+    {% if request.recaptcha %}
+      {% comment %}
+        Adapted from https://stackoverflow.com/a/63290578/453168
+      {% endcomment %}
+
+      {% comment %}
+        hidden input field will later send g-recaptcha token back to server
+      {% endcomment %}
+      <input type="hidden" name="{{ request.recaptcha.data_field }}" value="">
+
       <script>
-                function onSubmit(token) {
-                    $("form[action='{{form_action}}']").submit();
-                }
+        function recaptchaSubmit($event) {
+          // Checks the validity of the form. Return if invalid; HTML5 validation errors should display
+          if (!$event.target.form.checkValidity()) {
+            return;
+          }
+          // form is client-side valid; taking over the remainder of processing
+          $event.preventDefault();
+
+          grecaptcha.ready(function() {
+            grecaptcha.execute("{{ request.recaptcha.site_key }}", { action: "submit" }).then(function(token) {
+                // Add the token to hidden form element
+                $event.target.form.elements["{{ request.recaptcha.data_field }}"].value = token;
+                // submit the form to server
+                $event.target.form.submit();
+            });
+          });
+        };
+
+        // bind the above handler to button click
+        $("button[type=submit]", "#{{ form.id }}").on("click", recaptchaSubmit);
       </script>
     {% endif %}
 
-    <script>
-            $(function(){
-                $("form[action='{{form_action}}']").on("submit", function(e) {
-                    if ("{{ form.submitting_value }}" !== "") {
-                        $("button[data-action='submit']", this)
-                            .attr("role", "status")
-                            .attr("disabled", "true")
-                            .text("{{ form.submitting_value }}")
-                            .addClass("disabled");
-                    }
-                });
-            });
-    </script>
   </form>
-
 {% endif %}
