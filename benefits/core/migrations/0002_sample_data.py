@@ -140,6 +140,8 @@ PEM DATA
         form_sub_help_text=_("eligibility.forms.confirm.mst_cc.fields.sub.help_text"),
         form_sub_placeholder="12345",
         form_sub_pattern=r"\d{5}",
+        form_input_mode="numeric",
+        form_max_length=5,
         form_name_label=_("eligibility.forms.confirm.mst_cc.fields.name"),
         form_name_help_text=_("eligibility.forms.confirm.mst_cc.fields.name.help_text"),
         form_name_placeholder="Garcia",
