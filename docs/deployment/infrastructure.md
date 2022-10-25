@@ -154,10 +154,11 @@ Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is
    ```
 
 1. Outside the [dev container](../../getting-started/), navigate to the [`terraform/`](https://github.com/cal-itp/benefits/tree/dev/terraform) directory.
-1. [Initialize Terraform.](https://www.terraform.io/cli/commands/init)
+1. [Initialize Terraform.](https://www.terraform.io/cli/commands/init) [The Backend Subscription](https://developer.hashicorp.com/terraform/language/settings/backends/azurerm#subscription_id) needs to be specified so that you can work across Subscriptions.
 
    ```sh
-   terraform init
+   PROD_ID=$(az account list --query "[?name == 'CDT/ODI Production'] | [0].id" --output tsv)
+   terraform init -backend-config="subscription_id=$PROD_ID"
    ```
 
 1. Make changes to Terraform files.
