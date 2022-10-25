@@ -31,6 +31,7 @@
   --font-size-24px: calc(24rem / 16);
   --font-size-16px: calc(16rem / 16);
   --font-size-14px: calc(14rem / 16);
+  --font-size-12px: calc(12rem / 16);
 }
 
 @media (min-width: 992px) {
@@ -378,7 +379,7 @@ footer .footer-links li a:visited {
 @media (min-width: 992px) {
   .signout-link,
   .signout-link:visited {
-    font-size: 12px;
+    font-size: var(--font-size-12px);
     text-decoration: underline !important;
     letter-spacing: var(--body-letter-spacing);
     border: none;
