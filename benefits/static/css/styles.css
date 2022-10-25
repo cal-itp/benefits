@@ -32,6 +32,7 @@
   --font-size-16px: calc(16rem / 16);
   --font-size-14px: calc(14rem / 16);
   --font-size-12px: calc(12rem / 16);
+  --border-width: calc(2rem / 16);
 }
 
 @media (min-width: 992px) {
@@ -468,14 +469,14 @@ footer .footer-links li a:visited {
 /* Forms: Radio Buttons */
 
 :root {
-  --radio-button-size: 24px;
+  --radio-button-size: calc(24rem / 16);
   --radio-input-color: var(--standout-color);
-  --radio-input-gap: 40px;
+  --radio-input-gap: calc(40rem / 16);
 }
 
 @media (min-width: 992px) {
   :root {
-    --radio-input-gap: 15px;
+    --radio-input-gap: calc(15rem / 16);
   }
 }
 
@@ -488,7 +489,7 @@ footer .footer-links li a:visited {
 }
 
 .radio-input-group:not(:first-child) {
-  padding-top: 24px;
+  padding-top: calc(24rem / 16);
 }
 
 .radio-input {
@@ -498,13 +499,13 @@ footer .footer-links li a:visited {
   appearance: none;
   width: var(--radio-button-size);
   height: var(--radio-button-size);
-  border: 2px solid var(--radio-input-color);
-  margin: 3px 0;
+  border: var(--border-width) solid var(--radio-input-color);
+  margin: calc(3rem / 16) 0;
 }
 
 .radio-input:checked {
   background-color: var(--radio-input-color);
-  box-shadow: inset 0 0 0 2px var(--bs-white);
+  box-shadow: inset 0 0 0 var(--border-width) var(--bs-white);
 }
 
 /* Media List */
