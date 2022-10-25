@@ -33,6 +33,7 @@
   --font-size-14px: calc(14rem / 16);
   --font-size-12px: calc(12rem / 16);
   --border-width: calc(2rem / 16);
+  --border-radius: calc(3rem / 16);
 }
 
 @media (min-width: 992px) {
@@ -387,8 +388,8 @@ footer .footer-links li a:visited {
   font-size: var(--bs-body-font-size);
   color: var(--primary-color) !important;
   padding: 2px 4px;
-  border-radius: 3px;
-  border: 2px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  border: var(--border-width) solid var(--primary-color);
   letter-spacing: 0.02em;
   font-weight: 500 !important;
   text-decoration: none !important;
@@ -453,8 +454,8 @@ footer .footer-links li a:visited {
 }
 
 .form-container .form-control {
-  border-width: 2px;
-  border-radius: 3px;
+  border-width: var(--border-width);
+  border-radius: var(--border-radius);
   border-color: var(--primary-color);
   color: var(--text-primary-color);
   font-size: var(--font-size-24px);
@@ -511,35 +512,35 @@ footer .footer-links li a:visited {
 /* Media List */
 
 :root {
-  --media-item-icon-size: 64px;
-  --media-item-gap: 24px;
-  --media-item-icon-margin: 24px;
-  --media-title-margin-top: 24px;
+  --media-item-icon-size: calc(64rem / 16);
+  --media-item-gap: calc(24rem / 16);
+  --media-item-icon-margin: calc(24rem / 16);
+  --media-title-margin-top: calc(24rem / 16);
 }
 
 @media (min-width: 992px) {
   :root {
-    --media-item-icon-size: 90px;
-    --media-item-gap: 62px;
-    --media-item-icon-margin: 32px;
-    --media-title-margin-top: 64px;
+    --media-item-icon-size: calc(90rem / 16);
+    --media-item-gap: calc(62rem / 16);
+    --media-item-icon-margin: calc(32rem / 16);
+    --media-title-margin-top: calc(64rem / 16);
   }
 }
 
 h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Success, but not Eligibility Start */
 .media-body--details p:not(:first-of-type) {
   /* All the p within .media-body--details, except for the first p - Any media item with more than one p */
-  padding-top: 24px;
+  padding-top: calc(24rem / 16);
 }
 
 .media-title {
   margin-top: var(--media-title-margin-top);
-  margin-bottom: 24px;
+  margin-bottom: calc(24rem / 16);
 }
 
 .media-list {
   gap: var(--media-item-gap);
-  margin-bottom: 64px;
+  margin-bottom: calc(64rem / 16);
 }
 
 .media-list .media .media-line .icon {
@@ -550,7 +551,7 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 
 .media-list .media .media-body--details,
 .media-list .media .media-body--items li:first-child {
-  padding-top: 5px;
+  padding-top: calc(5rem / 16);
 }
 
 .media-list .media .media-body--items li {
