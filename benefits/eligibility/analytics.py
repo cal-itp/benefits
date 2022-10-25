@@ -16,9 +16,8 @@ class EligibilityEvent(core.Event):
 class SelectedVerifierEvent(EligibilityEvent):
     """Analytics event representing the user selecting an eligibility verifier."""
 
-    def __init__(self, request, verifier, eligibility_types):
+    def __init__(self, request, eligibility_types):
         super().__init__(request, "selected eligibility verifier", eligibility_types)
-        self.update_event_properties(eligibility_verifier=verifier)
 
 
 class StartedEligibilityEvent(EligibilityEvent):
@@ -40,9 +39,9 @@ class ReturnedEligibilityEvent(EligibilityEvent):
             self.update_user_properties(eligibility_types=eligibility_types)
 
 
-def selected_verifier(request, verifier, eligibility_types):
+def selected_verifier(request, eligibility_types):
     """Send the "selected eligibility verifier" analytics event."""
-    core.send_event(SelectedVerifierEvent(request, verifier, eligibility_types))
+    core.send_event(SelectedVerifierEvent(request, eligibility_types))
 
 
 def started_eligibility(request, eligibility_types):

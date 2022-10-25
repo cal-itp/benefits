@@ -65,7 +65,7 @@ def index(request):
             session.update(request, verifier=verifier)
 
             types_to_verify = agency.type_names_to_verify(verifier)
-            analytics.selected_verifier(request, verifier.name, types_to_verify)
+            analytics.selected_verifier(request, types_to_verify)
 
             response = redirect(eligibility_start)
         else:
