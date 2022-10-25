@@ -43,7 +43,7 @@
 
 @font-face {
   font-family: "Public Sans";
-  font-weight: 700;
+  font-weight: var(--bold-font-weight);
   font-style: normal;
   src: local("PublicSans"), url("../fonts/PublicSans-Bold.woff") format("woff");
 }
