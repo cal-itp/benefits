@@ -156,7 +156,7 @@ h4 {
 h1 {
   font-size: var(--h1-font-size);
   text-align: var(--h1-text-align);
-  padding-top: 70px;
+  padding-top: calc(70rem / 16);
 }
 
 /* H2 */
@@ -376,7 +376,7 @@ footer .footer-links li a:visited {
 /* Nav Buttons: Previous Page, Sign Out */
 
 .nav-button-row {
-  height: 70px;
+  height: calc(70rem / 16);
 }
 
 /* Custom button: Sign Out */
