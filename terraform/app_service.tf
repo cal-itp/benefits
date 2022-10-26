@@ -16,7 +16,7 @@ resource "azurerm_linux_web_app" "main" {
   resource_group_name       = data.azurerm_resource_group.main.name
   service_plan_id           = azurerm_service_plan.main.id
   https_only                = true
-  virtual_network_subnet_id = data.azurerm_subnet.main.id
+  virtual_network_subnet_id = local.subnet_id
 
   site_config {
     ftps_state             = "Disabled"
