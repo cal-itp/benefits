@@ -73,8 +73,8 @@
 
       <script>
         function recaptchaSubmit($event) {
-          // Checks the validity of the form. Return if invalid; HTML5 validation errors should display
-          if (!$event.target.form.checkValidity()) {
+          // checks the validity of the form. Return if invalid; HTML5 validation errors should display
+          if (!$event.currentTarget.form.checkValidity()) {
             return;
           }
           // form is client-side valid; taking over the remainder of processing
@@ -82,10 +82,10 @@
 
           grecaptcha.ready(function() {
             grecaptcha.execute("{{ request.recaptcha.site_key }}", { action: "submit" }).then(function(token) {
-                // Add the token to hidden form element
-                $event.target.form.elements["{{ request.recaptcha.data_field }}"].value = token;
+                // add the token to hidden form element
+                $event.currentTarget.form.elements["{{ request.recaptcha.data_field }}"].value = token;
                 // submit the form to server
-                $event.target.form.submit();
+                $event.currentTarget.form.submit();
             });
           });
         };
