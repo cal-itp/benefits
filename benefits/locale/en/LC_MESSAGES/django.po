@@ -104,7 +104,7 @@ msgid "eligibility.pages.confirm.mst_cc.title"
 msgstr "Confirm your Courtesy Card"
 
 msgid "eligibility.pages.confirm.mst_cc.headline"
-msgstr "Let’s see if we can find you in our system"
+msgstr "Let’s see if we can confirm your eligibility."
 
 msgid "eligibility.pages.confirm.mst_cc.p[0]"
 msgstr ""
@@ -506,7 +506,7 @@ msgstr "The next step is to link your bank card"
 #, python-format
 msgid "enrollment.pages.index.link_card_item.p[0]%(link)s"
 msgstr ""
-"Now that your eligibility has been verified we can link your transit "
+"Now that your eligibility has been verified, we can link your transit "
 "discount to your card through our payment partner, <a href=\"%(link)s"
 "\">Littlepay</a>. We don’t store your information, and you won’t be charged."
 
