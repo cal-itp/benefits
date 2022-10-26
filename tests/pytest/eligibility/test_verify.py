@@ -1,7 +1,7 @@
 import pytest
 
 from benefits.eligibility.forms import EligibilityVerificationForm
-from benefits.eligibility.verify import typenames_to_verify, eligibility_from_api, eligibility_from_oauth
+from benefits.eligibility.verify import eligibility_from_api, eligibility_from_oauth
 
 
 @pytest.fixture
@@ -12,15 +12,6 @@ def form(mocker):
 @pytest.fixture
 def mock_api_client_verify(mocker):
     return mocker.patch("benefits.eligibility.verify.Client.verify")
-
-
-@pytest.mark.django_db
-def test_typenames_to_verify(model_TransitAgency, model_EligibilityVerifier):
-    expected = [t.name for t in model_TransitAgency.types_to_verify(model_EligibilityVerifier)]
-
-    result = typenames_to_verify(model_TransitAgency, model_EligibilityVerifier)
-
-    assert result == expected
 
 
 @pytest.mark.django_db

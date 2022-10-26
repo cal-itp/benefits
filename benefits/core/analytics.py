@@ -12,6 +12,7 @@ from django.conf import settings
 import requests
 
 from benefits import VERSION
+from benefits.core.models import EligibilityType
 from . import session
 
 
@@ -45,8 +46,15 @@ class Event:
         agency_name = agency.long_name if agency else None
         verifier = session.verifier(request)
         verifier_name = verifier.name if verifier else None
+        eligibility_types = session.eligibility(request)
+        eligibility_types = EligibilityType.get_names(eligibility_types) if eligibility_types else None
 
-        self.update_event_properties(path=request.path, transit_agency=agency_name, eligibility_verifier=verifier_name)
+        self.update_event_properties(
+            path=request.path,
+            transit_agency=agency_name,
+            eligibility_types=eligibility_types,
+            eligibility_verifier=verifier_name,
+        )
 
         uagent = request.headers.get("user-agent")
 
@@ -59,6 +67,7 @@ class Event:
             referring_domain=refdom,
             user_agent=uagent,
             transit_agency=agency_name,
+            eligibility_types=eligibility_types,
             eligibility_verifier=verifier_name,
         )
 

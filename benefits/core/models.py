@@ -73,6 +73,13 @@ class EligibilityType(models.Model):
         logger.debug(f"Get {EligibilityType.__name__} list by ids: {ids}")
         return EligibilityType.objects.filter(id__in=ids)
 
+    @staticmethod
+    def get_names(eligibility_types):
+        """Convert a list of EligibilityType to a list of their names"""
+        if isinstance(eligibility_types, EligibilityType):
+            eligibility_types = [eligibility_types]
+        return [t.name for t in eligibility_types if isinstance(t, EligibilityType)]
+
 
 class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""
@@ -221,6 +228,10 @@ class TransitAgency(models.Model):
         verifier_types = {eligibility_verifier.eligibility_type.id}
         supported_types = list(agency_types & verifier_types)
         return EligibilityType.get_many(supported_types)
+
+    def type_names_to_verify(self, verifier):
+        """List of names of the eligibility types to check for this agency."""
+        return EligibilityType.get_names(self.types_to_verify(verifier))
 
     @property
     def index_url(self):

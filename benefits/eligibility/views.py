@@ -64,6 +64,9 @@ def index(request):
             verifier = EligibilityVerifier.objects.get(id=verifier_id)
             session.update(request, verifier=verifier)
 
+            types_to_verify = agency.type_names_to_verify(verifier)
+            analytics.selected_verifier(request, types_to_verify)
+
             response = redirect(eligibility_start)
         else:
             # form was not valid, allow for correction/resubmission
@@ -156,7 +159,7 @@ def confirm(request):
 
     agency = session.agency(request)
     verifier = session.verifier(request)
-    types_to_verify = verify.typenames_to_verify(agency, verifier)
+    types_to_verify = agency.type_names_to_verify(verifier)
 
     # GET for OAuth verification
     if request.method == "GET" and verifier.uses_auth_verification:
@@ -232,7 +235,7 @@ def unverified(request):
 
     agency = session.agency(request)
     verifier = session.verifier(request)
-    types_to_verify = verify.typenames_to_verify(agency, verifier)
+    types_to_verify = agency.type_names_to_verify(verifier)
 
     analytics.returned_fail(request, types_to_verify)
 
