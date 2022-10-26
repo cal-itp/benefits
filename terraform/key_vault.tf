@@ -6,6 +6,7 @@ resource "azurerm_key_vault" "main" {
   tenant_id           = data.azurerm_client_config.current.tenant_id
 
   lifecycle {
-    ignore_changes = [tags]
+    prevent_destroy = true
+    ignore_changes  = [tags]
   }
 }

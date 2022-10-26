@@ -80,7 +80,8 @@ resource "azurerm_linux_web_app" "main" {
   }
 
   lifecycle {
-    ignore_changes = [app_settings, storage_account, tags]
+    prevent_destroy = true
+    ignore_changes  = [app_settings, storage_account, tags]
   }
 }
 
@@ -123,7 +124,8 @@ resource "azurerm_linux_web_app_slot" "dev" {
   }
 
   lifecycle {
-    ignore_changes = [app_settings, tags]
+    prevent_destroy = true
+    ignore_changes  = [app_settings, tags]
   }
 
   # setup files
@@ -176,7 +178,8 @@ resource "azurerm_linux_web_app_slot" "test" {
   }
 
   lifecycle {
-    ignore_changes = [app_settings, tags]
+    prevent_destroy = true
+    ignore_changes  = [app_settings, tags]
   }
 
   # setup files
