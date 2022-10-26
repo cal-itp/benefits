@@ -58,6 +58,8 @@ resource "azurerm_linux_web_app" "main" {
       "DJANGO_LOAD_SAMPLE_DATA",
       "DJANGO_LOG_LEVEL",
       "DJANGO_MIGRATIONS_DIR",
+      "DJANGO_RECAPTCHA_SECRET_KEY",
+      "DJANGO_RECAPTCHA_SITE_KEY",
       "DJANGO_TRUSTED_ORIGINS",
 
       # populated through auto-instrumentation
