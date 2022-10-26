@@ -28,16 +28,28 @@ resource "azurerm_storage_container" "config_dev" {
   name                  = "benefits-config-dev"
   storage_account_name  = azurerm_storage_account.main.name
   container_access_type = "private"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_storage_container" "config_test" {
   name                  = "benefits-config-test"
   storage_account_name  = azurerm_storage_account.main.name
   container_access_type = "private"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "azurerm_storage_container" "config_prod" {
   name                  = "benefits-config-prod"
   storage_account_name  = azurerm_storage_account.main.name
   container_access_type = "private"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
