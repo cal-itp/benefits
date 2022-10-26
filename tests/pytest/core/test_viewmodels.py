@@ -35,7 +35,7 @@ def test_ErrorPage_translations(error_page_function, title, headline, paragraphs
     translation.activate("en")
 
     error_page = error_page_function()
-    english_title = f"{_('core.pages.index.prefix')}: {_(title)}"
+    english_title = _(title)
     english_headline = _(headline)
     english_paragraphs = [_(paragraph) for paragraph in paragraphs]
 
@@ -46,7 +46,7 @@ def test_ErrorPage_translations(error_page_function, title, headline, paragraphs
     translation.activate("es")
 
     error_page = error_page_function()
-    spanish_title = f"{_('core.pages.index.prefix')}: {_(title)}"
+    spanish_title = _(title)
     spanish_headline = _(headline)
     spanish_paragraphs = [_(paragraph) for paragraph in paragraphs]
 

@@ -143,12 +143,9 @@ class Page:
     """
 
     def __init__(self, **kwargs):
-        self.title = kwargs.get("title")
-        if self.title is None:
-            self.title = _("core.pages.index.prefix")
-        else:
-            self.title = f"{_('core.pages.index.prefix')}: {self.title}"
-
+        title = kwargs.get("title")
+        if title is not None:
+            self.title = title
         self.icon = kwargs.get("icon")
         self.headline = kwargs.get("headline")
         self.paragraphs = kwargs.get("paragraphs", [])

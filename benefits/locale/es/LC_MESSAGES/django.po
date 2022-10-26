@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-10-14 01:02+0000\n"
+"POT-Creation-Date: 2022-10-26 22:09+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -168,6 +168,9 @@ msgstr ""
 "Travel Project “Proyecto de Viaje Integrado de California” (Cal-ITP), que es "
 "un nuevo programa del Departamento de Transporte de California dedicado a "
 "hacer que los viajes sean más sencillos y económicos para todos."
+
+msgid "core.pages.title.suffix"
+msgstr "Beneficios de Cal-ITP"
 
 msgid "core.buttons.skip"
 msgstr "Saltar al contenido principal"
@@ -358,9 +361,6 @@ msgstr "TODO: Select the option that best applies to you:"
 
 msgid "core.buttons.previous_page"
 msgstr "TODO: Previous Page"
-
-msgid "core.pages.index.prefix"
-msgstr "Beneficios del Tránsito"
 
 msgid "core.pages.error.title"
 msgstr "Error"
