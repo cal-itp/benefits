@@ -35,10 +35,12 @@
           </div>
         {% endif %}
         <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
-            <button class="btn btn-lg btn-primary spinner-hidden d-flex justify-content-center align-items-center" data-action="submit" type="submit">
-                <span class="btn-text">{{ form.submit_value }}</span>
-                <span class="spinner-border spinner-border-sm" role="status"></span>
-            </button>
+          <button class="btn btn-lg btn-primary spinner-hidden d-flex justify-content-center align-items-center"
+                  data-action="submit"
+                  type="submit">
+            <span class="btn-text">{{ form.submit_value }}</span>
+            <span class="spinner-border spinner-border-sm" role="status"></span>
+          </button>
         </div>
       </div>
     {% endif %}
@@ -48,11 +50,11 @@
         $("#{{ form.id }}").on("submit", function(e) {
           if ("{{ form.submitting_value }}" !== "") {
             $("button[type=submit]", this)
-                .removeClass("spinner-hidden")
-                .children().first().text("{{ form.submitting_value }}")
-                .attr("role", "status")
-                .attr("disabled", "true")
-                .addClass("disabled");
+              .removeClass("spinner-hidden")
+              .addClass("disabled")
+              .attr("role", "status")
+              .attr("disabled", "true")
+              .children().first().text("{{ form.submitting_value }}");
           }
         });
       });
