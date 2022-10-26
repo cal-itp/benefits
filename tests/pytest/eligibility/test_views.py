@@ -119,7 +119,7 @@ def test_index_post_invalid_form(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency")
-def test_index_post_valid_form(client, model_EligibilityVerifier, mocked_session_update):
+def test_index_post_valid_form(client, model_EligibilityVerifier, mocked_session_update, mocked_analytics_module):
     path = reverse(ROUTE_INDEX)
 
     response = client.post(path, {"verifier": model_EligibilityVerifier.id})
@@ -127,6 +127,7 @@ def test_index_post_valid_form(client, model_EligibilityVerifier, mocked_session
     assert response.status_code == 302
     assert response.url == reverse(ROUTE_START)
     assert mocked_session_update.call_args.kwargs["verifier"] == model_EligibilityVerifier
+    mocked_analytics_module.selected_verifier.assert_called_once()
 
 
 @pytest.mark.django_db
