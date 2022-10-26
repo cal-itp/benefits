@@ -92,8 +92,7 @@ msgstr "Your current Courtesy Card number"
 
 msgid "eligibility.pages.start.mst_cc.start_item.details"
 msgstr ""
-"You do not need to have your physical card, but you will need to know the "
-"number. It is five digits and starts with a #.  "
+"You do not need to have your physical card, but you will need to know the number. The number starts with a number sign (#) followed by five digits."
 
 msgid "eligibility.pages.start.mst_cc.p[0]"
 msgstr ""
