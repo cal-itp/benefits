@@ -145,10 +145,7 @@ msgstr "You may need to reapply for transit benefits at a later date"
 
 msgid "enrollment.pages.success.mst_cc.expiry_item.details"
 msgstr ""
-"This website is a demonstration tool to support the Courtesy Card program. "
-"At some point in the future you may need to re-register for Benefits to "
-"continue using contactless payment cards. You will also need to reapply if "
-"you choose to change the bank card you use to pay for transit service."
+"In the future, you may need to re-register for Benefits to continue using contactless payment cards. You will also need to reapply if you choose to change the bank card you use to pay for transit service."
 
 msgid "core.pages.agency_index.h2"
 msgstr "Your benefit applies every time you tap to ride"
