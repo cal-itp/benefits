@@ -10,8 +10,7 @@ resource "azurerm_service_plan" "main" {
   }
 }
 
-# app_settings and storage_account are managed manually through the portal since they contain secrets. Issue to move the latter in:
-# https://github.com/cal-itp/benefits/issues/686
+# app_settings are managed manually through the portal since they contain secrets
 
 resource "azurerm_linux_web_app" "main" {
   name                      = "AS-CDT-PUB-VIP-CALITP-P-001"
@@ -82,9 +81,19 @@ resource "azurerm_linux_web_app" "main" {
     ])
   }
 
+  storage_account {
+    access_key   = azurerm_storage_account.main.primary_access_key
+    account_name = azurerm_storage_account.main.name
+    # use the same name
+    name       = azurerm_storage_container.config_prod.name
+    type       = "AzureBlob"
+    share_name = azurerm_storage_container.config_prod.name
+    mount_path = "/home/calitp/app/config"
+  }
+
   lifecycle {
     prevent_destroy = true
-    ignore_changes  = [app_settings, storage_account, tags]
+    ignore_changes  = [app_settings, tags]
   }
 }
 
