@@ -145,20 +145,17 @@ Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is
    - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
    - [Terraform](https://www.terraform.io/downloads) - see exact version in [`azure-pipelines.yml`](https://github.com/cal-itp/benefits/blob/dev/terraform/azure-pipelines.yml)
 
-1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli), specifying the `CDT/ODI Development` Subscription.
+1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli).
 
    ```sh
    az login
-
-   az account set --subscription="CDT/ODI Development"
    ```
 
 1. Outside the [dev container](../../getting-started/), navigate to the [`terraform/`](https://github.com/cal-itp/benefits/tree/dev/terraform) directory.
-1. [Initialize Terraform.](https://www.terraform.io/cli/commands/init) [The Backend Subscription](https://developer.hashicorp.com/terraform/language/settings/backends/azurerm#subscription_id) needs to be specified so that you can work across Subscriptions.
+1. [Initialize Terraform.](https://www.terraform.io/cli/commands/init) You can also use this script later to switch between [environments](#environments).
 
    ```sh
-   PROD_ID=$(az account list --query "[?name == 'CDT/ODI Production'] | [0].id" --output tsv)
-   terraform init -backend-config="subscription_id=$PROD_ID"
+   ./init.sh <env>
    ```
 
 1. Make changes to Terraform files.
