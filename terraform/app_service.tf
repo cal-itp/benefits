@@ -13,12 +13,11 @@ resource "azurerm_service_plan" "main" {
 # app_settings are managed manually through the portal since they contain secrets
 
 resource "azurerm_linux_web_app" "main" {
-  name                      = "AS-CDT-PUB-VIP-CALITP-${local.env_letter}-001"
-  location                  = data.azurerm_resource_group.main.location
-  resource_group_name       = data.azurerm_resource_group.main.name
-  service_plan_id           = azurerm_service_plan.main.id
-  https_only                = true
-  virtual_network_subnet_id = data.azurerm_subnet.main.id
+  name                = "AS-CDT-PUB-VIP-CALITP-${local.env_letter}-001"
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
+  service_plan_id     = azurerm_service_plan.main.id
+  https_only          = true
 
   site_config {
     ftps_state             = "Disabled"
