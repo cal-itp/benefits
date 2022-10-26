@@ -85,7 +85,7 @@
                 // add the token to hidden form element
                 $event.currentTarget.form.elements["{{ request.recaptcha.data_field }}"].value = token;
                 // submit the form to server
-                $event.currentTarget.form.submit();
+                $event.currentTarget.form.requestSubmit($event.currentTarget);
             });
           });
         };
