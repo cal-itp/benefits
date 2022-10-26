@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-10-14 01:02+0000\n"
+"POT-Creation-Date: 2022-10-26 22:09+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -161,6 +161,9 @@ msgstr ""
 "The Benefits tool is provided by California Integrated Travel Project (Cal-"
 "ITP), which is a new program from the California Department of "
 "Transportation dedicated to making travel simpler and cost-effective for all."
+
+msgid "core.pages.title.suffix"
+msgstr "Cal-ITP Benefits"
 
 msgid "core.buttons.skip"
 msgstr "Skip to Main Content"
@@ -345,9 +348,6 @@ msgstr "Select the option that best applies to you:"
 
 msgid "core.buttons.previous_page"
 msgstr "Previous Page"
-
-msgid "core.pages.index.prefix"
-msgstr "Transit Benefits"
 
 msgid "core.pages.error.title"
 msgstr "Error"
