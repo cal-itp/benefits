@@ -20,7 +20,7 @@ msgid "eligibility.buttons.signout"
 msgstr "Sign out of Login.gov"
 
 msgid "eligibility.pages.index.mst_login.label"
-msgstr "Senior Discount Program"
+msgstr "I am 65 years of age or older"
 
 msgid "eligibility.pages.index.mst_login.description"
 msgstr ""
@@ -78,10 +78,8 @@ msgstr "I have an MST Courtesy Card"
 
 msgid "eligibility.pages.index.mst_cc.description"
 msgstr ""
-"This option is for people who have a current Courtesy Card (includes MST "
-"RIDES Eligibility cardholders). This benefit is part of a demonstration tool "
-"and may need to be renewed in the future. Using this benefit means your new "
-"transit fare is half of the standard fare."
+"This option is for people who have a current Courtesy Card or an MST "
+"RIDES Eligibility card. This benefit may need to be renewed in the future. Using this benefit means your new transit fare is half of the standard fare."
 
 msgid "eligibility.pages.start.mst_cc.headline"
 msgstr "You selected a Courtesy Card benefit."
@@ -154,7 +152,7 @@ msgstr ""
 "you choose to change the bank card you use to pay for transit service."
 
 msgid "core.pages.agency_index.h2"
-msgstr "Your benefit applies every time you tap to ride."
+msgstr "Your benefit applies every time you tap to ride"
 
 msgid "core.pages.help.about.p[0]"
 msgstr ""
@@ -448,17 +446,16 @@ msgstr "Select a benefit option"
 
 msgid "eligibility.pages.index.headline"
 msgstr ""
-"Connect your bank card to your public transit discount with Cal-ITP Benefits"
+"Connect your bank card to your public transit discount with Cal-ITP Benefits."
 
 #, python-format
 msgid "eligibility.pages.index.p[0]%(info_link)s"
 msgstr ""
-"You can tap your credit or debit card when you board, and your discount will "
+"You can tap your credit or debit card when you board an MST bus and your discounted fare will "
 "automatically apply every time you ride. Cal-ITP doesn’t save any of your "
-"information, and you don’t need to create an account. Verify for your "
+"information, and you don’t need to create an account. Verify to get your "
 "benefit, and connect your bank card today. <strong><a class='info-link' href="
-"\"%(info_link)s\">Learn more about Cal-ITP Benefits</a></strong><span "
-"class='period'>.</span>"
+"\"%(info_link)s\">Learn more about Cal-ITP Benefits.</a></strong>"
 
 #, python-format
 msgid "eligibility.pages.index.help_text%(help_link)s"
