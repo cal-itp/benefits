@@ -29,7 +29,7 @@ msgstr ""
 "standard fare."
 
 msgid "eligibility.pages.start.mst_login.headline"
-msgstr "You selected an Older Adult benefit with MST."
+msgstr "You selected an Older Adult benefit."
 
 msgid "eligibility.pages.start.mst_login.sub_headline"
 msgstr "You will need a few items to connect your benefit:"
