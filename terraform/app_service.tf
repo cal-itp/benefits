@@ -51,7 +51,8 @@ resource "azurerm_linux_web_app" "main" {
   # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app#app_setting_names
   # https://docs.microsoft.com/en-us/azure/app-service/deploy-staging-slots#which-settings-are-swapped
   sticky_settings {
-    app_setting_names = [
+    # sort them so that they don't change when we rearrange them
+    app_setting_names = sort([
       # custom config
       "ANALYTICS_KEY",
       "DJANGO_ALLOWED_HOSTS",
@@ -78,7 +79,7 @@ resource "azurerm_linux_web_app" "main" {
       "XDT_MicrosoftApplicationInsights_NodeJS",
       "XDT_MicrosoftApplicationInsights_PreemptSdk",
       "XDT_MicrosoftApplicationInsightsJava",
-    ]
+    ])
   }
 
   lifecycle {
