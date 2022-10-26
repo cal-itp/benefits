@@ -84,11 +84,10 @@ resource "azurerm_linux_web_app" "main" {
   storage_account {
     access_key   = azurerm_storage_account.main.primary_access_key
     account_name = azurerm_storage_account.main.name
-    # use the same name
-    name       = azurerm_storage_container.config_prod.name
-    type       = "AzureBlob"
-    share_name = azurerm_storage_container.config_prod.name
-    mount_path = "/home/calitp/app/config"
+    name         = "benefits-config"
+    type         = "AzureBlob"
+    share_name   = azurerm_storage_container.config_prod.name
+    mount_path   = "/home/calitp/app/config"
   }
 
   lifecycle {
