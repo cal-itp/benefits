@@ -35,8 +35,12 @@
           </div>
         {% endif %}
         <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
-          <button class="btn btn-lg btn-primary" form="{{ form.id }}" data-action="submit" type="submit">
-            {{ form.submit_value }}
+          <button class="btn btn-lg btn-primary spinner-hidden d-flex justify-content-center align-items-center"
+                  data-action="submit"
+                  type="submit"
+                  form="{{ form.id }}">
+            <span class="btn-text">{{ form.submit_value }}</span>
+            <span class="spinner-border spinner-border-sm"></span>
           </button>
         </div>
       </div>
@@ -47,10 +51,11 @@
         $("#{{ form.id }}").on("submit", function(e) {
           if ("{{ form.submitting_value }}" !== "") {
             $("button[type=submit]", this)
+              .removeClass("spinner-hidden")
+              .addClass("disabled")
               .attr("role", "status")
               .attr("disabled", "true")
-              .text("{{ form.submitting_value }}")
-              .addClass("disabled");
+              .children().first().text("{{ form.submitting_value }}");
           }
         });
       });
@@ -68,8 +73,8 @@
 
       <script>
         function recaptchaSubmit($event) {
-          // Checks the validity of the form. Return if invalid; HTML5 validation errors should display
-          if (!$event.target.form.checkValidity()) {
+          // checks the validity of the form. Return if invalid; HTML5 validation errors should display
+          if (!$event.currentTarget.form.checkValidity()) {
             return;
           }
           // form is client-side valid; taking over the remainder of processing
@@ -77,10 +82,10 @@
 
           grecaptcha.ready(function() {
             grecaptcha.execute("{{ request.recaptcha.site_key }}", { action: "submit" }).then(function(token) {
-                // Add the token to hidden form element
-                $event.target.form.elements["{{ request.recaptcha.data_field }}"].value = token;
+                // add the token to hidden form element
+                $event.currentTarget.form.elements["{{ request.recaptcha.data_field }}"].value = token;
                 // submit the form to server
-                $event.target.form.submit();
+                $event.currentTarget.form.requestSubmit($event.currentTarget);
             });
           });
         };
