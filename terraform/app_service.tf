@@ -59,9 +59,3 @@ resource "azurerm_linux_web_app" "main" {
     ignore_changes  = [app_settings, sticky_settings, tags]
   }
 }
-
-resource "azurerm_app_service_custom_hostname_binding" "main" {
-  hostname            = local.hostname
-  app_service_name    = azurerm_linux_web_app.main.name
-  resource_group_name = data.azurerm_resource_group.main.name
-}

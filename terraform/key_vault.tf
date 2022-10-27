@@ -1,5 +1,5 @@
 resource "azurerm_key_vault" "main" {
-  name                = "KV-CDT-PUB-CALITP-${local.env_letter}-001"
+  name                = "KV-CDT-PUB-CALITP-${local.env_letter}-002"
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   sku_name            = "standard"
