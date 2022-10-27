@@ -154,6 +154,15 @@ Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is
    ```
 
 1. Outside the [dev container](../../getting-started/), navigate to the [`terraform/`](https://github.com/cal-itp/benefits/tree/dev/terraform) directory.
+1. Set up the GitHub token
+
+   1. [Create a personal access token](https://github.com/settings/tokens/new) with `repo` permissions
+   1. Create a `terraform.tfvars` file with the following contents:
+
+      ```hcl
+      github_token = "..."
+      ```
+
 1. [Initialize Terraform.](https://www.terraform.io/cli/commands/init) You can also use this script later to switch between [environments](#environments).
 
    ```sh

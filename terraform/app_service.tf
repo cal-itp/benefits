@@ -45,6 +45,8 @@ resource "azurerm_linux_web_app" "main" {
     }
   }
 
+  app_settings = sensitive(data.dotenv.main.env)
+
   storage_account {
     access_key   = azurerm_storage_account.main.primary_access_key
     account_name = azurerm_storage_account.main.name
@@ -56,6 +58,6 @@ resource "azurerm_linux_web_app" "main" {
 
   lifecycle {
     prevent_destroy = true
-    ignore_changes  = [app_settings, sticky_settings, tags]
+    ignore_changes  = [tags]
   }
 }

@@ -4,7 +4,17 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">= 3.0.0, < 4.0.0"
+      version = "~> 3.0"
+    }
+
+    dotenv = {
+      source  = "jrhouston/dotenv"
+      version = "~> 1.0"
+    }
+
+    github = {
+      source  = "integrations/github"
+      version = "~> 4.0"
     }
   }
 
@@ -19,6 +29,11 @@ terraform {
 
 provider "azurerm" {
   features {}
+}
+
+provider "github" {
+  token = var.github_token
+  owner = "cal-itp"
 }
 
 data "azurerm_client_config" "current" {}
