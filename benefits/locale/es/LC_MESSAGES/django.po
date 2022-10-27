@@ -46,9 +46,6 @@ msgstr ""
 "no tiene una cuenta, podrá crear una. También deberá verificar su identidad, "
 "lo que requerirá estos artículos:"
 
-msgid "eligibility.pages.start.mst_login.p[0]"
-msgstr ""
-
 msgid "eligibility.pages.unverified.mst_login.title"
 msgstr "Error de elegibilidad"
 
@@ -99,13 +96,6 @@ msgstr "Tu tarjeta de cortesía MST"
 
 msgid "eligibility.pages.start.mst_cc.start_item.details"
 msgstr "Una tarjeta activa que no ha caducado"
-
-msgid "eligibility.pages.start.mst_cc.p[0]"
-msgstr ""
-"Este programa está actualmente abierto a todas los titulares de tarjetas de "
-"cortesía MST. ¿No es titular de una tarjeta de cortesía? Póngase en contacto "
-"con su proveedor de transporte público para obtener información sobre los "
-"programas de descuento disponibles"
 
 msgid "eligibility.pages.confirm.mst_cc.title"
 msgstr "Verificar su tarjeta de cortesía MST"
