@@ -509,8 +509,11 @@ msgstr ""
 "Su tarjeta debe ser una tarjeta de débito o crédito sin contacto de Visa o "
 "Mastercard."
 
-msgid "eligibility.pages.start.title"
-msgstr "Comencemos"
+msgid "eligibility.pages.start.mst_cc.title"
+msgstr "TODO: Courtey Card information"
+
+msgid "eligibility.pages.start.mst_login.title"
+msgstr "TODO: Older Adult benefit information"
 
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"

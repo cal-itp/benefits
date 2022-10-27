@@ -486,8 +486,11 @@ msgid "eligibility.pages.start.bankcard.text"
 msgstr ""
 "Your card must be a contactless debit or credit card by Visa or Mastercard."
 
-msgid "eligibility.pages.start.title"
-msgstr "Get Started"
+msgid "eligibility.pages.start.mst_cc.title"
+msgstr "Courtesy Card information"
+
+msgid "eligibility.pages.start.mst_login.title"
+msgstr "Older Adult benefit information"
 
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
