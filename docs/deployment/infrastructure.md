@@ -83,6 +83,8 @@ All resources in these Resource Groups should be reflected in Terraform in this 
 - Secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) and [App Service application settings](https://docs.microsoft.com/en-us/azure/app-service/configure-common#configure-app-settings). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
 - [Things managed by DevSecOps](#ownership)
 
+You'll see these represented in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources).
+
 For browsing the [Azure portal](https://portal.azure.com), you can [switch your `Default subscription filter`](https://docs.microsoft.com/en-us/azure/azure-portal/set-preferences).
 
 ## Monitoring
@@ -180,6 +182,9 @@ lifecycle {
 The following steps are required to set up the environment, with linked issues to automate them:
 
 - `terraform apply`
+- Set up Slack notifications
+  1. [Create a Slack email](https://slack.com/help/articles/206819278-Send-emails-to-Slack) for the [#benefits-notify](https://cal-itp.slack.com/archives/C022HHSEE3F) channel
+  1. [Set it as a Secret in the Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-portal#add-a-secret-to-key-vault) named `slack-benefits-notify-email`
 - Set required [App Service configuration](../configuration/environment-variables.md)
 - Bind the certificate - [#704](https://github.com/cal-itp/benefits/issues/704)
 

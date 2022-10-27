@@ -22,8 +22,6 @@ resource "azurerm_application_insights" "main" {
   }
 }
 
-# created manually
-# https://slack.com/help/articles/206819278-Send-emails-to-Slack
 data "azurerm_key_vault_secret" "slack_benefits_notify_email" {
   name         = "slack-benefits-notify-email"
   key_vault_id = azurerm_key_vault.main.id
