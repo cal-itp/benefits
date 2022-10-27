@@ -67,6 +67,7 @@ class Migration(migrations.Migration):
                 ("unverified_title", models.TextField()),
                 ("unverified_headline", models.TextField()),
                 ("unverified_blurb", models.TextField()),
+                ("eligibility_confirmed_headline", models.TextField(null=True)),
                 ("eligibility_confirmed_item_heading", models.TextField(null=True)),
                 ("eligibility_confirmed_item_details", models.TextField(null=True)),
                 ("enrollment_success_confirm_item_details", models.TextField()),

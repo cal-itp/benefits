@@ -101,7 +101,7 @@ def index(request):
 
         page = viewmodels.Page(
             title=_("enrollment.pages.index.title"),
-            headline=format_html(_("enrollment.pages.index.headline")),
+            headline=format_html(_(verifier.eligibility_confirmed_headline)),
             forms=[tokenize_retry_form, tokenize_success_form],
             buttons=[
                 viewmodels.Button.primary(
