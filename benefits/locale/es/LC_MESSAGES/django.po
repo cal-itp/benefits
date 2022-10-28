@@ -471,7 +471,7 @@ msgstr ""
 #, python-format
 msgid "eligibility.pages.index.p[0]%(info_link)s"
 msgstr ""
-"TODO: You can tap your credit or debit card when you board, and your "
+"TODO: You can tap your credit or debit card when you board an MST bus, and your "
 "discount will automatically apply every time you ride. Cal-ITP doesn’t save "
 "any of your information, and you don’t need to create an account. Verify for "
 "your benefit, and connect your bank card today. <strong><a class='info-link' "
