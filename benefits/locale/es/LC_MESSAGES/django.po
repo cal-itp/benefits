@@ -540,6 +540,12 @@ msgstr ""
 msgid "enrollment.pages.index.title"
 msgstr "Tarjeta de conexión"
 
+msgid "enrollment.pages.index.mst_cc.eligibility_confirmed.headline"
+msgstr "TODO: Your eligibility is confirmed! You’re nearly there."
+
+msgid "enrollment.pages.index.mst_login.eligibility_confirmed.headline"
+msgstr "TODO: Your eligibility is confirmed! You’re nearly there."
+
 msgid "enrollment.buttons.payment_partner"
 msgstr "Conecta tu tarjeta"
 
