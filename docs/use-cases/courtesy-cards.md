@@ -22,7 +22,7 @@ flowchart LR
     subgraph MST Azure
         api --> data
     end
-    
+
     subgraph MST Velocity
         velocity --> hashfields
     end
