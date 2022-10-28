@@ -594,9 +594,7 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 /* This page has a full-width and full-height background image, creating the need to re-set the Footer margin top to 0 */
 
 :root {
-  --agency-index-main-height: calc(
-    100vh - 182px
-  ); /* 182px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) */
+  --agency-index-main-height: 100vh;
   --agency-index-background: url("/static/img/benefits-bg-mobile.jpg") no-repeat
     var(--primary-color);
   --agency-index-box-background: var(--bs-white);
