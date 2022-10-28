@@ -160,6 +160,35 @@ lifecycle {
 }
 ```
 
+### Naming conventions
+
+The DevSecOps team sets the following naming convention for Resources:
+
+```
+<<Resource Type>>-<<Department>>-<<Public/Private>>-<<Project Category>>-<<Project Name>>-<<Region>><<OS Type>>-<<Environment>>-<<Sequence Number>>
+```
+
+#### Sample Names
+
+- `RG-CDT-PUB-VIP-BNSCN-E-D-001`
+- `ASP-CDT-PUB-VIP-BNSCN-EL-P-001`
+- `AS-CDT-PUB-VIP-BNSCN-EL-D-001`
+
+#### Resource Types
+
+Use the following shorthand for conveying the Resource Type as part of the Resource Name:
+
+| Resource         | Convention |
+| ---------------- | ---------- |
+| App Service      | `AS`       |
+| App Service Plan | `ASP`      |
+| Virtual Network  | `VNET`     |
+| Resource Group   | `RG`       |
+| Virtual Machine  | `VM`       |
+| Database         | `DB`       |
+| Subnet           | `SNET`     |
+| Front Door       | `FD`       |
+
 ## Azure environment setup
 
 The following steps are required to set up the environment, with linked issues to automate them:
