@@ -48,12 +48,12 @@ repos:
         files: .py$
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.0-alpha.3
+    rev: v3.0.0-alpha.4
     hooks:
       - id: prettier
         types_or: [javascript, css]
 
   - repo: https://github.com/Riverside-Healthcare/djLint
-    rev: v1.19.2
+    rev: v1.19.3
     hooks:
       - id: djlint-django
