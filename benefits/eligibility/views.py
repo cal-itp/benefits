@@ -124,9 +124,8 @@ def start(request):
     media = [identity_item, bank_card_item]
 
     page = viewmodels.Page(
-        title=_("eligibility.pages.start.title"),
+        title=_(verifier.start_title),
         headline=_(verifier.start_headline),
-        paragraphs=[_(verifier.start_blurb)],
         button=button,
     )
 
