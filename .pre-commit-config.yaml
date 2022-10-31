@@ -6,6 +6,11 @@ default_install_hook_types:
   - pre-commit
   - commit-msg
 
+# by default, confine hooks to these git stages (except for hooks that specify their own stages)
+# https://pre-commit.com/#top_level-default_stages
+default_stages:
+  - commit
+
 repos:
   - repo: https://github.com/compilerla/conventional-pre-commit
     rev: v2.1.1
