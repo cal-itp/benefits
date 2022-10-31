@@ -32,9 +32,7 @@ msgid "eligibility.pages.start.mst_login.title"
 msgstr "TODO: Older Adult benefit information"
 
 msgid "eligibility.pages.start.mst_login.headline"
-msgstr ""
-"Conecta tu tarjeta bancaria para tu descuento en el transporte público con "
-"Cal-ITP Benefits."
+msgstr "TODO: You selected an Older Adult benefit."
 
 msgid "eligibility.pages.start.mst_login.sub_headline"
 msgstr "Necesitará algunos artículos para conectar su descuento:"
