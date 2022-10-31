@@ -433,12 +433,12 @@ footer .footer-links li a:visited {
 /* Form Container: Must use .form-container parent to use these styles */
 
 :root {
-  --form-input-gap: 22px;
+  --form-input-gap: calc(22rem / 16);
 }
 
 @media (min-width: 992px) {
   :root {
-    --form-input-gap: 42px;
+    --form-input-gap: calc(42rem / 16);
   }
 }
 
@@ -450,7 +450,7 @@ footer .footer-links li a:visited {
   font-size: var(--bs-body-font-size);
   font-weight: var(--medium-font-weight);
   letter-spacing: var(--body-letter-spacing);
-  padding-bottom: 12px;
+  padding-bottom: calc(12rem / 16);
 }
 
 .form-container .form-control {
@@ -472,7 +472,7 @@ footer .footer-links li a:visited {
 :root {
   --radio-button-size: calc(24rem / 16);
   --radio-input-color: var(--standout-color);
-  --radio-input-gap: calc(40rem / 16);
+  --radio-input-gap: calc(24rem / 16);
 }
 
 @media (min-width: 992px) {
