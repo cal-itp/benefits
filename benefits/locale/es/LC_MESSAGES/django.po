@@ -28,13 +28,6 @@ msgstr ""
 "may need to renew. Using this benefit means your new transit fare is half of "
 "the standard fare."
 
-#, fuzzy
-#| msgid "eligibility.pages.start.mst_login.headline"
-msgid "eligibility.pages.start.mst_login.title"
-msgstr ""
-"Conecta tu tarjeta bancaria para tu descuento en el transporte público con "
-"Cal-ITP Benefits."
-
 msgid "eligibility.pages.start.mst_login.headline"
 msgstr ""
 "Conecta tu tarjeta bancaria para tu descuento en el transporte público con "
@@ -90,17 +83,9 @@ msgstr ""
 "tool and may need to be renewed in the future. Using this benefit means your "
 "new transit fare is half of the standard fare."
 
-#, fuzzy
-#| msgid "eligibility.pages.start.mst_cc.headline"
-msgid "eligibility.pages.start.mst_cc.title"
-msgstr ""
-"Conecta tu tarjeta bancaria para tu descuento en el transporte público con "
-"Cal-ITP Benefits."
-
 msgid "eligibility.pages.start.mst_cc.headline"
 msgstr ""
-"Conecta tu tarjeta bancaria para tu descuento en el transporte público con "
-"Cal-ITP Benefits."
+"TODO: You selected a Courtesy Card benefit."
 
 msgid "eligibility.pages.start.mst_cc.sub_headline"
 msgstr "TODO: Genial, necesitarás dos cosas antes de empeza"
@@ -115,7 +100,7 @@ msgid "eligibility.pages.confirm.mst_cc.title"
 msgstr "Verificar su tarjeta de cortesía MST"
 
 msgid "eligibility.pages.confirm.mst_cc.headline"
-msgstr "Veamos si podemos encontrarle en nuestra sistema"
+msgstr "TODO: Veamos si podemos encontrarle en nuestra sistema"
 
 msgid "eligibility.pages.confirm.mst_cc.p[0]"
 msgstr ""

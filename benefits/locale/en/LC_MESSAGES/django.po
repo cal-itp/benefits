@@ -127,7 +127,7 @@ msgid "eligibility.pages.unverified.mst_cc.title"
 msgstr "Courtesy Card not located"
 
 msgid "eligibility.pages.unverified.mst_cc.headline"
-msgstr "We couldn’t locate you in our system"
+msgstr "We couldn’t confirm your eligibility"
 
 msgid "eligibility.pages.unverified.mst_cc.p[0]"
 msgstr ""
