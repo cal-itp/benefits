@@ -631,7 +631,7 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
   background: var(--agency-index-box-background);
   border-top: var(--agency-index-box-border);
   color: var(--agency-index-text-color);
-  margin-bottom: 32px;
+  margin-bottom: calc(32rem / 16);
 }
 
 .agency-index .box .btn.btn-lg.btn-primary {
