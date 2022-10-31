@@ -9,6 +9,7 @@ flowchart LR
     rider((User's browser))
     api[Eligibility Server]
     data[Hashed Courtesy Card data]
+    velocity[SQL Server]
 
     rider --> Benefits
 
@@ -22,7 +23,11 @@ flowchart LR
         api --> data
     end
 
-    Velocity --> data
+    subgraph MST Velocity
+        velocity --> hashfields
+    end
+
+    hashfields --> data
 ```
 
 Notes:
