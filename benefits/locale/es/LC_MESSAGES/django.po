@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-10-31 18:05+0000\n"
+"POT-Creation-Date: 2022-10-31 20:49+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -59,9 +59,6 @@ msgid "eligibility.pages.unverified.mst_login.p[0]"
 msgstr ""
 "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
 "proveedor de tránsito local para obtener asistencia."
-
-msgid "enrollment.pages.index.mst_cc.eligibility_confirmed.headline"
-msgstr "TODO: Your eligibility is confirmed! You’re nearly there."
 
 msgid "enrollment.pages.index.mst_login.eligibility_confirmed.headline"
 msgstr "TODO: Your eligibility is confirmed! You’re nearly there."
@@ -141,6 +138,9 @@ msgid "eligibility.pages.unverified.mst_cc.p[0]"
 msgstr ""
 "TODO: That’s okay! You may still be eligible for our program. Please reach "
 "out to Monterey-Salinas Transit for assistance."
+
+msgid "enrollment.pages.index.mst_cc.eligibility_confirmed.headline"
+msgstr "TODO: Your eligibility is confirmed! You’re nearly there."
 
 msgid "enrollment.pages.success.mst_cc.confirm_item.details"
 msgstr ""
