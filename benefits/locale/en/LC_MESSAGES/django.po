@@ -58,6 +58,12 @@ msgstr ""
 "That’s okay! You may still be eligible for our program. Please reach out to "
 "your local transit provider for assistance."
 
+msgid "enrollment.pages.index.mst_cc.eligibility_confirmed.headline"
+msgstr "Your eligibility is confirmed! You’re nearly there."
+
+msgid "enrollment.pages.index.mst_login.eligibility_confirmed.headline"
+msgstr "Your eligibility is confirmed! You’re nearly there."
+
 msgid "enrollment.pages.index.mst_login.eligibility_confirmed_item.heading"
 msgstr "Your eligibility is confirmed for an Older Adult benefit"
 
