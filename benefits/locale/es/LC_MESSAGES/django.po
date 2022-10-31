@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-10-27 17:47+0000\n"
+"POT-Creation-Date: 2022-10-31 18:05+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,6 +27,9 @@ msgstr ""
 "TODO: You must be 65 years or older. This benefit does not expire, but you "
 "may need to renew. Using this benefit means your new transit fare is half of "
 "the standard fare."
+
+msgid "eligibility.pages.start.mst_login.title"
+msgstr "TODO: Older Adult benefit information"
 
 msgid "eligibility.pages.start.mst_login.headline"
 msgstr ""
@@ -83,9 +86,11 @@ msgstr ""
 "tool and may need to be renewed in the future. Using this benefit means your "
 "new transit fare is half of the standard fare."
 
+msgid "eligibility.pages.start.mst_cc.title"
+msgstr "TODO: Courtesy Card information"
+
 msgid "eligibility.pages.start.mst_cc.headline"
-msgstr ""
-"TODO: You selected a Courtesy Card benefit."
+msgstr "TODO: You selected a Courtesy Card benefit."
 
 msgid "eligibility.pages.start.mst_cc.sub_headline"
 msgstr "TODO: Genial, necesitarás dos cosas antes de empeza"
@@ -456,12 +461,12 @@ msgstr ""
 #, python-format
 msgid "eligibility.pages.index.p[0]%(info_link)s"
 msgstr ""
-"TODO: You can tap your credit or debit card when you board an MST bus, and your "
-"discount will automatically apply every time you ride. Cal-ITP doesn’t save "
-"any of your information, and you don’t need to create an account. Verify for "
-"your benefit, and connect your bank card today. <strong><a class='info-link' "
-"href=\"%(info_link)s\">Learn more about Cal-ITP Benefits</a></strong><span "
-"class='period'>.</span>"
+"TODO: You can tap your credit or debit card when you board an MST bus, and "
+"your discount will automatically apply every time you ride. Cal-ITP doesn’t "
+"save any of your information, and you don’t need to create an account. "
+"Verify for your benefit, and connect your bank card today. <strong><a "
+"class='info-link' href=\"%(info_link)s\">Learn more about Cal-ITP Benefits</"
+"a></strong><span class='period'>.</span>"
 
 #, python-format
 msgid "eligibility.pages.index.help_text%(help_link)s"
@@ -524,12 +529,6 @@ msgstr ""
 
 msgid "enrollment.pages.index.title"
 msgstr "Tarjeta de conexión"
-
-msgid "enrollment.pages.index.mst_cc.eligibility_confirmed.headline"
-msgstr "TODO: Your eligibility is confirmed! You’re nearly there."
-
-msgid "enrollment.pages.index.mst_login.eligibility_confirmed.headline"
-msgstr "TODO: Your eligibility is confirmed! You’re nearly there."
 
 msgid "enrollment.buttons.payment_partner"
 msgstr "Conecta tu tarjeta"
