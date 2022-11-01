@@ -2,9 +2,16 @@ ci:
   autofix_commit_msg: "chore(pre-commit): autofix run"
   autoupdate_commit_msg: "chore(pre-commit): autoupdate hooks"
 
+# by default, install these hook types
+# https://pre-commit.com/#top_level-default_install_hook_types
 default_install_hook_types:
   - pre-commit
   - commit-msg
+
+# by default, confine hooks to these git stages (except for hooks that specify their own stages)
+# https://pre-commit.com/#top_level-default_stages
+default_stages:
+  - commit
 
 repos:
   - repo: https://github.com/compilerla/conventional-pre-commit
