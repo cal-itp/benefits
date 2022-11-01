@@ -47,8 +47,9 @@
     {% endif %}
 
     <script>
-      $(function(){
-        $("#{{ form.id }}").on("submit", function(e) {
+      $(function() {
+        // listen for a custom "submitting" event on the form, for button interactions
+        $("#{{ form.id }}").on("submitting", function(e) {
           if ("{{ form.submitting_value }}" !== "") {
             $("button[type=submit]", this)
               .removeClass("spinner-hidden")
@@ -57,6 +58,11 @@
               .attr("disabled", "true")
               .children().first().text("{{ form.submitting_value }}");
           }
+        });
+
+        // on normal form submit, trigger the custom "submitting" event
+        $("#{{ form.id }}").on("submit", function(e) {
+          $(this).trigger("submitting");
         });
       });
     </script>
@@ -84,8 +90,12 @@
             grecaptcha.execute("{{ request.recaptcha.site_key }}", { action: "submit" }).then(function(token) {
                 // add the token to hidden form element
                 $event.currentTarget.form.elements["{{ request.recaptcha.data_field }}"].value = token;
+                // trigger the custom "submitting" event
+                // since calling .submit() does not trigger the "submit" event
+                // hence the normal handler won't apply
+                $($event.currentTarget.form).trigger("submitting");
                 // submit the form to server
-                $event.currentTarget.form.requestSubmit($event.currentTarget);
+                $event.currentTarget.form.submit($event.currentTarget);
             });
           });
         };
