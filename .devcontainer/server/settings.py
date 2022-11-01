@@ -16,7 +16,7 @@ INPUT_HASH_ALGO = ""
 
 # CSV-specific settings
 
-CSV_DELIMITER = ";"
+CSV_DELIMITER = ","
 CSV_NEWLINE = ""
 CSV_QUOTING = 3
 CSV_QUOTECHAR = ""
