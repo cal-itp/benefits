@@ -10,7 +10,20 @@ resource "azurerm_service_plan" "main" {
   }
 }
 
+resource "azurerm_app_service_certificate" "wildcard" {
+  name                = "${azurerm_key_vault.main.name}-${data.azurerm_key_vault_certificate.wildcard.name}"
+  resource_group_name = data.azurerm_resource_group.prod.name
+  location            = data.azurerm_resource_group.prod.location
+  key_vault_secret_id = data.azurerm_key_vault_certificate.wildcard.id
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
+}
+
 # app_settings are managed manually through the portal since they contain secrets
+
+## PROD ##
 
 resource "azurerm_linux_web_app" "main" {
   name                      = "AS-CDT-PUB-VIP-CALITP-P-001"
@@ -100,11 +113,26 @@ resource "azurerm_linux_web_app" "main" {
   }
 }
 
-resource "azurerm_app_service_custom_hostname_binding" "main" {
+resource "azurerm_app_service_custom_hostname_binding" "prod" {
   hostname            = "benefits.calitp.org"
   app_service_name    = azurerm_linux_web_app.main.name
   resource_group_name = data.azurerm_resource_group.prod.name
+
+  # Ignore ssl_state and thumbprint as they are managed using azurerm_app_service_certificate_binding.prod
+  lifecycle {
+    ignore_changes = [ssl_state, thumbprint]
+  }
 }
+
+# only managing the production certificate binding in Terraform because the provider doesn't support it on slots yet
+# https://github.com/cal-itp/benefits/issues/704#issuecomment-1192045490
+resource "azurerm_app_service_certificate_binding" "prod" {
+  hostname_binding_id = azurerm_app_service_custom_hostname_binding.prod.id
+  certificate_id      = azurerm_app_service_certificate.wildcard.id
+  ssl_state           = "SniEnabled"
+}
+
+## DEV ##
 
 resource "azurerm_linux_web_app_slot" "dev" {
   name                      = "dev"
@@ -160,6 +188,8 @@ resource "azurerm_app_service_slot_custom_hostname_binding" "dev" {
   hostname            = "dev-benefits.calitp.org"
 }
 
+## TEST ##
+
 resource "azurerm_linux_web_app_slot" "test" {
   name                      = "test"
   https_only                = true
@@ -212,4 +242,11 @@ resource "azurerm_linux_web_app_slot" "test" {
 resource "azurerm_app_service_slot_custom_hostname_binding" "test" {
   app_service_slot_id = azurerm_linux_web_app_slot.test.id
   hostname            = "test-benefits.calitp.org"
+}
+
+# migrations
+
+moved {
+  from = azurerm_app_service_custom_hostname_binding.main
+  to   = azurerm_app_service_custom_hostname_binding.prod
 }

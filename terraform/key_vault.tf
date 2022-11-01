@@ -10,3 +10,8 @@ resource "azurerm_key_vault" "main" {
     ignore_changes  = [tags]
   }
 }
+
+data "azurerm_key_vault_certificate" "wildcard" {
+  name         = "calitp-org-wildcard-cert"
+  key_vault_id = azurerm_key_vault.main.id
+}
