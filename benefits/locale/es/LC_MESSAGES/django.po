@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-11-02 21:49+0000\n"
+"POT-Creation-Date: 2022-11-02 23:20+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -362,7 +362,7 @@ msgid "eligibility.pages.index.label"
 msgstr "Seleccione la opción que mejor se adapte a usted:"
 
 msgid "core.buttons.previous_page"
-msgstr "Pagina Anterior"
+msgstr "Página Anterior"
 
 msgid "core.pages.error.title"
 msgstr "Error"
