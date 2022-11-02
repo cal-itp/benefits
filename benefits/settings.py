@@ -283,7 +283,6 @@ CSP_SCRIPT_SRC = [
     "'unsafe-inline'",
     "https://cdn.amplitude.com/libs/",
     "https://cdn.jsdelivr.net/",
-    "https://code.jquery.com/",
     "*.littlepay.com",
 ]
 env_script_src = _filter_empty(os.environ.get("DJANGO_CSP_SCRIPT_SRC", "").split(","))
