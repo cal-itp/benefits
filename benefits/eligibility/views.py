@@ -100,7 +100,10 @@ def start(request):
         details=_(verifier.start_item_details),
     )
 
+    help_anchor = "mst-courtesy-card"
+
     if verifier.is_auth_required:
+        help_anchor = "login-gov"
         if verifier.uses_auth_verification:
             identity_item.bullets = [
                 _("eligibility.pages.start.mst_login.required_items[0]"),
@@ -133,7 +136,8 @@ def start(request):
     ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_INDEX))
     ctx["start_sub_headline"] = _(verifier.start_sub_headline)
     ctx["media"] = media
-    ctx["help_link"] = reverse(ROUTE_HELP)
+    help_page = reverse(ROUTE_HELP)
+    ctx["help_link"] = f"{help_page}#{help_anchor}"
 
     # update origin now, after we've saved the previous page
     session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))
