@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-11-02 19:52+0000\n"
+"POT-Creation-Date: 2022-11-02 20:13+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -29,10 +29,10 @@ msgstr ""
 "tránsito es la mitad de la tarifa estándar."
 
 msgid "eligibility.pages.start.mst_login.title"
-msgstr "TODO: Older Adult benefit information"
+msgstr "Información sobre beneficios para Adultos Mayores"
 
 msgid "eligibility.pages.start.mst_login.headline"
-msgstr "TODO: You selected an Older Adult benefit."
+msgstr "Usted seleccionó un beneficio para Adultos Mayores"
 
 msgid "eligibility.pages.start.mst_login.sub_headline"
 msgstr "Necesitará algunos artículos para conectar su descuento:"
@@ -88,19 +88,21 @@ msgstr ""
 "nueva tarifa de tránsito es la mitad de la tarifa estándar."
 
 msgid "eligibility.pages.start.mst_cc.title"
-msgstr "TODO: Courtesy Card information"
+msgstr "Información de la Tarjeta de Cortesía"
 
 msgid "eligibility.pages.start.mst_cc.headline"
-msgstr "TODO: You selected a Courtesy Card benefit."
+msgstr "Usted a seleccionado un Beneficio de la Tarjeta de Cortesía."
 
 msgid "eligibility.pages.start.mst_cc.sub_headline"
-msgstr "TODO: Genial, necesitarás dos cosas antes de empeza"
+msgstr "Necesitará algunos artículos para conectar su beneficio:"
 
 msgid "eligibility.pages.start.mst_cc.start_item.heading"
-msgstr "Tu tarjeta de cortesía MST"
+msgstr "Su número actual de Tarjeta de Cortesía"
 
 msgid "eligibility.pages.start.mst_cc.start_item.details"
-msgstr "Una tarjeta activa que no ha caducado"
+msgstr ""
+"No necesitas tener su tarjeta física, pero necesitará saber el número. El "
+"número comienza con un signo de número (#) seguido de cinco dígitos."
 
 msgid "eligibility.pages.confirm.mst_cc.title"
 msgstr "Verificar su tarjeta de cortesía MST"
@@ -358,7 +360,7 @@ msgid "eligibility.pages.index.label"
 msgstr "Seleccione la opción que mejor se adapte a usted:"
 
 msgid "core.buttons.previous_page"
-msgstr "TODO: Previous Page"
+msgstr "Pagina Anterior"
 
 msgid "core.pages.error.title"
 msgstr "Error"
@@ -451,8 +453,8 @@ msgstr "Este campo es requerido."
 #, python-format
 msgid "eligibility.pages.start.help_text%(help_link)s"
 msgstr ""
-"TODO: Questions about the items above? Please visit our <a href="
-"\"%(help_link)s\">Help Page</a>."
+"¿Preguntas sobre los artículos anteriores? Visite nuestro <a href="
+"\"%(help_link)s\">Página de Ayuda</a>."
 
 msgid "eligibility.pages.index.title"
 msgstr "Seleccione una opción de beneficio"
