@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-11-02 20:20+0000\n"
+"POT-Creation-Date: 2022-11-02 20:42+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -59,16 +59,15 @@ msgstr ""
 "proveedor de tránsito local para obtener asistencia."
 
 msgid "enrollment.pages.index.mst_login.eligibility_confirmed.headline"
-msgstr "TODO: Your eligibility is confirmed! You’re nearly there."
+msgstr "¡Su elegibilidad está confirmada! Ya casi estás allí."
 
 msgid "enrollment.pages.index.mst_login.eligibility_confirmed_item.heading"
-msgstr "TODO: Your eligibility is confirmed for an Older Adult benefit"
+msgstr "Su eligibilidad es confirmada para un beneficio de Adulto Mayor"
 
 msgid "enrollment.pages.index.mst_login.eligibility_confirmed_item.details"
 msgstr ""
-"TODO: Your eligibility has been verified by MST through your Courtesy Card "
-"account. This benefit will give you a half-price fare on public "
-"transportation with MST."
+"Su elegibilidad ha sido verificada por Login.gov. Este beneficio le dará una "
+"tarifa a mitad de precio en el transporte público con MST."
 
 msgid "enrollment.pages.success.mst_login.confirm_item.details"
 msgstr ""
@@ -143,7 +142,7 @@ msgstr ""
 "out to Monterey-Salinas Transit for assistance."
 
 msgid "enrollment.pages.index.mst_cc.eligibility_confirmed.headline"
-msgstr "TODO: Your eligibility is confirmed! You’re nearly there."
+msgstr "¡Su elegibilidad está confirmada! Ya casi estás allí."
 
 msgid "enrollment.pages.success.mst_cc.confirm_item.details"
 msgstr ""
@@ -522,22 +521,22 @@ msgstr ""
 "para cerrar la sesión de"
 
 msgid "enrollment.pages.index.link_card_item.heading"
-msgstr "TODO: The next step is to link your bank card"
+msgstr "El siguiente paso es vincular su tarjeta bancaria"
 
 #, python-format
 msgid "enrollment.pages.index.link_card_item.p[0]%(link)s"
 msgstr ""
-"TODO: Now that your eligibility has been verified we can link your transit "
-"discount to your card through our payment partner, <a href=\"%(link)s"
-"\">Littlepay</a>. We don’t store your information, and you won’t be charged."
+"Ahora que se ha verificado su elegibilidad, vincularemos su descuento de "
+"tránsito a su tarjeta a través de nuestro socio de pago, <a href=\"%(link)s"
+"\">Littlepay</a>. No almacenamos su información y no se te cobrará."
 
 msgid "enrollment.pages.index.link_card_item.p[1]"
 msgstr ""
-"TODO: Please use a bank-issued contactless Visa or Mastercard credit or "
-"debit card."
+"Por favor utilice una tarjeta de crédito o débito Visa o Mastercard sin "
+"contacto emitida por un banco."
 
 msgid "enrollment.pages.index.title"
-msgstr "Tarjeta de conexión"
+msgstr "Conecte su tarjeta"
 
 msgid "enrollment.buttons.payment_partner"
 msgstr "Conecta tu tarjeta"
