@@ -52,9 +52,7 @@ def index(request):
 
     ctx = page.context_dict()
     ctx["help_page"] = help_page
-    ctx["help_text"] = format_html(
-        _("eligibility.pages.index.help_text%(help_link)s") % {"help_link": f"{help_page}#login-gov"}
-    )
+    ctx["help_text"] = format_html(_("eligibility.pages.index.help_text%(help_link)s") % {"help_link": help_page})
 
     if request.method == "POST":
         form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency)
@@ -100,10 +98,7 @@ def start(request):
         details=_(verifier.start_item_details),
     )
 
-    help_anchor = "mst-courtesy-card"
-
     if verifier.is_auth_required:
-        help_anchor = "login-gov"
         if verifier.uses_auth_verification:
             identity_item.bullets = [
                 _("eligibility.pages.start.mst_login.required_items[0]"),
@@ -137,7 +132,7 @@ def start(request):
     ctx["start_sub_headline"] = _(verifier.start_sub_headline)
     ctx["media"] = media
     help_page = reverse(ROUTE_HELP)
-    ctx["help_link"] = f"{help_page}#{help_anchor}"
+    ctx["help_link"] = f"{help_page}#{verifier.start_help_anchor}"
 
     # update origin now, after we've saved the previous page
     session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))
