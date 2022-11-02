@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-11-02 21:26+0000\n"
+"POT-Creation-Date: 2022-11-02 21:49+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -567,7 +567,8 @@ msgstr "¡Felicidades! Su descuento ahora está vinculado a su tarjeta bancaria.
 msgid "enrollment.pages.success.helplink%(link)s"
 msgstr ""
 "Gracias por usar los Beneficios de Cal-ITP. Para más información, consulte "
-"nuestro our <a href=\"%(link)s\" rel=\"noopener noreferrer\">Help Page</a>."
+"nuestro our <a href=\"%(link)s\" rel=\"noopener noreferrer\">Página de "
+"Ayuda</a>."
 
 msgctxt "image alt text"
 msgid "core.icons.calendarcheck"
