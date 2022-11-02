@@ -281,8 +281,8 @@ if len(env_frame_src) > 0:
 
 CSP_SCRIPT_SRC = [
     "'unsafe-inline'",
-    "https://california.azureedge.net/",
     "https://cdn.amplitude.com/libs/",
+    "https://cdn.jsdelivr.net/",
     "https://code.jquery.com/",
     "*.littlepay.com",
 ]
