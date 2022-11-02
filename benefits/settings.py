@@ -281,9 +281,8 @@ if len(env_frame_src) > 0:
 
 CSP_SCRIPT_SRC = [
     "'unsafe-inline'",
-    "https://california.azureedge.net/",
     "https://cdn.amplitude.com/libs/",
-    "https://code.jquery.com/",
+    "https://cdn.jsdelivr.net/",
     "*.littlepay.com",
 ]
 env_script_src = _filter_empty(os.environ.get("DJANGO_CSP_SCRIPT_SRC", "").split(","))
