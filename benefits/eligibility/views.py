@@ -52,9 +52,7 @@ def index(request):
 
     ctx = page.context_dict()
     ctx["help_page"] = help_page
-    ctx["help_text"] = format_html(
-        _("eligibility.pages.index.help_text%(help_link)s") % {"help_link": f"{help_page}#what-is-cal-itp"}
-    )
+    ctx["help_text"] = format_html(_("eligibility.pages.index.help_text%(help_link)s") % {"help_link": help_page})
 
     if request.method == "POST":
         form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency)
@@ -133,7 +131,8 @@ def start(request):
     ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_INDEX))
     ctx["start_sub_headline"] = _(verifier.start_sub_headline)
     ctx["media"] = media
-    ctx["help_link"] = reverse(ROUTE_HELP)
+    help_page = reverse(ROUTE_HELP)
+    ctx["help_link"] = f"{help_page}#{verifier.start_help_anchor}"
 
     # update origin now, after we've saved the previous page
     session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))

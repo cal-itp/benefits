@@ -288,6 +288,18 @@ msgstr ""
 "identity/how-to-verify-your-identity/' target=\"_blank\" rel=\"noopener "
 "noreferrer\">Help Center.</a>"
 
+msgid "core.pages.help.mst_cc"
+msgstr "What is a Courtesy Card?"
+
+msgid "core.pages.help.mst_cc.p[0]"
+msgstr ""
+"Courtesy Cards are issued by Monterey-Salinas Transit to riders who qualify "
+"for a number of discounted-fare programs. This website is a demonstration "
+"tool to support the Courtesy Card program. This benefit may need to be "
+"renewed in the future based on the expiration date of the Courtesy Card. "
+"Learn more at the <a href='https://mst.org/riders-guide/how-to-ride/courtesy-"
+"card/' target =\"blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
+
 msgid "core.pages.help.littlepay"
 msgstr "What is Littlepay?"
 
