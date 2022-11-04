@@ -20,7 +20,7 @@ def load_sample_data(app, *args, **kwargs):
 
     server_public_key = PemData.objects.create(
         label="Eligibility server public key",
-        remote_url="https://raw.githubusercontent.com/cal-itp/eligibility-server/main/keys/server.pub",
+        remote_url="https://raw.githubusercontent.com/cal-itp/eligibility-server/dev/keys/server.pub",
     )
 
     client_private_key = PemData.objects.create(
