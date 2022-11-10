@@ -1,160 +1,351 @@
-/* HTML element overrides */
+:root {
+  --primary-color: #046b99;
+  --primary-color-rgb: 4, 107, 153;
+  --bs-blue: var(--primary-color);
+  --bs-primary: var(--primary-color);
+  --bs-primary-rgb: var(--primary-color-rgb);
+  --text-primary-color: #000000;
+  --bs-body-color: var(--text-primary-color);
+  --bs-body-text-align: left;
+  --bs-body-font-weight: 400;
+  --medium-font-weight: 500;
+  --bold-font-weight: 700;
+  --bs-body-font-size: calc(18rem / 16);
+  --bs-font-sans-serif: Roboto, system-ui, -apple-system, "Segoe UI", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-body-line-height: 1.5;
+  --body-letter-spacing: 0.05em;
+  --dark-color: #212121;
+  --hover-color: #2f4c65;
+  --error-color: #ea1010;
+  --selected-color: #562b97;
+  --error-color-rgb: 234, 16, 16;
+  --bs-danger: var(--error-color);
+  --bs-danger-rgb: var(--error-color-rgb);
+  --standout-color: #323a45;
+  --h1-font-size: calc(24rem / 16);
+  --h1-text-align: left;
+  --h2-font-size: calc(24rem / 16);
+  --h3-font-size: calc(20rem / 16);
+  --font-size-24px: calc(24rem / 16);
+  --font-size-16px: calc(16rem / 16);
+  --font-size-14px: calc(14rem / 16);
+  --font-size-12px: calc(12rem / 16);
+  --border-width: calc(2rem / 16);
+  --border-radius: calc(3rem / 16);
+}
 
-body {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 22px;
-  color: #000000;
+@media (min-width: 992px) {
+  :root {
+    --h1-font-size: calc(35rem / 16);
+    --h1-text-align: center;
+  }
 }
 
 @font-face {
   font-family: "Public Sans";
-  font-weight: 700;
+  font-weight: var(--bold-font-weight);
   font-style: normal;
   src: local("PublicSans"), url("../fonts/PublicSans-Bold.woff") format("woff");
 }
 
-body,
+body {
+  font-size: 100%;
+}
+
 h1,
 h2,
+.h2,
 h3,
+.h3,
 h4,
 h5,
 h6,
 p,
 a,
+label,
 span,
+button,
+input,
+small,
 li {
-  font-family: "Roboto", sans-serif;
+  font-family: var(--bs-body-font-family);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 30px;
-  margin-top: 30px;
-  margin-bottom: 20px;
+/* Paragraph: Body Text */
+/* Same sizes for all screen widths */
+p,
+.p,
+span,
+.span,
+li {
+  font-size: var(--bs-body-font-size);
+  font-weight: var(--bs-body-font-weight);
+  letter-spacing: var(--body-letter-spacing);
+  line-height: var(--bs-body-line-height);
+  margin: 0;
 }
 
-h1 {
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 30px;
-  letter-spacing: 0.05em;
+@media (max-width: 992px) {
+  /* Paragraph: Body Text, up to Small width */
+  .p-sm {
+    font-size: var(--bs-body-font-size);
+    font-weight: var(--bs-body-font-weight);
+    letter-spacing: var(--body-letter-spacing);
+    line-height: var(--bs-body-line-height);
+    margin: 0;
+  }
 }
 
-p {
-  margin-bottom: 1.5rem;
-  font-size: 18px;
-  line-height: 27px;
-  letter-spacing: 0.05em;
+@media (min-width: 992px) {
+  /* Utility Class: Padding bottom 64px on Desktop */
+  /* Pair with pb-4 on Form pages to get 24px on Mobile, 64px on Desktop */
+  .pb-lg-8 {
+    padding-bottom: 64px !important;
+  }
 }
 
-label {
-  font-size: 18px;
-  line-height: 26px;
-  letter-spacing: 0.05em;
+.pt-8 {
+  padding-top: 64px;
 }
 
-.main-content .main-primary a:not(.btn) {
-  background: none;
+.fs-base {
+  font-size: var(--bs-body-font-size);
 }
 
-/* making the sticky footer */
-
-html,
-body {
-  height: 100%;
-  overflow-y: unset;
+.ls-base {
+  letter-spacing: var(--body-letter-spacing);
 }
 
-body {
-  display: flex;
-  flex-direction: column;
+/* Links */
+/* Same sizes for all screen widths: 18px */
+a:not(.btn) {
+  color: var(--primary-color);
+  text-decoration: underline;
+  text-decoration-style: solid;
+  font-weight: var(--bold-font-weight);
 }
 
-main {
-  flex-shrink: 0 !important;
-}
-
-main#main-content.main-content {
-  position: relative;
-}
-
-/* All pages but the Start Page */
-main .main-row {
-  min-height: calc(100vh - 120px);
-}
-
-main .main-row .col-lg-6.image {
-  background: 48% 75% url("/static/img/ridertappingbankcard.png") no-repeat;
-  background-size: cover;
-}
-
-.one-column-image {
-  background: url("/static/img/rider-tapping-bank-card-horizontal.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  height: 292px;
-}
-
-footer {
-  margin-top: auto;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-footer.global-footer .footer-links a {
-  font-size: 18px;
-  color: #73b3e7;
+a:hover:not(.btn) {
+  color: var(--hover-color);
   text-decoration: underline;
 }
 
-footer.global-footer .footer-links a:hover,
-footer.global-footer .footer-links a:focus,
-footer.global-footer .footer-links a:active {
-  color: #9b74d7;
-  text-decoration: none;
+a:visited:not(.btn) {
+  color: var(--selected-color);
 }
 
-/* class styles */
-
-.bg-p2,
-.bg-primary {
-  background-color: #2b6597 !important;
+/* Headlines */
+/* All headlines */
+/* All headlines share font-weight, letter-spacing, line-height and margin */
+h1,
+h2,
+.h2,
+h3,
+.h3,
+h4 {
+  font-weight: var(--bold-font-weight);
+  letter-spacing: var(--body-letter-spacing);
+  line-height: var(--bs-body-line-height);
+  margin: 0;
 }
 
-.btn-lg {
+/* H1 */
+/* Mobile first: Screen width up to 992px - 24px (24rem/16 = 1.5rem) and left */
+/* Screen width above 992px - 35px (35rem/16 = 2.1875rem) and centered */
+/* Does not have a class. Do not apply to non-headline elements. */
+h1 {
+  font-size: var(--h1-font-size);
+  text-align: var(--h1-text-align);
+  padding-top: calc(70rem / 16);
+}
+
+/* H2 */
+/* Same sizes for all screen widths: 24px (24rem/16 = 1.5rem) */
+/* Also has a class which can be applied to non-headline elements */
+h2,
+.h2 {
+  font-size: var(--h2-font-size);
+}
+
+/* H3 */
+/* Same sizes for all screen widths: 20px (20rem/16 = 1.25rem) */
+/* Also has a class which can be applied to non-headline elements */
+h3,
+.h3 {
+  font-size: var(--h3-font-size);
+}
+
+/* Main */
+/* The minimum height is calculated by 100 viewport height minus Header and Footer height */
+main {
+  min-height: var(--main-content-min-height);
+}
+
+/* Footer */
+/* Footer has same font styles on all screen widths */
+/* Mobile first: One link per row, each link is 50px height */
+/* Screen width above 992px - Footer is 50px height */
+/* Total footer height is 50px on Desktop */
+/* And 102 on Mobile */
+/* Footer breakpoint set to 992px */
+/* Note: Not all Footer styles are written in mobile-first */
+/* to style the full-width line on mobile */
+/* and the desktop container-width sizing */
+
+:root {
+  --footer-background-color: var(--dark-color);
+  --footer-link-color: #73b3e7;
+  --footer-link-width: 100%;
+  --footer-link-hover-color: #9b74d7;
+  --footer-link-font-weight: var(--medium-font-weight);
+  --footer-mobile-underline-color: var(--bs-white);
+  --main-content-min-height: calc(100vh - 246px);
+  /* 246px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) + Footer Margin Top (64px) */
+}
+
+@media (min-width: 992px) {
+  :root {
+    --footer-link-width: auto;
+    --main-content-min-height: calc(100vh - 194px);
+    /* 194px = Header Height (80px) + Footer Height (50px) + Footer Margin Top (64px) */
+  }
+}
+
+footer {
+  background: var(--footer-background-color);
+  margin-top: 64px;
+}
+
+footer .footer-links li {
+  width: var(--footer-link-width);
+}
+
+footer .footer-links li a {
+  color: var(--footer-link-color);
+  font-weight: var(--footer-link-font-weight);
+  font-size: var(--bs-body-font-size);
+  text-decoration: underline;
+  letter-spacing: 0;
+  line-height: 50px;
+}
+
+footer .footer-links li a:hover,
+footer .footer-links li a:focus,
+footer .footer-links li a:active,
+footer .footer-links li a:visited {
+  color: var(--footer-link-hover-color);
+}
+
+/* Custom non-mobile-first code to */
+/* allow the mobile footer to have a */
+/* full-width line beyond container-fluid width */
+@media (max-width: 992px) {
+  footer {
+    margin-top: 64px;
+  }
+
+  footer .container {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  footer .footer-links li:not(:last-child) {
+    border-bottom: 2px solid var(--footer-mobile-underline-color);
+  }
+}
+
+/* Header */
+
+#header-container {
+  height: 80px;
+}
+
+/* Language button */
+#header-container .btn-outline-light {
+  font-size: var(--bs-body-font-size);
+  padding: 3.5px 29.01px; /* 126 x 38px, all screen sizes  */
+}
+
+/* Buttons */
+/* Primary Button: Use all three classes: btn btn-lg btn-primary */
+/* Set button width in parent with Bootstrap column */
+/* Height: 60px on Desktop; 72 on mobile*/
+
+:root {
+  --primary-button-padding: 19px 0;
+}
+
+@media (min-width: 992px) {
+  :root {
+    --primary-button-padding: 13px 0;
+  }
+}
+
+.btn.btn-lg.btn-primary {
+  border-width: 2px;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  font-weight: var(--medium-font-weight);
+  font-size: calc(20rem / 16);
+  width: 100%;
+  padding: var(--primary-button-padding);
+}
+
+.btn-text {
+  letter-spacing: 0.02em;
+  font-weight: var(--medium-font-weight);
+  font-size: calc(20rem / 16);
+}
+
+/* A button that actually is a text link */
+/* TODO: Check if this is actually really used anymore */
+.btn-link {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+/* Previous Button, Language Button */
+.btn-outline-dark,
+.btn-outline-light {
   border-width: 2px;
 }
 
-/* Log In */
+/* Custom button: Loading spinner */
 
-#login {
-  background: #046b99;
-  border: 0;
-  color: #ffffff;
-  cursor: pointer;
-  display: block;
-  line-height: 1;
-  padding: 11.999px 13.4px;
-  min-width: auto;
-  text-transform: none;
-  letter-spacing: 0;
-  margin-right: inherit;
-  font-size: 16px;
-  margin-bottom: 32px;
-  font-family: "Public Sans", Roboto, system-ui;
+.spinner-hidden .spinner-border {
+  display: none;
 }
 
-#login:hover {
-  background: #2f4c65;
+.spinner-border {
+  border-width: 3px;
+  margin-left: 15px;
+}
+
+/* Custom button: Login.gov Button with text and SVG */
+/* Used on Eligibility Start */
+
+:root {
+  --login-gov-button-font-size: var(--h3-font-size);
+  --login-gov-button-padding: 11px 0;
+}
+
+@media (min-width: 992px) {
+  :root {
+    --login-gov-button-font-size: var(--font-size-16px);
+    --login-gov-button-padding: var(--primary-button-padding);
+  }
+}
+
+#login {
+  cursor: pointer;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: var(--login-gov-button-font-size);
+  font-family: "Public Sans", Roboto, system-ui;
+  padding: var(--login-gov-button-padding);
 }
 
 /* Sets the text `Login.gov` as transparent */
@@ -163,224 +354,224 @@ footer.global-footer .footer-links a:active {
 #login .fallback-text {
   background: url("/static/img/login-gov-logo-rev.svg") no-repeat;
   background-size: contain;
-  display: inline-block;
+  display: block;
+  margin: 8px auto 0 auto;
   position: relative;
   width: 132px;
   height: 18px;
-  margin-left: 5px;
   padding-top: 1px;
-  vertical-align: baseline;
   color: transparent;
+  font-size: var(--font-size-16px);
+  font-weight: var(--bold-font-weight);
+  line-height: 1;
 }
 
-/* Sign Out */
-
-.signout-row {
-  position: absolute;
-  width: 100%;
-  z-index: 100;
+@media (min-width: 992px) {
+  #login .fallback-text {
+    margin: 0 0 0 5px;
+    display: inline-block;
+    vertical-align: baseline;
+  }
 }
 
-.signout-row .container {
-  display: flex;
-  justify-content: flex-end;
+/* Custom button: Sign Out */
+/* Nav Buttons: Previous Page, Sign Out */
+
+.nav-button-row {
+  height: calc(70rem / 16);
 }
 
-.signout-row .container .signout-link {
-  font-size: 12px;
-  text-decoration: underline;
-  color: #2b6597;
-  letter-spacing: 0.05rem;
-  padding-top: 18px;
-  display: block;
+/* Custom button: Sign Out */
+
+.signout-link,
+.signout-link:visited {
+  font-size: var(--bs-body-font-size);
+  color: var(--primary-color) !important;
+  padding: 2px 4px;
+  border-radius: var(--border-radius);
+  border: var(--border-width) solid var(--primary-color);
+  letter-spacing: 0.02em;
+  font-weight: 500 !important;
+  text-decoration: none !important;
 }
 
-.btn-link {
-  color: #046b99;
+@media (min-width: 992px) {
+  .signout-link,
+  .signout-link:visited {
+    font-size: var(--font-size-12px);
+    text-decoration: underline !important;
+    letter-spacing: var(--body-letter-spacing);
+    border: none;
+  }
 }
 
-.btn-primary {
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+/* Custom button: Previous Page */
+
+#previous-page-button {
+  border-color: var(--text-primary-color);
+  color: var(--text-primary-color);
+  font-weight: var(--medium-font-weight);
+  font-size: var(--font-size-14px);
+  letter-spacing: var(--body-letter-spacing);
+  padding: 3.5px 2.35px; /* button dimensions are 130 x 32 */
 }
 
-.btn-outline-light {
-  width: 126px;
-  height: 38px;
-  padding: 0px !important;
+#previous-page-button:hover {
+  background: none;
+  color: var(--hover-color);
+  border-color: var(--hover-color);
 }
 
-.form-control {
-  border-radius: 0.25rem;
-  border-color: #212121;
-  border-width: 2px;
-  color: #212121;
+@media (min-width: 992px) {
+  #previous-page-button,
+  #previous-page-button:hover {
+    border: none;
+  }
 }
 
-.form-control:focus-within {
-  color: #212121;
+/* Forms: Text Inputs */
+/* Form Container: Must use .form-container parent to use these styles */
+
+:root {
+  --form-input-gap: calc(22rem / 16);
 }
 
-.form-control-lg {
-  border-radius: 0.3rem;
+@media (min-width: 992px) {
+  :root {
+    --form-input-gap: calc(42rem / 16);
+  }
 }
 
-.required-label {
-  color: #000;
+.form-container .form-group:not(:first-child) {
+  padding-top: var(--form-input-gap);
 }
 
-.form-group:not(.with-errors) {
-  margin-bottom: 2.375rem;
+.form-container .form-control-label {
+  font-size: var(--bs-body-font-size);
+  font-weight: var(--medium-font-weight);
+  letter-spacing: var(--body-letter-spacing);
+  padding-bottom: calc(12rem / 16);
 }
 
-.form-group:not(.with-errors):nth-last-of-type(2) {
-  margin-bottom: 3.375rem;
+.form-container .form-control {
+  border-width: var(--border-width);
+  border-radius: var(--border-radius);
+  border-color: var(--primary-color);
+  color: var(--text-primary-color);
+  font-size: var(--font-size-24px);
+  padding: 0.625rem 0.75rem;
+  /* Input height should be 60px */
 }
 
-.form-group.with-errors label,
-.form-group.with-errors .required-label {
-  color: #de0c0c;
+.form-text {
+  font-size: var(--font-size-14px);
 }
 
-.form-group.with-errors .form-control {
-  border-color: #de0c0c;
+/* Forms: Radio Buttons */
+
+:root {
+  --radio-button-size: calc(24rem / 16);
+  --radio-input-color: var(--standout-color);
+  --radio-input-gap: calc(24rem / 16);
 }
 
-.form-group.with-errors .error-message {
-  font-size: 14px;
-  padding-left: 1rem;
+@media (min-width: 992px) {
+  :root {
+    --radio-input-gap: calc(15rem / 16);
+  }
 }
 
-.form-group.with-errors .error-message p {
-  margin-bottom: 0;
+.radio-label {
+  cursor: pointer;
 }
 
-.global-footer {
-  background: #212121;
+.radio-input-group {
+  gap: var(--radio-input-gap);
 }
 
-/* Eligibility Start */
+.radio-input-group:not(:first-child) {
+  padding-top: calc(24rem / 16);
+}
+
+.radio-input {
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: var(--radio-button-size);
+  height: var(--radio-button-size);
+  border: var(--border-width) solid var(--radio-input-color);
+  margin: calc(3rem / 16) 0;
+}
+
+.radio-input:checked {
+  background-color: var(--radio-input-color);
+  box-shadow: inset 0 0 0 var(--border-width) var(--bs-white);
+}
+
+/* Media List */
+
+:root {
+  --media-item-icon-size: calc(64rem / 16);
+  --media-item-gap: calc(24rem / 16);
+  --media-item-icon-margin: calc(24rem / 16);
+  --media-title-margin-top: calc(24rem / 16);
+}
+
+@media (min-width: 992px) {
+  :root {
+    --media-item-icon-size: calc(90rem / 16);
+    --media-item-gap: calc(62rem / 16);
+    --media-item-icon-margin: calc(32rem / 16);
+    --media-title-margin-top: calc(64rem / 16);
+  }
+}
+
+h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Success, but not Eligibility Start */
+.media-body--details p:not(:first-of-type) {
+  /* All the p within .media-body--details, except for the first p - Any media item with more than one p */
+  padding-top: calc(24rem / 16);
+}
 
 .media-title {
-  margin-top: 100px;
-  margin-bottom: 60px;
-  font-size: 24px;
-  line-height: 36px;
-  letter-spacing: 0.05em;
-  font-weight: 700;
+  margin-top: var(--media-title-margin-top);
+  margin-bottom: calc(24rem / 16);
 }
 
 .media-list {
-  margin-top: 0;
-  margin-bottom: 80px;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 116px;
-}
-
-.media-list .media {
-  display: flex;
-  align-items: stretch;
-  width: 100%;
-}
-
-.media-list .media .media-line {
-  position: relative;
+  gap: var(--media-item-gap);
+  margin-bottom: calc(64rem / 16);
 }
 
 .media-list .media .media-line .icon {
-  width: 115px;
-  height: 115px;
-  position: relative;
-  display: block;
-  z-index: 10;
+  width: var(--media-item-icon-size);
+  height: var(--media-item-icon-size);
+  margin-right: var(--media-item-icon-margin);
 }
 
-.media-list .media .media-body {
-  padding: 0 60px;
-  line-height: 26.1px;
-}
-
-.media-list .media .media-body--heading {
-  font-size: 18px;
-  letter-spacing: 0.05em;
-  line-height: 26.1px;
-  font-weight: 700;
-  padding-left: 0;
-  margin-top: 0;
-  margin-bottom: 16px;
-}
-
-.media-list .media .media-body--details {
-  font-size: 18px;
-  letter-spacing: 0.05em;
-  padding-bottom: 1rem;
-  line-height: 26.1px;
-}
-
-.media-list .media .media-body--details p {
-  margin-bottom: 12px;
-}
-
-.media-list .media .media-body--items {
-  font-size: 18px;
-  letter-spacing: 0.05em;
-  line-height: 26.1px;
+.media-list .media .media-body--details,
+.media-list .media .media-body--items li:first-child {
+  padding-top: calc(5rem / 16);
 }
 
 .media-list .media .media-body--items li {
   list-style-type: disc;
 }
 
-.media-list .media .media-body .media-body--links .btn-lg {
-  font-size: 16px;
-  letter-spacing: 0.05em;
-  padding: 0 0 6px 0;
-  text-align: left;
-  width: fit-content;
-}
-
-.media-list .media .media-body .media-body--links .btn-lg:hover {
-  color: #2f4c65;
-}
-
-.eligibility-start .main-container {
-  padding-top: 3rem;
-  padding-bottom: 2rem;
-  width: initial;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.eligibility-start .buttons {
-  display: flex;
-  align-items: flex-end;
-  justify-content: right;
-  margin-bottom: 30px;
-}
-
-.eligibility-start .main-container .buttons .btn {
-  margin-left: initial;
-  margin-right: initial;
-}
-
-.eligibility-start .main-container .buttons label {
-  margin: 0 0.8rem 0 0;
-  line-height: 1;
-}
-
-.eligibility-start h1.headline {
-  font-size: 35px;
-  line-height: 52.5px;
-  letter-spacing: 0.05em;
-  text-align: center;
-  margin-bottom: 50px;
-  margin-top: 64px;
-}
-
 /* Enrollment Success */
+/* Custom in-line log out button for Enrollment Success, in paragraph */
+
+:root {
+  --logout-paragraph-margin-left: calc(
+    var(--media-item-icon-margin) + var(--media-item-icon-size)
+  );
+}
+
+@media (min-width: 992px) {
+  :root {
+    --logout-paragraph-margin-left: 0;
+  }
+}
 
 .enrollment-success #login {
   padding: 0 0.5rem 0.3rem 0.6rem;
@@ -397,468 +588,59 @@ footer.global-footer .footer-links a:active {
   width: 7rem;
 }
 
-.logged-out.enrollment-success .success-image {
-  display: block;
-  margin: 0 auto;
-  height: 150px;
-  width: 150px;
-  margin-top: 15%;
+.enrollment-success .logout-paragraph {
+  margin-left: var(--logout-paragraph-margin-left);
 }
 
-.logged-out.enrollment-success .container.content {
-  padding-top: 20vh;
-}
-
-.logged-out.enrollment-success .container.content h1 {
-  text-align: center;
-}
-
-.radio-container {
-  display: block;
-  margin-left: 15%;
-}
-
-.radio-label {
-  cursor: pointer;
-  display: inline;
-  margin-left: 15px;
-}
-
-.radio-input {
-  cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-
-  border: 3px solid #000;
-  margin-right: 5px;
-  margin-top: 20px;
-
-  position: relative;
-  top: 7px;
-}
-
-.radio-input:checked {
-  background-color: #046b99;
-  box-shadow: inset 0 0 0 2px white;
-}
-
-.radio-label-description {
-  display: block;
-  font-size: 0.75rem;
-  margin-left: 2rem;
-  font-weight: normal;
-}
-
-/* context-specific overrides */
-
-/* Header */
-
-.navbar.navbar-expand-sm.navbar-dark.bg-primary {
-  padding: 8.5px 1rem;
-}
-
-.navbar-brand {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-.navbar-brand img.sm {
-  width: 120px;
-}
-
-.navbar-brand img.lg {
-  width: 271px;
-}
-
-.container.content {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-.container.content .buttons label {
-  display: block;
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
-.container.content h1.icon-title {
-  padding-bottom: 1.5rem;
-  line-height: 36px;
-  text-align: center;
-}
-
-.container.content h1.icon-title span.icon {
-  text-align: center;
-  display: block;
-  padding-bottom: 3rem;
-}
-
-.container.content h1.icon-title img.icon {
-  width: 150px;
-  height: 150px;
-}
-
-.with-image .container.content h1.icon-title img.icon {
-  width: 92px;
-  height: 92px;
-}
-
-.with-image .container.content h1.icon-title {
-  text-align: left;
-}
-
-.container.content.help {
-  margin: 4rem auto 2rem auto;
-}
-
-.container.content.help h1 {
-  letter-spacing: 0.05em;
-  font-weight: 700;
-  font-size: 2.25rem;
-  text-align: center;
-  margin-top: 5.5rem;
-  margin-bottom: 4rem;
-}
-
-.container.content.help h2 {
-  letter-spacing: 0.05em;
-  font-weight: 700;
-  font-size: 1.5rem;
-  margin-bottom: 3rem;
-  margin-top: 3rem;
-}
-
-.container.content.help p {
-  margin-bottom: 2rem;
-}
-
-.container.content.help .buttons-agencies,
-.with-agency-links .buttons-agencies {
-  font-size: 18px;
-  letter-spacing: 0.05rem;
-  margin-bottom: 3rem;
-}
-
-.container.content.help .buttons-agencies a,
-.with-agency-links .container.content .buttons-agencies a {
-  display: table;
-  margin-bottom: 0.2rem;
-}
-
-.container.content.help .buttons-agencies label,
-.with-agency-links .container.content .buttons-agencies label {
-  display: block;
-  margin-top: 2rem;
-  font-size: 18px;
-}
-
-.container.content.help .button-back {
-  margin-top: 5rem;
-  margin-bottom: 5rem;
-}
-
-.container.content h1 ~ p:nth-last-of-type(1) {
-  margin-bottom: 2rem;
-}
-
-.container.content .btn-lg,
-.eligibility-start .btn-link {
-  font-weight: 500;
-  margin-bottom: 1rem;
-  padding: 0.8125rem;
-  /* btn-lg height is 60px */
-  width: 100%;
-}
-
-.container.content .btn-link,
-.eligibility-start .btn-link {
-  text-decoration: underline;
-}
-
-/* media queries */
-
-@media (max-width: 320px) {
-  #login {
-    padding: 1rem 1.25rem;
-  }
-
-  .eligibility-start .main-container .buttons {
-    padding: 0 3rem;
-  }
-}
-
-@media (max-width: 767px) {
-  /* xs and sm */
-  .global-footer {
-    padding: 0;
-  }
-
-  .global-footer .container {
-    padding: 0;
-    max-width: 100%;
-  }
-
-  .global-footer ul.footer-links {
-    margin: 0 !important;
-    padding: 0;
-  }
-
-  .global-footer ul.footer-links li {
-    width: 100%;
-    line-height: 50px;
-    margin-left: 0;
-  }
-
-  .global-footer ul.footer-links li:not(:last-child) {
-    border-bottom: 2px solid white;
-  }
-
-  .global-footer ul.footer-links li a {
-    padding-left: 30px;
-    margin: 0;
-  }
-
-  .radio-container {
-    display: block;
-    margin-left: 0%;
-  }
-
-  .radio-label {
-    display: inline;
-    margin-left: 5px;
-  }
-
-  .container.content {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
-@media (max-width: 992px) {
-  .one-column-image {
-    height: 131px;
-  }
-
-  .navbar.navbar-expand-sm.navbar-dark.bg-primary {
-    padding: 14.5px 1rem;
-  }
-
-  .container.content .btn-lg {
-    padding: 1.1875rem 0.813rem;
-  }
-
-  /* Mobile With Image */
-
-  .no-image-mobile .col-lg-6.image {
-    display: none !important;
-  }
-
-  .with-image main .main-row .col-lg-6.image {
-    background-position: center bottom;
-    height: 240px;
-    background-size: cover;
-    margin-bottom: 60px;
-  }
-
-  .signout-row .container .signout-link {
-    font-size: 18px;
-    color: #2b6597;
-    background: none;
-    padding: 5px 10px;
-    border-radius: 3px;
-    border: 2px solid #2b6597;
-    margin-top: 20px;
-    letter-spacing: 0.02em;
-    font-weight: 500;
-  }
-
-  .signout-row .container .signout-link:hover {
-    background: none;
-  }
-
-  .signout-row {
-    top: 240px;
-  }
-
-  .no-image-mobile .signout-row {
-    top: 0;
-  }
-
-  .no-image-mobile .main-primary .container-fluid {
-    margin-top: 72px;
-  }
-
-  /* Eligibility Start */
-
-  .eligibility-start h1.headline {
-    text-align: left;
-    font-size: 24px;
-    line-height: 36px;
-    margin-top: 24px;
-    margin-bottom: 16px;
-  }
-
-  .eligibility-start .main-content {
-    padding-top: 0;
-  }
-
-  .eligibility-start .period {
-    display: none;
-  }
-
-  .media-list {
-    gap: 40px;
-  }
-
-  .media-list .media .media-line .icon {
-    width: 92px;
-    height: 92px;
-    margin: 0 auto 42px auto;
-  }
-
-  .media-list .media {
-    flex-direction: column;
-  }
-
-  .media-list .media .media-line {
-    margin: 0 20px 0 0;
-  }
-
-  .media-list .media .media-body {
-    padding: 0;
-  }
-
-  .media-list .media .media-body--heading {
-    font-size: 20px;
-    line-height: 30px;
-  }
-
-  .media-list .media .media-body--details p {
-    padding-bottom: 25px;
-    margin-left: 0;
-    font-size: 20px;
-    line-height: 30px;
-    letter-spacing: 0.05em;
-  }
-
-  .media-list .media .media-body--items li {
-    font-size: 20px;
-    line-height: 30px;
-    letter-spacing: 0.05em;
-  }
-
-  .media-list .media .media-body--links {
-    margin-left: 0;
-    float: right;
-  }
-
-  .eligibility-start .main-content .container strong .info-link {
-    display: none;
-  }
-
-  .media-list .media .media-body .media-body--links .btn-lg {
-    font-size: 18px;
-    line-height: 27px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    display: block;
-  }
-
-  .media-title {
-    text-align: left !important;
-    margin-top: 42px;
-    margin-bottom: 46px;
-  }
-
-  .eligibility-start .media-list {
-    margin-bottom: 60px;
-  }
-
-  #login .fallback-text {
-    padding-top: 14px;
-    margin: 8px auto 0 auto;
-    display: block;
-  }
-
-  #login {
-    line-height: unset;
-    padding: 12px 67.5px;
-    font-size: 20px;
-    margin: 30px auto;
-    display: inline-block;
-  }
-
-  /* Override for only the Agency Index page */
-  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
-    margin-bottom: 2rem;
-  }
-
-  .logged-out.enrollment-success .container.content {
-    padding-top: 10vh;
-  }
+/* Agency Index */
+/* This page has a full-width and full-height background image, creating the need to re-set the Footer margin top to 0 */
+
+:root {
+  --agency-index-main-height: 100vh;
+  --agency-index-background: url("/static/img/benefits-bg-mobile.jpg") no-repeat
+    var(--primary-color);
+  --agency-index-box-background: var(--bs-white);
+  --agency-index-box-border: 12px solid var(--primary-color);
+  --agency-index-text-color: var(--text-primary-color);
 }
 
 @media (min-width: 992px) {
-  /* undoing the sticky footer for pages with header image
-       the backup plan is to color the body the same as the footer
-       to avoid the floating footer look
-    */
-  .with-image main {
-    flex-shrink: unset;
-  }
-
-  footer {
-    margin-top: unset;
-    padding-top: 0.138rem;
-    padding-bottom: 0.138rem;
-  }
-
-  .container.content {
-    padding-left: 3.5rem;
-    padding-right: 3.5rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    margin: 0;
-  }
-
-  .container.content input[type="submit"],
-  .container.content .btn {
-    width: fit-content;
-    min-width: 250px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* Override for only the Agency Index page */
-  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
-    margin-bottom: 4rem;
+  :root {
+    --agency-index-main-height: calc(
+      100vh - 130px
+    ); /* 130px = Header Height (80px) + (Footer Link (50px) */
+    --agency-index-background: url("/static/img/benefits-bg-desktop.jpg")
+      no-repeat;
+    --agency-index-box-background: transparent;
+    --agency-index-box-border: none;
+    --agency-index-text-color: var(--bs-white);
   }
 }
 
-@media (max-width: 1081px) {
-  .media-list {
-    margin-top: 50px;
-  }
+.agency-index main#main-content {
+  min-height: var(--agency-index-main-height);
+  background: var(--agency-index-background);
+  background-size: cover;
 }
 
-@media (min-width: 1200px) {
-  /* xl+ */
-  .container.content {
-    padding-left: 5rem;
-    padding-right: 5rem;
-    padding-top: 4.5rem;
-    padding-bottom: 2rem;
-    margin: 0;
-  }
+.agency-index main#main-content .container .row:first-child {
+  min-height: var(--agency-index-main-height);
+}
 
-  /* Override for only the Agency Index page */
-  .agency-index .container.content h1 ~ p:nth-last-of-type(1) {
-    margin-bottom: 5rem;
-  }
+.agency-index .box {
+  background: var(--agency-index-box-background);
+  border-top: var(--agency-index-box-border);
+  color: var(--agency-index-text-color);
+  margin-bottom: calc(32rem / 16);
+}
+
+.agency-index .box .btn.btn-lg.btn-primary {
+  width: 250px; /* Button is 250 x 72 */
+  display: block;
+  margin: 0 auto; /* Center the button */
+  padding: 19px 0; /* Button is 250 x 72 */
+}
+
+.agency-index footer {
+  margin-top: 0;
 }

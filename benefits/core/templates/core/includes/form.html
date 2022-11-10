@@ -1,76 +1,109 @@
-
+{% load i18n %}
 {% if form.action_url %}
 
   {% url form.action_url as form_action %}
 
-  <form action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
+  <form id="{{ form.id }}" action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
     {% csrf_token %}
 
-    {% for field in form %}
-      {% if field.errors %}
-        <div class="form-group with-errors">
-        {% else %}
-          <div class="form-group">
-          {% endif %}
+    <div class="row form-container">
+      <div class="{{ form.classes }}">
+        {% for field in form %}
+          <div class="row form-group mb-0">
+            <div class="col-12">
+              {% if field.label %}
+                <label for="{{ field.id_for_label }}" class="form-control-label">
+                  {{ field.label }}
+                  {% if field.field.required %}<span class="required-label text-body">*</span>{% endif %}
+                </label>
+              {% endif %}
 
-          {% if field.label %}
-            <label for="{{ field.id_for_label }}" class="form-control-label">
-              {{ field.label }}
-              {% if field.field.required %}<span class="required-label">*</span>{% endif %}
-            </label>
-          {% endif %}
+              {{ field }}
 
-          {{ field }}
-
-          {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
-
-          {% if field.errors %}
-            <div class="error-message">
-              {% for error in field.errors %}<p>{{ error }}</p>{% endfor %}
+              {% if field.help_text %}<small class="form-text text-body">{{ field.help_text }}</small>{% endif %}
             </div>
-          {% endif %}
-        </div>
-      {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
 
-      {% if form.submit_value %}
-        <div class="form-group">
-          {% if recaptcha.enabled %}
-            <button class="btn btn-lg btn-primary g-recaptcha"
-                    data-sitekey="{{ recaptcha.site_key }}"
-                    data-callback="onSubmit"
-                    data-action="submit">
-              {{ form.submit_value }}
-            </button>
-          {% else %}
-            <button class="btn btn-lg btn-primary">{{ form.submit_value }}</button>
-          {% endif %}
+    {% if form.submit_value %}
+      <div class="row d-flex flex-column-reverse justify-content-lg-end flex-lg-row pt-8">
+        {% if help_text %}
+          <div class="col-lg-9 d-flex align-items-end flex-row-reverse col-sm-8 offset-sm-2 offset-lg-0 offset-2 col-8">
+            <p class="pt-4 pt-lg-0">{{ help_text }}</p>
+          </div>
+        {% endif %}
+        <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
+          <button class="btn btn-lg btn-primary spinner-hidden d-flex justify-content-center align-items-center"
+                  data-action="submit"
+                  type="submit"
+                  form="{{ form.id }}">
+            <span class="btn-text">{{ form.submit_value }}</span>
+            <span class="spinner-border spinner-border-sm"></span>
+          </button>
         </div>
-      {% endif %}
+      </div>
+    {% endif %}
 
-      {% if recaptcha.enabled %}
-        <script src="{{ recaptcha.api_url }}"></script>
-        <script>
-                function onSubmit(token) {
-                    $("form[action='{{form_action}}']").submit();
-                }
-        </script>
-      {% endif %}
+    <script>
+      $(function() {
+        // listen for a custom "submitting" event on the form, for button interactions
+        $("#{{ form.id }}").on("submitting", function(e) {
+          if ("{{ form.submitting_value }}" !== "") {
+            $("button[type=submit]", this)
+              .removeClass("spinner-hidden")
+              .addClass("disabled")
+              .attr("role", "status")
+              .attr("disabled", "true")
+              .children().first().text("{{ form.submitting_value }}");
+          }
+        });
+
+        // on normal form submit, trigger the custom "submitting" event
+        $("#{{ form.id }}").on("submit", function(e) {
+          $(this).trigger("submitting");
+        });
+      });
+    </script>
+
+    {% if request.recaptcha %}
+      {% comment %}
+        Adapted from https://stackoverflow.com/a/63290578/453168
+      {% endcomment %}
+
+      {% comment %}
+        hidden input field will later send g-recaptcha token back to server
+      {% endcomment %}
+      <input type="hidden" name="{{ request.recaptcha.data_field }}" value="">
+
       <script>
-            $(function(){
-                $("form[action='{{form_action}}']").on("submit", function(e) {
-                    $(".form-group", this).removeClass("with-errors");
-                    $(".error-message", this).remove();
+        function recaptchaSubmit($event) {
+          // checks the validity of the form. Return if invalid; HTML5 validation errors should display
+          if (!$event.currentTarget.form.checkValidity()) {
+            return;
+          }
+          // form is client-side valid; taking over the remainder of processing
+          $event.preventDefault();
 
-                    if ("{{ form.submitting_value }}" !== "") {
-                        $("button[data-action='submit']", this)
-                            .attr("role", "status")
-                            .attr("disabled", "true")
-                            .text("{{ form.submitting_value }}")
-                            .addClass("disabled");
-                    }
-                });
+          grecaptcha.ready(function() {
+            grecaptcha.execute("{{ request.recaptcha.site_key }}", { action: "submit" }).then(function(token) {
+                // add the token to hidden form element
+                $event.currentTarget.form.elements["{{ request.recaptcha.data_field }}"].value = token;
+                // trigger the custom "submitting" event
+                // since calling .submit() does not trigger the "submit" event
+                // hence the normal handler won't apply
+                $($event.currentTarget.form).trigger("submitting");
+                // submit the form to server
+                $event.currentTarget.form.submit($event.currentTarget);
             });
-      </script>
-    </form>
+          });
+        };
 
-  {% endif %}
+        // bind the above handler to button click
+        $("button[type=submit]", "#{{ form.id }}").on("click", recaptchaSubmit);
+      </script>
+    {% endif %}
+
+  </form>
+{% endif %}

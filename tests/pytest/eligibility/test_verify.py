@@ -1,7 +1,7 @@
 import pytest
 
 from benefits.eligibility.forms import EligibilityVerificationForm
-from benefits.eligibility.verify import typenames_to_verify, eligibility_from_api, eligibility_from_oauth
+from benefits.eligibility.verify import eligibility_from_api, eligibility_from_oauth
 
 
 @pytest.fixture
@@ -15,15 +15,6 @@ def mock_api_client_verify(mocker):
 
 
 @pytest.mark.django_db
-def test_typenames_to_verify(model_TransitAgency, model_EligibilityVerifier):
-    expected = [t.name for t in model_TransitAgency.types_to_verify(model_EligibilityVerifier)]
-
-    result = typenames_to_verify(model_TransitAgency, model_EligibilityVerifier)
-
-    assert result == expected
-
-
-@pytest.mark.django_db
 def test_eligibility_from_api_error(mocker, model_TransitAgency, model_EligibilityVerifier, mock_api_client_verify, form):
     api_errors = {"name": "Name error"}
     api_response = mocker.Mock(error=api_errors)
@@ -32,7 +23,6 @@ def test_eligibility_from_api_error(mocker, model_TransitAgency, model_Eligibili
     response = eligibility_from_api(model_EligibilityVerifier, form, model_TransitAgency)
 
     assert response is None
-    form.add_api_errors.assert_called_once_with(api_errors)
 
 
 @pytest.mark.django_db
@@ -46,7 +36,6 @@ def test_eligibility_from_api_verified_types(
     response = eligibility_from_api(model_EligibilityVerifier, form, model_TransitAgency)
 
     assert response == verified_types
-    form.add_api_errors.assert_not_called()
 
 
 @pytest.mark.django_db
@@ -60,7 +49,6 @@ def test_eligibility_from_api_no_verified_types(
     response = eligibility_from_api(model_EligibilityVerifier, form, model_TransitAgency)
 
     assert response == verified_types
-    form.add_api_errors.assert_not_called()
 
 
 @pytest.mark.django_db

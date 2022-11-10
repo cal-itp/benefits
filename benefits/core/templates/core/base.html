@@ -8,18 +8,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="{% translate "core.pages.help.about.p[0]" %}">
-    <title>
-      {% block page_title %}
-      {% endblock page_title %}
-      Cal-ITP
-    </title>
+    {# djlint:off #}
+    <title>{% block page_title %}{% if page.title %}{{ page.title }}&nbsp;|&nbsp;{% endif %}{% endblock page_title %}{% translate "core.pages.title.suffix" %}</title>
+    {# djlint:on #}
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css">
-    <link href="https://california.azureedge.net/cdt/statetemplate/6.0.2/css/cagov.core.min.css" rel="stylesheet">
+
+    {% comment %}
+      CA State Template v6.0.7 comes with Bootstrap v5.1.3
+      See https://github.com/Office-of-Digital-Services/California-State-Web-Template/releases/tag/v6.0.7
+    {% endcomment %}
+    <link href="https://california.azureedge.net/cdt/statetemplate/6.0.7/css/cagov.core.min.css" rel="stylesheet">
+
     <link href="{% static "css/styles.css" %}" rel="stylesheet">
     <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    {% comment %}
+      CA State Template v6.0.7 does not include jQuery
+      See https://github.com/Office-of-Digital-Services/California-State-Web-Template/releases/tag/v6.0.7
+    {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 
     {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
   </head>
@@ -27,7 +35,7 @@
     {% if debug %}
       {% include "core/includes/debug.html" %}
     {% endif %}
-    <header role="banner" id="header" class="global-header">
+    <header role="banner" id="header">
       <div id="skip-to-content">
         <a href="#main-content">{% translate "core.buttons.skip" %}</a>
       </div>
@@ -43,66 +51,99 @@
         {% include "core/includes/noscript.html" %}
       </noscript>
 
-      <div class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-between">
+      <div id="header-container" class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-between">
         <div class="container">
-          <span class="navbar-brand">
-            <img class="sm d-lg-none" src="{% static "img/logo-sm.svg" %}" alt="{% translate "core.logos.small" context "image alt text" %}"/>
+          <span class="navbar-brand p-0">
+            <img class="sm d-lg-none"
+                 src="{% static "img/logo-sm.svg" %}"
+                 width="90"
+                 height="51.3"
+                 alt="{% translate "core.logos.small" context "image alt text" %}"/>
             <img class="lg d-none d-lg-block"
                  src="{% static "img/logo-lg.svg" %}"
+                 width="220"
+                 height="50"
                  alt="{% translate "core.logos.large" context "image alt text" %}"/>
           </span>
-          <span class="form-inline">{% include "core/includes/lang-selector.html" %}</span>
+          <div class="form-inline">{% include "core/includes/lang-selector.html" %}</div>
         </div>
       </div>
     </header>
 
-    <main id="main-content" class="main-content" role="main">
-      <div class="main-primary">
-        {% block main_content %}
-        {% endblock main_content %}
-      </div>
+    <main id="main-content" role="main">
+      {% block main_content %}
+        {% block nav-buttons %}
+        {% endblock nav-buttons %}
+        <div class="container main-row">
+          <div class="row justify-content-center">
+            {% block headline %}
+              <div class="col-lg-10">
+                <h1>{{ page.headline }}</h1>
+              </div>
+            {% endblock headline %}
+            <div class="col-lg-10">
+              {% block explanatory-text %}
+              {% endblock explanatory-text %}
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            {% block inner-content %}
+            {% endblock inner-content %}
+          </div>
+          {% block call-to-action %}
+            <div class="row d-flex flex-column-reverse justify-content-lg-end flex-lg-row">
+              <div class="col-lg-9 d-flex align-items-end flex-row-reverse col-sm-8 offset-sm-2 offset-lg-0 offset-2 col-8">
+                {% block call-to-action-text %}
+                {% endblock call-to-action-text %}
+              </div>
+              <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
+                {% block call-to-action-button %}
+                {% endblock call-to-action-button %}
+              </div>
+            </div>
+          {% endblock call-to-action %}
+        </div>
+      {% endblock main_content %}
     </main>
 
-    <footer id="footer" class="global-footer">
+    <footer id="footer">
       <div class="container">
-        <ul class="footer-links">
+        <ul class="footer-links m-0 p-0 list-unstyled d-lg-flex gap-lg-4">
           <li>
-            <a href="{% url "core:help" %}">{% translate "core.buttons.help" %}</a>
+            <a class="m-0 ps-5 ps-lg-0" href="{% url "core:help" %}">{% translate "core.buttons.help" %}</a>
           </li>
           <li>
-            <a href="https://cdt.ca.gov/privacy-policy/" target="_blank" rel="noopener noreferrer">{% translate "core.buttons.privacy" %}</a>
+            <a class="m-0 ps-5 ps-lg-0" href="https://cdt.ca.gov/privacy-policy/" target="_blank" rel="noopener noreferrer">{% translate "core.buttons.privacy" %}</a>
           </li>
         </ul>
       </div>
     </footer>
 
-    <script src="https://california.azureedge.net/cdt/statetemplate/6.0.2/js/cagov.core.js"></script>
+    {% comment %}
+      CA State Template v6.0.7 comes with Bootstrap v5.1.3
+      see https://github.com/Office-of-Digital-Services/California-State-Web-Template/releases/tag/v6.0.7
+
+      But we aren't using CA State Template Javascript, so include Bootstrap directly
+    {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
     <script>
-            $(function() {
-                document.cookie = "testcookie"
-                if (document.cookie.indexOf("testcookie") < 0) {
-                    $(".nocookies").removeClass("d-none");
-                }
-                else {
-                    document.cookie = "testcookie; expires=Thu, 01-Jan-1970 00:00:01 GMT";
-                    $(".nocookies").addClass("d-none");
-                }
+      $(function() {
+        document.cookie = "testcookie"
+        if (document.cookie.indexOf("testcookie") < 0) {
+          $(".nocookies").removeClass("d-none");
+        }
+        else {
+          document.cookie = "testcookie; expires=Thu, 01-Jan-1970 00:00:01 GMT";
+          $(".nocookies").addClass("d-none");
+        }
 
-                var doc = document.documentElement;
-                if ($(doc).hasClass("with-image")) {
-                    var top = localStorage.getItem("scroll");
-                    if (top !== null) {
-                        doc.scrollTop = parseInt(top, 10);
-                    }
-                    window.addEventListener("visibilitychange", () => {
-                        localStorage.setItem("scroll", doc.scrollTop);
-                    });
-                }
-
-                $("a[href^='https'], a[href^='tel'], [href*='#']").on("click", function(e) {
-                    amplitude.getInstance().logEvent('clicked link', {'href': e.target.href, 'path': window.location.pathname});
-                });
-            });
+        $("a[href^='https'], a[href^='tel'], [href*='#']").on("click", function(e) {
+          amplitude.getInstance().logEvent('clicked link', {'href': e.target.href, 'path': window.location.pathname});
+        });
+      });
     </script>
+
+    {% if request.recaptcha %}<script src="{{ request.recaptcha.script_api }}"></script>{% endif %}
   </body>
 </html>

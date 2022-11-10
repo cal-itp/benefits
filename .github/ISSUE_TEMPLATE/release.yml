@@ -56,8 +56,11 @@ body:
         - label: Create a branch called release/version from the source branch
         - label: Bump the application version
         - label: Open a PR for the release branch into the staging target, merge
+        - label: "(If applicable): update staging data migrations"
         - label: "(If applicable): open another PR from dev to test"
+        - label: "(If applicable): update data migrations"
         - label: QA the app in test
+        - label: "(If applicable): prepare production data migrations"
         - label: Open a PR to for the test branch into prod, merge
         - label: QA the app in prod
         - label: Tag the release on the prod branch, push the tag to GitHub

@@ -1,4 +1,4 @@
-{% extends "core/page.html" %}
+{% extends "core/base.html" %}
 
 {% load i18n %}
 {% load static %}
@@ -7,26 +7,29 @@
   {{ block.super |add:" enrollment-success" }}
 {% endblock classes %}
 
-{% block paragraph_content %}
-  {% if "logged-out" in page.classes %}
-    <img class="success-image" src="{% static "img/icon/happybus.svg" %}" alt="Bus icon with smiley face">
-  {% else %}
-    <p>{% translate "enrollment.pages.success.p1" %}</p>
-    <p>{% translate "enrollment.pages.success.p2" %}</p>
-    <p>{% blocktranslate with help_link=help_link%}enrollment.pages.success.p3{{ help_link }}{% endblocktranslate %}</p>
-  {% endif %}
-{% endblock paragraph_content %}
+{% block headline %}
+  <div class="col-lg-10">
+    <h1 class="pb-lg-8 pb-4">{{ page.headline }}</h1>
+  </div>
+{% endblock headline %}
 
-{% block buttons %}
+{% block inner-content %}
+  <div class="col-12 col-sm-12 col-lg-10">{% include "core/includes/media-list.html" with media=media %}</div>
+{% endblock inner-content %}
+
+{% block call-to-action %}
   {% if page.buttons|length_is:"1" %}
-    <p>
-      <span>{% translate "enrollment.pages.success.p3" %}</span>
-      {% for b in page.buttons %}
-        <a id="{{ b.id }}" class="{{ b.classes | join:" " }}" style="display: inline-block;" href="{{ b.url }}" role="b">
-          <span class="fallback-text">{{ b.fallback_text }}</span>
-        </a>
-      {% endfor %}
-      <span>{% translate "enrollment.pages.success.p4" %}</span>
-    </p>
+    <div class="row d-flex justify-content-lg-center flex-lg-row">
+      <div class="col-9 col-lg-10 d-flex justify-content-end logout-paragraph">
+        <p>
+          <span>{% translate "enrollment.pages.success.logout[0]" %}</span>
+          {% for b in page.buttons %}
+            <a id="{{ b.id }}" class="{{ b.classes | join:" " }}" href="{{ b.url }}" role="button">
+              <span class="fallback-text">{{ b.fallback_text }}</span>
+            </a>
+          {% endfor %}
+        </p>
+      </div>
+    </div>
   {% endif %}
-{% endblock buttons %}
+{% endblock call-to-action %}

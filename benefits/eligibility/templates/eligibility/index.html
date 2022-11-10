@@ -1,0 +1,17 @@
+{% extends "core/base.html" %}
+
+{% block explanatory-text %}
+  {% for p in page.paragraphs %}<p class="pt-4 pb-4 pb-lg-8">{{ p }}</p>{% endfor %}
+{% endblock explanatory-text %}
+
+{% block inner-content %}
+  <div class="container">
+    <div class="row">
+      {% block forms %}
+        {% for f in page.forms %}
+          {% include "core/includes/form.html" with form=f %}
+        {% endfor %}
+      {% endblock forms %}
+    </div>
+  </div>
+{% endblock inner-content %}

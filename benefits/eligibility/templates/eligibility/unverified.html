@@ -1,6 +1,28 @@
-{% extends "core/page.html" %}
+{% extends "core/base.html" %}
 
 {% block main_content %}
   {% include "core/includes/sign-out-link.html" %}
-  {{ block.super }}
+
+  <div class="container">
+    {% include "core/includes/icon-title.html" with title=page.headline icon=page.icon %}
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8 pt-4">
+        {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8">{% include "core/includes/agency-links.html" with buttons=page.buttons %}</div>
+    </div>
+
+    {% for back_button in page.buttons %}
+      {% if "btn-primary" in back_button.classes %}
+        <div class="row pt-8 justify-content-center">
+          <div class="col-lg-3 col-8">{% include "core/includes/button.html" with button=back_button %}</div>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+  </div>
 {% endblock main_content %}

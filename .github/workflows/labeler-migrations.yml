@@ -1,0 +1,17 @@
+name: Label migrations
+
+on:
+  pull_request:
+    types: [opened]
+    paths:
+      - "benefits/core/migrations/**"
+      - "benefits/core/models.py"
+
+jobs:
+  label-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: add-label
+        uses: andymckay/labeler@master
+        with:
+          add-labels: "migrations"

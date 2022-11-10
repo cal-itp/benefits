@@ -24,6 +24,14 @@ You can view what Git commit is deployed for a given environment by visitng the 
 [Configuration settings](../configuration/README.md) are stored as Application Configuration variables in Azure.
 [Data](../configuration/data.md) is loaded via Django data migrations. The migration files can be stored as blobs in in Azure Storage, and [mounted into the Web App container][az-mount].
 
+## Docker images
+
+Docker images for each of the deploy branches are available from GitHub Container Registry (GHCR):
+
+* [Repository Package page](https://github.com/cal-itp/benefits/pkgs/container/benefits)
+* Image path: `ghcr.io/cal-itp/benefits`
+* Image tags: `dev`, `test`, `prod`
+
 [dev-benefits]: https://dev-benefits.calitp.org
 [oet]: https://techblog.cdt.ca.gov/2020/06/cdt-taking-the-lead-in-digital-transformation/
 [app-service-containers]: https://docs.microsoft.com/en-us/azure/app-service/configure-custom-container

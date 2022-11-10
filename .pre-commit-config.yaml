@@ -2,13 +2,20 @@ ci:
   autofix_commit_msg: "chore(pre-commit): autofix run"
   autoupdate_commit_msg: "chore(pre-commit): autoupdate hooks"
 
+# by default, install these hook types
+# https://pre-commit.com/#top_level-default_install_hook_types
 default_install_hook_types:
   - pre-commit
   - commit-msg
 
+# by default, confine hooks to these git stages (except for hooks that specify their own stages)
+# https://pre-commit.com/#top_level-default_stages
+default_stages:
+  - commit
+
 repos:
   - repo: https://github.com/compilerla/conventional-pre-commit
-    rev: v2.0.0
+    rev: v2.1.1
     hooks:
       - id: conventional-pre-commit
         stages: [commit-msg]
@@ -24,9 +31,10 @@ repos:
       - id: check-yaml
         args: ["--unsafe"]
       - id: check-added-large-files
+        args: ["--maxkb=1500"]
 
   - repo: https://github.com/psf/black
-    rev: 22.8.0
+    rev: 22.10.0
     hooks:
       - id: black
         types:
@@ -47,12 +55,12 @@ repos:
         files: .py$
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.0-alpha.0
+    rev: v3.0.0-alpha.4
     hooks:
       - id: prettier
         types_or: [javascript, css]
 
   - repo: https://github.com/Riverside-Healthcare/djLint
-    rev: v1.14.0
+    rev: v1.19.5
     hooks:
       - id: djlint-django

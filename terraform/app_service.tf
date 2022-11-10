@@ -10,8 +10,7 @@ resource "azurerm_service_plan" "main" {
   }
 }
 
-# app_settings and storage_account are managed manually through the portal since they contain secrets. Issue to move the latter in:
-# https://github.com/cal-itp/benefits/issues/686
+# app_settings are managed manually through the portal since they contain secrets
 
 resource "azurerm_linux_web_app" "main" {
   name                      = "AS-CDT-PUB-VIP-CALITP-P-001"
@@ -51,13 +50,16 @@ resource "azurerm_linux_web_app" "main" {
   # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_web_app#app_setting_names
   # https://docs.microsoft.com/en-us/azure/app-service/deploy-staging-slots#which-settings-are-swapped
   sticky_settings {
-    app_setting_names = [
+    # sort them so that they don't change when we rearrange them
+    app_setting_names = sort([
       # custom config
       "ANALYTICS_KEY",
       "DJANGO_ALLOWED_HOSTS",
       "DJANGO_LOAD_SAMPLE_DATA",
       "DJANGO_LOG_LEVEL",
       "DJANGO_MIGRATIONS_DIR",
+      "DJANGO_RECAPTCHA_SECRET_KEY",
+      "DJANGO_RECAPTCHA_SITE_KEY",
       "DJANGO_TRUSTED_ORIGINS",
 
       # populated through auto-instrumentation
@@ -76,11 +78,21 @@ resource "azurerm_linux_web_app" "main" {
       "XDT_MicrosoftApplicationInsights_NodeJS",
       "XDT_MicrosoftApplicationInsights_PreemptSdk",
       "XDT_MicrosoftApplicationInsightsJava",
-    ]
+    ])
+  }
+
+  storage_account {
+    access_key   = azurerm_storage_account.main.primary_access_key
+    account_name = azurerm_storage_account.main.name
+    name         = "benefits-config"
+    type         = "AzureBlob"
+    share_name   = azurerm_storage_container.config_prod.name
+    mount_path   = "/home/calitp/app/config"
   }
 
   lifecycle {
-    ignore_changes = [app_settings, storage_account, tags]
+    prevent_destroy = true
+    ignore_changes  = [app_settings, tags]
   }
 }
 
@@ -123,7 +135,8 @@ resource "azurerm_linux_web_app_slot" "dev" {
   }
 
   lifecycle {
-    ignore_changes = [app_settings, tags]
+    prevent_destroy = true
+    ignore_changes  = [app_settings, tags]
   }
 
   # setup files
@@ -176,7 +189,8 @@ resource "azurerm_linux_web_app_slot" "test" {
   }
 
   lifecycle {
-    ignore_changes = [app_settings, tags]
+    prevent_destroy = true
+    ignore_changes  = [app_settings, tags]
   }
 
   # setup files

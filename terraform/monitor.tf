@@ -54,7 +54,7 @@ data "azurerm_key_vault_secret" "slack_benefits_notify_email" {
   key_vault_id = azurerm_key_vault.main.id
 }
 
-resource "azurerm_monitor_action_group" "dev_email" {
+resource "azurerm_monitor_action_group" "eng_email" {
   name                = "benefits-notify Slack channel email"
   resource_group_name = data.azurerm_resource_group.prod.name
   short_name          = "slack-notify"
@@ -67,4 +67,11 @@ resource "azurerm_monitor_action_group" "dev_email" {
   lifecycle {
     ignore_changes = [tags]
   }
+}
+
+# migrations
+
+moved {
+  from = azurerm_monitor_action_group.dev_email
+  to   = azurerm_monitor_action_group.eng_email
 }

@@ -9,8 +9,6 @@ on:
       - 'benefits/**'
       - 'bin/**'
       - Dockerfile
-      - gunicorn.conf.py
-      - nginx.conf
       - requirements.txt
 
 jobs:

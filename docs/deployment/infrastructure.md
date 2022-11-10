@@ -3,7 +3,7 @@
 The infrastructure is configured as code via [Terraform](https://www.terraform.io/), for [various reasons](https://techcommunity.microsoft.com/t5/fasttrack-for-azure/the-benefits-of-infrastructure-as-code/ba-p/2069350). There are two subscriptions, with a single [resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal) under each:
 
 - `CDT/ODI Development` - Meant for experimentation with short-lived resources
-- `CDT/ODI Production` - All resources in here should be reflected in Terraform in this repository. The exception is secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) and [App Service application settings](https://docs.microsoft.com/en-us/azure/app-service/configure-common#configure-app-settings).
+- `CDT/ODI Production` - All resources in here should be reflected in Terraform in this repository. The exception is secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) and [App Service application settings](https://docs.microsoft.com/en-us/azure/app-service/configure-common#configure-app-settings). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
 
 For browsing the [Azure portal](https://portal.azure.com), [switching your `Default subscription filter`](https://docs.microsoft.com/en-us/azure/azure-portal/set-preferences) to only `CDT/ODI Production` is recommended.
 
@@ -126,7 +126,7 @@ Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is
 1. Install dependencies:
 
    - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
-   - [Terraform](https://www.terraform.io/downloads)
+   - [Terraform](https://www.terraform.io/downloads) - see exact version in [`azure-pipelines.yml`](https://github.com/cal-itp/benefits/blob/dev/terraform/azure-pipelines.yml)
 
 1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli), specifying the `CDT/ODI Production` Subscription.
 
@@ -159,6 +159,35 @@ lifecycle {
   ignore_changes = [tags]
 }
 ```
+
+### Naming conventions
+
+The DevSecOps team sets the following naming convention for Resources:
+
+```
+<<Resource Type>>-<<Department>>-<<Public/Private>>-<<Project Category>>-<<Project Name>>-<<Region>><<OS Type>>-<<Environment>>-<<Sequence Number>>
+```
+
+#### Sample Names
+
+- `RG-CDT-PUB-VIP-BNSCN-E-D-001`
+- `ASP-CDT-PUB-VIP-BNSCN-EL-P-001`
+- `AS-CDT-PUB-VIP-BNSCN-EL-D-001`
+
+#### Resource Types
+
+Use the following shorthand for conveying the Resource Type as part of the Resource Name:
+
+| Resource         | Convention |
+| ---------------- | ---------- |
+| App Service      | `AS`       |
+| App Service Plan | `ASP`      |
+| Virtual Network  | `VNET`     |
+| Resource Group   | `RG`       |
+| Virtual Machine  | `VM`       |
+| Database         | `DB`       |
+| Subnet           | `SNET`     |
+| Front Door       | `FD`       |
 
 ## Azure environment setup
 
