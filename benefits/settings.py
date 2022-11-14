@@ -133,7 +133,6 @@ template_ctx_processors = [
     "django.contrib.messages.context_processors.messages",
     "benefits.core.context_processors.analytics",
     "benefits.core.context_processors.authentication",
-    "benefits.core.context_processors.recaptcha",
 ]
 
 if DEBUG:
@@ -218,7 +217,10 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "benefits", "static")]
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+# use Manifest Static Files Storage by default
+STATICFILES_STORAGE = os.environ.get(
+    "DJANGO_STATICFILES_STORAGE", "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+)
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Logging configuration
@@ -247,6 +249,7 @@ RATE_LIMIT_ENABLED = all((RATE_LIMIT > 0, len(RATE_LIMIT_METHODS) > 0, RATE_LIMI
 
 RECAPTCHA_API_URL = os.environ.get("DJANGO_RECAPTCHA_API_URL", "https://www.google.com/recaptcha/api.js")
 RECAPTCHA_SITE_KEY = os.environ.get("DJANGO_RECAPTCHA_SITE_KEY")
+RECAPTCHA_API_KEY_URL = f"{RECAPTCHA_API_URL}?render={RECAPTCHA_SITE_KEY}"
 RECAPTCHA_SECRET_KEY = os.environ.get("DJANGO_RECAPTCHA_SECRET_KEY")
 RECAPTCHA_VERIFY_URL = os.environ.get("DJANGO_RECAPTCHA_VERIFY_URL", "https://www.google.com/recaptcha/api/siteverify")
 RECAPTCHA_ENABLED = all((RECAPTCHA_API_URL, RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET_KEY, RECAPTCHA_VERIFY_URL))
@@ -263,7 +266,7 @@ CSP_CONNECT_SRC = ["'self'", "https://api.amplitude.com/"]
 env_connect_src = _filter_empty(os.environ.get("DJANGO_CSP_CONNECT_SRC", "").split(","))
 CSP_CONNECT_SRC.extend(env_connect_src)
 
-CSP_FONT_SRC = ["'self'", "https://california.azureedge.net/cdt/statetemplate/", "https://fonts.gstatic.com/"]
+CSP_FONT_SRC = ["'self'", "https://california.azureedge.net/", "https://fonts.gstatic.com/"]
 env_font_src = _filter_empty(os.environ.get("DJANGO_CSP_FONT_SRC", "").split(","))
 CSP_FONT_SRC.extend(env_font_src)
 
@@ -271,16 +274,15 @@ CSP_FRAME_ANCESTORS = ["'none'"]
 
 CSP_FRAME_SRC = ["'none'"]
 env_frame_src = _filter_empty(os.environ.get("DJANGO_CSP_FRAME_SRC", "").split(","))
-CSP_FRAME_SRC.extend(env_frame_src)
 if RECAPTCHA_ENABLED:
-    CSP_FRAME_SRC.append("https://www.google.com")
-
+    env_frame_src.append("https://www.google.com")
+if len(env_frame_src) > 0:
+    CSP_FRAME_SRC = env_frame_src
 
 CSP_SCRIPT_SRC = [
     "'unsafe-inline'",
-    "https://california.azureedge.net/cdt/statetemplate/",
     "https://cdn.amplitude.com/libs/",
-    "https://code.jquery.com/",
+    "https://cdn.jsdelivr.net/",
     "*.littlepay.com",
 ]
 env_script_src = _filter_empty(os.environ.get("DJANGO_CSP_SCRIPT_SRC", "").split(","))
@@ -291,7 +293,7 @@ if RECAPTCHA_ENABLED:
 CSP_STYLE_SRC = [
     "'self'",
     "'unsafe-inline'",
-    "https://california.azureedge.net/cdt/statetemplate/",
+    "https://california.azureedge.net/",
     "https://fonts.googleapis.com/css",
 ]
 env_style_src = _filter_empty(os.environ.get("DJANGO_CSP_STYLE_SRC", "").split(","))

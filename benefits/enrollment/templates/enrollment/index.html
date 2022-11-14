@@ -1,20 +1,20 @@
-{% extends "core/page.html" %}
+{% extends "core/base.html" %}
 
-{% block main_content %}
+{% block nav-buttons %}
   {% include "core/includes/sign-out-link.html" %}
-  {{ block.super }}
-{% endblock main_content %}
+{% endblock nav-buttons %}
 
-{% block icon_title %}
-  {{ block.super }}
-{% endblock icon_title %}
+{% block headline %}
+  <div class="col-lg-6">
+    <h1 class="pb-lg-8 pb-4">{{ page.headline }}</h1>
+  </div>
+{% endblock headline %}
 
-{% block paragraph_content %}
-  {{ block.super }}
+{% block inner-content %}
+  <div class="col-12 col-sm-12 col-lg-10">{% include "core/includes/media-list.html" with media=media %}</div>
+
+  {% comment %} This Javascript code must be before the forms. {% endcomment %}
   {% if payment_processor %}
-    <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
-      {{ payment_processor.loading_text }}
-    </button>
     <script>
             var startedEvent = "started payment connection", closedEvent = "closed payment connection";
 
@@ -88,8 +88,21 @@
     <h2>Error!</h2>
     <p>No access token configured</p>
   {% endif %}
-{% endblock paragraph_content %}
 
-{% block buttons %}
-  {% if payment_processor %}<div class="invisible">{{ block.super }}</div>{% endif %}
-{% endblock buttons %}
+  {% for f in page.forms %}
+    {% include "core/includes/form.html" with form=f %}
+  {% endfor %}
+{% endblock inner-content %}
+
+{% block call-to-action-button %}
+  {% if payment_processor %}
+    <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
+      {{ payment_processor.loading_text }}
+    </button>
+    <div class="invisible">
+      {% for b in page.buttons %}
+        {% include "core/includes/button.html" with button=b %}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endblock call-to-action-button %}

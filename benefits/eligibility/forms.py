@@ -16,26 +16,33 @@ class EligibilityVerifierSelectionForm(forms.Form):
     """Form to capture eligibility verifier selection."""
 
     action_url = "eligibility:index"
+    id = "form-verifier-selection"
     method = "POST"
 
-    verifier = forms.ChoiceField(label="", widget=widgets.RadioSelect)
-
-    submit_value = _("eligibility.buttons.continue")
+    verifier = forms.ChoiceField(label="", widget=widgets.VerifierRadioSelect)
+    # sets label to empty string so the radio_select template can override the label style
+    submit_value = _("eligibility.buttons.choose")
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
         verifiers = agency.eligibility_verifiers.all()
 
+        self.classes = "offset-lg-1 col-lg-9"
         self.fields["verifier"].choices = [(v.id, _(v.selection_label)) for v in verifiers]
         self.fields["verifier"].widget.choice_descriptions = {
             v.id: _(v.selection_label_description) for v in verifiers if v.selection_label_description
         }
+
+    def clean(self):
+        if not recaptcha.verify(self.data):
+            raise forms.ValidationError("reCAPTCHA failed")
 
 
 class EligibilityVerificationForm(forms.Form):
     """Form to collect eligibility verification details."""
 
     action_url = "eligibility:confirm"
+    id = "form-eligibility-verification"
     method = "POST"
 
     submit_value = _("eligibility.forms.confirm.submit")
@@ -49,32 +56,28 @@ class EligibilityVerificationForm(forms.Form):
     def __init__(self, verifier: models.EligibilityVerifier, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.classes = "offset-lg-3 col-lg-6"
         sub_widget = widgets.FormControlTextInput(placeholder=verifier.form_sub_placeholder)
         if verifier.form_sub_pattern:
             sub_widget.attrs.update({"pattern": verifier.form_sub_pattern})
+        if verifier.form_input_mode:
+            sub_widget.attrs.update({"inputmode": verifier.form_input_mode})
+        if verifier.form_max_length:
+            sub_widget.attrs.update({"maxlength": verifier.form_max_length})
 
-        self.fields["sub"] = forms.CharField(label=_(verifier.form_sub_label), widget=sub_widget)
+        self.fields["sub"] = forms.CharField(
+            label=_(verifier.form_sub_label),
+            widget=sub_widget,
+            help_text=_(verifier.form_sub_help_text),
+        )
 
         name_widget = widgets.FormControlTextInput(placeholder=verifier.form_name_placeholder)
         if verifier.form_name_max_length:
             name_widget.attrs.update({"maxlength": verifier.form_name_max_length})
 
-        self.fields["name"] = forms.CharField(label=_(verifier.form_name_label), widget=name_widget)
-
-    def add_api_errors(self, form_errors):
-        """Handle errors passed back from API server related to submitted form values."""
-
-        validation_errors = {
-            field: forms.ValidationError(self._error_messages.get(code, _("core.pages.error.title")), code=code)
-            for (field, code) in form_errors.items()
-            if field in self.fields
-        }
-
-        if len(validation_errors) > 0:
-            logger.warning("Form fields are invalid")
-
-        for (field, err) in validation_errors.items():
-            self.add_error(field, err)
+        self.fields["name"] = forms.CharField(
+            label=_(verifier.form_name_label), widget=name_widget, help_text=_(verifier.form_name_help_text)
+        )
 
     def clean(self):
         if not recaptcha.verify(self.data):

@@ -73,6 +73,13 @@ class EligibilityType(models.Model):
         logger.debug(f"Get {EligibilityType.__name__} list by ids: {ids}")
         return EligibilityType.objects.filter(id__in=ids)
 
+    @staticmethod
+    def get_names(eligibility_types):
+        """Convert a list of EligibilityType to a list of their names"""
+        if isinstance(eligibility_types, EligibilityType):
+            eligibility_types = [eligibility_types]
+        return [t.name for t in eligibility_types if isinstance(t, EligibilityType)]
+
 
 class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""
@@ -94,24 +101,39 @@ class EligibilityVerifier(models.Model):
     auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True)
     selection_label = models.TextField()
     selection_label_description = models.TextField(null=True)
-    start_content_title = models.TextField()
-    start_item_name = models.TextField()
-    start_item_description = models.TextField()
-    start_blurb = models.TextField()
+    start_title = models.TextField()
+    start_headline = models.TextField()
+    start_sub_headline = models.TextField()
+    start_item_heading = models.TextField()
+    start_item_details = models.TextField()
+    start_help_anchor = models.TextField()
     form_title = models.TextField(null=True)
-    form_content_title = models.TextField(null=True)
+    form_headline = models.TextField(null=True)
     form_blurb = models.TextField(null=True)
     form_sub_label = models.TextField(null=True)
+    form_sub_help_text = models.TextField(null=True)
     form_sub_placeholder = models.TextField(null=True)
     # A regular expression used to validate the 'sub' API field before sending to this verifier
     form_sub_pattern = models.TextField(null=True)
+    # Input mode can be "numeric", "tel", "search", etc. to override default "text" keyboard on mobile devices
+    form_input_mode = models.TextField(null=True)
+    # The maximum length accepted for the 'sub' API field before sending to this verifier
+    form_max_length = models.PositiveSmallIntegerField(null=True)
     form_name_label = models.TextField(null=True)
+    form_name_help_text = models.TextField(null=True)
     form_name_placeholder = models.TextField(null=True)
     # The maximum length accepted for the 'name' API field before sending to this verifier
     form_name_max_length = models.PositiveSmallIntegerField(null=True)
     unverified_title = models.TextField()
-    unverified_content_title = models.TextField()
+    unverified_headline = models.TextField()
     unverified_blurb = models.TextField()
+    eligibility_confirmed_headline = models.TextField()
+    eligibility_confirmed_item_heading = models.TextField(null=True)
+    eligibility_confirmed_item_details = models.TextField(null=True)
+    # Fields for the dynamic enrollment success message
+    enrollment_success_confirm_item_details = models.TextField()
+    enrollment_success_expiry_item_heading = models.TextField(null=True)
+    enrollment_success_expiry_item_details = models.TextField(null=True)
 
     def __str__(self):
         return self.name
@@ -208,6 +230,10 @@ class TransitAgency(models.Model):
         verifier_types = {eligibility_verifier.eligibility_type.id}
         supported_types = list(agency_types & verifier_types)
         return EligibilityType.get_many(supported_types)
+
+    def type_names_to_verify(self, verifier):
+        """List of names of the eligibility types to check for this agency."""
+        return EligibilityType.get_names(self.types_to_verify(verifier))
 
     @property
     def index_url(self):

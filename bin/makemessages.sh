@@ -3,7 +3,7 @@ set -eu
 
 # generate initial .PO files from msgids in template and view files
 
-python manage.py makemessages -a --no-obsolete
+python manage.py makemessages -a --no-obsolete --no-location
 
 # put back bug-report link
 

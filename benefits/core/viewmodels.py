@@ -1,7 +1,7 @@
 """
 The core application: view model definitions for the root of the webapp.
 """
-from django.utils.translation import pgettext, gettext as _
+from django.utils.translation import pgettext, gettext_lazy as _
 from django.urls import reverse
 
 from benefits.core import models
@@ -91,6 +91,10 @@ class Button:
         btn = Button.primary(fallback_text="Login.gov", id="login", url=reverse("oauth:logout"), text="", **kwargs)
         return btn
 
+    @staticmethod
+    def previous_page(url):
+        return Button(text=_("core.buttons.previous_page"), url=url)
+
 
 class Icon:
     """Represents an icon."""
@@ -100,13 +104,36 @@ class Icon:
         self.alt = alt
 
 
+class MediaItem:
+    """
+    Represents a media item in a list of items:
+    * icon: core.viewmodels.Icon
+    * details: str, str[]
+    * heading: str
+    * bullets: str, str[]
+    """
+
+    def __init__(self, icon: Icon, details, heading=None, bullets=None):
+        self.icon = icon
+        if isinstance(details, str):
+            self.details = [details]
+        elif isinstance(details, list):
+            self.details = details
+        else:
+            self.details = [str(details)]
+        self.heading = heading
+        if isinstance(bullets, str):
+            self.bullets = [bullets]
+        elif isinstance(bullets, list):
+            self.bullets = bullets
+
+
 class Page:
     """
     Represents a page of content:
     * title: str
-    * noimage: bool
     * icon: core.viewmodels.Icon
-    * content_title: str
+    * headline: str
     * paragraphs: str[]
     * form: django.forms.Form
     * forms: django.forms.Form[]
@@ -116,15 +143,11 @@ class Page:
     """
 
     def __init__(self, **kwargs):
-        self.title = kwargs.get("title")
-        if self.title is None:
-            self.title = _("core.pages.index.prefix")
-        else:
-            self.title = f"{_('core.pages.index.prefix')}: {self.title}"
-
-        self.noimage = kwargs.get("noimage", False)
+        title = kwargs.get("title")
+        if title is not None:
+            self.title = title
         self.icon = kwargs.get("icon")
-        self.content_title = kwargs.get("content_title")
+        self.headline = kwargs.get("headline")
         self.paragraphs = kwargs.get("paragraphs", [])
         self.steps = kwargs.get("steps")
 
@@ -143,8 +166,6 @@ class Page:
         self.classes = kwargs.get("classes", [])
         if not isinstance(self.classes, list):
             self.classes = self.classes.split(" ")
-        if not self.noimage:
-            self.classes.append("with-image")
 
     def context_dict(self):
         """Return a context dict for a Page."""
@@ -156,7 +177,7 @@ class ErrorPage(Page):
     Represents an error page:
     * title: str
     * icon: core.viewmodels.Icon
-    * content_title: str
+    * headline: str
     * paragraphs: str[]
     * button: core.viewmodels.Button
     """
@@ -165,25 +186,35 @@ class ErrorPage(Page):
         super().__init__(
             title=kwargs.get("title", _("core.pages.error.title")),
             icon=kwargs.get("icon", Icon("sadbus", pgettext("image alt text", "core.icons.sadbus"))),
-            content_title=kwargs.get("content_title", _("core.pages.error.title")),
-            paragraphs=kwargs.get("paragraphs", [_("core.pages.server_error.content_title")]),
+            headline=kwargs.get("headline", _("core.pages.error.title")),
+            paragraphs=kwargs.get("paragraphs", [_("core.pages.server_error.headline")]),
             button=kwargs.get("button"),
         )
 
     @staticmethod
-    def error(
-        title=_("core.pages.server_error.title"),
-        content_title=_("core.pages.server_error.title"),
-        paragraphs=[_("core.pages.server_error.p[0]"), _("core.pages.server_error.p[1]")],
+    def user_error(
+        title=_("core.pages.user_error.title"),
+        headline=_("core.pages.user_error.headline"),
+        paragraphs=[_("core.pages.user_error.p[0]")],
         **kwargs,
     ):
-        """Create a new core.viewmodels.ErrorPage instance with defaults for a generic error."""
-        return ErrorPage(title=title, content_title=content_title, paragraphs=paragraphs, **kwargs)
+        """Create a new core.viewmodels.ErrorPage instance with defaults for a user error."""
+        return ErrorPage(title=title, headline=headline, paragraphs=paragraphs, **kwargs)
+
+    @staticmethod
+    def server_error(
+        title=_("core.pages.server_error.title"),
+        headline=_("core.pages.server_error.title"),
+        paragraphs=[_("core.pages.server_error.p[0]")],
+        **kwargs,
+    ):
+        """Create a new core.viewmodels.ErrorPage instance with defaults for a generic server error."""
+        return ErrorPage(title=title, headline=headline, paragraphs=paragraphs, **kwargs)
 
     @staticmethod
     def not_found(
         title=_("core.pages.not_found.title"),
-        content_title=_("core.pages.not_found.content_title"),
+        headline=_("core.pages.not_found.headline"),
         paragraphs=[_("core.pages.not_found.p[0]")],
         **kwargs,
     ):
@@ -193,7 +224,7 @@ class ErrorPage(Page):
             title = f"{title}: {path}"
         elif path and not title:
             title = path
-        return ErrorPage(title=title, content_title=content_title, paragraphs=paragraphs, **kwargs)
+        return ErrorPage(title=title, headline=headline, paragraphs=paragraphs, **kwargs)
 
 
 class PaymentProcessor:

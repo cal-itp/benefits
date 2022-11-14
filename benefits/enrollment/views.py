@@ -6,12 +6,13 @@ import logging
 from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.utils.html import format_html
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import models, session, viewmodels
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
-from benefits.core.views import ROUTE_HELP
+from benefits.core.views import ROUTE_HELP, ROUTE_LOGGED_OUT
 from . import analytics, api, forms
 
 
@@ -47,6 +48,7 @@ def index(request):
     session.update(request, origin=reverse(ROUTE_INDEX))
 
     agency = session.agency(request)
+    verifier = session.verifier(request)
 
     # POST back after payment processor form, process card token
     if request.method == "POST":
@@ -74,12 +76,32 @@ def index(request):
         tokenize_retry_form = forms.CardTokenizeFailForm(ROUTE_RETRY)
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
+        media = []
+
+        if verifier.eligibility_confirmed_item_heading or verifier.eligibility_confirmed_item_details:
+            heading = _(verifier.eligibility_confirmed_item_heading) if verifier.eligibility_confirmed_item_heading else None
+            details = _(verifier.eligibility_confirmed_item_details) if verifier.eligibility_confirmed_item_details else None
+            confirmed_eligibility_item = viewmodels.MediaItem(
+                icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
+                heading=heading,
+                details=details,
+            )
+            media.append(confirmed_eligibility_item)
+
+        help_link = reverse(ROUTE_HELP)
+        link_card_item = viewmodels.MediaItem(
+            icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
+            heading=_("enrollment.pages.index.link_card_item.heading"),
+            details=[
+                format_html(_("enrollment.pages.index.link_card_item.p[0]%(link)s") % {"link": f"{help_link}#littlepay"}),
+                _("enrollment.pages.index.link_card_item.p[1]"),
+            ],
+        )
+        media.append(link_card_item)
+
         page = viewmodels.Page(
             title=_("enrollment.pages.index.title"),
-            content_title=_("enrollment.pages.index.content_title"),
-            icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-            paragraphs=[_("enrollment.pages.index.p[0]"), _("enrollment.pages.index.p[1]"), _("enrollment.pages.index.p[2]")],
-            classes="text-lg-center no-image-mobile",
+            headline=format_html(_(verifier.eligibility_confirmed_headline)),
             forms=[tokenize_retry_form, tokenize_success_form],
             buttons=[
                 viewmodels.Button.primary(
@@ -87,7 +109,7 @@ def index(request):
                 ),
             ],
         )
-        context = {}
+        context = {"media": media}
         context.update(page.context_dict())
 
         # add agency details
@@ -123,10 +145,9 @@ def retry(request):
         if form.is_valid():
             agency = session.agency(request)
             page = viewmodels.Page(
-                classes="no-image-mobile",
                 title=_("enrollment.pages.retry.title"),
                 icon=viewmodels.Icon("bankcardquestion", pgettext("image alt text", "core.icons.bankcardquestion")),
-                content_title=_("enrollment.pages.retry.title"),
+                headline=_("enrollment.pages.retry.title"),
                 paragraphs=[_("enrollment.pages.retry.p[0]")],
                 buttons=viewmodels.Button.agency_contact_links(agency),
             )
@@ -146,27 +167,41 @@ def success(request):
     """View handler for the final success page."""
     request.path = "/enrollment/success"
     session.update(request, origin=reverse(ROUTE_SUCCESS))
+
     verifier = session.verifier(request)
-    icon = viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck"))
-    page = viewmodels.Page(
-        classes="no-image-mobile",
-        title=_("enrollment.pages.success.title"),
-        content_title=_("enrollment.pages.success.content_title"),
+
+    page = viewmodels.Page(title=_("enrollment.pages.success.title"), headline=_("enrollment.pages.success.headline"))
+
+    if verifier.is_auth_required and session.logged_in(request):
+        # overwrite origin for a logged in user
+        # if they click the logout button, they are taken to the new route
+        session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
+        page.buttons = [viewmodels.Button.logout()]
+
+    success_item = viewmodels.MediaItem(
+        icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
+        details=[
+            _(verifier.enrollment_success_confirm_item_details),
+            format_html(_("enrollment.pages.success.helplink%(link)s") % {"link": f"{reverse(ROUTE_HELP)}"}),
+        ],
     )
+    media = [success_item]
 
-    if verifier.is_auth_required:
-        if session.logged_in(request):
-            page.buttons = [viewmodels.Button.logout()]
-            page.classes = ["no-image-mobile", "logged-in"]
-            page.icon = icon
-        else:
-            page.classes = ["no-image-mobile", "logged-out"]
-            page.content_title = _("enrollment.pages.success.logout.title")
-            page.noimage = True
-    else:
-        page.icon = icon
+    if verifier.enrollment_success_expiry_item_heading or verifier.enrollment_success_expiry_item_details:
+        heading = (
+            _(verifier.enrollment_success_expiry_item_heading) if verifier.enrollment_success_expiry_item_heading else None
+        )
+        details = (
+            _(verifier.enrollment_success_expiry_item_details) if verifier.enrollment_success_expiry_item_details else None
+        )
+        expiry_item = viewmodels.MediaItem(
+            icon=viewmodels.Icon("calendarcheck", pgettext("image alt text", "core.icons.calendarcheck")),
+            heading=heading,
+            details=details,
+        )
+        media.insert(0, expiry_item)
 
-    help_link = reverse(ROUTE_HELP)
-    context_dict = {**page.context_dict(), **{"help_link": help_link}}
+    context = {"media": media}
+    context.update(page.context_dict())
 
-    return TemplateResponse(request, TEMPLATE_SUCCESS, context_dict)
+    return TemplateResponse(request, TEMPLATE_SUCCESS, context)

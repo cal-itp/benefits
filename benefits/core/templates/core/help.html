@@ -1,63 +1,86 @@
-{% extends "core/page.html" %}
+{% extends "core/base.html" %}
 {% load i18n %}
 {% load static %}
 
 {% block main_content %}
-  <div class="container-fluid">
-    <div class="container content help">
-      {% block container_content %}
-        <h1>{{ page.content_title }}</h1>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <h1>{{ page.headline }}</h1>
+      </div>
+    </div>
 
-        <h2 id="what-is-cal-itp">{% translate "core.pages.help.about" %}</h2>
-        <p>{% translate "core.pages.help.about.p[0]" %}</p>
-        <p>{% translate "core.pages.help.about.p[1]" %}</p>
+    <div class="row justify-content-center">
+      <div class="col-10">
+        <h2 class="pt-8" id="what-is-cal-itp">{% translate "core.pages.help.about" %}</h2>
+        <p class="pt-4">{% translate "core.pages.help.about.p[0]" %}</p>
+        <p class="pt-4">{% translate "core.pages.help.about.p[1]" %}</p>
 
-        <h2 id="payment-options">{% translate "core.pages.help.payment_options" %}</h2>
-        <p>{% translate "core.pages.help.payment_options.p[0]" %}</p>
+        <h2 class="pt-8" id="payment-options">{% translate "core.pages.help.payment_options" %}</h2>
+        <p class="pt-4">{% translate "core.pages.help.payment_options.p[0]" %}</p>
 
-        <p class="contactless-symbol">
+        <p class="contactless-symbol pt-3">
           <img class="icon mx-auto d-block"
+               width="40"
+               height="50"
                src="{% static 'img/icon/contactless.svg' %}"
                alt="{% translate "core.icons.contactless" context "image alt text" %}"/>
         </p>
 
-        <p>{% translate "core.pages.help.payment_options.p[1]" %}</p>
-        <p>
+        <p class="pt-4">{% translate "core.pages.help.payment_options.p[1]" %}</p>
+        <p class="pt-4">
           {% blocktranslate with website="https://cash.app/help/us/en-us/14425-cal-transit" %}core.pages.help.payment_options.p[2][0]{{ website }}{% endblocktranslate %}
           {% blocktranslate with website="https://venmo.com/about/debitcard/" %}core.pages.help.payment_options.p[2][1]{{ website }}{% endblocktranslate %}
         </p>
-        <p>{% translate "core.pages.help.payment_options.p[3]" %}</p>
-        <p>{% translate "core.pages.help.payment_options.p[4]" %}</p>
+        <p class="pt-4">{% translate "core.pages.help.payment_options.p[3]" %}</p>
+        <p class="pt-4">{% translate "core.pages.help.payment_options.p[4]" %}</p>
 
-        <h2 id="login-gov">{% translate "core.pages.help.login_gov" %}</h2>
-        <p>{% translate "core.pages.help.login_gov.p[0]" %}</p>
-        <p>{% translate "core.pages.help.login_gov.p[1]" %}</p>
-        <p>{% translate "core.pages.help.login_gov.p[2]" %}</p>
+        <h2 class="pt-8" id="login-gov">{% translate "core.pages.help.login_gov" %}</h2>
+        <p class="pt-4">{% translate "core.pages.help.login_gov.p[0]" %}</p>
+        <p class="pt-4">{% translate "core.pages.help.login_gov.p[1]" %}</p>
+        <p class="pt-4">{% translate "core.pages.help.login_gov.p[2]" %}</p>
 
-        <h2 id="login-gov-verify">{% translate "core.pages.help.login_gov_verify" %}</h2>
-        <p>{% translate "core.pages.help.login_gov_verify.p[0]" %}</p>
-        <p>{% translate "core.pages.help.login_gov_verify.p[1]" %}</p>
-        <p>{% translate "core.pages.help.login_gov_verify.p[2]" %}</p>
-        <p>{% translate "core.pages.help.login_gov_verify.p[3]" %}</p>
+        <h2 class="pt-8" id="login-gov-verify">{% translate "core.pages.help.login_gov_verify" %}</h2>
+        <p class="pt-4">{% translate "core.pages.help.login_gov_verify.p[0]" %}</p>
+        <p class="pt-4">{% translate "core.pages.help.login_gov_verify.p[1]" %}</p>
+        <p class="pt-4">{% translate "core.pages.help.login_gov_verify.p[2]" %}</p>
+        <p class="pt-4">{% translate "core.pages.help.login_gov_verify.p[3]" %}</p>
 
-        <h2 id="littlepay">{% translate "core.pages.help.littlepay" %}</h2>
-        <p>{% translate "core.pages.help.littlepay.p[0]" %}</p>
-        <p>
+        <h2 class="pt-8" id="mst-courtesy-card">{% translate "core.pages.help.mst_cc" %}</h2>
+        <p class="pt-4">{% translate "core.pages.help.mst_cc.p[0]" %}</p>
+
+        <h2 class="pt-8" id="littlepay">{% translate "core.pages.help.littlepay" %}</h2>
+        <p class="pt-4">{% translate "core.pages.help.littlepay.p[0]" %}</p>
+        <p class="pt-4">
           {% blocktranslate with website="https://littlepay.com" %}core.pages.help.littlepay.p[1]{{ website }}{% endblocktranslate %}
         </p>
 
-        <h2 id="questions">{% translate "core.pages.help.questions" %}</h2>
-        <p>{% translate "core.pages.help.questions.p[0]" %}</p>
+        <h2 class="pt-8" id="questions">{% translate "core.pages.help.questions" %}</h2>
+        <p class="pt-4">{% translate "core.pages.help.questions.p[0]" %}</p>
+      </div>
+    </div>
 
-        {% block buttons %}
-          {% include "core/includes/agency-links.html" with buttons=page.buttons %}
-        {% endblock buttons %}
+    <div class="row justify-content-center">
+      <div class="col-10">{% include "core/includes/agency-links.html" with buttons=page.buttons %}</div>
+    </div>
 
-        <p class="mt-4">
+    {% for back_button in page.buttons %}
+      {% if "btn-primary" in back_button.classes %}
+        <div class="row pt-8">
+          <div class="col-lg-3 offset-lg-8 col-8 offset-2">
+            {% include "core/includes/button.html" with button=back_button %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+    <div class="row justify-content-center">
+      <div class="col-8 col-lg-10 mt-4">
+        <p class="pt-4">
           {% translate "core.pages.help.foss.text" %}
           <a href="https://www.github.com/cal-itp/benefits" target="_blank" rel="noopener noreferrer">{% translate "core.pages.help.foss.link" %}</a>.
         </p>
-      {% endblock container_content %}
+      </div>
     </div>
   </div>
 {% endblock main_content %}

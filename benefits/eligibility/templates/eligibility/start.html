@@ -1,51 +1,28 @@
-{% extends "core/page.html" %}
+{% extends "core/base.html" %}
 {% load i18n %}
 {% block classes %}
   {{ block.super |add:" eligibility-start" }}
 {% endblock classes %}
 
-{% block main_content %}
-  <div class="one-column-image"></div>
+{% block nav-buttons %}
+  {% include "core/includes/previous-page-link.html" %}
+{% endblock nav-buttons %}
 
-  <div class="container">
-    <h1 class="headline">{% translate "eligibility.pages.start.content_title" %}</h1>
-    <p>{% blocktranslate with info_link=info_link%}eligibility.pages.start.p[0]{{ info_link }}{% endblocktranslate %}</p>
-    <p>{% translate "eligibility.pages.start.p[1]" %}</p>
-
-    <h2 class="media-title">{{ title }}</h2>
-
-    {% block media_list %}
-      {% if media|length_is:"0" %}
-      {% else %}
-        <ul class="media-list">
-          {% for item in media %}
-            <li class="media">
-              <div class="media-line">{% include "core/includes/icon.html" with icon=item.icon %}</div>
-              <div class="media-body">
-                <h3 class="media-body--heading">{{ item.heading }}</h3>
-                <div class="media-body--details">
-                  <p>{{ item.details }}</p>
-                  <div class="media-body--items">
-                    <ul>
-                      {% for l in item.bullets %}<li>{{ l }}</li>{% endfor %}
-                    </ul>
-                  </div>
-                </div>
-                <div class="media-body--links">
-                  {% for l in item.links %}
-                    {% include "core/includes/button.html" with button=l %}
-                  {% endfor %}
-                </div>
-              </div>
-            </li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endblock media_list %}
-
-    {% block buttons %}
-      {{ block.super }}
-    {% endblock buttons %}
+{% block inner-content %}
+  <div class="col-12 col-sm-12 col-lg-10">
+    <h2 class="media-title p-sm">{{ start_sub_headline }}</h2>
+    {% include "core/includes/media-list.html" with media=media %}
   </div>
+{% endblock inner-content %}
 
-{% endblock main_content %}
+{% block call-to-action-text %}
+  <p class="pt-4 pt-lg-0">
+    {% blocktranslate with help_link=help_link%}eligibility.pages.start.help_text{{ help_link }}{% endblocktranslate %}
+  </p>
+{% endblock call-to-action-text %}
+
+{% block call-to-action-button %}
+  {% for b in page.buttons %}
+    {% include "core/includes/button.html" with button=b %}
+  {% endfor %}
+{% endblock call-to-action-button %}

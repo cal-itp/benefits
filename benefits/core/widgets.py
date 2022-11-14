@@ -11,16 +11,18 @@ class FormControlTextInput(widgets.TextInput):
     def __init__(self, pattern=None, placeholder=None, **kwargs):
         super().__init__(**kwargs)
 
-        self.attrs.update({"class": "form-control form-control-lg"})
+        self.attrs.update({"class": "form-control"})
         if pattern:
             self.attrs.update({"pattern": pattern})
         if placeholder:
             self.attrs.update({"placeholder": placeholder})
 
 
-class RadioSelect(widgets.RadioSelect):
-    template_name = "core/widgets/radio_select.html"
-    option_template_name = "core/widgets/radio_select_option.html"
+class VerifierRadioSelect(widgets.RadioSelect):
+    """A radio select input styled for the Eligibility Verifier"""
+
+    template_name = "core/widgets/verifier_radio_select.html"
+    option_template_name = "core/widgets/verifier_radio_select_option.html"
 
     def __init__(self, choice_descriptions=(), *args, **kwargs):
         super().__init__(*args, **kwargs)

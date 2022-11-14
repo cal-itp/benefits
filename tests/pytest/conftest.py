@@ -89,19 +89,22 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         eligibility_type=model_EligibilityType,
         public_key=model_PemData,
         selection_label="Select",
-        start_content_title="Start",
-        start_item_name="Start Item",
-        start_item_description="Start Item Description",
-        start_blurb="Start Blurb",
+        start_title="Information",
+        start_headline="Start",
+        start_sub_headline="Start",
+        start_item_heading="Start Item",
+        start_item_details="Start Item Description",
         form_title="Form",
-        form_content_title="Form",
+        form_headline="Form",
         form_blurb="Form Blurb",
         form_sub_label="Sub",
+        form_sub_help_text="Sub Help Text",
         form_sub_placeholder="Sub",
         form_name_label="Name",
+        form_name_help_text="Name Help Text",
         form_name_placeholder="Name",
         unverified_title="Unverified",
-        unverified_content_title="Unverified",
+        unverified_headline="Unverified",
         unverified_blurb="Unverified Blurb",
     )
 
@@ -222,6 +225,7 @@ def mocked_session_verifier_oauth(mocker, model_EligibilityVerifier_AuthProvider
 @pytest.fixture
 def mocked_session_verifier_auth_required(mocker, model_EligibilityVerifier, mocked_session_verifier):
     mock_verifier = mocker.Mock(spec=model_EligibilityVerifier)
+    mock_verifier.name = model_EligibilityVerifier.name
     mock_verifier.is_auth_required = True
     mocked_session_verifier.return_value = mock_verifier
     return mocked_session_verifier
