@@ -4,13 +4,13 @@ We have another potential transit discount use case, which is for students/facul
 
 ## Prototype
 
-Here's a clickable prototype showing what the flow might look like, having users enroll via their college's single sign-on (SSO) system:
+Here's a clickable prototype showing the planned flow, having users enroll via their college's single sign-on (SSO) system:
 
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="700" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FSeSd3LaLd6WkbEYhmtKpO3%2FBenefits-(Identity-Verification-SSO)%3Fnode-id%3D7741%253A33063%26scaling%3Dscale-down%26page-id%3D7741%253A32852%26starting-point-node-id%3D7741%253A33063" allowfullscreen></iframe>
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="500" height="900" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2FSeSd3LaLd6WkbEYhmtKpO3%2FBenefits-(Identity-Verification-Login.gov)%3Fnode-id%3D7742%253A35091%26scaling%3Dscale-down%26page-id%3D7742%253A35066%26starting-point-node-id%3D7742%253A35091" allowfullscreen></iframe>
 
 ## Process
 
-Here's what might happen behind the scenes in a success flow:
+Here's what will happen behind the scenes in a success flow:
 
 ```mermaid
 sequenceDiagram
