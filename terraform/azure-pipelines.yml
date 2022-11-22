@@ -9,11 +9,11 @@ trigger:
     include:
       - terraform/*
 stages:
-  - stage: plan
+  - stage: terraform
     pool:
       vmImage: ubuntu-latest
     jobs:
-      - job: plan
+      - job: terraform
         steps:
           # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformInstaller#readme
           - task: TerraformInstaller@0
@@ -45,6 +45,8 @@ stages:
               workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
               # service connection
               environmentServiceNameAzureRM: Production
+            # the plan is done as part of the apply (below), so don't bother doing it twice
+            condition: ne(variables['Build.SourceBranchName'], 'dev')
           - task: TerraformTaskV3@3
             displayName: Terraform apply
             inputs:
@@ -56,4 +58,4 @@ stages:
               # service connection
               environmentServiceNameAzureRM: Production
             # only run on dev
-            condition: eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+            condition: eq(variables['Build.SourceBranchName'], 'dev')
