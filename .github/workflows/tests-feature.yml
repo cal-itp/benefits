@@ -48,7 +48,7 @@ jobs:
             ghcr.io/cal-itp/eligibility-server:dev
 
       - name: Run feature tests
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v5
         env:
           CYPRESS_baseUrl: http://localhost:8000
         with:
