@@ -26,14 +26,37 @@ resource "azurerm_key_vault_access_policy" "app_service_cert" {
   ]
 }
 
-# allow the pipeline to access the certificate (below)
-resource "azurerm_key_vault_access_policy" "prod_service_connection" {
+resource "azurerm_key_vault_access_policy" "devsecops" {
   key_vault_id = azurerm_key_vault.main.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = var.PROD_SERVICE_CONNECTION_APP_ID
+  object_id    = var.DEVSECOPS_OBJECT_ID
 
+  # allow the pipeline to access the certificate (below)
   certificate_permissions = [
     "Get",
+  ]
+  key_permissions = [
+    "Get",
+    "List",
+    "Update",
+    "Create",
+    "Import",
+    "Delete",
+    "Recover",
+    "Backup",
+    "Restore",
+    "GetRotationPolicy",
+    "SetRotationPolicy",
+    "Rotate",
+  ]
+  secret_permissions = [
+    "Get",
+    "List",
+    "Set",
+    "Delete",
+    "Recover",
+    "Backup",
+    "Restore",
   ]
 }
 
@@ -42,6 +65,13 @@ data "azurerm_key_vault_certificate" "wildcard" {
   key_vault_id = azurerm_key_vault.main.id
 
   depends_on = [
-    azurerm_key_vault_access_policy.prod_service_connection
+    azurerm_key_vault_access_policy.devsecops
   ]
+}
+
+# migrations
+
+moved {
+  from = azurerm_key_vault_access_policy.prod_service_connection
+  to   = azurerm_key_vault_access_policy.devsecops
 }
