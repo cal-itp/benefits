@@ -16,6 +16,10 @@ resource "azurerm_app_service_certificate" "wildcard" {
   location            = data.azurerm_resource_group.prod.location
   key_vault_secret_id = data.azurerm_key_vault_certificate.wildcard.id
 
+  depends_on = [
+    azurerm_key_vault_access_policy.app_service_cert
+  ]
+
   lifecycle {
     ignore_changes = [tags]
   }
