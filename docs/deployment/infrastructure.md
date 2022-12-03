@@ -62,7 +62,7 @@ flowchart LR
     end
 ```
 
-[Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview). Both are managed by the DevSecOps team.
+[Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview) and handles TLS termination. Front Door is managed by the DevSecOps team.
 
 On this page, "slot" will refer to the true [App Service slots](https://docs.microsoft.com/en-us/azure/app-service/deploy-staging-slots) for the different environments, or the overarching App Service resource for `production`. The latter is basically an implicit slot.
 
@@ -198,7 +198,5 @@ The following steps are required to set up the environment, with linked issues t
 - Set required [App Service configuration](../configuration/environment-variables.md)
 - [Upload configuration data](../configuration/data.md) to the storage container
 - [Set up webhook from GitHub](https://github.com/cal-itp/benefits/settings/hooks) to [App Service Deployment Center](https://learn.microsoft.com/en-us/azure/app-service/deploy-ci-cd-custom-container?tabs=acr&pivots=container-linux) for the `Packages` event
-- [Import the wildcard certificate (`*.calitp.org`) to the Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/certificates/tutorial-import-certificate?tabs=azure-portal)
-- Bind the certificates to the slots - [#704](https://github.com/cal-itp/benefits/issues/704)
 
 This is not a complete step-by-step guide; more a list of things to remember. This may be useful as part of [incident response](https://docs.google.com/document/d/1qtev8qItPiTB4Tp9FQ87XsLtWZ4HlNXqoe9vF2VuGcY/edit#).
