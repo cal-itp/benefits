@@ -5,6 +5,13 @@ The infrastructure is configured as code via [Terraform](https://www.terraform.i
 - `CDT/ODI Development` - Meant for experimentation with short-lived resources
 - `CDT/ODI Production` - All resources in here should be reflected in Terraform in this repository. The exception is secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) and [App Service application settings](https://docs.microsoft.com/en-us/azure/app-service/configure-common#configure-app-settings). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
 
+All resources in the `CDT/ODI Production` Resource Group should be reflected in Terraform in this repository. The exceptions are:
+
+- Secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) and [App Service application settings](https://docs.microsoft.com/en-us/azure/app-service/configure-common#configure-app-settings). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
+- [Things managed by DevSecOps](#ownership)
+
+You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources).
+
 For browsing the [Azure portal](https://portal.azure.com), [switching your `Default subscription filter`](https://docs.microsoft.com/en-us/azure/azure-portal/set-preferences) to only `CDT/ODI Production` is recommended.
 
 ## Architecture
@@ -65,6 +72,17 @@ flowchart LR
 [Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview) and handles TLS termination. Front Door is managed by the DevSecOps team.
 
 On this page, "slot" will refer to the true [App Service slots](https://docs.microsoft.com/en-us/azure/app-service/deploy-staging-slots) for the different environments, or the overarching App Service resource for `production`. The latter is basically an implicit slot.
+
+## Ownership
+
+The following things in Azure are managed by the California Department of Technology (CDT)'s DevSecOps (OET) team:
+
+- Subcriptions
+- [Resource Groups](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal)
+- Networking
+- Front Door
+- IAM
+- Service connections
 
 ## Monitoring
 
