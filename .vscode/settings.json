@@ -32,5 +32,8 @@
   },
   "[terraform-vars]": {
     "editor.defaultFormatter": "hashicorp.terraform"
+  },
+  "workbench.editorAssociations": {
+    "*.db": "sqlite-viewer.option"
   }
 }
