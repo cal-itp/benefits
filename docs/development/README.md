@@ -47,9 +47,9 @@ In VS Code, press <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>D</kb
 
 ![Screenshot of the VSCode Run and Debug pane, showing selection of the launch configuration](img/vscode-debugger-launch-config.png)
 
-The [environment](../configuration/environment-variables.md) can also be overridden for the debug session by editing the configuration in `.vscode/launch.json`, where any of the supported environment variables may be specified in the `env` block:
+The [environment](../configuration/environment-variables.md) can also be overridden for the debug session by editing the configuration in `.vscode/launch.json`, where any of the supported environment variables may be specified in the `env` block. For example, to test the app with reCAPTCHA environment variables:
 
-```json
+```jsonc
 {
     "name": "Django: Benefits Client",
     "type": "python",
@@ -58,10 +58,16 @@ The [environment](../configuration/environment-variables.md) can also be overrid
     "args": ["runserver", "--insecure", "0.0.0.0:8000"],
     "django": true,
     "env": {
+        // existing field...
         "DJANGO_DEBUG": "true",
+        // add these 2 entries with the values for reCAPTCHA
+        "DJANGO_RECAPTCHA_SITE_KEY": "<SITE KEY HERE>",
+        "DJANGO_RECAPTCHA_SECRET_KEY": "<SECRET KEY HERE>"
     }
 }
 ```
+
+See [#1071](https://github.com/cal-itp/benefits/pull/1071) for more examples and context.
 
 ## Exiting devcontainers
 
