@@ -37,6 +37,32 @@ dynamically assigned by Docker. See [Docker dynamic ports](./docker-dynamic-port
 
 Add breakpoints in the code and browse the local site to trigger a pause. Press `F5` to continue execution from the breakpoint.
 
+### Changing launch configuration
+
+By default, the application is launched with `DJANGO_DEBUG=True`, causing Django to provide additional logging and error output and to relax certain security settings.
+
+Alternatively, you may attach to an instance launched with `DJANGO_DEBUG=False`, to allow debugging the app in a state more similar to production.
+
+In VS Code, press <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd> to open the `Run and Debug` pane, where you can select between the various configurations (disregard the duplicate entry, selecting either will work):
+
+![Screenshot of the VSCode Run and Debug pane, showing selection of the launch configuration](img/vscode-debugger-launch-config.png)
+
+The [environment](../configuration/environment-variables.md) can also be overridden for the debug session by editing the configuration in `.vscode/launch.json`, where any of the supported environment variables may be specified in the `env` block:
+
+```json
+{
+    "name": "Django: Benefits Client",
+    "type": "python",
+    "request": "launch",
+    "program": "${workspaceFolder}/manage.py",
+    "args": ["runserver", "--insecure", "0.0.0.0:8000"],
+    "django": true,
+    "env": {
+        "DJANGO_DEBUG": "true",
+    }
+}
+```
+
 ## Exiting devcontainers
 
 To close out of the container and re-open the directory locally in Visual Studio Code:
