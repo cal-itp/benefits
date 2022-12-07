@@ -25,17 +25,17 @@ inside a container.
 
 If you do not receive a prompt, or when you feel like starting from a fresh environment:
 
-1. `Ctrl/Cmd+Shift+P` to bring up the command palette in Visual Studio Code
+1. <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> to bring up the command palette in Visual Studio Code
 1. Type `Remote-Containers` to filter the commands
 1. Select `Rebuild and Reopen in Container` to completely rebuild the devcontainer
 1. Select `Reopen in Container` to reopen the most recent devcontainer build
 
 ## Attach a debugger
 
-Once running inside a container, press **`F5`** to attach a debugger to the client, running on `http://localhost` at a port
+Once running inside a container, press <kbd>F5</kbd> to attach a debugger to the client, running on `http://localhost` at a port
 dynamically assigned by Docker. See [Docker dynamic ports](./docker-dynamic-ports.md) for more information.
 
-Add breakpoints in the code and browse the local site to trigger a pause. Press `F5` to continue execution from the breakpoint.
+Add breakpoints in the code and browse the local site to trigger a pause. Press <kbd>F5</kbd> to continue execution from the breakpoint.
 
 ### Changing launch configuration
 
@@ -67,7 +67,7 @@ The [environment](../configuration/environment-variables.md) can also be overrid
 
 To close out of the container and re-open the directory locally in Visual Studio Code:
 
-1. `Ctrl/Cmd+Shift+P` to bring up the command palette in Visual Studio Code
+1. <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> to bring up the command palette in Visual Studio Code
 1. Type `Remote-Containers` to filter the commands
 1. Select `Reopen Locally`
 
