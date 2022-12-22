@@ -35,10 +35,11 @@ plugins:
   - awesome-pages
   - redirects:
       redirect_maps:
-        "students.md": "use-cases/students.md"
         "deployment/azure.md": "deployment/infrastructure.md"
         "getting-started/development.md": "development/README.md"
         "getting-started/docker-dynamic-ports.md": "development/docker-dynamic-ports.md"
+        "students.md": "use-cases/college.md"
+        "use-cases/students.md": "use-cases/college.md"
 
 extra_css:
   - https://use.fontawesome.com/releases/v5.13.0/css/all.css

@@ -22,7 +22,3 @@ provider "azurerm" {
 }
 
 data "azurerm_client_config" "current" {}
-
-data "azurerm_resource_group" "prod" {
-  name = "RG-CDT-PUB-VIP-CALITP-P-001"
-}

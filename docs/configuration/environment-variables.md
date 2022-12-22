@@ -113,7 +113,6 @@ The log level used in the application's logging configuration.
 
 By default the application sends logs to `stdout`.
 
-
 ### `DJANGO_MIGRATIONS_DIR`
 
 !!! warning "Deployment configuration"
@@ -167,9 +166,8 @@ devcontainer, check the [`DJANGO_LOCAL_PORT`](#django_local_port).
 
     [Azure Monitor connection strings](https://docs.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string)
 
-Enables [log collection](../../deployment/infrastructure/#logs). Set the value in quotes, e.g. `APPLICATIONINSIGHTS_CONNECTION_STRING="InstrumentationKey=…"`.
+Enables [log collection](../../deployment/troubleshooting/#logs). Set the value in quotes, e.g. `APPLICATIONINSIGHTS_CONNECTION_STRING="InstrumentationKey=…"`.
 
 [app-service-config]: https://docs.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal
 [benefits-secrets]: https://github.com/cal-itp/benefits-secrets
-[deployment]: ../deployment/README.md
 [getting-started_create-env]: ../getting-started/README.md#create-an-environment-file

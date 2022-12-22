@@ -1,59 +1,56 @@
 trigger:
-  # automatically runs on pull requests; this runs the pipeline after merge
+  # automatically runs on pull requests
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#pr-triggers
   branches:
     include:
       - dev
+      - test
+      - prod
   # only run for changes to Terraform files
   paths:
     include:
       - terraform/*
 stages:
-  - stage: plan
+  - stage: terraform
     pool:
       vmImage: ubuntu-latest
     jobs:
-      - job: plan
+      # the service connection name must be hard-coded, so the workaround to make it dynamic is to use multiple jobs with conditions
+      # https://stackoverflow.com/a/57520153/358804
+      # https://developercommunity.visualstudio.com/t/using-a-variable-for-the-service-connection-result/676259#T-N1183768
+      - job: environment
+        variables:
+          - name: OTHER_SOURCE
+            value: $[variables['System.PullRequest.SourceBranch']]
+          - name: INDIVIDUAL_SOURCE
+            value: $[variables['Build.SourceBranchName']]
+          - name: TARGET
+            value: $[variables['System.PullRequest.TargetBranch']]
         steps:
-          # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformInstaller#readme
-          - task: TerraformInstaller@0
-            displayName: Install Terraform
-            inputs:
-              terraformVersion: 1.3.1
-          # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformTask/TerraformTaskV3#readme
-          - task: TerraformTaskV3@3
-            displayName: Terraform init
-            inputs:
-              provider: azurerm
-              command: init
-              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
-              # service connection
-              backendServiceArm: Production
-              # needs to match main.tf
-              backendAzureRmResourceGroupName: RG-CDT-PUB-VIP-CALITP-P-001
-              backendAzureRmStorageAccountName: sacdtcalitpp001
-              backendAzureRmContainerName: tfstate
-              backendAzureRmKey: terraform.tfstate
-          - task: TerraformTaskV3@3
-            displayName: Terraform plan
-            inputs:
-              provider: azurerm
-              command: plan
-              # wait for lock to be released, in case being used by another pipeline run
-              # https://discuss.hashicorp.com/t/terraform-plan-wait-for-lock-to-be-released/6870/2
-              commandOptions: -lock-timeout=2m
-              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
-              # service connection
-              environmentServiceNameAzureRM: Production
-          - task: TerraformTaskV3@3
-            displayName: Terraform apply
-            inputs:
-              provider: azurerm
-              command: apply
-              # (ditto the lock comment above)
-              commandOptions: -lock-timeout=2m
-              workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
-              # service connection
-              environmentServiceNameAzureRM: Production
-            # only run on dev
-            condition: eq(variables['Build.SourceBranch'], 'refs/heads/dev')
+          - bash: python terraform/pipeline/workspace.py
+            displayName: Set environment-related variables
+            # save the values
+            # https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch#use-outputs-in-a-different-job
+            name: env_select
+            env:
+              REASON: $(Build.Reason)
+      - job: dev
+        dependsOn: environment
+        condition: eq(dependencies.environment.outputs['env_select.service_connection'], 'Development')
+        variables:
+          workspace: $[ dependencies.environment.outputs['env_select.workspace'] ]
+        steps:
+          - template: pipeline/deploy.yml
+            parameters:
+              service_connection: Development
+              workspace: $(workspace)
+      - job: prod
+        dependsOn: environment
+        condition: eq(dependencies.environment.outputs['env_select.service_connection'], 'Production')
+        variables:
+          workspace: $[ dependencies.environment.outputs['env_select.workspace'] ]
+        steps:
+          - template: pipeline/deploy.yml
+            parameters:
+              service_connection: Production
+              workspace: $(workspace)

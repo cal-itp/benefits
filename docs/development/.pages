@@ -4,5 +4,6 @@ nav:
   - docker-dynamic-ports.md
   - linting-pre-commit.md
   - models-migrations.md
+  - i18n.md
   - test-server.md
   - Style Guide: https://www.figma.com/proto/SeSd3LaLd6WkbEYhmtKpO3/Benefits-(IAL2-Login.gov)?node-id=4942%3A17385&scaling=scale-down&page-id=4890%3A17182
