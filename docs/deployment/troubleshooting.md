@@ -53,3 +53,14 @@ If Terraform commands fail (locally or in the Pipeline) due to an `Error acquiri
 1. **Are any [Pipeline runs](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_build?definitionId=828) stuck?** If so, cancel that build, and try re-running the Terraform command.
 1. **Do any engineers have a Terrafrom command running locally?** You'll need to ask them. For example: They may have started an `apply` and it's sitting waiting for them to [approve](https://developer.hashicorp.com/terraform/cli/commands/apply#automatic-plan-mode) it. They will need to (gracefully) exit for the lock to be relased.
 1. **If none of the steps above identified the source of the lock**, and especially if the `Created` time is more than ten minutes ago, that probably means the last Terraform command didn't release the lock. You'll need to grab the `ID` from the `Lock Info` output and [force unlock](https://developer.hashicorp.com/terraform/language/state/locking#force-unlock).
+
+## Eligibility Server
+
+If the Benefits application gets a 403 error when trying to make API calls to the [Eligibility Server](https://docs.calitp.org/eligibility-server/), it may be because the outbound IP addresses changed, and the Eligibility Server firewall is still restricting access to the old IP ranges.
+
+1. Grab the `outbound_ip_ranges` `output` values from the most recent Benefit [deployment](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_build?definitionId=828) to the relevant environment.
+1. Update the IP ranges
+   1. Go to the [Eligibility Server Pipeline](https://dev.azure.com/mstransit/courtesy-cards/_build?definitionId=1&_a=summary)
+   1. Click `Edit`
+   1. Click `Variables`
+   1. Update the relevant variable with the new list of CIDRs
