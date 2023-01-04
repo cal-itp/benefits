@@ -1,28 +1,11 @@
-module "dev_healthcheck" {
+module "healthcheck" {
   source = "./uptime"
 
   action_group_id      = azurerm_monitor_action_group.eng_email.id
-  application_insights = azurerm_application_insights.prod
-  name                 = "dev-healthcheck"
-  url                  = "https://dev-benefits.calitp.org/healthcheck"
-}
-
-module "test_healthcheck" {
-  source = "./uptime"
-
-  action_group_id      = azurerm_monitor_action_group.eng_email.id
-  application_insights = azurerm_application_insights.prod
-  name                 = "test-healthcheck"
-  url                  = "https://test-benefits.calitp.org/healthcheck"
-}
-
-module "prod_healthcheck" {
-  source = "./uptime"
-
-  action_group_id      = azurerm_monitor_action_group.eng_email.id
-  application_insights = azurerm_application_insights.prod
-  name                 = "prod-healthcheck"
-  url                  = "https://benefits.calitp.org/healthcheck"
+  application_insights = azurerm_application_insights.main
+  # not strictly necessary to include the environment name, but helps to make the alerts more clear
+  name = "${local.env_name}-healthcheck"
+  url  = "https://${local.hostname}/healthcheck"
 }
 
 # migrations
@@ -35,4 +18,9 @@ moved {
 moved {
   from = azurerm_monitor_metric_alert.uptime
   to   = module.dev_healthcheck.azurerm_monitor_metric_alert.uptime
+}
+
+moved {
+  from = module.prod_healthcheck
+  to   = module.healthcheck
 }

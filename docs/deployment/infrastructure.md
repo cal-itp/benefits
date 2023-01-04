@@ -1,11 +1,6 @@
 # Infrastructure
 
-The infrastructure is configured as code via [Terraform](https://www.terraform.io/), for [various reasons](https://techcommunity.microsoft.com/t5/fasttrack-for-azure/the-benefits-of-infrastructure-as-code/ba-p/2069350). There are two subscriptions, with a single [resource group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal) under each:
-
-- `CDT/ODI Development` - Meant for experimentation with short-lived resources
-- `CDT/ODI Production` - All resources in here should be reflected in Terraform in this repository. The exception is secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) and [App Service application settings](https://docs.microsoft.com/en-us/azure/app-service/configure-common#configure-app-settings). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
-
-For browsing the [Azure portal](https://portal.azure.com), [switching your `Default subscription filter`](https://docs.microsoft.com/en-us/azure/azure-portal/set-preferences) to only `CDT/ODI Production` is recommended.
+The infrastructure is configured as code via [Terraform](https://www.terraform.io/), for [various reasons](https://techcommunity.microsoft.com/t5/fasttrack-for-azure/the-benefits-of-infrastructure-as-code/ba-p/2069350).
 
 ## Architecture
 
@@ -62,54 +57,37 @@ flowchart LR
     end
 ```
 
-[Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview). Both are managed by the DevSecOps team.
+[Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview) and handles TLS termination. Front Door is managed by the DevSecOps team.
 
-On this page, "slot" will refer to the true [App Service slots](https://docs.microsoft.com/en-us/azure/app-service/deploy-staging-slots) for the different environments, or the overarching App Service resource for `production`. The latter is basically an implicit slot.
+## Ownership
 
-## Monitoring
+The following things in Azure are managed by the California Department of Technology (CDT)'s DevSecOps (OET) team:
 
-We have [ping tests](https://docs.microsoft.com/en-us/azure/azure-monitor/app/monitor-web-app-availability) set up to notify about availability of the dev, test, and prod deployments. Alerts go to [#benefits-notify](https://cal-itp.slack.com/archives/C022HHSEE3F).
+- Subcriptions
+- [Resource Groups](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal)
+- Networking
+- Front Door
+- IAM
+- Service connections
 
-## Logs
+## Environments
 
-Logs can be found a couple of places:
+Within the `CDT Digital CA` directory ([how to switch](https://learn.microsoft.com/en-us/azure/devtest/offer/how-to-change-directory-tenants-visual-studio-azure)), there are two [Subscriptions](https://learn.microsoft.com/en-us/microsoft-365/enterprise/subscriptions-licenses-accounts-and-tenants-for-microsoft-cloud-offerings?view=o365-worldwide#subscriptions), with Resource Groups under each. Each environment corresponds to a single Resource Group, [Terraform Workspace](https://developer.hashicorp.com/terraform/language/state/workspaces), and branch.
 
-### Azure App Service Logs
+| Environment | Subscription          | Resource Group                | Workspace | Branch |
+| ----------- | --------------------- | ----------------------------- | --------- | ------ |
+| Dev         | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-D-001` | `dev`     | `dev`  |
+| Test        | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-T-001` | `test`    | `test` |
+| Prod        | `CDT/ODI Production`  | `RG-CDT-PUB-VIP-CALITP-P-001` | `default` | `prod` |
 
-[Open the `Logs` for the slot you are interested in.](https://docs.google.com/document/d/11EPDIROBvg7cRtU2V42c6VBxcW_o8HhcyORALNtL_XY/edit#heading=h.6pxjhslhxwvj) The following tables are likely of interest:
+All resources in these Resource Groups should be reflected in Terraform in this repository. The exceptions are:
 
-- `AppServiceConsoleLogs`: `stdout` and `stderr` coming from the container
-- `AppServiceHTTPLogs`: requests coming through App Service
-- `AppServicePlatformLogs`: deployment information
+- Secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) and [App Service application settings](https://docs.microsoft.com/en-us/azure/app-service/configure-common#configure-app-settings). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
+- [Things managed by DevSecOps](#ownership)
 
-For some pre-defined queries, click `Queries`, then `Group by: Query type`, and look under `Query pack queries`.
+You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources).
 
-### [Azure Monitor Logs](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-platform-logs)
-
-[Open the `Logs` for the slot you are interested in.](https://docs.google.com/document/d/11EPDIROBvg7cRtU2V42c6VBxcW_o8HhcyORALNtL_XY/edit#heading=h.n0oq4r1jo7zs)
-
-The following [tables](https://docs.microsoft.com/en-us/azure/azure-monitor/app/opencensus-python#telemetry-type-mappings) are likely of interest:
-
-- `requests`
-- `traces`
-
-In the latter two, you should see recent log output. Note [there is some latency](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-ingestion-time).
-
-See [`Failures`](https://docs.microsoft.com/en-us/azure/azure-monitor/app/asp-net-exceptions#diagnose-failures-using-the-azure-portal) in the sidebar (or `exceptions` under `Logs`) for application errors/exceptions.
-
-### Live tail
-
-After [setting up the Azure CLI](#making-changes), you can use the following command to [stream live logs](https://docs.microsoft.com/en-us/azure/app-service/troubleshoot-diagnostic-logs#in-local-terminal):
-
-```sh
-az webapp log tail --resource-group RG-CDT-PUB-VIP-CALITP-P-001 --name AS-CDT-PUB-VIP-CALITP-P-001 --slot dev 2>&1 | grep -v /healthcheck
-```
-
-`--slot dev` can be removed for production or changed for a different slot.
-
-### SCM
-
-https://as-cdt-pub-vip-calitp-p-001-dev.scm.azurewebsites.net/api/logs/docker
+For browsing the [Azure portal](https://portal.azure.com), you can [switch your `Default subscription filter`](https://docs.microsoft.com/en-us/azure/azure-portal/set-preferences).
 
 ## Making changes
 
@@ -128,19 +106,17 @@ Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is
    - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
    - [Terraform](https://www.terraform.io/downloads) - see exact version in [`azure-pipelines.yml`](https://github.com/cal-itp/benefits/blob/dev/terraform/azure-pipelines.yml)
 
-1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli), specifying the `CDT/ODI Production` Subscription.
+1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli).
 
    ```sh
    az login
-
-   az account set --subscription="CDT/ODI Production"
    ```
 
 1. Outside the [dev container](../../getting-started/), navigate to the [`terraform/`](https://github.com/cal-itp/benefits/tree/dev/terraform) directory.
-1. [Initialize Terraform.](https://www.terraform.io/cli/commands/init)
+1. [Initialize Terraform.](https://www.terraform.io/cli/commands/init) You can also use this script later to switch between [environments](#environments).
 
    ```sh
-   terraform init
+   ./init.sh <env>
    ```
 
 1. Make changes to Terraform files.
@@ -194,7 +170,9 @@ Use the following shorthand for conveying the Resource Type as part of the Resou
 The following steps are required to set up the environment, with linked issues to automate them:
 
 - `terraform apply`
+- Set up Slack notifications by [creating a Slack email](https://slack.com/help/articles/206819278-Send-emails-to-Slack) for the [#benefits-notify](https://cal-itp.slack.com/archives/C022HHSEE3F) channel, then [setting it as a Secret in the Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-portal#add-a-secret-to-key-vault) named `slack-benefits-notify-email`
 - Set required [App Service configuration](../configuration/environment-variables.md)
-- Bind the certificates to the slots - [#704](https://github.com/cal-itp/benefits/issues/704)
+- [Upload configuration data](../configuration/data.md) to the storage container
+- [Set up webhook from GitHub](https://github.com/cal-itp/benefits/settings/hooks) to [App Service Deployment Center](https://learn.microsoft.com/en-us/azure/app-service/deploy-ci-cd-custom-container?tabs=acr&pivots=container-linux) for the `Packages` event
 
-This is not a complete step-by-step guide; more a list of things to remember. This may be useful as part of incident response.
+This is not a complete step-by-step guide; more a list of things to remember. This may be useful as part of [incident response](https://docs.google.com/document/d/1qtev8qItPiTB4Tp9FQ87XsLtWZ4HlNXqoe9vF2VuGcY/edit#).

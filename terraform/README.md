@@ -1,1 +1,1 @@
-[Documentation](https://docs.calitp.org/benefits/deployment/azure/)
+[Documentation](https://docs.calitp.org/benefits/deployment/infrastructure/)
