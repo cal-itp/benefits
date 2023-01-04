@@ -17,7 +17,7 @@ address, look on the **PORTS** tab in VS Code's _Terminal_ window. The `Local Ad
 Replace `0.0.0.0` with `localhost` and use the same port number shown in the `Local Address` column. This is highlighted by the
 red box in the image below:
 
-![Screenshot showing a Local Address for a conatiner application](img/ports-local-address.png)
+![Screenshot showing a Local Address for a container application](img/ports-local-address.png)
 
 ## Outside the Devcontainer
 
