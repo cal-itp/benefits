@@ -10,8 +10,3 @@ variable "ENGINEERING_GROUP_OBJECT_ID" {
   description = "Object ID for the Cal-ITP engineering Active Directory Group"
   type        = string
 }
-
-variable "MYSTERY_APP_SERVICE_OBJECT_ID" {
-  description = "Object ID for something with principal name 'Microsoft Azure App Service'"
-  type        = string
-}
