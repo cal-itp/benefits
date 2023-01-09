@@ -79,7 +79,7 @@ jobs:
       # https://www.ravsam.in/blog/send-slack-notification-when-github-actions-fails/#using-notify-slack-action
       - name: Report failure to Slack
         if: always()
-        uses: ravsamhq/notify-slack-action@v1
+        uses: ravsamhq/notify-slack-action@v2
         with:
           status: ${{ job.status }}
           notify_when: "failure"
