@@ -75,3 +75,13 @@ jobs:
           --cacert $temp_dir/cacert.ca > $temp_dir/payload.txt
 
           test $(head -n 1 $temp_dir/payload.txt | grep -o 201)
+
+      # https://www.ravsam.in/blog/send-slack-notification-when-github-actions-fails/#using-notify-slack-action
+      - name: Report failure to Slack
+        if: always()
+        uses: ravsamhq/notify-slack-action@v1
+        with:
+          status: ${{ job.status }}
+          notify_when: "failure"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.ACTION_MONITORING_SLACK }}
