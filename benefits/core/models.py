@@ -124,7 +124,6 @@ class EligibilityVerifier(models.Model):
     # The maximum length accepted for the 'name' API field before sending to this verifier
     form_name_max_length = models.PositiveSmallIntegerField(null=True)
     unverified_title = models.TextField()
-    unverified_headline = models.TextField()
     unverified_blurb = models.TextField()
     eligibility_confirmed_item_heading = models.TextField(null=True)
     eligibility_confirmed_item_details = models.TextField(null=True)
