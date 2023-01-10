@@ -103,7 +103,6 @@ class EligibilityVerifier(models.Model):
     selection_label_description = models.TextField(null=True)
     start_title = models.TextField()
     start_headline = models.TextField()
-    start_sub_headline = models.TextField()
     start_item_heading = models.TextField()
     start_item_details = models.TextField()
     start_help_anchor = models.TextField()

@@ -91,7 +91,6 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         selection_label="Select",
         start_title="Information",
         start_headline="Start",
-        start_sub_headline="Start",
         start_item_heading="Start Item",
         start_item_details="Start Item Description",
         form_title="Form",

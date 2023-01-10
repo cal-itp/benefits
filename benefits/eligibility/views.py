@@ -129,7 +129,7 @@ def start(request):
 
     ctx = page.context_dict()
     ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_INDEX))
-    ctx["start_sub_headline"] = _(verifier.start_sub_headline)
+    ctx["start_sub_headline"] = _("eligibility.pages.start.sub_headline")
     ctx["media"] = media
     help_page = reverse(ROUTE_HELP)
     ctx["help_link"] = f"{help_page}#{verifier.start_help_anchor}"
