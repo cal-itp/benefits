@@ -101,9 +101,9 @@ def start(request):
     if verifier.is_auth_required:
         if verifier.uses_auth_verification:
             identity_item.bullets = [
-                _("eligibility.pages.start.mst_login.required_items[0]"),
-                _("eligibility.pages.start.mst_login.required_items[1]"),
-                _("eligibility.pages.start.mst_login.required_items[2]"),
+                _("eligibility.pages.start.login_gov.required_items[0]"),
+                _("eligibility.pages.start.login_gov.required_items[1]"),
+                _("eligibility.pages.start.login_gov.required_items[2]"),
             ]
 
         if not session.logged_in(request):
@@ -129,7 +129,7 @@ def start(request):
 
     ctx = page.context_dict()
     ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_INDEX))
-    ctx["start_sub_headline"] = _(verifier.start_sub_headline)
+    ctx["start_sub_headline"] = _("eligibility.pages.start.sub_headline")
     ctx["media"] = media
     help_page = reverse(ROUTE_HELP)
     ctx["help_link"] = f"{help_page}#{verifier.start_help_anchor}"
@@ -243,7 +243,7 @@ def unverified(request):
 
     page = viewmodels.Page(
         title=_(verifier.unverified_title),
-        headline=_(verifier.unverified_headline),
+        headline=_("eligibility.pages.unverified.headline"),
         icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
         paragraphs=[_(verifier.unverified_blurb)],
         buttons=buttons,
