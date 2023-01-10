@@ -101,9 +101,9 @@ def start(request):
     if verifier.is_auth_required:
         if verifier.uses_auth_verification:
             identity_item.bullets = [
-                _("eligibility.pages.start.mst_login.required_items[0]"),
-                _("eligibility.pages.start.mst_login.required_items[1]"),
-                _("eligibility.pages.start.mst_login.required_items[2]"),
+                _("eligibility.pages.start.login_gov.required_items[0]"),
+                _("eligibility.pages.start.login_gov.required_items[1]"),
+                _("eligibility.pages.start.login_gov.required_items[2]"),
             ]
 
         if not session.logged_in(request):
