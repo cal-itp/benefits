@@ -46,8 +46,11 @@ def index(request):
         headline=_("eligibility.pages.index.headline"),
         paragraphs=[
             format_html(
-                _("eligibility.pages.index.p[0]%(info_link)s%(transit_agency_short_name)s")
-                % {"info_link": f"{help_page}#what-is-cal-itp", "transit_agency_short_name": agency.short_name}
+                _("eligibility.pages.index.p[0]%(info_link)s%(transit_agency_part)s")
+                % {
+                    "info_link": f"{help_page}#what-is-cal-itp",
+                    "transit_agency_part": _(agency.eligibility_index_paragraph_part),
+                }
             )
         ],
         forms=forms.EligibilityVerifierSelectionForm(agency=agency),
