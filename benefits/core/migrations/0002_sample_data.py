@@ -95,7 +95,7 @@ PEM DATA
     )
 
     payment_processor_client_cert_private_key = PemData.objects.create(
-        text=os.environ.get("PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY", client_private_key),
+        text=os.environ.get("PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY", client_private_key.text),
         label="Payment processor client certificate private key",
     )
 
