@@ -190,7 +190,7 @@ PEM DATA
         public_key=client_public_key,
         jws_signing_alg="RS256",
         payment_processor=payment_processor,
-        eligibility_index_paragraph_part=_("eligibility.pages.index.p[0].mst"),
+        eligibility_index_intro=_("eligibility.pages.index.p[0].mst"),
     )
     mst_agency.eligibility_types.set([senior_type, courtesy_card_type])
     mst_agency.eligibility_verifiers.set([verifier1, verifier2])
