@@ -118,8 +118,8 @@ PEM DATA
 
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
 
-    verifier1 = EligibilityVerifier.objects.create(
-        name="OAuth claims via Login.gov",
+    oauth_claims_verifier = EligibilityVerifier.objects.create(
+        name=os.environ.get("OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov"),
         eligibility_type=senior_type,
         auth_provider=auth_provider,
         selection_label=_("eligibility.pages.index.login_gov.label"),
@@ -217,7 +217,7 @@ PEM DATA
         eligibility_index_intro=_("eligibility.pages.index.p[0].mst"),
     )
     mst_agency.eligibility_types.set([senior_type, courtesy_card_type])
-    mst_agency.eligibility_verifiers.set([verifier1, verifier2])
+    mst_agency.eligibility_verifiers.set([oauth_claims_verifier, verifier2])
 
 
 class Migration(migrations.Migration):
