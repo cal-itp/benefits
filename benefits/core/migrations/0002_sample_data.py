@@ -140,16 +140,16 @@ PEM DATA
         enrollment_success_expiry_item_details=None,
     )
 
-    verifier2 = EligibilityVerifier.objects.create(
-        name="Test Eligibility Verifier 2",
-        api_url="http://server:8000/verify",
-        api_auth_header="X-Server-API-Key",
-        api_auth_key="server-auth-token",
+    courtesy_card_verifier = EligibilityVerifier.objects.create(
+        name=os.environ.get("COURTESY_CARD_VERIFIER", "Eligibility Server Verifier"),
+        api_url=os.environ.get("COURTESY_CARD_VERIFIER_API_URL", "http://server:8000/verify"),
+        api_auth_header=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_HEADER", "X-Server-API-Key"),
+        api_auth_key=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_KEY", "server-auth-token"),
         eligibility_type=courtesy_card_type,
         public_key=server_public_key,
-        jwe_cek_enc="A256CBC-HS512",
-        jwe_encryption_alg="RSA-OAEP",
-        jws_signing_alg="RS256",
+        jwe_cek_enc=os.environ.get("COURTESY_CARD_VERIFIER_JWE_CEK_ENC", "A256CBC-HS512"),
+        jwe_encryption_alg=os.environ.get("COURTESY_CARD_VERIFIER_JWE_ENCRYPTION_ALG", "RSA-OAEP"),
+        jws_signing_alg=os.environ.get("COURTESY_CARD_VERIFIER_JWS_SIGNING_ALG", "RS256"),
         auth_provider=None,
         selection_label=_("eligibility.pages.index.mst_cc.label"),
         selection_label_description=_("eligibility.pages.index.mst_cc.description"),
@@ -217,7 +217,7 @@ PEM DATA
         eligibility_index_intro=_("eligibility.pages.index.p[0].mst"),
     )
     mst_agency.eligibility_types.set([senior_type, courtesy_card_type])
-    mst_agency.eligibility_verifiers.set([oauth_claims_verifier, verifier2])
+    mst_agency.eligibility_verifiers.set([oauth_claims_verifier, courtesy_card_verifier])
 
 
 class Migration(migrations.Migration):
