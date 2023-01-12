@@ -41,10 +41,9 @@ def index(request):
 
     help_page = reverse(ROUTE_HELP)
 
-    intro = format_html(
-        _(agency.eligibility_index_intro)
-        + _("eligibility.pages.index.p[0]%(info_link)s") % {"info_link": f"{help_page}#what-is-cal-itp"}
-    )
+    agency_intro = _(agency.eligibility_index_intro) if isinstance(agency.eligibility_index_intro, str) else ""
+    common_intro = _("eligibility.pages.index.p[0]%(info_link)s") % {"info_link": f"{help_page}#what-is-cal-itp"}
+    intro = format_html(agency_intro + common_intro)
     page = viewmodels.Page(
         title=_("eligibility.pages.index.title"),
         headline=_("eligibility.pages.index.headline"),
