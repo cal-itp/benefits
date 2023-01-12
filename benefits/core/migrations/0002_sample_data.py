@@ -26,11 +26,12 @@ def load_sample_data(app, *args, **kwargs):
 
     server_public_key = PemData.objects.create(
         label="Eligibility server public key",
-        remote_url="https://raw.githubusercontent.com/cal-itp/eligibility-server/dev/keys/server.pub",
+        remote_url=os.environ.get(
+            "SERVER_PUBLIC_KEY_URL", "https://raw.githubusercontent.com/cal-itp/eligibility-server/dev/keys/server.pub"
+        ),
     )
 
-    client_private_key = PemData.objects.create(
-        text="""
+    default_client_private_key = """
 -----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEA1pt0ZoOuPEVPJJS+5r884zcjZLkZZ2GcPwr79XOLDbOi46on
 Ca79kjRnhS0VUK96SwUPS0z9J5mDA5LSNL2RoxFb5QGaevnJY828NupzTNdUd0sY
@@ -58,12 +59,14 @@ FbKZRd0CgYBC1HTbA+zMEqDdY4MWJJLC6jZsjdxOGhzjrCtWcIWEGMDF7oDDEoix
 W3j2hwm4C6vaNkH9XX1dr5+q6gq8vJQdbYoExl22BGMiNbfI3+sLRk0zBYL//W6c
 tSREgR4EjosqQfbkceLJ2JT1wuNjInI0eR9H3cRugvlDTeWtbdJ5qA==
 -----END RSA PRIVATE KEY-----
-""",
+"""
+
+    client_private_key = PemData.objects.create(
+        text=os.environ.get("CLIENT_PRIVATE_KEY", default_client_private_key),
         label="Benefits client private key",
     )
 
-    client_public_key = PemData.objects.create(
-        text="""
+    default_client_public_key = """
 -----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1pt0ZoOuPEVPJJS+5r88
 4zcjZLkZZ2GcPwr79XOLDbOi46onCa79kjRnhS0VUK96SwUPS0z9J5mDA5LSNL2R
@@ -73,7 +76,10 @@ Nd3RaIaSREO50NvNywXIIt/OmCiRqI7JtOcn4eyh1I4j9WtlbMhRJLfwPMAgY5ep
 TsWcURmhVofF2wVoFbib3JGCfA7tz/gmP5YoEKnf/cumKmF3e9LrZb8zwm7bTHUV
 iwIDAQAB
 -----END PUBLIC KEY-----
-""",
+"""
+
+    client_public_key = PemData.objects.create(
+        text=os.environ.get("CLIENT_PUBLIC_KEY", default_client_public_key),
         label="Benefits client public key",
     )
 
