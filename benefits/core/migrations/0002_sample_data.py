@@ -109,11 +109,11 @@ PEM DATA
     auth_provider = AuthProvider.objects.create(
         sign_in_button_label=_("eligibility.buttons.signin"),
         sign_out_button_label=_("eligibility.buttons.signout"),
-        client_name="benefits-oauth-client-name",
-        client_id="benefits-oauth-client-id",
-        authority="https://example.com",
-        scope="verify:senior",
-        claim="senior",
+        client_name=os.environ.get("AUTH_PROVIDER_CLIENT_NAME", "benefits-oauth-client-name"),
+        client_id=os.environ.get("AUTH_PROVIDER_CLIENT_ID", "benefits-oauth-client-id"),
+        authority=os.environ.get("AUTH_PROVIDER_AUTHORITY", "https://example.com"),
+        scope=os.environ.get("AUTH_PROVIDER_SCOPE", "verify:senior"),
+        claim=os.environ.get("AUTH_PROVIDER_CLAIM", "senior"),
     )
 
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
