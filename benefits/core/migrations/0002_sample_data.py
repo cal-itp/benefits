@@ -183,14 +183,14 @@ PEM DATA
     PaymentProcessor = app.get_model("core", "PaymentProcessor")
 
     payment_processor = PaymentProcessor.objects.create(
-        name="Test Payment Processor",
-        api_base_url="http://server:8000",
-        api_access_token_endpoint="access-token",
-        api_access_token_request_key="request_access",
-        api_access_token_request_val="REQUEST_ACCESS",
-        card_tokenize_url="http://server:8000/static/tokenize.js",
-        card_tokenize_func="tokenize",
-        card_tokenize_env="test",
+        name=os.environ.get("PAYMENT_PROCESSOR_NAME", "Test Payment Processor"),
+        api_base_url=os.environ.get("PAYMENT_PROCESSOR_API_BASE_URL", "http://server:8000"),
+        api_access_token_endpoint=os.environ.get("PAYMENT_PROCESSOR_API_ACCESS_TOKEN_ENDPOINT", "access-token"),
+        api_access_token_request_key=os.environ.get("PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_KEY", "request_access"),
+        api_access_token_request_val=os.environ.get("PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_VAL", "REQUEST_ACCESS"),
+        card_tokenize_url=os.environ.get("PAYMENT_PROCESSOR_CARD_TOKENIZE_URL", "http://server:8000/static/tokenize.js"),
+        card_tokenize_func=os.environ.get("PAYMENT_PROCESSOR_CARD_TOKENIZE_FUNC", "tokenize"),
+        card_tokenize_env=os.environ.get("PAYMENT_PROCESSOR_CARD_TOKENIZE_ENV", "test"),
         client_cert=payment_processor_client_cert,
         client_cert_private_key=payment_processor_client_cert_private_key,
         client_cert_root_ca=payment_processor_client_cert_root_ca,
