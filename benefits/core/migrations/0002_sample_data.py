@@ -1,6 +1,8 @@
 """Data migration which loads sample data.
 Set environment variable DJANGO_LOAD_SAMPLE_DATA to False to skip loading sample data.
 """
+import os
+
 from django.conf import settings
 from django.db import migrations
 from django.utils.translation import gettext_lazy as _
@@ -13,8 +15,12 @@ def load_sample_data(app, *args, **kwargs):
 
     EligibilityType = app.get_model("core", "EligibilityType")
 
-    senior_type = EligibilityType.objects.create(name="senior", label="Senior", group_id="group1")
-    courtesy_card_type = EligibilityType.objects.create(name="courtesy_card", label="Courtesy Card", group_id="group2")
+    senior_type = EligibilityType.objects.create(
+        name="senior", label="Senior", group_id=os.environ.get("MST_SENIOR_GROUP_ID", "group1")
+    )
+    courtesy_card_type = EligibilityType.objects.create(
+        name="courtesy_card", label="Courtesy Card", group_id=os.environ.get("MST_COURTESY_CARD_GROUP_ID", "group2")
+    )
 
     PemData = app.get_model("core", "PemData")
 
