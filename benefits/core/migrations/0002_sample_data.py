@@ -83,13 +83,25 @@ iwIDAQAB
         label="Benefits client public key",
     )
 
-    dummy_cert = PemData.objects.create(
-        text="""
+    dummy_cert_text = """
 -----BEGIN CERTIFICATE-----
 PEM DATA
 -----END CERTIFICATE-----
-""",
-        label="Dummy certificate",
+"""
+
+    payment_processor_client_cert = PemData.objects.create(
+        text=os.environ.get("PAYMENT_PROCESSOR_CLIENT_CERT", dummy_cert_text),
+        label="Payment processor client certificate",
+    )
+
+    payment_processor_client_cert_private_key = PemData.objects.create(
+        text=os.environ.get("PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY", client_private_key),
+        label="Payment processor client certificate private key",
+    )
+
+    payment_processor_client_cert_root_ca = PemData.objects.create(
+        text=os.environ.get("PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA", dummy_cert_text),
+        label="Payment processor client certificate root CA",
     )
 
     AuthProvider = app.get_model("core", "AuthProvider")
@@ -179,9 +191,9 @@ PEM DATA
         card_tokenize_url="http://server:8000/static/tokenize.js",
         card_tokenize_func="tokenize",
         card_tokenize_env="test",
-        client_cert=dummy_cert,
-        client_cert_private_key=client_private_key,
-        client_cert_root_ca=dummy_cert,
+        client_cert=payment_processor_client_cert,
+        client_cert_private_key=payment_processor_client_cert_private_key,
+        client_cert_root_ca=payment_processor_client_cert_root_ca,
         customer_endpoint="customer",
         customers_endpoint="customers",
         group_endpoint="group",
