@@ -203,8 +203,8 @@ PEM DATA
 
     mst_agency = TransitAgency.objects.create(
         slug="mst",
-        short_name="MST (sample)",
-        long_name="Monterey-Salinas Transit (sample)",
+        short_name=os.environ.get("MST_AGENCY_SHORT_NAME", "MST (sample)"),
+        long_name=os.environ.get("MST_AGENCY_LONG_NAME", "Monterey-Salinas Transit (sample)"),
         agency_id="mst",
         merchant_id="mst",
         info_url="https://mst.org/benefits",
@@ -212,7 +212,7 @@ PEM DATA
         active=True,
         private_key=client_private_key,
         public_key=client_public_key,
-        jws_signing_alg="RS256",
+        jws_signing_alg=os.environ.get("MST_AGENCY_JWS_SIGNING_ALG", "RS256"),
         payment_processor=payment_processor,
         eligibility_index_intro=_("eligibility.pages.index.p[0].mst"),
     )
