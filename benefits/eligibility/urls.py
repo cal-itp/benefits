@@ -10,6 +10,7 @@ app_name = "eligibility"
 urlpatterns = [
     # /eligibility
     path("", views.index, name="index"),
+    path("<agency:agency>", views.index, name="index"),
     path("start", views.start, name="start"),
     path("confirm", views.confirm, name="confirm"),
     path("unverified", views.unverified, name="unverified"),
