@@ -74,12 +74,7 @@ def index(request):
             page.forms = [form]
             response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
     else:
-        if agency.eligibility_verifiers.count() == 1:
-            verifier = agency.eligibility_verifiers.first()
-            session.update(request, verifier=verifier)
-            response = redirect(eligibility_start)
-        else:
-            response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
+        response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
 
     return response
 
