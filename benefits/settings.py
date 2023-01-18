@@ -262,6 +262,8 @@ RECAPTCHA_ENABLED = all((RECAPTCHA_API_URL, RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET
 
 CSP_DEFAULT_SRC = ["'self'"]
 
+CSP_IMG_SRC = ["'self'", "data:"]
+
 CSP_CONNECT_SRC = ["'self'", "https://api.amplitude.com/"]
 env_connect_src = _filter_empty(os.environ.get("DJANGO_CSP_CONNECT_SRC", "").split(","))
 CSP_CONNECT_SRC.extend(env_connect_src)
