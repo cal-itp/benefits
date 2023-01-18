@@ -1,1 +1,22 @@
 {% extends "core/includes/modal.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block modal-content %}
+    <div class="container text-center">
+        <h3 id="{{ modal.id }}-modal-label">{% translate "core.pages.index.agency_selector.headline" %}</h3>
+        <div class="row">
+            {% for agency in agencies %}
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="{% get_static_prefix %}img/agencies/{{ agency.slug }}.svg" alt="{{ agency.short_name }} logo" width="162" height="60">
+                            <h4 class="card-title">{{ agency.long_name }}</h4>
+                            <a href="{{ agency.eligibility_index_url }}" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock modal-content %}

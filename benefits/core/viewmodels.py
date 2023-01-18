@@ -286,6 +286,7 @@ class TransitAgency:
             self.merchant_id = model.merchant_id
             self.info_url = model.info_url
             self.phone = model.phone
+            self.eligibility_index_url = model.eligibility_index_url
 
     def context_dict(self):
         """Return a context dict for a TransitAgency."""
