@@ -406,8 +406,7 @@ msgstr "Choose Provider"
 
 msgid "core.pages.index.headline"
 msgstr ""
-"Cal-ITP Benefits makes it easy to use your public transit discount every "
-"time you ride."
+"Connect your transit benefit to your contactless card"
 
 msgid "core.pages.index.continue"
 msgstr "Get started"
