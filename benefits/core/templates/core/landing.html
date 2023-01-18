@@ -1,7 +1,7 @@
 {% extends "core/base.html" %}
 {% load i18n %}
 {% block classes %}
-  {{ block.super |add:" agency-index" }}
+  {{ block.super |add:" landing" }}
 {% endblock classes %}
 
 {% block main_content %}
@@ -10,7 +10,7 @@
       <div class="col-lg-5">
         <div class="box px-4 py-3">
           <h1 class="text-left p-0">{{ page.headline }}</h1>
-          <h2 class="p-sm pb-lg-8 pt-1 pt-lg-4 pb-4">{% translate "core.pages.agency_index.h2" %}</h2>
+          <h2 class="p-sm pb-lg-8 pt-1 pt-lg-4 pb-4">{% translate "core.pages.landing.h2" %}</h2>
           {% block call-to-action %}
           {% endblock call-to-action %}
         </div>

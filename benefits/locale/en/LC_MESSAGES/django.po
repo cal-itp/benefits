@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-01-13 17:24+0000\n"
+"POT-Creation-Date: 2023-01-18 01:35+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -149,9 +149,6 @@ msgid "eligibility.pages.index.p[0].sacrt"
 msgstr ""
 "You can tap your credit or debit card when you board a SacRT bus, and your "
 "discounted fare will automatically apply every time you ride. "
-
-msgid "core.pages.agency_index.h2"
-msgstr "Your benefit applies every time you tap to ride"
 
 msgid "core.pages.help.about.p[0]"
 msgstr ""
@@ -346,6 +343,9 @@ msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
 
+msgid "core.pages.landing.h2"
+msgstr "Your benefit applies every time you tap to ride"
+
 msgid "core.pages.logged_out.headline[0]"
 msgstr "You have successfully logged out."
 
@@ -400,9 +400,6 @@ msgstr ""
 
 msgid "core.buttons.wait"
 msgstr "Please wait..."
-
-msgid "core.pages.index.chooseprovider"
-msgstr "Please choose your transit provider:"
 
 msgid "core.pages.index.title"
 msgstr "Choose Provider"
