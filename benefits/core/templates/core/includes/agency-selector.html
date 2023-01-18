@@ -4,7 +4,7 @@
 
 {% block modal-content %}
     <div class="container text-center">
-        <h3 id="{{ modal.id }}-modal-label">{% translate "core.pages.index.agency_selector.headline" %}</h3>
+        <h3 id="{{ modal.id }}-modal-label" class="modal-title">{% translate "core.pages.index.agency_selector.headline" %}</h3>
         <div class="row gx-5 mx-3">
             {% for agency in agencies %}
                 <div class="col">
