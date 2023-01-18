@@ -29,13 +29,21 @@ TEMPLATE_CONFIRM = "eligibility/confirm.html"
 TEMPLATE_UNVERIFIED = "eligibility/unverified.html"
 
 
-@decorator_from_middleware(AgencySessionRequired)
 @decorator_from_middleware(RecaptchaEnabled)
-def index(request):
+def index(request, agency=None):
     """View handler for the eligibility verifier selection form."""
 
+    if agency is None:
+        # see if session has an agency
+        agency = session.agency(request)
+        if agency is None:
+            home = viewmodels.Button.home(request)
+            page = viewmodels.ErrorPage.user_error(button=home, path=request.path)
+            return TemplateResponse(request, "200_user_error.html", page.context_dict())
+    else:
+        session.update(request, agency=agency)
+
     session.update(request, eligibility_types=[], origin=reverse(ROUTE_INDEX))
-    agency = session.agency(request)
 
     eligibility_start = reverse(ROUTE_START)
 

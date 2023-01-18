@@ -219,6 +219,24 @@ PEM DATA
     mst_agency.eligibility_types.set([senior_type, courtesy_card_type])
     mst_agency.eligibility_verifiers.set([oauth_claims_verifier, courtesy_card_verifier])
 
+    sacrt_agency = TransitAgency.objects.create(
+        slug="sacrt",
+        short_name=os.environ.get("SACRT_AGENCY_SHORT_NAME", "SacRT (sample)"),
+        long_name=os.environ.get("SACRT_AGENCY_LONG_NAME", "Sacramento Regional Transit (sample)"),
+        agency_id="sacrt",
+        merchant_id="sacrt",
+        info_url="https://sacrt.com/",
+        phone="916-321-2877",
+        active=True,
+        private_key=client_private_key,
+        public_key=client_public_key,
+        jws_signing_alg=os.environ.get("SACRT_AGENCY_JWS_SIGNING_ALG", "RS256"),
+        payment_processor=payment_processor,
+        eligibility_index_intro=_("eligibility.pages.index.p[0].sacrt"),
+    )
+    sacrt_agency.eligibility_types.set([senior_type])
+    sacrt_agency.eligibility_verifiers.set([oauth_claims_verifier])
+
 
 class Migration(migrations.Migration):
 

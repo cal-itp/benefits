@@ -34,7 +34,7 @@ def index(request):
         return redirect(agency.index_url)
 
     # generate a button to the landing page for each active agency
-    buttons = [viewmodels.Button.outline_primary(text=a.short_name, url=a.index_url) for a in agencies]
+    buttons = [viewmodels.Button.outline_primary(text=a.short_name, url=a.eligibility_index_url) for a in agencies]
     buttons[0].classes.append("mt-3")
     buttons[0].label = _("core.pages.index.chooseprovider")
 

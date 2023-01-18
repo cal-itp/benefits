@@ -239,6 +239,11 @@ class TransitAgency(models.Model):
         return reverse("core:agency_index", args=[self.slug])
 
     @property
+    def eligibility_index_url(self):
+        """Public facing URL to the TransitAgency's eligibility page."""
+        return reverse("eligibility:agency_index", args=[self.slug])
+
+    @property
     def public_key_url(self):
         """Public-facing URL to the TransitAgency's public key."""
         return reverse("core:agency_public_key", args=[self.slug])
