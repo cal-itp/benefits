@@ -16,7 +16,7 @@ ROUTE_ELIGIBILITY = "eligibility:index"
 ROUTE_HELP = "core:help"
 ROUTE_LOGGED_OUT = "core:logged_out"
 
-TEMPLATE_PAGE = "core/page.html"
+TEMPLATE_INDEX = "core/index.html"
 TEMPLATE_AGENCY = "core/agency_index.html"
 TEMPLATE_HELP = "core/help.html"
 TEMPLATE_LOGGED_OUT = "core/logged_out.html"
@@ -33,19 +33,13 @@ def index(request):
         agency = agencies[0]
         return redirect(agency.index_url)
 
-    # generate a button to the landing page for each active agency
-    buttons = [viewmodels.Button.outline_primary(text=a.short_name, url=a.eligibility_index_url) for a in agencies]
-    buttons[0].classes.append("mt-3")
-    buttons[0].label = _("core.pages.index.chooseprovider")
-
     page = viewmodels.Page(
         title=_("core.pages.index.title"),
         headline=_("core.pages.index.headline"),
-        buttons=buttons,
         classes="home",
     )
 
-    return TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
+    return TemplateResponse(request, TEMPLATE_INDEX, page.context_dict())
 
 
 @pageview_decorator
