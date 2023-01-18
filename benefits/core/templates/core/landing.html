@@ -11,9 +11,8 @@
         <div class="box px-4 py-3">
           <h1 class="text-left p-0">{{ page.headline }}</h1>
           <h2 class="p-sm pb-lg-8 pt-1 pt-lg-4 pb-4">{% translate "core.pages.agency_index.h2" %}</h2>
-          {% for b in page.buttons %}
-            {% include "core/includes/button.html" with button=b %}
-          {% endfor %}
+          {% block call-to-action %}
+          {% endblock call-to-action %}
         </div>
       </div>
     </div>
