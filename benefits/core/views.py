@@ -36,6 +36,7 @@ def index(request):
     page = viewmodels.Page(
         title=_("core.pages.index.title"),
         headline=_("core.pages.index.headline"),
+        modal=viewmodels.Modal(id="agency-selector", button_text=_("core.pages.index.button")),
     )
 
     return TemplateResponse(request, TEMPLATE_INDEX, page.context_dict())

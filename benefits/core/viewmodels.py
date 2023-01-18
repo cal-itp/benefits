@@ -128,6 +128,19 @@ class MediaItem:
             self.bullets = bullets
 
 
+class Modal:
+    """
+    Represents a modal dialog, triggered by a button:
+    * id: str
+    * button_text: str
+    """
+
+    def __init__(self, **kwargs):
+        self.id = kwargs.get("id")
+        self.button_text = kwargs.get("button_text")
+        pass
+
+
 class Page:
     """
     Represents a page of content:
@@ -139,6 +152,7 @@ class Page:
     * forms: django.forms.Form[]
     * button: core.viewmodels.Button
     * buttons: core.viewmodels.Button[]
+    * modal: core.viewmodels.Modal
     * classes: str[]
     """
 
@@ -162,6 +176,9 @@ class Page:
             self.buttons = [self.buttons]
         if "button" in kwargs:
             self.buttons.append(kwargs.get("button"))
+
+        if "modal" in kwargs:
+            self.modal = kwargs.get("modal")
 
         self.classes = kwargs.get("classes", [])
         if not isinstance(self.classes, list):
