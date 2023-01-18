@@ -10,11 +10,16 @@
                 <div class="col">
                     <div class="card mt-4 mx-auto">
                         <div class="card-body">
-                            <img class="mt-3"
-                                 src="{% get_static_prefix %}img/agencies/{{ agency.slug }}.svg"
-                                 alt="{{ agency.short_name }} logo"
+                            <img class="sm d-lg-none"
+                                 src="{% get_static_prefix %}img/agencies/{{ agency.slug }}-sm.svg"
+                                 width="47"
+                                 height="24"
+                                 alt="{{ agency.short_name }} logo">
+                            <img class="lg d-none d-lg-block mt-3 mx-auto"
+                                 src="{% get_static_prefix %}img/agencies/{{ agency.slug }}-lg.svg"
                                  width="162"
-                                 height="60">
+                                 height="60"
+                                 alt="{{ agency.short_name }} logo">
                             <h4 class="card-title mt-3">{{ agency.long_name }}</h4>
                             <a href="{{ agency.eligibility_index_url }}" class="stretched-link"></a>
                         </div>
