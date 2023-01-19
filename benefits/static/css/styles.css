@@ -691,6 +691,10 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
   --landing-box-background: var(--bs-white);
   --landing-box-border: 12px solid var(--primary-color);
   --landing-text-color: var(--text-primary-color);
+  --agency-index-box-background: var(--bs-white);
+  --agency-index-box-border: 12px solid var(--primary-color);
+  --agency-index-text-color: var(--text-primary-color);
+  --landing-page-x-margin: auto;
 }
 
 @media (min-width: 992px) {
@@ -702,6 +706,7 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
     --landing-box-background: transparent;
     --landing-box-border: none;
     --landing-text-color: var(--bs-white);
+    --landing-page-x-margin: 0;
   }
 }
 
@@ -725,7 +730,7 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 .landing .box .btn.btn-lg.btn-primary {
   width: 250px; /* Button is 250 x 72 */
   display: block;
-  margin: 0 auto; /* Center the button */
+  margin: 0 var(--landing-page-x-margin);
   padding: 19px 0; /* Button is 250 x 72 */
 }
 
