@@ -568,6 +568,7 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
   --card-x-padding: calc(10rem / 16);
   --card-body-x-padding: 0;
   --card-body-y-padding: 0.75rem;
+  --card-border-width: var(--font-size-12px);
 }
 
 @media (min-width: 992px) {
@@ -576,12 +577,13 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
     --card-x-padding: calc(35rem / 16);
     --card-body-x-padding: calc(40rem / 16);
     --card-body-y-padding: 0;
+    --card-border-width: var(--font-size-20px);
   }
 }
 
 .card {
   height: 75%;
-  border-top: solid 20px var(--primary-color);
+  border-top: solid var(--card-border-width) var(--primary-color);
   border-radius: 8px;
   transition: 0.3s;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -589,7 +591,7 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 }
 
 .card:hover {
-  border-top: solid 20px var(--hover-color);
+  border-top: solid var(--card-border-width) var(--hover-color);
 }
 
 .card .card-title {
