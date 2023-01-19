@@ -315,6 +315,11 @@ footer .footer-links li a:visited {
   border-width: 2px;
 }
 
+/* Make `button` elements look similar to button-links. */
+button:focus {
+  outline: none !important;
+}
+
 /* Custom button: Loading spinner */
 
 .spinner-hidden .spinner-border {
