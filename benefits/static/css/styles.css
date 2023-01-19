@@ -604,17 +604,23 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 
 :root {
   --modal-title-font-size: var(--font-size-24px);
+  --modal-border-radius: 8px;
 }
 
 @media (min-width: 992px) {
   :root {
     --modal-title-font-size: var(--font-size-35px);
+    --modal-border-radius: 4px;
   }
 }
 
 .modal-dialog {
   width: auto;
   height: auto;
+}
+
+.modal-content {
+  border-radius: var(--modal-border-radius);
 }
 
 /* This is to stop Bootstrap from shifting the page behind the modal - see https://stackoverflow.com/q/32862394 */
