@@ -427,7 +427,7 @@ msgid "core.pages.index.title"
 msgstr "Elija Proveedor"
 
 msgid "core.pages.index.headline"
-msgstr "TODO: Conecte su beneficio a su tarjeta de sin contacto"
+msgstr "Conecte su beneficio del transporte a su tarjeta de sin contacto"
 
 msgid "core.pages.index.button"
 msgstr "Elija Su Proveedor"
@@ -439,7 +439,7 @@ msgid "core.pages.agency_index.title"
 msgstr "Introducción"
 
 msgid "core.pages.agency_index.mst_cc.headline"
-msgstr "Conecte su beneficio de MST a su tarjeta de sin contacto"
+msgstr "Conecte su beneficio del transporte de MST a su tarjeta de sin contacto"
 
 msgid "core.buttons.back"
 msgstr "Regresar a la página principal"
