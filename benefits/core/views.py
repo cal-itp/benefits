@@ -49,7 +49,8 @@ def agency_index(request, agency):
 
     page = viewmodels.Page(
         title=_("core.pages.agency_index.title"),
-        headline=_("core.pages.agency_index.mst_cc.headline"),
+        headline=_("core.pages.agency_index.headline%(transit_agency_short_name)s")
+        % {"transit_agency_short_name": agency.short_name},
         button=button,
     )
 
