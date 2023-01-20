@@ -154,9 +154,9 @@ msgstr ""
 
 msgid "eligibility.pages.index.p[0].sacrt"
 msgstr ""
-"Puede acercar su tarjeta de crédito o débito cuando aborde un autobús de "
-"SacRT y su tarifa con descuento se aplicará automáticamente cada vez que "
-"viaje. "
+"Puede acercar su tarjeta de crédito o débito cuando aborde el transporte "
+"público SacRT y su tarifa con descuento se aplicará automáticamente cada vez "
+"que viaje. "
 
 msgid "core.pages.help.about.p[0]"
 msgstr ""
