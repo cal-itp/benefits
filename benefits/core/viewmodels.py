@@ -137,8 +137,8 @@ class Modal:
 
     def __init__(self, **kwargs):
         self.id = kwargs.get("id")
+        self.aria_labelledby_id = kwargs.get("aria_labelledby_id")
         self.button_text = kwargs.get("button_text")
-        pass
 
 
 class Page:
