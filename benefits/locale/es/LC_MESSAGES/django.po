@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-01-18 18:05+0000\n"
+"POT-Creation-Date: 2023-01-24 17:43+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -342,6 +342,9 @@ msgstr "GitHub"
 
 msgid "core.pages.index.agency_selector.headline"
 msgstr "TODO: Please choose your transit provider:"
+
+msgid "core.pages.index.agency_selector%(agency_short_name)s"
+msgstr "%(agency_short_name)s logo"
 
 msgid "core.includes.nocookies.brand"
 msgstr "Cookies están inactivos"
