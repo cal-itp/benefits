@@ -132,6 +132,7 @@ class Modal:
     """
     Represents a modal dialog, triggered by a button:
     * id: str
+    * aria_labelledby_id: str
     * button_text: str
     """
 
@@ -139,6 +140,17 @@ class Modal:
         self.id = kwargs.get("id")
         self.aria_labelledby_id = kwargs.get("aria_labelledby_id")
         self.button_text = kwargs.get("button_text")
+
+
+class AgencySelector(Modal):
+    """
+    Represents the agency selector modal dialog.
+    """
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        agencies = kwargs.get("agencies", [])
+        self.agencies = [TransitAgency(a) for a in agencies]
 
 
 class Page:

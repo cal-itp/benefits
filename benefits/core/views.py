@@ -33,22 +33,18 @@ def index(request):
         agency = agencies[0]
         return redirect(agency.index_url)
 
-    context = {}
-
     page = viewmodels.Page(
         title=_("core.pages.index.title"),
         headline=_("core.pages.index.headline"),
-        modal=viewmodels.Modal(
-            id="agency-selector", aria_labelledby_id="agency-selector-modal-label", button_text=_("core.pages.index.button")
+        modal=viewmodels.AgencySelector(
+            agencies=agencies,
+            id="agency-selector",
+            aria_labelledby_id="agency-selector-modal-label",
+            button_text=_("core.pages.index.button"),
         ),
     )
-    context.update(page.context_dict())
 
-    # add agency details
-    agency_vms = [viewmodels.TransitAgency(a) for a in agencies]
-    context["agencies"] = [avm.context_dict()["agency"] for avm in agency_vms]
-
-    return TemplateResponse(request, TEMPLATE_INDEX, context)
+    return TemplateResponse(request, TEMPLATE_INDEX, page.context_dict())
 
 
 @pageview_decorator
