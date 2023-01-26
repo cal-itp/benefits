@@ -26,13 +26,10 @@ def index(request):
     """View handler for the main entry page."""
     session.reset(request)
 
-    agencies = models.TransitAgency.all_active()
-
     page = viewmodels.Page(
         title=_("core.pages.index.title"),
         headline=_("core.pages.index.headline"),
         modal=viewmodels.AgencySelector(
-            agencies=agencies,
             id="agency-selector",
             aria_labelledby_id="agency-selector-modal-label",
             button_text=_("core.pages.index.button"),

@@ -149,8 +149,7 @@ class AgencySelector(Modal):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        agencies = kwargs.get("agencies", [])
-        self.agencies = [TransitAgency(a) for a in agencies]
+        self.agencies = [TransitAgency(a) for a in models.TransitAgency.all_active()]
 
 
 class Page:
