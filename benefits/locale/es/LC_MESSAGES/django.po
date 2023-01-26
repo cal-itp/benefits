@@ -387,12 +387,11 @@ msgid "core.pages.user_error.title"
 msgstr "Error"
 
 msgid "core.pages.user_error.headline"
-msgstr "TODO: You may have reached this page on accident."
+msgstr "Es posible que haya llegado a esta página por accidente."
 
 msgid "core.pages.user_error.p[0]"
 msgstr ""
-"TODO: To get started with Cal-ITP Benefits please click the button below, "
-"and you will be directed to the beginning of the enrollment process. "
+"Para empezar a utilizar Cal-ITP Benefits, haga clic en el botón que aparece a continuación y se le dirigirá al inicio del proceso de inscripción."
 
 msgid "core.pages.server_error.title"
 msgstr "¡Lo sentimos! El servicio no está funcionando"
@@ -444,7 +443,7 @@ msgstr "Cierre sesión"
 
 msgctxt "image alt text"
 msgid "core.icons.happybus"
-msgstr "TODO: Icono de autobus"
+msgstr "Icono de autobús con cara sonriente"
 
 msgid "eligibility.buttons.choose"
 msgstr "Elija Este Beneficio"
@@ -588,4 +587,4 @@ msgstr ""
 
 msgctxt "image alt text"
 msgid "core.icons.calendarcheck"
-msgstr "TODO: A calendar page icon with a check mark"
+msgstr "Icono de página de calendario con una marca de verificación"
