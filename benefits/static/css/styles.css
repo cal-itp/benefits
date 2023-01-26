@@ -585,6 +585,10 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
   }
 }
 
+a.card {
+  text-decoration: none;
+}
+
 .card {
   height: 75%;
   border-top: solid var(--card-border-width) var(--primary-color);
