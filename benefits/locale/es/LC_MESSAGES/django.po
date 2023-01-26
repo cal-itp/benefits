@@ -438,8 +438,11 @@ msgstr "Empezar"
 msgid "core.pages.agency_index.title"
 msgstr "Introducción"
 
-msgid "core.pages.agency_index.mst_cc.headline"
-msgstr "Conecte su beneficio del transporte de MST a su tarjeta de sin contacto"
+#, python-format
+msgid "core.pages.agency_index.headline%(transit_agency_short_name)s"
+msgstr ""
+"Conecte su beneficio del transporte de %(transit_agency_short_name)s a su "
+"tarjeta de sin contacto"
 
 msgid "core.buttons.back"
 msgstr "Regresar a la página principal"

@@ -423,8 +423,11 @@ msgstr "Get started"
 msgid "core.pages.agency_index.title"
 msgstr "Introduction"
 
-msgid "core.pages.agency_index.mst_cc.headline"
-msgstr "Connect your MST benefit to your contactless card"
+#, python-format
+msgid "core.pages.agency_index.headline%(transit_agency_short_name)s"
+msgstr ""
+"Connect your %(transit_agency_short_name)s transit benefit to your "
+"contactless card"
 
 msgid "core.buttons.back"
 msgstr "Go back"
