@@ -2,7 +2,6 @@
 The core application: view definition for the root of the webapp.
 """
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
-from django.shortcuts import redirect
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.urls import reverse
@@ -16,7 +15,7 @@ ROUTE_ELIGIBILITY = "eligibility:index"
 ROUTE_HELP = "core:help"
 ROUTE_LOGGED_OUT = "core:logged_out"
 
-TEMPLATE_PAGE = "core/page.html"
+TEMPLATE_INDEX = "core/index.html"
 TEMPLATE_AGENCY = "core/agency_index.html"
 TEMPLATE_HELP = "core/help.html"
 TEMPLATE_LOGGED_OUT = "core/logged_out.html"
@@ -27,25 +26,17 @@ def index(request):
     """View handler for the main entry page."""
     session.reset(request)
 
-    agencies = models.TransitAgency.all_active()
-
-    if len(agencies) == 1:
-        agency = agencies[0]
-        return redirect(agency.index_url)
-
-    # generate a button to the landing page for each active agency
-    buttons = [viewmodels.Button.outline_primary(text=a.short_name, url=a.eligibility_index_url) for a in agencies]
-    buttons[0].classes.append("mt-3")
-    buttons[0].label = _("core.pages.index.chooseprovider")
-
     page = viewmodels.Page(
         title=_("core.pages.index.title"),
         headline=_("core.pages.index.headline"),
-        buttons=buttons,
-        classes="home",
+        modal=viewmodels.AgencySelector(
+            id="agency-selector",
+            aria_labelledby_id="agency-selector-modal-label",
+            button_text=_("core.pages.index.button"),
+        ),
     )
 
-    return TemplateResponse(request, TEMPLATE_PAGE, page.context_dict())
+    return TemplateResponse(request, TEMPLATE_INDEX, page.context_dict())
 
 
 @pageview_decorator
@@ -60,7 +51,6 @@ def agency_index(request, agency):
         title=_("core.pages.agency_index.title"),
         headline=_("core.pages.agency_index.mst_cc.headline"),
         button=button,
-        classes="home",
     )
 
     return TemplateResponse(request, TEMPLATE_AGENCY, page.context_dict())

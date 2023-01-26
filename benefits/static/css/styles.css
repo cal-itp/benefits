@@ -29,6 +29,8 @@
   --h2-font-size: calc(24rem / 16);
   --h3-font-size: calc(20rem / 16);
   --font-size-24px: calc(24rem / 16);
+  --font-size-20px: calc(20rem / 16);
+  --font-size-18px: calc(18rem / 16);
   --font-size-16px: calc(16rem / 16);
   --font-size-14px: calc(14rem / 16);
   --font-size-12px: calc(12rem / 16);
@@ -38,8 +40,9 @@
 
 @media (min-width: 992px) {
   :root {
-    --h1-font-size: calc(35rem / 16);
+    --h1-font-size: var(--font-size-35px);
     --h1-text-align: center;
+    --font-size-35px: calc(35rem / 16);
   }
 }
 
@@ -558,6 +561,100 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
   list-style-type: disc;
 }
 
+/* Cards */
+
+:root {
+  --card-title-font-size: var(--font-size-18px);
+  --card-title-line-height: 21.6px;
+  --card-title-letter-spacing: 0.03em;
+  --card-x-padding: calc(10rem / 16);
+  --card-body-x-padding: 0;
+  --card-body-y-padding: 0.75rem;
+  --card-border-width: var(--font-size-12px);
+}
+
+@media (min-width: 992px) {
+  :root {
+    --card-title-font-size: var(--font-size-20px);
+    --card-title-line-height: 24px;
+    --card-title-letter-spacing: 0.05rem;
+    --card-x-padding: calc(35rem / 16);
+    --card-body-x-padding: calc(40rem / 16);
+    --card-body-y-padding: 0;
+    --card-border-width: var(--font-size-20px);
+  }
+}
+
+a.card,
+a.card:hover,
+a.card:focus,
+a.card:focus-visible {
+  text-decoration: none;
+}
+
+.card {
+  height: 75%;
+  border-top: solid var(--card-border-width) var(--primary-color);
+  border-radius: 8px;
+  transition: 0.3s;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: var(--card-body-y-padding) var(--card-x-padding);
+}
+
+.card:hover {
+  border-top: solid var(--card-border-width) var(--hover-color);
+}
+
+.card .card-title {
+  font-size: var(--card-title-font-size);
+  line-height: var(--card-title-line-height);
+  letter-spacing: var(--card-title-letter-spacing);
+}
+
+.card .card-body {
+  padding: 0 var(--card-body-x-padding) !important;
+}
+
+/* Modal Dialogs */
+
+:root {
+  --modal-title-font-size: var(--font-size-24px);
+  --modal-border-radius: 8px;
+}
+
+@media (min-width: 992px) {
+  :root {
+    --modal-title-font-size: var(--font-size-35px);
+    --modal-border-radius: 4px;
+  }
+}
+
+.modal-dialog {
+  width: auto;
+  height: auto;
+}
+
+.modal-content {
+  border-radius: var(--modal-border-radius);
+}
+
+/* This is to stop Bootstrap from shifting the page behind the modal - see https://stackoverflow.com/q/32862394 */
+.modal-open {
+  padding-right: 0 !important;
+}
+
+.modal-dialog * {
+  color: var(--text-primary-color);
+}
+
+.btn-close {
+  color: var(--text-primary-color);
+}
+
+.modal-title {
+  font-size: var(--modal-title-font-size);
+}
+
 /* Enrollment Success */
 /* Custom in-line log out button for Enrollment Success, in paragraph */
 
@@ -592,55 +689,79 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
   margin-left: var(--logout-paragraph-margin-left);
 }
 
-/* Agency Index */
-/* This page has a full-width and full-height background image, creating the need to re-set the Footer margin top to 0 */
+/* Index and Agency Index (Landing pages) */
+/* These pages have a full-width and full-height background image, creating the need to re-set the Footer margin top to 0 */
 
 :root {
-  --agency-index-main-height: 100vh;
-  --agency-index-background: url("/static/img/benefits-bg-mobile.jpg") no-repeat
+  --landing-main-height: 100vh;
+  --landing-background: url("/static/img/benefits-bg-mobile.jpg") no-repeat
     var(--primary-color);
+  --landing-box-background: var(--bs-white);
+  --landing-box-border: 12px solid var(--primary-color);
+  --landing-text-color: var(--text-primary-color);
   --agency-index-box-background: var(--bs-white);
   --agency-index-box-border: 12px solid var(--primary-color);
   --agency-index-text-color: var(--text-primary-color);
+  --landing-page-x-margin: auto;
 }
 
 @media (min-width: 992px) {
   :root {
-    --agency-index-main-height: calc(
+    --landing-main-height: calc(
       100vh - 130px
     ); /* 130px = Header Height (80px) + (Footer Link (50px) */
-    --agency-index-background: url("/static/img/benefits-bg-desktop.jpg")
-      no-repeat;
-    --agency-index-box-background: transparent;
-    --agency-index-box-border: none;
-    --agency-index-text-color: var(--bs-white);
+    --landing-background: url("/static/img/benefits-bg-desktop.jpg") no-repeat;
+    --landing-box-background: transparent;
+    --landing-box-border: none;
+    --landing-text-color: var(--bs-white);
+    --landing-page-x-margin: 0;
   }
 }
 
-.agency-index main#main-content {
-  min-height: var(--agency-index-main-height);
-  background: var(--agency-index-background);
+.landing main#main-content {
+  min-height: var(--landing-main-height);
+  background: var(--landing-background);
   background-size: cover;
 }
 
-.agency-index main#main-content .container .row:first-child {
-  min-height: var(--agency-index-main-height);
+.landing main#main-content .container .row:first-child {
+  min-height: var(--landing-main-height);
 }
 
-.agency-index .box {
-  background: var(--agency-index-box-background);
-  border-top: var(--agency-index-box-border);
-  color: var(--agency-index-text-color);
+.landing .box {
+  background: var(--landing-box-background);
+  border-top: var(--landing-box-border);
+  color: var(--landing-text-color);
   margin-bottom: calc(32rem / 16);
 }
 
-.agency-index .box .btn.btn-lg.btn-primary {
+.landing .box .btn.btn-lg.btn-primary {
   width: 250px; /* Button is 250 x 72 */
   display: block;
-  margin: 0 auto; /* Center the button */
+  margin: 0 var(--landing-page-x-margin);
   padding: 19px 0; /* Button is 250 x 72 */
 }
 
-.agency-index footer {
+.landing footer {
   margin-top: 0;
+}
+
+/* Agency Selector */
+
+#agency-selector .modal-body {
+  padding: 0;
+}
+
+#agency-selector .card img {
+  margin-right: -1px;
+}
+
+#agency-selector .col:first-child .card {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+#agency-selector .col:last-child .card {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
 }

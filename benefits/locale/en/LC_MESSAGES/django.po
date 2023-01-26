@@ -150,9 +150,6 @@ msgstr ""
 "You can tap your credit or debit card when you board a SacRT bus, and your "
 "discounted fare will automatically apply every time you ride. "
 
-msgid "core.pages.agency_index.h2"
-msgstr "Your benefit applies every time you tap to ride"
-
 msgid "core.pages.help.about.p[0]"
 msgstr ""
 "The Benefits tool is provided by California Integrated Travel Project (Cal-"
@@ -327,6 +324,12 @@ msgstr ""
 msgid "core.pages.help.foss.link"
 msgstr "GitHub"
 
+msgid "core.pages.index.agency_selector.headline"
+msgstr "Please choose your transit provider:"
+
+msgid "core.pages.index.agency_selector%(agency_short_name)s"
+msgstr "%(agency_short_name)s logo"
+
 msgid "core.includes.nocookies.brand"
 msgstr "Cookies are disabled"
 
@@ -345,6 +348,9 @@ msgid "core.includes.noscript.text"
 msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
+
+msgid "core.pages.landing.h2"
+msgstr "Your benefit applies every time you tap to ride"
 
 msgid "core.pages.logged_out.headline[0]"
 msgstr "You have successfully logged out."
@@ -401,16 +407,14 @@ msgstr ""
 msgid "core.buttons.wait"
 msgstr "Please wait..."
 
-msgid "core.pages.index.chooseprovider"
-msgstr "Please choose your transit provider:"
-
 msgid "core.pages.index.title"
 msgstr "Choose Provider"
 
 msgid "core.pages.index.headline"
-msgstr ""
-"Cal-ITP Benefits makes it easy to use your public transit discount every "
-"time you ride."
+msgstr "Connect your transit benefit to your contactless card"
+
+msgid "core.pages.index.button"
+msgstr "Choose Your Provider"
 
 msgid "core.pages.index.continue"
 msgstr "Get started"

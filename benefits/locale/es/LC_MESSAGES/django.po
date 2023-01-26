@@ -158,9 +158,6 @@ msgstr ""
 "SacRT y su tarifa con descuento se aplicará automáticamente cada vez que "
 "viaje. "
 
-msgid "core.pages.agency_index.h2"
-msgstr "Su beneficio se aplicará cada vez que acerque su tarjeta para viajar"
-
 msgid "core.pages.help.about.p[0]"
 msgstr ""
 "La herramienta de Beneficios es proporcionada por California Integrated "
@@ -343,6 +340,12 @@ msgstr ""
 msgid "core.pages.help.foss.link"
 msgstr "GitHub"
 
+msgid "core.pages.index.agency_selector.headline"
+msgstr "TODO: Please choose your transit provider:"
+
+msgid "core.pages.index.agency_selector%(agency_short_name)s"
+msgstr "%(agency_short_name)s logo"
+
 msgid "core.includes.nocookies.brand"
 msgstr "Cookies están inactivos"
 
@@ -361,6 +364,9 @@ msgid "core.includes.noscript.text"
 msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita JavaScript. Por favor, active JavaScript por este sitio web y"
+
+msgid "core.pages.landing.h2"
+msgstr "Su beneficio se aplicará cada vez que acerque su tarjeta para viajar"
 
 msgid "core.pages.logged_out.headline[0]"
 msgstr "Ha cerrado la sesión correctamente."
@@ -417,16 +423,14 @@ msgstr ""
 msgid "core.buttons.wait"
 msgstr "Espere por favor..."
 
-msgid "core.pages.index.chooseprovider"
-msgstr "Por favor, elija su proveedor de transporte:"
-
 msgid "core.pages.index.title"
 msgstr "Elija proveedor"
 
 msgid "core.pages.index.headline"
-msgstr ""
-"Los Beneficios de Cal-ITP facilita el uso de su descuento de transporte "
-"público cada vez que viaja."
+msgstr "TODO: Conecte su beneficio a su tarjeta de sin contacto"
+
+msgid "core.pages.index.button"
+msgstr "Elija proveedor"
 
 msgid "core.pages.index.continue"
 msgstr "Empezar"
