@@ -570,6 +570,8 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 
 :root {
   --card-title-font-size: var(--font-size-18px);
+  --card-title-line-height: 21.6px;
+  --card-title-letter-spacing: 0.03em;
   --card-x-padding: calc(10rem / 16);
   --card-body-x-padding: 0;
   --card-body-y-padding: 0.75rem;
@@ -579,6 +581,8 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 @media (min-width: 992px) {
   :root {
     --card-title-font-size: var(--font-size-20px);
+    --card-title-line-height: 24px;
+    --card-title-letter-spacing: 0.05rem;
     --card-x-padding: calc(35rem / 16);
     --card-body-x-padding: calc(40rem / 16);
     --card-body-y-padding: 0;
@@ -601,6 +605,8 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 
 .card .card-title {
   font-size: var(--card-title-font-size);
+  line-height: var(--card-title-line-height);
+  letter-spacing: var(--card-title-letter-spacing);
 }
 
 .card .card-body {
