@@ -585,7 +585,10 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
   }
 }
 
-a.card {
+a.card,
+a.card:hover,
+a.card:focus,
+a.card:focus-visible {
   text-decoration: none;
 }
 
