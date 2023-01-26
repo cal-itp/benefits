@@ -147,8 +147,9 @@ msgstr ""
 
 msgid "eligibility.pages.index.p[0].sacrt"
 msgstr ""
-"You can tap your credit or debit card when you board a SacRT bus, and your "
-"discounted fare will automatically apply every time you ride. "
+"You can tap your credit or debit card when you board SacRT public "
+"transportation, and your discounted fare will automatically apply every time "
+"you ride. "
 
 msgid "core.pages.help.about.p[0]"
 msgstr ""
