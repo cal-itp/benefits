@@ -16,6 +16,7 @@ from benefits.core.views import ROUTE_HELP
 from . import analytics, forms, verify
 
 
+ROUTE_CORE_INDEX = "core:index"
 ROUTE_INDEX = "eligibility:index"
 ROUTE_START = "eligibility:start"
 ROUTE_LOGIN = "oauth:login"
@@ -40,10 +41,10 @@ def index(request, agency=None):
             home = viewmodels.Button.home(request)
             page = viewmodels.ErrorPage.user_error(button=home, path=request.path)
             return TemplateResponse(request, "200_user_error.html", page.context_dict())
+        else:
+            session.update(request, eligibility_types=[], origin=agency.index_url)
     else:
-        session.update(request, agency=agency)
-
-    session.update(request, eligibility_types=[], origin=reverse(ROUTE_INDEX))
+        session.update(request, agency=agency, eligibility_types=[], origin=reverse(ROUTE_CORE_INDEX))
 
     eligibility_start = reverse(ROUTE_START)
 
@@ -60,6 +61,11 @@ def index(request, agency=None):
     )
 
     ctx = page.context_dict()
+
+    origin = session.origin(request)
+    if origin == reverse(ROUTE_CORE_INDEX):
+        ctx["previous_page_button"] = viewmodels.Button.previous_page(url=origin)
+
     ctx["help_page"] = help_page
     ctx["help_text"] = format_html(_("eligibility.pages.index.help_text%(help_link)s") % {"help_link": help_page})
 
