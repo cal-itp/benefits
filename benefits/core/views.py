@@ -2,7 +2,6 @@
 The core application: view definition for the root of the webapp.
 """
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
-from django.shortcuts import redirect
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.urls import reverse
@@ -28,10 +27,6 @@ def index(request):
     session.reset(request)
 
     agencies = models.TransitAgency.all_active()
-
-    if len(agencies) == 1:
-        agency = agencies[0]
-        return redirect(agency.index_url)
 
     page = viewmodels.Page(
         title=_("core.pages.index.title"),
