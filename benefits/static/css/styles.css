@@ -741,7 +741,7 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 /* Agency Selector */
 
 #agency-selector .modal-body {
-  padding: 0px;
+  padding: 0;
 }
 
 #agency-selector .card img {
