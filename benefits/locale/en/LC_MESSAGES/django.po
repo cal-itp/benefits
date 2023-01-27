@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2022-11-02 23:20+0000\n"
+"POT-Creation-Date: 2023-01-26 16:08+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,57 +19,52 @@ msgstr "Get started with"
 msgid "eligibility.buttons.signout"
 msgstr "Sign out of Login.gov"
 
-msgid "eligibility.pages.index.mst_login.label"
+msgid "eligibility.pages.index.login_gov.label"
 msgstr "I am 65 years of age or older"
 
-msgid "eligibility.pages.index.mst_login.description"
+msgid "eligibility.pages.index.login_gov.description"
 msgstr ""
 "You must be 65 years or older. This benefit does not expire, but you may "
 "need to renew. Using this benefit means your new transit fare is half of the "
 "standard fare."
 
-msgid "eligibility.pages.start.mst_login.title"
+msgid "eligibility.pages.start.login_gov.title"
 msgstr "Older Adult benefit information"
 
-msgid "eligibility.pages.start.mst_login.headline"
+msgid "eligibility.pages.start.login_gov.headline"
 msgstr "You selected an Older Adult benefit."
 
-msgid "eligibility.pages.start.mst_login.sub_headline"
-msgstr "You will need a few items to connect your benefit:"
-
-msgid "eligibility.pages.start.mst_login.start_item.heading"
+msgid "eligibility.pages.start.login_gov.start_item.heading"
 msgstr "A Login.gov account with identity verification"
 
-msgid "eligibility.pages.start.mst_login.start_item.details"
+msgid "eligibility.pages.start.login_gov.start_item.details"
 msgstr ""
 "Login.gov is a safe way to sign in to government services. Benefits uses "
 "Login.gov to verify your age. If you do not have an account already, you "
 "will be able to create one. You will also need to verify your identity, "
 "which will require these items:"
 
-msgid "eligibility.pages.unverified.mst_login.title"
+msgid "eligibility.pages.unverified.login_gov.title"
 msgstr "Eligibility Error"
 
-msgid "eligibility.pages.unverified.mst_login.headline"
-msgstr "Your eligibility could not be verified."
-
-msgid "eligibility.pages.unverified.mst_login.p[0]"
+msgid "eligibility.pages.unverified.login_gov.p[0]"
 msgstr ""
 "That’s okay! You may still be eligible for our program. Please reach out to "
 "your local transit provider for assistance."
 
-msgid "enrollment.pages.index.mst_login.eligibility_confirmed.headline"
-msgstr "Your eligibility is confirmed! You’re nearly there."
-
-msgid "enrollment.pages.index.mst_login.eligibility_confirmed_item.heading"
+msgid "enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"
 msgstr "Your eligibility is confirmed for an Older Adult benefit"
 
-msgid "enrollment.pages.index.mst_login.eligibility_confirmed_item.details"
+#, python-format
+msgid ""
+"enrollment.pages.index.login_gov.eligibility_confirmed_item.details"
+"%(transit_agency_short_name)s"
 msgstr ""
 "Your eligibility has been verified by Login.gov. This benefit will give you "
-"a half-price fare on public transportation with MST."
+"a half-price fare on public transportation with "
+"%(transit_agency_short_name)s."
 
-msgid "enrollment.pages.success.mst_login.confirm_item.details"
+msgid "enrollment.pages.success.login_gov.confirm_item.details"
 msgstr ""
 "You were not charged anything today. When boarding transit, pay with this "
 "same physical card and you will automatically receive your new reduced fare. "
@@ -90,9 +85,6 @@ msgstr "Courtesy Card information"
 
 msgid "eligibility.pages.start.mst_cc.headline"
 msgstr "You selected a Courtesy Card benefit."
-
-msgid "eligibility.pages.start.mst_cc.sub_headline"
-msgstr "You will need a few items to connect your benefit:"
 
 msgid "eligibility.pages.start.mst_cc.start_item.heading"
 msgstr "Your current Courtesy Card number"
@@ -129,16 +121,10 @@ msgstr "We use this to help confirm your Courtesy Card."
 msgid "eligibility.pages.unverified.mst_cc.title"
 msgstr "Courtesy Card not located"
 
-msgid "eligibility.pages.unverified.mst_cc.headline"
-msgstr "We couldn’t confirm your eligibility"
-
 msgid "eligibility.pages.unverified.mst_cc.p[0]"
 msgstr ""
 "That’s okay! You may still be eligible for our program. Please reach out to "
 "Monterey-Salinas Transit for assistance."
-
-msgid "enrollment.pages.index.mst_cc.eligibility_confirmed.headline"
-msgstr "Your eligibility is confirmed! You’re nearly there."
 
 msgid "enrollment.pages.success.mst_cc.confirm_item.details"
 msgstr ""
@@ -154,8 +140,16 @@ msgstr ""
 "contactless payment cards. You will also need to reapply if you choose to "
 "change the bank card you use to pay for transit service."
 
-msgid "core.pages.agency_index.h2"
-msgstr "Your benefit applies every time you tap to ride"
+msgid "eligibility.pages.index.p[0].mst"
+msgstr ""
+"You can tap your credit or debit card when you board an MST bus, and your "
+"discounted fare will automatically apply every time you ride. "
+
+msgid "eligibility.pages.index.p[0].sacrt"
+msgstr ""
+"You can tap your credit or debit card when you board SacRT public "
+"transportation, and your discounted fare will automatically apply every time "
+"you ride. "
 
 msgid "core.pages.help.about.p[0]"
 msgstr ""
@@ -331,6 +325,12 @@ msgstr ""
 msgid "core.pages.help.foss.link"
 msgstr "GitHub"
 
+msgid "core.pages.index.agency_selector.headline"
+msgstr "Please choose your transit provider:"
+
+msgid "core.pages.index.agency_selector%(agency_short_name)s"
+msgstr "%(agency_short_name)s logo"
+
 msgid "core.includes.nocookies.brand"
 msgstr "Cookies are disabled"
 
@@ -349,6 +349,9 @@ msgid "core.includes.noscript.text"
 msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
+
+msgid "core.pages.landing.h2"
+msgstr "Your benefit applies every time you tap to ride"
 
 msgid "core.pages.logged_out.headline[0]"
 msgstr "You have successfully logged out."
@@ -405,16 +408,14 @@ msgstr ""
 msgid "core.buttons.wait"
 msgstr "Please wait..."
 
-msgid "core.pages.index.chooseprovider"
-msgstr "Please choose your transit provider:"
-
 msgid "core.pages.index.title"
 msgstr "Choose Provider"
 
 msgid "core.pages.index.headline"
-msgstr ""
-"Cal-ITP Benefits makes it easy to use your public transit discount every "
-"time you ride."
+msgstr "Connect your transit benefit to your contactless card"
+
+msgid "core.pages.index.button"
+msgstr "Choose Your Provider"
 
 msgid "core.pages.index.continue"
 msgstr "Get started"
@@ -422,8 +423,11 @@ msgstr "Get started"
 msgid "core.pages.agency_index.title"
 msgstr "Introduction"
 
-msgid "core.pages.agency_index.mst_cc.headline"
-msgstr "Connect your MST benefit to your contactless card"
+#, python-format
+msgid "core.pages.agency_index.headline%(transit_agency_short_name)s"
+msgstr ""
+"Connect your %(transit_agency_short_name)s transit benefit to your "
+"contactless card"
 
 msgid "core.buttons.back"
 msgstr "Go back"
@@ -456,22 +460,20 @@ msgstr ""
 "Questions about the items above? Please visit our <a href=\"%(help_link)s"
 "\">Help Page</a>."
 
+#, python-format
+msgid "eligibility.pages.index.p[0]%(info_link)s"
+msgstr ""
+"Cal-ITP doesn’t save any of your information, and you don’t need to create "
+"an account. Verify to get your benefit, and connect your bank card today. "
+"<strong><a class='info-link' href=\"%(info_link)s\">Learn more about Cal-ITP "
+"Benefits.</a></strong>"
+
 msgid "eligibility.pages.index.title"
 msgstr "Select a benefit option"
 
 msgid "eligibility.pages.index.headline"
 msgstr ""
 "Connect your bank card to your public transit discount with Cal-ITP Benefits."
-
-#, python-format
-msgid "eligibility.pages.index.p[0]%(info_link)s"
-msgstr ""
-"You can tap your credit or debit card when you board an MST bus, and your "
-"discounted fare will automatically apply every time you ride. Cal-ITP "
-"doesn’t save any of your information, and you don’t need to create an "
-"account. Verify to get your benefit, and connect your bank card today. "
-"<strong><a class='info-link' href=\"%(info_link)s\">Learn more about Cal-ITP "
-"Benefits.</a></strong>"
 
 #, python-format
 msgid "eligibility.pages.index.help_text%(help_link)s"
@@ -486,13 +488,13 @@ msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Identification card icon with checkmark"
 
-msgid "eligibility.pages.start.mst_login.required_items[0]"
+msgid "eligibility.pages.start.login_gov.required_items[0]"
 msgstr "Your state-issued ID card"
 
-msgid "eligibility.pages.start.mst_login.required_items[1]"
+msgid "eligibility.pages.start.login_gov.required_items[1]"
 msgstr "Your Social Security number"
 
-msgid "eligibility.pages.start.mst_login.required_items[2]"
+msgid "eligibility.pages.start.login_gov.required_items[2]"
 msgstr "A phone number with a phone plan associated with your name"
 
 msgctxt "image alt text"
@@ -505,6 +507,12 @@ msgstr "Your bank card details"
 msgid "eligibility.pages.start.bankcard.text"
 msgstr ""
 "Your card must be a contactless debit or credit card by Visa or Mastercard."
+
+msgid "eligibility.pages.start.sub_headline"
+msgstr "You will need a few items to connect your benefit:"
+
+msgid "eligibility.pages.unverified.headline"
+msgstr "Your eligibility could not be verified."
 
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
@@ -530,6 +538,9 @@ msgstr ""
 
 msgid "enrollment.pages.index.title"
 msgstr "Connect your card"
+
+msgid "enrollment.pages.index.headline"
+msgstr "Your eligibility is confirmed! You’re nearly there."
 
 msgid "enrollment.buttons.payment_partner"
 msgstr "Connect Your Card"

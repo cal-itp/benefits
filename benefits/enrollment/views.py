@@ -80,7 +80,11 @@ def index(request):
 
         if verifier.eligibility_confirmed_item_heading or verifier.eligibility_confirmed_item_details:
             heading = _(verifier.eligibility_confirmed_item_heading) if verifier.eligibility_confirmed_item_heading else None
-            details = _(verifier.eligibility_confirmed_item_details) if verifier.eligibility_confirmed_item_details else None
+            details = (
+                _(verifier.eligibility_confirmed_item_details) % {"transit_agency_short_name": agency.short_name}
+                if verifier.eligibility_confirmed_item_details
+                else None
+            )
             confirmed_eligibility_item = viewmodels.MediaItem(
                 icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
                 heading=heading,
@@ -101,7 +105,7 @@ def index(request):
 
         page = viewmodels.Page(
             title=_("enrollment.pages.index.title"),
-            headline=format_html(_(verifier.eligibility_confirmed_headline)),
+            headline=_("enrollment.pages.index.headline"),
             forms=[tokenize_retry_form, tokenize_success_form],
             buttons=[
                 viewmodels.Button.primary(

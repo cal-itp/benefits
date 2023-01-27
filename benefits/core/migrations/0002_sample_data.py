@@ -1,6 +1,8 @@
 """Data migration which loads sample data.
 Set environment variable DJANGO_LOAD_SAMPLE_DATA to False to skip loading sample data.
 """
+import os
+
 from django.conf import settings
 from django.db import migrations
 from django.utils.translation import gettext_lazy as _
@@ -13,18 +15,23 @@ def load_sample_data(app, *args, **kwargs):
 
     EligibilityType = app.get_model("core", "EligibilityType")
 
-    senior_type = EligibilityType.objects.create(name="senior", label="Senior", group_id="group1")
-    courtesy_card_type = EligibilityType.objects.create(name="courtesy_card", label="Courtesy Card", group_id="group2")
+    senior_type = EligibilityType.objects.create(
+        name="senior", label="Senior", group_id=os.environ.get("MST_SENIOR_GROUP_ID", "group1")
+    )
+    courtesy_card_type = EligibilityType.objects.create(
+        name="courtesy_card", label="Courtesy Card", group_id=os.environ.get("MST_COURTESY_CARD_GROUP_ID", "group2")
+    )
 
     PemData = app.get_model("core", "PemData")
 
     server_public_key = PemData.objects.create(
         label="Eligibility server public key",
-        remote_url="https://raw.githubusercontent.com/cal-itp/eligibility-server/dev/keys/server.pub",
+        remote_url=os.environ.get(
+            "SERVER_PUBLIC_KEY_URL", "https://raw.githubusercontent.com/cal-itp/eligibility-server/dev/keys/server.pub"
+        ),
     )
 
-    client_private_key = PemData.objects.create(
-        text="""
+    default_client_private_key = """
 -----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEA1pt0ZoOuPEVPJJS+5r884zcjZLkZZ2GcPwr79XOLDbOi46on
 Ca79kjRnhS0VUK96SwUPS0z9J5mDA5LSNL2RoxFb5QGaevnJY828NupzTNdUd0sY
@@ -52,12 +59,14 @@ FbKZRd0CgYBC1HTbA+zMEqDdY4MWJJLC6jZsjdxOGhzjrCtWcIWEGMDF7oDDEoix
 W3j2hwm4C6vaNkH9XX1dr5+q6gq8vJQdbYoExl22BGMiNbfI3+sLRk0zBYL//W6c
 tSREgR4EjosqQfbkceLJ2JT1wuNjInI0eR9H3cRugvlDTeWtbdJ5qA==
 -----END RSA PRIVATE KEY-----
-""",
+"""
+
+    client_private_key = PemData.objects.create(
+        text=os.environ.get("CLIENT_PRIVATE_KEY", default_client_private_key),
         label="Benefits client private key",
     )
 
-    client_public_key = PemData.objects.create(
-        text="""
+    default_client_public_key = """
 -----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1pt0ZoOuPEVPJJS+5r88
 4zcjZLkZZ2GcPwr79XOLDbOi46onCa79kjRnhS0VUK96SwUPS0z9J5mDA5LSNL2R
@@ -67,17 +76,32 @@ Nd3RaIaSREO50NvNywXIIt/OmCiRqI7JtOcn4eyh1I4j9WtlbMhRJLfwPMAgY5ep
 TsWcURmhVofF2wVoFbib3JGCfA7tz/gmP5YoEKnf/cumKmF3e9LrZb8zwm7bTHUV
 iwIDAQAB
 -----END PUBLIC KEY-----
-""",
+"""
+
+    client_public_key = PemData.objects.create(
+        text=os.environ.get("CLIENT_PUBLIC_KEY", default_client_public_key),
         label="Benefits client public key",
     )
 
-    dummy_cert = PemData.objects.create(
-        text="""
+    dummy_cert_text = """
 -----BEGIN CERTIFICATE-----
 PEM DATA
 -----END CERTIFICATE-----
-""",
-        label="Dummy certificate",
+"""
+
+    payment_processor_client_cert = PemData.objects.create(
+        text=os.environ.get("PAYMENT_PROCESSOR_CLIENT_CERT", dummy_cert_text),
+        label="Payment processor client certificate",
+    )
+
+    payment_processor_client_cert_private_key = PemData.objects.create(
+        text=os.environ.get("PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY", client_private_key.text),
+        label="Payment processor client certificate private key",
+    )
+
+    payment_processor_client_cert_root_ca = PemData.objects.create(
+        text=os.environ.get("PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA", dummy_cert_text),
+        label="Payment processor client certificate root CA",
     )
 
     AuthProvider = app.get_model("core", "AuthProvider")
@@ -85,54 +109,52 @@ PEM DATA
     auth_provider = AuthProvider.objects.create(
         sign_in_button_label=_("eligibility.buttons.signin"),
         sign_out_button_label=_("eligibility.buttons.signout"),
-        client_name="benefits-oauth-client-name",
-        client_id="benefits-oauth-client-id",
-        authority="https://example.com",
-        scope="verify:senior",
-        claim="senior",
+        client_name=os.environ.get("AUTH_PROVIDER_CLIENT_NAME", "benefits-oauth-client-name"),
+        client_id=os.environ.get("AUTH_PROVIDER_CLIENT_ID", "benefits-oauth-client-id"),
+        authority=os.environ.get("AUTH_PROVIDER_AUTHORITY", "https://example.com"),
+        scope=os.environ.get("AUTH_PROVIDER_SCOPE", "verify:senior"),
+        claim=os.environ.get("AUTH_PROVIDER_CLAIM", "senior"),
     )
 
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
 
-    verifier1 = EligibilityVerifier.objects.create(
-        name="OAuth claims via Login.gov",
+    oauth_claims_verifier = EligibilityVerifier.objects.create(
+        name=os.environ.get("OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov"),
         eligibility_type=senior_type,
         auth_provider=auth_provider,
-        selection_label=_("eligibility.pages.index.mst_login.label"),
-        selection_label_description=_("eligibility.pages.index.mst_login.description"),
-        start_title=_("eligibility.pages.start.mst_login.title"),
-        start_headline=_("eligibility.pages.start.mst_login.headline"),
-        start_sub_headline=_("eligibility.pages.start.mst_login.sub_headline"),
-        start_item_heading=_("eligibility.pages.start.mst_login.start_item.heading"),
-        start_item_details=_("eligibility.pages.start.mst_login.start_item.details"),
+        selection_label=_("eligibility.pages.index.login_gov.label"),
+        selection_label_description=_("eligibility.pages.index.login_gov.description"),
+        start_title=_("eligibility.pages.start.login_gov.title"),
+        start_headline=_("eligibility.pages.start.login_gov.headline"),
+        start_item_heading=_("eligibility.pages.start.login_gov.start_item.heading"),
+        start_item_details=_("eligibility.pages.start.login_gov.start_item.details"),
         start_help_anchor="login-gov",
-        unverified_title=_("eligibility.pages.unverified.mst_login.title"),
-        unverified_headline=_("eligibility.pages.unverified.mst_login.headline"),
-        unverified_blurb=_("eligibility.pages.unverified.mst_login.p[0]"),
-        eligibility_confirmed_headline=_("enrollment.pages.index.mst_login.eligibility_confirmed.headline"),
-        eligibility_confirmed_item_heading=_("enrollment.pages.index.mst_login.eligibility_confirmed_item.heading"),
-        eligibility_confirmed_item_details=_("enrollment.pages.index.mst_login.eligibility_confirmed_item.details"),
-        enrollment_success_confirm_item_details=_("enrollment.pages.success.mst_login.confirm_item.details"),
+        unverified_title=_("eligibility.pages.unverified.login_gov.title"),
+        unverified_blurb=_("eligibility.pages.unverified.login_gov.p[0]"),
+        eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
+        eligibility_confirmed_item_details=_(
+            "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
+        ),
+        enrollment_success_confirm_item_details=_("enrollment.pages.success.login_gov.confirm_item.details"),
         enrollment_success_expiry_item_heading=None,
         enrollment_success_expiry_item_details=None,
     )
 
-    verifier2 = EligibilityVerifier.objects.create(
-        name="Test Eligibility Verifier 2",
-        api_url="http://server:8000/verify",
-        api_auth_header="X-Server-API-Key",
-        api_auth_key="server-auth-token",
+    courtesy_card_verifier = EligibilityVerifier.objects.create(
+        name=os.environ.get("COURTESY_CARD_VERIFIER", "Eligibility Server Verifier"),
+        api_url=os.environ.get("COURTESY_CARD_VERIFIER_API_URL", "http://server:8000/verify"),
+        api_auth_header=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_HEADER", "X-Server-API-Key"),
+        api_auth_key=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_KEY", "server-auth-token"),
         eligibility_type=courtesy_card_type,
         public_key=server_public_key,
-        jwe_cek_enc="A256CBC-HS512",
-        jwe_encryption_alg="RSA-OAEP",
-        jws_signing_alg="RS256",
+        jwe_cek_enc=os.environ.get("COURTESY_CARD_VERIFIER_JWE_CEK_ENC", "A256CBC-HS512"),
+        jwe_encryption_alg=os.environ.get("COURTESY_CARD_VERIFIER_JWE_ENCRYPTION_ALG", "RSA-OAEP"),
+        jws_signing_alg=os.environ.get("COURTESY_CARD_VERIFIER_JWS_SIGNING_ALG", "RS256"),
         auth_provider=None,
         selection_label=_("eligibility.pages.index.mst_cc.label"),
         selection_label_description=_("eligibility.pages.index.mst_cc.description"),
         start_title=_("eligibility.pages.start.mst_cc.title"),
         start_headline=_("eligibility.pages.start.mst_cc.headline"),
-        start_sub_headline=_("eligibility.pages.start.mst_cc.sub_headline"),
         start_item_heading=_("eligibility.pages.start.mst_cc.start_item.heading"),
         start_item_details=_("eligibility.pages.start.mst_cc.start_item.details"),
         start_help_anchor="mst-courtesy-card",
@@ -150,9 +172,7 @@ PEM DATA
         form_name_placeholder="Garcia",
         form_name_max_length=255,
         unverified_title=_("eligibility.pages.unverified.mst_cc.title"),
-        unverified_headline=_("eligibility.pages.unverified.mst_cc.headline"),
         unverified_blurb=_("eligibility.pages.unverified.mst_cc.p[0]"),
-        eligibility_confirmed_headline=_("enrollment.pages.index.mst_cc.eligibility_confirmed.headline"),
         eligibility_confirmed_item_heading=None,
         eligibility_confirmed_item_details=None,
         enrollment_success_confirm_item_details=_("enrollment.pages.success.mst_cc.confirm_item.details"),
@@ -163,17 +183,17 @@ PEM DATA
     PaymentProcessor = app.get_model("core", "PaymentProcessor")
 
     payment_processor = PaymentProcessor.objects.create(
-        name="Test Payment Processor",
-        api_base_url="http://server:8000",
-        api_access_token_endpoint="access-token",
-        api_access_token_request_key="request_access",
-        api_access_token_request_val="REQUEST_ACCESS",
-        card_tokenize_url="http://server:8000/static/tokenize.js",
-        card_tokenize_func="tokenize",
-        card_tokenize_env="test",
-        client_cert=dummy_cert,
-        client_cert_private_key=client_private_key,
-        client_cert_root_ca=dummy_cert,
+        name=os.environ.get("PAYMENT_PROCESSOR_NAME", "Test Payment Processor"),
+        api_base_url=os.environ.get("PAYMENT_PROCESSOR_API_BASE_URL", "http://server:8000"),
+        api_access_token_endpoint=os.environ.get("PAYMENT_PROCESSOR_API_ACCESS_TOKEN_ENDPOINT", "access-token"),
+        api_access_token_request_key=os.environ.get("PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_KEY", "request_access"),
+        api_access_token_request_val=os.environ.get("PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_VAL", "REQUEST_ACCESS"),
+        card_tokenize_url=os.environ.get("PAYMENT_PROCESSOR_CARD_TOKENIZE_URL", "http://server:8000/static/tokenize.js"),
+        card_tokenize_func=os.environ.get("PAYMENT_PROCESSOR_CARD_TOKENIZE_FUNC", "tokenize"),
+        card_tokenize_env=os.environ.get("PAYMENT_PROCESSOR_CARD_TOKENIZE_ENV", "test"),
+        client_cert=payment_processor_client_cert,
+        client_cert_private_key=payment_processor_client_cert_private_key,
+        client_cert_root_ca=payment_processor_client_cert_root_ca,
         customer_endpoint="customer",
         customers_endpoint="customers",
         group_endpoint="group",
@@ -183,8 +203,8 @@ PEM DATA
 
     mst_agency = TransitAgency.objects.create(
         slug="mst",
-        short_name="MST (sample)",
-        long_name="Monterey-Salinas Transit (sample)",
+        short_name=os.environ.get("MST_AGENCY_SHORT_NAME", "MST (sample)"),
+        long_name=os.environ.get("MST_AGENCY_LONG_NAME", "Monterey-Salinas Transit (sample)"),
         agency_id="mst",
         merchant_id="mst",
         info_url="https://mst.org/benefits",
@@ -192,11 +212,30 @@ PEM DATA
         active=True,
         private_key=client_private_key,
         public_key=client_public_key,
-        jws_signing_alg="RS256",
+        jws_signing_alg=os.environ.get("MST_AGENCY_JWS_SIGNING_ALG", "RS256"),
         payment_processor=payment_processor,
+        eligibility_index_intro=_("eligibility.pages.index.p[0].mst"),
     )
     mst_agency.eligibility_types.set([senior_type, courtesy_card_type])
-    mst_agency.eligibility_verifiers.set([verifier1, verifier2])
+    mst_agency.eligibility_verifiers.set([oauth_claims_verifier, courtesy_card_verifier])
+
+    sacrt_agency = TransitAgency.objects.create(
+        slug="sacrt",
+        short_name=os.environ.get("SACRT_AGENCY_SHORT_NAME", "SacRT (sample)"),
+        long_name=os.environ.get("SACRT_AGENCY_LONG_NAME", "Sacramento Regional Transit (sample)"),
+        agency_id="sacrt",
+        merchant_id="sacrt",
+        info_url="https://sacrt.com/",
+        phone="916-321-2877",
+        active=True,
+        private_key=client_private_key,
+        public_key=client_public_key,
+        jws_signing_alg=os.environ.get("SACRT_AGENCY_JWS_SIGNING_ALG", "RS256"),
+        payment_processor=payment_processor,
+        eligibility_index_intro=_("eligibility.pages.index.p[0].sacrt"),
+    )
+    sacrt_agency.eligibility_types.set([senior_type])
+    sacrt_agency.eligibility_verifiers.set([oauth_claims_verifier])
 
 
 class Migration(migrations.Migration):

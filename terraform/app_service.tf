@@ -3,7 +3,7 @@ resource "azurerm_service_plan" "main" {
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   os_type             = "Linux"
-  sku_name            = "P2v2"
+  sku_name            = "B1"
 
   lifecycle {
     ignore_changes = [tags]

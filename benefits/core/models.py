@@ -103,7 +103,6 @@ class EligibilityVerifier(models.Model):
     selection_label_description = models.TextField(null=True)
     start_title = models.TextField()
     start_headline = models.TextField()
-    start_sub_headline = models.TextField()
     start_item_heading = models.TextField()
     start_item_details = models.TextField()
     start_help_anchor = models.TextField()
@@ -125,9 +124,7 @@ class EligibilityVerifier(models.Model):
     # The maximum length accepted for the 'name' API field before sending to this verifier
     form_name_max_length = models.PositiveSmallIntegerField(null=True)
     unverified_title = models.TextField()
-    unverified_headline = models.TextField()
     unverified_blurb = models.TextField()
-    eligibility_confirmed_headline = models.TextField()
     eligibility_confirmed_item_heading = models.TextField(null=True)
     eligibility_confirmed_item_details = models.TextField(null=True)
     # Fields for the dynamic enrollment success message
@@ -207,6 +204,7 @@ class TransitAgency(models.Model):
     public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
     # The JWS-compatible signing algorithm
     jws_signing_alg = models.TextField()
+    eligibility_index_intro = models.TextField()
 
     def __str__(self):
         return self.long_name
@@ -239,6 +237,11 @@ class TransitAgency(models.Model):
     def index_url(self):
         """Public-facing URL to the TransitAgency's landing page."""
         return reverse("core:agency_index", args=[self.slug])
+
+    @property
+    def eligibility_index_url(self):
+        """Public facing URL to the TransitAgency's eligibility page."""
+        return reverse("eligibility:agency_index", args=[self.slug])
 
     @property
     def public_key_url(self):
