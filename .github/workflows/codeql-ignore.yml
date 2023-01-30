@@ -1,0 +1,26 @@
+# Since the CodeQL check is required and filters to .js and .py files, we need another check with a job of the same name for all other files.
+# https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/troubleshooting-required-status-checks#handling-skipped-but-required-checks
+name: Skip CodeQL on ignored paths
+
+on:
+  push:
+    path-ignore:
+      - "**.js"
+      - "**.py"
+  pull_request:
+    branches: [dev, test, prod]
+    path-ignore:
+      - "**.js"
+      - "**.py"
+
+jobs:
+  codeql:
+    name: CodeQL Analyze
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        language: ["javascript", "python"]
+
+    steps:
+      - run: 'echo "No build required" '
