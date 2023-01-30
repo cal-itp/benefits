@@ -565,23 +565,27 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 
 :root {
   --card-title-font-size: var(--font-size-18px);
-  --card-title-line-height: 21.6px;
+  --card-title-line-height: calc(21.6rem / 16);
   --card-title-letter-spacing: 0.03em;
   --card-x-padding: calc(10rem / 16);
   --card-body-x-padding: 0;
   --card-body-y-padding: 0.75rem;
   --card-border-width: var(--font-size-12px);
+  --card-max-width: 100%;
+  --card-min-height: 100%;
 }
 
 @media (min-width: 992px) {
   :root {
     --card-title-font-size: var(--font-size-20px);
-    --card-title-line-height: 24px;
+    --card-title-line-height: calc(24rem / 16);
     --card-title-letter-spacing: 0.05rem;
     --card-x-padding: calc(35rem / 16);
     --card-body-x-padding: calc(40rem / 16);
     --card-body-y-padding: 0;
     --card-border-width: var(--font-size-20px);
+    --card-max-width: calc(340rem / 16);
+    --card-min-height: calc(185rem / 16);
   }
 }
 
@@ -599,6 +603,8 @@ a.card:focus-visible {
   transition: 0.3s;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: var(--card-body-y-padding) var(--card-x-padding);
+  max-width: var(--card-max-width);
+  min-height: var(--card-min-height);
 }
 
 .card:hover {
@@ -758,10 +764,8 @@ a.card:focus-visible {
 
 #agency-selector .col:first-child .card {
   margin-top: 2rem;
-  margin-bottom: 1rem;
 }
 
 #agency-selector .col:last-child .card {
-  margin-top: 1rem;
   margin-bottom: 2rem;
 }
