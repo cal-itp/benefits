@@ -11,6 +11,7 @@ class EligibilityEvent(core.Event):
         super().__init__(request, event_type)
         # overwrite core.Event eligibility_types
         self.update_event_properties(eligibility_types=eligibility_types)
+        self.update_user_properties(eligibility_types=eligibility_types)
 
 
 class SelectedVerifierEvent(EligibilityEvent):
