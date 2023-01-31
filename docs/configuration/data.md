@@ -16,7 +16,7 @@
 
 ## Introduction
 
-Django [data migrations](https://docs.djangoproject.com/en/4.0/topics/migrations/#data-migrations) can be used to load the database with instances of the app's model classes, defined in [`benefits/core/models.py`][core-models].
+Django [data migrations](https://docs.djangoproject.com/en/4.0/topics/migrations/#data-migrations) are used to load the database with instances of the app's model classes, defined in [`benefits/core/models.py`][core-models].
 
 Migrations are run as the application starts up. See the [`bin/init.sh`][init] script.
 
