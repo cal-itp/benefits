@@ -27,16 +27,17 @@ For development and testing, only a Littlepay customer group is needed since the
 
 ## Configuration for production validation
 
-For production validation, both a customer group and discount product are needed. The customer group used here is a temporary one for testing only. Production validation is done against the Benefits test environment to avoid disruption of the production environment.
+For production validation, both a customer group and discount product are needed. The customer group used here is a temporary one for testing only. Production validation is done against the Benefits **test environment** to avoid disruption of the production environment.
 
 ### Steps
 
 1. Transit agency staff creates the discount product in production Littlepay (if it does not already exist).
 1. Cal-ITP creates a customer group **for testing purposes** in production Littlepay.
 1. Cal-ITP associates the group with the product.
-1. Cal-ITP sets that group's ID as the `group_id` for a new `EligibilityType` in the Benefits database.
+1. Cal-ITP creates a new `EligibilityType` **for testing purposes** in the Benefits database and sets the `group_id` to the ID of the newly-created group.
 1. Cal-ITP creates a new `EligibilityVerifier` with configuration **for a testing environment** to ensure successful eligibility verification. (For example, use sandbox Login.gov instead of production Login.gov.)
-1. Cal-ITP creates a new `TransitAgency` in the database with the proper associations to eligibility types, verifiers, and payment processor.
+1. Cal-ITP creates a new `PaymentProcessor` **for testing purposes** with configuration for production Littlepay.
+1. Cal-ITP updates the existing `TransitAgency` (created [previously](#configuration-for-development-and-testing)) with associations to the eligibility types, verifiers, and payment processor that were just created for testing.
 
 At this point, Cal-ITP and transit agency staff can coordinate to do on-the-ground testing where a live card is tapped on a live payment validator.
 
@@ -61,7 +62,8 @@ Once production validation is done, the transit agency can be added to the produ
 
 ### Cleanup
 
-At this point, the customer group that was created in production Littlepay for testing purposes can be deleted.
+At this point, the customer group that was created in production Littlepay for testing purposes can be deleted. The temporary production validation objects in the Benefits database can also be deleted.
 
 1. Remove the association between the test customer group and discount product.
 1. Delete the test customer group.
+1. Remove temporary `EligibilityType`s, `EligibilityVerifier`s, and `PaymentProcessor` that were [created](#steps_1) in the Benefits test environment.
