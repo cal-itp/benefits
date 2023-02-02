@@ -43,3 +43,21 @@ At this point, Cal-ITP and transit agency staff can coordinate to do on-the-grou
 1. Transit agency staff uses the Merchant Portal to verify the taps and discounts were successful.
 1. Cal-ITP uses logs from Azure to verify the user was associated to the customer group.
 1. Cal-ITP verifies that Amplitude analytic events are being sent.
+
+## Configuration for production
+
+Once production validation is done, the transit agency can be added to the production Benefits database.
+
+### Steps
+
+1. Cal-ITP creates a customer group **for production use** in production Littlepay and associates the group with the discount product created [previously during production validation](#configuration-for-production-validation).
+1. Cal-ITP sets that group's ID as the `group_id` for a new `EligibilityType` in the Benefits database.
+1. Cal-ITP creates a new `EligibilityVerifier` with configuration for the **production** eligibility verification system.
+1. Cal-ITP creates a new `TransitAgency` in the database with proper associations to eligibility tpes, verifiers, and payment processors.
+
+### Cleanup
+
+At this point, the customer group that was created in production Littlepay for testing purposes can be deleted.
+
+1. Remove the association between the test customer group and discount product.
+1. Delete the test customer group.
