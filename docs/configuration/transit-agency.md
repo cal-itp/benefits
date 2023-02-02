@@ -10,7 +10,7 @@ Note that a `TransitAgency` model requires:
 - a list of `EligibilityVerifier`s used to verify one of those supported eligibility types
 - a `PaymentProcessor` for enrolling the user's contactless card for discounts
 
-Also note that these steps assume the transit agency is using Littlepay as their payment processor. Support for integration with other payment processors may be added in the future.
+Also note that these steps assume the transit agency is using Littlepay as their payment processor. Support for integration with [other payment processors](https://www.camobilitymarketplace.org/contracts/) may be added in the future.
 
 ## Configuration for development and testing
 
