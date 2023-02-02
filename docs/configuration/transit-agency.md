@@ -20,5 +20,5 @@ For development and testing, only a Littlepay customer group is needed since the
 
 1. Cal-ITP uses the transit agency's Littlepay merchant ID to create a customer group in the Littlepay QA environment for each type of eligibility (e.g. senior).
 1. For each group that's created, a group ID will be returned and should be set as the `group_id` on a new `EligibilityType` in the Benefits database. (See [Configuration data](../data/) for more on loading the database.)
-1. Cal-ITP creates a new `EligibilityVerifier` in the database for each supported eligibility type. This will require configuration for either [API](https://docs.calitp.org/eligibility-api)-based verification or verification through an [OAuth Open ID Connect provider](../oauth/) (e.g. Login.gov).
+1. Cal-ITP creates a new `EligibilityVerifier` in the database for each supported eligibility type. This will require configuration for either [API](https://docs.calitp.org/eligibility-api/specification/)-based verification or verification through an [OAuth Open ID Connect provider](../oauth/) (e.g. Login.gov).
 1. Cal-ITP creates a new `TransitAgency` in the database and associates it with the new `EligibilityType`s and `EligibilityVerifier`s as well as the existing Littlepay `PaymentProcessor`.
