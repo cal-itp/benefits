@@ -32,6 +32,7 @@ For production validation, both a customer group and discount product are needed
 ### Steps
 
 1. Transit agency staff creates the discount product in production Littlepay (if it does not already exist).
+1. Transit agency staff takes a screenshot of the discount product in the Merchant Portal, making sure the browser URL is visible, and sends that to Cal-ITP.
 1. Cal-ITP creates a customer group **for testing purposes** in production Littlepay.
 1. Cal-ITP associates the group with the product.
 1. Cal-ITP creates a new `EligibilityType` **for testing purposes** in the Benefits database and sets the `group_id` to the ID of the newly-created group.
