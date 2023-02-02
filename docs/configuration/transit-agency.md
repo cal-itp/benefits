@@ -42,7 +42,7 @@ At this point, Cal-ITP and transit agency staff can coordinate to do on-the-grou
 
 ### Production validation testing
 
-1. Transit agency staff (or Cal-IT staff) does live test in the field.
+1. Transit agency staff (or Cal-ITP staff) does live test in the field.
 1. Transit agency staff uses the Merchant Portal to verify the taps and discounts were successful.
 1. Cal-ITP uses logs from Azure to verify the user was associated to the customer group.
 1. Cal-ITP verifies that Amplitude analytic events are being sent.
