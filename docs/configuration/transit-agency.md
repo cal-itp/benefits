@@ -20,5 +20,26 @@ For development and testing, only a Littlepay customer group is needed since the
 
 1. Cal-ITP uses the transit agency's Littlepay merchant ID to create a customer group in the Littlepay QA environment for each type of eligibility (e.g. senior).
 1. For each group that's created, a group ID will be returned and should be set as the `group_id` on a new `EligibilityType` in the Benefits database. (See [Configuration data](../data/) for more on loading the database.)
-1. Cal-ITP creates a new `EligibilityVerifier` in the database for each supported eligibility type. This will require configuration for either [API](https://docs.calitp.org/eligibility-api/specification/)-based verification or verification through an [OAuth Open ID Connect provider](../oauth/) (e.g. Login.gov).
+1. Cal-ITP creates a new `EligibilityVerifier` in the database for each supported eligibility type. This will require configuration for either [API](https://docs.calitp.org/eligibility-api/specification/)-based verification or verification through an [OAuth Open ID Connect provider](../oauth/) (e.g. sandbox Login.gov) -- either way, this resource should be meant for testing.
 1. Cal-ITP creates a new `TransitAgency` in the database and associates it with the new `EligibilityType`s and `EligibilityVerifier`s as well as the existing Littlepay `PaymentProcessor`.
+
+## Configuration for production validation
+
+For production validation, both a customer group and discount product are needed. The customer group used here is a temporary one for testing only. Production validation is done against the Benefits test environment to avoid disruption of the production environment.
+
+### Steps
+
+1. Transit agency staff creates the discount product in production Littlepay (if it does not already exist).
+1. Cal-ITP creates a customer group **for testing purposes** in production Littlepay and associates the group with the product.
+1. Cal-ITP sets that group's ID as the `group_id` for a new `EligibilityType` in the Benefits database.
+1. Cal-ITP creates a new `EligibilityVerifier` with configuration **for a testing environment** to ensure successful eligibility verification. (For example, use sandbox Login.gov instead of production Login.gov.)
+1. Cal-ITP creates a new `TransitAgency` in the database with the proper associations to eligibility types, verifiers, and payment processors.
+
+At this point, Cal-ITP and transit agency staff can coordinate to do on-the-ground testing where a live card is tapped on a live payment validator.
+
+### Production validation testing
+
+1. Transit agency staff (or Cal-IT staff) does live test in the field.
+1. Transit agency staff uses the Merchant Portal to verify the taps and discounts were successful.
+1. Cal-ITP uses logs from Azure to verify the user was associated to the customer group.
+1. Cal-ITP verifies that Amplitude analytic events are being sent.
