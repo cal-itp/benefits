@@ -30,10 +30,11 @@ For production validation, both a customer group and discount product are needed
 ### Steps
 
 1. Transit agency staff creates the discount product in production Littlepay (if it does not already exist).
-1. Cal-ITP creates a customer group **for testing purposes** in production Littlepay and associates the group with the product.
+1. Cal-ITP creates a customer group **for testing purposes** in production Littlepay.
+1. Cal-ITP associates the group with the product.
 1. Cal-ITP sets that group's ID as the `group_id` for a new `EligibilityType` in the Benefits database.
 1. Cal-ITP creates a new `EligibilityVerifier` with configuration **for a testing environment** to ensure successful eligibility verification. (For example, use sandbox Login.gov instead of production Login.gov.)
-1. Cal-ITP creates a new `TransitAgency` in the database with the proper associations to eligibility types, verifiers, and payment processors.
+1. Cal-ITP creates a new `TransitAgency` in the database with the proper associations to eligibility types, verifiers, and payment processor.
 
 At this point, Cal-ITP and transit agency staff can coordinate to do on-the-ground testing where a live card is tapped on a live payment validator.
 
@@ -50,10 +51,11 @@ Once production validation is done, the transit agency can be added to the produ
 
 ### Steps
 
-1. Cal-ITP creates a customer group **for production use** in production Littlepay and associates the group with the discount product created [previously during production validation](#configuration-for-production-validation).
+1. Cal-ITP creates a customer group **for production use** in production Littlepay.
+1. Cal-ITP associates the group with the discount product created [previously during production validation](#configuration-for-production-validation).
 1. Cal-ITP sets that group's ID as the `group_id` for a new `EligibilityType` in the Benefits database.
 1. Cal-ITP creates a new `EligibilityVerifier` with configuration for the **production** eligibility verification system.
-1. Cal-ITP creates a new `TransitAgency` in the database with proper associations to eligibility tpes, verifiers, and payment processors.
+1. Cal-ITP creates a new `TransitAgency` in the database with proper associations to eligibility types, verifiers, and payment processor.
 
 ### Cleanup
 
