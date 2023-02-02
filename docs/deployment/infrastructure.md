@@ -13,21 +13,23 @@ flowchart LR
     %% dmv[DMV Eligibility Verification API]
     benefits[Benefits application]
     style benefits stroke-width:5px
-    %% recaptcha[Google reCAPTCHA]
+    recaptcha[Google reCAPTCHA]
     rider((User's browser))
     idg[Identity Gateway]
+    mst_elig[MST Courtesy Card Eligibility Server]
 
     rider --> benefits
     rider --> Login.gov
-    %% rider --> recaptcha
+    rider --> recaptcha
     rider --> Littlepay
     rider --> Amplitude
 
     benefits <--> idg
-    %% benefits <--> recaptcha
+    benefits <--> recaptcha
     %% benefits --> dmv
     benefits --> Amplitude
     benefits <--> Littlepay
+    benefits --> mst_elig
 
     idg <--> Login.gov
 ```
