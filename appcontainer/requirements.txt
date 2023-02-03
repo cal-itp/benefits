@@ -1,5 +1,5 @@
 Authlib==1.2.0
-Django==4.1.5
+Django==4.1.6
 django-csp==3.7
 eligibility-api==2023.01.1
 opencensus-ext-azure==1.1.6
