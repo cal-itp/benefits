@@ -16,22 +16,31 @@ flowchart LR
     recaptcha[Google reCAPTCHA]
     rider((User's browser))
     idg[Identity Gateway]
-    mst_elig[MST Courtesy Card Eligibility Server]
+    mst_elig[Eligibility Server]
+    cc_data[(Card data)]
+    cookies[(Cookies)]
 
     rider --> benefits
-    rider --> Login.gov
+    rider -->|Credentials and identity proofing| Login.gov
     rider --> recaptcha
-    rider --> Littlepay
-    rider --> Amplitude
+    rider -->|Payment card info| Littlepay
+    rider -->|Events| Amplitude
+    rider -->|Session| cookies
 
-    benefits <--> idg
+    benefits --> idg
     benefits <--> recaptcha
     %% benefits --> dmv
-    benefits --> Amplitude
-    benefits <--> Littlepay
+    benefits -->|Events| Amplitude
+    benefits -->|Group enrollment| Littlepay
     benefits --> mst_elig
 
-    idg <--> Login.gov
+    subgraph "MST (Courtesy Cards)"
+    mst_elig --> cc_data
+    end
+
+    idg --> Login.gov
+    Login.gov -->|User attributes| idg
+    idg -->|User attributes| benefits
 ```
 
 ### Benefits application
