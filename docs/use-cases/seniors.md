@@ -14,19 +14,19 @@ Here's a GIF showing what the flow looks like, having seniors confirm eligibilit
 
 ```mermaid
 sequenceDiagram
-    actor rider
+    actor Rider
     participant Benefits as Benefits app
     participant IdG as Identity Gateway
     participant Login.gov
     participant Littlepay
 
-    rider->>Benefits: visits site
+    Rider->>Benefits: visits site
     Benefits-->>IdG: identity proofing
     IdG-->>Login.gov: identity proofing
-    rider->>Login.gov: enters SSN and ID
+    Rider->>Login.gov: enters SSN and ID
     Login.gov-->>IdG: eligibility verification
     IdG-->>Benefits: eligibility verification
     Benefits-->>Littlepay: enrollment start
-    rider->>Littlepay: enters payment card details
+    Rider->>Littlepay: enters payment card details
     Littlepay-->>Benefits: enrollment complete
 ```
