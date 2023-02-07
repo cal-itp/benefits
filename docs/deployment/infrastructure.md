@@ -17,7 +17,7 @@ flowchart LR
     rider((User's browser))
     idg[Identity Gateway]
     mst_elig[Eligibility Server]
-    cc_data[(Card data)]
+    cc_data[(Courtesy Card data)]
     cookies[(Cookies)]
 
     rider --> benefits
