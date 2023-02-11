@@ -162,11 +162,17 @@ class LoginRequired(MiddlewareMixin):
 
 
 # https://github.com/census-instrumentation/opencensus-python/issues/766
-class LogErrorToAzure(MiddlewareMixin):
+class LogErrorToAzure:
     def __init__(self, get_response):
         self.get_response = get_response
         # wait to do this here to be sure the handler is initialized
         self.azure_logger = logging.getLogger("azure")
+
+    def __call__(self, request):
+        # boilerplate
+        # https://docs.djangoproject.com/en/4.1/topics/http/middleware/#writing-your-own-middleware
+        response = self.get_response(request)
+        return response
 
     def process_exception(self, request, exception):
         # https://stackoverflow.com/a/45532289

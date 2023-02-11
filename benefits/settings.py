@@ -84,7 +84,7 @@ if ENABLE_AZURE_INSIGHTS:
 # only used if enabled above
 OPENCENSUS = {
     "TRACE": {
-        "SAMPLER": "opencensus.trace.samplers.ProbabilitySampler(rate=1)",
+        "SAMPLER": "opencensus.trace.samplers.AlwaysOnSampler()",
         "EXPORTER": "opencensus.ext.azure.trace_exporter.AzureExporter()",
     }
 }
