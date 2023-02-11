@@ -34,7 +34,8 @@ def get_release() -> str:
 def configure():
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
     if SENTRY_DSN:
-        print("Enabling Sentry…")
+        release = get_release()
+        print(f"Enabling Sentry for environment '{SENTRY_ENVIRONMENT}', release '{release}'...")
 
         # https://docs.sentry.io/platforms/python/configuration/
         sentry_sdk.init(
@@ -44,7 +45,7 @@ def configure():
             ],
             traces_sample_rate=1.0,
             environment=SENTRY_ENVIRONMENT,
-            release=get_release(),
+            release=release,
             in_app_include=["benefits"],
         )
     else:
