@@ -181,3 +181,11 @@ Enables [log collection](../../deployment/troubleshooting/#logs). Set the value 
     [Data Source Name (DSN)](https://docs.sentry.io/product/sentry-basics/dsn-explainer/)
 
 Enables [sending events to Sentry](../../deployment/troubleshooting/#error-monitoring).
+
+### `SENTRY_ENVIRONMENT`
+
+!!! tldr "Sentry docs"
+
+    [`environment` config value](https://docs.sentry.io/platforms/python/configuration/options/#environment)
+
+Segments errors by which deployment they occur in. This defaults to `local`, and can be set to match one of the [environment names](../../deployment/infrastructure/#environments).

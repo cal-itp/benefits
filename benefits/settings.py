@@ -2,6 +2,7 @@
 Django settings for benefits project.
 """
 import os
+from benefits import VERSION
 import benefits.logging
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -233,18 +234,17 @@ SENTRY_DSN = os.environ.get("SENTRY_DSN")
 if SENTRY_DSN:
     print("Enabling Sentry…")
 
+    SENTRY_ENVIRONMENT = os.environ.get("SENTRY_ENVIRONMENT", "local")
+
+    # https://docs.sentry.io/platforms/python/configuration/
     sentry_sdk.init(
         dsn=SENTRY_DSN,
         integrations=[
             DjangoIntegration(),
         ],
-        # Set traces_sample_rate to 1.0 to capture 100%
-        # of transactions for performance monitoring.
-        # We recommend adjusting this value in production.
         traces_sample_rate=1.0,
-        # If you wish to associate users to errors (assuming you are using
-        # django.contrib.auth) you may enable sending PII data.
-        send_default_pii=True,
+        environment=SENTRY_ENVIRONMENT,
+        release=VERSION,
     )
 else:
     print("SENTRY_DSN not set, so won't send events")
