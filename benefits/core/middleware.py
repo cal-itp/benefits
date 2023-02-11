@@ -161,21 +161,6 @@ class LoginRequired(MiddlewareMixin):
         return redirect("oauth:login")
 
 
-# https://github.com/census-instrumentation/opencensus-python/issues/766
-class LogErrorToAzure(MiddlewareMixin):
-    def __init__(self, get_response):
-        super().__init__(get_response)
-        # wait to do this here to be sure the handler is initialized
-        self.azure_logger = logging.getLogger("azure")
-
-    def process_exception(self, request, exception):
-        # https://stackoverflow.com/a/45532289
-        msg = getattr(exception, "message", repr(exception))
-        self.azure_logger.exception(msg, exc_info=exception)
-
-        return None
-
-
 class RecaptchaEnabled(MiddlewareMixin):
     """Middleware configures the request with required reCAPTCHA settings."""
 

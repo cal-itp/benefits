@@ -31,7 +31,7 @@ The following [tables](https://docs.microsoft.com/en-us/azure/azure-monitor/app/
 
 In the latter two, you should see recent log output. Note [there is some latency](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-ingestion-time).
 
-See [`Failures`](https://docs.microsoft.com/en-us/azure/azure-monitor/app/asp-net-exceptions#diagnose-failures-using-the-azure-portal) in the sidebar (or `exceptions` under `Logs`) for application errors/exceptions.
+Note that we aren't [sending exceptions to Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/app/opencensus-python#send-exceptions) (aside from the logs), so you won't see anything show up under `Failures` or `Logs`->`exceptions`.
 
 #### Live tail
 
