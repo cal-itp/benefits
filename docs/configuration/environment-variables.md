@@ -171,3 +171,13 @@ Enables [log collection](../../deployment/troubleshooting/#logs). Set the value 
 [app-service-config]: https://docs.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal
 [benefits-secrets]: https://github.com/cal-itp/benefits-secrets
 [getting-started_create-env]: ../getting-started/README.md#create-an-environment-file
+
+## Sentry
+
+### `SENTRY_DSN`
+
+!!! tldr "Sentry docs"
+
+    [Data Source Name (DSN)](https://docs.sentry.io/product/sentry-basics/dsn-explainer/)
+
+Enables [sending events to Sentry](../../deployment/troubleshooting/#error-monitoring).

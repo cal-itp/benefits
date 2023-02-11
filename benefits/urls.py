@@ -16,12 +16,20 @@ handler403 = "benefits.core.views.bad_request"
 handler404 = "benefits.core.views.page_not_found"
 handler500 = "benefits.core.views.server_error"
 
+
+# based on
+# https://docs.sentry.io/platforms/python/guides/django/#verify
+def trigger_error(request):
+    raise RuntimeError("Test error")
+
+
 urlpatterns = [
     path("", include("benefits.core.urls")),
     path("eligibility/", include("benefits.eligibility.urls")),
     path("enrollment/", include("benefits.enrollment.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
     path("oauth/", include("benefits.oauth.urls")),
+    path("sentry-debug/", trigger_error),
 ]
 
 if settings.ADMIN:
