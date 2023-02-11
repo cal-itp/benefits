@@ -2,10 +2,8 @@
 Django settings for benefits project.
 """
 import os
-from benefits import VERSION
+from benefits import sentry
 import benefits.logging
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
 
 
 def _filter_empty(ls):
@@ -230,24 +228,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 LOG_LEVEL = os.environ.get("DJANGO_LOG_LEVEL", "DEBUG" if DEBUG else "WARNING")
 LOGGING = benefits.logging.get_config(LOG_LEVEL, enable_azure=ENABLE_AZURE_INSIGHTS)
 
-SENTRY_DSN = os.environ.get("SENTRY_DSN")
-if SENTRY_DSN:
-    print("Enabling Sentry…")
-
-    SENTRY_ENVIRONMENT = os.environ.get("SENTRY_ENVIRONMENT", "local")
-
-    # https://docs.sentry.io/platforms/python/configuration/
-    sentry_sdk.init(
-        dsn=SENTRY_DSN,
-        integrations=[
-            DjangoIntegration(),
-        ],
-        traces_sample_rate=1.0,
-        environment=SENTRY_ENVIRONMENT,
-        release=VERSION,
-    )
-else:
-    print("SENTRY_DSN not set, so won't send events")
+sentry.configure()
 
 # Analytics configuration
 
