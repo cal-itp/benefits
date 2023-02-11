@@ -21,6 +21,17 @@ HEALTHCHECK_PATH = "/healthcheck"
 TEMPLATE_USER_ERROR = "200_user_error.html"
 
 
+# boilerplate
+# https://docs.djangoproject.com/en/4.1/topics/http/middleware/#writing-your-own-middleware
+class BaseMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        response = self.get_response(request)
+        return response
+
+
 def user_error(request):
     home = viewmodels.Button.home(request)
     page = viewmodels.ErrorPage.user_error(button=home)
@@ -162,17 +173,11 @@ class LoginRequired(MiddlewareMixin):
 
 
 # https://github.com/census-instrumentation/opencensus-python/issues/766
-class LogErrorToAzure:
+class LogErrorToAzure(BaseMiddleware):
     def __init__(self, get_response):
-        self.get_response = get_response
+        super().__init__(get_response)
         # wait to do this here to be sure the handler is initialized
         self.azure_logger = logging.getLogger("azure")
-
-    def __call__(self, request):
-        # boilerplate
-        # https://docs.djangoproject.com/en/4.1/topics/http/middleware/#writing-your-own-middleware
-        response = self.get_response(request)
-        return response
 
     def process_exception(self, request, exception):
         # https://stackoverflow.com/a/45532289
