@@ -61,7 +61,7 @@ A list of strings representing the host/domain names that this Django site can s
 
 !!! warning "Deployment configuration"
 
-    You may change this setting when deploying the app to a non-localhost domain
+    Do not enable this in production
 
 !!! tldr "Django docs"
 

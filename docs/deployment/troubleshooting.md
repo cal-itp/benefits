@@ -60,6 +60,28 @@ If Terraform commands fail (locally or in the Pipeline) due to an `Error acquiri
 1. **Do any engineers have a Terrafrom command running locally?** You'll need to ask them. For example: They may have started an `apply` and it's sitting waiting for them to [approve](https://developer.hashicorp.com/terraform/cli/commands/apply#automatic-plan-mode) it. They will need to (gracefully) exit for the lock to be released.
 1. **If none of the steps above identified the source of the lock**, and especially if the `Created` time is more than ten minutes ago, that probably means the last Terraform command didn't release the lock. You'll need to grab the `ID` from the `Lock Info` output and [force unlock](https://developer.hashicorp.com/terraform/language/state/locking#force-unlock).
 
+### App fails to start
+
+If the container fails to start, you should see a [downtime alert](#monitoring). Assuming this app version was working in another [environment](../infrastructure/#environments), the issue is likely due to misconfiguration. Some things you can do:
+
+- Check the [logs](#logs)
+- Ensure the [environment variables](../../configuration/environment-variables/) and [configuration data](../../configuration/data/) are set properly.
+- [Turn on debugging](../../configuration/environment-variables/#django_debug)
+- Force-push/revert the [environment](../infrastructure/#environments) branch back to the old version to roll back
+
+### Littlepay API issue
+
+Littlepay API issues may show up as:
+
+- The [monitor](https://github.com/cal-itp/benefits/actions/workflows/check-api.yml) failing
+- The `Connect your card` button doesn't work
+
+A common problem that causes Littlepay API failures is that the certificate expired. To resolve:
+
+1. Reach out to <support@littlepay.com>
+1. Receive a new certificate
+1. Put that certificate into the [configuration data](../../configuration/data/) and/or the [GitHub Actions secrets](https://github.com/cal-itp/benefits/settings/secrets/actions)
+
 ### Eligibility Server
 
 If the Benefits application gets a 403 error when trying to make API calls to the [Eligibility Server](https://docs.calitp.org/eligibility-server/), it may be because the outbound IP addresses changed, and the Eligibility Server firewall is still restricting access to the old IP ranges.
@@ -70,3 +92,5 @@ If the Benefits application gets a 403 error when trying to make API calls to th
    1. Click `Edit`
    1. Click `Variables`
    1. Update the relevant variable with the new list of CIDRs
+
+Note there is nightly downtime as the Eligibility Server restarts and loads new data.
