@@ -1,7 +1,6 @@
 name: Feature tests
 
-on:
-  workflow_dispatch:
+on: push
 
 defaults:
   run:
@@ -35,9 +34,7 @@ jobs:
         run: |
           docker run \
             --detach \
-            --env-file tests/cypress/.env.tests \
             -p 8000:8000 \
-            -v ${{ github.workspace }}/fixtures:/home/calitp/app/fixtures \
             benefits_client:${{ github.sha }}
 
       - name: Start server
