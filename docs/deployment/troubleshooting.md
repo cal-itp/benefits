@@ -47,7 +47,7 @@ az webapp log tail --resource-group RG-CDT-PUB-VIP-CALITP-P-001 --name AS-CDT-PU
 
 ## Specific issues
 
-This section serves the [runbook](https://www.pagerduty.com/resources/learn/what-is-a-runbook/) for Benefits.
+This section serves as the [runbook](https://www.pagerduty.com/resources/learn/what-is-a-runbook/) for Benefits.
 
 ### Terraform lock
 
