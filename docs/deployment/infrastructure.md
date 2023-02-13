@@ -78,6 +78,8 @@ The following things in Azure are managed by the California Department of Techno
 - [Resource Groups](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal)
 - Networking
 - Front Door
+  - Web Application Firewall (WAF)
+  - Distributed denial-of-service (DDoS) protection
 - IAM
 - Service connections
 
