@@ -4,13 +4,22 @@ const { eligibility_url, post_confirm } = require("../../plugins/eligibility");
 
 describe("Rate limiting feature spec", () => {
   beforeEach(() => {
-    cy.visit("/" + agencies[0].fields.slug);
-    cy.visit(eligibility_url);
+    cy.visit("/");
+
+    // agency selection
+    cy.contains("Choose Your Provider").click();
+    cy.contains(agencies[0].fields.long_name).click();
+
+    // select Courtesy Card
+    // TODO find a more robust way to do this
+    cy.get('#form-verifier-selection [type="radio"]').check("2");
+    cy.get("#form-verifier-selection button[type='submit']").click();
+    cy.contains("Continue").click();
   });
 
   it("Limits excess requests", () => {
-    const sub = users.invalidSub.sub;
-    const name = users.invalidSub.name;
+    const sub = users.ineligible.sub;
+    const name = users.ineligible.name;
 
     // start by making 5 times as many requests as allowed
     const RATE_LIMIT = Cypress.env("DJANGO_RATE_LIMIT");
