@@ -1,11 +1,16 @@
 from benefits import VERSION
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+import shutil
 import os
 import subprocess
 
 
 SENTRY_ENVIRONMENT = os.environ.get("SENTRY_ENVIRONMENT", "local")
+
+
+def git_available():
+    return bool(shutil.which("git"))
 
 
 # https://stackoverflow.com/a/21901260/358804
@@ -19,16 +24,18 @@ def get_sha_path():
 
 
 def get_release() -> str:
-    """On 'local' and 'dev', returns the Git SHA. Otherwise, returns the VERSION."""
+    """Returns the first available: the SHA from Git, the value from sha.txt, or the VERSION."""
 
-    sha_path = get_sha_path()
-    if SENTRY_ENVIRONMENT == "local":
+    if git_available():
         return get_git_revision_hash()
-    elif SENTRY_ENVIRONMENT == "dev" and os.path.isfile(sha_path):
-        with open(sha_path) as f:
-            return f.read().strip()
     else:
-        return VERSION
+        sha_path = get_sha_path()
+        if os.path.isfile(sha_path):
+            with open(sha_path) as f:
+                return f.read().strip()
+        else:
+            # one of the above *should* always be available, but including this just in case
+            return VERSION
 
 
 def configure():
