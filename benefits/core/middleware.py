@@ -164,7 +164,7 @@ class LoginRequired(MiddlewareMixin):
 # https://github.com/census-instrumentation/opencensus-python/issues/766
 class LogErrorToAzure(MiddlewareMixin):
     def __init__(self, get_response):
-        self.get_response = get_response
+        super().__init__(get_response)
         # wait to do this here to be sure the handler is initialized
         self.azure_logger = logging.getLogger("azure")
 
