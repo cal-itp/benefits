@@ -699,7 +699,7 @@ a.card:focus-visible {
 /* These pages have a full-width and full-height background image, creating the need to re-set the Footer margin top to 0 */
 
 :root {
-  --landing-main-height: 100vh;
+  --landing-main-height: calc(100vh - 80px); /* Header Height (80px) */
   --landing-background: url("/static/img/benefits-bg-mobile.jpg") no-repeat
     var(--primary-color);
   --landing-box-background: var(--bs-white);
@@ -725,7 +725,6 @@ a.card:focus-visible {
 }
 
 .landing main#main-content {
-  min-height: var(--landing-main-height);
   background: var(--landing-background);
   background-size: cover;
 }
