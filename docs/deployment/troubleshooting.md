@@ -51,6 +51,8 @@ Cal-ITP's Sentry instance collects both [errors ("Issues")](https://sentry.calit
 
 [Alerts are sent to #benefits-notify in Slack.](https://sentry.calitp.org/organizations/sentry/alerts/rules/benefits/9/details/) [Others can be configured.](https://sentry.calitp.org/organizations/sentry/alerts/rules/)
 
+You can troubleshoot Sentry itself by [turning on debug mode](../../configuration/environment-variables/#django_debug) and visiting `/error/`.
+
 ## Specific issues
 
 This section serves as the [runbook](https://www.pagerduty.com/resources/learn/what-is-a-runbook/) for Benefits.
