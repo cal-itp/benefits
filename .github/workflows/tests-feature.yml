@@ -13,36 +13,10 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Build Dockerfile
-        id: build-client-image
-        uses: docker/build-push-action@v4
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          cache-from: type=gha,scope=cal-itp
-          cache-to: type=gha,scope=cal-itp,mode=max
-          context: .
-          file: appcontainer/Dockerfile
-          push: false
-          load: true
-          tags: benefits_client:${{ github.sha }}
-
       - name: Start app
         run: |
-          docker run \
-            --detach \
-            -p 8000:8000 \
-            benefits_client:${{ github.sha }}
-
-      - name: Start server
-        run: |
-          docker run \
-            --detach \
-            -p 5000:5000 \
-            ghcr.io/cal-itp/eligibility-server:dev
+          touch .env
+          docker compose up --detach client server
 
       - name: Run feature tests
         uses: cypress-io/github-action@v5
