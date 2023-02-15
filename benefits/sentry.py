@@ -13,6 +13,12 @@ def git_available():
     return bool(shutil.which("git"))
 
 
+# https://stackoverflow.com/a/24584384/358804
+def is_git_directory(path="."):
+    dev_null = open(os.devnull, "w")
+    return subprocess.call(["git", "-C", path, "status"], stderr=dev_null, stdout=dev_null) == 0
+
+
 # https://stackoverflow.com/a/21901260/358804
 def get_git_revision_hash():
     return subprocess.check_output(["git", "rev-parse", "HEAD"]).decode("ascii").strip()
@@ -26,7 +32,7 @@ def get_sha_path():
 def get_release() -> str:
     """Returns the first available: the SHA from Git, the value from sha.txt, or the VERSION."""
 
-    if git_available():
+    if git_available() and is_git_directory():
         return get_git_revision_hash()
     else:
         sha_path = get_sha_path()
