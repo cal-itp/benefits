@@ -1,19 +1,12 @@
-const agencies = require("../../fixtures/transit-agencies");
+const helpers = require("../helpers");
 const users = require("../../fixtures/users.json");
 
 describe("Eligibility confirmation flow", () => {
   beforeEach(() => {
     cy.visit("/");
 
-    // agency selection
-    cy.contains("Choose Your Provider").click();
-    cy.contains(agencies[0].fields.long_name).click();
-
-    // select Courtesy Card
-    // TODO find a more robust way to do this
-    cy.get('#form-verifier-selection [type="radio"]').check("2");
-    cy.get("#form-verifier-selection button[type='submit']").click();
-    cy.contains("Continue").click();
+    helpers.selectAgency();
+    helpers.selectCourtesyCard();
   });
 
   it("Confirms an eligible user", () => {
