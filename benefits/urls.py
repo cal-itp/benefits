@@ -24,6 +24,15 @@ urlpatterns = [
     path("oauth/", include("benefits.oauth.urls")),
 ]
 
+if settings.DEBUG:
+    # based on
+    # https://docs.sentry.io/platforms/python/guides/django/#verify
+
+    def trigger_error(request):
+        raise RuntimeError("Test error")
+
+    urlpatterns.append(path("error/", trigger_error))
+
 if settings.ADMIN:
     from django.contrib import admin
 

@@ -2,6 +2,7 @@
 Django settings for benefits project.
 """
 import os
+from benefits import sentry
 import benefits.logging
 
 
@@ -226,6 +227,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 # Logging configuration
 LOG_LEVEL = os.environ.get("DJANGO_LOG_LEVEL", "DEBUG" if DEBUG else "WARNING")
 LOGGING = benefits.logging.get_config(LOG_LEVEL, enable_azure=ENABLE_AZURE_INSIGHTS)
+
+sentry.configure()
 
 # Analytics configuration
 

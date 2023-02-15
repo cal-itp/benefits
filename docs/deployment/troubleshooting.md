@@ -45,6 +45,14 @@ az webapp log tail --resource-group RG-CDT-PUB-VIP-CALITP-P-001 --name AS-CDT-PU
 
 <https://as-cdt-pub-vip-calitp-p-001-dev.scm.azurewebsites.net/api/logs/docker>
 
+### Sentry
+
+Cal-ITP's Sentry instance collects both [errors ("Issues")](https://sentry.calitp.org/organizations/sentry/issues/?project=3) and app [performance info](https://sentry.calitp.org/organizations/sentry/performance/?project=3).
+
+[Alerts are sent to #benefits-notify in Slack.](https://sentry.calitp.org/organizations/sentry/alerts/rules/benefits/9/details/) [Others can be configured.](https://sentry.calitp.org/organizations/sentry/alerts/rules/)
+
+You can troubleshoot Sentry itself by [turning on debug mode](../../configuration/environment-variables/#django_debug) and visiting `/error/`.
+
 ## Specific issues
 
 This section serves as the [runbook](https://www.pagerduty.com/resources/learn/what-is-a-runbook/) for Benefits.
