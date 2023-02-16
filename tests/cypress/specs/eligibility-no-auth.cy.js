@@ -1,4 +1,4 @@
-const helpers = require("../helpers");
+const helpers = require("./helpers");
 
 const verifier_selection_url = "/eligibility";
 

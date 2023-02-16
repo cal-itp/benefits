@@ -1,6 +1,6 @@
-const agencies = require("../../fixtures/transit-agencies");
-const users = require("../../fixtures/users.json");
-const { eligibility_url, post_confirm } = require("../../plugins/eligibility");
+const agencies = require("../fixtures/transit-agencies");
+const users = require("../fixtures/users.json");
+const { eligibility_url, post_confirm } = require("../plugins/eligibility");
 
 describe("Rate limiting feature spec", () => {
   beforeEach(() => {

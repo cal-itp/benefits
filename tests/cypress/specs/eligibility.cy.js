@@ -1,5 +1,5 @@
-const helpers = require("../helpers");
-const users = require("../../fixtures/users.json");
+const helpers = require("./helpers");
+const users = require("../fixtures/users.json");
 
 describe("Eligibility confirmation flow", () => {
   beforeEach(() => {
