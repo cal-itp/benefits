@@ -1,5 +1,7 @@
 from benefits import VERSION
 from benefits.sentry import get_release
+import os
+from tempfile import NamedTemporaryFile
 
 
 def test_git(mocker):
@@ -16,15 +18,21 @@ def test_sha_file(mocker):
     mocker.patch("benefits.sentry.git_available", return_value=True)
     mocker.patch("benefits.sentry.is_git_directory", return_value=False)
 
-    fake_sha = "123"
-    mocker.patch("benefits.sentry.get_sha_from_file", return_value=fake_sha)
+    with NamedTemporaryFile() as fp:
+        fake_sha = "123"
 
-    assert get_release() == fake_sha
+        fp.write(bytes(fake_sha, "utf-8"))
+        fp.seek(0)
+        mocker.patch("benefits.sentry.get_sha_file_path", return_value=fp.name)
+
+        assert get_release() == fake_sha
 
 
 def test_no_git(mocker):
     mocker.patch("benefits.sentry.git_available", return_value=False)
-    mocker.patch("benefits.sentry.get_sha_from_file", return_value=None)
+
+    file_path = os.path.join("tmp", "nonexistent.txt")
+    mocker.patch("benefits.sentry.get_sha_file_path", return_value=file_path)
 
     assert get_release() == VERSION
 
@@ -32,6 +40,8 @@ def test_no_git(mocker):
 def test_git_no_repo(mocker):
     mocker.patch("benefits.sentry.git_available", return_value=True)
     mocker.patch("benefits.sentry.is_git_directory", return_value=False)
-    mocker.patch("benefits.sentry.get_sha_from_file", return_value=None)
+
+    file_path = os.path.join("tmp", "nonexistent.txt")
+    mocker.patch("benefits.sentry.get_sha_file_path", return_value=file_path)
 
     assert get_release() == VERSION
