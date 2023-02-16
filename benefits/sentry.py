@@ -24,9 +24,18 @@ def get_git_revision_hash():
     return subprocess.check_output(["git", "rev-parse", "HEAD"]).decode("ascii").strip()
 
 
-def get_sha_path():
+def get_sha_file_path():
     current_file = os.path.dirname(os.path.abspath(__file__))
     return os.path.join(current_file, "..", "static", "sha.txt")
+
+
+def get_sha_from_file():
+    sha_path = get_sha_file_path()
+    if os.path.isfile(sha_path):
+        with open(sha_path) as f:
+            return f.read().strip()
+    else:
+        return None
 
 
 def get_release() -> str:
@@ -35,10 +44,9 @@ def get_release() -> str:
     if git_available() and is_git_directory():
         return get_git_revision_hash()
     else:
-        sha_path = get_sha_path()
-        if os.path.isfile(sha_path):
-            with open(sha_path) as f:
-                return f.read().strip()
+        sha = get_sha_from_file()
+        if sha:
+            return sha
         else:
             # one of the above *should* always be available, but including this just in case
             return VERSION
