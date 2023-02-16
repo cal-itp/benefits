@@ -235,6 +235,7 @@ sentry.configure()
 ANALYTICS_KEY = os.environ.get("ANALYTICS_KEY")
 
 # rate limit configuration
+# these should match the values in rate-limit.cy.js
 
 # number of requests allowed in the given period
 RATE_LIMIT = int(os.environ.get("DJANGO_RATE_LIMIT", 5))
