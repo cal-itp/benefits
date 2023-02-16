@@ -7,6 +7,10 @@ export const selectAgency = () => {
 
   cy.contains("Choose Your Provider").click();
   cy.contains(agency.long_name).click();
+
+  cy.location("pathname").should("eq", `/eligibility/${agency.slug}`);
+
+  return agency;
 };
 
 export const selectCourtesyCard = () => {
