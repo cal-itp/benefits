@@ -8,8 +8,6 @@ We have [ping tests](https://docs.microsoft.com/en-us/azure/azure-monitor/app/mo
 
 ### Logs
 
-Logs can be found a couple of places:
-
 #### Azure App Service Logs
 
 [Open the `Logs` for the environment you are interested in.](https://docs.google.com/document/d/11EPDIROBvg7cRtU2V42c6VBxcW_o8HhcyORALNtL_XY/edit#heading=h.6pxjhslhxwvj) The following tables are likely of interest:
@@ -19,19 +17,6 @@ Logs can be found a couple of places:
 - `AppServicePlatformLogs`: deployment information
 
 For some pre-defined queries, click `Queries`, then `Group by: Query type`, and look under `Query pack queries`.
-
-#### [Azure Monitor Logs](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-platform-logs)
-
-[Open the `Logs` for the environment you are interested in.](https://docs.google.com/document/d/11EPDIROBvg7cRtU2V42c6VBxcW_o8HhcyORALNtL_XY/edit#heading=h.n0oq4r1jo7zs)
-
-The following [tables](https://docs.microsoft.com/en-us/azure/azure-monitor/app/opencensus-python#telemetry-type-mappings) are likely of interest:
-
-- `requests`
-- `traces`
-
-In the latter two, you should see recent log output. Note [there is some latency](https://docs.microsoft.com/en-us/azure/azure-monitor/logs/data-ingestion-time).
-
-Note that we aren't [sending exceptions to Azure Monitor](https://learn.microsoft.com/en-us/azure/azure-monitor/app/opencensus-python#send-exceptions) (aside from the logs), so you won't see anything show up under `Failures` or `Logs`->`exceptions`.
 
 #### Live tail
 
