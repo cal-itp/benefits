@@ -2,7 +2,7 @@ const helpers = require("./helpers");
 
 const verifier_selection_url = "/eligibility";
 
-describe("Multiple Verifier, no AuthProvider: Verifier selection page spec", () => {
+describe("Benefit selection", () => {
   beforeEach(() => {
     cy.visit("/");
     helpers.selectAgency();

@@ -1,7 +1,7 @@
 const helpers = require("./helpers");
 const users = require("../fixtures/users.json");
 
-describe("Eligibility confirmation flow", () => {
+describe("Courtesy Cards", () => {
   beforeEach(() => {
     cy.visit("/");
 
