@@ -34,6 +34,38 @@ The user interface and content is available in both English and Spanish. Additio
 
 The application communicates with external services like [Littlepay][littlepay] via API calls and others like the [Identity Gateway](https://dev.auth.cdt.ca.gov) via redirects, both over the public internet. See [all the system interconnections][interconnections].
 
+## Security
+
+Cal-ITP takes security and privacy very seriously. Below is an overview of how the system is designed with security in mind.
+
+### Architecture
+
+The Benefits application is deployed to Microsoft Azure. Traffic is encrypted between the user and the application, as well as between the application and external integrations.
+
+The network is managed by the [California Department of Technology (CDT)](https://cdt.ca.gov/), who provide a firewall and [distributed denial-of-service (DDoS)](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) protection.
+
+You can find more technical details on [our infrastructure page](deployment/infrastructure/).
+
+### Data storage
+
+The Benefits application doesn’t collect or store any user data directly, and we minimize the information exchanged between systems. Information about the user’s progress and credentials for interacting with the eligibility verification services are temporarily stored in an encrypted session in the user’s browser. Once enrolled, a user’s payment card information is saved policies and information on by Littlepay. Credentials / identity proofing information provided to Login.gov and payment card information provided to Littlepay are never accessible by the Benefits system/team.
+
+You can learn more about the security/privacy practices of some of the third-party systems integrated with Benefits on their respective sites:
+
+- [Amplitude](https://amplitude.com/amplitude-security-and-privacy)
+- [Littlepay](https://littlepay.com/privacy-policy/)
+- [Login.gov](https://www.login.gov/policy/)
+
+Benefits collects analytics on usage, without any identifying information. ([IP addresses are filtered out.](https://github.com/cal-itp/benefits/blob/3a5f7c28036b77355d7a137df4f33bd2a9362de1/benefits/core/templates/core/includes/analytics.html#L31))
+
+### Practices
+
+The team is automatically notified when vulnerabilities are discovered in dependencies of the application via [GitHub Dependabot](https://github.com/features/security/software-supply-chain).
+
+Upon doing new major integrations, features, or architectural changes, the Benefits team has a penetration test performed by a third party to ensure the security of the system.
+
+All code changes are reviewed by at least one other member of the engineering team, which is enforced through [branch protections](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/about-protected-branches).
+
 [benefits-repo]: https://github.com/cal-itp/benefits
 [calitp]: https://calitp.org
 [django]: https://docs.djangoproject.com/en/
