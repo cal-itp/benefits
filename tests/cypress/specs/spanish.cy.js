@@ -1,4 +1,4 @@
-const agencies = require("../../fixtures/transit-agencies");
+const helpers = require("./helpers");
 
 describe("Spanish language", () => {
   beforeEach(() => {
@@ -32,16 +32,12 @@ describe("Spanish language", () => {
   });
 
   it("Changes the language to Spanish from any page", () => {
-    let agencySlug = agencies[0].fields.slug;
-    cy.contains(agencies[0].fields.short_name)
-      .click()
-      .location("pathname")
-      .should("eq", "/" + agencySlug);
+    const agency = helpers.selectAgency();
 
     cy.contains("Español").click();
 
     cy.get("#header").should("not.contain", "Español");
     cy.get("#header").should("contain", "English");
-    cy.location("pathname").should("eq", "/" + agencySlug);
+    cy.location("pathname").should("eq", `/eligibility/${agency.slug}`);
   });
 });

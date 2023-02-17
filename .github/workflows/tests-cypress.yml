@@ -1,4 +1,4 @@
-name: Feature tests
+name: Cypress tests
 
 on: push
 
@@ -7,7 +7,7 @@ defaults:
     shell: bash
 
 jobs:
-  tests-feature:
+  tests-cypress:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -18,12 +18,12 @@ jobs:
           touch .env
           docker compose up --detach client server
 
-      - name: Run feature tests
+      - name: Run Cypress tests
         uses: cypress-io/github-action@v5
         env:
           CYPRESS_baseUrl: http://localhost:8000
         with:
-          command: npm run cypress:feature
+          command: npm test
           working-directory: tests/cypress
           wait-on: http://localhost:8000/healthcheck
 
