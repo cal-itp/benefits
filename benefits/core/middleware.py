@@ -109,6 +109,18 @@ class Healthcheck:
         return self.get_response(request)
 
 
+class HealthcheckUserAgents(MiddlewareMixin):
+    """Middleware to return healthcheck for user agents specified in HEALTHCHECK_USER_AGENTS."""
+
+    def process_request(self, request):
+        if hasattr(request, "META"):
+            user_agent = request.META.get("HTTP_USER_AGENT", "")
+            if user_agent in settings.HEALTHCHECK_USER_AGENTS:
+                return HttpResponse("Healthy", content_type="text/plain")
+
+        return self.get_response(request)
+
+
 class VerifierSessionRequired(MiddlewareMixin):
     """Middleware raises an exception for sessions lacking an eligibility verifier configuration."""
 
