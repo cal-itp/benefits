@@ -145,6 +145,14 @@ Django's primary secret, keep this safe!
 
 Comma-separated list of hosts which are trusted origins for unsafe requests (e.g. POST)
 
+### `HEALTHCHECK_USER_AGENTS`
+
+!!! warning "Deployment configuration"
+
+   You must change this setting when deploying the app to a non-localhost domain
+
+Comma-separated list of User-Agent strings which, when present as an HTTP header, should only receive healthcheck responses. Used by our `HealthcheckUserAgent` middleware.
+
 ## Cypress tests
 
 !!! tldr "Cypress docs"
