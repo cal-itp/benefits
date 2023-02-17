@@ -49,6 +49,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "benefits.core.middleware.Healthcheck",
+    "benefits.core.middleware.HealthcheckUserAgents",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -67,6 +68,7 @@ if ADMIN:
 if DEBUG:
     MIDDLEWARE.append("benefits.core.middleware.DebugSession")
 
+HEALTHCHECK_USER_AGENTS = _filter_empty(os.environ.get("HEALTHCHECK_USER_AGENTS", "").split(","))
 
 CSRF_COOKIE_AGE = None
 CSRF_COOKIE_SAMESITE = "Strict"
