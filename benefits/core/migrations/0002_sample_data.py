@@ -230,7 +230,7 @@ PEM DATA
         short_name=os.environ.get("SACRT_AGENCY_SHORT_NAME", "SacRT (sample)"),
         long_name=os.environ.get("SACRT_AGENCY_LONG_NAME", "Sacramento Regional Transit (sample)"),
         agency_id="sacrt",
-        merchant_id="sacrt",
+        merchant_id=os.environ.get("SACRT_AGENCY_MERCHANT_ID", "sacrt"),
         info_url="https://sacrt.com/",
         phone="916-321-2877",
         active=True,
