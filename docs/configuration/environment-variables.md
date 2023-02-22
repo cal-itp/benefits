@@ -151,7 +151,7 @@ Comma-separated list of hosts which are trusted origins for unsafe requests (e.g
 
     You must change this setting when deploying the app to a non-localhost domain
 
-Comma-separated list of User-Agent strings which, when present as an HTTP header, should only receive healthcheck responses. Used by our `HealthcheckUserAgent` middleware.
+Comma-separated list of User-Agent strings which, when present as an HTTP header, should only receive healthcheck responses. Used by our `HealthcheckUserAgents` middleware.
 
 ## Cypress tests
 
