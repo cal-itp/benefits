@@ -6,14 +6,12 @@
   "scripts": {
     "cypress": "npm test",
     "cypress:open": "npx cypress open",
-    "cypress:feature": "npm test -- --spec \"specs/feature/**/*\"",
-    "cypress:ui": "npm test -- --spec \"specs/ui/**/*\"",
     "test": "npx cypress run"
   },
   "author": "",
   "license": "AGPL-3.0-or-later",
   "private": true,
   "devDependencies": {
-    "cypress": "^10.9.0"
+    "cypress": "^12.5.1"
   }
 }

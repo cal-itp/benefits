@@ -13,23 +13,34 @@ flowchart LR
     %% dmv[DMV Eligibility Verification API]
     benefits[Benefits application]
     style benefits stroke-width:5px
-    %% recaptcha[Google reCAPTCHA]
+    recaptcha[Google reCAPTCHA]
     rider((User's browser))
     idg[Identity Gateway]
+    mst_elig[Eligibility Server]
+    cc_data[(Courtesy Card data)]
+    cookies[(Cookies)]
 
     rider --> benefits
-    rider --> Login.gov
-    %% rider --> recaptcha
-    rider --> Littlepay
-    rider --> Amplitude
+    rider -->|Credentials and identity proofing| Login.gov
+    rider --> recaptcha
+    rider -->|Payment card info| Littlepay
+    rider -->|Events| Amplitude
+    rider -->|Session| cookies
 
-    benefits <--> idg
-    %% benefits <--> recaptcha
+    benefits --> idg
+    benefits <--> recaptcha
     %% benefits --> dmv
-    benefits --> Amplitude
-    benefits <--> Littlepay
+    benefits -->|Events| Amplitude
+    benefits -->|Group enrollment| Littlepay
+    benefits --> mst_elig
 
-    idg <--> Login.gov
+    subgraph "MST (Courtesy Cards)"
+    mst_elig --> cc_data
+    end
+
+    idg --> Login.gov
+    Login.gov -->|User attributes| idg
+    idg -->|User attributes| benefits
 ```
 
 ### Benefits application
@@ -67,6 +78,8 @@ The following things in Azure are managed by the California Department of Techno
 - [Resource Groups](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal)
 - Networking
 - Front Door
+  - Web Application Firewall (WAF)
+  - Distributed denial-of-service (DDoS) protection
 - IAM
 - Service connections
 

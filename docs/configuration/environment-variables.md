@@ -61,7 +61,7 @@ A list of strings representing the host/domain names that this Django site can s
 
 !!! warning "Deployment configuration"
 
-    You may change this setting when deploying the app to a non-localhost domain
+    Do not enable this in production
 
 !!! tldr "Django docs"
 
@@ -145,6 +145,14 @@ Django's primary secret, keep this safe!
 
 Comma-separated list of hosts which are trusted origins for unsafe requests (e.g. POST)
 
+### `HEALTHCHECK_USER_AGENTS`
+
+!!! warning "Deployment configuration"
+
+   You must change this setting when deploying the app to a non-localhost domain
+
+Comma-separated list of User-Agent strings which, when present as an HTTP header, should only receive healthcheck responses. Used by our `HealthcheckUserAgent` middleware.
+
 ## Cypress tests
 
 !!! tldr "Cypress docs"
@@ -158,16 +166,20 @@ The base URL for the (running) application, against which all Cypress `.visit()`
 When Cypress is running inside the devcontainer, this should be `http://localhost:8000`. When Cypress is running outside the
 devcontainer, check the [`DJANGO_LOCAL_PORT`](#django_local_port).
 
-## Azure
+## Sentry
 
-### `APPLICATIONINSIGHTS_CONNECTION_STRING`
+### `SENTRY_DSN`
 
-!!! tldr "Azure docs"
+!!! tldr "Sentry docs"
 
-    [Azure Monitor connection strings](https://docs.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string)
+    [Data Source Name (DSN)](https://docs.sentry.io/product/sentry-basics/dsn-explainer/)
 
-Enables [log collection](../../deployment/troubleshooting/#logs). Set the value in quotes, e.g. `APPLICATIONINSIGHTS_CONNECTION_STRING="InstrumentationKey=…"`.
+Enables [sending events to Sentry](../../deployment/troubleshooting/#error-monitoring).
 
-[app-service-config]: https://docs.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal
-[benefits-secrets]: https://github.com/cal-itp/benefits-secrets
-[getting-started_create-env]: ../getting-started/README.md#create-an-environment-file
+### `SENTRY_ENVIRONMENT`
+
+!!! tldr "Sentry docs"
+
+    [`environment` config value](https://docs.sentry.io/platforms/python/configuration/options/#environment)
+
+Segments errors by which deployment they occur in. This defaults to `local`, and can be set to match one of the [environment names](../../deployment/infrastructure/#environments).

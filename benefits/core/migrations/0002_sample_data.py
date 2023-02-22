@@ -1,6 +1,7 @@
 """Data migration which loads sample data.
 Set environment variable DJANGO_LOAD_SAMPLE_DATA to False to skip loading sample data.
 """
+import json
 import os
 
 from django.conf import settings
@@ -201,14 +202,19 @@ PEM DATA
 
     TransitAgency = app.get_model("core", "TransitAgency")
 
+    # load the sample data from a JSON file so that it can be accessed by Cypress as well
+    sample_agency_data = os.path.join(os.path.dirname(__file__), "sample_agency.json")
+    with open(sample_agency_data) as f:
+        sample_agency = json.load(f)
+
     mst_agency = TransitAgency.objects.create(
-        slug="mst",
-        short_name=os.environ.get("MST_AGENCY_SHORT_NAME", "MST (sample)"),
-        long_name=os.environ.get("MST_AGENCY_LONG_NAME", "Monterey-Salinas Transit (sample)"),
-        agency_id="mst",
-        merchant_id="mst",
-        info_url="https://mst.org/benefits",
-        phone="888-678-2871",
+        slug=sample_agency["slug"],
+        short_name=os.environ.get("MST_AGENCY_SHORT_NAME", sample_agency["short_name"]),
+        long_name=os.environ.get("MST_AGENCY_LONG_NAME", sample_agency["long_name"]),
+        agency_id=sample_agency["agency_id"],
+        merchant_id=sample_agency["merchant_id"],
+        info_url=sample_agency["info_url"],
+        phone=sample_agency["phone"],
         active=True,
         private_key=client_private_key,
         public_key=client_public_key,
@@ -239,7 +245,6 @@ PEM DATA
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("core", "0001_initial"),
     ]

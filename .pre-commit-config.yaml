@@ -34,7 +34,7 @@ repos:
         args: ["--maxkb=1500"]
 
   - repo: https://github.com/psf/black
-    rev: 22.12.0
+    rev: 23.1.0
     hooks:
       - id: black
         types:
@@ -61,6 +61,6 @@ repos:
         types_or: [javascript, css]
 
   - repo: https://github.com/Riverside-Healthcare/djLint
-    rev: v1.19.13
+    rev: v1.19.15
     hooks:
       - id: djlint-django

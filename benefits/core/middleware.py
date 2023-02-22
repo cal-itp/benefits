@@ -109,6 +109,18 @@ class Healthcheck:
         return self.get_response(request)
 
 
+class HealthcheckUserAgents(MiddlewareMixin):
+    """Middleware to return healthcheck for user agents specified in HEALTHCHECK_USER_AGENTS."""
+
+    def process_request(self, request):
+        if hasattr(request, "META"):
+            user_agent = request.META.get("HTTP_USER_AGENT", "")
+            if user_agent in settings.HEALTHCHECK_USER_AGENTS:
+                return HttpResponse("Healthy", content_type="text/plain")
+
+        return self.get_response(request)
+
+
 class VerifierSessionRequired(MiddlewareMixin):
     """Middleware raises an exception for sessions lacking an eligibility verifier configuration."""
 
@@ -159,21 +171,6 @@ class LoginRequired(MiddlewareMixin):
             return None
 
         return redirect("oauth:login")
-
-
-# https://github.com/census-instrumentation/opencensus-python/issues/766
-class LogErrorToAzure(MiddlewareMixin):
-    def __init__(self, get_response):
-        self.get_response = get_response
-        # wait to do this here to be sure the handler is initialized
-        self.azure_logger = logging.getLogger("azure")
-
-    def process_exception(self, request, exception):
-        # https://stackoverflow.com/a/45532289
-        msg = getattr(exception, "message", repr(exception))
-        self.azure_logger.exception(msg, exc_info=exception)
-
-        return None
 
 
 class RecaptchaEnabled(MiddlewareMixin):

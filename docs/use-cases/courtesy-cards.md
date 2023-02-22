@@ -35,3 +35,26 @@ Notes:
 - [Eligibility Server documentation](https://docs.calitp.org/eligibility-server/)
 - [More details about the Benefits architecture](../deployment/infrastructure/#architecture)
 - Velocity is the system MST uses to manage Courtesy Cards
+
+## Process
+
+```mermaid
+sequenceDiagram
+    actor Rider
+    participant Benefits as Benefits app
+    participant elig_server as Eligibility Server
+    participant cc_data as Hashed data
+    participant Velocity
+    participant Littlepay
+
+    Velocity-->>cc_data: exports nightly
+    cc_data-->>elig_server: gets loaded on Server start
+
+    Rider->>Benefits: visits site
+    Benefits-->>elig_server: passes entered Courtesy Card details
+    elig_server-->>Benefits: confirms eligibility
+
+    Benefits-->>Littlepay: enrollment start
+    Rider->>Littlepay: enters payment card details
+    Littlepay-->>Benefits: enrollment complete
+```

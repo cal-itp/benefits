@@ -51,6 +51,8 @@ CYPRESS_baseUrl=http://localhost:8000 npm run cypress:open
 
 See `tests/cypress/package.json` for more cypress scripts.
 
+As of Cypress 12.5.1 with Firefox 109, there is a CSRF issue that prevents the tests from passing; unclear if this is a bug in Cypress or what. Use one of the other browser options.
+
 ## Pytest
 
 The tests done at a request/unit level are run via [pytest-django](https://pytest-django.readthedocs.io/en/latest/index.html).

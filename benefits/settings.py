@@ -2,7 +2,7 @@
 Django settings for benefits project.
 """
 import os
-import benefits.logging
+from benefits import sentry
 
 
 def _filter_empty(ls):
@@ -49,6 +49,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "benefits.core.middleware.Healthcheck",
+    "benefits.core.middleware.HealthcheckUserAgents",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -67,28 +68,7 @@ if ADMIN:
 if DEBUG:
     MIDDLEWARE.append("benefits.core.middleware.DebugSession")
 
-
-# Azure Insights
-# https://docs.microsoft.com/en-us/azure/azure-monitor/app/opencensus-python-request#tracking-django-applications
-
-ENABLE_AZURE_INSIGHTS = "APPLICATIONINSIGHTS_CONNECTION_STRING" in os.environ
-print("ENABLE_AZURE_INSIGHTS: ", ENABLE_AZURE_INSIGHTS)
-if ENABLE_AZURE_INSIGHTS:
-    MIDDLEWARE.extend(
-        [
-            "opencensus.ext.django.middleware.OpencensusMiddleware",
-            "benefits.core.middleware.LogErrorToAzure",
-        ]
-    )
-
-# only used if enabled above
-OPENCENSUS = {
-    "TRACE": {
-        "SAMPLER": "opencensus.trace.samplers.ProbabilitySampler(rate=1)",
-        "EXPORTER": "opencensus.ext.azure.trace_exporter.AzureExporter()",
-    }
-}
-
+HEALTHCHECK_USER_AGENTS = _filter_empty(os.environ.get("HEALTHCHECK_USER_AGENTS", "").split(","))
 
 CSRF_COOKIE_AGE = None
 CSRF_COOKIE_SAMESITE = "Strict"
@@ -225,13 +205,42 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Logging configuration
 LOG_LEVEL = os.environ.get("DJANGO_LOG_LEVEL", "DEBUG" if DEBUG else "WARNING")
-LOGGING = benefits.logging.get_config(LOG_LEVEL, enable_azure=ENABLE_AZURE_INSIGHTS)
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "default": {
+            "format": "[{asctime}] {levelname} {name}:{lineno} {message}",
+            "datefmt": "%d/%b/%Y %H:%M:%S",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "default",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": LOG_LEVEL,
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "propagate": False,
+        },
+    },
+}
+
+sentry.configure()
 
 # Analytics configuration
 
 ANALYTICS_KEY = os.environ.get("ANALYTICS_KEY")
 
 # rate limit configuration
+# these should match the values in rate-limit.cy.js
 
 # number of requests allowed in the given period
 RATE_LIMIT = int(os.environ.get("DJANGO_RATE_LIMIT", 5))
