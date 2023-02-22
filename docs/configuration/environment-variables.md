@@ -149,9 +149,9 @@ Comma-separated list of hosts which are trusted origins for unsafe requests (e.g
 
 !!! warning "Deployment configuration"
 
-   You must change this setting when deploying the app to a non-localhost domain
+    You must change this setting when deploying the app to a non-localhost domain
 
-Comma-separated list of User-Agent strings which, when present as an HTTP header, should only receive healthcheck responses. Used by our `HealthcheckUserAgent` middleware.
+Comma-separated list of User-Agent strings which, when present as an HTTP header, should only receive healthcheck responses. Used by our `HealthcheckUserAgents` middleware.
 
 ## Cypress tests
 
@@ -183,3 +183,7 @@ Enables [sending events to Sentry](../../deployment/troubleshooting/#error-monit
     [`environment` config value](https://docs.sentry.io/platforms/python/configuration/options/#environment)
 
 Segments errors by which deployment they occur in. This defaults to `local`, and can be set to match one of the [environment names](../../deployment/infrastructure/#environments).
+
+[app-service-config]: https://docs.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal
+[benefits-secrets]: https://github.com/cal-itp/benefits-secrets
+[getting-started_create-env]: ../getting-started/README.md#create-an-environment-file
