@@ -1,0 +1,7 @@
+nav:
+  - README.md
+  - infrastructure.md
+  - secrets.md
+  - release.md
+  - troubleshooting.md
+  - workflows.md
