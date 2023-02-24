@@ -54,7 +54,12 @@ resource "azurerm_linux_web_app" "main" {
   }
 
   app_settings = {
+    "DOCKER_ENABLE_CI"                    = "true",
+    "DOCKER_REGISTRY_SERVER_URL"          = "https://ghcr.io/",
+    "WEBSITE_HTTPLOGGING_RETENTION_DAYS"  = "99999",
+    "WEBSITE_TIME_ZONE"                   = "America/Los_Angeles",
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false",
+    "WEBSITES_PORT"                       = "8000",
 
     # Environment variables for data migration
     "MST_SENIOR_GROUP_ID"                            = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=mst-senior-group-id)",
