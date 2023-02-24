@@ -54,7 +54,47 @@ resource "azurerm_linux_web_app" "main" {
   }
 
   app_settings = {
-    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false",
+
+    # Environment variables for data migration
+    "MST_SENIOR_GROUP_ID"                            = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=mst-senior-group-id)",
+    "MST_COURTESY_CARD_GROUP_ID"                     = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=mst-courtesy-card-group-id)"
+    "SACRT_SENIOR_GROUP_ID"                          = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=sacrt-senior-group-id)"
+    "CLIENT_PRIVATE_KEY"                             = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=client-private-key)"
+    "CLIENT_PUBLIC_KEY"                              = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=client-public-key)"
+    "SERVER_PUBLIC_KEY_URL"                          = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=server-public-key-url)"
+    "PAYMENT_PROCESSOR_CLIENT_CERT"                  = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=payment-processor-client-cert)"
+    "PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY"      = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=payment-processor-client-cert-private-key)"
+    "PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA"          = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=payment-processor-client-cert-root-ca)"
+    "AUTH_PROVIDER_CLIENT_NAME"                      = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=auth-provider-client-name)"
+    "AUTH_PROVIDER_CLIENT_ID"                        = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=auth-provider-client-id)"
+    "AUTH_PROVIDER_AUTHORITY"                        = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=auth-provider-authority)"
+    "AUTH_PROVIDER_SCOPE"                            = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=auth-provider-scope)"
+    "AUTH_PROVIDER_CLAIM"                            = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=auth-provider-claim)"
+    "MST_OAUTH_VERIFIER_NAME"                        = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=mst-oauth-verifier-name)"
+    "COURTESY_CARD_VERIFIER"                         = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=courtesy-card-verifier)"
+    "COURTESY_CARD_VERIFIER_API_URL"                 = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=courtesy-card-verifier-api-url)"
+    "COURTESY_CARD_VERIFIER_API_AUTH_HEADER"         = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=courtesy-card-verifier-api-auth-header)"
+    "COURTESY_CARD_VERIFIER_API_AUTH_KEY"            = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=courtesy-card-verifier-api-auth-key)"
+    "COURTESY_CARD_VERIFIER_JWE_CEK_ENC"             = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=courtesy-card-verifier-jwe-cek-enc)"
+    "COURTESY_CARD_VERIFIER_JWE_ENCRYPTION_ALG"      = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=courtesy-card-verifier-jwe-encryption-alg)"
+    "COURTESY_CARD_VERIFIER_JWS_SIGNING_ALG"         = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=courtesy-card-verifier-jws-signing-alg)"
+    "SACRT_OAUTH_VERIFIER_NAME"                      = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=sacrt-oauth-verifier-name)"
+    "PAYMENT_PROCESSOR_NAME"                         = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=payment-processor-name)"
+    "PAYMENT_PROCESSOR_API_BASE_URL"                 = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=payment-processor-api-base-url)"
+    "PAYMENT_PROCESSOR_API_ACCESS_TOKEN_ENDPOINT"    = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=payment-processor-api-access-token-endpoint)"
+    "PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_KEY" = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=payment-processor-api-access-token-request-key)"
+    "PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_VAL" = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=payment-processor-api-access-token-request-val)"
+    "PAYMENT_PROCESSOR_CARD_TOKENIZE_URL"            = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=payment-processor-card-tokenize-url)"
+    "PAYMENT_PROCESSOR_CARD_TOKENIZE_FUNC"           = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=payment-processor-card-tokenize-func)"
+    "PAYMENT_PROCESSOR_CARD_TOKENIZE_ENV"            = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=payment-processor-card-tokenize-env)"
+    "MST_AGENCY_SHORT_NAME"                          = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=mst-agency-short-name)"
+    "MST_AGENCY_LONG_NAME"                           = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=mst-agency-long-name)"
+    "MST_AGENCY_JWS_SIGNING_ALG"                     = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=mst-agency-jws-signing-alg)"
+    "SACRT_AGENCY_SHORT_NAME"                        = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=sacrt-agency-short-name)"
+    "SACRT_AGENCY_LONG_NAME"                         = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=sacrt-agency-long-name)"
+    "SACRT_AGENCY_MERCHANT_ID"                       = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=sacrt-agency-merchant-id)"
+    "SACRT_AGENCY_JWS_SIGNING_ALG"                   = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=sacrt-agency-jws-signing-alg)"
   }
 
   lifecycle {
