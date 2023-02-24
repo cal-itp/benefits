@@ -53,10 +53,13 @@ resource "azurerm_linux_web_app" "main" {
     mount_path   = "/home/calitp/app/config"
   }
 
+  app_settings = {
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false"
+  }
+
   lifecycle {
     prevent_destroy = true
-    # app_settings are managed manually through the portal since they contain secrets
-    ignore_changes = [app_settings, sticky_settings, tags]
+    ignore_changes  = [tags]
   }
 }
 
