@@ -9,4 +9,4 @@ env=$1
 secret_name=$2
 secret_value=$3
 
-az keyvault secret set --vault-name "KV-CDT-PUB-CALITP-$env-001" --name $1 --value "$2"
+az keyvault secret set --vault-name "KV-CDT-PUB-CALITP-$env-001" --name $secret_name --value "$secret_value"
