@@ -54,6 +54,9 @@ resource "azurerm_linux_web_app" "main" {
   }
 
   app_settings = {
+    # app setting used solely for refreshing secrets - see https://github.com/MicrosoftDocs/azure-docs/issues/79855#issuecomment-1265664801
+    "change_me_to_refresh_secrets" = "change me in the portal to refresh all secrets",
+
     "DOCKER_ENABLE_CI"                    = "true",
     "DOCKER_REGISTRY_SERVER_URL"          = "https://ghcr.io/",
     "WEBSITE_HTTPLOGGING_RETENTION_DAYS"  = "99999",
@@ -71,20 +74,20 @@ resource "azurerm_linux_web_app" "main" {
     "DJANGO_LOG_LEVEL"        = "DEBUG",
     "DJANGO_MIGRATIONS_DIR"   = "./config",
 
-    "DJANGO_RATE_LIMIT"           = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-rate-limit)",
-    "DJANGO_RATE_LIMIT_METHODS"   = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-rate-limit-methods)",
-    "DJANGO_RATE_LIMIT_PERIOD"    = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-rate-limit-period)",
+    "DJANGO_RATE_LIMIT"         = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-rate-limit)",
+    "DJANGO_RATE_LIMIT_METHODS" = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-rate-limit-methods)",
+    "DJANGO_RATE_LIMIT_PERIOD"  = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-rate-limit-period)",
 
     "DJANGO_RECAPTCHA_SECRET_KEY" = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-recaptcha-secret-key)",
     "DJANGO_RECAPTCHA_SITE_KEY"   = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-recaptcha-site-key)",
 
-    "DJANGO_SECRET_KEY"           = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-secret-key)",
-    "DJANGO_TRUSTED_ORIGINS"      = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-trusted-origins)",
+    "DJANGO_SECRET_KEY"      = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-secret-key)",
+    "DJANGO_TRUSTED_ORIGINS" = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-trusted-origins)",
 
     "HEALTHCHECK_USER_AGENTS" = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=healthcheck-user-agents)",
 
     # Sentry
-    "SENTRY_DSN" = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=sentry-dsn)",
+    "SENTRY_DSN"         = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=sentry-dsn)",
     "SENTRY_ENVIRONMENT" = local.env_name,
 
     # Environment variables for data migration
