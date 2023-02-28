@@ -21,17 +21,15 @@ will install `cypress` and its dependencies on your machine. Make sure to run th
 
    If not, [install Node.js](https://nodejs.org/en/download/) locally.
 
-2. Start the the application container
+2. Start the the application container:
 
    ```bash
-   cd .devcontainer/
    docker compose up -d client
    ```
 
 3. Change into the `cypress` directory:
 
    ```bash
-   cd ..
    cd tests/cypress
    ```
 
@@ -39,8 +37,6 @@ will install `cypress` and its dependencies on your machine. Make sure to run th
 
    ```bash
    npm install
-   npx cypress install
-   npx cypress verify
    ```
 
 5. Run `cypress` with test environment variables and configuration variables:
