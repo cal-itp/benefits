@@ -9,4 +9,4 @@ env=$1
 secret_name=$2
 file_path=$3
 
-az keyvault secret set --vault-name "KV-CDT-PUB-CALITP-$env-001" --name $secret_name --file $file_path
+az keyvault secret set --vault-name "KV-CDT-PUB-CALITP-$env-001" --name $secret_name --file "$file_path"
