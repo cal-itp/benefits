@@ -14,40 +14,40 @@ will install `cypress` and its dependencies on your machine. Make sure to run th
 
 1. Ensure you have Node.js and NPM available on your local machine:
 
-```bash
-node -v
-npm -v
-```
+   ```bash
+   node -v
+   npm -v
+   ```
 
-If not, [install Node.js](https://nodejs.org/en/download/) locally.
+   If not, [install Node.js](https://nodejs.org/en/download/) locally.
 
 2. Start the the application container
 
-```bash
-cd .devcontainer/
-docker compose up -d client
-```
+   ```bash
+   cd .devcontainer/
+   docker compose up -d client
+   ```
 
 3. Change into the `cypress` directory:
 
-```bash
-cd ..
-cd tests/cypress
-```
+   ```bash
+   cd ..
+   cd tests/cypress
+   ```
 
 4. Install all packages and `cypress`. Verify `cypress` installation succeeds:
 
-```bash
-npm install
-npx cypress install
-npx cypress verify
-```
+   ```bash
+   npm install
+   npx cypress install
+   npx cypress verify
+   ```
 
 5. Run `cypress` with test environment variables and configuration variables:
 
-```bash
-CYPRESS_baseUrl=http://localhost:8000 npm run cypress:open
-```
+   ```bash
+   CYPRESS_baseUrl=http://localhost:8000 npm run cypress:open
+   ```
 
 See `tests/cypress/package.json` for more cypress scripts.
 
