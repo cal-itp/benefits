@@ -22,7 +22,7 @@ _**Do not put sensitive information in this issue or Slack.** Use a file on Goog
 - [ ] Assign the severity above:
   - **High:** Possible/confirmed breach of sensitive information, such as production system credentials or personally-identifiable information (PII)
   - **Medium:** Full Benefits downtime for more than 30 minutes
-  - **Low:** Partial service degredation
+  - **Low:** Partial service degredation, zero-day vulnerabilities, data loss
 
 ### Medium/High incidents
 
@@ -32,7 +32,7 @@ _**Do not put sensitive information in this issue or Slack.** Use a file on Goog
 
 ## Remediate
 
-- [ ] Take notes in the Slack thread.
+- [ ] Delegate someone to take notes in the Slack thread.
 - [ ] Check the [troubleshooting documentation](https://docs.calitp.org/benefits/deployment/troubleshooting/) for relevant information.
 - [ ] Post in the Slack thread when the incident has been resolved.
 - [ ] Retain any relevant materials.
@@ -45,7 +45,7 @@ _**Do not put sensitive information in this issue or Slack.** Use a file on Goog
 
 ## Follow-up
 
-- [ ] For Medium/High incidents, write an incident report. [Past examples.](https://drive.google.com/drive/search?q=parent:1f_UhA3958lrRQ7IVf0mGSpt7A9rSoUQm%20title:incident)
+- [ ] For Medium/High incidents, write an incident report. [Past examples.](https://drive.google.com/drive/folders/1MVixX2jFioaSiM3xtGB15rKyU99fScqH)
   1. [ ] Write a draft.
      - Link to relevant Slack messages, etc.
   1. [ ] Get thumbs-up from those involved in the incident.
@@ -56,4 +56,4 @@ _**Do not put sensitive information in this issue or Slack.** Use a file on Goog
   - Having the system fail more gracefully
   - Scheduling a retrospective/post-mortem
 
-[benefits-general]: https://cal-itp.slack.com/archives/c013w8ruamu
+[benefits-general]: https://cal-itp.slack.com/archives/C013W8RUAMU
