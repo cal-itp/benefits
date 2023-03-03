@@ -64,27 +64,27 @@ resource "azurerm_linux_web_app" "main" {
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false",
     "WEBSITES_PORT"                       = "8000",
 
-    "ANALYTICS_KEY" = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=analytics-key)",
+    "ANALYTICS_KEY" = local.is_dev ? null : "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=analytics-key)",
 
     # Django settings
-    "DJANGO_ADMIN"            = local.is_prod ? "false" : "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-admin)",
+    "DJANGO_ADMIN"            = (local.is_prod || local.is_test) ? null : "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-admin)",
     "DJANGO_ALLOWED_HOSTS"    = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-allowed-hosts)",
-    "DJANGO_DEBUG"            = local.is_prod ? "false" : "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-debug)",
+    "DJANGO_DEBUG"            = local.is_prod ? null : "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-debug)",
     "DJANGO_LOAD_SAMPLE_DATA" = "false",
     "DJANGO_LOG_LEVEL"        = "DEBUG",
     "DJANGO_MIGRATIONS_DIR"   = "./config",
 
-    "DJANGO_RATE_LIMIT"         = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-rate-limit)",
-    "DJANGO_RATE_LIMIT_METHODS" = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-rate-limit-methods)",
-    "DJANGO_RATE_LIMIT_PERIOD"  = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-rate-limit-period)",
+    "DJANGO_RATE_LIMIT"         = local.is_dev ? null : "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-rate-limit)",
+    "DJANGO_RATE_LIMIT_METHODS" = local.is_dev ? null : "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-rate-limit-methods)",
+    "DJANGO_RATE_LIMIT_PERIOD"  = local.is_dev ? null : "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-rate-limit-period)",
 
-    "DJANGO_RECAPTCHA_SECRET_KEY" = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-recaptcha-secret-key)",
-    "DJANGO_RECAPTCHA_SITE_KEY"   = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-recaptcha-site-key)",
+    "DJANGO_RECAPTCHA_SECRET_KEY" = local.is_dev ? null : "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-recaptcha-secret-key)",
+    "DJANGO_RECAPTCHA_SITE_KEY"   = local.is_dev ? null : "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-recaptcha-site-key)",
 
     "DJANGO_SECRET_KEY"      = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-secret-key)",
     "DJANGO_TRUSTED_ORIGINS" = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=django-trusted-origins)",
 
-    "HEALTHCHECK_USER_AGENTS" = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=healthcheck-user-agents)",
+    "HEALTHCHECK_USER_AGENTS" = local.is_dev ? null : "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=healthcheck-user-agents)",
 
     # Sentry
     "SENTRY_DSN"         = "@Microsoft.KeyVault(VaultName=KV-CDT-PUB-CALITP-${local.env_letter}-001;SecretName=sentry-dsn)",
