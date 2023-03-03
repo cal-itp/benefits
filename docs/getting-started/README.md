@@ -73,4 +73,4 @@ docker compose down
 [docker]: https://www.docker.com/products/docker-desktop
 [sample-data]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations/0002_sample_data.py
 
-[data-migration](https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations)
+[data-migration]: (https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations)
