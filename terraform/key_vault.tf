@@ -45,11 +45,12 @@ locals {
 }
 
 resource "azurerm_key_vault" "main" {
-  name                = "KV-CDT-PUB-CALITP-${local.env_letter}-001"
-  location            = data.azurerm_resource_group.main.location
-  resource_group_name = data.azurerm_resource_group.main.name
-  sku_name            = "standard"
-  tenant_id           = data.azurerm_client_config.current.tenant_id
+  name                     = "KV-CDT-PUB-CALITP-${local.env_letter}-001"
+  location                 = data.azurerm_resource_group.main.location
+  resource_group_name      = data.azurerm_resource_group.main.name
+  sku_name                 = "standard"
+  tenant_id                = data.azurerm_client_config.current.tenant_id
+  purge_protection_enabled = true
 
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
