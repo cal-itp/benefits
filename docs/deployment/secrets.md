@@ -26,6 +26,12 @@ To set a secret by providing the path of a file containing the secret (useful fo
 ./file.sh <environment_letter> <secret_name> <file_path>
 ```
 
+To verify the value of a secret, you can use the helper script named `read.sh`.
+
+```bash
+./read.sh <environment_letter> <secret_name>
+```
+
 ## Refreshing secrets
 
 To make sure the Benefits application uses the latest secret values in Key Vault, you will need to make a change to the app service's configuration. If you don't do this step, the application will instead use cached values, which may not be what you expect. See the [Azure docs](https://learn.microsoft.com/en-us/azure/app-service/app-service-key-vault-references?tabs=azure-cli#rotation) for more details.
