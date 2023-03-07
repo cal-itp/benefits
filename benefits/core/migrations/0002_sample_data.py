@@ -16,11 +16,16 @@ def load_sample_data(app, *args, **kwargs):
 
     EligibilityType = app.get_model("core", "EligibilityType")
 
-    senior_type = EligibilityType.objects.create(
-        name="senior", label="Senior", group_id=os.environ.get("MST_SENIOR_GROUP_ID", "group1")
+    mst_senior_type = EligibilityType.objects.create(
+        name="senior", label="Senior Discount (MST)", group_id=os.environ.get("MST_SENIOR_GROUP_ID", "group1")
     )
-    courtesy_card_type = EligibilityType.objects.create(
-        name="courtesy_card", label="Courtesy Card", group_id=os.environ.get("MST_COURTESY_CARD_GROUP_ID", "group2")
+    mst_courtesy_card_type = EligibilityType.objects.create(
+        name="courtesy_card",
+        label="Courtesy Card Discount (MST)",
+        group_id=os.environ.get("MST_COURTESY_CARD_GROUP_ID", "group2"),
+    )
+    sacrt_senior_type = EligibilityType.objects.create(
+        name="senior", label="Senior Discount (SacRT)", group_id=os.environ.get("SACRT_SENIOR_GROUP_ID", "group3")
     )
 
     PemData = app.get_model("core", "PemData")
@@ -119,9 +124,9 @@ PEM DATA
 
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
 
-    oauth_claims_verifier = EligibilityVerifier.objects.create(
-        name=os.environ.get("OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov"),
-        eligibility_type=senior_type,
+    mst_oauth_claims_verifier = EligibilityVerifier.objects.create(
+        name=os.environ.get("MST_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (MST)"),
+        eligibility_type=mst_senior_type,
         auth_provider=auth_provider,
         selection_label=_("eligibility.pages.index.login_gov.label"),
         selection_label_description=_("eligibility.pages.index.login_gov.description"),
@@ -141,12 +146,12 @@ PEM DATA
         enrollment_success_expiry_item_details=None,
     )
 
-    courtesy_card_verifier = EligibilityVerifier.objects.create(
+    mst_courtesy_card_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("COURTESY_CARD_VERIFIER", "Eligibility Server Verifier"),
         api_url=os.environ.get("COURTESY_CARD_VERIFIER_API_URL", "http://server:8000/verify"),
         api_auth_header=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_HEADER", "X-Server-API-Key"),
         api_auth_key=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_KEY", "server-auth-token"),
-        eligibility_type=courtesy_card_type,
+        eligibility_type=mst_courtesy_card_type,
         public_key=server_public_key,
         jwe_cek_enc=os.environ.get("COURTESY_CARD_VERIFIER_JWE_CEK_ENC", "A256CBC-HS512"),
         jwe_encryption_alg=os.environ.get("COURTESY_CARD_VERIFIER_JWE_ENCRYPTION_ALG", "RSA-OAEP"),
@@ -179,6 +184,28 @@ PEM DATA
         enrollment_success_confirm_item_details=_("enrollment.pages.success.mst_cc.confirm_item.details"),
         enrollment_success_expiry_item_heading=_("enrollment.pages.success.mst_cc.expiry_item.heading"),
         enrollment_success_expiry_item_details=_("enrollment.pages.success.mst_cc.expiry_item.details"),
+    )
+
+    sacrt_oauth_claims_verifier = EligibilityVerifier.objects.create(
+        name=os.environ.get("SACRT_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (SacRT)"),
+        eligibility_type=sacrt_senior_type,
+        auth_provider=auth_provider,
+        selection_label=_("eligibility.pages.index.login_gov.label"),
+        selection_label_description=_("eligibility.pages.index.login_gov.description"),
+        start_title=_("eligibility.pages.start.login_gov.title"),
+        start_headline=_("eligibility.pages.start.login_gov.headline"),
+        start_item_heading=_("eligibility.pages.start.login_gov.start_item.heading"),
+        start_item_details=_("eligibility.pages.start.login_gov.start_item.details"),
+        start_help_anchor="login-gov",
+        unverified_title=_("eligibility.pages.unverified.login_gov.title"),
+        unverified_blurb=_("eligibility.pages.unverified.login_gov.p[0]"),
+        eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
+        eligibility_confirmed_item_details=_(
+            "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
+        ),
+        enrollment_success_confirm_item_details=_("enrollment.pages.success.login_gov.confirm_item.details"),
+        enrollment_success_expiry_item_heading=None,
+        enrollment_success_expiry_item_details=None,
     )
 
     PaymentProcessor = app.get_model("core", "PaymentProcessor")
@@ -222,15 +249,15 @@ PEM DATA
         payment_processor=payment_processor,
         eligibility_index_intro=_("eligibility.pages.index.p[0].mst"),
     )
-    mst_agency.eligibility_types.set([senior_type, courtesy_card_type])
-    mst_agency.eligibility_verifiers.set([oauth_claims_verifier, courtesy_card_verifier])
+    mst_agency.eligibility_types.set([mst_senior_type, mst_courtesy_card_type])
+    mst_agency.eligibility_verifiers.set([mst_oauth_claims_verifier, mst_courtesy_card_verifier])
 
     sacrt_agency = TransitAgency.objects.create(
         slug="sacrt",
         short_name=os.environ.get("SACRT_AGENCY_SHORT_NAME", "SacRT (sample)"),
         long_name=os.environ.get("SACRT_AGENCY_LONG_NAME", "Sacramento Regional Transit (sample)"),
         agency_id="sacrt",
-        merchant_id="sacrt",
+        merchant_id=os.environ.get("SACRT_AGENCY_MERCHANT_ID", "sacrt"),
         info_url="https://sacrt.com/",
         phone="916-321-2877",
         active=True,
@@ -240,8 +267,8 @@ PEM DATA
         payment_processor=payment_processor,
         eligibility_index_intro=_("eligibility.pages.index.p[0].sacrt"),
     )
-    sacrt_agency.eligibility_types.set([senior_type])
-    sacrt_agency.eligibility_verifiers.set([oauth_claims_verifier])
+    sacrt_agency.eligibility_types.set([sacrt_senior_type])
+    sacrt_agency.eligibility_verifiers.set([sacrt_oauth_claims_verifier])
 
 
 class Migration(migrations.Migration):

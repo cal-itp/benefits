@@ -95,7 +95,7 @@ Within the `CDT Digital CA` directory ([how to switch](https://learn.microsoft.c
 
 All resources in these Resource Groups should be reflected in Terraform in this repository. The exceptions are:
 
-- Secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) and [App Service application settings](https://docs.microsoft.com/en-us/azure/app-service/configure-common#configure-app-settings). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
+- Secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
 - [Things managed by DevSecOps](#ownership)
 
 You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources).
