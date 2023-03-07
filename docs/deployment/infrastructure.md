@@ -13,23 +13,34 @@ flowchart LR
     %% dmv[DMV Eligibility Verification API]
     benefits[Benefits application]
     style benefits stroke-width:5px
-    %% recaptcha[Google reCAPTCHA]
+    recaptcha[Google reCAPTCHA]
     rider((User's browser))
     idg[Identity Gateway]
+    mst_elig[Eligibility Server]
+    cc_data[(Courtesy Card data)]
+    cookies[(Cookies)]
 
     rider --> benefits
-    rider --> Login.gov
-    %% rider --> recaptcha
-    rider --> Littlepay
-    rider --> Amplitude
+    rider -->|Credentials and identity proofing| Login.gov
+    rider --> recaptcha
+    rider -->|Payment card info| Littlepay
+    rider -->|Events| Amplitude
+    rider -->|Session| cookies
 
-    benefits <--> idg
-    %% benefits <--> recaptcha
+    benefits --> idg
+    benefits <--> recaptcha
     %% benefits --> dmv
-    benefits --> Amplitude
-    benefits <--> Littlepay
+    benefits -->|Events| Amplitude
+    benefits -->|Group enrollment| Littlepay
+    benefits --> mst_elig
 
-    idg <--> Login.gov
+    subgraph "MST (Courtesy Cards)"
+    mst_elig --> cc_data
+    end
+
+    idg --> Login.gov
+    Login.gov -->|User attributes| idg
+    idg -->|User attributes| benefits
 ```
 
 ### Benefits application
@@ -67,6 +78,8 @@ The following things in Azure are managed by the California Department of Techno
 - [Resource Groups](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal)
 - Networking
 - Front Door
+  - Web Application Firewall (WAF)
+  - Distributed denial-of-service (DDoS) protection
 - IAM
 - Service connections
 
@@ -82,7 +95,7 @@ Within the `CDT Digital CA` directory ([how to switch](https://learn.microsoft.c
 
 All resources in these Resource Groups should be reflected in Terraform in this repository. The exceptions are:
 
-- Secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) and [App Service application settings](https://docs.microsoft.com/en-us/azure/app-service/configure-common#configure-app-settings). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
+- Secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
 - [Things managed by DevSecOps](#ownership)
 
 You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources).
@@ -104,7 +117,7 @@ Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is
 1. Install dependencies:
 
    - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
-   - [Terraform](https://www.terraform.io/downloads) - see exact version in [`azure-pipelines.yml`](https://github.com/cal-itp/benefits/blob/dev/terraform/azure-pipelines.yml)
+   - [Terraform](https://www.terraform.io/downloads) - see exact version in [`deploy.yml`](https://github.com/cal-itp/benefits/blob/dev/terraform/pipeline/deploy.yml)
 
 1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli).
 

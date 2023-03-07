@@ -16,6 +16,7 @@ from benefits.core.views import ROUTE_HELP
 from . import analytics, forms, verify
 
 
+ROUTE_CORE_INDEX = "core:index"
 ROUTE_INDEX = "eligibility:index"
 ROUTE_START = "eligibility:start"
 ROUTE_LOGIN = "oauth:login"
@@ -29,28 +30,42 @@ TEMPLATE_CONFIRM = "eligibility/confirm.html"
 TEMPLATE_UNVERIFIED = "eligibility/unverified.html"
 
 
-@decorator_from_middleware(AgencySessionRequired)
 @decorator_from_middleware(RecaptchaEnabled)
-def index(request):
+def index(request, agency=None):
     """View handler for the eligibility verifier selection form."""
 
-    session.update(request, eligibility_types=[], origin=reverse(ROUTE_INDEX))
-    agency = session.agency(request)
+    if agency is None:
+        # see if session has an agency
+        agency = session.agency(request)
+        if agency is None:
+            home = viewmodels.Button.home(request)
+            page = viewmodels.ErrorPage.user_error(button=home, path=request.path)
+            return TemplateResponse(request, "200_user_error.html", page.context_dict())
+        else:
+            session.update(request, eligibility_types=[], origin=agency.index_url)
+    else:
+        session.update(request, agency=agency, eligibility_types=[], origin=reverse(ROUTE_CORE_INDEX))
 
     eligibility_start = reverse(ROUTE_START)
 
     help_page = reverse(ROUTE_HELP)
 
+    agency_intro = _(agency.eligibility_index_intro) if isinstance(agency.eligibility_index_intro, str) else ""
+    common_intro = _("eligibility.pages.index.p[0]%(info_link)s") % {"info_link": f"{help_page}#what-is-cal-itp"}
+    intro = format_html(agency_intro + common_intro)
     page = viewmodels.Page(
         title=_("eligibility.pages.index.title"),
         headline=_("eligibility.pages.index.headline"),
-        paragraphs=[
-            format_html(_("eligibility.pages.index.p[0]%(info_link)s") % {"info_link": f"{help_page}#what-is-cal-itp"})
-        ],
+        paragraphs=[intro],
         forms=forms.EligibilityVerifierSelectionForm(agency=agency),
     )
 
     ctx = page.context_dict()
+
+    origin = session.origin(request)
+    if origin == reverse(ROUTE_CORE_INDEX):
+        ctx["previous_page_button"] = viewmodels.Button.previous_page(url=origin)
+
     ctx["help_page"] = help_page
     ctx["help_text"] = format_html(_("eligibility.pages.index.help_text%(help_link)s") % {"help_link": help_page})
 
@@ -73,12 +88,7 @@ def index(request):
             page.forms = [form]
             response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
     else:
-        if agency.eligibility_verifiers.count() == 1:
-            verifier = agency.eligibility_verifiers.first()
-            session.update(request, verifier=verifier)
-            response = redirect(eligibility_start)
-        else:
-            response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
+        response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
 
     return response
 
@@ -101,9 +111,9 @@ def start(request):
     if verifier.is_auth_required:
         if verifier.uses_auth_verification:
             identity_item.bullets = [
-                _("eligibility.pages.start.mst_login.required_items[0]"),
-                _("eligibility.pages.start.mst_login.required_items[1]"),
-                _("eligibility.pages.start.mst_login.required_items[2]"),
+                _("eligibility.pages.start.login_gov.required_items[0]"),
+                _("eligibility.pages.start.login_gov.required_items[1]"),
+                _("eligibility.pages.start.login_gov.required_items[2]"),
             ]
 
         if not session.logged_in(request):
@@ -129,7 +139,7 @@ def start(request):
 
     ctx = page.context_dict()
     ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_INDEX))
-    ctx["start_sub_headline"] = _(verifier.start_sub_headline)
+    ctx["start_sub_headline"] = _("eligibility.pages.start.sub_headline")
     ctx["media"] = media
     help_page = reverse(ROUTE_HELP)
     ctx["help_link"] = f"{help_page}#{verifier.start_help_anchor}"
@@ -243,7 +253,7 @@ def unverified(request):
 
     page = viewmodels.Page(
         title=_(verifier.unverified_title),
-        headline=_(verifier.unverified_headline),
+        headline=_("eligibility.pages.unverified.headline"),
         icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
         paragraphs=[_(verifier.unverified_blurb)],
         buttons=buttons,

@@ -6,3 +6,4 @@ nav:
   - oauth.md
   - rate-limit.md
   - recaptcha.md
+  - transit-agency.md

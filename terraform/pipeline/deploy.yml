@@ -9,7 +9,7 @@ steps:
   - task: TerraformInstaller@0
     displayName: Install Terraform
     inputs:
-      terraformVersion: 1.3.1
+      terraformVersion: 1.3.7
   # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformTask/TerraformTaskV3#readme
   - task: TerraformTaskV3@3
     displayName: Terraform init

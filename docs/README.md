@@ -10,7 +10,7 @@ Documentation for the `dev` (default) branch is available online at: <https://do
 Cal-ITP Benefits is an application that enables automated eligibility verification and enrollment for transit
 benefits onto customers' existing contactless bank (credit/debit) cards.
 
-The development of this publicly-accessible client is being managed by Caltrans’ California Integrated Travel Project (Cal-ITP), in partnership with the California Department of Technology (CDT). From the [Cal-ITP site](https://www.calitp.org/):
+The development of this publicly-accessible client is being managed by Caltrans' California Integrated Travel Project (Cal-ITP), in partnership with the California Department of Technology (CDT). From the [Cal-ITP site](https://www.calitp.org/):
 
 > Our Cal-ITP Benefits web application streamlines the process for transit riders to instantly qualify for and receive discounts, starting with Monterey-Salinas Transit (MST), which offers a half-price Senior Fare. Now older adults (65+) who are able to electronically verify their identity are able to access MST's reduced fares without the hassle of paperwork.
 >
@@ -33,6 +33,48 @@ The user interface and content is available in both English and Spanish. Additio
 [i18n and l10n features][i18n].
 
 The application communicates with external services like [Littlepay][littlepay] via API calls and others like the [Identity Gateway](https://dev.auth.cdt.ca.gov) via redirects, both over the public internet. See [all the system interconnections][interconnections].
+
+## Security
+
+Cal-ITP takes security and privacy seriously. Below is an overview of how the system is designed with security in mind.
+
+### Architecture
+
+The Benefits application is deployed to Microsoft Azure. Traffic is encrypted between the user and the application, as well as between the application and external systems.
+
+The network is managed by the [California Department of Technology (CDT)](https://cdt.ca.gov/), who provide a firewall and [distributed denial-of-service (DDoS)](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) protection.
+
+You can find more technical details on [our infrastructure page](deployment/infrastructure/).
+
+### Data storage
+
+The Benefits application doesn't collect or store any user data directly, and we minimize the information exchanged between systems. The following information is temporarily stored in an encrypted session in the user's browser:
+
+- The user's progress
+- Credentials for interacting with the eligibility verification services
+
+Sensitive user information exists in the following places:
+
+- To enroll in a senior discount, users need to [provide personal information to Login.gov](https://benefits.calitp.org/help#login-gov-verify).
+- Users need to [provide their credit or debit card information to our payment processor (Littlepay)](https://benefits.calitp.org/help#littlepay) to enroll in a discount.
+
+None of that information is accessible to the Benefits system/team.
+
+Learn more about the security/privacy practices of some of our third-party integrations:
+
+- [Amplitude](https://amplitude.com/amplitude-security-and-privacy)
+- [Littlepay](https://littlepay.com/privacy-policy/)
+- [Login.gov](https://www.login.gov/policy/)
+
+Benefits collects analytics on usage, without any identifying information. ([IP addresses are filtered out.](https://github.com/cal-itp/benefits/blob/3a5f7c28036b77355d7a137df4f33bd2a9362de1/benefits/core/templates/core/includes/analytics.html#L31))
+
+### Practices
+
+[Dependabot](https://github.com/features/security/software-supply-chain) immediately notifies the team of vulnerabilities in application dependencies.
+
+Upon doing new major integrations, features, or architectural changes, the Benefits team has a penetration test performed by a third party to ensure the security of the system.
+
+All code changes are reviewed by at least one other member of the engineering team, which is enforced through [branch protections](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/about-protected-branches).
 
 [benefits-repo]: https://github.com/cal-itp/benefits
 [calitp]: https://calitp.org

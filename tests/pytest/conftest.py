@@ -91,7 +91,6 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         selection_label="Select",
         start_title="Information",
         start_headline="Start",
-        start_sub_headline="Start",
         start_item_heading="Start Item",
         start_item_details="Start Item Description",
         form_title="Form",
@@ -104,7 +103,6 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         form_name_help_text="Name Help Text",
         form_name_placeholder="Name",
         unverified_title="Unverified",
-        unverified_headline="Unverified",
         unverified_blurb="Unverified Blurb",
     )
 
@@ -156,6 +154,7 @@ def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityV
         private_key=model_PemData,
         public_key=model_PemData,
         jws_signing_alg="alg",
+        eligibility_index_intro="",
     )
 
     # add many-to-many relationships after creation, need ID on both sides

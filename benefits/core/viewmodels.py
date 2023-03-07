@@ -128,6 +128,30 @@ class MediaItem:
             self.bullets = bullets
 
 
+class Modal:
+    """
+    Represents a modal dialog, triggered by a button:
+    * id: str
+    * aria_labelledby_id: str
+    * button_text: str
+    """
+
+    def __init__(self, **kwargs):
+        self.id = kwargs.get("id")
+        self.aria_labelledby_id = kwargs.get("aria_labelledby_id")
+        self.button_text = kwargs.get("button_text")
+
+
+class AgencySelector(Modal):
+    """
+    Represents the agency selector modal dialog.
+    """
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.agencies = [TransitAgency(a) for a in models.TransitAgency.all_active()]
+
+
 class Page:
     """
     Represents a page of content:
@@ -139,6 +163,7 @@ class Page:
     * forms: django.forms.Form[]
     * button: core.viewmodels.Button
     * buttons: core.viewmodels.Button[]
+    * modal: core.viewmodels.Modal
     * classes: str[]
     """
 
@@ -162,6 +187,9 @@ class Page:
             self.buttons = [self.buttons]
         if "button" in kwargs:
             self.buttons.append(kwargs.get("button"))
+
+        if "modal" in kwargs:
+            self.modal = kwargs.get("modal")
 
         self.classes = kwargs.get("classes", [])
         if not isinstance(self.classes, list):
@@ -269,6 +297,7 @@ class TransitAgency:
             self.merchant_id = model.merchant_id
             self.info_url = model.info_url
             self.phone = model.phone
+            self.eligibility_index_url = model.eligibility_index_url
 
     def context_dict(self):
         """Return a context dict for a TransitAgency."""

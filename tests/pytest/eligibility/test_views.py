@@ -92,8 +92,11 @@ def test_index_get_agency_single_verifier(
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
 
-    assert response.status_code == 302
-    assert response.url == reverse(ROUTE_START)
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_INDEX
+    assert "page" in response.context_data
+    assert len(response.context_data["page"].forms) > 0
+    assert isinstance(response.context_data["page"].forms[0], EligibilityVerifierSelectionForm)
 
 
 @pytest.mark.django_db

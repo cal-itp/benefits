@@ -1,0 +1,34 @@
+name: Cypress tests
+
+on: push
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  tests-cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Start app
+        run: |
+          touch .env
+          docker compose up --detach client server
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v5
+        env:
+          CYPRESS_baseUrl: http://localhost:8000
+        with:
+          command: npm test
+          working-directory: tests/cypress
+          wait-on: http://localhost:8000/healthcheck
+
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: tests/cypress/screenshots

@@ -2,6 +2,7 @@
 *.env
 *.mo
 *.tfbackend
+*.tmp
 benefits/core/migrations/0002_*.py
 !benefits/core/migrations/0002_sample_data.py
 static/

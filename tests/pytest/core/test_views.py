@@ -4,7 +4,15 @@ import pytest
 
 from benefits.core.models import EligibilityVerifier, TransitAgency
 import benefits.core.session
-from benefits.core.views import ROUTE_INDEX, ROUTE_HELP, ROUTE_LOGGED_OUT, TEMPLATE_AGENCY, bad_request, csrf_failure
+from benefits.core.views import (
+    ROUTE_INDEX,
+    ROUTE_HELP,
+    ROUTE_LOGGED_OUT,
+    TEMPLATE_INDEX,
+    TEMPLATE_AGENCY,
+    bad_request,
+    csrf_failure,
+)
 
 
 ROUTE_AGENCY = "core:agency_index"
@@ -47,8 +55,8 @@ def test_index_single_agency(mocker, model_TransitAgency, client, session_reset_
     response = client.get(path)
 
     session_reset_spy.assert_called_once()
-    assert response.status_code == 302
-    assert response.url == model_TransitAgency.index_url
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_INDEX
 
 
 @pytest.mark.django_db

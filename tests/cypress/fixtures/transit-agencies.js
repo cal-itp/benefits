@@ -1,3 +1,4 @@
-const agencies = require("../../../fixtures/05_transitagency.json");
+const agency = require("../../../benefits/core/migrations/sample_agency.json");
+const agencies = [{ fields: agency }];
 
 export default agencies;

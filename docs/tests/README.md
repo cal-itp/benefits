@@ -14,42 +14,40 @@ will install `cypress` and its dependencies on your machine. Make sure to run th
 
 1. Ensure you have Node.js and NPM available on your local machine:
 
-```bash
-node -v
-npm -v
-```
+   ```bash
+   node -v
+   npm -v
+   ```
 
-If not, [install Node.js](https://nodejs.org/en/download/) locally.
+   If not, [install Node.js](https://nodejs.org/en/download/) locally.
 
-2. Start the the application container
+2. Start the the application container:
 
-```bash
-cd .devcontainer/
-docker compose up -d client
-```
+   ```bash
+   docker compose up -d client
+   ```
 
 3. Change into the `cypress` directory:
 
-```bash
-cd ..
-cd tests/cypress
-```
+   ```bash
+   cd tests/cypress
+   ```
 
 4. Install all packages and `cypress`. Verify `cypress` installation succeeds:
 
-```bash
-npm install
-npx cypress install
-npx cypress verify
-```
+   ```bash
+   npm install
+   ```
 
 5. Run `cypress` with test environment variables and configuration variables:
 
-```bash
-CYPRESS_baseUrl=http://localhost:8000 npm run cypress:open
-```
+   ```bash
+   CYPRESS_baseUrl=http://localhost:8000 npm run cypress:open
+   ```
 
 See `tests/cypress/package.json` for more cypress scripts.
+
+As of Cypress 12.5.1 with Firefox 109, there is a CSRF issue that prevents the tests from passing; unclear if this is a bug in Cypress or what. Use one of the other browser options.
 
 ## Pytest
 
