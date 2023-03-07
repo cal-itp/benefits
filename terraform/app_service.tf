@@ -71,7 +71,7 @@ resource "azurerm_linux_web_app" "main" {
     "DJANGO_ALLOWED_HOSTS"    = "${local.secret_prefix}django-allowed-hosts)",
     "DJANGO_DEBUG"            = local.is_prod ? null : "${local.secret_prefix}django-debug)",
     "DJANGO_LOAD_SAMPLE_DATA" = "false",
-    "DJANGO_LOG_LEVEL"        = "DEBUG",
+    "DJANGO_LOG_LEVEL"        = "${local.secret_prefix}django-log-level)",
     "DJANGO_MIGRATIONS_DIR"   = "./config",
 
     "DJANGO_RATE_LIMIT"         = local.is_dev ? null : "${local.secret_prefix}django-rate-limit)",
