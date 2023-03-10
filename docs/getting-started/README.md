@@ -59,10 +59,9 @@ After initialization, the client is running running on `http://localhost:8000` b
 If `DJANGO_ADMIN=true`, the backend administrative interface can be accessed at the `/admin` route using the superuser account
 you setup as part of initialization.
 
-By default, [sample data][sample-data] is used to initialize Django. Alternatively you may:
+By default, sample values are used to initialize Django. Alternatively you may:
 
-- Modify the [migration file][data-migration] that handles data migration
-- (If `DJANGO_ADMIN=true`) use the backend administrative interface CRUD
+- Set environment variable values to use instead of the default sample values
 
 Stop the running services with:
 
@@ -71,6 +70,4 @@ docker compose down
 ```
 
 [docker]: https://www.docker.com/products/docker-desktop
-[sample-data]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations/0002_sample_data.py
-
 [data-migration]: (https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations)

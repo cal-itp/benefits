@@ -21,7 +21,7 @@ You can view what Git commit is deployed for a given environment by visitng the 
 ## Configuration
 
 [Configuration settings](../configuration/README.md) are stored as Application Configuration variables in Azure.
-[Data](../configuration/data.md) is loaded via Django data migrations. The migration files can be stored as blobs in in Azure Storage, and [mounted into the Web App container][az-mount].
+[Data](../configuration/data.md) is loaded via Django data migrations.
 
 ## Docker images
 
@@ -37,7 +37,6 @@ Docker images for each of the deploy branches are available from GitHub Containe
 [app-service]: https://docs.microsoft.com/en-us/azure/app-service/overview
 [dockerfile]: https://github.com/cal-itp/benefits/blob/dev/Dockerfile
 [az-webapp]: https://azure.microsoft.com/en-us/services/app-service/containers/
-[az-mount]: https://docs.microsoft.com/en-us/azure/app-service/configure-connect-to-azure-storage?tabs=portal&pivots=container-linux
 [gh-actions]: https://docs.github.com/en/actions
 [gh-webhook-event]: https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#package
 [gh-webhooks]: https://docs.github.com/en/github-ae@latest/developers/webhooks-and-events/webhooks
