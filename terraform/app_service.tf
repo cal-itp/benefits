@@ -44,15 +44,6 @@ resource "azurerm_linux_web_app" "main" {
     }
   }
 
-  storage_account {
-    access_key   = azurerm_storage_account.main.primary_access_key
-    account_name = azurerm_storage_account.main.name
-    name         = "benefits-config"
-    type         = "AzureBlob"
-    share_name   = azurerm_storage_container.config.name
-    mount_path   = "/home/calitp/app/config"
-  }
-
   app_settings = {
     # app setting used solely for refreshing secrets - see https://github.com/MicrosoftDocs/azure-docs/issues/79855#issuecomment-1265664801
     "change_me_to_refresh_secrets" = "change me in the portal to refresh all secrets",
