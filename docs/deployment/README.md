@@ -5,8 +5,7 @@
 ## Deployment process
 
 The Django application gets built into a [Docker image][dockerfile] with [NGINX](https://www.nginx.com/) and
-[Gunicorn](https://gunicorn.org/). SQLite is used within that same container to store configuration data and Azure Blobs are
-used for secrets; there is no external database.
+[Gunicorn](https://gunicorn.org/). SQLite is used within that same container to store configuration data; there is no external database.
 
 The application is deployed to an [Azure Web App Container][az-webapp] using three separate environments for `dev`, `test`,
 and `prod`.

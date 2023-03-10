@@ -4,7 +4,7 @@ The first steps of the Getting Started guide mention [creating an `.env` file][g
 
 The sections below outline in more detail the application environment variables that you may want to override, and their purpose. In App Service, this is more generally called the ["configuration"][app-service-config].
 
-See other topic pages in this section for more specific environment variable configurations. See [benefits-secrets][benefits-secrets] for values.
+See other topic pages in this section for more specific environment variable configurations.
 
 ## Docker
 
@@ -164,5 +164,4 @@ Enables [sending events to Sentry](../../deployment/troubleshooting/#error-monit
 Segments errors by which deployment they occur in. This defaults to `local`, and can be set to match one of the [environment names](../../deployment/infrastructure/#environments).
 
 [app-service-config]: https://docs.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal
-[benefits-secrets]: https://github.com/cal-itp/benefits-secrets
 [getting-started_create-env]: ../getting-started/README.md#create-an-environment-file
