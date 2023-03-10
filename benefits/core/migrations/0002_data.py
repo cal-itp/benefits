@@ -1,4 +1,4 @@
-"""Data migration which loads sample data.
+"""Data migration which loads configuration data for Benefits.
 """
 import json
 import os
@@ -7,7 +7,7 @@ from django.db import migrations
 from django.utils.translation import gettext_lazy as _
 
 
-def load_sample_data(app, *args, **kwargs):
+def load_data(app, *args, **kwargs):
     EligibilityType = app.get_model("core", "EligibilityType")
 
     mst_senior_type = EligibilityType.objects.create(
@@ -271,5 +271,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(load_sample_data),
+        migrations.RunPython(load_data),
     ]
