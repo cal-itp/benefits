@@ -1,14 +1,8 @@
 # Configuration data
 
-!!! example "Sample data provided by data migration"
+!!! example "Data migration file"
 
-    [`benefits/core/migrations/0002_sample_data.py`][data-sample]
-
-!!! example "Helper migration file to define data migration order"
-
-    [`benefits/core/migrations/0003_data_migration_order.py`][helper-migration]
-
-    Since our initial data migration files are assumed to start with `0002` and depend only on `0001_initial`, this migration file ensures the migration graph has a defined order (which is required for the migration to run). It looks in the `benefits/core/migrations` directory for migration files starting with `0002` and declares them in its dependencies list.
+    [`benefits/core/migrations/0002_data.py`][data-migration]
 
 !!! tldr "Django docs"
 
@@ -20,11 +14,10 @@ Django [data migrations](https://docs.djangoproject.com/en/4.0/topics/migrations
 
 Migrations are run as the application starts up. See the [`bin/init.sh`][init] script.
 
-The sample data provided in the repository is sufficient to run the app locally and interact with e.g. the sample Transit
+The sample values provided in the repository are sufficient to run the app locally and interact with e.g. the sample Transit
 Agencies.
 
-During the [deployment](../deployment/README.md) process, an environment-specific data migration is used to build that
-environment's configuration database.
+During the [deployment](../deployment/README.md) process, environment-specific values are set in environment variables and are read by the data migration file to build that environment's configuration database. See the [data migration file][data-migration] for the environment variable names.
 
 ## Sample data
 
@@ -68,38 +61,9 @@ Run these commands from within the repository root, inside the devcontainer:
 bin/init.sh
 ```
 
-## Loading new data for different environment
-
-Django will run all migration files found in an app's `migrations` module.
-
-To load new data for a different environment:
-
-1. (Optional) Set an environment variable `DJANGO_LOAD_SAMPLE_DATA` to `false` if you don't want the `core` app's sample data to be loaded.
-1. Create a data migration file, and make sure the name is prefixed with `0002`. (The migration process for Benefits expects data migration files to named as such). The basic structure for the contents of this file is:
-```python
-from django.db import migrations
-
-
-def load_data(app, *args, **kwargs):
-    pass
-
-
-class Migration(migrations.Migration):
-    dependencies = [
-        ("core", "0001_initial"),
-    ]
-
-    operations = [
-        migrations.RunPython(load_data),
-    ]
-```
-1. Put this file under `benefits/core/migrations`
-1. If `DJANGO_LOAD_SAMPLE_DATA` is `false`, you can also set [`DJANGO_MIGRATIONS_DIR`](../environment-variables/#django_migrations_dir) to a directory path, and put your data migration there.
-
-
 [core-models]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/models.py
 [django-load-initial-data]: https://docs.djangoproject.com/en/4.0/howto/initial-data/
 [eligibility-server]: https://docs.calitp.org/eligibility-server
-[data-sample]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations/0002_sample_data.py
+[data-migration]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations/0002_data.py
 [helper-migration]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations/0003_data_migration_order.py
 [init]: https://github.com/cal-itp/benefits/blob/dev/bin/init.sh

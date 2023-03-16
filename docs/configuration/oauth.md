@@ -24,21 +24,7 @@ for more details about what features are available. Specifically, from Authlib w
 
 OAuth settings are configured as instances of the [`AuthProvider` model](../development/models-migrations.md).
 
-The [sample data](./data.md) contain example `AuthProvider` configurations; create new instances to integrate with
-real Open ID Connect providers.
-
-Authlib's [Django OpenID Connect Client example][authlib-django-oidc] for Google could be adapted into a Benefits model,
-(with extraneous fields omitted) like:
-
-```python
-  AuthProvider = app.get_model("core", "AuthProvider")
-  AuthProvider.objects.create(
-      client_name="google",
-      client_id="google-client-id",
-      authority="https://accounts.google.com",
-      scope="profile email"
-  )
-```
+The [data migration file](./data.md) contains sample values for an `AuthProvider` configuration. You can set values for a real Open ID Connect provider in environment variables so that they are used instead of the sample values.
 
 ## Django usage
 
@@ -54,6 +40,5 @@ startup.
 Consumers call `oauth.create_client(client_name)` with the name of a previously registered client to obtain an Authlib client
 instance.
 
-[authlib-django-oidc]: https://docs.authlib.org/en/latest/client/django.html#django-openid-connect-client
 [oauth-app-ready]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/__init__.py
 [oauth-client]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/client.py
