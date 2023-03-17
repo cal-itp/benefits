@@ -153,6 +153,20 @@ Comma-separated list of hosts which are trusted origins for unsafe requests (e.g
 
 Comma-separated list of User-Agent strings which, when present as an HTTP header, should only receive healthcheck responses. Used by our `HealthcheckUserAgents` middleware.
 
+## `requests` configuration
+
+!!! tldr "`requests` docs"
+
+    [Docs for timeouts](https://requests.readthedocs.io/en/latest/user/advanced/#timeouts)
+
+### `REQUESTS_CONNECT_TIMEOUT`
+
+The number of seconds `requests` will wait for the client to establish a connection to a remote machine. Defaults to 3 seconds.
+
+### `REQUESTS_READ_TIMEOUT`
+
+The number of seconds the client will wait for the server to send a response. Defaults to 1 second.
+
 ## Cypress tests
 
 !!! tldr "Cypress docs"

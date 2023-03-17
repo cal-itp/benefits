@@ -309,3 +309,9 @@ CSP_STYLE_SRC = [
 ]
 env_style_src = _filter_empty(os.environ.get("DJANGO_CSP_STYLE_SRC", "").split(","))
 CSP_STYLE_SRC.extend(env_style_src)
+
+# Configuration for requests
+# https://requests.readthedocs.io/en/latest/user/advanced/#timeouts
+
+REQUESTS_CONNECT_TIMEOUT = os.environ.get("REQUESTS_CONNECT_TIMEOUT", 3)
+REQUESTS_READ_TIMEOUT = os.environ.get("REQUESTS_READ_TIMEOUT", 1)
