@@ -128,7 +128,12 @@ class Client:
             payload = self._payload(event)
             logger.debug(f"Sending event payload: {payload}")
 
-            r = requests.post(self.url, headers=self.headers, json=payload)
+            r = requests.post(
+                self.url,
+                headers=self.headers,
+                json=payload,
+                timeout=settings.REQUESTS_TIMEOUT,
+            )
             if r.status_code == 200:
                 logger.debug(f"Event sent successfully: {r.json()}")
             elif r.status_code == 400:

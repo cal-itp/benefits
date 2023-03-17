@@ -5,6 +5,7 @@ import logging
 from tempfile import NamedTemporaryFile
 import time
 
+from django.conf import settings
 import requests
 
 
@@ -123,15 +124,42 @@ class Client:
 
     def _get(self, url, payload, headers=None):
         h = self._headers(headers)
-        return self._cert_request(lambda verify, cert: requests.get(url, headers=h, params=payload, verify=verify, cert=cert))
+        return self._cert_request(
+            lambda verify, cert: requests.get(
+                url,
+                headers=h,
+                params=payload,
+                verify=verify,
+                cert=cert,
+                timeout=settings.REQUESTS_TIMEOUT,
+            )
+        )
 
     def _patch(self, url, payload, headers=None):
         h = self._headers(headers)
-        return self._cert_request(lambda verify, cert: requests.patch(url, headers=h, json=payload, verify=verify, cert=cert))
+        return self._cert_request(
+            lambda verify, cert: requests.patch(
+                url,
+                headers=h,
+                json=payload,
+                verify=verify,
+                cert=cert,
+                timeout=settings.REQUESTS_TIMEOUT,
+            )
+        )
 
     def _post(self, url, payload, headers=None):
         h = self._headers(headers)
-        return self._cert_request(lambda verify, cert: requests.post(url, headers=h, json=payload, verify=verify, cert=cert))
+        return self._cert_request(
+            lambda verify, cert: requests.post(
+                url,
+                headers=h,
+                json=payload,
+                verify=verify,
+                cert=cert,
+                timeout=settings.REQUESTS_TIMEOUT,
+            )
+        )
 
     def _cert_request(self, request_func):
         """

@@ -26,6 +26,6 @@ def verify(form_data: dict) -> bool:
         return False
 
     payload = dict(secret=settings.RECAPTCHA_SECRET_KEY, response=form_data[DATA_FIELD])
-    response = requests.post(settings.RECAPTCHA_VERIFY_URL, payload).json()
+    response = requests.post(settings.RECAPTCHA_VERIFY_URL, payload, timeout=settings.REQUESTS_TIMEOUT).json()
 
     return bool(response["success"])
