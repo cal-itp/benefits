@@ -3,6 +3,7 @@ The core application: Common model definitions.
 """
 import logging
 
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
@@ -31,7 +32,7 @@ class PemData(models.Model):
         if self.text:
             return self.text
         elif self.remote_url:
-            self.text = requests.get(self.remote_url).text
+            self.text = requests.get(self.remote_url, timeout=settings.REQUESTS_TIMEOUT).text
 
         self.save()
         return self.text
