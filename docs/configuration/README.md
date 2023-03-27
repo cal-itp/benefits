@@ -13,6 +13,8 @@ startup.
 
 The model objects defined in the data migration file are also loaded into and seed Django's database at application startup time.
 
+ See the [Setting secrets](../deployment/secrets) section for how to set secret values for a deployment.
+
 ## Django settings
 
 !!! example "Settings file"
