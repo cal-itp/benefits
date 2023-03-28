@@ -1,17 +1,19 @@
 # Configuring the Benefits app
 
-The [Getting Started][getting-started] section and sample configuration in the repository gives enough detail to
-run the app locally. But further configuration is required before many of the integrations and features are active.
+The [Getting Started][getting-started] section and sample configuration values in the repository give enough detail to
+run the app locally, but further configuration is required before many of the integrations and features are active.
 
-There are two primary components of the application configuration include:
+There are two primary components of the application configuration:
 
 - Overall app settings in [environment variables][env-vars]
-- Content and more specific configurations in [sample models][data]
+- Content and more specific configurations in [the data migration file][data]
 
-The majority (but not all) of the environment variables are read into [Django settings](#django-settings) during application
+Many (but not all) of the environment variables are read into [Django settings](#django-settings) during application
 startup.
 
-The sample models are also loaded into and seed Django's database at application startup time.
+The model objects defined in the data migration file are also loaded into and seed Django's database at application startup time.
+
+ See the [Setting secrets](../deployment/secrets) section for how to set secret values for a deployment.
 
 ## Django settings
 

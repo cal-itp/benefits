@@ -151,8 +151,6 @@ DATABASES = {
     }
 }
 
-LOAD_SAMPLE_DATA = os.environ.get("DJANGO_LOAD_SAMPLE_DATA", "true").lower() != "false"
-
 # Password validation
 
 AUTH_PASSWORD_VALIDATORS = []
@@ -309,3 +307,10 @@ CSP_STYLE_SRC = [
 ]
 env_style_src = _filter_empty(os.environ.get("DJANGO_CSP_STYLE_SRC", "").split(","))
 CSP_STYLE_SRC.extend(env_style_src)
+
+# Configuration for requests
+# https://requests.readthedocs.io/en/latest/user/advanced/#timeouts
+
+REQUESTS_CONNECT_TIMEOUT = os.environ.get("REQUESTS_CONNECT_TIMEOUT", 3)
+REQUESTS_READ_TIMEOUT = os.environ.get("REQUESTS_READ_TIMEOUT", 1)
+REQUESTS_TIMEOUT = (REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT)

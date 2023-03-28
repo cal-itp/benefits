@@ -90,7 +90,7 @@ git reset --hard origin/prod
 
 git tag YYYY.0M.R
 
-git push --tags
+git push origin YYYY.0M.R
 ```
 
 ## 6. [Generate release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
