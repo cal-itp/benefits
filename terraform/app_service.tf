@@ -117,6 +117,7 @@ resource "azurerm_linux_web_app" "main" {
     "SACRT_AGENCY_SHORT_NAME"                        = "${local.secret_prefix}sacrt-agency-short-name)"
     "SACRT_AGENCY_LONG_NAME"                         = "${local.secret_prefix}sacrt-agency-long-name)"
     "SACRT_AGENCY_MERCHANT_ID"                       = "${local.secret_prefix}sacrt-agency-merchant-id)"
+    "SACRT_AGENCY_ACTIVE"                            = "${local.secret_prefix}sacrt-agency-active)"
     "SACRT_AGENCY_JWS_SIGNING_ALG"                   = "${local.secret_prefix}sacrt-agency-jws-signing-alg)"
   }
 

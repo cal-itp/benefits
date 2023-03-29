@@ -254,7 +254,7 @@ PEM DATA
         merchant_id=os.environ.get("SACRT_AGENCY_MERCHANT_ID", "sacrt"),
         info_url="https://sacrt.com/",
         phone="916-321-2877",
-        active=True,
+        active=os.environ.get("SACRT_AGENCY_ACTIVE", "True").lower() == "true",
         private_key=client_private_key,
         public_key=client_public_key,
         jws_signing_alg=os.environ.get("SACRT_AGENCY_JWS_SIGNING_ALG", "RS256"),
