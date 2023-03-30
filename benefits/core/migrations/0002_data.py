@@ -1,19 +1,13 @@
-"""Data migration which loads sample data.
-Set environment variable DJANGO_LOAD_SAMPLE_DATA to False to skip loading sample data.
+"""Data migration which loads configuration data for Benefits.
 """
 import json
 import os
 
-from django.conf import settings
 from django.db import migrations
 from django.utils.translation import gettext_lazy as _
 
 
-def load_sample_data(app, *args, **kwargs):
-    if not settings.LOAD_SAMPLE_DATA:
-        print("  LOAD_SAMPLE_DATA is set to False, skipping sample data")
-        return
-
+def load_data(app, *args, **kwargs):
     EligibilityType = app.get_model("core", "EligibilityType")
 
     mst_senior_type = EligibilityType.objects.create(
@@ -260,7 +254,7 @@ PEM DATA
         merchant_id=os.environ.get("SACRT_AGENCY_MERCHANT_ID", "sacrt"),
         info_url="https://sacrt.com/",
         phone="916-321-2877",
-        active=True,
+        active=os.environ.get("SACRT_AGENCY_ACTIVE", "True").lower() == "true",
         private_key=client_private_key,
         public_key=client_public_key,
         jws_signing_alg=os.environ.get("SACRT_AGENCY_JWS_SIGNING_ALG", "RS256"),
@@ -277,5 +271,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(load_sample_data),
+        migrations.RunPython(load_data),
     ]

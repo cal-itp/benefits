@@ -44,15 +44,6 @@ resource "azurerm_linux_web_app" "main" {
     }
   }
 
-  storage_account {
-    access_key   = azurerm_storage_account.main.primary_access_key
-    account_name = azurerm_storage_account.main.name
-    name         = "benefits-config"
-    type         = "AzureBlob"
-    share_name   = azurerm_storage_container.config.name
-    mount_path   = "/home/calitp/app/config"
-  }
-
   app_settings = {
     # app setting used solely for refreshing secrets - see https://github.com/MicrosoftDocs/azure-docs/issues/79855#issuecomment-1265664801
     "change_me_to_refresh_secrets" = "change me in the portal to refresh all secrets",
@@ -70,9 +61,7 @@ resource "azurerm_linux_web_app" "main" {
     "DJANGO_ADMIN"            = (local.is_prod || local.is_test) ? null : "${local.secret_prefix}django-admin)",
     "DJANGO_ALLOWED_HOSTS"    = "${local.secret_prefix}django-allowed-hosts)",
     "DJANGO_DEBUG"            = local.is_prod ? null : "${local.secret_prefix}django-debug)",
-    "DJANGO_LOAD_SAMPLE_DATA" = "false",
     "DJANGO_LOG_LEVEL"        = "${local.secret_prefix}django-log-level)",
-    "DJANGO_MIGRATIONS_DIR"   = "./config",
 
     "DJANGO_RATE_LIMIT"         = local.is_dev ? null : "${local.secret_prefix}django-rate-limit)",
     "DJANGO_RATE_LIMIT_METHODS" = local.is_dev ? null : "${local.secret_prefix}django-rate-limit-methods)",
@@ -128,6 +117,7 @@ resource "azurerm_linux_web_app" "main" {
     "SACRT_AGENCY_SHORT_NAME"                        = "${local.secret_prefix}sacrt-agency-short-name)"
     "SACRT_AGENCY_LONG_NAME"                         = "${local.secret_prefix}sacrt-agency-long-name)"
     "SACRT_AGENCY_MERCHANT_ID"                       = "${local.secret_prefix}sacrt-agency-merchant-id)"
+    "SACRT_AGENCY_ACTIVE"                            = "${local.secret_prefix}sacrt-agency-active)"
     "SACRT_AGENCY_JWS_SIGNING_ALG"                   = "${local.secret_prefix}sacrt-agency-jws-signing-alg)"
   }
 

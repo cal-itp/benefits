@@ -1,3 +1,4 @@
+from django.conf import settings
 import pytest
 
 from benefits.core.models import EligibilityType, EligibilityVerifier, TransitAgency
@@ -29,7 +30,7 @@ def test_PemData_data_remote(model_PemData, mocker):
     assert model_PemData.text
     assert data == "PEM text"
     assert data == model_PemData.text
-    requests_spy.assert_called_once_with(model_PemData.remote_url)
+    requests_spy.assert_called_once_with(model_PemData.remote_url, timeout=settings.REQUESTS_TIMEOUT)
 
 
 @pytest.mark.django_db
