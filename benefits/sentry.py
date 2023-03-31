@@ -77,6 +77,7 @@ def configure():
             environment=SENTRY_ENVIRONMENT,
             release=release,
             in_app_include=["benefits"],
+            # send_default_pii must be False (the default) for a custom EventScrubber/denylist
             # https://docs.sentry.io/platforms/python/data-management/sensitive-data/#event_scrubber
             send_default_pii=False,
             event_scrubber=EventScrubber(denylist=get_denylist()),
