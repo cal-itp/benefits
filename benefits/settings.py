@@ -311,6 +311,14 @@ CSP_STYLE_SRC.extend(env_style_src)
 # Configuration for requests
 # https://requests.readthedocs.io/en/latest/user/advanced/#timeouts
 
-REQUESTS_CONNECT_TIMEOUT = os.environ.get("REQUESTS_CONNECT_TIMEOUT", 3)
-REQUESTS_READ_TIMEOUT = os.environ.get("REQUESTS_READ_TIMEOUT", 1)
+try:
+    REQUESTS_CONNECT_TIMEOUT = int(os.environ.get("REQUESTS_CONNECT_TIMEOUT"))
+except Exception:
+    REQUESTS_CONNECT_TIMEOUT = 3
+
+try:
+    REQUESTS_READ_TIMEOUT = int(os.environ.get("REQUESTS_READ_TIMEOUT"))
+except Exception:
+    REQUESTS_READ_TIMEOUT = 20
+
 REQUESTS_TIMEOUT = (REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT)

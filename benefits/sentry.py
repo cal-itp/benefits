@@ -1,9 +1,12 @@
-from benefits import VERSION
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
 import shutil
 import os
 import subprocess
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.scrubber import EventScrubber, DEFAULT_DENYLIST
+
+from benefits import VERSION
 
 
 SENTRY_ENVIRONMENT = os.environ.get("SENTRY_ENVIRONMENT", "local")
@@ -52,6 +55,12 @@ def get_release() -> str:
             return VERSION
 
 
+def get_denylist():
+    # custom denylist
+    denylist = DEFAULT_DENYLIST + ["sub", "name"]
+    return denylist
+
+
 def configure():
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
     if SENTRY_DSN:
@@ -68,6 +77,10 @@ def configure():
             environment=SENTRY_ENVIRONMENT,
             release=release,
             in_app_include=["benefits"],
+            # send_default_pii must be False (the default) for a custom EventScrubber/denylist
+            # https://docs.sentry.io/platforms/python/data-management/sensitive-data/#event_scrubber
+            send_default_pii=False,
+            event_scrubber=EventScrubber(denylist=get_denylist()),
         )
     else:
         print("SENTRY_DSN not set, so won't send events")
