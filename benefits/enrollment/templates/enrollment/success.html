@@ -18,7 +18,7 @@
 {% endblock inner-content %}
 
 {% block call-to-action %}
-  {% if page.buttons|length_is:"1" %}
+  {% if page.buttons|length == 1 %}
     <div class="row d-flex justify-content-lg-center flex-lg-row">
       <div class="col-9 col-lg-10 d-flex justify-content-end logout-paragraph">
         <p>
