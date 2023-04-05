@@ -55,13 +55,16 @@ body:
       options:
         - label: Create a branch called release/version from the source branch
         - label: Bump the application version
+        - label: "(If applicable): update staging environment's Key Vault secrets"
         - label: Open a PR for the release branch into the staging target, merge
-        - label: "(If applicable): update staging environment's Key Vault secrets, trigger secrets refresh"
-        - label: "(If applicable): open another PR from dev to test"
-        - label: "(If applicable): update test environment's Key Vault secrets, trigger secrets refresh"
+        - label: "(If applicable): [trigger secrets refresh](https://docs.calitp.org/benefits/deployment/secrets/#refreshing-secrets)"
+        - label: "(If applicable): update test environment's Key Vault secrets"
+        - label: "(If applicable): open another PR from dev to test, merge"
+        - label: "(If applicable): trigger secrets refresh"
         - label: QA the app in test
-        - label: "(If applicable): update production environment's Key Vault secrets, trigger secrets refresh"
+        - label: "(If applicable): update production environment's Key Vault secrets"
         - label: Open a PR to for the test branch into prod, merge
+        - label: "(If applicable): trigger secrets refresh"
         - label: QA the app in prod
         - label: Tag the release on the prod branch, push the tag to GitHub
         - label: Create a release in GitHub for the tag, generating release notes
