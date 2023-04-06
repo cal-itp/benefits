@@ -33,7 +33,7 @@ flowchart LR
 Notes:
 
 - [Eligibility Server documentation](https://docs.calitp.org/eligibility-server/)
-- [More details about the Benefits architecture](../deployment/infrastructure/#architecture)
+- [More details about the Benefits architecture](../../deployment/infrastructure/#architecture)
 - Velocity is the system MST uses to manage Courtesy Cards
 
 ## Process
