@@ -1,4 +1,4 @@
-# College discount
+# College Discount
 
 We have another potential transit discount use case, which is for students/faculty/staff from the Monterey-Salinas Transit (MST) area. We will be taking [the existing program](https://mst.org/fares/overview/) where students from certain schools ride free, expanding it to faculty and staff in some cases, and allowing those riders to enroll their contactless bank (credit/debit) cards for half-price (50%) discounts during fall and winter breaks.
 
