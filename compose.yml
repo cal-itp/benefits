@@ -38,6 +38,7 @@ services:
   server:
     image: ghcr.io/cal-itp/eligibility-server:dev
     env_file: .devcontainer/server/.env.server
+    platform: linux/amd64
     ports:
       - "8000"
     volumes:
