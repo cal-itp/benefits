@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ghcr.io/cal-itp/docker-python-web:main
+FROM ghcr.io/cal-itp/docker-python-web:main
 
 # install python dependencies
 COPY appcontainer/requirements.txt requirements.txt

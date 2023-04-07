@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 benefits_client:latest
+FROM benefits_client:latest
 
 # install devcontainer requirements
 COPY .devcontainer/requirements.txt .devcontainer/requirements.txt
