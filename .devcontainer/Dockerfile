@@ -1,7 +1,7 @@
 FROM benefits_client:latest
 
 # install devcontainer requirements
-RUN pip install -e .[dev]
+RUN pip install -e .[dev,test]
 
 # docs requirements are in a separate file for the GitHub Action
 COPY docs/requirements.txt docs/requirements.txt

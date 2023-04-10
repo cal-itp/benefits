@@ -27,6 +27,8 @@ dev = [
     "djlint",
     "flake8",
     "pre-commit",
+]
+test = [
     "pytest",
     "pytest-cov",
     "pytest-django",
