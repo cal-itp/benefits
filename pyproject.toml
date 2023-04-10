@@ -66,3 +66,6 @@ DJANGO_SETTINGS_MODULE = "benefits.settings"
 markers = [
     "request_path: use with session_request to initialize with the given path",
 ]
+
+[tool.setuptools]
+packages = ["benefits"]
