@@ -5,11 +5,11 @@ on:
     branches: [dev]
     types: [opened]
     paths:
-      - '.github/workflows/deploy-*.yml'
-      - 'benefits/**'
-      - 'bin/**'
+      - ".github/workflows/deploy-*.yml"
+      - "benefits/**"
+      - "bin/**"
       - Dockerfile
-      - requirements.txt
+      - pyproject.toml
 
 jobs:
   label-deployment-dev:
