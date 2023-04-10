@@ -63,7 +63,7 @@ body:
         - label: "(If applicable): trigger secrets refresh"
         - label: QA the app in test
         - label: "(If applicable): update production environment's Key Vault secrets"
-        - label: Open a PR to for the test branch into prod, merge
+        - label: Open a PR for the test branch into prod, merge
         - label: "(If applicable): trigger secrets refresh"
         - label: QA the app in prod
         - label: Tag the release on the prod branch, push the tag to GitHub
