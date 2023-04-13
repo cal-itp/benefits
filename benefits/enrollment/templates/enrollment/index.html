@@ -15,7 +15,7 @@
 
   {% comment %} This Javascript code must be before the forms. {% endcomment %}
   {% if payment_processor %}
-    <script>
+    <script nonce="{{ request.csp_nonce }}">
             var startedEvent = "started payment connection", closedEvent = "closed payment connection";
 
             $.getScript("{{ payment_processor.card_tokenize_url }}")
