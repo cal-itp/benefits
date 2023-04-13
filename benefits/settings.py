@@ -271,9 +271,9 @@ RECAPTCHA_ENABLED = all((RECAPTCHA_API_URL, RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET
 # In particular, note that the inner single-quotes are required!
 # https://django-csp.readthedocs.io/en/latest/configuration.html#policy-settings
 
-CSP_DEFAULT_SRC = ["'self'"]
+CSP_BASE_URI = ["'none'"]
 
-CSP_IMG_SRC = ["'self'", "data:"]
+CSP_DEFAULT_SRC = ["'self'"]
 
 CSP_CONNECT_SRC = ["'self'", "https://api.amplitude.com/"]
 env_connect_src = _filter_empty(os.environ.get("DJANGO_CSP_CONNECT_SRC", "").split(","))
@@ -292,8 +292,15 @@ if RECAPTCHA_ENABLED:
 if len(env_frame_src) > 0:
     CSP_FRAME_SRC = env_frame_src
 
+CSP_IMG_SRC = ["'self'", "data:"]
+
+# Configuring strict Content Security Policy
+# https://django-csp.readthedocs.io/en/latest/nonce.html
+CSP_INCLUDE_NONCE_IN = ["script-src"]
+
+CSP_OBJECT_SRC = ["'none'"]
+
 CSP_SCRIPT_SRC = [
-    "'unsafe-inline'",
     "https://cdn.amplitude.com/libs/",
     "https://cdn.jsdelivr.net/",
     "*.littlepay.com",
@@ -305,7 +312,6 @@ if RECAPTCHA_ENABLED:
 
 CSP_STYLE_SRC = [
     "'self'",
-    "'unsafe-inline'",
     "https://california.azureedge.net/",
     "https://fonts.googleapis.com/css",
 ]
