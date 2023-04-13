@@ -18,7 +18,7 @@
     <script nonce="{{ request.csp_nonce }}">
             var startedEvent = "started payment connection", closedEvent = "closed payment connection";
 
-            $.getScript("{{ payment_processor.card_tokenize_url }}")
+            $.ajax({ dataType: "script", attrs: { nonce: "{{ request.csp_nonce }}"}, url: "{{ payment_processor.card_tokenize_url }}" })
                 .done(function() {
                 $.get("{{ payment_processor.access_token_url }}", function(data) {
                     $(".loading").remove();
