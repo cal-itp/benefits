@@ -78,6 +78,7 @@ resource "azurerm_linux_web_app" "main" {
     # Sentry
     "SENTRY_DSN"         = "${local.secret_prefix}sentry-dsn)",
     "SENTRY_ENVIRONMENT" = local.env_name,
+    "SENTRY_REPORT_URI"  = "${local.secret_prefix}sentry-report-uri)",
 
     # Environment variables for data migration
     "MST_SENIOR_GROUP_ID"                            = "${local.secret_prefix}mst-senior-group-id)",

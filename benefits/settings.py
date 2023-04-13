@@ -300,6 +300,9 @@ CSP_INCLUDE_NONCE_IN = ["script-src"]
 
 CSP_OBJECT_SRC = ["'none'"]
 
+if sentry.SENTRY_CSP_REPORT_URI:
+    CSP_REPORT_URI = [sentry.SENTRY_CSP_REPORT_URI]
+
 CSP_SCRIPT_SRC = [
     "https://cdn.amplitude.com/libs/",
     "https://cdn.jsdelivr.net/",

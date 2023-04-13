@@ -10,6 +10,7 @@ from benefits import VERSION
 
 
 SENTRY_ENVIRONMENT = os.environ.get("SENTRY_ENVIRONMENT", "local")
+SENTRY_CSP_REPORT_URI = None
 
 
 def git_available():
@@ -82,5 +83,9 @@ def configure():
             send_default_pii=False,
             event_scrubber=EventScrubber(denylist=get_denylist()),
         )
+
+        # override the module-level variable when configuration happens, if set
+        global SENTRY_CSP_REPORT_URI
+        SENTRY_CSP_REPORT_URI = os.environ.get("SENTRY_REPORT_URI", "")
     else:
         print("SENTRY_DSN not set, so won't send events")
