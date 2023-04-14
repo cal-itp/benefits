@@ -160,47 +160,6 @@ def test_oauth_token_default(app_request):
 
 
 @pytest.mark.django_db
-def test_rate_limit_counter_default(app_request):
-    assert session.rate_limit_counter(app_request) == 0
-
-
-@pytest.mark.django_db
-def test_rate_limit_counter_increment(app_request):
-    session.reset_rate_limit(app_request)
-    session.increment_rate_limit_counter(app_request)
-
-    c1 = session.rate_limit_counter(app_request)
-    assert isinstance(c1, int)
-    assert c1 > 0
-
-    session.increment_rate_limit_counter(app_request)
-
-    c2 = session.rate_limit_counter(app_request)
-    assert c2 == c1 + 1
-
-
-@pytest.mark.django_db
-def test_rate_limit_reset(mocker, app_request):
-    mocker.patch.object(session.settings, "RATE_LIMIT_PERIOD", 100)
-    t0 = int(time.time())
-
-    session.reset_rate_limit(app_request)
-
-    assert session.rate_limit_counter(app_request) == 0
-    assert session.rate_limit_time(app_request) >= t0 + 100
-
-
-@pytest.mark.django_db
-def test_rate_limit_time_default(app_request):
-    # a reset session also resets rate limit time (t0), which should have already happened coming into this test
-    t0 = session.rate_limit_time(app_request)
-    t1 = int(time.time())
-
-    # rate limit expiry time should be in the future
-    assert t0 >= t1
-
-
-@pytest.mark.django_db
 def test_reset_agency(model_TransitAgency, app_request):
     session.update(app_request, agency=model_TransitAgency)
 

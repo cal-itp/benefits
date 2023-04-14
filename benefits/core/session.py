@@ -6,7 +6,6 @@ import logging
 import time
 import uuid
 
-from django.conf import settings
 from django.urls import reverse
 
 from . import models
@@ -22,8 +21,6 @@ _ELIGIBILITY = "eligibility"
 _ENROLLMENT_TOKEN = "enrollment_token"
 _ENROLLMENT_TOKEN_EXP = "enrollment_token_exp"
 _LANG = "lang"
-_LIMITCOUNTER = "limitcounter"
-_LIMITUNTIL = "limituntil"
 _OAUTH_CLAIM = "oauth_claim"
 _OAUTH_TOKEN = "oauth_token"
 _ORIGIN = "origin"
@@ -54,7 +51,6 @@ def context_dict(request):
     logger.debug("Get session context dict")
     return {
         _AGENCY: agency(request).slug if active_agency(request) else None,
-        _LIMITCOUNTER: rate_limit_counter(request),
         _DEBUG: debug(request),
         _DID: did(request),
         _ELIGIBILITY: eligibility(request),
@@ -64,7 +60,6 @@ def context_dict(request):
         _OAUTH_TOKEN: oauth_token(request),
         _OAUTH_CLAIM: oauth_claim(request),
         _ORIGIN: origin(request),
-        _LIMITUNTIL: rate_limit_time(request),
         _START: start(request),
         _UID: uid(request),
         _VERIFIER: verifier(request),
@@ -174,33 +169,6 @@ def origin(request):
     return request.session.get(_ORIGIN)
 
 
-def rate_limit_counter(request):
-    """Get this session's rate limit counter."""
-    logger.debug("Get rate limit counter")
-    return request.session.get(_LIMITCOUNTER)
-
-
-def increment_rate_limit_counter(request):
-    """Adds 1 to this session's rate limit counter."""
-    logger.debug("Increment rate limit counter")
-    c = rate_limit_counter(request)
-    request.session[_LIMITCOUNTER] = int(c) + 1
-
-
-def reset_rate_limit(request):
-    """Reset this session's rate limit counter and time."""
-    logger.debug("Reset rate limit")
-    request.session[_LIMITCOUNTER] = 0
-    # get the current time in Unix seconds, then add RATE_LIMIT_PERIOD seconds
-    request.session[_LIMITUNTIL] = int(time.time()) + settings.RATE_LIMIT_PERIOD
-
-
-def rate_limit_time(request):
-    """Get this session's rate limit time, a Unix timestamp after which the session's rate limt resets."""
-    logger.debug("Get rate limit time")
-    return request.session.get(_LIMITUNTIL)
-
-
 def reset(request):
     """Reset the session for the request."""
     logger.debug("Reset session")
@@ -219,7 +187,6 @@ def reset(request):
         u = str(uuid.uuid4())
         request.session[_UID] = u
         request.session[_DID] = str(uuid.UUID(hashlib.sha512(bytes(u, "utf8")).hexdigest()[:32]))
-        reset_rate_limit(request)
 
 
 def start(request):

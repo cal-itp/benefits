@@ -241,21 +241,6 @@ sentry.configure()
 
 ANALYTICS_KEY = os.environ.get("ANALYTICS_KEY")
 
-# rate limit configuration
-# these should match the values in rate-limit.cy.js
-
-# number of requests allowed in the given period
-RATE_LIMIT = int(os.environ.get("DJANGO_RATE_LIMIT", 5))
-
-# HTTP request methods to rate limit
-RATE_LIMIT_METHODS = os.environ.get("DJANGO_RATE_LIMIT_METHODS", "POST").upper().split(",")
-
-# number of seconds before additional requests are denied
-RATE_LIMIT_PERIOD = int(os.environ.get("DJANGO_RATE_LIMIT_PERIOD", 60))
-
-# Rate Limit feature flag
-RATE_LIMIT_ENABLED = all((RATE_LIMIT > 0, len(RATE_LIMIT_METHODS) > 0, RATE_LIMIT_PERIOD > 0))
-
 # reCAPTCHA configuration
 
 RECAPTCHA_API_URL = os.environ.get("DJANGO_RECAPTCHA_API_URL", "https://www.google.com/recaptcha/api.js")
