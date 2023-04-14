@@ -39,6 +39,7 @@ plugins:
         "getting-started/development.md": "development/README.md"
         "getting-started/docker-dynamic-ports.md": "development/docker-dynamic-ports.md"
         "students.md": "use-cases/college.md"
+        "use-cases/courtesy-cards.md": "use-cases/agency-cards.md"
         "use-cases/students.md": "use-cases/college.md"
 
 extra_css:
