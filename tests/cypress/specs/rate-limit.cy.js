@@ -1,5 +1,5 @@
-const agencies = require("../fixtures/transit-agencies");
 const users = require("../fixtures/users.json");
+const helpers = require("./helpers");
 const { eligibility_url, post_confirm } = require("../plugins/eligibility");
 
 const RATE_LIMIT = 12;
@@ -12,15 +12,8 @@ describe("Rate limiting feature spec", () => {
   beforeEach(() => {
     cy.visit("/");
 
-    // agency selection
-    cy.contains("Choose Your Provider").click();
-    cy.contains(agencies[0].fields.long_name).click();
-
-    // select Courtesy Card
-    // TODO find a more robust way to do this
-    cy.get('#form-verifier-selection [type="radio"]').check("2");
-    cy.get("#form-verifier-selection button[type='submit']").click();
-    cy.contains("Continue").click();
+    helpers.selectAgency();
+    helpers.selectCourtesyCard();
   });
 
   it("Limits excess requests", () => {
