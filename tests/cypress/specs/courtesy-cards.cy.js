@@ -10,6 +10,8 @@ describe("Courtesy Cards", () => {
   });
 
   it("Confirms an eligible user", () => {
+    helpers.rateLimitWait();
+
     cy.get("#sub").type(users.eligible.sub);
     cy.get("#name").type(users.eligible.name);
     cy.get("#form-eligibility-verification button[type='submit']").click();
@@ -18,6 +20,8 @@ describe("Courtesy Cards", () => {
   });
 
   it("Rejects an ineligible user", () => {
+    helpers.rateLimitWait();
+
     cy.get("#sub").type(users.ineligible.sub);
     cy.get("#name").type(users.ineligible.name);
     cy.get("#form-eligibility-verification button[type='submit']").click();
