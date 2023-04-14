@@ -63,10 +63,6 @@ resource "azurerm_linux_web_app" "main" {
     "DJANGO_DEBUG"         = local.is_prod ? null : "${local.secret_prefix}django-debug)",
     "DJANGO_LOG_LEVEL"     = "${local.secret_prefix}django-log-level)",
 
-    "DJANGO_RATE_LIMIT"         = local.is_dev ? null : "${local.secret_prefix}django-rate-limit)",
-    "DJANGO_RATE_LIMIT_METHODS" = local.is_dev ? null : "${local.secret_prefix}django-rate-limit-methods)",
-    "DJANGO_RATE_LIMIT_PERIOD"  = local.is_dev ? null : "${local.secret_prefix}django-rate-limit-period)",
-
     "DJANGO_RECAPTCHA_SECRET_KEY" = local.is_dev ? null : "${local.secret_prefix}django-recaptcha-secret-key)",
     "DJANGO_RECAPTCHA_SITE_KEY"   = local.is_dev ? null : "${local.secret_prefix}django-recaptcha-site-key)",
 
