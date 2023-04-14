@@ -69,3 +69,11 @@ def test_traces_sample_rate_invalid_range(mocker, env_rate):
 
     with pytest.raises(ValueError, match=r"SENTRY_TRACES_SAMPLE_RATE"):
         get_traces_sample_rate()
+
+
+@pytest.mark.parametrize("env_rate", ["zero", "one", "huh?"])
+def test_traces_sample_rate_float(mocker, env_rate):
+    mocker.patch("benefits.sentry.os.environ.get", return_value=env_rate)
+
+    with pytest.raises(ValueError, match=r"could not convert string to float"):
+        get_traces_sample_rate()
