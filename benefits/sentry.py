@@ -62,6 +62,15 @@ def get_denylist():
     return denylist
 
 
+def get_traces_sample_rate():
+    rate = float(os.environ.get("SENTRY_TRACES_SAMPLE_RATE", "0.0"))
+
+    if rate < 0.0 or rate > 1.0:
+        raise ValueError("SENTRY_TRACES_SAMPLE_RATE must be a float in [0.0, 1.0]")
+
+    return rate
+
+
 def configure():
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
     if SENTRY_DSN:
@@ -74,7 +83,7 @@ def configure():
             integrations=[
                 DjangoIntegration(),
             ],
-            traces_sample_rate=1.0,
+            traces_sample_rate=get_traces_sample_rate(),
             environment=SENTRY_ENVIRONMENT,
             release=release,
             in_app_include=["benefits"],
