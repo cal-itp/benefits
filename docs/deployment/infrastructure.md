@@ -14,7 +14,7 @@ flowchart LR
     rider((User's browser))
     idg[Identity Gateway]
     elig_server[Eligibility Server]
-    cc_data[(Agency Card data)]
+    ac_data[(Agency Card data)]
     cookies[(Cookies)]
 
     benefits -->|Errors| sentry
@@ -34,7 +34,7 @@ flowchart LR
     benefits --> elig_server
 
     subgraph "Agency Cards (e.g. MST Courtesy Cards)"
-    elig_server --> cc_data
+    elig_server --> ac_data
     end
 
     idg --> Login.gov
