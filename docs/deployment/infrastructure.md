@@ -8,17 +8,17 @@ The infrastructure is configured as code via [Terraform](https://www.terraform.i
 
 ```mermaid
 flowchart LR
-    %% DMV integration is currently disabled, hence the lines commented out below
-
-    %% dmv[DMV Eligibility Verification API]
     benefits[Benefits application]
     style benefits stroke-width:5px
     recaptcha[Google reCAPTCHA]
     rider((User's browser))
     idg[Identity Gateway]
-    mst_elig[Eligibility Server]
-    cc_data[(Courtesy Card data)]
+    elig_server[Eligibility Server]
+    cc_data[(Agency Card data)]
     cookies[(Cookies)]
+
+    benefits -->|Errors| sentry
+    elig_server -->|Errors| sentry
 
     rider --> benefits
     rider -->|Credentials and identity proofing| Login.gov
@@ -29,13 +29,12 @@ flowchart LR
 
     benefits --> idg
     benefits <--> recaptcha
-    %% benefits --> dmv
     benefits -->|Events| Amplitude
     benefits -->|Group enrollment| Littlepay
-    benefits --> mst_elig
+    benefits --> elig_server
 
-    subgraph "MST (Courtesy Cards)"
-    mst_elig --> cc_data
+    subgraph "Agency Cards (e.g. MST Courtesy Cards)"
+    elig_server --> cc_data
     end
 
     idg --> Login.gov
