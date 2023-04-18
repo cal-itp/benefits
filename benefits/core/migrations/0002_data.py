@@ -89,19 +89,19 @@ PEM DATA
 -----END CERTIFICATE-----
 """
 
-    payment_processor_client_cert = PemData.objects.create(
-        text=os.environ.get("PAYMENT_PROCESSOR_CLIENT_CERT", dummy_cert_text),
-        label="Payment processor client certificate",
+    mst_payment_processor_client_cert = PemData.objects.create(
+        text=os.environ.get("MST_PAYMENT_PROCESSOR_CLIENT_CERT", dummy_cert_text),
+        label="MST payment processor client certificate",
     )
 
-    payment_processor_client_cert_private_key = PemData.objects.create(
-        text=os.environ.get("PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY", client_private_key.text),
-        label="Payment processor client certificate private key",
+    mst_payment_processor_client_cert_private_key = PemData.objects.create(
+        text=os.environ.get("MST_PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY", client_private_key.text),
+        label="MST payment processor client certificate private key",
     )
 
-    payment_processor_client_cert_root_ca = PemData.objects.create(
-        text=os.environ.get("PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA", dummy_cert_text),
-        label="Payment processor client certificate root CA",
+    mst_payment_processor_client_cert_root_ca = PemData.objects.create(
+        text=os.environ.get("MST_PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA", dummy_cert_text),
+        label="MST payment processor client certificate root CA",
     )
 
     AuthProvider = app.get_model("core", "AuthProvider")
@@ -204,18 +204,18 @@ PEM DATA
 
     PaymentProcessor = app.get_model("core", "PaymentProcessor")
 
-    payment_processor = PaymentProcessor.objects.create(
-        name=os.environ.get("PAYMENT_PROCESSOR_NAME", "Test Payment Processor"),
-        api_base_url=os.environ.get("PAYMENT_PROCESSOR_API_BASE_URL", "http://server:8000"),
-        api_access_token_endpoint=os.environ.get("PAYMENT_PROCESSOR_API_ACCESS_TOKEN_ENDPOINT", "access-token"),
-        api_access_token_request_key=os.environ.get("PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_KEY", "request_access"),
-        api_access_token_request_val=os.environ.get("PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_VAL", "REQUEST_ACCESS"),
-        card_tokenize_url=os.environ.get("PAYMENT_PROCESSOR_CARD_TOKENIZE_URL", "http://server:8000/static/tokenize.js"),
-        card_tokenize_func=os.environ.get("PAYMENT_PROCESSOR_CARD_TOKENIZE_FUNC", "tokenize"),
-        card_tokenize_env=os.environ.get("PAYMENT_PROCESSOR_CARD_TOKENIZE_ENV", "test"),
-        client_cert=payment_processor_client_cert,
-        client_cert_private_key=payment_processor_client_cert_private_key,
-        client_cert_root_ca=payment_processor_client_cert_root_ca,
+    mst_payment_processor = PaymentProcessor.objects.create(
+        name=os.environ.get("MST_PAYMENT_PROCESSOR_NAME", "Test Payment Processor"),
+        api_base_url=os.environ.get("MST_PAYMENT_PROCESSOR_API_BASE_URL", "http://server:8000"),
+        api_access_token_endpoint=os.environ.get("MST_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_ENDPOINT", "access-token"),
+        api_access_token_request_key=os.environ.get("MST_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_KEY", "request_access"),
+        api_access_token_request_val=os.environ.get("MST_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_VAL", "REQUEST_ACCESS"),
+        card_tokenize_url=os.environ.get("MST_PAYMENT_PROCESSOR_CARD_TOKENIZE_URL", "http://server:8000/static/tokenize.js"),
+        card_tokenize_func=os.environ.get("MST_PAYMENT_PROCESSOR_CARD_TOKENIZE_FUNC", "tokenize"),
+        card_tokenize_env=os.environ.get("MST_PAYMENT_PROCESSOR_CARD_TOKENIZE_ENV", "test"),
+        client_cert=mst_payment_processor_client_cert,
+        client_cert_private_key=mst_payment_processor_client_cert_private_key,
+        client_cert_root_ca=mst_payment_processor_client_cert_root_ca,
         customer_endpoint="customer",
         customers_endpoint="customers",
         group_endpoint="group",
@@ -240,7 +240,7 @@ PEM DATA
         private_key=client_private_key,
         public_key=client_public_key,
         jws_signing_alg=os.environ.get("MST_AGENCY_JWS_SIGNING_ALG", "RS256"),
-        payment_processor=payment_processor,
+        payment_processor=mst_payment_processor,
         eligibility_index_intro=_("eligibility.pages.index.p[0].mst"),
     )
     mst_agency.eligibility_types.set([mst_senior_type, mst_courtesy_card_type])
@@ -258,7 +258,7 @@ PEM DATA
         private_key=client_private_key,
         public_key=client_public_key,
         jws_signing_alg=os.environ.get("SACRT_AGENCY_JWS_SIGNING_ALG", "RS256"),
-        payment_processor=payment_processor,
+        payment_processor=mst_payment_processor,
         eligibility_index_intro=_("eligibility.pages.index.p[0].sacrt"),
     )
     sacrt_agency.eligibility_types.set([sacrt_senior_type])
