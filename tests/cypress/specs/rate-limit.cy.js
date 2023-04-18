@@ -32,6 +32,8 @@ describe("Rate limiting feature spec", () => {
               expect(res.status).to.eq(SUCCESS_STATUS);
             } else {
               expect(res.status).to.eq(FAIL_STATUS);
+              expect(res.body).to.contain("nginx");
+              expect(res.body).not.to.contain("Return home");
             }
           });
         }
