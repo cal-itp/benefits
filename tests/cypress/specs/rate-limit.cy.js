@@ -1,5 +1,5 @@
 const users = require("../fixtures/users.json");
-const helpers = require("./helpers");
+const helpers = require("../plugins/helpers");
 const { eligibility_url, post_confirm } = require("../plugins/eligibility");
 
 const SUCCESS_STATUS = 302;

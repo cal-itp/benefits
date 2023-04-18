@@ -1,4 +1,4 @@
-const helpers = require("./helpers");
+const helpers = require("../plugins/helpers");
 const users = require("../fixtures/users.json");
 
 describe("Courtesy Cards", () => {
