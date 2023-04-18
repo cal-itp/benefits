@@ -6,7 +6,7 @@
 version: 2
 updates:
   - package-ecosystem: "pip"
-    directory: "/appcontainer" # main requirements.txt
+    directory: "/" # pyproject.toml
     schedule:
       interval: "daily"
     commit-message:

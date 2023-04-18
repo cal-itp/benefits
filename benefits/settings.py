@@ -196,9 +196,13 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "benefits", "static")]
 # use Manifest Static Files Storage by default
-STATICFILES_STORAGE = os.environ.get(
-    "DJANGO_STATICFILES_STORAGE", "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
-)
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": os.environ.get(
+            "DJANGO_STATICFILES_STORAGE", "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+        )
+    }
+}
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Logging configuration
