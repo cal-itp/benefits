@@ -1,3 +1,4 @@
+import logging
 import shutil
 import os
 import subprocess
@@ -8,6 +9,7 @@ from sentry_sdk.scrubber import EventScrubber, DEFAULT_DENYLIST
 
 from benefits import VERSION
 
+logger = logging.getLogger(__name__)
 
 SENTRY_ENVIRONMENT = os.environ.get("SENTRY_ENVIRONMENT", "local")
 SENTRY_CSP_REPORT_URI = None
@@ -62,11 +64,26 @@ def get_denylist():
     return denylist
 
 
+def get_traces_sample_rate():
+    try:
+        rate = float(os.environ.get("SENTRY_TRACES_SAMPLE_RATE", "0.0"))
+        if rate < 0.0 or rate > 1.0:
+            logger.warn("SENTRY_TRACES_SAMPLE_RATE was not in the range [0.0, 1.0], defaulting to 0.0")
+            rate = 0.0
+        else:
+            logger.info(f"SENTRY_TRACES_SAMPLE_RATE set to: {rate}")
+    except ValueError:
+        logger.warn("SENTRY_TRACES_SAMPLE_RATE did not parse to float, defaulting to 0.0")
+        rate = 0.0
+
+    return rate
+
+
 def configure():
     SENTRY_DSN = os.environ.get("SENTRY_DSN")
     if SENTRY_DSN:
         release = get_release()
-        print(f"Enabling Sentry for environment '{SENTRY_ENVIRONMENT}', release '{release}'...")
+        logger.info(f"Enabling Sentry for environment '{SENTRY_ENVIRONMENT}', release '{release}'...")
 
         # https://docs.sentry.io/platforms/python/configuration/
         sentry_sdk.init(
@@ -74,7 +91,7 @@ def configure():
             integrations=[
                 DjangoIntegration(),
             ],
-            traces_sample_rate=1.0,
+            traces_sample_rate=get_traces_sample_rate(),
             environment=SENTRY_ENVIRONMENT,
             release=release,
             in_app_include=["benefits"],
@@ -88,4 +105,4 @@ def configure():
         global SENTRY_CSP_REPORT_URI
         SENTRY_CSP_REPORT_URI = os.environ.get("SENTRY_REPORT_URI", "")
     else:
-        print("SENTRY_DSN not set, so won't send events")
+        logger.info("SENTRY_DSN not set, so won't send events")

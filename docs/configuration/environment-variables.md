@@ -187,5 +187,15 @@ Collect information on Content-Security-Policy (CSP) violations. Read more about
 
 To enable report collection, set this env var to the authenticated Sentry endpoint.
 
+### `SENTRY_TRACES_SAMPLE_RATE`
+
+!!! tldr "Sentry docs"
+
+    [`traces_sample_rate`](https://docs.sentry.io/platforms/python/configuration/sampling/#configuring-the-transaction-sample-rate)
+
+Control the volume of transactions sent to Sentry. Value must be a float in the range `[0.0, 1.0]`.
+
+The default is `0.0` (i.e. no transactions are tracked).
+
 [app-service-config]: https://docs.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal
 [getting-started_create-env]: ../getting-started/README.md#create-an-environment-file
