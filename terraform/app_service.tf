@@ -63,10 +63,6 @@ resource "azurerm_linux_web_app" "main" {
     "DJANGO_DEBUG"         = local.is_prod ? null : "${local.secret_prefix}django-debug)",
     "DJANGO_LOG_LEVEL"     = "${local.secret_prefix}django-log-level)",
 
-    "DJANGO_RATE_LIMIT"         = local.is_dev ? null : "${local.secret_prefix}django-rate-limit)",
-    "DJANGO_RATE_LIMIT_METHODS" = local.is_dev ? null : "${local.secret_prefix}django-rate-limit-methods)",
-    "DJANGO_RATE_LIMIT_PERIOD"  = local.is_dev ? null : "${local.secret_prefix}django-rate-limit-period)",
-
     "DJANGO_RECAPTCHA_SECRET_KEY" = local.is_dev ? null : "${local.secret_prefix}django-recaptcha-secret-key)",
     "DJANGO_RECAPTCHA_SITE_KEY"   = local.is_dev ? null : "${local.secret_prefix}django-recaptcha-site-key)",
 
@@ -76,8 +72,10 @@ resource "azurerm_linux_web_app" "main" {
     "HEALTHCHECK_USER_AGENTS" = local.is_dev ? null : "${local.secret_prefix}healthcheck-user-agents)",
 
     # Sentry
-    "SENTRY_DSN"         = "${local.secret_prefix}sentry-dsn)",
-    "SENTRY_ENVIRONMENT" = local.env_name,
+    "SENTRY_DSN"                = "${local.secret_prefix}sentry-dsn)",
+    "SENTRY_ENVIRONMENT"        = local.env_name,
+    "SENTRY_REPORT_URI"         = "${local.secret_prefix}sentry-report-uri)",
+    "SENTRY_TRACES_SAMPLE_RATE" = "${local.secret_prefix}sentry-traces-sample-rate)",
 
     # Environment variables for data migration
     "MST_SENIOR_GROUP_ID"                                  = "${local.secret_prefix}mst-senior-group-id)",

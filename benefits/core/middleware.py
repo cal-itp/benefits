@@ -2,12 +2,10 @@
 The core application: middleware definitions for request/response cycle.
 """
 import logging
-import time
 
 from django.conf import settings
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse
 from django.shortcuts import redirect
-from django.template import loader
 from django.template.response import TemplateResponse
 from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
@@ -38,43 +36,6 @@ class AgencySessionRequired(MiddlewareMixin):
         else:
             logger.debug("Session not configured with agency")
             return user_error(request)
-
-
-class RateLimit(MiddlewareMixin):
-    """Middleware checks settings and session to ensure rate limit is respected."""
-
-    def process_request(self, request):
-        if not settings.RATE_LIMIT_ENABLED:
-            logger.debug("Rate Limiting is not configured")
-            return None
-
-        if request.method in settings.RATE_LIMIT_METHODS:
-            session.increment_rate_limit_counter(request)
-        else:
-            # bail early if the request method doesn't match
-            return None
-
-        counter = session.rate_limit_counter(request)
-        reset_time = session.rate_limit_time(request)
-        now = int(time.time())
-
-        if counter > settings.RATE_LIMIT:
-            if reset_time > now:
-                logger.warning("Rate limit exceeded")
-                home = viewmodels.Button.home(request)
-                page = viewmodels.ErrorPage.server_error(
-                    title="Rate limit error",
-                    headline="Rate limit error",
-                    paragraphs=["You have reached the rate limit. Please try again."],
-                    button=home,
-                )
-                t = loader.get_template("400.html")
-                return HttpResponseBadRequest(t.render(page.context_dict()))
-            else:
-                # enough time has passed, reset the rate limit
-                session.reset_rate_limit(request)
-
-        return None
 
 
 class EligibleSessionRequired(MiddlewareMixin):
