@@ -63,10 +63,12 @@ def get_denylist():
 
 
 def get_traces_sample_rate():
-    rate = float(os.environ.get("SENTRY_TRACES_SAMPLE_RATE", "0.0"))
-
-    if rate < 0.0 or rate > 1.0:
-        raise ValueError("SENTRY_TRACES_SAMPLE_RATE must be a float in [0.0, 1.0]")
+    try:
+        rate = float(os.environ.get("SENTRY_TRACES_SAMPLE_RATE", "0.0"))
+        if rate < 0.0 or rate > 1.0:
+            rate = 0.0
+    except ValueError:
+        rate = 0.0
 
     return rate
 
