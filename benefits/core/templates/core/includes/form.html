@@ -46,7 +46,7 @@
       </div>
     {% endif %}
 
-    <script>
+    <script nonce="{{ request.csp_nonce }}">
       $(function() {
         // listen for a custom "submitting" event on the form, for button interactions
         $("#{{ form.id }}").on("submitting", function(e) {
@@ -77,7 +77,7 @@
       {% endcomment %}
       <input type="hidden" name="{{ request.recaptcha.data_field }}" value="">
 
-      <script>
+      <script nonce="{{ request.csp_nonce }}">
         function recaptchaSubmit($event) {
           // checks the validity of the form. Return if invalid; HTML5 validation errors should display
           if (!$event.currentTarget.form.checkValidity()) {
