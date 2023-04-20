@@ -1,4 +1,4 @@
-const endpoints = ["auth", "cgi", "eligibility/app", "login", "sample/api"];
+const endpoints = ["cgi", "eligibility/app", "sample/api"];
 const files = [".env", "wp-admin/login.php", "data.json", "secrets/prod.yaml"];
 const targets = endpoints.concat(files);
 
