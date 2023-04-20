@@ -3,6 +3,10 @@ FROM ghcr.io/cal-itp/docker-python-web:main
 # upgrade pip
 RUN python -m pip install --upgrade pip
 
+# overwrite default nginx.conf
+COPY appcontainer/nginx.conf /etc/nginx/nginx.conf
+COPY appcontainer/proxy.conf /home/calitp/run/proxy.conf
+
 # copy source files
 COPY manage.py manage.py
 COPY bin bin
