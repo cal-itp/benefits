@@ -315,6 +315,7 @@ if RECAPTCHA_ENABLED:
 
 CSP_STYLE_SRC = [
     "'self'",
+    "'unsafe-inline'",
     "https://california.azureedge.net/",
     "https://fonts.googleapis.com/css",
 ]
