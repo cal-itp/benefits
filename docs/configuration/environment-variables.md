@@ -177,5 +177,25 @@ Enables [sending events to Sentry](../../deployment/troubleshooting/#error-monit
 
 Segments errors by which deployment they occur in. This defaults to `local`, and can be set to match one of the [environment names](../../deployment/infrastructure/#environments).
 
+### `SENTRY_REPORT_URI`
+
+!!! tldr "Sentry docs"
+
+    [Security Policy Reporting](https://docs.sentry.io/product/security-policy-reporting/)
+
+Collect information on Content-Security-Policy (CSP) violations. Read more about [CSP configuration in Benefits](./content-security-policy.md).
+
+To enable report collection, set this env var to the authenticated Sentry endpoint.
+
+### `SENTRY_TRACES_SAMPLE_RATE`
+
+!!! tldr "Sentry docs"
+
+    [`traces_sample_rate`](https://docs.sentry.io/platforms/python/configuration/sampling/#configuring-the-transaction-sample-rate)
+
+Control the volume of transactions sent to Sentry. Value must be a float in the range `[0.0, 1.0]`.
+
+The default is `0.0` (i.e. no transactions are tracked).
+
 [app-service-config]: https://docs.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal
 [getting-started_create-env]: ../getting-started/README.md#create-an-environment-file

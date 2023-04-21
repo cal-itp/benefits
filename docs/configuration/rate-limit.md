@@ -1,47 +1,56 @@
 # Configuring Rate Limiting
 
-The benefits application has a simple, single-configuration Rate Limit feature that acts per-session to limit the
-number of consecutive requests in a given time period.
+The benefits application has a simple, single-configuration Rate Limit that acts
+per-IP to limit the number of consecutive requests in a given time period, via
+nginx [`limit_req_zone`](http://nginx.org/en/docs/http/ngx_http_limit_req_module.html#limit_req_zone)
+and [`limit_req`](http://nginx.org/en/docs/http/ngx_http_limit_req_module.html#limit_req) directives.
 
-## Applying to Django code
+The configured rate limit is 12 requests/minute, or 1 request/5 seconds:
 
-The [`RateLimit` middleware][benefits-middleware] can be installed globally for all requests with the
-[`MIDDLEWARE` setting][django-middleware], or per-view with a function decorator.
-
-The latter approach is how the Benefits application rate-limits the Eligibility verification form (which is shown on the
-`confirm` route/view):
-
-```python
-from django.utils.decorators import decorator_from_middleware
-
-from benefits.core.middleware import RateLimit
-
-
-@decorator_from_middleware(RateLimit)
-def confirm(request):
-    """View handler for the eligibility verification form."""
-    # ...
+```nginx
+limit_req_zone $limit zone=rate_limit:10m rate=12r/m;
 ```
 
-## Environment variables
+## HTTP method selection
 
-!!! warning
+An NGINX [map](http://nginx.org/en/docs/http/ngx_http_map_module.html#map)
+variable lists HTTP methods that will be rate limited:
 
-    The following environment variables are all required to activate the Rate Limit feature
+```nginx
+map $request_method $limit {
+    default         "";
+    POST            $binary_remote_addr;
+}
+```
 
-### `DJANGO_RATE_LIMIT`
+The `default` means don't apply a rate limit.
 
-Number of requests allowed in the given [`DJANGO_RATE_LIMIT_PERIOD`](#DJANGO_RATE_LIMIT_PERIOD).
+To add a new method, add a new line:
 
-Must be greater than `0`.
+```nginx
+map $request_method $limit {
+    default         "";
+    OPTIONS         $binary_remote_addr;
+    POST            $binary_remote_addr;
+}
+```
 
-### `DJANGO_RATE_LIMIT_METHODS`
+## App path selection
 
-Comma-separated list of HTTP Methods for which requests are rate limited.
+The `limit_req` is applied to an NGINX [`location`](https://nginx.org/en/docs/http/ngx_http_core_module.html#location) block with a case-insensitive regex to match paths:
 
-### `DJANGO_RATE_LIMIT_PERIOD`
+```nginx
+location ~* ^/(eligibility/confirm)$ {
+    limit_req zone=rate_limit;
+    # config...
+}
+```
 
-Number of seconds before additional requests are denied.
+To add a new path, add a regex OR `|` with the new path (omitting the leading slash):
 
-[benefits-middleware]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/middleware.py
-[django-middleware]: https://docs.djangoproject.com/en/4.0/ref/settings/#std:setting-MIDDLEWARE
+```nginx
+location ~* ^/(eligibility/confirm|new/path)$ {
+    limit_req zone=rate_limit;
+    # config...
+}
+```

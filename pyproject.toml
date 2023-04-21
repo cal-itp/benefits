@@ -1,17 +1,53 @@
-# NOTE: you have to use single-quoted strings in TOML for regular expressions.
-# It's the equivalent of r-strings in Python.  Multiline strings are treated as
-# verbose regular expressions by Black.  Use [ ] to denote a significant space
-# character.
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+classifiers = ["Programming Language :: Python :: 3 :: Only"]
+description = "Cal-ITP Benefits is an application that enables automated eligibility verification and enrollment for transit benefits onto customers’ existing contactless bank (credit/debit) cards."
+dependencies = [
+    "Authlib==1.2.0",
+    "Django==4.2",
+    "django-csp==3.7",
+    "eligibility-api==2023.01.1",
+    "requests==2.28.2",
+    "sentry-sdk==1.19.1",
+    "six==1.16.0",
+]
+dynamic = ["version"]
+keywords = ["django"]
+license = { file = "LICENSE" }
+name = "benefits"
+readme = "README.md"
+requires-python = ">=3.9"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "djlint",
+    "flake8",
+    "pre-commit",
+]
+test = [
+    "pytest",
+    "pytest-cov",
+    "pytest-django",
+    "pytest-mock",
+    "pytest-socket",
+]
+
+[project.urls]
+Code = "https://github.com/cal-itp/benefits"
+Documentation = "https://docs.calitp.org/benefits"
+Issues = "https://github.com/cal-itp/benefits/issues"
 
 # Configuration for black
-
 [tool.black]
 line-length = 127
 target-version = ['py310']
 include = '\.pyi?$'
 
 # Configuration for djlint
-
 [tool.djlint]
 ignore = "H017,H031"
 indent = 2
@@ -22,7 +58,6 @@ preserve_blank_lines = true
 use_gitignore = true
 
 # Configuration for pytest
-
 [tool.coverage.run]
 omit = [
     "benefits/core/migrations/*"
@@ -33,3 +68,6 @@ DJANGO_SETTINGS_MODULE = "benefits.settings"
 markers = [
     "request_path: use with session_request to initialize with the given path",
 ]
+
+[tool.setuptools]
+packages = ["benefits"]

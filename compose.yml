@@ -8,6 +8,7 @@ services:
       dockerfile: appcontainer/Dockerfile
     image: benefits_client:latest
     env_file: .env
+    platform: linux/amd64
     ports:
       - "${DJANGO_LOCAL_PORT:-8000}:8000"
 
@@ -21,6 +22,7 @@ services:
     entrypoint: sleep infinity
     depends_on:
       - server
+    platform: linux/amd64
     ports:
       - "${DJANGO_LOCAL_PORT:-8000}:8000"
     volumes:
@@ -30,6 +32,7 @@ services:
     image: benefits_client:dev
     entrypoint: mkdocs
     command: serve --dev-addr "0.0.0.0:8001"
+    platform: linux/amd64
     ports:
       - "8001"
     volumes:
@@ -38,6 +41,7 @@ services:
   server:
     image: ghcr.io/cal-itp/eligibility-server:dev
     env_file: .devcontainer/server/.env.server
+    platform: linux/amd64
     ports:
       - "8000"
     volumes:

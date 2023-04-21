@@ -10,7 +10,7 @@ from django.utils.html import format_html
 from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import recaptcha, session, viewmodels
-from benefits.core.middleware import AgencySessionRequired, LoginRequired, RateLimit, RecaptchaEnabled, VerifierSessionRequired
+from benefits.core.middleware import AgencySessionRequired, LoginRequired, RecaptchaEnabled, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
 from benefits.core.views import ROUTE_HELP
 from . import analytics, forms, verify
@@ -152,7 +152,6 @@ def start(request):
 
 @decorator_from_middleware(AgencySessionRequired)
 @decorator_from_middleware(LoginRequired)
-@decorator_from_middleware(RateLimit)
 @decorator_from_middleware(RecaptchaEnabled)
 @decorator_from_middleware(VerifierSessionRequired)
 def confirm(request):

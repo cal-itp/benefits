@@ -50,13 +50,6 @@ def mocked_verifier_form(mocker):
     mocker.patch("benefits.eligibility.views.forms.EligibilityVerifierSelectionForm", return_value=mock_form)
 
 
-@pytest.fixture(autouse=True)
-def disable_rate_limit(mocker):
-    # override session rate limit handling for all tests
-    mock_settings = mocker.patch("benefits.core.middleware.settings")
-    mock_settings.RATE_LIMIT_ENABLED = False
-
-
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency")
 def test_index_get_agency_multiple_verifiers(

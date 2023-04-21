@@ -1,4 +1,4 @@
-const helpers = require("./helpers");
+const helpers = require("../plugins/helpers");
 
 describe("Spanish language", () => {
   beforeEach(() => {
