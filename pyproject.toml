@@ -10,7 +10,7 @@ dependencies = [
     "Django==4.2",
     "django-csp==3.7",
     "eligibility-api==2023.01.1",
-    "requests==2.28.2",
+    "requests==2.29.0",
     "sentry-sdk==1.19.1",
     "six==1.16.0",
 ]
