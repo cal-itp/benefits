@@ -44,8 +44,8 @@ body:
 
         Reference the diagram and discussion on [the release process docs](https://docs.calitp.org/benefits/deployment/release/).
 
-        * `Regular` release: propogates from `dev` to `test`, and then `test` to `prod`. Only possible if `dev` is ready to deploy.
-        * `Hotfix` release: propogates from `test` to `prod`, skipping `dev`.
+        * `Regular` release: propagates from `dev` to `test`, and then `test` to `prod`. Only possible if `dev` is ready to deploy.
+        * `Hotfix` release: fix is merged into `prod`. After release, fix is propagated to `dev` and `test`.
   - type: dropdown
     id: type
     attributes:
