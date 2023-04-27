@@ -19,18 +19,24 @@ body:
         release process](https://docs.calitp.org/benefits/deployment/release/).
 
         Close this issue when the checklist is complete.
+    validations:
+      required: true
   - type: input
     id: manager
     attributes:
       label: Release manager
       description: GitHub handle of who is responsible for this release; assign this issue to this user
       placeholder: "@cal-itp-bot"
+    validations:
+      required: true
   - type: input
     id: version
     attributes:
       label: Release version
       description: Calver-formatted version for this release
       placeholder: YYYY.0M.R
+    validations:
+      required: true
   - type: markdown
     attributes:
       value: |
@@ -47,6 +53,8 @@ body:
       options:
         - "Regular"
         - "Hotfix"
+    validations:
+      required: true
   - type: markdown
     attributes:
       value: |
