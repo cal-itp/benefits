@@ -48,24 +48,21 @@ body:
         - "Regular"
         - "Hotfix"
   - type: checkboxes
-    id: checklist
+    id: regular-checklist
     attributes:
-      label: Release checklist
-      description: Complete these items in sequence as the release progresses
+      label: Regular release checklist
+      description: Complete these items in sequence as the `Regular` release progresses
       options:
+        - label: Ensure the `dev` branch and secrets are up to date
         - label: Create a branch called release/version from the source branch
         - label: Bump the application version
-        - label: "(If applicable): update staging environment's Key Vault secrets"
-        - label: Open a PR for the release branch into the staging target, merge
-        - label: "(If applicable): [trigger secrets refresh](https://docs.calitp.org/benefits/deployment/secrets/#refreshing-secrets)"
-        - label: "(If applicable): update test environment's Key Vault secrets"
-        - label: "(If applicable): open another PR from dev to test, merge"
-        - label: "(If applicable): trigger secrets refresh"
+        - label: Open a PR for the release branch into `dev`, merge
+        - label: Ensure `test` secrets are up to date
+        - label: Open another PR from `dev` to `test`, merge
         - label: QA the app in test
-        - label: "(If applicable): update production environment's Key Vault secrets"
-        - label: Open a PR for the test branch into prod, merge
-        - label: "(If applicable): trigger secrets refresh"
+        - label: Ensure `prod` secrets are up to date
+        - label: Open a PR for the `test` branch into `prod`, merge
         - label: QA the app in prod
-        - label: Tag the release on the prod branch, push the tag to GitHub
+        - label: Tag the release on the `prod` branch, push the tag to GitHub (see [docs](https://docs.calitp.org/benefits/deployment/release/#5-tag-the-release) for commands)
         - label: Create a release in GitHub for the tag, generating release notes
         - label: Edit release notes with additional context, images, animations, etc. as-needed
