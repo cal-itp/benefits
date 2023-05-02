@@ -68,11 +68,11 @@ def help(request):
     """View handler for the help page."""
     if session.active_agency(request):
         agency = session.agency(request)
-        buttons = viewmodels.Button.agency_contact_links(agency)
+        agency_links = viewmodels.Button.agency_contact_links(agency)
     else:
-        buttons = [btn for a in models.TransitAgency.all_active() for btn in viewmodels.Button.agency_contact_links(a)]
+        agency_links = [btn for a in models.TransitAgency.all_active() for btn in viewmodels.Button.agency_contact_links(a)]
 
-    buttons.append(viewmodels.Button.home(request, _("core.buttons.back")))
+    buttons = viewmodels.Button.home(request, _("core.buttons.back"))
 
     page = viewmodels.Page(
         title=_("core.buttons.help"),
@@ -80,7 +80,10 @@ def help(request):
         buttons=buttons,
     )
 
-    return TemplateResponse(request, TEMPLATE_HELP, page.context_dict())
+    ctx = page.context_dict()
+    ctx["agency_links"] = agency_links
+
+    return TemplateResponse(request, TEMPLATE_HELP, ctx)
 
 
 @pageview_decorator
