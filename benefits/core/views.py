@@ -72,16 +72,16 @@ def help(request):
     else:
         agency_links = [btn for a in models.TransitAgency.all_active() for btn in viewmodels.Button.agency_contact_links(a)]
 
-    buttons = viewmodels.Button.home(request, _("core.buttons.back"))
+    back_button = viewmodels.Button.home(request, _("core.buttons.back"))
 
     page = viewmodels.Page(
         title=_("core.buttons.help"),
         headline=_("core.buttons.help"),
-        buttons=buttons,
     )
 
     ctx = page.context_dict()
     ctx["agency_links"] = agency_links
+    ctx["back_button"] = back_button
 
     return TemplateResponse(request, TEMPLATE_HELP, ctx)
 
