@@ -247,17 +247,17 @@ def unverified(request):
     analytics.returned_fail(request, types_to_verify)
 
     agency_links = viewmodels.Button.agency_contact_links(agency)
-    buttons = viewmodels.Button.home(request)
+    back_button = viewmodels.Button.home(request)
 
     page = viewmodels.Page(
         title=_(verifier.unverified_title),
         headline=_("eligibility.pages.unverified.headline"),
         icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
         paragraphs=[_(verifier.unverified_blurb)],
-        buttons=buttons,
     )
 
     ctx = page.context_dict()
     ctx["agency_links"] = agency_links
+    ctx["back_button"] = back_button
 
     return TemplateResponse(request, TEMPLATE_UNVERIFIED, ctx)
