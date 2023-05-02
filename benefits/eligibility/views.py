@@ -246,9 +246,8 @@ def unverified(request):
 
     analytics.returned_fail(request, types_to_verify)
 
-    # tel: link to agency phone number
-    buttons = viewmodels.Button.agency_contact_links(agency)
-    buttons.append(viewmodels.Button.home(request))
+    agency_links = viewmodels.Button.agency_contact_links(agency)
+    buttons = viewmodels.Button.home(request)
 
     page = viewmodels.Page(
         title=_(verifier.unverified_title),
@@ -258,4 +257,7 @@ def unverified(request):
         buttons=buttons,
     )
 
-    return TemplateResponse(request, TEMPLATE_UNVERIFIED, page.context_dict())
+    ctx = page.context_dict()
+    ctx["agency_links"] = agency_links
+
+    return TemplateResponse(request, TEMPLATE_UNVERIFIED, ctx)

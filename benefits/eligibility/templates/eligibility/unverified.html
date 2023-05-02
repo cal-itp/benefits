@@ -12,9 +12,11 @@
       </div>
     </div>
 
+    {% if agency_links %}
     <div class="row justify-content-center">
-      <div class="col-lg-8">{% include "core/includes/agency-links.html" with buttons=page.buttons %}</div>
+      <div class="col-lg-8">{% include "core/includes/agency-links.html" with buttons=agency_links %}</div>
     </div>
+    {% endif %}
 
     {% for back_button in page.buttons %}
       {% if "btn-primary" in back_button.classes %}
