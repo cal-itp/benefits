@@ -153,12 +153,11 @@ def retry(request):
                 icon=viewmodels.Icon("bankcardquestion", pgettext("image alt text", "core.icons.bankcardquestion")),
                 headline=_("enrollment.pages.retry.title"),
                 paragraphs=[_("enrollment.pages.retry.p[0]")],
-                buttons=[],
             )
-            page.buttons.append(viewmodels.Button.primary(text=_("core.buttons.retry"), url=session.origin(request)))
 
             ctx = page.context_dict()
             ctx["agency_links"] = viewmodels.Button.agency_contact_links(agency)
+            ctx["retry_button"] = viewmodels.Button.primary(text=_("core.buttons.retry"), url=session.origin(request))
 
             return TemplateResponse(request, TEMPLATE_RETRY, ctx)
         else:
