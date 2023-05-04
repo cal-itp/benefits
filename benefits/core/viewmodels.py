@@ -41,10 +41,8 @@ class Button:
     def agency_contact_links(agency):
         """Create link buttons for agency contact information."""
         return [
-            Button.link(classes="agency", label=agency.long_name, text=agency.phone, url=f"tel:{agency.phone}"),
-            Button.link(
-                classes="agency", text=agency.info_url, url=agency.info_url, target="_blank", rel="noopener noreferrer"
-            ),
+            Button.link(label=agency.long_name, text=agency.phone, url=f"tel:{agency.phone}"),
+            Button.link(text=agency.info_url, url=agency.info_url, target="_blank", rel="noopener noreferrer"),
         ]
 
     @staticmethod
