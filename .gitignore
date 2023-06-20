@@ -3,6 +3,7 @@
 *.mo
 *.tfbackend
 *.tmp
+*.egg-info
 static/
 !benefits/static
 benefits/static/sha.txt
