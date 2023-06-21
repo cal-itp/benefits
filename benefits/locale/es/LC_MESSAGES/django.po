@@ -171,6 +171,11 @@ msgstr ""
 "TODO: You will need to sign into VA.gov in order to verify your identity and "
 "your veteran status. VA.gov uses the following services:"
 
+msgid "eligibility.pages.start.veteran.start_item.secondary_details"
+msgstr ""
+"TODO: If you do not have an account with any of these services, you will "
+"need to create one. We recommend using Login.gov."
+
 msgid "eligibility.pages.index.p[0].mst"
 msgstr ""
 "Puede acercar su tarjeta de crédito o débito cuando aborde un autobús de MST "
