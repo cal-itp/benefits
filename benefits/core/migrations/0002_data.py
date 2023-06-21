@@ -156,7 +156,7 @@ PEM DATA
         enrollment_success_expiry_item_details=None,
     )
 
-    mst_courtesy_card_verifier = EligibilityVerifier.objects.create(
+    mst_veteran_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("COURTESY_CARD_VERIFIER", "Eligibility Server Verifier"),
         api_url=os.environ.get("COURTESY_CARD_VERIFIER_API_URL", "http://server:8000/verify"),
         api_auth_header=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_HEADER", "X-Server-API-Key"),
@@ -277,7 +277,7 @@ PEM DATA
         eligibility_index_intro=_("eligibility.pages.index.p[0].mst"),
     )
     mst_agency.eligibility_types.set([mst_senior_type, mst_courtesy_card_type])
-    mst_agency.eligibility_verifiers.set([mst_oauth_claims_verifier, mst_courtesy_card_verifier])
+    mst_agency.eligibility_verifiers.set([mst_oauth_claims_verifier, mst_veteran_verifier])
 
     sacrt_agency = TransitAgency.objects.create(
         slug="sacrt",
