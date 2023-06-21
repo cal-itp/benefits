@@ -28,6 +28,26 @@ msgstr ""
 "need to renew. Using this benefit means your new transit fare is half of the "
 "standard fare."
 
+msgid "eligibility.pages.index.veteran.label"
+msgstr "US Veteran"
+
+msgid "eligibility.pages.index.veteran.description"
+msgstr ""
+"This option is for people who have served in the active military, naval, or air service, and who were discharged or released therefrom under conditions other than dishonorable. You will need to verify your identity through VA.gov."
+
+msgid "eligibility.pages.start.veteran.title"
+msgstr "Veteran benefit information"
+
+msgid "eligibility.pages.start.veteran.headline"
+msgstr "You selected a Veteran benefit."
+
+msgid "eligibility.pages.start.veteran.start_item.heading"
+msgstr "Access to your preferred VA related account"
+
+msgid "eligibility.pages.start.veteran.start_item.details"
+msgstr ""
+"You will need to sign into VA.gov in order to verify your identity and your veteran status. VA.gov uses the following services:"
+
 msgid "eligibility.pages.start.login_gov.title"
 msgstr "Older Adult benefit information"
 
@@ -70,6 +90,10 @@ msgstr ""
 "same physical card and you will automatically receive your new reduced fare. "
 "You will need to reapply if you choose to change the bank card you use to "
 "pay for transit service."
+
+msgid "enrollment.pages.success.veteran.confirm_item.details"
+msgstr ""
+"You were not charged anything today. When boarding a %(transit_agency_short_name)s bus, tap this card and you will be charged a reduced fare. You will need to re-enroll if you choose to change the card you use to pay for transit service."
 
 msgid "eligibility.pages.index.mst_cc.label"
 msgstr "I have an MST Courtesy Card"

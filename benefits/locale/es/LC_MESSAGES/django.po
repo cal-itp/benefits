@@ -28,6 +28,26 @@ msgstr ""
 "que deba renovarlo. Usando este beneficio significa que su nueva tarifa de "
 "tránsito es la mitad de la tarifa estándar."
 
+msgid "eligibility.pages.index.veteran.label"
+msgstr "TODO: US Veteran"
+
+msgid "eligibility.pages.index.veteran.description"
+msgstr ""
+"TODO: This option is for people who have served in the active military, naval, or air service, and who were discharged or released therefrom under conditions other than dishonorable. You will need to verify your identity through VA.gov."
+
+msgid "eligibility.pages.start.veteran.title"
+msgstr "TODO: Veteran benefit information"
+
+msgid "eligibility.pages.start.veteran.headline"
+msgstr "TODO: You selected a Veteran benefit."
+
+msgid "eligibility.pages.start.veteran.start_item.heading"
+msgstr "TODO: Access to your preferred VA related account"
+
+msgid "eligibility.pages.start.veteran.start_item.details"
+msgstr ""
+"TODO: You will need to sign into VA.gov in order to verify your identity and your veteran status. VA.gov uses the following services:"
+
 msgid "eligibility.pages.start.login_gov.title"
 msgstr "Información sobre beneficios para Adultos Mayores"
 
@@ -67,6 +87,13 @@ msgstr ""
 msgid "enrollment.pages.success.login_gov.confirm_item.details"
 msgstr ""
 "No se le ha cobrado nada hoy. Al abordar al el tránsito, pague con esta "
+"misma tarjeta física y automáticamente recibirá su nueva tarifa reducida. "
+"Deberá volver a presenter la solicitud si elige cambiar la tarjeta bancaria "
+"que utiliza para pagar el servicio de transito."
+
+msgid "enrollment.pages.success.veteran.confirm_item.details"
+msgstr ""
+"No se le ha cobrado nada hoy. Al abordar al el tránsito de %(transit_agency_short_name)s, pague con esta "
 "misma tarjeta física y automáticamente recibirá su nueva tarifa reducida. "
 "Deberá volver a presenter la solicitud si elige cambiar la tarjeta bancaria "
 "que utiliza para pagar el servicio de transito."
