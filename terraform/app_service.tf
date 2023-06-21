@@ -79,6 +79,7 @@ resource "azurerm_linux_web_app" "main" {
 
     # Environment variables for data migration
     "MST_SENIOR_GROUP_ID"                                  = "${local.secret_prefix}mst-senior-group-id)",
+    "MST_VETERAN_GROUP_ID"                                 = "${local.secret_prefix}mst-veteran-group-id)",
     "MST_COURTESY_CARD_GROUP_ID"                           = "${local.secret_prefix}mst-courtesy-card-group-id)"
     "SACRT_SENIOR_GROUP_ID"                                = "${local.secret_prefix}sacrt-senior-group-id)"
     "CLIENT_PRIVATE_KEY"                                   = "${local.secret_prefix}client-private-key)"

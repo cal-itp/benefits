@@ -16,7 +16,7 @@ def load_data(app, *args, **kwargs):
     mst_veteran_type = EligibilityType.objects.create(
         name="veteran",
         label="Veteran Discount (MST)",
-        group_id=os.environ.get("MST_COURTESY_CARD_GROUP_ID", "group2"),
+        group_id=os.environ.get("MST_VETERAN_GROUP_ID", "group3"),
     )
     mst_courtesy_card_type = EligibilityType.objects.create(
         name="courtesy_card",
