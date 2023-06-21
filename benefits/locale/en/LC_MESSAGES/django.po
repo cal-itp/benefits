@@ -5,8 +5,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-01-26 16:08+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-06-21 04:56+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,26 +27,6 @@ msgstr ""
 "You must be 65 years or older. This benefit does not expire, but you may "
 "need to renew. Using this benefit means your new transit fare is half of the "
 "standard fare."
-
-msgid "eligibility.pages.index.veteran.label"
-msgstr "US Veteran"
-
-msgid "eligibility.pages.index.veteran.description"
-msgstr ""
-"This option is for people who have served in the active military, naval, or air service, and who were discharged or released therefrom under conditions other than dishonorable. You will need to verify your identity through VA.gov."
-
-msgid "eligibility.pages.start.veteran.title"
-msgstr "Veteran benefit information"
-
-msgid "eligibility.pages.start.veteran.headline"
-msgstr "You selected a Veteran benefit."
-
-msgid "eligibility.pages.start.veteran.start_item.heading"
-msgstr "Access to your preferred VA related account"
-
-msgid "eligibility.pages.start.veteran.start_item.details"
-msgstr ""
-"You will need to sign into VA.gov in order to verify your identity and your veteran status. VA.gov uses the following services:"
 
 msgid "eligibility.pages.start.login_gov.title"
 msgstr "Older Adult benefit information"
@@ -90,10 +70,6 @@ msgstr ""
 "same physical card and you will automatically receive your new reduced fare. "
 "You will need to reapply if you choose to change the bank card you use to "
 "pay for transit service."
-
-msgid "enrollment.pages.success.veteran.confirm_item.details"
-msgstr ""
-"You were not charged anything today. When boarding a %(transit_agency_short_name)s bus, tap this card and you will be charged a reduced fare. You will need to re-enroll if you choose to change the card you use to pay for transit service."
 
 msgid "eligibility.pages.index.mst_cc.label"
 msgstr "I have an MST Courtesy Card"
@@ -163,6 +139,47 @@ msgstr ""
 "In the future, you may need to re-register for Benefits to continue using "
 "contactless payment cards. You will also need to reapply if you choose to "
 "change the bank card you use to pay for transit service."
+
+msgid "eligibility.pages.index.veteran.label"
+msgstr "US Veteran"
+
+msgid "eligibility.pages.index.veteran.description"
+msgstr ""
+"This option is for people who have served in the active military, naval, or "
+"air service, and who were discharged or released therefrom under conditions "
+"other than dishonorable. You will need to verify your identity through VA."
+"gov."
+
+msgid "eligibility.pages.start.veteran.title"
+msgstr "Veteran benefit information"
+
+msgid "eligibility.pages.start.veteran.headline"
+msgstr "You selected a Veteran benefit."
+
+msgid "eligibility.pages.start.veteran.start_item.heading"
+msgstr "Access to your preferred VA related account"
+
+msgid "eligibility.pages.start.veteran.start_item.details"
+msgstr ""
+"You will need to sign into VA.gov in order to verify your identity and your "
+"veteran status. VA.gov uses the following services:"
+
+#, fuzzy
+#| msgid "enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"
+msgid "enrollment.pages.index.veteran.eligibility_confirmed_item.heading"
+msgstr "Your eligibility is confirmed for an Older Adult benefit"
+
+#, fuzzy, python-format
+#| msgid ""
+#| "enrollment.pages.index.login_gov.eligibility_confirmed_item.details"
+#| "%(transit_agency_short_name)s"
+msgid ""
+"enrollment.pages.success.veteran.confirm_item.details"
+"%(transit_agency_short_name)s"
+msgstr ""
+"Your eligibility has been verified by Login.gov. This benefit will give you "
+"a half-price fare on public transportation with "
+"%(transit_agency_short_name)s."
 
 msgid "eligibility.pages.index.p[0].mst"
 msgstr ""
@@ -352,6 +369,7 @@ msgstr "GitHub"
 msgid "core.pages.index.agency_selector.headline"
 msgstr "Please choose your transit provider:"
 
+#, python-format
 msgid "core.pages.index.agency_selector%(agency_short_name)s"
 msgstr "%(agency_short_name)s logo"
 
