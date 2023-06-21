@@ -33,6 +33,15 @@ def _server_metadata_url(authority):
     return f"{authority}/.well-known/openid-configuration"
 
 
+def _authorize_params(scheme):
+    if scheme is not None:
+        params = {"scheme": scheme}
+    else:
+        params = None
+
+    return params
+
+
 def register_providers(oauth_registry):
     """
     Register OAuth clients into the given registry, using configuration from AuthProvider models.
@@ -51,4 +60,5 @@ def register_providers(oauth_registry):
             client_id=provider.client_id,
             server_metadata_url=_server_metadata_url(provider.authority),
             client_kwargs=_client_kwargs(provider.scope),
+            authorize_params=_authorize_params(provider.scheme),
         )

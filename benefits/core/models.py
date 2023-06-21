@@ -49,6 +49,7 @@ class AuthProvider(models.Model):
     authority = models.TextField()
     scope = models.TextField(null=True)
     claim = models.TextField(null=True)
+    scheme = models.TextField()
 
 
 class EligibilityType(models.Model):

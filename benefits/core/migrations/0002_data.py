@@ -129,6 +129,7 @@ PEM DATA
         authority=os.environ.get("AUTH_PROVIDER_AUTHORITY", "https://example.com"),
         scope=os.environ.get("AUTH_PROVIDER_SCOPE", "verify:senior"),
         claim=os.environ.get("AUTH_PROVIDER_CLAIM", "senior"),
+        scheme=os.environ.get("AUTH_PROVIDER_SCHEME", "dev-cal-itp_benefits"),
     )
 
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
