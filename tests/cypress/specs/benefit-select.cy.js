@@ -21,7 +21,7 @@ describe("Benefit selection", () => {
 
     cy.url().should("include", verifier_selection_url);
     cy.get("input:radio:checked").should("have.length", 0);
-    cy.get("input:invalid").should("have.length", 2);
+    cy.get("input:invalid").should("have.length", 3);
     cy.get("input:radio")
       .first()
       .invoke("prop", "validationMessage")
