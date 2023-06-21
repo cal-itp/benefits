@@ -96,6 +96,7 @@ resource "azurerm_linux_web_app" "main" {
     "AUTH_PROVIDER_SCOPE"                                  = "${local.secret_prefix}auth-provider-scope)"
     "AUTH_PROVIDER_CLAIM"                                  = "${local.secret_prefix}auth-provider-claim)"
     "MST_OAUTH_VERIFIER_NAME"                              = "${local.secret_prefix}mst-oauth-verifier-name)"
+    "MST_VETERAN_VERIFIER_NAME"                            = "${local.secret_prefix}mst-veteran-verifier-name)"
     "COURTESY_CARD_VERIFIER"                               = "${local.secret_prefix}courtesy-card-verifier)"
     "COURTESY_CARD_VERIFIER_API_URL"                       = "${local.secret_prefix}courtesy-card-verifier-api-url)"
     "COURTESY_CARD_VERIFIER_API_AUTH_HEADER"               = "${local.secret_prefix}courtesy-card-verifier-api-auth-header)"

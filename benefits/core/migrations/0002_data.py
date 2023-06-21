@@ -202,7 +202,7 @@ PEM DATA
     )
 
     mst_veteran_verifier = EligibilityVerifier.objects.create(
-        name=os.environ.get("MST_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov - Veteran (MST)"),
+        name=os.environ.get("MST_VETERAN_VERIFIER_NAME", "OAuth claims via Login.gov - Veteran (MST)"),
         eligibility_type=mst_veteran_type,
         auth_provider=auth_provider,
         selection_label=_("eligibility.pages.index.veteran.label"),
