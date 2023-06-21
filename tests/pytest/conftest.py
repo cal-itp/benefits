@@ -93,6 +93,7 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         start_headline="Start",
         start_item_heading="Start Item",
         start_item_details="Start Item Description",
+        start_item_secondary_details="Start Item Details Secondary",
         form_title="Form",
         form_headline="Form",
         form_blurb="Form Blurb",

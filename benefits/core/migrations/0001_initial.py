@@ -50,6 +50,7 @@ class Migration(migrations.Migration):
                 ("start_headline", models.TextField()),
                 ("start_item_heading", models.TextField()),
                 ("start_item_details", models.TextField()),
+                ("start_item_secondary_details", models.TextField()),
                 ("start_help_anchor", models.TextField()),
                 ("form_title", models.TextField(null=True)),
                 ("form_headline", models.TextField(null=True)),
