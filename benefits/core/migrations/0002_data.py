@@ -161,6 +161,26 @@ PEM DATA
         enrollment_success_expiry_item_details=None,
     )
 
+    mst_veteran_verifier = EligibilityVerifier.objects.create(
+        name=os.environ.get("MST_VETERAN_VERIFIER_NAME", "OAuth claims via Login.gov - Veteran (MST)"),
+        eligibility_type=mst_veteran_type,
+        auth_provider=auth_provider,
+        selection_label=_("eligibility.pages.index.veteran.label"),
+        selection_label_description=_("eligibility.pages.index.veteran.description"),
+        start_title=_("eligibility.pages.start.veteran.title"),
+        start_headline=_("eligibility.pages.start.veteran.headline"),
+        start_item_heading=_("eligibility.pages.start.veteran.start_item.heading"),
+        start_item_details=_("eligibility.pages.start.veteran.start_item.details"),
+        start_item_secondary_details=_("eligibility.pages.start.veteran.start_item.details"),
+        unverified_title=_("eligibility.pages.unverified.login_gov.title"),
+        unverified_blurb=_("eligibility.pages.unverified.login_gov.p[0]"),
+        enrollment_success_confirm_item_details=_(
+            "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
+        ),
+        enrollment_success_expiry_item_heading=None,
+        enrollment_success_expiry_item_details=None,
+    )
+
     mst_courtesy_card_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("COURTESY_CARD_VERIFIER", "Eligibility Server Verifier"),
         api_url=os.environ.get("COURTESY_CARD_VERIFIER_API_URL", "http://server:8000/verify"),
@@ -199,26 +219,6 @@ PEM DATA
         enrollment_success_confirm_item_details=_("enrollment.pages.success.mst_cc.confirm_item.details"),
         enrollment_success_expiry_item_heading=_("enrollment.pages.success.mst_cc.expiry_item.heading"),
         enrollment_success_expiry_item_details=_("enrollment.pages.success.mst_cc.expiry_item.details"),
-    )
-
-    mst_veteran_verifier = EligibilityVerifier.objects.create(
-        name=os.environ.get("MST_VETERAN_VERIFIER_NAME", "OAuth claims via Login.gov - Veteran (MST)"),
-        eligibility_type=mst_veteran_type,
-        auth_provider=auth_provider,
-        selection_label=_("eligibility.pages.index.veteran.label"),
-        selection_label_description=_("eligibility.pages.index.veteran.description"),
-        start_title=_("eligibility.pages.start.veteran.title"),
-        start_headline=_("eligibility.pages.start.veteran.headline"),
-        start_item_heading=_("eligibility.pages.start.veteran.start_item.heading"),
-        start_item_details=_("eligibility.pages.start.veteran.start_item.details"),
-        start_item_secondary_details=_("eligibility.pages.start.veteran.start_item.secondary_details"),
-        unverified_title=_("eligibility.pages.unverified.login_gov.title"),
-        unverified_blurb=_("eligibility.pages.unverified.login_gov.p[0]"),
-        enrollment_success_confirm_item_details=_(
-            "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
-        ),
-        enrollment_success_expiry_item_heading=None,
-        enrollment_success_expiry_item_details=None,
     )
 
     sacrt_oauth_claims_verifier = EligibilityVerifier.objects.create(
