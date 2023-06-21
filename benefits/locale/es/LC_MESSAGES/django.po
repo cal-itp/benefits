@@ -171,23 +171,6 @@ msgstr ""
 "TODO: You will need to sign into VA.gov in order to verify your identity and "
 "your veteran status. VA.gov uses the following services:"
 
-#, fuzzy
-#| msgid "enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"
-msgid "enrollment.pages.index.veteran.eligibility_confirmed_item.heading"
-msgstr "Su eligibilidad es confirmada para un beneficio de Adulto Mayor"
-
-#, fuzzy, python-format
-#| msgid ""
-#| "enrollment.pages.index.login_gov.eligibility_confirmed_item.details"
-#| "%(transit_agency_short_name)s"
-msgid ""
-"enrollment.pages.success.veteran.confirm_item.details"
-"%(transit_agency_short_name)s"
-msgstr ""
-"Su elegibilidad ha sido verificada por Login.gov. Este beneficio le dará una "
-"tarifa a mitad de precio en el transporte público con "
-"%(transit_agency_short_name)s."
-
 msgid "eligibility.pages.index.p[0].mst"
 msgstr ""
 "Puede acercar su tarjeta de crédito o débito cuando aborde un autobús de MST "

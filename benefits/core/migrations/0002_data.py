@@ -213,12 +213,8 @@ PEM DATA
         start_item_details=_("eligibility.pages.start.veteran.start_item.details"),
         unverified_title=_("eligibility.pages.unverified.login_gov.title"),
         unverified_blurb=_("eligibility.pages.unverified.login_gov.p[0]"),
-        eligibility_confirmed_item_heading=_("enrollment.pages.index.veteran.eligibility_confirmed_item.heading"),
-        eligibility_confirmed_item_details=_(
-            "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
-        ),
         enrollment_success_confirm_item_details=_(
-            "enrollment.pages.success.veteran.confirm_item.details%(transit_agency_short_name)s"
+            "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
         ),
         enrollment_success_expiry_item_heading=None,
         enrollment_success_expiry_item_details=None,
