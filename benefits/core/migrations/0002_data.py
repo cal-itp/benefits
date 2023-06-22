@@ -137,6 +137,17 @@ PEM DATA
         scheme=os.environ.get("SENIOR_AUTH_PROVIDER_SCHEME", "dev-cal-itp_benefits"),
     )
 
+    veteran_auth_provider = AuthProvider.objects.create(
+        sign_in_button_label=_("eligibility.buttons.signin"),
+        sign_out_button_label=_("eligibility.buttons.signout"),
+        client_name=os.environ.get("VETERAN_AUTH_PROVIDER_CLIENT_NAME", "veteran-benefits-oauth-client-name"),
+        client_id=os.environ.get("AUTH_PROVIDER_CLIENT_ID", "benefits-oauth-client-id"),
+        authority=os.environ.get("AUTH_PROVIDER_AUTHORITY", "https://example.com"),
+        scope=os.environ.get("VETERAN_AUTH_PROVIDER_SCOPE", "verify:veteran"),
+        claim=os.environ.get("VETERAN_AUTH_PROVIDER_CLAIM", "veteran"),
+        scheme=os.environ.get("VETERAN_AUTH_PROVIDER_SCHEME", "vagov"),
+    )
+
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
 
     mst_oauth_claims_verifier = EligibilityVerifier.objects.create(
@@ -164,7 +175,7 @@ PEM DATA
     mst_veteran_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("MST_VETERAN_VERIFIER_NAME", "VA.gov - Veteran (MST)"),
         eligibility_type=mst_veteran_type,
-        auth_provider=auth_provider,
+        auth_provider=veteran_auth_provider,
         selection_label=_("eligibility.pages.index.veteran.label"),
         selection_label_description=_("eligibility.pages.index.veteran.description"),
         start_title=_("eligibility.pages.start.veteran.title"),
