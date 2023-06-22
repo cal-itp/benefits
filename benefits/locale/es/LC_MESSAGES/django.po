@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-21 04:56+0000\n"
+"POT-Creation-Date: 2023-06-21 23:17+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -70,6 +70,36 @@ msgstr ""
 "misma tarjeta física y automáticamente recibirá su nueva tarifa reducida. "
 "Deberá volver a presenter la solicitud si elige cambiar la tarjeta bancaria "
 "que utiliza para pagar el servicio de transito."
+
+msgid "eligibility.pages.index.veteran.label"
+msgstr "TODO: US Veteran"
+
+msgid "eligibility.pages.index.veteran.description"
+msgstr ""
+"TODO: This option is for people who have served in the active military, "
+"naval, or air service, and who were discharged or released therefrom under "
+"conditions other than dishonorable. You will need to <a href='https://www.va."
+"gov/resources/verifying-your-identity-on-vagov/' target=\"_blank\" rel="
+"\"noopener noreferrer\">verify your identity through VA.gov</a>"
+
+msgid "eligibility.pages.start.veteran.title"
+msgstr "TODO: Veteran benefit information"
+
+msgid "eligibility.pages.start.veteran.headline"
+msgstr "TODO: You selected a Veteran benefit."
+
+msgid "eligibility.pages.start.veteran.start_item.heading"
+msgstr "TODO: Access to your preferred VA related account"
+
+msgid "eligibility.pages.start.veteran.start_item.details"
+msgstr ""
+"TODO: You will need to sign into VA.gov in order to verify your identity and "
+"your veteran status. VA.gov uses the following services:"
+
+msgid "eligibility.pages.start.veteran.start_item.secondary_details"
+msgstr ""
+"TODO: If you do not have an account with any of these services, you will "
+"need to create one. We recommend using Login.gov."
 
 msgid "eligibility.pages.index.mst_cc.label"
 msgstr "Tengo una Tarjeta de Cortesía de MST"
@@ -146,35 +176,6 @@ msgstr ""
 "para continuar usando las tarjetas de pago sin contacto. También tendrá que "
 "volver a presenter una solicitud si elige cambiar la tarjeta bancaria que "
 "usa para pagar el servicio de tránsito."
-
-msgid "eligibility.pages.index.veteran.label"
-msgstr "TODO: US Veteran"
-
-msgid "eligibility.pages.index.veteran.description"
-msgstr ""
-"TODO: This option is for people who have served in the active military, "
-"naval, or air service, and who were discharged or released therefrom under "
-"conditions other than dishonorable. You will need to verify your identity "
-"through VA.gov."
-
-msgid "eligibility.pages.start.veteran.title"
-msgstr "TODO: Veteran benefit information"
-
-msgid "eligibility.pages.start.veteran.headline"
-msgstr "TODO: You selected a Veteran benefit."
-
-msgid "eligibility.pages.start.veteran.start_item.heading"
-msgstr "TODO: Access to your preferred VA related account"
-
-msgid "eligibility.pages.start.veteran.start_item.details"
-msgstr ""
-"TODO: You will need to sign into VA.gov in order to verify your identity and "
-"your veteran status. VA.gov uses the following services:"
-
-msgid "eligibility.pages.start.veteran.start_item.secondary_details"
-msgstr ""
-"TODO: If you do not have an account with any of these services, you will "
-"need to create one. We recommend using Login.gov."
 
 msgid "eligibility.pages.index.p[0].mst"
 msgstr ""
