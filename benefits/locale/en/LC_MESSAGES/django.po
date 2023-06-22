@@ -44,10 +44,10 @@ msgstr ""
 "will be able to create one. You will also need to verify your identity, "
 "which will require these items:"
 
-msgid "eligibility.pages.unverified.login_gov.title"
+msgid "eligibility.pages.unverified.title"
 msgstr "Eligibility Error"
 
-msgid "eligibility.pages.unverified.login_gov.p[0]"
+msgid "eligibility.pages.unverified.p[0]"
 msgstr ""
 "That’s okay! You may still be eligible for our program. Please reach out to "
 "your local transit provider for assistance."

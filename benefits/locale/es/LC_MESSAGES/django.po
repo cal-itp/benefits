@@ -44,10 +44,10 @@ msgstr ""
 "no tiene una cuenta, podrá crear una. También deberá verificar su identidad, "
 "lo que requerirá estos artículos:"
 
-msgid "eligibility.pages.unverified.login_gov.title"
+msgid "eligibility.pages.unverified.title"
 msgstr "Error de elegibilidad"
 
-msgid "eligibility.pages.unverified.login_gov.p[0]"
+msgid "eligibility.pages.unverified.p[0]"
 msgstr ""
 "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
 "proveedor de tránsito local para obtener asistencia."

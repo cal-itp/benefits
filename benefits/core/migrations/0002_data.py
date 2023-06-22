@@ -150,8 +150,8 @@ PEM DATA
         start_item_heading=_("eligibility.pages.start.login_gov.start_item.heading"),
         start_item_details=_("eligibility.pages.start.login_gov.start_item.details"),
         start_help_anchor="login-gov",
-        unverified_title=_("eligibility.pages.unverified.login_gov.title"),
-        unverified_blurb=_("eligibility.pages.unverified.login_gov.p[0]"),
+        unverified_title=_("eligibility.pages.unverified.title"),
+        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
         eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
         eligibility_confirmed_item_details=_(
             "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
@@ -172,8 +172,8 @@ PEM DATA
         start_item_heading=_("eligibility.pages.start.veteran.start_item.heading"),
         start_item_details=_("eligibility.pages.start.veteran.start_item.details"),
         start_item_secondary_details=_("eligibility.pages.start.veteran.start_item.secondary_details"),
-        unverified_title=_("eligibility.pages.unverified.login_gov.title"),
-        unverified_blurb=_("eligibility.pages.unverified.login_gov.p[0]"),
+        unverified_title=_("eligibility.pages.unverified.title"),
+        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
         enrollment_success_confirm_item_details=_(
             "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
         ),
@@ -232,8 +232,8 @@ PEM DATA
         start_item_heading=_("eligibility.pages.start.login_gov.start_item.heading"),
         start_item_details=_("eligibility.pages.start.login_gov.start_item.details"),
         start_help_anchor="login-gov",
-        unverified_title=_("eligibility.pages.unverified.login_gov.title"),
-        unverified_blurb=_("eligibility.pages.unverified.login_gov.p[0]"),
+        unverified_title=_("eligibility.pages.unverified.title"),
+        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
         eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
         eligibility_confirmed_item_details=_(
             "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
