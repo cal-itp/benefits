@@ -86,7 +86,7 @@ msgid "eligibility.pages.start.veteran.title"
 msgstr "TODO: Veteran benefit information"
 
 msgid "eligibility.pages.start.veteran.headline"
-msgstr "TODO: You selected a Veteran benefit."
+msgstr "TODO: You selected a Veteran transit benefit."
 
 msgid "eligibility.pages.start.veteran.start_item.heading"
 msgstr "TODO: Access to your preferred VA related account"
