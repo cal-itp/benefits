@@ -106,6 +106,7 @@ def start(request):
         icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
         heading=_(verifier.start_item_heading),
         details=_(verifier.start_item_details),
+        secondary_details=_(verifier.start_item_secondary_details),
     )
 
     if verifier.is_auth_required:

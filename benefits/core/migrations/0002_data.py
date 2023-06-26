@@ -13,6 +13,11 @@ def load_data(app, *args, **kwargs):
     mst_senior_type = EligibilityType.objects.create(
         name="senior", label="Senior Discount (MST)", group_id=os.environ.get("MST_SENIOR_GROUP_ID", "group1")
     )
+    mst_veteran_type = EligibilityType.objects.create(
+        name="veteran",
+        label="Veteran Discount (MST)",
+        group_id=os.environ.get("MST_VETERAN_GROUP_ID", "group3"),
+    )
     mst_courtesy_card_type = EligibilityType.objects.create(
         name="courtesy_card",
         label="Courtesy Card Discount (MST)",
@@ -145,13 +150,33 @@ PEM DATA
         start_item_heading=_("eligibility.pages.start.login_gov.start_item.heading"),
         start_item_details=_("eligibility.pages.start.login_gov.start_item.details"),
         start_help_anchor="login-gov",
-        unverified_title=_("eligibility.pages.unverified.login_gov.title"),
-        unverified_blurb=_("eligibility.pages.unverified.login_gov.p[0]"),
+        unverified_title=_("eligibility.pages.unverified.title"),
+        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
         eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
         eligibility_confirmed_item_details=_(
             "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
         ),
         enrollment_success_confirm_item_details=_("enrollment.pages.success.login_gov.confirm_item.details"),
+        enrollment_success_expiry_item_heading=None,
+        enrollment_success_expiry_item_details=None,
+    )
+
+    mst_veteran_verifier = EligibilityVerifier.objects.create(
+        name=os.environ.get("MST_VETERAN_VERIFIER_NAME", "VA.gov - Veteran (MST)"),
+        eligibility_type=mst_veteran_type,
+        auth_provider=auth_provider,
+        selection_label=_("eligibility.pages.index.veteran.label"),
+        selection_label_description=_("eligibility.pages.index.veteran.description"),
+        start_title=_("eligibility.pages.start.veteran.title"),
+        start_headline=_("eligibility.pages.start.veteran.headline"),
+        start_item_heading=_("eligibility.pages.start.veteran.start_item.heading"),
+        start_item_details=_("eligibility.pages.start.veteran.start_item.details"),
+        start_item_secondary_details=_("eligibility.pages.start.veteran.start_item.secondary_details"),
+        unverified_title=_("eligibility.pages.unverified.title"),
+        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
+        enrollment_success_confirm_item_details=_(
+            "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
+        ),
         enrollment_success_expiry_item_heading=None,
         enrollment_success_expiry_item_details=None,
     )
@@ -207,8 +232,8 @@ PEM DATA
         start_item_heading=_("eligibility.pages.start.login_gov.start_item.heading"),
         start_item_details=_("eligibility.pages.start.login_gov.start_item.details"),
         start_help_anchor="login-gov",
-        unverified_title=_("eligibility.pages.unverified.login_gov.title"),
-        unverified_blurb=_("eligibility.pages.unverified.login_gov.p[0]"),
+        unverified_title=_("eligibility.pages.unverified.title"),
+        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
         eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
         eligibility_confirmed_item_details=_(
             "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
@@ -277,7 +302,7 @@ PEM DATA
         eligibility_index_intro=_("eligibility.pages.index.p[0].mst"),
     )
     mst_agency.eligibility_types.set([mst_senior_type, mst_courtesy_card_type])
-    mst_agency.eligibility_verifiers.set([mst_oauth_claims_verifier, mst_courtesy_card_verifier])
+    mst_agency.eligibility_verifiers.set([mst_oauth_claims_verifier, mst_veteran_verifier, mst_courtesy_card_verifier])
 
     sacrt_agency = TransitAgency.objects.create(
         slug="sacrt",

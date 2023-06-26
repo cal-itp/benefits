@@ -26,7 +26,7 @@ export const selectCourtesyCard = () => {
   cy.location("pathname").should("eq", `/eligibility/${agency.slug}`);
 
   // TODO find a more robust way to do this
-  cy.get('#form-verifier-selection [type="radio"]').check("2");
+  cy.get('#form-verifier-selection [type="radio"]').check("3");
   cy.get("#form-verifier-selection button[type='submit']").click();
   cy.contains("Continue").click();
 };
