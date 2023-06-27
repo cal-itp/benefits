@@ -147,8 +147,8 @@ def logged_in(request):
 
 
 def logout(request):
-    """Reset the session tokens."""
-    update(request, oauth_token=False, enrollment_token=False)
+    """Reset the session claims and tokens."""
+    update(request, oauth_claim=False, oauth_token=False, enrollment_token=False)
 
 
 def oauth_token(request):
