@@ -2,8 +2,8 @@ from django.urls import reverse
 
 import pytest
 
-
 from benefits.core.middleware import TEMPLATE_USER_ERROR
+import benefits.core.session
 from benefits.eligibility.forms import EligibilityVerifierSelectionForm
 from benefits.eligibility.views import (
     ROUTE_INDEX,
@@ -42,6 +42,11 @@ def mocked_eligibility_auth_request(mocked_eligibility_request_session, mocked_s
     so that session behaves like in an authenticated request to the eligibility app
     """
     pass
+
+
+@pytest.fixture
+def session_logout_spy(mocker):
+    return mocker.spy(benefits.core.session, "logout")
 
 
 @pytest.fixture
@@ -124,6 +129,16 @@ def test_index_post_valid_form(client, model_EligibilityVerifier, mocked_session
     assert response.url == reverse(ROUTE_START)
     assert mocked_session_update.call_args.kwargs["verifier"] == model_EligibilityVerifier
     mocked_analytics_module.selected_verifier.assert_called_once()
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+def test_index_calls_session_logout(client, session_logout_spy):
+    path = reverse(ROUTE_INDEX)
+
+    client.get(path)
+
+    session_logout_spy.assert_called_once()
 
 
 @pytest.mark.django_db
