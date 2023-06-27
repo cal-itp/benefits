@@ -110,13 +110,13 @@ def start(request):
     )
 
     if verifier.is_auth_required:
-        if verifier.name == "OAuth claims via Login.gov (MST)" or "OAuth claims via Login.gov (SacRT)":
+        if verifier.auth_provider.claim == "senior":
             identity_item.bullets = [
                 _("eligibility.pages.start.login_gov.required_items[0]"),
                 _("eligibility.pages.start.login_gov.required_items[1]"),
                 _("eligibility.pages.start.login_gov.required_items[2]"),
             ]
-        if verifier.name == "VA.gov - Veteran (MST)":
+        if verifier.auth_provider.claim == "veteran":
             identity_item.bullets = [
                 _("eligibility.pages.start.veteran.required_items[0]"),
                 _("eligibility.pages.start.veteran.required_items[1]"),
