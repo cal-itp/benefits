@@ -312,7 +312,7 @@ PEM DATA
         payment_processor=mst_payment_processor,
         eligibility_index_intro=_("eligibility.pages.index.p[0].mst"),
     )
-    mst_agency.eligibility_types.set([mst_senior_type, mst_courtesy_card_type])
+    mst_agency.eligibility_types.set([mst_senior_type, mst_veteran_type, mst_courtesy_card_type])
     mst_agency.eligibility_verifiers.set([mst_oauth_claims_verifier, mst_veteran_verifier, mst_courtesy_card_verifier])
 
     sacrt_agency = TransitAgency.objects.create(
