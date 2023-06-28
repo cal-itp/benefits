@@ -107,6 +107,13 @@ msgstr ""
 "TODO: If you do not have an account with any of these services, you will "
 "need to create one. We recommend using Login.gov."
 
+msgid "enrollment.pages.success.veteran.confirm_item.details"
+msgstr ""
+"No se le ha cobrado nada hoy. Al abordar al el tránsito, pague con esta "
+"misma tarjeta física y automáticamente recibirá su nueva tarifa reducida. "
+"Deberá volver a presenter la solicitud si elige cambiar la tarjeta bancaria "
+"que utiliza para pagar el servicio de transito."
+
 msgid "eligibility.pages.index.mst_cc.label"
 msgstr "Tengo una Tarjeta de Cortesía de MST"
 

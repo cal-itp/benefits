@@ -107,6 +107,13 @@ msgstr ""
 "If you do not have an account with any of these services, you will need to "
 "create one. We recommend using Login.gov."
 
+msgid "enrollment.pages.success.veteran.confirm_item.details"
+msgstr ""
+"You were not charged anything today. When boarding transit, pay with this "
+"same physical card and you will automatically receive your new reduced fare. "
+"You will need to reapply if you choose to change the bank card you use to "
+"pay for transit service."
+
 msgid "eligibility.pages.index.mst_cc.label"
 msgstr "I have an MST Courtesy Card"
 
