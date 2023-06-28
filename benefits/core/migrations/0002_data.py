@@ -185,9 +185,7 @@ PEM DATA
         start_item_secondary_details=_("eligibility.pages.start.veteran.start_item.secondary_details"),
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
-        enrollment_success_confirm_item_details=_(
-            "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
-        ),
+        enrollment_success_confirm_item_details=_("enrollment.pages.success.veteran.confirm_item.details"),
         enrollment_success_expiry_item_heading=None,
         enrollment_success_expiry_item_details=None,
     )
