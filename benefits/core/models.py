@@ -153,6 +153,10 @@ class EligibilityVerifier(models.Model):
         """True if this Verifier verifies via the auth provider. False otherwise."""
         return self.is_auth_required and self.auth_provider.scope and self.auth_provider.claim
 
+    @property
+    def supports_sign_out(self):
+        return bool(self.is_auth_required and self.auth_provider.sign_out_button_label)
+
     @staticmethod
     def by_id(id):
         """Get an EligibilityVerifier instance by its ID."""
