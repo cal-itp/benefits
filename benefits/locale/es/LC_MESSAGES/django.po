@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-06-28 22:08+0000\n"
+"POT-Creation-Date: 2023-06-28 23:56+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,9 +21,6 @@ msgstr "Cierre sesión de Login.gov"
 
 msgid "eligibility.buttons.veteran.signin"
 msgstr "TODO: Continue with VA.gov"
-
-msgid "eligibility.buttons.veteran.signout"
-msgstr "TODO: Cierre sesión de VA.gov"
 
 msgid "eligibility.pages.index.login_gov.label"
 msgstr "Tengo 65 años de edad o más"
