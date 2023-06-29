@@ -43,7 +43,7 @@ class AuthProvider(models.Model):
 
     id = models.AutoField(primary_key=True)
     sign_in_button_label = models.TextField()
-    sign_out_button_label = models.TextField()
+    sign_out_button_label = models.TextField(null=True)
     client_name = models.TextField()
     client_id = models.TextField()
     authority = models.TextField()
@@ -152,6 +152,10 @@ class EligibilityVerifier(models.Model):
     def uses_auth_verification(self):
         """True if this Verifier verifies via the auth provider. False otherwise."""
         return self.is_auth_required and self.auth_provider.scope and self.auth_provider.claim
+
+    @property
+    def supports_sign_out(self):
+        return bool(self.is_auth_required and self.auth_provider.sign_out_button_label)
 
     @staticmethod
     def by_id(id):
