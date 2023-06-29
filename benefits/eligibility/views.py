@@ -110,7 +110,7 @@ def start(request):
     )
 
     if verifier.is_auth_required:
-        identity_item.bullets = verifier.bullets.values()
+        identity_item.bullets = [_(bullet) for bullet in verifier.bullets]
 
         if not session.logged_in(request):
             button = viewmodels.Button.login(
