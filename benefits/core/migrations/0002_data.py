@@ -152,6 +152,11 @@ PEM DATA
 
     mst_oauth_claims_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("MST_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (MST)"),
+        bullets=[
+            "eligibility.pages.start.login_gov.required_items[0]",
+            "eligibility.pages.start.login_gov.required_items[1]",
+            "eligibility.pages.start.login_gov.required_items[2]",
+        ],
         eligibility_type=mst_senior_type,
         auth_provider=senior_auth_provider,
         selection_label=_("eligibility.pages.index.login_gov.label"),
@@ -238,6 +243,11 @@ PEM DATA
 
     sacrt_oauth_claims_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("SACRT_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (SacRT)"),
+        bullets=[
+            "eligibility.pages.start.login_gov.required_items[0]",
+            "eligibility.pages.start.login_gov.required_items[1]",
+            "eligibility.pages.start.login_gov.required_items[2]",
+        ],
         eligibility_type=sacrt_senior_type,
         auth_provider=senior_auth_provider,
         selection_label=_("eligibility.pages.index.login_gov.label"),
