@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% if authentication %}
-  {% if authentication.required and authentication.logged_in and authentication.supports_sign_out %}
+  {% if authentication.supports_sign_out and authentication.logged_in %}
     <div class="w-100 position-absolute">
       <div class="container">
         <div class="row nav-button-row">
