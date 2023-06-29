@@ -64,9 +64,29 @@ def model_AuthProvider_with_verification(model_AuthProvider):
 
 
 @pytest.fixture
+def model_AuthProvider_with_verification_no_sign_out(model_AuthProvider):
+    model_AuthProvider.scope = "scope"
+    model_AuthProvider.claim = "claim"
+    model_AuthProvider.sign_out_button_label = None
+    model_AuthProvider.save()
+
+    return model_AuthProvider
+
+
+@pytest.fixture
 def model_AuthProvider_without_verification(model_AuthProvider):
     model_AuthProvider.scope = None
     model_AuthProvider.claim = None
+    model_AuthProvider.save()
+
+    return model_AuthProvider
+
+
+@pytest.fixture
+def model_AuthProvider_without_verification_no_sign_out(model_AuthProvider):
+    model_AuthProvider.scope = None
+    model_AuthProvider.claim = None
+    model_AuthProvider.sign_out_button_label = None
     model_AuthProvider.save()
 
     return model_AuthProvider

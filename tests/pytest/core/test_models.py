@@ -114,6 +114,18 @@ def test_EligibilityVerifier_with_AuthProvider_with_verification(
 
     assert model_EligibilityVerifier.is_auth_required
     assert model_EligibilityVerifier.uses_auth_verification
+    assert model_EligibilityVerifier.supports_sign_out
+
+
+@pytest.mark.django_db
+def test_EligibilityVerifier_with_AuthProvider_with_verification_no_sign_out(
+    model_EligibilityVerifier, model_AuthProvider_with_verification_no_sign_out
+):
+    model_EligibilityVerifier.auth_provider = model_AuthProvider_with_verification_no_sign_out
+
+    assert model_EligibilityVerifier.is_auth_required
+    assert model_EligibilityVerifier.uses_auth_verification
+    assert not model_EligibilityVerifier.supports_sign_out
 
 
 @pytest.mark.django_db
@@ -124,6 +136,18 @@ def test_EligibilityVerifier_with_AuthProvider_without_verification(
 
     assert model_EligibilityVerifier.is_auth_required
     assert not model_EligibilityVerifier.uses_auth_verification
+    assert model_EligibilityVerifier.supports_sign_out
+
+
+@pytest.mark.django_db
+def test_EligibilityVerifier_with_AuthProvider_without_verification_no_sign_out(
+    model_EligibilityVerifier, model_AuthProvider_without_verification_no_sign_out
+):
+    model_EligibilityVerifier.auth_provider = model_AuthProvider_without_verification_no_sign_out
+
+    assert model_EligibilityVerifier.is_auth_required
+    assert not model_EligibilityVerifier.uses_auth_verification
+    assert not model_EligibilityVerifier.supports_sign_out
 
 
 @pytest.mark.django_db
