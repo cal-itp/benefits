@@ -117,7 +117,12 @@ def start(request):
                 _("eligibility.pages.start.login_gov.required_items[2]"),
             ]
         if verifier.name == "VA.gov - Veteran (MST)":
-            identity_item.bullets = ["Login.gov", "ID.me", "DS Logon", "My HealtheVet"]
+            identity_item.bullets = [
+                _("eligibility.pages.start.veteran.required_items[0]"),
+                _("eligibility.pages.start.veteran.required_items[1]"),
+                _("eligibility.pages.start.veteran.required_items[2]"),
+                _("eligibility.pages.start.veteran.required_items[3]"),
+            ]
 
         if not session.logged_in(request):
             button = viewmodels.Button.login(

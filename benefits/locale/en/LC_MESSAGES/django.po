@@ -538,6 +538,18 @@ msgstr "Your Social Security number"
 msgid "eligibility.pages.start.login_gov.required_items[2]"
 msgstr "A phone number with a phone plan associated with your name"
 
+msgid "eligibility.pages.start.veteran.required_items[0]"
+msgstr "Login.gov"
+
+msgid "eligibility.pages.start.veteran.required_items[1]"
+msgstr "ID.me"
+
+msgid "eligibility.pages.start.veteran.required_items[2]"
+msgstr "DS Logon"
+
+msgid "eligibility.pages.start.veteran.required_items[3]"
+msgstr "My HealtheVet"
+
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
 msgstr "Bank card icon with contactless symbol and checkmark"
