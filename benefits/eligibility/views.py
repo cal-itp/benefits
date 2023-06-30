@@ -46,6 +46,10 @@ def index(request, agency=None):
     else:
         session.update(request, agency=agency, eligibility_types=[], origin=reverse(ROUTE_CORE_INDEX))
 
+    # clear any prior OAuth token as the user is choosing their desired flow
+    # this may or may not require OAuth, with a different set of scope/claims than what is already stored
+    session.logout(request)
+
     eligibility_start = reverse(ROUTE_START)
 
     help_page = reverse(ROUTE_HELP)
