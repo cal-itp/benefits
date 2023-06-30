@@ -21,7 +21,7 @@ def _client_kwargs(scope=None):
     `scope` should be a space-separated list of scopes to add.
     """
     scopes = ["openid", scope] if scope else ["openid"]
-    return {"code_challenge_method": "S256", "scope": " ".join(scopes)}
+    return {"code_challenge_method": "S256", "scope": " ".join(scopes), "prompt": "login"}
 
 
 def _server_metadata_url(authority):
