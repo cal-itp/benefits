@@ -201,8 +201,11 @@ def test_logout(mocker, mocked_oauth_create_client, mocked_analytics_module, app
     mocked_analytics_module.started_sign_out.assert_called_once()
     assert result.status_code == 200
     assert message in str(result.content)
+
     assert not session.logged_in(app_request)
     assert session.enrollment_token(app_request) is False
+    assert session.oauth_token(app_request) is False
+    assert session.oauth_claim(app_request) is False
 
 
 def test_post_logout(app_request, mocked_analytics_module):

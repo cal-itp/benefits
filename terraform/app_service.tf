@@ -79,6 +79,7 @@ resource "azurerm_linux_web_app" "main" {
 
     # Environment variables for data migration
     "MST_SENIOR_GROUP_ID"                                  = "${local.secret_prefix}mst-senior-group-id)",
+    "MST_VETERAN_GROUP_ID"                                 = "${local.secret_prefix}mst-veteran-group-id)",
     "MST_COURTESY_CARD_GROUP_ID"                           = "${local.secret_prefix}mst-courtesy-card-group-id)"
     "SACRT_SENIOR_GROUP_ID"                                = "${local.secret_prefix}sacrt-senior-group-id)"
     "CLIENT_PRIVATE_KEY"                                   = "${local.secret_prefix}client-private-key)"
@@ -90,12 +91,18 @@ resource "azurerm_linux_web_app" "main" {
     "SACRT_PAYMENT_PROCESSOR_CLIENT_CERT"                  = "${local.secret_prefix}sacrt-payment-processor-client-cert)"
     "SACRT_PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY"      = "${local.secret_prefix}sacrt-payment-processor-client-cert-private-key)"
     "SACRT_PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA"          = "${local.secret_prefix}sacrt-payment-processor-client-cert-root-ca)"
-    "AUTH_PROVIDER_CLIENT_NAME"                            = "${local.secret_prefix}auth-provider-client-name)"
     "AUTH_PROVIDER_CLIENT_ID"                              = "${local.secret_prefix}auth-provider-client-id)"
     "AUTH_PROVIDER_AUTHORITY"                              = "${local.secret_prefix}auth-provider-authority)"
-    "AUTH_PROVIDER_SCOPE"                                  = "${local.secret_prefix}auth-provider-scope)"
-    "AUTH_PROVIDER_CLAIM"                                  = "${local.secret_prefix}auth-provider-claim)"
+    "SENIOR_AUTH_PROVIDER_CLIENT_NAME"                     = "${local.secret_prefix}senior-auth-provider-client-name)"
+    "SENIOR_AUTH_PROVIDER_SCOPE"                           = "${local.secret_prefix}senior-auth-provider-scope)"
+    "SENIOR_AUTH_PROVIDER_CLAIM"                           = "${local.secret_prefix}senior-auth-provider-claim)"
+    "SENIOR_AUTH_PROVIDER_SCHEME"                          = "${local.secret_prefix}senior-auth-provider-scheme)"
+    "VETERAN_AUTH_PROVIDER_CLIENT_NAME"                    = "${local.secret_prefix}veteran-auth-provider-client-name)"
+    "VETERAN_AUTH_PROVIDER_SCOPE"                          = "${local.secret_prefix}veteran-auth-provider-scope)"
+    "VETERAN_AUTH_PROVIDER_CLAIM"                          = "${local.secret_prefix}veteran-auth-provider-claim)"
+    "VETERAN_AUTH_PROVIDER_SCHEME"                         = "${local.secret_prefix}veteran-auth-provider-scheme)"
     "MST_OAUTH_VERIFIER_NAME"                              = "${local.secret_prefix}mst-oauth-verifier-name)"
+    "MST_VETERAN_VERIFIER_NAME"                            = "${local.secret_prefix}mst-veteran-verifier-name)"
     "COURTESY_CARD_VERIFIER"                               = "${local.secret_prefix}courtesy-card-verifier)"
     "COURTESY_CARD_VERIFIER_API_URL"                       = "${local.secret_prefix}courtesy-card-verifier-api-url)"
     "COURTESY_CARD_VERIFIER_API_AUTH_HEADER"               = "${local.secret_prefix}courtesy-card-verifier-api-auth-header)"

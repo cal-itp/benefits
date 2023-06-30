@@ -16,6 +16,7 @@
                         {% endif %}
                     </div>
                 {% endif %}
+                {% if item.secondary_details %}<p class="pt-1">{{ item.secondary_details }}</p>{% endif %}
             </div>
         </li>
     {% endfor %}

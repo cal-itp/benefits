@@ -13,6 +13,11 @@ def load_data(app, *args, **kwargs):
     mst_senior_type = EligibilityType.objects.create(
         name="senior", label="Senior Discount (MST)", group_id=os.environ.get("MST_SENIOR_GROUP_ID", "group1")
     )
+    mst_veteran_type = EligibilityType.objects.create(
+        name="veteran",
+        label="Veteran Discount (MST)",
+        group_id=os.environ.get("MST_VETERAN_GROUP_ID", "group3"),
+    )
     mst_courtesy_card_type = EligibilityType.objects.create(
         name="courtesy_card",
         label="Courtesy Card Discount (MST)",
@@ -121,22 +126,39 @@ PEM DATA
 
     AuthProvider = app.get_model("core", "AuthProvider")
 
-    auth_provider = AuthProvider.objects.create(
-        sign_in_button_label=_("eligibility.buttons.signin"),
-        sign_out_button_label=_("eligibility.buttons.signout"),
-        client_name=os.environ.get("AUTH_PROVIDER_CLIENT_NAME", "benefits-oauth-client-name"),
+    senior_auth_provider = AuthProvider.objects.create(
+        sign_in_button_label=_("eligibility.buttons.senior.signin"),
+        sign_out_button_label=_("eligibility.buttons.senior.signout"),
+        client_name=os.environ.get("SENIOR_AUTH_PROVIDER_CLIENT_NAME", "senior-benefits-oauth-client-name"),
         client_id=os.environ.get("AUTH_PROVIDER_CLIENT_ID", "benefits-oauth-client-id"),
         authority=os.environ.get("AUTH_PROVIDER_AUTHORITY", "https://example.com"),
-        scope=os.environ.get("AUTH_PROVIDER_SCOPE", "verify:senior"),
-        claim=os.environ.get("AUTH_PROVIDER_CLAIM", "senior"),
+        scope=os.environ.get("SENIOR_AUTH_PROVIDER_SCOPE", "verify:senior"),
+        claim=os.environ.get("SENIOR_AUTH_PROVIDER_CLAIM", "senior"),
+        scheme=os.environ.get("SENIOR_AUTH_PROVIDER_SCHEME", "dev-cal-itp_benefits"),
+    )
+
+    veteran_auth_provider = AuthProvider.objects.create(
+        sign_in_button_label=_("eligibility.buttons.veteran.signin"),
+        sign_out_button_label=None,
+        client_name=os.environ.get("VETERAN_AUTH_PROVIDER_CLIENT_NAME", "veteran-benefits-oauth-client-name"),
+        client_id=os.environ.get("AUTH_PROVIDER_CLIENT_ID", "benefits-oauth-client-id"),
+        authority=os.environ.get("AUTH_PROVIDER_AUTHORITY", "https://example.com"),
+        scope=os.environ.get("VETERAN_AUTH_PROVIDER_SCOPE", "verify:veteran"),
+        claim=os.environ.get("VETERAN_AUTH_PROVIDER_CLAIM", "veteran"),
+        scheme=os.environ.get("VETERAN_AUTH_PROVIDER_SCHEME", "vagov"),
     )
 
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
 
     mst_oauth_claims_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("MST_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (MST)"),
+        bullets=[
+            "eligibility.pages.start.login_gov.required_items[0]",
+            "eligibility.pages.start.login_gov.required_items[1]",
+            "eligibility.pages.start.login_gov.required_items[2]",
+        ],
         eligibility_type=mst_senior_type,
-        auth_provider=auth_provider,
+        auth_provider=senior_auth_provider,
         selection_label=_("eligibility.pages.index.login_gov.label"),
         selection_label_description=_("eligibility.pages.index.login_gov.description"),
         start_title=_("eligibility.pages.start.login_gov.title"),
@@ -144,13 +166,37 @@ PEM DATA
         start_item_heading=_("eligibility.pages.start.login_gov.start_item.heading"),
         start_item_details=_("eligibility.pages.start.login_gov.start_item.details"),
         start_help_anchor="login-gov",
-        unverified_title=_("eligibility.pages.unverified.login_gov.title"),
-        unverified_blurb=_("eligibility.pages.unverified.login_gov.p[0]"),
+        unverified_title=_("eligibility.pages.unverified.title"),
+        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
         eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
         eligibility_confirmed_item_details=_(
             "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
         ),
         enrollment_success_confirm_item_details=_("enrollment.pages.success.login_gov.confirm_item.details"),
+        enrollment_success_expiry_item_heading=None,
+        enrollment_success_expiry_item_details=None,
+    )
+
+    mst_veteran_verifier = EligibilityVerifier.objects.create(
+        name=os.environ.get("MST_VETERAN_VERIFIER_NAME", "VA.gov - Veteran (MST)"),
+        bullets=[
+            "eligibility.pages.start.veteran.required_items[0]",
+            "eligibility.pages.start.veteran.required_items[1]",
+            "eligibility.pages.start.veteran.required_items[2]",
+            "eligibility.pages.start.veteran.required_items[3]",
+        ],
+        eligibility_type=mst_veteran_type,
+        auth_provider=veteran_auth_provider,
+        selection_label=_("eligibility.pages.index.veteran.label"),
+        selection_label_description=_("eligibility.pages.index.veteran.description"),
+        start_title=_("eligibility.pages.start.veteran.title"),
+        start_headline=_("eligibility.pages.start.veteran.headline"),
+        start_item_heading=_("eligibility.pages.start.veteran.start_item.heading"),
+        start_item_details=_("eligibility.pages.start.veteran.start_item.details"),
+        start_item_secondary_details=_("eligibility.pages.start.veteran.start_item.secondary_details"),
+        unverified_title=_("eligibility.pages.unverified.title"),
+        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
+        enrollment_success_confirm_item_details=_("enrollment.pages.success.veteran.confirm_item.details"),
         enrollment_success_expiry_item_heading=None,
         enrollment_success_expiry_item_details=None,
     )
@@ -197,8 +243,13 @@ PEM DATA
 
     sacrt_oauth_claims_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("SACRT_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (SacRT)"),
+        bullets=[
+            "eligibility.pages.start.login_gov.required_items[0]",
+            "eligibility.pages.start.login_gov.required_items[1]",
+            "eligibility.pages.start.login_gov.required_items[2]",
+        ],
         eligibility_type=sacrt_senior_type,
-        auth_provider=auth_provider,
+        auth_provider=senior_auth_provider,
         selection_label=_("eligibility.pages.index.login_gov.label"),
         selection_label_description=_("eligibility.pages.index.login_gov.description"),
         start_title=_("eligibility.pages.start.login_gov.title"),
@@ -206,8 +257,8 @@ PEM DATA
         start_item_heading=_("eligibility.pages.start.login_gov.start_item.heading"),
         start_item_details=_("eligibility.pages.start.login_gov.start_item.details"),
         start_help_anchor="login-gov",
-        unverified_title=_("eligibility.pages.unverified.login_gov.title"),
-        unverified_blurb=_("eligibility.pages.unverified.login_gov.p[0]"),
+        unverified_title=_("eligibility.pages.unverified.title"),
+        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
         eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
         eligibility_confirmed_item_details=_(
             "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
@@ -275,8 +326,8 @@ PEM DATA
         payment_processor=mst_payment_processor,
         eligibility_index_intro=_("eligibility.pages.index.p[0].mst"),
     )
-    mst_agency.eligibility_types.set([mst_senior_type, mst_courtesy_card_type])
-    mst_agency.eligibility_verifiers.set([mst_oauth_claims_verifier, mst_courtesy_card_verifier])
+    mst_agency.eligibility_types.set([mst_senior_type, mst_veteran_type, mst_courtesy_card_type])
+    mst_agency.eligibility_verifiers.set([mst_oauth_claims_verifier, mst_veteran_verifier, mst_courtesy_card_verifier])
 
     sacrt_agency = TransitAgency.objects.create(
         slug="sacrt",

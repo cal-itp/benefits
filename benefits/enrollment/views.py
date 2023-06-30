@@ -153,10 +153,13 @@ def retry(request):
                 icon=viewmodels.Icon("bankcardquestion", pgettext("image alt text", "core.icons.bankcardquestion")),
                 headline=_("enrollment.pages.retry.title"),
                 paragraphs=[_("enrollment.pages.retry.p[0]")],
-                buttons=viewmodels.Button.agency_contact_links(agency),
             )
-            page.buttons.append(viewmodels.Button.primary(text=_("core.buttons.retry"), url=session.origin(request)))
-            return TemplateResponse(request, TEMPLATE_RETRY, page.context_dict())
+
+            ctx = page.context_dict()
+            ctx["agency_links"] = viewmodels.Button.agency_contact_links(agency)
+            ctx["retry_button"] = viewmodels.Button.primary(text=_("core.buttons.retry"), url=session.origin(request))
+
+            return TemplateResponse(request, TEMPLATE_RETRY, ctx)
         else:
             analytics.returned_error(request, "Invalid retry submission.")
             raise Exception("Invalid retry submission.")
@@ -176,7 +179,7 @@ def success(request):
 
     page = viewmodels.Page(title=_("enrollment.pages.success.title"), headline=_("enrollment.pages.success.headline"))
 
-    if verifier.is_auth_required and session.logged_in(request):
+    if verifier.supports_sign_out and session.logged_in(request):
         # overwrite origin for a logged in user
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))

@@ -41,10 +41,8 @@ class Button:
     def agency_contact_links(agency):
         """Create link buttons for agency contact information."""
         return [
-            Button.link(classes="agency", label=agency.long_name, text=agency.phone, url=f"tel:{agency.phone}"),
-            Button.link(
-                classes="agency", text=agency.info_url, url=agency.info_url, target="_blank", rel="noopener noreferrer"
-            ),
+            Button.link(label=agency.long_name, text=agency.phone, url=f"tel:{agency.phone}"),
+            Button.link(text=agency.info_url, url=agency.info_url, target="_blank", rel="noopener noreferrer"),
         ]
 
     @staticmethod
@@ -109,11 +107,12 @@ class MediaItem:
     Represents a media item in a list of items:
     * icon: core.viewmodels.Icon
     * details: str, str[]
+    * secondary_details: str
     * heading: str
     * bullets: str, str[]
     """
 
-    def __init__(self, icon: Icon, details, heading=None, bullets=None):
+    def __init__(self, icon: Icon, details, secondary_details=None, heading=None, bullets=None):
         self.icon = icon
         if isinstance(details, str):
             self.details = [details]
@@ -122,6 +121,7 @@ class MediaItem:
         else:
             self.details = [str(details)]
         self.heading = heading
+        self.secondary_details = secondary_details
         if isinstance(bullets, str):
             self.bullets = [bullets]
         elif isinstance(bullets, list):

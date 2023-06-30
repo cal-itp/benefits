@@ -43,12 +43,13 @@ class AuthProvider(models.Model):
 
     id = models.AutoField(primary_key=True)
     sign_in_button_label = models.TextField()
-    sign_out_button_label = models.TextField()
+    sign_out_button_label = models.TextField(null=True)
     client_name = models.TextField()
     client_id = models.TextField()
     authority = models.TextField()
     scope = models.TextField(null=True)
     claim = models.TextField(null=True)
+    scheme = models.TextField()
 
 
 class EligibilityType(models.Model):
@@ -86,6 +87,7 @@ class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""
 
     id = models.AutoField(primary_key=True)
+    bullets = models.JSONField(null=True)
     name = models.TextField()
     api_url = models.TextField(null=True)
     api_auth_header = models.TextField(null=True)
@@ -106,6 +108,7 @@ class EligibilityVerifier(models.Model):
     start_headline = models.TextField()
     start_item_heading = models.TextField()
     start_item_details = models.TextField()
+    start_item_secondary_details = models.TextField()
     start_help_anchor = models.TextField()
     form_title = models.TextField(null=True)
     form_headline = models.TextField(null=True)
@@ -150,6 +153,10 @@ class EligibilityVerifier(models.Model):
     def uses_auth_verification(self):
         """True if this Verifier verifies via the auth provider. False otherwise."""
         return self.is_auth_required and self.auth_provider.scope and self.auth_provider.claim
+
+    @property
+    def supports_sign_out(self):
+        return bool(self.is_auth_required and self.auth_provider.sign_out_button_label)
 
     @staticmethod
     def by_id(id):

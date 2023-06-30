@@ -46,6 +46,10 @@ def index(request, agency=None):
     else:
         session.update(request, agency=agency, eligibility_types=[], origin=reverse(ROUTE_CORE_INDEX))
 
+    # clear any prior OAuth token as the user is choosing their desired flow
+    # this may or may not require OAuth, with a different set of scope/claims than what is already stored
+    session.logout(request)
+
     eligibility_start = reverse(ROUTE_START)
 
     help_page = reverse(ROUTE_HELP)
@@ -106,15 +110,11 @@ def start(request):
         icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
         heading=_(verifier.start_item_heading),
         details=_(verifier.start_item_details),
+        secondary_details=_(verifier.start_item_secondary_details),
     )
 
     if verifier.is_auth_required:
-        if verifier.uses_auth_verification:
-            identity_item.bullets = [
-                _("eligibility.pages.start.login_gov.required_items[0]"),
-                _("eligibility.pages.start.login_gov.required_items[1]"),
-                _("eligibility.pages.start.login_gov.required_items[2]"),
-            ]
+        identity_item.bullets = [_(bullet) for bullet in verifier.bullets]
 
         if not session.logged_in(request):
             button = viewmodels.Button.login(
@@ -246,16 +246,18 @@ def unverified(request):
 
     analytics.returned_fail(request, types_to_verify)
 
-    # tel: link to agency phone number
-    buttons = viewmodels.Button.agency_contact_links(agency)
-    buttons.append(viewmodels.Button.home(request))
+    agency_links = viewmodels.Button.agency_contact_links(agency)
+    back_button = viewmodels.Button.home(request)
 
     page = viewmodels.Page(
         title=_(verifier.unverified_title),
         headline=_("eligibility.pages.unverified.headline"),
         icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
         paragraphs=[_(verifier.unverified_blurb)],
-        buttons=buttons,
     )
 
-    return TemplateResponse(request, TEMPLATE_UNVERIFIED, page.context_dict())
+    ctx = page.context_dict()
+    ctx["agency_links"] = agency_links
+    ctx["back_button"] = back_button
+
+    return TemplateResponse(request, TEMPLATE_UNVERIFIED, ctx)

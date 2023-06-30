@@ -6,18 +6,21 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-01-26 16:08+0000\n"
+"POT-Creation-Date: 2023-06-29 00:40+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "eligibility.buttons.signin"
+msgid "eligibility.buttons.senior.signin"
 msgstr "Comencemos con"
 
-msgid "eligibility.buttons.signout"
+msgid "eligibility.buttons.senior.signout"
 msgstr "Cierre sesión de Login.gov"
+
+msgid "eligibility.buttons.veteran.signin"
+msgstr "TODO: Continue with VA.gov"
 
 msgid "eligibility.pages.index.login_gov.label"
 msgstr "Tengo 65 años de edad o más"
@@ -44,10 +47,10 @@ msgstr ""
 "no tiene una cuenta, podrá crear una. También deberá verificar su identidad, "
 "lo que requerirá estos artículos:"
 
-msgid "eligibility.pages.unverified.login_gov.title"
+msgid "eligibility.pages.unverified.title"
 msgstr "Error de elegibilidad"
 
-msgid "eligibility.pages.unverified.login_gov.p[0]"
+msgid "eligibility.pages.unverified.p[0]"
 msgstr ""
 "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
 "proveedor de tránsito local para obtener asistencia."
@@ -65,6 +68,43 @@ msgstr ""
 "%(transit_agency_short_name)s."
 
 msgid "enrollment.pages.success.login_gov.confirm_item.details"
+msgstr ""
+"No se le ha cobrado nada hoy. Al abordar al el tránsito, pague con esta "
+"misma tarjeta física y automáticamente recibirá su nueva tarifa reducida. "
+"Deberá volver a presenter la solicitud si elige cambiar la tarjeta bancaria "
+"que utiliza para pagar el servicio de transito."
+
+msgid "eligibility.pages.index.veteran.label"
+msgstr "TODO: US Veteran"
+
+msgid "eligibility.pages.index.veteran.description"
+msgstr ""
+"TODO: This option is for people who have served in the active military, "
+"naval, or air service, and who were discharged or released therefrom under "
+"conditions other than dishonorable. You will need to <a href='https://www.va."
+"gov/resources/verifying-your-identity-on-vagov/' target=\"_blank\" rel="
+"\"noopener noreferrer\">verify your identity through VA.gov</a>"
+
+msgid "eligibility.pages.start.veteran.title"
+msgstr "TODO: Veteran benefit information"
+
+msgid "eligibility.pages.start.veteran.headline"
+msgstr "TODO: You selected a Veteran transit benefit."
+
+msgid "eligibility.pages.start.veteran.start_item.heading"
+msgstr "TODO: Access to your preferred VA related account"
+
+msgid "eligibility.pages.start.veteran.start_item.details"
+msgstr ""
+"TODO: You will need to sign into VA.gov in order to verify your identity and "
+"your veteran status. VA.gov uses the following services:"
+
+msgid "eligibility.pages.start.veteran.start_item.secondary_details"
+msgstr ""
+"TODO: If you do not have an account with any of these services, you will "
+"need to create one. We recommend using Login.gov."
+
+msgid "enrollment.pages.success.veteran.confirm_item.details"
 msgstr ""
 "No se le ha cobrado nada hoy. Al abordar al el tránsito, pague con esta "
 "misma tarjeta física y automáticamente recibirá su nueva tarifa reducida. "
@@ -343,6 +383,7 @@ msgstr "GitHub"
 msgid "core.pages.index.agency_selector.headline"
 msgstr "Por favor, elija su proveedor de transporte:"
 
+#, python-format
 msgid "core.pages.index.agency_selector%(agency_short_name)s"
 msgstr "%(agency_short_name)s logo"
 
@@ -512,6 +553,18 @@ msgstr "Su número de Seguro Social"
 
 msgid "eligibility.pages.start.login_gov.required_items[2]"
 msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
+
+msgid "eligibility.pages.start.veteran.required_items[0]"
+msgstr "Login.gov"
+
+msgid "eligibility.pages.start.veteran.required_items[1]"
+msgstr "ID.me"
+
+msgid "eligibility.pages.start.veteran.required_items[2]"
+msgstr "DS Logon"
+
+msgid "eligibility.pages.start.veteran.required_items[3]"
+msgstr "My HealtheVet"
 
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"

@@ -21,7 +21,7 @@ def _client_kwargs(scope=None):
     `scope` should be a space-separated list of scopes to add.
     """
     scopes = ["openid", scope] if scope else ["openid"]
-    return {"code_challenge_method": "S256", "scope": " ".join(scopes)}
+    return {"code_challenge_method": "S256", "scope": " ".join(scopes), "prompt": "login"}
 
 
 def _server_metadata_url(authority):
@@ -31,6 +31,15 @@ def _server_metadata_url(authority):
     `authority` should be a fully qualified HTTPS domain name, e.g. https://example.com.
     """
     return f"{authority}/.well-known/openid-configuration"
+
+
+def _authorize_params(scheme):
+    if scheme is not None:
+        params = {"scheme": scheme}
+    else:
+        params = None
+
+    return params
 
 
 def register_providers(oauth_registry):
@@ -51,4 +60,5 @@ def register_providers(oauth_registry):
             client_id=provider.client_id,
             server_metadata_url=_server_metadata_url(provider.authority),
             client_kwargs=_client_kwargs(provider.scope),
+            authorize_params=_authorize_params(provider.scheme),
         )

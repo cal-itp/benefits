@@ -64,9 +64,29 @@ def model_AuthProvider_with_verification(model_AuthProvider):
 
 
 @pytest.fixture
+def model_AuthProvider_with_verification_no_sign_out(model_AuthProvider):
+    model_AuthProvider.scope = "scope"
+    model_AuthProvider.claim = "claim"
+    model_AuthProvider.sign_out_button_label = None
+    model_AuthProvider.save()
+
+    return model_AuthProvider
+
+
+@pytest.fixture
 def model_AuthProvider_without_verification(model_AuthProvider):
     model_AuthProvider.scope = None
     model_AuthProvider.claim = None
+    model_AuthProvider.save()
+
+    return model_AuthProvider
+
+
+@pytest.fixture
+def model_AuthProvider_without_verification_no_sign_out(model_AuthProvider):
+    model_AuthProvider.scope = None
+    model_AuthProvider.claim = None
+    model_AuthProvider.sign_out_button_label = None
     model_AuthProvider.save()
 
     return model_AuthProvider
@@ -93,6 +113,7 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         start_headline="Start",
         start_item_heading="Start Item",
         start_item_details="Start Item Description",
+        start_item_secondary_details="Start Item Details Secondary",
         form_title="Form",
         form_headline="Form",
         form_blurb="Form Blurb",

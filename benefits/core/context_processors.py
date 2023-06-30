@@ -20,6 +20,7 @@ def authentication(request):
         data = {
             "required": verifier.is_auth_required,
             "logged_in": session.logged_in(request),
+            "supports_sign_out": verifier.supports_sign_out,
             "sign_out_route": reverse("oauth:logout"),
         }
 
