@@ -8,13 +8,13 @@ def test_client_kwargs():
     kwargs = _client_kwargs()
 
     assert kwargs["code_challenge_method"] == "S256"
+    assert kwargs["prompt"] == "login"
     assert "openid" in kwargs["scope"]
 
 
 def test_client_kwargs_scope():
     kwargs = _client_kwargs("scope1")
 
-    assert kwargs["code_challenge_method"] == "S256"
     assert "openid" in kwargs["scope"]
     assert "scope1" in kwargs["scope"]
 
