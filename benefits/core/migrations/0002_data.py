@@ -174,6 +174,12 @@ PEM DATA
 
     mst_veteran_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("MST_VETERAN_VERIFIER_NAME", "VA.gov - Veteran (MST)"),
+        bullets={
+            0: _("eligibility.pages.start.veteran.required_items[0]"),
+            1: _("eligibility.pages.start.veteran.required_items[1]"),
+            2: _("eligibility.pages.start.veteran.required_items[2]"),
+            3: _("eligibility.pages.start.veteran.required_items[3]"),
+        },
         eligibility_type=mst_veteran_type,
         auth_provider=veteran_auth_provider,
         selection_label=_("eligibility.pages.index.veteran.label"),

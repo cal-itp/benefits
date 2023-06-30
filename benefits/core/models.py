@@ -87,6 +87,7 @@ class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""
 
     id = models.AutoField(primary_key=True)
+    bullets = models.JSONField(null=True)
     name = models.TextField()
     api_url = models.TextField(null=True)
     api_auth_header = models.TextField(null=True)

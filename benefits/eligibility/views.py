@@ -110,19 +110,7 @@ def start(request):
     )
 
     if verifier.is_auth_required:
-        if verifier.auth_provider.claim == "senior":
-            identity_item.bullets = [
-                _("eligibility.pages.start.login_gov.required_items[0]"),
-                _("eligibility.pages.start.login_gov.required_items[1]"),
-                _("eligibility.pages.start.login_gov.required_items[2]"),
-            ]
-        if verifier.auth_provider.claim == "veteran":
-            identity_item.bullets = [
-                _("eligibility.pages.start.veteran.required_items[0]"),
-                _("eligibility.pages.start.veteran.required_items[1]"),
-                _("eligibility.pages.start.veteran.required_items[2]"),
-                _("eligibility.pages.start.veteran.required_items[3]"),
-            ]
+        identity_item.bullets = verifier.bullets.values()
 
         if not session.logged_in(request):
             button = viewmodels.Button.login(
