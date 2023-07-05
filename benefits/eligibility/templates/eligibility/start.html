@@ -1,7 +1,8 @@
 {% extends "core/base.html" %}
 {% load i18n %}
+
 {% block classes %}
-  {{ block.super |add:" eligibility-start" }}
+  {{ block.super | add:" eligibility-start" }}
 {% endblock classes %}
 
 {% block nav-buttons %}
@@ -10,14 +11,20 @@
 
 {% block inner-content %}
   <div class="col-12 col-sm-12 col-lg-10">
-    <h2 class="media-title p-sm">{{ start_sub_headline }}</h2>
+    <h2 class="media-title p-sm">
+      {% if start_sub_headline %}
+        {% translate start_sub_headline %}
+      {% else %}
+        {% translate "eligibility.pages.start.sub_headline" %}
+      {% endif %}
+    </h2>
     {% include "core/includes/media-list.html" with media=media %}
   </div>
 {% endblock inner-content %}
 
 {% block call-to-action-text %}
   <p class="pt-4 pt-lg-0">
-    {% blocktranslate with help_link=help_link%}eligibility.pages.start.help_text{{ help_link }}{% endblocktranslate %}
+    {% blocktranslate with help_link=help_link %}eligibility.pages.start.help_text{{ help_link }}{% endblocktranslate %}
   </p>
 {% endblock call-to-action-text %}
 
