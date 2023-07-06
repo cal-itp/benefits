@@ -18,6 +18,14 @@
   {% media_item__bankcardcheck %}
 {% endblock media-list %}
 
+{% block help-link %}
+  {% url "core:help" as help_page %}
+  {# djlint:off #}
+  {% translate "eligibility.pages.start.help_text" %}
+  <a href="{{ help_page }}#mst-courtesy-card">{% translate "eligibility.pages.start.help_link_text" %}</a>.
+  {# djlint:on #}
+{% endblock help-link %}
+
 {% block call-to-action-button %}
   {% url "eligibility:confirm" as button_url %}
   {% translate "eligibility.buttons.continue" as button_text %}

@@ -510,11 +510,11 @@ msgstr "Verifique su entrada. El formato parece incorrecto."
 msgid "eligibility.forms.confirm.errors.missing"
 msgstr "Este campo es requerido."
 
-#, python-format
-msgid "eligibility.pages.start.help_text%(help_link)s"
-msgstr ""
-"¿Preguntas sobre los artículos anteriores? Visite nuestro <a href="
-"\"%(help_link)s\">Página de Ayuda</a>."
+msgid "eligibility.pages.start.help_text"
+msgstr "¿Preguntas sobre los artículos anteriores? Visite nuestro"
+
+msgid "eligibility.pages.start.help_link_text"
+msgstr "Página de Ayuda"
 
 #, python-format
 msgid "eligibility.pages.index.p[0]%(info_link)s"

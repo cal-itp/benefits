@@ -495,11 +495,11 @@ msgstr "Check your input. The format looks wrong."
 msgid "eligibility.forms.confirm.errors.missing"
 msgstr "This field is required."
 
-#, python-format
-msgid "eligibility.pages.start.help_text%(help_link)s"
-msgstr ""
-"Questions about the items above? Please visit our <a href=\"%(help_link)s"
-"\">Help Page</a>."
+msgid "eligibility.pages.start.help_text"
+msgstr "Questions about the items above? Please visit our"
+
+msgid "eligibility.pages.start.help_link_text"
+msgstr "Help Page"
 
 #, python-format
 msgid "eligibility.pages.index.p[0]%(info_link)s"
