@@ -1,0 +1,17 @@
+{% extends "core/includes/media_item.html" %}
+{% load i18n %}
+
+{% block icon %}
+    {% translate "core.icons.bankcardcheck" context "image alt text" as icon_alt %}
+    {% include "core/includes/icon__direct_args.html" with name="bankcardcheck" alt=icon_alt %}
+{% endblock icon %}
+
+{% block heading %}
+    {% translate "eligibility.pages.start.bankcard.title" %}
+{% endblock heading %}
+
+{% block body %}
+    <div class="media-body--details">
+        <p>{% translate "eligibility.pages.start.bankcard.text" %}</p>
+    </div>
+{% endblock body %}

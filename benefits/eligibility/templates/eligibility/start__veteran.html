@@ -1,7 +1,5 @@
 {% extends "eligibility/start.html" %}
 {% load i18n %}
-{% load core %}
-{% load eligibility %}
 
 {% block page_title %}
   {% translate "eligibility.pages.start.veteran.title" %}&nbsp;|&nbsp;
@@ -14,42 +12,18 @@
 {% endblock headline %}
 
 {% block media-list %}
-  {% translate "core.icons.idcardcheck" context "image alt text" as icon_alt %}
-  {% translate "eligibility.pages.start.veteran.start_item.heading" as heading %}
-  {% translate "eligibility.pages.start.veteran.start_item.details" as details %}
-  {# djlint: off #}
-  {% media_item icon="idcardcheck" icon_alt=icon_alt heading=heading %}
-    <div class="media-body--details">
-      <p>{{ details }}</p>
-      <div class="media-body--items">
-        <ul>
-          <li>{% translate "eligibility.pages.start.veteran.required_items[0]" %}</li>
-          <li>{% translate "eligibility.pages.start.veteran.required_items[1]" %}</li>
-          <li>{% translate "eligibility.pages.start.veteran.required_items[2]" %}</li>
-          <li>{% translate "eligibility.pages.start.veteran.required_items[3]" %}</li>
-        </ul>
-        <p class="pt-1">{% translate "eligibility.pages.start.veteran.start_item.secondary_details" %}</p>
-      </div>
-    </div>
-  {% endmedia_item %}
-  {# djlint: on #}
-  {% media_item__start__bankcardcheck %}
+  {% include "eligibility/includes/media_item__idcardcheck__start__veteran.html" %}
+  {% include "eligibility/includes/media_item__bankcardcheck__start.html" %}
 {% endblock media-list %}
 
 {% block help-link %}
   {% url "core:help" as help_page %}
-  {# djlint:off #}
   {% translate "eligibility.pages.start.help_text" %}
   <a href="{{ help_page }}#veteran">{% translate "eligibility.pages.start.help_link_text" %}</a>.
-  {# djlint:on #}
 {% endblock help-link %}
 
 {% block call-to-action-button %}
   {% url "oauth:login" as button_url %}
   {% translate "eligibility.buttons.veteran.signin" as button_text %}
-  {# djlint:off #}
-  {% button url=button_url classes="btn btn-lg btn-primary" %}
-      {{ button_text }}
-  {% endbutton %}
-  {# djlint:on #}
+  <a href="{{ button_url }}" class="btn btn-lg btn-primary" role="button">{{ button_text }}</a>
 {% endblock call-to-action-button %}
