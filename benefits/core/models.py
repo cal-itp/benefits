@@ -103,8 +103,6 @@ class EligibilityVerifier(models.Model):
     jws_signing_alg = models.TextField(null=True)
     auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True)
     selection_label_template = models.TextField()
-    selection_label = models.TextField(null=True)
-    selection_label_description = models.TextField(null=True)
     start_title = models.TextField()
     start_headline = models.TextField()
     start_item_heading = models.TextField()
