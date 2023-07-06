@@ -7,16 +7,8 @@
                 {% if item.details|length %}
                     <div class="media-body--details">
                         {% for d in item.details %}<p>{{ d }}</p>{% endfor %}
-                        {% if item.bullets|length %}
-                            <div class="media-body--items">
-                                <ul>
-                                    {% for l in item.bullets %}<li>{{ l }}</li>{% endfor %}
-                                </ul>
-                            </div>
-                        {% endif %}
                     </div>
                 {% endif %}
-                {% if item.secondary_details %}<p class="pt-1">{{ item.secondary_details }}</p>{% endif %}
             </div>
         </li>
     {% endfor %}

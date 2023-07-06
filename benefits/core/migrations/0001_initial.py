@@ -14,7 +14,6 @@ class Migration(migrations.Migration):
             name="AuthProvider",
             fields=[
                 ("id", models.AutoField(primary_key=True, serialize=False)),
-                ("sign_in_button_label", models.TextField(null=True)),
                 ("sign_out_button_label", models.TextField(null=True)),
                 ("client_name", models.TextField()),
                 ("client_id", models.TextField()),
@@ -37,7 +36,6 @@ class Migration(migrations.Migration):
             name="EligibilityVerifier",
             fields=[
                 ("id", models.AutoField(primary_key=True, serialize=False)),
-                ("bullets", models.JSONField(null=True)),
                 ("name", models.TextField()),
                 ("api_url", models.TextField(null=True)),
                 ("api_auth_header", models.TextField(null=True)),
@@ -47,12 +45,6 @@ class Migration(migrations.Migration):
                 ("jws_signing_alg", models.TextField(null=True)),
                 ("selection_label_template", models.TextField()),
                 ("start_template", models.TextField(null=True)),
-                ("start_title", models.TextField()),
-                ("start_headline", models.TextField()),
-                ("start_item_heading", models.TextField()),
-                ("start_item_details", models.TextField()),
-                ("start_item_secondary_details", models.TextField()),
-                ("start_help_anchor", models.TextField()),
                 ("form_title", models.TextField(null=True)),
                 ("form_headline", models.TextField(null=True)),
                 ("form_blurb", models.TextField(null=True)),

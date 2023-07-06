@@ -149,16 +149,10 @@ PEM DATA
 
     mst_oauth_claims_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("MST_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (MST)"),
-        bullets=[
-            "eligibility.pages.start.login_gov.required_items[0]",
-            "eligibility.pages.start.login_gov.required_items[1]",
-            "eligibility.pages.start.login_gov.required_items[2]",
-        ],
         eligibility_type=mst_senior_type,
         auth_provider=senior_auth_provider,
         selection_label_template="core/includes/selection_label__login_gov.html",
         start_template="eligibility/start__login_gov.html",
-        start_help_anchor="login-gov",
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
         eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
@@ -172,12 +166,6 @@ PEM DATA
 
     mst_veteran_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("MST_VETERAN_VERIFIER_NAME", "VA.gov - Veteran (MST)"),
-        bullets=[
-            "eligibility.pages.start.veteran.required_items[0]",
-            "eligibility.pages.start.veteran.required_items[1]",
-            "eligibility.pages.start.veteran.required_items[2]",
-            "eligibility.pages.start.veteran.required_items[3]",
-        ],
         eligibility_type=mst_veteran_type,
         auth_provider=veteran_auth_provider,
         selection_label_template="core/includes/selection_label__mst_veteran.html",
@@ -202,7 +190,6 @@ PEM DATA
         auth_provider=None,
         selection_label_template="core/includes/selection_label__mst_courtesy_card.html",
         start_template="eligibility/start__mst_courtesy_card.html",
-        start_help_anchor="mst-courtesy-card",
         form_title=_("eligibility.pages.confirm.mst_cc.title"),
         form_headline=_("eligibility.pages.confirm.mst_cc.headline"),
         form_blurb=_("eligibility.pages.confirm.mst_cc.p[0]"),
@@ -227,16 +214,10 @@ PEM DATA
 
     sacrt_oauth_claims_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("SACRT_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (SacRT)"),
-        bullets=[
-            "eligibility.pages.start.login_gov.required_items[0]",
-            "eligibility.pages.start.login_gov.required_items[1]",
-            "eligibility.pages.start.login_gov.required_items[2]",
-        ],
         eligibility_type=sacrt_senior_type,
         auth_provider=senior_auth_provider,
         selection_label_template="core/includes/selection_label__login_gov.html",
         start_template="eligibility/start__login_gov.html",
-        start_help_anchor="login-gov",
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
         eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),

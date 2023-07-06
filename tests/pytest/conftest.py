@@ -44,7 +44,6 @@ def model_PemData():
 @pytest.fixture
 def model_AuthProvider():
     auth_provider = AuthProvider.objects.create(
-        sign_in_button_label="Sign in",
         sign_out_button_label="Sign out",
         client_name="Client",
         client_id="1234",
@@ -109,11 +108,6 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         eligibility_type=model_EligibilityType,
         public_key=model_PemData,
         selection_label_template="core/includes/verifier_radio_select_label.html",
-        start_title="Information",
-        start_headline="Start",
-        start_item_heading="Start Item",
-        start_item_details="Start Item Description",
-        start_item_secondary_details="Start Item Details Secondary",
         form_title="Form",
         form_headline="Form",
         form_blurb="Form Blurb",

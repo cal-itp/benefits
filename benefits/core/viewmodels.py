@@ -107,12 +107,10 @@ class MediaItem:
     Represents a media item in a list of items:
     * icon: core.viewmodels.Icon
     * details: str, str[]
-    * secondary_details: str
     * heading: str
-    * bullets: str, str[]
     """
 
-    def __init__(self, icon: Icon, details, secondary_details=None, heading=None, bullets=None):
+    def __init__(self, icon: Icon, details, heading=None):
         self.icon = icon
         if isinstance(details, str):
             self.details = [details]
@@ -121,11 +119,6 @@ class MediaItem:
         else:
             self.details = [str(details)]
         self.heading = heading
-        self.secondary_details = secondary_details
-        if isinstance(bullets, str):
-            self.bullets = [bullets]
-        elif isinstance(bullets, list):
-            self.bullets = bullets
 
 
 class Modal:
