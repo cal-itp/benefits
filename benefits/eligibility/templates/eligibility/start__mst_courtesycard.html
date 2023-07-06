@@ -1,7 +1,6 @@
 {% extends "eligibility/start.html" %}
 {% load i18n %}
 {% load core %}
-{% load eligibility %}
 
 {% block page_title %}
   {% translate "eligibility.pages.start.mst_cc.title" %}&nbsp;|&nbsp;
@@ -24,7 +23,7 @@
   </div>
   {% endmedia_item %}
   {# djlint: on #}
-  {% media_item__start__bankcardcheck %}
+  {% include "eligibility/includes/media_item__start__bankcardcheck.html" %}
 {% endblock media-list %}
 
 {% block help-link %}
