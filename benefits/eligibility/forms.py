@@ -4,7 +4,6 @@ The eligibility application: Form definition for the eligibility verification fl
 import logging
 
 from django import forms
-from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from benefits.core import models, recaptcha, widgets
@@ -29,10 +28,10 @@ class EligibilityVerifierSelectionForm(forms.Form):
         verifiers = agency.eligibility_verifiers.all()
 
         self.classes = "offset-lg-1 col-lg-9"
-        self.fields["verifier"].choices = [(v.id, _(v.selection_label)) for v in verifiers]
-        self.fields["verifier"].widget.choice_descriptions = {
-            v.id: format_html(_(v.selection_label_description)) for v in verifiers if v.selection_label_description
-        }
+        # second element is not used since we render the whole label using selection_label_template,
+        # therefore set to None
+        self.fields["verifier"].choices = [(v.id, None) for v in verifiers]
+        self.fields["verifier"].widget.selection_label_templates = {v.id: v.selection_label_template for v in verifiers}
 
     def clean(self):
         if not recaptcha.verify(self.data):
