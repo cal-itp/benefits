@@ -203,7 +203,7 @@ PEM DATA
         auth_provider=None,
         selection_label=_("eligibility.pages.index.mst_cc.label"),
         selection_label_description=_("eligibility.pages.index.mst_cc.description"),
-        start_template="eligibility/start__mst_courtesycard.html",
+        start_template="eligibility/start__mst_courtesy_card.html",
         form_title=_("eligibility.pages.confirm.mst_cc.title"),
         form_headline=_("eligibility.pages.confirm.mst_cc.headline"),
         form_blurb=_("eligibility.pages.confirm.mst_cc.p[0]"),
