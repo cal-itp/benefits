@@ -13,21 +13,11 @@
 
 {% block inner-content %}
   <div class="col-12 col-sm-12 col-lg-10">
-    <h2 class="media-title p-sm">
-      {% if start_sub_headline %}
-        {% translate start_sub_headline %}
-      {% else %}
-        {% translate "eligibility.pages.start.sub_headline" %}
-      {% endif %}
-    </h2>
-    {% if media %}
-    {% include "core/includes/media-list.html" with media=media %}
-    {% else %}
-      <ul class="media-list mx-0 px-0 d-flex justify-content-center flex-column">
-        {% block media-list %}
-        {% endblock media-list %}
-      </ul>
-    {% endif %}
+    <h2 class="media-title p-sm">{% translate "eligibility.pages.start.sub_headline" %}</h2>
+    <ul class="media-list mx-0 px-0 d-flex justify-content-center flex-column">
+      {% block media-list %}
+      {% endblock media-list %}
+    </ul>
   </div>
 {% endblock inner-content %}
 
@@ -39,7 +29,4 @@
 {% endblock call-to-action-text %}
 
 {% block call-to-action-button %}
-  {% for b in page.buttons %}
-    {% include "core/includes/button.html" with button=b %}
-  {% endfor %}
 {% endblock call-to-action-button %}
