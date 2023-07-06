@@ -1,5 +1,6 @@
 {% extends "eligibility/start.html" %}
 {% load i18n %}
+{% load eligibility %}
 
 {% block page_title %}
   {% translate "eligibility.pages.start.mst_cc.title" %}&nbsp;|&nbsp;
@@ -10,3 +11,17 @@
     <h1>{% translate "eligibility.pages.start.mst_cc.headline" %}</h1>
   </div>
 {% endblock headline %}
+
+{% block media-list %}
+  {% translate "core.icons.idcardcheck" context "image alt text" as icon_alt %}
+  {% translate "eligibility.pages.start.mst_cc.start_item.heading" as heading %}
+  {% translate "eligibility.pages.start.mst_cc.start_item.details" as details %}
+  {# djlint: off #}
+  {% media_item icon="idcardcheck" icon_alt=icon_alt heading=heading %}
+  <div class="media-body--details">
+      <p>{{ details }}</p>
+  </div>
+  {% endmedia_item %}
+  {# djlint: on #}
+  {% media_item__start__bankcardcheck %}
+{% endblock media-list %}
