@@ -1,9 +1,0 @@
-{% load core %}
-
-<li class="media d-flex align-items-stretch w-auto">
-    <div class="media-line">{% include "core/includes/icon__direct_args.html" with name=icon alt=icon_alt %}</div>
-    <div class="media-body">
-        {% if heading %}<h3 class="media-body--heading">{{ heading }}</h3>{% endif %}
-        {{ body }}
-    </div>
-</li>

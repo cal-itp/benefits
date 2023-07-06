@@ -1,0 +1,25 @@
+{% extends "core/includes/media_item.html" %}
+
+{% load i18n %}
+
+{% block icon %}
+    {% translate "core.icons.idcardcheck" context "image alt text" as icon_alt %}
+    {% include "core/includes/icon__direct_args.html" with name="idcardcheck" alt=icon_alt %}
+{% endblock icon %}
+
+{% block heading %}
+    {% translate "eligibility.pages.start.login_gov.start_item.heading" %}
+{% endblock heading %}
+
+{% block body %}
+    <div class="media-body--details">
+        <p>{% translate "eligibility.pages.start.login_gov.start_item.details" %}</p>
+        <div class="media-body--items">
+            <ul>
+                <li>{% translate "eligibility.pages.start.login_gov.required_items[0]" %}</li>
+                <li>{% translate "eligibility.pages.start.login_gov.required_items[1]" %}</li>
+                <li>{% translate "eligibility.pages.start.login_gov.required_items[2]" %}</li>
+            </ul>
+        </div>
+    </div>
+{% endblock body %}

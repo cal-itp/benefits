@@ -1,6 +1,5 @@
 {% extends "eligibility/start.html" %}
 {% load i18n %}
-{% load core %}
 
 {% block page_title %}
   {% translate "eligibility.pages.start.veteran.title" %}&nbsp;|&nbsp;
@@ -13,25 +12,7 @@
 {% endblock headline %}
 
 {% block media-list %}
-  {% translate "core.icons.idcardcheck" context "image alt text" as icon_alt %}
-  {% translate "eligibility.pages.start.veteran.start_item.heading" as heading %}
-  {% translate "eligibility.pages.start.veteran.start_item.details" as details %}
-  {# djlint: off #}
-  {% media_item icon="idcardcheck" icon_alt=icon_alt heading=heading %}
-    <div class="media-body--details">
-      <p>{{ details }}</p>
-      <div class="media-body--items">
-        <ul>
-          <li>{% translate "eligibility.pages.start.veteran.required_items[0]" %}</li>
-          <li>{% translate "eligibility.pages.start.veteran.required_items[1]" %}</li>
-          <li>{% translate "eligibility.pages.start.veteran.required_items[2]" %}</li>
-          <li>{% translate "eligibility.pages.start.veteran.required_items[3]" %}</li>
-        </ul>
-        <p class="pt-1">{% translate "eligibility.pages.start.veteran.start_item.secondary_details" %}</p>
-      </div>
-    </div>
-  {% endmedia_item %}
-  {# djlint: on #}
+  {% include "eligibility/includes/media_item__start__idcardcheck__veteran.html" %}
   {% include "eligibility/includes/media_item__start__bankcardcheck.html" %}
 {% endblock media-list %}
 
