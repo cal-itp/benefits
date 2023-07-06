@@ -108,7 +108,7 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         api_auth_key="secret-key",
         eligibility_type=model_EligibilityType,
         public_key=model_PemData,
-        selection_label="Select",
+        selection_label_template="core/includes/verifier_radio_select_label.html",
         start_title="Information",
         start_headline="Start",
         start_item_heading="Start Item",
