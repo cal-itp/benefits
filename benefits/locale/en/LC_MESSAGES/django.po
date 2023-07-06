@@ -6,21 +6,15 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-06-29 00:40+0000\n"
+"POT-Creation-Date: 2023-07-06 18:34+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "eligibility.buttons.senior.signin"
-msgstr "Get started with"
-
 msgid "eligibility.buttons.senior.signout"
 msgstr "Sign out of Login.gov"
-
-msgid "eligibility.buttons.veteran.signin"
-msgstr "Continue to VA.gov"
 
 msgid "eligibility.pages.index.login_gov.label"
 msgstr "I am 65 years of age or older"
@@ -30,22 +24,6 @@ msgstr ""
 "You must be 65 years or older. This benefit does not expire, but you may "
 "need to renew. Using this benefit means your new transit fare is half of the "
 "standard fare."
-
-msgid "eligibility.pages.start.login_gov.title"
-msgstr "Older Adult benefit information"
-
-msgid "eligibility.pages.start.login_gov.headline"
-msgstr "You selected an Older Adult benefit."
-
-msgid "eligibility.pages.start.login_gov.start_item.heading"
-msgstr "A Login.gov account with identity verification"
-
-msgid "eligibility.pages.start.login_gov.start_item.details"
-msgstr ""
-"Login.gov is a safe way to sign in to government services. Benefits uses "
-"Login.gov to verify your age. If you do not have an account already, you "
-"will be able to create one. You will also need to verify your identity, "
-"which will require these items:"
 
 msgid "eligibility.pages.unverified.title"
 msgstr "Eligibility Error"
@@ -82,27 +60,8 @@ msgstr ""
 "This option is for people who have served in the active military, naval, or "
 "air service, and who were discharged or released therefrom under conditions "
 "other than dishonorable. You will need to <a href='https://www.va.gov/"
-"resources/verifying-your-identity-on-vagov/' target=\"_blank\" rel="
-"\"noopener noreferrer\">verify your identity through VA.gov</a>"
-
-msgid "eligibility.pages.start.veteran.title"
-msgstr "Veteran benefit information"
-
-msgid "eligibility.pages.start.veteran.headline"
-msgstr "You selected a Veteran transit benefit."
-
-msgid "eligibility.pages.start.veteran.start_item.heading"
-msgstr "Access to your preferred VA related account"
-
-msgid "eligibility.pages.start.veteran.start_item.details"
-msgstr ""
-"You will need to sign into VA.gov in order to verify your identity and your "
-"veteran status. VA.gov uses the following services:"
-
-msgid "eligibility.pages.start.veteran.start_item.secondary_details"
-msgstr ""
-"If you do not have an account with any of these services, you will need to "
-"create one. We recommend using Login.gov."
+"resources/verifying-your-identity-on-vagov/' target=\"_blank\" "
+"rel=\"noopener noreferrer\">verify your identity through VA.gov</a>"
 
 msgid "enrollment.pages.success.veteran.confirm_item.details"
 msgstr ""
@@ -119,20 +78,6 @@ msgstr ""
 "This option is for people who have a current Courtesy Card or an MST RIDES "
 "Eligibility card. This benefit may need to be renewed in the future. Using "
 "this benefit means your new transit fare is half of the standard fare."
-
-msgid "eligibility.pages.start.mst_cc.title"
-msgstr "Courtesy Card information"
-
-msgid "eligibility.pages.start.mst_cc.headline"
-msgstr "You selected a Courtesy Card benefit."
-
-msgid "eligibility.pages.start.mst_cc.start_item.heading"
-msgstr "Your current Courtesy Card number"
-
-msgid "eligibility.pages.start.mst_cc.start_item.details"
-msgstr ""
-"You do not need to have your physical card, but you will need to know the "
-"number. The number starts with a number sign (#) followed by five digits."
 
 msgid "eligibility.pages.confirm.mst_cc.title"
 msgstr "Confirm your Courtesy Card"
@@ -400,11 +345,11 @@ msgstr "You have successfully logged out."
 msgid "core.pages.logged_out.headline[1]"
 msgstr "Thank you for using Cal-ITP Benefits!"
 
-msgid "eligibility.pages.index.label"
-msgstr "Select the option that best applies to you:"
-
 msgid "core.buttons.previous_page"
 msgstr "Previous Page"
+
+msgid "eligibility.pages.index.label"
+msgstr "Select the option that best applies to you:"
 
 msgid "core.pages.error.title"
 msgstr "Error"
@@ -495,11 +440,108 @@ msgstr "Check your input. The format looks wrong."
 msgid "eligibility.forms.confirm.errors.missing"
 msgstr "This field is required."
 
+msgid "eligibility.pages.start.sub_headline"
+msgstr "You will need a few items to connect your benefit:"
+
+msgid "eligibility.pages.start.login_gov.title"
+msgstr "Older Adult benefit information"
+
+msgid "eligibility.pages.start.login_gov.headline"
+msgstr "You selected an Older Adult benefit."
+
+msgctxt "image alt text"
+msgid "core.icons.idcardcheck"
+msgstr "Identification card icon with checkmark"
+
+msgid "eligibility.pages.start.login_gov.start_item.heading"
+msgstr "A Login.gov account with identity verification"
+
+msgid "eligibility.pages.start.login_gov.start_item.details"
+msgstr ""
+"Login.gov is a safe way to sign in to government services. Benefits uses "
+"Login.gov to verify your age. If you do not have an account already, you "
+"will be able to create one. You will also need to verify your identity, "
+"which will require these items:"
+
+msgid "eligibility.pages.start.login_gov.required_items[0]"
+msgstr "Your state-issued ID card"
+
+msgid "eligibility.pages.start.login_gov.required_items[1]"
+msgstr "Your Social Security number"
+
+msgid "eligibility.pages.start.login_gov.required_items[2]"
+msgstr "A phone number with a phone plan associated with your name"
+
 msgid "eligibility.pages.start.help_text"
 msgstr "Questions about the items above? Please visit our"
 
 msgid "eligibility.pages.start.help_link_text"
 msgstr "Help Page"
+
+msgid "eligibility.buttons.senior.signin"
+msgstr "Get started with"
+
+msgid "eligibility.pages.start.mst_cc.title"
+msgstr "Courtesy Card information"
+
+msgid "eligibility.pages.start.mst_cc.headline"
+msgstr "You selected a Courtesy Card benefit."
+
+msgid "eligibility.pages.start.mst_cc.start_item.heading"
+msgstr "Your current Courtesy Card number"
+
+msgid "eligibility.pages.start.mst_cc.start_item.details"
+msgstr ""
+"You do not need to have your physical card, but you will need to know the "
+"number. The number starts with a number sign (#) followed by five digits."
+
+msgid "eligibility.buttons.continue"
+msgstr "Continue"
+
+msgid "eligibility.pages.start.veteran.title"
+msgstr "Veteran benefit information"
+
+msgid "eligibility.pages.start.veteran.headline"
+msgstr "You selected a Veteran transit benefit."
+
+msgid "eligibility.pages.start.veteran.start_item.heading"
+msgstr "Access to your preferred VA related account"
+
+msgid "eligibility.pages.start.veteran.start_item.details"
+msgstr ""
+"You will need to sign into VA.gov in order to verify your identity and your "
+"veteran status. VA.gov uses the following services:"
+
+msgid "eligibility.pages.start.veteran.required_items[0]"
+msgstr "Login.gov"
+
+msgid "eligibility.pages.start.veteran.required_items[1]"
+msgstr "ID.me"
+
+msgid "eligibility.pages.start.veteran.required_items[2]"
+msgstr "DS Logon"
+
+msgid "eligibility.pages.start.veteran.required_items[3]"
+msgstr "My HealtheVet"
+
+msgid "eligibility.pages.start.veteran.start_item.secondary_details"
+msgstr ""
+"If you do not have an account with any of these services, you will need to "
+"create one. We recommend using Login.gov."
+
+msgid "eligibility.buttons.veteran.signin"
+msgstr "Continue to VA.gov"
+
+msgctxt "image alt text"
+msgid "core.icons.bankcardcheck"
+msgstr "Bank card icon with contactless symbol and checkmark"
+
+msgid "eligibility.pages.start.bankcard.title"
+msgstr "Your bank card details"
+
+msgid "eligibility.pages.start.bankcard.text"
+msgstr ""
+"Your card must be a contactless debit or credit card by Visa or Mastercard."
 
 #, python-format
 msgid "eligibility.pages.index.p[0]%(info_link)s"
@@ -519,50 +561,8 @@ msgstr ""
 #, python-format
 msgid "eligibility.pages.index.help_text%(help_link)s"
 msgstr ""
-"Not sure which option is right for you? Please visit our <a href="
-"\"%(help_link)s\">Help Page</a>."
-
-msgid "eligibility.buttons.continue"
-msgstr "Continue"
-
-msgctxt "image alt text"
-msgid "core.icons.idcardcheck"
-msgstr "Identification card icon with checkmark"
-
-msgid "eligibility.pages.start.login_gov.required_items[0]"
-msgstr "Your state-issued ID card"
-
-msgid "eligibility.pages.start.login_gov.required_items[1]"
-msgstr "Your Social Security number"
-
-msgid "eligibility.pages.start.login_gov.required_items[2]"
-msgstr "A phone number with a phone plan associated with your name"
-
-msgid "eligibility.pages.start.veteran.required_items[0]"
-msgstr "Login.gov"
-
-msgid "eligibility.pages.start.veteran.required_items[1]"
-msgstr "ID.me"
-
-msgid "eligibility.pages.start.veteran.required_items[2]"
-msgstr "DS Logon"
-
-msgid "eligibility.pages.start.veteran.required_items[3]"
-msgstr "My HealtheVet"
-
-msgctxt "image alt text"
-msgid "core.icons.bankcardcheck"
-msgstr "Bank card icon with contactless symbol and checkmark"
-
-msgid "eligibility.pages.start.bankcard.title"
-msgstr "Your bank card details"
-
-msgid "eligibility.pages.start.bankcard.text"
-msgstr ""
-"Your card must be a contactless debit or credit card by Visa or Mastercard."
-
-msgid "eligibility.pages.start.sub_headline"
-msgstr "You will need a few items to connect your benefit:"
+"Not sure which option is right for you? Please visit our <a "
+"href=\"%(help_link)s\">Help Page</a>."
 
 msgid "eligibility.pages.unverified.headline"
 msgstr "Your eligibility could not be verified."
