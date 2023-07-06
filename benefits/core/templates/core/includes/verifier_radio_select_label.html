@@ -1,2 +1,12 @@
-<span class="d-block h3">{{ widget.label }}</span>
-{% if widget.description %}<span class="d-block pt-1">{{ widget.description }}</span>{% endif %}
+<span class="d-block h3">
+    {% block label %}
+        {{ widget.label }}
+    {% endblock label %}
+</span>
+{% if widget.description %}
+    <span class="d-block pt-1">
+        {% block description %}
+            {{ widget.description }}
+        {% endblock description %}
+    </span>
+{% endif %}
