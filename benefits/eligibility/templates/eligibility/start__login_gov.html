@@ -46,8 +46,8 @@
   {% url "oauth:login" as button_url %}
   {% translate "eligibility.buttons.senior.signin" as button_text %}
   {# djlint:off #}
-  {% button url=button_url classes="btn btn-lg btn-primary" id="login" %}
+  <a href="{{ button_url }}" class="btn btn-lg btn-primary" id="login">
       {{ button_text }} <span class="fallback-text">Login.gov</span>
-  {% endbutton %}
+  </a>
   {# djlint:on #}
 {% endblock call-to-action-button %}

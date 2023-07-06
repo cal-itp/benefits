@@ -37,10 +37,9 @@
 
 {% block call-to-action-button %}
   {% url "eligibility:confirm" as button_url %}
-  {% translate "eligibility.buttons.continue" as button_text %}
   {# djlint:off #}
-  {% button url=button_url classes="btn btn-lg btn-primary" %}
-      {{ button_text }}
-  {% endbutton %}
+  <a href="{{ button_url }}" class="btn btn-lg btn-primary" role="button">
+    {% translate "eligibility.buttons.continue" %}
+  </a>
   {# djlint:on #}
 {% endblock call-to-action-button %}

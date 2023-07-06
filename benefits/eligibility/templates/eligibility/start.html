@@ -8,7 +8,7 @@
 
 {% block nav-buttons %}
   {% url "eligibility:index" as url %}
-  {% button__previous_page url=url %}
+  {% include "core/includes/button__previous_page.html" with url=url %}
 {% endblock nav-buttons %}
 
 {% block inner-content %}
