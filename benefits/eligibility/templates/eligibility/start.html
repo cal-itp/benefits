@@ -33,7 +33,8 @@
 
 {% block call-to-action-text %}
   <p class="pt-4 pt-lg-0">
-    {% blocktranslate with help_link=help_link %}eligibility.pages.start.help_text{{ help_link }}{% endblocktranslate %}
+    {% block help-link %}
+    {% endblock help-link %}
   </p>
 {% endblock call-to-action-text %}
 

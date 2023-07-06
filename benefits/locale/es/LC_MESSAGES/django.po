@@ -13,14 +13,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "eligibility.buttons.senior.signin"
-msgstr "Comencemos con"
-
 msgid "eligibility.buttons.senior.signout"
 msgstr "Cierre sesión de Login.gov"
-
-msgid "eligibility.buttons.veteran.signin"
-msgstr "TODO: Continue with VA.gov"
 
 msgid "eligibility.pages.index.login_gov.label"
 msgstr "Tengo 65 años de edad o más"
@@ -30,22 +24,6 @@ msgstr ""
 "Usted debe de tener 65 años o más. Este beneficio no caduca, pero es posible "
 "que deba renovarlo. Usando este beneficio significa que su nueva tarifa de "
 "tránsito es la mitad de la tarifa estándar."
-
-msgid "eligibility.pages.start.login_gov.title"
-msgstr "Información sobre beneficios para Adultos Mayores"
-
-msgid "eligibility.pages.start.login_gov.headline"
-msgstr "Usted seleccionó un beneficio para Adultos Mayores"
-
-msgid "eligibility.pages.start.login_gov.start_item.heading"
-msgstr "Una cuenta de Login.gov con verificación de identidad"
-
-msgid "eligibility.pages.start.login_gov.start_item.details"
-msgstr ""
-"Login.gov es una forma segura de iniciar sesión en servicios "
-"gubernamentales. Benefits utiliza Login.gov para verificar su edad. Si aún "
-"no tiene una cuenta, podrá crear una. También deberá verificar su identidad, "
-"lo que requerirá estos artículos:"
 
 msgid "eligibility.pages.unverified.title"
 msgstr "Error de elegibilidad"
@@ -82,27 +60,8 @@ msgstr ""
 "TODO: This option is for people who have served in the active military, "
 "naval, or air service, and who were discharged or released therefrom under "
 "conditions other than dishonorable. You will need to <a href='https://www.va."
-"gov/resources/verifying-your-identity-on-vagov/' target=\"_blank\" rel="
-"\"noopener noreferrer\">verify your identity through VA.gov</a>"
-
-msgid "eligibility.pages.start.veteran.title"
-msgstr "TODO: Veteran benefit information"
-
-msgid "eligibility.pages.start.veteran.headline"
-msgstr "TODO: You selected a Veteran transit benefit."
-
-msgid "eligibility.pages.start.veteran.start_item.heading"
-msgstr "TODO: Access to your preferred VA related account"
-
-msgid "eligibility.pages.start.veteran.start_item.details"
-msgstr ""
-"TODO: You will need to sign into VA.gov in order to verify your identity and "
-"your veteran status. VA.gov uses the following services:"
-
-msgid "eligibility.pages.start.veteran.start_item.secondary_details"
-msgstr ""
-"TODO: If you do not have an account with any of these services, you will "
-"need to create one. We recommend using Login.gov."
+"gov/resources/verifying-your-identity-on-vagov/' target=\"_blank\" "
+"rel=\"noopener noreferrer\">verify your identity through VA.gov</a>"
 
 msgid "enrollment.pages.success.veteran.confirm_item.details"
 msgstr ""
@@ -120,20 +79,6 @@ msgstr ""
 "tarjeta de elegibilidad de Paratránsito de MST RIDES. Es posible que este "
 "beneficio deba renovarse en el futuro. Usar este beneficio significa que su "
 "nueva tarifa de tránsito es la mitad de la tarifa estándar."
-
-msgid "eligibility.pages.start.mst_cc.title"
-msgstr "Información de la Tarjeta de Cortesía"
-
-msgid "eligibility.pages.start.mst_cc.headline"
-msgstr "Usted a seleccionado un Beneficio de la Tarjeta de Cortesía."
-
-msgid "eligibility.pages.start.mst_cc.start_item.heading"
-msgstr "Su número actual de Tarjeta de Cortesía"
-
-msgid "eligibility.pages.start.mst_cc.start_item.details"
-msgstr ""
-"No necesitas tener su tarjeta física, pero necesitará saber el número. El "
-"número comienza con un signo de número (#) seguido de cinco dígitos."
 
 msgid "eligibility.pages.confirm.mst_cc.title"
 msgstr "Confirmar su eligibilidad"
@@ -421,11 +366,11 @@ msgstr "Ha cerrado la sesión correctamente."
 msgid "core.pages.logged_out.headline[1]"
 msgstr "¡Gracias por usar los Beneficios de Cal-ITP!"
 
-msgid "eligibility.pages.index.label"
-msgstr "Seleccione la opción que mejor se adapte a usted:"
-
 msgid "core.buttons.previous_page"
 msgstr "Página Anterior"
+
+msgid "eligibility.pages.index.label"
+msgstr "Seleccione la opción que mejor se adapte a usted:"
 
 msgid "core.pages.error.title"
 msgstr "Error"
@@ -517,11 +462,110 @@ msgstr "Verifique su entrada. El formato parece incorrecto."
 msgid "eligibility.forms.confirm.errors.missing"
 msgstr "Este campo es requerido."
 
-#, python-format
-msgid "eligibility.pages.start.help_text%(help_link)s"
+msgid "eligibility.pages.start.sub_headline"
+msgstr "Necesitará algunos artículos para conectar su beneficio:"
+
+msgid "eligibility.pages.start.login_gov.title"
+msgstr "Información sobre beneficios para Adultos Mayores"
+
+msgid "eligibility.pages.start.login_gov.headline"
+msgstr "Usted seleccionó un beneficio para Adultos Mayores"
+
+msgctxt "image alt text"
+msgid "core.icons.idcardcheck"
+msgstr "Icono de tarjeta de identificación con marca de verificación"
+
+msgid "eligibility.pages.start.login_gov.start_item.heading"
+msgstr "Una cuenta de Login.gov con verificación de identidad"
+
+msgid "eligibility.pages.start.login_gov.start_item.details"
 msgstr ""
-"¿Preguntas sobre los artículos anteriores? Visite nuestro <a href="
-"\"%(help_link)s\">Página de Ayuda</a>."
+"Login.gov es una forma segura de iniciar sesión en servicios "
+"gubernamentales. Benefits utiliza Login.gov para verificar su edad. Si aún "
+"no tiene una cuenta, podrá crear una. También deberá verificar su identidad, "
+"lo que requerirá estos artículos:"
+
+msgid "eligibility.pages.start.login_gov.required_items[0]"
+msgstr "Su tarjeta de identificación emitida por el estado"
+
+msgid "eligibility.pages.start.login_gov.required_items[1]"
+msgstr "Su número de Seguro Social"
+
+msgid "eligibility.pages.start.login_gov.required_items[2]"
+msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
+
+msgid "eligibility.pages.start.help_text"
+msgstr "¿Preguntas sobre los artículos anteriores? Visite nuestro"
+
+msgid "eligibility.pages.start.help_link_text"
+msgstr "Página de Ayuda"
+
+msgid "eligibility.buttons.senior.signin"
+msgstr "Comencemos con"
+
+msgid "eligibility.pages.start.mst_cc.title"
+msgstr "Información de la Tarjeta de Cortesía"
+
+msgid "eligibility.pages.start.mst_cc.headline"
+msgstr "Usted a seleccionado un Beneficio de la Tarjeta de Cortesía."
+
+msgid "eligibility.pages.start.mst_cc.start_item.heading"
+msgstr "Su número actual de Tarjeta de Cortesía"
+
+msgid "eligibility.pages.start.mst_cc.start_item.details"
+msgstr ""
+"No necesitas tener su tarjeta física, pero necesitará saber el número. El "
+"número comienza con un signo de número (#) seguido de cinco dígitos."
+
+msgid "eligibility.buttons.continue"
+msgstr "Continuar"
+
+msgid "eligibility.pages.start.veteran.title"
+msgstr "TODO: Veteran benefit information"
+
+msgid "eligibility.pages.start.veteran.headline"
+msgstr "TODO: You selected a Veteran transit benefit."
+
+msgid "eligibility.pages.start.veteran.start_item.heading"
+msgstr "TODO: Access to your preferred VA related account"
+
+msgid "eligibility.pages.start.veteran.start_item.details"
+msgstr ""
+"TODO: You will need to sign into VA.gov in order to verify your identity and "
+"your veteran status. VA.gov uses the following services:"
+
+msgid "eligibility.pages.start.veteran.required_items[0]"
+msgstr "Login.gov"
+
+msgid "eligibility.pages.start.veteran.required_items[1]"
+msgstr "ID.me"
+
+msgid "eligibility.pages.start.veteran.required_items[2]"
+msgstr "DS Logon"
+
+msgid "eligibility.pages.start.veteran.required_items[3]"
+msgstr "My HealtheVet"
+
+msgid "eligibility.pages.start.veteran.start_item.secondary_details"
+msgstr ""
+"TODO: If you do not have an account with any of these services, you will "
+"need to create one. We recommend using Login.gov."
+
+msgid "eligibility.buttons.veteran.signin"
+msgstr "TODO: Continue with VA.gov"
+
+msgctxt "image alt text"
+msgid "core.icons.bankcardcheck"
+msgstr ""
+"Icono de tarjeta bancaria con símbolo sin contacto y marca de verificación"
+
+msgid "eligibility.pages.start.bankcard.title"
+msgstr "Los datos de su tarjeta bancaria"
+
+msgid "eligibility.pages.start.bankcard.text"
+msgstr ""
+"Su tarjeta debe ser una tarjeta de débito o crédito sin contacto de Visa o "
+"Mastercard."
 
 #, python-format
 msgid "eligibility.pages.index.p[0]%(info_link)s"
@@ -545,50 +589,6 @@ msgstr ""
 "¿No está seguro de qué opción es la adecuada para usted? Visite nuestro <a "
 "href=\"%(help_link)s\">Página de Ayuda</a>."
 
-msgid "eligibility.buttons.continue"
-msgstr "Continuar"
-
-msgctxt "image alt text"
-msgid "core.icons.idcardcheck"
-msgstr "Icono de tarjeta de identificación con marca de verificación"
-
-msgid "eligibility.pages.start.login_gov.required_items[0]"
-msgstr "Su tarjeta de identificación emitida por el estado"
-
-msgid "eligibility.pages.start.login_gov.required_items[1]"
-msgstr "Su número de Seguro Social"
-
-msgid "eligibility.pages.start.login_gov.required_items[2]"
-msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
-
-msgid "eligibility.pages.start.veteran.required_items[0]"
-msgstr "Login.gov"
-
-msgid "eligibility.pages.start.veteran.required_items[1]"
-msgstr "ID.me"
-
-msgid "eligibility.pages.start.veteran.required_items[2]"
-msgstr "DS Logon"
-
-msgid "eligibility.pages.start.veteran.required_items[3]"
-msgstr "My HealtheVet"
-
-msgctxt "image alt text"
-msgid "core.icons.bankcardcheck"
-msgstr ""
-"Icono de tarjeta bancaria con símbolo sin contacto y marca de verificación"
-
-msgid "eligibility.pages.start.bankcard.title"
-msgstr "Los datos de su tarjeta bancaria"
-
-msgid "eligibility.pages.start.bankcard.text"
-msgstr ""
-"Su tarjeta debe ser una tarjeta de débito o crédito sin contacto de Visa o "
-"Mastercard."
-
-msgid "eligibility.pages.start.sub_headline"
-msgstr "Necesitará algunos artículos para conectar su beneficio:"
-
 msgid "eligibility.pages.unverified.headline"
 msgstr "No se pudo verificar su elegibilidad."
 
@@ -608,8 +608,9 @@ msgstr "El siguiente paso es vincular su tarjeta bancaria"
 msgid "enrollment.pages.index.link_card_item.p[0]%(link)s"
 msgstr ""
 "Ahora que se ha verificado su elegibilidad, vincularemos su descuento de "
-"tránsito a su tarjeta a través de nuestro socio de pago, <a href=\"%(link)s"
-"\">Littlepay</a>. No almacenamos su información y no se te cobrará."
+"tránsito a su tarjeta a través de nuestro socio de pago, <a "
+"href=\"%(link)s\">Littlepay</a>. No almacenamos su información y no se te "
+"cobrará."
 
 msgid "enrollment.pages.index.link_card_item.p[1]"
 msgstr ""
