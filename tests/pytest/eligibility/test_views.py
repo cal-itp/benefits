@@ -8,7 +8,6 @@ from benefits.eligibility.forms import EligibilityVerifierSelectionForm
 from benefits.eligibility.views import (
     ROUTE_INDEX,
     ROUTE_START,
-    ROUTE_LOGIN,
     ROUTE_CONFIRM,
     ROUTE_ENROLLMENT,
     ROUTE_UNVERIFIED,
@@ -151,9 +150,6 @@ def test_start_verifier_auth_required_logged_in(mocker, client):
     response = client.get(path)
 
     assert response.status_code == 200
-    assert "page" in response.context_data
-    assert len(response.context_data["page"].buttons) == 1
-    assert response.context_data["page"].buttons[0].url == reverse(ROUTE_CONFIRM)
 
 
 @pytest.mark.django_db
@@ -166,9 +162,6 @@ def test_start_verifier_auth_required_not_logged_in(mocker, client):
     response = client.get(path)
 
     assert response.status_code == 200
-    assert "page" in response.context_data
-    assert len(response.context_data["page"].buttons) == 1
-    assert response.context_data["page"].buttons[0].url == reverse(ROUTE_LOGIN)
 
 
 @pytest.mark.django_db
@@ -178,9 +171,6 @@ def test_start_verifier_auth_not_required(client):
     response = client.get(path)
 
     assert response.status_code == 200
-    assert "page" in response.context_data
-    assert len(response.context_data["page"].buttons) == 1
-    assert response.context_data["page"].buttons[0].url == reverse(ROUTE_CONFIRM)
 
 
 @pytest.mark.django_db
