@@ -17,3 +17,8 @@ def media_item__idcardcheck__login_gov():
 @register.inclusion_tag("eligibility/tags/media_item__idcardcheck__mst_cc.html")
 def media_item__idcardcheck__mst_cc():
     return {}
+
+
+@register.inclusion_tag("eligibility/tags/media_item__idcardcheck__veteran.html")
+def media_item__idcardcheck__veteran():
+    return {}
