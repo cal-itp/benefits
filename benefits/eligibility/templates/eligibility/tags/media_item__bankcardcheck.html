@@ -1,0 +1,12 @@
+{% load i18n %}
+{% load core %}
+
+{% translate "core.icons.bankcardcheck" context "image alt text" as icon_alt %}
+{% translate "eligibility.pages.start.bankcard.title" as heading %}
+{% translate "eligibility.pages.start.bankcard.text" as details %}
+
+{% media_item icon="bankcardcheck" icon_alt=icon_alt heading=heading %}
+<div class="media-body--details">
+    <p>{{ details }}</p>
+</div>
+{% endmedia_item %}
