@@ -121,3 +121,11 @@ class ButtonNodeItem(template.Node):
         # render the tag template
         t = context.template.engine.get_template("core/tags/button.html")
         return t.render(ctx)
+
+
+@register.inclusion_tag("core/tags/button__previous_page.html")
+def button__previous_page(url):
+    """
+    Defines a tag `{% button__previous_page url="" %}`
+    """
+    return {"url": url}
