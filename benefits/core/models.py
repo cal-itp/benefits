@@ -42,7 +42,6 @@ class AuthProvider(models.Model):
     """An entity that provides authentication for eligibility verifiers."""
 
     id = models.AutoField(primary_key=True)
-    sign_in_button_label = models.TextField(null=True)
     sign_out_button_label = models.TextField(null=True)
     client_name = models.TextField()
     client_id = models.TextField()
@@ -105,12 +104,6 @@ class EligibilityVerifier(models.Model):
     selection_label = models.TextField()
     selection_label_description = models.TextField(null=True)
     start_template = models.TextField(null=True)
-    start_title = models.TextField(null=True)
-    start_headline = models.TextField(null=True)
-    start_item_heading = models.TextField(null=True)
-    start_item_details = models.TextField(null=True)
-    start_item_secondary_details = models.TextField(null=True)
-    start_help_anchor = models.TextField(null=True)
     form_title = models.TextField(null=True)
     form_headline = models.TextField(null=True)
     form_blurb = models.TextField(null=True)
