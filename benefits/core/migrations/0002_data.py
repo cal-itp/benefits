@@ -215,8 +215,6 @@ PEM DATA
         selection_label=_("eligibility.pages.index.mst_cc.label"),
         selection_label_description=_("eligibility.pages.index.mst_cc.description"),
         start_template="eligibility/start__mst_courtesycard.html",
-        start_item_heading=_("eligibility.pages.start.mst_cc.start_item.heading"),
-        start_item_details=_("eligibility.pages.start.mst_cc.start_item.details"),
         start_help_anchor="mst-courtesy-card",
         form_title=_("eligibility.pages.confirm.mst_cc.title"),
         form_headline=_("eligibility.pages.confirm.mst_cc.headline"),
