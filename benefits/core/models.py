@@ -42,7 +42,7 @@ class AuthProvider(models.Model):
     """An entity that provides authentication for eligibility verifiers."""
 
     id = models.AutoField(primary_key=True)
-    sign_in_button_label = models.TextField()
+    sign_in_button_label = models.TextField(null=True)
     sign_out_button_label = models.TextField(null=True)
     client_name = models.TextField()
     client_id = models.TextField()

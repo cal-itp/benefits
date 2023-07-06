@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
             name="AuthProvider",
             fields=[
                 ("id", models.AutoField(primary_key=True, serialize=False)),
-                ("sign_in_button_label", models.TextField()),
+                ("sign_in_button_label", models.TextField(null=True)),
                 ("sign_out_button_label", models.TextField(null=True)),
                 ("client_name", models.TextField()),
                 ("client_id", models.TextField()),

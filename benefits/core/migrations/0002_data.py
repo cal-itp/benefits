@@ -127,7 +127,6 @@ PEM DATA
     AuthProvider = app.get_model("core", "AuthProvider")
 
     senior_auth_provider = AuthProvider.objects.create(
-        sign_in_button_label=_("eligibility.buttons.senior.signin"),
         sign_out_button_label=_("eligibility.buttons.senior.signout"),
         client_name=os.environ.get("SENIOR_AUTH_PROVIDER_CLIENT_NAME", "senior-benefits-oauth-client-name"),
         client_id=os.environ.get("AUTH_PROVIDER_CLIENT_ID", "benefits-oauth-client-id"),
