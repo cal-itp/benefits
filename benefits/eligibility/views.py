@@ -103,6 +103,9 @@ def start(request):
     """View handler for the eligibility verification getting started screen."""
 
     verifier = session.verifier(request)
+    if verifier.start_template:
+        return TemplateResponse(request, verifier.start_template)
+
     button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse(ROUTE_CONFIRM))
 
     # define the verifier-specific required item
