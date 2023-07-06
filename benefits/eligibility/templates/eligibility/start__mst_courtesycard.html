@@ -1,5 +1,6 @@
 {% extends "eligibility/start.html" %}
 {% load i18n %}
+{% load core %}
 {% load eligibility %}
 
 {% block page_title %}
@@ -16,3 +17,13 @@
   {% media_item__idcardcheck__mst_cc %}
   {% media_item__bankcardcheck %}
 {% endblock media-list %}
+
+{% block call-to-action-button %}
+  {% url "eligibility:confirm" as button_url %}
+  {% translate "eligibility.buttons.continue" as button_text %}
+  {# djlint:off #}
+  {% button url=button_url classes="btn btn-lg btn-primary" %}
+      {{ button_text }}
+  {% endbutton %}
+  {# djlint:on #}
+{% endblock call-to-action-button %}
