@@ -1,0 +1,18 @@
+{% extends "eligibility/start.html" %}
+{% load i18n %}
+{% load eligibility %}
+
+{% block page_title %}
+  {% translate "eligibility.pages.start.login_gov.title" %}&nbsp;|&nbsp;
+{% endblock page_title %}
+
+{% block headline %}
+  <div class="col-lg-10">
+    <h1>{% translate "eligibility.pages.start.login_gov.headline" %}</h1>
+  </div>
+{% endblock headline %}
+
+{% block media-list %}
+  {% media_item__idcardcheck__login_gov %}
+  {% media_item__bankcardcheck %}
+{% endblock media-list %}
