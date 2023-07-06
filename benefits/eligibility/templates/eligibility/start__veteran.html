@@ -1,5 +1,6 @@
 {% extends "eligibility/start.html" %}
 {% load i18n %}
+{% load core %}
 {% load eligibility %}
 
 {% block page_title %}
@@ -34,3 +35,13 @@
   {# djlint: on #}
   {% media_item__start__bankcardcheck %}
 {% endblock media-list %}
+
+{% block call-to-action-button %}
+  {% url "oauth:login" as button_url %}
+  {% translate "eligibility.buttons.veteran.signin" as button_text %}
+  {# djlint:off #}
+  {% button url=button_url classes="btn btn-lg btn-primary" %}
+      {{ button_text }}
+  {% endbutton %}
+  {# djlint:on #}
+{% endblock call-to-action-button %}
