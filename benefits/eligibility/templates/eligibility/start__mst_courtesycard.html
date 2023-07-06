@@ -1,5 +1,6 @@
 {% extends "eligibility/start.html" %}
 {% load i18n %}
+{% load eligibility %}
 
 {% block page_title %}
   {% translate "eligibility.pages.start.mst_cc.title" %}&nbsp;|&nbsp;
@@ -10,3 +11,8 @@
     <h1>{% translate "eligibility.pages.start.mst_cc.headline" %}</h1>
   </div>
 {% endblock headline %}
+
+{% block media-list %}
+  {% media_item__idcardcheck__mst_cc %}
+  {% media_item__bankcardcheck %}
+{% endblock media-list %}
