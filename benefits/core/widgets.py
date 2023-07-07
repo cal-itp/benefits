@@ -24,19 +24,19 @@ class VerifierRadioSelect(widgets.RadioSelect):
     template_name = "core/widgets/verifier_radio_select.html"
     option_template_name = "core/widgets/verifier_radio_select_option.html"
 
-    def __init__(self, choice_descriptions=(), *args, **kwargs):
+    def __init__(self, selection_label_templates=(), *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.choice_descriptions = list(choice_descriptions)
+        self.selection_label_templates = list(selection_label_templates)
 
     def __deepcopy__(self, memo):
         obj = super().__deepcopy__(memo)
-        obj.choice_descriptions = copy.copy(self.choice_descriptions)
+        obj.selection_label_templates = copy.copy(self.selection_label_templates)
         return obj
 
     def create_option(self, name, value, label, selected, index, subindex, attrs):
         option = super().create_option(name, value, label, selected, index, subindex, attrs)
         # this implementation does not support groups from ChoiceWidget.optgroups
-        if value in self.choice_descriptions:
-            option.update({"description": self.choice_descriptions[value]})
+        if value in self.selection_label_templates:
+            option.update({"selection_label_template": self.selection_label_templates[value]})
 
         return option
