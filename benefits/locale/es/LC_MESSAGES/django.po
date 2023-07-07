@@ -192,11 +192,17 @@ msgstr ""
 "Puede acercar su tarjeta de crédito o débito cuando aborde un autobús de MST "
 "y su tarifa con descuento se aplicará automáticamente cada vez que viaje. "
 
+msgid "agency.variables.mst.transit_type"
+msgstr "TODO: bus"
+
 msgid "eligibility.pages.index.p[0].sacrt"
 msgstr ""
 "Puede acercar su tarjeta de crédito o débito cuando aborde el transporte "
 "público SacRT y su tarifa con descuento se aplicará automáticamente cada vez "
 "que viaje. "
+
+msgid "agency.variables.sacrt.transit_type"
+msgstr "TODO: light rail"
 
 msgid "core.pages.help.about.p[0]"
 msgstr ""
@@ -468,7 +474,8 @@ msgid "core.pages.index.title"
 msgstr "Elija Proveedor"
 
 msgid "core.pages.index.headline"
-msgstr "Conecte su beneficio del transporte a su tarjeta de sin contacto"
+msgstr ""
+"Obtenga una tarifa reducida en el transporte público cuando toque para viajar"
 
 msgid "core.pages.index.button"
 msgstr "Elija su Proveedor"
@@ -480,10 +487,10 @@ msgid "core.pages.agency_index.title"
 msgstr "Introducción"
 
 #, python-format
-msgid "core.pages.agency_index.headline%(transit_agency_short_name)s"
+msgid "core.pages.agency_index.headline%(transit_agency_short_name_and_type)s"
 msgstr ""
-"Conecte su beneficio del transporte de %(transit_agency_short_name)s a su "
-"tarjeta de sin contacto"
+"Obtenga una tarifa reducida en el transporte público "
+"%(transit_agency_short_name_and_type)s a cuando toque para viajar"
 
 msgid "core.buttons.back"
 msgstr "Regresar a la Página Principal"

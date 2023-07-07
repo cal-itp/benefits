@@ -185,11 +185,17 @@ msgstr ""
 "You can tap your credit or debit card when you board an MST bus, and your "
 "discounted fare will automatically apply every time you ride. "
 
+msgid "agency.variables.mst.transit_type"
+msgstr "bus"
+
 msgid "eligibility.pages.index.p[0].sacrt"
 msgstr ""
 "You can tap your credit or debit card when you board SacRT public "
 "transportation, and your discounted fare will automatically apply every time "
 "you ride. "
+
+msgid "agency.variables.sacrt.transit_type"
+msgstr "light rail"
 
 msgid "core.pages.help.about.p[0]"
 msgstr ""
@@ -392,7 +398,8 @@ msgstr ""
 "JavaScript. Please enable JavaScript for this website and"
 
 msgid "core.pages.landing.h2"
-msgstr "Your benefit applies every time you tap to ride"
+msgstr ""
+"Cal-ITP Benefits connects your transit benefit to your contactless card"
 
 msgid "core.pages.logged_out.headline[0]"
 msgstr "You have successfully logged out."
@@ -453,7 +460,7 @@ msgid "core.pages.index.title"
 msgstr "Choose Provider"
 
 msgid "core.pages.index.headline"
-msgstr "Connect your transit benefit to your contactless card"
+msgstr "Get reduced fare on public transportation when you tap to ride"
 
 msgid "core.pages.index.button"
 msgstr "Choose your Provider"
@@ -465,10 +472,10 @@ msgid "core.pages.agency_index.title"
 msgstr "Introduction"
 
 #, python-format
-msgid "core.pages.agency_index.headline%(transit_agency_short_name)s"
+msgid "core.pages.agency_index.headline%(transit_agency_short_name_and_type)s"
 msgstr ""
-"Connect your %(transit_agency_short_name)s transit benefit to your "
-"contactless card"
+"Get reduced fare on %(transit_agency_short_name_and_type)s when you tap to "
+"ride"
 
 msgid "core.buttons.back"
 msgstr "Go Back"

@@ -212,6 +212,7 @@ class TransitAgency(models.Model):
     # The JWS-compatible signing algorithm
     jws_signing_alg = models.TextField()
     eligibility_index_intro = models.TextField()
+    transit_type = models.TextField()
 
     def __str__(self):
         return self.long_name
