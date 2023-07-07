@@ -29,12 +29,12 @@ def index(request):
     page = viewmodels.Page(
         title=_("core.pages.index.title"),
         headline=_("core.pages.index.headline"),
-        modal=viewmodels.AgencySelector(
-            button_text=_("core.pages.index.button"),
-        ),
     )
 
-    return TemplateResponse(request, TEMPLATE_INDEX, page.context_dict())
+    ctx = page.context_dict()
+    ctx["agencies"] = [viewmodels.TransitAgency(a) for a in models.TransitAgency.all_active()]
+
+    return TemplateResponse(request, TEMPLATE_INDEX, ctx)
 
 
 @pageview_decorator

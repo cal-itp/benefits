@@ -1,6 +1,7 @@
 <!-- Button to trigger modal -->
 <button type="button" class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#{{ id }}">
-    {{ modal.button_text }}
+    {% block modal-trigger-text %}
+    {% endblock modal-trigger-text %}
 </button>
 
 <!-- Modal -->

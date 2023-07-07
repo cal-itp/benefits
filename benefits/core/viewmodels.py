@@ -128,26 +128,6 @@ class MediaItem:
             self.bullets = bullets
 
 
-class Modal:
-    """
-    Represents a modal dialog, triggered by a button:
-    * button_text: str
-    """
-
-    def __init__(self, **kwargs):
-        self.button_text = kwargs.get("button_text")
-
-
-class AgencySelector(Modal):
-    """
-    Represents the agency selector modal dialog.
-    """
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.agencies = [TransitAgency(a) for a in models.TransitAgency.all_active()]
-
-
 class Page:
     """
     Represents a page of content:
