@@ -14,7 +14,7 @@ export const rateLimitWait = () => {
 export const selectAgency = () => {
   cy.location("pathname").should("eq", "/");
 
-  cy.contains("Choose Your Provider").click();
+  cy.contains("Choose your Provider").click();
   cy.contains(agency.long_name).click();
 
   cy.location("pathname").should("eq", `/eligibility/${agency.slug}`);

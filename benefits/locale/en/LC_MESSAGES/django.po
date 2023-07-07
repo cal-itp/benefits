@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-06-29 00:40+0000\n"
+"POT-Creation-Date: 2023-07-07 02:33+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -381,7 +381,7 @@ msgstr ""
 "Please enable cookies for this website and"
 
 msgid "core.buttons.return_home"
-msgstr "Return home"
+msgstr "Return Home"
 
 msgid "core.includes.noscript.brand"
 msgstr "JavaScript is disabled"
@@ -456,10 +456,10 @@ msgid "core.pages.index.headline"
 msgstr "Connect your transit benefit to your contactless card"
 
 msgid "core.pages.index.button"
-msgstr "Choose Your Provider"
+msgstr "Choose your Provider"
 
 msgid "core.pages.index.continue"
-msgstr "Get started"
+msgstr "Get Started"
 
 msgid "core.pages.agency_index.title"
 msgstr "Introduction"
@@ -471,7 +471,7 @@ msgstr ""
 "contactless card"
 
 msgid "core.buttons.back"
-msgstr "Go back"
+msgstr "Go Back"
 
 msgid "core.pages.logged_out.title"
 msgstr "Logged out"
@@ -596,7 +596,7 @@ msgid "enrollment.pages.index.headline"
 msgstr "Your eligibility is confirmed! You’re nearly there."
 
 msgid "enrollment.buttons.payment_partner"
-msgstr "Connect Your Card"
+msgstr "Connect your Card"
 
 msgid "enrollment.pages.retry.title"
 msgstr "We couldn’t connect your bank card"

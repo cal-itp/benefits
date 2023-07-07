@@ -290,7 +290,6 @@ footer .footer-links li a:visited {
 
 .btn.btn-lg.btn-primary {
   border-width: 2px;
-  text-transform: capitalize;
   letter-spacing: 0.02em;
   font-weight: var(--medium-font-weight);
   font-size: calc(20rem / 16);

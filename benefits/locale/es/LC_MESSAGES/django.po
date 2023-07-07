@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-06-29 00:40+0000\n"
+"POT-Creation-Date: 2023-07-07 02:33+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -396,7 +396,7 @@ msgstr ""
 "admita cookies. Por favor, active cookies por este sitio web y"
 
 msgid "core.buttons.return_home"
-msgstr "Regresar a la página principal"
+msgstr "Regresar a la Página Principal"
 
 msgid "core.includes.noscript.brand"
 msgstr "JavaScript está inactivo"
@@ -471,7 +471,7 @@ msgid "core.pages.index.headline"
 msgstr "Conecte su beneficio del transporte a su tarjeta de sin contacto"
 
 msgid "core.pages.index.button"
-msgstr "Elija Su Proveedor"
+msgstr "Elija su Proveedor"
 
 msgid "core.pages.index.continue"
 msgstr "Empezar"
@@ -486,7 +486,7 @@ msgstr ""
 "tarjeta de sin contacto"
 
 msgid "core.buttons.back"
-msgstr "Regresar a la página principal"
+msgstr "Regresar a la Página Principal"
 
 msgid "core.pages.logged_out.title"
 msgstr "Cierre sesión"
@@ -496,7 +496,7 @@ msgid "core.icons.happybus"
 msgstr "Icono de autobús con cara sonriente"
 
 msgid "eligibility.buttons.choose"
-msgstr "Elija Este Beneficio"
+msgstr "Elija este Beneficio"
 
 msgid "eligibility.forms.confirm.submit"
 msgstr "Verificación de estatus"
