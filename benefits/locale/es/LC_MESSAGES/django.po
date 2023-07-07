@@ -192,11 +192,47 @@ msgstr ""
 "Puede acercar su tarjeta de crédito o débito cuando aborde un autobús de MST "
 "y su tarifa con descuento se aplicará automáticamente cada vez que viaje. "
 
+msgid "agency.variables.mst.transit_option"
+msgstr "TODO: public transportation"
+
+msgid "agency.variables.mst.benefit_action"
+msgstr "TODO: reduces"
+
+msgid "agency.variables.mst.benefit_rate"
+msgstr "TODO: 50%"
+
+msgid "agency.variables.mst.affected_service"
+msgstr "TODO: fixed route"
+
+msgid "agency.variables.mst.transit_type"
+msgstr "TODO: bus"
+
+msgid "agency.variables.mst.card_action"
+msgstr "TODO: tap this card"
+
 msgid "eligibility.pages.index.p[0].sacrt"
 msgstr ""
 "Puede acercar su tarjeta de crédito o débito cuando aborde el transporte "
 "público SacRT y su tarifa con descuento se aplicará automáticamente cada vez "
 "que viaje. "
+
+msgid "agency.variables.sacrt.transit_option"
+msgstr "TODO: light rail"
+
+msgid "agency.variables.sacrt.benefit_action"
+msgstr "TODO: reduces"
+
+msgid "agency.variables.sacrt.benefit_rate"
+msgstr "TODO: 50%"
+
+msgid "agency.variables.sacrt.affected_service"
+msgstr "TODO: fixed route"
+
+msgid "agency.variables.sacrt.transit_type"
+msgstr "TODO: light rail"
+
+msgid "agency.variables.sacrt.card_action"
+msgstr "TODO: tap this card"
 
 msgid "core.pages.help.about.p[0]"
 msgstr ""
@@ -544,27 +580,6 @@ msgstr "Continuar"
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Icono de tarjeta de identificación con marca de verificación"
-
-msgid "eligibility.pages.start.login_gov.required_items[0]"
-msgstr "Su tarjeta de identificación emitida por el estado"
-
-msgid "eligibility.pages.start.login_gov.required_items[1]"
-msgstr "Su número de Seguro Social"
-
-msgid "eligibility.pages.start.login_gov.required_items[2]"
-msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
-
-msgid "eligibility.pages.start.veteran.required_items[0]"
-msgstr "Login.gov"
-
-msgid "eligibility.pages.start.veteran.required_items[1]"
-msgstr "ID.me"
-
-msgid "eligibility.pages.start.veteran.required_items[2]"
-msgstr "DS Logon"
-
-msgid "eligibility.pages.start.veteran.required_items[3]"
-msgstr "My HealtheVet"
 
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"

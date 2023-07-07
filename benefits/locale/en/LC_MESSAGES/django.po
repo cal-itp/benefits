@@ -185,11 +185,47 @@ msgstr ""
 "You can tap your credit or debit card when you board an MST bus, and your "
 "discounted fare will automatically apply every time you ride. "
 
+msgid "agency.variables.mst.transit_option"
+msgstr "public transportation"
+
+msgid "agency.variables.mst.benefit_action"
+msgstr "reduces"
+
+msgid "agency.variables.mst.benefit_rate"
+msgstr "50%"
+
+msgid "agency.variables.mst.affected_service"
+msgstr "fixed route"
+
+msgid "agency.variables.mst.transit_type"
+msgstr "bus"
+
+msgid "agency.variables.mst.card_action"
+msgstr "tap this card"
+
 msgid "eligibility.pages.index.p[0].sacrt"
 msgstr ""
 "You can tap your credit or debit card when you board SacRT public "
 "transportation, and your discounted fare will automatically apply every time "
 "you ride. "
+
+msgid "agency.variables.sacrt.transit_option"
+msgstr "light rail"
+
+msgid "agency.variables.sacrt.benefit_action"
+msgstr "reduces"
+
+msgid "agency.variables.sacrt.benefit_rate"
+msgstr "50%"
+
+msgid "agency.variables.sacrt.affected_service"
+msgstr "fixed route"
+
+msgid "agency.variables.sacrt.transit_type"
+msgstr "light rail"
+
+msgid "agency.variables.sacrt.card_action"
+msgstr "tap this card"
 
 msgid "core.pages.help.about.p[0]"
 msgstr ""
@@ -528,27 +564,6 @@ msgstr "Continue"
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Identification card icon with checkmark"
-
-msgid "eligibility.pages.start.login_gov.required_items[0]"
-msgstr "Your state-issued ID card"
-
-msgid "eligibility.pages.start.login_gov.required_items[1]"
-msgstr "Your Social Security number"
-
-msgid "eligibility.pages.start.login_gov.required_items[2]"
-msgstr "A phone number with a phone plan associated with your name"
-
-msgid "eligibility.pages.start.veteran.required_items[0]"
-msgstr "Login.gov"
-
-msgid "eligibility.pages.start.veteran.required_items[1]"
-msgstr "ID.me"
-
-msgid "eligibility.pages.start.veteran.required_items[2]"
-msgstr "DS Logon"
-
-msgid "eligibility.pages.start.veteran.required_items[3]"
-msgstr "My HealtheVet"
 
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
