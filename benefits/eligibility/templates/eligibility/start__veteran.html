@@ -11,10 +11,9 @@
   </div>
 {% endblock headline %}
 
-{% block media-list %}
+{% block media-item %}
   {% include "eligibility/includes/media_item__idcardcheck__start__veteran.html" %}
-  {% include "eligibility/includes/media_item__bankcardcheck__start.html" %}
-{% endblock media-list %}
+{% endblock media-item %}
 
 {% block help-link %}
   {% url "core:help" as help_page %}

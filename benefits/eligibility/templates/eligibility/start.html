@@ -14,8 +14,9 @@
   <div class="col-12 col-sm-12 col-lg-10">
     <h2 class="media-title p-sm">{% translate "eligibility.pages.start.sub_headline" %}</h2>
     <ul class="media-list mx-0 px-0 d-flex justify-content-center flex-column">
-      {% block media-list %}
-      {% endblock media-list %}
+      {% block media-item %}
+      {% endblock media-item %}
+      {% include "eligibility/includes/media_item__bankcardcheck__start.html" %}
     </ul>
   </div>
 {% endblock inner-content %}
