@@ -48,7 +48,6 @@ def index(request):
     session.update(request, origin=reverse(ROUTE_INDEX))
 
     agency = session.agency(request)
-    verifier = session.verifier(request)
 
     # POST back after payment processor form, process card token
     if request.method == "POST":
@@ -70,72 +69,23 @@ def index(request):
             analytics.returned_error(request, response.message)
             raise Exception(response.message)
 
-    # GET enrollment index, with button to initiate payment processor connection
+    # GET enrollment index
     else:
-        tokenize_button = "tokenize_card"
         tokenize_retry_form = forms.CardTokenizeFailForm(ROUTE_RETRY)
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
-        media = []
-
-        if verifier.eligibility_confirmed_item_heading or verifier.eligibility_confirmed_item_details:
-            heading = _(verifier.eligibility_confirmed_item_heading) if verifier.eligibility_confirmed_item_heading else None
-            details = (
-                _(verifier.eligibility_confirmed_item_details) % {"transit_agency_short_name": agency.short_name}
-                if verifier.eligibility_confirmed_item_details
-                else None
-            )
-            confirmed_eligibility_item = viewmodels.MediaItem(
-                icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
-                heading=heading,
-                details=details,
-            )
-            media.append(confirmed_eligibility_item)
-
-        help_link = reverse(ROUTE_HELP)
-        link_card_item = viewmodels.MediaItem(
-            icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-            heading=_("enrollment.pages.index.link_card_item.heading"),
-            details=[
-                format_html(_("enrollment.pages.index.link_card_item.p[0]%(link)s") % {"link": f"{help_link}#littlepay"}),
-                _("enrollment.pages.index.link_card_item.p[1]"),
-            ],
-        )
-        media.append(link_card_item)
-
-        page = viewmodels.Page(
-            title=_("enrollment.pages.index.title"),
-            headline=_("enrollment.pages.index.headline"),
-            forms=[tokenize_retry_form, tokenize_success_form],
-            buttons=[
-                viewmodels.Button.primary(
-                    text=_("enrollment.buttons.payment_partner"), id=tokenize_button, url=f"#{tokenize_button}"
-                ),
-            ],
-        )
-        context = {"media": media}
-        context.update(page.context_dict())
-
-        # add agency details
-        agency_vm = viewmodels.TransitAgency(agency)
-        context.update(agency_vm.context_dict())
-
-        # and payment processor details
-        processor_vm = viewmodels.PaymentProcessor(
-            model=agency.payment_processor,
-            access_token_url=reverse(ROUTE_TOKEN),
-            element_id=f"#{tokenize_button}",
-            color="#046b99",
-            name=f"{agency.long_name} {_('partnered with')} {agency.payment_processor.name}",
-        )
-        context.update(processor_vm.context_dict())
-        logger.warning(f"card_tokenize_url: {context['payment_processor'].card_tokenize_url}")
-
-        # the tokenize form URLs are injected to page-generated Javascript
-        context["forms"] = {
-            "tokenize_retry": reverse(tokenize_retry_form.action_url),
-            "tokenize_success": reverse(tokenize_success_form.action_url),
+        context = {
+            "forms": [tokenize_retry_form, tokenize_success_form],
+            "cta_button": "tokenize_card",
+            "card_tokenize_env": agency.payment_processor.card_tokenize_env,
+            "card_tokenize_func": agency.payment_processor.card_tokenize_func,
+            "card_tokenize_url": agency.payment_processor.card_tokenize_url,
+            "token_field": "card_token",
+            "form_retry": tokenize_retry_form.id,
+            "form_success": tokenize_success_form.id,
         }
+
+        logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
 
         return TemplateResponse(request, TEMPLATE_INDEX, context)
 

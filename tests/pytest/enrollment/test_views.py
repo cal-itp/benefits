@@ -87,11 +87,14 @@ def test_index_eligible_get(client):
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_INDEX
-    assert "page" in response.context_data
-    assert "payment_processor" in response.context_data
     assert "forms" in response.context_data
-    assert "tokenize_retry" in response.context_data["forms"]
-    assert "tokenize_success" in response.context_data["forms"]
+    assert "cta_button" in response.context_data
+    assert "card_tokenize_env" in response.context_data
+    assert "card_tokenize_func" in response.context_data
+    assert "card_tokenize_url" in response.context_data
+    assert "token_field" in response.context_data
+    assert "form_retry" in response.context_data
+    assert "form_success" in response.context_data
 
 
 @pytest.mark.django_db
