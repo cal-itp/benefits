@@ -185,23 +185,8 @@ msgstr ""
 "You can tap your credit or debit card when you board an MST bus, and your "
 "discounted fare will automatically apply every time you ride. "
 
-msgid "agency.variables.mst.transit_option"
-msgstr "public transportation"
-
-msgid "agency.variables.mst.benefit_action"
-msgstr "reduces"
-
-msgid "agency.variables.mst.benefit_rate"
-msgstr "50%"
-
-msgid "agency.variables.mst.affected_service"
-msgstr "fixed route"
-
 msgid "agency.variables.mst.transit_type"
 msgstr "bus"
-
-msgid "agency.variables.mst.card_action"
-msgstr "tap this card"
 
 msgid "eligibility.pages.index.p[0].sacrt"
 msgstr ""
@@ -209,23 +194,8 @@ msgstr ""
 "transportation, and your discounted fare will automatically apply every time "
 "you ride. "
 
-msgid "agency.variables.sacrt.transit_option"
-msgstr "light rail"
-
-msgid "agency.variables.sacrt.benefit_action"
-msgstr "reduces"
-
-msgid "agency.variables.sacrt.benefit_rate"
-msgstr "50%"
-
-msgid "agency.variables.sacrt.affected_service"
-msgstr "fixed route"
-
 msgid "agency.variables.sacrt.transit_type"
 msgstr "light rail"
-
-msgid "agency.variables.sacrt.card_action"
-msgstr "tap this card"
 
 msgid "core.pages.help.about.p[0]"
 msgstr ""
@@ -428,7 +398,8 @@ msgstr ""
 "JavaScript. Please enable JavaScript for this website and"
 
 msgid "core.pages.landing.h2"
-msgstr "Your benefit applies every time you tap to ride"
+msgstr ""
+"Cal-ITP Benefits connects your transit benefit to your contactless card"
 
 msgid "core.pages.logged_out.headline[0]"
 msgstr "You have successfully logged out."
@@ -489,7 +460,7 @@ msgid "core.pages.index.title"
 msgstr "Choose Provider"
 
 msgid "core.pages.index.headline"
-msgstr "Connect your transit benefit to your contactless card"
+msgstr "Get reduced fare on public transportation when you tap to ride"
 
 msgid "core.pages.index.button"
 msgstr "Choose your Provider"
@@ -501,10 +472,10 @@ msgid "core.pages.agency_index.title"
 msgstr "Introduction"
 
 #, python-format
-msgid "core.pages.agency_index.headline%(transit_agency_short_name)s"
+msgid "core.pages.agency_index.headline%(transit_agency_short_name_and_type)s"
 msgstr ""
-"Connect your %(transit_agency_short_name)s transit benefit to your "
-"contactless card"
+"Get reduced fare on %(transit_agency_short_name_and_type)s when you tap to "
+"ride"
 
 msgid "core.buttons.back"
 msgstr "Go Back"
@@ -564,6 +535,27 @@ msgstr "Continue"
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Identification card icon with checkmark"
+
+msgid "eligibility.pages.start.login_gov.required_items[0]"
+msgstr "Your state-issued ID card"
+
+msgid "eligibility.pages.start.login_gov.required_items[1]"
+msgstr "Your Social Security number"
+
+msgid "eligibility.pages.start.login_gov.required_items[2]"
+msgstr "A phone number with a phone plan associated with your name"
+
+msgid "eligibility.pages.start.veteran.required_items[0]"
+msgstr "Login.gov"
+
+msgid "eligibility.pages.start.veteran.required_items[1]"
+msgstr "ID.me"
+
+msgid "eligibility.pages.start.veteran.required_items[2]"
+msgstr "DS Logon"
+
+msgid "eligibility.pages.start.veteran.required_items[3]"
+msgstr "My HealtheVet"
 
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
