@@ -5,8 +5,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-06-29 00:40+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-07 05:06+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -174,18 +174,6 @@ msgid "enrollment.pages.success.mst_cc.confirm_item.details"
 msgstr ""
 "No te cobraron nada hoy. Al abordar el tránsito, pague con esta misma "
 "tarjeta física y automáticamente recibirá su nueva tarifa reducida."
-
-msgid "enrollment.pages.success.mst_cc.expiry_item.heading"
-msgstr ""
-"Es posible que deba volver a solicitar los beneficios de tránsito en una "
-"fecha posterior"
-
-msgid "enrollment.pages.success.mst_cc.expiry_item.details"
-msgstr ""
-"En el futuro, es posible que tenga que volver a registrarse para Beneficios "
-"para continuar usando las tarjetas de pago sin contacto. También tendrá que "
-"volver a presenter una solicitud si elige cambiar la tarjeta bancaria que "
-"usa para pagar el servicio de tránsito."
 
 msgid "eligibility.pages.index.p[0].mst"
 msgstr ""
@@ -545,27 +533,6 @@ msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Icono de tarjeta de identificación con marca de verificación"
 
-msgid "eligibility.pages.start.login_gov.required_items[0]"
-msgstr "Su tarjeta de identificación emitida por el estado"
-
-msgid "eligibility.pages.start.login_gov.required_items[1]"
-msgstr "Su número de Seguro Social"
-
-msgid "eligibility.pages.start.login_gov.required_items[2]"
-msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
-
-msgid "eligibility.pages.start.veteran.required_items[0]"
-msgstr "Login.gov"
-
-msgid "eligibility.pages.start.veteran.required_items[1]"
-msgstr "ID.me"
-
-msgid "eligibility.pages.start.veteran.required_items[2]"
-msgstr "DS Logon"
-
-msgid "eligibility.pages.start.veteran.required_items[3]"
-msgstr "My HealtheVet"
-
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
 msgstr ""
@@ -640,13 +607,31 @@ msgstr "Éxito"
 msgid "enrollment.pages.success.headline"
 msgstr "¡Felicidades! Su descuento ahora está vinculado a su tarjeta bancaria."
 
-#, python-format
-msgid "enrollment.pages.success.helplink%(link)s"
-msgstr ""
-"Gracias por usar los Beneficios de Cal-ITP. Para más información, consulte "
-"nuestro our <a href=\"%(link)s\" rel=\"noopener noreferrer\">Página de "
-"Ayuda</a>."
+msgid "enrollment.pages.success.details"
+msgstr "¡Gracias por usar los Beneficios de Cal-ITP!"
 
-msgctxt "image alt text"
-msgid "core.icons.calendarcheck"
-msgstr "Icono de página de calendario con una marca de verificación"
+#~ msgid "eligibility.pages.start.login_gov.required_items[0]"
+#~ msgstr "Su tarjeta de identificación emitida por el estado"
+
+#~ msgid "eligibility.pages.start.login_gov.required_items[1]"
+#~ msgstr "Su número de Seguro Social"
+
+#~ msgid "eligibility.pages.start.login_gov.required_items[2]"
+#~ msgstr ""
+#~ "Un número de teléfono con un plan de teléfono asociado con su nombre"
+
+#~ msgid "eligibility.pages.start.veteran.required_items[0]"
+#~ msgstr "Login.gov"
+
+#~ msgid "eligibility.pages.start.veteran.required_items[1]"
+#~ msgstr "ID.me"
+
+#~ msgid "eligibility.pages.start.veteran.required_items[2]"
+#~ msgstr "DS Logon"
+
+#~ msgid "eligibility.pages.start.veteran.required_items[3]"
+#~ msgstr "My HealtheVet"
+
+#~ msgctxt "image alt text"
+#~ msgid "core.icons.calendarcheck"
+#~ msgstr "Icono de página de calendario con una marca de verificación"

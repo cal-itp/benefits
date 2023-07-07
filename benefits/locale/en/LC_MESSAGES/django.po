@@ -5,8 +5,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-06-29 00:40+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-07 05:08+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -170,15 +170,6 @@ msgid "enrollment.pages.success.mst_cc.confirm_item.details"
 msgstr ""
 "You were not charged anything today. When boarding transit, pay with this "
 "same physical card and you will automatically receive your new reduced fare."
-
-msgid "enrollment.pages.success.mst_cc.expiry_item.heading"
-msgstr "You may need to reapply for transit benefits at a later date"
-
-msgid "enrollment.pages.success.mst_cc.expiry_item.details"
-msgstr ""
-"In the future, you may need to re-register for Benefits to continue using "
-"contactless payment cards. You will also need to reapply if you choose to "
-"change the bank card you use to pay for transit service."
 
 msgid "eligibility.pages.index.p[0].mst"
 msgstr ""
@@ -529,27 +520,6 @@ msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Identification card icon with checkmark"
 
-msgid "eligibility.pages.start.login_gov.required_items[0]"
-msgstr "Your state-issued ID card"
-
-msgid "eligibility.pages.start.login_gov.required_items[1]"
-msgstr "Your Social Security number"
-
-msgid "eligibility.pages.start.login_gov.required_items[2]"
-msgstr "A phone number with a phone plan associated with your name"
-
-msgid "eligibility.pages.start.veteran.required_items[0]"
-msgstr "Login.gov"
-
-msgid "eligibility.pages.start.veteran.required_items[1]"
-msgstr "ID.me"
-
-msgid "eligibility.pages.start.veteran.required_items[2]"
-msgstr "DS Logon"
-
-msgid "eligibility.pages.start.veteran.required_items[3]"
-msgstr "My HealtheVet"
-
 msgctxt "image alt text"
 msgid "core.icons.bankcardcheck"
 msgstr "Bank card icon with contactless symbol and checkmark"
@@ -618,12 +588,46 @@ msgstr "Success"
 msgid "enrollment.pages.success.headline"
 msgstr "Success! Your discount is now linked to your bank card."
 
-#, python-format
-msgid "enrollment.pages.success.helplink%(link)s"
-msgstr ""
-"Thank you for using Cal-ITP Benefits! For more information check out our <a "
-"href=\"%(link)s\" rel=\"noopener noreferrer\">Help Page</a>."
+msgid "enrollment.pages.success.details"
+msgstr "Thank you for using Cal-ITP Benefits!"
 
-msgctxt "image alt text"
-msgid "core.icons.calendarcheck"
-msgstr "A calendar page icon with a check mark"
+#, fuzzy
+#~| msgid "enrollment.pages.success.mst_cc.confirm_item.details"
+#~ msgid "enrollment.pages.success.mst_cc.expiry_item.heading"
+#~ msgstr ""
+#~ "You were not charged anything today. When boarding transit, pay with this "
+#~ "same physical card and you will automatically receive your new reduced "
+#~ "fare."
+
+#, fuzzy
+#~| msgid "enrollment.pages.success.mst_cc.confirm_item.details"
+#~ msgid "enrollment.pages.success.mst_cc.expiry_item.details"
+#~ msgstr ""
+#~ "You were not charged anything today. When boarding transit, pay with this "
+#~ "same physical card and you will automatically receive your new reduced "
+#~ "fare."
+
+#~ msgid "eligibility.pages.start.login_gov.required_items[0]"
+#~ msgstr "Your state-issued ID card"
+
+#~ msgid "eligibility.pages.start.login_gov.required_items[1]"
+#~ msgstr "Your Social Security number"
+
+#~ msgid "eligibility.pages.start.login_gov.required_items[2]"
+#~ msgstr "A phone number with a phone plan associated with your name"
+
+#~ msgid "eligibility.pages.start.veteran.required_items[0]"
+#~ msgstr "Login.gov"
+
+#~ msgid "eligibility.pages.start.veteran.required_items[1]"
+#~ msgstr "ID.me"
+
+#~ msgid "eligibility.pages.start.veteran.required_items[2]"
+#~ msgstr "DS Logon"
+
+#~ msgid "eligibility.pages.start.veteran.required_items[3]"
+#~ msgstr "My HealtheVet"
+
+#~ msgctxt "image alt text"
+#~ msgid "core.icons.calendarcheck"
+#~ msgstr "A calendar page icon with a check mark"

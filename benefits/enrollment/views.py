@@ -189,24 +189,10 @@ def success(request):
         icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
         details=[
             _(verifier.enrollment_success_confirm_item_details),
-            format_html(_("enrollment.pages.success.helplink%(link)s") % {"link": f"{reverse(ROUTE_HELP)}"}),
+            _("enrollment.pages.success.details"),
         ],
     )
     media = [success_item]
-
-    if verifier.enrollment_success_expiry_item_heading or verifier.enrollment_success_expiry_item_details:
-        heading = (
-            _(verifier.enrollment_success_expiry_item_heading) if verifier.enrollment_success_expiry_item_heading else None
-        )
-        details = (
-            _(verifier.enrollment_success_expiry_item_details) if verifier.enrollment_success_expiry_item_details else None
-        )
-        expiry_item = viewmodels.MediaItem(
-            icon=viewmodels.Icon("calendarcheck", pgettext("image alt text", "core.icons.calendarcheck")),
-            heading=heading,
-            details=details,
-        )
-        media.insert(0, expiry_item)
 
     context = {"media": media}
     context.update(page.context_dict())
