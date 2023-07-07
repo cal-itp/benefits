@@ -1,9 +1,3 @@
-<!-- Button to trigger modal -->
-<button type="button" class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#{{ id }}">
-    {% block modal-trigger-text %}
-    {% endblock modal-trigger-text %}
-</button>
-
 <!-- Modal -->
 {% with id|add:"-modal-label" as aria_labelledby_id %}
     <div class="modal fade" id="{{ id }}" tabindex="-1" aria-labelledby="{{ aria_labelledby_id }}" aria-hidden="true">
