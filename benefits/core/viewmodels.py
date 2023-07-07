@@ -131,14 +131,10 @@ class MediaItem:
 class Modal:
     """
     Represents a modal dialog, triggered by a button:
-    * id: str
-    * aria_labelledby_id: str
     * button_text: str
     """
 
     def __init__(self, **kwargs):
-        self.id = kwargs.get("id")
-        self.aria_labelledby_id = kwargs.get("aria_labelledby_id")
         self.button_text = kwargs.get("button_text")
 
 

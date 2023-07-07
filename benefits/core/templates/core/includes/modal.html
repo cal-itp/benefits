@@ -1,19 +1,21 @@
 <!-- Button to trigger modal -->
-<button type="button" class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#{{ modal.id }}">
+<button type="button" class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#{{ id }}">
     {{ modal.button_text }}
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="{{ modal.id }}" tabindex="-1" aria-labelledby="{{ modal.aria_labelledby_id }}" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header border-0">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                {% block modal-content %}
-                {% endblock modal-content %}
+{% with id|add:"-modal-label" as aria_labelledby_id %}
+    <div class="modal fade" id="{{ id }}" tabindex="-1" aria-labelledby="{{ aria_labelledby_id }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% block modal-content %}
+                    {% endblock modal-content %}
+                </div>
             </div>
         </div>
     </div>
-</div>
+{% endwith %}

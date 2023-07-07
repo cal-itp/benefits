@@ -30,8 +30,6 @@ def index(request):
         title=_("core.pages.index.title"),
         headline=_("core.pages.index.headline"),
         modal=viewmodels.AgencySelector(
-            id="agency-selector",
-            aria_labelledby_id="agency-selector-modal-label",
             button_text=_("core.pages.index.button"),
         ),
     )
