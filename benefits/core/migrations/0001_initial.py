@@ -122,12 +122,7 @@ class Migration(migrations.Migration):
                 ("active", models.BooleanField(default=False)),
                 ("jws_signing_alg", models.TextField()),
                 ("eligibility_index_intro", models.TextField()),
-                ("transit_option", models.TextField()),
-                ("benefit_action", models.TextField()),
-                ("benefit_rate", models.TextField()),
-                ("affected_service", models.TextField()),
                 ("transit_type", models.TextField()),
-                ("card_action", models.TextField()),
                 ("eligibility_types", models.ManyToManyField(to="core.eligibilitytype")),
                 ("eligibility_verifiers", models.ManyToManyField(to="core.eligibilityverifier")),
                 (

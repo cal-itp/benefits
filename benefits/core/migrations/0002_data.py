@@ -321,12 +321,7 @@ PEM DATA
         jws_signing_alg=os.environ.get("MST_AGENCY_JWS_SIGNING_ALG", "RS256"),
         payment_processor=mst_payment_processor,
         eligibility_index_intro=_("eligibility.pages.index.p[0].mst"),
-        transit_option=_("agency.variables.mst.transit_option"),
-        benefit_action=_("agency.variables.mst.benefit_action"),
-        benefit_rate=_("agency.variables.mst.benefit_rate"),
-        affected_service=_("agency.variables.mst.affected_service"),
         transit_type=_("agency.variables.mst.transit_type"),
-        card_action=_("agency.variables.mst.card_action"),
     )
     mst_agency.eligibility_types.set([mst_senior_type, mst_veteran_type, mst_courtesy_card_type])
     mst_agency.eligibility_verifiers.set([mst_oauth_claims_verifier, mst_veteran_verifier, mst_courtesy_card_verifier])
@@ -345,12 +340,7 @@ PEM DATA
         jws_signing_alg=os.environ.get("SACRT_AGENCY_JWS_SIGNING_ALG", "RS256"),
         payment_processor=sacrt_payment_processor,
         eligibility_index_intro=_("eligibility.pages.index.p[0].sacrt"),
-        transit_option=_("agency.variables.sacrt.transit_option"),
-        benefit_action=_("agency.variables.sacrt.benefit_action"),
-        benefit_rate=_("agency.variables.sacrt.benefit_rate"),
-        affected_service=_("agency.variables.sacrt.affected_service"),
         transit_type=_("agency.variables.sacrt.transit_type"),
-        card_action=_("agency.variables.sacrt.card_action"),
     )
     sacrt_agency.eligibility_types.set([sacrt_senior_type])
     sacrt_agency.eligibility_verifiers.set([sacrt_oauth_claims_verifier])
