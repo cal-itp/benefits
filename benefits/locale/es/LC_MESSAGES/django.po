@@ -602,19 +602,16 @@ msgstr ""
 "para cerrar la sesión de"
 
 msgid "enrollment.pages.index.link_card_item.heading"
-msgstr "El siguiente paso es vincular su tarjeta bancaria"
+msgstr "TODO: The next step is to connect your contactless card to your transit benefit"
 
-#, python-format
-msgid "enrollment.pages.index.link_card_item.p[0]%(link)s"
-msgstr ""
-"Ahora que se ha verificado su elegibilidad, vincularemos su descuento de "
-"tránsito a su tarjeta a través de nuestro socio de pago, <a href=\"%(link)s"
-"\">Littlepay</a>. No almacenamos su información y no se te cobrará."
+msgid "enrollment.pages.index.link_card_item.p[0]s[0]"
+msgstr "TODO: You will be directed to our payment partner, "
 
-msgid "enrollment.pages.index.link_card_item.p[1]"
-msgstr ""
-"Por favor utilice una tarjeta de crédito o débito Visa o Mastercard sin "
-"contacto emitida por un banco."
+msgid "enrollment.pages.index.link_card_item.p[0]s[1]"
+msgstr "TODO: We don’t store your information, and you won’t be charged."
+
+msgid "enrollment.pages.index.link_card_item.p[1]s[0]"
+msgstr "TODO: Please use a debit or credit card by Visa or Mastercard."
 
 msgid "enrollment.pages.index.title"
 msgstr "Conecte su tarjeta"

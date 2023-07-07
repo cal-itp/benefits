@@ -1,4 +1,11 @@
 {% extends "core/base.html" %}
+{% load i18n %}
+
+{% translate "core.buttons.wait" as loading_text %}
+
+{% block page_title %}
+  {% translate "enrollment.pages.index.title" %}&nbsp;|&nbsp;
+{% endblock page_title %}
 
 {% block nav-buttons %}
   {% include "core/includes/sign-out-link.html" %}
@@ -6,39 +13,43 @@
 
 {% block headline %}
   <div class="col-lg-6">
-    <h1 class="pb-lg-8 pb-4">{{ page.headline }}</h1>
+    <h1 class="pb-lg-8 pb-4">{% translate "enrollment.pages.index.headline" %}</h1>
   </div>
 {% endblock headline %}
 
 {% block inner-content %}
-  <div class="col-12 col-sm-12 col-lg-10">{% include "core/includes/media-list.html" with media=media %}</div>
+  <div class="col-12 col-sm-12 col-lg-10">
+    <ul class="media-list mx-0 px-0 d-flex justify-content-center flex-column">
+      {% include "enrollment/includes/media-item--bankcardcheck--index.html" %}
+    </ul>
+  </div>
 
   {% comment %} This Javascript code must be before the forms. {% endcomment %}
   {% if payment_processor %}
+    {% url "enrollment:token" as access_token_url %}
     <script nonce="{{ request.csp_nonce }}">
             var startedEvent = "started payment connection", closedEvent = "closed payment connection";
 
             $.ajax({ dataType: "script", attrs: { nonce: "{{ request.csp_nonce }}"}, url: "{{ payment_processor.card_tokenize_url }}" })
                 .done(function() {
-                $.get("{{ payment_processor.access_token_url }}", function(data) {
+                $.get("{{ access_token_url }}", function(data) {
                     $(".loading").remove();
                     $(".invisible").removeClass("invisible");
 
-                    $("{{ payment_processor.element_id }}").on("click", function() {
+                    $("#tokenize_card").on("click", function() {
                         amplitude.getInstance().logEvent(startedEvent, {
                             card_tokenize_url: "{{ payment_processor.card_tokenize_url }}",
                             card_tokenize_func: "{{ payment_processor.card_tokenize_func }}"
                         });
-                        $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ payment_processor.loading_text }}");
+                        $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ loading_text }}");
                     });
 
                     {{ payment_processor.card_tokenize_func }}({
                         authorization: data.token,
-                        element: '{{ payment_processor.element_id }}',
+                        element: '#tokenize_card',
                         envUrl: '{{ payment_processor.card_tokenize_env }}',
                         options: {
-                            name: '{{ payment_processor.name }}',
-                            color: '{{ payment_processor.color }}'
+                            color: '#046b99'
                         },
                         onTokenize: function (response) {
                             /* This function executes when the
@@ -46,7 +57,7 @@
                             /* successfully with a token from enrollment server */
                             amplitude.getInstance().logEvent(closedEvent, {status: "success"});
 
-                            var form = $("form[action='{{ forms.tokenize_success }}']");
+                            var form = $("form[action='{{ form_urls.tokenize_success }}']");
                             $("#card_token", form).val(response.token);
                             form.submit();
                         },
@@ -56,7 +67,7 @@
                             /* return verification failure message */
                             amplitude.getInstance().logEvent(closedEvent, {status: "fail"});
 
-                            var form = $("form[action='{{ forms.tokenize_retry }}']");
+                            var form = $("form[action='{{ form_urls.tokenize_retry }}']");
                             form.submit();
                         },
                         onError: function (response) {
@@ -65,7 +76,7 @@
                             /* 400 or 500 will return. */
                             amplitude.getInstance().logEvent(closedEvent, {status: "error", error: response});
 
-                            var form = $("form[action='{{ forms.tokenize_retry }}']");
+                            var form = $("form[action='{{ form_urls.tokenize_retry }}']");
                             form.submit();
                         },
                         onCancel: function () {
@@ -89,20 +100,16 @@
     <p>No access token configured</p>
   {% endif %}
 
-  {% for f in page.forms %}
+  {% for f in forms %}
     {% include "core/includes/form.html" with form=f %}
   {% endfor %}
 {% endblock inner-content %}
 
 {% block call-to-action-button %}
-  {% if payment_processor %}
-    <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
-      {{ payment_processor.loading_text }}
+  <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>{{ loading_text }}</button>
+  <div class="invisible">
+    <button href="#tokenize_card" class="btn btn-lg btn-primary" role="button" id="tokenize_card">
+      {% translate "enrollment.buttons.payment_partner" %}
     </button>
-    <div class="invisible">
-      {% for b in page.buttons %}
-        {% include "core/includes/button.html" with button=b %}
-      {% endfor %}
-    </div>
-  {% endif %}
+  </div>
 {% endblock call-to-action-button %}

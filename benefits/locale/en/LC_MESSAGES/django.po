@@ -583,18 +583,16 @@ msgstr ""
 "If you are on a public or shared computer, don't forget to sign out of "
 
 msgid "enrollment.pages.index.link_card_item.heading"
-msgstr "The next step is to link your bank card"
+msgstr "The next step is to connect your contactless card to your transit benefit"
 
-#, python-format
-msgid "enrollment.pages.index.link_card_item.p[0]%(link)s"
-msgstr ""
-"Now that your eligibility has been verified, we can link your transit "
-"discount to your card through our payment partner, <a href=\"%(link)s"
-"\">Littlepay</a>. We don’t store your information, and you won’t be charged."
+msgid "enrollment.pages.index.link_card_item.p[0]s[0]"
+msgstr "You will be directed to our payment partner, "
 
-msgid "enrollment.pages.index.link_card_item.p[1]"
-msgstr ""
-"Please use a bank-issued contactless Visa or Mastercard credit or debit card."
+msgid "enrollment.pages.index.link_card_item.p[0]s[1]"
+msgstr "We don’t store your information, and you won’t be charged."
+
+msgid "enrollment.pages.index.link_card_item.p[1]s[0]"
+msgstr "Please use a debit or credit card by Visa or Mastercard."
 
 msgid "enrollment.pages.index.title"
 msgstr "Connect your card"
