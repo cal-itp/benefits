@@ -155,10 +155,6 @@ PEM DATA
         start_template="eligibility/start__login_gov.html",
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
-        eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
-        eligibility_confirmed_item_details=_(
-            "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
-        ),
         enrollment_success_confirm_item_details=_("enrollment.pages.success.login_gov.confirm_item.details"),
         enrollment_success_expiry_item_heading=None,
         enrollment_success_expiry_item_details=None,
@@ -205,8 +201,6 @@ PEM DATA
         form_name_max_length=255,
         unverified_title=_("eligibility.pages.unverified.mst_cc.title"),
         unverified_blurb=_("eligibility.pages.unverified.mst_cc.p[0]"),
-        eligibility_confirmed_item_heading=None,
-        eligibility_confirmed_item_details=None,
         enrollment_success_confirm_item_details=_("enrollment.pages.success.mst_cc.confirm_item.details"),
         enrollment_success_expiry_item_heading=_("enrollment.pages.success.mst_cc.expiry_item.heading"),
         enrollment_success_expiry_item_details=_("enrollment.pages.success.mst_cc.expiry_item.details"),
@@ -220,10 +214,6 @@ PEM DATA
         start_template="eligibility/start__login_gov.html",
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
-        eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
-        eligibility_confirmed_item_details=_(
-            "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
-        ),
         enrollment_success_confirm_item_details=_("enrollment.pages.success.login_gov.confirm_item.details"),
         enrollment_success_expiry_item_heading=None,
         enrollment_success_expiry_item_details=None,
