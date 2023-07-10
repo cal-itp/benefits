@@ -711,7 +711,7 @@ a.card:focus-visible {
   --logout-paragraph-margin-left: calc(
     var(--media-item-icon-margin) + var(--media-item-icon-size)
   );
-  --success-illo-width: 189px;
+  --success-illo-width: 180px;
   --success-illo-height: 155.1px;
 }
 
