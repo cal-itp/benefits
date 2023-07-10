@@ -135,4 +135,4 @@ def success(request):
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
         page.buttons = [viewmodels.Button.logout()]
 
-    return TemplateResponse(request, TEMPLATE_SUCCESS)
+    return TemplateResponse(request, TEMPLATE_SUCCESS, page.context_dict())
