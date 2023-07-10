@@ -5,5 +5,5 @@
 {% block call-to-action %}
     {% translate "core.pages.index.button" as trigger_text %}
     {% include "core/includes/modal-trigger.html" with id="agency-selector" text=trigger_text %}
-    {% include "core/includes/agency-selector.html" with id="agency-selector" agencies=agencies %}
+    {% include "core/includes/modal--agency-selector.html" with id="agency-selector" agencies=agencies %}
 {% endblock call-to-action %}
