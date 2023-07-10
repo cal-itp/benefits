@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-10 20:47+0000\n"
+"POT-Creation-Date: 2023-07-10 21:14+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,18 +23,6 @@ msgid "eligibility.pages.unverified.p[0]"
 msgstr ""
 "That’s okay! You may still be eligible for our program. Please reach out to "
 "your local transit provider for assistance."
-
-msgid "enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"
-msgstr "Your eligibility is confirmed for an Older Adult benefit"
-
-#, python-format
-msgid ""
-"enrollment.pages.index.login_gov.eligibility_confirmed_item.details"
-"%(transit_agency_short_name)s"
-msgstr ""
-"Your eligibility has been verified by Login.gov. This benefit will give you "
-"a half-price fare on public transportation with "
-"%(transit_agency_short_name)s."
 
 msgid "enrollment.pages.success.login_gov.confirm_item.details"
 msgstr ""
@@ -398,9 +386,6 @@ msgstr ""
 "The page you are looking for might be somewhere else or may not exist "
 "anymore."
 
-msgid "core.buttons.wait"
-msgstr "Please wait..."
-
 msgid "core.pages.index.title"
 msgstr "Choose Provider"
 
@@ -578,12 +563,9 @@ msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Identification card icon with question mark"
 
-msgid "enrollment.pages.success.logout[0]"
-msgstr ""
-"If you are on a public or shared computer, don't forget to sign out of "
-
 msgid "enrollment.pages.index.link_card_item.heading"
-msgstr "The next step is to connect your contactless card to your transit benefit"
+msgstr ""
+"The next step is to connect your contactless card to your transit benefit"
 
 msgid "enrollment.pages.index.link_card_item.p[0]s[0]"
 msgstr "You will be directed to our payment partner, "
@@ -594,6 +576,9 @@ msgstr "We don’t store your information, and you won’t be charged."
 msgid "enrollment.pages.index.link_card_item.p[1]s[0]"
 msgstr "Please use a debit or credit card by Visa or Mastercard."
 
+msgid "core.buttons.wait"
+msgstr "Please wait..."
+
 msgid "enrollment.pages.index.title"
 msgstr "Connect your card"
 
@@ -602,6 +587,10 @@ msgstr "Your eligibility is confirmed! You’re nearly there."
 
 msgid "enrollment.buttons.payment_partner"
 msgstr "Connect your Card"
+
+msgid "enrollment.pages.success.logout[0]"
+msgstr ""
+"If you are on a public or shared computer, don't forget to sign out of "
 
 msgid "enrollment.pages.retry.title"
 msgstr "We couldn’t connect your bank card"
