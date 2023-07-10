@@ -1,8 +1,6 @@
 {% extends "core/base.html" %}
 {% load i18n %}
 
-{% translate "core.buttons.wait" as loading_text %}
-
 {% block page_title %}
   {% translate "enrollment.pages.index.title" %}&nbsp;|&nbsp;
 {% endblock page_title %}
@@ -104,7 +102,9 @@
 {% endblock inner-content %}
 
 {% block call-to-action-button %}
-  <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>{{ loading_text }}</button>
+  <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
+    {% translate "core.buttons.wait" %}
+  </button>
   <div class="invisible">
     <button id="{{ cta_button }}" href="#{{ cta_button }}" class="btn btn-lg btn-primary" role="button">
       {% translate "enrollment.buttons.payment_partner" %}
