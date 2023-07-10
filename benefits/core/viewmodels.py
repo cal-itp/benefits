@@ -218,33 +218,6 @@ class ErrorPage(Page):
         return ErrorPage(title=title, headline=headline, paragraphs=paragraphs, **kwargs)
 
 
-class PaymentProcessor:
-    """
-    Represents a core.models.PaymentProcessor:
-    * model: core.models.PaymentProcessor
-    * access_token_url: str
-    * element_id: str
-    * color: str
-    * [name: str]
-    * [loading_text: str]
-    """
-
-    def __init__(self, model, access_token_url, element_id, color, name=None, loading_text=_("core.buttons.wait")):
-        if isinstance(model, models.PaymentProcessor):
-            self.access_token_url = access_token_url
-            self.element_id = element_id
-            self.color = color
-            self.name = name or model.name
-            self.loading_text = loading_text
-            self.card_tokenize_url = model.card_tokenize_url
-            self.card_tokenize_func = model.card_tokenize_func
-            self.card_tokenize_env = model.card_tokenize_env
-
-    def context_dict(self):
-        """Return a context dict for a PaymentProcessor."""
-        return {"payment_processor": self}
-
-
 class TransitAgency:
     """
     Represents a core.models.TransitAgency:
