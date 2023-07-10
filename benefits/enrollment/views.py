@@ -127,7 +127,7 @@ def success(request):
 
     verifier = session.verifier(request)
 
-    page = viewmodels.Page(title=_("enrollment.pages.success.title"), headline=_("enrollment.pages.success.headline"))
+    page = viewmodels.Page()
 
     if verifier.supports_sign_out and session.logged_in(request):
         # overwrite origin for a logged in user

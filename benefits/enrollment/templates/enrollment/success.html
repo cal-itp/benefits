@@ -7,14 +7,18 @@
   {{ block.super |add:" enrollment-success" }}
 {% endblock classes %}
 
+{% block page_title %}
+  {% translate "enrollment.pages.success.title" %}&nbsp;|&nbsp;
+{% endblock page_title %}
+
 {% block headline %}
   <div class="col-lg-10">
-    <h1 class="pb-lg-8 pb-4">{{ page.headline }}</h1>
+    <h1 class="pb-lg-8 pb-4">{% translate "enrollment.pages.success.headline" %}</h1>
   </div>
 {% endblock headline %}
 
 {% block inner-content %}
-  <div class="col-12 col-sm-12 col-lg-10">
+  <div class="col-12 col-sm-12 col-lg-9">
     <div class="row">
       <div class="col-12 col-lg-6">
         <p>{% translate "enrollment.pages.success.login_gov.confirm_item.details" %}</p>
