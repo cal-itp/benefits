@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-10 22:44+0000\n"
+"POT-Creation-Date: 2023-07-10 22:55+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -314,21 +314,21 @@ msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita JavaScript. Por favor, active JavaScript por este sitio web y"
 
-msgid "eligibility.pages.index.senior.label"
-msgstr "Adulto mayor"
-
-msgid "eligibility.pages.index.senior.description"
-msgstr "Debe tener 65 años o más. Deberá verificar su identidad con"
-
-msgid "eligibility.pages.index.mst_cc.label"
+msgid "eligibility.pages.index.courtesy_card.label"
 msgstr "Tengo una Tarjeta de Cortesía de MST"
 
-msgid "eligibility.pages.index.mst_cc.description"
+msgid "eligibility.pages.index.courtesy_card.description"
 msgstr ""
 "Esta opción es para personas que tienen una Tarjeta de Cortesía actual o una "
 "tarjeta de elegibilidad de Paratránsito de MST RIDES. Es posible que este "
 "beneficio deba renovarse en el futuro. Usar este beneficio significa que su "
 "nueva tarifa de tránsito es la mitad de la tarifa estándar."
+
+msgid "eligibility.pages.index.senior.label"
+msgstr "Adulto mayor"
+
+msgid "eligibility.pages.index.senior.description"
+msgstr "Debe tener 65 años o más. Deberá verificar su identidad con"
 
 msgid "eligibility.pages.index.veteran.label"
 msgstr "TODO: US Veteran"
