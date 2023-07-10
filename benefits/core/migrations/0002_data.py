@@ -164,7 +164,7 @@ PEM DATA
         name=os.environ.get("MST_VETERAN_VERIFIER_NAME", "VA.gov - Veteran (MST)"),
         eligibility_type=mst_veteran_type,
         auth_provider=veteran_auth_provider,
-        selection_label_template="core/includes/selection_label__mst_veteran.html",
+        selection_label_template="core/includes/selection-label--veteran.html",
         start_template="eligibility/start__veteran.html",
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
