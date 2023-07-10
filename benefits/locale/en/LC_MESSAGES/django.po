@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-07 02:33+0000\n"
+"POT-Creation-Date: 2023-07-10 17:40+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,15 +21,6 @@ msgstr "Sign out of Login.gov"
 
 msgid "eligibility.buttons.veteran.signin"
 msgstr "Continue to VA.gov"
-
-msgid "eligibility.pages.index.login_gov.label"
-msgstr "I am 65 years of age or older"
-
-msgid "eligibility.pages.index.login_gov.description"
-msgstr ""
-"You must be 65 years or older. This benefit does not expire, but you may "
-"need to renew. Using this benefit means your new transit fare is half of the "
-"standard fare."
 
 msgid "eligibility.pages.start.login_gov.title"
 msgstr "Older Adult benefit information"
@@ -74,17 +65,6 @@ msgstr ""
 "You will need to reapply if you choose to change the bank card you use to "
 "pay for transit service."
 
-msgid "eligibility.pages.index.veteran.label"
-msgstr "US Veteran"
-
-msgid "eligibility.pages.index.veteran.description"
-msgstr ""
-"This option is for people who have served in the active military, naval, or "
-"air service, and who were discharged or released therefrom under conditions "
-"other than dishonorable. You will need to <a href='https://www.va.gov/"
-"resources/verifying-your-identity-on-vagov/' target=\"_blank\" rel="
-"\"noopener noreferrer\">verify your identity through VA.gov</a>"
-
 msgid "eligibility.pages.start.veteran.title"
 msgstr "Veteran benefit information"
 
@@ -110,15 +90,6 @@ msgstr ""
 "same physical card and you will automatically receive your new reduced fare. "
 "You will need to reapply if you choose to change the bank card you use to "
 "pay for transit service."
-
-msgid "eligibility.pages.index.mst_cc.label"
-msgstr "I have an MST Courtesy Card"
-
-msgid "eligibility.pages.index.mst_cc.description"
-msgstr ""
-"This option is for people who have a current Courtesy Card or an MST RIDES "
-"Eligibility card. This benefit may need to be renewed in the future. Using "
-"this benefit means your new transit fare is half of the standard fare."
 
 msgid "eligibility.pages.start.mst_cc.title"
 msgstr "Courtesy Card information"
@@ -397,6 +368,35 @@ msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
 
+msgid "eligibility.pages.index.login_gov.label"
+msgstr "I am 65 years of age or older"
+
+msgid "eligibility.pages.index.login_gov.description"
+msgstr ""
+"You must be 65 years or older. This benefit does not expire, but you may "
+"need to renew. Using this benefit means your new transit fare is half of the "
+"standard fare."
+
+msgid "eligibility.pages.index.mst_cc.label"
+msgstr "I have an MST Courtesy Card"
+
+msgid "eligibility.pages.index.mst_cc.description"
+msgstr ""
+"This option is for people who have a current Courtesy Card or an MST RIDES "
+"Eligibility card. This benefit may need to be renewed in the future. Using "
+"this benefit means your new transit fare is half of the standard fare."
+
+msgid "eligibility.pages.index.veteran.label"
+msgstr "US Veteran"
+
+msgid "eligibility.pages.index.veteran.description"
+msgstr ""
+"This option is for people who have served in the active military, naval, or "
+"air service, and who were discharged or released therefrom under conditions "
+"other than dishonorable. You will need to <a href='https://www.va.gov/"
+"resources/verifying-your-identity-on-vagov/' target=\"_blank\" rel="
+"\"noopener noreferrer\">verify your identity through VA.gov</a>"
+
 msgid "core.pages.landing.h2"
 msgstr ""
 "Cal-ITP Benefits connects your transit benefit to your contactless card"
@@ -583,18 +583,17 @@ msgstr ""
 "If you are on a public or shared computer, don't forget to sign out of "
 
 msgid "enrollment.pages.index.link_card_item.heading"
-msgstr "The next step is to link your bank card"
+msgstr "The next step is to connect your contactless card to your transit benefit"
 
 #, python-format
 msgid "enrollment.pages.index.link_card_item.p[0]%(link)s"
 msgstr ""
-"Now that your eligibility has been verified, we can link your transit "
-"discount to your card through our payment partner, <a href=\"%(link)s"
+"You will be directed to our payment partner, <a href=\"%(link)s"
 "\">Littlepay</a>. We don’t store your information, and you won’t be charged."
 
 msgid "enrollment.pages.index.link_card_item.p[1]"
 msgstr ""
-"Please use a bank-issued contactless Visa or Mastercard credit or debit card."
+"Please use a debit or credit card by Visa or Mastercard."
 
 msgid "enrollment.pages.index.title"
 msgstr "Connect your card"
