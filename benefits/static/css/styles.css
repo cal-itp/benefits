@@ -711,12 +711,21 @@ a.card:focus-visible {
   --logout-paragraph-margin-left: calc(
     var(--media-item-icon-margin) + var(--media-item-icon-size)
   );
+  --success-illo-width: 189px;
+  --success-illo-height: 155.1px;
 }
 
 @media (min-width: 992px) {
   :root {
     --logout-paragraph-margin-left: 0;
+    --success-illo-width: 345px;
+    --success-illo-height: 297px;
   }
+}
+
+.enrollment-success .illo {
+  width: var(--success-illo-width);
+  height: var(--success-illo-height);
 }
 
 .enrollment-success #login {
