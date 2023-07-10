@@ -303,10 +303,10 @@ msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
 
-msgid "eligibility.pages.index.login_gov.label"
+msgid "eligibility.pages.index.senior.label"
 msgstr "Older Adult"
 
-msgid "eligibility.pages.index.login_gov.description"
+msgid "eligibility.pages.index.senior.description"
 msgstr ""
 "You must be 65 years or older. You will need to verify your identity with"
 

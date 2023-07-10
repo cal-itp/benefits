@@ -314,10 +314,10 @@ msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita JavaScript. Por favor, active JavaScript por este sitio web y"
 
-msgid "eligibility.pages.index.login_gov.label"
+msgid "eligibility.pages.index.senior.label"
 msgstr "Adulto mayor"
 
-msgid "eligibility.pages.index.login_gov.description"
+msgid "eligibility.pages.index.senior.description"
 msgstr "Debe tener 65 años o más. Deberá verificar su identidad con"
 
 msgid "eligibility.pages.index.mst_cc.label"
