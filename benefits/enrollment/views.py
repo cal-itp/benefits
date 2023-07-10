@@ -139,7 +139,7 @@ def success(request):
         icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
         details=[
             _(verifier.enrollment_success_confirm_item_details),
-            format_html(_("enrollment.pages.success.helplink%(link)s") % {"link": f"{reverse(ROUTE_HELP)}"}),
+            _("enrollment.pages.success.thankyou"),
         ],
     )
     media = [success_item]
