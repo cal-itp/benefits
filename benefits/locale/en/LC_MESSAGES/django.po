@@ -74,15 +74,6 @@ msgstr ""
 "You were not charged anything today. When boarding transit, pay with this "
 "same physical card and you will automatically receive your new reduced fare."
 
-msgid "enrollment.pages.success.mst_cc.expiry_item.heading"
-msgstr "You may need to reapply for transit benefits at a later date"
-
-msgid "enrollment.pages.success.mst_cc.expiry_item.details"
-msgstr ""
-"In the future, you may need to re-register for Benefits to continue using "
-"contactless payment cards. You will also need to reapply if you choose to "
-"change the bank card you use to pay for transit service."
-
 msgid "eligibility.pages.index.p[0].mst"
 msgstr ""
 "You can tap your credit or debit card when you board an MST bus, and your "
@@ -629,7 +620,3 @@ msgid "enrollment.pages.success.helplink%(link)s"
 msgstr ""
 "Thank you for using Cal-ITP Benefits! For more information check out our <a "
 "href=\"%(link)s\" rel=\"noopener noreferrer\">Help Page</a>."
-
-msgctxt "image alt text"
-msgid "core.icons.calendarcheck"
-msgstr "A calendar page icon with a check mark"

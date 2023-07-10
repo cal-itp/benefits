@@ -156,8 +156,6 @@ PEM DATA
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
         enrollment_success_confirm_item_details=_("enrollment.pages.success.login_gov.confirm_item.details"),
-        enrollment_success_expiry_item_heading=None,
-        enrollment_success_expiry_item_details=None,
     )
 
     mst_veteran_verifier = EligibilityVerifier.objects.create(
@@ -169,8 +167,6 @@ PEM DATA
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
         enrollment_success_confirm_item_details=_("enrollment.pages.success.veteran.confirm_item.details"),
-        enrollment_success_expiry_item_heading=None,
-        enrollment_success_expiry_item_details=None,
     )
 
     mst_courtesy_card_verifier = EligibilityVerifier.objects.create(
@@ -202,8 +198,6 @@ PEM DATA
         unverified_title=_("eligibility.pages.unverified.mst_cc.title"),
         unverified_blurb=_("eligibility.pages.unverified.mst_cc.p[0]"),
         enrollment_success_confirm_item_details=_("enrollment.pages.success.mst_cc.confirm_item.details"),
-        enrollment_success_expiry_item_heading=_("enrollment.pages.success.mst_cc.expiry_item.heading"),
-        enrollment_success_expiry_item_details=_("enrollment.pages.success.mst_cc.expiry_item.details"),
     )
 
     sacrt_oauth_claims_verifier = EligibilityVerifier.objects.create(
@@ -215,8 +209,6 @@ PEM DATA
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
         enrollment_success_confirm_item_details=_("enrollment.pages.success.login_gov.confirm_item.details"),
-        enrollment_success_expiry_item_heading=None,
-        enrollment_success_expiry_item_details=None,
     )
 
     PaymentProcessor = app.get_model("core", "PaymentProcessor")

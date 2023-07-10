@@ -123,8 +123,6 @@ class EligibilityVerifier(models.Model):
     unverified_blurb = models.TextField()
     # Fields for the dynamic enrollment success message
     enrollment_success_confirm_item_details = models.TextField()
-    enrollment_success_expiry_item_heading = models.TextField(null=True)
-    enrollment_success_expiry_item_details = models.TextField(null=True)
 
     def __str__(self):
         return self.name
