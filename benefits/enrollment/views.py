@@ -135,16 +135,4 @@ def success(request):
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
         page.buttons = [viewmodels.Button.logout()]
 
-    success_item = viewmodels.MediaItem(
-        icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
-        details=[
-            _(verifier.enrollment_success_confirm_item_details),
-            _("enrollment.pages.success.thankyou"),
-        ],
-    )
-    media = [success_item]
-
-    context = {"media": media}
-    context.update(page.context_dict())
-
-    return TemplateResponse(request, TEMPLATE_SUCCESS, context)
+    return TemplateResponse(request, TEMPLATE_SUCCESS)
