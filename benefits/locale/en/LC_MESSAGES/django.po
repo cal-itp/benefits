@@ -600,7 +600,7 @@ msgid "enrollment.pages.index.title"
 msgstr "Connect your card"
 
 msgid "enrollment.pages.index.headline"
-msgstr "Your eligibility is confirmed! You’re nearly there."
+msgstr "Your eligibility is confirmed! You’re almost there."
 
 msgid "enrollment.buttons.payment_partner"
 msgstr "Connect your Card"

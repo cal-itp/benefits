@@ -620,7 +620,7 @@ msgid "enrollment.pages.index.title"
 msgstr "Conecte su tarjeta"
 
 msgid "enrollment.pages.index.headline"
-msgstr "¡Su elegibilidad está confirmada! Ya casi estás allí."
+msgstr "¡Su elegibilidad está confirmada! Ya falta poco."
 
 msgid "enrollment.buttons.payment_partner"
 msgstr "Conecta tu tarjeta"
