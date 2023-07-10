@@ -1,0 +1,28 @@
+{% extends "eligibility/start.html" %}
+{% load i18n %}
+
+{% block page_title %}
+  {% translate "eligibility.pages.start.veteran.title" %}&nbsp;|&nbsp;
+{% endblock page_title %}
+
+{% block headline %}
+  <div class="col-lg-10">
+    <h1>{% translate "eligibility.pages.start.veteran.headline" %}</h1>
+  </div>
+{% endblock headline %}
+
+{% block media-item %}
+  {% include "eligibility/includes/media_item__idcardcheck__start__veteran.html" %}
+{% endblock media-item %}
+
+{% block help-link %}
+  {% url "core:help" as help_page %}
+  {% translate "eligibility.pages.start.help_text" %}
+  <a href="{{ help_page }}#veteran">{% translate "eligibility.pages.start.help_link_text" %}</a>.
+{% endblock help-link %}
+
+{% block call-to-action-button %}
+  {% url "oauth:login" as button_url %}
+  {% translate "eligibility.buttons.veteran.signin" as button_text %}
+  <a href="{{ button_url }}" class="btn btn-lg btn-primary" role="button">{{ button_text }}</a>
+{% endblock call-to-action-button %}

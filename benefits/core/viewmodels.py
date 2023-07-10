@@ -78,12 +78,6 @@ class Button:
         return Button(classes=classes, **kwargs)
 
     @staticmethod
-    def login(**kwargs):
-        """Create a login.gov button, with a login.gov logo and fallback text"""
-        btn = Button.primary(fallback_text="Login.gov", id="login", **kwargs)
-        return btn
-
-    @staticmethod
     def logout(**kwargs):
         """Create a button that logs user out, with a login.gov button, with a login.gov logo and fallback text"""
         btn = Button.primary(fallback_text="Login.gov", id="login", url=reverse("oauth:logout"), text="", **kwargs)
@@ -107,12 +101,10 @@ class MediaItem:
     Represents a media item in a list of items:
     * icon: core.viewmodels.Icon
     * details: str, str[]
-    * secondary_details: str
     * heading: str
-    * bullets: str, str[]
     """
 
-    def __init__(self, icon: Icon, details, secondary_details=None, heading=None, bullets=None):
+    def __init__(self, icon: Icon, details, heading=None):
         self.icon = icon
         if isinstance(details, str):
             self.details = [details]
@@ -121,11 +113,6 @@ class MediaItem:
         else:
             self.details = [str(details)]
         self.heading = heading
-        self.secondary_details = secondary_details
-        if isinstance(bullets, str):
-            self.bullets = [bullets]
-        elif isinstance(bullets, list):
-            self.bullets = bullets
 
 
 class Modal:

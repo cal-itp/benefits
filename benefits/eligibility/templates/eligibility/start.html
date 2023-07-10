@@ -1,28 +1,32 @@
 {% extends "core/base.html" %}
 {% load i18n %}
+
 {% block classes %}
-  {{ block.super |add:" eligibility-start" }}
+  {{ block.super | add:" eligibility-start" }}
 {% endblock classes %}
 
 {% block nav-buttons %}
-  {% include "core/includes/previous-page-link.html" %}
+  {% url "eligibility:index" as url %}
+  {% include "core/includes/button__previous_page.html" with url=url %}
 {% endblock nav-buttons %}
 
 {% block inner-content %}
   <div class="col-12 col-sm-12 col-lg-10">
-    <h2 class="media-title p-sm">{{ start_sub_headline }}</h2>
-    {% include "core/includes/media-list.html" with media=media %}
+    <h2 class="media-title p-sm">{% translate "eligibility.pages.start.sub_headline" %}</h2>
+    <ul class="media-list mx-0 px-0 d-flex justify-content-center flex-column">
+      {% block media-item %}
+      {% endblock media-item %}
+      {% include "eligibility/includes/media_item__bankcardcheck__start.html" %}
+    </ul>
   </div>
 {% endblock inner-content %}
 
 {% block call-to-action-text %}
   <p class="pt-4 pt-lg-0">
-    {% blocktranslate with help_link=help_link%}eligibility.pages.start.help_text{{ help_link }}{% endblocktranslate %}
+    {% block help-link %}
+    {% endblock help-link %}
   </p>
 {% endblock call-to-action-text %}
 
 {% block call-to-action-button %}
-  {% for b in page.buttons %}
-    {% include "core/includes/button.html" with button=b %}
-  {% endfor %}
 {% endblock call-to-action-button %}

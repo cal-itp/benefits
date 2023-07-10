@@ -101,53 +101,12 @@ def index(request, agency=None):
 @decorator_from_middleware(VerifierSessionRequired)
 def start(request):
     """View handler for the eligibility verification getting started screen."""
-
-    verifier = session.verifier(request)
-    button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse(ROUTE_CONFIRM))
-
-    # define the verifier-specific required item
-    identity_item = viewmodels.MediaItem(
-        icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-        heading=_(verifier.start_item_heading),
-        details=_(verifier.start_item_details),
-        secondary_details=_(verifier.start_item_secondary_details),
-    )
-
-    if verifier.is_auth_required:
-        identity_item.bullets = [_(bullet) for bullet in verifier.bullets]
-
-        if not session.logged_in(request):
-            button = viewmodels.Button.login(
-                text=_(verifier.auth_provider.sign_in_button_label),
-                url=reverse(ROUTE_LOGIN),
-            )
-
-    # define the bank card item
-    bank_card_item = viewmodels.MediaItem(
-        icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-        heading=_("eligibility.pages.start.bankcard.title"),
-        details=_("eligibility.pages.start.bankcard.text"),
-    )
-
-    media = [identity_item, bank_card_item]
-
-    page = viewmodels.Page(
-        title=_(verifier.start_title),
-        headline=_(verifier.start_headline),
-        button=button,
-    )
-
-    ctx = page.context_dict()
-    ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_INDEX))
-    ctx["start_sub_headline"] = _("eligibility.pages.start.sub_headline")
-    ctx["media"] = media
-    help_page = reverse(ROUTE_HELP)
-    ctx["help_link"] = f"{help_page}#{verifier.start_help_anchor}"
-
-    # update origin now, after we've saved the previous page
     session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))
 
-    return TemplateResponse(request, TEMPLATE_START, ctx)
+    verifier = session.verifier(request)
+    template = verifier.start_template or TEMPLATE_START
+
+    return TemplateResponse(request, template)
 
 
 @decorator_from_middleware(AgencySessionRequired)
