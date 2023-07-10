@@ -115,30 +115,6 @@ class MediaItem:
         self.heading = heading
 
 
-class Modal:
-    """
-    Represents a modal dialog, triggered by a button:
-    * id: str
-    * aria_labelledby_id: str
-    * button_text: str
-    """
-
-    def __init__(self, **kwargs):
-        self.id = kwargs.get("id")
-        self.aria_labelledby_id = kwargs.get("aria_labelledby_id")
-        self.button_text = kwargs.get("button_text")
-
-
-class AgencySelector(Modal):
-    """
-    Represents the agency selector modal dialog.
-    """
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.agencies = [TransitAgency(a) for a in models.TransitAgency.all_active()]
-
-
 class Page:
     """
     Represents a page of content:
