@@ -46,24 +46,20 @@ msgstr "Veamos si podemos confirmar su eligibilidad."
 
 msgid "eligibility.pages.confirm.mst_cc.p[0]"
 msgstr ""
-"Por favor, ingrese su número de tarjeta de cortesía y apellido a "
-"continuación. Si usted es un titular de tarjeta de cortesía de MST actual, "
-"podemos confirmar que es elegible para un descuento. No guardamos su "
-"información."
+"Ingrese su [ID-number-type] de [Agency-Card] y [identity-marker] a "
+"continuación para confirmar su elegibilidad."
 
 msgid "eligibility.forms.confirm.mst_cc.fields.sub"
-msgstr "Número de tarjeta de cortesía de MST"
+msgstr "[short-name] [Agency-card] [ID-type]"
 
 msgid "eligibility.forms.confirm.mst_cc.fields.sub.help_text"
-msgstr ""
-"Este es un número de 5 dígitos que aparece en la parte frontal y el reverso "
-"de su tarjeta."
+msgstr "[qualifier]"
 
 msgid "eligibility.forms.confirm.mst_cc.fields.name"
-msgstr "Apellido (como aparece en la tarjeta de cortesía)"
+msgstr "[Identity-Marker] (as it appears on [Agency-Card])*"
 
 msgid "eligibility.forms.confirm.mst_cc.fields.name.help_text"
-msgstr "Nosotros usamos esto para ayudar a confirmar su Tarjeta de Cortesía."
+msgstr "Usamos esto para ayudar a confirmar su [Agency-Card]."
 
 msgid "eligibility.pages.unverified.mst_cc.title"
 msgstr "Tarjeta de Cortesía de MST no confirmada"
@@ -436,10 +432,10 @@ msgid "eligibility.buttons.choose"
 msgstr "Elija este Beneficio"
 
 msgid "eligibility.forms.confirm.submit"
-msgstr "Verificación de estatus"
+msgstr "Comprobar elegibilidad"
 
 msgid "eligibility.forms.confirm.submitting"
-msgstr "Verificando"
+msgstr "Comprobando"
 
 msgid "eligibility.forms.confirm.errors.invalid"
 msgstr "Verifique su entrada. El formato parece incorrecto."

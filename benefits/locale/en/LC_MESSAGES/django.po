@@ -46,21 +46,20 @@ msgstr "Let’s see if we can confirm your eligibility."
 
 msgid "eligibility.pages.confirm.mst_cc.p[0]"
 msgstr ""
-"Please input your Courtesy Card number and last name below. If you’re a "
-"current MST Courtesy Cardholder, we can confirm that you are eligible for a "
-"benefit. We do not save your information."
+"Please input your [Agency-Card] [ID-number-type] and [identity-marker] below "
+"to confirm your eligibility."
 
 msgid "eligibility.forms.confirm.mst_cc.fields.sub"
-msgstr "MST Courtesy Card number"
+msgstr "[short-name] [Agency-card] [ID-type]"
 
 msgid "eligibility.forms.confirm.mst_cc.fields.sub.help_text"
-msgstr "This is a 5-digit number on the front and back of your card."
+msgstr "[qualifier]"
 
 msgid "eligibility.forms.confirm.mst_cc.fields.name"
-msgstr "Last name (as it appears on Courtesy Card)"
+msgstr "[Identity-Marker] (as it appears on [Agency-Card])*"
 
 msgid "eligibility.forms.confirm.mst_cc.fields.name.help_text"
-msgstr "We use this to help confirm your Courtesy Card."
+msgstr "We use this to help confirm your [Agency-Card]."
 
 msgid "eligibility.pages.unverified.mst_cc.title"
 msgstr "Courtesy Card not located"
@@ -421,7 +420,7 @@ msgid "eligibility.buttons.choose"
 msgstr "Choose this Benefit"
 
 msgid "eligibility.forms.confirm.submit"
-msgstr "Check status"
+msgstr "Check eligibility"
 
 msgid "eligibility.forms.confirm.submitting"
 msgstr "Checking"
