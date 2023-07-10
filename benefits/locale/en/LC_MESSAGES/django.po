@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-07 02:33+0000\n"
+"POT-Creation-Date: 2023-07-10 20:47+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,15 +15,6 @@ msgstr ""
 
 msgid "eligibility.buttons.senior.signout"
 msgstr "Sign out of Login.gov"
-
-msgid "eligibility.pages.index.login_gov.label"
-msgstr "I am 65 years of age or older"
-
-msgid "eligibility.pages.index.login_gov.description"
-msgstr ""
-"You must be 65 years or older. This benefit does not expire, but you may "
-"need to renew. Using this benefit means your new transit fare is half of the "
-"standard fare."
 
 msgid "eligibility.pages.unverified.title"
 msgstr "Eligibility Error"
@@ -52,32 +43,12 @@ msgstr ""
 "You will need to reapply if you choose to change the bank card you use to "
 "pay for transit service."
 
-msgid "eligibility.pages.index.veteran.label"
-msgstr "US Veteran"
-
-msgid "eligibility.pages.index.veteran.description"
-msgstr ""
-"This option is for people who have served in the active military, naval, or "
-"air service, and who were discharged or released therefrom under conditions "
-"other than dishonorable. You will need to <a href='https://www.va.gov/"
-"resources/verifying-your-identity-on-vagov/' target=\"_blank\" "
-"rel=\"noopener noreferrer\">verify your identity through VA.gov</a>"
-
 msgid "enrollment.pages.success.veteran.confirm_item.details"
 msgstr ""
 "You were not charged anything today. When boarding transit, pay with this "
 "same physical card and you will automatically receive your new reduced fare. "
 "You will need to reapply if you choose to change the bank card you use to "
 "pay for transit service."
-
-msgid "eligibility.pages.index.mst_cc.label"
-msgstr "I have an MST Courtesy Card"
-
-msgid "eligibility.pages.index.mst_cc.description"
-msgstr ""
-"This option is for people who have a current Courtesy Card or an MST RIDES "
-"Eligibility card. This benefit may need to be renewed in the future. Using "
-"this benefit means your new transit fare is half of the standard fare."
 
 msgid "eligibility.pages.confirm.mst_cc.title"
 msgstr "Confirm your Courtesy Card"
@@ -323,6 +294,9 @@ msgstr "Please choose your transit provider:"
 msgid "core.pages.index.agency_selector%(agency_short_name)s"
 msgstr "%(agency_short_name)s logo"
 
+msgid "core.buttons.previous_page"
+msgstr "Previous Page"
+
 msgid "core.includes.nocookies.brand"
 msgstr "Cookies are disabled"
 
@@ -342,6 +316,35 @@ msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
 
+msgid "eligibility.pages.index.login_gov.label"
+msgstr "I am 65 years of age or older"
+
+msgid "eligibility.pages.index.login_gov.description"
+msgstr ""
+"You must be 65 years or older. This benefit does not expire, but you may "
+"need to renew. Using this benefit means your new transit fare is half of the "
+"standard fare."
+
+msgid "eligibility.pages.index.mst_cc.label"
+msgstr "I have an MST Courtesy Card"
+
+msgid "eligibility.pages.index.mst_cc.description"
+msgstr ""
+"This option is for people who have a current Courtesy Card or an MST RIDES "
+"Eligibility card. This benefit may need to be renewed in the future. Using "
+"this benefit means your new transit fare is half of the standard fare."
+
+msgid "eligibility.pages.index.veteran.label"
+msgstr "US Veteran"
+
+msgid "eligibility.pages.index.veteran.description"
+msgstr ""
+"This option is for people who have served in the active military, naval, or "
+"air service, and who were discharged or released therefrom under conditions "
+"other than dishonorable. You will need to <a href='https://www.va.gov/"
+"resources/verifying-your-identity-on-vagov/' target=\"_blank\" rel="
+"\"noopener noreferrer\">verify your identity through VA.gov</a>"
+
 msgid "core.pages.landing.h2"
 msgstr ""
 "Cal-ITP Benefits connects your transit benefit to your contactless card"
@@ -351,9 +354,6 @@ msgstr "You have successfully logged out."
 
 msgid "core.pages.logged_out.headline[1]"
 msgstr "Thank you for using Cal-ITP Benefits!"
-
-msgid "core.buttons.previous_page"
-msgstr "Previous Page"
 
 msgid "eligibility.pages.index.label"
 msgstr "Select the option that best applies to you:"
@@ -447,14 +447,16 @@ msgstr "Check your input. The format looks wrong."
 msgid "eligibility.forms.confirm.errors.missing"
 msgstr "This field is required."
 
-msgid "eligibility.pages.start.sub_headline"
-msgstr "You will need a few items to connect your benefit:"
+msgctxt "image alt text"
+msgid "core.icons.bankcardcheck"
+msgstr "Bank card icon with contactless symbol and checkmark"
 
-msgid "eligibility.pages.start.login_gov.title"
-msgstr "Older Adult benefit information"
+msgid "eligibility.pages.start.bankcard.title"
+msgstr "Your bank card details"
 
-msgid "eligibility.pages.start.login_gov.headline"
-msgstr "You selected an Older Adult benefit."
+msgid "eligibility.pages.start.bankcard.text"
+msgstr ""
+"Your card must be a contactless debit or credit card by Visa or Mastercard."
 
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
@@ -479,21 +481,6 @@ msgstr "Your Social Security number"
 msgid "eligibility.pages.start.login_gov.required_items[2]"
 msgstr "A phone number with a phone plan associated with your name"
 
-msgid "eligibility.pages.start.help_text"
-msgstr "Questions about the items above? Please visit our"
-
-msgid "eligibility.pages.start.help_link_text"
-msgstr "Help Page"
-
-msgid "eligibility.buttons.senior.signin"
-msgstr "Get started with"
-
-msgid "eligibility.pages.start.mst_cc.title"
-msgstr "Courtesy Card information"
-
-msgid "eligibility.pages.start.mst_cc.headline"
-msgstr "You selected a Courtesy Card benefit."
-
 msgid "eligibility.pages.start.mst_cc.start_item.heading"
 msgstr "Your current Courtesy Card number"
 
@@ -501,15 +488,6 @@ msgid "eligibility.pages.start.mst_cc.start_item.details"
 msgstr ""
 "You do not need to have your physical card, but you will need to know the "
 "number. The number starts with a number sign (#) followed by five digits."
-
-msgid "eligibility.buttons.continue"
-msgstr "Continue"
-
-msgid "eligibility.pages.start.veteran.title"
-msgstr "Veteran benefit information"
-
-msgid "eligibility.pages.start.veteran.headline"
-msgstr "You selected a Veteran transit benefit."
 
 msgid "eligibility.pages.start.veteran.start_item.heading"
 msgstr "Access to your preferred VA related account"
@@ -536,19 +514,41 @@ msgstr ""
 "If you do not have an account with any of these services, you will need to "
 "create one. We recommend using Login.gov."
 
+msgid "eligibility.pages.start.sub_headline"
+msgstr "You will need a few items to connect your benefit:"
+
+msgid "eligibility.pages.start.login_gov.title"
+msgstr "Older Adult benefit information"
+
+msgid "eligibility.pages.start.login_gov.headline"
+msgstr "You selected an Older Adult benefit."
+
+msgid "eligibility.pages.start.help_text"
+msgstr "Questions about the items above? Please visit our"
+
+msgid "eligibility.pages.start.help_link_text"
+msgstr "Help Page"
+
+msgid "eligibility.buttons.senior.signin"
+msgstr "Get started with"
+
+msgid "eligibility.pages.start.mst_cc.title"
+msgstr "Courtesy Card information"
+
+msgid "eligibility.pages.start.mst_cc.headline"
+msgstr "You selected a Courtesy Card benefit."
+
+msgid "eligibility.buttons.continue"
+msgstr "Continue"
+
+msgid "eligibility.pages.start.veteran.title"
+msgstr "Veteran benefit information"
+
+msgid "eligibility.pages.start.veteran.headline"
+msgstr "You selected a Veteran transit benefit."
+
 msgid "eligibility.buttons.veteran.signin"
 msgstr "Continue to VA.gov"
-
-msgctxt "image alt text"
-msgid "core.icons.bankcardcheck"
-msgstr "Bank card icon with contactless symbol and checkmark"
-
-msgid "eligibility.pages.start.bankcard.title"
-msgstr "Your bank card details"
-
-msgid "eligibility.pages.start.bankcard.text"
-msgstr ""
-"Your card must be a contactless debit or credit card by Visa or Mastercard."
 
 #, python-format
 msgid "eligibility.pages.index.p[0]%(info_link)s"
@@ -568,8 +568,8 @@ msgstr ""
 #, python-format
 msgid "eligibility.pages.index.help_text%(help_link)s"
 msgstr ""
-"Not sure which option is right for you? Please visit our <a "
-"href=\"%(help_link)s\">Help Page</a>."
+"Not sure which option is right for you? Please visit our <a href="
+"\"%(help_link)s\">Help Page</a>."
 
 msgid "eligibility.pages.unverified.headline"
 msgstr "Your eligibility could not be verified."
