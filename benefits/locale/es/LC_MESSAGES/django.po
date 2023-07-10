@@ -602,22 +602,24 @@ msgstr ""
 "para cerrar la sesión de"
 
 msgid "enrollment.pages.index.link_card_item.heading"
-msgstr "TODO: The next step is to connect your contactless card to your transit benefit"
+msgstr ""
+"El siguiente paso es conectar su tarjeta sin contacto a su beneficio de "
+"tránsito"
 
 msgid "enrollment.pages.index.link_card_item.p[0]s[0]"
-msgstr "TODO: You will be directed to our payment partner, "
+msgstr "Será dirigido a nuestro socio de pago, "
 
 msgid "enrollment.pages.index.link_card_item.p[0]s[1]"
-msgstr "TODO: We don’t store your information, and you won’t be charged."
+msgstr "No almacenamos su información y no se le cobrará."
 
 msgid "enrollment.pages.index.link_card_item.p[1]s[0]"
-msgstr "TODO: Please use a debit or credit card by Visa or Mastercard."
+msgstr "Utilice una tarjeta de débito o crédito de Visa o Mastercard."
 
 msgid "enrollment.pages.index.title"
 msgstr "Conecte su tarjeta"
 
 msgid "enrollment.pages.index.headline"
-msgstr "¡Su elegibilidad está confirmada! Ya casi estás allí."
+msgstr "¡Su elegibilidad está confirmada! Ya falta poco."
 
 msgid "enrollment.buttons.payment_partner"
 msgstr "Conecta tu tarjeta"
