@@ -182,10 +182,7 @@ def unverified(request):
     analytics.returned_fail(request, types_to_verify)
 
     page = viewmodels.Page(
-        title=_(verifier.unverified_title),
-        headline=_("eligibility.pages.unverified.headline"),
         icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
-        paragraphs=[_(verifier.unverified_blurb)],
     )
 
     ctx = page.context_dict()

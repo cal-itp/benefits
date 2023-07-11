@@ -13,14 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "eligibility.pages.unverified.title"
-msgstr "Error de elegibilidad"
-
-msgid "eligibility.pages.unverified.p[0]"
-msgstr ""
-"¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
-"proveedor de tránsito local para obtener asistencia."
-
 msgid "eligibility.pages.confirm.mst_courtesy_card.title"
 msgstr "Confirmar su eligibilidad"
 
@@ -43,14 +35,6 @@ msgstr "[Identity-Marker] (as it appears on [Agency-Card])"
 
 msgid "eligibility.forms.confirm.mst_courtesy_card.fields.name.help_text"
 msgstr "Usamos esto para ayudar a confirmar su [Agency-Card]."
-
-msgid "eligibility.pages.unverified.mst_courtesy_card.title"
-msgstr "Tarjeta de Cortesía de MST no confirmada"
-
-msgid "eligibility.pages.unverified.mst_courtesy_card.p[0]"
-msgstr ""
-"¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con "
-"Monterey-Salinas Transit para obtener asistencia."
 
 msgid "agency.variables.mst.transit_type"
 msgstr "TODO: bus"
@@ -583,8 +567,16 @@ msgstr "TODO: Continue with VA.gov"
 msgid "eligibility.pages.start.sub_headline"
 msgstr "TODO: Necesitará algunos artículos para conectar su beneficio:"
 
+msgid "eligibility.pages.unverified.title"
+msgstr "Error de elegibilidad"
+
 msgid "eligibility.pages.unverified.headline"
 msgstr "No se pudo verificar su elegibilidad."
+
+msgid "eligibility.pages.unverified.p[0]"
+msgstr ""
+"¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
+"proveedor de tránsito local para obtener asistencia."
 
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"

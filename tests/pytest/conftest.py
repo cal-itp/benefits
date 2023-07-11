@@ -120,8 +120,6 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         form_name_label="Name",
         form_name_help_text="Name Help Text",
         form_name_placeholder="Name",
-        unverified_title="Unverified",
-        unverified_blurb="Unverified Blurb",
     )
 
     return verifier

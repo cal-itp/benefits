@@ -59,8 +59,6 @@ class Migration(migrations.Migration):
                 ("form_name_help_text", models.TextField(null=True)),
                 ("form_name_placeholder", models.TextField(null=True)),
                 ("form_name_max_length", models.PositiveSmallIntegerField(null=True)),
-                ("unverified_title", models.TextField()),
-                ("unverified_blurb", models.TextField()),
                 (
                     "auth_provider",
                     models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to="core.authprovider"),
