@@ -13,9 +13,31 @@
 {% block body %}
     <div class="media-body--details">
         <p>
-            {% translate "enrollment.pages.index.link_card_item.p[0]s[0]" %} <a href="#">Littlepay</a>.
+            {% translate "enrollment.pages.index.link_card_item.p[0]s[0]" %} <a class="modal-trigger--link" data-bs-toggle="modal" data-bs-target="#littlepay-modal" tabindex="0">Littlepay</a>.
             {% translate "enrollment.pages.index.link_card_item.p[0]s[1]" %}
         </p>
         <p>{% translate "enrollment.pages.index.link_card_item.p[1]s[0]" %}</p>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="littlepay-modal" tabindex="-1" aria-labelledby="littlepay-modal" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header border-0 p-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0 mt-0 p-4 m-2">
+                    <h2 id="littlepay-modal">Learn more about LittlePay</h2>
+                    <div class="row">
+                        <p class="pt-3">
+                            Our payment partner, Littlepay, is a secure, end-to-end payment processing platform that allows us to connect your transit benefit to the contactless card of your choice.
+                        </p>
+                        <p class="pt-4">
+                            For more information on Littlepay, please visit the <a href="https://littlepay.com">Littlepay website</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock body %}

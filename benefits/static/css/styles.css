@@ -662,6 +662,31 @@ a.card:focus-visible {
   font-size: var(--modal-title-font-size);
 }
 
+.modal-trigger--link {
+  cursor: pointer;
+  padding: 1px;
+}
+
+.modal-trigger--link::after {
+  content: " ";
+  background-image: url("/static/img/modal-trigger.svg");
+  background-size: contain;
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+}
+
+.modal-trigger--link:hover::after {
+  background-image: url("/static/img/modal-trigger--hover.svg");
+}
+
+.modal-trigger--link:visited::after {
+  background-image: url("/static/img/modal-trigger--selected.svg");
+}
+
 /* Enrollment Success */
 /* Custom in-line log out button for Enrollment Success, in paragraph */
 
