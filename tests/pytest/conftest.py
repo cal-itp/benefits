@@ -169,7 +169,7 @@ def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityV
         private_key=model_PemData,
         public_key=model_PemData,
         jws_signing_alg="alg",
-        eligibility_index_intro="",
+        eligibility_index_template="eligibility/index.html",
     )
 
     # add many-to-many relationships after creation, need ID on both sides

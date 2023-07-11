@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-12 05:34+0000\n"
+"POT-Creation-Date: 2023-07-13 16:41+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,19 +55,8 @@ msgstr ""
 "That’s okay! You may still be eligible for our program. Please reach out to "
 "Monterey-Salinas Transit for assistance."
 
-msgid "eligibility.pages.index.p[0].mst"
-msgstr ""
-"You can tap your credit or debit card when you board an MST bus, and your "
-"discounted fare will automatically apply every time you ride. "
-
 msgid "agency.variables.mst.transit_type"
 msgstr "bus"
-
-msgid "eligibility.pages.index.p[0].sacrt"
-msgstr ""
-"You can tap your credit or debit card when you board SacRT public "
-"transportation, and your discounted fare will automatically apply every time "
-"you ride. "
 
 msgid "agency.variables.sacrt.transit_type"
 msgstr "light rail"
@@ -275,33 +264,6 @@ msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
 
-msgid "eligibility.pages.index.mst_courtesy_card.label"
-msgstr "I have an MST Courtesy Card"
-
-msgid "eligibility.pages.index.mst_courtesy_card.description"
-msgstr ""
-"This option is for people who have a current Courtesy Card or an MST RIDES "
-"Eligibility card. This benefit may need to be renewed in the future. Using "
-"this benefit means your new transit fare is half of the standard fare."
-
-msgid "eligibility.pages.index.senior.label"
-msgstr "Older Adult"
-
-msgid "eligibility.pages.index.senior.description"
-msgstr ""
-"You must be 65 years or older. You will need to verify your identity with"
-
-msgid "eligibility.pages.index.veteran.label"
-msgstr "US Veteran"
-
-msgid "eligibility.pages.index.veteran.description"
-msgstr ""
-"This option is for people who have served in the active military, naval, or "
-"air service, and who were discharged or released therefrom under conditions "
-"other than dishonorable. You will need to <a href='https://www.va.gov/"
-"resources/verifying-your-identity-on-vagov/' target=\"_blank\" rel="
-"\"noopener noreferrer\">verify your identity through VA.gov</a>"
-
 msgid "core.pages.index.button"
 msgstr "Choose your Provider"
 
@@ -316,7 +278,7 @@ msgid "core.pages.logged_out.headline[1]"
 msgstr "Thank you for using Cal-ITP Benefits!"
 
 msgid "eligibility.pages.index.label"
-msgstr "Select the option that best applies to you:"
+msgstr "Which transit benefit would you like to enroll in?"
 
 msgid "core.pages.error.title"
 msgstr "Error"
@@ -501,6 +463,48 @@ msgstr ""
 "gov/help/' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov Help "
 "Center</a>"
 
+msgid "eligibility.pages.index.mst_courtesy_card.label"
+msgstr "MST Courtesy Card"
+
+msgid "eligibility.pages.index.mst_courtesy_card.description"
+msgstr ""
+"This option is for people who have a current Courtesy Card [optional "
+"qualifier]."
+
+msgid "eligibility.pages.index.senior.label"
+msgstr "Older Adult"
+
+msgid "eligibility.pages.index.senior.description"
+msgstr ""
+"You must be 65 years or older. You will need to verify your identity with"
+
+msgid "eligibility.pages.index.veteran.label"
+msgstr "US Veteran"
+
+msgid "eligibility.pages.index.veteran.description"
+msgstr ""
+"This option is for people who have served in the active military, naval, or "
+"air service, and who were discharged or released therefrom under conditions "
+"other than dishonorable. You will need to <a href='https://www.va.gov/"
+"resources/verifying-your-identity-on-vagov/' target=\"_blank\" "
+"rel=\"noopener noreferrer\">verify your identity through VA.gov</a>"
+
+msgid "eligibility.pages.index.intro.mst"
+msgstr ""
+"Cal-ITP doesn’t save any of your information. All MST transit benefits "
+"[action] by [rate of discount] for [affected service] on [transit options]."
+
+msgid "eligibility.pages.index.intro.sacrt"
+msgstr ""
+"Cal-ITP doesn’t save any of your information. All SacRT transit benefits "
+"[action] by [rate of discount] for [affected service] on [transit options]."
+
+msgid "eligibility.pages.index.title"
+msgstr "Choose benefit option"
+
+msgid "eligibility.pages.index.headline"
+msgstr "Choose the transit benefit you would like to enroll in"
+
 msgid "eligibility.pages.start.sub_headline"
 msgstr "You will need a few items to connect your benefit:"
 
@@ -536,27 +540,6 @@ msgstr "You selected a Veteran transit benefit."
 
 msgid "eligibility.buttons.veteran.signin"
 msgstr "Continue to VA.gov"
-
-#, python-format
-msgid "eligibility.pages.index.p[0]%(info_link)s"
-msgstr ""
-"Cal-ITP doesn’t save any of your information, and you don’t need to create "
-"an account. Verify to get your benefit, and connect your bank card today. "
-"<strong><a class='info-link' href=\"%(info_link)s\">Learn more about Cal-ITP "
-"Benefits.</a></strong>"
-
-msgid "eligibility.pages.index.title"
-msgstr "Choose benefit option"
-
-msgid "eligibility.pages.index.headline"
-msgstr ""
-"Choose the transit benefit you would like to enroll in"
-
-#, python-format
-msgid "eligibility.pages.index.help_text%(help_link)s"
-msgstr ""
-"Not sure which option is right for you? Please visit our <a href="
-"\"%(help_link)s\">Help Page</a>."
 
 msgid "eligibility.pages.unverified.headline"
 msgstr "Your eligibility could not be verified."

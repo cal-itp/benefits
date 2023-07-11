@@ -11,7 +11,6 @@ from benefits.eligibility.views import (
     ROUTE_CONFIRM,
     ROUTE_ENROLLMENT,
     ROUTE_UNVERIFIED,
-    TEMPLATE_INDEX,
     TEMPLATE_CONFIRM,
     TEMPLATE_UNVERIFIED,
 )
@@ -70,7 +69,6 @@ def test_index_get_agency_multiple_verifiers(
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
     assert "form" in response.context_data
     assert isinstance(response.context_data["form"], EligibilityVerifierSelectionForm)
 
@@ -91,7 +89,6 @@ def test_index_get_agency_single_verifier(
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
     assert "form" in response.context_data
     assert isinstance(response.context_data["form"], EligibilityVerifierSelectionForm)
 
@@ -114,7 +111,6 @@ def test_index_post_invalid_form(client):
     response = client.post(path, {"invalid": "data"})
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
 
 
 @pytest.mark.django_db
