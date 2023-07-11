@@ -66,10 +66,6 @@ def index(request, agency=None):
 
     ctx = page.context_dict()
 
-    origin = session.origin(request)
-    if origin == reverse(ROUTE_CORE_INDEX):
-        ctx["previous_page_button"] = viewmodels.Button.previous_page(url=origin)
-
     ctx["help_page"] = help_page
     ctx["help_text"] = format_html(_("eligibility.pages.index.help_text%(help_link)s") % {"help_link": help_page})
 

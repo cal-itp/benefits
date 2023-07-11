@@ -5,7 +5,8 @@
 {% endblock classes %}
 
 {% block nav-buttons %}
-  {% include "core/includes/previous-page-link.html" %}
+  {% url "core:index" as url %}
+  {% include "core/includes/button--previous-page.html" with url=url %}
 {% endblock nav-buttons %}
 
 {% block explanatory-text %}
