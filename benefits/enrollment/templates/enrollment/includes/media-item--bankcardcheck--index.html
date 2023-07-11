@@ -21,21 +21,5 @@
         <p>{% translate "enrollment.pages.index.link_card_item.p[1]s[0]" %}</p>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="littlepay-modal" tabindex="-1" aria-labelledby="littlepay-modal" aria-hidden="true">
-        <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header border-0 p-2">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body pt-0 mt-0 p-4 m-2">
-                    <h2 id="littlepay-modal">{% translate "enrollment.pages.index.modal.title" %}</h2>
-                    <div class="row">
-                        <p class="pt-3">{% translate "enrollment.pages.index.modal.p[0]" %}</p>
-                        <p class="pt-4">{% translate "enrollment.pages.index.modal.p[1]" %}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include "enrollment/includes/modal--littlepay.html" with id="littlepay-modal" size="modal-md" %}
 {% endblock body %}
