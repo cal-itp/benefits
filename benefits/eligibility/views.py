@@ -59,13 +59,11 @@ def index(request, agency=None):
     intro = format_html(agency_intro + common_intro)
     page = viewmodels.Page(
         paragraphs=[intro],
-        forms=forms.EligibilityVerifierSelectionForm(agency=agency),
     )
 
-    ctx = page.context_dict()
-
-    ctx["help_page"] = help_page
-    ctx["help_text"] = format_html(_("eligibility.pages.index.help_text%(help_link)s") % {"help_link": help_page})
+    context = {"form": forms.EligibilityVerifierSelectionForm(agency=agency)}
+    context["help_page"] = help_page
+    context["help_text"] = format_html(_("eligibility.pages.index.help_text%(help_link)s") % {"help_link": help_page})
 
     if request.method == "POST":
         form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency)
@@ -83,10 +81,10 @@ def index(request, agency=None):
             # form was not valid, allow for correction/resubmission
             if recaptcha.has_error(form):
                 messages.error(request, "Recaptcha failed. Please try again.")
-            page.forms = [form]
-            response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
+            context["form"] = form
+            response = TemplateResponse(request, TEMPLATE_INDEX, context)
     else:
-        response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
+        response = TemplateResponse(request, TEMPLATE_INDEX, context)
 
     return response
 

@@ -63,6 +63,7 @@ def test_index_get_agency_multiple_verifiers(
     mock_agency = mocker.Mock(spec=model_TransitAgency)
     mock_agency.eligibility_verifiers.all.return_value = [model_EligibilityVerifier, model_EligibilityVerifier]
     mock_agency.eligibility_verifiers.count.return_value = 2
+    mock_agency.index_url = "/agency"
     mocked_session_agency.return_value = mock_agency
 
     path = reverse(ROUTE_INDEX)
@@ -70,9 +71,8 @@ def test_index_get_agency_multiple_verifiers(
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_INDEX
-    assert "page" in response.context_data
-    assert len(response.context_data["page"].forms) > 0
-    assert isinstance(response.context_data["page"].forms[0], EligibilityVerifierSelectionForm)
+    assert "form" in response.context_data
+    assert isinstance(response.context_data["form"], EligibilityVerifierSelectionForm)
 
 
 @pytest.mark.django_db
@@ -84,6 +84,7 @@ def test_index_get_agency_single_verifier(
     mock_agency = mocker.Mock(spec=model_TransitAgency)
     mock_agency.eligibility_verifiers.all.return_value = [model_EligibilityVerifier]
     mock_agency.eligibility_verifiers.count.return_value = 1
+    mock_agency.index_url = "/agency"
     mocked_session_agency.return_value = mock_agency
 
     path = reverse(ROUTE_INDEX)
@@ -91,9 +92,8 @@ def test_index_get_agency_single_verifier(
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_INDEX
-    assert "page" in response.context_data
-    assert len(response.context_data["page"].forms) > 0
-    assert isinstance(response.context_data["page"].forms[0], EligibilityVerifierSelectionForm)
+    assert "form" in response.context_data
+    assert isinstance(response.context_data["form"], EligibilityVerifierSelectionForm)
 
 
 @pytest.mark.django_db

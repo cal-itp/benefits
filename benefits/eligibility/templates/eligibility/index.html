@@ -25,12 +25,6 @@
 
 {% block inner-content %}
   <div class="container">
-    <div class="row">
-      {% block forms %}
-        {% for f in page.forms %}
-          {% include "core/includes/form.html" with form=f %}
-        {% endfor %}
-      {% endblock forms %}
-    </div>
+    <div class="row">{% include "core/includes/form.html" with form=form %}</div>
   </div>
 {% endblock inner-content %}
