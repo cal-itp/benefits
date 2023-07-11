@@ -564,7 +564,16 @@ msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Icono de tarjeta de identificación con signo de interrogación"
 
-msgid "enrollment.pages.index.link_card_item.heading"
+msgid "enrollment.pages.success.title"
+msgstr "Éxito"
+
+msgid "enrollment.pages.success.headline"
+msgstr "¡Éxito! Su beneficio de tránsito ahora está conectado a su tarjeta."
+
+msgid "enrollment.pages.success.thankyou"
+msgstr "Gracias por usar los Beneficios de Cal-ITP."
+
+msgid "enrollment.pages.success.logout[0]"
 msgstr ""
 "El siguiente paso es conectar su tarjeta sin contacto a su beneficio de "
 "tránsito"
@@ -625,12 +634,3 @@ msgstr ""
 
 msgid "core.buttons.retry"
 msgstr "Intentar otra vez"
-
-msgid "enrollment.pages.success.title"
-msgstr "Éxito"
-
-msgid "enrollment.pages.success.headline"
-msgstr "¡Éxito! Su beneficio de tránsito ahora está conectado a su tarjeta."
-
-msgid "enrollment.pages.success.thankyou"
-msgstr "Gracias por usar los Beneficios de Cal-ITP."

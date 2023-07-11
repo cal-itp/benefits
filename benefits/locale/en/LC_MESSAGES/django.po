@@ -553,7 +553,16 @@ msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Identification card icon with question mark"
 
-msgid "enrollment.pages.index.link_card_item.heading"
+msgid "enrollment.pages.success.title"
+msgstr "Success"
+
+msgid "enrollment.pages.success.headline"
+msgstr "Success! Your transit benefit is now connected to your card."
+
+msgid "enrollment.pages.success.thankyou"
+msgstr "Thank you for using Cal-ITP Benefits!"
+
+msgid "enrollment.pages.success.logout[0]"
 msgstr ""
 "The next step is to connect your contactless card to your transit benefit"
 
@@ -610,12 +619,3 @@ msgstr ""
 
 msgid "core.buttons.retry"
 msgstr "Try again"
-
-msgid "enrollment.pages.success.title"
-msgstr "Success"
-
-msgid "enrollment.pages.success.headline"
-msgstr "Success! Your transit benefit is now connected to your card."
-
-msgid "enrollment.pages.success.thankyou"
-msgstr "Thank you for using Cal-ITP Benefits!"
