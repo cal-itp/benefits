@@ -546,11 +546,11 @@ msgstr ""
 "Benefits.</a></strong>"
 
 msgid "eligibility.pages.index.title"
-msgstr "Select a benefit option"
+msgstr "Choose benefit option"
 
 msgid "eligibility.pages.index.headline"
 msgstr ""
-"Connect your bank card to your public transit discount with Cal-ITP Benefits."
+"Choose the transit benefit you would like to enroll in"
 
 #, python-format
 msgid "eligibility.pages.index.help_text%(help_link)s"
