@@ -155,10 +155,6 @@ PEM DATA
         start_template="eligibility/start__login_gov.html",
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
-        eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
-        eligibility_confirmed_item_details=_(
-            "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
-        ),
     )
 
     mst_veteran_verifier = EligibilityVerifier.objects.create(
@@ -199,8 +195,6 @@ PEM DATA
         form_name_max_length=255,
         unverified_title=_("eligibility.pages.unverified.mst_cc.title"),
         unverified_blurb=_("eligibility.pages.unverified.mst_cc.p[0]"),
-        eligibility_confirmed_item_heading=None,
-        eligibility_confirmed_item_details=None,
     )
 
     sacrt_oauth_claims_verifier = EligibilityVerifier.objects.create(
@@ -211,10 +205,6 @@ PEM DATA
         start_template="eligibility/start__login_gov.html",
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
-        eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
-        eligibility_confirmed_item_details=_(
-            "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
-        ),
     )
 
     PaymentProcessor = app.get_model("core", "PaymentProcessor")
