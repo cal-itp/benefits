@@ -14,7 +14,8 @@
     <div class="media-body--details">
         <p>
             {% translate "enrollment.pages.index.link_card_item.p[0]s[0]" %}
-            <button type="button" class="modal-trigger--link" data-bs-toggle="modal" data-bs-target="#littlepay-modal">Littlepay</button>.
+            {% include "core/includes/modal-trigger.html" with id="littlepay-modal" classes="modal-trigger--link" text="Littlepay" %}
+            .
             {% translate "enrollment.pages.index.link_card_item.p[0]s[1]" %}
         </p>
         <p>{% translate "enrollment.pages.index.link_card_item.p[1]s[0]" %}</p>
