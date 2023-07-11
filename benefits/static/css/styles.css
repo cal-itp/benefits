@@ -670,6 +670,7 @@ a.card:focus-visible {
   font-weight: var(--bold-font-weight);
   letter-spacing: var(--body-letter-spacing);
   padding: 0;
+  margin-right: -5px;
   text-decoration: underline;
   text-decoration-style: solid;
 }
