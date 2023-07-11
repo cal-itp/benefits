@@ -1,12 +1,10 @@
 {
-  "djlint.guessProfile": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "[html]": {
-    "editor.defaultFormatter": "monosans.djlint"
-  },
-  "[django-html]": {
-    "editor.defaultFormatter": "monosans.djlint"
+  "[django-html][html]": {
+    "editor.defaultFormatter": "monosans.djlint",
+    "djlint.enableLinting": true,
+    "djlint.profile": "django"
   },
   "files.encoding": "utf8",
   "files.eol": "\n",
