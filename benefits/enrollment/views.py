@@ -6,13 +6,12 @@ import logging
 from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.utils.html import format_html
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import models, session, viewmodels
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
-from benefits.core.views import ROUTE_HELP, ROUTE_LOGGED_OUT
+from benefits.core.views import ROUTE_LOGGED_OUT
 from . import analytics, api, forms
 
 
