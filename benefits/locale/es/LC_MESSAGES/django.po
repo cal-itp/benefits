@@ -613,11 +613,6 @@ msgstr "Espere por favor..."
 msgid "enrollment.buttons.payment_partner"
 msgstr "Conecta tu tarjeta"
 
-msgid "enrollment.pages.success.logout[0]"
-msgstr ""
-"Si estás en una computadora pública o compartida, no olvides hacer clic aquí "
-"para cerrar la sesión de"
-
 msgid "enrollment.pages.retry.title"
 msgstr "No pudimos conectar tú tarjeta bancaria"
 

@@ -602,10 +602,6 @@ msgstr "Please wait..."
 msgid "enrollment.buttons.payment_partner"
 msgstr "Connect your Card"
 
-msgid "enrollment.pages.success.logout[0]"
-msgstr ""
-"If you are on a public or shared computer, don't forget to sign out of "
-
 msgid "enrollment.pages.retry.title"
 msgstr "We couldn’t connect your bank card"
 
