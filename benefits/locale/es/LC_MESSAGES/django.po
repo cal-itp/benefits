@@ -604,7 +604,7 @@ msgid "enrollment.pages.index.modal.p[1]"
 msgstr ""
 "Para obtener más información sobre Littlepay, visite el <a href='https://"
 "littlepay.com' target=\"_blank\" rel=\"noopener noreferrer\">sitio web de "
-"Littlepay.</a>"
+"Littlepay</a>."
 
 msgid "enrollment.pages.index.title"
 msgstr "Conecte su tarjeta"
