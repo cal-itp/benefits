@@ -314,10 +314,10 @@ msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita JavaScript. Por favor, active JavaScript por este sitio web y"
 
-msgid "eligibility.pages.index.courtesy_card.label"
+msgid "eligibility.pages.index.mst_courtesy_card.label"
 msgstr "Tengo una Tarjeta de Cortesía de MST"
 
-msgid "eligibility.pages.index.courtesy_card.description"
+msgid "eligibility.pages.index.mst_courtesy_card.description"
 msgstr ""
 "Esta opción es para personas que tienen una Tarjeta de Cortesía actual o una "
 "tarjeta de elegibilidad de Paratránsito de MST RIDES. Es posible que este "

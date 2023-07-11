@@ -184,7 +184,7 @@ PEM DATA
         jwe_encryption_alg=os.environ.get("COURTESY_CARD_VERIFIER_JWE_ENCRYPTION_ALG", "RSA-OAEP"),
         jws_signing_alg=os.environ.get("COURTESY_CARD_VERIFIER_JWS_SIGNING_ALG", "RS256"),
         auth_provider=None,
-        selection_label_template="core/includes/selection-label--courtesy-card.html",
+        selection_label_template="core/includes/selection-label--mst-courtesy-card.html",
         start_template="eligibility/start__mst_courtesy_card.html",
         form_title=_("eligibility.pages.confirm.mst_cc.title"),
         form_headline=_("eligibility.pages.confirm.mst_cc.headline"),

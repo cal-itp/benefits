@@ -303,10 +303,10 @@ msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
 
-msgid "eligibility.pages.index.courtesy_card.label"
+msgid "eligibility.pages.index.mst_courtesy_card.label"
 msgstr "I have an MST Courtesy Card"
 
-msgid "eligibility.pages.index.courtesy_card.description"
+msgid "eligibility.pages.index.mst_courtesy_card.description"
 msgstr ""
 "This option is for people who have a current Courtesy Card or an MST RIDES "
 "Eligibility card. This benefit may need to be renewed in the future. Using "
