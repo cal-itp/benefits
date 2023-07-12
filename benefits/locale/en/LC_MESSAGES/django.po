@@ -564,7 +564,7 @@ msgstr "Thank you for using Cal-ITP Benefits!"
 
 msgid "enrollment.pages.success.logout[0]"
 msgstr ""
-"The next step is to connect your contactless card to your transit benefit"
+"If you are on a public or shared computer, don’t forget to sign out of "
 
 msgid "enrollment.pages.index.link_card_item.p[0]s[0]"
 msgstr "You will be directed to our payment partner, "

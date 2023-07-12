@@ -575,8 +575,7 @@ msgstr "Gracias por usar los Beneficios de Cal-ITP."
 
 msgid "enrollment.pages.success.logout[0]"
 msgstr ""
-"El siguiente paso es conectar su tarjeta sin contacto a su beneficio de "
-"tránsito"
+"Si está en una computadora pública o compartida, no olvide cerrar sesión en "
 
 msgid "enrollment.pages.index.link_card_item.p[0]s[0]"
 msgstr "Será dirigido a nuestro socio de pago, "

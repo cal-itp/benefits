@@ -37,14 +37,15 @@
 
 {% block call-to-action %}
   {% if page.buttons|length == 1 %}
-    <div class="row d-flex justify-content-lg-center flex-lg-row">
-      <div class="col-9 col-lg-10 d-flex justify-content-end logout-paragraph">
+    <div class="row d-flex justify-content-start justify-content-lg-center">
+      <div class="col-12 col-lg-8 pt-lg-5 mt-lg-0 pt-4 mt-2">
         <p>
-          <span>{% translate "enrollment.pages.success.logout[0]" %}</span>
+          {% translate "enrollment.pages.success.logout[0]" %}
           {% for b in page.buttons %}
-            <a id="{{ b.id }}" class="{{ b.classes | join:" " }}" href="{{ b.url }}" role="button">
-              <span class="fallback-text">{{ b.fallback_text }}</span>
+            <a id="{{ b.id }}" class="d-inline-block p-0 {{ b.classes | join:" " }}" href="{{ b.url }}" role="button">
+              <span class="fallback-text color-logo">{{ b.fallback_text }}</span>
             </a>
+            .
           {% endfor %}
         </p>
       </div>
