@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-11 17:23+0000\n"
+"POT-Creation-Date: 2023-07-11 16:05+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -42,7 +42,7 @@ msgid "eligibility.forms.confirm.mst_cc.fields.sub.help_text"
 msgstr "[qualifier]"
 
 msgid "eligibility.forms.confirm.mst_cc.fields.name"
-msgstr "[Identity-Marker] (as it appears on [Agency-Card])*"
+msgstr "[Identity-Marker] (as it appears on [Agency-Card])"
 
 msgid "eligibility.forms.confirm.mst_cc.fields.name.help_text"
 msgstr "We use this to help confirm your [Agency-Card]."
