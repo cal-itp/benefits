@@ -181,8 +181,6 @@ def unverified(request):
 
     analytics.returned_fail(request, types_to_verify)
 
-    agency_links = viewmodels.Button.agency_contact_links(agency)
-
     page = viewmodels.Page(
         title=_(verifier.unverified_title),
         headline=_("eligibility.pages.unverified.headline"),
@@ -191,6 +189,4 @@ def unverified(request):
     )
 
     ctx = page.context_dict()
-    ctx["agency_links"] = agency_links
-
     return TemplateResponse(request, TEMPLATE_UNVERIFIED, ctx)
