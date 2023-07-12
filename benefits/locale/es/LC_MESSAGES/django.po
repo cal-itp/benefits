@@ -24,20 +24,6 @@ msgstr ""
 "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
 "proveedor de tránsito local para obtener asistencia."
 
-msgid "enrollment.pages.success.login_gov.confirm_item.details"
-msgstr ""
-"No se le ha cobrado nada hoy. Al abordar al el tránsito, pague con esta "
-"misma tarjeta física y automáticamente recibirá su nueva tarifa reducida. "
-"Deberá volver a presenter la solicitud si elige cambiar la tarjeta bancaria "
-"que utiliza para pagar el servicio de transito."
-
-msgid "enrollment.pages.success.veteran.confirm_item.details"
-msgstr ""
-"No se le ha cobrado nada hoy. Al abordar al el tránsito, pague con esta "
-"misma tarjeta física y automáticamente recibirá su nueva tarifa reducida. "
-"Deberá volver a presenter la solicitud si elige cambiar la tarjeta bancaria "
-"que utiliza para pagar el servicio de transito."
-
 msgid "eligibility.pages.confirm.mst_cc.title"
 msgstr "Confirmar su eligibilidad"
 
@@ -68,23 +54,6 @@ msgid "eligibility.pages.unverified.mst_cc.p[0]"
 msgstr ""
 "¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con "
 "Monterey-Salinas Transit para obtener asistencia."
-
-msgid "enrollment.pages.success.mst_cc.confirm_item.details"
-msgstr ""
-"No te cobraron nada hoy. Al abordar el tránsito, pague con esta misma "
-"tarjeta física y automáticamente recibirá su nueva tarifa reducida."
-
-msgid "enrollment.pages.success.mst_cc.expiry_item.heading"
-msgstr ""
-"Es posible que deba volver a solicitar los beneficios de tránsito en una "
-"fecha posterior"
-
-msgid "enrollment.pages.success.mst_cc.expiry_item.details"
-msgstr ""
-"En el futuro, es posible que tenga que volver a registrarse para Beneficios "
-"para continuar usando las tarjetas de pago sin contacto. También tendrá que "
-"volver a presenter una solicitud si elige cambiar la tarjeta bancaria que "
-"usa para pagar el servicio de tránsito."
 
 msgid "eligibility.pages.index.p[0].mst"
 msgstr ""
@@ -615,10 +584,25 @@ msgstr "Espere por favor..."
 msgid "enrollment.buttons.payment_partner"
 msgstr "Conecta tu tarjeta"
 
+msgid "enrollment.pages.success.title"
+msgstr "Éxito"
+
+msgid "enrollment.pages.success.headline"
+msgstr "¡Éxito! Su beneficio de tránsito ahora está conectado a su tarjeta."
+
+msgid "enrollment.pages.success.confirm_item.details"
+msgstr ""
+"No se le cobró nada hoy. Al abordar un [transportaton-type] de [short-name], "
+"[card-functionality] y se le cobrará una tarifa reducida. Deberá volver a "
+"inscribirse si elige cambiar la tarjeta que usa para pagar el servicio de "
+"tránsito."
+
+msgid "enrollment.pages.success.thankyou"
+msgstr "Gracias por usar los Beneficios de Cal-ITP."
+
 msgid "enrollment.pages.success.logout[0]"
 msgstr ""
-"Si estás en una computadora pública o compartida, no olvides hacer clic aquí "
-"para cerrar la sesión de"
+"Si está en una computadora pública o compartida, no olvide cerrar sesión en "
 
 msgid "enrollment.pages.retry.title"
 msgstr "No pudimos conectar tú tarjeta bancaria"
@@ -635,20 +619,3 @@ msgstr ""
 
 msgid "core.buttons.retry"
 msgstr "Intentar otra vez"
-
-msgid "enrollment.pages.success.title"
-msgstr "Éxito"
-
-msgid "enrollment.pages.success.headline"
-msgstr "¡Felicidades! Su descuento ahora está vinculado a su tarjeta bancaria."
-
-#, python-format
-msgid "enrollment.pages.success.helplink%(link)s"
-msgstr ""
-"Gracias por usar los Beneficios de Cal-ITP. Para más información, consulte "
-"nuestro our <a href=\"%(link)s\" rel=\"noopener noreferrer\">Página de "
-"Ayuda</a>."
-
-msgctxt "image alt text"
-msgid "core.icons.calendarcheck"
-msgstr "Icono de página de calendario con una marca de verificación"

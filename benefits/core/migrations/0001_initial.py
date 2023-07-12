@@ -60,9 +60,6 @@ class Migration(migrations.Migration):
                 ("form_name_max_length", models.PositiveSmallIntegerField(null=True)),
                 ("unverified_title", models.TextField()),
                 ("unverified_blurb", models.TextField()),
-                ("enrollment_success_confirm_item_details", models.TextField()),
-                ("enrollment_success_expiry_item_heading", models.TextField(null=True)),
-                ("enrollment_success_expiry_item_details", models.TextField(null=True)),
                 (
                     "auth_provider",
                     models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, to="core.authprovider"),

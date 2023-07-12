@@ -351,13 +351,13 @@ footer .footer-links li a:visited {
   font-size: var(--login-gov-button-font-size);
   font-family: "Public Sans", Roboto, system-ui;
   padding: var(--login-gov-button-padding);
+  text-decoration: none;
 }
 
 /* Sets the text `Login.gov` as transparent */
 /* With an Login.gov logo image over it */
 /* So screenreaders can read out `Login.gov` */
 #login .fallback-text {
-  background: url("/static/img/login-gov-logo-rev.svg") no-repeat;
   background-size: contain;
   display: block;
   margin: 8px auto 0 auto;
@@ -369,6 +369,14 @@ footer .footer-links li a:visited {
   font-size: var(--font-size-16px);
   font-weight: var(--bold-font-weight);
   line-height: 1;
+}
+
+#login .fallback-text.white-logo {
+  background-image: url("/static/img/login-gov-logo-rev.svg");
+}
+
+#login .fallback-text.color-logo {
+  background-image: url("/static/img/login-gov-logo.svg");
 }
 
 @media (min-width: 992px) {
@@ -708,34 +716,20 @@ a.card:focus-visible {
 /* Custom in-line log out button for Enrollment Success, in paragraph */
 
 :root {
-  --logout-paragraph-margin-left: calc(
-    var(--media-item-icon-margin) + var(--media-item-icon-size)
-  );
+  --success-illo-width: 180px;
+  --success-illo-height: 155.1px;
 }
 
 @media (min-width: 992px) {
   :root {
-    --logout-paragraph-margin-left: 0;
+    --success-illo-width: 345px;
+    --success-illo-height: 297px;
   }
 }
 
-.enrollment-success #login {
-  padding: 0 0.5rem 0.3rem 0.6rem;
-  display: inline-block;
-  margin: 0;
-  width: inherit;
-  border-radius: 0;
-}
-
-.enrollment-success #login .fallback-text {
-  padding-top: 14px;
-  margin: 8px auto 0 auto;
-  display: block;
-  width: 7rem;
-}
-
-.enrollment-success .logout-paragraph {
-  margin-left: var(--logout-paragraph-margin-left);
+.enrollment-success .illo {
+  width: var(--success-illo-width);
+  height: var(--success-illo-height);
 }
 
 /* Index and Agency Index (Landing pages) */

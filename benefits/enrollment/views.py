@@ -6,13 +6,12 @@ import logging
 from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.utils.html import format_html
 from django.utils.decorators import decorator_from_middleware
 from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import models, session, viewmodels
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
-from benefits.core.views import ROUTE_HELP, ROUTE_LOGGED_OUT
+from benefits.core.views import ROUTE_LOGGED_OUT
 from . import analytics, api, forms
 
 
@@ -127,7 +126,7 @@ def success(request):
 
     verifier = session.verifier(request)
 
-    page = viewmodels.Page(title=_("enrollment.pages.success.title"), headline=_("enrollment.pages.success.headline"))
+    page = viewmodels.Page()
 
     if verifier.supports_sign_out and session.logged_in(request):
         # overwrite origin for a logged in user
@@ -135,30 +134,4 @@ def success(request):
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
         page.buttons = [viewmodels.Button.logout()]
 
-    success_item = viewmodels.MediaItem(
-        icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
-        details=[
-            _(verifier.enrollment_success_confirm_item_details),
-            format_html(_("enrollment.pages.success.helplink%(link)s") % {"link": f"{reverse(ROUTE_HELP)}"}),
-        ],
-    )
-    media = [success_item]
-
-    if verifier.enrollment_success_expiry_item_heading or verifier.enrollment_success_expiry_item_details:
-        heading = (
-            _(verifier.enrollment_success_expiry_item_heading) if verifier.enrollment_success_expiry_item_heading else None
-        )
-        details = (
-            _(verifier.enrollment_success_expiry_item_details) if verifier.enrollment_success_expiry_item_details else None
-        )
-        expiry_item = viewmodels.MediaItem(
-            icon=viewmodels.Icon("calendarcheck", pgettext("image alt text", "core.icons.calendarcheck")),
-            heading=heading,
-            details=details,
-        )
-        media.insert(0, expiry_item)
-
-    context = {"media": media}
-    context.update(page.context_dict())
-
-    return TemplateResponse(request, TEMPLATE_SUCCESS, context)
+    return TemplateResponse(request, TEMPLATE_SUCCESS, page.context_dict())

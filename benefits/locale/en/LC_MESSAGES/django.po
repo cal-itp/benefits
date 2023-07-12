@@ -24,20 +24,6 @@ msgstr ""
 "That’s okay! You may still be eligible for our program. Please reach out to "
 "your local transit provider for assistance."
 
-msgid "enrollment.pages.success.login_gov.confirm_item.details"
-msgstr ""
-"You were not charged anything today. When boarding transit, pay with this "
-"same physical card and you will automatically receive your new reduced fare. "
-"You will need to reapply if you choose to change the bank card you use to "
-"pay for transit service."
-
-msgid "enrollment.pages.success.veteran.confirm_item.details"
-msgstr ""
-"You were not charged anything today. When boarding transit, pay with this "
-"same physical card and you will automatically receive your new reduced fare. "
-"You will need to reapply if you choose to change the bank card you use to "
-"pay for transit service."
-
 msgid "eligibility.pages.confirm.mst_cc.title"
 msgstr "Confirm your Courtesy Card"
 
@@ -68,20 +54,6 @@ msgid "eligibility.pages.unverified.mst_cc.p[0]"
 msgstr ""
 "That’s okay! You may still be eligible for our program. Please reach out to "
 "Monterey-Salinas Transit for assistance."
-
-msgid "enrollment.pages.success.mst_cc.confirm_item.details"
-msgstr ""
-"You were not charged anything today. When boarding transit, pay with this "
-"same physical card and you will automatically receive your new reduced fare."
-
-msgid "enrollment.pages.success.mst_cc.expiry_item.heading"
-msgstr "You may need to reapply for transit benefits at a later date"
-
-msgid "enrollment.pages.success.mst_cc.expiry_item.details"
-msgstr ""
-"In the future, you may need to re-register for Benefits to continue using "
-"contactless payment cards. You will also need to reapply if you choose to "
-"change the bank card you use to pay for transit service."
 
 msgid "eligibility.pages.index.p[0].mst"
 msgstr ""
@@ -600,9 +572,25 @@ msgstr "Please wait..."
 msgid "enrollment.buttons.payment_partner"
 msgstr "Connect your Card"
 
+msgid "enrollment.pages.success.title"
+msgstr "Success"
+
+msgid "enrollment.pages.success.headline"
+msgstr "Success! Your transit benefit is now connected to your card."
+
+msgid "enrollment.pages.success.confirm_item.details"
+msgstr ""
+"You were not charged anything today. When boarding a [short-name] "
+"[transportaton-type], [card-functionality] and you will be charged a reduced "
+"fare. You will need to re-enroll if you choose to change the card you use to "
+"pay for transit service."
+
+msgid "enrollment.pages.success.thankyou"
+msgstr "Thank you for using Cal-ITP Benefits!"
+
 msgid "enrollment.pages.success.logout[0]"
 msgstr ""
-"If you are on a public or shared computer, don't forget to sign out of "
+"If you are on a public or shared computer, don’t forget to sign out of "
 
 msgid "enrollment.pages.retry.title"
 msgstr "We couldn’t connect your bank card"
@@ -617,19 +605,3 @@ msgstr ""
 
 msgid "core.buttons.retry"
 msgstr "Try again"
-
-msgid "enrollment.pages.success.title"
-msgstr "Success"
-
-msgid "enrollment.pages.success.headline"
-msgstr "Success! Your discount is now linked to your bank card."
-
-#, python-format
-msgid "enrollment.pages.success.helplink%(link)s"
-msgstr ""
-"Thank you for using Cal-ITP Benefits! For more information check out our <a "
-"href=\"%(link)s\" rel=\"noopener noreferrer\">Help Page</a>."
-
-msgctxt "image alt text"
-msgid "core.icons.calendarcheck"
-msgstr "A calendar page icon with a check mark"
