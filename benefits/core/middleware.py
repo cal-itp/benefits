@@ -20,8 +20,7 @@ TEMPLATE_USER_ERROR = "200_user_error.html"
 
 
 def user_error(request):
-    home = viewmodels.Button.home(request)
-    page = viewmodels.ErrorPage.user_error(button=home)
+    page = viewmodels.ErrorPage.user_error()
 
     return TemplateResponse(request, TEMPLATE_USER_ERROR, page.context_dict())
 
