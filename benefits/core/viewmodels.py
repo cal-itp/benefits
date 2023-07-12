@@ -6,8 +6,6 @@ from django.urls import reverse
 
 from benefits.core import models
 
-from . import session
-
 
 class Button:
     """
@@ -44,14 +42,6 @@ class Button:
             Button.link(label=agency.long_name, text=agency.phone, url=f"tel:{agency.phone}"),
             Button.link(text=agency.info_url, url=agency.info_url, target="_blank", rel="noopener noreferrer"),
         ]
-
-    @staticmethod
-    def home(request, text=None):
-        """Create a button back to this session's origin."""
-        if text is None:
-            text = _("core.buttons.return_home")
-
-        return Button.primary(text=text, url=session.origin(request))
 
     @staticmethod
     def link(**kwargs):
