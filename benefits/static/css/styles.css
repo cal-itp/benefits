@@ -132,7 +132,8 @@ a:not(.btn) {
   font-weight: var(--bold-font-weight);
 }
 
-a:hover:not(.btn) {
+a:hover:not(.btn),
+.modal-trigger--link:hover {
   color: var(--hover-color);
   text-decoration: underline;
 }
@@ -636,6 +637,14 @@ a.card:focus-visible {
   }
 }
 
+.btn-close {
+  width: 20px;
+  height: 20px;
+  opacity: 1;
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23323A45'%3e%3cpath d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e")
+    center/1em auto no-repeat;
+}
+
 .modal-dialog {
   width: auto;
   height: auto;
@@ -660,6 +669,39 @@ a.card:focus-visible {
 
 .modal-title {
   font-size: var(--modal-title-font-size);
+}
+
+.modal-trigger--link {
+  background: transparent;
+  border: none;
+  color: var(--primary-color);
+  font-family: var(--bs-body-font-family);
+  font-weight: var(--bold-font-weight);
+  letter-spacing: var(--body-letter-spacing);
+  padding: 0;
+  margin-right: -5px;
+  text-decoration: underline;
+  text-decoration-style: solid;
+}
+
+.modal-trigger--link::after {
+  content: " ";
+  background-image: url("/static/img/modal-trigger.svg");
+  background-size: contain;
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+}
+
+.modal-trigger--link:hover::after {
+  background-image: url("/static/img/modal-trigger--hover.svg");
+}
+
+.modal-trigger--link:visited::after {
+  background-image: url("/static/img/modal-trigger--selected.svg");
 }
 
 /* Enrollment Success */

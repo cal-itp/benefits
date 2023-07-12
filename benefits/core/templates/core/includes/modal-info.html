@@ -1,0 +1,16 @@
+<!-- Modal -->
+{% with id|add:"-modal-label" as aria_labelledby_id %}
+    <div class="modal fade" id="{{ id }}" tabindex="-1" aria-labelledby="{{ aria_labelledby_id }}" aria-hidden="true">
+        <div class="modal-dialog {{ size }} modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header border-0 p-2">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-0 mt-0 p-4 m-2">
+                    {% block modal-content %}
+                    {% endblock modal-content %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endwith %}
