@@ -362,6 +362,7 @@ footer .footer-links li a:visited {
 /* So screenreaders can read out `Login.gov` */
 #login .fallback-text {
   background-size: contain;
+  background-repeat: no-repeat;
   display: block;
   margin: 8px auto 0 auto;
   position: relative;
