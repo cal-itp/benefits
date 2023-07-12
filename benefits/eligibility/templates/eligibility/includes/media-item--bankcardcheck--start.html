@@ -14,7 +14,8 @@
     <div class="media-body--details">
         <p>
             {% translate "eligibility.pages.start.bankcard.text" %}
-            {% include "core/includes/modal-trigger.html" with id="contactless-modal" classes="modal-trigger--link" text="Learn more about contactless cards" %}
+            {% translate "eligibility.pages.start.modal.title" as trigger_text %}
+            {% include "core/includes/modal-trigger.html" with id="contactless-modal" classes="modal-trigger--link" text=trigger_text %}
         </p>
     </div>
 
