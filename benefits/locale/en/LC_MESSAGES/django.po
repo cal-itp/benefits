@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-11 16:05+0000\n"
+"POT-Creation-Date: 2023-07-12 05:34+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -467,6 +467,39 @@ msgid "eligibility.pages.start.veteran.start_item.secondary_details"
 msgstr ""
 "If you do not have an account with any of these services, you will need to "
 "create one. We recommend using Login.gov."
+
+msgid "eligibility.pages.index.senior.help.headline"
+msgstr "Learn more about"
+
+msgctxt "image alt text"
+msgid "core.logos.login_gov"
+msgstr "TODO"
+
+msgid "eligibility.pages.index.senior.help.sub_headline[0]"
+msgstr "What is Login.gov?"
+
+msgid "eligibility.pages.index.senior.help.p[0]"
+msgstr ""
+"Login.gov is a service that offers secure and private online access to "
+"government programs, such as federal benefits, services and applications. "
+"With a Login.gov account, you can sign into multiple government websites "
+"with the same email address and password."
+
+msgid "eligibility.pages.index.senior.help.sub_headline[1]"
+msgstr "Why is Cal-ITP Benefits using Login.gov?"
+
+msgid "eligibility.pages.index.senior.help.p[1]"
+msgstr ""
+"Login.gov uses two-factor authentication, and stronger passwords, that meet "
+"new National Institute of Standards of Technology requirements for secure "
+"validation and verification. By using Login.gov, you’ll get an extra layer "
+"of security to help protect your account against password compromises."
+
+msgid "eligibility.pages.index.senior.help.p[2]"
+msgstr ""
+"For more information on Login.gov, please visit the <a href='https://login."
+"gov/help/' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov Help "
+"Center</a>"
 
 msgid "eligibility.pages.start.sub_headline"
 msgstr "You will need a few items to connect your benefit:"
