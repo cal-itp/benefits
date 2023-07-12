@@ -69,13 +69,6 @@ msgstr ""
 "That’s okay! You may still be eligible for our program. Please reach out to "
 "Monterey-Salinas Transit for assistance."
 
-msgid "enrollment.pages.success.mst_cc.confirm_item.details"
-msgstr ""
-"You were not charged anything today. When boarding a [short-name] "
-"[transportaton-type], [card-functionality] and you will be charged a reduced "
-"fare. You will need to re-enroll if you choose to change the card you use to "
-"pay for transit service."
-
 msgid "eligibility.pages.index.p[0].mst"
 msgstr ""
 "You can tap your credit or debit card when you board an MST bus, and your "
@@ -558,6 +551,13 @@ msgstr "Success"
 
 msgid "enrollment.pages.success.headline"
 msgstr "Success! Your transit benefit is now connected to your card."
+
+msgid "enrollment.pages.success.confirm_item.details"
+msgstr ""
+"You were not charged anything today. When boarding a [short-name] "
+"[transportaton-type], [card-functionality] and you will be charged a reduced "
+"fare. You will need to re-enroll if you choose to change the card you use to "
+"pay for transit service."
 
 msgid "enrollment.pages.success.thankyou"
 msgstr "Thank you for using Cal-ITP Benefits!"
