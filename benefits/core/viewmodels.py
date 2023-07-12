@@ -36,22 +36,6 @@ class Button:
         self.rel = kwargs.get("rel")
 
     @staticmethod
-    def agency_contact_links(agency):
-        """Create link buttons for agency contact information."""
-        return [
-            Button.link(label=agency.long_name, text=agency.phone, url=f"tel:{agency.phone}"),
-            Button.link(text=agency.info_url, url=agency.info_url, target="_blank", rel="noopener noreferrer"),
-        ]
-
-    @staticmethod
-    def link(**kwargs):
-        classes = kwargs.pop("classes", [])
-        if isinstance(classes, str):
-            classes = classes.split(" ")
-        classes.insert(0, "btn-link")
-        return Button(classes=classes, **kwargs)
-
-    @staticmethod
     def primary(**kwargs):
         classes = kwargs.pop("classes", [])
         if isinstance(classes, str):
