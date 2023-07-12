@@ -4,7 +4,33 @@ The core application: context processors for enriching request context data.
 from django.conf import settings
 from django.urls import reverse
 
-from . import session
+from . import models, session
+
+
+def _agency_context(agency):
+    return {
+        "long_name": agency.long_name,
+        "short_name": agency.short_name,
+        "info_url": agency.info_url,
+        "phone": agency.phone,
+    }
+
+
+def agency(request):
+    """Context processor adds some information about the active agency to the request context."""
+    agency = session.agency(request)
+
+    if agency is None:
+        return {}
+
+    return {"agency": _agency_context(agency)}
+
+
+def active_agencies(request):
+    """Context processor adds some information about all active agencies to the request context."""
+    agencies = models.TransitAgency.all_active()
+
+    return {"active_agencies": [_agency_context(agency) for agency in agencies]}
 
 
 def analytics(request):
