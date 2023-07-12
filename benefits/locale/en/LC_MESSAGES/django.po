@@ -24,20 +24,6 @@ msgstr ""
 "That’s okay! You may still be eligible for our program. Please reach out to "
 "your local transit provider for assistance."
 
-msgid "enrollment.pages.success.login_gov.confirm_item.details"
-msgstr ""
-"You were not charged anything today. When boarding a [short-name] "
-"[transportaton-type], [card-functionality] and you will be charged a reduced "
-"fare. You will need to re-enroll if you choose to change the card you use to "
-"pay for transit service."
-
-msgid "enrollment.pages.success.veteran.confirm_item.details"
-msgstr ""
-"You were not charged anything today. When boarding a [short-name] "
-"[transportaton-type], [card-functionality] and you will be charged a reduced "
-"fare. You will need to re-enroll if you choose to change the card you use to "
-"pay for transit service."
-
 msgid "eligibility.pages.confirm.mst_cc.title"
 msgstr "Confirm your Courtesy Card"
 
@@ -546,25 +532,9 @@ msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
 msgstr "Identification card icon with question mark"
 
-msgid "enrollment.pages.success.title"
-msgstr "Success"
-
-msgid "enrollment.pages.success.headline"
-msgstr "Success! Your transit benefit is now connected to your card."
-
-msgid "enrollment.pages.success.confirm_item.details"
+msgid "enrollment.pages.index.link_card_item.heading"
 msgstr ""
-"You were not charged anything today. When boarding a [short-name] "
-"[transportaton-type], [card-functionality] and you will be charged a reduced "
-"fare. You will need to re-enroll if you choose to change the card you use to "
-"pay for transit service."
-
-msgid "enrollment.pages.success.thankyou"
-msgstr "Thank you for using Cal-ITP Benefits!"
-
-msgid "enrollment.pages.success.logout[0]"
-msgstr ""
-"If you are on a public or shared computer, don’t forget to sign out of "
+"The next step is to connect your contactless card to your transit benefit"
 
 msgid "enrollment.pages.index.link_card_item.p[0]s[0]"
 msgstr "You will be directed to our payment partner, "
@@ -601,6 +571,26 @@ msgstr "Please wait..."
 
 msgid "enrollment.buttons.payment_partner"
 msgstr "Connect your Card"
+
+msgid "enrollment.pages.success.title"
+msgstr "Success"
+
+msgid "enrollment.pages.success.headline"
+msgstr "Success! Your transit benefit is now connected to your card."
+
+msgid "enrollment.pages.success.confirm_item.details"
+msgstr ""
+"You were not charged anything today. When boarding a [short-name] "
+"[transportaton-type], [card-functionality] and you will be charged a reduced "
+"fare. You will need to re-enroll if you choose to change the card you use to "
+"pay for transit service."
+
+msgid "enrollment.pages.success.thankyou"
+msgstr "Thank you for using Cal-ITP Benefits!"
+
+msgid "enrollment.pages.success.logout[0]"
+msgstr ""
+"If you are on a public or shared computer, don’t forget to sign out of "
 
 msgid "enrollment.pages.retry.title"
 msgstr "We couldn’t connect your bank card"
