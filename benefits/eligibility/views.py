@@ -61,7 +61,7 @@ def index(request, agency=None):
         title=_("eligibility.pages.index.title"),
         headline=_("eligibility.pages.index.headline"),
         paragraphs=[intro],
-        forms=forms.EligibilityVerifierSelectionForm(agency=agency),
+        forms=forms.EligibilityVerifierSelectionForm(agency=agency, csp_nonce=request.csp_nonce),
     )
 
     ctx = page.context_dict()
