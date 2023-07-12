@@ -350,8 +350,11 @@ footer .footer-links li a:visited {
   letter-spacing: 0;
   font-size: var(--login-gov-button-font-size);
   font-family: "Public Sans", Roboto, system-ui;
-  padding: var(--login-gov-button-padding);
   text-decoration: none;
+}
+
+.eligibility-start #login {
+  padding: var(--login-gov-button-padding);
 }
 
 /* Sets the text `Login.gov` as transparent */
@@ -369,6 +372,10 @@ footer .footer-links li a:visited {
   font-size: var(--font-size-16px);
   font-weight: var(--bold-font-weight);
   line-height: 1;
+}
+
+.eligibility-index #login .fallback-text {
+  display: inline-block;
 }
 
 #login .fallback-text.white-logo {
