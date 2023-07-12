@@ -96,7 +96,6 @@ def retry(request):
         analytics.returned_retry(request)
         form = forms.CardTokenizeFailForm(request.POST)
         if form.is_valid():
-            agency = session.agency(request)
             page = viewmodels.Page(
                 title=_("enrollment.pages.retry.title"),
                 icon=viewmodels.Icon("bankcardquestion", pgettext("image alt text", "core.icons.bankcardquestion")),
@@ -105,7 +104,6 @@ def retry(request):
             )
 
             ctx = page.context_dict()
-            ctx["agency_links"] = viewmodels.Button.agency_contact_links(agency)
             ctx["retry_button"] = viewmodels.Button.primary(text=_("core.buttons.retry"), url=session.origin(request))
 
             return TemplateResponse(request, TEMPLATE_RETRY, ctx)
