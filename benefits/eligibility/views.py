@@ -6,13 +6,11 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.utils.html import format_html
 from django.utils.translation import pgettext, gettext as _
 
 from benefits.core import recaptcha, session, viewmodels
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RecaptchaEnabled, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
-from benefits.core.views import ROUTE_HELP
 from . import analytics, forms, verify
 
 
@@ -24,7 +22,6 @@ ROUTE_CONFIRM = "eligibility:confirm"
 ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_ENROLLMENT = "enrollment:index"
 
-TEMPLATE_INDEX = "eligibility/index.html"
 TEMPLATE_START = "eligibility/start.html"
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
 TEMPLATE_UNVERIFIED = "eligibility/unverified.html"
@@ -50,28 +47,7 @@ def index(request, agency=None):
     # this may or may not require OAuth, with a different set of scope/claims than what is already stored
     session.logout(request)
 
-    eligibility_start = reverse(ROUTE_START)
-
-    help_page = reverse(ROUTE_HELP)
-
-    agency_intro = _(agency.eligibility_index_intro) if isinstance(agency.eligibility_index_intro, str) else ""
-    common_intro = _("eligibility.pages.index.p[0]%(info_link)s") % {"info_link": f"{help_page}#what-is-cal-itp"}
-    intro = format_html(agency_intro + common_intro)
-    page = viewmodels.Page(
-        title=_("eligibility.pages.index.title"),
-        headline=_("eligibility.pages.index.headline"),
-        paragraphs=[intro],
-        forms=forms.EligibilityVerifierSelectionForm(agency=agency),
-    )
-
-    ctx = page.context_dict()
-
-    origin = session.origin(request)
-    if origin == reverse(ROUTE_CORE_INDEX):
-        ctx["previous_page_button"] = viewmodels.Button.previous_page(url=origin)
-
-    ctx["help_page"] = help_page
-    ctx["help_text"] = format_html(_("eligibility.pages.index.help_text%(help_link)s") % {"help_link": help_page})
+    context = {"form": forms.EligibilityVerifierSelectionForm(agency=agency)}
 
     if request.method == "POST":
         form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency)
@@ -84,15 +60,16 @@ def index(request, agency=None):
             types_to_verify = agency.type_names_to_verify(verifier)
             analytics.selected_verifier(request, types_to_verify)
 
+            eligibility_start = reverse(ROUTE_START)
             response = redirect(eligibility_start)
         else:
             # form was not valid, allow for correction/resubmission
             if recaptcha.has_error(form):
                 messages.error(request, "Recaptcha failed. Please try again.")
-            page.forms = [form]
-            response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
+            context["form"] = form
+            response = TemplateResponse(request, agency.eligibility_index_template, context)
     else:
-        response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
+        response = TemplateResponse(request, agency.eligibility_index_template, context)
 
     return response
 

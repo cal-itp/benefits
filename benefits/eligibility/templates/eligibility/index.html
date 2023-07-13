@@ -1,25 +1,30 @@
 {% extends "core/base.html" %}
+{% load i18n %}
 
 {% block classes %}
   {{ block.super | add:" eligibility-index" }}
 {% endblock classes %}
 
+{% block page_title %}
+  {% translate "eligibility.pages.index.title" %}&nbsp;|&nbsp;
+{% endblock page_title %}
+
 {% block nav-buttons %}
-  {% include "core/includes/previous-page-link.html" %}
+  {% url "core:index" as url %}
+  {% include "core/includes/button--previous-page.html" with url=url %}
 {% endblock nav-buttons %}
 
+{% block headline %}
+  <div class="col-lg-10">
+    <h1>{% translate "eligibility.pages.index.headline" %}</h1>
+  </div>
+{% endblock headline %}
+
 {% block explanatory-text %}
-  {% for p in page.paragraphs %}<p class="pt-4 pb-4 pb-lg-8">{{ p }}</p>{% endfor %}
 {% endblock explanatory-text %}
 
 {% block inner-content %}
   <div class="container">
-    <div class="row">
-      {% block forms %}
-        {% for f in page.forms %}
-          {% include "core/includes/form.html" with form=f %}
-        {% endfor %}
-      {% endblock forms %}
-    </div>
+    <div class="row">{% include "core/includes/form.html" with form=form %}</div>
   </div>
 {% endblock inner-content %}

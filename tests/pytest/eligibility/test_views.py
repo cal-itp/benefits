@@ -11,7 +11,6 @@ from benefits.eligibility.views import (
     ROUTE_CONFIRM,
     ROUTE_ENROLLMENT,
     ROUTE_UNVERIFIED,
-    TEMPLATE_INDEX,
     TEMPLATE_CONFIRM,
     TEMPLATE_UNVERIFIED,
 )
@@ -63,16 +62,17 @@ def test_index_get_agency_multiple_verifiers(
     mock_agency = mocker.Mock(spec=model_TransitAgency)
     mock_agency.eligibility_verifiers.all.return_value = [model_EligibilityVerifier, model_EligibilityVerifier]
     mock_agency.eligibility_verifiers.count.return_value = 2
+    mock_agency.index_url = "/agency"
+    mock_agency.eligibility_index_template = "eligibility/index.html"
     mocked_session_agency.return_value = mock_agency
 
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
-    assert "page" in response.context_data
-    assert len(response.context_data["page"].forms) > 0
-    assert isinstance(response.context_data["page"].forms[0], EligibilityVerifierSelectionForm)
+    assert response.template_name == mock_agency.eligibility_index_template
+    assert "form" in response.context_data
+    assert isinstance(response.context_data["form"], EligibilityVerifierSelectionForm)
 
 
 @pytest.mark.django_db
@@ -84,16 +84,17 @@ def test_index_get_agency_single_verifier(
     mock_agency = mocker.Mock(spec=model_TransitAgency)
     mock_agency.eligibility_verifiers.all.return_value = [model_EligibilityVerifier]
     mock_agency.eligibility_verifiers.count.return_value = 1
+    mock_agency.index_url = "/agency"
+    mock_agency.eligibility_index_template = "eligibility/index.html"
     mocked_session_agency.return_value = mock_agency
 
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
-    assert "page" in response.context_data
-    assert len(response.context_data["page"].forms) > 0
-    assert isinstance(response.context_data["page"].forms[0], EligibilityVerifierSelectionForm)
+    assert response.template_name == mock_agency.eligibility_index_template
+    assert "form" in response.context_data
+    assert isinstance(response.context_data["form"], EligibilityVerifierSelectionForm)
 
 
 @pytest.mark.django_db
@@ -114,7 +115,6 @@ def test_index_post_invalid_form(client):
     response = client.post(path, {"invalid": "data"})
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
 
 
 @pytest.mark.django_db
