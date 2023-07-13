@@ -15,12 +15,6 @@
   {% include "eligibility/includes/media_item__idcardcheck__start__login_gov.html" %}
 {% endblock media-item %}
 
-{% block help-link %}
-  {% url "core:help" as help_page %}
-  {% translate "eligibility.pages.start.help_text" %}
-  <a href="{{ help_page }}#login-gov">{% translate "eligibility.pages.start.help_link_text" %}</a>.
-{% endblock help-link %}
-
 {% block call-to-action-button %}
   {% url "oauth:login" as button_url %}
   {% translate "eligibility.buttons.senior.signin" as button_text %}
