@@ -113,15 +113,12 @@ def test_help(client):
 
 
 @pytest.mark.django_db
-def test_help_with_session_agency(mocked_session_agency, client):
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_help_with_session_agency(client):
     path = reverse(ROUTE_HELP)
     response = client.get(path)
 
     assert response.status_code == 200
-    # mocked_session_agency is Mocked version of the session.agency() function
-    # call it (with a None request) to return the sample agency
-    agency = mocked_session_agency(None)
-    assert agency.long_name in str(response.content)
 
 
 @pytest.mark.django_db

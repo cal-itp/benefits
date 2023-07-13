@@ -64,20 +64,12 @@ def agency_public_key(request, agency):
 @pageview_decorator
 def help(request):
     """View handler for the help page."""
-    if session.active_agency(request):
-        agency = session.agency(request)
-        agency_links = viewmodels.Button.agency_contact_links(agency)
-    else:
-        agency_links = [btn for a in models.TransitAgency.all_active() for btn in viewmodels.Button.agency_contact_links(a)]
-
     page = viewmodels.Page(
         title=_("core.buttons.help"),
         headline=_("core.buttons.help"),
     )
 
     ctx = page.context_dict()
-    ctx["agency_links"] = agency_links
-
     return TemplateResponse(request, TEMPLATE_HELP, ctx)
 
 

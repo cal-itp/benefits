@@ -24,7 +24,7 @@
                width="40"
                height="50"
                src="{% static 'img/icon/contactless.svg' %}"
-               alt="{% translate "core.icons.contactless" context "image alt text" %}"/>
+               alt="{% translate "core.icons.contactless" context "image alt text" %}" />
         </p>
 
         <p class="pt-4">{% translate "core.pages.help.payment_options.p[1]" %}</p>
@@ -60,11 +60,17 @@
       </div>
     </div>
 
-    {% if agency_links %}
     <div class="row justify-content-center">
-      <div class="col-10">{% include "core/includes/agency-links.html" with buttons=agency_links %}</div>
+      <div class="col-10">
+        {% if agency %}
+          {% include "core/includes/agency-links.html" %}
+        {% else %}
+          {% for agency in active_agencies %}
+            {% include "core/includes/agency-links.html" with agency_name=agency.long_name phone=agency.phone info_url=agency.info_url %}
+          {% endfor %}
+        {% endif %}
+      </div>
     </div>
-    {% endif %}
 
     <div class="row pt-8">
       <div class="col-lg-3 offset-lg-8 col-8 offset-2">

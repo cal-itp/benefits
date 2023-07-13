@@ -111,6 +111,8 @@ ROOT_URLCONF = "benefits.urls"
 template_ctx_processors = [
     "django.template.context_processors.request",
     "django.contrib.messages.context_processors.messages",
+    "benefits.core.context_processors.agency",
+    "benefits.core.context_processors.active_agencies",
     "benefits.core.context_processors.analytics",
     "benefits.core.context_processors.authentication",
     "benefits.core.context_processors.origin",
