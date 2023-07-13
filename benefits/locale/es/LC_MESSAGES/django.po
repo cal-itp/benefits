@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-14 05:24+0000\n"
+"POT-Creation-Date: 2023-07-14 21:06+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -573,10 +573,12 @@ msgstr "Error de elegibilidad"
 msgid "eligibility.pages.unverified.headline"
 msgstr "No se pudo verificar su elegibilidad."
 
-msgid "eligibility.pages.unverified.p[0]"
-msgstr ""
-"¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
-"proveedor de tránsito local para obtener asistencia."
+msgid "eligibility.pages.unverified.p[0]s[0]"
+msgstr "TODO: ¡Esta bien! Aún puede ser elegible para nuestro programa."
+
+#, python-format
+msgid "eligibility.pages.unverified.p[0]s[1]%(short_name)s"
+msgstr "TODO: Comuníquese con %(short_name)s para obtener asistencia."
 
 msgctxt "image alt text"
 msgid "core.icons.idcardquestion"
