@@ -152,7 +152,7 @@ PEM DATA
         eligibility_type=mst_senior_type,
         auth_provider=senior_auth_provider,
         selection_label_template="eligibility/includes/selection-label--senior.html",
-        start_template="eligibility/start__login_gov.html",
+        start_template="eligibility/start--login-gov.html",
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
     )
@@ -162,7 +162,7 @@ PEM DATA
         eligibility_type=mst_veteran_type,
         auth_provider=veteran_auth_provider,
         selection_label_template="eligibility/includes/selection-label--veteran.html",
-        start_template="eligibility/start__veteran.html",
+        start_template="eligibility/start--veteran.html",
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
     )
@@ -179,7 +179,7 @@ PEM DATA
         jws_signing_alg=os.environ.get("COURTESY_CARD_VERIFIER_JWS_SIGNING_ALG", "RS256"),
         auth_provider=None,
         selection_label_template="eligibility/includes/selection-label--mst-courtesy-card.html",
-        start_template="eligibility/start__mst_courtesy_card.html",
+        start_template="eligibility/start--mst-courtesy-card.html",
         form_title=_("eligibility.pages.confirm.mst_cc.title"),
         form_headline=_("eligibility.pages.confirm.mst_cc.headline"),
         form_blurb=_("eligibility.pages.confirm.mst_cc.p[0]"),
@@ -202,7 +202,7 @@ PEM DATA
         eligibility_type=sacrt_senior_type,
         auth_provider=senior_auth_provider,
         selection_label_template="eligibility/includes/selection-label--senior.html",
-        start_template="eligibility/start__login_gov.html",
+        start_template="eligibility/start--login-gov.html",
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
     )
