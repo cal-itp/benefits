@@ -516,7 +516,7 @@ msgid "eligibility.pages.index.headline"
 msgstr "TODO: Choose the transit benefit you would like to enroll in"
 
 msgid "eligibility.pages.start.sub_headline"
-msgstr "Necesitará algunos artículos para conectar su beneficio:"
+msgstr "TODO: Necesitará algunos artículos para conectar su beneficio:"
 
 msgid "eligibility.pages.start.login_gov.title"
 msgstr "Información sobre beneficios para Adultos Mayores"
