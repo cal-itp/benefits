@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-13 16:41+0000\n"
+"POT-Creation-Date: 2023-07-13 19:33+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -486,8 +486,8 @@ msgstr ""
 "This option is for people who have served in the active military, naval, or "
 "air service, and who were discharged or released therefrom under conditions "
 "other than dishonorable. You will need to <a href='https://www.va.gov/"
-"resources/verifying-your-identity-on-vagov/' target=\"_blank\" "
-"rel=\"noopener noreferrer\">verify your identity through VA.gov</a>"
+"resources/verifying-your-identity-on-vagov/' target=\"_blank\" rel="
+"\"noopener noreferrer\">verify your identity through VA.gov</a>"
 
 msgid "eligibility.pages.index.intro.mst"
 msgstr ""
@@ -513,12 +513,6 @@ msgstr "Older Adult benefit information"
 
 msgid "eligibility.pages.start.login_gov.headline"
 msgstr "You selected an Older Adult transit benefit."
-
-msgid "eligibility.pages.start.help_text"
-msgstr "Questions about the items above? Please visit our"
-
-msgid "eligibility.pages.start.help_link_text"
-msgstr "Help Page"
 
 msgid "eligibility.buttons.senior.signin"
 msgstr "Get started with"
