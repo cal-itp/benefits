@@ -372,7 +372,7 @@ msgstr "Your contactless card details"
 
 msgid "eligibility.pages.start.bankcard.text"
 msgstr ""
-"Your card must be a contactless debit or credit card by Visa or Mastercard."
+"Your contactless card must be a debit or credit card by Visa or Mastercard."
 
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"

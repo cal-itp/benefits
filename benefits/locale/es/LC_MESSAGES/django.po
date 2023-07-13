@@ -381,7 +381,7 @@ msgstr "TODO: Los datos de su tarjeta bancaria"
 
 msgid "eligibility.pages.start.bankcard.text"
 msgstr ""
-"Su tarjeta debe ser una tarjeta de débito o crédito sin contacto de Visa o "
+"TODO: Su tarjeta debe ser una tarjeta de débito o crédito sin contacto de Visa o "
 "Mastercard."
 
 msgctxt "image alt text"
