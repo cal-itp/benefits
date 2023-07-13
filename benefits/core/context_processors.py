@@ -36,3 +36,13 @@ def authentication(request):
 def debug(request):
     """Context processor adds debug information to request context."""
     return {"debug": session.context_dict(request)}
+
+
+def origin(request):
+    """Context processor adds session.origin to request context."""
+    origin = session.origin(request)
+
+    if origin:
+        return {"origin": origin}
+    else:
+        return {}

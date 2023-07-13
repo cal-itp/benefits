@@ -235,6 +235,9 @@ msgstr ""
 "Si necesita ayuda con este sitio web, póngase en contacto con el equipo de "
 "servicio al cliente de su proveedor de transito local."
 
+msgid "core.buttons.back"
+msgstr "Regresar a la Página Principal"
+
 msgid "core.pages.help.foss.text"
 msgstr ""
 "Esta aplicación es un software libre y de código abierto. Puede obtener el "
@@ -242,6 +245,9 @@ msgstr ""
 
 msgid "core.pages.help.foss.link"
 msgstr "GitHub"
+
+msgid "core.buttons.return_home"
+msgstr "Regresar a la Página Principal"
 
 msgid "core.buttons.previous_page"
 msgstr "Página Anterior"
@@ -260,9 +266,6 @@ msgid "core.includes.nocookies.text"
 msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita cookies. Por favor, active cookies por este sitio web y"
-
-msgid "core.buttons.return_home"
-msgstr "Regresar a la Página Principal"
 
 msgid "core.includes.noscript.brand"
 msgstr "JavaScript está inactivo"
@@ -345,9 +348,6 @@ msgid "core.pages.agency_index.headline%(transit_agency_short_name_and_type)s"
 msgstr ""
 "Obtenga una tarifa reducida en el transporte público "
 "%(transit_agency_short_name_and_type)s a cuando toque para viajar"
-
-msgid "core.buttons.back"
-msgstr "Regresar a la Página Principal"
 
 msgid "core.pages.logged_out.title"
 msgstr "Cierre sesión"

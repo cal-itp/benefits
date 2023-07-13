@@ -35,8 +35,7 @@ def index(request, agency=None):
         # see if session has an agency
         agency = session.agency(request)
         if agency is None:
-            home = viewmodels.Button.home(request)
-            page = viewmodels.ErrorPage.user_error(button=home, path=request.path)
+            page = viewmodels.ErrorPage.user_error(path=request.path)
             return TemplateResponse(request, "200_user_error.html", page.context_dict())
         else:
             session.update(request, eligibility_types=[], origin=agency.index_url)
@@ -183,7 +182,6 @@ def unverified(request):
     analytics.returned_fail(request, types_to_verify)
 
     agency_links = viewmodels.Button.agency_contact_links(agency)
-    back_button = viewmodels.Button.home(request)
 
     page = viewmodels.Page(
         title=_(verifier.unverified_title),
@@ -194,6 +192,5 @@ def unverified(request):
 
     ctx = page.context_dict()
     ctx["agency_links"] = agency_links
-    ctx["back_button"] = back_button
 
     return TemplateResponse(request, TEMPLATE_UNVERIFIED, ctx)

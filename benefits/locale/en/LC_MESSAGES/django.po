@@ -227,6 +227,9 @@ msgstr ""
 "If you need assistance with this website, please reach out to the customer "
 "service team for your local transit provider."
 
+msgid "core.buttons.back"
+msgstr "Go Back"
+
 msgid "core.pages.help.foss.text"
 msgstr ""
 "This application is Free and Open Source Software. You may obtain the source "
@@ -234,6 +237,9 @@ msgstr ""
 
 msgid "core.pages.help.foss.link"
 msgstr "GitHub"
+
+msgid "core.buttons.return_home"
+msgstr "Return Home"
 
 msgid "core.buttons.previous_page"
 msgstr "Previous Page"
@@ -252,9 +258,6 @@ msgid "core.includes.nocookies.text"
 msgstr ""
 "To function properly, this website requires a browser that supports cookies. "
 "Please enable cookies for this website and"
-
-msgid "core.buttons.return_home"
-msgstr "Return Home"
 
 msgid "core.includes.noscript.brand"
 msgstr "JavaScript is disabled"
@@ -337,9 +340,6 @@ msgid "core.pages.agency_index.headline%(transit_agency_short_name_and_type)s"
 msgstr ""
 "Get reduced fare on %(transit_agency_short_name_and_type)s when you tap to "
 "ride"
-
-msgid "core.buttons.back"
-msgstr "Go Back"
 
 msgid "core.pages.logged_out.title"
 msgstr "Logged out"
