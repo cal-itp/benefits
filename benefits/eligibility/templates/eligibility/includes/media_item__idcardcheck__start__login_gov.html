@@ -8,8 +8,15 @@
 
 {% block body %}
     <div class="media-body--details">
-        <p>{% translate "eligibility.pages.start.login_gov.start_item.details" %}</p>
+        <p>
+            {% translate "eligibility.pages.start.login_gov.start_item.details" %}
+            <!-- Button to trigger modal -->
+            <button type="button" class="modal-trigger--link" data-bs-toggle="modal" data-bs-target="#identity-verification-help">
+                {% translate "eligibility.pages.start.senior.help.link_text" %}
+            </button>
+        </p>
         <div class="media-body--items">
+            <p>{% translate "eligibility.pages.start.senior.start_item.secondary_details" %}</p>
             <ul>
                 <li>{% translate "eligibility.pages.start.login_gov.required_items[0]" %}</li>
                 <li>{% translate "eligibility.pages.start.login_gov.required_items[1]" %}</li>
@@ -17,4 +24,6 @@
             </ul>
         </div>
     </div>
+
+    {% include "eligibility/includes/modal--senior-start-help.html" with id="identity-verification-help" %}
 {% endblock body %}
