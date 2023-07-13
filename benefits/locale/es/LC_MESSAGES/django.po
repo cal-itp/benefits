@@ -388,10 +388,10 @@ msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Icono de tarjeta de identificación con marca de verificación"
 
-msgid "eligibility.pages.start.login_gov.start_item.heading"
+msgid "eligibility.pages.start.senior.start_item.heading"
 msgstr "Una cuenta de Login.gov con verificación de identidad"
 
-msgid "eligibility.pages.start.login_gov.start_item.details"
+msgid "eligibility.pages.start.senior.start_item.details"
 msgstr ""
 "TODO: You will be able to create an account using your email address if you "
 "do not already have one. We use your Login.gov account to verify your "
@@ -404,13 +404,13 @@ msgid "eligibility.pages.start.senior.start_item.secondary_details"
 msgstr ""
 "TODO: For this process you will need:"
 
-msgid "eligibility.pages.start.login_gov.required_items[0]"
+msgid "eligibility.pages.start.senior.required_items[0]"
 msgstr "Su tarjeta de identificación emitida por el estado"
 
-msgid "eligibility.pages.start.login_gov.required_items[1]"
+msgid "eligibility.pages.start.senior.required_items[1]"
 msgstr "Su número de Seguro Social"
 
-msgid "eligibility.pages.start.login_gov.required_items[2]"
+msgid "eligibility.pages.start.senior.required_items[2]"
 msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
 
 msgid "eligibility.pages.start.mst_cc.start_item.heading"
@@ -556,10 +556,10 @@ msgstr "TODO: Choose the transit benefit you would like to enroll in"
 msgid "eligibility.pages.start.sub_headline"
 msgstr "TODO: Necesitará algunos artículos para conectar su beneficio:"
 
-msgid "eligibility.pages.start.login_gov.title"
+msgid "eligibility.pages.start.senior.title"
 msgstr "Información sobre beneficios para Adultos Mayores"
 
-msgid "eligibility.pages.start.login_gov.headline"
+msgid "eligibility.pages.start.senior.headline"
 msgstr "Usted seleccionó un beneficio para Adultos Mayores"
 
 msgid "eligibility.buttons.senior.signin"

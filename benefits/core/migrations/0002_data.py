@@ -152,7 +152,7 @@ PEM DATA
         eligibility_type=mst_senior_type,
         auth_provider=senior_auth_provider,
         selection_label_template="eligibility/includes/selection-label--senior.html",
-        start_template="eligibility/start--login-gov.html",
+        start_template="eligibility/start--senior.html",
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
     )
@@ -202,7 +202,7 @@ PEM DATA
         eligibility_type=sacrt_senior_type,
         auth_provider=senior_auth_provider,
         selection_label_template="eligibility/includes/selection-label--senior.html",
-        start_template="eligibility/start--login-gov.html",
+        start_template="eligibility/start--senior.html",
         unverified_title=_("eligibility.pages.unverified.title"),
         unverified_blurb=_("eligibility.pages.unverified.p[0]"),
     )

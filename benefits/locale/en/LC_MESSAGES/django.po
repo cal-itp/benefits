@@ -378,10 +378,10 @@ msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Identification card icon with checkmark"
 
-msgid "eligibility.pages.start.login_gov.start_item.heading"
+msgid "eligibility.pages.start.senior.start_item.heading"
 msgstr "A Login.gov account with identity verification"
 
-msgid "eligibility.pages.start.login_gov.start_item.details"
+msgid "eligibility.pages.start.senior.start_item.details"
 msgstr ""
 "You will be able to create an account using your email address if you do not "
 "already have one. We use your Login.gov account to verify your identity."
@@ -392,13 +392,13 @@ msgstr "Learn more about identity verification"
 msgid "eligibility.pages.start.senior.start_item.secondary_details"
 msgstr "For this process you will need:"
 
-msgid "eligibility.pages.start.login_gov.required_items[0]"
+msgid "eligibility.pages.start.senior.required_items[0]"
 msgstr "Your state-issued ID card"
 
-msgid "eligibility.pages.start.login_gov.required_items[1]"
+msgid "eligibility.pages.start.senior.required_items[1]"
 msgstr "Your Social Security number"
 
-msgid "eligibility.pages.start.login_gov.required_items[2]"
+msgid "eligibility.pages.start.senior.required_items[2]"
 msgstr "A phone number with a phone plan associated with your name"
 
 msgid "eligibility.pages.start.mst_cc.start_item.heading"
@@ -544,10 +544,10 @@ msgstr "Choose the transit benefit you would like to enroll in"
 msgid "eligibility.pages.start.sub_headline"
 msgstr "You will need a few items to continue:"
 
-msgid "eligibility.pages.start.login_gov.title"
+msgid "eligibility.pages.start.senior.title"
 msgstr "Older Adult benefit information"
 
-msgid "eligibility.pages.start.login_gov.headline"
+msgid "eligibility.pages.start.senior.headline"
 msgstr "You selected an Older Adult transit benefit."
 
 msgid "eligibility.buttons.senior.signin"
