@@ -368,7 +368,7 @@ msgid "core.icons.bankcardcheck"
 msgstr "Bank card icon with contactless symbol and checkmark"
 
 msgid "eligibility.pages.start.bankcard.title"
-msgstr "Your bank card details"
+msgstr "Your contactless card details"
 
 msgid "eligibility.pages.start.bankcard.text"
 msgstr ""

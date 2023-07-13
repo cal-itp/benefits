@@ -377,7 +377,7 @@ msgstr ""
 "Icono de tarjeta bancaria con símbolo sin contacto y marca de verificación"
 
 msgid "eligibility.pages.start.bankcard.title"
-msgstr "Los datos de su tarjeta bancaria"
+msgstr "TODO: Los datos de su tarjeta bancaria"
 
 msgid "eligibility.pages.start.bankcard.text"
 msgstr ""
