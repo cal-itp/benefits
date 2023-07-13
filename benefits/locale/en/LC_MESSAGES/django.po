@@ -512,7 +512,7 @@ msgid "eligibility.pages.start.login_gov.title"
 msgstr "Older Adult benefit information"
 
 msgid "eligibility.pages.start.login_gov.headline"
-msgstr "You selected an Older Adult benefit."
+msgstr "You selected an Older Adult transit benefit."
 
 msgid "eligibility.pages.start.help_text"
 msgstr "Questions about the items above? Please visit our"
@@ -527,7 +527,7 @@ msgid "eligibility.pages.start.mst_cc.title"
 msgstr "Courtesy Card information"
 
 msgid "eligibility.pages.start.mst_cc.headline"
-msgstr "You selected a Courtesy Card benefit."
+msgstr "You selected a Courtesy Card transit benefit."
 
 msgid "eligibility.buttons.continue"
 msgstr "Continue"
