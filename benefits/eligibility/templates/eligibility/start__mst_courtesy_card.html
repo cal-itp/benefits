@@ -15,12 +15,6 @@
   {% include "eligibility/includes/media_item__idcardcheck__start__mst_courtesy_card.html" %}
 {% endblock media-item %}
 
-{% block help-link %}
-  {% url "core:help" as help_page %}
-  {% translate "eligibility.pages.start.help_text" %}
-  <a href="{{ help_page }}#mst-courtesy-card">{% translate "eligibility.pages.start.help_link_text" %}</a>.
-{% endblock help-link %}
-
 {% block call-to-action-button %}
   {% url "eligibility:confirm" as button_url %}
   <a href="{{ button_url }}" class="btn btn-lg btn-primary" role="button">{% translate "eligibility.buttons.continue" %}</a>

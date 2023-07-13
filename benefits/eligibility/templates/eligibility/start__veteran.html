@@ -15,12 +15,6 @@
   {% include "eligibility/includes/media_item__idcardcheck__start__veteran.html" %}
 {% endblock media-item %}
 
-{% block help-link %}
-  {% url "core:help" as help_page %}
-  {% translate "eligibility.pages.start.help_text" %}
-  <a href="{{ help_page }}#veteran">{% translate "eligibility.pages.start.help_link_text" %}</a>.
-{% endblock help-link %}
-
 {% block call-to-action-button %}
   {% url "oauth:login" as button_url %}
   {% translate "eligibility.buttons.veteran.signin" as button_text %}
