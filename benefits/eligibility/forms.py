@@ -23,7 +23,7 @@ class EligibilityVerifierSelectionForm(forms.Form):
     # sets label to empty string so the radio_select template can override the label style
     submit_value = _("eligibility.buttons.choose")
 
-    def __init__(self, agency: models.TransitAgency, csp_nonce=None, *args, **kwargs):
+    def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
         verifiers = agency.eligibility_verifiers.all()
 
@@ -32,7 +32,6 @@ class EligibilityVerifierSelectionForm(forms.Form):
         # therefore set to None
         self.fields["verifier"].choices = [(v.id, None) for v in verifiers]
         self.fields["verifier"].widget.selection_label_templates = {v.id: v.selection_label_template for v in verifiers}
-        self.fields["verifier"].widget.csp_nonce = csp_nonce
 
     def clean(self):
         if not recaptcha.verify(self.data):

@@ -24,10 +24,9 @@ class VerifierRadioSelect(widgets.RadioSelect):
     template_name = "core/widgets/verifier_radio_select.html"
     option_template_name = "core/widgets/verifier_radio_select_option.html"
 
-    def __init__(self, selection_label_templates=(), csp_nonce=None, *args, **kwargs):
+    def __init__(self, selection_label_templates=(), *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.selection_label_templates = list(selection_label_templates)
-        self.csp_nonce = csp_nonce
 
     def __deepcopy__(self, memo):
         obj = super().__deepcopy__(memo)
@@ -38,6 +37,6 @@ class VerifierRadioSelect(widgets.RadioSelect):
         option = super().create_option(name, value, label, selected, index, subindex, attrs)
         # this implementation does not support groups from ChoiceWidget.optgroups
         if value in self.selection_label_templates:
-            option.update({"selection_label_template": self.selection_label_templates[value], "csp_nonce": self.csp_nonce})
+            option.update({"selection_label_template": self.selection_label_templates[value]})
 
         return option

@@ -14,11 +14,4 @@
     </button>
 
     {% include "eligibility/includes/modal--senior-help.html" with id="login-gov-help" %}
-
-    <script nonce="{{ widget.csp_nonce }}">
-        const modal = document.getElementById("login-gov-help");
-        modal.addEventListener("click", function (event) {
-            event.preventDefault();
-          });
-    </script>
 {% endblock description %}
