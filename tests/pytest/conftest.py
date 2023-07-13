@@ -107,7 +107,7 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         api_auth_key="secret-key",
         eligibility_type=model_EligibilityType,
         public_key=model_PemData,
-        selection_label_template="core/includes/selection-label.html",
+        selection_label_template="eligibility/includes/selection-label.html",
         form_title="Form",
         form_headline="Form",
         form_blurb="Form Blurb",

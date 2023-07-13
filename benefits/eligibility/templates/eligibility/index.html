@@ -1,5 +1,9 @@
 {% extends "core/base.html" %}
 
+{% block classes %}
+  {{ block.super | add:" eligibility-index" }}
+{% endblock classes %}
+
 {% block nav-buttons %}
   {% include "core/includes/previous-page-link.html" %}
 {% endblock nav-buttons %}

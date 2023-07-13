@@ -1,0 +1,17 @@
+{% extends "core/includes/modal.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block modal-content %}
+    <h2 class="px-lg-3">
+        {% translate "eligibility.pages.index.senior.help.headline" %}
+        <img class="icon" width="197" height="26" src="{% static "img/login-gov-logo.svg" %}" alt="{% translate "core.logos.login_gov" context "image alt text" %}" />
+    </h2>
+    <h3 class="pt-4 pt-lg-3 px-lg-3">{% translate "eligibility.pages.index.senior.help.sub_headline[0]" %}</h3>
+    <p class="pt-1 pt-lg-3 px-lg-3">{% translate "eligibility.pages.index.senior.help.p[0]" %}</p>
+
+    <h3 class="pt-4 pt-lg-3 px-lg-3">{% translate "eligibility.pages.index.senior.help.sub_headline[1]" %}</h3>
+    <p class="pt-1 pt-lg-3 px-lg-3">{% translate "eligibility.pages.index.senior.help.p[1]" %}</p>
+
+    <p class="py-4 py-lg-3 px-lg-3">{% translate "eligibility.pages.index.senior.help.p[2]" %}</p>
+{% endblock modal-content %}
