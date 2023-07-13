@@ -63,12 +63,14 @@ def test_index_get_agency_multiple_verifiers(
     mock_agency.eligibility_verifiers.all.return_value = [model_EligibilityVerifier, model_EligibilityVerifier]
     mock_agency.eligibility_verifiers.count.return_value = 2
     mock_agency.index_url = "/agency"
+    mock_agency.eligibility_index_template = "eligibility/index.html"
     mocked_session_agency.return_value = mock_agency
 
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
 
     assert response.status_code == 200
+    assert response.template_name == mock_agency.eligibility_index_template
     assert "form" in response.context_data
     assert isinstance(response.context_data["form"], EligibilityVerifierSelectionForm)
 
@@ -83,12 +85,14 @@ def test_index_get_agency_single_verifier(
     mock_agency.eligibility_verifiers.all.return_value = [model_EligibilityVerifier]
     mock_agency.eligibility_verifiers.count.return_value = 1
     mock_agency.index_url = "/agency"
+    mock_agency.eligibility_index_template = "eligibility/index.html"
     mocked_session_agency.return_value = mock_agency
 
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
 
     assert response.status_code == 200
+    assert response.template_name == mock_agency.eligibility_index_template
     assert "form" in response.context_data
     assert isinstance(response.context_data["form"], EligibilityVerifierSelectionForm)
 
