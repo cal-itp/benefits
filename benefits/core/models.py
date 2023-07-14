@@ -52,6 +52,10 @@ class AuthProvider(models.Model):
     scheme = models.TextField()
 
     @property
+    def supports_claims_verification(self):
+        return bool(self.scope) and bool(self.claim)
+
+    @property
     def supports_sign_out(self):
         return bool(self.sign_out_button_template) or bool(self.sign_out_link_template)
 
@@ -143,7 +147,7 @@ class EligibilityVerifier(models.Model):
     @property
     def uses_auth_verification(self):
         """True if this Verifier verifies via the auth provider. False otherwise."""
-        return self.is_auth_required and self.auth_provider.scope and self.auth_provider.claim
+        return self.is_auth_required and self.auth_provider.supports_claims_verification
 
     @staticmethod
     def by_id(id):

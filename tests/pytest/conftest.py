@@ -51,6 +51,9 @@ def model_AuthProvider():
         authority="https://example.com",
     )
 
+    assert not auth_provider.supports_claims_verification
+    assert auth_provider.supports_sign_out
+
     return auth_provider
 
 
@@ -59,6 +62,8 @@ def model_AuthProvider_with_verification(model_AuthProvider):
     model_AuthProvider.scope = "scope"
     model_AuthProvider.claim = "claim"
     model_AuthProvider.save()
+
+    assert model_AuthProvider.supports_claims_verification
 
     return model_AuthProvider
 
@@ -71,6 +76,9 @@ def model_AuthProvider_with_verification_no_sign_out(model_AuthProvider):
     model_AuthProvider.sign_out_link_template = None
     model_AuthProvider.save()
 
+    assert model_AuthProvider.supports_claims_verification
+    assert not model_AuthProvider.supports_sign_out
+
     return model_AuthProvider
 
 
@@ -79,6 +87,8 @@ def model_AuthProvider_without_verification(model_AuthProvider):
     model_AuthProvider.scope = None
     model_AuthProvider.claim = None
     model_AuthProvider.save()
+
+    assert not model_AuthProvider.supports_claims_verification
 
     return model_AuthProvider
 
@@ -90,6 +100,9 @@ def model_AuthProvider_without_verification_no_sign_out(model_AuthProvider):
     model_AuthProvider.sign_out_button_template = None
     model_AuthProvider.sign_out_link_template = None
     model_AuthProvider.save()
+
+    assert not model_AuthProvider.supports_claims_verification
+    assert not model_AuthProvider.supports_sign_out
 
     return model_AuthProvider
 
