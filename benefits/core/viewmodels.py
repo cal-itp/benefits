@@ -2,7 +2,6 @@
 The core application: view model definitions for the root of the webapp.
 """
 from django.utils.translation import pgettext, gettext_lazy as _
-from django.urls import reverse
 
 from benefits.core import models
 
@@ -50,12 +49,6 @@ class Button:
             classes = classes.split(" ")
         classes.insert(0, "btn-outline-primary")
         return Button(classes=classes, **kwargs)
-
-    @staticmethod
-    def logout(**kwargs):
-        """Create a button that logs user out, with a login.gov button, with a login.gov logo and fallback text"""
-        btn = Button.primary(fallback_text="Login.gov", id="login", url=reverse("oauth:logout"), text="", **kwargs)
-        return btn
 
     @staticmethod
     def previous_page(url):
