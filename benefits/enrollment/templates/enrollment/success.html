@@ -36,17 +36,12 @@
 {% endblock inner-content %}
 
 {% block call-to-action %}
-  {% if page.buttons|length == 1 %}
+  {% if authentication and authentication.sign_out_button_template %}
     <div class="row d-flex justify-content-start justify-content-lg-center">
       <div class="col-12 col-lg-8 pt-lg-5 mt-lg-0 pt-4 mt-2">
         <p>
-          {% translate "enrollment.pages.success.logout[0]" %}
-          {% for b in page.buttons %}
-            <a id="{{ b.id }}" class="d-inline-block p-0 {{ b.classes | join:" " }}" href="{{ b.url }}" role="button">
-              <span class="fallback-text color-logo">{{ b.fallback_text }}</span>
-            </a>
-            .
-          {% endfor %}
+          {% translate "enrollment.pages.success.logout" %}
+          {% include authentication.sign_out_button_template %}
         </p>
       </div>
     </div>

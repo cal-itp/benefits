@@ -6,15 +6,12 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-13 23:04+0000\n"
+"POT-Creation-Date: 2023-07-14 05:24+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid "eligibility.buttons.senior.signout"
-msgstr "Cierre sesión de Login.gov"
 
 msgid "eligibility.pages.unverified.title"
 msgstr "Error de elegibilidad"
@@ -275,6 +272,9 @@ msgid "core.includes.noscript.text"
 msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita JavaScript. Por favor, active JavaScript por este sitio web y"
+
+msgid "core.buttons.senior.signout"
+msgstr "Cierre sesión de Login.gov"
 
 msgid "core.pages.index.button"
 msgstr "Elija su Proveedor"
@@ -647,7 +647,7 @@ msgstr ""
 msgid "enrollment.pages.success.thankyou"
 msgstr "Gracias por usar los Beneficios de Cal-ITP."
 
-msgid "enrollment.pages.success.logout[0]"
+msgid "enrollment.pages.success.logout"
 msgstr ""
 "Si está en una computadora pública o compartida, no olvide cerrar sesión en "
 

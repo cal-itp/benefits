@@ -6,7 +6,9 @@
 {% endblock page-title %}
 
 {% block nav-buttons %}
-  {% include "core/includes/sign-out-link.html" %}
+  {% if authentication and authentication.sign_out_link_template %}
+    {% include authentication.sign_out_link_template %}
+  {% endif %}
 {% endblock nav-buttons %}
 
 {% block headline %}
