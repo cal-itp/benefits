@@ -16,7 +16,7 @@ from . import analytics, recaptcha, session, viewmodels
 
 logger = logging.getLogger(__name__)
 HEALTHCHECK_PATH = "/healthcheck"
-TEMPLATE_USER_ERROR = "200_user_error.html"
+TEMPLATE_USER_ERROR = "200-user-error.html"
 
 
 def user_error(request):

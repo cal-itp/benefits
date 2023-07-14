@@ -5,9 +5,9 @@
   {{ block.super | add:" eligibility-index" }}
 {% endblock classes %}
 
-{% block page_title %}
+{% block page-title %}
   {% translate "eligibility.pages.index.title" %}&nbsp;|&nbsp;
-{% endblock page_title %}
+{% endblock page-title %}
 
 {% block nav-buttons %}
   {% url "core:index" as url %}

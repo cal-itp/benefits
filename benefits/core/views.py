@@ -16,9 +16,9 @@ ROUTE_HELP = "core:help"
 ROUTE_LOGGED_OUT = "core:logged_out"
 
 TEMPLATE_INDEX = "core/index.html"
-TEMPLATE_AGENCY = "core/agency_index.html"
+TEMPLATE_AGENCY = "core/agency-index.html"
 TEMPLATE_HELP = "core/help.html"
-TEMPLATE_LOGGED_OUT = "core/logged_out.html"
+TEMPLATE_LOGGED_OUT = "core/logged-out.html"
 
 
 @pageview_decorator

@@ -1,15 +1,15 @@
-{% extends "eligibility/includes/media_item__idcardcheck.html" %}
+{% extends "eligibility/includes/media-item--idcardcheck.html" %}
 
 {% load i18n %}
 
 {% block heading %}
-    {% translate "eligibility.pages.start.login_gov.start_item.heading" %}
+    {% translate "eligibility.pages.start.senior.start_item.heading" %}
 {% endblock heading %}
 
 {% block body %}
     <div class="media-body--details">
         <p>
-            {% translate "eligibility.pages.start.login_gov.start_item.details" %}
+            {% translate "eligibility.pages.start.senior.start_item.details" %}
             <!-- Button to trigger modal -->
             <button type="button" class="modal-trigger--link" data-bs-toggle="modal" data-bs-target="#identity-verification-help">
                 {% translate "eligibility.pages.start.senior.help.link_text" %}
@@ -18,9 +18,9 @@
         <div class="media-body--items">
             <p>{% translate "eligibility.pages.start.senior.start_item.secondary_details" %}</p>
             <ul>
-                <li>{% translate "eligibility.pages.start.login_gov.required_items[0]" %}</li>
-                <li>{% translate "eligibility.pages.start.login_gov.required_items[1]" %}</li>
-                <li>{% translate "eligibility.pages.start.login_gov.required_items[2]" %}</li>
+                <li>{% translate "eligibility.pages.start.senior.required_items[0]" %}</li>
+                <li>{% translate "eligibility.pages.start.senior.required_items[1]" %}</li>
+                <li>{% translate "eligibility.pages.start.senior.required_items[2]" %}</li>
             </ul>
         </div>
     </div>

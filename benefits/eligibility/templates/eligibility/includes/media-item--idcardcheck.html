@@ -1,0 +1,8 @@
+{% extends "core/includes/media-item.html" %}
+
+{% load i18n %}
+
+{% block icon %}
+    {% translate "core.icons.idcardcheck" context "image alt text" as icon_alt %}
+    {% include "core/includes/icon--direct-args.html" with name="idcardcheck" alt=icon_alt %}
+{% endblock icon %}

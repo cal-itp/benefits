@@ -1,18 +1,18 @@
 {% extends "eligibility/start.html" %}
 {% load i18n %}
 
-{% block page_title %}
-  {% translate "eligibility.pages.start.login_gov.title" %}&nbsp;|&nbsp;
-{% endblock page_title %}
+{% block page-title %}
+  {% translate "eligibility.pages.start.senior.title" %}&nbsp;|&nbsp;
+{% endblock page-title %}
 
 {% block headline %}
   <div class="col-lg-10">
-    <h1>{% translate "eligibility.pages.start.login_gov.headline" %}</h1>
+    <h1>{% translate "eligibility.pages.start.senior.headline" %}</h1>
   </div>
 {% endblock headline %}
 
 {% block media-item %}
-  {% include "eligibility/includes/media_item__idcardcheck__start__login_gov.html" %}
+  {% include "eligibility/includes/media-item--idcardcheck--start--senior.html" %}
 {% endblock media-item %}
 
 {% block call-to-action-button %}

@@ -2,14 +2,14 @@
 {% load i18n %}
 {% load static %}
 {% get_current_language as LANGUAGE_CODE %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}" class="{% block classes %}{% endblock classes %}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="{% translate "core.pages.help.about.p[0]" %}">
     {# djlint:off #}
-    <title>{% block page_title %}{% if page.title %}{{ page.title }}&nbsp;|&nbsp;{% endif %}{% endblock page_title %}{% translate "core.pages.title.suffix" %}</title>
+    <title>{% block page-title %}{% if page.title %}{{ page.title }}&nbsp;|&nbsp;{% endif %}{% endblock page-title %}{% translate "core.pages.title.suffix" %}</title>
     {# djlint:on #}
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css">
@@ -57,16 +57,8 @@
       <div id="header-container" class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-between">
         <div class="container">
           <span class="navbar-brand p-0">
-            <img class="sm d-lg-none"
-                 src="{% static "img/logo-sm.svg" %}"
-                 width="90"
-                 height="51.3"
-                 alt="{% translate "core.logos.small" context "image alt text" %}"/>
-            <img class="lg d-none d-lg-block"
-                 src="{% static "img/logo-lg.svg" %}"
-                 width="220"
-                 height="50"
-                 alt="{% translate "core.logos.large" context "image alt text" %}"/>
+            <img class="sm d-lg-none" src="{% static "img/logo-sm.svg" %}" width="90" height="51.3" alt="{% translate "core.logos.small" context "image alt text" %}" />
+            <img class="lg d-none d-lg-block" src="{% static "img/logo-lg.svg" %}" width="220" height="50" alt="{% translate "core.logos.large" context "image alt text" %}" />
           </span>
           <div class="form-inline">{% include "core/includes/lang-selector.html" %}</div>
         </div>
@@ -74,7 +66,7 @@
     </header>
 
     <main id="main-content" role="main">
-      {% block main_content %}
+      {% block main-content %}
         {% block nav-buttons %}
         {% endblock nav-buttons %}
         <div class="container main-row">
@@ -106,7 +98,7 @@
             </div>
           {% endblock call-to-action %}
         </div>
-      {% endblock main_content %}
+      {% endblock main-content %}
     </main>
 
     <footer id="footer">
