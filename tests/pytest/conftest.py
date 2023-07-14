@@ -240,12 +240,20 @@ def mocked_session_verifier_oauth(mocker, model_EligibilityVerifier_AuthProvider
 
 
 @pytest.fixture
-def mocked_session_verifier_auth_required(mocker, model_EligibilityVerifier, mocked_session_verifier):
-    mock_verifier = mocker.Mock(spec=model_EligibilityVerifier)
-    mock_verifier.name = model_EligibilityVerifier.name
+def mocked_session_verifier_auth_required(
+    mocker, model_EligibilityVerifier_AuthProvider_with_verification, mocked_session_verifier_oauth
+):
+    mock_verifier = mocker.Mock(spec=model_EligibilityVerifier_AuthProvider_with_verification)
+    mock_verifier.name = model_EligibilityVerifier_AuthProvider_with_verification.name
     mock_verifier.is_auth_required = True
-    mocked_session_verifier.return_value = mock_verifier
-    return mocked_session_verifier
+    mock_verifier.auth_provider.sign_out_button_template = (
+        model_EligibilityVerifier_AuthProvider_with_verification.auth_provider.sign_out_button_template
+    )
+    mock_verifier.auth_provider.sign_out_link_template = (
+        model_EligibilityVerifier_AuthProvider_with_verification.auth_provider.sign_out_link_template
+    )
+    mocked_session_verifier_oauth.return_value = mock_verifier
+    return mocked_session_verifier_oauth
 
 
 @pytest.fixture
