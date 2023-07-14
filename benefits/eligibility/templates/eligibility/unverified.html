@@ -1,7 +1,9 @@
 {% extends "core/base.html" %}
 
 {% block main-content %}
-  {% include "core/includes/sign-out-link.html" %}
+  {% if authentication and authentication.sign_out_link_template %}
+    {% include authentication.sign_out_link_template %}
+  {% endif %}
 
   <div class="container">
     {% include "core/includes/icon-title.html" with title=page.headline icon=page.icon %}
