@@ -124,12 +124,9 @@ def success(request):
 
     verifier = session.verifier(request)
 
-    page = viewmodels.Page()
-
     if session.logged_in(request) and verifier.auth_provider.supports_sign_out:
         # overwrite origin for a logged in user
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
-        page.buttons = [viewmodels.Button.logout()]
 
-    return TemplateResponse(request, TEMPLATE_SUCCESS, page.context_dict())
+    return TemplateResponse(request, TEMPLATE_SUCCESS)

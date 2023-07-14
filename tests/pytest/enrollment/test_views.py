@@ -209,7 +209,6 @@ def test_success_authentication_logged_in(mocker, client):
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
-    assert "page" in response.context_data
     assert {"origin": reverse(ROUTE_LOGGED_OUT)} in mock_session.update.call_args
 
 
@@ -224,7 +223,6 @@ def test_success_authentication_not_logged_in(mocker, client):
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
-    assert "page" in response.context_data
 
 
 @pytest.mark.django_db
@@ -235,4 +233,3 @@ def test_success_no_authentication(client):
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
-    assert "page" in response.context_data

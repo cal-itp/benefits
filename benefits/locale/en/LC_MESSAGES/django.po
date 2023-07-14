@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-14 05:02+0000\n"
+"POT-Creation-Date: 2023-07-14 05:24+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -634,7 +634,7 @@ msgstr ""
 msgid "enrollment.pages.success.thankyou"
 msgstr "Thank you for using Cal-ITP Benefits!"
 
-msgid "enrollment.pages.success.logout[0]"
+msgid "enrollment.pages.success.logout"
 msgstr ""
 "If you are on a public or shared computer, don’t forget to sign out of "
 
