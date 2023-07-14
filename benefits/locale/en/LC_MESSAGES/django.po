@@ -6,15 +6,12 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-13 23:04+0000\n"
+"POT-Creation-Date: 2023-07-14 05:02+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid "eligibility.buttons.senior.signout"
-msgstr "Sign out of Login.gov"
 
 msgid "eligibility.pages.unverified.title"
 msgstr "Eligibility Error"
@@ -266,6 +263,9 @@ msgid "core.includes.noscript.text"
 msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
+
+msgid "core.buttons.senior.signout"
+msgstr "Sign out of Login.gov"
 
 msgid "core.pages.index.button"
 msgstr "Choose your Provider"
