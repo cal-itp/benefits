@@ -47,6 +47,7 @@ def authentication(request):
         }
 
         if verifier.is_auth_required:
+            data["sign_out_button_template"] = verifier.auth_provider.sign_out_button_template
             data["sign_out_link_template"] = verifier.auth_provider.sign_out_link_template
 
         return {"authentication": data}

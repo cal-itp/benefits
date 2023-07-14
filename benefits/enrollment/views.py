@@ -126,7 +126,7 @@ def success(request):
 
     page = viewmodels.Page()
 
-    if verifier.supports_sign_out and session.logged_in(request):
+    if session.logged_in(request) and verifier.auth_provider.supports_sign_out:
         # overwrite origin for a logged in user
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
