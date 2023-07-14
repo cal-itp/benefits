@@ -34,7 +34,35 @@ def test_PemData_data_remote(model_PemData, mocker):
 
 
 @pytest.mark.django_db
-def test_EligibilityType_str(model_EligibilityType):
+def test_model_AuthProvider(model_AuthProvider):
+    assert not model_AuthProvider.supports_claims_verification
+    assert model_AuthProvider.supports_sign_out
+
+
+@pytest.mark.django_db
+def test_model_AuthProvider_with_verification(model_AuthProvider_with_verification):
+    assert model_AuthProvider_with_verification.supports_claims_verification
+
+
+@pytest.mark.django_db
+def test_model_AuthProvider_with_verification_no_sign_out(model_AuthProvider_with_verification_no_sign_out):
+    assert model_AuthProvider_with_verification_no_sign_out.supports_claims_verification
+    assert not model_AuthProvider_with_verification_no_sign_out.supports_sign_out
+
+
+@pytest.mark.django_db
+def test_model_AuthProvider_without_verification(model_AuthProvider_without_verification):
+    assert not model_AuthProvider_without_verification.supports_claims_verification
+
+
+@pytest.mark.django_db
+def model_AuthProvider_without_verification_no_sign_out(model_AuthProvider_without_verification_no_sign_out):
+    assert not model_AuthProvider_without_verification_no_sign_out.supports_claims_verification
+    assert not model_AuthProvider_without_verification_no_sign_out.supports_sign_out
+
+
+@pytest.mark.django_db
+def test_test_EligibilityType_str(model_EligibilityType):
     assert str(model_EligibilityType) == model_EligibilityType.label
 
 
