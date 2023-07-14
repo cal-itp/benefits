@@ -2,7 +2,6 @@
 The core application: context processors for enriching request context data.
 """
 from django.conf import settings
-from django.urls import reverse
 
 from . import models, session
 
@@ -44,15 +43,11 @@ def authentication(request):
 
     if verifier:
         data = {
-            "required": verifier.is_auth_required,
             "logged_in": session.logged_in(request),
-            "supports_sign_out": verifier.supports_sign_out,
-            "sign_out_route": reverse("oauth:logout"),
         }
 
         if verifier.is_auth_required:
-            auth_provider = verifier.auth_provider
-            data["sign_out_button_label"] = auth_provider.sign_out_button_label
+            data["sign_out_link_template"] = verifier.auth_provider.sign_out_link_template
 
         return {"authentication": data}
     else:
