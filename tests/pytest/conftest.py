@@ -44,7 +44,7 @@ def model_PemData():
 @pytest.fixture
 def model_AuthProvider():
     auth_provider = AuthProvider.objects.create(
-        sign_out_button_label="Sign out",
+        sign_out_link_template="core/includes/sign-out-link.html",
         client_name="Client",
         client_id="1234",
         authority="https://example.com",
@@ -66,7 +66,7 @@ def model_AuthProvider_with_verification(model_AuthProvider):
 def model_AuthProvider_with_verification_no_sign_out(model_AuthProvider):
     model_AuthProvider.scope = "scope"
     model_AuthProvider.claim = "claim"
-    model_AuthProvider.sign_out_button_label = None
+    model_AuthProvider.sign_out_link_template = None
     model_AuthProvider.save()
 
     return model_AuthProvider
@@ -85,7 +85,7 @@ def model_AuthProvider_without_verification(model_AuthProvider):
 def model_AuthProvider_without_verification_no_sign_out(model_AuthProvider):
     model_AuthProvider.scope = None
     model_AuthProvider.claim = None
-    model_AuthProvider.sign_out_button_label = None
+    model_AuthProvider.sign_out_link_template = None
     model_AuthProvider.save()
 
     return model_AuthProvider

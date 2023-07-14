@@ -42,7 +42,7 @@ class AuthProvider(models.Model):
     """An entity that provides authentication for eligibility verifiers."""
 
     id = models.AutoField(primary_key=True)
-    sign_out_button_label = models.TextField(null=True)
+    sign_out_link_template = models.TextField(null=True)
     client_name = models.TextField()
     client_id = models.TextField()
     authority = models.TextField()
@@ -142,7 +142,7 @@ class EligibilityVerifier(models.Model):
 
     @property
     def supports_sign_out(self):
-        return bool(self.is_auth_required and self.auth_provider.sign_out_button_label)
+        return bool(self.is_auth_required and self.auth_provider.sign_out_link_template)
 
     @staticmethod
     def by_id(id):
