@@ -1,1 +1,14 @@
 {% extends "error.html" %}
+{% load i18n %}
+
+{% block title %}
+  {% translate "core.pages.user_error.title" %}
+{% endblock title %}
+
+{% block headline %}
+  {% translate "core.pages.user_error.headline" %}
+{% endblock headline %}
+
+{% block paragraphs %}
+  <p>{% translate "core.pages.user_error.p[0]" %}</p>
+{% endblock paragraphs %}

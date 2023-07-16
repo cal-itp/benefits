@@ -11,7 +11,7 @@ from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
 
-from . import analytics, recaptcha, session, viewmodels
+from . import analytics, recaptcha, session
 
 
 logger = logging.getLogger(__name__)
@@ -20,9 +20,7 @@ TEMPLATE_USER_ERROR = "200-user-error.html"
 
 
 def user_error(request):
-    page = viewmodels.ErrorPage.user_error()
-
-    return TemplateResponse(request, TEMPLATE_USER_ERROR, page.context_dict())
+    return TemplateResponse(request, TEMPLATE_USER_ERROR)
 
 
 class AgencySessionRequired(MiddlewareMixin):

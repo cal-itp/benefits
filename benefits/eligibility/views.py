@@ -35,8 +35,7 @@ def index(request, agency=None):
         # see if session has an agency
         agency = session.agency(request)
         if agency is None:
-            page = viewmodels.ErrorPage.user_error(path=request.path)
-            return TemplateResponse(request, "200-user-error.html", page.context_dict())
+            return TemplateResponse(request, "200-user-error.html")
         else:
             session.update(request, eligibility_types=[], origin=agency.index_url)
     else:

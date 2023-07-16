@@ -14,14 +14,7 @@ from benefits.core.viewmodels import ErrorPage
             "core.pages.not_found.headline",
             ["core.pages.not_found.p[0]"],
             id="not_found",
-        ),
-        pytest.param(
-            ErrorPage.user_error,
-            "core.pages.user_error.title",
-            "core.pages.user_error.headline",
-            ["core.pages.user_error.p[0]"],
-            id="user_error",
-        ),
+        )
     ],
 )
 def test_ErrorPage_translations(error_page_function, title, headline, paragraphs):

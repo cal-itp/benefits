@@ -150,16 +150,6 @@ class ErrorPage(Page):
         )
 
     @staticmethod
-    def user_error(
-        title=_("core.pages.user_error.title"),
-        headline=_("core.pages.user_error.headline"),
-        paragraphs=[_("core.pages.user_error.p[0]")],
-        **kwargs,
-    ):
-        """Create a new core.viewmodels.ErrorPage instance with defaults for a user error."""
-        return ErrorPage(title=title, headline=headline, paragraphs=paragraphs, **kwargs)
-
-    @staticmethod
     def not_found(
         title=_("core.pages.not_found.title"),
         headline=_("core.pages.not_found.headline"),
