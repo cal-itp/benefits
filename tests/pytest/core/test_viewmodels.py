@@ -9,13 +9,6 @@ from benefits.core.viewmodels import ErrorPage
     "error_page_function,title,headline,paragraphs",
     [
         pytest.param(
-            ErrorPage.server_error,
-            "core.pages.server_error.title",
-            "core.pages.server_error.title",
-            ["core.pages.server_error.p[0]"],
-            id="server_error",
-        ),
-        pytest.param(
             ErrorPage.not_found,
             "core.pages.not_found.title",
             "core.pages.not_found.headline",

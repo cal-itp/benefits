@@ -160,16 +160,6 @@ class ErrorPage(Page):
         return ErrorPage(title=title, headline=headline, paragraphs=paragraphs, **kwargs)
 
     @staticmethod
-    def server_error(
-        title=_("core.pages.server_error.title"),
-        headline=_("core.pages.server_error.title"),
-        paragraphs=[_("core.pages.server_error.p[0]")],
-        **kwargs,
-    ):
-        """Create a new core.viewmodels.ErrorPage instance with defaults for a generic server error."""
-        return ErrorPage(title=title, headline=headline, paragraphs=paragraphs, **kwargs)
-
-    @staticmethod
     def not_found(
         title=_("core.pages.not_found.title"),
         headline=_("core.pages.not_found.headline"),

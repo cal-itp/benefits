@@ -1,12 +1,27 @@
 {% extends "core/base.html" %}
+{% load i18n %}
+
+{% block page-title %}
+  {% block title %}
+  {% endblock title %}
+  &nbsp;|&nbsp;
+{% endblock page-title %}
 
 {% block main-content %}
   <div class="container">
-    {% include "core/includes/icon-title.html" with title=page.headline icon=page.icon %}
+    <h1 class="icon-title h2 text-center">
+      <span class="icon d-block pb-5">
+        {% translate "core.icons.sadbus" as alt_i18n %}
+        {% include "core/includes/icon--direct-args.html" with name="sadbus" alt=alt_i18n %}
+      </span>
+      {% block headline %}
+      {% endblock headline %}
+    </h1>
 
     <div class="row justify-content-center">
       <div class="col-lg-8 pt-4">
-        {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
+        {% block paragraphs %}
+        {% endblock paragraphs %}
       </div>
     </div>
 

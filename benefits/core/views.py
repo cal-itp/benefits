@@ -81,10 +81,9 @@ def bad_request(request, exception, template_name="400.html"):
     else:
         session.update(request, origin=reverse(ROUTE_INDEX))
 
-    page = viewmodels.ErrorPage.server_error()
     t = loader.get_template(template_name)
 
-    return HttpResponseBadRequest(t.render(page.context_dict()))
+    return HttpResponseBadRequest(t.render())
 
 
 @pageview_decorator
@@ -126,10 +125,9 @@ def server_error(request, template_name="500.html"):
     else:
         session.update(request, origin=reverse(ROUTE_INDEX))
 
-    page = viewmodels.ErrorPage.server_error()
     t = loader.get_template(template_name)
 
-    return HttpResponseServerError(t.render(page.context_dict()))
+    return HttpResponseServerError(t.render())
 
 
 def logged_out(request):
