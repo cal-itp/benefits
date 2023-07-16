@@ -3,8 +3,6 @@ The core application: view model definitions for the root of the webapp.
 """
 from django.utils.translation import gettext_lazy as _
 
-from benefits.core import models
-
 
 class Button:
     """
@@ -128,25 +126,3 @@ class Page:
     def context_dict(self):
         """Return a context dict for a Page."""
         return {"page": self}
-
-
-class TransitAgency:
-    """
-    Represents a core.models.TransitAgency:
-    * model: core.models.TransitAgency
-    """
-
-    def __init__(self, model):
-        if isinstance(model, models.TransitAgency):
-            self.slug = model.slug
-            self.short_name = model.short_name
-            self.long_name = model.long_name
-            self.agency_id = model.agency_id
-            self.merchant_id = model.merchant_id
-            self.info_url = model.info_url
-            self.phone = model.phone
-            self.eligibility_index_url = model.eligibility_index_url
-
-    def context_dict(self):
-        """Return a context dict for a TransitAgency."""
-        return {"agency": self}
