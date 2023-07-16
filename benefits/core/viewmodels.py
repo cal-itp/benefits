@@ -1,7 +1,7 @@
 """
 The core application: view model definitions for the root of the webapp.
 """
-from django.utils.translation import pgettext, gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from benefits.core import models
 
@@ -128,26 +128,6 @@ class Page:
     def context_dict(self):
         """Return a context dict for a Page."""
         return {"page": self}
-
-
-class ErrorPage(Page):
-    """
-    Represents an error page:
-    * title: str
-    * icon: core.viewmodels.Icon
-    * headline: str
-    * paragraphs: str[]
-    * button: core.viewmodels.Button
-    """
-
-    def __init__(self, **kwargs):
-        super().__init__(
-            title=kwargs.get("title", _("core.pages.error.title")),
-            icon=kwargs.get("icon", Icon("sadbus", pgettext("image alt text", "core.icons.sadbus"))),
-            headline=kwargs.get("headline", _("core.pages.error.title")),
-            paragraphs=kwargs.get("paragraphs", [_("core.pages.server_error.headline")]),
-            button=kwargs.get("button"),
-        )
 
 
 class TransitAgency:
