@@ -149,21 +149,6 @@ class ErrorPage(Page):
             button=kwargs.get("button"),
         )
 
-    @staticmethod
-    def not_found(
-        title=_("core.pages.not_found.title"),
-        headline=_("core.pages.not_found.headline"),
-        paragraphs=[_("core.pages.not_found.p[0]")],
-        **kwargs,
-    ):
-        """Create a new core.viewmodels.ErrorPage with defaults for a 404."""
-        path = kwargs.pop("path", None)
-        if path and title:
-            title = f"{title}: {path}"
-        elif path and not title:
-            title = path
-        return ErrorPage(title=title, headline=headline, paragraphs=paragraphs, **kwargs)
-
 
 class TransitAgency:
     """

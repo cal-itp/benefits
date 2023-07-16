@@ -1,1 +1,14 @@
 {% extends "error.html" %}
+{% load i18n %}
+
+{% block title %}
+  {% translate "core.pages.not_found.title" %}
+{% endblock title %}
+
+{% block headline %}
+  {% translate "core.pages.not_found.headline" %}
+{% endblock headline %}
+
+{% block paragraphs %}
+  <p>{% translate "core.pages.not_found.p[0]" %}</p>
+{% endblock paragraphs %}

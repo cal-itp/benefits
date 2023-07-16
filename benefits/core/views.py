@@ -96,10 +96,9 @@ def csrf_failure(request, reason):
     else:
         session.update(request, origin=reverse(ROUTE_INDEX))
 
-    page = viewmodels.ErrorPage.not_found(path=request.path)
     t = loader.get_template("400.html")
 
-    return HttpResponseNotFound(t.render(page.context_dict()))
+    return HttpResponseNotFound(t.render())
 
 
 @pageview_decorator
