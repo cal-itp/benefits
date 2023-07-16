@@ -5,7 +5,6 @@ import pytest
 from benefits.core.models import EligibilityVerifier, TransitAgency
 import benefits.core.session
 from benefits.core.views import (
-    ROUTE_INDEX,
     ROUTE_HELP,
     ROUTE_LOGGED_OUT,
     TEMPLATE_INDEX,
@@ -13,6 +12,7 @@ from benefits.core.views import (
     bad_request,
     csrf_failure,
 )
+from benefits.core.middleware import ROUTE_INDEX
 
 
 ROUTE_AGENCY = "core:agency_index"

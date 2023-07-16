@@ -15,7 +15,9 @@ from . import analytics, recaptcha, session
 
 
 logger = logging.getLogger(__name__)
+
 HEALTHCHECK_PATH = "/healthcheck"
+ROUTE_INDEX = "core:index"
 TEMPLATE_USER_ERROR = "200-user-error.html"
 
 
