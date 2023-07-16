@@ -7,7 +7,7 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.translation import pgettext, gettext as _
 
-from . import models, session, viewmodels
+from . import session, viewmodels
 from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator
 
 ROUTE_ELIGIBILITY = "eligibility:index"
@@ -35,7 +35,6 @@ def index(request):
     )
 
     ctx = page.context_dict()
-    ctx["agencies"] = [viewmodels.TransitAgency(a) for a in models.TransitAgency.all_active()]
 
     return TemplateResponse(request, TEMPLATE_INDEX, ctx)
 
