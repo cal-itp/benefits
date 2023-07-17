@@ -83,6 +83,7 @@ def authorize(request):
     return redirect(ROUTE_CONFIRM)
 
 
+@decorator_from_middleware(VerifierSessionRequired)
 def cancel(request):
     """View implementing cancellation of OIDC authorization."""
 

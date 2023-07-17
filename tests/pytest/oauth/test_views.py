@@ -4,7 +4,7 @@ from django.urls import reverse
 import pytest
 
 from benefits.core import session
-from benefits.core.middleware import ROUTE_INDEX
+from benefits.core.middleware import ROUTE_INDEX, TEMPLATE_USER_ERROR
 
 from benefits.oauth.views import ROUTE_START, ROUTE_CONFIRM, ROUTE_UNVERIFIED, login, authorize, cancel, logout, post_logout
 import benefits.oauth.views
@@ -162,6 +162,8 @@ def test_authorize_success_without_claim_in_response(
     assert result.url == reverse(ROUTE_CONFIRM)
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
 def test_cancel(mocked_analytics_module, app_request):
     unverified_route = reverse(ROUTE_UNVERIFIED)
 
@@ -170,6 +172,14 @@ def test_cancel(mocked_analytics_module, app_request):
     mocked_analytics_module.canceled_sign_in.assert_called_once()
     assert result.status_code == 302
     assert result.url == unverified_route
+
+
+@pytest.mark.django_db
+def test_cancel_no_session_verifier(app_request):
+    result = cancel(app_request)
+
+    assert result.status_code == 200
+    assert result.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
