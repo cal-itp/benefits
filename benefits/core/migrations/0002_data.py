@@ -154,8 +154,6 @@ PEM DATA
         auth_provider=senior_auth_provider,
         selection_label_template="eligibility/includes/selection-label--senior.html",
         start_template="eligibility/start--senior.html",
-        unverified_title=_("eligibility.pages.unverified.title"),
-        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
     )
 
     mst_veteran_verifier = EligibilityVerifier.objects.create(
@@ -164,8 +162,6 @@ PEM DATA
         auth_provider=veteran_auth_provider,
         selection_label_template="eligibility/includes/selection-label--veteran.html",
         start_template="eligibility/start--veteran.html",
-        unverified_title=_("eligibility.pages.unverified.title"),
-        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
     )
 
     mst_courtesy_card_verifier = EligibilityVerifier.objects.create(
@@ -194,8 +190,6 @@ PEM DATA
         form_name_help_text=_("eligibility.forms.confirm.mst_courtesy_card.fields.name.help_text"),
         form_name_placeholder="Garcia",
         form_name_max_length=255,
-        unverified_title=_("eligibility.pages.unverified.mst_courtesy_card.title"),
-        unverified_blurb=_("eligibility.pages.unverified.mst_courtesy_card.p[0]"),
     )
 
     sacrt_oauth_claims_verifier = EligibilityVerifier.objects.create(
@@ -204,8 +198,6 @@ PEM DATA
         auth_provider=senior_auth_provider,
         selection_label_template="eligibility/includes/selection-label--senior.html",
         start_template="eligibility/start--senior.html",
-        unverified_title=_("eligibility.pages.unverified.title"),
-        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
     )
 
     PaymentProcessor = app.get_model("core", "PaymentProcessor")
