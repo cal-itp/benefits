@@ -8,8 +8,7 @@ from django.urls import reverse
 from django.utils.translation import pgettext, gettext as _
 
 from . import models, session, viewmodels
-from .middleware import pageview_decorator, ROUTE_INDEX
-
+from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator
 
 ROUTE_ELIGIBILITY = "eligibility:index"
 ROUTE_HELP = "core:help"
@@ -78,19 +77,16 @@ def help(request):
 
 
 @pageview_decorator
+@index_or_agencyindex_origin_decorator
 def bad_request(request, exception, template_name=TEMPLATE_BAD_REQUEST):
     """View handler for HTTP 400 Bad Request responses."""
-    if session.active_agency(request):
-        session.update(request, origin=session.agency(request).index_url)
-    else:
-        session.update(request, origin=reverse(ROUTE_INDEX))
-
     t = loader.get_template(template_name)
 
     return HttpResponseBadRequest(t.render())
 
 
 @pageview_decorator
+@index_or_agencyindex_origin_decorator
 def csrf_failure(request, reason):
     """
     View handler for CSRF_FAILURE_VIEW with custom data.
@@ -101,26 +97,18 @@ def csrf_failure(request, reason):
 
 
 @pageview_decorator
+@index_or_agencyindex_origin_decorator
 def page_not_found(request, exception, template_name=TEMPLATE_NOT_FOUND):
     """View handler for HTTP 404 Not Found responses."""
-    if session.active_agency(request):
-        session.update(request, origin=session.agency(request).index_url)
-    else:
-        session.update(request, origin=reverse(ROUTE_INDEX))
-
     t = loader.get_template(template_name)
 
     return HttpResponseNotFound(t.render())
 
 
 @pageview_decorator
+@index_or_agencyindex_origin_decorator
 def server_error(request, template_name=TEMPLATE_SERVER_ERROR):
     """View handler for HTTP 500 Server Error responses."""
-    if session.active_agency(request):
-        session.update(request, origin=session.agency(request).index_url)
-    else:
-        session.update(request, origin=reverse(ROUTE_INDEX))
-
     t = loader.get_template(template_name)
 
     return HttpResponseServerError(t.render())
