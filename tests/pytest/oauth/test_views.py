@@ -25,6 +25,14 @@ def test_login_no_oauth_client(mocked_oauth_create_client, app_request):
 
 
 @pytest.mark.django_db
+def test_login_no_session_verifier(app_request):
+    result = login(app_request)
+
+    assert result.status_code == 200
+    assert result.template_name == TEMPLATE_USER_ERROR
+
+
+@pytest.mark.django_db
 def test_login(mocked_oauth_create_client, mocked_session_verifier_auth_required, mocked_analytics_module, app_request):
     assert not session.logged_in(app_request)
 
@@ -47,6 +55,14 @@ def test_authorize_no_oauth_client(mocked_oauth_create_client, app_request):
 
     with pytest.raises(Exception, match=r"oauth_client"):
         authorize(app_request)
+
+
+@pytest.mark.django_db
+def test_authorize_no_session_verifier(app_request):
+    result = authorize(app_request)
+
+    assert result.status_code == 200
+    assert result.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
@@ -192,6 +208,14 @@ def test_logout_no_oauth_client(mocked_oauth_create_client, app_request):
 
 
 @pytest.mark.django_db
+def test_logout_no_session_verifier(app_request):
+    result = logout(app_request)
+
+    assert result.status_code == 200
+    assert result.template_name == TEMPLATE_USER_ERROR
+
+
+@pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_auth_required")
 def test_logout(mocker, mocked_oauth_create_client, mocked_analytics_module, app_request):
     # logout internally calls deauthorize_redirect
@@ -218,6 +242,8 @@ def test_logout(mocker, mocked_oauth_create_client, mocked_analytics_module, app
     assert session.oauth_claim(app_request) is False
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
 def test_post_logout(app_request, mocked_analytics_module):
     origin = reverse(ROUTE_INDEX)
     session.update(app_request, origin=origin)
@@ -227,3 +253,11 @@ def test_post_logout(app_request, mocked_analytics_module):
     assert result.status_code == 302
     assert result.url == origin
     mocked_analytics_module.finished_sign_out.assert_called_once()
+
+
+@pytest.mark.django_db
+def test_post_logout_no_session_verifier(app_request):
+    result = post_logout(app_request)
+
+    assert result.status_code == 200
+    assert result.template_name == TEMPLATE_USER_ERROR

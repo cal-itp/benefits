@@ -117,6 +117,7 @@ def logout(request):
     return redirects.deauthorize_redirect(oauth_client, token, redirect_uri)
 
 
+@decorator_from_middleware(VerifierSessionRequired)
 def post_logout(request):
     """View routes the user to their origin after sign out."""
 
