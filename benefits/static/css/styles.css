@@ -142,7 +142,7 @@ a:visited:not(.btn) {
   color: var(--selected-color);
 }
 
-.external-link::after {
+[target="_blank"]::after {
   content: " ";
   background-color: currentColor;
 
