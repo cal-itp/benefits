@@ -36,7 +36,7 @@
 {% endblock inner-content %}
 
 {% block call-to-action %}
-  {% if authentication and authentication.sign_out_button_template %}
+  {% if authentication and authentication.logged_in and authentication.sign_out_button_template %}
     <div class="row d-flex justify-content-start justify-content-lg-center">
       <div class="col-12 col-lg-8 pt-lg-5 mt-lg-0 pt-4 mt-2">
         <p>
