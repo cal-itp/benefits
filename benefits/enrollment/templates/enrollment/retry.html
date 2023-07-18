@@ -9,9 +9,7 @@
   <div class="container">
     <h1 class="h2 text-center">
       {% translate "core.icons.bankcardquestion" context "image alt text" as alt_i18n %}
-      <span class="icon d-block pb-5">
-        {% include "core/includes/icon--direct-args.html" with name="bankcardquestion" alt=alt_i18n %}
-      </span>
+      <span class="icon d-block pb-5">{% include "core/includes/icon.html" with name="bankcardquestion" alt=alt_i18n %}</span>
       {% translate "enrollment.pages.retry.title" %}
     </h1>
 
