@@ -82,7 +82,7 @@ def bad_request(request, exception, template_name=TEMPLATE_BAD_REQUEST):
     """View handler for HTTP 400 Bad Request responses."""
     t = loader.get_template(template_name)
 
-    return HttpResponseBadRequest(t.render())
+    return HttpResponseBadRequest(t.render(request=request))
 
 
 @pageview_decorator
@@ -93,7 +93,7 @@ def csrf_failure(request, reason):
     """
     t = loader.get_template(TEMPLATE_BAD_REQUEST)
 
-    return HttpResponseNotFound(t.render())
+    return HttpResponseNotFound(t.render(request=request))
 
 
 @pageview_decorator
@@ -102,7 +102,7 @@ def page_not_found(request, exception, template_name=TEMPLATE_NOT_FOUND):
     """View handler for HTTP 404 Not Found responses."""
     t = loader.get_template(template_name)
 
-    return HttpResponseNotFound(t.render())
+    return HttpResponseNotFound(t.render(request=request))
 
 
 @pageview_decorator
@@ -111,7 +111,7 @@ def server_error(request, template_name=TEMPLATE_SERVER_ERROR):
     """View handler for HTTP 500 Server Error responses."""
     t = loader.get_template(template_name)
 
-    return HttpResponseServerError(t.render())
+    return HttpResponseServerError(t.render(request=request))
 
 
 def logged_out(request):
