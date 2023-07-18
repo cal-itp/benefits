@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.utils.translation import pgettext, gettext as _
+from django.utils.translation import gettext as _
 
 from benefits.core import recaptcha, session, viewmodels
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RecaptchaEnabled, VerifierSessionRequired
@@ -180,9 +180,4 @@ def unverified(request):
 
     analytics.returned_fail(request, types_to_verify)
 
-    page = viewmodels.Page(
-        icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
-    )
-
-    ctx = page.context_dict()
-    return TemplateResponse(request, TEMPLATE_UNVERIFIED, ctx)
+    return TemplateResponse(request, TEMPLATE_UNVERIFIED)
