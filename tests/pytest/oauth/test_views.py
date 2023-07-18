@@ -4,7 +4,7 @@ from django.urls import reverse
 import pytest
 
 from benefits.core import session
-from benefits.core.views import ROUTE_INDEX
+from benefits.core.middleware import ROUTE_INDEX
 
 from benefits.oauth.views import ROUTE_START, ROUTE_CONFIRM, ROUTE_UNVERIFIED, login, authorize, cancel, logout, post_logout
 import benefits.oauth.views

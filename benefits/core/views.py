@@ -8,9 +8,8 @@ from django.urls import reverse
 from django.utils.translation import pgettext, gettext as _
 
 from . import models, session, viewmodels
-from .middleware import pageview_decorator
+from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator
 
-ROUTE_INDEX = "core:index"
 ROUTE_ELIGIBILITY = "eligibility:index"
 ROUTE_HELP = "core:help"
 ROUTE_LOGGED_OUT = "core:logged_out"
@@ -19,6 +18,10 @@ TEMPLATE_INDEX = "core/index.html"
 TEMPLATE_AGENCY = "core/agency-index.html"
 TEMPLATE_HELP = "core/help.html"
 TEMPLATE_LOGGED_OUT = "core/logged-out.html"
+
+TEMPLATE_BAD_REQUEST = "400.html"
+TEMPLATE_NOT_FOUND = "404.html"
+TEMPLATE_SERVER_ERROR = "500.html"
 
 
 @pageview_decorator
@@ -74,62 +77,41 @@ def help(request):
 
 
 @pageview_decorator
-def bad_request(request, exception, template_name="400.html"):
+@index_or_agencyindex_origin_decorator
+def bad_request(request, exception, template_name=TEMPLATE_BAD_REQUEST):
     """View handler for HTTP 400 Bad Request responses."""
-    if session.active_agency(request):
-        session.update(request, origin=session.agency(request).index_url)
-    else:
-        session.update(request, origin=reverse(ROUTE_INDEX))
-
-    page = viewmodels.ErrorPage.server_error()
     t = loader.get_template(template_name)
 
-    return HttpResponseBadRequest(t.render(page.context_dict()))
+    return HttpResponseBadRequest(t.render(request=request))
 
 
 @pageview_decorator
+@index_or_agencyindex_origin_decorator
 def csrf_failure(request, reason):
     """
     View handler for CSRF_FAILURE_VIEW with custom data.
     """
-    if session.active_agency(request):
-        session.update(request, origin=session.agency(request).index_url)
-    else:
-        session.update(request, origin=reverse(ROUTE_INDEX))
+    t = loader.get_template(TEMPLATE_BAD_REQUEST)
 
-    page = viewmodels.ErrorPage.not_found(path=request.path)
-    t = loader.get_template("400.html")
-
-    return HttpResponseNotFound(t.render(page.context_dict()))
+    return HttpResponseNotFound(t.render(request=request))
 
 
 @pageview_decorator
-def page_not_found(request, exception, template_name="404.html"):
+@index_or_agencyindex_origin_decorator
+def page_not_found(request, exception, template_name=TEMPLATE_NOT_FOUND):
     """View handler for HTTP 404 Not Found responses."""
-    if session.active_agency(request):
-        session.update(request, origin=session.agency(request).index_url)
-    else:
-        session.update(request, origin=reverse(ROUTE_INDEX))
-
-    # show a more user-friendly message instead of not_found
-    page = viewmodels.ErrorPage.user_error(path=request.path)
     t = loader.get_template(template_name)
 
-    return HttpResponseNotFound(t.render(page.context_dict()))
+    return HttpResponseNotFound(t.render(request=request))
 
 
 @pageview_decorator
-def server_error(request, template_name="500.html"):
+@index_or_agencyindex_origin_decorator
+def server_error(request, template_name=TEMPLATE_SERVER_ERROR):
     """View handler for HTTP 500 Server Error responses."""
-    if session.active_agency(request):
-        session.update(request, origin=session.agency(request).index_url)
-    else:
-        session.update(request, origin=reverse(ROUTE_INDEX))
-
-    page = viewmodels.ErrorPage.server_error()
     t = loader.get_template(template_name)
 
-    return HttpResponseServerError(t.render(page.context_dict()))
+    return HttpResponseServerError(t.render(request=request))
 
 
 def logged_out(request):

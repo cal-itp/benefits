@@ -164,9 +164,9 @@ def oauth_claim(request):
 
 
 def origin(request):
-    """Get the origin for the request's session, or None."""
+    """Get the origin for the request's session, or the default core:index."""
     logger.debug("Get session origin")
-    return request.session.get(_ORIGIN)
+    return request.session.get(_ORIGIN, reverse("core:index"))
 
 
 def reset(request):

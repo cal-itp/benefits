@@ -5,14 +5,16 @@ import pytest
 from benefits.core.models import EligibilityVerifier, TransitAgency
 import benefits.core.session
 from benefits.core.views import (
-    ROUTE_INDEX,
     ROUTE_HELP,
     ROUTE_LOGGED_OUT,
     TEMPLATE_INDEX,
     TEMPLATE_AGENCY,
     bad_request,
     csrf_failure,
+    page_not_found,
+    server_error,
 )
+from benefits.core.middleware import ROUTE_INDEX
 
 
 ROUTE_AGENCY = "core:agency_index"
@@ -175,6 +177,20 @@ def test_not_found_no_active_agency(mocker, client, mocked_session_update):
     assert response.status_code == 404
     assert "origin" in mocked_session_update.call_args.kwargs
     assert mocked_session_update.call_args.kwargs["origin"] == reverse(ROUTE_INDEX)
+
+
+@pytest.mark.django_db
+def test_page_not_found(app_request):
+    response = page_not_found(app_request, Exception())
+
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_server_error(app_request):
+    response = server_error(app_request)
+
+    assert response.status_code == 500
 
 
 @pytest.mark.django_db

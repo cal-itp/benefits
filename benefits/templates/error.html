@@ -1,0 +1,32 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block page-title %}
+  {% block title %}
+  {% endblock title %}
+  &nbsp;|&nbsp;
+{% endblock page-title %}
+
+{% block main-content %}
+  <div class="container">
+    <h1 class="icon-title h2 text-center">
+      <span class="icon d-block pb-5">
+        {% translate "core.icons.sadbus" as alt_i18n %}
+        {% include "core/includes/icon--direct-args.html" with name="sadbus" alt=alt_i18n %}
+      </span>
+      {% block headline %}
+      {% endblock headline %}
+    </h1>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8 pt-4">
+        {% block paragraphs %}
+        {% endblock paragraphs %}
+      </div>
+    </div>
+
+    <div class="row pt-8 justify-content-center">
+      <div class="col-lg-3 col-8">{% include "core/includes/button--home.html" %}</div>
+    </div>
+  </div>
+{% endblock main-content %}

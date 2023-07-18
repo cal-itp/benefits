@@ -1,17 +1,14 @@
-{% extends "core/base.html" %}
+{% extends "error.html" %}
+{% load i18n %}
 
-{% block main-content %}
-  <div class="container">
-    {% include "core/includes/icon-title.html" with title=page.headline icon=page.icon %}
+{% block title %}
+  {% translate "core.pages.user_error.title" %}
+{% endblock title %}
 
-    <div class="row justify-content-center">
-      <div class="col-lg-8 pt-4">
-        {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
-      </div>
-    </div>
+{% block headline %}
+  {% translate "core.pages.user_error.headline" %}
+{% endblock headline %}
 
-    <div class="row pt-8 justify-content-center">
-      <div class="col-lg-3 col-8">{% include "core/includes/button--home.html" %}</div>
-    </div>
-  </div>
-{% endblock main-content %}
+{% block paragraphs %}
+  <p>{% translate "core.pages.user_error.p[0]" %}</p>
+{% endblock paragraphs %}
