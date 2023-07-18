@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.utils.translation import pgettext, gettext as _
+from django.utils.translation import gettext as _
 
 from benefits.core import models, session, viewmodels
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
@@ -98,7 +98,6 @@ def retry(request):
         if form.is_valid():
             page = viewmodels.Page(
                 title=_("enrollment.pages.retry.title"),
-                icon=viewmodels.Icon("bankcardquestion", pgettext("image alt text", "core.icons.bankcardquestion")),
                 headline=_("enrollment.pages.retry.title"),
                 paragraphs=[_("enrollment.pages.retry.p[0]")],
             )
