@@ -142,6 +142,25 @@ a:visited:not(.btn) {
   color: var(--selected-color);
 }
 
+a[target="_blank"]::after {
+  content: " ";
+  background-color: currentColor;
+
+  mask-image: url("/static/img/external-link.svg"),
+    linear-gradient(transparent, transparent);
+  mask-position: center center;
+  -webkit-mask-image: url("/static/img/external-link.svg"),
+    linear-gradient(transparent, transparent);
+  -webkit-mask-position: center center;
+
+  display: inline-block;
+  position: relative;
+  width: 24px;
+  height: 24px;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+}
+
 /* Headlines */
 /* All headlines */
 /* All headlines share font-weight, letter-spacing, line-height and margin */

@@ -191,7 +191,7 @@ msgstr ""
 "Tarjeta de Cortesía. Es posible que este beneficio deba renovarse en el "
 "futuro según la fecha de vencimiento de la Tarjeta de Cortesía. Obtenga más "
 "información <a href='https://mst.org/riders-guide/how-to-ride/courtesy-"
-"card/' target =\"blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
+"card/' target=\"_blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
 
 msgid "core.pages.help.littlepay"
 msgstr "¿Qué es Littlepay?"
