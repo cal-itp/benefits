@@ -1,7 +1,7 @@
 {% extends "core/landing.html" %}
+{% load i18n %}
 
 {% block call-to-action %}
-    {% for b in page.buttons %}
-        {% include "core/includes/button.html" with button=b %}
-    {% endfor %}
+    {% url "eligibility:index" as url_continue %}
+    <a href="{{ url_continue }}" class="btn btn-lg btn-primary">{% translate "core.pages.index.continue" %}</a>
 {% endblock call-to-action %}

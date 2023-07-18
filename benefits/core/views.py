@@ -4,7 +4,6 @@ The core application: view definition for the root of the webapp.
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
 from django.template import loader
 from django.template.response import TemplateResponse
-from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from . import session, viewmodels
@@ -45,13 +44,10 @@ def agency_index(request, agency):
     session.reset(request)
     session.update(request, agency=agency, origin=agency.index_url)
 
-    button = viewmodels.Button.primary(text=_("core.pages.index.continue"), url=reverse(ROUTE_ELIGIBILITY))
-
     page = viewmodels.Page(
         title=_("core.pages.agency_index.title"),
         headline=_("core.pages.agency_index.headline%(transit_agency_short_name_and_type)s")
         % {"transit_agency_short_name_and_type": " ".join([agency.short_name, _(agency.transit_type)])},
-        button=button,
     )
 
     return TemplateResponse(request, TEMPLATE_AGENCY, page.context_dict())
