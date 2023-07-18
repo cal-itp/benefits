@@ -8,7 +8,8 @@
                 <span class="h2 d-block d-lg-inline mb-4">{% translate "core.pages.logged_out.headline[0]" %}</span>
                 <span class="h2">{% translate "core.pages.logged_out.headline[1]" %}</span>
             </h1>
-            {% include "core/includes/icon.html" with icon=page.icon %}
+      {% translate "core.icons.happybus" context "image alt text" as alt_i18n %}
+      {% include "core/includes/icon--direct-args.html" with name="happybus" alt=alt_i18n %}
         </div>
     </div>
 {% endblock main-content %}

@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFou
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.utils.translation import pgettext, gettext as _
+from django.utils.translation import gettext as _
 
 from . import session, viewmodels
 from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator
@@ -115,9 +115,5 @@ def server_error(request, template_name=TEMPLATE_SERVER_ERROR):
 
 def logged_out(request):
     """View handler for the final log out confirmation message."""
-    page = viewmodels.Page(
-        title=_("core.pages.logged_out.title"),
-        icon=viewmodels.Icon("happybus", pgettext("image alt text", "core.icons.happybus")),
-    )
-
+    page = viewmodels.Page(title=_("core.pages.logged_out.title"))
     return TemplateResponse(request, TEMPLATE_LOGGED_OUT, page.context_dict())
