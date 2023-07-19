@@ -386,6 +386,10 @@ msgstr ""
 "TODO: If you do not have an account with any of these services, you will "
 "need to create one. We recommend using Login.gov."
 
+msgctxt "image alt text"
+msgid "core.icons.idcardcheck"
+msgstr "Icono de tarjeta de identificación con marca de verificación"
+
 msgid "eligibility.pages.start.modal.title"
 msgstr "TODO: Learn more about contactless cards"
 

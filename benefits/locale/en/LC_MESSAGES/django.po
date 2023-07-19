@@ -374,6 +374,10 @@ msgstr ""
 "If you do not have an account with any of these services, you will need to "
 "create one. We recommend using Login.gov."
 
+msgctxt "image alt text"
+msgid "core.icons.idcardcheck"
+msgstr "Identification card icon with checkmark"
+
 msgid "eligibility.pages.start.modal.title"
 msgstr "Learn more about contactless cards"
 
