@@ -11,9 +11,7 @@
         <p>
             {% translate "eligibility.pages.start.senior.start_item.details" %}
             {% translate "eligibility.pages.start.senior.help.link_text" as trigger_text %}
-            <span class="text-decoration-underline text-decoration-underline--primary">
-                {% include "core/includes/modal-trigger.html" with id="identity-verification-help" classes="modal-trigger--link" text=trigger_text %}
-            </span>
+            {% include "core/includes/modal-trigger.html" with id="identity-verification-help" classes="modal-trigger--link" text=trigger_text %}
         </p>
         <div class="media-body--items">
             <p>{% translate "eligibility.pages.start.senior.start_item.secondary_details" %}</p>
