@@ -724,7 +724,6 @@ a.card:focus-visible {
   background-image: url("/static/img/modal-trigger.svg");
   background-size: contain;
   display: inline-block;
-  position: relative;
   width: 24px;
   height: 24px;
   margin-left: 2px;
