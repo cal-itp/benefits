@@ -1,5 +1,19 @@
-const endpoints = ["cgi", "eligibility/app", "sample/api"];
-const files = [".env", "wp-admin/login.php", "data.json", "secrets/prod.yaml"];
+const endpoints = [
+  "cgi",
+  "cpaneladmin/",
+  "eligibility/app",
+  "n/jenkins/script",
+  "sample/api",
+];
+const files = [
+  ".env",
+  "data.json",
+  "n/SWNetPerfMon.db.i18n.ashx",
+  "robots.txt",
+  "secrets/prod.yaml",
+  "sp/startSLO.ping",
+  "wp-admin/login.php",
+];
 const targets = endpoints.concat(files);
 
 const visit = (partial_path) => {
