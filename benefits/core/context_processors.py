@@ -8,10 +8,12 @@ from . import models, session
 
 def _agency_context(agency):
     return {
-        "long_name": agency.long_name,
-        "short_name": agency.short_name,
+        "eligibility_index_url": agency.eligibility_index_url,
         "info_url": agency.info_url,
+        "long_name": agency.long_name,
         "phone": agency.phone,
+        "short_name": agency.short_name,
+        "slug": agency.slug,
     }
 
 
