@@ -706,19 +706,6 @@ a.card:focus-visible {
   font-size: var(--modal-title-font-size);
 }
 
-.modal-trigger--link {
-  background: transparent;
-  border: none;
-  color: var(--primary-color);
-  font-family: var(--bs-body-font-family);
-  font-weight: var(--bold-font-weight);
-  letter-spacing: var(--body-letter-spacing);
-  padding: 0;
-  margin-right: -5px;
-  text-decoration: underline;
-  text-decoration-style: solid;
-}
-
 .modal-trigger--link::after {
   content: " ";
   background-image: url("/static/img/modal-trigger.svg");
