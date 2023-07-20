@@ -5,8 +5,8 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-19 20:22+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-07-20 18:48+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -408,10 +408,12 @@ msgstr ""
 "prepaid debit cards, such as the Cash App Visa debit card or the Venmo "
 "Mastercard debit card."
 
-#, fuzzy, python-format
-#| msgid "eligibility.pages.start.modal.p[4.3]%(agency_short_name)s"
+#, python-format
 msgid "eligibility.pages.start.modal.p[4.1]%(agency_short_name)s"
-msgstr "%(agency_short_name)s</a>."
+msgstr ""
+"TODO: You can still get your transit benefit by going through your "
+"%(agency_short_name)s application process. For updates on additional "
+"options, please check back on this website, or contact "
 
 #, python-format
 msgid "eligibility.pages.start.modal.p[4.2]%(agency_info_url)s"
@@ -422,6 +424,9 @@ msgstr ""
 #, python-format
 msgid "eligibility.pages.start.modal.p[4.3]%(agency_short_name)s"
 msgstr "%(agency_short_name)s</a>."
+
+msgid "core.modals.back"
+msgstr "TODO: Regresar a la página principal"
 
 msgid "eligibility.pages.index.senior.help.headline"
 msgstr "TODO: Learn more about"
