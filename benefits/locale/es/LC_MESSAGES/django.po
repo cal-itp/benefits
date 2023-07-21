@@ -400,6 +400,9 @@ msgstr ""
 msgid "eligibility.pages.start.modal.p[1]"
 msgstr "TODO: The contactless symbol is four curved lines, like this:"
 
+msgid "eligibility.pages.start.modal.p[2]"
+msgstr "TODO: Your card must include a Visa or Mastercard logo."
+
 msgid "eligibility.pages.start.modal.p[3]"
 msgstr ""
 "TODO: Don’t have access to a contactless card? You can request a contactless "
