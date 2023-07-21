@@ -53,33 +53,6 @@ class Button:
         return Button(text=_("core.buttons.previous_page"), url=url)
 
 
-class Icon:
-    """Represents an icon."""
-
-    def __init__(self, icon, alt):
-        self.src = f"img/icon/{icon}.svg"
-        self.alt = alt
-
-
-class MediaItem:
-    """
-    Represents a media item in a list of items:
-    * icon: core.viewmodels.Icon
-    * details: str, str[]
-    * heading: str
-    """
-
-    def __init__(self, icon: Icon, details, heading=None):
-        self.icon = icon
-        if isinstance(details, str):
-            self.details = [details]
-        elif isinstance(details, list):
-            self.details = details
-        else:
-            self.details = [str(details)]
-        self.heading = heading
-
-
 class Page:
     """
     Represents a page of content:

@@ -11,8 +11,8 @@
   <div class="container">
     <h1 class="icon-title h2 text-center">
       <span class="icon d-block pb-5">
-        {% translate "core.icons.sadbus" as alt_i18n %}
-        {% include "core/includes/icon--direct-args.html" with name="sadbus" alt=alt_i18n %}
+        {% translate "core.icons.sadbus" context "image alt text" as alt_i18n %}
+        {% include "core/includes/icon.html" with name="sadbus" alt=alt_i18n %}
       </span>
       {% block headline %}
       {% endblock headline %}

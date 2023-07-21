@@ -11,8 +11,13 @@
   {% endif %}
 
   <div class="container">
-    {% translate "eligibility.pages.unverified.headline" as headline %}
-    {% include "core/includes/icon-title.html" with title=headline icon=page.icon %}
+    <h1 class="h2 text-center">
+      <span class="icon d-block pb-5">
+        {% translate "core.icons.idcardquestion" context "image alt text" as alt_i18n %}
+        {% include "core/includes/icon.html" with name="idcardquestion" alt=alt_i18n %}
+      </span>
+      {% translate "eligibility.pages.unverified.headline" %}
+    </h1>
 
     <div class="row justify-content-center">
       <div class="col-lg-8 pt-4">

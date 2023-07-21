@@ -1,13 +1,13 @@
 
-{% if not icon.src %}
+{% if not name %}
   <p class="bg-grey-lightest color-standout">
-    Missing <strong><code>icon.src</code></strong> argument
+    Missing <strong><code>name</code></strong> argument
   </p>
-{% elif not icon.alt %}
+{% elif not alt %}
   <p class="bg-grey-lightest color-standout">
-    Missing <strong><code>icon.alt</code></strong> argument
+    Missing <strong><code>alt</code></strong> argument
   </p>
 {% else %}
   {% load static %}
-  <img class="icon" width="150" height="150" src="{% static icon.src %}" alt="{{ icon.alt }}" />
+  <img class="icon" width="150" height="150" src="{% get_static_prefix %}img/icon/{{ name }}.svg" alt="{{ alt }}" />
 {% endif %}
