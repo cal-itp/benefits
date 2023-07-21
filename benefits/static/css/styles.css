@@ -718,7 +718,6 @@ a.card:focus-visible {
   display: inline-block;
   width: 22px;
   height: 22px;
-  margin-left: 2px;
   vertical-align: text-bottom;
 }
 
