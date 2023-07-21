@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-21 17:59+0000\n"
+"POT-Creation-Date: 2023-07-21 18:32+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -85,23 +85,23 @@ msgstr ""
 msgid "core.pages.help.payment_options"
 msgstr "TODO: What kind of credit card can I use?"
 
-msgid "core.pages.help.payment_options.p[0]"
+msgid "eligibility.pages.start.modal.p[0]"
 msgstr ""
 "TODO: Benefits only works with contactless debit or credit cards. We do not "
 "currently support mobile wallets or digital cards, such as Apple Pay, Google "
 "Wallet, or Samsung Wallet."
 
-msgid "core.pages.help.payment_options.p[1]"
+msgid "eligibility.pages.start.modal.p[1]"
 msgstr "TODO: The contactless symbol is four curved lines, like this:"
 
 msgctxt "image alt text"
 msgid "core.icons.contactless"
 msgstr "Cuatro líneas curvas en las tarjetas habilitadas sin contacto"
 
-msgid "core.pages.help.payment_options.p[2]"
+msgid "eligibility.pages.start.modal.p[2]"
 msgstr "TODO: Your card must include a Visa or Mastercard logo."
 
-msgid "core.pages.help.payment_options.p[3]"
+msgid "eligibility.pages.start.modal.p[3]"
 msgstr ""
 "TODO: Don’t have access to a contactless card? You can request a contactless "
 "card from your bank, or one of the companies that offer free contactless "
@@ -109,12 +109,21 @@ msgstr ""
 "Mastercard debit card."
 
 #, python-format
-msgid "core.pages.help.payment_options.p[4]%(website)s"
+msgid "eligibility.pages.start.modal.p[4.1]%(agency_short_name)s"
 msgstr ""
-"You can still get your transit benefit by going through your [short name]'s "
-"application process. For updates on additional options, please check back on "
-"this website, or <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener "
-"noreferrer\">contact [short name].</a>"
+"TODO: You can still get your transit benefit by going through your "
+"%(agency_short_name)s application process. For updates on additional "
+"options, please check back on this website, or contact "
+
+#, python-format
+msgid "eligibility.pages.start.modal.p[4.2]%(agency_info_url)s"
+msgstr ""
+"<a href=\"%(agency_info_url)s\" target=\"_blank\" rel=\"noopener noreferrer"
+"\">"
+
+#, python-format
+msgid "eligibility.pages.start.modal.p[4.3]%(agency_short_name)s"
+msgstr "%(agency_short_name)s</a>."
 
 msgid "core.pages.help.login_gov"
 msgstr "¿Qué es Login.gov?"
@@ -382,42 +391,6 @@ msgstr ""
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Icono de tarjeta de identificación con marca de verificación"
-
-msgid "eligibility.pages.start.modal.p[0]"
-msgstr ""
-"TODO: Benefits only works with contactless debit or credit cards. We do not "
-"currently support mobile wallets or digital cards, such as Apple Pay, Google "
-"Wallet, or Samsung Wallet."
-
-msgid "eligibility.pages.start.modal.p[1]"
-msgstr "TODO: The contactless symbol is four curved lines, like this:"
-
-msgid "eligibility.pages.start.modal.p[2]"
-msgstr "TODO: Your card must include a Visa or Mastercard logo."
-
-msgid "eligibility.pages.start.modal.p[3]"
-msgstr ""
-"TODO: Don’t have access to a contactless card? You can request a contactless "
-"card from your bank, or one of the companies that offer free contactless "
-"prepaid debit cards, such as the Cash App Visa debit card or the Venmo "
-"Mastercard debit card."
-
-#, python-format
-msgid "eligibility.pages.start.modal.p[4.1]%(agency_short_name)s"
-msgstr ""
-"TODO: You can still get your transit benefit by going through your "
-"%(agency_short_name)s application process. For updates on additional "
-"options, please check back on this website, or contact "
-
-#, python-format
-msgid "eligibility.pages.start.modal.p[4.2]%(agency_info_url)s"
-msgstr ""
-"<a href=\"%(agency_info_url)s\" target=\"_blank\" rel=\"noopener noreferrer"
-"\">"
-
-#, python-format
-msgid "eligibility.pages.start.modal.p[4.3]%(agency_short_name)s"
-msgstr "%(agency_short_name)s</a>."
 
 msgid "core.modals.back"
 msgstr "TODO: Regresar a la página principal"
