@@ -15,7 +15,7 @@
 {% endblock nav-buttons %}
 
 {% block headline %}
-  <div class="col-lg-10">
+  <div class="col-lg-8">
     <h1>{% translate "eligibility.pages.index.headline" %}</h1>
   </div>
 {% endblock headline %}
@@ -24,7 +24,5 @@
 {% endblock explanatory-text %}
 
 {% block inner-content %}
-  <div class="container">
-    <div class="row">{% include "core/includes/form.html" with form=form %}</div>
-  </div>
+  {% include "core/includes/form.html" with form=form %}
 {% endblock inner-content %}

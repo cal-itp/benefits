@@ -560,7 +560,7 @@ footer .footer-links li a:visited {
 @media (min-width: 992px) {
   :root {
     --media-item-icon-size: calc(90rem / 16);
-    --media-item-gap: calc(62rem / 16);
+    --media-item-gap: calc(24rem / 16);
     --media-item-icon-margin: calc(32rem / 16);
     --media-title-margin-top: calc(64rem / 16);
   }

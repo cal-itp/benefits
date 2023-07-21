@@ -27,7 +27,7 @@ class EligibilityVerifierSelectionForm(forms.Form):
         super().__init__(*args, **kwargs)
         verifiers = agency.eligibility_verifiers.all()
 
-        self.classes = "offset-lg-1 col-lg-9"
+        self.classes = "col-lg-8"
         # second element is not used since we render the whole label using selection_label_template,
         # therefore set to None
         self.fields["verifier"].choices = [(v.id, None) for v in verifiers]
@@ -56,7 +56,7 @@ class EligibilityVerificationForm(forms.Form):
     def __init__(self, verifier: models.EligibilityVerifier, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.classes = "offset-lg-3 col-lg-6"
+        self.classes = "col-lg-6"
         sub_widget = widgets.FormControlTextInput(placeholder=verifier.form_sub_placeholder)
         if verifier.form_sub_pattern:
             sub_widget.attrs.update({"pattern": verifier.form_sub_pattern})

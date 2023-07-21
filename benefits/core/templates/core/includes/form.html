@@ -6,7 +6,7 @@
   <form id="{{ form.id }}" action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
     {% csrf_token %}
 
-    <div class="row form-container">
+    <div class="row form-container justify-content-center">
       <div class="{{ form.classes }}">
         {% for field in form %}
           <div class="row form-group mb-0">
