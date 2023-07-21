@@ -561,7 +561,7 @@ footer .footer-links li a:visited {
 @media (min-width: 992px) {
   :root {
     --media-item-icon-size: calc(90rem / 16);
-    --media-item-gap: calc(62rem / 16);
+    --media-item-gap: calc(24rem / 16);
     --media-item-icon-margin: calc(32rem / 16);
     --media-title-margin-top: calc(32rem / 16);
   }
@@ -580,7 +580,7 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 
 .media-list {
   gap: var(--media-item-gap);
-  margin-bottom: calc(64rem / 16);
+  margin-bottom: calc(55rem / 16);
 }
 
 .media-list .media .media-line .icon {
