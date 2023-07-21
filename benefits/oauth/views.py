@@ -5,9 +5,9 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 
 from benefits.core import session
-from benefits.core.middleware import VerifierSessionRequired
 from . import analytics, redirects
 from .client import oauth
+from .middleware import VerifierUsesAuthVerificationSessionRequired
 
 
 logger = logging.getLogger(__name__)
@@ -20,7 +20,7 @@ ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_POST_LOGOUT = "oauth:post_logout"
 
 
-@decorator_from_middleware(VerifierSessionRequired)
+@decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
 def login(request):
     """View implementing OIDC authorize_redirect."""
     verifier = session.verifier(request)
@@ -39,7 +39,7 @@ def login(request):
     return oauth_client.authorize_redirect(request, redirect_uri)
 
 
-@decorator_from_middleware(VerifierSessionRequired)
+@decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
 def authorize(request):
     """View implementing OIDC token authorization."""
     verifier = session.verifier(request)
@@ -83,6 +83,7 @@ def authorize(request):
     return redirect(ROUTE_CONFIRM)
 
 
+@decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
 def cancel(request):
     """View implementing cancellation of OIDC authorization."""
 
@@ -91,7 +92,7 @@ def cancel(request):
     return redirect(ROUTE_UNVERIFIED)
 
 
-@decorator_from_middleware(VerifierSessionRequired)
+@decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
 def logout(request):
     """View implementing OIDC and application sign out."""
     verifier = session.verifier(request)
@@ -116,6 +117,7 @@ def logout(request):
     return redirects.deauthorize_redirect(oauth_client, token, redirect_uri)
 
 
+@decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
 def post_logout(request):
     """View routes the user to their origin after sign out."""
 
