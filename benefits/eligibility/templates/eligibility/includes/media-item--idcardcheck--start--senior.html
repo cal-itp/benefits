@@ -10,10 +10,8 @@
     <div class="media-body--details">
         <p>
             {% translate "eligibility.pages.start.senior.start_item.details" %}
-            <!-- Button to trigger modal -->
-            <button type="button" class="modal-trigger--link" data-bs-toggle="modal" data-bs-target="#identity-verification-help">
-                {% translate "eligibility.pages.start.senior.help.link_text" %}
-            </button>
+            {% translate "eligibility.pages.start.senior.help.link_text" as trigger_text %}
+            {% include "core/includes/modal-trigger-link.html" with id="identity-verification-help" text=trigger_text %}
         </p>
         <div class="media-body--items">
             <p>{% translate "eligibility.pages.start.senior.start_item.secondary_details" %}</p>

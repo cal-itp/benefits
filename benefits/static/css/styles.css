@@ -132,8 +132,7 @@ a:not(.btn) {
   font-weight: var(--bold-font-weight);
 }
 
-a:hover:not(.btn),
-.modal-trigger--link:hover {
+a:hover:not(.btn) {
   color: var(--hover-color);
   text-decoration: underline;
 }
@@ -706,36 +705,26 @@ a.card:focus-visible {
   font-size: var(--modal-title-font-size);
 }
 
-.modal-trigger--link {
-  background: transparent;
-  border: none;
-  color: var(--primary-color);
-  font-family: var(--bs-body-font-family);
-  font-weight: var(--bold-font-weight);
-  letter-spacing: var(--body-letter-spacing);
-  padding: 0;
-  margin-right: -5px;
-  text-decoration: underline;
-  text-decoration-style: solid;
-}
+/* Modal Trigger */
+/* All links/image buttons that open modals have a question mark icon after them */
+/* Buttons that open modals (like the Agency Selector) do not have the icon */
 
-.modal-trigger--link::after {
+[data-bs-toggle="modal"]:not(.btn)::after {
   content: " ";
   background-image: url("/static/img/modal-trigger.svg");
   background-size: contain;
   display: inline-block;
-  position: relative;
   width: 24px;
   height: 24px;
   margin-left: 2px;
   vertical-align: text-bottom;
 }
 
-.modal-trigger--link:hover::after {
+[data-bs-toggle="modal"]:not(.btn):hover::after {
   background-image: url("/static/img/modal-trigger--hover.svg");
 }
 
-.modal-trigger--link:visited::after {
+[data-bs-toggle="modal"]:not(.btn):visited::after {
   background-image: url("/static/img/modal-trigger--selected.svg");
 }
 

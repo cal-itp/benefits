@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-16 22:50+0000\n"
+"POT-Creation-Date: 2023-07-20 18:48+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -112,8 +112,8 @@ msgstr ""
 #, python-format
 msgid "core.pages.help.payment_options.p[2][1]%(website)s"
 msgstr ""
-"o la tarjeta de débito <a href=\"%(website)s\" target=\"_blank\" "
-"rel=\"noopener noreferrer\">Venmo Mastercard</a>."
+"o la tarjeta de débito <a href=\"%(website)s\" target=\"_blank\" rel="
+"\"noopener noreferrer\">Venmo Mastercard</a>."
 
 msgid "core.pages.help.payment_options.p[3]"
 msgstr ""
@@ -144,8 +144,8 @@ msgid "core.pages.help.login_gov.p[2]"
 msgstr ""
 "Para obtener más información sobre Login.gov, visite <a href='https://login."
 "gov/es' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov</a> o <a "
-"href='https://login.gov/es/help/' target=\"_blank\" rel=\"noopener "
-"noreferrer\">Login.gov: Centro de ayuda</a>."
+"href='https://login.gov/es/help/' target=\"_blank\" rel=\"noopener noreferrer"
+"\">Login.gov: Centro de ayuda</a>."
 
 msgid "core.pages.help.login_gov_verify"
 msgstr "¿Cómo verifico mi identidad en Login.gov?"
@@ -205,9 +205,8 @@ msgstr ""
 #, python-format
 msgid "core.pages.help.littlepay.p[1]%(website)s"
 msgstr ""
-"Para obtener más información sobre Littlepay, visite el sitio web de <a "
-"href=\"%(website)s\" target=\"_blank\" rel=\"noopener "
-"noreferrer\">Littlepay</a>."
+"Para obtener más información sobre Littlepay, visite el sitio web de <a href="
+"\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Littlepay</a>."
 
 msgid "core.pages.help.questions"
 msgstr "¿Preguntas?"
@@ -329,6 +328,9 @@ msgstr ""
 "TODO: Su tarjeta debe ser una tarjeta de débito o crédito sin contacto de "
 "Visa o Mastercard."
 
+msgid "eligibility.pages.start.modal.title"
+msgstr "TODO: Learn more about contactless cards"
+
 msgid "eligibility.pages.start.mst_courtesy_card.start_item.heading"
 msgstr "Su número actual de Tarjeta de Cortesía"
 
@@ -389,6 +391,42 @@ msgstr ""
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Icono de tarjeta de identificación con marca de verificación"
+
+msgid "eligibility.pages.start.modal.p[0]"
+msgstr ""
+"TODO: Benefits only works with contactless debit or credit cards. We do not "
+"currently support mobile wallets or digital cards, such as Apple Pay, Google "
+"Wallet, or Samsung Wallet."
+
+msgid "eligibility.pages.start.modal.p[1]"
+msgstr "TODO: The contactless symbol is four curved lines, like this:"
+
+msgid "eligibility.pages.start.modal.p[3]"
+msgstr ""
+"TODO: Don’t have access to a contactless card? You can request a contactless "
+"card from your bank, or one of the companies that offer free contactless "
+"prepaid debit cards, such as the Cash App Visa debit card or the Venmo "
+"Mastercard debit card."
+
+#, python-format
+msgid "eligibility.pages.start.modal.p[4.1]%(agency_short_name)s"
+msgstr ""
+"TODO: You can still get your transit benefit by going through your "
+"%(agency_short_name)s application process. For updates on additional "
+"options, please check back on this website, or contact "
+
+#, python-format
+msgid "eligibility.pages.start.modal.p[4.2]%(agency_info_url)s"
+msgstr ""
+"<a href=\"%(agency_info_url)s\" target=\"_blank\" rel=\"noopener noreferrer"
+"\">"
+
+#, python-format
+msgid "eligibility.pages.start.modal.p[4.3]%(agency_short_name)s"
+msgstr "%(agency_short_name)s</a>."
+
+msgid "core.modals.back"
+msgstr "TODO: Regresar a la página principal"
 
 msgid "eligibility.pages.index.senior.help.headline"
 msgstr "TODO: Learn more about"
@@ -477,8 +515,8 @@ msgstr ""
 "TODO: This option is for people who have served in the active military, "
 "naval, or air service, and who were discharged or released therefrom under "
 "conditions other than dishonorable. You will need to <a href='https://www.va."
-"gov/resources/verifying-your-identity-on-vagov/' target=\"_blank\" "
-"rel=\"noopener noreferrer\">verify your identity through VA.gov</a>"
+"gov/resources/verifying-your-identity-on-vagov/' target=\"_blank\" rel="
+"\"noopener noreferrer\">verify your identity through VA.gov</a>"
 
 msgid "eligibility.pages.index.intro.mst"
 msgstr ""

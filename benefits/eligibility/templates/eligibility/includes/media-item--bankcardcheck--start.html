@@ -12,6 +12,12 @@
 
 {% block body %}
     <div class="media-body--details">
-        <p>{% translate "eligibility.pages.start.bankcard.text" %}</p>
+        <p>
+            {% translate "eligibility.pages.start.bankcard.text" %}
+            {% translate "eligibility.pages.start.modal.title" as trigger_text %}
+            {% include "core/includes/modal-trigger-link.html" with id="contactless-modal" text=trigger_text %}
+        </p>
     </div>
+
+    {% include "eligibility/includes/modal--contactless.html" with id="contactless-modal" size="modal-lg" %}
 {% endblock body %}
