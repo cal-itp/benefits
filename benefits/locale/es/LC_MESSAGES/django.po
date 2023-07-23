@@ -42,6 +42,9 @@ msgstr "TODO: bus"
 msgid "agency.variables.sacrt.transit_type"
 msgstr "TODO: light rail"
 
+msgid "core.pages.index.continue"
+msgstr "Empezar"
+
 msgid "core.pages.help.about.p[0]"
 msgstr ""
 "La herramienta de Beneficios es proporcionada por California Integrated "
@@ -224,6 +227,9 @@ msgstr "Regresar a la Página Principal"
 msgid "core.buttons.previous_page"
 msgstr "Página Anterior"
 
+msgid "core.buttons.senior.signout"
+msgstr "Cierre sesión de Login.gov"
+
 msgid "core.pages.index.agency_selector.headline"
 msgstr "Por favor, elija su proveedor de transporte:"
 
@@ -247,9 +253,6 @@ msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita JavaScript. Por favor, active JavaScript por este sitio web y"
 
-msgid "core.buttons.senior.signout"
-msgstr "Cierre sesión de Login.gov"
-
 msgid "core.pages.index.button"
 msgstr "Elija su Proveedor"
 
@@ -262,6 +265,10 @@ msgstr "Ha cerrado la sesión correctamente."
 msgid "core.pages.logged_out.headline[1]"
 msgstr "¡Gracias por usar los Beneficios de Cal-ITP!"
 
+msgctxt "image alt text"
+msgid "core.icons.happybus"
+msgstr "Icono de autobús con cara sonriente"
+
 msgid "eligibility.pages.index.label"
 msgstr "TODO: Which transit benefit would you like to enroll in?"
 
@@ -271,9 +278,6 @@ msgstr "Elija Proveedor"
 msgid "core.pages.index.headline"
 msgstr ""
 "Obtenga una tarifa reducida en el transporte público cuando toque para viajar"
-
-msgid "core.pages.index.continue"
-msgstr "Empezar"
 
 msgid "core.pages.agency_index.title"
 msgstr "Introducción"
@@ -286,10 +290,6 @@ msgstr ""
 
 msgid "core.pages.logged_out.title"
 msgstr "Cierre sesión"
-
-msgctxt "image alt text"
-msgid "core.icons.happybus"
-msgstr "Icono de autobús con cara sonriente"
 
 msgid "eligibility.buttons.choose"
 msgstr "Elija este Beneficio"
@@ -526,6 +526,10 @@ msgstr "TODO: Necesitará algunos artículos para conectar su beneficio:"
 msgid "eligibility.pages.unverified.title"
 msgstr "Error de elegibilidad"
 
+msgctxt "image alt text"
+msgid "core.icons.idcardquestion"
+msgstr "Icono de tarjeta de identificación con signo de interrogación"
+
 msgid "eligibility.pages.unverified.headline"
 msgstr "No se pudo verificar su elegibilidad."
 
@@ -535,10 +539,6 @@ msgstr "TODO: ¡Esta bien! Aún puede ser elegible para nuestro programa."
 #, python-format
 msgid "eligibility.pages.unverified.p[0]s[1]%(short_name)s"
 msgstr "TODO: Comuníquese con %(short_name)s para obtener asistencia."
-
-msgctxt "image alt text"
-msgid "core.icons.idcardquestion"
-msgstr "Icono de tarjeta de identificación con signo de interrogación"
 
 msgid "enrollment.pages.index.link_card_item.heading"
 msgstr ""
@@ -581,6 +581,17 @@ msgstr "Espere por favor..."
 msgid "enrollment.buttons.payment_partner"
 msgstr "Conecta tu tarjeta"
 
+msgctxt "image alt text"
+msgid "core.icons.bankcardquestion"
+msgstr ""
+"Icono de tarjeta bancaria con símbolo sin contacto y signo de interrogación"
+
+msgid "enrollment.pages.retry.title"
+msgstr "No pudimos conectar tú tarjeta bancaria"
+
+msgid "core.buttons.retry"
+msgstr "Intentar otra vez"
+
 msgid "enrollment.pages.success.title"
 msgstr "Éxito"
 
@@ -601,21 +612,10 @@ msgid "enrollment.pages.success.logout"
 msgstr ""
 "Si está en una computadora pública o compartida, no olvide cerrar sesión en "
 
-msgid "enrollment.pages.retry.title"
-msgstr "No pudimos conectar tú tarjeta bancaria"
-
-msgctxt "image alt text"
-msgid "core.icons.bankcardquestion"
-msgstr ""
-"Icono de tarjeta bancaria con símbolo sin contacto y signo de interrogación"
-
 msgid "enrollment.pages.retry.p[0]"
 msgstr ""
 "Puede intentarlo de nuevo o comunicarse con su proveedor de transporte local "
 "para obtener ayuda."
-
-msgid "core.buttons.retry"
-msgstr "Intentar otra vez"
 
 msgid "core.pages.user_error.title"
 msgstr "Error"
@@ -647,5 +647,6 @@ msgstr ""
 "La página que estás buscando puede estar en otro lugar o puede que ya no "
 "exista."
 
+msgctxt "image alt text"
 msgid "core.icons.sadbus"
 msgstr "Icono de autobus con llanta ponchada"

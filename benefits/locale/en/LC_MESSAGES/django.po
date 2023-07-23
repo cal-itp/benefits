@@ -42,6 +42,9 @@ msgstr "bus"
 msgid "agency.variables.sacrt.transit_type"
 msgstr "light rail"
 
+msgid "core.pages.index.continue"
+msgstr "Get Started"
+
 msgid "core.pages.help.about.p[0]"
 msgstr ""
 "The Benefits tool is provided by California Integrated Travel Project (Cal-"
@@ -217,6 +220,9 @@ msgstr "Return Home"
 msgid "core.buttons.previous_page"
 msgstr "Previous Page"
 
+msgid "core.buttons.senior.signout"
+msgstr "Sign out of Login.gov"
+
 msgid "core.pages.index.agency_selector.headline"
 msgstr "Please choose your transit provider:"
 
@@ -240,9 +246,6 @@ msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
 
-msgid "core.buttons.senior.signout"
-msgstr "Sign out of Login.gov"
-
 msgid "core.pages.index.button"
 msgstr "Choose your Provider"
 
@@ -256,6 +259,10 @@ msgstr "You have successfully logged out."
 msgid "core.pages.logged_out.headline[1]"
 msgstr "Thank you for using Cal-ITP Benefits!"
 
+msgctxt "image alt text"
+msgid "core.icons.happybus"
+msgstr "Bus icon with smiley face"
+
 msgid "eligibility.pages.index.label"
 msgstr "Which transit benefit would you like to enroll in?"
 
@@ -264,9 +271,6 @@ msgstr "Choose Provider"
 
 msgid "core.pages.index.headline"
 msgstr "Get reduced fare on public transportation when you tap to ride"
-
-msgid "core.pages.index.continue"
-msgstr "Get Started"
 
 msgid "core.pages.agency_index.title"
 msgstr "Introduction"
@@ -279,10 +283,6 @@ msgstr ""
 
 msgid "core.pages.logged_out.title"
 msgstr "Logged out"
-
-msgctxt "image alt text"
-msgid "core.icons.happybus"
-msgstr "Bus icon with smiley face"
 
 msgid "eligibility.buttons.choose"
 msgstr "Choose this Benefit"
@@ -516,6 +516,10 @@ msgstr "You will need a few items to continue:"
 msgid "eligibility.pages.unverified.title"
 msgstr "Eligibility Error"
 
+msgctxt "image alt text"
+msgid "core.icons.idcardquestion"
+msgstr "Identification card icon with question mark"
+
 msgid "eligibility.pages.unverified.headline"
 msgstr "Your eligibility could not be verified."
 
@@ -525,10 +529,6 @@ msgstr "That’s okay! You may still be eligible for our program."
 #, python-format
 msgid "eligibility.pages.unverified.p[0]s[1]%(short_name)s"
 msgstr "Please reach out to %(short_name)s for assistance."
-
-msgctxt "image alt text"
-msgid "core.icons.idcardquestion"
-msgstr "Identification card icon with question mark"
 
 msgid "enrollment.pages.index.link_card_item.heading"
 msgstr ""
@@ -570,6 +570,16 @@ msgstr "Please wait..."
 msgid "enrollment.buttons.payment_partner"
 msgstr "Connect your Card"
 
+msgctxt "image alt text"
+msgid "core.icons.bankcardquestion"
+msgstr "Bank card icon with contactless symbol and question mark"
+
+msgid "enrollment.pages.retry.title"
+msgstr "We couldn’t connect your bank card"
+
+msgid "core.buttons.retry"
+msgstr "Try again"
+
 msgid "enrollment.pages.success.title"
 msgstr "Success"
 
@@ -590,19 +600,9 @@ msgid "enrollment.pages.success.logout"
 msgstr ""
 "If you are on a public or shared computer, don’t forget to sign out of "
 
-msgid "enrollment.pages.retry.title"
-msgstr "We couldn’t connect your bank card"
-
-msgctxt "image alt text"
-msgid "core.icons.bankcardquestion"
-msgstr "Bank card icon with contactless symbol and question mark"
-
 msgid "enrollment.pages.retry.p[0]"
 msgstr ""
 "You can try again or reach out to your transit provider for assistance."
-
-msgid "core.buttons.retry"
-msgstr "Try again"
 
 msgid "core.pages.user_error.title"
 msgstr "Invalid state"
@@ -634,5 +634,6 @@ msgstr ""
 "The page you are looking for might be somewhere else or may not exist "
 "anymore."
 
+msgctxt "image alt text"
 msgid "core.icons.sadbus"
 msgstr "Bus icon with flat tire"
