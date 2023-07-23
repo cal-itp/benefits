@@ -1,6 +1,10 @@
 {% extends "core/base.html" %}
 {% load i18n %}
 
+{% block page-title %}
+  {% translate "enrollment.pages.retry.title" %}&nbsp;|&nbsp;
+{% endblock page-title %}
+
 {% block main-content %}
   {% if authentication and authentication.sign_out_link_template %}
     {% include authentication.sign_out_link_template %}
@@ -15,7 +19,7 @@
 
     <div class="row justify-content-center">
       <div class="col-lg-8 pt-4">
-        {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
+        <p>{% translate "enrollment.pages.retry.p[0]" %}</p>
       </div>
     </div>
 

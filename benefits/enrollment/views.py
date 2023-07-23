@@ -7,9 +7,8 @@ from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.utils.translation import gettext as _
 
-from benefits.core import models, session, viewmodels
+from benefits.core import models, session
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
 from benefits.core.views import ROUTE_LOGGED_OUT
 from . import analytics, api, forms
@@ -96,14 +95,7 @@ def retry(request):
         analytics.returned_retry(request)
         form = forms.CardTokenizeFailForm(request.POST)
         if form.is_valid():
-            page = viewmodels.Page(
-                title=_("enrollment.pages.retry.title"),
-                headline=_("enrollment.pages.retry.title"),
-                paragraphs=[_("enrollment.pages.retry.p[0]")],
-            )
-
-            ctx = page.context_dict()
-            return TemplateResponse(request, TEMPLATE_RETRY, ctx)
+            return TemplateResponse(request, TEMPLATE_RETRY)
         else:
             analytics.returned_error(request, "Invalid retry submission.")
             raise Exception("Invalid retry submission.")

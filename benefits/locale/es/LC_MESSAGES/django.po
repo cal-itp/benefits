@@ -519,13 +519,18 @@ msgstr "Espere por favor..."
 msgid "enrollment.buttons.payment_partner"
 msgstr "Conecta tu tarjeta"
 
+msgid "enrollment.pages.retry.title"
+msgstr "No pudimos conectar tú tarjeta bancaria"
+
 msgctxt "image alt text"
 msgid "core.icons.bankcardquestion"
 msgstr ""
 "Icono de tarjeta bancaria con símbolo sin contacto y signo de interrogación"
 
-msgid "enrollment.pages.retry.title"
-msgstr "No pudimos conectar tú tarjeta bancaria"
+msgid "enrollment.pages.retry.p[0]"
+msgstr ""
+"Puede intentarlo de nuevo o comunicarse con su proveedor de transporte local "
+"para obtener ayuda."
 
 msgid "core.buttons.retry"
 msgstr "Intentar otra vez"
@@ -549,11 +554,6 @@ msgstr "Gracias por usar los Beneficios de Cal-ITP."
 msgid "enrollment.pages.success.logout"
 msgstr ""
 "Si está en una computadora pública o compartida, no olvide cerrar sesión en "
-
-msgid "enrollment.pages.retry.p[0]"
-msgstr ""
-"Puede intentarlo de nuevo o comunicarse con su proveedor de transporte local "
-"para obtener ayuda."
 
 msgid "core.pages.user_error.title"
 msgstr "Error"

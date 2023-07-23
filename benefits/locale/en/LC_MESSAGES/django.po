@@ -505,12 +505,16 @@ msgstr "Please wait..."
 msgid "enrollment.buttons.payment_partner"
 msgstr "Connect your Card"
 
+msgid "enrollment.pages.retry.title"
+msgstr "We couldn’t connect your bank card"
+
 msgctxt "image alt text"
 msgid "core.icons.bankcardquestion"
 msgstr "Bank card icon with contactless symbol and question mark"
 
-msgid "enrollment.pages.retry.title"
-msgstr "We couldn’t connect your bank card"
+msgid "enrollment.pages.retry.p[0]"
+msgstr ""
+"You can try again or reach out to your transit provider for assistance."
 
 msgid "core.buttons.retry"
 msgstr "Try again"
@@ -534,10 +538,6 @@ msgstr "Thank you for using Cal-ITP Benefits!"
 msgid "enrollment.pages.success.logout"
 msgstr ""
 "If you are on a public or shared computer, don’t forget to sign out of "
-
-msgid "enrollment.pages.retry.p[0]"
-msgstr ""
-"You can try again or reach out to your transit provider for assistance."
 
 msgid "core.pages.user_error.title"
 msgstr "Invalid state"
