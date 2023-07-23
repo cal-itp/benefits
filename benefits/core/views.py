@@ -37,13 +37,7 @@ def agency_index(request, agency):
     session.reset(request)
     session.update(request, agency=agency, origin=agency.index_url)
 
-    page = viewmodels.Page(
-        title=_("core.pages.agency_index.title"),
-        headline=_("core.pages.agency_index.headline%(transit_agency_short_name_and_type)s")
-        % {"transit_agency_short_name_and_type": " ".join([agency.short_name, _(agency.transit_type)])},
-    )
-
-    return TemplateResponse(request, TEMPLATE_AGENCY, page.context_dict())
+    return TemplateResponse(request, agency.index_template)
 
 
 @pageview_decorator

@@ -201,8 +201,8 @@ class TransitAgency(models.Model):
     public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
     # The JWS-compatible signing algorithm
     jws_signing_alg = models.TextField()
+    index_template = models.TextField()
     eligibility_index_template = models.TextField()
-    transit_type = models.TextField()
     help_template = models.TextField(null=True)
 
     def __str__(self):

@@ -170,6 +170,7 @@ def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityV
         private_key=model_PemData,
         public_key=model_PemData,
         jws_signing_alg="alg",
+        index_template="core/agency-index.html",
         eligibility_index_template="eligibility/index.html",
     )
 
