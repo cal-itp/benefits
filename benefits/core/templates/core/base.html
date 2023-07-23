@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="{% translate "core.pages.help.about.p[0]" %}">
     {# djlint:off #}
-    <title>{% block page-title %}{% if page.title %}{{ page.title }}&nbsp;|&nbsp;{% endif %}{% endblock page-title %}{% translate "core.pages.title.suffix" %}</title>
+    <title>{% block page-title %}{% endblock page-title %}| {% translate "core.pages.title.suffix" %}</title>
     {# djlint:on #}
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css">
