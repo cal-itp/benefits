@@ -1,56 +1,6 @@
 """
 The core application: view model definitions for the root of the webapp.
 """
-from django.utils.translation import gettext_lazy as _
-
-
-class Button:
-    """
-    Represents a clickable button as styled <a> element (with optional label, optional transparent fallback text):
-    * classes: str, str[]
-    * id: str
-    * fallback_text: str
-    * label: str
-    * text: str
-    * url: str
-    * target: str
-    * rel: str
-    """
-
-    def __init__(self, **kwargs):
-        classes = kwargs.get("classes", [])
-        if isinstance(classes, str):
-            classes = classes.split()
-
-        self.classes = ["btn", "btn-lg"]
-        self.classes.extend(classes)
-        self.id = kwargs.get("id")
-        self.fallback_text = kwargs.get("fallback_text")
-        self.label = kwargs.get("label")
-        self.text = kwargs.get("text", "Button")
-        self.url = kwargs.get("url")
-        self.target = kwargs.get("target")
-        self.rel = kwargs.get("rel")
-
-    @staticmethod
-    def primary(**kwargs):
-        classes = kwargs.pop("classes", [])
-        if isinstance(classes, str):
-            classes = classes.split(" ")
-        classes.insert(0, "btn-primary")
-        return Button(classes=classes, **kwargs)
-
-    @staticmethod
-    def outline_primary(**kwargs):
-        classes = kwargs.pop("classes", [])
-        if isinstance(classes, str):
-            classes = classes.split(" ")
-        classes.insert(0, "btn-outline-primary")
-        return Button(classes=classes, **kwargs)
-
-    @staticmethod
-    def previous_page(url):
-        return Button(text=_("core.buttons.previous_page"), url=url)
 
 
 class Page:
