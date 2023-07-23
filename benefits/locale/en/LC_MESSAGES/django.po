@@ -259,11 +259,9 @@ msgid "core.pages.landing.h2"
 msgstr ""
 "Cal-ITP Benefits connects your transit benefit to your contactless card"
 
-msgid "core.pages.logged_out.headline[0]"
-msgstr "You have successfully logged out."
-
-msgid "core.pages.logged_out.headline[1]"
-msgstr "Thank you for using Cal-ITP Benefits!"
+msgid "core.pages.index.alt"
+msgstr ""
+"A person holds a contactless debit card next to a card reader on a bus."
 
 msgctxt "image alt text"
 msgid "core.icons.happybus"

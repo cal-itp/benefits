@@ -28,14 +28,7 @@ def index(request):
     """View handler for the main entry page."""
     session.reset(request)
 
-    page = viewmodels.Page(
-        title=_("core.pages.index.title"),
-        headline=_("core.pages.index.headline"),
-    )
-
-    ctx = page.context_dict()
-
-    return TemplateResponse(request, TEMPLATE_INDEX, ctx)
+    return TemplateResponse(request, TEMPLATE_INDEX)
 
 
 @pageview_decorator

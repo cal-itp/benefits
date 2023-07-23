@@ -296,6 +296,11 @@ msgstr ""
 "Obtenga una tarifa reducida en el transporte público "
 "%(transit_agency_short_name_and_type)s a cuando toque para viajar"
 
+msgid "core.pages.index.alt"
+msgstr ""
+"Una persona sostiene una tarjeta de débito junto a un lector de tarjetas en "
+"un autobús."
+
 msgid "core.pages.logged_out.title"
 msgstr "Cierre sesión"
 
