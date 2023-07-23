@@ -1,22 +1,27 @@
 {% extends "core/base.html" %}
+{% load i18n %}
+
+{% block page-title %}
+  {% translate title %}&nbsp;|&nbsp;
+{% endblock page-title %}
 
 {% block nav-buttons %}
   {% url "eligibility:start" as url_previous %}
   {% include "core/includes/button--previous-page.html" with url=url_previous %}
 {% endblock nav-buttons %}
 
+{% block headline %}
+  <div class="col-lg-8">
+    <h1>{% translate headline %}</h1>
+  </div>
+{% endblock headline %}
+
 {% block explanatory-text %}
-  {% for p in page.paragraphs %}<p class="pt-4 pb-4 pb-lg-8">{{ p }}</p>{% endfor %}
+  <p class="pt-4 pb-4 pb-lg-8">{% translate blurb %}</p>
 {% endblock explanatory-text %}
 
 {% block inner-content %}
   <div class="container">
-    <div class="row">
-      {% block forms %}
-        {% for f in page.forms %}
-          {% include "core/includes/form.html" with form=f %}
-        {% endfor %}
-      {% endblock forms %}
-    </div>
+    <div class="row">{% include "core/includes/form.html" with form=form %}</div>
   </div>
 {% endblock inner-content %}

@@ -6,9 +6,8 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.utils.translation import gettext as _
 
-from benefits.core import recaptcha, session, viewmodels
+from benefits.core import recaptcha, session
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RecaptchaEnabled, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
 from . import analytics, forms, verify
@@ -113,18 +112,16 @@ def confirm(request):
             return redirect(unverified_view)
 
     # GET/POST for Eligibility API verification
-    page = viewmodels.Page(
-        title=_(verifier.form_title),
-        headline=_(verifier.form_headline),
-        paragraphs=[_(verifier.form_blurb)],
-        form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
-    )
-
-    ctx = page.context_dict()
+    context = {
+        "title": verifier.form_title,
+        "headline": verifier.form_headline,
+        "blurb": verifier.form_blurb,
+        "form": forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
+    }
 
     # GET from an unverified user, present the form
     if request.method == "GET":
-        return TemplateResponse(request, TEMPLATE_CONFIRM, ctx)
+        return TemplateResponse(request, TEMPLATE_CONFIRM, context)
     # POST form submission, process form data, make Eligibility Verification API call
     elif request.method == "POST":
         analytics.started_eligibility(request, types_to_verify)
@@ -135,9 +132,8 @@ def confirm(request):
             if recaptcha.has_error(form):
                 messages.error(request, "Recaptcha failed. Please try again.")
 
-            page.forms = [form]
-            ctx.update(page.context_dict())
-            return TemplateResponse(request, TEMPLATE_CONFIRM, ctx)
+            context["form"] = form
+            return TemplateResponse(request, TEMPLATE_CONFIRM, context)
 
         # form is valid, make Eligibility Verification request to get the verified types
         verified_types = verify.eligibility_from_api(verifier, form, agency)
@@ -145,9 +141,8 @@ def confirm(request):
         # form was not valid, allow for correction/resubmission
         if verified_types is None:
             analytics.returned_error(request, types_to_verify, form.errors)
-            page.forms = [form]
-            ctx.update(page.context_dict())
-            return TemplateResponse(request, TEMPLATE_CONFIRM, ctx)
+            context["form"] = form
+            return TemplateResponse(request, TEMPLATE_CONFIRM, context)
         # no types were verified
         elif len(verified_types) == 0:
             return redirect(unverified_view)
