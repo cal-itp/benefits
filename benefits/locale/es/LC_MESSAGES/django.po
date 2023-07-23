@@ -276,19 +276,6 @@ msgstr "Elija su Proveedor"
 msgid "core.pages.landing.h2"
 msgstr "Su beneficio se aplicará cada vez que acerque su tarjeta para viajar"
 
-msgid "core.pages.logged_out.headline[0]"
-msgstr "Ha cerrado la sesión correctamente."
-
-msgid "core.pages.logged_out.headline[1]"
-msgstr "¡Gracias por usar los Beneficios de Cal-ITP!"
-
-msgctxt "image alt text"
-msgid "core.icons.happybus"
-msgstr "Icono de autobús con cara sonriente"
-
-msgid "eligibility.pages.index.label"
-msgstr "TODO: Which transit benefit would you like to enroll in?"
-
 msgid "core.pages.index.alt"
 msgstr ""
 "Una persona sostiene una tarjeta de débito junto a un lector de tarjetas en "
@@ -296,6 +283,18 @@ msgstr ""
 
 msgid "core.pages.logged_out.title"
 msgstr "Cierre sesión"
+
+msgctxt "image alt text"
+msgid "core.icons.happybus"
+msgstr "Icono de autobús con cara sonriente"
+
+msgid "core.pages.logged_out.headline"
+msgstr ""
+"Ha cerrado la sesión correctamente. ¡Gracias por usar los Beneficios de Cal-"
+"ITP!"
+
+msgid "eligibility.pages.index.label"
+msgstr "TODO: Which transit benefit would you like to enroll in?"
 
 msgid "eligibility.buttons.choose"
 msgstr "Elija este Beneficio"

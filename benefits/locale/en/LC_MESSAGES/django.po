@@ -272,15 +272,19 @@ msgid "core.pages.index.alt"
 msgstr ""
 "A person holds a contactless debit card next to a card reader on a bus."
 
+msgid "core.pages.logged_out.title"
+msgstr "Logged out"
+
 msgctxt "image alt text"
 msgid "core.icons.happybus"
 msgstr "Bus icon with smiley face"
 
+msgid "core.pages.logged_out.headline"
+msgstr ""
+"You have successfully logged out. Thank you for using Cal-ITP Benefits!"
+
 msgid "eligibility.pages.index.label"
 msgstr "Which transit benefit would you like to enroll in?"
-
-msgid "core.pages.logged_out.title"
-msgstr "Logged out"
 
 msgid "eligibility.buttons.choose"
 msgstr "Choose this Benefit"

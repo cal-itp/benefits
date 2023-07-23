@@ -1,15 +1,22 @@
 {% extends "core/base.html" %}
 {% load i18n %}
 
+{% block page-title %}
+  {% translate "core.pages.logged_out.title" %}&nbsp;|&nbsp;
+{% endblock page-title %}
+
 {% block main-content %}
   <div class="container">
     <div class="row justify-content-lg-center">
-      <h1 class="pb-lg-8 pb-5">
-        <span class="h2 d-block d-lg-inline mb-4">{% translate "core.pages.logged_out.headline[0]" %}</span>
-        <span class="h2">{% translate "core.pages.logged_out.headline[1]" %}</span>
-      </h1>
-      {% translate "core.icons.happybus" context "image alt text" as alt_i18n %}
-      {% include "core/includes/icon.html" with name="happybus" alt=alt_i18n %}
+      <div class="col-md-6">
+        <h1 class="h2 text-center">
+          <span class="d-block pb-lg-8 pb-5">
+            {% translate "core.icons.happybus" context "image alt text" as alt_i18n %}
+            {% include "core/includes/icon.html" with name="happybus" alt=alt_i18n %}
+          </span>
+          {% translate "core.pages.logged_out.headline" %}
+        </h1>
+      </div>
     </div>
   </div>
 {% endblock main-content %}

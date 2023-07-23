@@ -4,9 +4,8 @@ The core application: view definition for the root of the webapp.
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
 from django.template import loader
 from django.template.response import TemplateResponse
-from django.utils.translation import gettext as _
 
-from . import session, viewmodels
+from . import session
 from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator
 
 ROUTE_ELIGIBILITY = "eligibility:index"
@@ -92,5 +91,4 @@ def server_error(request, template_name=TEMPLATE_SERVER_ERROR):
 
 def logged_out(request):
     """View handler for the final log out confirmation message."""
-    page = viewmodels.Page(title=_("core.pages.logged_out.title"))
-    return TemplateResponse(request, TEMPLATE_LOGGED_OUT, page.context_dict())
+    return TemplateResponse(request, TEMPLATE_LOGGED_OUT)
