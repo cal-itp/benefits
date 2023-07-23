@@ -49,13 +49,7 @@ def agency_public_key(request, agency):
 @pageview_decorator
 def help(request):
     """View handler for the help page."""
-    page = viewmodels.Page(
-        title=_("core.buttons.help"),
-        headline=_("core.buttons.help"),
-    )
-
-    ctx = page.context_dict()
-    return TemplateResponse(request, TEMPLATE_HELP, ctx)
+    return TemplateResponse(request, TEMPLATE_HELP)
 
 
 @pageview_decorator
