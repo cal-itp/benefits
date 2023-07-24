@@ -30,9 +30,7 @@
         <p class="pt-4">{% translate "eligibility.pages.start.modal.p[3]" %}</p>
         {% if agency %}
           <p class="pt-4">
-            {% blocktranslate with agency_short_name=agency.short_name %}eligibility.pages.start.modal.p[4.1]{{agency_short_name}}{% endblocktranslate %}
-            {% blocktranslate with agency_info_url=agency.info_url %}eligibility.pages.start.modal.p[4.2]{{agency_info_url}}{% endblocktranslate %}
-            {% blocktranslate with agency_short_name=agency.short_name %}eligibility.pages.start.modal.p[4.3]{{agency_short_name}}{% endblocktranslate %}
+            {% blocktranslate with website=agency.info_url %}eligibility.pages.start.modal.p[4]{{ website }}{% endblocktranslate %}
           </p>
         {% endif %}
 

@@ -17,9 +17,7 @@
         <p class="pt-4">{% translate "eligibility.pages.start.modal.p[2]" %}</p>
         <p class="pt-4">{% translate "eligibility.pages.start.modal.p[3]" %}</p>
         <p class="pt-4 pb-2">
-            {% blocktranslate with agency_short_name=agency.short_name %}eligibility.pages.start.modal.p[4.1]{{agency_short_name}}{% endblocktranslate %}
-            {% blocktranslate with agency_info_url=agency.info_url %}eligibility.pages.start.modal.p[4.2]{{agency_info_url}}{% endblocktranslate %}
-            {% blocktranslate with agency_short_name=agency.short_name %}eligibility.pages.start.modal.p[4.3]{{agency_short_name}}{% endblocktranslate %}
+            {% blocktranslate with website=agency.info_url %}eligibility.pages.start.modal.p[4]{{ website }}{% endblocktranslate %}
         </p>
         <p class="pt-4 d-block d-sm-none">
             <a href="#" data-bs-dismiss="modal" aria-label="Close">{% translate "core.modals.back" %}</a>
