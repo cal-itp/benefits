@@ -121,7 +121,6 @@ def confirm(request):
     )
 
     ctx = page.context_dict()
-    ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_START))
 
     # GET from an unverified user, present the form
     if request.method == "GET":

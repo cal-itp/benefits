@@ -103,8 +103,6 @@ def retry(request):
             )
 
             ctx = page.context_dict()
-            ctx["retry_button"] = viewmodels.Button.primary(text=_("core.buttons.retry"), url=session.origin(request))
-
             return TemplateResponse(request, TEMPLATE_RETRY, ctx)
         else:
             analytics.returned_error(request, "Invalid retry submission.")

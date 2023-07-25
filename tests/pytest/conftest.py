@@ -44,8 +44,8 @@ def model_PemData():
 @pytest.fixture
 def model_AuthProvider():
     auth_provider = AuthProvider.objects.create(
-        sign_out_button_template="core/includes/sign-out-button--senior.html",
-        sign_out_link_template="core/includes/sign-out-link--senior.html",
+        sign_out_button_template="core/includes/button--sign-out--senior.html",
+        sign_out_link_template="core/includes/link--sign-out--senior.html",
         client_name="Client",
         client_id="1234",
         authority="https://example.com",
