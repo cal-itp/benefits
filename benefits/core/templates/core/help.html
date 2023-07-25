@@ -30,7 +30,7 @@
         <p class="pt-4">{% translate "eligibility.pages.start.modal.p[3]" %}</p>
         {% if agency %}
           <p class="pt-4">
-            {% blocktranslate with website=agency.info_url %}eligibility.pages.start.modal.p[4]{{ website }}{% endblocktranslate %}
+            {% blocktranslate with short_name=agency.short_name website=agency.info_url %}eligibility.pages.start.modal.p[4]{{ short_name }}{{ website }}{% endblocktranslate %}
           </p>
         {% endif %}
 
