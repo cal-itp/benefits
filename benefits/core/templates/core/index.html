@@ -1,9 +1,25 @@
 {% extends "core/landing.html" %}
 
 {% load i18n %}
+{% load static %}
 
-{% block call-to-action %}
-    {% translate "core.pages.index.button" as trigger_text %}
-    {% include "core/includes/modal-trigger.html" with id="agency-selector" classes="btn btn-lg btn-primary" text=trigger_text %}
+{% block main-content %}
+    {# djlint:off #}
+    <img class="image w-100 d-none d-sm-none d-md-none d-lg-block" src="{% static "img/benefits-bg-desktop.jpg" %}" alt="{% translate "core.pages.index.alt" %}">
+    <img class="image w-100 d-sm-block d-md-block d-lg-none" src="{% static "img/benefits-bg-mobile.jpg" %}" alt="{% translate "core.pages.index.alt" %}">
+    {# djlint:on #}
+    <div class="container landing-container position-absolute start-0 end-0">
+        <div class="col-lg-5 col-12">
+            <div class="box px-4 py-3 px-lg-0 py-lg-0">
+                <h1 class="text-left p-0">{{ page.headline }}</h1>
+                <h2 class="p-sm pb-lg-8 pt-1 pt-lg-4 pb-4">{% translate "core.pages.landing.h2" %}</h2>
+                {% block call-to-action %}
+                    {% translate "core.pages.index.button" as trigger_text %}
+                    {% include "core/includes/modal-trigger.html" with id="agency-selector" classes="btn btn-lg btn-primary" text=trigger_text %}
+                {% endblock call-to-action %}
+            </div>
+        </div>
+    </div>
+
     {% include "core/includes/modal--agency-selector.html" with id="agency-selector" %}
-{% endblock call-to-action %}
+{% endblock main-content %}
