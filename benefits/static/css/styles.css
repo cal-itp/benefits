@@ -754,15 +754,11 @@ a.card:focus-visible {
 
 :root {
   --landing-main-height: calc(100vh - 80px); /* Header Height (80px) */
-  --landing-background: url("/static/img/benefits-bg-mobile.jpg") no-repeat
-    var(--primary-color);
   --landing-box-background: var(--bs-white);
   --landing-box-border: 12px solid var(--primary-color);
   --landing-text-color: var(--text-primary-color);
-  --agency-index-box-background: var(--bs-white);
-  --agency-index-box-border: 12px solid var(--primary-color);
-  --agency-index-text-color: var(--text-primary-color);
   --landing-page-x-margin: auto;
+  --landing-box-top: inherit;
 }
 
 @media (min-width: 992px) {
@@ -770,21 +766,26 @@ a.card:focus-visible {
     --landing-main-height: calc(
       100vh - 130px
     ); /* 130px = Header Height (80px) + (Footer Link (50px) */
-    --landing-background: url("/static/img/benefits-bg-desktop.jpg") no-repeat;
     --landing-box-background: transparent;
     --landing-box-border: none;
     --landing-text-color: var(--bs-white);
     --landing-page-x-margin: 0;
+    --landing-box-top: 215px;
   }
 }
 
-.landing main#main-content {
-  background: var(--landing-background);
-  background-size: cover;
+.landing main#main-content .image {
+  height: var(--landing-main-height);
+  object-fit: cover;
+  object-position: top;
 }
 
-.landing main#main-content .container .row:first-child {
-  min-height: var(--landing-main-height);
+.landing-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: var(--landing-box-top);
 }
 
 .landing .box {

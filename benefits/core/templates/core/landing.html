@@ -1,19 +1,22 @@
 {% extends "core/base.html" %}
 {% load i18n %}
+{% load static %}
 {% block classes %}
   {{ block.super |add:" landing" }}
 {% endblock classes %}
 
 {% block main-content %}
-  <div class="container">
-    <div class="row align-items-end align-items-lg-center">
-      <div class="col-lg-5">
-        <div class="box px-4 py-3">
-          <h1 class="text-left p-0">{{ page.headline }}</h1>
-          <h2 class="p-sm pb-lg-8 pt-1 pt-lg-4 pb-4">{% translate "core.pages.landing.h2" %}</h2>
-          {% block call-to-action %}
-          {% endblock call-to-action %}
-        </div>
+  {# djlint:off #}
+  <img class="image w-100 d-none d-sm-none d-md-none d-lg-block" src="{% static "img/benefits-bg-desktop.jpg" %}" alt="A person holds a contactless debit card next to a card reader on a bus.">
+  <img class="image w-100 d-sm-block d-md-block d-lg-none" src="{% static "img/benefits-bg-mobile.jpg" %}" alt="A person holds a contactless debit card next to a card reader on a bus.">
+  {# djlint:on #}
+  <div class="container landing-container">
+    <div class="col-lg-5 col-12">
+      <div class="box px-4 py-3 px-lg-0 py-lg-0">
+        <h1 class="text-left p-0">{{ page.headline }}</h1>
+        <h2 class="p-sm pb-lg-8 pt-1 pt-lg-4 pb-4">{% translate "core.pages.landing.h2" %}</h2>
+        {% block call-to-action %}
+        {% endblock call-to-action %}
       </div>
     </div>
   </div>
