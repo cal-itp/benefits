@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-21 16:47+0000\n"
+"POT-Creation-Date: 2023-07-25 01:52+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -261,6 +261,11 @@ msgstr "Cierre sesión de Login.gov"
 msgid "core.pages.index.button"
 msgstr "Elija su Proveedor"
 
+msgid "core.pages.index.alt"
+msgstr ""
+"Una persona sostiene una tarjeta de débito junto a un lector de tarjetas en "
+"un autobús."
+
 msgid "core.pages.landing.h2"
 msgstr "Su beneficio se aplicará cada vez que acerque su tarjeta para viajar"
 
@@ -269,6 +274,10 @@ msgstr "Ha cerrado la sesión correctamente."
 
 msgid "core.pages.logged_out.headline[1]"
 msgstr "¡Gracias por usar los Beneficios de Cal-ITP!"
+
+msgctxt "image alt text"
+msgid "core.icons.happybus"
+msgstr "Icono de autobús con cara sonriente"
 
 msgid "eligibility.pages.index.label"
 msgstr "TODO: Which transit benefit would you like to enroll in?"
@@ -294,10 +303,6 @@ msgstr ""
 
 msgid "core.pages.logged_out.title"
 msgstr "Cierre sesión"
-
-msgctxt "image alt text"
-msgid "core.icons.happybus"
-msgstr "Icono de autobús con cara sonriente"
 
 msgid "eligibility.buttons.choose"
 msgstr "Elija este Beneficio"
@@ -570,6 +575,10 @@ msgstr "TODO: Necesitará algunos artículos para conectar su beneficio:"
 msgid "eligibility.pages.unverified.title"
 msgstr "Error de elegibilidad"
 
+msgctxt "image alt text"
+msgid "core.icons.idcardquestion"
+msgstr "Icono de tarjeta de identificación con signo de interrogación"
+
 msgid "eligibility.pages.unverified.headline"
 msgstr "No se pudo verificar su elegibilidad."
 
@@ -579,10 +588,6 @@ msgstr "TODO: ¡Esta bien! Aún puede ser elegible para nuestro programa."
 #, python-format
 msgid "eligibility.pages.unverified.p[0]s[1]%(short_name)s"
 msgstr "TODO: Comuníquese con %(short_name)s para obtener asistencia."
-
-msgctxt "image alt text"
-msgid "core.icons.idcardquestion"
-msgstr "Icono de tarjeta de identificación con signo de interrogación"
 
 msgid "enrollment.pages.index.link_card_item.heading"
 msgstr ""
@@ -625,6 +630,14 @@ msgstr "Espere por favor..."
 msgid "enrollment.buttons.payment_partner"
 msgstr "Conecta tu tarjeta"
 
+msgctxt "image alt text"
+msgid "core.icons.bankcardquestion"
+msgstr ""
+"Icono de tarjeta bancaria con símbolo sin contacto y signo de interrogación"
+
+msgid "enrollment.pages.retry.title"
+msgstr "No pudimos conectar tú tarjeta bancaria"
+
 msgid "enrollment.pages.success.title"
 msgstr "Éxito"
 
@@ -644,14 +657,6 @@ msgstr "Gracias por usar los Beneficios de Cal-ITP."
 msgid "enrollment.pages.success.logout"
 msgstr ""
 "Si está en una computadora pública o compartida, no olvide cerrar sesión en "
-
-msgid "enrollment.pages.retry.title"
-msgstr "No pudimos conectar tú tarjeta bancaria"
-
-msgctxt "image alt text"
-msgid "core.icons.bankcardquestion"
-msgstr ""
-"Icono de tarjeta bancaria con símbolo sin contacto y signo de interrogación"
 
 msgid "enrollment.pages.retry.p[0]"
 msgstr ""
@@ -691,5 +696,8 @@ msgstr ""
 "La página que estás buscando puede estar en otro lugar o puede que ya no "
 "exista."
 
+#, fuzzy
+#| msgid "core.icons.sadbus"
+msgctxt "image alt text"
 msgid "core.icons.sadbus"
 msgstr "Icono de autobus con llanta ponchada"
