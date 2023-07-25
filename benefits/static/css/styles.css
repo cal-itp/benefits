@@ -764,7 +764,8 @@ a.card:focus-visible {
   --landing-text-color: var(--text-primary-color);
   --landing-page-x-margin: auto;
   --landing-container-bottom: 0;
-  --landing-box-top: inherit;
+  --landing-container-top: inherit;
+  --landing-container-transform: inherit;
 }
 
 @media (min-width: 992px) {
@@ -777,7 +778,8 @@ a.card:focus-visible {
     --landing-text-color: var(--bs-white);
     --landing-page-x-margin: 0;
     --landing-container-bottom: 50px; /* Desktop Footer Height (50px) */
-    --landing-box-top: 215px; /* 215px = Header Height (80px) + Margin (135px) */
+    --landing-container-top: 50%;
+    --landing-container-transform: translate(0%, -50%);
   }
 }
 
@@ -789,7 +791,8 @@ a.card:focus-visible {
 
 .landing-container {
   bottom: var(--landing-container-bottom);
-  top: var(--landing-box-top);
+  top: var(--landing-container-top);
+  transform: var(--landing-container-transform);
 }
 
 .landing .box {
