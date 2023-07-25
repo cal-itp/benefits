@@ -55,6 +55,11 @@
     url("../fonts/PublicSans-Bold.woff") format("woff");
 }
 
+html.debug {
+  outline: 5px solid var(--error-color);
+  outline-offset: -5px;
+}
+
 body {
   font-size: 100%;
 }

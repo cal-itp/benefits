@@ -3,7 +3,7 @@
 {% load static %}
 {% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}" class="{% block classes %}{% endblock classes %}">
+<html lang="{{ LANGUAGE_CODE }}" class="{% block classes %}{% endblock classes %}{% if debug %}debug{% endif %}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -51,7 +51,7 @@
         {% include "core/includes/noscript.html" %}
       </noscript>
 
-      <div id="header-container" class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-between">
+      <div id="header-container" class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-between position-static">
         <div class="container">
           <span class="navbar-brand p-0">
             <img class="sm d-lg-none" src="{% static "img/logo-sm.svg" %}" width="90" height="51.3" alt="{% translate "core.logos.small" context "image alt text" %}" />
