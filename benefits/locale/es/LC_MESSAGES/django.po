@@ -2,11 +2,10 @@
 # Copyright (C) 2021 California Department of Transportation
 # This file is distributed under the same license as the benefits package.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-25 01:52+0000\n"
+"POT-Creation-Date: 2023-07-25 18:34+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -696,8 +695,6 @@ msgstr ""
 "La página que estás buscando puede estar en otro lugar o puede que ya no "
 "exista."
 
-#, fuzzy
-#| msgid "core.icons.sadbus"
 msgctxt "image alt text"
 msgid "core.icons.sadbus"
 msgstr "Icono de autobus con llanta ponchada"
