@@ -765,12 +765,12 @@ a.card:focus-visible {
   :root {
     --landing-main-height: calc(
       100vh - 130px
-    ); /* 130px = Header Height (80px) + (Footer Link (50px) */
+    ); /* 130px = Header Height (80px) + Footer Link (50px) */
     --landing-box-background: transparent;
     --landing-box-border: none;
     --landing-text-color: var(--bs-white);
     --landing-page-x-margin: 0;
-    --landing-box-top: 215px;
+    --landing-box-top: 215px; /* 215px = Header Height (80px) + Margin (135px) */
   }
 }
 
