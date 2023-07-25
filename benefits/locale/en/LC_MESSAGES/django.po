@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-21 16:47+0000\n"
+"POT-Creation-Date: 2023-07-25 17:28+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -80,46 +80,38 @@ msgstr ""
 "benefit to the rider's contactless card of choice."
 
 msgid "core.pages.help.payment_options"
-msgstr "Payment options"
+msgstr "What kind of credit card can I use?"
 
-msgid "core.pages.help.payment_options.p[0]"
+msgid "eligibility.pages.start.modal.p[0]"
 msgstr ""
-"In order to activate your discount, you need a bank card that has the "
-"contactless symbol on it. The contactless symbol is four curved lines that "
-"looks like this:"
+"Benefits only works with contactless debit or credit cards. We do not "
+"currently support mobile wallets or digital cards, such as Apple Pay, Google "
+"Wallet, or Samsung Wallet."
+
+msgid "eligibility.pages.start.modal.p[1]"
+msgstr "The contactless symbol is four curved lines, like this:"
 
 msgctxt "image alt text"
 msgid "core.icons.contactless"
 msgstr "Four curved lines on contactless-enabled cards"
 
-msgid "core.pages.help.payment_options.p[1]"
+msgid "eligibility.pages.start.modal.p[2]"
+msgstr "Your card must include a Visa or Mastercard logo."
+
+msgid "eligibility.pages.start.modal.p[3]"
 msgstr ""
-"A contactless bank card can be a credit card or a debit card and must "
-"include a Visa or Mastercard logo."
+"Don’t have access to a contactless card? You can request a contactless card "
+"from your bank, or one of the companies that offer free contactless prepaid "
+"debit cards, such as the Cash App Visa debit card or the Venmo Mastercard "
+"debit card."
 
 #, python-format
-msgid "core.pages.help.payment_options.p[2][0]%(website)s"
+msgid "eligibility.pages.start.modal.p[4]%(short_name)s%(website)s"
 msgstr ""
-"Don’t have access to a bank card? You can request a contactless card from "
-"one of the companies that offer free contactless prepaid debit cards, such "
-"as the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer"
-"\">Cash App Visa Debit Card</a> "
-
-#, python-format
-msgid "core.pages.help.payment_options.p[2][1]%(website)s"
-msgstr ""
-"or the <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer"
-"\">Venmo Mastercard Debit Card</a>."
-
-msgid "core.pages.help.payment_options.p[3]"
-msgstr ""
-"You can still get your discount by going through your local transit "
-"provider’s application process."
-
-msgid "core.pages.help.payment_options.p[4]"
-msgstr ""
-"For updates on additional options, please check back on this website, or get "
-"in touch with your local transit provider."
+"You can still get your transit benefit by going through your "
+"%(short_name)s's application process. For updates on additional options, "
+"please check back on this website, or <a href=\"%(website)s\" target=\"_blank"
+"\" rel=\"noopener noreferrer\">contact %(short_name)s.</a>"
 
 msgid "core.pages.help.login_gov"
 msgstr "What is Login.gov?"
@@ -380,42 +372,6 @@ msgstr ""
 msgctxt "image alt text"
 msgid "core.icons.idcardcheck"
 msgstr "Identification card icon with checkmark"
-
-msgid "eligibility.pages.start.modal.p[0]"
-msgstr ""
-"Benefits only works with contactless debit or credit cards. We do not "
-"currently support mobile wallets or digital cards, such as Apple Pay, Google "
-"Wallet, or Samsung Wallet."
-
-msgid "eligibility.pages.start.modal.p[1]"
-msgstr "The contactless symbol is four curved lines, like this:"
-
-msgid "eligibility.pages.start.modal.p[2]"
-msgstr "Your card must include a Visa or Mastercard logo."
-
-msgid "eligibility.pages.start.modal.p[3]"
-msgstr ""
-"Don’t have access to a contactless card? You can request a contactless card "
-"from your bank, or one of the companies that offer free contactless prepaid "
-"debit cards, such as the Cash App Visa debit card or the Venmo Mastercard "
-"debit card."
-
-#, python-format
-msgid "eligibility.pages.start.modal.p[4.1]%(agency_short_name)s"
-msgstr ""
-"You can still get your transit benefit by going through your "
-"%(agency_short_name)s application process. For updates on additional "
-"options, please check back on this website, or contact "
-
-#, python-format
-msgid "eligibility.pages.start.modal.p[4.2]%(agency_info_url)s"
-msgstr ""
-"<a href=\"%(agency_info_url)s\" target=\"_blank\" rel=\"noopener noreferrer"
-"\">"
-
-#, python-format
-msgid "eligibility.pages.start.modal.p[4.3]%(agency_short_name)s"
-msgstr "%(agency_short_name)s</a>."
 
 msgid "core.modals.back"
 msgstr "Go back"

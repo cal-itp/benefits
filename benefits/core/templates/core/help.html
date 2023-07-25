@@ -17,8 +17,8 @@
         <p class="pt-4">{% translate "core.pages.help.about.p[1]" %}</p>
 
         <h2 class="pt-8" id="payment-options">{% translate "core.pages.help.payment_options" %}</h2>
-        <p class="pt-4">{% translate "core.pages.help.payment_options.p[0]" %}</p>
-
+        <p class="pt-4">{% translate "eligibility.pages.start.modal.p[0]" %}</p>
+        <p class="pt-4">{% translate "eligibility.pages.start.modal.p[1]" %}</p>
         <p class="contactless-symbol pt-3">
           <img class="icon mx-auto d-block"
                width="40"
@@ -26,14 +26,13 @@
                src="{% static 'img/icon/contactless.svg' %}"
                alt="{% translate "core.icons.contactless" context "image alt text" %}" />
         </p>
-
-        <p class="pt-4">{% translate "core.pages.help.payment_options.p[1]" %}</p>
-        <p class="pt-4">
-          {% blocktranslate with website="https://cash.app/help/us/en-us/14425-cal-transit" %}core.pages.help.payment_options.p[2][0]{{ website }}{% endblocktranslate %}
-          {% blocktranslate with website="https://venmo.com/about/debitcard/" %}core.pages.help.payment_options.p[2][1]{{ website }}{% endblocktranslate %}
-        </p>
-        <p class="pt-4">{% translate "core.pages.help.payment_options.p[3]" %}</p>
-        <p class="pt-4">{% translate "core.pages.help.payment_options.p[4]" %}</p>
+        <p class="pt-4">{% translate "eligibility.pages.start.modal.p[2]" %}</p>
+        <p class="pt-4">{% translate "eligibility.pages.start.modal.p[3]" %}</p>
+        {% if agency %}
+          <p class="pt-4">
+            {% blocktranslate with short_name=agency.short_name website=agency.info_url %}eligibility.pages.start.modal.p[4]{{ short_name }}{{ website }}{% endblocktranslate %}
+          </p>
+        {% endif %}
 
         <h2 class="pt-8" id="login-gov">{% translate "core.pages.help.login_gov" %}</h2>
         <p class="pt-4">{% translate "core.pages.help.login_gov.p[0]" %}</p>
