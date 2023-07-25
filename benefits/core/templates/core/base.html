@@ -35,9 +35,6 @@
     {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
   </head>
   <body>
-    {% if debug %}
-      {% include "core/includes/debug.html" %}
-    {% endif %}
     <header role="banner" id="header">
       <div id="skip-to-content">
         <a href="#main-content">{% translate "core.buttons.skip" %}</a>
@@ -113,6 +110,10 @@
         </ul>
       </div>
     </footer>
+
+    {% if debug %}
+      {% include "core/includes/debug.html" %}
+    {% endif %}
 
     {% comment %}
       CA State Template v6.0.7 comes with Bootstrap v5.1.3
