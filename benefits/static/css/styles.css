@@ -763,6 +763,7 @@ a.card:focus-visible {
   --landing-box-border: 12px solid var(--primary-color);
   --landing-text-color: var(--text-primary-color);
   --landing-page-x-margin: auto;
+  --landing-container-bottom: 0;
   --landing-box-top: inherit;
 }
 
@@ -775,6 +776,7 @@ a.card:focus-visible {
     --landing-box-border: none;
     --landing-text-color: var(--bs-white);
     --landing-page-x-margin: 0;
+    --landing-container-bottom: 50px; /* Desktop Footer Height (50px) */
     --landing-box-top: 215px; /* 215px = Header Height (80px) + Margin (135px) */
   }
 }
@@ -786,10 +788,7 @@ a.card:focus-visible {
 }
 
 .landing-container {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  bottom: var(--landing-container-bottom);
   top: var(--landing-box-top);
 }
 
