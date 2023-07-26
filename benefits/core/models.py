@@ -203,6 +203,7 @@ class TransitAgency(models.Model):
     jws_signing_alg = models.TextField()
     eligibility_index_template = models.TextField()
     transit_type = models.TextField()
+    help_template = models.TextField(null=True)
 
     def __str__(self):
         return self.long_name

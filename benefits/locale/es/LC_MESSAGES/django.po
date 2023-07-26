@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-25 17:28+0000\n"
+"POT-Creation-Date: 2023-07-26 20:48+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -177,19 +177,6 @@ msgstr ""
 "help/' target=\"_blank\" rel=\"noopener noreferrer\">more information on "
 "identity verification.</a>"
 
-msgid "core.pages.help.mst_courtesy_card"
-msgstr "¿Qué es una Tarjeta de Cortesía?"
-
-msgid "core.pages.help.mst_courtesy_card.p[0]"
-msgstr ""
-"Las Tarjetas de Cortesía son emitidas por Monterey-Salinas Transit a "
-"pasajeros que califican para varios programas de tarifas con descuento. Este "
-"sitio web es una herramienta de demostración para apoyar el programa de "
-"Tarjeta de Cortesía. Es posible que este beneficio deba renovarse en el "
-"futuro según la fecha de vencimiento de la Tarjeta de Cortesía. Obtenga más "
-"información <a href='https://mst.org/riders-guide/how-to-ride/courtesy-"
-"card/' target=\"_blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
-
 msgid "core.pages.help.littlepay"
 msgstr "¿Qué es Littlepay?"
 
@@ -229,6 +216,19 @@ msgstr "Regresar a la Página Principal"
 
 msgid "core.buttons.previous_page"
 msgstr "Página Anterior"
+
+msgid "core.pages.help.mst_courtesy_card"
+msgstr "¿Qué es una Tarjeta de Cortesía?"
+
+msgid "core.pages.help.mst_courtesy_card.p[0]"
+msgstr ""
+"Las Tarjetas de Cortesía son emitidas por Monterey-Salinas Transit a "
+"pasajeros que califican para varios programas de tarifas con descuento. Este "
+"sitio web es una herramienta de demostración para apoyar el programa de "
+"Tarjeta de Cortesía. Es posible que este beneficio deba renovarse en el "
+"futuro según la fecha de vencimiento de la Tarjeta de Cortesía. Obtenga más "
+"información <a href='https://mst.org/riders-guide/how-to-ride/courtesy-"
+"card/' target=\"_blank\" rel=\"noopener noreferrer\">MST Riders Guide.</a>"
 
 msgid "core.buttons.senior.signout"
 msgstr "Cierre sesión de Login.gov"

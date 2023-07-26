@@ -48,8 +48,9 @@
         <p class="pt-4">{% translate "eligibility.pages.start.senior.help.p[3]" %}</p>
         <p class="pt-4">{% translate "eligibility.pages.start.senior.help.p[4]" %}</p>
 
-        <h2 class="pt-8" id="mst-courtesy-card">{% translate "core.pages.help.mst_courtesy_card" %}</h2>
-        <p class="pt-4">{% translate "core.pages.help.mst_courtesy_card.p[0]" %}</p>
+        {% if agency and agency.help_template %}
+          {% include agency.help_template %}
+        {% endif %}
 
         <h2 class="pt-8" id="littlepay">{% translate "core.pages.help.littlepay" %}</h2>
         <p class="pt-4">{% translate "core.pages.help.littlepay.p[0]" %}</p>
