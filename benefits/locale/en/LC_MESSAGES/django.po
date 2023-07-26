@@ -224,7 +224,7 @@ msgstr ""
 "tool to support the Courtesy Card program. This benefit may need to be "
 "renewed in the future based on the expiration date of the Courtesy Card. "
 "Learn more at the <a href='https://mst.org/riders-guide/how-to-ride/courtesy-"
-"card/' target=\"_blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
+"card/' target=\"_blank\" rel=\"noopener noreferrer\">MST Riders Guide.</a>"
 
 msgid "core.buttons.senior.signout"
 msgstr "Sign out of Login.gov"
