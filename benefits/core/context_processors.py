@@ -9,6 +9,7 @@ from . import models, session
 def _agency_context(agency):
     return {
         "eligibility_index_url": agency.eligibility_index_url,
+        "help_template": agency.help_template,
         "info_url": agency.info_url,
         "long_name": agency.long_name,
         "phone": agency.phone,

@@ -258,6 +258,7 @@ PEM DATA
         payment_processor=mst_payment_processor,
         eligibility_index_template="eligibility/index--mst.html",
         transit_type=_("agency.variables.mst.transit_type"),
+        help_template="core/includes/help--mst.html",
     )
     mst_agency.eligibility_types.set([mst_senior_type, mst_veteran_type, mst_courtesy_card_type])
     mst_agency.eligibility_verifiers.set([mst_oauth_claims_verifier, mst_veteran_verifier, mst_courtesy_card_verifier])
