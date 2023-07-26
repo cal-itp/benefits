@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-25 17:28+0000\n"
+"POT-Creation-Date: 2023-07-26 20:48+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -174,18 +174,6 @@ msgstr ""
 "target=\"_blank\" rel=\"noopener noreferrer\">more information on identity "
 "verification.</a>"
 
-msgid "core.pages.help.mst_courtesy_card"
-msgstr "What is a Courtesy Card?"
-
-msgid "core.pages.help.mst_courtesy_card.p[0]"
-msgstr ""
-"Courtesy Cards are issued by Monterey-Salinas Transit to riders who qualify "
-"for a number of discounted-fare programs. This website is a demonstration "
-"tool to support the Courtesy Card program. This benefit may need to be "
-"renewed in the future based on the expiration date of the Courtesy Card. "
-"Learn more at the <a href='https://mst.org/riders-guide/how-to-ride/courtesy-"
-"card/' target=\"_blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
-
 msgid "core.pages.help.littlepay"
 msgstr "What is Littlepay?"
 
@@ -225,6 +213,18 @@ msgstr "Return Home"
 
 msgid "core.buttons.previous_page"
 msgstr "Previous Page"
+
+msgid "core.pages.help.mst_courtesy_card"
+msgstr "What is a Courtesy Card?"
+
+msgid "core.pages.help.mst_courtesy_card.p[0]"
+msgstr ""
+"Courtesy Cards are issued by Monterey-Salinas Transit to riders who qualify "
+"for a number of discounted-fare programs. This website is a demonstration "
+"tool to support the Courtesy Card program. This benefit may need to be "
+"renewed in the future based on the expiration date of the Courtesy Card. "
+"Learn more at the <a href='https://mst.org/riders-guide/how-to-ride/courtesy-"
+"card/' target=\"_blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
 
 msgid "core.buttons.senior.signout"
 msgstr "Sign out of Login.gov"
