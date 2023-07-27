@@ -278,6 +278,10 @@ msgstr "Choose Provider"
 msgid "core.pages.index.headline"
 msgstr "Get reduced fare on public transportation when you tap to ride"
 
+msgid "core.pages.index.alt"
+msgstr ""
+"A person holds a contactless debit card next to a card reader on a bus."
+
 msgid "core.pages.agency_index.title"
 msgstr "Introduction"
 
