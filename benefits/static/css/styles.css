@@ -759,9 +759,6 @@ a.card:focus-visible {
   --landing-box-background: var(--bs-white);
   --landing-box-border: 12px solid var(--primary-color);
   --landing-text-color: var(--text-primary-color);
-  --agency-index-box-background: var(--bs-white);
-  --agency-index-box-border: 12px solid var(--primary-color);
-  --agency-index-text-color: var(--text-primary-color);
   --landing-page-x-margin: auto;
 }
 
