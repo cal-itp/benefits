@@ -50,9 +50,9 @@
   font-family: "Public Sans";
   font-weight: var(--bold-font-weight);
   font-style: normal;
-  src:
-    local("PublicSans"),
-    url("../fonts/PublicSans-Bold.woff") format("woff");
+  /* prettier-ignore */
+  src: local("PublicSans"), url("../fonts/PublicSans-Bold.woff") format("woff");
+  /* prettier-ignore */
 }
 
 body {
