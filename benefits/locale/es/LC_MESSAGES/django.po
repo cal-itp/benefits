@@ -282,6 +282,11 @@ msgid "core.pages.index.headline"
 msgstr ""
 "Obtenga una tarifa reducida en el transporte público cuando toque para viajar"
 
+msgid "core.pages.index.alt"
+msgstr ""
+"Una persona sostiene una tarjeta de débito junto a un lector de tarjetas en "
+"un autobús."
+
 msgid "core.pages.agency_index.title"
 msgstr "Introducción"
 
