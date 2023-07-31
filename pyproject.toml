@@ -11,7 +11,7 @@ dependencies = [
     "django-csp==3.7",
     "eligibility-api==2023.6.1",
     "requests==2.31.0",
-    "sentry-sdk==1.28.1",
+    "sentry-sdk==1.29.0",
     "six==1.16.0",
 ]
 dynamic = ["version"]
