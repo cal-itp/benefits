@@ -256,8 +256,8 @@ PEM DATA
         public_key=client_public_key,
         jws_signing_alg=os.environ.get("MST_AGENCY_JWS_SIGNING_ALG", "RS256"),
         payment_processor=mst_payment_processor,
+        index_template="core/index--mst.html",
         eligibility_index_template="eligibility/index--mst.html",
-        transit_type=_("agency.variables.mst.transit_type"),
         help_template="core/includes/help--mst.html",
     )
     mst_agency.eligibility_types.set([mst_senior_type, mst_veteran_type, mst_courtesy_card_type])
@@ -276,8 +276,8 @@ PEM DATA
         public_key=client_public_key,
         jws_signing_alg=os.environ.get("SACRT_AGENCY_JWS_SIGNING_ALG", "RS256"),
         payment_processor=sacrt_payment_processor,
+        index_template="core/index--sacrt.html",
         eligibility_index_template="eligibility/index--sacrt.html",
-        transit_type=_("agency.variables.sacrt.transit_type"),
     )
     sacrt_agency.eligibility_types.set([sacrt_senior_type])
     sacrt_agency.eligibility_verifiers.set([sacrt_oauth_claims_verifier])

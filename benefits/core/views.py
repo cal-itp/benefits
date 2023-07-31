@@ -4,9 +4,8 @@ The core application: view definition for the root of the webapp.
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
 from django.template import loader
 from django.template.response import TemplateResponse
-from django.utils.translation import gettext as _
 
-from . import session, viewmodels
+from . import session
 from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator
 
 ROUTE_ELIGIBILITY = "eligibility:index"
@@ -28,14 +27,7 @@ def index(request):
     """View handler for the main entry page."""
     session.reset(request)
 
-    page = viewmodels.Page(
-        title=_("core.pages.index.title"),
-        headline=_("core.pages.index.headline"),
-    )
-
-    ctx = page.context_dict()
-
-    return TemplateResponse(request, TEMPLATE_INDEX, ctx)
+    return TemplateResponse(request, TEMPLATE_INDEX)
 
 
 @pageview_decorator
@@ -44,13 +36,7 @@ def agency_index(request, agency):
     session.reset(request)
     session.update(request, agency=agency, origin=agency.index_url)
 
-    page = viewmodels.Page(
-        title=_("core.pages.agency_index.title"),
-        headline=_("core.pages.agency_index.headline%(transit_agency_short_name_and_type)s")
-        % {"transit_agency_short_name_and_type": " ".join([agency.short_name, _(agency.transit_type)])},
-    )
-
-    return TemplateResponse(request, TEMPLATE_AGENCY, page.context_dict())
+    return TemplateResponse(request, agency.index_template)
 
 
 @pageview_decorator
@@ -62,13 +48,7 @@ def agency_public_key(request, agency):
 @pageview_decorator
 def help(request):
     """View handler for the help page."""
-    page = viewmodels.Page(
-        title=_("core.buttons.help"),
-        headline=_("core.buttons.help"),
-    )
-
-    ctx = page.context_dict()
-    return TemplateResponse(request, TEMPLATE_HELP, ctx)
+    return TemplateResponse(request, TEMPLATE_HELP)
 
 
 @pageview_decorator
@@ -111,5 +91,4 @@ def server_error(request, template_name=TEMPLATE_SERVER_ERROR):
 
 def logged_out(request):
     """View handler for the final log out confirmation message."""
-    page = viewmodels.Page(title=_("core.pages.logged_out.title"))
-    return TemplateResponse(request, TEMPLATE_LOGGED_OUT, page.context_dict())
+    return TemplateResponse(request, TEMPLATE_LOGGED_OUT)

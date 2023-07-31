@@ -8,16 +8,12 @@ from benefits.core.views import (
     ROUTE_HELP,
     ROUTE_LOGGED_OUT,
     TEMPLATE_INDEX,
-    TEMPLATE_AGENCY,
     bad_request,
     csrf_failure,
     page_not_found,
     server_error,
 )
 from benefits.core.middleware import ROUTE_INDEX
-
-
-ROUTE_AGENCY = "core:agency_index"
 
 
 @pytest.fixture
@@ -71,7 +67,7 @@ def test_agency_index_single_verifier(mocker, model_TransitAgency, client, sessi
     mocked_session_update.assert_called_once()
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_AGENCY
+    assert response.template_name == model_TransitAgency.index_template
 
 
 @pytest.mark.django_db
@@ -92,7 +88,7 @@ def test_agency_index_multiple_verifier(
     session_reset_spy.assert_called_once()
     mocked_session_update.assert_called_once()
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_AGENCY
+    assert response.template_name == model_TransitAgency.index_template
 
 
 @pytest.mark.django_db

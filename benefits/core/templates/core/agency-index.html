@@ -1,7 +1,11 @@
 {% extends "core/landing.html" %}
 {% load i18n %}
 
+{% block title %}
+  {% translate "core.pages.agency_index.title" %}
+{% endblock title %}
+
 {% block call-to-action %}
-    {% url "eligibility:index" as url_continue %}
-    <a href="{{ url_continue }}" class="btn btn-lg btn-primary">{% translate "core.pages.index.continue" %}</a>
+  {% url "eligibility:index" as url_continue %}
+  <a href="{{ url_continue }}" class="btn btn-lg btn-primary">{% translate "core.pages.index.continue" %}</a>
 {% endblock call-to-action %}

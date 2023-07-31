@@ -36,11 +36,8 @@ msgstr "[Identity-Marker] (as it appears on [Agency-Card])"
 msgid "eligibility.forms.confirm.mst_courtesy_card.fields.name.help_text"
 msgstr "We use this to help confirm your [Agency-Card]."
 
-msgid "agency.variables.mst.transit_type"
-msgstr "bus"
-
-msgid "agency.variables.sacrt.transit_type"
-msgstr "light rail"
+msgid "core.pages.agency_index.title"
+msgstr "Introduction"
 
 msgid "core.pages.index.continue"
 msgstr "Get Started"
@@ -252,25 +249,11 @@ msgstr ""
 "To function properly, this website requires a browser that supports "
 "JavaScript. Please enable JavaScript for this website and"
 
-msgid "core.pages.index.button"
-msgstr "Choose your Provider"
+msgid "core.pages.agency_index.mst.headline"
+msgstr "Get reduced fare on MST public transportation when you tap to ride"
 
-msgid "core.pages.landing.h2"
-msgstr ""
-"Cal-ITP Benefits connects your transit benefit to your contactless card"
-
-msgid "core.pages.logged_out.headline[0]"
-msgstr "You have successfully logged out."
-
-msgid "core.pages.logged_out.headline[1]"
-msgstr "Thank you for using Cal-ITP Benefits!"
-
-msgctxt "image alt text"
-msgid "core.icons.happybus"
-msgstr "Bus icon with smiley face"
-
-msgid "eligibility.pages.index.label"
-msgstr "Which transit benefit would you like to enroll in?"
+msgid "core.pages.agency_index.sacrt.headline"
+msgstr "Get reduced fare on SacRT light rail when you tap to ride"
 
 msgid "core.pages.index.title"
 msgstr "Choose Provider"
@@ -278,21 +261,30 @@ msgstr "Choose Provider"
 msgid "core.pages.index.headline"
 msgstr "Get reduced fare on public transportation when you tap to ride"
 
+msgid "core.pages.index.button"
+msgstr "Choose your Provider"
+
+msgid "core.pages.landing.h2"
+msgstr ""
+"Cal-ITP Benefits connects your transit benefit to your contactless card"
+
 msgid "core.pages.index.alt"
 msgstr ""
 "A person holds a contactless debit card next to a card reader on a bus."
 
-msgid "core.pages.agency_index.title"
-msgstr "Introduction"
-
-#, python-format
-msgid "core.pages.agency_index.headline%(transit_agency_short_name_and_type)s"
-msgstr ""
-"Get reduced fare on %(transit_agency_short_name_and_type)s when you tap to "
-"ride"
-
 msgid "core.pages.logged_out.title"
 msgstr "Logged out"
+
+msgctxt "image alt text"
+msgid "core.icons.happybus"
+msgstr "Bus icon with smiley face"
+
+msgid "core.pages.logged_out.headline"
+msgstr ""
+"You have successfully logged out. Thank you for using Cal-ITP Benefits!"
+
+msgid "eligibility.pages.index.label"
+msgstr "Which transit benefit would you like to enroll in?"
 
 msgid "eligibility.buttons.choose"
 msgstr "Choose this Benefit"
@@ -513,12 +505,16 @@ msgstr "Please wait..."
 msgid "enrollment.buttons.payment_partner"
 msgstr "Connect your Card"
 
+msgid "enrollment.pages.retry.title"
+msgstr "We couldn’t connect your bank card"
+
 msgctxt "image alt text"
 msgid "core.icons.bankcardquestion"
 msgstr "Bank card icon with contactless symbol and question mark"
 
-msgid "enrollment.pages.retry.title"
-msgstr "We couldn’t connect your bank card"
+msgid "enrollment.pages.retry.p[0]"
+msgstr ""
+"You can try again or reach out to your transit provider for assistance."
 
 msgid "core.buttons.retry"
 msgstr "Try again"
@@ -542,10 +538,6 @@ msgstr "Thank you for using Cal-ITP Benefits!"
 msgid "enrollment.pages.success.logout"
 msgstr ""
 "If you are on a public or shared computer, don’t forget to sign out of "
-
-msgid "enrollment.pages.retry.p[0]"
-msgstr ""
-"You can try again or reach out to your transit provider for assistance."
 
 msgid "core.pages.user_error.title"
 msgstr "Invalid state"

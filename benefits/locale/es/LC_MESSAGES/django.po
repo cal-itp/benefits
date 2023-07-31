@@ -36,11 +36,8 @@ msgstr "[Identity-Marker] (as it appears on [Agency-Card])"
 msgid "eligibility.forms.confirm.mst_courtesy_card.fields.name.help_text"
 msgstr "Usamos esto para ayudar a confirmar su [Agency-Card]."
 
-msgid "agency.variables.mst.transit_type"
-msgstr "TODO: bus"
-
-msgid "agency.variables.sacrt.transit_type"
-msgstr "TODO: light rail"
+msgid "core.pages.agency_index.title"
+msgstr "Introducción"
 
 msgid "core.pages.index.continue"
 msgstr "Empezar"
@@ -256,24 +253,15 @@ msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita JavaScript. Por favor, active JavaScript por este sitio web y"
 
-msgid "core.pages.index.button"
-msgstr "Elija su Proveedor"
+msgid "core.pages.agency_index.mst.headline"
+msgstr ""
+"TODO: Obtenga una tarifa reducida en el transporte público de MST cuando "
+"toque para viajar"
 
-msgid "core.pages.landing.h2"
-msgstr "Su beneficio se aplicará cada vez que acerque su tarjeta para viajar"
-
-msgid "core.pages.logged_out.headline[0]"
-msgstr "Ha cerrado la sesión correctamente."
-
-msgid "core.pages.logged_out.headline[1]"
-msgstr "¡Gracias por usar los Beneficios de Cal-ITP!"
-
-msgctxt "image alt text"
-msgid "core.icons.happybus"
-msgstr "Icono de autobús con cara sonriente"
-
-msgid "eligibility.pages.index.label"
-msgstr "TODO: Which transit benefit would you like to enroll in?"
+msgid "core.pages.agency_index.sacrt.headline"
+msgstr ""
+"TODO: Obtenga una tarifa reducida en el transporte público de SacRT cuando "
+"toque para viajar"
 
 msgid "core.pages.index.title"
 msgstr "Elija Proveedor"
@@ -282,22 +270,31 @@ msgid "core.pages.index.headline"
 msgstr ""
 "Obtenga una tarifa reducida en el transporte público cuando toque para viajar"
 
+msgid "core.pages.index.button"
+msgstr "Elija su Proveedor"
+
+msgid "core.pages.landing.h2"
+msgstr "Su beneficio se aplicará cada vez que acerque su tarjeta para viajar"
+
 msgid "core.pages.index.alt"
 msgstr ""
 "Una persona sostiene una tarjeta de débito junto a un lector de tarjetas en "
 "un autobús."
 
-msgid "core.pages.agency_index.title"
-msgstr "Introducción"
-
-#, python-format
-msgid "core.pages.agency_index.headline%(transit_agency_short_name_and_type)s"
-msgstr ""
-"Obtenga una tarifa reducida en el transporte público "
-"%(transit_agency_short_name_and_type)s a cuando toque para viajar"
-
 msgid "core.pages.logged_out.title"
 msgstr "Cierre sesión"
+
+msgctxt "image alt text"
+msgid "core.icons.happybus"
+msgstr "Icono de autobús con cara sonriente"
+
+msgid "core.pages.logged_out.headline"
+msgstr ""
+"Ha cerrado la sesión correctamente. ¡Gracias por usar los Beneficios de Cal-"
+"ITP!"
+
+msgid "eligibility.pages.index.label"
+msgstr "TODO: Which transit benefit would you like to enroll in?"
 
 msgid "eligibility.buttons.choose"
 msgstr "Elija este Beneficio"
@@ -522,13 +519,18 @@ msgstr "Espere por favor..."
 msgid "enrollment.buttons.payment_partner"
 msgstr "Conecta tu tarjeta"
 
+msgid "enrollment.pages.retry.title"
+msgstr "No pudimos conectar tú tarjeta bancaria"
+
 msgctxt "image alt text"
 msgid "core.icons.bankcardquestion"
 msgstr ""
 "Icono de tarjeta bancaria con símbolo sin contacto y signo de interrogación"
 
-msgid "enrollment.pages.retry.title"
-msgstr "No pudimos conectar tú tarjeta bancaria"
+msgid "enrollment.pages.retry.p[0]"
+msgstr ""
+"Puede intentarlo de nuevo o comunicarse con su proveedor de transporte local "
+"para obtener ayuda."
 
 msgid "core.buttons.retry"
 msgstr "Intentar otra vez"
@@ -552,11 +554,6 @@ msgstr "Gracias por usar los Beneficios de Cal-ITP."
 msgid "enrollment.pages.success.logout"
 msgstr ""
 "Si está en una computadora pública o compartida, no olvide cerrar sesión en "
-
-msgid "enrollment.pages.retry.p[0]"
-msgstr ""
-"Puede intentarlo de nuevo o comunicarse con su proveedor de transporte local "
-"para obtener ayuda."
 
 msgid "core.pages.user_error.title"
 msgstr "Error"

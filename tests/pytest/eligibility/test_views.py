@@ -184,11 +184,8 @@ def test_start_without_verifier(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier_auth_not_required")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier")
 def test_confirm_get_unverified(mocker, client):
-    mock_page = mocker.patch("benefits.eligibility.views.viewmodels.Page")
-    mock_page.return_value.context_dict.return_value = {"page": {"title": "page title", "headline": "page headline"}}
-
     path = reverse(ROUTE_CONFIRM)
     response = client.get(path)
 
