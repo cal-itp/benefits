@@ -707,6 +707,21 @@ a.card:focus-visible {
   font-size: var(--modal-title-font-size);
 }
 
+.modal-header {
+  z-index: 1057;
+}
+
+.modal-body {
+  top: -36px;
+  z-index: 1056;
+}
+
+@media (min-width: 992px) {
+  .modal-body {
+    top: 0;
+  }
+}
+
 /* Modal Trigger */
 /* All links/image buttons that open modals have a question mark icon after them */
 /* Buttons that open modals (like the Agency Selector) do not have the icon */
