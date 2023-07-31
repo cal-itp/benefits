@@ -9,13 +9,13 @@
 {% block main-content %}
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-10">
+      <div class="col-md-8 col-10">
         <h1>{% translate "core.buttons.help" %}</h1>
       </div>
     </div>
 
     <div class="row justify-content-center">
-      <div class="col-10">
+      <div class="col-md-8 col-10">
         <h2 class="pt-8" id="what-is-cal-itp">{% translate "core.pages.help.about" %}</h2>
         <p class="pt-4">{% translate "core.pages.help.about.p[0]" %}</p>
         <p class="pt-4">{% translate "core.pages.help.about.p[1]" %}</p>
@@ -66,7 +66,7 @@
     </div>
 
     <div class="row justify-content-center">
-      <div class="col-10">
+      <div class="col-md-8 col-10">
         {% if agency %}
           {% include "core/includes/agency-links.html" %}
         {% else %}
@@ -78,14 +78,14 @@
     </div>
 
     <div class="row pt-8">
-      <div class="col-lg-3 offset-lg-8 col-8 offset-2">
+      <div class="col-lg-2 offset-lg-10 col-8 offset-2">
         {% translate "core.buttons.back" as button_text %}
         {% include "core/includes/button--origin.html" with button_text=button_text %}
       </div>
     </div>
 
     <div class="row justify-content-center">
-      <div class="col-8 col-lg-10 mt-4">
+      <div class="col-md-8 col-10 mt-4">
         <p class="pt-4">
           {% translate "core.pages.help.foss.text" %}
           <a href="https://www.github.com/cal-itp/benefits" target="_blank" rel="noopener noreferrer">{% translate "core.pages.help.foss.link" %}</a>.
