@@ -787,6 +787,7 @@ a.card:focus-visible {
 .landing .box {
   background: var(--landing-box-background);
   border-top: var(--landing-box-border);
+  border-radius: calc(8rem / 16);
   color: var(--landing-text-color);
   margin-bottom: calc(32rem / 16);
 }
