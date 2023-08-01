@@ -15,8 +15,12 @@
   {% include "eligibility/includes/media-item--idcardcheck--start--veteran.html" %}
 {% endblock media-item %}
 
-{% block call-to-action-button %}
-  {% url "oauth:login" as button_url %}
-  {% translate "eligibility.buttons.veteran.signin" as button_text %}
-  <a href="{{ button_url }}" class="btn btn-lg btn-primary" role="button">{{ button_text }}</a>
-{% endblock call-to-action-button %}
+{% block call-to-action %}
+  <div class="row d-flex flex-column-reverse justify-content-lg-end flex-lg-row">
+    <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
+      {% url "oauth:login" as button_url %}
+      {% translate "eligibility.buttons.veteran.signin" as button_text %}
+      <a href="{{ button_url }}" class="btn btn-lg btn-primary" role="button">{{ button_text }}</a>
+    </div>
+  </div>
+{% endblock call-to-action %}
