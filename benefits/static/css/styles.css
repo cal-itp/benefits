@@ -352,7 +352,7 @@ footer .footer-links li a:visited {
 :root {
   --login-gov-button-font-size: var(--font-size-20px);
   --login-gov-button-padding: 10px 0;
-  --login-gov-button-max-width: none;
+  --login-gov-button-max-width: 310px;
 }
 
 @media (min-width: 992px) {
