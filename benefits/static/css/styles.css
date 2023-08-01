@@ -350,14 +350,16 @@ footer .footer-links li a:visited {
 /* Used on Eligibility Start */
 
 :root {
-  --login-gov-button-font-size: var(--h3-font-size);
-  --login-gov-button-padding: 11px 0;
+  --login-gov-button-font-size: var(--font-size-20px);
+  --login-gov-button-padding: 10px 0;
+  --login-gov-button-max-width: none;
 }
 
 @media (min-width: 992px) {
   :root {
     --login-gov-button-font-size: var(--font-size-16px);
-    --login-gov-button-padding: var(--primary-button-padding);
+    --login-gov-button-padding: 13px 0;
+    --login-gov-button-max-width: 289px;
   }
 }
 
@@ -368,6 +370,7 @@ footer .footer-links li a:visited {
   letter-spacing: 0;
   font-size: var(--login-gov-button-font-size);
   font-family: "Public Sans", Roboto, system-ui;
+  max-width: var(--login-gov-button-max-width);
   text-decoration: none;
 }
 
@@ -382,7 +385,7 @@ footer .footer-links li a:visited {
   background-size: contain;
   background-repeat: no-repeat;
   display: block;
-  margin: 8px auto 0 auto;
+  margin: 11px auto 0 auto;
   position: relative;
   padding-top: 1px;
   color: transparent;
@@ -397,9 +400,11 @@ footer .footer-links li a:visited {
 
 #login .fallback-text.white-logo {
   background-image: url("/static/img/login-gov-logo-rev.svg");
-  width: 132px;
-  height: 18px;
+  width: 130.9887px;
+  height: 17px;
 }
+
+/* Used on Eligibility Index for Modal */
 
 #login .fallback-text.color-logo {
   background-image: url("/static/img/login-gov-logo.svg");
