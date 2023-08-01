@@ -664,12 +664,14 @@ a.card:focus-visible {
 :root {
   --modal-title-font-size: var(--font-size-24px);
   --modal-border-radius: 8px;
+  --modal-body-top: -36px;
 }
 
 @media (min-width: 992px) {
   :root {
     --modal-title-font-size: var(--font-size-35px);
     --modal-border-radius: 4px;
+    --modal-body-top: 0;
   }
 }
 
@@ -712,14 +714,8 @@ a.card:focus-visible {
 }
 
 .modal-body {
-  top: -36px;
+  top: var(--modal-body-top);
   z-index: 1056;
-}
-
-@media (min-width: 992px) {
-  .modal-body {
-    top: 0;
-  }
 }
 
 /* Modal Trigger */
