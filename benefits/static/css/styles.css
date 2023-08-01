@@ -1,6 +1,6 @@
 :root {
-  --primary-color: #046b99;
-  --primary-color-rgb: 4, 107, 153;
+  --primary-color: #045b86;
+  --primary-color-rgb: 4, 91, 134;
   --bs-blue: var(--primary-color);
   --bs-primary: var(--primary-color);
   --bs-primary-rgb: var(--primary-color-rgb);
@@ -17,7 +17,7 @@
   --bs-body-line-height: 1.5;
   --body-letter-spacing: 0.05em;
   --dark-color: #212121;
-  --hover-color: #2f4c65;
+  --hover-color: #044869;
   --error-color: #ea1010;
   --selected-color: #562b97;
   --error-color-rgb: 234, 16, 16;
@@ -222,7 +222,8 @@ main {
   --footer-background-color: var(--dark-color);
   --footer-link-color: #73b3e7;
   --footer-link-width: 100%;
-  --footer-link-hover-color: #9b74d7;
+  --footer-link-hover-color: #0062ff;
+  --footer-link-visited-color: #9b74d7;
   --footer-link-font-weight: var(--bold-font-weight);
   --footer-mobile-underline-color: var(--bs-white);
   --main-content-min-height: calc(100vh - 246px);
@@ -255,11 +256,13 @@ footer .footer-links li a {
   line-height: 50px;
 }
 
-footer .footer-links li a:hover,
-footer .footer-links li a:focus,
+footer .footer-links li a:hover {
+  color: var(--footer-link-hover-color);
+}
+
 footer .footer-links li a:active,
 footer .footer-links li a:visited {
-  color: var(--footer-link-hover-color);
+  color: var(--footer-link-visited-color);
 }
 
 /* Custom non-mobile-first code to */
