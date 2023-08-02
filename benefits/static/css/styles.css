@@ -667,6 +667,13 @@ a.card:focus-visible {
 :root {
   --modal-title-font-size: var(--font-size-24px);
   --modal-border-radius: 8px;
+  --modal-body-top: -36px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --modal-body-top: 0;
+  }
 }
 
 @media (min-width: 992px) {
@@ -708,6 +715,15 @@ a.card:focus-visible {
 
 .modal-title {
   font-size: var(--modal-title-font-size);
+}
+
+.modal-info .modal-header {
+  z-index: 1057;
+}
+
+.modal-info .modal-body {
+  top: var(--modal-body-top);
+  z-index: 1056;
 }
 
 /* Modal Trigger */
