@@ -38,10 +38,6 @@
   --border-radius: calc(3rem / 16);
 }
 
-.bg-danger {
-  display: none;
-}
-
 @media (min-width: 992px) {
   :root {
     --h1-font-size: var(--font-size-35px);
