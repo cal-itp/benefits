@@ -38,6 +38,10 @@
   --border-radius: calc(3rem / 16);
 }
 
+.bg-danger {
+  display: none;
+}
+
 @media (min-width: 992px) {
   :root {
     --h1-font-size: var(--font-size-35px);
@@ -667,11 +671,16 @@ a.card:focus-visible {
   --modal-body-top: -36px;
 }
 
+@media (min-width: 768px) {
+  :root {
+    --modal-body-top: 0;
+  }
+}
+
 @media (min-width: 992px) {
   :root {
     --modal-title-font-size: var(--font-size-35px);
     --modal-border-radius: 4px;
-    --modal-body-top: 0;
   }
 }
 
@@ -709,11 +718,11 @@ a.card:focus-visible {
   font-size: var(--modal-title-font-size);
 }
 
-.modal-header {
+.modal-info .modal-header {
   z-index: 1057;
 }
 
-.modal-body {
+.modal-info .modal-body {
   top: var(--modal-body-top);
   z-index: 1056;
 }
