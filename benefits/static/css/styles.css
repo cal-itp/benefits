@@ -18,6 +18,8 @@
   --heading-line-height: 1.3; /* Displayed as 130% on Figma */
   --h4-line-height: 1.2; /* Displayed as 120% on Figma */
   --body-letter-spacing: 0.05em;
+  --letter-spacing-3: 0.03;
+  --letter-spacing-5: 0.05;
   --dark-color: #212121;
   --hover-color: #044869;
   --error-color: #ea1010;
@@ -38,14 +40,6 @@
   --font-size-12px: calc(12rem / 16);
   --border-width: calc(2rem / 16);
   --border-radius: calc(3rem / 16);
-}
-
-@media (min-width: 992px) {
-  :root {
-    --h1-font-size: var(--font-size-35px);
-    --h1-text-align: center;
-    --font-size-35px: calc(35rem / 16);
-  }
 }
 
 @font-face {
@@ -176,7 +170,6 @@ h3,
 .h3,
 h4 {
   font-weight: var(--bold-font-weight);
-  letter-spacing: var(--body-letter-spacing);
   margin: 0;
 }
 
@@ -184,11 +177,25 @@ h4 {
 /* Mobile first: Screen width up to 992px - 24px (24rem/16 = 1.5rem) and left */
 /* Screen width above 992px - 35px (35rem/16 = 2.1875rem) and centered */
 /* Does not have a class. Do not apply to non-headline elements. */
+:root {
+  --h1-letter-spacing-percent: var(--letter-spacing-3);
+}
+
+@media (min-width: 992px) {
+  :root {
+    --h1-font-size: var(--font-size-35px);
+    --h1-text-align: center;
+    --h1-letter-spacing-percent: var(--letter-spacing-5);
+    --font-size-35px: 2.1875rem;
+  }
+}
+
 h1 {
   font-size: var(--h1-font-size);
   text-align: var(--h1-text-align);
   padding-top: calc(70rem / 16);
   line-height: var(--heading-line-height);
+  letter-spacing: calc(var(--h1-font-size) * var(--h1-letter-spacing-percent));
 }
 
 /* H2 */
