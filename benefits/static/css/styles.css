@@ -351,14 +351,12 @@ footer .footer-links li a:visited {
 
 :root {
   --login-gov-button-font-size: var(--font-size-20px);
-  --login-gov-button-padding: 10px 0;
   --login-gov-button-max-width: 310px;
 }
 
 @media (min-width: 992px) {
   :root {
     --login-gov-button-font-size: var(--font-size-16px);
-    --login-gov-button-padding: 10px 0;
     --login-gov-button-max-width: 289px;
   }
 }
@@ -372,10 +370,6 @@ footer .footer-links li a:visited {
   font-family: "Public Sans", Roboto, system-ui;
   max-width: var(--login-gov-button-max-width);
   text-decoration: none;
-}
-
-.eligibility-start #login {
-  padding: var(--login-gov-button-padding);
 }
 
 /* Sets the text `Login.gov` as transparent */
@@ -394,8 +388,18 @@ footer .footer-links li a:visited {
   line-height: 1;
 }
 
-.eligibility-index #login .fallback-text {
-  display: inline-block;
+@media (min-width: 992px) {
+  #login .fallback-text {
+    margin: 0 0 0 5px;
+    display: inline-block;
+    vertical-align: baseline;
+  }
+}
+
+/* Sign in with Login.gov (white logo) on Eligibility Start */
+
+.eligibility-start #login {
+  padding: 10px 0;
 }
 
 #login .fallback-text.white-logo {
@@ -404,7 +408,7 @@ footer .footer-links li a:visited {
   height: 17px;
 }
 
-/* Used on Eligibility Index for Modal */
+/* Login.gov modal button (color logo) on Eligibility Index */
 
 #login .fallback-text.color-logo {
   background-image: url("/static/img/login-gov-logo.svg");
@@ -412,12 +416,8 @@ footer .footer-links li a:visited {
   height: 16px;
 }
 
-@media (min-width: 992px) {
-  #login .fallback-text {
-    margin: 0 0 0 5px;
-    display: inline-block;
-    vertical-align: baseline;
-  }
+.eligibility-index #login .fallback-text {
+  display: inline-block;
 }
 
 /* Custom button: Sign Out */
