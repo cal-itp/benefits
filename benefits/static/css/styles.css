@@ -28,9 +28,7 @@
   --bs-danger: var(--error-color);
   --bs-danger-rgb: var(--error-color-rgb);
   --standout-color: #323a45;
-  --h1-font-size: calc(24rem / 16);
   --h1-text-align: left;
-  --h2-font-size: calc(24rem / 16);
   --h3-font-size: calc(20rem / 16);
   --font-size-24px: calc(24rem / 16);
   --font-size-20px: calc(20rem / 16);
@@ -168,6 +166,7 @@ h4 {
 /* Mobile first: Screen width up to 992px - 24px (24rem/16 = 1.5rem) and left */
 /* Screen width above 992px - 35px (35rem/16 = 2.1875rem) and centered */
 :root {
+  --h1-font-size: var(--font-size-24px);
   --h1-letter-spacing-percent: var(--letter-spacing-3);
 }
 
@@ -193,11 +192,13 @@ h1,
 /* Same sizes for all screen widths: 24px (24rem/16 = 1.5rem) */
 /* Also has a class which can be applied to non-headline elements */
 :root {
+  --h2-font-size: var(--font-size-20px);
   --h2-letter-spacing-percent: var(--letter-spacing-5);
 }
 
 @media (min-width: 992px) {
   :root {
+    --h2-font-size: var(--font-size-24px);
     --h2-letter-spacing-percent: var(--letter-spacing-3);
   }
 }
