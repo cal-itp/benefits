@@ -115,9 +115,12 @@ class ChangedLanguageEvent(MiddlewareMixin):
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         if view_func == i18n.set_language:
-            new_lang = request.POST["language"]
-            event = analytics.ChangedLanguageEvent(request, new_lang)
-            analytics.send_event(event)
+            new_lang = request.POST.get("language")
+            if new_lang:
+                event = analytics.ChangedLanguageEvent(request, new_lang)
+                analytics.send_event(event)
+            else:
+                logger.warning("i18n.set_language POST without language")
         return None
 
 
