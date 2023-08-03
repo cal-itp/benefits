@@ -11,7 +11,7 @@
         <p>
             {% translate "eligibility.pages.start.senior.start_item.details" %}
             {% translate "eligibility.pages.start.senior.help.link_text" as trigger_text %}
-            {% include "core/includes/modal-trigger-link.html" with id="identity-verification-help" text=trigger_text %}
+            {% include "core/includes/modal-trigger-link.html" with id="modal--identity-verification" text=trigger_text %}
         </p>
         <div class="media-body--items">
             <p>{% translate "eligibility.pages.start.senior.start_item.secondary_details" %}</p>
@@ -23,5 +23,5 @@
         </div>
     </div>
 
-    {% include "eligibility/includes/modal--senior-start-help.html" with size="modal-lg" id="identity-verification-help" %}
+    {% include "eligibility/includes/modal--senior-start-help.html" with size="modal-lg" id="modal--identity-verification" %}
 {% endblock body %}

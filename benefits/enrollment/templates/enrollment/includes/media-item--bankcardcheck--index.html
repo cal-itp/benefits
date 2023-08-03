@@ -14,11 +14,11 @@
     <div class="media-body--details">
         <p>
             {% translate "enrollment.pages.index.link_card_item.p[0]s[0]" %}
-            {% include "core/includes/modal-trigger-link.html" with id="littlepay-modal" text="Littlepay" %}
+            {% include "core/includes/modal-trigger-link.html" with id="modal--littlepay" text="Littlepay" %}
             {% translate "enrollment.pages.index.link_card_item.p[0]s[1]" %}
         </p>
         <p>{% translate "enrollment.pages.index.link_card_item.p[1]s[0]" %}</p>
     </div>
 
-    {% include "enrollment/includes/modal--littlepay.html" with id="littlepay-modal" size="modal-md" %}
+    {% include "enrollment/includes/modal--littlepay.html" with id="modal--littlepay" size="modal-md" %}
 {% endblock body %}
