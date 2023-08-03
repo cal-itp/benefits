@@ -14,7 +14,9 @@
   --bs-font-sans-serif: Roboto, system-ui, -apple-system, "Segoe UI", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-body-font-family: var(--bs-font-sans-serif);
-  --bs-body-line-height: 1.5;
+  --bs-body-line-height: 1.5; /* Displayed as 150% on Figma */
+  --heading-line-height: 1.3; /* Displayed as 130% on Figma */
+  --h4-line-height: 1.2; /* Displayed as 120% on Figma */
   --body-letter-spacing: 0.05em;
   --dark-color: #212121;
   --hover-color: #044869;
@@ -162,7 +164,6 @@ a[target="_blank"]::after {
 
 /* Headlines */
 /* All headlines */
-/* All headlines share font-weight, letter-spacing, line-height and margin */
 h1,
 h2,
 .h2,
@@ -171,7 +172,6 @@ h3,
 h4 {
   font-weight: var(--bold-font-weight);
   letter-spacing: var(--body-letter-spacing);
-  line-height: var(--bs-body-line-height);
   margin: 0;
 }
 
@@ -183,6 +183,7 @@ h1 {
   font-size: var(--h1-font-size);
   text-align: var(--h1-text-align);
   padding-top: calc(70rem / 16);
+  line-height: var(--heading-line-height);
 }
 
 /* H2 */
@@ -191,6 +192,7 @@ h1 {
 h2,
 .h2 {
   font-size: var(--h2-font-size);
+  line-height: var(--heading-line-height);
 }
 
 /* H3 */
@@ -199,6 +201,13 @@ h2,
 h3,
 .h3 {
   font-size: var(--h3-font-size);
+  line-height: var(--heading-line-height);
+}
+
+/* H4 */
+/* Desktop only: Used for Agency Selector card, agency name */
+h4 {
+  line-height: var(--h4-line-height);
 }
 
 /* Main */
@@ -611,7 +620,6 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 
 :root {
   --card-title-font-size: var(--font-size-18px);
-  --card-title-line-height: calc(21.6rem / 16);
   --card-title-letter-spacing: 0.03em;
   --card-x-padding: calc(10rem / 16);
   --card-body-x-padding: 0;
@@ -624,7 +632,6 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 @media (min-width: 992px) {
   :root {
     --card-title-font-size: var(--font-size-20px);
-    --card-title-line-height: calc(24rem / 16);
     --card-title-letter-spacing: 0.05rem;
     --card-x-padding: calc(35rem / 16);
     --card-body-x-padding: calc(40rem / 16);
@@ -659,7 +666,6 @@ a.card:focus-visible {
 
 .card .card-title {
   font-size: var(--card-title-font-size);
-  line-height: var(--card-title-line-height);
   letter-spacing: var(--card-title-letter-spacing);
 }
 
