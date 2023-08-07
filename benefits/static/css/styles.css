@@ -835,18 +835,18 @@ a.card:focus-visible {
 
 /* Agency Selector */
 
-#agency-selector .modal-body {
+#modal--agency-selector .modal-body {
   padding: 0;
 }
 
-#agency-selector .card img {
+#modal--agency-selector .card img {
   margin-right: -1px;
 }
 
-#agency-selector .col:first-child .card {
+#modal--agency-selector .col:first-child .card {
   margin-top: 2rem;
 }
 
-#agency-selector .col:last-child .card {
+#modal--agency-selector .col:last-child .card {
   margin-bottom: 2rem;
 }
