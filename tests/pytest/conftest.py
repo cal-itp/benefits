@@ -172,6 +172,7 @@ def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityV
         jws_signing_alg="alg",
         index_template="core/agency-index.html",
         eligibility_index_template="eligibility/index.html",
+        enrollment_success_template="enrollment/success.html",
     )
 
     # add many-to-many relationships after creation, need ID on both sides

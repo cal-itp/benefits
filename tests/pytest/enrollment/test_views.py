@@ -200,9 +200,10 @@ def test_success_no_verifier(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_success_authentication_logged_in(mocker, client):
+def test_success_authentication_logged_in(mocker, client, model_TransitAgency):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = True
+    mock_session.agency.return_value = model_TransitAgency
 
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
@@ -214,9 +215,10 @@ def test_success_authentication_logged_in(mocker, client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_success_authentication_not_logged_in(mocker, client):
+def test_success_authentication_not_logged_in(mocker, client, model_TransitAgency):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = False
+    mock_session.agency.return_value = model_TransitAgency
 
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
@@ -226,7 +228,7 @@ def test_success_authentication_not_logged_in(mocker, client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_auth_not_required")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier_auth_not_required")
 def test_success_no_authentication(client):
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
