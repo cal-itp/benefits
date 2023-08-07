@@ -4,7 +4,7 @@
   --bs-blue: var(--primary-color);
   --bs-primary: var(--primary-color);
   --bs-primary-rgb: var(--primary-color-rgb);
-  --text-primary-color: #000000;
+  --text-primary-color: #212121;
   --bs-body-color: var(--text-primary-color);
   --bs-body-text-align: left;
   --bs-body-font-weight: 400;
@@ -59,6 +59,7 @@
 
 body {
   font-size: 100%;
+  color: var(--text-primary-color);
 }
 
 h1,
