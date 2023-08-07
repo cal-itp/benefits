@@ -204,6 +204,14 @@ h3,
   line-height: var(--heading-line-height);
 }
 
+@media (max-width: 992px) {
+  /* H3: H3, up to Small width */
+  .h3-sm {
+    font-size: var(--h3-font-size);
+    line-height: var(--heading-line-height);
+  }
+}
+
 /* H4 */
 /* Desktop only: Used for Agency Selector card, agency name */
 h4 {
