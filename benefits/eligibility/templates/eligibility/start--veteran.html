@@ -2,12 +2,12 @@
 {% load i18n %}
 
 {% block page-title %}
-  {% translate "eligibility.pages.start.veteran.title" %}
+  {% translate "Veteran benefit information" %}
 {% endblock page-title %}
 
 {% block headline %}
   <div class="col-lg-8">
-    <h1>{% translate "eligibility.pages.start.veteran.headline" %}</h1>
+    <h1>{% translate "You selected a Veteran transit benefit." %}</h1>
   </div>
 {% endblock headline %}
 
@@ -19,7 +19,7 @@
   <div class="row d-flex justify-content-lg-end">
     <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
       {% url "oauth:login" as button_url %}
-      {% translate "eligibility.buttons.veteran.signin" as button_text %}
+      {% translate "Continue to VA.gov" as button_text %}
       <a href="{{ button_url }}" class="btn btn-lg btn-primary" role="button">{{ button_text }}</a>
     </div>
   </div>

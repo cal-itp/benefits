@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block page-title %}
-  {% translate "eligibility.pages.unverified.title" %}
+  {% translate "Eligibility Error" %}
 {% endblock page-title %}
 
 {% block main-content %}
@@ -13,16 +13,16 @@
   <div class="container">
     <h1 class="h2 text-center">
       <span class="icon d-block pb-5">
-        {% translate "core.icons.idcardquestion" context "image alt text" as alt_i18n %}
+        {% translate "Identification card icon with question mark" context "image alt text" as alt_i18n %}
         {% include "core/includes/icon.html" with name="idcardquestion" alt=alt_i18n %}
       </span>
-      {% translate "eligibility.pages.unverified.headline" %}
+      {% translate "Your eligibility could not be verified." %}
     </h1>
 
     <div class="row justify-content-center">
       <div class="col-lg-8 pt-4">
         <p>
-          {% translate "eligibility.pages.unverified.p[0]s[0]" %}
+          {% translate "That’s okay! You may still be eligible for our program." %}
           {% blocktranslate with short_name=agency.short_name %}eligibility.pages.unverified.p[0]s[1]{{ short_name }}{% endblocktranslate %}
         </p>
       </div>

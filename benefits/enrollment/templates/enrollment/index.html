@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block page-title %}
-  {% translate "enrollment.pages.index.title" %}
+  {% translate "Connect your card" %}
 {% endblock page-title %}
 
 {% block nav-buttons %}
@@ -13,7 +13,7 @@
 
 {% block headline %}
   <div class="col-lg-6">
-    <h1 class="pb-lg-8 pb-4">{% translate "enrollment.pages.index.headline" %}</h1>
+    <h1 class="pb-lg-8 pb-4">{% translate "Your eligibility is confirmed! You’re nearly there." %}</h1>
   </div>
 {% endblock headline %}
 
@@ -28,7 +28,7 @@
     come before the forms, which are rendered at just before the {% endblock inner-content %}
   {% endcomment %}
   {% url "enrollment:token" as access_token_url %}
-  {% translate "core.buttons.wait" as loading_text %}
+  {% translate "Please wait..." as loading_text %}
   <script nonce="{{ request.csp_nonce }}">
       var startedEvent = "started payment connection", closedEvent = "closed payment connection";
 
@@ -104,12 +104,10 @@
 {% endblock inner-content %}
 
 {% block call-to-action-button %}
-  <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>
-    {% translate "core.buttons.wait" %}
-  </button>
+  <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>{% translate "Please wait..." %}</button>
   <div class="invisible">
     <button id="{{ cta_button }}" href="#{{ cta_button }}" class="btn btn-lg btn-primary" role="button">
-      {% translate "enrollment.buttons.payment_partner" %}
+      {% translate "Connect your Card" %}
     </button>
   </div>
 {% endblock call-to-action-button %}

@@ -2,22 +2,22 @@
 {% load i18n %}
 
 {% block icon %}
-    {% translate "core.icons.bankcardcheck" context "image alt text" as icon_alt %}
+    {% translate "Bank card icon with contactless symbol and checkmark" context "image alt text" as icon_alt %}
     {% include "core/includes/icon.html" with name="bankcardcheck" alt=icon_alt %}
 {% endblock icon %}
 
 {% block heading %}
-    {% translate "enrollment.pages.index.link_card_item.heading" %}
+    {% translate "The next step is to connect your contactless card to your transit benefit" %}
 {% endblock heading %}
 
 {% block body %}
     <div class="media-body--details">
         <p>
-            {% translate "enrollment.pages.index.link_card_item.p[0]s[0]" %}
+            {% translate "You will be directed to our payment partner, " %}
             {% include "core/includes/modal-trigger-link.html" with id="modal--littlepay" text="Littlepay" %}
-            {% translate "enrollment.pages.index.link_card_item.p[0]s[1]" %}
+            {% translate "We don’t store your information, and you won’t be charged." %}
         </p>
-        <p>{% translate "enrollment.pages.index.link_card_item.p[1]s[0]" %}</p>
+        <p>{% translate "Please use a debit or credit card by Visa or Mastercard." %}</p>
     </div>
 
     {% include "enrollment/includes/modal--littlepay.html" with id="modal--littlepay" size="modal-md" %}

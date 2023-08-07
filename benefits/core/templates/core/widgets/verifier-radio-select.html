@@ -2,7 +2,7 @@
 
 {% with id=widget.attrs.id %}
 
-  <label for="{{ id }}" class="pb-4 h2">{% translate "eligibility.pages.index.label" %}</label>
+  <label for="{{ id }}" class="pb-4 h2">{% translate "Which transit benefit would you like to enroll in?" %}</label>
 
   <div {% if id %}id="{{ id }}"{% endif %} class="ps-3 ps-md-0 ps-lg-0 offset-md-1 offset-lg-1 radio-container">
     {% for group, options, index in widget.optgroups %}

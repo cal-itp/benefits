@@ -2,19 +2,19 @@
 {% load i18n %}
 
 {% block icon %}
-    {% translate "core.icons.bankcardcheck" context "image alt text" as icon_alt %}
+    {% translate "Bank card icon with contactless symbol and checkmark" context "image alt text" as icon_alt %}
     {% include "core/includes/icon.html" with name="bankcardcheck" alt=icon_alt %}
 {% endblock icon %}
 
 {% block heading %}
-    {% translate "eligibility.pages.start.bankcard.title" %}
+    {% translate "Your contactless card details" %}
 {% endblock heading %}
 
 {% block body %}
     <div class="media-body--details">
         <p>
-            {% translate "eligibility.pages.start.bankcard.text" %}
-            {% translate "eligibility.pages.start.modal.title" as trigger_text %}
+            {% translate "Your contactless card must be a debit or credit card by Visa or Mastercard." %}
+            {% translate "Learn more about contactless cards" as trigger_text %}
             {% include "core/includes/modal-trigger-link.html" with id="modal--contactless" text=trigger_text %}
         </p>
     </div>

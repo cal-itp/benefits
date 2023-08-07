@@ -3,34 +3,51 @@
 {% load static %}
 
 {% block page-title %}
-  {% translate "core.buttons.help" %}
+  {% translate "Help" %}
 {% endblock page-title %}
 
 {% block main-content %}
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8 col-10">
-        <h1 class="text-center">{% translate "core.buttons.help" %}</h1>
+        <h1 class="text-center">{% translate "Help" %}</h1>
       </div>
     </div>
 
     <div class="row justify-content-center">
       <div class="col-md-8 col-10">
-        <h2 class="h2-sm pt-4 pt-lg-8" id="what-is-cal-itp">{% translate "core.pages.help.about" %}</h2>
-        <p class="pt-2 pt-lg-4">{% translate "core.pages.help.about.p[0]" %}</p>
-        <p class="pt-3 pt-lg-4">{% translate "core.pages.help.about.p[1]" %}</p>
+        <h2 class="h2-sm pt-4 pt-lg-8" id="what-is-cal-itp">{% translate "What is Cal-ITP Benefits?" %}</h2>
+        <p class="pt-2 pt-lg-4">
+          {% blocktranslate trimmed %}
+            The Benefits tool is provided by California Integrated Travel Project (Cal-ITP), which is a new program from the
+            California Department of Transportation dedicated to making travel simpler and cost-effective for all.
+          {% endblocktranslate %}
+        </p>
+        <p class="pt-3 pt-lg-4">
+          {% blocktranslate trimmed %}
+            We partner with local transit agencies, the California Department of Technology, and Login.gov to confirm the
+            identity of riders who are eligible to receive transit benefits. Once we are able to confirm a rider's identity and
+            eligibility, our payment partner Littlepay helps us connect a transit benefit to the rider's contactless card of
+            choice.
+          {% endblocktranslate %}
+        </p>
 
-        <h2 class="h2-sm pt-4 pt-lg-8" id="payment-options">{% translate "core.pages.help.payment_options" %}</h2>
-        <p class="pt-2 pt-lg-4">{% translate "eligibility.pages.start.modal.p[0]" %}</p>
-        <p class="pt-3 pt-lg-4">{% translate "eligibility.pages.start.modal.p[1]" %}</p>
+        <h2 class="h2-sm pt-4 pt-lg-8" id="payment-options">{% translate "What kind of credit card can I use?" %}</h2>
+        <p class="pt-2 pt-lg-4">
+          {% blocktranslate trimmed %}
+            Benefits only works with contactless debit or credit cards. We do not currently support mobile wallets or digital
+            cards, such as Apple Pay, Google Wallet, or Samsung Wallet.
+          {% endblocktranslate %}
+        </p>
+        <p class="pt-3 pt-lg-4">{% translate "The contactless symbol is four curved lines, like this:" %}</p>
         <p class="contactless-symbol pt-3">
           <img class="icon mx-auto d-block"
                width="40"
                height="50"
                src="{% static 'img/icon/contactless.svg' %}"
-               alt="{% translate "core.icons.contactless" context "image alt text" %}" />
+               alt="{% translate "Four curved lines on contactless-enabled cards" context "image alt text" %}" />
         </p>
-        <p class="pt-3 pt-lg-4">{% translate "eligibility.pages.start.modal.p[2]" %}</p>
+        <p class="pt-3 pt-lg-4">{% translate "Your card must include a Visa or Mastercard logo." %}</p>
         <p class="pt-3 pt-lg-4">{% translate "eligibility.pages.start.modal.p[3]" %}</p>
         {% if agency %}
           <p class="pt-3 pt-lg-4">
@@ -38,14 +55,14 @@
           </p>
         {% endif %}
 
-        <h2 class="h2-sm pt-4 pt-lg-8" id="login-gov">{% translate "eligibility.pages.index.senior.help.sub_headline[0]" %}</h2>
+        <h2 class="h2-sm pt-4 pt-lg-8" id="login-gov">{% translate "What is Login.gov?" %}</h2>
         <p class="pt-2 pt-lg-4">{% translate "eligibility.pages.index.senior.help.p[0]" %}</p>
         <p class="pt-3 pt-lg-4">{% translate "eligibility.pages.index.senior.help.p[2]" %}</p>
 
-        <h2 class="h2-sm pt-4 pt-lg-8" id="why-login-gov">{% translate "eligibility.pages.index.senior.help.sub_headline[1]" %}</h2>
+        <h2 class="h2-sm pt-4 pt-lg-8" id="why-login-gov">{% translate "Why is Cal-ITP Benefits using Login.gov?" %}</h2>
         <p class="pt-2 pt-lg-4">{% translate "eligibility.pages.index.senior.help.p[1]" %}</p>
 
-        <h2 class="h2-sm pt-4 pt-lg-8" id="login-gov-verify">{% translate "core.pages.help.login_gov_verify" %}</h2>
+        <h2 class="h2-sm pt-4 pt-lg-8" id="login-gov-verify">{% translate "How do I verify my identity on Login.gov?" %}</h2>
         <p class="pt-2 pt-lg-4">{% translate "eligibility.pages.start.senior.help.p[0]" %}</p>
         <p class="pt-3 pt-lg-4">{% translate "eligibility.pages.start.senior.help.p[1]" %}</p>
         <p class="pt-3 pt-lg-4">{% translate "eligibility.pages.start.senior.help.p[2]" %}</p>
@@ -56,12 +73,17 @@
           {% include agency.help_template %}
         {% endif %}
 
-        <h2 class="h2-sm pt-4 pt-lg-8" id="littlepay">{% translate "core.pages.help.littlepay" %}</h2>
+        <h2 class="h2-sm pt-4 pt-lg-8" id="littlepay">{% translate "What is Littlepay?" %}</h2>
         <p class="pt-2 pt-lg-4">{% translate "enrollment.pages.index.modal.p[0]" %}</p>
         <p class="pt-3 pt-lg-4">{% translate "enrollment.pages.index.modal.p[1]" %}</p>
 
-        <h2 class="h2-sm pt-4 pt-lg-8" id="questions">{% translate "core.pages.help.questions" %}</h2>
-        <p class="pt-2 pt-lg-4">{% translate "core.pages.help.questions.p[0]" %}</p>
+        <h2 class="h2-sm pt-4 pt-lg-8" id="questions">{% translate "Questions?" %}</h2>
+        <p class="pt-2 pt-lg-4">
+          {% blocktranslate trimmed %}
+            If you need assistance with this website, please reach out to the customer service team for your local transit
+            provider.
+          {% endblocktranslate %}
+        </p>
       </div>
     </div>
 
@@ -79,7 +101,7 @@
 
     <div class="row pt-4 pt-lg-8">
       <div class="col-lg-2 offset-lg-10 col-8 offset-2">
-        {% translate "core.buttons.back" as button_text %}
+        {% translate "Go Back" as button_text %}
         {% include "core/includes/button--origin.html" with button_text=button_text %}
       </div>
     </div>
@@ -87,8 +109,8 @@
     <div class="row justify-content-center">
       <div class="col-md-8 col-10 mt-4">
         <p class="pt-3 pt-lg-4">
-          {% translate "core.pages.help.foss.text" %}
-          <a href="https://www.github.com/cal-itp/benefits" target="_blank" rel="noopener noreferrer">{% translate "core.pages.help.foss.link" %}</a>.
+          {% translate "This application is Free and Open Source Software. You may obtain the source code from" %}
+          <a href="https://www.github.com/cal-itp/benefits" target="_blank" rel="noopener noreferrer">{% translate "GitHub" %}</a>.
         </p>
       </div>
     </div>
