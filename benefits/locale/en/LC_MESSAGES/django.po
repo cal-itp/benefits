@@ -1,12 +1,12 @@
 # Cal-ITP Benefits: English PO file.
-# Copyright (C) 2021 California Department of Transportation
+# Copyright (C) 2023 California Department of Transportation
 # This file is distributed under the same license as the benefits package.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-07-27 21:39+0000\n"
+"POT-Creation-Date: 2023-08-07 17:20+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,20 +21,20 @@ msgstr "Let’s see if we can confirm your eligibility."
 
 msgid "eligibility.pages.confirm.mst_courtesy_card.p[0]"
 msgstr ""
-"Please input your [Agency-Card] [ID-number-type] and [identity-marker] below "
-"to confirm your eligibility."
+"Please input your Courtesy Card number and last name below to confirm your "
+"eligibility."
 
 msgid "eligibility.forms.confirm.mst_courtesy_card.fields.sub"
-msgstr "[short-name] [Agency-card] [ID-type]"
+msgstr "MST Courtesy Card number"
 
 msgid "eligibility.forms.confirm.mst_courtesy_card.fields.sub.help_text"
-msgstr "[qualifier]"
+msgstr "This is a 5-digit number on the front and back of your card."
 
 msgid "eligibility.forms.confirm.mst_courtesy_card.fields.name"
-msgstr "[Identity-Marker] (as it appears on [Agency-Card])"
+msgstr "last name (as it appears on Courtesy Card)"
 
 msgid "eligibility.forms.confirm.mst_courtesy_card.fields.name.help_text"
-msgstr "We use this to help confirm your [Agency-Card]."
+msgstr "We use this to help confirm your Courtesy Card."
 
 msgid "core.pages.agency_index.title"
 msgstr "Introduction"
@@ -217,11 +217,11 @@ msgstr "What is a Courtesy Card?"
 msgid "core.pages.help.mst_courtesy_card.p[0]"
 msgstr ""
 "Courtesy Cards are issued by Monterey-Salinas Transit to riders who qualify "
-"for a number of discounted-fare programs. This website is a demonstration "
-"tool to support the Courtesy Card program. This benefit may need to be "
-"renewed in the future based on the expiration date of the Courtesy Card. "
-"Learn more at the <a href='https://mst.org/riders-guide/how-to-ride/courtesy-"
-"card/' target=\"_blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
+"for a number of reduced fare programs. This website is a demonstration tool "
+"to support the Courtesy Card program. This benefit may need to be renewed in "
+"the future based on the expiration date of the Courtesy Card. Learn more at "
+"the <a href='https://mst.org/riders-guide/how-to-ride/courtesy-card/' "
+"target=\"_blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
 
 msgid "core.buttons.senior.signout"
 msgstr "Sign out of Login.gov"
@@ -250,10 +250,10 @@ msgstr ""
 "JavaScript. Please enable JavaScript for this website and"
 
 msgid "core.pages.agency_index.mst.headline"
-msgstr "Get reduced fare on MST public transportation when you tap to ride"
+msgstr "Get a reduced fare on MST public transportation when you tap to ride"
 
 msgid "core.pages.agency_index.sacrt.headline"
-msgstr "Get reduced fare on SacRT light rail when you tap to ride"
+msgstr "Get a reduced fare on SacRT light rail when you tap to ride"
 
 msgid "core.pages.index.title"
 msgstr "Choose Provider"
@@ -393,8 +393,8 @@ msgstr "MST Courtesy Card"
 
 msgid "eligibility.pages.index.mst_courtesy_card.description"
 msgstr ""
-"This option is for people who have a current Courtesy Card [optional "
-"qualifier]."
+"This option is for people who have a current Courtesy Card or an MST RIDES "
+"eligibility card."
 
 msgid "eligibility.pages.index.senior.label"
 msgstr "Older Adult"
@@ -417,12 +417,12 @@ msgstr ""
 msgid "eligibility.pages.index.intro.mst"
 msgstr ""
 "Cal-ITP doesn’t save any of your information. All MST transit benefits "
-"[action] by [rate of discount] for [affected service] on [transit options]."
+"reduce fares by 50% for buses on fixed routes."
 
 msgid "eligibility.pages.index.intro.sacrt"
 msgstr ""
 "Cal-ITP doesn’t save any of your information. All SacRT transit benefits "
-"[action] by [rate of discount] for [affected service] on [transit options]."
+"reduce fares by 50% for light rail."
 
 msgid "eligibility.pages.index.title"
 msgstr "Choose benefit option"
@@ -519,23 +519,25 @@ msgstr ""
 msgid "core.buttons.retry"
 msgstr "Try again"
 
+msgid "enrollment.pages.success.message.mst"
+msgstr ""
+"You were not charged anything today. When boarding an MST fixed route bus, "
+"tap this card when you board and you will be charged a reduced fare. You "
+"will need to re-enroll if you choose to change the card you use to pay for "
+"transit service."
+
+msgid "enrollment.pages.success.message.sacrt"
+msgstr ""
+"You were not charged anything today. When boarding SacRT light rail, tap "
+"this card when you get on and you will be charged a reduced fare. You will "
+"need to re-enroll if you choose to change the card you use to pay for "
+"transit service."
+
 msgid "enrollment.pages.success.title"
 msgstr "Success"
 
 msgid "enrollment.pages.success.headline"
 msgstr "Success! Your transit benefit is now connected to your card."
-
-msgid "enrollment.pages.success.message.mst"
-msgstr ""
-"You were not charged anything today. When boarding an MST fixed route bus, "
-"tap this card when you get on the bus and you will be charged a reduced fare. "
-"You will need to re-enroll if you choose to change the card you use to pay for transit service."
-
-msgid "enrollment.pages.success.message.sacrt"
-msgstr ""
-"You were not charged anything today. When boarding SacRT light rail, "
-"tap this card when you get on and you will be charged a reduced fare. "
-"You will need to re-enroll if you choose to change the card you use to pay for transit service."
 
 msgid "enrollment.pages.success.thankyou"
 msgstr "Thank you for using Cal-ITP Benefits!"
