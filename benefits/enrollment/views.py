@@ -9,7 +9,11 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 
 from benefits.core import models, session
-from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
+from benefits.core.middleware import (
+    EligibleSessionRequired,
+    VerifierSessionRequired,
+    pageview_decorator,
+)
 from benefits.core.views import ROUTE_LOGGED_OUT
 from . import analytics, api, forms
 
@@ -111,6 +115,7 @@ def success(request):
     request.path = "/enrollment/success"
     session.update(request, origin=reverse(ROUTE_SUCCESS))
 
+    agency = session.agency(request)
     verifier = session.verifier(request)
 
     if session.logged_in(request) and verifier.auth_provider.supports_sign_out:
@@ -118,4 +123,4 @@ def success(request):
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
 
-    return TemplateResponse(request, TEMPLATE_SUCCESS)
+    return TemplateResponse(request, agency.enrollment_success_template)

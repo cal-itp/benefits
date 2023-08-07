@@ -258,6 +258,7 @@ PEM DATA
         payment_processor=mst_payment_processor,
         index_template="core/index--mst.html",
         eligibility_index_template="eligibility/index--mst.html",
+        enrollment_success_template="enrollment/success--mst.html",
         help_template="core/includes/help--mst.html",
     )
     mst_agency.eligibility_types.set([mst_senior_type, mst_veteran_type, mst_courtesy_card_type])
@@ -278,6 +279,7 @@ PEM DATA
         payment_processor=sacrt_payment_processor,
         index_template="core/index--sacrt.html",
         eligibility_index_template="eligibility/index--sacrt.html",
+        enrollment_success_template="enrollment/success--sacrt.html",
     )
     sacrt_agency.eligibility_types.set([sacrt_senior_type])
     sacrt_agency.eligibility_verifiers.set([sacrt_oauth_claims_verifier])
