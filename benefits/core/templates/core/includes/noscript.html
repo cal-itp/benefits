@@ -5,7 +5,8 @@
   <div class="text-left">
     <span class="navbar-brand">{% translate "JavaScript is disabled" %}</span>
     <span class="navbar-text">
-      {% translate "core.includes.noscript.text" %} <a href="{% url "core:index" %}">{% translate "Return Home" %}</a>.
+      {% translate "To function properly, this website requires a browser that supports JavaScript. Please enable JavaScript for this website and" %}
+      <a href="{% url "core:index" %}">{% translate "Return Home" %}</a>.
     </span>
   </div>
 {% endblock content %}

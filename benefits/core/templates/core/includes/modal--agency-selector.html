@@ -14,12 +14,12 @@
                                  src="{% get_static_prefix %}img/agencies/{{ agency.slug }}-sm.svg"
                                  width="46"
                                  height="29"
-                                 alt="{% blocktranslate with agency_short_name=agency.short_name %}core.pages.index.agency_selector{{ agency_short_name }}{% endblocktranslate %}">
+                                 alt="{% blocktranslate with agency=agency.short_name %}{{ agency }} logo{% endblocktranslate %}">
                             <img class="lg d-none d-lg-block mt-lg-3 mx-lg-auto"
                                  src="{% get_static_prefix %}img/agencies/{{ agency.slug }}-lg.svg"
                                  width="117"
                                  height="74"
-                                 alt="{% blocktranslate with agency_short_name=agency.short_name %}core.pages.index.agency_selector{{ agency_short_name }}{% endblocktranslate %}">
+                                 alt="{% blocktranslate with agency=agency.short_name %}{{ agency }} logo{% endblocktranslate %}">
                             <h4 class="card-title mt-lg-3 mb-0 mb-lg-3">{{ agency.long_name }}</h4>
                         </div>
                     </a>
