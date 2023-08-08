@@ -191,23 +191,11 @@ h1,
 /* H2 */
 /* Same sizes for all screen widths: 24px (24rem/16 = 1.5rem) */
 /* Also has a class which can be applied to non-headline elements */
-:root {
-  --h2-letter-spacing-percent: var(--letter-spacing-5);
-}
-
-@media (min-width: 992px) {
-  :root {
-    --h2-letter-spacing-percent: var(--letter-spacing-3);
-  }
-}
-
 h2,
 .h2 {
   font-size: var(--font-size-24px);
   line-height: var(--heading-line-height);
-  letter-spacing: calc(
-    var(--font-size-24px) * var(--h2-letter-spacing-percent)
-  );
+  letter-spacing: calc(var(--font-size-24px) * var(--letter-spacing-3));
 }
 
 @media (max-width: 992px) {
@@ -216,16 +204,13 @@ h2,
   .h2-sm-p {
     font-size: var(--bs-body-font-size);
     font-weight: var(--bs-body-font-weight);
-    letter-spacing: calc(
-      var(--bs-body-font-size) * var(--h2-letter-spacing-percent)
-    );
+    letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
     line-height: var(--heading-line-height);
     margin: 0;
   }
-}
 
-@media (max-width: 992px) {
   /* H2: 20px, up to Small width */
+  /* Only used on Help Pages */
   .h2-sm {
     font-size: var(--font-size-20px);
     line-height: var(--heading-line-height);
