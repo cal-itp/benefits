@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-08-08 15:19+0000\n"
+"POT-Creation-Date: 2023-08-08 22:15+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -186,13 +186,6 @@ msgstr ""
 
 msgid "How do I verify my identity on Login.gov?"
 msgstr "¿Cómo verifico mi identidad en Login.gov?"
-
-msgid ""
-"We use Login.gov to verify your identity to make sure you are eligible for "
-"the transit benefit you selected."
-msgstr ""
-"TODO: We use Login.gov to verify your identity to make sure you are eligible "
-"for the transit benefit you selected."
 
 msgid ""
 "You will need a state-issued ID to verify your identity with Login.gov, "
@@ -475,6 +468,13 @@ msgstr "TODO"
 
 msgid "Verify your identity with "
 msgstr "TODO: Verify your identity with "
+
+msgid ""
+"We use Login.gov to verify your identity to make sure you are eligible for "
+"the transit benefit you selected."
+msgstr ""
+"TODO: We use Login.gov to verify your identity to make sure you are eligible "
+"for the transit benefit you selected."
 
 msgid "MST Courtesy Card"
 msgstr "TODO: MST Courtesy Card"
