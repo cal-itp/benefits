@@ -153,6 +153,7 @@ a[target="_blank"]::after {
 /* Headlines */
 /* All headlines */
 h1,
+.h1,
 h2,
 .h2,
 h3,
@@ -165,7 +166,6 @@ h4 {
 /* H1 */
 /* Mobile first: Screen width up to 992px - 24px (24rem/16 = 1.5rem) and left */
 /* Screen width above 992px - 35px (35rem/16 = 2.1875rem) and centered */
-/* Does not have a class. Do not apply to non-headline elements. */
 :root {
   --h1-letter-spacing-percent: var(--letter-spacing-3);
 }
@@ -179,7 +179,9 @@ h4 {
   }
 }
 
-h1 {
+h1,
+.h1 {
+  font-family: var(--bs-font-sans-serif);
   font-size: var(--h1-font-size);
   text-align: var(--h1-text-align);
   padding-top: calc(70rem / 16);
@@ -710,7 +712,6 @@ a.card:focus-visible {
 /* Modal Dialogs */
 
 :root {
-  --modal-title-font-size: var(--font-size-24px);
   --modal-border-radius: 8px;
   --modal-body-top: -36px;
 }
@@ -723,7 +724,6 @@ a.card:focus-visible {
 
 @media (min-width: 992px) {
   :root {
-    --modal-title-font-size: var(--font-size-35px);
     --modal-border-radius: 4px;
   }
 }
@@ -756,10 +756,6 @@ a.card:focus-visible {
 
 .btn-close {
   color: var(--text-primary-color);
-}
-
-.modal-title {
-  font-size: var(--modal-title-font-size);
 }
 
 .modal-info .modal-header {
