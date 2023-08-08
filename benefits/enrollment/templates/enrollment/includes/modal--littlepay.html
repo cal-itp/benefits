@@ -3,12 +3,22 @@
 {% load static %}
 
 {% block modal-content %}
-    <h2 id="littlepay-modal" class="me-4 me-md-0">{% translate "Learn more about Littlepay" %}</h2>
-    <div class="row">
-        <p class="pt-3">{% translate "enrollment.pages.index.modal.p[0]" %}</p>
-        <p class="pt-4">{% translate "enrollment.pages.index.modal.p[1]" %}</p>
-        <p class="pt-4 d-block d-sm-none">
-            <a href="#" data-bs-dismiss="modal" aria-label="Close">{% translate "Go back" %}</a>
-        </p>
-    </div>
+  <h2 id="littlepay-modal" class="me-4 me-md-0">{% translate "Learn more about Littlepay" %}</h2>
+  <div class="row">
+    <p class="pt-3">
+      {% blocktranslate trimmed %}
+        Our payment partner, Littlepay, is a secure, end-to-end payment processing platform that allows us to connect your
+        transit benefit to the contactless card of your choice.
+      {% endblocktranslate %}
+    </p>
+    <p class="pt-4">
+      {% blocktranslate trimmed %}
+        For more information on Littlepay, please visit the
+        <a href="https://littlepay.com" target="_blank" rel="noopener noreferrer">Littlepay website</a>.
+      {% endblocktranslate %}
+    </p>
+    <p class="pt-4 d-block d-sm-none">
+      <a href="#" data-bs-dismiss="modal" aria-label="Close">{% translate "Go back" %}</a>
+    </p>
+  </div>
 {% endblock modal-content %}

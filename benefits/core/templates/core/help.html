@@ -111,8 +111,18 @@
         {% endif %}
 
         <h2 class="h2-sm pt-4 pt-lg-8" id="littlepay">{% translate "What is Littlepay?" %}</h2>
-        <p class="pt-2 pt-lg-4">{% translate "enrollment.pages.index.modal.p[0]" %}</p>
-        <p class="pt-3 pt-lg-4">{% translate "enrollment.pages.index.modal.p[1]" %}</p>
+        <p class="pt-2 pt-lg-4">
+          {% blocktranslate trimmed %}
+            Our payment partner, Littlepay, is a secure, end-to-end payment processing platform that allows us to connect your
+            transit benefit to the contactless card of your choice.
+          {% endblocktranslate %}
+        </p>
+        <p class="pt-3 pt-lg-4">
+          {% blocktranslate trimmed %}
+            For more information on Littlepay, please visit the
+            <a href="https://littlepay.com" target="_blank" rel="noopener noreferrer">Littlepay website</a>.
+          {% endblocktranslate %}
+        </p>
 
         <h2 class="h2-sm pt-4 pt-lg-8" id="questions">{% translate "Questions?" %}</h2>
         <p class="pt-2 pt-lg-4">
