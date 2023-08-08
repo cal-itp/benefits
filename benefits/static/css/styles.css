@@ -313,7 +313,7 @@ footer .footer-links li a {
   font-weight: var(--footer-link-font-weight);
   font-size: var(--bs-body-font-size);
   text-decoration: underline;
-  letter-spacing: var(--body-letter-spacing);
+  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
   line-height: 50px;
 }
 
