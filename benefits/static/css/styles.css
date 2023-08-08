@@ -239,11 +239,26 @@ h3,
 .h3 {
   font-size: var(--h3-font-size);
   line-height: var(--heading-line-height);
+  letter-spacing: calc(var(--h3-font-size) * var(--letter-spacing-5));
 }
 
 /* H4 */
-/* Desktop only: Used for Agency Selector card, agency name */
+/* Used for Agency Selector card, agency name */
+:root {
+  --h4-font-size: var(--font-size-18px);
+  --h4-letter-spacing-percent: var(--letter-spacing-5);
+}
+
+@media (min-width: 992px) {
+  :root {
+    --h4-font-size: var(--font-size-20px);
+    --h4-letter-spacing-percent: var(--letter-spacing-3);
+  }
+}
+
 h4 {
+  font-size: var(--h4-font-size);
+  letter-spacing: calc(var(--h4-font-size) * var(--h4-letter-spacing-percent));
   line-height: var(--h4-line-height);
 }
 
