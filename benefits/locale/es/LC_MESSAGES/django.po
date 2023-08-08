@@ -332,7 +332,7 @@ msgstr ""
 msgid "Choose Provider"
 msgstr "Elija Proveedor"
 
-msgid "Get reduced fare on public transportation when you tap to ride"
+msgid "Get a reduced fare on public transportation when you tap to ride"
 msgstr ""
 "Obtenga una tarifa reducida en el transporte público cuando toque para viajar"
 

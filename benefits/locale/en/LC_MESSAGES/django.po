@@ -261,7 +261,7 @@ msgstr ""
 msgid "Choose Provider"
 msgstr ""
 
-msgid "Get reduced fare on public transportation when you tap to ride"
+msgid "Get a reduced fare on public transportation when you tap to ride"
 msgstr ""
 
 msgid "Choose your Provider"
