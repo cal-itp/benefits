@@ -8,11 +8,7 @@
 {% block description %}
     {% translate "You must be 65 years or older. You will need to verify your identity with" %}
 
-    <!-- Button to trigger modal -->
-    <button id="login" type="button" class="border-0 bg-transparent p-0" data-bs-toggle="modal" data-bs-target="#modal--login-gov">
-        <span class="fallback-text color-logo">Login.gov</span>
-    </button>
-    .
+    {% include "core/includes/modal-trigger-link.html" with classes="border-0 bg-transparent p-0" cssid="login" modal="modal--login-gov" login=True period=True %}
 
     {% include "eligibility/includes/modal--senior-help.html" with id="modal--login-gov" size="modal-lg" %}
 {% endblock description %}
