@@ -26,8 +26,8 @@
         <p class="pt-3 pt-lg-4">
           {% blocktranslate trimmed %}
             We partner with local transit agencies, the California Department of Technology, and Login.gov to confirm the
-            identity of riders who are eligible to receive transit benefits. Once we are able to confirm a rider's identity and
-            eligibility, our payment partner Littlepay helps us connect a transit benefit to the rider's contactless card of
+            identity of riders who are eligible to receive transit benefits. Once we are able to confirm a rider’s identity and
+            eligibility, our payment partner Littlepay helps us connect a transit benefit to the rider’s contactless card of
             choice.
           {% endblocktranslate %}
         </p>
@@ -62,9 +62,9 @@
         {% if agency %}
           <p class="pt-3 pt-lg-4">
             {% blocktranslate trimmed with short_name=agency.short_name website=agency.info_url %}
-              You can still get your transit benefit by going through {{ short_name }}'s application process. For updates on
+              You can still get your transit benefit by going through {{ short_name }}’s application process. For updates on
               additional options, please check back on this website, or
-              <a href="{{ website }}" target="_blank" rel="noopener noreferrer">contact {{ short_name }}</a>."
+              <a href="{{ website }}" target="_blank" rel="noopener noreferrer">contact {{ short_name }}</a>.
             {% endblocktranslate %}
           </p>
         {% endif %}
