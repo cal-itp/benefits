@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-08-07 23:15+0000\n"
+"POT-Creation-Date: 2023-08-08 15:19+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -91,6 +91,16 @@ msgstr ""
 "to receive transit benefits. Once we are able to confirm a rider's identity "
 "and eligibility, our payment partner Littlepay helps us connect a transit "
 "benefit to the rider's contactless card of choice."
+
+msgid ""
+"The Benefits application is Free and Open Source Software (FOSS). You may "
+"obtain the source code from"
+msgstr ""
+"Esta aplicación es un software libre y de código abierto. Puede obtener el "
+"código fuente de"
+
+msgid "GitHub"
+msgstr "GitHub"
 
 msgid "What kind of credit card can I use?"
 msgstr "TODO: What kind of credit card can I use?"
@@ -253,16 +263,6 @@ msgstr ""
 
 msgid "Go Back"
 msgstr "Regresar a la Página Principal"
-
-msgid ""
-"This application is Free and Open Source Software. You may obtain the source "
-"code from"
-msgstr ""
-"Esta aplicación es un software libre y de código abierto. Puede obtener el "
-"código fuente de"
-
-msgid "GitHub"
-msgstr "GitHub"
 
 msgid "Return Home"
 msgstr "Regresar a la Página Principal"
