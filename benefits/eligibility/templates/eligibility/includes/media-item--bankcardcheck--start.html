@@ -14,8 +14,8 @@
     <div class="media-body--details">
         <p>
             {% translate "Your contactless card must be a debit or credit card by Visa or Mastercard." %}
-            {% translate "Learn more about contactless cards" as trigger_text %}
-            {% include "core/includes/modal-trigger.html" with modal="modal--contactless" text=trigger_text period=True %}
+            {% translate "Learn more about contactless cards" as text %}
+            {% include "core/includes/modal-trigger.html" with modal="modal--contactless" text=text period=True %}
         </p>
     </div>
 

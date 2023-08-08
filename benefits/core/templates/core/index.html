@@ -10,7 +10,7 @@
 {% endblock headline %}
 
 {% block call-to-action %}
-  {% translate "Choose your Provider" as trigger_text %}
-  {% include "core/includes/modal-trigger.html" with modal="modal--agency-selector" classes="btn btn-lg btn-primary" text=trigger_text period=False %}
+  {% translate "Choose your Provider" as text %}
+  {% include "core/includes/modal-trigger.html" with modal="modal--agency-selector" classes="btn btn-lg btn-primary" text=text period=False %}
   {% include "core/includes/modal--agency-selector.html" with id="modal--agency-selector" %}
 {% endblock call-to-action %}
