@@ -671,7 +671,6 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 /* Cards */
 
 :root {
-  --card-title-font-size: var(--font-size-18px);
   --card-x-padding: calc(10rem / 16);
   --card-body-x-padding: 0;
   --card-body-y-padding: 0.75rem;
@@ -682,7 +681,6 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 
 @media (min-width: 992px) {
   :root {
-    --card-title-font-size: var(--font-size-20px);
     --card-x-padding: calc(35rem / 16);
     --card-body-x-padding: calc(40rem / 16);
     --card-body-y-padding: 0;
