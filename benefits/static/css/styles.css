@@ -112,6 +112,10 @@ li {
   .pb-lg-8 {
     padding-bottom: 64px !important;
   }
+
+  .pt-lg-8 {
+    padding-top: 64px !important;
+  }
 }
 
 .pt-8 {
@@ -194,6 +198,14 @@ h2,
 .h2 {
   font-size: var(--h2-font-size);
   line-height: var(--heading-line-height);
+}
+
+@media (max-width: 992px) {
+  /* H2: 20px, up to Small width */
+  .h2-sm {
+    font-size: var(--font-size-20px);
+    line-height: var(--heading-line-height);
+  }
 }
 
 /* H3 */
