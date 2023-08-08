@@ -18,6 +18,7 @@
   --heading-line-height: 1.3; /* Displayed as 130% on Figma */
   --h4-line-height: 1.2; /* Displayed as 120% on Figma */
   --body-letter-spacing: 0.05em;
+  --letter-spacing-2: 0.02;
   --letter-spacing-3: 0.03;
   --letter-spacing-5: 0.05;
   --dark-color: #212121;
@@ -373,17 +374,19 @@ footer .footer-links li a:visited {
 
 .btn.btn-lg.btn-primary {
   border-width: 2px;
-  letter-spacing: 0.02em;
   font-weight: var(--medium-font-weight);
-  font-size: calc(20rem / 16);
+  font-size: var(--font-size-20px);
+  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
   width: 100%;
   padding: var(--primary-button-padding);
 }
 
+/* Unclear if this class is still necessary/different from .btn.btn-lg */
+/* Only used in Form */
 .btn-text {
-  letter-spacing: 0.02em;
   font-weight: var(--medium-font-weight);
-  font-size: calc(20rem / 16);
+  font-size: var(--font-size-20px);
+  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
 }
 
 /* A button that actually is a text link */
