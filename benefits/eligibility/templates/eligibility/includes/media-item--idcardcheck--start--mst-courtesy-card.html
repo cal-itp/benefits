@@ -3,11 +3,13 @@
 {% load i18n %}
 
 {% block heading %}
-    {% translate "eligibility.pages.start.mst_courtesy_card.start_item.heading" %}
+  {% translate "Your current Courtesy Card number" %}
 {% endblock heading %}
 
 {% block body %}
-    <div class="media-body--details">
-        <p>{% translate "eligibility.pages.start.mst_courtesy_card.start_item.details" %}</p>
-    </div>
+  <div class="media-body--details">
+    <p>
+      {% translate "You do not need to have your physical card, but you will need to know the number. The number starts with a number sign (#) followed by five digits." %}
+    </p>
+  </div>
 {% endblock body %}

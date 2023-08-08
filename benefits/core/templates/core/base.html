@@ -7,9 +7,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="{% translate "core.pages.help.about.p[0]" %}">
+    {% blocktranslate trimmed asvar description %}
+      The Benefits tool is provided by California Integrated Travel Project (Cal-ITP), which is a new program from the California
+      Department of Transportation dedicated to making travel simpler and cost-effective for all.
+    {% endblocktranslate %}
+    <meta name="description" content="{{ description }}">
     {# djlint:off #}
-    <title>{% block page-title %}{% endblock page-title %}| {% translate "core.pages.title.suffix" %}</title>
+    <title>{% block page-title %}{% endblock page-title %}| {% translate "Cal-ITP Benefits" %}</title>
     {# djlint:on #}
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css">
@@ -40,7 +44,7 @@
     {% endif %}
     <header role="banner" id="header">
       <div id="skip-to-content">
-        <a href="#main-content">{% translate "core.buttons.skip" %}</a>
+        <a href="#main-content">{% translate "Skip to Main Content" %}</a>
       </div>
       {% if messages %}
         {% for message in messages %}
@@ -57,8 +61,8 @@
       <div id="header-container" class="navbar navbar-expand-sm navbar-dark bg-primary justify-content-between">
         <div class="container">
           <span class="navbar-brand p-0">
-            <img class="sm d-lg-none" src="{% static "img/logo-sm.svg" %}" width="90" height="51.3" alt="{% translate "core.logos.small" context "image alt text" %}" />
-            <img class="lg d-none d-lg-block" src="{% static "img/logo-lg.svg" %}" width="220" height="50" alt="{% translate "core.logos.large" context "image alt text" %}" />
+            <img class="sm d-lg-none" src="{% static "img/logo-sm.svg" %}" width="90" height="51.3" alt="{% translate "California Integrated Travel Project: Benefits logo (small)" context "image alt text" %}" />
+            <img class="lg d-none d-lg-block" src="{% static "img/logo-lg.svg" %}" width="220" height="50" alt="{% translate "California Integrated Travel Project: Benefits logo (large)" context "image alt text" %}" />
           </span>
           <div class="form-inline">{% include "core/includes/lang-selector.html" %}</div>
         </div>
@@ -102,10 +106,10 @@
       <div class="container">
         <ul class="footer-links m-0 p-0 list-unstyled d-lg-flex gap-lg-4">
           <li>
-            <a class="m-0 ps-5 ps-lg-0" href="{% url "core:help" %}">{% translate "core.buttons.help" %}</a>
+            <a class="m-0 ps-5 ps-lg-0" href="{% url "core:help" %}">{% translate "Help" %}</a>
           </li>
           <li>
-            <a class="m-0 ps-5 ps-lg-0" href="https://cdt.ca.gov/privacy-policy/" target="_blank" rel="noopener noreferrer">{% translate "core.buttons.privacy" %}</a>
+            <a class="m-0 ps-5 ps-lg-0" href="https://cdt.ca.gov/privacy-policy/" target="_blank" rel="noopener noreferrer">{% translate "Privacy Policy" %}</a>
           </li>
         </ul>
       </div>

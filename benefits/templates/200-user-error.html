@@ -2,13 +2,15 @@
 {% load i18n %}
 
 {% block title %}
-  {% translate "core.pages.user_error.title" %}
+  {% translate "Invalid state" %}
 {% endblock title %}
 
 {% block headline %}
-  {% translate "core.pages.user_error.headline" %}
+  {% translate "You may have reached this page on accident." %}
 {% endblock headline %}
 
 {% block paragraphs %}
-  <p>{% translate "core.pages.user_error.p[0]" %}</p>
+  <p>
+    {% translate "To get started with Cal-ITP Benefits please click the button below, and you will be directed to the beginning of the enrollment process." %}
+  </p>
 {% endblock paragraphs %}

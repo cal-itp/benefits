@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block page-title %}
-  {% translate "enrollment.pages.retry.title" %}
+  {% translate "We couldn’t connect your bank card" %}
 {% endblock page-title %}
 
 {% block main-content %}
@@ -12,14 +12,14 @@
 
   <div class="container">
     <h1 class="h2 text-center">
-      {% translate "core.icons.bankcardquestion" context "image alt text" as alt_i18n %}
+      {% translate "Bank card icon with contactless symbol and question mark" context "image alt text" as alt_i18n %}
       <span class="icon d-block pb-5">{% include "core/includes/icon.html" with name="bankcardquestion" alt=alt_i18n %}</span>
-      {% translate "enrollment.pages.retry.title" %}
+      {% translate "We couldn’t connect your bank card" %}
     </h1>
 
     <div class="row justify-content-center">
       <div class="col-lg-8 pt-4">
-        <p>{% translate "enrollment.pages.retry.p[0]" %}</p>
+        <p>{% translate "You can try again or reach out to your transit provider for assistance." %}</p>
       </div>
     </div>
 
@@ -30,7 +30,7 @@
     {% if retry_button %}
       <div class="row pt-8 justify-content-center">
         <div class="col-lg-3 col-8">
-          {% translate "core.buttons.retry" as button_text %}
+          {% translate "Try again" as button_text %}
           {% include "core/includes/button--origin.html" with button_text=button_text %}
         </div>
       </div>

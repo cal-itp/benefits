@@ -8,12 +8,12 @@
 {% endblock classes %}
 
 {% block page-title %}
-  {% translate "enrollment.pages.success.title" %}
+  {% translate "Success" %}
 {% endblock page-title %}
 
 {% block headline %}
   <div class="col-lg-8">
-    <h1 class="pb-lg-5 pb-4">{% translate "enrollment.pages.success.headline" %}</h1>
+    <h1 class="pb-lg-5 pb-4">{% translate "Success! Your transit benefit is now connected to your card." %}</h1>
   </div>
 {% endblock headline %}
 
@@ -25,7 +25,7 @@
           {% block success-message %}
           {% endblock success-message %}
         </p>
-        <p class="pt-4">{% translate "enrollment.pages.success.thankyou" %}</p>
+        <p class="pt-4">{% translate "Thank you for using Cal-ITP Benefits!" %}</p>
       </div>
       <div class="col-12 offset-lg-1 col-lg-5">
         <img width="180"
@@ -43,7 +43,7 @@
     <div class="row d-flex justify-content-start justify-content-lg-center">
       <div class="col-12 col-lg-8 pt-lg-5 mt-lg-0 pt-4 mt-2">
         <p>
-          {% translate "enrollment.pages.success.logout" %}
+          {% translate "If you are on a public or shared computer, don’t forget to sign out of " %}
           {% include authentication.sign_out_button_template %}
         </p>
       </div>

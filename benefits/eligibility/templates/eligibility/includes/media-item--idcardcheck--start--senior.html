@@ -3,22 +3,22 @@
 {% load i18n %}
 
 {% block heading %}
-    {% translate "eligibility.pages.start.senior.start_item.heading" %}
+    {% translate "A Login.gov account with identity verification" %}
 {% endblock heading %}
 
 {% block body %}
     <div class="media-body--details">
         <p>
-            {% translate "eligibility.pages.start.senior.start_item.details" %}
-            {% translate "eligibility.pages.start.senior.help.link_text" as trigger_text %}
+            {% translate "You will be able to create an account using your email address if you do not already have one. We use your Login.gov account to verify your identity." %}
+            {% translate "Learn more about identity verification" as trigger_text %}
             {% include "core/includes/modal-trigger-link.html" with id="modal--identity-verification" text=trigger_text %}
         </p>
         <div class="media-body--items">
-            <p>{% translate "eligibility.pages.start.senior.start_item.secondary_details" %}</p>
+            <p>{% translate "For this process you will need:" %}</p>
             <ul>
-                <li>{% translate "eligibility.pages.start.senior.required_items[0]" %}</li>
-                <li>{% translate "eligibility.pages.start.senior.required_items[1]" %}</li>
-                <li>{% translate "eligibility.pages.start.senior.required_items[2]" %}</li>
+                <li>{% translate "Your state-issued ID card" %}</li>
+                <li>{% translate "Your Social Security number" %}</li>
+                <li>{% translate "A phone number with a phone plan associated with your name" %}</li>
             </ul>
         </div>
     </div>

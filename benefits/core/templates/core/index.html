@@ -2,15 +2,15 @@
 {% load i18n %}
 
 {% block title %}
-  {% translate "core.pages.index.title" %}
+  {% translate "Choose Provider" %}
 {% endblock title %}
 
 {% block headline %}
-  {% translate "core.pages.index.headline" %}
+  {% translate "Get a reduced fare on public transportation when you tap to ride" %}
 {% endblock headline %}
 
 {% block call-to-action %}
-  {% translate "core.pages.index.button" as trigger_text %}
+  {% translate "Choose your Provider" as trigger_text %}
   {% include "core/includes/modal-trigger.html" with id="modal--agency-selector" classes="btn btn-lg btn-primary" text=trigger_text %}
   {% include "core/includes/modal--agency-selector.html" with id="modal--agency-selector" %}
 {% endblock call-to-action %}

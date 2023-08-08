@@ -2,10 +2,10 @@
 {% load i18n %}
 
 {% block title %}
-  {% translate "core.pages.agency_index.title" %}
+  {% translate "Introduction" %}
 {% endblock title %}
 
 {% block call-to-action %}
   {% url "eligibility:index" as url_continue %}
-  <a href="{{ url_continue }}" class="btn btn-lg btn-primary">{% translate "core.pages.index.continue" %}</a>
+  <a href="{{ url_continue }}" class="btn btn-lg btn-primary">{% translate "Get Started" %}</a>
 {% endblock call-to-action %}

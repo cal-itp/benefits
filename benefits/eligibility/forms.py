@@ -21,7 +21,7 @@ class EligibilityVerifierSelectionForm(forms.Form):
 
     verifier = forms.ChoiceField(label="", widget=widgets.VerifierRadioSelect)
     # sets label to empty string so the radio_select template can override the label style
-    submit_value = _("eligibility.buttons.choose")
+    submit_value = _("Choose this Benefit")
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -45,12 +45,12 @@ class EligibilityVerificationForm(forms.Form):
     id = "form-eligibility-verification"
     method = "POST"
 
-    submit_value = _("eligibility.forms.confirm.submit")
-    submitting_value = _("eligibility.forms.confirm.submitting")
+    submit_value = _("Check eligibility")
+    submitting_value = _("Checking")
 
     _error_messages = {
-        "invalid": _("eligibility.forms.confirm.errors.invalid"),
-        "missing": _("eligibility.forms.confirm.errors.missing"),
+        "invalid": _("Check your input. The format looks wrong."),
+        "missing": _("This field is required."),
     }
 
     def __init__(self, verifier: models.EligibilityVerifier, *args, **kwargs):

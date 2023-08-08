@@ -3,24 +3,39 @@
 {% load static %}
 
 {% block modal-content %}
-    <h2 id="contactless-modal" class="me-4 me-md-0">{% translate "eligibility.pages.start.modal.title" %}</h2>
-    <div class="row">
-        <p class="pt-3">{% translate "eligibility.pages.start.modal.p[0]" %}</p>
-        <p class="pt-4">{% translate "eligibility.pages.start.modal.p[1]" %}</p>
-        <p class="contactless-symbol pt-3">
-            <img class="icon mx-auto d-block"
-                 width="30"
-                 height="37.5"
-                 src="{% static 'img/icon/contactless.svg' %}"
-                 alt="{% translate "core.icons.contactless" context "image alt text" %}" />
-        </p>
-        <p class="pt-4">{% translate "eligibility.pages.start.modal.p[2]" %}</p>
-        <p class="pt-4">{% translate "eligibility.pages.start.modal.p[3]" %}</p>
-        <p class="pt-4 pb-2">
-            {% blocktranslate with short_name=agency.short_name website=agency.info_url %}eligibility.pages.start.modal.p[4]{{ short_name }}{{ website }}{% endblocktranslate %}
-        </p>
-        <p class="pt-4 d-block d-sm-none">
-            <a href="#" data-bs-dismiss="modal" aria-label="Close">{% translate "core.modals.back" %}</a>
-        </p>
-    </div>
+  <h2 id="contactless-modal" class="me-4 me-md-0">{% translate "Learn more about contactless cards" %}</h2>
+  <div class="row">
+    <p class="pt-3">
+      {% blocktranslate trimmed %}
+        Benefits only works with contactless debit or credit cards. We do not currently support mobile wallets or digital
+        cards, such as Apple Pay, Google Wallet, or Samsung Wallet.
+      {% endblocktranslate %}
+    </p>
+    <p class="pt-4">{% translate "The contactless symbol is four curved lines, like this:" %}</p>
+    <p class="contactless-symbol pt-3">
+      <img class="icon mx-auto d-block"
+           width="30"
+           height="37.5"
+           src="{% static 'img/icon/contactless.svg' %}"
+           alt="{% translate "Four curved lines on contactless-enabled cards" context "image alt text" %}" />
+    </p>
+    <p class="pt-4">{% translate "Your card must include a Visa or Mastercard logo." %}</p>
+    <p class="pt-4">
+      {% blocktranslate trimmed %}
+        Don’t have access to a contactless card? You can request a contactless card from your bank, or one of the companies
+        that offer free contactless prepaid debit cards, such as the Cash App Visa debit card or the Venmo Mastercard debit
+        card.
+      {% endblocktranslate %}
+    </p>
+    <p class="pt-4 pb-2">
+      {% blocktranslate trimmed with short_name=agency.short_name website=agency.info_url %}
+        You can still get your transit benefit by going through {{ short_name }}’s application process. For updates on
+        additional options, please check back on this website, or
+        <a href="{{ website }}" target="_blank" rel="noopener noreferrer">contact {{ short_name }}</a>.
+      {% endblocktranslate %}
+    </p>
+    <p class="pt-4 d-block d-sm-none">
+      <a href="#" data-bs-dismiss="modal" aria-label="Close">{% translate "Go back" %}</a>
+    </p>
+  </div>
 {% endblock modal-content %}

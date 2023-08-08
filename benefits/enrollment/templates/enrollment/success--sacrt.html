@@ -2,5 +2,8 @@
 {% load i18n %}
 
 {% block success-message %}
-  {% translate "enrollment.pages.success.message.sacrt" %}
+  {% blocktranslate trimmed %}
+    You were not charged anything today. When boarding SacRT light rail, tap this card when you board and you will be charged
+    a reduced fare. You will need to re-enroll if you choose to change the card you use to pay for transit service.
+  {% endblocktranslate %}
 {% endblock success-message %}
