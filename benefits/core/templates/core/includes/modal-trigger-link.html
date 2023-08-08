@@ -1,4 +1,4 @@
 <!-- Inline link to trigger modal -->
 {# djlint:off #}
-<a href="#{{ id }}" class="{{ classes }}" id="{{ cssid }}" data-bs-toggle="modal" data-bs-target="#{{ modal }}">{{ text }}{% if login %}<span class="fallback-text color-logo">Login.gov</span>{% endif %}</a>{% if period %}.{% endif %}
+<a href="#{{ id }}" class="{{ classes }}" id="{{ id }}" data-bs-toggle="modal" data-bs-target="#{{ modal }}">{{ text }}{% if login %}<span class="fallback-text color-logo">Login.gov</span>{% endif %}</a>{% if period %}.{% endif %}
 {# djlint:on #}
