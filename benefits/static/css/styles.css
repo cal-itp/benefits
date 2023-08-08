@@ -83,7 +83,7 @@ span,
 li {
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
-  letter-spacing: var(--body-letter-spacing);
+  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
   line-height: var(--bs-body-line-height);
   margin: 0;
 }
