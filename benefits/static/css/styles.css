@@ -366,8 +366,6 @@ footer .footer-links li a:visited {
   padding: var(--primary-button-padding);
 }
 
-/* Unclear if this class is still necessary/different from .btn.btn-lg */
-/* Only used in Form */
 .btn-text {
   font-weight: var(--medium-font-weight);
   font-size: var(--font-size-20px);
