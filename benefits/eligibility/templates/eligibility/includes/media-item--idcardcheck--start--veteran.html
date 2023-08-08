@@ -3,20 +3,24 @@
 {% load i18n %}
 
 {% block heading %}
-    {% translate "Access to your preferred VA related account" %}
+  {% translate "Access to your preferred VA related account" %}
 {% endblock heading %}
 
 {% block body %}
-    <div class="media-body--details">
-        <p>{% translate "eligibility.pages.start.veteran.start_item.details" %}</p>
-        <div class="media-body--items">
-            <ul>
-                <li>{% translate "Login.gov" %}</li>
-                <li>{% translate "ID.me" %}</li>
-                <li>{% translate "DS Logon" %}</li>
-                <li>{% translate "My HealtheVet" %}</li>
-            </ul>
-            <p class="pt-1">{% translate "eligibility.pages.start.veteran.start_item.secondary_details" %}</p>
-        </div>
+  <div class="media-body--details">
+    <p>
+      {% translate "You will need to sign into VA.gov in order to verify your identity and your veteran status. VA.gov uses the following services:" %}
+    </p>
+    <div class="media-body--items">
+      <ul>
+        <li>{% translate "Login.gov" %}</li>
+        <li>{% translate "ID.me" %}</li>
+        <li>{% translate "DS Logon" %}</li>
+        <li>{% translate "My HealtheVet" %}</li>
+      </ul>
+      <p class="pt-1">
+        {% translate "If you do not have an account with any of these services, you will need to create one. We recommend using Login.gov." %}
+      </p>
     </div>
+  </div>
 {% endblock body %}

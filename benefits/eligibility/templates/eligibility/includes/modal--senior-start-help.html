@@ -3,18 +3,31 @@
 {% load static %}
 
 {% block modal-content %}
-    <h2 class="me-4 me-md-0">
-        {% translate "Verify your identity with " %}
-        <img class="icon" width="197" height="26" src="{% static "img/login-gov-logo.svg" %}" alt="{% translate "TODO" context "image alt text" %}" />
-    </h2>
-    <div class="row">
-        <p class="pt-3">{% translate "eligibility.pages.start.senior.help.p[0]" %}</p>
-        <p class="pt-4">{% translate "eligibility.pages.start.senior.help.p[1]" %}</p>
-        <p class="pt-4">{% translate "eligibility.pages.start.senior.help.p[2]" %}</p>
-        <p class="pt-4">{% translate "eligibility.pages.start.senior.help.p[3]" %}</p>
-        <p class="pt-4">{% translate "eligibility.pages.start.senior.help.p[4]" %}</p>
-        <p class="pt-4 d-block d-sm-none">
-            <a href="#" data-bs-dismiss="modal" aria-label="Close">{% translate "Go back" %}</a>
-        </p>
-    </div>
+  <h2 class="me-4 me-md-0">
+    {% translate "Verify your identity with " %}
+    <img class="icon" width="197" height="26" src="{% static "img/login-gov-logo.svg" %}" alt="{% translate "TODO" context "image alt text" %}" />
+  </h2>
+  <div class="row">
+    <p class="pt-3">
+      {% translate "We use Login.gov to verify your identity to make sure you are eligible for the transit benefit you selected." %}
+    </p>
+    <p class="pt-4">
+      {% translate "You will need a state-issued ID to verify your identity with Login.gov, which can be either a driver’s license or non-driver’s license state-issued ID card." %}
+    </p>
+    <p class="pt-4">
+      {% translate "You will need to upload a photograph of your state-issued ID and share your address, phone number and other personal information which is then verified against authoritative sources." %}
+    </p>
+    <p class="pt-4">
+      {% translate "Login.gov will also need to verify your identity by calling or texting your phone. If Login.gov can’t verify your phone number, you can verify by mail instead." %}
+    </p>
+    <p class="pt-4">
+      {% blocktranslate trimmed %}
+        Please visit the Login.gov help center for
+        <a href="https://login.gov/help/" target="_blank" rel="noopener noreferrer">more information on identity verification</a>.
+      {% endblocktranslate %}
+    </p>
+    <p class="pt-4 d-block d-sm-none">
+      <a href="#" data-bs-dismiss="modal" aria-label="Close">{% translate "Go back" %}</a>
+    </p>
+  </div>
 {% endblock modal-content %}
