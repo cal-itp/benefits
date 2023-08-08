@@ -213,7 +213,7 @@ h2,
 @media (max-width: 992px) {
   /* H2 mobile sizing */
   /* Only used on Landing Pages */
-  .h2-sm {
+  .h2-sm-p {
     font-size: var(--bs-body-font-size);
     font-weight: var(--bs-body-font-weight);
     letter-spacing: calc(
