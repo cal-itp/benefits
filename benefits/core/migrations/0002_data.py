@@ -151,7 +151,7 @@ PEM DATA
 
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
 
-    mst_oauth_claims_verifier = EligibilityVerifier.objects.create(
+    mst_senior_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("MST_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (MST)"),
         eligibility_type=mst_senior_type,
         auth_provider=senior_auth_provider,
@@ -195,9 +195,17 @@ PEM DATA
         form_name_max_length=255,
     )
 
-    sacrt_oauth_claims_verifier = EligibilityVerifier.objects.create(
+    sacrt_senior_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("SACRT_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (SacRT)"),
         eligibility_type=sacrt_senior_type,
+        auth_provider=senior_auth_provider,
+        selection_label_template="eligibility/includes/selection-label--senior.html",
+        start_template="eligibility/start--senior.html",
+    )
+
+    sbmtd_senior_verifier = EligibilityVerifier.objects.create(
+        name=os.environ.get("SBMTD_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (SBMTD)"),
+        eligibility_type=sbmtd_senior_type,
         auth_provider=senior_auth_provider,
         selection_label_template="eligibility/includes/selection-label--senior.html",
         start_template="eligibility/start--senior.html",
@@ -265,7 +273,7 @@ PEM DATA
         help_template="core/includes/help--mst.html",
     )
     mst_agency.eligibility_types.set([mst_senior_type, mst_veteran_type, mst_courtesy_card_type])
-    mst_agency.eligibility_verifiers.set([mst_oauth_claims_verifier, mst_veteran_verifier, mst_courtesy_card_verifier])
+    mst_agency.eligibility_verifiers.set([mst_senior_verifier, mst_veteran_verifier, mst_courtesy_card_verifier])
 
     sacrt_agency = TransitAgency.objects.create(
         slug="sacrt",
@@ -285,7 +293,7 @@ PEM DATA
         enrollment_success_template="enrollment/success--sacrt.html",
     )
     sacrt_agency.eligibility_types.set([sacrt_senior_type])
-    sacrt_agency.eligibility_verifiers.set([sacrt_oauth_claims_verifier])
+    sacrt_agency.eligibility_verifiers.set([sacrt_senior_verifier])
 
 
 class Migration(migrations.Migration):
