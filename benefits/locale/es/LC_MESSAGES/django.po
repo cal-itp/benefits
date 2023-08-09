@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-08-09 20:22+0000\n"
+"POT-Creation-Date: 2023-08-09 20:34+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,8 +38,8 @@ msgstr "Apellido (tal como aparece en la tarjeta de cortesía)*"
 msgid "We use this to help confirm your Courtesy Card."
 msgstr "Usamos esto para ayudar a confirmar su tarjeta de cortesía."
 
-msgid "Choose transit agency"
-msgstr "Elija la agencia de tránsito"
+msgid "Get started"
+msgstr "Comenzar"
 
 msgid "Get Started"
 msgstr "Comenzar"
@@ -327,8 +327,8 @@ msgid "Get a reduced fare on SacRT light rail when you tap to ride"
 msgstr ""
 "Obtenga una tarifa reducida en el tren ligero SacRT cuando toque para viajar"
 
-msgid "Choose Provider"
-msgstr "Elija Proveedor"
+msgid "Choose transit agency"
+msgstr "Elija la agencia de tránsito"
 
 msgid "Get a reduced fare on public transportation when you tap to ride"
 msgstr ""
@@ -601,10 +601,8 @@ msgstr "Utilice una tarjeta de débito o crédito de Visa o Mastercard."
 msgid "Learn more about Littlepay"
 msgstr "Más información sobre Littlepay"
 
-#, fuzzy
-#| msgid "Connect your Card"
-msgid "Connect your card"
-msgstr "Conecta tu tarjeta"
+msgid "Eligibility confirmation"
+msgstr "Confirmación de elegibilidad"
 
 msgid "Your eligibility is confirmed! You’re nearly there."
 msgstr "¡Su elegibilidad está confirmada! Ya falta poco."
