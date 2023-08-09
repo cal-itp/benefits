@@ -26,6 +26,9 @@ def load_data(app, *args, **kwargs):
     sacrt_senior_type = EligibilityType.objects.create(
         name="senior", label="Senior Discount (SacRT)", group_id=os.environ.get("SACRT_SENIOR_GROUP_ID", "group3")
     )
+    sbmtd_senior_type = EligibilityType.objects.create(
+        name="senior", label="Senior Discount (SBMTD)", group_id=os.environ.get("SBMTD_SENIOR_GROUP_ID", "group4")
+    )
 
     PemData = app.get_model("core", "PemData")
 
