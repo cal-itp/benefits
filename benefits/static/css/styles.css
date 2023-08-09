@@ -23,6 +23,7 @@
   --error-color: #ea1010;
   --selected-color: #562b97;
   --focus-color: #fdb714;
+  --secondary-bg-color: #fafafa;
   --error-color-rgb: 234, 16, 16;
   --bs-danger: var(--error-color);
   --bs-danger-rgb: var(--error-color-rgb);
@@ -146,8 +147,8 @@ a:hover:not(.btn) {
   text-decoration: underline;
 }
 
-a:focus:not(.btn):not(.card),
-a:focus-visible:not(.btn):not(.card) {
+a:focus:not(.btn):not(.card):not(.footer-link),
+a:focus-visible:not(.btn):not(.card):not(.footer-link) {
   outline: 3px solid var(--focus-color) !important;
   outline-offset: 2px !important;
 }
@@ -277,7 +278,7 @@ footer .footer-links li {
   width: var(--footer-link-width);
 }
 
-footer .footer-links li a {
+footer .footer-links li a.footer-link {
   color: var(--footer-link-color);
   font-weight: var(--footer-link-font-weight);
   font-size: var(--bs-body-font-size);
@@ -286,12 +287,18 @@ footer .footer-links li a {
   line-height: 50px;
 }
 
-footer .footer-links li a:hover {
+footer .footer-links li a.footer-link:hover {
   color: var(--footer-link-hover-color);
 }
 
-footer .footer-links li a:active,
-footer .footer-links li a:visited {
+footer .footer-links li a.footer-link:focus,
+footer .footer-links li a.footer-link:focus-visible {
+  outline: 3px solid var(--secondary-bg-color) !important;
+  outline-offset: 2px !important;
+}
+
+footer .footer-links li a.footer-link:active,
+footer .footer-links li a.footer-link:visited {
   color: var(--footer-link-visited-color);
 }
 
