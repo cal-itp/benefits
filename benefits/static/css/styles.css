@@ -22,6 +22,7 @@
   --hover-color: #044869;
   --error-color: #ea1010;
   --selected-color: #562b97;
+  --focus-color: #fdb714;
   --error-color-rgb: 234, 16, 16;
   --bs-danger: var(--error-color);
   --bs-danger-rgb: var(--error-color-rgb);
@@ -132,16 +133,23 @@ li {
 
 /* Links */
 /* Same sizes for all screen widths: 18px */
-a:not(.btn) {
+a:not(.btn):not(.card) {
   color: var(--primary-color);
   text-decoration: underline;
   text-decoration-style: solid;
   font-weight: var(--bold-font-weight);
+  border-radius: 2px; /* for the focus ring */
 }
 
 a:hover:not(.btn) {
   color: var(--hover-color);
   text-decoration: underline;
+}
+
+a:focus:not(.btn):not(.card),
+a:focus-visible:not(.btn):not(.card) {
+  outline: 3px solid var(--focus-color) !important;
+  outline-offset: 2px !important;
 }
 
 a:visited:not(.btn) {
