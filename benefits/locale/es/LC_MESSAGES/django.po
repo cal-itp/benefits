@@ -192,7 +192,7 @@ msgstr ""
 "contra compromisos de contraseñas."
 
 msgid "How do I verify my identity on Login.gov?"
-msgstr "¿Cómo verifico mi identidad en Login.gov? "
+msgstr "¿Cómo verifico mi identidad en Login.gov?"
 
 msgid ""
 "You will need a state-issued ID to verify your identity with Login.gov, "
