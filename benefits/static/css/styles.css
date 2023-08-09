@@ -678,6 +678,7 @@ a.card:focus-visible {
 
 .card {
   height: 75%;
+  border: 0;
   border-top: solid var(--card-border-width) var(--primary-color);
   border-radius: 8px;
   transition: 0.3s;
@@ -689,6 +690,12 @@ a.card:focus-visible {
 
 .card:hover {
   border-top: solid var(--card-border-width) var(--hover-color);
+}
+
+.card:focus,
+.card:focus-visible {
+  outline: 3px solid var(--focus-color) !important; /* override CA State Web Template */
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
 }
 
 .card .card-title {
