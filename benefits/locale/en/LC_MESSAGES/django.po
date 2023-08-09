@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-08-09 19:47+0000\n"
+"POT-Creation-Date: 2023-08-09 20:08+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -428,7 +428,7 @@ msgstr ""
 msgid "Choose the transit benefit you would like to enroll in"
 msgstr ""
 
-msgid "Courtesy Card overview"
+msgid "Courtesy Card information"
 msgstr ""
 
 msgid "You selected a Courtesy Card transit benefit."
@@ -437,7 +437,7 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-msgid "Older Adult benefit overview"
+msgid "Older Adult benefit information"
 msgstr ""
 
 msgid "You selected an Older Adult transit benefit."
@@ -446,7 +446,7 @@ msgstr ""
 msgid "Get started with"
 msgstr ""
 
-msgid "Veteran benefit overview"
+msgid "Veteran benefit information"
 msgstr ""
 
 msgid "You selected a Veteran transit benefit."
