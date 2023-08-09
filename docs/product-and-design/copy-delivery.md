@@ -29,6 +29,7 @@ By tabs:
 - Engage all necessary stakeholders to get English language copy approved and ready for design.
 - Compile copy in [Cal-ITP Benefits Application Copy (Configurable Strings)](https://docs.google.com/spreadsheets/d/1_Gi_YbJr4ZuXCOsnOWaewvHqUO1nC1nKqiVDHvw0118/edit#gid=0), ready to be used by Design, so Design can sync the spreadsheet to Figma.
 - Engage with the translation agency, [iBabbleOn](https://ibabbleon.com/), to get Spanish translations ready for Engineering.
+- Transfer translations from iBabbleOn to the spreadsheet, in proper format.
 - Ensure English and Spanish copy is ready for Engineering.
 
 ### Design
