@@ -295,6 +295,26 @@ PEM DATA
     sacrt_agency.eligibility_types.set([sacrt_senior_type])
     sacrt_agency.eligibility_verifiers.set([sacrt_senior_verifier])
 
+    sbmtd_agency = TransitAgency.objects.create(
+        slug="sbmtd",
+        short_name=os.environ.get("SBMTD_AGENCY_SHORT_NAME", "SBMTD (sample)"),
+        long_name=os.environ.get("SBMTD_AGENCY_LONG_NAME", "Santa Barbara MTD (sample)"),
+        agency_id="sbmtd",
+        merchant_id=os.environ.get("SBMTD_AGENCY_MERCHANT_ID", "sbmtd"),
+        info_url="https://sbmtd.gov/taptopride/",
+        phone="805-963-3366",
+        active=os.environ.get("SBMTD_AGENCY_ACTIVE", "True").lower() == "true",
+        private_key=client_private_key,
+        public_key=client_public_key,
+        jws_signing_alg=os.environ.get("SBMTD_AGENCY_JWS_SIGNING_ALG", "RS256"),
+        payment_processor=mst_payment_processor,
+        index_template="core/index--sbmtd.html",
+        eligibility_index_template="eligibility/index--sbmtd.html",
+        enrollment_success_template="enrollment/success--sbmtd.html",
+    )
+    sbmtd_agency.eligibility_types.set([sbmtd_senior_type])
+    sbmtd_agency.eligibility_verifiers.set([sbmtd_senior_verifier])
+
 
 class Migration(migrations.Migration):
     dependencies = [
