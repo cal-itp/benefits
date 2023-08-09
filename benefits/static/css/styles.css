@@ -548,6 +548,13 @@ footer .footer-links li a:visited {
   /* Input height should be 60px */
 }
 
+.form-container .form-control:focus,
+.form-container .form-control:focus-visible {
+  outline: 3px solid var(--focus-color) !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
+}
+
 .form-text {
   font-size: var(--font-size-14px);
 }
