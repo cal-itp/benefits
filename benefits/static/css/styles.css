@@ -347,13 +347,6 @@ footer .footer-links li a:visited {
   font-size: calc(20rem / 16);
 }
 
-/* A button that actually is a text link */
-/* TODO: Check if this is actually really used anymore */
-.btn-link {
-  color: var(--primary-color);
-  text-decoration: underline;
-}
-
 /* Previous Button, Language Button */
 .btn-outline-dark,
 .btn-outline-light {
