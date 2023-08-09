@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-08-09 20:08+0000\n"
+"POT-Creation-Date: 2023-08-09 20:22+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "We use this to help confirm your Courtesy Card."
 msgstr ""
 
-msgid "Introduction"
+msgid "Choose transit agency"
 msgstr ""
 
 msgid "Get Started"
@@ -458,7 +458,7 @@ msgstr ""
 msgid "You will need a few items to continue:"
 msgstr ""
 
-msgid "Eligibility Error"
+msgid "Unable to confirm eligibility"
 msgstr ""
 
 msgctxt "image alt text"
@@ -503,11 +503,14 @@ msgstr ""
 msgid "Connect your Card"
 msgstr ""
 
-msgid "We couldn’t connect your bank card"
+msgid "Unable to register card"
 msgstr ""
 
 msgctxt "image alt text"
 msgid "Bank card icon with contactless symbol and question mark"
+msgstr ""
+
+msgid "We couldn’t connect your bank card"
 msgstr ""
 
 msgid "You can try again or reach out to your transit provider for assistance."
@@ -542,7 +545,7 @@ msgstr ""
 msgid "If you are on a public or shared computer, don’t forget to sign out of "
 msgstr ""
 
-msgid "Invalid state"
+msgid "Start over"
 msgstr ""
 
 msgid "You may have reached this page on accident."
@@ -551,6 +554,9 @@ msgstr ""
 msgid ""
 "To get started with Cal-ITP Benefits please click the button below, and you "
 "will be directed to the beginning of the enrollment process."
+msgstr ""
+
+msgid "Service is down."
 msgstr ""
 
 msgid "Sorry! Service for this site is down."
