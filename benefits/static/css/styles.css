@@ -594,6 +594,12 @@ footer .footer-links li a:visited {
   box-shadow: inset 0 0 0 var(--border-width) var(--bs-white);
 }
 
+.radio-input:focus,
+.radio-input:focus-visible {
+  outline: 2px solid var(--focus-color) !important;
+  outline-offset: 1px !important;
+}
+
 /* Media List */
 
 :root {
