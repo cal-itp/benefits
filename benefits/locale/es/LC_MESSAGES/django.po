@@ -71,6 +71,7 @@ msgctxt "image alt text"
 msgid "California Integrated Travel Project: Benefits logo (large)"
 msgstr ""
 "Proyecto Integrado de Viaje de California: Logotipo de Cal-ITP Benefits "
+"(grande)"
 "(pequeño)"
 
 msgid "Help"
