@@ -349,6 +349,19 @@ footer .footer-links li a:visited {
   padding: var(--primary-button-padding);
 }
 
+.btn.btn-lg.btn-primary:focus,
+.btn.btn-lg.btn-primary:focus-visible,
+.btn-outline-dark:focus,
+.btn-outline-dark:focus-visible,
+.btn-outline-light:focus,
+.btn-ouline-dark:focus-visible,
+.btn-close:focus,
+.btn-close:focus-visible {
+  outline: 3px solid var(--focus-color) !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important; /* override CA State Web Template */
+}
+
 .btn-text {
   letter-spacing: 0.02em;
   font-weight: var(--medium-font-weight);
