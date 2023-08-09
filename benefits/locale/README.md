@@ -9,9 +9,9 @@ Translation strings include all application copy, including:
 - Page titles used in the browser tab
 - In-line link URLs
 
-## BENEFITS STRING SPREADSHEET NAME TBD
+## Cal-ITP Benefits Application Copy (Configurable Strings)
 
-The human-readable version of the English and Spanish translation strings for the application are delivered to Design and Engineering by Product, and live at this link: [Benefits String Spreadsheet NAME TBD](https://docs.google.com/spreadsheets/d/13YZLv7wf8dAk_HnEP-KLEUurTggx8QOx9HovEW4_UjI/edit#gid=0).
+The human-readable version of the English and Spanish translation strings for the application are delivered to Design and Engineering by Product, and live at this link: [Cal-ITP Benefits Application Copy (Configurable Strings)](https://docs.google.com/spreadsheets/d/1_Gi_YbJr4ZuXCOsnOWaewvHqUO1nC1nKqiVDHvw0118/edit#gid=0).
 
 ## Copy process responsibilities
 
@@ -21,13 +21,13 @@ The human-readable version of the English and Spanish translation strings for th
 - Engaging with copy writers to get the English language copy drafted, proofed and ready for design.
 - Engaging with client editorial/communications team to ensure English language and Spanish language copy are edited according to client style guides.
 - Engaging all necessary stakeholders to get English language copy approved and ready for design.
-- Compiling copy in [Benefits String Spreadsheet NAME TBD](https://docs.google.com/spreadsheets/d/13YZLv7wf8dAk_HnEP-KLEUurTggx8QOx9HovEW4_UjI/edit#gid=0), ready to be used by Design, so Design can sync the spreadsheet to Figma.
+- Compiling copy in [Cal-ITP Benefits Application Copy (Configurable Strings)](https://docs.google.com/spreadsheets/d/1_Gi_YbJr4ZuXCOsnOWaewvHqUO1nC1nKqiVDHvw0118/edit#gid=0), ready to be used by Design, so Design can sync the spreadsheet to Figma.
 - Engaging with the translation agency, [iBabbleOn](https://ibabbleon.com/), to get Spanish translations ready for Engineering.
 - Ensure English and Spanish copy is ready for Engineering.
 
 ### Design
 
-- Syncing copy from [Benefits String Spreadsheet](https://docs.google.com/spreadsheets/d/13YZLv7wf8dAk_HnEP-KLEUurTggx8QOx9HovEW4_UjI/edit#gid=0) into Figma.
+- Syncing copy from [Cal-ITP Benefits Application Copy (Configurable Strings)](https://docs.google.com/spreadsheets/d/1_Gi_YbJr4ZuXCOsnOWaewvHqUO1nC1nKqiVDHvw0118/edit#gid=0) into Figma.
 - Ensuring the string is in the appropriate column (e.g. `Subtitle`, `ButtonLabel`)
 
 ### Engineering
