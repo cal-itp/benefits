@@ -186,7 +186,7 @@ PEM DATA
         form_sub_pattern=r"\d{5}",
         form_input_mode="numeric",
         form_max_length=5,
-        form_name_label=_("last name (as it appears on Courtesy Card)"),
+        form_name_label=_("Last name (as it appears on Courtesy Card)"),
         form_name_help_text=_("We use this to help confirm your Courtesy Card."),
         form_name_placeholder="Garcia",
         form_name_max_length=255,
