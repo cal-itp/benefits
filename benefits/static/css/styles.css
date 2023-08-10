@@ -276,13 +276,10 @@ main {
 }
 
 #skip-to-content {
-  background: var(--focus-color);
-  text-align: inherit;
-  position: initial !important;
-  clip: initial;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  left: unset !important;
+  transform: none;
   overflow: hidden;
+  background: var(--focus-color);
   font-size: var(--font-size-15px);
   line-height: var(--bs-body-line-height);
   letter-spacing: calc(var(--font-size-15px) * var(--letter-spacing-5));
@@ -294,13 +291,6 @@ main {
   box-shadow: none;
 }
 
-#skip-to-content {
-  width: unset;
-  height: 0;
-  left: unset !important;
-  transform: none;
-  overflow: hidden;
-}
 /* Footer */
 :root {
   --footer-background-color: var(--dark-color);
