@@ -446,7 +446,7 @@ msgstr ""
 msgid "Get started with"
 msgstr ""
 
-msgid "Veteran benefit overview"
+msgid "Veterans benefit overview"
 msgstr ""
 
 msgid "You selected a Veteran transit benefit."
