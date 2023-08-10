@@ -510,7 +510,7 @@ msgctxt "image alt text"
 msgid "Bank card icon with contactless symbol and question mark"
 msgstr ""
 
-msgid "We couldn’t connect your bank card"
+msgid "We couldn’t connect your card"
 msgstr ""
 
 msgid "You can try again or reach out to your transit provider for assistance."
