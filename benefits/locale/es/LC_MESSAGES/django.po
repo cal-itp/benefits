@@ -554,7 +554,7 @@ msgstr "Ha seleccionado un beneficio de tránsito para adultos mayores."
 msgid "Get started with"
 msgstr "Comience con"
 
-msgid "Veteran benefit overview"
+msgid "Veterans benefit overview"
 msgstr "Descripción de beneficios para veteranos"
 
 msgid "You selected a Veteran transit benefit."
