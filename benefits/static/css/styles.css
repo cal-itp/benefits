@@ -373,6 +373,8 @@ footer .footer-links li a.footer-link:visited {
 }
 
 .btn.btn-lg.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   border-width: 2px;
   font-weight: var(--medium-font-weight);
   font-size: var(--font-size-20px);
