@@ -33,7 +33,7 @@ msgid "This is a 5-digit number on the front and back of your card."
 msgstr "Este es un número de 5 dígitos en el anverso y reverso de su tarjeta."
 
 msgid "Last name (as it appears on Courtesy Card)"
-msgstr "Apellido (tal como aparece en la tarjeta de cortesía)*"
+msgstr "Apellido (tal como aparece en la tarjeta de cortesía)"
 
 msgid "We use this to help confirm your Courtesy Card."
 msgstr "Usamos esto para ayudar a confirmar su tarjeta de cortesía."
