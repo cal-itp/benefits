@@ -536,8 +536,8 @@ msgstr "Elija la opción de beneficio"
 msgid "Choose the transit benefit you would like to enroll in"
 msgstr "Elija el beneficio de tránsito al que le gustaría inscribirse"
 
-msgid "Courtesy Card overview"
-msgstr "Descripción de la tarjeta de cortesía"
+msgid "Agency card overview"
+msgstr "Descripción de la tarjeta de agencia"
 
 msgid "You selected a Courtesy Card transit benefit."
 msgstr "Ha seleccionado un beneficio de tránsito de tarjeta de cortesía."

@@ -428,7 +428,7 @@ msgstr ""
 msgid "Choose the transit benefit you would like to enroll in"
 msgstr ""
 
-msgid "Courtesy Card overview"
+msgid "Agency card overview"
 msgstr ""
 
 msgid "You selected a Courtesy Card transit benefit."
