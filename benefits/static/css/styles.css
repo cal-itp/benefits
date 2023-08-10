@@ -17,7 +17,9 @@
   --bs-body-line-height: 1.5; /* Displayed as 150% on Figma */
   --heading-line-height: 1.3; /* Displayed as 130% on Figma */
   --h4-line-height: 1.2; /* Displayed as 120% on Figma */
-  --body-letter-spacing: 0.05em;
+  --letter-spacing-2: 0.02; /* Displayed as 2% on Figma */
+  --letter-spacing-3: 0.03; /* Displayed as 3% on Figma */
+  --letter-spacing-5: 0.05; /* Displayed as 5% on Figma */
   --dark-color: #212121;
   --hover-color: #044869;
   --error-color: #ea1010;
@@ -26,9 +28,7 @@
   --bs-danger: var(--error-color);
   --bs-danger-rgb: var(--error-color-rgb);
   --standout-color: #323a45;
-  --h1-font-size: calc(24rem / 16);
   --h1-text-align: left;
-  --h2-font-size: calc(24rem / 16);
   --h3-font-size: calc(20rem / 16);
   --font-size-24px: calc(24rem / 16);
   --font-size-20px: calc(20rem / 16);
@@ -38,14 +38,6 @@
   --font-size-12px: calc(12rem / 16);
   --border-width: calc(2rem / 16);
   --border-radius: calc(3rem / 16);
-}
-
-@media (min-width: 992px) {
-  :root {
-    --h1-font-size: var(--font-size-35px);
-    --h1-text-align: center;
-    --font-size-35px: calc(35rem / 16);
-  }
 }
 
 @font-face {
@@ -63,6 +55,7 @@ body {
 }
 
 h1,
+.h1,
 h2,
 .h2,
 h3,
@@ -90,20 +83,9 @@ span,
 li {
   font-size: var(--bs-body-font-size);
   font-weight: var(--bs-body-font-weight);
-  letter-spacing: var(--body-letter-spacing);
+  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
   line-height: var(--bs-body-line-height);
   margin: 0;
-}
-
-@media (max-width: 992px) {
-  /* Paragraph: Body Text, up to Small width */
-  .p-sm {
-    font-size: var(--bs-body-font-size);
-    font-weight: var(--bs-body-font-weight);
-    letter-spacing: var(--body-letter-spacing);
-    line-height: var(--bs-body-line-height);
-    margin: 0;
-  }
 }
 
 @media (min-width: 992px) {
@@ -127,7 +109,7 @@ li {
 }
 
 .ls-base {
-  letter-spacing: var(--body-letter-spacing);
+  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
 }
 
 /* Links */
@@ -170,25 +152,40 @@ a[target="_blank"]::after {
 /* Headlines */
 /* All headlines */
 h1,
+.h1,
 h2,
 .h2,
 h3,
 .h3,
 h4 {
   font-weight: var(--bold-font-weight);
-  letter-spacing: var(--body-letter-spacing);
   margin: 0;
 }
 
 /* H1 */
 /* Mobile first: Screen width up to 992px - 24px (24rem/16 = 1.5rem) and left */
 /* Screen width above 992px - 35px (35rem/16 = 2.1875rem) and centered */
-/* Does not have a class. Do not apply to non-headline elements. */
-h1 {
+:root {
+  --h1-font-size: var(--font-size-24px);
+  --h1-letter-spacing-percent: var(--letter-spacing-3);
+}
+
+@media (min-width: 992px) {
+  :root {
+    --h1-font-size: var(--font-size-35px);
+    --h1-text-align: center;
+    --h1-letter-spacing-percent: var(--letter-spacing-5);
+    --font-size-35px: 2.1875rem;
+  }
+}
+
+h1,
+.h1 {
   font-size: var(--h1-font-size);
   text-align: var(--h1-text-align);
   padding-top: calc(70rem / 16);
   line-height: var(--heading-line-height);
+  letter-spacing: calc(var(--h1-font-size) * var(--h1-letter-spacing-percent));
 }
 
 /* H2 */
@@ -196,15 +193,28 @@ h1 {
 /* Also has a class which can be applied to non-headline elements */
 h2,
 .h2 {
-  font-size: var(--h2-font-size);
+  font-size: var(--font-size-24px);
   line-height: var(--heading-line-height);
+  letter-spacing: calc(var(--font-size-24px) * var(--letter-spacing-3));
 }
 
 @media (max-width: 992px) {
   /* H2: 20px, up to Small width */
+  /* Only used on Help Pages */
   .h2-sm {
     font-size: var(--font-size-20px);
     line-height: var(--heading-line-height);
+    letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-5));
+  }
+
+  /* H2: 18px, up to Small width */
+  /* Only used on Landing Page, Eligibility Start */
+  .h2-sm-p {
+    font-size: var(--bs-body-font-size);
+    font-weight: var(--bs-body-font-weight);
+    line-height: var(--heading-line-height);
+    letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
+    margin: 0;
   }
 }
 
@@ -215,11 +225,26 @@ h3,
 .h3 {
   font-size: var(--h3-font-size);
   line-height: var(--heading-line-height);
+  letter-spacing: calc(var(--h3-font-size) * var(--letter-spacing-5));
 }
 
 /* H4 */
-/* Desktop only: Used for Agency Selector card, agency name */
+/* Used for Agency Selector card, agency name */
+:root {
+  --h4-font-size: var(--font-size-18px);
+  --h4-letter-spacing-percent: var(--letter-spacing-3);
+}
+
+@media (min-width: 992px) {
+  :root {
+    --h4-font-size: var(--font-size-20px);
+    --h4-letter-spacing-percent: var(--letter-spacing-5);
+  }
+}
+
 h4 {
+  font-size: var(--h4-font-size);
+  letter-spacing: calc(var(--h4-font-size) * var(--h4-letter-spacing-percent));
   line-height: var(--h4-line-height);
 }
 
@@ -274,7 +299,7 @@ footer .footer-links li a {
   font-weight: var(--footer-link-font-weight);
   font-size: var(--bs-body-font-size);
   text-decoration: underline;
-  letter-spacing: var(--body-letter-spacing);
+  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
   line-height: 50px;
 }
 
@@ -334,17 +359,17 @@ footer .footer-links li a:visited {
 
 .btn.btn-lg.btn-primary {
   border-width: 2px;
-  letter-spacing: 0.02em;
   font-weight: var(--medium-font-weight);
-  font-size: calc(20rem / 16);
+  font-size: var(--font-size-20px);
+  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
   width: 100%;
   padding: var(--primary-button-padding);
 }
 
 .btn-text {
-  letter-spacing: 0.02em;
   font-weight: var(--medium-font-weight);
-  font-size: calc(20rem / 16);
+  font-size: var(--font-size-20px);
+  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
 }
 
 /* A button that actually is a text link */
@@ -461,7 +486,7 @@ footer .footer-links li a:visited {
   padding: 2px 4px;
   border-radius: var(--border-radius);
   border: var(--border-width) solid var(--primary-color);
-  letter-spacing: 0.02em;
+  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-2));
   font-weight: 500 !important;
   text-decoration: none !important;
 }
@@ -471,7 +496,7 @@ footer .footer-links li a:visited {
   .signout-link:visited {
     font-size: var(--font-size-12px);
     text-decoration: underline !important;
-    letter-spacing: var(--body-letter-spacing);
+    letter-spacing: calc(var(--font-size-12px) * var(--letter-spacing-5));
     border: none;
   }
 }
@@ -483,7 +508,7 @@ footer .footer-links li a:visited {
   color: var(--text-primary-color);
   font-weight: var(--medium-font-weight);
   font-size: var(--font-size-14px);
-  letter-spacing: var(--body-letter-spacing);
+  letter-spacing: calc(var(--font-size-14px) * var(--letter-spacing-5));
   padding: 3.5px 2.35px; /* button dimensions are 130 x 32 */
 }
 
@@ -520,7 +545,7 @@ footer .footer-links li a:visited {
 .form-container .form-control-label {
   font-size: var(--bs-body-font-size);
   font-weight: var(--medium-font-weight);
-  letter-spacing: var(--body-letter-spacing);
+  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
   padding-bottom: calc(12rem / 16);
 }
 
@@ -632,8 +657,6 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 /* Cards */
 
 :root {
-  --card-title-font-size: var(--font-size-18px);
-  --card-title-letter-spacing: 0.03em;
   --card-x-padding: calc(10rem / 16);
   --card-body-x-padding: 0;
   --card-body-y-padding: 0.75rem;
@@ -644,8 +667,6 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 
 @media (min-width: 992px) {
   :root {
-    --card-title-font-size: var(--font-size-20px);
-    --card-title-letter-spacing: 0.05rem;
     --card-x-padding: calc(35rem / 16);
     --card-body-x-padding: calc(40rem / 16);
     --card-body-y-padding: 0;
@@ -677,11 +698,6 @@ a.card:focus-visible {
   border-top: solid var(--card-border-width) var(--hover-color);
 }
 
-.card .card-title {
-  font-size: var(--card-title-font-size);
-  letter-spacing: var(--card-title-letter-spacing);
-}
-
 .card .card-body {
   padding: 0 var(--card-body-x-padding) !important;
 }
@@ -689,7 +705,6 @@ a.card:focus-visible {
 /* Modal Dialogs */
 
 :root {
-  --modal-title-font-size: var(--font-size-24px);
   --modal-border-radius: 8px;
   --modal-body-top: -36px;
 }
@@ -702,7 +717,6 @@ a.card:focus-visible {
 
 @media (min-width: 992px) {
   :root {
-    --modal-title-font-size: var(--font-size-35px);
     --modal-border-radius: 4px;
   }
 }
@@ -735,10 +749,6 @@ a.card:focus-visible {
 
 .btn-close {
   color: var(--text-primary-color);
-}
-
-.modal-title {
-  font-size: var(--modal-title-font-size);
 }
 
 .modal-info .modal-header {
