@@ -102,8 +102,8 @@
       {% endblock main-content %}
     </main>
 
-    <footer id="footer">
-      <div class="container">
+    <footer id="footer" class="navbar py-0">
+      <div class="container d-none d-lg-block">
         <ul class="footer-links m-0 p-0 list-unstyled d-lg-flex gap-lg-4">
           <li>
             <a class="footer-link m-0 ms-5 ps-lg-0" href="{% url "core:help" %}">{% translate "Help" %}</a>
@@ -113,6 +113,25 @@
           </li>
         </ul>
       </div>
+
+      <div class="d-block d-lg-none container">
+        <ul class="col-12 footer-links ps-0 mb-0">
+          <li>
+            <a href="{% url "core:help" %}">{% translate "Help" %}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="d-block d-lg-none container-fluid p-0">
+        <hr class="border border-white border-1 p-0 m-0 w-100 opacity-100">
+      </div>
+      <div class="d-block d-lg-none container">
+        <ul class="col-12 footer-links ps-0 mb-0">
+          <li>
+            <a href="https://cdt.ca.gov/privacy-policy/" target="_blank" rel="noopener noreferrer" class="">Privacy Policy</a>
+          </li>
+        </ul>
+      </div>
+
     </footer>
 
     {% comment %}
