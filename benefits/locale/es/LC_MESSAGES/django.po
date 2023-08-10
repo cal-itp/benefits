@@ -27,7 +27,7 @@ msgstr ""
 "confirmar su elegibilidad."
 
 msgid "MST Courtesy Card number"
-msgstr "Número de tarjeta de cortesía de MST*"
+msgstr "Número de tarjeta de cortesía de MST"
 
 msgid "This is a 5-digit number on the front and back of your card."
 msgstr "Este es un número de 5 dígitos en el anverso y reverso de su tarjeta."
