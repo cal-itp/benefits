@@ -13,8 +13,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Courtesy Card information"
-msgstr "Información de la tarjeta de cortesía"
+msgid "Agency card information"
+msgstr "Información de la tarjeta de agencia"
 
 msgid "Let’s see if we can confirm your eligibility."
 msgstr "Veamos si podemos confirmar su elegibilidad."
