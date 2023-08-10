@@ -360,7 +360,7 @@ msgid "Which transit benefit would you like to enroll in?"
 msgstr "¿A qué beneficio de tránsito le gustaría inscribirse?"
 
 msgid "Choose this Benefit"
-msgstr "Elegir este Beneficio"
+msgstr "Elegir este beneficio"
 
 msgid "Check eligibility"
 msgstr "Comprobar elegibilidad"
