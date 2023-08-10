@@ -622,7 +622,7 @@ msgid "Bank card icon with contactless symbol and question mark"
 msgstr ""
 "Icono de tarjeta bancaria con símbolo sin contacto y signo de interrogación"
 
-msgid "We couldn’t connect your bank card"
+msgid "We couldn’t connect your card"
 msgstr "No pudimos conectar su tarjeta"
 
 msgid "You can try again or reach out to your transit provider for assistance."
