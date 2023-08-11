@@ -746,11 +746,6 @@ a.card:focus-visible {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
 }
 
-.card .card-title {
-  font-size: var(--card-title-font-size);
-  letter-spacing: var(--card-title-letter-spacing);
-}
-
 .card .card-body {
   padding: 0 var(--card-body-x-padding) !important;
 }
