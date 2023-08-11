@@ -35,6 +35,7 @@
   --font-size-24px: calc(24rem / 16);
   --font-size-20px: calc(20rem / 16);
   --font-size-18px: calc(18rem / 16);
+  --font-size-15px: calc(15rem / 16);
   --font-size-16px: calc(16rem / 16);
   --font-size-14px: calc(14rem / 16);
   --font-size-12px: calc(12rem / 16);
@@ -129,8 +130,8 @@ a:hover:not(.btn) {
   text-decoration: underline;
 }
 
-a:focus:not(.btn):not(.card):not(.footer-link),
-a:focus-visible:not(.btn):not(.card):not(.footer-link) {
+a:focus:not(.btn):not(.card):not(.footer-link):not(#skip-to-content),
+a:focus-visible:not(.btn):not(.card):not(.footer-link):not(#skip-to-content) {
   outline: 3px solid var(--focus-color) !important;
   outline-offset: 2px !important;
 }
@@ -274,6 +275,32 @@ main {
   min-height: var(--main-content-min-height);
 }
 
+#skip-to-content {
+  background: var(--focus-color);
+  text-align: inherit;
+  position: initial !important;
+  clip: initial;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  overflow: hidden;
+  font-size: var(--font-size-15px);
+  line-height: var(--bs-body-line-height);
+  letter-spacing: calc(var(--font-size-15px) * var(--letter-spacing-5));
+}
+
+#skip-to-content:focus {
+  height: 21px !important;
+  outline: none !important;
+  box-shadow: none;
+}
+
+#skip-to-content {
+  width: unset;
+  height: 0;
+  left: unset !important;
+  transform: none;
+  overflow: hidden;
+}
 /* Footer */
 :root {
   --footer-background-color: var(--dark-color);
