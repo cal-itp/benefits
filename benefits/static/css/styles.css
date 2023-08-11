@@ -679,22 +679,20 @@ h1 + .media-list, /* A .media-list immediately following the h1: Enrollment Succ
 /* Cards */
 
 :root {
-  --card-x-padding: calc(10rem / 16);
-  --card-body-x-padding: 0;
-  --card-body-y-padding: 0.75rem;
-  --card-border-width: var(--font-size-12px);
-  --card-max-width: 100%;
-  --card-min-height: 100%;
+  --card-padding: calc(12rem / 16);
+  --card-border-width: calc(13rem / 16);
+  --card-width: 100%;
+  --card-height: 100%;
+  --card-gap: 1rem;
 }
 
 @media (min-width: 992px) {
   :root {
-    --card-x-padding: calc(35rem / 16);
-    --card-body-x-padding: calc(40rem / 16);
-    --card-body-y-padding: 0;
-    --card-border-width: var(--font-size-20px);
-    --card-max-width: calc(340rem / 16);
-    --card-min-height: calc(185rem / 16);
+    --card-padding: 1rem;
+    --card-border-width: calc(15rem / 16);
+    --card-width: calc(200rem / 16);
+    --card-height: calc(178rem / 16);
+    --card-gap: calc(44rem / 16);
   }
 }
 
@@ -706,15 +704,13 @@ a.card:focus-visible {
 }
 
 .card {
-  height: 75%;
-  border: 0;
   border-top: solid var(--card-border-width) var(--primary-color);
-  border-radius: 8px;
+  border-radius: calc(8rem / 16);
   transition: 0.3s;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  padding: var(--card-body-y-padding) var(--card-x-padding);
-  max-width: var(--card-max-width);
-  min-height: var(--card-min-height);
+  padding: var(--card-padding);
+  width: var(--card-width);
+  height: var(--card-height);
 }
 
 .card:hover {
@@ -727,14 +723,18 @@ a.card:focus-visible {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
 }
 
+.card-row {
+  gap: var(--card-gap);
+}
+
 .card .card-body {
-  padding: 0 var(--card-body-x-padding) !important;
+  padding: 0 !important; /* override CA State Web Template */
 }
 
 /* Modal Dialogs */
 
 :root {
-  --modal-border-radius: 8px;
+  --modal-border-radius: calc(8rem / 16);
   --modal-body-top: -36px;
 }
 
@@ -746,7 +746,7 @@ a.card:focus-visible {
 
 @media (min-width: 992px) {
   :root {
-    --modal-border-radius: 4px;
+    --modal-border-radius: calc(4rem / 16);
   }
 }
 
@@ -883,22 +883,4 @@ a.card:focus-visible {
 
 .landing footer {
   margin-top: 0;
-}
-
-/* Agency Selector */
-
-#modal--agency-selector .modal-body {
-  padding: 0;
-}
-
-#modal--agency-selector .card img {
-  margin-right: -1px;
-}
-
-#modal--agency-selector .col:first-child .card {
-  margin-top: 2rem;
-}
-
-#modal--agency-selector .col:last-child .card {
-  margin-bottom: 2rem;
 }
