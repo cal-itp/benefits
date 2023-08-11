@@ -758,11 +758,6 @@ a.card:focus-visible {
     center/1em auto no-repeat;
 }
 
-.modal-dialog {
-  width: auto;
-  height: auto;
-}
-
 .modal-content {
   border-radius: var(--modal-border-radius);
 }
@@ -773,10 +768,6 @@ a.card:focus-visible {
 }
 
 .modal-dialog * {
-  color: var(--text-primary-color);
-}
-
-.btn-close {
   color: var(--text-primary-color);
 }
 
