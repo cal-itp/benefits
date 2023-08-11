@@ -780,11 +780,11 @@ a.card:focus-visible {
   color: var(--text-primary-color);
 }
 
-.modal-info .modal-header {
+.modal-header {
   z-index: 1057;
 }
 
-.modal-info .modal-body.absolute-top {
+.modal-body.absolute-top {
   top: var(--modal-body-top);
   z-index: 1056;
 }
