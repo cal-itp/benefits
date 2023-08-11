@@ -6,14 +6,14 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-08-08 22:20+0000\n"
+"POT-Creation-Date: 2023-08-10 19:39+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Confirm your Courtesy Card"
+msgid "Agency card information"
 msgstr ""
 
 msgid "Let’s see if we can confirm your eligibility."
@@ -30,13 +30,13 @@ msgstr ""
 msgid "This is a 5-digit number on the front and back of your card."
 msgstr ""
 
-msgid "last name (as it appears on Courtesy Card)"
+msgid "Last name (as it appears on Courtesy Card)"
 msgstr ""
 
 msgid "We use this to help confirm your Courtesy Card."
 msgstr ""
 
-msgid "Introduction"
+msgid "Get started"
 msgstr ""
 
 msgid "Get Started"
@@ -210,11 +210,10 @@ msgid "What is a Courtesy Card?"
 msgstr ""
 
 msgid ""
-"Courtesy Cards are issued by Monterey-Salinas Transit to riders who qualify "
-"for a number of reduced fare programs. This website is a demonstration tool "
-"to support the Courtesy Card program. This benefit may need to be renewed in "
-"the future based on the expiration date of the Courtesy Card. Learn more at "
-"the <a href=\"https://mst.org/riders-guide/how-to-ride/courtesy-card/\" "
+"Monterey-Salinas Transit issues Courtesy Cards to riders who qualify for a "
+"number of reduced fare programs. This transit benefit may need to be renewed "
+"in the future based on the expiration date of the Courtesy Card. Learn more "
+"at the <a href=\"https://mst.org/riders-guide/how-to-ride/courtesy-card/\" "
 "target=\"_blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
 msgstr ""
 
@@ -250,7 +249,7 @@ msgstr ""
 msgid "Get a reduced fare on SacRT light rail when you tap to ride"
 msgstr ""
 
-msgid "Choose Provider"
+msgid "Choose transit agency"
 msgstr ""
 
 msgid "Get a reduced fare on public transportation when you tap to ride"
@@ -407,8 +406,8 @@ msgid ""
 "This option is for people who have served in the active military, naval, or "
 "air service, and who were discharged or released therefrom under conditions "
 "other than dishonorable. You will need to <a href=\"https://www.va.gov/"
-"resources/verifying-your-identity-on-vagov/\" target=\"_blank\" "
-"rel=\"noopener noreferrer\">verify your identity through VA.gov</a>."
+"resources/verifying-your-identity-on-vagov/\" target=\"_blank\" rel="
+"\"noopener noreferrer\">verify your identity through VA.gov</a>."
 msgstr ""
 
 #, python-format
@@ -429,7 +428,7 @@ msgstr ""
 msgid "Choose the transit benefit you would like to enroll in"
 msgstr ""
 
-msgid "Courtesy Card information"
+msgid "Agency card overview"
 msgstr ""
 
 msgid "You selected a Courtesy Card transit benefit."
@@ -438,7 +437,7 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-msgid "Older Adult benefit information"
+msgid "Older Adult benefit overview"
 msgstr ""
 
 msgid "You selected an Older Adult transit benefit."
@@ -447,7 +446,7 @@ msgstr ""
 msgid "Get started with"
 msgstr ""
 
-msgid "Veteran benefit information"
+msgid "Veterans benefit overview"
 msgstr ""
 
 msgid "You selected a Veteran transit benefit."
@@ -459,7 +458,7 @@ msgstr ""
 msgid "You will need a few items to continue:"
 msgstr ""
 
-msgid "Eligibility Error"
+msgid "Unable to confirm eligibility"
 msgstr ""
 
 msgctxt "image alt text"
@@ -492,7 +491,7 @@ msgstr ""
 msgid "Learn more about Littlepay"
 msgstr ""
 
-msgid "Connect your card"
+msgid "Eligibility confirmation"
 msgstr ""
 
 msgid "Your eligibility is confirmed! You’re nearly there."
@@ -504,11 +503,14 @@ msgstr ""
 msgid "Connect your Card"
 msgstr ""
 
-msgid "We couldn’t connect your bank card"
+msgid "Unable to register card"
 msgstr ""
 
 msgctxt "image alt text"
 msgid "Bank card icon with contactless symbol and question mark"
+msgstr ""
+
+msgid "We couldn’t connect your card"
 msgstr ""
 
 msgid "You can try again or reach out to your transit provider for assistance."
@@ -543,7 +545,7 @@ msgstr ""
 msgid "If you are on a public or shared computer, don’t forget to sign out of "
 msgstr ""
 
-msgid "Invalid state"
+msgid "Start over"
 msgstr ""
 
 msgid "You may have reached this page on accident."
@@ -552,6 +554,9 @@ msgstr ""
 msgid ""
 "To get started with Cal-ITP Benefits please click the button below, and you "
 "will be directed to the beginning of the enrollment process."
+msgstr ""
+
+msgid "Service is down."
 msgstr ""
 
 msgid "Sorry! Service for this site is down."
