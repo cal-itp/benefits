@@ -257,6 +257,17 @@ h4 {
   line-height: var(--h4-line-height);
 }
 
+/* Header */
+#header-container {
+  height: 80px;
+}
+
+/* Language button */
+#header-container .btn-outline-light {
+  font-size: var(--bs-body-font-size);
+  padding: 3.5px 29.01px; /* 126 x 38px, all screen sizes  */
+}
+
 /* Main */
 /* The minimum height is calculated by 100 viewport height minus Header and Footer height */
 main {
@@ -264,42 +275,20 @@ main {
 }
 
 /* Footer */
-/* Footer has same font styles on all screen widths */
-/* Mobile first: One link per row, each link is 50px height */
-/* Screen width above 992px - Footer is 50px height */
-/* Total footer height is 50px on Desktop */
-/* And 102 on Mobile */
-/* Footer breakpoint set to 992px */
-/* Note: Not all Footer styles are written in mobile-first */
-/* to style the full-width line on mobile */
-/* and the desktop container-width sizing */
-
 :root {
   --footer-background-color: var(--dark-color);
   --footer-link-color: #73b3e7;
-  --footer-link-width: 100%;
   --footer-link-hover-color: #0062ff;
   --footer-link-visited-color: #9b74d7;
   --footer-link-font-weight: var(--bold-font-weight);
-  --footer-mobile-underline-color: var(--bs-white);
   --main-content-min-height: calc(100vh - 246px);
   /* 246px = Header Height (80px) + (Footer Link (50px) * Number of Links (2)) + Underline Height (2px) + Footer Margin Top (64px) */
 }
 
 @media (min-width: 992px) {
   :root {
-    --footer-link-width: auto;
     --main-content-min-height: calc(100vh - 194px);
     /* 194px = Header Height (80px) + Footer Height (50px) + Footer Margin Top (64px) */
-  }
-}
-
-/* Custom non-mobile-first code to */
-/* allow the mobile footer to have a */
-/* full-width line beyond container-fluid width */
-@media (max-width: 992px) {
-  footer {
-    margin-top: 64px;
   }
 }
 
@@ -334,18 +323,6 @@ footer .footer-links li a.footer-link:focus-visible {
 footer .footer-links li a.footer-link:active,
 footer .footer-links li a.footer-link:visited {
   color: var(--footer-link-visited-color);
-}
-
-/* Header */
-
-#header-container {
-  height: 80px;
-}
-
-/* Language button */
-#header-container .btn-outline-light {
-  font-size: var(--bs-body-font-size);
-  padding: 3.5px 29.01px; /* 126 x 38px, all screen sizes  */
 }
 
 /* Buttons */
