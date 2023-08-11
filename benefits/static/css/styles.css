@@ -704,6 +704,7 @@ a.card:focus-visible {
 }
 
 .card {
+  border: 0;
   border-top: solid var(--card-border-width) var(--primary-color);
   border-radius: calc(8rem / 16);
   transition: 0.3s;
