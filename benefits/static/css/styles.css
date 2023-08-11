@@ -297,10 +297,6 @@ footer {
   margin-top: 64px;
 }
 
-/* footer .footer-links li {
-  width: var(--footer-link-width);
-} */
-
 footer .footer-links li a.footer-link {
   color: var(--footer-link-color);
   font-weight: var(--footer-link-font-weight);
