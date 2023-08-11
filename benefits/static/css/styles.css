@@ -383,6 +383,11 @@ footer .footer-links li a.footer-link:visited {
   padding: var(--primary-button-padding);
 }
 
+.btn.btn-lg.btn-primary:hover {
+  background-color: var(--hover-color);
+  border-color: var(--hover-color);
+}
+
 .btn.btn-lg.btn-primary:focus,
 .btn.btn-lg.btn-primary:focus-visible,
 .btn-outline-dark:focus,
