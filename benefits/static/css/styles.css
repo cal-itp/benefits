@@ -373,12 +373,19 @@ footer .footer-links li a.footer-link:visited {
 }
 
 .btn.btn-lg.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
   border-width: 2px;
   font-weight: var(--medium-font-weight);
   font-size: var(--font-size-20px);
   letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
   width: 100%;
   padding: var(--primary-button-padding);
+}
+
+.btn.btn-lg.btn-primary:hover {
+  background-color: var(--hover-color);
+  border-color: var(--hover-color);
 }
 
 .btn.btn-lg.btn-primary:focus,
