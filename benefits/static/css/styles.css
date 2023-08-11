@@ -24,6 +24,8 @@
   --hover-color: #044869;
   --error-color: #ea1010;
   --selected-color: #562b97;
+  --focus-color: #fdb714;
+  --secondary-bg-color: #fafafa;
   --error-color-rgb: 234, 16, 16;
   --bs-danger: var(--error-color);
   --bs-danger-rgb: var(--error-color-rgb);
@@ -114,16 +116,23 @@ li {
 
 /* Links */
 /* Same sizes for all screen widths: 18px */
-a:not(.btn) {
+a:not(.btn):not(.card) {
   color: var(--primary-color);
   text-decoration: underline;
   text-decoration-style: solid;
   font-weight: var(--bold-font-weight);
+  border-radius: 2px; /* for the focus ring */
 }
 
 a:hover:not(.btn) {
   color: var(--hover-color);
   text-decoration: underline;
+}
+
+a:focus:not(.btn):not(.card):not(.footer-link),
+a:focus-visible:not(.btn):not(.card):not(.footer-link) {
+  outline: 3px solid var(--focus-color) !important;
+  outline-offset: 2px !important;
 }
 
 a:visited:not(.btn) {
@@ -294,7 +303,7 @@ footer .footer-links li {
   width: var(--footer-link-width);
 }
 
-footer .footer-links li a {
+footer .footer-links li a.footer-link {
   color: var(--footer-link-color);
   font-weight: var(--footer-link-font-weight);
   font-size: var(--bs-body-font-size);
@@ -303,12 +312,18 @@ footer .footer-links li a {
   line-height: 50px;
 }
 
-footer .footer-links li a:hover {
+footer .footer-links li a.footer-link:hover {
   color: var(--footer-link-hover-color);
 }
 
-footer .footer-links li a:active,
-footer .footer-links li a:visited {
+footer .footer-links li a.footer-link:focus,
+footer .footer-links li a.footer-link:focus-visible {
+  outline: 3px solid var(--secondary-bg-color) !important;
+  outline-offset: 2px !important;
+}
+
+footer .footer-links li a.footer-link:active,
+footer .footer-links li a.footer-link:visited {
   color: var(--footer-link-visited-color);
 }
 
@@ -366,17 +381,23 @@ footer .footer-links li a:visited {
   padding: var(--primary-button-padding);
 }
 
+.btn.btn-lg.btn-primary:focus,
+.btn.btn-lg.btn-primary:focus-visible,
+.btn-outline-dark:focus,
+.btn-outline-dark:focus-visible,
+.btn-outline-light:focus,
+.btn-ouline-dark:focus-visible,
+.btn-close:focus,
+.btn-close:focus-visible {
+  outline: 3px solid var(--focus-color) !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important; /* override CA State Web Template */
+}
+
 .btn-text {
   font-weight: var(--medium-font-weight);
   font-size: var(--font-size-20px);
   letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
-}
-
-/* A button that actually is a text link */
-/* TODO: Check if this is actually really used anymore */
-.btn-link {
-  color: var(--primary-color);
-  text-decoration: underline;
 }
 
 /* Previous Button, Language Button */
@@ -559,6 +580,13 @@ footer .footer-links li a:visited {
   /* Input height should be 60px */
 }
 
+.form-container .form-control:focus,
+.form-container .form-control:focus-visible {
+  outline: 3px solid var(--focus-color) !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important;
+}
+
 .form-text {
   font-size: var(--font-size-14px);
 }
@@ -603,6 +631,12 @@ footer .footer-links li a:visited {
 .radio-input:checked {
   background-color: var(--radio-input-color);
   box-shadow: inset 0 0 0 var(--border-width) var(--bs-white);
+}
+
+.radio-input:focus,
+.radio-input:focus-visible {
+  outline: 2px solid var(--focus-color) !important;
+  outline-offset: 1px !important;
 }
 
 /* Media List */
@@ -685,6 +719,7 @@ a.card:focus-visible {
 
 .card {
   height: 75%;
+  border: 0;
   border-top: solid var(--card-border-width) var(--primary-color);
   border-radius: 8px;
   transition: 0.3s;
@@ -696,6 +731,17 @@ a.card:focus-visible {
 
 .card:hover {
   border-top: solid var(--card-border-width) var(--hover-color);
+}
+
+.card:focus,
+.card:focus-visible {
+  outline: 3px solid var(--focus-color) !important; /* override CA State Web Template */
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
+}
+
+.card .card-title {
+  font-size: var(--card-title-font-size);
+  letter-spacing: var(--card-title-letter-spacing);
 }
 
 .card .card-body {
