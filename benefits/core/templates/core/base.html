@@ -43,9 +43,9 @@
       {% include "core/includes/debug.html" %}
     {% endif %}
     <header role="banner" id="header">
-      <div id="skip-to-content">
-        <a href="#main-content">{% translate "Skip to Main Content" %}</a>
-      </div>
+      <a id="skip-to-content"  href="#main-content" class="d-block w-100">
+        <div class="container">{% translate "Skip to Main Content" %}</div>
+      </a>
       {% if messages %}
         {% for message in messages %}
           {% include "core/includes/alert.html" with message=message %}
