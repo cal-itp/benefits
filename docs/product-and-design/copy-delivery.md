@@ -39,5 +39,5 @@ By tabs:
 
 ### Engineering
 
-- Use copy from the English and Spanish language tabs of the spreadsheet, and turning it into code in `django.po` message files. Developer-specific instructions in the [Django message files technical documentation](https://docs.calitp.org/benefits/development/i18n/).
+- Use copy from the English and Spanish language tabs of the spreadsheet, and turning it into code in `django.po` message files. Developer-specific instructions in the [Django message files technical documentation](../development/i18n.md).
 - Ensure the messages accurately reflect the spreadsheet and Figma designs.
