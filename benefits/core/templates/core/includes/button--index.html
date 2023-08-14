@@ -1,0 +1,6 @@
+{% load i18n %}
+
+{% url "core:index" as href %}
+{% translate "Return Home" as text %}
+
+<a href="{{ href }}" class="btn btn-lg btn-primary">{{ text }}</a>
