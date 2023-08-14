@@ -1,1 +1,9 @@
 {% extends "enrollment/success.html" %}
+{% load i18n %}
+
+{% block success-message %}
+    {% blocktranslate trimmed %}
+        You were not charged anything today. When boarding an SBMTD bus, tap this card when you board and you will be
+        charged a reduced fare. If you change the card you use to pay for transit service, you will need to re-enroll.
+    {% endblocktranslate %}
+{% endblock success-message %}
