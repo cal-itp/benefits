@@ -26,6 +26,9 @@ def load_data(app, *args, **kwargs):
     sacrt_senior_type = EligibilityType.objects.create(
         name="senior", label="Senior Discount (SacRT)", group_id=os.environ.get("SACRT_SENIOR_GROUP_ID", "group3")
     )
+    sbmtd_senior_type = EligibilityType.objects.create(
+        name="senior", label="Senior Discount (SBMTD)", group_id=os.environ.get("SBMTD_SENIOR_GROUP_ID", "group4")
+    )
 
     PemData = app.get_model("core", "PemData")
 
@@ -124,6 +127,21 @@ PEM DATA
         label="SacRT payment processor client certificate root CA",
     )
 
+    sbmtd_payment_processor_client_cert = PemData.objects.create(
+        text=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT", dummy_cert_text),
+        label="SBMTD payment processor client certificate",
+    )
+
+    sbmtd_payment_processor_client_cert_private_key = PemData.objects.create(
+        text=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY", client_private_key.text),
+        label="SBMTD payment processor client certificate private key",
+    )
+
+    sbmtd_payment_processor_client_cert_root_ca = PemData.objects.create(
+        text=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA", dummy_cert_text),
+        label="SBMTD payment processor client certificate root CA",
+    )
+
     AuthProvider = app.get_model("core", "AuthProvider")
 
     senior_auth_provider = AuthProvider.objects.create(
@@ -148,7 +166,7 @@ PEM DATA
 
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
 
-    mst_oauth_claims_verifier = EligibilityVerifier.objects.create(
+    mst_senior_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("MST_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (MST)"),
         eligibility_type=mst_senior_type,
         auth_provider=senior_auth_provider,
@@ -192,9 +210,17 @@ PEM DATA
         form_name_max_length=255,
     )
 
-    sacrt_oauth_claims_verifier = EligibilityVerifier.objects.create(
+    sacrt_senior_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("SACRT_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (SacRT)"),
         eligibility_type=sacrt_senior_type,
+        auth_provider=senior_auth_provider,
+        selection_label_template="eligibility/includes/selection-label--senior.html",
+        start_template="eligibility/start--senior.html",
+    )
+
+    sbmtd_senior_verifier = EligibilityVerifier.objects.create(
+        name=os.environ.get("SBMTD_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (SBMTD)"),
+        eligibility_type=sbmtd_senior_type,
         auth_provider=senior_auth_provider,
         selection_label_template="eligibility/includes/selection-label--senior.html",
         start_template="eligibility/start--senior.html",
@@ -236,6 +262,23 @@ PEM DATA
         group_endpoint="group",
     )
 
+    sbmtd_payment_processor = PaymentProcessor.objects.create(
+        name=os.environ.get("SBMTD_PAYMENT_PROCESSOR_NAME", "Test Payment Processor"),
+        api_base_url=os.environ.get("SBMTD_PAYMENT_PROCESSOR_API_BASE_URL", "http://server:8000"),
+        api_access_token_endpoint=os.environ.get("SBMTD_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_ENDPOINT", "access-token"),
+        api_access_token_request_key=os.environ.get("SBMTD_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_KEY", "request_access"),
+        api_access_token_request_val=os.environ.get("SBMTD_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_VAL", "REQUEST_ACCESS"),
+        card_tokenize_url=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_URL", "http://server:8000/static/tokenize.js"),
+        card_tokenize_func=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_FUNC", "tokenize"),
+        card_tokenize_env=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_ENV", "test"),
+        client_cert=sbmtd_payment_processor_client_cert,
+        client_cert_private_key=sbmtd_payment_processor_client_cert_private_key,
+        client_cert_root_ca=sbmtd_payment_processor_client_cert_root_ca,
+        customer_endpoint="customer",
+        customers_endpoint="customers",
+        group_endpoint="group",
+    )
+
     TransitAgency = app.get_model("core", "TransitAgency")
 
     # load the sample data from a JSON file so that it can be accessed by Cypress as well
@@ -262,7 +305,7 @@ PEM DATA
         help_template="core/includes/help--mst.html",
     )
     mst_agency.eligibility_types.set([mst_senior_type, mst_veteran_type, mst_courtesy_card_type])
-    mst_agency.eligibility_verifiers.set([mst_oauth_claims_verifier, mst_veteran_verifier, mst_courtesy_card_verifier])
+    mst_agency.eligibility_verifiers.set([mst_senior_verifier, mst_veteran_verifier, mst_courtesy_card_verifier])
 
     sacrt_agency = TransitAgency.objects.create(
         slug="sacrt",
@@ -282,7 +325,27 @@ PEM DATA
         enrollment_success_template="enrollment/success--sacrt.html",
     )
     sacrt_agency.eligibility_types.set([sacrt_senior_type])
-    sacrt_agency.eligibility_verifiers.set([sacrt_oauth_claims_verifier])
+    sacrt_agency.eligibility_verifiers.set([sacrt_senior_verifier])
+
+    sbmtd_agency = TransitAgency.objects.create(
+        slug="sbmtd",
+        short_name=os.environ.get("SBMTD_AGENCY_SHORT_NAME", "SBMTD (sample)"),
+        long_name=os.environ.get("SBMTD_AGENCY_LONG_NAME", "Santa Barbara MTD (sample)"),
+        agency_id="sbmtd",
+        merchant_id=os.environ.get("SBMTD_AGENCY_MERCHANT_ID", "sbmtd"),
+        info_url="https://sbmtd.gov/taptopride/",
+        phone="805-963-3366",
+        active=os.environ.get("SBMTD_AGENCY_ACTIVE", "True").lower() == "true",
+        private_key=client_private_key,
+        public_key=client_public_key,
+        jws_signing_alg=os.environ.get("SBMTD_AGENCY_JWS_SIGNING_ALG", "RS256"),
+        payment_processor=sbmtd_payment_processor,
+        index_template="core/index--sbmtd.html",
+        eligibility_index_template="eligibility/index--sbmtd.html",
+        enrollment_success_template="enrollment/success--sbmtd.html",
+    )
+    sbmtd_agency.eligibility_types.set([sbmtd_senior_type])
+    sbmtd_agency.eligibility_verifiers.set([sbmtd_senior_verifier])
 
 
 class Migration(migrations.Migration):

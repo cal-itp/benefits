@@ -82,6 +82,7 @@ resource "azurerm_linux_web_app" "main" {
     "MST_VETERAN_GROUP_ID"                                 = "${local.secret_prefix}mst-veteran-group-id)",
     "MST_COURTESY_CARD_GROUP_ID"                           = "${local.secret_prefix}mst-courtesy-card-group-id)"
     "SACRT_SENIOR_GROUP_ID"                                = "${local.secret_prefix}sacrt-senior-group-id)"
+    "SBMTD_SENIOR_GROUP_ID"                                = "${local.secret_prefix}sbmtd-senior-group-id)",
     "CLIENT_PRIVATE_KEY"                                   = "${local.secret_prefix}client-private-key)"
     "CLIENT_PUBLIC_KEY"                                    = "${local.secret_prefix}client-public-key)"
     "SERVER_PUBLIC_KEY_URL"                                = "${local.secret_prefix}server-public-key-url)"
@@ -91,6 +92,9 @@ resource "azurerm_linux_web_app" "main" {
     "SACRT_PAYMENT_PROCESSOR_CLIENT_CERT"                  = "${local.secret_prefix}sacrt-payment-processor-client-cert)"
     "SACRT_PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY"      = "${local.secret_prefix}sacrt-payment-processor-client-cert-private-key)"
     "SACRT_PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA"          = "${local.secret_prefix}sacrt-payment-processor-client-cert-root-ca)"
+    "SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT"                  = "${local.secret_prefix}sbmtd-payment-processor-client-cert)"
+    "SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY"      = "${local.secret_prefix}sbmtd-payment-processor-client-cert-private-key)"
+    "SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA"          = "${local.secret_prefix}sbmtd-payment-processor-client-cert-root-ca)"
     "AUTH_PROVIDER_CLIENT_ID"                              = "${local.secret_prefix}auth-provider-client-id)"
     "AUTH_PROVIDER_AUTHORITY"                              = "${local.secret_prefix}auth-provider-authority)"
     "SENIOR_AUTH_PROVIDER_CLIENT_NAME"                     = "${local.secret_prefix}senior-auth-provider-client-name)"
@@ -111,6 +115,7 @@ resource "azurerm_linux_web_app" "main" {
     "COURTESY_CARD_VERIFIER_JWE_ENCRYPTION_ALG"            = "${local.secret_prefix}courtesy-card-verifier-jwe-encryption-alg)"
     "COURTESY_CARD_VERIFIER_JWS_SIGNING_ALG"               = "${local.secret_prefix}courtesy-card-verifier-jws-signing-alg)"
     "SACRT_OAUTH_VERIFIER_NAME"                            = "${local.secret_prefix}sacrt-oauth-verifier-name)"
+    "SBMTD_SENIOR_VERIFIER_NAME"                           = "${local.secret_prefix}sbmtd-senior-verifier-name"
     "MST_PAYMENT_PROCESSOR_NAME"                           = "${local.secret_prefix}mst-payment-processor-name)"
     "MST_PAYMENT_PROCESSOR_API_BASE_URL"                   = "${local.secret_prefix}mst-payment-processor-api-base-url)"
     "MST_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_ENDPOINT"      = "${local.secret_prefix}mst-payment-processor-api-access-token-endpoint)"
@@ -127,6 +132,14 @@ resource "azurerm_linux_web_app" "main" {
     "SACRT_PAYMENT_PROCESSOR_CARD_TOKENIZE_URL"            = "${local.secret_prefix}sacrt-payment-processor-card-tokenize-url)"
     "SACRT_PAYMENT_PROCESSOR_CARD_TOKENIZE_FUNC"           = "${local.secret_prefix}sacrt-payment-processor-card-tokenize-func)"
     "SACRT_PAYMENT_PROCESSOR_CARD_TOKENIZE_ENV"            = "${local.secret_prefix}sacrt-payment-processor-card-tokenize-env)"
+    "SBMTD_PAYMENT_PROCESSOR_NAME"                         = "${local.secret_prefix}sbmtd-payment-processor-name)"
+    "SBMTD_PAYMENT_PROCESSOR_API_BASE_URL"                 = "${local.secret_prefix}sbmtd-payment-processor-api-base-url)"
+    "SBMTD_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_ENDPOINT"    = "${local.secret_prefix}sbmtd-payment-processor-api-access-token-endpoint)"
+    "SBMTD_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_KEY" = "${local.secret_prefix}sbmtd-payment-processor-api-access-token-request-key)"
+    "SBMTD_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_VAL" = "${local.secret_prefix}sbmtd-payment-processor-api-access-token-request-val)"
+    "SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_URL"            = "${local.secret_prefix}sbmtd-payment-processor-card-tokenize-url)"
+    "SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_FUNC"           = "${local.secret_prefix}sbmtd-payment-processor-card-tokenize-func)"
+    "SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_ENV"            = "${local.secret_prefix}sbmtd-payment-processor-card-tokenize-env)"
     "MST_AGENCY_SHORT_NAME"                                = "${local.secret_prefix}mst-agency-short-name)"
     "MST_AGENCY_LONG_NAME"                                 = "${local.secret_prefix}mst-agency-long-name)"
     "MST_AGENCY_JWS_SIGNING_ALG"                           = "${local.secret_prefix}mst-agency-jws-signing-alg)"
@@ -135,6 +148,11 @@ resource "azurerm_linux_web_app" "main" {
     "SACRT_AGENCY_MERCHANT_ID"                             = "${local.secret_prefix}sacrt-agency-merchant-id)"
     "SACRT_AGENCY_ACTIVE"                                  = "${local.secret_prefix}sacrt-agency-active)"
     "SACRT_AGENCY_JWS_SIGNING_ALG"                         = "${local.secret_prefix}sacrt-agency-jws-signing-alg)"
+    "SBMTD_AGENCY_SHORT_NAME"                              = "${local.secret_prefix}sbmtd-agency-short-name)"
+    "SBMTD_AGENCY_LONG_NAME"                               = "${local.secret_prefix}sbmtd-agency-long-name)"
+    "SBMTD_AGENCY_MERCHANT_ID"                             = "${local.secret_prefix}sbmtd-agency-merchant-id)"
+    "SBMTD_AGENCY_ACTIVE"                                  = "${local.secret_prefix}sbmtd-agency-active)"
+    "SBMTD_AGENCY_JWS_SIGNING_ALG"                         = "${local.secret_prefix}sbmtd-agency-jws-signing-alg)"
   }
 
   lifecycle {
