@@ -53,7 +53,7 @@
 }
 
 html {
-  scroll-padding-top: 120px;
+  scroll-padding-top: 101px; /* Header Height (80px) + Skip Nav Height (21px) = 101px */
 }
 
 body {
