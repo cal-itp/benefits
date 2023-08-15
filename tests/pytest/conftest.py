@@ -111,15 +111,6 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         eligibility_type=model_EligibilityType,
         public_key=model_PemData,
         selection_label_template="eligibility/includes/selection-label.html",
-        form_title="Form",
-        form_headline="Form",
-        form_blurb="Form Blurb",
-        form_sub_label="Sub",
-        form_sub_help_text="Sub Help Text",
-        form_sub_placeholder="Sub",
-        form_name_label="Name",
-        form_name_help_text="Name Help Text",
-        form_name_placeholder="Name",
     )
 
     return verifier

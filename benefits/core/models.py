@@ -1,6 +1,7 @@
 """
 The core application: Common model definitions.
 """
+import importlib
 import logging
 
 from django.conf import settings
@@ -111,23 +112,8 @@ class EligibilityVerifier(models.Model):
     auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True)
     selection_label_template = models.TextField()
     start_template = models.TextField(null=True)
-    form_title = models.TextField(null=True)
-    form_headline = models.TextField(null=True)
-    form_blurb = models.TextField(null=True)
-    form_sub_label = models.TextField(null=True)
-    form_sub_help_text = models.TextField(null=True)
-    form_sub_placeholder = models.TextField(null=True)
-    # A regular expression used to validate the 'sub' API field before sending to this verifier
-    form_sub_pattern = models.TextField(null=True)
-    # Input mode can be "numeric", "tel", "search", etc. to override default "text" keyboard on mobile devices
-    form_input_mode = models.TextField(null=True)
-    # The maximum length accepted for the 'sub' API field before sending to this verifier
-    form_max_length = models.PositiveSmallIntegerField(null=True)
-    form_name_label = models.TextField(null=True)
-    form_name_help_text = models.TextField(null=True)
-    form_name_placeholder = models.TextField(null=True)
-    # The maximum length accepted for the 'name' API field before sending to this verifier
-    form_name_max_length = models.PositiveSmallIntegerField(null=True)
+    # reference to a form class used by this Verifier, e.g. benefits.app.forms.FormClass
+    form_class = models.TextField(null=True)
 
     def __str__(self):
         return self.name
@@ -146,6 +132,17 @@ class EligibilityVerifier(models.Model):
     def uses_auth_verification(self):
         """True if this Verifier verifies via the auth provider. False otherwise."""
         return self.is_auth_required and self.auth_provider.supports_claims_verification
+
+    def form_instance(self, *args, **kwargs):
+        """Return an instance of this verifier's form, or None."""
+        if not bool(self.form_class):
+            return None
+
+        # inspired by https://stackoverflow.com/a/30941292
+        module_name, class_name = self.form_class.rsplit(".", 1)
+        FormClass = getattr(importlib.import_module(module_name), class_name)
+
+        return FormClass(*args, **kwargs)
 
     @staticmethod
     def by_id(id):

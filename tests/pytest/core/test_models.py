@@ -121,6 +121,28 @@ def test_EligibilityVerifier_str(model_EligibilityVerifier):
     assert str(model_EligibilityVerifier) == model_EligibilityVerifier.name
 
 
+class TestFormClass:
+    """A class for testing EligibilityVerifier form references."""
+
+    def __init__(self, *args, **kwargs):
+        self.args = args
+        self.kwargs = kwargs
+
+
+@pytest.mark.django_db
+def test_EligibilityVerifier_form_instance(model_EligibilityVerifier):
+    model_EligibilityVerifier.form_class = f"{__name__}.TestFormClass"
+    model_EligibilityVerifier.save()
+
+    args = (1, "2")
+    kwargs = {"one": 1, "two": "2"}
+    form_instance = model_EligibilityVerifier.form_instance(*args, **kwargs)
+
+    assert isinstance(form_instance, TestFormClass)
+    assert form_instance.args == args
+    assert form_instance.kwargs == kwargs
+
+
 @pytest.mark.django_db
 def test_EligibilityVerifier_by_id_matching(model_EligibilityVerifier):
     verifier = EligibilityVerifier.by_id(model_EligibilityVerifier.id)
