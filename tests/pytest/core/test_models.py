@@ -56,13 +56,13 @@ def test_model_AuthProvider_without_verification(model_AuthProvider_without_veri
 
 
 @pytest.mark.django_db
-def model_AuthProvider_without_verification_no_sign_out(model_AuthProvider_without_verification_no_sign_out):
+def test_model_AuthProvider_without_verification_no_sign_out(model_AuthProvider_without_verification_no_sign_out):
     assert not model_AuthProvider_without_verification_no_sign_out.supports_claims_verification
     assert not model_AuthProvider_without_verification_no_sign_out.supports_sign_out
 
 
 @pytest.mark.django_db
-def test_test_EligibilityType_str(model_EligibilityType):
+def test_model_EligibilityType_str(model_EligibilityType):
     assert str(model_EligibilityType) == model_EligibilityType.label
 
 
