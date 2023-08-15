@@ -111,13 +111,10 @@ def confirm(request):
         else:
             return redirect(unverified_view)
 
+    form = verifier.form_instance()
+
     # GET/POST for Eligibility API verification
-    context = {
-        "title": verifier.form_title,
-        "headline": verifier.form_headline,
-        "blurb": verifier.form_blurb,
-        "form": forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
-    }
+    context = {"form": form}
 
     # GET from an unverified user, present the form
     if request.method == "GET":
@@ -126,12 +123,11 @@ def confirm(request):
     elif request.method == "POST":
         analytics.started_eligibility(request, types_to_verify)
 
-        form = forms.EligibilityVerificationForm(data=request.POST, verifier=verifier)
+        form = verifier.form_instance(data=request.POST)
         # form was not valid, allow for correction/resubmission
         if not form.is_valid():
             if recaptcha.has_error(form):
                 messages.error(request, "Recaptcha failed. Please try again.")
-
             context["form"] = form
             return TemplateResponse(request, TEMPLATE_CONFIRM, context)
 
