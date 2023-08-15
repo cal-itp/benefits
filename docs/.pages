@@ -3,6 +3,7 @@ nav:
       - README.md
       - use-cases
   - getting-started
+  - product-and-design
   - development
   - tests
   - configuration
