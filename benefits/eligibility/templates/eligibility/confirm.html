@@ -1,8 +1,7 @@
 {% extends "core/base.html" %}
-{% load i18n %}
 
 {% block page-title %}
-  {% translate title %}
+  {{ form.title }}
 {% endblock page-title %}
 
 {% block nav-buttons %}
@@ -12,12 +11,12 @@
 
 {% block headline %}
   <div class="col-lg-8">
-    <h1>{% translate headline %}</h1>
+    <h1>{{ form.headline }}</h1>
   </div>
 {% endblock headline %}
 
 {% block explanatory-text %}
-  <p class="pt-4 pb-4 pb-lg-8">{% translate blurb %}</p>
+  <p class="pt-4 pb-4 pb-lg-8">{{ form.blurb }}</p>
 {% endblock explanatory-text %}
 
 {% block inner-content %}

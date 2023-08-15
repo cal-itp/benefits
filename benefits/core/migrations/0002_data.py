@@ -4,7 +4,6 @@ import json
 import os
 
 from django.db import migrations
-from django.utils.translation import gettext_lazy as _
 
 
 def load_data(app, *args, **kwargs):
@@ -195,19 +194,7 @@ PEM DATA
         auth_provider=None,
         selection_label_template="eligibility/includes/selection-label--mst-courtesy-card.html",
         start_template="eligibility/start--mst-courtesy-card.html",
-        form_title=_("Agency card information"),
-        form_headline=_("Let’s see if we can confirm your eligibility."),
-        form_blurb=_("Please input your Courtesy Card number and last name below to confirm your eligibility."),
-        form_sub_label=_("MST Courtesy Card number"),
-        form_sub_help_text=_("This is a 5-digit number on the front and back of your card."),
-        form_sub_placeholder="12345",
-        form_sub_pattern=r"\d{5}",
-        form_input_mode="numeric",
-        form_max_length=5,
-        form_name_label=_("Last name (as it appears on Courtesy Card)"),
-        form_name_help_text=_("We use this to help confirm your Courtesy Card."),
-        form_name_placeholder="Garcia",
-        form_name_max_length=255,
+        form_class="benefits.eligibility.forms.MSTCourtesyCard",
     )
 
     sacrt_senior_verifier = EligibilityVerifier.objects.create(

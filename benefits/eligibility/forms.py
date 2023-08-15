@@ -53,32 +53,106 @@ class EligibilityVerificationForm(forms.Form):
         "missing": _("This field is required."),
     }
 
-    def __init__(self, verifier: models.EligibilityVerifier, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(
+        self,
+        title,
+        headline,
+        blurb,
+        name_label,
+        name_placeholder,
+        name_help_text,
+        sub_label,
+        sub_placeholder,
+        sub_help_text,
+        name_max_length=None,
+        sub_input_mode=None,
+        sub_max_length=None,
+        sub_pattern=None,
+        *args,
+        **kwargs,
+    ):
+        """Initialize a new EligibilityVerifier form.
+
+        Args:
+            title (str): The page (i.e. tab) title for the form's page.
+
+            headline (str): The <h1> on the form's page.
+
+            blurb (str): Intro <p> on the form's page.
+
+            name_label (str): Label for the name form field.
+
+            name_placeholder (str): Field placeholder for the name form field.
+
+            name_help_text (str): Extra help text for the name form field.
+
+            sub_label (str): Label for the sub form field.
+
+            sub_placeholder (str): Field placeholder for the sub form field.
+
+            sub_help_text (str): Extra help text for the sub form field.
+
+            name_max_length (int): The maximum length accepted for the 'name' API field before sending to this verifier
+
+            sub_input_mode (str): Input mode can be "numeric", "tel", "search", etc. to override default "text" keyboard on
+                                  mobile devices
+
+            sub_max_length (int): The maximum length accepted for the 'sub' API field before sending to this verifier
+
+            sub_pattern (str): A regular expression used to validate the 'sub' API field before sending to this verifier
+
+        Extra args and kwargs are passed through to the underlying django.forms.Form.
+        """
+        super().__init__(auto_id=True, label_suffix="", *args, **kwargs)
+
+        self.title = title
+        self.headline = headline
+        self.blurb = blurb
 
         self.classes = "col-lg-6"
-        sub_widget = widgets.FormControlTextInput(placeholder=verifier.form_sub_placeholder)
-        if verifier.form_sub_pattern:
-            sub_widget.attrs.update({"pattern": verifier.form_sub_pattern})
-        if verifier.form_input_mode:
-            sub_widget.attrs.update({"inputmode": verifier.form_input_mode})
-        if verifier.form_max_length:
-            sub_widget.attrs.update({"maxlength": verifier.form_max_length})
+        sub_widget = widgets.FormControlTextInput(placeholder=sub_placeholder)
+        if sub_pattern:
+            sub_widget.attrs.update({"pattern": sub_pattern})
+        if sub_input_mode:
+            sub_widget.attrs.update({"inputmode": sub_input_mode})
+        if sub_max_length:
+            sub_widget.attrs.update({"maxlength": sub_max_length})
 
         self.fields["sub"] = forms.CharField(
-            label=_(verifier.form_sub_label),
+            label=sub_label,
             widget=sub_widget,
-            help_text=_(verifier.form_sub_help_text),
+            help_text=sub_help_text,
         )
 
-        name_widget = widgets.FormControlTextInput(placeholder=verifier.form_name_placeholder)
-        if verifier.form_name_max_length:
-            name_widget.attrs.update({"maxlength": verifier.form_name_max_length})
+        name_widget = widgets.FormControlTextInput(placeholder=name_placeholder)
+        if name_max_length:
+            name_widget.attrs.update({"maxlength": name_max_length})
 
-        self.fields["name"] = forms.CharField(
-            label=_(verifier.form_name_label), widget=name_widget, help_text=_(verifier.form_name_help_text)
-        )
+        self.fields["name"] = forms.CharField(label=name_label, widget=name_widget, help_text=name_help_text)
 
     def clean(self):
         if not recaptcha.verify(self.data):
             raise forms.ValidationError("reCAPTCHA failed")
+
+
+class MSTCourtesyCard(EligibilityVerificationForm):
+    """EligibilityVerification form for the MST Courtesy Card."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(
+            title=_("Agency card information"),
+            headline=_("Let’s see if we can confirm your eligibility."),
+            blurb=_("Please input your Courtesy Card number and last name below to confirm your eligibility."),
+            name_label=_("Last name (as it appears on Courtesy Card)"),
+            name_placeholder="Garcia",
+            name_help_text=_("We use this to help confirm your Courtesy Card."),
+            sub_label=_("MST Courtesy Card number"),
+            sub_help_text=_("This is a 5-digit number on the front and back of your card."),
+            sub_placeholder="12345",
+            name_max_length=255,
+            sub_input_mode="numeric",
+            sub_max_length=5,
+            sub_pattern=r"\d{5}",
+            *args,
+            **kwargs,
+        )
