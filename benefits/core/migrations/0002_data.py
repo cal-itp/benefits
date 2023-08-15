@@ -333,7 +333,7 @@ PEM DATA
         long_name=os.environ.get("SBMTD_AGENCY_LONG_NAME", "Santa Barbara MTD (sample)"),
         agency_id="sbmtd",
         merchant_id=os.environ.get("SBMTD_AGENCY_MERCHANT_ID", "sbmtd"),
-        info_url="https://sbmtd.gov/taptopride/",
+        info_url="https://sbmtd.gov/taptoride/",
         phone="805-963-3366",
         active=os.environ.get("SBMTD_AGENCY_ACTIVE", "True").lower() == "true",
         private_key=client_private_key,
