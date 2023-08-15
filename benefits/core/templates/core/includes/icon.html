@@ -1,13 +1,2 @@
-
-{% if not name %}
-  <p class="bg-grey-lightest color-standout">
-    Missing <strong><code>name</code></strong> argument
-  </p>
-{% elif not alt %}
-  <p class="bg-grey-lightest color-standout">
-    Missing <strong><code>alt</code></strong> argument
-  </p>
-{% else %}
-  {% load static %}
-  <img class="icon" width="150" height="150" src="{% get_static_prefix %}img/icon/{{ name }}.svg" alt="{{ alt }}" />
-{% endif %}
+{% load static %}
+<img class="icon" width="150" height="150" src="{% get_static_prefix %}img/icon/{{ name }}.svg" alt="" />
