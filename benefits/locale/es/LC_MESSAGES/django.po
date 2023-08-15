@@ -353,10 +353,6 @@ msgstr ""
 msgid "Logged out"
 msgstr "Cierre sesión"
 
-msgctxt "image alt text"
-msgid "Bus icon with smiley face"
-msgstr "Icono de autobús con cara sonriente"
-
 msgid "You have successfully logged out. Thank you for using Cal-ITP Benefits!"
 msgstr "Ha cerrado sesión correctamente. ¡Gracias por usar Cal-ITP Benefits!"
 
@@ -377,11 +373,6 @@ msgstr "Verifique su entrada. El formato parece incorrecto."
 
 msgid "This field is required."
 msgstr "Este campo es requerido."
-
-msgctxt "image alt text"
-msgid "Bank card icon with contactless symbol and checkmark"
-msgstr ""
-"Icono de tarjeta bancaria con símbolo sin contacto y marca de verificación"
 
 msgid "Your contactless card details"
 msgstr "Los datos de su tarjeta sin contacto"
@@ -460,10 +451,6 @@ msgid ""
 msgstr ""
 "Si no tiene una cuenta con ninguno de estos servicios, deberá crear una. "
 "Recomendamos utilizar Login.gov. "
-
-msgctxt "image alt text"
-msgid "Identification card icon with checkmark"
-msgstr "Icono de tarjeta de identificación con marca de verificación"
 
 msgid "Go back"
 msgstr "Volver"
@@ -580,10 +567,6 @@ msgstr "Necesitará algunos artículos para continuar:"
 msgid "Unable to confirm eligibility"
 msgstr "No se pudo confirmar la elegibilidad"
 
-msgctxt "image alt text"
-msgid "Identification card icon with question mark"
-msgstr "Icono de tarjeta de identificación con signo de interrogación"
-
 msgid "Your eligibility could not be verified."
 msgstr "No se pudo verificar su elegibilidad."
 
@@ -626,11 +609,6 @@ msgstr "Conecta tu tarjeta"
 
 msgid "Unable to register card"
 msgstr "No se pudo registrar la tarjeta"
-
-msgctxt "image alt text"
-msgid "Bank card icon with contactless symbol and question mark"
-msgstr ""
-"Icono de tarjeta bancaria con símbolo sin contacto y signo de interrogación"
 
 msgid "We couldn’t connect your card"
 msgstr "No pudimos conectar su tarjeta"
@@ -726,7 +704,3 @@ msgid ""
 msgstr ""
 "La página que está buscando puede estar en otro lugar o puede que ya no "
 "exista."
-
-msgctxt "image alt text"
-msgid "Bus icon with flat tire"
-msgstr "Icono de autobus con llanta ponchada"

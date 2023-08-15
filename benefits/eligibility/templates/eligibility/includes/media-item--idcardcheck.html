@@ -3,6 +3,5 @@
 {% load i18n %}
 
 {% block icon %}
-    {% translate "Identification card icon with checkmark" context "image alt text" as icon_alt %}
-    {% include "core/includes/icon.html" with name="idcardcheck" alt=icon_alt %}
+    {% include "core/includes/icon.html" with name="idcardcheck" %}
 {% endblock icon %}

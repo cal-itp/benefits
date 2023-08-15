@@ -270,10 +270,6 @@ msgstr ""
 msgid "Logged out"
 msgstr ""
 
-msgctxt "image alt text"
-msgid "Bus icon with smiley face"
-msgstr ""
-
 msgid "You have successfully logged out. Thank you for using Cal-ITP Benefits!"
 msgstr ""
 
@@ -293,10 +289,6 @@ msgid "Check your input. The format looks wrong."
 msgstr ""
 
 msgid "This field is required."
-msgstr ""
-
-msgctxt "image alt text"
-msgid "Bank card icon with contactless symbol and checkmark"
 msgstr ""
 
 msgid "Your contactless card details"
@@ -363,10 +355,6 @@ msgstr ""
 msgid ""
 "If you do not have an account with any of these services, you will need to "
 "create one. We recommend using Login.gov."
-msgstr ""
-
-msgctxt "image alt text"
-msgid "Identification card icon with checkmark"
 msgstr ""
 
 msgid "Go back"
@@ -469,10 +457,6 @@ msgstr ""
 msgid "Unable to confirm eligibility"
 msgstr ""
 
-msgctxt "image alt text"
-msgid "Identification card icon with question mark"
-msgstr ""
-
 msgid "Your eligibility could not be verified."
 msgstr ""
 
@@ -512,10 +496,6 @@ msgid "Connect your Card"
 msgstr ""
 
 msgid "Unable to register card"
-msgstr ""
-
-msgctxt "image alt text"
-msgid "Bank card icon with contactless symbol and question mark"
 msgstr ""
 
 msgid "We couldn’t connect your card"
@@ -593,8 +573,4 @@ msgstr ""
 msgid ""
 "The page you are looking for might be somewhere else or may not exist "
 "anymore."
-msgstr ""
-
-msgctxt "image alt text"
-msgid "Bus icon with flat tire"
 msgstr ""

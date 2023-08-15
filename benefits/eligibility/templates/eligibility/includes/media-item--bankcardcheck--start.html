@@ -2,8 +2,7 @@
 {% load i18n %}
 
 {% block icon %}
-    {% translate "Bank card icon with contactless symbol and checkmark" context "image alt text" as icon_alt %}
-    {% include "core/includes/icon.html" with name="bankcardcheck" alt=icon_alt %}
+    {% include "core/includes/icon.html" with name="bankcardcheck" %}
 {% endblock icon %}
 
 {% block heading %}
