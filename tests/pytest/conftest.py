@@ -105,6 +105,7 @@ def model_EligibilityType():
 def model_EligibilityVerifier(model_PemData, model_EligibilityType):
     verifier = EligibilityVerifier.objects.create(
         name="Test Verifier",
+        active=True,
         api_url="https://example.com/verify",
         api_auth_header="X-API-AUTH",
         api_auth_key="secret-key",
