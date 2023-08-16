@@ -166,8 +166,8 @@ PEM DATA
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
 
     mst_senior_verifier = EligibilityVerifier.objects.create(
-        name=os.environ.get("MST_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (MST)"),
-        active=os.environ.get("MST_OAUTH_VERIFIER_ACTIVE", "True").lower() == "true",
+        name=os.environ.get("MST_SENIOR_VERIFIER_NAME", "OAuth claims via Login.gov (MST)"),
+        active=os.environ.get("MST_SENIOR_VERIFIER_ACTIVE", "True").lower() == "true",
         eligibility_type=mst_senior_type,
         auth_provider=senior_auth_provider,
         selection_label_template="eligibility/includes/selection-label--senior.html",
@@ -201,8 +201,8 @@ PEM DATA
     )
 
     sacrt_senior_verifier = EligibilityVerifier.objects.create(
-        name=os.environ.get("SACRT_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (SacRT)"),
-        active=os.environ.get("SACRT_OAUTH_VERIFIER_ACTIVE", "False").lower() == "true",
+        name=os.environ.get("SACRT_SENIOR_VERIFIER_NAME", "OAuth claims via Login.gov (SacRT)"),
+        active=os.environ.get("SACRT_SENIOR_VERIFIER_ACTIVE", "False").lower() == "true",
         eligibility_type=sacrt_senior_type,
         auth_provider=senior_auth_provider,
         selection_label_template="eligibility/includes/selection-label--senior.html",
@@ -210,8 +210,8 @@ PEM DATA
     )
 
     sbmtd_senior_verifier = EligibilityVerifier.objects.create(
-        name=os.environ.get("SBMTD_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (SBMTD)"),
-        active=os.environ.get("SBMTD_OAUTH_VERIFIER_ACTIVE", "False").lower() == "true",
+        name=os.environ.get("SBMTD_SENIOR_VERIFIER_NAME", "OAuth claims via Login.gov (SBMTD)"),
+        active=os.environ.get("SBMTD_SENIOR_VERIFIER_ACTIVE", "False").lower() == "true",
         eligibility_type=sbmtd_senior_type,
         auth_provider=senior_auth_provider,
         selection_label_template="eligibility/includes/selection-label--senior.html",
