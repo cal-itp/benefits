@@ -167,7 +167,7 @@ PEM DATA
 
     mst_senior_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("MST_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (MST)"),
-        active=os.environ.get("MST_OAUTH_VERIFIER_ACTIVE", "False").lower() == "true",
+        active=os.environ.get("MST_OAUTH_VERIFIER_ACTIVE", "True").lower() == "true",
         eligibility_type=mst_senior_type,
         auth_provider=senior_auth_provider,
         selection_label_template="eligibility/includes/selection-label--senior.html",
@@ -176,7 +176,7 @@ PEM DATA
 
     mst_veteran_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("MST_VETERAN_VERIFIER_NAME", "VA.gov - Veteran (MST)"),
-        active=os.environ.get("MST_VETERAN_VERIFIER_ACTIVE", "False").lower() == "true",
+        active=os.environ.get("MST_VETERAN_VERIFIER_ACTIVE", "True").lower() == "true",
         eligibility_type=mst_veteran_type,
         auth_provider=veteran_auth_provider,
         selection_label_template="eligibility/includes/selection-label--veteran.html",
@@ -185,7 +185,7 @@ PEM DATA
 
     mst_courtesy_card_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("COURTESY_CARD_VERIFIER", "Eligibility Server Verifier"),
-        active=os.environ.get("COURTESY_CARD_VERIFIER_ACTIVE", "False").lower() == "true",
+        active=os.environ.get("COURTESY_CARD_VERIFIER_ACTIVE", "True").lower() == "true",
         api_url=os.environ.get("COURTESY_CARD_VERIFIER_API_URL", "http://server:8000/verify"),
         api_auth_header=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_HEADER", "X-Server-API-Key"),
         api_auth_key=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_KEY", "server-auth-token"),
