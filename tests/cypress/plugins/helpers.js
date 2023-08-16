@@ -25,8 +25,7 @@ export const selectAgency = () => {
 export const selectCourtesyCard = () => {
   cy.location("pathname").should("eq", `/eligibility/${agency.slug}`);
 
-  // TODO find a more robust way to do this
-  cy.get('#form-verifier-selection [type="radio"]').check("3");
-  cy.get("#form-verifier-selection button[type='submit']").click();
+  cy.contains("MST Courtesy Card").click();
+  cy.contains("Choose this Benefit").click();
   cy.contains("Continue").click();
 };
