@@ -184,7 +184,7 @@ PEM DATA
     )
 
     mst_courtesy_card_verifier = EligibilityVerifier.objects.create(
-        name=os.environ.get("COURTESY_CARD_VERIFIER", "Eligibility Server Verifier"),
+        name=os.environ.get("COURTESY_CARD_VERIFIER_NAME", "Eligibility Server Verifier"),
         active=os.environ.get("COURTESY_CARD_VERIFIER_ACTIVE", "True").lower() == "true",
         api_url=os.environ.get("COURTESY_CARD_VERIFIER_API_URL", "http://server:8000/verify"),
         api_auth_header=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_HEADER", "X-Server-API-Key"),

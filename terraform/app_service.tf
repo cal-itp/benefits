@@ -109,7 +109,7 @@ resource "azurerm_linux_web_app" "main" {
     "MST_SENIOR_VERIFIER_ACTIVE"                            = "${local.secret_prefix}mst-senior-verifier-active)"
     "MST_VETERAN_VERIFIER_NAME"                            = "${local.secret_prefix}mst-veteran-verifier-name)"
     "MST_VETERAN_VERIFIER_ACTIVE"                          = "${local.secret_prefix}mst-veteran-verifier-active)"
-    "COURTESY_CARD_VERIFIER"                               = "${local.secret_prefix}courtesy-card-verifier)"
+    "COURTESY_CARD_VERIFIER_NAME"                               = "${local.secret_prefix}courtesy-card-verifier-name)"
     "COURTESY_CARD_VERIFIER_ACTIVE"                        = "${local.secret_prefix}courtesy-card-verifier-active)"
     "COURTESY_CARD_VERIFIER_API_URL"                       = "${local.secret_prefix}courtesy-card-verifier-api-url)"
     "COURTESY_CARD_VERIFIER_API_AUTH_HEADER"               = "${local.secret_prefix}courtesy-card-verifier-api-auth-header)"
