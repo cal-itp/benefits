@@ -1,0 +1,14 @@
+{% extends "eligibility/includes/selection-label.html" %}
+{% load i18n %}
+
+{% block label %}
+  {% translate "US Veteran" %}
+{% endblock label %}
+
+{% block description %}
+  {% blocktranslate trimmed %}
+    This option is for people who have served in the active military, naval, or air service, and who were discharged or
+    released therefrom under conditions other than dishonorable. You will need to
+    <a href="https://www.va.gov/resources/verifying-your-identity-on-vagov/" target="_blank" rel="noopener noreferrer">verify your identity through VA.gov</a>.
+  {% endblocktranslate %}
+{% endblock description %}

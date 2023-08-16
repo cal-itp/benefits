@@ -2,85 +2,159 @@
 {% load i18n %}
 {% load static %}
 
-{% block main_content %}
+{% block page-title %}
+  {% translate "Help" %}
+{% endblock page-title %}
+
+{% block main-content %}
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-10">
-        <h1>{{ page.headline }}</h1>
+      <div class="col-md-8 col-10">
+        <h1 class="text-center">{% translate "Help" %}</h1>
       </div>
     </div>
 
     <div class="row justify-content-center">
-      <div class="col-10">
-        <h2 class="pt-8" id="what-is-cal-itp">{% translate "core.pages.help.about" %}</h2>
-        <p class="pt-4">{% translate "core.pages.help.about.p[0]" %}</p>
-        <p class="pt-4">{% translate "core.pages.help.about.p[1]" %}</p>
+      <div class="col-md-8 col-10">
+        <h2 class="h2-sm pt-4 pt-lg-8" id="what-is-cal-itp">{% translate "What is Cal-ITP Benefits?" %}</h2>
+        <p class="pt-2 pt-lg-4">
+          {% blocktranslate trimmed %}
+            The Benefits tool is provided by California Integrated Travel Project (Cal-ITP), which is a new program from the
+            California Department of Transportation dedicated to making travel simpler and cost-effective for all.
+          {% endblocktranslate %}
+        </p>
+        <p class="pt-3 pt-lg-4">
+          {% blocktranslate trimmed %}
+            We partner with local transit agencies, the California Department of Technology, and Login.gov to confirm the
+            identity of riders who are eligible to receive transit benefits. Once we are able to confirm a rider’s identity and
+            eligibility, our payment partner Littlepay helps us connect a transit benefit to the rider’s contactless card of
+            choice.
+          {% endblocktranslate %}
+        </p>
+        <p class="pt-3 pt-lg-4">
+          {% translate "The Benefits application is Free and Open Source Software (FOSS). You may obtain the source code from" %}
+          <a href="https://www.github.com/cal-itp/benefits" target="_blank" rel="noopener noreferrer">{% translate "GitHub" %}</a>.
+        </p>
 
-        <h2 class="pt-8" id="payment-options">{% translate "core.pages.help.payment_options" %}</h2>
-        <p class="pt-4">{% translate "core.pages.help.payment_options.p[0]" %}</p>
-
+        <h2 class="h2-sm pt-4 pt-lg-8" id="payment-options">{% translate "What kind of credit card can I use?" %}</h2>
+        <p class="pt-2 pt-lg-4">
+          {% blocktranslate trimmed %}
+            Benefits only works with contactless debit or credit cards. We do not currently support mobile wallets or digital
+            cards, such as Apple Pay, Google Wallet, or Samsung Wallet.
+          {% endblocktranslate %}
+        </p>
+        <p class="pt-3 pt-lg-4">{% translate "The contactless symbol is four curved lines, like this:" %}</p>
         <p class="contactless-symbol pt-3">
           <img class="icon mx-auto d-block"
                width="40"
                height="50"
                src="{% static 'img/icon/contactless.svg' %}"
-               alt="{% translate "core.icons.contactless" context "image alt text" %}"/>
+               alt="{% translate "Four curved lines on contactless-enabled cards" context "image alt text" %}" />
+        </p>
+        <p class="pt-3 pt-lg-4">{% translate "Your card must include a Visa or Mastercard logo." %}</p>
+        <p class="pt-3 pt-lg-4">
+          {% blocktranslate trimmed %}
+            Don’t have access to a contactless card? You can request a contactless card from your bank, or one of the companies
+            that offer free contactless prepaid debit cards, such as the Cash App Visa debit card or the Venmo Mastercard debit
+            card.
+          {% endblocktranslate %}
+        </p>
+        {% if agency %}
+          <p class="pt-3 pt-lg-4">
+            {% blocktranslate trimmed with short_name=agency.short_name website=agency.info_url %}
+              You can still get your transit benefit by going through {{ short_name }}’s application process. For updates on
+              additional options, please check back on this website, or
+              <a href="{{ website }}" target="_blank" rel="noopener noreferrer">contact {{ short_name }}</a>.
+            {% endblocktranslate %}
+          </p>
+        {% endif %}
+
+        <h2 class="h2-sm pt-4 pt-lg-8" id="login-gov">{% translate "What is Login.gov?" %}</h2>
+        <p class="pt-2 pt-lg-4">
+          {% blocktranslate trimmed %}
+            Login.gov is a service that offers secure and private online access to government programs, such as federal
+            benefits, services and applications. With a Login.gov account, you can sign into multiple government websites with
+            the same email address and password.
+          {% endblocktranslate %}
+        </p>
+        <p class="pt-3 pt-lg-4">
+          {% blocktranslate trimmed %}
+            For more information on Login.gov, please visit the
+            <a href="https://login.gov/help/" target="_blank" rel="noopener noreferrer">Login.gov Help Center</a>.
+          {% endblocktranslate %}
         </p>
 
-        <p class="pt-4">{% translate "core.pages.help.payment_options.p[1]" %}</p>
-        <p class="pt-4">
-          {% blocktranslate with website="https://cash.app/help/us/en-us/14425-cal-transit" %}core.pages.help.payment_options.p[2][0]{{ website }}{% endblocktranslate %}
-          {% blocktranslate with website="https://venmo.com/about/debitcard/" %}core.pages.help.payment_options.p[2][1]{{ website }}{% endblocktranslate %}
-        </p>
-        <p class="pt-4">{% translate "core.pages.help.payment_options.p[3]" %}</p>
-        <p class="pt-4">{% translate "core.pages.help.payment_options.p[4]" %}</p>
-
-        <h2 class="pt-8" id="login-gov">{% translate "core.pages.help.login_gov" %}</h2>
-        <p class="pt-4">{% translate "core.pages.help.login_gov.p[0]" %}</p>
-        <p class="pt-4">{% translate "core.pages.help.login_gov.p[1]" %}</p>
-        <p class="pt-4">{% translate "core.pages.help.login_gov.p[2]" %}</p>
-
-        <h2 class="pt-8" id="login-gov-verify">{% translate "core.pages.help.login_gov_verify" %}</h2>
-        <p class="pt-4">{% translate "core.pages.help.login_gov_verify.p[0]" %}</p>
-        <p class="pt-4">{% translate "core.pages.help.login_gov_verify.p[1]" %}</p>
-        <p class="pt-4">{% translate "core.pages.help.login_gov_verify.p[2]" %}</p>
-        <p class="pt-4">{% translate "core.pages.help.login_gov_verify.p[3]" %}</p>
-
-        <h2 class="pt-8" id="mst-courtesy-card">{% translate "core.pages.help.mst_cc" %}</h2>
-        <p class="pt-4">{% translate "core.pages.help.mst_cc.p[0]" %}</p>
-
-        <h2 class="pt-8" id="littlepay">{% translate "core.pages.help.littlepay" %}</h2>
-        <p class="pt-4">{% translate "core.pages.help.littlepay.p[0]" %}</p>
-        <p class="pt-4">
-          {% blocktranslate with website="https://littlepay.com" %}core.pages.help.littlepay.p[1]{{ website }}{% endblocktranslate %}
+        <h2 class="h2-sm pt-4 pt-lg-8" id="why-login-gov">{% translate "Why is Cal-ITP Benefits using Login.gov?" %}</h2>
+        <p class="pt-2 pt-lg-4">
+          {% blocktranslate trimmed %}
+            Login.gov uses two-factor authentication, and stronger passwords, that meet new National Institute of Standards of
+            Technology requirements for secure validation and verification. By using Login.gov, you’ll get an extra layer of
+            security to help protect your account against password compromises.
+          {% endblocktranslate %}
         </p>
 
-        <h2 class="pt-8" id="questions">{% translate "core.pages.help.questions" %}</h2>
-        <p class="pt-4">{% translate "core.pages.help.questions.p[0]" %}</p>
+        <h2 class="h2-sm pt-4 pt-lg-8" id="login-gov-verify">{% translate "How do I verify my identity on Login.gov?" %}</h2>
+        <p class="pt-2 pt-lg-4">
+          {% translate "You will need a state-issued ID to verify your identity with Login.gov, which can be either a driver’s license or non-driver’s license state-issued ID card." %}
+        </p>
+        <p class="pt-3 pt-lg-4">
+          {% translate "You will need to upload a photograph of your state-issued ID and share your address, phone number and other personal information which is then verified against authoritative sources." %}
+        </p>
+        <p class="pt-3 pt-lg-4">
+          {% translate "Login.gov will also need to verify your identity by calling or texting your phone. If Login.gov can’t verify your phone number, you can verify by mail instead." %}
+        </p>
+        <p class="pt-3 pt-lg-4">
+          {% blocktranslate trimmed %}
+            Please visit the Login.gov help center for
+            <a href="https://login.gov/help/" target="_blank" rel="noopener noreferrer">more information on identity verification</a>.
+          {% endblocktranslate %}
+        </p>
+
+        {% if agency and agency.help_template %}
+          {% include agency.help_template %}
+        {% endif %}
+
+        <h2 class="h2-sm pt-4 pt-lg-8" id="littlepay">{% translate "What is Littlepay?" %}</h2>
+        <p class="pt-2 pt-lg-4">
+          {% blocktranslate trimmed %}
+            Our payment partner, Littlepay, is a secure, end-to-end payment processing platform that allows us to connect your
+            transit benefit to the contactless card of your choice.
+          {% endblocktranslate %}
+        </p>
+        <p class="pt-3 pt-lg-4">
+          {% blocktranslate trimmed %}
+            For more information on Littlepay, please visit the
+            <a href="https://littlepay.com" target="_blank" rel="noopener noreferrer">Littlepay website</a>.
+          {% endblocktranslate %}
+        </p>
+
+        <h2 class="h2-sm pt-4 pt-lg-8" id="questions">{% translate "Questions?" %}</h2>
+        <p class="pt-2 pt-lg-4">
+          {% blocktranslate trimmed %}
+            If you need assistance with this website, please reach out to the customer service team for your local transit
+            provider.
+          {% endblocktranslate %}
+        </p>
       </div>
     </div>
 
-    {% if agency_links %}
     <div class="row justify-content-center">
-      <div class="col-10">{% include "core/includes/agency-links.html" with buttons=agency_links %}</div>
-    </div>
-    {% endif %}
-
-    {% if back_button %}
-    <div class="row pt-8">
-      <div class="col-lg-3 offset-lg-8 col-8 offset-2">
-        {% include "core/includes/button.html" with button=back_button %}
+      <div class="col-md-8 col-10">
+        {% if agency %}
+          {% include "core/includes/agency-links.html" %}
+        {% else %}
+          {% for agency in active_agencies %}
+            {% include "core/includes/agency-links.html" with agency_name=agency.long_name phone=agency.phone info_url=agency.info_url %}
+          {% endfor %}
+        {% endif %}
       </div>
     </div>
-    {% endif %}
 
-    <div class="row justify-content-center">
-      <div class="col-8 col-lg-10 mt-4">
-        <p class="pt-4">
-          {% translate "core.pages.help.foss.text" %}
-          <a href="https://www.github.com/cal-itp/benefits" target="_blank" rel="noopener noreferrer">{% translate "core.pages.help.foss.link" %}</a>.
-        </p>
+    <div class="row pt-4 pt-lg-8">
+      <div class="col-lg-2 offset-lg-10 col-8 offset-2">
+        {% translate "Go Back" as button_text %}
+        {% include "core/includes/button--origin.html" with button_text=button_text %}
       </div>
     </div>
   </div>
-{% endblock main_content %}
+{% endblock main-content %}

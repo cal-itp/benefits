@@ -6,647 +6,701 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-06-29 00:40+0000\n"
+"POT-Creation-Date: 2023-08-15 22:45+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "eligibility.buttons.senior.signin"
-msgstr "Comencemos con"
+msgid "Get started"
+msgstr "Comenzar"
 
-msgid "eligibility.buttons.senior.signout"
-msgstr "Cierre sesión de Login.gov"
+msgid "Get Started"
+msgstr "Comenzar"
 
-msgid "eligibility.buttons.veteran.signin"
-msgstr "TODO: Continue with VA.gov"
-
-msgid "eligibility.pages.index.login_gov.label"
-msgstr "Tengo 65 años de edad o más"
-
-msgid "eligibility.pages.index.login_gov.description"
-msgstr ""
-"Usted debe de tener 65 años o más. Este beneficio no caduca, pero es posible "
-"que deba renovarlo. Usando este beneficio significa que su nueva tarifa de "
-"tránsito es la mitad de la tarifa estándar."
-
-msgid "eligibility.pages.start.login_gov.title"
-msgstr "Información sobre beneficios para Adultos Mayores"
-
-msgid "eligibility.pages.start.login_gov.headline"
-msgstr "Usted seleccionó un beneficio para Adultos Mayores"
-
-msgid "eligibility.pages.start.login_gov.start_item.heading"
-msgstr "Una cuenta de Login.gov con verificación de identidad"
-
-msgid "eligibility.pages.start.login_gov.start_item.details"
-msgstr ""
-"Login.gov es una forma segura de iniciar sesión en servicios "
-"gubernamentales. Benefits utiliza Login.gov para verificar su edad. Si aún "
-"no tiene una cuenta, podrá crear una. También deberá verificar su identidad, "
-"lo que requerirá estos artículos:"
-
-msgid "eligibility.pages.unverified.title"
-msgstr "Error de elegibilidad"
-
-msgid "eligibility.pages.unverified.p[0]"
-msgstr ""
-"¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con su "
-"proveedor de tránsito local para obtener asistencia."
-
-msgid "enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"
-msgstr "Su eligibilidad es confirmada para un beneficio de Adulto Mayor"
-
-#, python-format
 msgid ""
-"enrollment.pages.index.login_gov.eligibility_confirmed_item.details"
-"%(transit_agency_short_name)s"
+"The Benefits tool is provided by California Integrated Travel Project (Cal-"
+"ITP), which is a new program from the California Department of "
+"Transportation dedicated to making travel simpler and cost-effective for all."
 msgstr ""
-"Su elegibilidad ha sido verificada por Login.gov. Este beneficio le dará una "
-"tarifa a mitad de precio en el transporte público con "
-"%(transit_agency_short_name)s."
+"La herramienta Benefits es proporcionada por California Integrated Travel "
+"Project (Proyecto Integrado de Viaje de California, o Cal-ITP por sus siglas "
+"en inglés), el cual es un nuevo programa del Departamento de Transporte de "
+"California dedicado a hacer que los viajes sean más simples y rentables para "
+"todos."
 
-msgid "enrollment.pages.success.login_gov.confirm_item.details"
-msgstr ""
-"No se le ha cobrado nada hoy. Al abordar al el tránsito, pague con esta "
-"misma tarjeta física y automáticamente recibirá su nueva tarifa reducida. "
-"Deberá volver a presenter la solicitud si elige cambiar la tarjeta bancaria "
-"que utiliza para pagar el servicio de transito."
+msgid "Cal-ITP Benefits"
+msgstr "Cal-ITP Benefits"
 
-msgid "eligibility.pages.index.veteran.label"
-msgstr "TODO: US Veteran"
-
-msgid "eligibility.pages.index.veteran.description"
-msgstr ""
-"TODO: This option is for people who have served in the active military, "
-"naval, or air service, and who were discharged or released therefrom under "
-"conditions other than dishonorable. You will need to <a href='https://www.va."
-"gov/resources/verifying-your-identity-on-vagov/' target=\"_blank\" rel="
-"\"noopener noreferrer\">verify your identity through VA.gov</a>"
-
-msgid "eligibility.pages.start.veteran.title"
-msgstr "TODO: Veteran benefit information"
-
-msgid "eligibility.pages.start.veteran.headline"
-msgstr "TODO: You selected a Veteran transit benefit."
-
-msgid "eligibility.pages.start.veteran.start_item.heading"
-msgstr "TODO: Access to your preferred VA related account"
-
-msgid "eligibility.pages.start.veteran.start_item.details"
-msgstr ""
-"TODO: You will need to sign into VA.gov in order to verify your identity and "
-"your veteran status. VA.gov uses the following services:"
-
-msgid "eligibility.pages.start.veteran.start_item.secondary_details"
-msgstr ""
-"TODO: If you do not have an account with any of these services, you will "
-"need to create one. We recommend using Login.gov."
-
-msgid "enrollment.pages.success.veteran.confirm_item.details"
-msgstr ""
-"No se le ha cobrado nada hoy. Al abordar al el tránsito, pague con esta "
-"misma tarjeta física y automáticamente recibirá su nueva tarifa reducida. "
-"Deberá volver a presenter la solicitud si elige cambiar la tarjeta bancaria "
-"que utiliza para pagar el servicio de transito."
-
-msgid "eligibility.pages.index.mst_cc.label"
-msgstr "Tengo una Tarjeta de Cortesía de MST"
-
-msgid "eligibility.pages.index.mst_cc.description"
-msgstr ""
-"Esta opción es para personas que tienen una Tarjeta de Cortesía actual o una "
-"tarjeta de elegibilidad de Paratránsito de MST RIDES. Es posible que este "
-"beneficio deba renovarse en el futuro. Usar este beneficio significa que su "
-"nueva tarifa de tránsito es la mitad de la tarifa estándar."
-
-msgid "eligibility.pages.start.mst_cc.title"
-msgstr "Información de la Tarjeta de Cortesía"
-
-msgid "eligibility.pages.start.mst_cc.headline"
-msgstr "Usted a seleccionado un Beneficio de la Tarjeta de Cortesía."
-
-msgid "eligibility.pages.start.mst_cc.start_item.heading"
-msgstr "Su número actual de Tarjeta de Cortesía"
-
-msgid "eligibility.pages.start.mst_cc.start_item.details"
-msgstr ""
-"No necesitas tener su tarjeta física, pero necesitará saber el número. El "
-"número comienza con un signo de número (#) seguido de cinco dígitos."
-
-msgid "eligibility.pages.confirm.mst_cc.title"
-msgstr "Confirmar su eligibilidad"
-
-msgid "eligibility.pages.confirm.mst_cc.headline"
-msgstr "Veamos si podemos confirmar su eligibilidad."
-
-msgid "eligibility.pages.confirm.mst_cc.p[0]"
-msgstr ""
-"Por favor, ingrese su número de tarjeta de cortesía y apellido a "
-"continuación. Si usted es un titular de tarjeta de cortesía de MST actual, "
-"podemos confirmar que es elegible para un descuento. No guardamos su "
-"información."
-
-msgid "eligibility.forms.confirm.mst_cc.fields.sub"
-msgstr "Número de tarjeta de cortesía de MST"
-
-msgid "eligibility.forms.confirm.mst_cc.fields.sub.help_text"
-msgstr ""
-"Este es un número de 5 dígitos que aparece en la parte frontal y el reverso "
-"de su tarjeta."
-
-msgid "eligibility.forms.confirm.mst_cc.fields.name"
-msgstr "Apellido (como aparece en la tarjeta de cortesía)"
-
-msgid "eligibility.forms.confirm.mst_cc.fields.name.help_text"
-msgstr "Nosotros usamos esto para ayudar a confirmar su Tarjeta de Cortesía."
-
-msgid "eligibility.pages.unverified.mst_cc.title"
-msgstr "Tarjeta de Cortesía de MST no confirmada"
-
-msgid "eligibility.pages.unverified.mst_cc.p[0]"
-msgstr ""
-"¡Esta bien! Aún puede ser elegible para nuestro programa. Comuníquese con "
-"Monterey-Salinas Transit para obtener asistencia."
-
-msgid "enrollment.pages.success.mst_cc.confirm_item.details"
-msgstr ""
-"No te cobraron nada hoy. Al abordar el tránsito, pague con esta misma "
-"tarjeta física y automáticamente recibirá su nueva tarifa reducida."
-
-msgid "enrollment.pages.success.mst_cc.expiry_item.heading"
-msgstr ""
-"Es posible que deba volver a solicitar los beneficios de tránsito en una "
-"fecha posterior"
-
-msgid "enrollment.pages.success.mst_cc.expiry_item.details"
-msgstr ""
-"En el futuro, es posible que tenga que volver a registrarse para Beneficios "
-"para continuar usando las tarjetas de pago sin contacto. También tendrá que "
-"volver a presenter una solicitud si elige cambiar la tarjeta bancaria que "
-"usa para pagar el servicio de tránsito."
-
-msgid "eligibility.pages.index.p[0].mst"
-msgstr ""
-"Puede acercar su tarjeta de crédito o débito cuando aborde un autobús de MST "
-"y su tarifa con descuento se aplicará automáticamente cada vez que viaje. "
-
-msgid "eligibility.pages.index.p[0].sacrt"
-msgstr ""
-"Puede acercar su tarjeta de crédito o débito cuando aborde el transporte "
-"público SacRT y su tarifa con descuento se aplicará automáticamente cada vez "
-"que viaje. "
-
-msgid "core.pages.help.about.p[0]"
-msgstr ""
-"La herramienta de Beneficios es proporcionada por California Integrated "
-"Travel Project “Proyecto de Viaje Integrado de California” (Cal-ITP), que es "
-"un nuevo programa del Departamento de Transporte de California dedicado a "
-"hacer que los viajes sean más sencillos y económicos para todos."
-
-msgid "core.pages.title.suffix"
-msgstr "Beneficios de Cal-ITP"
-
-msgid "core.buttons.skip"
+msgid "Skip to Main Content"
 msgstr "Saltar al contenido principal"
 
 msgctxt "image alt text"
-msgid "core.logos.small"
+msgid "California Integrated Travel Project: Benefits logo (small)"
 msgstr ""
-"Proyecto de viaje integrado de California: logotipo de beneficios (pequeño)"
+"Proyecto Integrado de Viaje de California: Logotipo de Cal-ITP Benefits "
+"(pequeño)"
 
 msgctxt "image alt text"
-msgid "core.logos.large"
+msgid "California Integrated Travel Project: Benefits logo (large)"
 msgstr ""
-"Proyecto de viaje integrado de California: logotipo de beneficios (grande)"
+"Proyecto Integrado de Viaje de California: Logotipo de Cal-ITP Benefits "
+"(grande)"
 
-msgid "core.buttons.help"
+msgid "Help"
 msgstr "Ayuda"
 
-msgid "core.buttons.privacy"
+msgid "Privacy Policy"
 msgstr "Póliza de Privacidad"
 
-msgid "core.pages.help.about"
-msgstr "¿Qué son los beneficios de Cal-ITP?"
+msgid "What is Cal-ITP Benefits?"
+msgstr "¿Qué es Cal-ITP Benefits?"
 
-msgid "core.pages.help.about.p[1]"
+msgid ""
+"We partner with local transit agencies, the California Department of "
+"Technology, and Login.gov to confirm the identity of riders who are eligible "
+"to receive transit benefits. Once we are able to confirm a rider’s identity "
+"and eligibility, our payment partner Littlepay helps us connect a transit "
+"benefit to the rider’s contactless card of choice."
 msgstr ""
-"Nos asociamos con Login.gov para confirmar la edad para los descuentos "
-"basados en la edad y nos asociamos con las agencias de transporte locales "
-"para confirmar los programas de descuento específicos. Una vez verificados, "
-"los descuentos se adjuntan a su tarjeta bancaria a través de nuestro socio "
-"de pago, Littlepay, para que cuando pague su viaje en transporte, obtenga su "
-"descuento automáticamente."
+"Nos asociamos con agencias de tránsito locales, el Departamento de "
+"Tecnología de California y Login.gov para confirmar la identidad de los "
+"pasajeros que sean elegibles de recibir beneficios de tránsito. Una vez que "
+"podemos confirmar la identidad del pasajero y su elegibilidad, nuestro socio "
+"de pagos Littlepay nos ayuda a conectar el beneficio de tránsito con la "
+"tarjeta sin contacto elegida por el pasajero."
 
-msgid "core.pages.help.payment_options"
-msgstr "Opciones de pago"
-
-msgid "core.pages.help.payment_options.p[0]"
-msgstr ""
-"Para activar su descuento, necesita una tarjeta bancaria que tenga el "
-"símbolo de sin contacto. El símbolo sin contacto son cuatro líneas curvas "
-"que se ven así:"
-
-msgctxt "image alt text"
-msgid "core.icons.contactless"
-msgstr "Cuatro líneas curvas en las tarjetas habilitadas sin contacto"
-
-msgid "core.pages.help.payment_options.p[1]"
-msgstr ""
-"Una tarjeta bancaria sin contacto puede ser una tarjeta de crédito o de "
-"débito y debe incluir el logotipo de Visa o Mastercard."
-
-#, python-format
-msgid "core.pages.help.payment_options.p[2][0]%(website)s"
-msgstr ""
-"¿No tienes acceso a una tarjeta bancaria? Puedes solicitar una tarjeta sin "
-"contacto de una de las compañías que ofrecen tarjetas de débito prepago sin "
-"contacto gratuitas, como la tarjeta de débito  <a href=\"%(website)s\" "
-"target=\"_blank\" rel=\"noopener noreferrer\">Cash App Visa</a> "
-
-#, python-format
-msgid "core.pages.help.payment_options.p[2][1]%(website)s"
-msgstr ""
-"o la tarjeta de débito <a href=\"%(website)s\" target=\"_blank\" rel="
-"\"noopener noreferrer\">Venmo Mastercard</a>."
-
-msgid "core.pages.help.payment_options.p[3]"
-msgstr ""
-"Todavía puede obtener su descuento mediante el proceso de solicitud de su "
-"proveedor de transporte local."
-
-msgid "core.pages.help.payment_options.p[4]"
-msgstr ""
-"Para obtener actualizaciones sobre opciones adicionales, vuelva a consultar "
-"este sitio web o comuníquese con su proveedor de transporte local."
-
-msgid "core.pages.help.login_gov"
-msgstr "¿Qué es Login.gov?"
-
-msgid "core.pages.help.login_gov.p[0]"
-msgstr ""
-"Login.gov es una forma segura de iniciar sesión en las agencias "
-"gubernamentales participantes. Puede utilizar su cuenta de Login.gov para "
-"acceder a todos los beneficios ofrecidos a través de Cal-ITP."
-
-msgid "core.pages.help.login_gov.p[1]"
-msgstr ""
-"Crear una cuenta es simple. Necesitará una dirección de correo electrónico y "
-"un método para autenticar su cuenta—que utilizará un teléfono fijo o un "
-"teléfono móvil o códigos de seguridad que deben imprimirse o anotarse."
-
-msgid "core.pages.help.login_gov.p[2]"
-msgstr ""
-"Para obtener más información sobre Login.gov, visite <a href='https://login."
-"gov/es' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov</a> o <a "
-"href='https://login.gov/es/help/' target=\"_blank\" rel=\"noopener noreferrer"
-"\">Login.gov: Centro de ayuda</a>."
-
-msgid "core.pages.help.login_gov_verify"
-msgstr "¿Cómo verifico mi identidad en Login.gov?"
-
-msgid "core.pages.help.login_gov_verify.p[0]"
-msgstr ""
-"​​Para verificar su identidad, Login.gov le pide que suba una fotografía de su "
-"identificación emitida por el estado y comparta su número de teléfono y otra "
-"información personal, que luego se verificara con fuentes autorizadas. Estos "
-"requisitos son adicionales para cumplir con los requisitos para la "
-"autentificación de dos factores."
-
-msgid "core.pages.help.login_gov_verify.p[1]"
-msgstr ""
-"No puede verificar su identidad en Login.gov sin una identificación emitida "
-"por el estado, que puede ser una licencia de conducir o una tarjeta de "
-"identificación emitida por el estado que no sea una licencia de conducir."
-
-msgid "core.pages.help.login_gov_verify.p[2]"
-msgstr ""
-"Si no tiene un plan telefónico que esté a su nombre, Login.gov puede "
-"enviarle el código de verificación por correo, lo que toma aproximadamente "
-"de 3 a 5 días."
-
-msgid "core.pages.help.login_gov_verify.p[3]"
-msgstr ""
-"Verificar su identidad asegura que la persona adecuada tenga acceso a la "
-"información correcta. Estamos utilizando el proceso simple y seguro de Login."
-"gov’s para mantener segura su información confidencial. Para obtener más "
-"información sobre la verificación de identidad en Login.gov, visite su <a "
-"href='https://login.gov/es/help/verify-your-identity/how-to-verify-your-"
-"identity/' target=\"_blank\" rel=\"noopener noreferrer\">Login.gov: Centro "
-"de ayuda</a>."
-
-msgid "core.pages.help.mst_cc"
-msgstr "¿Qué es una Tarjeta de Cortesía?"
-
-msgid "core.pages.help.mst_cc.p[0]"
-msgstr ""
-"Las Tarjetas de Cortesía son emitidas por Monterey-Salinas Transit a "
-"pasajeros que califican para varios programas de tarifas con descuento. Este "
-"sitio web es una herramienta de demostración para apoyar el programa de "
-"Tarjeta de Cortesía. Es posible que este beneficio deba renovarse en el "
-"futuro según la fecha de vencimiento de la Tarjeta de Cortesía. Obtenga más "
-"información <a href='https://mst.org/riders-guide/how-to-ride/courtesy-"
-"card/' target =\"blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
-
-msgid "core.pages.help.littlepay"
-msgstr "¿Qué es Littlepay?"
-
-msgid "core.pages.help.littlepay.p[0]"
-msgstr ""
-"Nuestro socio de pagos, Littlepay, es una plataforma de procesamiento de "
-"pagos segura e integral que nos permite adjuntar sin problemas su descuento "
-"de tránsito a su tarjeta bancaria."
-
-#, python-format
-msgid "core.pages.help.littlepay.p[1]%(website)s"
-msgstr ""
-"Para obtener más información sobre Littlepay, visite el sitio web de <a href="
-"\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">Littlepay</a>."
-
-msgid "core.pages.help.questions"
-msgstr "¿Preguntas?"
-
-msgid "core.pages.help.questions.p[0]"
-msgstr ""
-"Si necesita ayuda con este sitio web, póngase en contacto con el equipo de "
-"servicio al cliente de su proveedor de transito local."
-
-msgid "core.pages.help.foss.text"
+msgid ""
+"The Benefits application is Free and Open Source Software (FOSS). You may "
+"obtain the source code from"
 msgstr ""
 "Esta aplicación es un software libre y de código abierto. Puede obtener el "
 "código fuente de"
 
-msgid "core.pages.help.foss.link"
+msgid "GitHub"
 msgstr "GitHub"
 
-msgid "core.pages.index.agency_selector.headline"
-msgstr "Por favor, elija su proveedor de transporte:"
+msgid "What kind of credit card can I use?"
+msgstr "¿Qué tipo de tarjeta de crédito puedo usar?"
+
+msgid ""
+"Benefits only works with contactless debit or credit cards. We do not "
+"currently support mobile wallets or digital cards, such as Apple Pay, Google "
+"Wallet, or Samsung Wallet."
+msgstr ""
+"Los beneficios solo funcionan con tarjetas de débito o crédito sin contacto. "
+"Actualmente no admitimos billeteras móviles o tarjetas digitales como Apple "
+"Pay, Google Wallet o Samsung Wallet."
+
+msgid "The contactless symbol is four curved lines, like this:"
+msgstr ""
+"El símbolo sin contacto está compuesto por cuatro líneas curvas, como este:"
+
+msgctxt "image alt text"
+msgid "Four curved lines on contactless-enabled cards"
+msgstr "Cuatro líneas curvas en las tarjetas habilitadas sin contacto"
+
+msgid "Your card must include a Visa or Mastercard logo."
+msgstr "Su tarjeta debe incluir un logotipo de Visa o Mastercard."
+
+msgid ""
+"Don’t have access to a contactless card? You can request a contactless card "
+"from your bank, or one of the companies that offer free contactless prepaid "
+"debit cards, such as the Cash App Visa debit card or the Venmo Mastercard "
+"debit card."
+msgstr ""
+"¿No tiene acceso a una tarjeta sin contacto? Puede solicitar una tarjeta sin "
+"contacto en su banco o con una de las empresas que ofrecen tarjetas de "
+"débito sin contacto prepagadas gratuitas, como la tarjeta de débito Visa de "
+"Cash App o la tarjeta de débito Mastercard de Venmo."
 
 #, python-format
-msgid "core.pages.index.agency_selector%(agency_short_name)s"
-msgstr "%(agency_short_name)s logo"
+msgid ""
+"You can still get your transit benefit by going through %(short_name)s’s "
+"application process. For updates on additional options, please check back on "
+"this website, or <a href=\"%(website)s\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">contact %(short_name)s</a>."
+msgstr ""
+"También puede conseguir su beneficio de tránsito pasando por el proceso de "
+"solicitud de su %(short_name)s. Para recibir actualizaciones sobre opciones "
+"adicionales, vuelva a consultar este sitio web o <a href=\"%(website)s\" "
+"target=\"_blank\" rel=\"noopener noreferrer\">contacte a %(short_name)s</a>."
 
-msgid "core.includes.nocookies.brand"
+msgid "What is Login.gov?"
+msgstr "¿Qué es Login.gov?"
+
+msgid ""
+"Login.gov is a service that offers secure and private online access to "
+"government programs, such as federal benefits, services and applications. "
+"With a Login.gov account, you can sign into multiple government websites "
+"with the same email address and password."
+msgstr ""
+"Login.gov es un servicio que ofrece acceso seguro y privado a programas "
+"gubernamentales como beneficios, servicios y aplicaciones federales. Con una "
+"cuenta de Login.gov puede iniciar sesión en varios sitios web "
+"gubernamentales con la misma dirección de correo electrónico y contraseña."
+
+msgid ""
+"For more information on Login.gov, please visit the <a href=\"https://login."
+"gov/help/\" target=\"_blank\" rel=\"noopener noreferrer\">Login.gov Help "
+"Center</a>."
+msgstr ""
+"Para obtener más información sobre Login.gov, visite el <a href=\"https://"
+"login.gov/help/\" target=\"_blank\" rel=\"noopener noreferrer\">Centro de "
+"ayuda de Login.gov</a>."
+
+msgid "Why is Cal-ITP Benefits using Login.gov?"
+msgstr "¿Por qué Cal-ITP Benefits utiliza Login.gov?"
+
+msgid ""
+"Login.gov uses two-factor authentication, and stronger passwords, that meet "
+"new National Institute of Standards of Technology requirements for secure "
+"validation and verification. By using Login.gov, you’ll get an extra layer "
+"of security to help protect your account against password compromises."
+msgstr ""
+"Login.gov utiliza autenticación de dos factores y contraseñas más seguras "
+"que cumplen con los nuevos requisitos del Instituto Nacional de Estándares "
+"de Tecnología para una validación y verificación seguras. Al usar Login.gov "
+"obtendrá una capa adicional de seguridad para ayudarle a proteger su cuenta "
+"contra compromisos de contraseñas."
+
+msgid "How do I verify my identity on Login.gov?"
+msgstr "¿Cómo verifico mi identidad en Login.gov?"
+
+msgid ""
+"You will need a state-issued ID to verify your identity with Login.gov, "
+"which can be either a driver’s license or non-driver’s license state-issued "
+"ID card."
+msgstr ""
+"Necesitarás una identificación emitida por el estado para verificar tu "
+"identidad con Login.gov, la cual puede ser una licencia para conducir o una "
+"tarjeta de identificación emitida por el estado que no sea una licencia de "
+"conducir."
+
+msgid ""
+"You will need to upload a photograph of your state-issued ID and share your "
+"address, phone number and other personal information which is then verified "
+"against authoritative sources."
+msgstr ""
+"Deberás cargar una fotografía de su identificación emitida por el estado y "
+"compartir tu dirección, número de teléfono y otra información personal, la "
+"cual será verificada con fuentes autorizadas."
+
+msgid ""
+"Login.gov will also need to verify your identity by calling or texting your "
+"phone. If Login.gov can’t verify your phone number, you can verify by mail "
+"instead."
+msgstr ""
+"Login.gov también necesitará verificar tu identidad llamando o enviando un "
+"mensaje de texto a tu teléfono. Si Login.gov no puede verificar tu número de "
+"teléfono, puedes verificarlo por correo."
+
+msgid ""
+"Please visit the Login.gov help center for <a href=\"https://login.gov/help/"
+"\" target=\"_blank\" rel=\"noopener noreferrer\">more information on "
+"identity verification</a>."
+msgstr ""
+"Visita el centro de ayuda de Login.gov para <a href='https://login.gov/"
+"help/' target=\"_blank\" rel=\"noopener noreferrer\">más información sobre "
+"la verificación de identidad</a>."
+
+msgid "What is Littlepay?"
+msgstr "¿Qué es Littlepay?"
+
+msgid ""
+"Our payment partner, Littlepay, is a secure, end-to-end payment processing "
+"platform that allows us to connect your transit benefit to the contactless "
+"card of your choice."
+msgstr ""
+"Littlepay, nuestro socio de pagos, es una plataforma de procesamiento de "
+"pagos segura e integral que nos permite conectar su beneficio de tránsito a "
+"la tarjeta sin contacto de su elección."
+
+msgid ""
+"For more information on Littlepay, please visit the <a href=\"https://"
+"littlepay.com\" target=\"_blank\" rel=\"noopener noreferrer\">Littlepay "
+"website</a>."
+msgstr ""
+"Para obtener más información sobre Littlepay, visite el <a href='https://"
+"littlepay.com' target=\"_blank\" rel=\"noopener noreferrer\">sitio web de "
+"Littlepay</a>."
+
+msgid "Questions?"
+msgstr "¿Tienes preguntas?"
+
+msgid ""
+"If you need assistance with this website, please reach out to the customer "
+"service team for your local transit provider."
+msgstr ""
+"Si necesita ayuda con este sitio web, comuníquese con el equipo de atención "
+"al cliente de su proveedor de transito local."
+
+msgid "Go Back"
+msgstr "Volver"
+
+msgid "Return Home"
+msgstr "Volver al inicio"
+
+msgid "Previous Page"
+msgstr "Página Anterior"
+
+msgid "What is a Courtesy Card?"
+msgstr "¿Qué es una tarjeta de cortesía?"
+
+msgid ""
+"Monterey-Salinas Transit issues Courtesy Cards to riders who qualify for a "
+"number of reduced fare programs. This transit benefit may need to be renewed "
+"in the future based on the expiration date of the Courtesy Card. Learn more "
+"at the <a href=\"https://mst.org/riders-guide/how-to-ride/courtesy-card/\" "
+"target=\"_blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
+msgstr ""
+"Monterey-Salinas Transit emite tarjetas de cortesía a los pasajeros que "
+"califican para una serie de programas de tarifas reducidas. Este beneficio "
+"de tránsito debe renovarse en el futuro en función de la fecha de "
+"vencimiento de la tarjeta de cortesía. Obtenga más información en el <a "
+"href='https://mst.org/riders-guide/how-to-ride/courtesy-card/' "
+"target=\"_blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
+
+msgid "Sign out of Login.gov"
+msgstr "Cierre sesión de Login.gov"
+
+msgid "Please choose your transit provider:"
+msgstr "Elija su proveedor de transporte:"
+
+#, python-format
+msgid "%(agency)s logo"
+msgstr "Logotipo de %(agency)s"
+
+msgid "Cookies are disabled"
 msgstr "Cookies están inactivos"
 
-msgid "core.includes.nocookies.text"
+msgid ""
+"To function properly, this website requires a browser that supports cookies. "
+"Please enable cookies for this website and"
 msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita cookies. Por favor, active cookies por este sitio web y"
 
-msgid "core.buttons.return_home"
-msgstr "Regresar a la página principal"
-
-msgid "core.includes.noscript.brand"
+msgid "JavaScript is disabled"
 msgstr "JavaScript está inactivo"
 
-msgid "core.includes.noscript.text"
+msgid ""
+"To function properly, this website requires a browser that supports "
+"JavaScript. Please enable JavaScript for this website and"
 msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita JavaScript. Por favor, active JavaScript por este sitio web y"
 
-msgid "core.pages.landing.h2"
-msgstr "Su beneficio se aplicará cada vez que acerque su tarjeta para viajar"
-
-msgid "core.pages.logged_out.headline[0]"
-msgstr "Ha cerrado la sesión correctamente."
-
-msgid "core.pages.logged_out.headline[1]"
-msgstr "¡Gracias por usar los Beneficios de Cal-ITP!"
-
-msgid "eligibility.pages.index.label"
-msgstr "Seleccione la opción que mejor se adapte a usted:"
-
-msgid "core.buttons.previous_page"
-msgstr "Página Anterior"
-
-msgid "core.pages.error.title"
-msgstr "Error"
-
-msgctxt "image alt text"
-msgid "core.icons.sadbus"
-msgstr "Icono de autobus con llanta ponchada"
-
-msgid "core.pages.server_error.headline"
-msgstr "¡Lo sentimos! El servicio para este sitio está caído."
-
-msgid "core.pages.user_error.title"
-msgstr "Error"
-
-msgid "core.pages.user_error.headline"
-msgstr "Es posible que haya llegado a esta página por accidente."
-
-msgid "core.pages.user_error.p[0]"
+msgid "Get a reduced fare on MST public transportation when you tap to ride"
 msgstr ""
-"Para empezar a utilizar Cal-ITP Benefits, haga clic en el botón que aparece "
-"a continuación y se le dirigirá al inicio del proceso de inscripción."
+"Obtenga una tarifa reducida en el transporte público MST cuando toque para "
+"viajar"
 
-msgid "core.pages.server_error.title"
-msgstr "¡Lo sentimos! El servicio no está funcionando"
-
-msgid "core.pages.server_error.p[0]"
+msgid "Get a reduced fare on SacRT light rail when you tap to ride"
 msgstr ""
-"Deberíamos volver a funcionar pronto. Por favor, actualice la página en unos "
-"minutos."
+"Obtenga una tarifa reducida en el tren ligero SacRT cuando toque para viajar"
 
-msgid "core.pages.not_found.title"
-msgstr "No podemos encontrar esa página"
-
-msgid "core.pages.not_found.headline"
-msgstr "¡Lo sentimos! No podemos encontrar esa página."
-
-msgid "core.pages.not_found.p[0]"
+msgid "Get a reduced fare on Santa Barbara MTD buses when you tap to ride"
 msgstr ""
-"La página que estás buscando puede estar en otro lugar o puede que ya no "
-"exista."
+"Obtenga una tarifa reducida en los autobuses del Santa Barbara MTD cuando "
+"toque para viajar"
 
-msgid "core.buttons.wait"
-msgstr "Espere por favor..."
+msgid "Choose transit agency"
+msgstr "Elija la agencia de tránsito"
 
-msgid "core.pages.index.title"
-msgstr "Elija Proveedor"
-
-msgid "core.pages.index.headline"
-msgstr "Conecte su beneficio del transporte a su tarjeta de sin contacto"
-
-msgid "core.pages.index.button"
-msgstr "Elija Su Proveedor"
-
-msgid "core.pages.index.continue"
-msgstr "Empezar"
-
-msgid "core.pages.agency_index.title"
-msgstr "Introducción"
-
-#, python-format
-msgid "core.pages.agency_index.headline%(transit_agency_short_name)s"
+msgid "Get a reduced fare on public transportation when you tap to ride"
 msgstr ""
-"Conecte su beneficio del transporte de %(transit_agency_short_name)s a su "
-"tarjeta de sin contacto"
+"Obtenga una tarifa reducida en el transporte público cuando toque para viajar"
 
-msgid "core.buttons.back"
-msgstr "Regresar a la página principal"
+msgid "Choose your Provider"
+msgstr "Elija su Proveedor"
 
-msgid "core.pages.logged_out.title"
+msgid "Cal-ITP Benefits connects your transit benefit to your contactless card"
+msgstr ""
+"Cal-ITP Benefits conecta su beneficio de tránsito con su tarjeta sin contacto"
+
+msgid "A person holds a contactless debit card next to a card reader on a bus."
+msgstr ""
+"Una persona sostiene una tarjeta de débito junto a un lector de tarjetas en "
+"un autobús."
+
+msgid "Logged out"
 msgstr "Cierre sesión"
 
-msgctxt "image alt text"
-msgid "core.icons.happybus"
-msgstr "Icono de autobús con cara sonriente"
+msgid "You have successfully logged out. Thank you for using Cal-ITP Benefits!"
+msgstr "Ha cerrado sesión correctamente. ¡Gracias por usar Cal-ITP Benefits!"
 
-msgid "eligibility.buttons.choose"
-msgstr "Elija Este Beneficio"
+msgid "Which transit benefit would you like to enroll in?"
+msgstr "¿A qué beneficio de tránsito le gustaría inscribirse?"
 
-msgid "eligibility.forms.confirm.submit"
-msgstr "Verificación de estatus"
+msgid "Choose this Benefit"
+msgstr "Elegir este beneficio"
 
-msgid "eligibility.forms.confirm.submitting"
-msgstr "Verificando"
+msgid "Check eligibility"
+msgstr "Comprobar elegibilidad"
 
-msgid "eligibility.forms.confirm.errors.invalid"
+msgid "Checking"
+msgstr "Comprobando"
+
+msgid "Check your input. The format looks wrong."
 msgstr "Verifique su entrada. El formato parece incorrecto."
 
-msgid "eligibility.forms.confirm.errors.missing"
+msgid "This field is required."
 msgstr "Este campo es requerido."
 
-#, python-format
-msgid "eligibility.pages.start.help_text%(help_link)s"
+msgid "Agency card information"
+msgstr "Información de la tarjeta de agencia"
+
+msgid "Let’s see if we can confirm your eligibility."
+msgstr "Veamos si podemos confirmar su elegibilidad."
+
+msgid ""
+"Please input your Courtesy Card number and last name below to confirm your "
+"eligibility."
 msgstr ""
-"¿Preguntas sobre los artículos anteriores? Visite nuestro <a href="
-"\"%(help_link)s\">Página de Ayuda</a>."
+"Ingrese el número de su tarjeta de cortesía y apellido a continuación para "
+"confirmar su elegibilidad."
 
-#, python-format
-msgid "eligibility.pages.index.p[0]%(info_link)s"
+msgid "Last name (as it appears on Courtesy Card)"
+msgstr "Apellido (tal como aparece en la tarjeta de cortesía)"
+
+msgid "We use this to help confirm your Courtesy Card."
+msgstr "Usamos esto para ayudar a confirmar su tarjeta de cortesía."
+
+msgid "MST Courtesy Card number"
+msgstr "Número de tarjeta de cortesía de MST"
+
+msgid "This is a 5-digit number on the front and back of your card."
+msgstr "Este es un número de 5 dígitos en el anverso y reverso de su tarjeta."
+
+msgid "Your contactless card details"
+msgstr "Los datos de su tarjeta sin contacto"
+
+msgid ""
+"Your contactless card must be a debit or credit card by Visa or Mastercard."
 msgstr ""
-"Cal-ITP no guarda su información y no necesita crear una cuenta. Verifique "
-"para obtener su beneficio y conecte su tarjeta bancaria hoy. <strong><a "
-"class='info-link' href=\"%(info_link)s\">Obtenga más información sobre los "
-"Beneficios de Cal-ITP</a></strong><span class='period'>.</span>"
-
-msgid "eligibility.pages.index.title"
-msgstr "Seleccione una opción de beneficio"
-
-msgid "eligibility.pages.index.headline"
-msgstr ""
-"Conecté su tarjeta bancaria a su descuento de transporte público con los "
-"Beneficios de Cal-ITP"
-
-#, python-format
-msgid "eligibility.pages.index.help_text%(help_link)s"
-msgstr ""
-"¿No está seguro de qué opción es la adecuada para usted? Visite nuestro <a "
-"href=\"%(help_link)s\">Página de Ayuda</a>."
-
-msgid "eligibility.buttons.continue"
-msgstr "Continuar"
-
-msgctxt "image alt text"
-msgid "core.icons.idcardcheck"
-msgstr "Icono de tarjeta de identificación con marca de verificación"
-
-msgid "eligibility.pages.start.login_gov.required_items[0]"
-msgstr "Su tarjeta de identificación emitida por el estado"
-
-msgid "eligibility.pages.start.login_gov.required_items[1]"
-msgstr "Su número de Seguro Social"
-
-msgid "eligibility.pages.start.login_gov.required_items[2]"
-msgstr "Un número de teléfono con un plan de teléfono asociado con su nombre"
-
-msgid "eligibility.pages.start.veteran.required_items[0]"
-msgstr "Login.gov"
-
-msgid "eligibility.pages.start.veteran.required_items[1]"
-msgstr "ID.me"
-
-msgid "eligibility.pages.start.veteran.required_items[2]"
-msgstr "DS Logon"
-
-msgid "eligibility.pages.start.veteran.required_items[3]"
-msgstr "My HealtheVet"
-
-msgctxt "image alt text"
-msgid "core.icons.bankcardcheck"
-msgstr ""
-"Icono de tarjeta bancaria con símbolo sin contacto y marca de verificación"
-
-msgid "eligibility.pages.start.bankcard.title"
-msgstr "Los datos de su tarjeta bancaria"
-
-msgid "eligibility.pages.start.bankcard.text"
-msgstr ""
-"Su tarjeta debe ser una tarjeta de débito o crédito sin contacto de Visa o "
+"Su tarjeta sin contacto debe ser una tarjeta de débito o crédito de Visa o "
 "Mastercard."
 
-msgid "eligibility.pages.start.sub_headline"
-msgstr "Necesitará algunos artículos para conectar su beneficio:"
+msgid "Learn more about contactless cards"
+msgstr "Más información sobre las tarjetas sin contacto"
 
-msgid "eligibility.pages.unverified.headline"
-msgstr "No se pudo verificar su elegibilidad."
+msgid "Your current Courtesy Card number"
+msgstr "Su número actual de tarjeta de cortesía"
+
+msgid ""
+"You do not need to have your physical card, but you will need to know the "
+"number. The number starts with a number sign (#) followed by five digits."
+msgstr ""
+"No necesita tener su tarjeta física, pero necesitará saber el número. El "
+"número comienza con un signo de número (#) seguido de cinco dígitos."
+
+msgid "A Login.gov account with identity verification"
+msgstr "Una cuenta de Login.gov con verificación de identidad"
+
+msgid ""
+"You will be able to create an account using your email address if you do not "
+"already have one. We use your Login.gov account to verify your identity."
+msgstr ""
+"Si aún no tiene una cuenta, podrá crear una utilizando su dirección de "
+"correo electrónico. Utilizamos su cuenta de Login.gov para verificar su "
+"identidad."
+
+msgid "Learn more about identity verification"
+msgstr "Más información sobre la verificación de identidad"
+
+msgid "For this process you will need:"
+msgstr "Para este proceso necesitará:"
+
+msgid "Your state-issued ID card"
+msgstr "Su tarjeta de identificación emitida por el estado"
+
+msgid "Your Social Security number"
+msgstr "Su número de seguro social"
+
+msgid "A phone number with a phone plan associated with your name"
+msgstr ""
+"Un número de teléfono en el cual pueda recibir llamadas o mensajes de texto"
+
+msgid "Access to your preferred VA related account"
+msgstr "Acceso a su cuenta preferida relacionada con VA"
+
+msgid ""
+"You will need to sign into VA.gov in order to verify your identity and your "
+"veteran status. VA.gov uses the following services:"
+msgstr ""
+"Deberá iniciar sesión en VA.gov para verificar su identidad y su estado de "
+"veterano. VA.gov utiliza los siguientes servicios:"
+
+msgid "Login.gov"
+msgstr "Login.gov"
+
+msgid "ID.me"
+msgstr "ID.me"
+
+msgid "DS Logon"
+msgstr "DS Logon"
+
+msgid "My HealtheVet"
+msgstr "My HealtheVet"
+
+msgid ""
+"If you do not have an account with any of these services, you will need to "
+"create one. We recommend using Login.gov."
+msgstr ""
+"Si no tiene una cuenta con ninguno de estos servicios, deberá crear una. "
+"Recomendamos utilizar Login.gov. "
+
+msgid "Go back"
+msgstr "Volver"
+
+msgid "Learn more about"
+msgstr "Más información sobre"
 
 msgctxt "image alt text"
-msgid "core.icons.idcardquestion"
-msgstr "Icono de tarjeta de identificación con signo de interrogación"
+msgid "Login.gov"
+msgstr "Login.gov"
 
-msgid "enrollment.pages.success.logout[0]"
+msgid "Verify your identity with "
+msgstr "Verifique su identidad con "
+
+msgid ""
+"We use Login.gov to verify your identity to make sure you are eligible for "
+"the transit benefit you selected."
 msgstr ""
-"Si estás en una computadora pública o compartida, no olvides hacer clic aquí "
-"para cerrar la sesión de"
+"Utilizamos Login.gov para verificar tu identidad para asegurarnos de que "
+"seas elegible para el beneficio de tránsito que seleccionaste."
 
-msgid "enrollment.pages.index.link_card_item.heading"
-msgstr "El siguiente paso es vincular su tarjeta bancaria"
+msgid "MST Courtesy Card"
+msgstr "Tarjeta de cortesía de MST"
+
+msgid ""
+"This option is for people who have a current Courtesy Card or an MST RIDES "
+"eligibility card."
+msgstr ""
+"Esta opción es para personas que cuentan actualmente con una tarjeta de "
+"cortesía o una tarjeta de elegibilidad MST RIDES."
+
+msgid "Older Adult"
+msgstr "Adulto mayor"
+
+msgid ""
+"You must be 65 years or older. You will need to verify your identity with"
+msgstr "Debe tener 65 años o más. Deberá verificar su identidad con"
+
+msgid "US Veteran"
+msgstr "Veterano de EE. UU."
+
+msgid ""
+"This option is for people who have served in the active military, naval, or "
+"air service, and who were discharged or released therefrom under conditions "
+"other than dishonorable. You will need to <a href=\"https://www.va.gov/"
+"resources/verifying-your-identity-on-vagov/\" target=\"_blank\" "
+"rel=\"noopener noreferrer\">verify your identity through VA.gov</a>."
+msgstr ""
+"Esta opción es para personas que hayan prestado servicio militar, naval o "
+"aéreo de manera activa, y quienes fueron dados de baja o liberados en "
+"condiciones que no hayan sido deshonrosas. Necesitará <a href='https://www."
+"va.gov/resources/verifying-your-identity-on-vagov/' target=\"_blank\" "
+"rel=\"noopener noreferrer\">verificar su identidad a través de VA.gov</a>."
 
 #, python-format
-msgid "enrollment.pages.index.link_card_item.p[0]%(link)s"
+msgid ""
+"Cal-ITP doesn’t save any of your information. All MST transit benefits "
+"reduce fares by 50%% for buses on fixed routes."
 msgstr ""
-"Ahora que se ha verificado su elegibilidad, vincularemos su descuento de "
-"tránsito a su tarjeta a través de nuestro socio de pago, <a href=\"%(link)s"
-"\">Littlepay</a>. No almacenamos su información y no se te cobrará."
+"Cal-ITP no almacena su información. Todos los beneficios de tránsito de MST "
+"reducen las tarifas de autobuses en un 50%%."
 
-msgid "enrollment.pages.index.link_card_item.p[1]"
+#, python-format
+msgid ""
+"Cal-ITP doesn’t save any of your information. All SacRT transit benefits "
+"reduce fares by 50%% for light rail."
 msgstr ""
-"Por favor utilice una tarjeta de crédito o débito Visa o Mastercard sin "
-"contacto emitida por un banco."
+"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
+"SacRT reducen las tarifas del tren ligero en un 50%%."
 
-msgid "enrollment.pages.index.title"
-msgstr "Conecte su tarjeta"
+msgid ""
+"Cal-ITP doesn’t save any of your information. All SBMTD transit benefits "
+"give riders a reduced bus fare."
+msgstr ""
+"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
+"SBMTD le ofrecen a los pasajeros tarifas de autobús reducidas."
 
-msgid "enrollment.pages.index.headline"
-msgstr "¡Su elegibilidad está confirmada! Ya casi estás allí."
+msgid "Choose benefit option"
+msgstr "Elija la opción de beneficio"
 
-msgid "enrollment.buttons.payment_partner"
+msgid "Choose the transit benefit you would like to enroll in"
+msgstr "Elija el beneficio de tránsito al que le gustaría inscribirse"
+
+msgid "Agency card overview"
+msgstr "Descripción de la tarjeta de agencia"
+
+msgid "You selected a Courtesy Card transit benefit."
+msgstr "Ha seleccionado un beneficio de tránsito de tarjeta de cortesía."
+
+msgid "Continue"
+msgstr "Continuar"
+
+msgid "Older Adult benefit overview"
+msgstr "Descripción de beneficios para adultos mayores"
+
+msgid "You selected an Older Adult transit benefit."
+msgstr "Ha seleccionado un beneficio de tránsito para adultos mayores."
+
+msgid "Get started with"
+msgstr "Comience con"
+
+msgid "Veterans benefit overview"
+msgstr "Descripción de beneficios para veteranos"
+
+msgid "You selected a Veteran transit benefit."
+msgstr "Ha seleccionado un beneficio de tránsito para veteranos."
+
+msgid "Continue to VA.gov"
+msgstr "Continuar con VA.gov"
+
+msgid "You will need a few items to continue:"
+msgstr "Necesitará algunos artículos para continuar:"
+
+msgid "Unable to confirm eligibility"
+msgstr "No se pudo confirmar la elegibilidad"
+
+msgid "Your eligibility could not be verified."
+msgstr "No se pudo verificar su elegibilidad."
+
+msgid "That’s okay! You may still be eligible for our program."
+msgstr "¡Está bien! Usted aún puede ser elegible para nuestro programa."
+
+#, python-format
+msgid "Please reach out to %(short_name)s for assistance."
+msgstr "Comuníquese con %(short_name)s para obtener ayuda."
+
+msgid ""
+"The next step is to connect your contactless card to your transit benefit"
+msgstr ""
+"El siguiente paso es conectar su tarjeta sin contacto a su beneficio de "
+"tránsito"
+
+msgid "You will be directed to our payment partner, "
+msgstr "Será dirigido a nuestro socio de pago, "
+
+msgid "We don’t store your information, and you won’t be charged."
+msgstr "No almacenamos su información y no se le cobrará."
+
+msgid "Please use a debit or credit card by Visa or Mastercard."
+msgstr "Utilice una tarjeta de débito o crédito de Visa o Mastercard."
+
+msgid "Learn more about Littlepay"
+msgstr "Más información sobre Littlepay"
+
+msgid "Eligibility confirmation"
+msgstr "Confirmación de elegibilidad"
+
+msgid "Your eligibility is confirmed!<br>You’re nearly there."
+msgstr "¡Su elegibilidad está confirmada!<br>Ya falta poco."
+
+msgid "Please wait..."
+msgstr "Espere por favor..."
+
+msgid "Connect your Card"
 msgstr "Conecta tu tarjeta"
 
-msgid "enrollment.pages.retry.title"
-msgstr "No pudimos conectar tú tarjeta bancaria"
+msgid "Unable to register card"
+msgstr "No se pudo registrar la tarjeta"
 
-msgctxt "image alt text"
-msgid "core.icons.bankcardquestion"
-msgstr ""
-"Icono de tarjeta bancaria con símbolo sin contacto y signo de interrogación"
+msgid "We couldn’t connect your card"
+msgstr "No pudimos conectar su tarjeta"
 
-msgid "enrollment.pages.retry.p[0]"
+msgid "You can try again or reach out to your transit provider for assistance."
 msgstr ""
 "Puede intentarlo de nuevo o comunicarse con su proveedor de transporte local "
 "para obtener ayuda."
 
-msgid "core.buttons.retry"
+msgid "Try again"
 msgstr "Intentar otra vez"
 
-msgid "enrollment.pages.success.title"
+msgid ""
+"You were not charged anything today. When boarding an MST fixed route bus, "
+"tap this card when you board and you will be charged a reduced fare. You "
+"will need to re-enroll if you choose to change the card you use to pay for "
+"transit service."
+msgstr ""
+"No se le cobró nada hoy. Al abordar un autobús de ruta fija de MST, toque "
+"esta tarjeta cuando suba y se le cobrará una tarifa reducida. Deberá volver "
+"a inscribirse si elige cambiar la tarjeta que usa para pagar el servicio de "
+"tránsito."
+
+msgid ""
+"You were not charged anything today. When boarding SacRT light rail, tap "
+"this card when you board and you will be charged a reduced fare. You will "
+"need to re-enroll if you choose to change the card you use to pay for "
+"transit service."
+msgstr ""
+"No se le cobró nada hoy. Al abordar un tren ligero SacRT, toque esta tarjeta "
+"cuando suba y se le cobrará una tarifa reducida. Deberá volver a inscribirse "
+"si elige cambiar la tarjeta que usa para pagar el servicio de tránsito."
+
+msgid ""
+"You were not charged anything today. When boarding an SBMTD bus, tap this "
+"card when you board and you will be charged a reduced fare. If you change "
+"the card you use to pay for transit service, you will need to re-enroll."
+msgstr ""
+"No se le cobró nada hoy. Al abordar un autobús de SBMTD, toque esta tarjeta "
+"cuando suba y se le cobrará una tarifa reducida. Deberá volver a inscribirse "
+"si elige cambiar la tarjeta que usa para pagar el servicio de tránsito."
+
+msgid "Success"
 msgstr "Éxito"
 
-msgid "enrollment.pages.success.headline"
-msgstr "¡Felicidades! Su descuento ahora está vinculado a su tarjeta bancaria."
+msgid "Success! Your transit benefit is now connected to your card."
+msgstr "¡Éxito! Su beneficio de tránsito ahora está conectado a su tarjeta."
 
-#, python-format
-msgid "enrollment.pages.success.helplink%(link)s"
+msgid "Thank you for using Cal-ITP Benefits!"
+msgstr "¡Gracias por usar Cal-ITP Benefits!"
+
+msgid "If you are on a public or shared computer, don’t forget to sign out of "
 msgstr ""
-"Gracias por usar los Beneficios de Cal-ITP. Para más información, consulte "
-"nuestro our <a href=\"%(link)s\" rel=\"noopener noreferrer\">Página de "
-"Ayuda</a>."
+"Si está en una computadora pública o compartida, no olvide cerrar sesión en "
 
-msgctxt "image alt text"
-msgid "core.icons.calendarcheck"
-msgstr "Icono de página de calendario con una marca de verificación"
+msgid "Start over"
+msgstr "Comenzar de nuevo"
+
+msgid "You may have reached this page on accident."
+msgstr "Es posible que haya llegado a esta página por accidente."
+
+msgid ""
+"To get started with Cal-ITP Benefits please click the button below, and you "
+"will be directed to the beginning of the enrollment process."
+msgstr ""
+"Para comenzar con Cal-ITP Benefits haga clic en el botón de abajo y será "
+"dirigido al comienzo del proceso de inscripción."
+
+msgid "Start Here"
+msgstr "Comenzar aquí"
+
+msgid "Service is down"
+msgstr "El servicio está inactivo"
+
+msgid "Sorry! Service for this site is down."
+msgstr "¡Lo sentimos! El servicio para este sitio está inactivo."
+
+msgid ""
+"We should be back in operation soon. Please refresh the page in a few "
+"minutes."
+msgstr ""
+"Deberíamos volver a funcionar pronto. Actualice la página en unos minutos."
+
+msgid "Page not found"
+msgstr "Página no encontrada"
+
+msgid "Sorry! We can’t find that page."
+msgstr "¡Lo sentimos! No podemos encontrar esa página."
+
+msgid ""
+"The page you are looking for might be somewhere else or may not exist "
+"anymore."
+msgstr ""
+"La página que está buscando puede estar en otro lugar o puede que ya no "
+"exista."

@@ -4,7 +4,6 @@ import json
 import os
 
 from django.db import migrations
-from django.utils.translation import gettext_lazy as _
 
 
 def load_data(app, *args, **kwargs):
@@ -25,6 +24,9 @@ def load_data(app, *args, **kwargs):
     )
     sacrt_senior_type = EligibilityType.objects.create(
         name="senior", label="Senior Discount (SacRT)", group_id=os.environ.get("SACRT_SENIOR_GROUP_ID", "group3")
+    )
+    sbmtd_senior_type = EligibilityType.objects.create(
+        name="senior", label="Senior Discount (SBMTD)", group_id=os.environ.get("SBMTD_SENIOR_GROUP_ID", "group4")
     )
 
     PemData = app.get_model("core", "PemData")
@@ -124,11 +126,26 @@ PEM DATA
         label="SacRT payment processor client certificate root CA",
     )
 
+    sbmtd_payment_processor_client_cert = PemData.objects.create(
+        text=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT", dummy_cert_text),
+        label="SBMTD payment processor client certificate",
+    )
+
+    sbmtd_payment_processor_client_cert_private_key = PemData.objects.create(
+        text=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY", client_private_key.text),
+        label="SBMTD payment processor client certificate private key",
+    )
+
+    sbmtd_payment_processor_client_cert_root_ca = PemData.objects.create(
+        text=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA", dummy_cert_text),
+        label="SBMTD payment processor client certificate root CA",
+    )
+
     AuthProvider = app.get_model("core", "AuthProvider")
 
     senior_auth_provider = AuthProvider.objects.create(
-        sign_in_button_label=_("eligibility.buttons.senior.signin"),
-        sign_out_button_label=_("eligibility.buttons.senior.signout"),
+        sign_out_button_template="core/includes/button--sign-out--senior.html",
+        sign_out_link_template="core/includes/link--sign-out--senior.html",
         client_name=os.environ.get("SENIOR_AUTH_PROVIDER_CLIENT_NAME", "senior-benefits-oauth-client-name"),
         client_id=os.environ.get("AUTH_PROVIDER_CLIENT_ID", "benefits-oauth-client-id"),
         authority=os.environ.get("AUTH_PROVIDER_AUTHORITY", "https://example.com"),
@@ -138,8 +155,6 @@ PEM DATA
     )
 
     veteran_auth_provider = AuthProvider.objects.create(
-        sign_in_button_label=_("eligibility.buttons.veteran.signin"),
-        sign_out_button_label=None,
         client_name=os.environ.get("VETERAN_AUTH_PROVIDER_CLIENT_NAME", "veteran-benefits-oauth-client-name"),
         client_id=os.environ.get("AUTH_PROVIDER_CLIENT_ID", "benefits-oauth-client-id"),
         authority=os.environ.get("AUTH_PROVIDER_AUTHORITY", "https://example.com"),
@@ -150,59 +165,27 @@ PEM DATA
 
     EligibilityVerifier = app.get_model("core", "EligibilityVerifier")
 
-    mst_oauth_claims_verifier = EligibilityVerifier.objects.create(
+    mst_senior_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("MST_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (MST)"),
-        bullets=[
-            "eligibility.pages.start.login_gov.required_items[0]",
-            "eligibility.pages.start.login_gov.required_items[1]",
-            "eligibility.pages.start.login_gov.required_items[2]",
-        ],
+        active=os.environ.get("MST_OAUTH_VERIFIER_ACTIVE", "True").lower() == "true",
         eligibility_type=mst_senior_type,
         auth_provider=senior_auth_provider,
-        selection_label=_("eligibility.pages.index.login_gov.label"),
-        selection_label_description=_("eligibility.pages.index.login_gov.description"),
-        start_title=_("eligibility.pages.start.login_gov.title"),
-        start_headline=_("eligibility.pages.start.login_gov.headline"),
-        start_item_heading=_("eligibility.pages.start.login_gov.start_item.heading"),
-        start_item_details=_("eligibility.pages.start.login_gov.start_item.details"),
-        start_help_anchor="login-gov",
-        unverified_title=_("eligibility.pages.unverified.title"),
-        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
-        eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
-        eligibility_confirmed_item_details=_(
-            "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
-        ),
-        enrollment_success_confirm_item_details=_("enrollment.pages.success.login_gov.confirm_item.details"),
-        enrollment_success_expiry_item_heading=None,
-        enrollment_success_expiry_item_details=None,
+        selection_label_template="eligibility/includes/selection-label--senior.html",
+        start_template="eligibility/start--senior.html",
     )
 
     mst_veteran_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("MST_VETERAN_VERIFIER_NAME", "VA.gov - Veteran (MST)"),
-        bullets=[
-            "eligibility.pages.start.veteran.required_items[0]",
-            "eligibility.pages.start.veteran.required_items[1]",
-            "eligibility.pages.start.veteran.required_items[2]",
-            "eligibility.pages.start.veteran.required_items[3]",
-        ],
+        active=os.environ.get("MST_VETERAN_VERIFIER_ACTIVE", "True").lower() == "true",
         eligibility_type=mst_veteran_type,
         auth_provider=veteran_auth_provider,
-        selection_label=_("eligibility.pages.index.veteran.label"),
-        selection_label_description=_("eligibility.pages.index.veteran.description"),
-        start_title=_("eligibility.pages.start.veteran.title"),
-        start_headline=_("eligibility.pages.start.veteran.headline"),
-        start_item_heading=_("eligibility.pages.start.veteran.start_item.heading"),
-        start_item_details=_("eligibility.pages.start.veteran.start_item.details"),
-        start_item_secondary_details=_("eligibility.pages.start.veteran.start_item.secondary_details"),
-        unverified_title=_("eligibility.pages.unverified.title"),
-        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
-        enrollment_success_confirm_item_details=_("enrollment.pages.success.veteran.confirm_item.details"),
-        enrollment_success_expiry_item_heading=None,
-        enrollment_success_expiry_item_details=None,
+        selection_label_template="eligibility/includes/selection-label--veteran.html",
+        start_template="eligibility/start--veteran.html",
     )
 
     mst_courtesy_card_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("COURTESY_CARD_VERIFIER", "Eligibility Server Verifier"),
+        active=os.environ.get("COURTESY_CARD_VERIFIER_ACTIVE", "True").lower() == "true",
         api_url=os.environ.get("COURTESY_CARD_VERIFIER_API_URL", "http://server:8000/verify"),
         api_auth_header=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_HEADER", "X-Server-API-Key"),
         api_auth_key=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_KEY", "server-auth-token"),
@@ -212,60 +195,27 @@ PEM DATA
         jwe_encryption_alg=os.environ.get("COURTESY_CARD_VERIFIER_JWE_ENCRYPTION_ALG", "RSA-OAEP"),
         jws_signing_alg=os.environ.get("COURTESY_CARD_VERIFIER_JWS_SIGNING_ALG", "RS256"),
         auth_provider=None,
-        selection_label=_("eligibility.pages.index.mst_cc.label"),
-        selection_label_description=_("eligibility.pages.index.mst_cc.description"),
-        start_title=_("eligibility.pages.start.mst_cc.title"),
-        start_headline=_("eligibility.pages.start.mst_cc.headline"),
-        start_item_heading=_("eligibility.pages.start.mst_cc.start_item.heading"),
-        start_item_details=_("eligibility.pages.start.mst_cc.start_item.details"),
-        start_help_anchor="mst-courtesy-card",
-        form_title=_("eligibility.pages.confirm.mst_cc.title"),
-        form_headline=_("eligibility.pages.confirm.mst_cc.headline"),
-        form_blurb=_("eligibility.pages.confirm.mst_cc.p[0]"),
-        form_sub_label=_("eligibility.forms.confirm.mst_cc.fields.sub"),
-        form_sub_help_text=_("eligibility.forms.confirm.mst_cc.fields.sub.help_text"),
-        form_sub_placeholder="12345",
-        form_sub_pattern=r"\d{5}",
-        form_input_mode="numeric",
-        form_max_length=5,
-        form_name_label=_("eligibility.forms.confirm.mst_cc.fields.name"),
-        form_name_help_text=_("eligibility.forms.confirm.mst_cc.fields.name.help_text"),
-        form_name_placeholder="Garcia",
-        form_name_max_length=255,
-        unverified_title=_("eligibility.pages.unverified.mst_cc.title"),
-        unverified_blurb=_("eligibility.pages.unverified.mst_cc.p[0]"),
-        eligibility_confirmed_item_heading=None,
-        eligibility_confirmed_item_details=None,
-        enrollment_success_confirm_item_details=_("enrollment.pages.success.mst_cc.confirm_item.details"),
-        enrollment_success_expiry_item_heading=_("enrollment.pages.success.mst_cc.expiry_item.heading"),
-        enrollment_success_expiry_item_details=_("enrollment.pages.success.mst_cc.expiry_item.details"),
+        selection_label_template="eligibility/includes/selection-label--mst-courtesy-card.html",
+        start_template="eligibility/start--mst-courtesy-card.html",
+        form_class="benefits.eligibility.forms.MSTCourtesyCard",
     )
 
-    sacrt_oauth_claims_verifier = EligibilityVerifier.objects.create(
+    sacrt_senior_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("SACRT_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (SacRT)"),
-        bullets=[
-            "eligibility.pages.start.login_gov.required_items[0]",
-            "eligibility.pages.start.login_gov.required_items[1]",
-            "eligibility.pages.start.login_gov.required_items[2]",
-        ],
+        active=os.environ.get("SACRT_OAUTH_VERIFIER_ACTIVE", "False").lower() == "true",
         eligibility_type=sacrt_senior_type,
         auth_provider=senior_auth_provider,
-        selection_label=_("eligibility.pages.index.login_gov.label"),
-        selection_label_description=_("eligibility.pages.index.login_gov.description"),
-        start_title=_("eligibility.pages.start.login_gov.title"),
-        start_headline=_("eligibility.pages.start.login_gov.headline"),
-        start_item_heading=_("eligibility.pages.start.login_gov.start_item.heading"),
-        start_item_details=_("eligibility.pages.start.login_gov.start_item.details"),
-        start_help_anchor="login-gov",
-        unverified_title=_("eligibility.pages.unverified.title"),
-        unverified_blurb=_("eligibility.pages.unverified.p[0]"),
-        eligibility_confirmed_item_heading=_("enrollment.pages.index.login_gov.eligibility_confirmed_item.heading"),
-        eligibility_confirmed_item_details=_(
-            "enrollment.pages.index.login_gov.eligibility_confirmed_item.details%(transit_agency_short_name)s"
-        ),
-        enrollment_success_confirm_item_details=_("enrollment.pages.success.login_gov.confirm_item.details"),
-        enrollment_success_expiry_item_heading=None,
-        enrollment_success_expiry_item_details=None,
+        selection_label_template="eligibility/includes/selection-label--senior.html",
+        start_template="eligibility/start--senior.html",
+    )
+
+    sbmtd_senior_verifier = EligibilityVerifier.objects.create(
+        name=os.environ.get("SBMTD_OAUTH_VERIFIER_NAME", "OAuth claims via Login.gov (SBMTD)"),
+        active=os.environ.get("SBMTD_OAUTH_VERIFIER_ACTIVE", "False").lower() == "true",
+        eligibility_type=sbmtd_senior_type,
+        auth_provider=senior_auth_provider,
+        selection_label_template="eligibility/includes/selection-label--senior.html",
+        start_template="eligibility/start--senior.html",
     )
 
     PaymentProcessor = app.get_model("core", "PaymentProcessor")
@@ -304,6 +254,23 @@ PEM DATA
         group_endpoint="group",
     )
 
+    sbmtd_payment_processor = PaymentProcessor.objects.create(
+        name=os.environ.get("SBMTD_PAYMENT_PROCESSOR_NAME", "Test Payment Processor"),
+        api_base_url=os.environ.get("SBMTD_PAYMENT_PROCESSOR_API_BASE_URL", "http://server:8000"),
+        api_access_token_endpoint=os.environ.get("SBMTD_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_ENDPOINT", "access-token"),
+        api_access_token_request_key=os.environ.get("SBMTD_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_KEY", "request_access"),
+        api_access_token_request_val=os.environ.get("SBMTD_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_VAL", "REQUEST_ACCESS"),
+        card_tokenize_url=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_URL", "http://server:8000/static/tokenize.js"),
+        card_tokenize_func=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_FUNC", "tokenize"),
+        card_tokenize_env=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_ENV", "test"),
+        client_cert=sbmtd_payment_processor_client_cert,
+        client_cert_private_key=sbmtd_payment_processor_client_cert_private_key,
+        client_cert_root_ca=sbmtd_payment_processor_client_cert_root_ca,
+        customer_endpoint="customer",
+        customers_endpoint="customers",
+        group_endpoint="group",
+    )
+
     TransitAgency = app.get_model("core", "TransitAgency")
 
     # load the sample data from a JSON file so that it can be accessed by Cypress as well
@@ -324,10 +291,13 @@ PEM DATA
         public_key=client_public_key,
         jws_signing_alg=os.environ.get("MST_AGENCY_JWS_SIGNING_ALG", "RS256"),
         payment_processor=mst_payment_processor,
-        eligibility_index_intro=_("eligibility.pages.index.p[0].mst"),
+        index_template="core/index--mst.html",
+        eligibility_index_template="eligibility/index--mst.html",
+        enrollment_success_template="enrollment/success--mst.html",
+        help_template="core/includes/help--mst.html",
     )
     mst_agency.eligibility_types.set([mst_senior_type, mst_veteran_type, mst_courtesy_card_type])
-    mst_agency.eligibility_verifiers.set([mst_oauth_claims_verifier, mst_veteran_verifier, mst_courtesy_card_verifier])
+    mst_agency.eligibility_verifiers.set([mst_senior_verifier, mst_veteran_verifier, mst_courtesy_card_verifier])
 
     sacrt_agency = TransitAgency.objects.create(
         slug="sacrt",
@@ -342,10 +312,32 @@ PEM DATA
         public_key=client_public_key,
         jws_signing_alg=os.environ.get("SACRT_AGENCY_JWS_SIGNING_ALG", "RS256"),
         payment_processor=sacrt_payment_processor,
-        eligibility_index_intro=_("eligibility.pages.index.p[0].sacrt"),
+        index_template="core/index--sacrt.html",
+        eligibility_index_template="eligibility/index--sacrt.html",
+        enrollment_success_template="enrollment/success--sacrt.html",
     )
     sacrt_agency.eligibility_types.set([sacrt_senior_type])
-    sacrt_agency.eligibility_verifiers.set([sacrt_oauth_claims_verifier])
+    sacrt_agency.eligibility_verifiers.set([sacrt_senior_verifier])
+
+    sbmtd_agency = TransitAgency.objects.create(
+        slug="sbmtd",
+        short_name=os.environ.get("SBMTD_AGENCY_SHORT_NAME", "SBMTD (sample)"),
+        long_name=os.environ.get("SBMTD_AGENCY_LONG_NAME", "Santa Barbara MTD (sample)"),
+        agency_id="sbmtd",
+        merchant_id=os.environ.get("SBMTD_AGENCY_MERCHANT_ID", "sbmtd"),
+        info_url="https://sbmtd.gov/taptoride/",
+        phone="805-963-3366",
+        active=os.environ.get("SBMTD_AGENCY_ACTIVE", "True").lower() == "true",
+        private_key=client_private_key,
+        public_key=client_public_key,
+        jws_signing_alg=os.environ.get("SBMTD_AGENCY_JWS_SIGNING_ALG", "RS256"),
+        payment_processor=sbmtd_payment_processor,
+        index_template="core/index--sbmtd.html",
+        eligibility_index_template="eligibility/index--sbmtd.html",
+        enrollment_success_template="enrollment/success--sbmtd.html",
+    )
+    sbmtd_agency.eligibility_types.set([sbmtd_senior_type])
+    sbmtd_agency.eligibility_verifiers.set([sbmtd_senior_verifier])
 
 
 class Migration(migrations.Migration):

@@ -7,7 +7,6 @@
 
 {% if widget.wrap_label %}
   <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}" class="radio-label"{% endif %}>
-    <span class="d-block h3">{{ widget.label }}</span>
-    {% if widget.description %}<span class="d-block pt-1">{{ widget.description }}</span>{% endif %}
+    {% include widget.selection_label_template %}
   </label>
 {% endif %}

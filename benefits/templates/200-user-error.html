@@ -1,0 +1,21 @@
+{% extends "error.html" %}
+{% load i18n %}
+
+{% block title %}
+  {% translate "Start over" %}
+{% endblock title %}
+
+{% block headline %}
+  {% translate "You may have reached this page on accident." %}
+{% endblock headline %}
+
+{% block paragraphs %}
+  <p>
+    {% translate "To get started with Cal-ITP Benefits please click the button below, and you will be directed to the beginning of the enrollment process." %}
+  </p>
+{% endblock paragraphs %}
+
+{% block button %}
+  {% translate "Start Here" as button_text %}
+  {% include "core/includes/button--index.html" with button_text=button_text %}
+{% endblock button %}

@@ -34,7 +34,35 @@ def test_PemData_data_remote(model_PemData, mocker):
 
 
 @pytest.mark.django_db
-def test_EligibilityType_str(model_EligibilityType):
+def test_model_AuthProvider(model_AuthProvider):
+    assert not model_AuthProvider.supports_claims_verification
+    assert model_AuthProvider.supports_sign_out
+
+
+@pytest.mark.django_db
+def test_model_AuthProvider_with_verification(model_AuthProvider_with_verification):
+    assert model_AuthProvider_with_verification.supports_claims_verification
+
+
+@pytest.mark.django_db
+def test_model_AuthProvider_with_verification_no_sign_out(model_AuthProvider_with_verification_no_sign_out):
+    assert model_AuthProvider_with_verification_no_sign_out.supports_claims_verification
+    assert not model_AuthProvider_with_verification_no_sign_out.supports_sign_out
+
+
+@pytest.mark.django_db
+def test_model_AuthProvider_without_verification(model_AuthProvider_without_verification):
+    assert not model_AuthProvider_without_verification.supports_claims_verification
+
+
+@pytest.mark.django_db
+def test_model_AuthProvider_without_verification_no_sign_out(model_AuthProvider_without_verification_no_sign_out):
+    assert not model_AuthProvider_without_verification_no_sign_out.supports_claims_verification
+    assert not model_AuthProvider_without_verification_no_sign_out.supports_sign_out
+
+
+@pytest.mark.django_db
+def test_model_EligibilityType_str(model_EligibilityType):
     assert str(model_EligibilityType) == model_EligibilityType.label
 
 
@@ -93,6 +121,28 @@ def test_EligibilityVerifier_str(model_EligibilityVerifier):
     assert str(model_EligibilityVerifier) == model_EligibilityVerifier.name
 
 
+class TestFormClass:
+    """A class for testing EligibilityVerifier form references."""
+
+    def __init__(self, *args, **kwargs):
+        self.args = args
+        self.kwargs = kwargs
+
+
+@pytest.mark.django_db
+def test_EligibilityVerifier_form_instance(model_EligibilityVerifier):
+    model_EligibilityVerifier.form_class = f"{__name__}.TestFormClass"
+    model_EligibilityVerifier.save()
+
+    args = (1, "2")
+    kwargs = {"one": 1, "two": "2"}
+    form_instance = model_EligibilityVerifier.form_instance(*args, **kwargs)
+
+    assert isinstance(form_instance, TestFormClass)
+    assert form_instance.args == args
+    assert form_instance.kwargs == kwargs
+
+
 @pytest.mark.django_db
 def test_EligibilityVerifier_by_id_matching(model_EligibilityVerifier):
     verifier = EligibilityVerifier.by_id(model_EligibilityVerifier.id)
@@ -114,7 +164,6 @@ def test_EligibilityVerifier_with_AuthProvider_with_verification(
 
     assert model_EligibilityVerifier.is_auth_required
     assert model_EligibilityVerifier.uses_auth_verification
-    assert model_EligibilityVerifier.supports_sign_out
 
 
 @pytest.mark.django_db
@@ -125,7 +174,6 @@ def test_EligibilityVerifier_with_AuthProvider_with_verification_no_sign_out(
 
     assert model_EligibilityVerifier.is_auth_required
     assert model_EligibilityVerifier.uses_auth_verification
-    assert not model_EligibilityVerifier.supports_sign_out
 
 
 @pytest.mark.django_db
@@ -136,7 +184,6 @@ def test_EligibilityVerifier_with_AuthProvider_without_verification(
 
     assert model_EligibilityVerifier.is_auth_required
     assert not model_EligibilityVerifier.uses_auth_verification
-    assert model_EligibilityVerifier.supports_sign_out
 
 
 @pytest.mark.django_db
@@ -147,7 +194,6 @@ def test_EligibilityVerifier_with_AuthProvider_without_verification_no_sign_out(
 
     assert model_EligibilityVerifier.is_auth_required
     assert not model_EligibilityVerifier.uses_auth_verification
-    assert not model_EligibilityVerifier.supports_sign_out
 
 
 @pytest.mark.django_db

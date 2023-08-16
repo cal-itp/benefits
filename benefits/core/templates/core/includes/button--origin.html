@@ -1,0 +1,5 @@
+{% load i18n %}
+
+{% translate "Return Home" as default_button_text %}
+
+<a href="{{ origin }}" class="btn btn-lg btn-primary">{{ button_text | default:default_button_text }}</a>

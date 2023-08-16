@@ -1,0 +1,40 @@
+{% extends "core/includes/modal.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block modal-content %}
+  <h2 class="me-4 me-md-0">
+    {% translate "Learn more about" %}
+    <img class="icon" width="197" height="26" src="{% static "img/login-gov-logo.svg" %}" alt="{% translate "Login.gov" context "image alt text" %}" />
+  </h2>
+  <div class="row">
+    <h3 class="pt-4">{% translate "What is Login.gov?" %}</h3>
+    <p class="pt-1">
+      {% blocktranslate trimmed %}
+        Login.gov is a service that offers secure and private online access to government programs, such as federal
+        benefits, services and applications. With a Login.gov account, you can sign into multiple government websites with
+        the same email address and password.
+      {% endblocktranslate %}
+    </p>
+
+    <h3 class="pt-4">{% translate "Why is Cal-ITP Benefits using Login.gov?" %}</h3>
+    <p class="pt-1">
+      {% blocktranslate trimmed %}
+        Login.gov uses two-factor authentication, and stronger passwords, that meet new National Institute of Standards of
+        Technology requirements for secure validation and verification. By using Login.gov, you’ll get an extra layer of
+        security to help protect your account against password compromises.
+      {% endblocktranslate %}
+    </p>
+
+    <p class="pt-4">
+      {% blocktranslate trimmed %}
+        For more information on Login.gov, please visit the
+        <a href="https://login.gov/help/" target="_blank" rel="noopener noreferrer">Login.gov Help Center</a>.
+      {% endblocktranslate %}
+    </p>
+
+    <p class="pt-4 d-block d-sm-none">
+      <a href="#" data-bs-dismiss="modal" aria-label="Close">{% translate "Go back" %}</a>
+    </p>
+  </div>
+{% endblock modal-content %}

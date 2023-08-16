@@ -1,6 +1,7 @@
 """
 The core application: Common model definitions.
 """
+import importlib
 import logging
 
 from django.conf import settings
@@ -42,14 +43,22 @@ class AuthProvider(models.Model):
     """An entity that provides authentication for eligibility verifiers."""
 
     id = models.AutoField(primary_key=True)
-    sign_in_button_label = models.TextField()
-    sign_out_button_label = models.TextField(null=True)
+    sign_out_button_template = models.TextField(null=True)
+    sign_out_link_template = models.TextField(null=True)
     client_name = models.TextField()
     client_id = models.TextField()
     authority = models.TextField()
     scope = models.TextField(null=True)
     claim = models.TextField(null=True)
     scheme = models.TextField()
+
+    @property
+    def supports_claims_verification(self):
+        return bool(self.scope) and bool(self.claim)
+
+    @property
+    def supports_sign_out(self):
+        return bool(self.sign_out_button_template) or bool(self.sign_out_link_template)
 
 
 class EligibilityType(models.Model):
@@ -87,8 +96,8 @@ class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""
 
     id = models.AutoField(primary_key=True)
-    bullets = models.JSONField(null=True)
     name = models.TextField()
+    active = models.BooleanField(default=False)
     api_url = models.TextField(null=True)
     api_auth_header = models.TextField(null=True)
     api_auth_key = models.TextField(null=True)
@@ -102,39 +111,10 @@ class EligibilityVerifier(models.Model):
     # The JWS-compatible signing algorithm
     jws_signing_alg = models.TextField(null=True)
     auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True)
-    selection_label = models.TextField()
-    selection_label_description = models.TextField(null=True)
-    start_title = models.TextField()
-    start_headline = models.TextField()
-    start_item_heading = models.TextField()
-    start_item_details = models.TextField()
-    start_item_secondary_details = models.TextField()
-    start_help_anchor = models.TextField()
-    form_title = models.TextField(null=True)
-    form_headline = models.TextField(null=True)
-    form_blurb = models.TextField(null=True)
-    form_sub_label = models.TextField(null=True)
-    form_sub_help_text = models.TextField(null=True)
-    form_sub_placeholder = models.TextField(null=True)
-    # A regular expression used to validate the 'sub' API field before sending to this verifier
-    form_sub_pattern = models.TextField(null=True)
-    # Input mode can be "numeric", "tel", "search", etc. to override default "text" keyboard on mobile devices
-    form_input_mode = models.TextField(null=True)
-    # The maximum length accepted for the 'sub' API field before sending to this verifier
-    form_max_length = models.PositiveSmallIntegerField(null=True)
-    form_name_label = models.TextField(null=True)
-    form_name_help_text = models.TextField(null=True)
-    form_name_placeholder = models.TextField(null=True)
-    # The maximum length accepted for the 'name' API field before sending to this verifier
-    form_name_max_length = models.PositiveSmallIntegerField(null=True)
-    unverified_title = models.TextField()
-    unverified_blurb = models.TextField()
-    eligibility_confirmed_item_heading = models.TextField(null=True)
-    eligibility_confirmed_item_details = models.TextField(null=True)
-    # Fields for the dynamic enrollment success message
-    enrollment_success_confirm_item_details = models.TextField()
-    enrollment_success_expiry_item_heading = models.TextField(null=True)
-    enrollment_success_expiry_item_details = models.TextField(null=True)
+    selection_label_template = models.TextField()
+    start_template = models.TextField(null=True)
+    # reference to a form class used by this Verifier, e.g. benefits.app.forms.FormClass
+    form_class = models.TextField(null=True)
 
     def __str__(self):
         return self.name
@@ -152,11 +132,18 @@ class EligibilityVerifier(models.Model):
     @property
     def uses_auth_verification(self):
         """True if this Verifier verifies via the auth provider. False otherwise."""
-        return self.is_auth_required and self.auth_provider.scope and self.auth_provider.claim
+        return self.is_auth_required and self.auth_provider.supports_claims_verification
 
-    @property
-    def supports_sign_out(self):
-        return bool(self.is_auth_required and self.auth_provider.sign_out_button_label)
+    def form_instance(self, *args, **kwargs):
+        """Return an instance of this verifier's form, or None."""
+        if not bool(self.form_class):
+            return None
+
+        # inspired by https://stackoverflow.com/a/30941292
+        module_name, class_name = self.form_class.rsplit(".", 1)
+        FormClass = getattr(importlib.import_module(module_name), class_name)
+
+        return FormClass(*args, **kwargs)
 
     @staticmethod
     def by_id(id):
@@ -212,7 +199,10 @@ class TransitAgency(models.Model):
     public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
     # The JWS-compatible signing algorithm
     jws_signing_alg = models.TextField()
-    eligibility_index_intro = models.TextField()
+    index_template = models.TextField()
+    eligibility_index_template = models.TextField()
+    enrollment_success_template = models.TextField()
+    help_template = models.TextField(null=True)
 
     def __str__(self):
         return self.long_name

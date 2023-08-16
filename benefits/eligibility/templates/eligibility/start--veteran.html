@@ -1,0 +1,26 @@
+{% extends "eligibility/start.html" %}
+{% load i18n %}
+
+{% block page-title %}
+  {% translate "Veterans benefit overview" %}
+{% endblock page-title %}
+
+{% block headline %}
+  <div class="col-lg-8">
+    <h1>{% translate "You selected a Veteran transit benefit." %}</h1>
+  </div>
+{% endblock headline %}
+
+{% block media-item %}
+  {% include "eligibility/includes/media-item--idcardcheck--start--veteran.html" %}
+{% endblock media-item %}
+
+{% block call-to-action %}
+  <div class="row d-flex justify-content-lg-end">
+    <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
+      {% url "oauth:login" as button_url %}
+      {% translate "Continue to VA.gov" as button_text %}
+      <a href="{{ button_url }}" class="btn btn-lg btn-primary" role="button">{{ button_text }}</a>
+    </div>
+  </div>
+{% endblock call-to-action %}

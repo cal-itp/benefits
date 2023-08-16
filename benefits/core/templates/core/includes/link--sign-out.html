@@ -1,0 +1,15 @@
+{% if authentication.logged_in %}
+  {% url "oauth:logout" as signout_url %}
+  <div class="w-100 position-absolute">
+    <div class="container">
+      <div class="row nav-button-row">
+        <div class="col-12 d-flex align-items-center justify-content-end">
+          <a class="signout-link" href="{{ signout_url }}">
+            {% block button_text %}
+            {% endblock button_text %}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

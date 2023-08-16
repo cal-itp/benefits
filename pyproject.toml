@@ -6,12 +6,12 @@ build-backend = "setuptools.build_meta"
 classifiers = ["Programming Language :: Python :: 3 :: Only"]
 description = "Cal-ITP Benefits is an application that enables automated eligibility verification and enrollment for transit benefits onto customers’ existing contactless bank (credit/debit) cards."
 dependencies = [
-    "Authlib==1.2.0",
-    "Django==4.2.2",
+    "Authlib==1.2.1",
+    "Django==4.2.4",
     "django-csp==3.7",
     "eligibility-api==2023.6.1",
     "requests==2.31.0",
-    "sentry-sdk==1.26.0",
+    "sentry-sdk==1.29.2",
     "six==1.16.0",
 ]
 dynamic = ["version"]

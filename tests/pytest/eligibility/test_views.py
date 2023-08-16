@@ -4,30 +4,18 @@ import pytest
 
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 import benefits.core.session
-from benefits.eligibility.forms import EligibilityVerifierSelectionForm
+from benefits.eligibility.forms import EligibilityVerifierSelectionForm, EligibilityVerificationForm
 from benefits.eligibility.views import (
     ROUTE_INDEX,
     ROUTE_START,
-    ROUTE_LOGIN,
     ROUTE_CONFIRM,
     ROUTE_ENROLLMENT,
     ROUTE_UNVERIFIED,
-    TEMPLATE_INDEX,
     TEMPLATE_CONFIRM,
     TEMPLATE_UNVERIFIED,
 )
 
 import benefits.eligibility.views
-
-
-@pytest.fixture
-def form_data():
-    return {"sub": "A1234567", "name": "Person"}
-
-
-@pytest.fixture
-def invalid_form_data():
-    return {"invalid": "data"}
 
 
 @pytest.fixture
@@ -50,9 +38,44 @@ def session_logout_spy(mocker):
 
 
 @pytest.fixture
-def mocked_verifier_form(mocker):
+def mocked_verifier_selection_form(mocker):
     mock_form = mocker.Mock(spec=EligibilityVerifierSelectionForm)
     mocker.patch("benefits.eligibility.views.forms.EligibilityVerifierSelectionForm", return_value=mock_form)
+
+
+@pytest.fixture
+def form_data():
+    return {"sub": "A1234567", "name": "Person"}
+
+
+@pytest.fixture
+def invalid_form_data():
+    return {"invalid": "data"}
+
+
+class TestVerificationForm(EligibilityVerificationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(
+            "title",
+            "headline",
+            "blurb",
+            "name_label",
+            "name_placeholder",
+            "name_help_text",
+            "sub_label",
+            "sub_placeholder",
+            "sub_help_text",
+            *args,
+            **kwargs,
+        )
+
+
+@pytest.fixture
+def model_EligibilityVerifier_with_form_class(mocker, model_EligibilityVerifier):
+    model_EligibilityVerifier.form_class = f"{__name__}.TestVerificationForm"
+    model_EligibilityVerifier.save()
+    mocker.patch("benefits.eligibility.views.session.verifier", return_value=model_EligibilityVerifier)
+    return model_EligibilityVerifier
 
 
 @pytest.mark.django_db
@@ -62,18 +85,19 @@ def test_index_get_agency_multiple_verifiers(
 ):
     # override the mocked session agency with a mock agency that has multiple verifiers
     mock_agency = mocker.Mock(spec=model_TransitAgency)
-    mock_agency.eligibility_verifiers.all.return_value = [model_EligibilityVerifier, model_EligibilityVerifier]
+    mock_agency.eligibility_verifiers.filter.return_value = [model_EligibilityVerifier, model_EligibilityVerifier]
     mock_agency.eligibility_verifiers.count.return_value = 2
+    mock_agency.index_url = "/agency"
+    mock_agency.eligibility_index_template = "eligibility/index.html"
     mocked_session_agency.return_value = mock_agency
 
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
-    assert "page" in response.context_data
-    assert len(response.context_data["page"].forms) > 0
-    assert isinstance(response.context_data["page"].forms[0], EligibilityVerifierSelectionForm)
+    assert response.template_name == mock_agency.eligibility_index_template
+    assert "form" in response.context_data
+    assert isinstance(response.context_data["form"], EligibilityVerifierSelectionForm)
 
 
 @pytest.mark.django_db
@@ -83,18 +107,19 @@ def test_index_get_agency_single_verifier(
 ):
     # override the mocked session agency with a mock agency that has a single verifier
     mock_agency = mocker.Mock(spec=model_TransitAgency)
-    mock_agency.eligibility_verifiers.all.return_value = [model_EligibilityVerifier]
+    mock_agency.eligibility_verifiers.filter.return_value = [model_EligibilityVerifier]
     mock_agency.eligibility_verifiers.count.return_value = 1
+    mock_agency.index_url = "/agency"
+    mock_agency.eligibility_index_template = "eligibility/index.html"
     mocked_session_agency.return_value = mock_agency
 
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
-    assert "page" in response.context_data
-    assert len(response.context_data["page"].forms) > 0
-    assert isinstance(response.context_data["page"].forms[0], EligibilityVerifierSelectionForm)
+    assert response.template_name == mock_agency.eligibility_index_template
+    assert "form" in response.context_data
+    assert isinstance(response.context_data["form"], EligibilityVerifierSelectionForm)
 
 
 @pytest.mark.django_db
@@ -115,7 +140,6 @@ def test_index_post_invalid_form(client):
     response = client.post(path, {"invalid": "data"})
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
 
 
 @pytest.mark.django_db
@@ -142,7 +166,7 @@ def test_index_calls_session_logout(client, session_logout_spy):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_form", "mocked_session_verifier_auth_required")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_selection_form", "mocked_session_verifier_auth_required")
 def test_start_verifier_auth_required_logged_in(mocker, client):
     mock_session = mocker.patch("benefits.eligibility.views.session")
     mock_session.logged_in.return_value = True
@@ -151,13 +175,10 @@ def test_start_verifier_auth_required_logged_in(mocker, client):
     response = client.get(path)
 
     assert response.status_code == 200
-    assert "page" in response.context_data
-    assert len(response.context_data["page"].buttons) == 1
-    assert response.context_data["page"].buttons[0].url == reverse(ROUTE_CONFIRM)
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_form", "mocked_session_verifier_auth_required")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_selection_form", "mocked_session_verifier_auth_required")
 def test_start_verifier_auth_required_not_logged_in(mocker, client):
     mock_session = mocker.patch("benefits.eligibility.views.session")
     mock_session.logged_in.return_value = False
@@ -166,21 +187,17 @@ def test_start_verifier_auth_required_not_logged_in(mocker, client):
     response = client.get(path)
 
     assert response.status_code == 200
-    assert "page" in response.context_data
-    assert len(response.context_data["page"].buttons) == 1
-    assert response.context_data["page"].buttons[0].url == reverse(ROUTE_LOGIN)
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_verifier_form", "mocked_session_verifier_auth_not_required")
+@pytest.mark.usefixtures(
+    "mocked_session_agency", "mocked_verifier_selection_form", "mocked_session_verifier_auth_not_required"
+)
 def test_start_verifier_auth_not_required(client):
     path = reverse(ROUTE_START)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert "page" in response.context_data
-    assert len(response.context_data["page"].buttons) == 1
-    assert response.context_data["page"].buttons[0].url == reverse(ROUTE_CONFIRM)
 
 
 @pytest.mark.django_db
@@ -194,11 +211,8 @@ def test_start_without_verifier(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier_auth_not_required")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier")
 def test_confirm_get_unverified(mocker, client):
-    mock_page = mocker.patch("benefits.eligibility.views.viewmodels.Page")
-    mock_page.return_value.context_dict.return_value = {"page": {"title": "page title", "headline": "page headline"}}
-
     path = reverse(ROUTE_CONFIRM)
     response = client.get(path)
 
@@ -246,7 +260,7 @@ def test_confirm_get_oauth_unverified(mocker, client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EligibilityVerifier_with_form_class")
 def test_confirm_post_invalid_form(client, invalid_form_data, mocked_analytics_module):
     path = reverse(ROUTE_CONFIRM)
     response = client.post(path, invalid_form_data)
@@ -257,7 +271,9 @@ def test_confirm_post_invalid_form(client, invalid_form_data, mocked_analytics_m
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_analytics_module", "mocked_eligibility_auth_request")
+@pytest.mark.usefixtures(
+    "mocked_analytics_module", "mocked_eligibility_auth_request", "model_EligibilityVerifier_with_form_class"
+)
 def test_confirm_post_recaptcha_fail(mocker, client, invalid_form_data):
     mocker.patch("benefits.eligibility.views.recaptcha.has_error", return_value=True)
     messages = mocker.spy(benefits.eligibility.views, "messages")
@@ -271,7 +287,7 @@ def test_confirm_post_recaptcha_fail(mocker, client, invalid_form_data):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EligibilityVerifier_with_form_class")
 def test_confirm_post_valid_form_eligibility_error(mocker, client, form_data, mocked_analytics_module):
     mocker.patch("benefits.eligibility.verify.eligibility_from_api", return_value=None)
 
@@ -284,7 +300,7 @@ def test_confirm_post_valid_form_eligibility_error(mocker, client, form_data, mo
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EligibilityVerifier_with_form_class")
 def test_confirm_post_valid_form_eligibility_unverified(mocker, client, form_data):
     mocker.patch("benefits.eligibility.verify.eligibility_from_api", return_value=[])
 
@@ -296,7 +312,7 @@ def test_confirm_post_valid_form_eligibility_unverified(mocker, client, form_dat
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request")
+@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EligibilityVerifier_with_form_class")
 def test_confirm_post_valid_form_eligibility_verified(
     mocker, client, form_data, mocked_session_eligibility, mocked_session_update, mocked_analytics_module
 ):
