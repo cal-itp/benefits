@@ -97,6 +97,7 @@ class EligibilityVerifier(models.Model):
 
     id = models.AutoField(primary_key=True)
     name = models.TextField()
+    active = models.BooleanField(default=False)
     api_url = models.TextField(null=True)
     api_auth_header = models.TextField(null=True)
     api_auth_key = models.TextField(null=True)
