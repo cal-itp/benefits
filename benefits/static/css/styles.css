@@ -280,6 +280,7 @@ main {
 }
 
 #skip-to-content {
+  color: #005681;
   left: unset !important;
   transform: none;
   overflow: hidden;
