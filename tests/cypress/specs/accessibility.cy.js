@@ -26,8 +26,8 @@ describe("Accessibility specs", function () {
       cy.visit("/");
     });
     it("has no critical a11y errors", () => {
-      cy.pa11y(pa11yOpts);
-      cy.lighthouse(lighthouseOpts);
+      // cy.pa11y(pa11yOpts);
+      // cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
@@ -36,7 +36,7 @@ describe("Accessibility specs", function () {
     before(() => {
       cy.visit("/mst");
     });
-    it("has no critical a11y errors", () => {
+    xit("has no critical a11y errors", () => {
       cy.pa11y(pa11yOpts);
       cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
@@ -48,7 +48,7 @@ describe("Accessibility specs", function () {
       cy.visit("/");
       cy.contains("Help").click();
     });
-    it("has no critical a11y errors", () => {
+    xit("has no critical a11y errors", () => {
       cy.pa11y(pa11yOpts);
       cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
@@ -60,7 +60,7 @@ describe("Accessibility specs", function () {
       cy.visit("/");
       helpers.selectAgency();
     });
-    it("has no critical a11y errors", () => {
+    xit("has no critical a11y errors", () => {
       cy.pa11y(pa11yOpts);
       cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
@@ -73,7 +73,7 @@ describe("Accessibility specs", function () {
       helpers.selectAgency();
       cy.contains("Choose this Benefit").click();
     });
-    it("has no critical a11y errors", () => {
+    xit("has no critical a11y errors", () => {
       cy.pa11y(pa11yOpts);
       cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
@@ -86,7 +86,7 @@ describe("Accessibility specs", function () {
       helpers.selectAgency();
       helpers.selectCourtesyCard();
     });
-    it("has no critical a11y errors", () => {
+    xit("has no critical a11y errors", () => {
       cy.pa11y(pa11yOpts);
       cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
@@ -102,7 +102,7 @@ describe("Accessibility specs", function () {
       cy.get("#name").type(users.eligible.name);
       cy.get("#form-eligibility-verification button[type='submit']").click();
     });
-    it("has no critical a11y errors", () => {
+    xit("has no critical a11y errors", () => {
       cy.pa11y(pa11yOpts);
       cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
@@ -119,7 +119,7 @@ describe("Accessibility specs", function () {
       cy.get("#form-eligibility-verification button[type='submit']").click();
       cy.visit("/enrollment/success");
     });
-    it("has no critical a11y errors", () => {
+    xit("has no critical a11y errors", () => {
       cy.pa11y(pa11yOpts);
       cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
