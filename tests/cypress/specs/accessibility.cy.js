@@ -12,7 +12,6 @@ const pa11yOpts = {
   threshold: 4, // Color Contrast for Skip Nav, some other text/buttons
 };
 const lighthouseOpts = {
-  performance: 85,
   accessibility: 100,
   "best-practices": 100,
 };
@@ -39,6 +38,7 @@ describe("Accessibility specs", function () {
     });
     it("has no critical a11y errors", () => {
       cy.pa11y(pa11yOpts);
+      cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
@@ -50,6 +50,7 @@ describe("Accessibility specs", function () {
     });
     it("has no critical a11y errors", () => {
       cy.pa11y(pa11yOpts);
+      cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
@@ -61,6 +62,7 @@ describe("Accessibility specs", function () {
     });
     it("has no critical a11y errors", () => {
       cy.pa11y(pa11yOpts);
+      cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
@@ -73,6 +75,7 @@ describe("Accessibility specs", function () {
     });
     it("has no critical a11y errors", () => {
       cy.pa11y(pa11yOpts);
+      cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
@@ -85,6 +88,7 @@ describe("Accessibility specs", function () {
     });
     it("has no critical a11y errors", () => {
       cy.pa11y(pa11yOpts);
+      cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
@@ -100,6 +104,7 @@ describe("Accessibility specs", function () {
     });
     it("has no critical a11y errors", () => {
       cy.pa11y(pa11yOpts);
+      cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
@@ -116,6 +121,7 @@ describe("Accessibility specs", function () {
     });
     it("has no critical a11y errors", () => {
       cy.pa11y(pa11yOpts);
+      cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
