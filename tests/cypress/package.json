@@ -12,6 +12,7 @@
   "license": "AGPL-3.0-or-later",
   "private": true,
   "devDependencies": {
+    "@cypress-audit/pa11y": "^1.4.2",
     "axe-core": "^4.7.2",
     "cypress": "^12.17.4",
     "cypress-axe": "^1.4.0"

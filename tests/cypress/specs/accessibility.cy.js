@@ -1,7 +1,12 @@
 import "cypress-axe";
+import "@cypress-audit/pa11y/commands";
 
 const helpers = require("../plugins/helpers");
 const users = require("../fixtures/users.json");
+const opts = {
+  ignore: ["WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"],
+  threshold: 4,
+};
 
 describe("Accessibility specs", function () {
   beforeEach(() => {
@@ -13,6 +18,7 @@ describe("Accessibility specs", function () {
       cy.visit("/");
     });
     it("has no critical a11y errors", () => {
+      cy.pa11y(opts);
       cy.checkA11y(null, {
         includedImpacts: ["critical"],
       });
@@ -24,6 +30,7 @@ describe("Accessibility specs", function () {
       cy.visit("/mst");
     });
     it("has no critical a11y errors", () => {
+      cy.pa11y(opts);
       cy.checkA11y(null, {
         includedImpacts: ["critical"],
       });
@@ -36,6 +43,7 @@ describe("Accessibility specs", function () {
       cy.contains("Help").click();
     });
     it("has no critical a11y errors", () => {
+      cy.pa11y(opts);
       cy.checkA11y(null, {
         includedImpacts: ["critical"],
       });
@@ -48,6 +56,7 @@ describe("Accessibility specs", function () {
       helpers.selectAgency();
     });
     it("has no critical a11y errors", () => {
+      cy.pa11y(opts);
       cy.checkA11y(null, {
         includedImpacts: ["critical"],
       });
@@ -61,6 +70,7 @@ describe("Accessibility specs", function () {
       cy.contains("Choose this Benefit").click();
     });
     it("has no critical a11y errors", () => {
+      cy.pa11y(opts);
       cy.checkA11y(null, {
         includedImpacts: ["critical"],
       });
@@ -74,6 +84,7 @@ describe("Accessibility specs", function () {
       helpers.selectCourtesyCard();
     });
     it("has no critical a11y errors", () => {
+      cy.pa11y(opts);
       cy.checkA11y(null, {
         includedImpacts: ["critical"],
       });
@@ -90,6 +101,7 @@ describe("Accessibility specs", function () {
       cy.get("#form-eligibility-verification button[type='submit']").click();
     });
     it("has no critical a11y errors", () => {
+      cy.pa11y(opts);
       cy.checkA11y(null, {
         includedImpacts: ["critical"],
       });
@@ -107,6 +119,7 @@ describe("Accessibility specs", function () {
       cy.visit("/enrollment/success");
     });
     it("has no critical a11y errors", () => {
+      cy.pa11y(opts);
       cy.checkA11y(null, {
         includedImpacts: ["critical"],
       });
