@@ -5,8 +5,8 @@ import "@cypress-audit/lighthouse/commands";
 const helpers = require("../plugins/helpers");
 const users = require("../fixtures/users.json");
 const pa11yOpts = {
-  ignore: ["WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"],
-  threshold: 4,
+  ignore: ["WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"], // Color Contrast
+  threshold: 4, // Color Contrast for Skip Nav, some other text/buttons
 };
 const lighthouseOpts = {
   performance: 85,
