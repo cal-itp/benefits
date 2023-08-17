@@ -1,5 +1,6 @@
 const { defineConfig } = require("cypress");
 const { pa11y, prepareAudit } = require("@cypress-audit/pa11y");
+const { lighthouse } = require("@cypress-audit/lighthouse");
 
 module.exports = defineConfig({
   downloadsFolder: "downloads",
@@ -17,6 +18,7 @@ module.exports = defineConfig({
       });
 
       on("task", {
+        lighthouse: lighthouse(),
         pa11y: pa11y(),
       });
 
