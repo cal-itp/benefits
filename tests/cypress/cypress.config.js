@@ -25,5 +25,6 @@ module.exports = defineConfig({
       });
     },
     specPattern: "specs/**/*.cy.{js,jsx,ts,tsx}",
+    supportFile: "support/e2e.js",
   },
 });
