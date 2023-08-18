@@ -18,12 +18,7 @@ jobs:
           touch .env
           docker compose up --detach client server
 
-      - name: Run Cypress test, refactor
-        runs-on: ubuntu-latest
-        uses: actions/checkout@v2
-        # Docker image with Cypress pre-installed
-        # https://github.com/cypress-io/cypress-docker-images/tree/master/included
-        container: cypress/included:10.0.2
+      - name: Cypress tests
         run: cd tests/cypress && npm install && CYPRESS_baseUrl=http://localhost:8000 npm test
 
       - uses: actions/upload-artifact@v3
