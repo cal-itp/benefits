@@ -21,9 +21,10 @@ describe("Accessibility specs", function () {
   context("Landing page", function () {
     before(() => {
       cy.visit("/");
-      cy.injectAxe();
     });
     it("has no critical a11y errors", () => {
+      cy.injectAxe();
+
       cy.checkA11y();
     });
     it("has no pa11y errors", () => {
