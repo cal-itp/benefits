@@ -21,7 +21,7 @@ jobs:
       - name: Run Cypress test, refactor
         run: |
           cd tests/cypress
-          CYPRESS_baseUrl=http://localhost:8000 npx cypress run --browser=chrome"
+          CYPRESS_baseUrl=http://localhost:8000 npx cypress run --browser=chrome
 
       - uses: actions/upload-artifact@v3
         if: failure()
