@@ -1,19 +1,9 @@
 import "cypress-axe";
-import "@cypress-audit/pa11y/commands";
-import "@cypress-audit/lighthouse/commands";
 
 const helpers = require("../plugins/helpers");
 const users = require("../fixtures/users.json");
-const a11yOpts = {
+const opts = {
   includedImpacts: ["critical"],
-};
-const pa11yOpts = {
-  ignore: ["WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"], // Color Contrast
-  threshold: 4, // Color Contrast for Skip Nav, some other text/buttons
-};
-const lighthouseOpts = {
-  accessibility: 100,
-  "best-practices": 100,
 };
 
 describe("Accessibility specs", function () {
@@ -32,7 +22,7 @@ describe("Accessibility specs", function () {
       cy.visit("/mst");
     });
     xit("has no critical a11y errors", () => {
-      cy.checkA11y(null, a11yOpts);
+      cy.checkA11y(null, opts);
     });
   });
 
@@ -42,7 +32,7 @@ describe("Accessibility specs", function () {
       cy.contains("Help").click();
     });
     xit("has no critical a11y errors", () => {
-      cy.checkA11y(null, a11yOpts);
+      cy.checkA11y(null, opts);
     });
   });
 
@@ -52,7 +42,7 @@ describe("Accessibility specs", function () {
       helpers.selectAgency();
     });
     xit("has no critical a11y errors", () => {
-      cy.checkA11y(null, a11yOpts);
+      cy.checkA11y(null, opts);
     });
   });
 
@@ -63,7 +53,7 @@ describe("Accessibility specs", function () {
       cy.contains("Choose this Benefit").click();
     });
     xit("has no critical a11y errors", () => {
-      cy.checkA11y(null, a11yOpts);
+      cy.checkA11y(null, opts);
     });
   });
 
@@ -74,7 +64,7 @@ describe("Accessibility specs", function () {
       helpers.selectCourtesyCard();
     });
     xit("has no critical a11y errors", () => {
-      cy.checkA11y(null, a11yOpts);
+      cy.checkA11y(null, opts);
     });
   });
 
@@ -88,7 +78,7 @@ describe("Accessibility specs", function () {
       cy.get("#form-eligibility-verification button[type='submit']").click();
     });
     xit("has no critical a11y errors", () => {
-      cy.checkA11y(null, a11yOpts);
+      cy.checkA11y(null, opts);
     });
   });
 
@@ -103,7 +93,7 @@ describe("Accessibility specs", function () {
       cy.visit("/enrollment/success");
     });
     xit("has no critical a11y errors", () => {
-      cy.checkA11y(null, a11yOpts);
+      cy.checkA11y(null, opts);
     });
   });
 });

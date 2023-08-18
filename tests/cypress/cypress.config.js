@@ -1,6 +1,4 @@
 const { defineConfig } = require("cypress");
-const { pa11y, prepareAudit } = require("@cypress-audit/pa11y");
-const { lighthouse } = require("@cypress-audit/lighthouse");
 
 module.exports = defineConfig({
   downloadsFolder: "downloads",
@@ -10,19 +8,21 @@ module.exports = defineConfig({
   viewportHeight: 960,
   videosFolder: "videos",
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
+    // Adding custom task logging, for better a11y output
+    // ref: https://docs.cypress.io/api/commands/task#Usage
+    // https://github.com/component-driven/cypress-axe#using-the-violationcallback-argument
     setupNodeEvents(on, config) {
-      on("before:browser:launch", (browser = {}, launchOptions) => {
-        prepareAudit(launchOptions);
-      });
-
       on("task", {
-        lighthouse: lighthouse(),
-        pa11y: pa11y(),
-      });
+        log(message) {
+          console.log(message);
+          return null;
+        },
+        table(message) {
+          console.table(message);
 
-      return require("./plugins/index.js")(on, config);
+          return null;
+        },
+      });
     },
     specPattern: "specs/**/*.cy.{js,jsx,ts,tsx}",
     supportFile: false,
