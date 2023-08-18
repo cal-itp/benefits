@@ -18,8 +18,8 @@ jobs:
           touch .env
           docker compose up --detach client server
 
-      - name: Run Cypress tests
-        uses: cypress-io/github-action@v5
+      - name: Run Cypress test, refactor
+        uses: actions/checkout@v3
         env:
           CYPRESS_baseUrl: http://localhost:8000
         with:
