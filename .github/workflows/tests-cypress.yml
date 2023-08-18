@@ -19,9 +19,13 @@ jobs:
           docker compose up --detach client server
 
       - name: Run Cypress test, refactor
-        run: |
-          cd tests/cypress
-          CYPRESS_baseUrl=http://localhost:8000 npx cypress run --browser=chrome
+        runs-on: ubuntu-latest
+        # Docker image with Cypress pre-installed
+        # https://github.com/cypress-io/cypress-docker-images/tree/master/included
+        container: cypress/included:10.0.2
+        steps:
+          - uses: actions/checkout@v2
+          - run: cd tests/cypress && npm install && CYPRESS_baseUrl=http://localhost:8000 npm test
 
       - uses: actions/upload-artifact@v3
         if: failure()
