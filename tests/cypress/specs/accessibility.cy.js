@@ -28,7 +28,7 @@ describe("Accessibility specs", function () {
     it("has no critical a11y errors", () => {
       // cy.pa11y(pa11yOpts);
       // cy.lighthouse(lighthouseOpts);
-      cy.checkA11y(null, a11yOpts);
+      cy.checkA11y();
     });
   });
 
