@@ -25,7 +25,6 @@ jobs:
         with:
           browser: chrome
           headed: true
-          command: npm test
           working-directory: tests/cypress
           wait-on: http://localhost:8000/healthcheck
           spec: tests/cypress/accessibility.cy.js
