@@ -17,17 +17,12 @@ const lighthouseOpts = {
 };
 
 describe("Accessibility specs", function () {
-  beforeEach(() => {
-    cy.injectAxe();
-  });
-
   context("Landing page", function () {
     before(() => {
       cy.visit("/");
+      cy.injectAxe();
     });
     it("has no critical a11y errors", () => {
-      // cy.pa11y(pa11yOpts);
-      // cy.lighthouse(lighthouseOpts);
       cy.checkA11y();
     });
   });
@@ -37,8 +32,6 @@ describe("Accessibility specs", function () {
       cy.visit("/mst");
     });
     xit("has no critical a11y errors", () => {
-      cy.pa11y(pa11yOpts);
-      cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
@@ -49,8 +42,6 @@ describe("Accessibility specs", function () {
       cy.contains("Help").click();
     });
     xit("has no critical a11y errors", () => {
-      cy.pa11y(pa11yOpts);
-      cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
@@ -61,8 +52,6 @@ describe("Accessibility specs", function () {
       helpers.selectAgency();
     });
     xit("has no critical a11y errors", () => {
-      cy.pa11y(pa11yOpts);
-      cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
@@ -74,8 +63,6 @@ describe("Accessibility specs", function () {
       cy.contains("Choose this Benefit").click();
     });
     xit("has no critical a11y errors", () => {
-      cy.pa11y(pa11yOpts);
-      cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
@@ -87,8 +74,6 @@ describe("Accessibility specs", function () {
       helpers.selectCourtesyCard();
     });
     xit("has no critical a11y errors", () => {
-      cy.pa11y(pa11yOpts);
-      cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
@@ -103,8 +88,6 @@ describe("Accessibility specs", function () {
       cy.get("#form-eligibility-verification button[type='submit']").click();
     });
     xit("has no critical a11y errors", () => {
-      cy.pa11y(pa11yOpts);
-      cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
@@ -120,8 +103,6 @@ describe("Accessibility specs", function () {
       cy.visit("/enrollment/success");
     });
     xit("has no critical a11y errors", () => {
-      cy.pa11y(pa11yOpts);
-      cy.lighthouse(lighthouseOpts);
       cy.checkA11y(null, a11yOpts);
     });
   });
