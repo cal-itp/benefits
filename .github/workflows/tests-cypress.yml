@@ -18,8 +18,17 @@ jobs:
           touch .env
           docker compose up --detach client server
 
-      - name: Cypress tests
-        run: cd tests/cypress && npm install && CYPRESS_baseUrl=http://localhost:8000 npm test
+      - name: Run Cypress tests
+        uses: cypress-io/github-action
+        env:
+          CYPRESS_baseUrl: http://localhost:8000
+        with:
+          browser: chrome
+          headed: true
+          command: npm test
+          working-directory: tests/cypress
+          wait-on: http://localhost:8000/healthcheck
+          spec: tests/cypress/accessibility.cy.js
 
       - uses: actions/upload-artifact@v3
         if: failure()

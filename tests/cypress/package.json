@@ -6,7 +6,7 @@
   "scripts": {
     "cypress": "npm test",
     "cypress:open": "npx cypress open",
-    "test": "npx cypress run --browser=chrome"
+    "test": "npx cypress run"
   },
   "author": "",
   "license": "AGPL-3.0-or-later",
