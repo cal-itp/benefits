@@ -20,12 +20,9 @@ jobs:
 
       - name: Run Cypress test, refactor
         uses: actions/checkout@v3
-        env:
-          CYPRESS_baseUrl: http://localhost:8000
-        with:
-          command: npm test
-          working-directory: tests/cypress
-          wait-on: http://localhost:8000/healthcheck
+        steps:
+          - run: cd tests/cypress
+          - run: CYPRESS_baseUrl=http://localhost:8000 npx cypress run --browser=chrome"
 
       - uses: actions/upload-artifact@v3
         if: failure()
