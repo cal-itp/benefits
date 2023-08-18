@@ -1,4 +1,6 @@
 const { defineConfig } = require("cypress");
+const { pa11y, prepareAudit } = require("@cypress-audit/pa11y");
+const { lighthouse } = require("@cypress-audit/lighthouse");
 
 module.exports = defineConfig({
   downloadsFolder: "downloads",
@@ -12,7 +14,12 @@ module.exports = defineConfig({
     // ref: https://docs.cypress.io/api/commands/task#Usage
     // https://github.com/component-driven/cypress-axe#using-the-violationcallback-argument
     setupNodeEvents(on, config) {
+      on("before:browser:launch", (browser = {}, launchOptions) => {
+        prepareAudit(launchOptions);
+      });
       on("task", {
+        lighthouse: lighthouse(),
+        pa11y: pa11y(),
         log(message) {
           console.log(message);
           return null;

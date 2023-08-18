@@ -1,9 +1,20 @@
 import "cypress-axe";
+import "@cypress-audit/pa11y/commands";
+import "@cypress-audit/lighthouse/commands";
 
 const helpers = require("../plugins/helpers");
 const users = require("../fixtures/users.json");
 const opts = {
   includedImpacts: ["critical"],
+};
+const pa11yOpts = {
+  ignore: ["WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"], // Color Contrast
+  threshold: 0, // Color Contrast for Skip Nav, some other text/buttons
+};
+const lighthouseOpts = {
+  performance: 85,
+  accessibility: 100,
+  "best-practices": 100,
 };
 
 describe("Accessibility specs", function () {
@@ -14,6 +25,12 @@ describe("Accessibility specs", function () {
     });
     it("has no critical a11y errors", () => {
       cy.checkA11y();
+    });
+    it("has no pa11y errors", () => {
+      cy.pa11y(pa11yOpts);
+    });
+    it("has no lighthouse errors", () => {
+      cy.lighthouse(lighthouseOpts);
     });
   });
 
