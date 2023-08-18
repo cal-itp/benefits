@@ -25,6 +25,5 @@ module.exports = defineConfig({
       });
     },
     specPattern: "specs/**/*.cy.{js,jsx,ts,tsx}",
-    supportFile: false,
   },
 });
