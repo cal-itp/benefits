@@ -27,7 +27,7 @@ jobs:
           headed: true
           working-directory: tests/cypress
           wait-on: http://localhost:8000/healthcheck
-          spec: accessibility.cy.js
+          spec: specs/accessibility.cy.js
 
       - uses: actions/upload-artifact@v3
         if: failure()
