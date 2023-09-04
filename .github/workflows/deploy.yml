@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Write commit SHA to file
         run: echo "${{ github.sha }}" >> benefits/static/sha.txt
