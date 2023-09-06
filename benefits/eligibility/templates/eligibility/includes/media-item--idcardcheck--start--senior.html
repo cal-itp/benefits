@@ -3,25 +3,25 @@
 {% load i18n %}
 
 {% block heading %}
-    {% translate "A Login.gov account with identity verification" %}
+  {% translate "A Login.gov account with identity verification" %}
 {% endblock heading %}
 
 {% block body %}
-    <div class="media-body--details">
-        <p>
-            {% translate "You will be able to create an account using your email address if you do not already have one. We use your Login.gov account to verify your identity." %}
-            {% translate "Learn more about identity verification" as text %}
-            {% include "core/includes/modal-trigger.html" with modal="modal--identity-verification" text=text period=True %}
-        </p>
-        <div class="media-body--items">
-            <p>{% translate "For this process you will need:" %}</p>
-            <ul>
-                <li>{% translate "Your state-issued ID card" %}</li>
-                <li>{% translate "Your Social Security number" %}</li>
-                <li>{% translate "A phone number with a phone plan associated with your name" %}</li>
-            </ul>
-        </div>
+  <div class="media-body--details">
+    <p>
+      {% translate "You will be able to create an account using your email address if you do not already have one. We use your Login.gov account to verify your identity." %}
+      {% translate "Learn more about identity verification" as text %}
+      {% include "core/includes/modal-trigger.html" with modal="modal--identity-verification" text=text period=True %}
+    </p>
+    <div class="media-body--items">
+      <p>{% translate "For this process you will need:" %}</p>
+      <ul>
+        <li>{% translate "Your state-issued ID card" %}</li>
+        <li>{% translate "Your Social Security number" %}</li>
+        <li>{% translate "A phone number with a phone plan associated with your name" %}</li>
+      </ul>
     </div>
+  </div>
 
-    {% include "eligibility/includes/modal--senior-start-help.html" with size="modal-lg" id="modal--identity-verification" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
+  {% include "eligibility/includes/modal--login-gov-start-help.html" with size="modal-lg" id="modal--identity-verification" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
 {% endblock body %}
