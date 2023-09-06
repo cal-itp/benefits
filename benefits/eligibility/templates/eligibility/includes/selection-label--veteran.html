@@ -7,8 +7,10 @@
 
 {% block description %}
   {% blocktranslate trimmed %}
-    This option is for people who have served in the active military, naval, or air service, and who were discharged or
-    released therefrom under conditions other than dishonorable. You will need to
-    <a href="https://www.va.gov/resources/verifying-your-identity-on-vagov/" target="_blank" rel="noopener noreferrer">verify your identity through VA.gov</a>.
+    This option is for people who have served in the active military, naval, or air service, and who were discharged or released therefrom under conditions other than dishonorable. You will need to verify your identity with
   {% endblocktranslate %}
+
+  {% include "core/includes/modal-trigger.html" with classes="border-0 bg-transparent p-0 login" modal="modal--login-gov" login=True period=True %}
+
+  {% include "eligibility/includes/modal--senior-help.html" with id="modal--login-gov-veterans" size="modal-lg" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
 {% endblock description %}

@@ -371,9 +371,7 @@ msgstr ""
 msgid ""
 "This option is for people who have served in the active military, naval, or "
 "air service, and who were discharged or released therefrom under conditions "
-"other than dishonorable. You will need to <a href=\"https://www.va.gov/"
-"resources/verifying-your-identity-on-vagov/\" target=\"_blank\" rel="
-"\"noopener noreferrer\">verify your identity through VA.gov</a>."
+"other than dishonorable. You will need to verify your identity with"
 msgstr ""
 
 #, python-format
