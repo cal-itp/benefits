@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-09-05 23:51+0000\n"
+"POT-Creation-Date: 2023-09-06 21:22+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -423,21 +423,15 @@ msgid "A phone number with a phone plan associated with your name"
 msgstr ""
 "Un número de teléfono en el cual pueda recibir llamadas o mensajes de texto"
 
-msgid "Access to your preferred VA related account"
-msgstr "Acceso a su cuenta preferida relacionada con VA"
-
 msgid "Go back"
 msgstr "Volver"
 
-msgid "Learn more about"
-msgstr "Más información sobre"
+msgid "Verify your identity with "
+msgstr "Verifique su identidad con "
 
 msgctxt "image alt text"
 msgid "Login.gov"
 msgstr "Login.gov"
-
-msgid "Verify your identity with "
-msgstr "Verifique su identidad con "
 
 msgid ""
 "We use Login.gov to verify your identity to make sure you are eligible for "
@@ -445,6 +439,9 @@ msgid ""
 msgstr ""
 "Utilizamos Login.gov para verificar tu identidad para asegurarnos de que "
 "seas elegible para el beneficio de tránsito que seleccionaste."
+
+msgid "Learn more about"
+msgstr "Más información sobre"
 
 msgid "MST Courtesy Card"
 msgstr "Tarjeta de cortesía de MST"
