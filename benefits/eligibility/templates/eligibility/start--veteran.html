@@ -20,7 +20,7 @@
     <div class="col-lg-4 offset-2 offset-lg-0 col-sm-8 col-8 d-flex justify-content-lg-end justify-content-center">
       {% url "oauth:login" as button_url %}
       {% translate "Get started with" as button_text %}
-      <a href="{{ button_url }}" class="btn btn-lg btn-primary" id="login">
+      <a href="{{ button_url }}" class="btn btn-lg btn-primary login">
         {{ button_text }} <span class="fallback-text white-logo">Login.gov</span>
       </a>
     </div>
