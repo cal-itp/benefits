@@ -144,8 +144,8 @@ PEM DATA
     AuthProvider = app.get_model("core", "AuthProvider")
 
     senior_auth_provider = AuthProvider.objects.create(
-        sign_out_button_template="core/includes/button--sign-out--senior.html",
-        sign_out_link_template="core/includes/link--sign-out--senior.html",
+        sign_out_button_template="core/includes/button--sign-out--login-gov.html",
+        sign_out_link_template="core/includes/link--sign-out--login-gov.html",
         client_name=os.environ.get("SENIOR_AUTH_PROVIDER_CLIENT_NAME", "senior-benefits-oauth-client-name"),
         client_id=os.environ.get("AUTH_PROVIDER_CLIENT_ID", "benefits-oauth-client-id"),
         authority=os.environ.get("AUTH_PROVIDER_AUTHORITY", "https://example.com"),
@@ -155,6 +155,8 @@ PEM DATA
     )
 
     veteran_auth_provider = AuthProvider.objects.create(
+        sign_out_button_template="core/includes/button--sign-out--login-gov.html",
+        sign_out_link_template="core/includes/link--sign-out--login-gov.html",
         client_name=os.environ.get("VETERAN_AUTH_PROVIDER_CLIENT_NAME", "veteran-benefits-oauth-client-name"),
         client_id=os.environ.get("AUTH_PROVIDER_CLIENT_ID", "benefits-oauth-client-id"),
         authority=os.environ.get("AUTH_PROVIDER_AUTHORITY", "https://example.com"),
