@@ -375,6 +375,8 @@ footer .footer-links li a.footer-link:visited {
 
 .btn.btn-lg.btn-primary:focus,
 .btn.btn-lg.btn-primary:focus-visible,
+.btn.btn-lg:focus,
+.btn.btn-lg:focus-visible,
 .btn-outline-dark:focus,
 .btn-outline-dark:focus-visible,
 .btn-outline-light:focus,
@@ -422,12 +424,12 @@ footer .footer-links li a.footer-link:visited {
   }
 }
 
-#login {
+.login {
   cursor: pointer;
   line-height: 1;
   text-transform: none;
   letter-spacing: 0;
-  font-size: var(--login-gov-button-font-size);
+  font-size: var(--login-gov-button-font-size) !important;
   font-family: "Public Sans", Roboto, system-ui;
   max-width: var(--login-gov-button-max-width);
   text-decoration: none;
@@ -436,7 +438,7 @@ footer .footer-links li a.footer-link:visited {
 /* Sets the text `Login.gov` as transparent */
 /* With an Login.gov logo image over it */
 /* So screenreaders can read out `Login.gov` */
-#login .fallback-text {
+.login .fallback-text {
   background-size: contain;
   background-repeat: no-repeat;
   display: block;
@@ -450,7 +452,7 @@ footer .footer-links li a.footer-link:visited {
 }
 
 @media (min-width: 992px) {
-  #login .fallback-text {
+  .login .fallback-text {
     margin: 0 0 0 5px;
     display: inline-block;
     vertical-align: baseline;
@@ -459,11 +461,11 @@ footer .footer-links li a.footer-link:visited {
 
 /* Sign in with Login.gov (white logo) on Eligibility Start */
 
-.eligibility-start #login {
+.eligibility-start .btn.btn-lg.btn-primary.login {
   padding: 10px 0;
 }
 
-#login .fallback-text.white-logo {
+.login .fallback-text.white-logo {
   background-image: url("/static/img/login-gov-logo-rev.svg");
   width: 130.9887px;
   height: 17px;
@@ -471,13 +473,13 @@ footer .footer-links li a.footer-link:visited {
 
 /* Login.gov modal button (color logo) on Eligibility Index */
 
-#login .fallback-text.color-logo {
+.login .fallback-text.color-logo {
   background-image: url("/static/img/login-gov-logo.svg");
   width: 120px;
   height: 16px;
 }
 
-.eligibility-index #login .fallback-text {
+.eligibility-index .login .fallback-text {
   display: inline-block;
 }
 
