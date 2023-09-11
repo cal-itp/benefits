@@ -573,7 +573,7 @@ msgid "Please wait..."
 msgstr "Espere por favor..."
 
 msgid "Connect your Card"
-msgstr "Conecta tu tarjeta"
+msgstr "Conecta su tarjeta"
 
 msgid "Unable to register card"
 msgstr "No se pudo registrar la tarjeta"
