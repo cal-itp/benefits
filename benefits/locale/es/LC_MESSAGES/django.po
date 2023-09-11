@@ -552,7 +552,7 @@ msgstr ""
 "tránsito"
 
 msgid "You will be directed to our payment partner, "
-msgstr "Será dirigido a nuestro socio de pago, "
+msgstr "Será dirigido a nuestro socio de pagos, "
 
 msgid "We don’t store your information, and you won’t be charged."
 msgstr "No almacenamos su información y no se le cobrará."
