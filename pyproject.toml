@@ -1,10 +1,11 @@
-[build-system]
-requires = ["setuptools>=65", "wheel"]
-build-backend = "setuptools.build_meta"
-
 [project]
-classifiers = ["Programming Language :: Python :: 3 :: Only"]
+name = "benefits"
+version = "2023.09.1"
 description = "Cal-ITP Benefits is an application that enables automated eligibility verification and enrollment for transit benefits onto customers’ existing contactless bank (credit/debit) cards."
+readme = "README.md"
+license = { file = "LICENSE" }
+classifiers = ["Programming Language :: Python :: 3 :: Only"]
+requires-python = ">=3.9"
 dependencies = [
     "Authlib==1.2.1",
     "Django==4.2.5",
@@ -14,12 +15,6 @@ dependencies = [
     "sentry-sdk==1.31.0",
     "six==1.16.0",
 ]
-version = "2023.09.1"
-keywords = ["django"]
-license = { file = "LICENSE" }
-name = "benefits"
-readme = "README.md"
-requires-python = ">=3.9"
 
 [project.optional-dependencies]
 dev = [
@@ -41,13 +36,20 @@ Code = "https://github.com/cal-itp/benefits"
 Documentation = "https://docs.calitp.org/benefits"
 Issues = "https://github.com/cal-itp/benefits/issues"
 
-# Configuration for black
+[build-system]
+requires = ["setuptools>=65", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [tool.black]
 line-length = 127
 target-version = ['py310']
 include = '\.pyi?$'
 
-# Configuration for djlint
+[tool.coverage.run]
+omit = [
+    "benefits/core/migrations/*"
+]
+
 [tool.djlint]
 ignore = "H017,H031"
 indent = 2
@@ -57,11 +59,8 @@ profile = "django"
 preserve_blank_lines = true
 use_gitignore = true
 
-# Configuration for pytest
-[tool.coverage.run]
-omit = [
-    "benefits/core/migrations/*"
-]
+[tool.pyright]
+include = ["benefits", "tests/pytest"]
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "benefits.settings"
