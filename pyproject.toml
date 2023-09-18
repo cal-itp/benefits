@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=64", "wheel"]
+requires = ["setuptools>=65", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -14,7 +14,7 @@ dependencies = [
     "sentry-sdk==1.31.0",
     "six==1.16.0",
 ]
-dynamic = ["version"]
+version = "2023.09.1"
 keywords = ["django"]
 license = { file = "LICENSE" }
 name = "benefits"
