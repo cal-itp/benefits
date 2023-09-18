@@ -9,7 +9,7 @@ dependencies = [
     "Authlib==1.2.1",
     "Django==4.2.5",
     "django-csp==3.7",
-    "eligibility-api==2023.6.1",
+    "eligibility-api==2023.9.1",
     "requests==2.31.0",
     "sentry-sdk==1.31.0",
     "six==1.16.0",
