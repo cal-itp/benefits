@@ -22,6 +22,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - uses: actions/setup-python@v4
+        with:
+          python-version-file: .github/workflows/.python-version
+          cache: pip
+          cache-dependency-path: "**/pyproject.toml"
+
+      - name: Write python packages to file
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -e .
+          pip freeze
+          pip freeze >> benefits/static/requirements.txt
+
       - name: Write commit SHA to file
         run: echo "${{ github.sha }}" >> benefits/static/sha.txt
 
