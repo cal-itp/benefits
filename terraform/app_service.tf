@@ -57,6 +57,10 @@ resource "azurerm_linux_web_app" "main" {
 
     "ANALYTICS_KEY" = local.is_dev ? null : "${local.secret_prefix}analytics-key)",
 
+    # Requests
+    "REQUESTS_CONNECT_TIMEOUT" = "${local.secret_prefix}requests-connect-timeout)",
+    "REQUESTS_READ_TIMEOUT"    = "${local.secret_prefix}requests-read-timeout)",
+
     # Django settings
     "DJANGO_ADMIN"         = (local.is_prod || local.is_test) ? null : "${local.secret_prefix}django-admin)",
     "DJANGO_ALLOWED_HOSTS" = "${local.secret_prefix}django-allowed-hosts)",
