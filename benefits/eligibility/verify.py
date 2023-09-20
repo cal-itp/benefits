@@ -16,6 +16,7 @@ def eligibility_from_api(verifier, form, agency):
         jwe_encryption_alg=verifier.jwe_encryption_alg,
         jwe_cek_enc=verifier.jwe_cek_enc,
         server_public_key=verifier.public_key_data,
+        timeout=settings.REQUESTS_TIMEOUT,
     )
 
     response = client.verify(sub, name, agency.type_names_to_verify(verifier))
