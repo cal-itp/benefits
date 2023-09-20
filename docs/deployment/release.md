@@ -28,25 +28,24 @@ version numbers look like: `YYYY.0M.R`
 ## 1. Prepare release in a branch
 
 Typically changes for a release will move from `dev`, to `test`, to `prod`. This
-assumes `dev` is in a state that it can be deployed without disruption.
+assumes `dev` is in a state that it can be deployed without disruption. (This is called a `Regular` release.)
 
 If `dev` or `test` contain in-progress work that is not ready for production,
 and a hotfix is needed in production, a separate process to test the changes
-before deploying to `prod` must be undertaken.
+before deploying to `prod` must be undertaken. (This is called a `Hotfix` release.)
 
-The following diagram shows how a release should propogate to `prod` under
+As implied in the previous step, all releases follow the same version number format.
+
+The following diagram shows how a release should propagate to `prod` under
 different circumstances:
 
 ```mermaid
 graph LR
     A(Release branch) --> B{Are dev and test ready to deploy?};
     B -->|Yes| C(dev);
-    B -->|No| D{Are test and prod equivalent?};
-    C --> E(test);
-    E --> F(prod);
-    D -->|Yes| E;
-    D -->|No| G{{Revert test to prod}};
-    G --> E;
+    C --> D(test);
+    D --> E(prod);
+    B -->|No| E;
 ```
 
 By convention the release branch is called `release/YYYY.0M.R` using the

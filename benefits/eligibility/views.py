@@ -6,13 +6,10 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.utils.html import format_html
-from django.utils.translation import pgettext, gettext as _
 
-from benefits.core import recaptcha, session, viewmodels
+from benefits.core import recaptcha, session
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RecaptchaEnabled, VerifierSessionRequired
 from benefits.core.models import EligibilityVerifier
-from benefits.core.views import ROUTE_HELP
 from . import analytics, forms, verify
 
 
@@ -24,7 +21,6 @@ ROUTE_CONFIRM = "eligibility:confirm"
 ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_ENROLLMENT = "enrollment:index"
 
-TEMPLATE_INDEX = "eligibility/index.html"
 TEMPLATE_START = "eligibility/start.html"
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
 TEMPLATE_UNVERIFIED = "eligibility/unverified.html"
@@ -38,36 +34,17 @@ def index(request, agency=None):
         # see if session has an agency
         agency = session.agency(request)
         if agency is None:
-            home = viewmodels.Button.home(request)
-            page = viewmodels.ErrorPage.user_error(button=home, path=request.path)
-            return TemplateResponse(request, "200_user_error.html", page.context_dict())
+            return TemplateResponse(request, "200-user-error.html")
         else:
             session.update(request, eligibility_types=[], origin=agency.index_url)
     else:
         session.update(request, agency=agency, eligibility_types=[], origin=reverse(ROUTE_CORE_INDEX))
 
-    eligibility_start = reverse(ROUTE_START)
+    # clear any prior OAuth token as the user is choosing their desired flow
+    # this may or may not require OAuth, with a different set of scope/claims than what is already stored
+    session.logout(request)
 
-    help_page = reverse(ROUTE_HELP)
-
-    agency_intro = _(agency.eligibility_index_intro) if isinstance(agency.eligibility_index_intro, str) else ""
-    common_intro = _("eligibility.pages.index.p[0]%(info_link)s") % {"info_link": f"{help_page}#what-is-cal-itp"}
-    intro = format_html(agency_intro + common_intro)
-    page = viewmodels.Page(
-        title=_("eligibility.pages.index.title"),
-        headline=_("eligibility.pages.index.headline"),
-        paragraphs=[intro],
-        forms=forms.EligibilityVerifierSelectionForm(agency=agency),
-    )
-
-    ctx = page.context_dict()
-
-    origin = session.origin(request)
-    if origin == reverse(ROUTE_CORE_INDEX):
-        ctx["previous_page_button"] = viewmodels.Button.previous_page(url=origin)
-
-    ctx["help_page"] = help_page
-    ctx["help_text"] = format_html(_("eligibility.pages.index.help_text%(help_link)s") % {"help_link": help_page})
+    context = {"form": forms.EligibilityVerifierSelectionForm(agency=agency)}
 
     if request.method == "POST":
         form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency)
@@ -80,15 +57,16 @@ def index(request, agency=None):
             types_to_verify = agency.type_names_to_verify(verifier)
             analytics.selected_verifier(request, types_to_verify)
 
+            eligibility_start = reverse(ROUTE_START)
             response = redirect(eligibility_start)
         else:
             # form was not valid, allow for correction/resubmission
             if recaptcha.has_error(form):
                 messages.error(request, "Recaptcha failed. Please try again.")
-            page.forms = [form]
-            response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
+            context["form"] = form
+            response = TemplateResponse(request, agency.eligibility_index_template, context)
     else:
-        response = TemplateResponse(request, TEMPLATE_INDEX, ctx)
+        response = TemplateResponse(request, agency.eligibility_index_template, context)
 
     return response
 
@@ -97,57 +75,12 @@ def index(request, agency=None):
 @decorator_from_middleware(VerifierSessionRequired)
 def start(request):
     """View handler for the eligibility verification getting started screen."""
-
-    verifier = session.verifier(request)
-    button = viewmodels.Button.primary(text=_("eligibility.buttons.continue"), url=reverse(ROUTE_CONFIRM))
-
-    # define the verifier-specific required item
-    identity_item = viewmodels.MediaItem(
-        icon=viewmodels.Icon("idcardcheck", pgettext("image alt text", "core.icons.idcardcheck")),
-        heading=_(verifier.start_item_heading),
-        details=_(verifier.start_item_details),
-    )
-
-    if verifier.is_auth_required:
-        if verifier.uses_auth_verification:
-            identity_item.bullets = [
-                _("eligibility.pages.start.login_gov.required_items[0]"),
-                _("eligibility.pages.start.login_gov.required_items[1]"),
-                _("eligibility.pages.start.login_gov.required_items[2]"),
-            ]
-
-        if not session.logged_in(request):
-            button = viewmodels.Button.login(
-                text=_(verifier.auth_provider.sign_in_button_label),
-                url=reverse(ROUTE_LOGIN),
-            )
-
-    # define the bank card item
-    bank_card_item = viewmodels.MediaItem(
-        icon=viewmodels.Icon("bankcardcheck", pgettext("image alt text", "core.icons.bankcardcheck")),
-        heading=_("eligibility.pages.start.bankcard.title"),
-        details=_("eligibility.pages.start.bankcard.text"),
-    )
-
-    media = [identity_item, bank_card_item]
-
-    page = viewmodels.Page(
-        title=_(verifier.start_title),
-        headline=_(verifier.start_headline),
-        button=button,
-    )
-
-    ctx = page.context_dict()
-    ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_INDEX))
-    ctx["start_sub_headline"] = _("eligibility.pages.start.sub_headline")
-    ctx["media"] = media
-    help_page = reverse(ROUTE_HELP)
-    ctx["help_link"] = f"{help_page}#{verifier.start_help_anchor}"
-
-    # update origin now, after we've saved the previous page
     session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))
 
-    return TemplateResponse(request, TEMPLATE_START, ctx)
+    verifier = session.verifier(request)
+    template = verifier.start_template or TEMPLATE_START
+
+    return TemplateResponse(request, template)
 
 
 @decorator_from_middleware(AgencySessionRequired)
@@ -178,33 +111,25 @@ def confirm(request):
         else:
             return redirect(unverified_view)
 
-    # GET/POST for Eligibility API verification
-    page = viewmodels.Page(
-        title=_(verifier.form_title),
-        headline=_(verifier.form_headline),
-        paragraphs=[_(verifier.form_blurb)],
-        form=forms.EligibilityVerificationForm(auto_id=True, label_suffix="", verifier=verifier),
-    )
+    form = verifier.form_instance()
 
-    ctx = page.context_dict()
-    ctx["previous_page_button"] = viewmodels.Button.previous_page(url=reverse(ROUTE_START))
+    # GET/POST for Eligibility API verification
+    context = {"form": form}
 
     # GET from an unverified user, present the form
     if request.method == "GET":
-        return TemplateResponse(request, TEMPLATE_CONFIRM, ctx)
+        return TemplateResponse(request, TEMPLATE_CONFIRM, context)
     # POST form submission, process form data, make Eligibility Verification API call
     elif request.method == "POST":
         analytics.started_eligibility(request, types_to_verify)
 
-        form = forms.EligibilityVerificationForm(data=request.POST, verifier=verifier)
+        form = verifier.form_instance(data=request.POST)
         # form was not valid, allow for correction/resubmission
         if not form.is_valid():
             if recaptcha.has_error(form):
                 messages.error(request, "Recaptcha failed. Please try again.")
-
-            page.forms = [form]
-            ctx.update(page.context_dict())
-            return TemplateResponse(request, TEMPLATE_CONFIRM, ctx)
+            context["form"] = form
+            return TemplateResponse(request, TEMPLATE_CONFIRM, context)
 
         # form is valid, make Eligibility Verification request to get the verified types
         verified_types = verify.eligibility_from_api(verifier, form, agency)
@@ -212,9 +137,8 @@ def confirm(request):
         # form was not valid, allow for correction/resubmission
         if verified_types is None:
             analytics.returned_error(request, types_to_verify, form.errors)
-            page.forms = [form]
-            ctx.update(page.context_dict())
-            return TemplateResponse(request, TEMPLATE_CONFIRM, ctx)
+            context["form"] = form
+            return TemplateResponse(request, TEMPLATE_CONFIRM, context)
         # no types were verified
         elif len(verified_types) == 0:
             return redirect(unverified_view)
@@ -246,16 +170,4 @@ def unverified(request):
 
     analytics.returned_fail(request, types_to_verify)
 
-    # tel: link to agency phone number
-    buttons = viewmodels.Button.agency_contact_links(agency)
-    buttons.append(viewmodels.Button.home(request))
-
-    page = viewmodels.Page(
-        title=_(verifier.unverified_title),
-        headline=_("eligibility.pages.unverified.headline"),
-        icon=viewmodels.Icon("idcardquestion", pgettext("image alt text", "core.icons.idcardquestion")),
-        paragraphs=[_(verifier.unverified_blurb)],
-        buttons=buttons,
-    )
-
-    return TemplateResponse(request, TEMPLATE_UNVERIFIED, page.context_dict())
+    return TemplateResponse(request, TEMPLATE_UNVERIFIED)

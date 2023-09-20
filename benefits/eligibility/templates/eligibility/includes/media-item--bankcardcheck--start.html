@@ -1,0 +1,22 @@
+{% extends "core/includes/media-item.html" %}
+{% load i18n %}
+
+{% block icon %}
+    {% include "core/includes/icon.html" with name="bankcardcheck" %}
+{% endblock icon %}
+
+{% block heading %}
+    {% translate "Your contactless card details" %}
+{% endblock heading %}
+
+{% block body %}
+    <div class="media-body--details">
+        <p>
+            {% translate "Your contactless card must be a debit or credit card by Visa or Mastercard." %}
+            {% translate "Learn more about contactless cards" as text %}
+            {% include "core/includes/modal-trigger.html" with modal="modal--contactless" text=text period=True %}
+        </p>
+    </div>
+
+    {% include "eligibility/includes/modal--contactless.html" with id="modal--contactless" size="modal-lg" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
+{% endblock body %}

@@ -1,10 +1,11 @@
 import time
 
+from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse
 import pytest
 
 from benefits.core import models, session
-from benefits.core.views import ROUTE_INDEX
+from benefits.core.middleware import ROUTE_INDEX
 
 
 @pytest.mark.django_db
@@ -144,19 +145,36 @@ def test_logged_in_True(app_request):
 
 @pytest.mark.django_db
 def test_logout(app_request):
-    session.update(app_request, oauth_token="oauth_token", enrollment_token="enrollment_token")
+    session.update(app_request, oauth_claim="oauth_claim", oauth_token="oauth_token", enrollment_token="enrollment_token")
     assert session.logged_in(app_request)
+    assert session.oauth_claim(app_request)
 
     session.logout(app_request)
 
     assert not session.logged_in(app_request)
     assert not session.enrollment_token(app_request)
     assert not session.oauth_token(app_request)
+    assert not session.oauth_claim(app_request)
 
 
 @pytest.mark.django_db
 def test_oauth_token_default(app_request):
     assert not session.oauth_token(app_request)
+
+
+@pytest.mark.django_db
+def test_origin_default(rf):
+    # create a new request without initializing the app's session
+    app_request = rf.get("/some/path")
+    assert not hasattr(app_request, "session")
+
+    SessionMiddleware(lambda x: x).process_request(app_request)
+
+    assert hasattr(app_request, "session")
+    app_request.session.save()
+
+    assert session._ORIGIN not in app_request.session
+    assert session.origin(app_request) == reverse(ROUTE_INDEX)
 
 
 @pytest.mark.django_db

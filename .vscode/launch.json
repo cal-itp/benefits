@@ -12,7 +12,8 @@
       "args": ["runserver", "--insecure", "0.0.0.0:8000"],
       "django": true,
       "env": {
-        "DJANGO_DEBUG": "true"
+        "DJANGO_DEBUG": "true",
+        "PYTHONWARNINGS": "default"
       }
     },
     {

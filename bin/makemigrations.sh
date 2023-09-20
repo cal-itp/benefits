@@ -24,4 +24,4 @@ rm -rf benefits/core/old_migrations
 
 # reformat with black
 
-python -m black benefits/core/migrations/*
+python -m black benefits/core/migrations/*.py

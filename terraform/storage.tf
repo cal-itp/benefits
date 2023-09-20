@@ -23,20 +23,3 @@ resource "azurerm_storage_account" "main" {
     ignore_changes = [tags]
   }
 }
-
-resource "azurerm_storage_container" "config" {
-  name                  = "benefits-config-${local.env_name}"
-  storage_account_name  = azurerm_storage_account.main.name
-  container_access_type = "private"
-
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
-# migrations
-
-moved {
-  from = azurerm_storage_container.config_prod
-  to   = azurerm_storage_container.config
-}

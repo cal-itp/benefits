@@ -6,7 +6,7 @@ describe("Help page spec", () => {
   it("Allows user to go back", () => {
     cy.contains("Help").click();
 
-    cy.contains("Go back").click();
+    cy.contains("Go Back").click();
 
     cy.location("pathname").should("eq", "/");
   });

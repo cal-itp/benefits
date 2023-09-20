@@ -1,5 +1,16 @@
 {% extends "core/landing.html" %}
+{% load i18n %}
+
+{% block title %}
+  {% translate "Choose transit agency" %}
+{% endblock title %}
+
+{% block headline %}
+  {% translate "Get a reduced fare on public transportation when you tap to ride" %}
+{% endblock headline %}
 
 {% block call-to-action %}
-    {% include "core/includes/agency-selector.html" with modal=page.modal agencies=agencies %}
+  {% translate "Choose your Provider" as text %}
+  {% include "core/includes/modal-trigger.html" with modal="modal--agency-selector" classes="btn btn-lg btn-primary" text=text period=False %}
+  {% include "core/includes/modal--agency-selector.html" with id="modal--agency-selector" size="modal-lg" body="pt-0 pb-4 pb-lg-5 mb-lg-1 px-lg-5 mx-lg-1" %}
 {% endblock call-to-action %}

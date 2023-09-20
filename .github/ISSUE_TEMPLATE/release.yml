@@ -19,18 +19,24 @@ body:
         release process](https://docs.calitp.org/benefits/deployment/release/).
 
         Close this issue when the checklist is complete.
+    validations:
+      required: true
   - type: input
     id: manager
     attributes:
       label: Release manager
       description: GitHub handle of who is responsible for this release; assign this issue to this user
       placeholder: "@cal-itp-bot"
+    validations:
+      required: true
   - type: input
     id: version
     attributes:
       label: Release version
       description: Calver-formatted version for this release
       placeholder: YYYY.0M.R
+    validations:
+      required: true
   - type: markdown
     attributes:
       value: |
@@ -38,8 +44,8 @@ body:
 
         Reference the diagram and discussion on [the release process docs](https://docs.calitp.org/benefits/deployment/release/).
 
-        * `Regular` release: propogates from `dev` to `test`, and then `test` to `prod`. Only possible if `dev` is ready to deploy.
-        * `Hotfix` release: propogates from `test` to `prod`, skipping `dev`.
+        * `Regular` release: propagates from `dev` to `test`, and then `test` to `prod`. Only possible if `dev` is ready to deploy.
+        * `Hotfix` release: fix is merged into `prod`. After release, fix is propagated to `dev` and `test`.
   - type: dropdown
     id: type
     attributes:
@@ -47,22 +53,48 @@ body:
       options:
         - "Regular"
         - "Hotfix"
-  - type: checkboxes
-    id: checklist
+    validations:
+      required: true
+  - type: markdown
     attributes:
-      label: Release checklist
-      description: Complete these items in sequence as the release progresses
+      value: |
+        ## Release checklist
+
+        After this issue is created, edit the description to keep only the checklist for the release type.
+  - type: checkboxes
+    id: regular-checklist
+    attributes:
+      label: Regular release checklist
+      description: Complete these items in sequence as the `Regular` release progresses
       options:
+        - label: Ensure the `dev` branch and secrets are up to date
         - label: Create a branch called release/version from the source branch
         - label: Bump the application version
-        - label: Open a PR for the release branch into the staging target, merge
-        - label: "(If applicable): update staging data migrations"
-        - label: "(If applicable): open another PR from dev to test"
-        - label: "(If applicable): update data migrations"
+        - label: Open a PR for the release branch into `dev`, merge
+        - label: Ensure `test` secrets are up to date
+        - label: Open another PR from `dev` to `test`, merge
         - label: QA the app in test
-        - label: "(If applicable): prepare production data migrations"
-        - label: Open a PR to for the test branch into prod, merge
+        - label: Ensure `prod` secrets are up to date
+        - label: Open a PR for the `test` branch into `prod`, merge
         - label: QA the app in prod
-        - label: Tag the release on the prod branch, push the tag to GitHub
+        - label: Tag the release on the `prod` branch, push the tag to GitHub (see [docs](https://docs.calitp.org/benefits/deployment/release/#5-tag-the-release) for commands)
         - label: Create a release in GitHub for the tag, generating release notes
         - label: Edit release notes with additional context, images, animations, etc. as-needed
+  - type: checkboxes
+    id: hotfix-checklist
+    attributes:
+      label: Hotfix release checklist
+      description: Complete these items in sequence as the `Hotfix` release progresses
+      options:
+        - label: Make the hotfix in a branch from `prod`
+        - label: Bump the application version
+        - label: Ensure `prod` secrets are up to date
+        - label: Open a PR from the hotfix branch into `prod`, merge
+        - label: QA the fix in prod
+        - label: Tag the release on `prod`, push the tag to GitHub (see [docs](https://docs.calitp.org/benefits/deployment/release/#5-tag-the-release) for commands)
+        - label: Create a release in GitHub for the tag, generating release notes
+        - label: Edit release notes with additional context, images, animations, etc. as-needed
+        - label: Create a branch off `dev`
+        - label: Open a PR from `prod` into that branch, merge
+        - label: (optional) Adapt hotfix to current state of `dev` in that same branch
+        - label: Merge the PR into `dev`

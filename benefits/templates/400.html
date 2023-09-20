@@ -1,19 +1,14 @@
-{% extends "core/base.html" %}
+{% extends "error.html" %}
+{% load i18n %}
 
-{% block main_content %}
-  <div class="container">
-    {% include "core/includes/icon-title.html" with title=page.headline icon=page.icon %}
+{% block title %}
+  {% translate "Service is down" %}
+{% endblock title %}
 
-    <div class="row justify-content-center">
-      <div class="col-lg-8 pt-4">
-        {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
-      </div>
-    </div>
+{% block headline %}
+  {% translate "Sorry! Service for this site is down." %}
+{% endblock headline %}
 
-    <div class="row pt-8 justify-content-center">
-      {% for b in page.buttons %}
-        <div class="col-lg-3 col-8">{% include "core/includes/button.html" with button=b %}</div>
-      {% endfor %}
-    </div>
-  </div>
-{% endblock main_content %}
+{% block paragraphs %}
+  <p>{% translate "We should be back in operation soon. Please refresh the page in a few minutes." %}</p>
+{% endblock paragraphs %}

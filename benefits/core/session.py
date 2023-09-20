@@ -147,8 +147,8 @@ def logged_in(request):
 
 
 def logout(request):
-    """Reset the session tokens."""
-    update(request, oauth_token=False, enrollment_token=False)
+    """Reset the session claims and tokens."""
+    update(request, oauth_claim=False, oauth_token=False, enrollment_token=False)
 
 
 def oauth_token(request):
@@ -164,9 +164,9 @@ def oauth_claim(request):
 
 
 def origin(request):
-    """Get the origin for the request's session, or None."""
+    """Get the origin for the request's session, or the default core:index."""
     logger.debug("Get session origin")
-    return request.session.get(_ORIGIN)
+    return request.session.get(_ORIGIN, reverse("core:index"))
 
 
 def reset(request):

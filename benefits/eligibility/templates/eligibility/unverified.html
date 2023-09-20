@@ -1,28 +1,39 @@
 {% extends "core/base.html" %}
+{% load i18n %}
 
-{% block main_content %}
-  {% include "core/includes/sign-out-link.html" %}
+{% block page-title %}
+  {% translate "Unable to confirm eligibility" %}
+{% endblock page-title %}
+
+{% block main-content %}
+  {% if authentication and authentication.sign_out_link_template %}
+    {% include authentication.sign_out_link_template %}
+  {% endif %}
 
   <div class="container">
-    {% include "core/includes/icon-title.html" with title=page.headline icon=page.icon %}
+    <h1 class="h2 text-center">
+      <span class="icon d-block pb-5">
+        {% include "core/includes/icon.html" with name="idcardquestion" %}
+      </span>
+      {% translate "Your eligibility could not be verified." %}
+    </h1>
 
     <div class="row justify-content-center">
       <div class="col-lg-8 pt-4">
-        {% for p in page.paragraphs %}<p>{{ p }}</p>{% endfor %}
+        <p>
+          {% translate "That’s okay! You may still be eligible for our program." %}
+          {% blocktranslate with short_name=agency.short_name %}Please reach out to {{ short_name }} for assistance.{% endblocktranslate %}
+        </p>
       </div>
     </div>
 
     <div class="row justify-content-center">
-      <div class="col-lg-8">{% include "core/includes/agency-links.html" with buttons=page.buttons %}</div>
+      <div class="col-lg-8">{% include "core/includes/agency-links.html" %}</div>
     </div>
 
-    {% for back_button in page.buttons %}
-      {% if "btn-primary" in back_button.classes %}
-        <div class="row pt-8 justify-content-center">
-          <div class="col-lg-3 col-8">{% include "core/includes/button.html" with button=back_button %}</div>
-        </div>
-      {% endif %}
-    {% endfor %}
+    <div class="row pt-8 justify-content-center">
+      <div class="col-lg-3 col-8">{% include "core/includes/button--index.html" %}</div>
+    </div>
 
   </div>
-{% endblock main_content %}
+{% endblock main-content %}

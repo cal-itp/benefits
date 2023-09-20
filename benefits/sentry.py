@@ -21,8 +21,8 @@ def git_available():
 
 # https://stackoverflow.com/a/24584384/358804
 def is_git_directory(path="."):
-    dev_null = open(os.devnull, "w")
-    return subprocess.call(["git", "-C", path, "status"], stderr=dev_null, stdout=dev_null) == 0
+    with open(os.devnull, "w") as dev_null:
+        return subprocess.call(["git", "-C", path, "status"], stderr=dev_null, stdout=dev_null) == 0
 
 
 # https://stackoverflow.com/a/21901260/358804
@@ -68,12 +68,12 @@ def get_traces_sample_rate():
     try:
         rate = float(os.environ.get("SENTRY_TRACES_SAMPLE_RATE", "0.0"))
         if rate < 0.0 or rate > 1.0:
-            logger.warn("SENTRY_TRACES_SAMPLE_RATE was not in the range [0.0, 1.0], defaulting to 0.0")
+            logger.warning("SENTRY_TRACES_SAMPLE_RATE was not in the range [0.0, 1.0], defaulting to 0.0")
             rate = 0.0
         else:
             logger.info(f"SENTRY_TRACES_SAMPLE_RATE set to: {rate}")
     except ValueError:
-        logger.warn("SENTRY_TRACES_SAMPLE_RATE did not parse to float, defaulting to 0.0")
+        logger.warning("SENTRY_TRACES_SAMPLE_RATE did not parse to float, defaulting to 0.0")
         rate = 0.0
 
     return rate

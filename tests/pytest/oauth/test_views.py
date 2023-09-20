@@ -4,7 +4,7 @@ from django.urls import reverse
 import pytest
 
 from benefits.core import session
-from benefits.core.views import ROUTE_INDEX
+from benefits.core.middleware import ROUTE_INDEX, TEMPLATE_USER_ERROR
 
 from benefits.oauth.views import ROUTE_START, ROUTE_CONFIRM, ROUTE_UNVERIFIED, login, authorize, cancel, logout, post_logout
 import benefits.oauth.views
@@ -22,6 +22,14 @@ def test_login_no_oauth_client(mocked_oauth_create_client, app_request):
 
     with pytest.raises(Exception, match=r"oauth_client"):
         login(app_request)
+
+
+@pytest.mark.django_db
+def test_login_no_session_verifier(app_request):
+    result = login(app_request)
+
+    assert result.status_code == 200
+    assert result.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
@@ -47,6 +55,14 @@ def test_authorize_no_oauth_client(mocked_oauth_create_client, app_request):
 
     with pytest.raises(Exception, match=r"oauth_client"):
         authorize(app_request)
+
+
+@pytest.mark.django_db
+def test_authorize_no_session_verifier(app_request):
+    result = authorize(app_request)
+
+    assert result.status_code == 200
+    assert result.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
@@ -162,6 +178,8 @@ def test_authorize_success_without_claim_in_response(
     assert result.url == reverse(ROUTE_CONFIRM)
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
 def test_cancel(mocked_analytics_module, app_request):
     unverified_route = reverse(ROUTE_UNVERIFIED)
 
@@ -173,12 +191,28 @@ def test_cancel(mocked_analytics_module, app_request):
 
 
 @pytest.mark.django_db
+def test_cancel_no_session_verifier(app_request):
+    result = cancel(app_request)
+
+    assert result.status_code == 200
+    assert result.template_name == TEMPLATE_USER_ERROR
+
+
+@pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_auth_required")
 def test_logout_no_oauth_client(mocked_oauth_create_client, app_request):
     mocked_oauth_create_client.return_value = None
 
     with pytest.raises(Exception, match=r"oauth_client"):
         logout(app_request)
+
+
+@pytest.mark.django_db
+def test_logout_no_session_verifier(app_request):
+    result = logout(app_request)
+
+    assert result.status_code == 200
+    assert result.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
@@ -201,10 +235,15 @@ def test_logout(mocker, mocked_oauth_create_client, mocked_analytics_module, app
     mocked_analytics_module.started_sign_out.assert_called_once()
     assert result.status_code == 200
     assert message in str(result.content)
+
     assert not session.logged_in(app_request)
     assert session.enrollment_token(app_request) is False
+    assert session.oauth_token(app_request) is False
+    assert session.oauth_claim(app_request) is False
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
 def test_post_logout(app_request, mocked_analytics_module):
     origin = reverse(ROUTE_INDEX)
     session.update(app_request, origin=origin)
@@ -214,3 +253,11 @@ def test_post_logout(app_request, mocked_analytics_module):
     assert result.status_code == 302
     assert result.url == origin
     mocked_analytics_module.finished_sign_out.assert_called_once()
+
+
+@pytest.mark.django_db
+def test_post_logout_no_session_verifier(app_request):
+    result = post_logout(app_request)
+
+    assert result.status_code == 200
+    assert result.template_name == TEMPLATE_USER_ERROR

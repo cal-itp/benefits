@@ -14,7 +14,7 @@ export const rateLimitWait = () => {
 export const selectAgency = () => {
   cy.location("pathname").should("eq", "/");
 
-  cy.contains("Choose Your Provider").click();
+  cy.contains("Choose your Provider").click();
   cy.contains(agency.long_name).click();
 
   cy.location("pathname").should("eq", `/eligibility/${agency.slug}`);
@@ -25,8 +25,7 @@ export const selectAgency = () => {
 export const selectCourtesyCard = () => {
   cy.location("pathname").should("eq", `/eligibility/${agency.slug}`);
 
-  // TODO find a more robust way to do this
-  cy.get('#form-verifier-selection [type="radio"]').check("2");
-  cy.get("#form-verifier-selection button[type='submit']").click();
+  cy.contains("MST Courtesy Card").click();
+  cy.contains("Choose this Benefit").click();
   cy.contains("Continue").click();
 };

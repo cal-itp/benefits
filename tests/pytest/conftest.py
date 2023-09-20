@@ -44,8 +44,8 @@ def model_PemData():
 @pytest.fixture
 def model_AuthProvider():
     auth_provider = AuthProvider.objects.create(
-        sign_in_button_label="Sign in",
-        sign_out_button_label="Sign out",
+        sign_out_button_template="core/includes/button--sign-out--senior.html",
+        sign_out_link_template="core/includes/link--sign-out--senior.html",
         client_name="Client",
         client_id="1234",
         authority="https://example.com",
@@ -64,9 +64,31 @@ def model_AuthProvider_with_verification(model_AuthProvider):
 
 
 @pytest.fixture
+def model_AuthProvider_with_verification_no_sign_out(model_AuthProvider):
+    model_AuthProvider.scope = "scope"
+    model_AuthProvider.claim = "claim"
+    model_AuthProvider.sign_out_button_template = None
+    model_AuthProvider.sign_out_link_template = None
+    model_AuthProvider.save()
+
+    return model_AuthProvider
+
+
+@pytest.fixture
 def model_AuthProvider_without_verification(model_AuthProvider):
     model_AuthProvider.scope = None
     model_AuthProvider.claim = None
+    model_AuthProvider.save()
+
+    return model_AuthProvider
+
+
+@pytest.fixture
+def model_AuthProvider_without_verification_no_sign_out(model_AuthProvider):
+    model_AuthProvider.scope = None
+    model_AuthProvider.claim = None
+    model_AuthProvider.sign_out_button_template = None
+    model_AuthProvider.sign_out_link_template = None
     model_AuthProvider.save()
 
     return model_AuthProvider
@@ -83,27 +105,13 @@ def model_EligibilityType():
 def model_EligibilityVerifier(model_PemData, model_EligibilityType):
     verifier = EligibilityVerifier.objects.create(
         name="Test Verifier",
+        active=True,
         api_url="https://example.com/verify",
         api_auth_header="X-API-AUTH",
         api_auth_key="secret-key",
         eligibility_type=model_EligibilityType,
         public_key=model_PemData,
-        selection_label="Select",
-        start_title="Information",
-        start_headline="Start",
-        start_item_heading="Start Item",
-        start_item_details="Start Item Description",
-        form_title="Form",
-        form_headline="Form",
-        form_blurb="Form Blurb",
-        form_sub_label="Sub",
-        form_sub_help_text="Sub Help Text",
-        form_sub_placeholder="Sub",
-        form_name_label="Name",
-        form_name_help_text="Name Help Text",
-        form_name_placeholder="Name",
-        unverified_title="Unverified",
-        unverified_blurb="Unverified Blurb",
+        selection_label_template="eligibility/includes/selection-label.html",
     )
 
     return verifier
@@ -154,7 +162,9 @@ def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityV
         private_key=model_PemData,
         public_key=model_PemData,
         jws_signing_alg="alg",
-        eligibility_index_intro="",
+        index_template="core/agency-index.html",
+        eligibility_index_template="eligibility/index.html",
+        enrollment_success_template="enrollment/success.html",
     )
 
     # add many-to-many relationships after creation, need ID on both sides
@@ -222,12 +232,20 @@ def mocked_session_verifier_oauth(mocker, model_EligibilityVerifier_AuthProvider
 
 
 @pytest.fixture
-def mocked_session_verifier_auth_required(mocker, model_EligibilityVerifier, mocked_session_verifier):
-    mock_verifier = mocker.Mock(spec=model_EligibilityVerifier)
-    mock_verifier.name = model_EligibilityVerifier.name
+def mocked_session_verifier_auth_required(
+    mocker, model_EligibilityVerifier_AuthProvider_with_verification, mocked_session_verifier_oauth
+):
+    mock_verifier = mocker.Mock(spec=model_EligibilityVerifier_AuthProvider_with_verification)
+    mock_verifier.name = model_EligibilityVerifier_AuthProvider_with_verification.name
     mock_verifier.is_auth_required = True
-    mocked_session_verifier.return_value = mock_verifier
-    return mocked_session_verifier
+    mock_verifier.auth_provider.sign_out_button_template = (
+        model_EligibilityVerifier_AuthProvider_with_verification.auth_provider.sign_out_button_template
+    )
+    mock_verifier.auth_provider.sign_out_link_template = (
+        model_EligibilityVerifier_AuthProvider_with_verification.auth_provider.sign_out_link_template
+    )
+    mocked_session_verifier_oauth.return_value = mock_verifier
+    return mocked_session_verifier_oauth
 
 
 @pytest.fixture

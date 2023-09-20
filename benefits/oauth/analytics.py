@@ -10,7 +10,8 @@ class OAuthEvent(core.Event):
     def __init__(self, request, event_type):
         super().__init__(request, event_type)
         verifier = session.verifier(request)
-        self.update_event_properties(auth_provider=verifier.auth_provider.client_name)
+        if verifier and verifier.uses_auth_verification:
+            self.update_event_properties(auth_provider=verifier.auth_provider.client_name)
 
 
 class StartedSignInEvent(OAuthEvent):

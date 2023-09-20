@@ -87,11 +87,14 @@ def test_index_eligible_get(client):
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_INDEX
-    assert "page" in response.context_data
-    assert "payment_processor" in response.context_data
     assert "forms" in response.context_data
-    assert "tokenize_retry" in response.context_data["forms"]
-    assert "tokenize_success" in response.context_data["forms"]
+    assert "cta_button" in response.context_data
+    assert "card_tokenize_env" in response.context_data
+    assert "card_tokenize_func" in response.context_data
+    assert "card_tokenize_url" in response.context_data
+    assert "token_field" in response.context_data
+    assert "form_retry" in response.context_data
+    assert "form_success" in response.context_data
 
 
 @pytest.mark.django_db
@@ -197,39 +200,38 @@ def test_success_no_verifier(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_success_authentication_logged_in(mocker, client):
+def test_success_authentication_logged_in(mocker, client, model_TransitAgency):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = True
+    mock_session.agency.return_value = model_TransitAgency
 
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
-    assert "page" in response.context_data
     assert {"origin": reverse(ROUTE_LOGGED_OUT)} in mock_session.update.call_args
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_success_authentication_not_logged_in(mocker, client):
+def test_success_authentication_not_logged_in(mocker, client, model_TransitAgency):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = False
+    mock_session.agency.return_value = model_TransitAgency
 
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
-    assert "page" in response.context_data
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_auth_not_required")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier_auth_not_required")
 def test_success_no_authentication(client):
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
-    assert "page" in response.context_data

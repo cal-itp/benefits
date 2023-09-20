@@ -1,0 +1,11 @@
+{% extends "core/landing.html" %}
+{% load i18n %}
+
+{% block title %}
+  {% translate "Get started" %}
+{% endblock title %}
+
+{% block call-to-action %}
+  {% url "eligibility:index" as url_continue %}
+  <a href="{{ url_continue }}" class="btn btn-lg btn-primary">{% translate "Get Started" %}</a>
+{% endblock call-to-action %}

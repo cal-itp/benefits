@@ -1,11 +1,3 @@
-{% for agency_button in buttons %}
-  {% if "agency" in agency_button.classes %}
-    {% if agency_button.label %}<label class="mt-4 d-block fs-base ls-base">{{ agency_button.label }}</label>{% endif %}
-    <a class="d-table fs-base ls-base"
-       {% if agency_button.target %}target="{{ agency_button.target }}"{% endif %}
-       {% if agency_button.rel %}rel="{{ agency_button.rel }}"{% endif %}
-       href="{{ agency_button.url }}">
-      {{ agency_button.text }}
-    </a>
-  {% endif %}
-{% endfor %}
+<label class="mt-4 d-block fs-base ls-base">{{ agency_name | default:agency.long_name }}</label>
+<a class="d-table fs-base ls-base" href="tel:{{ phone | default:agency.phone }}">{{ phone | default:agency.phone }}</a>
+<a class="d-table fs-base ls-base" href="{{ info_url | default:agency.info_url }}" target="_blank" rel="noopener noreferrer">{{ info_url | default:agency.info_url }}</a>

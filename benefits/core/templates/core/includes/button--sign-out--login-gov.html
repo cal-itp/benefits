@@ -1,0 +1,8 @@
+{% load i18n %}
+
+{% if authentication.logged_in %}
+  {% url "oauth:logout" as sign_out_url %}
+  <a href="{{ sign_out_url }}" class="login p-0 btn btn-lg" role="button">
+    <span class="fallback-text color-logo">Login.gov</span>
+  </a>
+{% endif %}

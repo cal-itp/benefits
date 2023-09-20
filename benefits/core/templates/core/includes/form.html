@@ -6,7 +6,7 @@
   <form id="{{ form.id }}" action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
     {% csrf_token %}
 
-    <div class="row form-container">
+    <div class="row form-container justify-content-center">
       <div class="{{ form.classes }}">
         {% for field in form %}
           <div class="row form-group mb-0">
@@ -20,7 +20,7 @@
 
               {{ field }}
 
-              {% if field.help_text %}<small class="form-text text-body">{{ field.help_text }}</small>{% endif %}
+              {% if field.help_text %}<small class="d-block mt-2 form-text text-body">{{ field.help_text }}</small>{% endif %}
             </div>
           </div>
         {% endfor %}
@@ -28,12 +28,7 @@
     </div>
 
     {% if form.submit_value %}
-      <div class="row d-flex flex-column-reverse justify-content-lg-end flex-lg-row pt-8">
-        {% if help_text %}
-          <div class="col-lg-9 d-flex align-items-end flex-row-reverse col-sm-8 offset-sm-2 offset-lg-0 offset-2 col-8">
-            <p class="pt-4 pt-lg-0">{{ help_text }}</p>
-          </div>
-        {% endif %}
+      <div class="row d-flex justify-content-lg-end pt-8">
         <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
           <button class="btn btn-lg btn-primary spinner-hidden d-flex justify-content-center align-items-center"
                   data-action="submit"

@@ -7,27 +7,44 @@
   {{ block.super |add:" enrollment-success" }}
 {% endblock classes %}
 
+{% block page-title %}
+  {% translate "Success" %}
+{% endblock page-title %}
+
 {% block headline %}
-  <div class="col-lg-10">
-    <h1 class="pb-lg-8 pb-4">{{ page.headline }}</h1>
+  <div class="col-lg-8">
+    <h1 class="pb-lg-5 pb-4">{% translate "Success! Your transit benefit is now connected to your card." %}</h1>
   </div>
 {% endblock headline %}
 
 {% block inner-content %}
-  <div class="col-12 col-sm-12 col-lg-10">{% include "core/includes/media-list.html" with media=media %}</div>
+  <div class="col-12 col-sm-12 col-lg-9">
+    <div class="row flex-column-reverse flex-lg-row">
+      <div class="col-12 col-lg-7">
+        <p class="pt-lg-4 mt-lg-3">
+          {% block success-message %}
+          {% endblock success-message %}
+        </p>
+        <p class="pt-4">{% translate "Thank you for using Cal-ITP Benefits!" %}</p>
+      </div>
+      <div class="col-12 col-lg-5">
+        <img width="180"
+             height="155.1"
+             class="illo d-block mx-auto mb-4 mb-lg-0"
+             src="{% get_static_prefix %}img/enrollment-success-illustration.png"
+             alt="" />
+      </div>
+    </div>
+  </div>
 {% endblock inner-content %}
 
 {% block call-to-action %}
-  {% if page.buttons|length == 1 %}
-    <div class="row d-flex justify-content-lg-center flex-lg-row">
-      <div class="col-9 col-lg-10 d-flex justify-content-end logout-paragraph">
+  {% if authentication and authentication.logged_in and authentication.sign_out_button_template %}
+    <div class="row d-flex justify-content-start justify-content-lg-center">
+      <div class="col-12 col-lg-8 pt-lg-5 mt-lg-0 pt-4 mt-2">
         <p>
-          <span>{% translate "enrollment.pages.success.logout[0]" %}</span>
-          {% for b in page.buttons %}
-            <a id="{{ b.id }}" class="{{ b.classes | join:" " }}" href="{{ b.url }}" role="button">
-              <span class="fallback-text">{{ b.fallback_text }}</span>
-            </a>
-          {% endfor %}
+          {% translate "If you are on a public or shared computer, don’t forget to sign out of " %}
+          {% include authentication.sign_out_button_template %}
         </p>
       </div>
     </div>
