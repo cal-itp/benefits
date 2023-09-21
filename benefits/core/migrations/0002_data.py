@@ -178,7 +178,7 @@ PEM DATA
 
     mst_veteran_verifier = EligibilityVerifier.objects.create(
         name=os.environ.get("MST_VETERAN_VERIFIER_NAME", "VA.gov - Veteran (MST)"),
-        active=os.environ.get("MST_VETERAN_VERIFIER_ACTIVE", "True").lower() == "true",
+        active=os.environ.get("MST_VETERAN_VERIFIER_ACTIVE", "False").lower() == "true",
         eligibility_type=mst_veteran_type,
         auth_provider=veteran_auth_provider,
         selection_label_template="eligibility/includes/selection-label--veteran.html",
@@ -309,7 +309,7 @@ PEM DATA
         merchant_id=os.environ.get("SACRT_AGENCY_MERCHANT_ID", "sacrt"),
         info_url="https://sacrt.com/",
         phone="916-321-2877",
-        active=os.environ.get("SACRT_AGENCY_ACTIVE", "True").lower() == "true",
+        active=os.environ.get("SACRT_AGENCY_ACTIVE", "False").lower() == "true",
         private_key=client_private_key,
         public_key=client_public_key,
         jws_signing_alg=os.environ.get("SACRT_AGENCY_JWS_SIGNING_ALG", "RS256"),
@@ -329,7 +329,7 @@ PEM DATA
         merchant_id=os.environ.get("SBMTD_AGENCY_MERCHANT_ID", "sbmtd"),
         info_url="https://sbmtd.gov/taptoride/",
         phone="805-963-3366",
-        active=os.environ.get("SBMTD_AGENCY_ACTIVE", "True").lower() == "true",
+        active=os.environ.get("SBMTD_AGENCY_ACTIVE", "False").lower() == "true",
         private_key=client_private_key,
         public_key=client_public_key,
         jws_signing_alg=os.environ.get("SBMTD_AGENCY_JWS_SIGNING_ALG", "RS256"),
