@@ -24,8 +24,8 @@ dev = [
     "pre-commit",
 ]
 test = [
+    "coverage",
     "pytest",
-    "pytest-cov",
     "pytest-django",
     "pytest-mock",
     "pytest-socket",
