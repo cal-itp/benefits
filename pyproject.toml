@@ -49,6 +49,7 @@ include = '\.pyi?$'
 omit = [
     "benefits/core/migrations/*"
 ]
+relative_files = true
 
 [tool.djlint]
 ignore = "H017,H031"
