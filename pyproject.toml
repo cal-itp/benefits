@@ -46,10 +46,12 @@ target-version = ['py311']
 include = '\.pyi?$'
 
 [tool.coverage.run]
+branch = true
+relative_files = true
 omit = [
     "benefits/core/migrations/*"
 ]
-relative_files = true
+source = ["benefits"]
 
 [tool.djlint]
 ignore = "H017,H031"
