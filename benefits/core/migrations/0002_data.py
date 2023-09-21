@@ -288,7 +288,7 @@ PEM DATA
         merchant_id=sample_agency["merchant_id"],
         info_url=sample_agency["info_url"],
         phone=sample_agency["phone"],
-        active=True,
+        active=os.environ.get("MST_AGENCY_ACTIVE", "True").lower() == "true",
         private_key=client_private_key,
         public_key=client_public_key,
         jws_signing_alg=os.environ.get("MST_AGENCY_JWS_SIGNING_ALG", "RS256"),
