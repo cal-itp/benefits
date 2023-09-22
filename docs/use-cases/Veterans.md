@@ -51,4 +51,3 @@ A veteran in California uses public transit regularly. They don’t have a car a
 
 The transit provider serving their part of California implements contactless payments on fixed bus routes throughout the service area. This rider uses [benefits.calitp.org](https://app.clickup.com/8631512/v/dc/87d6r-10994/benefits.calitp.org) to confirm their veteran status and register their debit card for reduced fares. They tap to pay when boarding buses in their area and are automatically charged the reduced fare. They no longer need to carry one card to pay for transit and another for other purchases. Best of all, they have complete access to all funds in their weekly budget. If food and medication costs are higher one week, they can allocate additional funds to those areas and ride transit less.
 
-# Untitled
