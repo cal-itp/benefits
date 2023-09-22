@@ -12,7 +12,40 @@ This use case describes a feature in the [Cal-ITP Benefits app](https://benefits
 
 ## **Basic Flow**
 
-![](https://t8631512.p.clickup-attachments.com/t8631512/5bc012c2-d4e5-4c44-8435-85dbe2f9efd8/Screenshot%202023-09-19%20at%203.58.29%20PM.png)
+```mermaid
+sequenceDiagram
+%% Veteran Enrollment Pathway
+    actor Transit Rider
+    participant Benefits as Benefits app
+    participant IdG as Identity Gateway
+    participant Login.gov
+    participant VA.gov
+    participant Littlepay
+Transit Rider->>Benefits: visits benefits.calitp.org
+    activate Benefits
+Benefits-->>IdG: eligibility verification
+    activate IdG
+Transit Rider->>Login.gov: account authentication
+    activate Login.gov
+IdG-->>Login.gov: requests required PII
+    activate Login.gov
+    Note right of Login.gov: transit rider first name<br>transit rider last name<br>home address<br>date of birth
+Login.gov-->>IdG: returns required PII
+    deactivate Login.gov
+IdG-->>VA.gov: check veteran status
+    activate VA.gov
+VA.gov-->>IdG: return veteran status
+    deactivate VA.gov
+IdG-->>Benefits: eligibility response
+    deactivate IdG
+    deactivate Login.gov
+Benefits-->>Littlepay: payment enrollment start
+    activate Littlepay
+Transit Rider->>Littlepay: provides debit or credit card details
+Littlepay-->>Benefits: payment method enrollment confirmation
+    deactivate Littlepay
+    deactivate Benefits
+```
 
 1. The transit rider visits the web application at [benefits.calitp.org](https://app.clickup.com/8631512/v/dc/87d6r-10994/benefits.calitp.org) in a browser on their desktop computer.
 2. The transit rider chooses the transit provider that serves their area.
