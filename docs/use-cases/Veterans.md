@@ -10,7 +10,7 @@ This use case describes a feature in the [Cal-ITP Benefits app](https://benefits
 
 **Precondition:** The California transit provider delivering fixed route service has installed and tested validator hardware necessary to collect fares using contactless payment on bus or rail lines, and the provider has a policy to offer a transit discount for US veterans.
 
-## **Basic Flow**
+## Basic Flow
 
 ```mermaid
 sequenceDiagram
@@ -57,7 +57,7 @@ Littlepay-->>Benefits: payment method enrollment confirmation
 8. The transit rider provides the debit or credit card details they use to pay for transit to Littlepay, the payment processor that facilitates transit fare collection.
 9. The app registers the veteran benefit with the transit rider’s debit or credit card.
 
-## **Alternative Flows**
+## Alternative Flows
 
 *   If the transit rider does not have a desktop computer, they can open the web application at [benefits.calitp.org](https://benefits.calitp.org) in a mobile browser on their iOS or Android tablet or mobile device to complete enrollment using the basic flow.
 *   Suppose the transit rider cannot authenticate with [Login.gov](https://Login.gov), or will not create an account. In either case, the app cannot determine their veteran status and, thus, cannot enroll their contactless debit or credit card for a reduced fare.
@@ -65,11 +65,11 @@ Littlepay-->>Benefits: payment method enrollment confirmation
 *   If the debit or credit card expires or is canceled by the issuer, the transit rider must repeat the basic flow to register a new debit or credit card.
 *   If the transit rider uses more than one debit or credit card to pay for transit, they repeat the basic flow for each card.
 
-## **Postcondition**
+## Postcondition
 
 The transit rider receives a fare reduction each time they use the debit or credit card they registered to pay for transit rides. The number of times they can use the card to pay for transit is unlimited and the benefit never expires. 
 
-## **Benefits**
+## Benefits
 
 *   The transit rider no longer needs cash to pay for transit rides.
 *   The transit rider doesn’t have to lock up funds on a closed-loop card offered by the transit provider.
@@ -78,7 +78,7 @@ The transit rider receives a fare reduction each time they use the debit or cred
 *   Secure state and federal solutions manage the transit rider’s personal identifiable information (PII): [Login.gov](https://Login.gov) and the California Department of Technology Identity Gateway (IdG). Transit riders do not have to share personal information with local transit agencies.
 *   Benefits enrollment takes minutes rather than days or weeks.
 
-## **Example Scenario**
+## Example Scenario
 
 A veteran in California uses public transit regularly. They don’t have a car and depend on buses to get to appointments and do errands that take too long to use their bicycle. They receive a 50% fare reduction for being a US veteran but have to pay for transit rides using the closed loop card provided by the agency to receive the reduced fare. It’s frustrating and inconvenient to reload this agency card in $10 payments every week, especially because they sometimes need the money tied up on the card to pay for groceries and medication. 
 
