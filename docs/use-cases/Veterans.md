@@ -78,7 +78,7 @@ The transit rider receives a fare reduction each time they use the debit or cred
 *   Secure state and federal solutions manage the transit rider’s personal identifiable information (PII): [Login.gov](https://Login.gov) and the California Department of Technology Identity Gateway (IdG). Transit riders do not have to share personal information with local transit agencies.
 *   Benefits enrollment takes minutes rather than days or weeks.
 
-## Example Scenario
+## Example scenario
 
 A veteran in California uses public transit regularly. They don’t have a car and depend on buses to get to appointments and do errands that take too long to use their bicycle. They receive a 50% fare reduction for being a US veteran but have to pay for transit rides using the closed loop card provided by the agency to receive the reduced fare. It’s frustrating and inconvenient to reload this agency card in $10 payments every week, especially because they sometimes need the money tied up on the card to pay for groceries and medication. 
 
