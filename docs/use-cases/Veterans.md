@@ -57,7 +57,7 @@ Littlepay-->>Benefits: payment method enrollment confirmation
 8. The transit rider provides the debit or credit card details they use to pay for transit to Littlepay, the payment processor that facilitates transit fare collection.
 9. The app registers the veteran benefit with the transit rider’s debit or credit card.
 
-## Alternative Flows
+## Alternative flows
 
 *   If the transit rider does not have a desktop computer, they can open the web application at [benefits.calitp.org](https://benefits.calitp.org) in a mobile browser on their iOS or Android tablet or mobile device to complete enrollment using the basic flow.
 *   Suppose the transit rider cannot authenticate with [Login.gov](https://Login.gov), or will not create an account. In either case, the app cannot determine their veteran status and, thus, cannot enroll their contactless debit or credit card for a reduced fare.
