@@ -10,7 +10,7 @@ This use case describes a feature in the [Cal-ITP Benefits app](https://benefits
 
 **Precondition:** The California transit provider delivering fixed route service has installed and tested validator hardware necessary to collect fares using contactless payment on bus or rail lines, and the provider has a policy to offer a transit discount for US veterans.
 
-## Basic Flow
+## Basic flow
 
 ```mermaid
 sequenceDiagram
