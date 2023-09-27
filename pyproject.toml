@@ -24,8 +24,8 @@ dev = [
     "pre-commit",
 ]
 test = [
+    "coverage",
     "pytest",
-    "pytest-cov",
     "pytest-django",
     "pytest-mock",
     "pytest-socket",
@@ -46,9 +46,12 @@ target-version = ['py311']
 include = '\.pyi?$'
 
 [tool.coverage.run]
+branch = true
+relative_files = true
 omit = [
     "benefits/core/migrations/*"
 ]
+source = ["benefits"]
 
 [tool.djlint]
 ignore = "H017,H031"
