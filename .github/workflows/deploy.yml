@@ -32,9 +32,10 @@ jobs:
         run: |
           python -m venv .venv
           source .venv/bin/activate
+          pip install pipdeptree
           pip install -e .
-          pip freeze
-          pip freeze >> benefits/static/requirements.txt
+          pipdeptree
+          pipdeptree >> benefits/static/requirements.txt
 
       - name: Write commit SHA to file
         run: echo "${{ github.sha }}" >> benefits/static/sha.txt
