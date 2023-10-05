@@ -8,7 +8,7 @@ classifiers = ["Programming Language :: Python :: 3 :: Only"]
 requires-python = ">=3.9"
 dependencies = [
     "Authlib==1.2.1",
-    "Django==4.2.5",
+    "Django==4.2.6",
     "django-csp==3.7",
     "eligibility-api==2023.9.1",
     "requests==2.31.0",
