@@ -54,6 +54,17 @@ writable by the Django process._
 
 By default, the base project directory (i.e. the root of the repository).
 
+### `DJANGO_DB_RESET`
+
+!!! warning "Deployment configuration"
+
+    You may change this setting when deploying the app to a non-localhost domain
+
+Boolean:
+
+- `True` (default): deletes the existing database file and runs fresh Django migrations.
+- `False`: Django uses the existing database file.
+
 ### `DJANGO_DEBUG`
 
 !!! warning "Deployment configuration"
