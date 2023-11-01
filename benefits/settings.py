@@ -2,6 +2,7 @@
 Django settings for benefits project.
 """
 import os
+
 from benefits import sentry
 
 
@@ -147,10 +148,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "benefits.wsgi.application"
 
+DATABASE_DIR = os.environ.get("DJANGO_DB_DIR", BASE_DIR)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "django.db",
+        "NAME": os.path.join(DATABASE_DIR, "django.db"),
     }
 }
 
