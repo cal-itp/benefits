@@ -36,7 +36,14 @@ def load_data(app, *args, **kwargs):
 
     PemData = app.get_model("core", "PemData")
 
-    server_public_key = PemData.objects.create(
+    mst_server_public_key = PemData.objects.create(
+        label="Eligibility server public key",
+        remote_url=os.environ.get(
+            "SERVER_PUBLIC_KEY_URL", "https://raw.githubusercontent.com/cal-itp/eligibility-server/dev/keys/server.pub"
+        ),
+    )
+
+    sbmtd_server_public_key = PemData.objects.create(
         label="Eligibility server public key",
         remote_url=os.environ.get(
             "SERVER_PUBLIC_KEY_URL", "https://raw.githubusercontent.com/cal-itp/eligibility-server/dev/keys/server.pub"
@@ -197,7 +204,7 @@ PEM DATA
         api_auth_header=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_HEADER", "X-Server-API-Key"),
         api_auth_key=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_KEY", "server-auth-token"),
         eligibility_type=mst_courtesy_card_type,
-        public_key=server_public_key,
+        public_key=mst_server_public_key,
         jwe_cek_enc=os.environ.get("COURTESY_CARD_VERIFIER_JWE_CEK_ENC", "A256CBC-HS512"),
         jwe_encryption_alg=os.environ.get("COURTESY_CARD_VERIFIER_JWE_ENCRYPTION_ALG", "RSA-OAEP"),
         jws_signing_alg=os.environ.get("COURTESY_CARD_VERIFIER_JWS_SIGNING_ALG", "RS256"),
@@ -232,7 +239,7 @@ PEM DATA
         api_auth_header=os.environ.get("MOBILITY_PASS_VERIFIER_API_AUTH_HEADER", "X-Server-API-Key"),
         api_auth_key=os.environ.get("MOBILITY_PASS_VERIFIER_API_AUTH_KEY", "server-auth-token"),
         eligibility_type=sbmtd_mobility_pass_type,
-        public_key=server_public_key,
+        public_key=sbmtd_server_public_key,
         jwe_cek_enc=os.environ.get("MOBILITY_PASS_VERIFIER_JWE_CEK_ENC", "A256CBC-HS512"),
         jwe_encryption_alg=os.environ.get("MOBILITY_PASS_VERIFIER_JWE_ENCRYPTION_ALG", "RSA-OAEP"),
         jws_signing_alg=os.environ.get("MOBILITY_PASS_VERIFIER_JWS_SIGNING_ALG", "RS256"),
