@@ -64,6 +64,8 @@ resource "azurerm_linux_web_app" "main" {
     # Django settings
     "DJANGO_ADMIN"         = (local.is_prod || local.is_test) ? null : "${local.secret_prefix}django-admin)",
     "DJANGO_ALLOWED_HOSTS" = "${local.secret_prefix}django-allowed-hosts)",
+    "DJANGO_DB_DIR"        = "${local.secret_prefix}django-db-dir)",
+    "DJANGO_DB_RESET"      = "${local.secret_prefix}django-db-reset)",
     "DJANGO_DEBUG"         = local.is_prod ? null : "${local.secret_prefix}django-debug)",
     "DJANGO_LOG_LEVEL"     = "${local.secret_prefix}django-log-level)",
 
