@@ -28,6 +28,11 @@ def load_data(app, *args, **kwargs):
     sbmtd_senior_type = EligibilityType.objects.create(
         name="senior", label="Senior Discount (SBMTD)", group_id=os.environ.get("SBMTD_SENIOR_GROUP_ID", "group4")
     )
+    sbmtd_mobility_pass_type = EligibilityType.objects.create(
+        name="mobility_pass",
+        label="Mobility Pass Discount (SBMTD)",
+        group_id=os.environ.get("SBMTD_MOBILITY_PASS_GROUP_ID", "group5"),
+    )
 
     PemData = app.get_model("core", "PemData")
 
@@ -220,6 +225,23 @@ PEM DATA
         start_template="eligibility/start--senior.html",
     )
 
+    sbmtd_mobility_pass_verifier = EligibilityVerifier.objects.create(
+        name=os.environ.get("MOBILITY_PASS_VERIFIER_NAME", "Eligibility Server Verifier"),
+        active=os.environ.get("MOBILITY_PASS_VERIFIER_ACTIVE", "True").lower() == "true",
+        api_url=os.environ.get("MOBILITY_PASS_VERIFIER_API_URL", "http://server:8000/verify"),
+        api_auth_header=os.environ.get("MOBILITY_PASS_VERIFIER_API_AUTH_HEADER", "X-Server-API-Key"),
+        api_auth_key=os.environ.get("MOBILITY_PASS_VERIFIER_API_AUTH_KEY", "server-auth-token"),
+        eligibility_type=sbmtd_mobility_pass_type,
+        public_key=server_public_key,
+        jwe_cek_enc=os.environ.get("MOBILITY_PASS_VERIFIER_JWE_CEK_ENC", "A256CBC-HS512"),
+        jwe_encryption_alg=os.environ.get("MOBILITY_PASS_VERIFIER_JWE_ENCRYPTION_ALG", "RSA-OAEP"),
+        jws_signing_alg=os.environ.get("MOBILITY_PASS_VERIFIER_JWS_SIGNING_ALG", "RS256"),
+        auth_provider=None,
+        selection_label_template="eligibility/includes/selection-label--sbmtd-mobility-pass.html",
+        start_template="eligibility/start--sbmtd-mobility-pass.html",
+        form_class="benefits.eligibility.forms.SBMTDMobilityPass",
+    )
+
     PaymentProcessor = app.get_model("core", "PaymentProcessor")
 
     mst_payment_processor = PaymentProcessor.objects.create(
@@ -339,7 +361,7 @@ PEM DATA
         enrollment_success_template="enrollment/success--sbmtd.html",
     )
     sbmtd_agency.eligibility_types.set([sbmtd_senior_type])
-    sbmtd_agency.eligibility_verifiers.set([sbmtd_senior_verifier])
+    sbmtd_agency.eligibility_verifiers.set([sbmtd_senior_verifier, sbmtd_mobility_pass_verifier])
 
 
 class Migration(migrations.Migration):
