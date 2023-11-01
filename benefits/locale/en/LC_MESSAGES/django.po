@@ -2,6 +2,9 @@
 # Copyright (C) 2023 California Department of Transportation
 # This file is distributed under the same license as the benefits package.
 #
+#, fuzzy
+msgid ""
+msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
 "POT-Creation-Date: 2023-11-01 23:33+0000\n"
 "Language: English\n"
