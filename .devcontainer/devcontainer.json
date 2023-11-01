@@ -20,7 +20,6 @@
       },
       // Add the IDs of extensions you want installed when the container is created.
       "extensions": [
-        "bungcip.better-toml",
         "batisteo.vscode-django",
         "bpruitt-goddard.mermaid-markdown-syntax-highlighting",
         "eamodio.gitlens",
@@ -28,10 +27,12 @@
         "hashicorp.terraform",
         "mhutchie.git-graph",
         "monosans.djlint",
-        "ms-python.python",
-        "ms-python.vscode-pylance",
         "mrorz.language-gettext",
-        "qwtel.sqlite-viewer"
+        "ms-python.python",
+        "ms-python.black-formatter",
+        "ms-python.flake8",
+        "qwtel.sqlite-viewer",
+        "tamasfe.even-better-toml"
       ]
     }
   }
