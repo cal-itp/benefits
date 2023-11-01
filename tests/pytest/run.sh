@@ -2,7 +2,7 @@
 set -eu
 
 # run normal pytests
-coverage run -m pytest --no-migrations
+coverage run -m pytest
 
 # clean out old coverage results
 rm -rf benefits/static/coverage
