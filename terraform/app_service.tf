@@ -10,6 +10,10 @@ resource "azurerm_service_plan" "main" {
   }
 }
 
+locals {
+  data_mount = "/home/calitp/app/data"
+}
+
 resource "azurerm_linux_web_app" "main" {
   name                      = "AS-CDT-PUB-VIP-CALITP-${local.env_letter}-001"
   location                  = data.azurerm_resource_group.main.location
@@ -164,6 +168,15 @@ resource "azurerm_linux_web_app" "main" {
     "SBMTD_AGENCY_MERCHANT_ID"                             = "${local.secret_prefix}sbmtd-agency-merchant-id)"
     "SBMTD_AGENCY_ACTIVE"                                  = "${local.secret_prefix}sbmtd-agency-active)"
     "SBMTD_AGENCY_JWS_SIGNING_ALG"                         = "${local.secret_prefix}sbmtd-agency-jws-signing-alg)"
+  }
+
+  storage_account {
+    access_key   = azurerm_storage_account.main.primary_access_key
+    account_name = azurerm_storage_account.main.name
+    name         = "benefits-data"
+    type         = "AzureFiles"
+    share_name   = azurerm_storage_share.data.name
+    mount_path   = local.data_mount
   }
 
   lifecycle {
