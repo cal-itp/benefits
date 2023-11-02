@@ -89,7 +89,8 @@ resource "azurerm_linux_web_app" "main" {
     "SBMTD_SENIOR_GROUP_ID"                                = "${local.secret_prefix}sbmtd-senior-group-id)",
     "CLIENT_PRIVATE_KEY"                                   = "${local.secret_prefix}client-private-key)"
     "CLIENT_PUBLIC_KEY"                                    = "${local.secret_prefix}client-public-key)"
-    "SERVER_PUBLIC_KEY_URL"                                = "${local.secret_prefix}server-public-key-url)"
+    "MST_SERVER_PUBLIC_KEY_URL"                            = "${local.secret_prefix}mst-server-public-key-url)"
+    "SBMTD_SERVER_PUBLIC_KEY_URL"                          = "${local.secret_prefix}sbmtd-server-public-key-url)"
     "MST_PAYMENT_PROCESSOR_CLIENT_CERT"                    = "${local.secret_prefix}mst-payment-processor-client-cert)"
     "MST_PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY"        = "${local.secret_prefix}mst-payment-processor-client-cert-private-key)"
     "MST_PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA"            = "${local.secret_prefix}mst-payment-processor-client-cert-root-ca)"

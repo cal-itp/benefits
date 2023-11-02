@@ -39,14 +39,14 @@ def load_data(app, *args, **kwargs):
     mst_server_public_key = PemData.objects.create(
         label="Eligibility server public key",
         remote_url=os.environ.get(
-            "SERVER_PUBLIC_KEY_URL", "https://raw.githubusercontent.com/cal-itp/eligibility-server/dev/keys/server.pub"
+            "MST_SERVER_PUBLIC_KEY_URL", "https://raw.githubusercontent.com/cal-itp/eligibility-server/dev/keys/server.pub"
         ),
     )
 
     sbmtd_server_public_key = PemData.objects.create(
         label="Eligibility server public key",
         remote_url=os.environ.get(
-            "SERVER_PUBLIC_KEY_URL", "https://raw.githubusercontent.com/cal-itp/eligibility-server/dev/keys/server.pub"
+            "SBMTD_SERVER_PUBLIC_KEY_URL", "https://raw.githubusercontent.com/cal-itp/eligibility-server/dev/keys/server.pub"
         ),
     )
 
