@@ -87,6 +87,7 @@ resource "azurerm_linux_web_app" "main" {
     "MST_COURTESY_CARD_GROUP_ID"                           = "${local.secret_prefix}mst-courtesy-card-group-id)"
     "SACRT_SENIOR_GROUP_ID"                                = "${local.secret_prefix}sacrt-senior-group-id)"
     "SBMTD_SENIOR_GROUP_ID"                                = "${local.secret_prefix}sbmtd-senior-group-id)",
+    "SBMTD_MOBILITY_PASS_GROUP_ID"                         = "${local.secret_prefix}sbmtd-mobility-pass-group-id)"
     "CLIENT_PRIVATE_KEY"                                   = "${local.secret_prefix}client-private-key)"
     "CLIENT_PUBLIC_KEY"                                    = "${local.secret_prefix}client-public-key)"
     "MST_SERVER_PUBLIC_KEY_URL"                            = "${local.secret_prefix}mst-server-public-key-url)"
