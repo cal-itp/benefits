@@ -368,7 +368,7 @@ PEM DATA
         enrollment_success_template="enrollment/success--sbmtd.html",
         help_template="core/includes/help--sbmtd.html",
     )
-    sbmtd_agency.eligibility_types.set([sbmtd_senior_type])
+    sbmtd_agency.eligibility_types.set([sbmtd_senior_type, sbmtd_mobility_pass_type])
     sbmtd_agency.eligibility_verifiers.set([sbmtd_senior_verifier, sbmtd_mobility_pass_verifier])
 
 
