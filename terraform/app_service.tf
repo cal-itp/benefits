@@ -66,12 +66,15 @@ resource "azurerm_linux_web_app" "main" {
     "REQUESTS_READ_TIMEOUT"    = "${local.secret_prefix}requests-read-timeout)",
 
     # Django settings
-    "DJANGO_ADMIN"         = (local.is_prod || local.is_test) ? null : "${local.secret_prefix}django-admin)",
-    "DJANGO_ALLOWED_HOSTS" = "${local.secret_prefix}django-allowed-hosts)",
-    "DJANGO_DB_DIR"        = "${local.secret_prefix}django-db-dir)",
-    "DJANGO_DB_RESET"      = "${local.secret_prefix}django-db-reset)",
-    "DJANGO_DEBUG"         = local.is_prod ? null : "${local.secret_prefix}django-debug)",
-    "DJANGO_LOG_LEVEL"     = "${local.secret_prefix}django-log-level)",
+    "DJANGO_ADMIN"              = "${local.secret_prefix}django-admin)",
+    "DJANGO_ALLOWED_HOSTS"      = "${local.secret_prefix}django-allowed-hosts)",
+    "DJANGO_DB_DIR"             = "${local.secret_prefix}django-db-dir)",
+    "DJANGO_DB_RESET"           = "${local.secret_prefix}django-db-reset)",
+    "DJANGO_DEBUG"              = local.is_prod ? null : "${local.secret_prefix}django-debug)",
+    "DJANGO_LOG_LEVEL"          = "${local.secret_prefix}django-log-level)",
+    "DJANGO_SUPERUSER_EMAIL"    = "${local.secret_prefix}django-superuser-email)",
+    "DJANGO_SUPERUSER_PASSWORD" = "${local.secret_prefix}django-superuser-password)",
+    "DJANGO_SUPERUSER_USERNAME" = "${local.secret_prefix}django-superuser-username)",
 
     "DJANGO_RECAPTCHA_SECRET_KEY" = local.is_dev ? null : "${local.secret_prefix}django-recaptcha-secret-key)",
     "DJANGO_RECAPTCHA_SITE_KEY"   = local.is_dev ? null : "${local.secret_prefix}django-recaptcha-site-key)",
