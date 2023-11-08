@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-09-11 17:23+0000\n"
+"POT-Creation-Date: 2023-11-01 23:37+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -259,8 +259,24 @@ msgstr ""
 "califican para una serie de programas de tarifas reducidas. Este beneficio "
 "de tránsito debe renovarse en el futuro en función de la fecha de "
 "vencimiento de la tarjeta de cortesía. Obtenga más información en el <a "
-"href='https://mst.org/riders-guide/how-to-ride/courtesy-card/' target="
-"\"_blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
+"href='https://mst.org/riders-guide/how-to-ride/courtesy-card/' "
+"target=\"_blank\" rel=\"noopener noreferrer\">MST Riders Guide</a>."
+
+msgid "What is a Mobility Pass?"
+msgstr "¿Qué es un Mobility Pass?"
+
+msgid ""
+"The Santa Barbara Metropolitan Transit District issues Mobility Pass cards "
+"to eligible riders. This transit benefit may need to be renewed in the "
+"future based on the expiration date of the Mobility Pass. Learn more at the "
+"<a href=\"https://sbmtd.gov/fares-passes/\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">SBMTD Fares & Passes</a>."
+msgstr ""
+"Santa Barbara Metropolitan Transit District emite tarjetas Mobility Pass a "
+"pasajeros que califican. Este beneficio de tránsito debe renovarse en el "
+"futuro en función de la fecha de vencimiento del Mobility Pass. Obtenga más "
+"información en el <a href=\"https://sbmtd.gov/fares-passes/\" "
+"target=\"_blank\" rel=\"noopener noreferrer\">SBMTD Fares & Passes</a>."
 
 msgid "Sign out of Login.gov"
 msgstr "Cierre sesión de Login.gov"
@@ -374,6 +390,25 @@ msgstr "Número de tarjeta de cortesía de MST"
 msgid "This is a 5-digit number on the front and back of your card."
 msgstr "Este es un número de 5 dígitos en el anverso y reverso de su tarjeta."
 
+msgid ""
+"Please input your Mobility Pass number and last name below to confirm your "
+"eligibility."
+msgstr ""
+"Ingrese el número de cuatro dígitos de su Mobility Pass y su apellido a "
+"continuación para confirmar su elegibilidad."
+
+msgid "Last name (as it appears on Mobility Pass)"
+msgstr "Apellido (tal como aparece en la tarjeta de Mobility Pass)"
+
+msgid "We use this to help confirm your Mobility Pass."
+msgstr "Usamos esto para ayudar a confirmar su Mobility Pass."
+
+msgid "SBMTD Mobility Pass number"
+msgstr "Número de SBMTD Mobility Pass"
+
+msgid "This is a 4-digit number on the front and back of your card."
+msgstr "Este es un número de 4 dígitos en el reverso de su tarjeta."
+
 msgid "Your contactless card details"
 msgstr "Los datos de su tarjeta sin contacto"
 
@@ -395,6 +430,16 @@ msgid ""
 msgstr ""
 "No necesita tener su tarjeta física, pero necesitará saber el número. El "
 "número comienza con un signo de número (#) seguido de cinco dígitos."
+
+msgid "Your current Mobility Pass number"
+msgstr "Su número actual de Mobility Pass"
+
+msgid ""
+"You do not need to have your physical card, but you will need your four-"
+"digit Mobility Pass number on the back of the card."
+msgstr ""
+"No necesita tener su tarjeta física, pero necesitará su número de cuatro "
+"dígitos de Mobility Pass en el reverso de la tarjeta."
 
 msgid "A Login.gov account with identity verification"
 msgstr "Una cuenta de Login.gov con verificación de identidad"
@@ -426,12 +471,15 @@ msgstr ""
 msgid "Go back"
 msgstr "Volver"
 
-msgid "Verify your identity with "
-msgstr "Verifique su identidad con "
+msgid "Learn more about"
+msgstr "Más información sobre"
 
 msgctxt "image alt text"
 msgid "Login.gov"
 msgstr "Login.gov"
+
+msgid "Verify your identity with "
+msgstr "Verifique su identidad con "
 
 msgid ""
 "We use Login.gov to verify your identity to make sure you are eligible for "
@@ -439,9 +487,6 @@ msgid ""
 msgstr ""
 "Utilizamos Login.gov para verificar su identidad para asegurarnos de que "
 "seas elegible para el beneficio de tránsito que seleccionaste."
-
-msgid "Learn more about"
-msgstr "Más información sobre"
 
 msgid "MST Courtesy Card"
 msgstr "Tarjeta de cortesía de MST"
@@ -452,6 +497,14 @@ msgid ""
 msgstr ""
 "Esta opción es para personas que cuentan actualmente con una tarjeta de "
 "cortesía o una tarjeta de elegibilidad MST RIDES."
+
+msgid "SBMTD Mobility Pass"
+msgstr ""
+
+msgid "This option is for people who have a current SBMTD Mobility Pass."
+msgstr ""
+"Esta opción es para personas que cuentan actualmente con un Mobility Pass de "
+"SBMTD."
 
 msgid "Older Adult"
 msgstr "Adulto mayor"
@@ -509,6 +562,9 @@ msgstr "Ha seleccionado un beneficio de tránsito de tarjeta de cortesía."
 
 msgid "Continue"
 msgstr "Continuar"
+
+msgid "You selected a Mobility Pass transit benefit."
+msgstr "Ha seleccionado un beneficio de tránsito de Mobility Pass."
 
 msgid "Older Adult benefit overview"
 msgstr "Descripción de beneficios para adultos mayores"

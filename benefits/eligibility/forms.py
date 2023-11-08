@@ -156,3 +156,26 @@ class MSTCourtesyCard(EligibilityVerificationForm):
             *args,
             **kwargs,
         )
+
+
+class SBMTDMobilityPass(EligibilityVerificationForm):
+    """EligibilityVerification form for the SBMTD Mobility Pass."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(
+            title=_("Agency card information"),
+            headline=_("Let’s see if we can confirm your eligibility."),
+            blurb=_("Please input your Mobility Pass number and last name below to confirm your eligibility."),
+            name_label=_("Last name (as it appears on Mobility Pass)"),
+            name_placeholder="Garcia",
+            name_help_text=_("We use this to help confirm your Mobility Pass."),
+            sub_label=_("SBMTD Mobility Pass number"),
+            sub_help_text=_("This is a 4-digit number on the front and back of your card."),
+            sub_placeholder="1234",
+            name_max_length=255,
+            sub_input_mode="numeric",
+            sub_max_length=4,
+            sub_pattern=r"\d{4}",
+            *args,
+            **kwargs,
+        )
