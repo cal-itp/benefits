@@ -20,7 +20,7 @@ python manage.py migrate
 # check DJANGO_ADMIN = true, default to false if empty or unset
 
 if [[ ${DJANGO_ADMIN:-false} = true ]]; then
-    python manage.py createsuperuser
+    python manage.py createsuperuser --no-input
 else
     echo "superuser: Django not configured for Admin access"
 fi

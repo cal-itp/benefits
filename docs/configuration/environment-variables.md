@@ -120,6 +120,42 @@ By default the application sends logs to `stdout`.
 
 Django's primary secret, keep this safe!
 
+### `DJANGO_SUPERUSER_EMAIL`
+
+!!! warning "Deployment configuration"
+
+    You may change this setting when deploying the app to a non-localhost domain
+
+!!! danger "Required configuration"
+
+    This setting is required when `DJANGO_ADMIN` is `true`
+
+The email address of the Django Admin superuser created during initialization.
+
+### `DJANGO_SUPERUSER_PASSWORD`
+
+!!! warning "Deployment configuration"
+
+    You may change this setting when deploying the app to a non-localhost domain
+
+!!! danger "Required configuration"
+
+    This setting is required when `DJANGO_ADMIN` is `true`
+
+The password of the Django Admin superuser created during initialization.
+
+### `DJANGO_SUPERUSER_USERNAME`
+
+!!! warning "Deployment configuration"
+
+    You may change this setting when deploying the app to a non-localhost domain
+
+!!! danger "Required configuration"
+
+    This setting is required when `DJANGO_ADMIN` is `true`
+
+The username of the Django Admin superuser created during initialization.
+
 ### `DJANGO_TRUSTED_ORIGINS`
 
 !!! warning "Deployment configuration"
