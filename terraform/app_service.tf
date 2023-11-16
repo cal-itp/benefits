@@ -167,7 +167,7 @@ resource "azurerm_linux_web_app" "main" {
     "MOBILITY_PASS_VERIFIER_API_AUTH_KEY"                  = "${local.secret_prefix}mobility-pass-verifier-api-auth-key)"
     "MOBILITY_PASS_VERIFIER_JWE_CEK_ENC"                   = "${local.secret_prefix}mobility-pass-verifier-jwe-cek-enc)"
     "MOBILITY_PASS_VERIFIER_JWE_ENCRYPTION_ALG"            = "${local.secret_prefix}mobility-pass-verifier-jwe-encryption-alg)"
-    "MOBILITY_PASS_VERIFIER_JWS_SIGNING_ALG"               = "${local.secret_prefix}mobility-pass-verifier-jwe-signing-alg)"
+    "MOBILITY_PASS_VERIFIER_JWS_SIGNING_ALG"               = "${local.secret_prefix}mobility-pass-verifier-jws-signing-alg)"
     "MST_AGENCY_SHORT_NAME"                                = "${local.secret_prefix}mst-agency-short-name)"
     "MST_AGENCY_LONG_NAME"                                 = "${local.secret_prefix}mst-agency-long-name)"
     "MST_AGENCY_JWS_SIGNING_ALG"                           = "${local.secret_prefix}mst-agency-jws-signing-alg)"
