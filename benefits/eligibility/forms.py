@@ -170,7 +170,7 @@ class SBMTDMobilityPass(EligibilityVerificationForm):
             name_placeholder="Garcia",
             name_help_text=_("We use this to help confirm your Mobility Pass."),
             sub_label=_("SBMTD Mobility Pass number"),
-            sub_help_text=_("This is a 4-digit number on the front and back of your card."),
+            sub_help_text=_("This is a 4-digit number on the back of your card."),
             sub_placeholder="1234",
             name_max_length=255,
             sub_input_mode="numeric",
