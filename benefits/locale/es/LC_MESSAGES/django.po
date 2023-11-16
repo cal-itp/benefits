@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-11-16 23:37+0000\n"
+"POT-Creation-Date: 2023-11-16 23:40+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -397,7 +397,7 @@ msgstr ""
 "Ingrese el número de cuatro dígitos de su Mobility Pass y su apellido a "
 "continuación para confirmar su elegibilidad."
 
-msgid "Last name (as it appears on Mobility Pass)"
+msgid "Last name (as it appears on Mobility Pass card)"
 msgstr "Apellido (tal como aparece en la tarjeta de Mobility Pass)"
 
 msgid "We use this to help confirm your Mobility Pass."

@@ -166,7 +166,7 @@ class SBMTDMobilityPass(EligibilityVerificationForm):
             title=_("Agency card information"),
             headline=_("Let’s see if we can confirm your eligibility."),
             blurb=_("Please input your Mobility Pass number and last name below to confirm your eligibility."),
-            name_label=_("Last name (as it appears on Mobility Pass)"),
+            name_label=_("Last name (as it appears on Mobility Pass card)"),
             name_placeholder="Garcia",
             name_help_text=_("We use this to help confirm your Mobility Pass."),
             sub_label=_("SBMTD Mobility Pass number"),
