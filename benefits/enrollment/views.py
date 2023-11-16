@@ -99,7 +99,10 @@ def retry(request):
         analytics.returned_retry(request)
         form = forms.CardTokenizeFailForm(request.POST)
         if form.is_valid():
-            return TemplateResponse(request, TEMPLATE_RETRY)
+            context = {
+                "retry_button": True,
+            }
+            return TemplateResponse(request, TEMPLATE_RETRY, context)
         else:
             analytics.returned_error(request, "Invalid retry submission.")
             raise Exception("Invalid retry submission.")
