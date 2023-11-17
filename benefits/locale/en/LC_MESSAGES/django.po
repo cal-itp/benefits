@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2023-11-01 23:33+0000\n"
+"POT-Creation-Date: 2023-11-16 23:40+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -307,7 +307,7 @@ msgid ""
 "eligibility."
 msgstr ""
 
-msgid "Last name (as it appears on Mobility Pass)"
+msgid "Last name (as it appears on Mobility Pass card)"
 msgstr ""
 
 msgid "We use this to help confirm your Mobility Pass."
@@ -316,7 +316,7 @@ msgstr ""
 msgid "SBMTD Mobility Pass number"
 msgstr ""
 
-msgid "This is a 4-digit number on the front and back of your card."
+msgid "This is a 4-digit number on the back of your card."
 msgstr ""
 
 msgid "Your contactless card details"
@@ -341,8 +341,8 @@ msgid "Your current Mobility Pass number"
 msgstr ""
 
 msgid ""
-"You do not need to have your physical card, but you will need your four-"
-"digit Mobility Pass number on the back of the card."
+"You do not need to have your physical card, but you will need your 4-digit "
+"Mobility Pass number on the back of the card."
 msgstr ""
 
 msgid "A Login.gov account with identity verification"
