@@ -53,6 +53,7 @@
 }
 
 html {
+  overflow-y: auto;
   scroll-padding-top: 101px; /* Header Height (80px) + Skip Nav Height (21px) = 101px */
 }
 

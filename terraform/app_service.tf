@@ -10,6 +10,10 @@ resource "azurerm_service_plan" "main" {
   }
 }
 
+locals {
+  data_mount = "/home/calitp/app/data"
+}
+
 resource "azurerm_linux_web_app" "main" {
   name                      = "AS-CDT-PUB-VIP-CALITP-${local.env_letter}-001"
   location                  = data.azurerm_resource_group.main.location
@@ -62,10 +66,15 @@ resource "azurerm_linux_web_app" "main" {
     "REQUESTS_READ_TIMEOUT"    = "${local.secret_prefix}requests-read-timeout)",
 
     # Django settings
-    "DJANGO_ADMIN"         = (local.is_prod || local.is_test) ? null : "${local.secret_prefix}django-admin)",
-    "DJANGO_ALLOWED_HOSTS" = "${local.secret_prefix}django-allowed-hosts)",
-    "DJANGO_DEBUG"         = local.is_prod ? null : "${local.secret_prefix}django-debug)",
-    "DJANGO_LOG_LEVEL"     = "${local.secret_prefix}django-log-level)",
+    "DJANGO_ADMIN"              = "${local.secret_prefix}django-admin)",
+    "DJANGO_ALLOWED_HOSTS"      = "${local.secret_prefix}django-allowed-hosts)",
+    "DJANGO_DB_DIR"             = "${local.secret_prefix}django-db-dir)",
+    "DJANGO_DB_RESET"           = "${local.secret_prefix}django-db-reset)",
+    "DJANGO_DEBUG"              = local.is_prod ? null : "${local.secret_prefix}django-debug)",
+    "DJANGO_LOG_LEVEL"          = "${local.secret_prefix}django-log-level)",
+    "DJANGO_SUPERUSER_EMAIL"    = "${local.secret_prefix}django-superuser-email)",
+    "DJANGO_SUPERUSER_PASSWORD" = "${local.secret_prefix}django-superuser-password)",
+    "DJANGO_SUPERUSER_USERNAME" = "${local.secret_prefix}django-superuser-username)",
 
     "DJANGO_RECAPTCHA_SECRET_KEY" = local.is_dev ? null : "${local.secret_prefix}django-recaptcha-secret-key)",
     "DJANGO_RECAPTCHA_SITE_KEY"   = local.is_dev ? null : "${local.secret_prefix}django-recaptcha-site-key)",
@@ -87,9 +96,11 @@ resource "azurerm_linux_web_app" "main" {
     "MST_COURTESY_CARD_GROUP_ID"                           = "${local.secret_prefix}mst-courtesy-card-group-id)"
     "SACRT_SENIOR_GROUP_ID"                                = "${local.secret_prefix}sacrt-senior-group-id)"
     "SBMTD_SENIOR_GROUP_ID"                                = "${local.secret_prefix}sbmtd-senior-group-id)",
+    "SBMTD_MOBILITY_PASS_GROUP_ID"                         = "${local.secret_prefix}sbmtd-mobility-pass-group-id)"
     "CLIENT_PRIVATE_KEY"                                   = "${local.secret_prefix}client-private-key)"
     "CLIENT_PUBLIC_KEY"                                    = "${local.secret_prefix}client-public-key)"
-    "SERVER_PUBLIC_KEY_URL"                                = "${local.secret_prefix}server-public-key-url)"
+    "MST_SERVER_PUBLIC_KEY_URL"                            = "${local.secret_prefix}mst-server-public-key-url)"
+    "SBMTD_SERVER_PUBLIC_KEY_URL"                          = "${local.secret_prefix}sbmtd-server-public-key-url)"
     "MST_PAYMENT_PROCESSOR_CLIENT_CERT"                    = "${local.secret_prefix}mst-payment-processor-client-cert)"
     "MST_PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY"        = "${local.secret_prefix}mst-payment-processor-client-cert-private-key)"
     "MST_PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA"            = "${local.secret_prefix}mst-payment-processor-client-cert-root-ca)"
@@ -149,6 +160,14 @@ resource "azurerm_linux_web_app" "main" {
     "SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_URL"            = "${local.secret_prefix}sbmtd-payment-processor-card-tokenize-url)"
     "SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_FUNC"           = "${local.secret_prefix}sbmtd-payment-processor-card-tokenize-func)"
     "SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_ENV"            = "${local.secret_prefix}sbmtd-payment-processor-card-tokenize-env)"
+    "MOBILITY_PASS_VERIFIER_NAME"                          = "${local.secret_prefix}mobility-pass-verifier-name)"
+    "MOBILITY_PASS_VERIFIER_ACTIVE"                        = "${local.secret_prefix}mobility-pass-verifier-active)"
+    "MOBILITY_PASS_VERIFIER_API_URL"                       = "${local.secret_prefix}mobility-pass-verifier-api-url)"
+    "MOBILITY_PASS_VERIFIER_API_AUTH_HEADER"               = "${local.secret_prefix}mobility-pass-verifier-api-auth-header)"
+    "MOBILITY_PASS_VERIFIER_API_AUTH_KEY"                  = "${local.secret_prefix}mobility-pass-verifier-api-auth-key)"
+    "MOBILITY_PASS_VERIFIER_JWE_CEK_ENC"                   = "${local.secret_prefix}mobility-pass-verifier-jwe-cek-enc)"
+    "MOBILITY_PASS_VERIFIER_JWE_ENCRYPTION_ALG"            = "${local.secret_prefix}mobility-pass-verifier-jwe-encryption-alg)"
+    "MOBILITY_PASS_VERIFIER_JWS_SIGNING_ALG"               = "${local.secret_prefix}mobility-pass-verifier-jws-signing-alg)"
     "MST_AGENCY_SHORT_NAME"                                = "${local.secret_prefix}mst-agency-short-name)"
     "MST_AGENCY_LONG_NAME"                                 = "${local.secret_prefix}mst-agency-long-name)"
     "MST_AGENCY_JWS_SIGNING_ALG"                           = "${local.secret_prefix}mst-agency-jws-signing-alg)"
@@ -162,6 +181,15 @@ resource "azurerm_linux_web_app" "main" {
     "SBMTD_AGENCY_MERCHANT_ID"                             = "${local.secret_prefix}sbmtd-agency-merchant-id)"
     "SBMTD_AGENCY_ACTIVE"                                  = "${local.secret_prefix}sbmtd-agency-active)"
     "SBMTD_AGENCY_JWS_SIGNING_ALG"                         = "${local.secret_prefix}sbmtd-agency-jws-signing-alg)"
+  }
+
+  storage_account {
+    access_key   = azurerm_storage_account.main.primary_access_key
+    account_name = azurerm_storage_account.main.name
+    name         = "benefits-data"
+    type         = "AzureFiles"
+    share_name   = azurerm_storage_share.data.name
+    mount_path   = local.data_mount
   }
 
   lifecycle {

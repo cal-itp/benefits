@@ -53,7 +53,7 @@ def invalid_form_data():
     return {"invalid": "data"}
 
 
-class TestVerificationForm(EligibilityVerificationForm):
+class SampleVerificationForm(EligibilityVerificationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(
             "title",
@@ -72,7 +72,7 @@ class TestVerificationForm(EligibilityVerificationForm):
 
 @pytest.fixture
 def model_EligibilityVerifier_with_form_class(mocker, model_EligibilityVerifier):
-    model_EligibilityVerifier.form_class = f"{__name__}.TestVerificationForm"
+    model_EligibilityVerifier.form_class = f"{__name__}.SampleVerificationForm"
     model_EligibilityVerifier.save()
     mocker.patch("benefits.eligibility.views.session.verifier", return_value=model_EligibilityVerifier)
     return model_EligibilityVerifier
