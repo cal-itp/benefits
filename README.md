@@ -26,7 +26,7 @@
 | benefits/eligibility/views.py        |      104 |        2 |       58 |        3 |     97% |41, 65, 123->exit |
 | benefits/enrollment/\_\_init\_\_.py  |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/analytics.py     |       14 |        2 |        4 |        2 |     78% |12->14, 15, 30 |
-| benefits/enrollment/api.py           |      166 |        6 |       54 |        0 |     95% |126-127, 139-140, 152-153 |
+| benefits/enrollment/api.py           |      166 |        6 |       54 |        0 |     95% |120-121, 133-134, 146-147 |
 | benefits/enrollment/apps.py          |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/forms.py         |       12 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/urls.py          |        4 |        0 |        0 |        0 |    100% |           |
