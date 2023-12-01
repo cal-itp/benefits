@@ -10,3 +10,4 @@ benefits/static/sha.txt
 __pycache__/
 .coverage
 .DS_Store
+.venv
