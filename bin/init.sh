@@ -1,10 +1,19 @@
 #!/usr/bin/env bash
 set -eux
 
-# remove existing (old) database file
-# -f forces the delete (and avoids an error when the file doesn't exist)
+# make the path to the database file from environment or default
+DB_DIR="${DJANGO_DB_DIR:-.}"
+DB_FILE="${DB_DIR}/django.db"
+DB_RESET="${DJANGO_DB_RESET:-true}"
 
-rm -f django.db
+# remove existing (old) database file
+if [[ $DB_RESET = true && -f $DB_FILE ]]; then
+    # rename then delete the new file
+    # trying to avoid a file lock on the existing file
+    # after marking it for deletion
+    mv "${DB_FILE}" "${DB_FILE}.old"
+    rm "${DB_FILE}.old"
+fi
 
 # run database migrations
 
@@ -14,7 +23,7 @@ python manage.py migrate
 # check DJANGO_ADMIN = true, default to false if empty or unset
 
 if [[ ${DJANGO_ADMIN:-false} = true ]]; then
-    python manage.py createsuperuser
+    python manage.py createsuperuser --no-input
 else
     echo "superuser: Django not configured for Admin access"
 fi

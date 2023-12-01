@@ -18,8 +18,20 @@ resource "azurerm_storage_account" "main" {
     }
   }
 
-
   lifecycle {
     ignore_changes = [tags]
+  }
+}
+
+resource "azurerm_storage_share" "data" {
+  name                 = "benefits-data"
+  storage_account_name = azurerm_storage_account.main.name
+  quota                = 5
+  enabled_protocol     = "SMB"
+  acl {
+    id = "benefits-data-rwdl"
+    access_policy {
+      permissions = "rwdl"
+    }
   }
 }
