@@ -65,7 +65,7 @@ class CustomerResponse:
 class GroupResponse:
     """Benefits Enrollment Customer Group API response."""
 
-    def __init__(self, response, requested_id, payload=None):
+    def __init__(self, response, requested_id, group_id, payload=None):
         if payload is None:
             try:
                 payload = response.json()
@@ -74,18 +74,12 @@ class GroupResponse:
         else:
             try:
                 # Group API uses an error response (500) to indicate that the customer already exists in the group (!!!)
-                # The error message should contain the customer ID we sent via payload and start with "Duplicate"
+                # The error message should contain the customer ID and group ID we sent via payload
                 error = response.json()["errors"][0]
                 customer_id = payload[0]
                 detail = error["detail"]
 
-                failure = (
-                    customer_id is None
-                    or detail is None
-                    or customer_id not in detail
-                    or customer_id in detail
-                    and not detail.startswith("Duplicate")
-                )
+                failure = customer_id is None or detail is None or not (customer_id in detail and group_id in detail)
 
                 if failure:
                     raise ApiError("Invalid response format")
@@ -269,10 +263,10 @@ class Client:
 
             if r.status_code in (200, 201):
                 logger.info("Customer enrolled in group")
-                return GroupResponse(r, customer.id)
+                return GroupResponse(r, customer.id, group_id)
             elif r.status_code == 500:
                 logger.info("Customer already exists in group")
-                return GroupResponse(r, customer.id, payload=payload)
+                return GroupResponse(r, customer.id, group_id, payload=payload)
             else:
                 r.raise_for_status()
         except requests.ConnectionError:
