@@ -18,6 +18,24 @@ The development of this publicly-accessible client is being managed by Caltrans'
 
 The application is accessible to the public at [benefits.calitp.org](https://benefits.calitp.org).
 
+## Adoption
+
+### Supported enrollment pathways
+
+| Enrollment pathway                        | API                      | Status | Launch year |
+| ----------------------------------------- | ------------------------ | ------ | ----------- |
+| **Older adults**                          | Login.gov                | Live   | 2022        |
+| **Agency cards**                          | Eligibility Server       | Live   | 2022        |
+| **Veterans via Veteran Confirmation API** | Veteran Confirmation API | Live   | 2023        |
+
+### Adoption by transit agencies
+
+| Transit agency                           | Older adults | Agency card              | Veterans | Launch year |
+| ---------------------------------------- | ------------ | ------------------------ | -------- | ----------- |
+| **Monterey-Salinas Transit**             | Live         | Live                     | Live     | 2022        |
+| **Santa Barbara MTD**                    | Live         | In production validation |          | 2023        |
+| **Sacramento Regional Transit District** | In test      |                          |          |             |
+
 ## Technical details
 
 `benefits` is a [Django 4][django] web application. The application talks to one or more [Eligibility Verification APIs](https://docs.calitp.org/eligibility-api/specification) or authentication providers. These APIs and the application are
