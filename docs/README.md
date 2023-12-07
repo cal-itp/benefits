@@ -20,14 +20,6 @@ The application is accessible to the public at [benefits.calitp.org](https://ben
 
 ## Adoption
 
-### Supported enrollment pathways
-
-| Enrollment pathway                        | API                      | Status | Launch year |
-| ----------------------------------------- | ------------------------ | ------ | ----------- |
-| **Older adults**                          | Login.gov                | Live   | 2022        |
-| **Agency cards**                          | Eligibility Server       | Live   | 2022        |
-| **Veterans via Veteran Confirmation API** | Veteran Confirmation API | Live   | 2023        |
-
 ### Adoption by transit agencies
 
 | Transit agency                           | Older adults | Agency card              | Veterans | Launch year |
@@ -35,6 +27,14 @@ The application is accessible to the public at [benefits.calitp.org](https://ben
 | **Monterey-Salinas Transit**             | Live         | Live                     | Live     | 2022        |
 | **Santa Barbara MTD**                    | Live         | In production validation |          | 2023        |
 | **Sacramento Regional Transit District** | In test      |                          |          |             |
+
+### Supported enrollment pathways
+
+| Enrollment pathway | API                      | Status | Launch year |
+| ------------------ | ------------------------ | ------ | ----------- |
+| **Older adults**   | Login.gov                | Live   | 2022        |
+| **Agency cards**   | Eligibility Server       | Live   | 2022        |
+| **Veterans**       | Veteran Confirmation API | Live   | 2023        |
 
 ## Technical details
 
