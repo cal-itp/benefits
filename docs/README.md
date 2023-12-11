@@ -18,8 +18,6 @@ The development of this publicly-accessible client is being managed by Caltrans'
 
 The application is accessible to the public at [benefits.calitp.org](https://benefits.calitp.org).
 
-## Adoption
-
 ### Adoption by transit agencies
 
 | Transit agency                           | Older adults | Agency card              | Veterans | Launch year |
@@ -30,11 +28,11 @@ The application is accessible to the public at [benefits.calitp.org](https://ben
 
 ### Supported enrollment pathways
 
-| Enrollment pathway | API                      | Status | Launch year |
-| ------------------ | ------------------------ | ------ | ----------- |
-| **Older adults**   | Login.gov                | Live   | 2022        |
-| **Agency cards**   | Eligibility Server       | Live   | 2022        |
-| **Veterans**       | Veteran Confirmation API | Live   | 2023        |
+| Enrollment pathway | API                                                                                   | Status | Launch year |
+| ------------------ | ------------------------------------------------------------------------------------- | ------ | ----------- |
+| **Older adults**   | [Login.gov IAL2](https://developers.login.gov/attributes/)                            | Live   | 2022        |
+| **Agency cards**   | [Eligibility API](https://docs.calitp.org/eligibility-api/specification/)             | Live   | 2022        |
+| **Veterans**       | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live   | 2023        |
 
 ## Technical details
 
