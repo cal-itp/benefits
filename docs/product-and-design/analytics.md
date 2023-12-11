@@ -1,5 +1,7 @@
 # Analytics
 
+The Cal-ITP Benefits application uses Amplitude to collect specific user properties and event data to analyze application usage.
+
 ## Information not collected
 
 - IP Address
@@ -39,28 +41,54 @@ Read more about each property on the [Amplitude documentation](https://help.ampl
 
 ## Event information collected
 
-Information is collected on key user actions on the app, called events. Each event is categorized within one of four categories: core, authentication, eligibility or enrollment.
-
-- https://data.amplitude.com/public-doc/hdhfmlby2e
+Information is collected on key user actions on the app, called events. Read about each event on the [Amplitude event documentation for Benefits](https://data.amplitude.com/public-doc/hdhfmlby2e). Each event is categorized within one of four categories: core, authentication, eligibility or enrollment.
 
 ### Core events
 
-Read more on each of these events on the [Amplitude event documentation for Benefits](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=id%3D1702329985270%26group%3Dcategories%26type%3DString%26operator%3Dis%26values%255B0%255D%3Dcore%26dateValue%255Btype%255D%3DSINCE)
+These events track when a user clicks on a link on the application.
+
+- changed language
+- clicked link
+- viewed page
+
+Read more on each of these events on the [Amplitude event documentation for Benefits, filtered by Core](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=id%3D1702329985270%26group%3Dcategories%26type%3DString%26operator%3Dis%26values%255B0%255D%3Dcore%26dateValue%255Btype%255D%3DSINCE).
 
 ### Authentication events
 
-Read more on each of these events on the [Amplitude event documentation for Benefits](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=id%3D1702329910563%26group%3Dcategories%26type%3DString%26operator%3Dis%26values%255B0%255D%3Doauth%26dateValue%255Btype%255D%3DSINCE)
+These events track the progress of a user going through the authentication process of both signing in and optionally signing out.
+
+- canceled sign in
+- finished sign in
+- finished sign out
+- started sign in
+- started sign out
+
+Read more on each of these events on the [Amplitude event documentation for Benefits, filtered by Authentication](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=id%3D1702329910563%26group%3Dcategories%26type%3DString%26operator%3Dis%26values%255B0%255D%3Doauth%26dateValue%255Btype%255D%3DSINCE).
 
 ### Eligibility events
 
-Read more on each of these events on the [Amplitude event documentation for Benefits](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=id%3D1702329975970%26group%3Dcategories%26type%3DString%26operator%3Dis%26values%255B0%255D%3Deligibility%26dateValue%255Btype%255D%3DSINCE)
+These events track the progress of a user choosing an eligibility verifier and completing eligibility verification.
+
+- returned eligibility
+- selected eligibility verifier
+- started eligibility
+
+Read more on each of these events on the [Amplitude event documentation for Benefits, filtered by Eligibility](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=id%3D1702329975970%26group%3Dcategories%26type%3DString%26operator%3Dis%26values%255B0%255D%3Deligibility%26dateValue%255Btype%255D%3DSINCE).
 
 ### Enrollment events
 
-Read more on each of these events on the [Amplitude event documentation for Benefits](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=id%3D1702329910563%26group%3Dcategories%26type%3DString%26operator%3Dis%26values%255B0%255D%3Denrollment%26dateValue%255Btype%255D%3DSINCE)
+These events track the progress of a user who has successfully verified their eligibility and is enrolling their payment card with the system.
+
+- closed payment connection (e.g. Littlepay)
+- returned enrollment
+- started payment connection (e.g. Littlepay)
+
+Read more on each of these events on the [Amplitude event documentation for Benefits, filtered by Enrollment](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=id%3D1702329910563%26group%3Dcategories%26type%3DString%26operator%3Dis%26values%255B0%255D%3Denrollment%26dateValue%255Btype%255D%3DSINCE).
 
 ## Key metrics
 
-- Number of users who successfully completed authentication: Users who `started sign in`, `finished sign in`
-- Number of users who successfully completed eligibility and received a status of True: Users who `selected eligibility verifier`, `started eligibility`, `returned eligibility` with a status of `True`
-- Numbers of users who successfully completed enrollment: Users who `started payment connection`, `closed payment connection` and `returned enrollment` with a status of `Success`
+Various key metrics are collected and analyzed, including:
+
+- **Number of users who successfully completed authentication**: Users who `started sign in`, `finished sign in`
+- **Number of users who successfully verified eligibility**: Users who completed the above and `selected eligibility verifier`, `started eligibility`, `returned eligibility` with a status of `True`
+- **Numbers of users who successfully completed enrollment**: Users who completed all of the above and `started payment connection`, `closed payment connection` and `returned enrollment` with a status of `Success`
