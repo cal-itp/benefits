@@ -20,6 +20,8 @@ The application is accessible to the public at [benefits.calitp.org](https://ben
 
 ### Adoption by transit agencies
 
+The following California transit agencies have launched Cal-ITP Benefits for their riders, with the following enrollment pathway options:
+
 | Transit agency                           | Older adults | Agency card              | Veterans | Launch year |
 | ---------------------------------------- | ------------ | ------------------------ | -------- | ----------- |
 | **Monterey-Salinas Transit**             | Live         | Live                     | Live     | 2022        |
@@ -28,11 +30,15 @@ The application is accessible to the public at [benefits.calitp.org](https://ben
 
 ### Supported enrollment pathways
 
-| Enrollment pathway | API                                                                                   | Status | Launch year |
-| ------------------ | ------------------------------------------------------------------------------------- | ------ | ----------- |
-| **Older adults**   | [Login.gov IAL2](https://developers.login.gov/attributes/)                            | Live   | 2022        |
-| **Agency cards**   | [Eligibility API](https://docs.calitp.org/eligibility-api/specification/)             | Live   | 2022        |
-| **Veterans**       | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live   | 2023        |
+The Cal-ITP Benefits app supports the following enrollment pathways that uses the corresponding eligibility verification methods:
+
+| Enrollment pathway                                             | Eligibility verification                                                              | Status | Launch year |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------ | ----------- |
+| [**Older adults**](/benefits/enrollment-pathways/older-adults) | [Login.gov IAL2](https://developers.login.gov/attributes/)                            | Live   | 2022        |
+| [**Agency cards**](/benefits/enrollment-pathways/agency-cards) | [Eligibility API](https://docs.calitp.org/eligibility-api/specification/)             | Live   | 2022        |
+| [**Veterans**](/benefits/enrollment-pathways/veterans)         | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live   | 2023        |
+
+Read more about each [enrollment pathway](/benefits/enrollment-pathways/).
 
 ## Technical details
 
