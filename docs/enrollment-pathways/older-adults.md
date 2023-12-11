@@ -1,4 +1,4 @@
-# Seniors
+# Older adults
 
 One Benefits application use case is for riders age 65 years and older. The Benefits application verifies the person's age to confirm eligibility and allows those eligible to enroll their contactless payment card for their transit benefit.
 
@@ -6,7 +6,7 @@ Currently, the app uses [Login.gov's Identity Assurance Level 2 (IAL2)](https://
 
 ## Demonstration
 
-Here's a GIF showing what the flow looks like, having seniors confirm eligibility via Login.gov and enroll via LittlePay:
+Here's a GIF showing what the flow looks like, having older adults confirm eligibility via Login.gov and enroll via LittlePay:
 
 ![Demonstration of the sign-up process for a senior confirming eligibility via Login.gov and enrolling via Littlepay](img/senior-success.gif){ width="350" }
 
