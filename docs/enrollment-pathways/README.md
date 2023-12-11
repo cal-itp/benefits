@@ -2,15 +2,15 @@
 title: Introduction
 ---
 
-# Use cases
+# Enrollment pathways
 
-This section describes in more detail some of the use cases with current or planned support in the Benefits application.
+This section describes in more detail some of the different enrollment pathways with current or planned support in the Benefits application.
 
 ## Current work
 
 We do sprint planning and track day-to-day work on our [Project Board][board].
 
-See our [Milestones][milestones] for current work tracked against specific features and use cases.
+See our [Milestones][milestones] for current work tracked against specific features and different enrollment pathways.
 
 ## Product roadmap
 
