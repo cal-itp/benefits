@@ -11,6 +11,8 @@ See the [Amplitude analytics code on GitHub](https://github.com/cal-itp/benefits
 
 ## User information collected
 
+A combination of default and application-specific custom user properties are collected for each user who visits Cal-ITP Benefits.
+
 ### Default Amplitude user properties collected
 
 - Platform
