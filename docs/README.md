@@ -30,7 +30,7 @@ The following California transit agencies have launched Cal-ITP Benefits for the
 
 ### Supported enrollment pathways
 
-The Cal-ITP Benefits app supports the following enrollment pathways that uses the corresponding eligibility verification methods:
+The Cal-ITP Benefits app supports the following enrollment pathways that use the corresponding eligibility verification methods:
 
 | Enrollment pathway                                             | Eligibility verification                                                              | Status | Launch                                                                |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------ | --------------------------------------------------------------------- |
