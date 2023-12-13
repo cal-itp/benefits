@@ -1,19 +1,23 @@
 # Analytics
 
-The Cal-ITP Benefits application uses Amplitude to collect specific user properties and event data to analyze application usage.
+The [Cal-ITP Benefits application](https://benefits.calitp.org/) uses [Amplitude](https://amplitude.com/) to collect specific user and event data properties to analyze application usage.
 
 ## Information not collected
 
-- IP Address
+The following user attributes are *not* collected:
+
+- IP address
 - Designated Market Area (DMA)
 
 See the [Amplitude analytics code on GitHub](https://github.com/cal-itp/benefits/blob/dev/benefits/core/templates/core/includes/analytics.html#L30).
 
 ## User information collected
 
-A combination of default and application-specific custom user properties are collected for each user who visits Cal-ITP Benefits.
+A combination of default and application-specific custom user properties are collected for each user who visits the [Cal-ITP Benefits](https://benefits.calitp.org/) application.
 
 ### Default Amplitude user properties collected
+
+The following attributes are collected from the browser of every user who visits the application, provided the browser does not block the tracking library:
 
 - Platform
 - Device type
@@ -32,11 +36,13 @@ Read more about each property on the [Amplitude documentation](https://help.ampl
 
 ### Custom user properties collected
 
+The following custom user attributes are collected when the user performs specific actions on the application, like selecing an eligibility type or transit agency:
+
 | Custom user property   | Description                        | Example value                                                                                                     |
 | ---------------------- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
 | `eligibility_types`    | Eligibility type chosen by user    | `[veteran]`                                                                                                       |
 | `eligibility_verifier` | Eligibility verifier used by user  | `VA.gov - Veteran (MST)`                                                                                          |
-| `referrer`             | URL that the event came from       | https://benefits.calitp.org/eligibility/start                                                                     |
+| `referrer`             | URL that the event came from       | [https://benefits.calitp.org/eligibility/start](https://benefits.calitp.org/eligibility/start)                                                                     |
 | `referring_domain`     | Domain that the event came from    | `benefits.calitp.org`                                                                                             |
 | `transit_agency`       | Agency chosen by the user          | `Monterey-Salinas Transit`                                                                                        |
 | `user_agent`           | User's browser agent               | `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36` |
