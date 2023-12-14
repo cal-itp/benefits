@@ -7,6 +7,7 @@ if [[ $(uname -m) == 'arm64' ]]; then
     # workaround for an issue in BuildKit causing dependent builds (specifically the dev image) to fail
     # https://github.com/docker/compose/issues/8449#issuecomment-1125761231
     export DOCKER_BUILDKIT=0
+    export COMPOSE_DOCKER_CLI_BUILD=0
 fi
 
 docker compose build --pull client
