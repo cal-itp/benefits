@@ -34,7 +34,7 @@ The Cal-ITP Benefits app supports the following enrollment pathways that use the
 
 | Enrollment pathway                                             | Eligibility verification                                                              | Status | Launch                                                                |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------ | --------------------------------------------------------------------- |
-| [**Older adults**](/benefits/enrollment-pathways/older-adults) | [Login.gov IAL2](https://developers.login.gov/attributes/)                            | Live   | [8/2022](https://github.com/cal-itp/benefits/releases/tag/2022.08.1)  |
+| [**Older adults**](/benefits/enrollment-pathways/older-adults) | [Login.gov IAL2](https://developers.login.gov/attributes/)                            | Live   | [08/2022](https://github.com/cal-itp/benefits/releases/tag/2022.08.1)  |
 | [**Agency cards**](/benefits/enrollment-pathways/agency-cards) | [Eligibility API](https://docs.calitp.org/eligibility-api/specification/)             | Live   | [11/2022](https://github.com/cal-itp/benefits/releases/tag/2022.11.1) |
 | [**Veterans**](/benefits/enrollment-pathways/veterans)         | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live   | [9/2023](https://github.com/cal-itp/benefits/releases/tag/2023.09.1)  |
 
