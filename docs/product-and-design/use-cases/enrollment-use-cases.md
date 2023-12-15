@@ -23,8 +23,9 @@ The use cases documented on this page focus on how the system is supposed to wor
 **Alternate flows**:
 
 - 3a. Payment processor returns with one of the following errors: card verification failed, token is invalid, or general server error
-    - 3a1. Transit rider chooses to retry, starting back at initiating the enrollment phase
-    - 3b1. Transit rider leaves the Benefits app
+
+  - 3a1. Transit rider chooses to retry, starting back at initiating the enrollment phase
+  - 3b1. Transit rider leaves the Benefits app
 
 **Postconditions**:
 
