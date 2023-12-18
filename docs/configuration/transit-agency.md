@@ -11,6 +11,15 @@ Note that a `TransitAgency` model requires:
 - a `PaymentProcessor` for enrolling the user's contactless card for discounts
 - an `info_url` and `phone` for users to contact customer service
 - an SVG or PNG file of the transit agency's logo
+- HTML templates for various buttons, text and other user interface elements of the flow, including:
+  - `index_template`: _Required for agencies_ - Text for agency direct entry page
+  - `eligibility_index_template`: _Required for agencies_ - Text for Eligibility Index page
+  - `enrollment_success_template`: _Required for agencies_ - Text for Enrollment Success page
+  - `help_template`: _Required for agencies_ - Agency-specific help questions and answers
+  - `selection_label_template`: _Required for verifiers_ - Text and optional modals for the radio button form on the Eligibility Index page
+  - `start_template`: _Required for verifiers_ - Text and optional custom styles for call to action button on the Eligibility Start page
+  - `sign_out_button_template`: _Required for auth providers_ - Sign out link button, used on any page after sign in
+  - `sign_out_link_template`: _Required for auth providers_ - Sign out link text, used on any page after sign in
 
 Also note that these steps assume the transit agency is using Littlepay as their payment processor. Support for integration with [other payment processors](https://www.camobilitymarketplace.org/contracts/) may be added in the future.
 
