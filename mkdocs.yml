@@ -38,9 +38,7 @@ plugins:
         "deployment/azure.md": "deployment/infrastructure.md"
         "getting-started/development.md": "development/README.md"
         "getting-started/docker-dynamic-ports.md": "development/docker-dynamic-ports.md"
-        "students.md": "use-cases/college.md"
-        "use-cases/courtesy-cards.md": "use-cases/agency-cards.md"
-        "use-cases/students.md": "use-cases/college.md"
+        "use-cases/courtesy-cards.md": "enrollment-pathways/agency-cards.md"
 
 extra_css:
   - https://use.fontawesome.com/releases/v5.13.0/css/all.css
