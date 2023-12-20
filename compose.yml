@@ -36,7 +36,7 @@ services:
       - ./:/home/calitp/app
 
   server:
-    image: ghcr.io/cal-itp/eligibility-server:dev
+    image: ghcr.io/cal-itp/eligibility-server:test
     env_file: .devcontainer/server/.env.server
     platform: linux/amd64
     ports:
