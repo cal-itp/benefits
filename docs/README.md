@@ -24,7 +24,7 @@ The following California transit agencies have launched Cal-ITP Benefits for the
 
 | Transit agency                                  | Older adults | Agency card | Veterans | Initial agency launch |
 | ----------------------------------------------- | ------------ | ----------- | -------- | --------------------- |
-| **Monterey-Salinas Transit**                    | Live         | Live        | Live     | 05/2021                |
+| **Monterey-Salinas Transit**                    | Live         | Live        | Live     | 05/2021               |
 | **Santa Barbara Metropolitan Transit District** | Live         | In test     |          | 10/2023               |
 | **Sacramento Regional Transit District**        | In test      |             |          |                       |
 
@@ -34,15 +34,15 @@ The Cal-ITP Benefits app supports the following enrollment pathways that use the
 
 | Enrollment pathway                                             | Eligibility verification                                                              | Status | Launch                                                                |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------ | --------------------------------------------------------------------- |
-| [**Older adults**](/benefits/enrollment-pathways/older-adults) | [Login.gov IAL2](https://developers.login.gov/attributes/)                            | Live   | [08/2022](https://github.com/cal-itp/benefits/releases/tag/2022.08.1)  |
+| [**Older adults**](/benefits/enrollment-pathways/older-adults) | [Login.gov IAL2](https://developers.login.gov/attributes/)                            | Live   | [08/2022](https://github.com/cal-itp/benefits/releases/tag/2022.08.1) |
 | [**Agency cards**](/benefits/enrollment-pathways/agency-cards) | [Eligibility API](https://docs.calitp.org/eligibility-api/specification/)             | Live   | [11/2022](https://github.com/cal-itp/benefits/releases/tag/2022.11.1) |
-| [**Veterans**](/benefits/enrollment-pathways/veterans)         | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live   | [09/2023](https://github.com/cal-itp/benefits/releases/tag/2023.09.1)  |
+| [**Veterans**](/benefits/enrollment-pathways/veterans)         | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live   | [09/2023](https://github.com/cal-itp/benefits/releases/tag/2023.09.1) |
 
 Read more about each [enrollment pathway](/benefits/enrollment-pathways/).
 
 ## Technical details
 
-`benefits` is a [Django 4][django] web application. The application talks to one or more [Eligibility Verification APIs](https://docs.calitp.org/eligibility-api/specification) or authentication providers. These APIs and the application are
+`benefits` is a [Django 5][django] web application. The application talks to one or more [Eligibility Verification APIs](https://docs.calitp.org/eligibility-api/specification) or authentication providers. These APIs and the application are
 designed for privacy and security of user information:
 
 - The API communicates with signed and encrypted JSON Web Tokens containing only the most necessary of user data for the purpose of eligibility verification
