@@ -191,7 +191,6 @@ LANGUAGES = [("en", "English"), ("es", "Español")]
 LOCALE_PATHS = [os.path.join(BASE_DIR, "benefits", "locale")]
 
 USE_I18N = True
-USE_L10N = True
 
 TIME_ZONE = "UTC"
 USE_TZ = True
