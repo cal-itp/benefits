@@ -3,12 +3,7 @@
 This website provides technical documentation for the [`benefits`][benefits-repo] application from the
 [California Integrated Travel Project (Cal-ITP)][calitp].
 
-Documentation for the `dev` (default) branch is available online at: <https://docs.calitp.org/benefits>.
-
-## Overview
-
-Cal-ITP Benefits is an application that enables automated eligibility verification and enrollment for transit
-benefits onto customers' existing contactless bank (credit/debit) cards.
+[Cal-ITP Benefits](https://benefits.calitp.org) is a web application that enables digital eligibility verification and enrollment for transit benefits onto transit riders’ existing contactless debit and credit cards.
 
 The development of this publicly-accessible client is being managed by Caltrans' California Integrated Travel Project (Cal-ITP), in partnership with the California Department of Technology (CDT). From the [Cal-ITP site](https://www.calitp.org/):
 
@@ -16,9 +11,7 @@ The development of this publicly-accessible client is being managed by Caltrans'
 >
 > We worked with state partners on this product launch, and next we're working to bring youth, lower-income riders, veterans, people with disabilities, and others the same instant access to free or reduced fares across all California transit providers, without having to prove eligibility to each agency.
 
-The application is accessible to the public at [benefits.calitp.org](https://benefits.calitp.org).
-
-### Adoption by transit agencies
+## Adoption by transit agencies
 
 The following California transit agencies have launched Cal-ITP Benefits for their riders, with the following enrollment pathway options:
 
@@ -28,7 +21,7 @@ The following California transit agencies have launched Cal-ITP Benefits for the
 | **Santa Barbara Metropolitan Transit District** | Live         | In test     |          | 10/2023               |
 | **Sacramento Regional Transit District**        | In test      |             |          |                       |
 
-### Supported enrollment pathways
+## Supported enrollment pathways
 
 The Cal-ITP Benefits app supports the following enrollment pathways that use the corresponding eligibility verification methods:
 
@@ -40,14 +33,14 @@ The Cal-ITP Benefits app supports the following enrollment pathways that use the
 
 Read more about each [enrollment pathway](/benefits/enrollment-pathways/).
 
-## Technical details
+## Technical and security details
 
-`benefits` is a [Django 5][django] web application. The application talks to one or more [Eligibility Verification APIs](https://docs.calitp.org/eligibility-api/specification) or authentication providers. These APIs and the application are
+`benefits` is a [Django 5][django] web application. The application talks to one or more [Eligibility Verification APIs](https://docs.calitp.org/eligibility-api/specification) or authentication providers. These APIs and the application itself are
 designed for privacy and security of user information:
 
 - The API communicates with signed and encrypted JSON Web Tokens containing only the most necessary of user data for the purpose of eligibility verification
 - The application requires no user accounts and stores no information about the user
-- Interaction with the application is anonymous, with only minimal event tracking for usage and problem analysis
+- Interaction with the application is anonymous, with only minimal event tracking for usage and problem analysis.
 
 Running the application locally is possible with [Docker and Docker Compose][docker]. [Hosting information.][hosting]
 
@@ -56,11 +49,7 @@ The user interface and content is available in both English and Spanish. Additio
 
 The application communicates with external services like [Littlepay][littlepay] via API calls and others like the [Identity Gateway](https://dev.auth.cdt.ca.gov) via redirects, both over the public internet. See [all the system interconnections][interconnections].
 
-## Security
-
-Cal-ITP takes security and privacy seriously. Below is an overview of how the system is designed with security in mind.
-
-### Architecture
+### Infrastructure
 
 The Benefits application is deployed to Microsoft Azure. Traffic is encrypted between the user and the application, as well as between the application and external systems.
 
@@ -88,7 +77,7 @@ Learn more about the security/privacy practices of some of our third-party integ
 - [Littlepay](https://littlepay.com/privacy-policy/)
 - [Login.gov](https://www.login.gov/policy/)
 
-Benefits collects analytics on usage, without any identifying information. ([IP addresses are filtered out.](https://github.com/cal-itp/benefits/blob/3a5f7c28036b77355d7a137df4f33bd2a9362de1/benefits/core/templates/core/includes/analytics.html#L31))
+Benefits collects analytics on usage, without any identifying information. You can find more details on [our analytics page](product-and-design/analytics/).
 
 ### Practices
 
