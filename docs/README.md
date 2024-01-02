@@ -40,7 +40,7 @@ designed for privacy and security of user information:
 
 - The API communicates with signed and encrypted JSON Web Tokens containing only the most necessary of user data for the purpose of eligibility verification
 - The application requires no user accounts and stores no information about the user
-- Interaction with the application is anonymous, with only minimal event tracking for usage and problem analysis.
+- Interaction with the application is anonymous, with only minimal event tracking for usage and problem analysis
 
 Running the application locally is possible with [Docker and Docker Compose][docker]. [Hosting information.][hosting]
 
@@ -61,7 +61,7 @@ You can find more technical details on [our infrastructure page](deployment/infr
 
 The Benefits application doesn't collect or store any user data directly, and we minimize the information exchanged between systems. The following information is temporarily stored in an encrypted session in the user's browser:
 
-- The user's progress
+- The user's progress through an enrollment pathway
 - Credentials for interacting with the eligibility verification services
 
 Sensitive user information exists in the following places:
