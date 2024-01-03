@@ -1,5 +1,7 @@
 # Project overview
 
+![Cal-ITP Benefits - Landing - Laptop+Mobile](https://github.com/cal-itp/benefits/assets/6279581/3f5c558b-ad45-49cd-bb51-b230c625837b)
+
 This website provides technical documentation for the [`benefits`][benefits-repo] application from the
 [California Integrated Travel Project (Cal-ITP)][calitp].
 
