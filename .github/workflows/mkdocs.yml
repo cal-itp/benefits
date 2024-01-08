@@ -8,19 +8,75 @@ on:
       - completed
     branches:
       - dev
+  pull_request:
+    branches:
+      - dev
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - ".github/workflows/mkdocs.yml"
   push:
     branches:
       - dev
     paths:
-      - 'docs/**'
-      - 'mkdocs.yml'
-      - '.github/workflows/mkdocs.yml'
+      - "docs/**"
+      - "mkdocs.yml"
+      - ".github/workflows/mkdocs.yml"
 
 jobs:
+  docs-preview:
+    name: Publish docs preview
+    runs-on: ubuntu-latest
+    # only pull requests should generate a preview
+    if: github.event.pull_request
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: "refs/pull/${{ github.event.number }}/merge"
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: .github/workflows/.python-version
+          cache: pip
+          cache-dependency-path: "docs/requirements.txt"
+
+      - name: Build MkDocs website
+        run: |
+          pip install -r docs/requirements.txt
+          mkdocs build
+
+      - name: Install Netlify CLI
+        run: npm install --location=global netlify-cli
+
+      - name: Deploy Preview to Netlify
+        run: |
+          netlify deploy \
+            --dir="site" \
+            --alias="${GITHUB_REPOSITORY#*/}-${{ github.event.number }}"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_PREVIEW_APP_SITE_ID }}
+
+      - name: Add Netlify link PR comment
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const hostnameSuffix = "cal-itp-previews.netlify.app"
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Preview url: https://${context.repo.repo}-${{ github.event.number }}--${hostnameSuffix}`,
+            })
+
   docs:
     name: Publish docs
     runs-on: ubuntu-latest
-    if: github.event.workflow_run == null || github.event.workflow_run.conclusion == 'success'
+    # don't publish for pull requests, and also not for unsuccessful (triggering) workflow runs
+    if: github.event.pull_request == null && (github.event.workflow_run == null || github.event.workflow_run.conclusion == 'success')
     steps:
       - name: Checkout
         uses: actions/checkout@v4
