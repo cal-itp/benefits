@@ -289,7 +289,11 @@ if RECAPTCHA_ENABLED:
 if len(env_frame_src) > 0:
     CSP_FRAME_SRC = env_frame_src
 
-CSP_IMG_SRC = ["'self'", "data:"]
+CSP_IMG_SRC = [
+    "'self'",
+    "data:",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1280px-Google_%22G%22_logo.svg.png",
+]
 
 # Configuring strict Content Security Policy
 # https://django-csp.readthedocs.io/en/latest/nonce.html
