@@ -293,6 +293,7 @@ CSP_IMG_SRC = [
     "'self'",
     "data:",
     "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1280px-Google_%22G%22_logo.svg.png",
+    "*.googleusercontent.com",
 ]
 
 # Configuring strict Content Security Policy
@@ -305,6 +306,7 @@ if sentry.SENTRY_CSP_REPORT_URI:
     CSP_REPORT_URI = [sentry.SENTRY_CSP_REPORT_URI]
 
 CSP_SCRIPT_SRC = [
+    "'self'",
     "https://cdn.amplitude.com/libs/",
     "https://cdn.jsdelivr.net/",
     "*.littlepay.com",
