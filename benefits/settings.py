@@ -30,7 +30,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.staticfiles",
-    "django_google_sso",  # Add django_google_sso
     "benefits.core",
     "benefits.enrollment",
     "benefits.eligibility",
@@ -71,6 +70,7 @@ if ADMIN:
         [
             "django.contrib.auth.middleware.AuthenticationMiddleware",
             "django.contrib.messages.middleware.MessageMiddleware",
+            "django_google_sso",  # Add django_google_sso
         ]
     )
 
