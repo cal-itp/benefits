@@ -41,6 +41,7 @@ if ADMIN:
     GOOGLE_SSO_PROJECT_ID = os.environ.get("GOOGLE_SSO_PROJECT_ID", "benefits-admin")
     GOOGLE_SSO_CLIENT_SECRET = os.environ.get("GOOGLE_SSO_CLIENT_SECRET", "secret")
     GOOGLE_SSO_ALLOWABLE_DOMAINS = _filter_empty(os.environ.get("GOOGLE_SSO_ALLOWABLE_DOMAINS", "compiler.la").split(","))
+    GOOGLE_SSO_LOGO_URL = "/static/img/icon/google_sso_logo.svg"
     GOOGLE_SSO_SAVE_ACCESS_TOKEN = True
     GOOGLE_SSO_PRE_LOGIN_CALLBACK = "benefits.admin.pre_login_user"
     GOOGLE_SSO_SCOPES = [
@@ -298,7 +299,6 @@ if len(env_frame_src) > 0:
 CSP_IMG_SRC = [
     "'self'",
     "data:",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/1280px-Google_%22G%22_logo.svg.png",
     "*.googleusercontent.com",
 ]
 
