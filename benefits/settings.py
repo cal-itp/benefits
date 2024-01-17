@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.staticfiles",
+    "django_google_sso",  # Add django_google_sso
     "benefits.core",
     "benefits.enrollment",
     "benefits.eligibility",
@@ -37,6 +38,12 @@ INSTALLED_APPS = [
 ]
 
 if ADMIN:
+    GOOGLE_SSO_CLIENT_ID = os.environ.get("GOOGLE_SSO_CLIENT_ID", "secret")
+    GOOGLE_SSO_PROJECT_ID = os.environ.get("GOOGLE_SSO_PROJECT_ID", "benefits-admin")
+    GOOGLE_SSO_CLIENT_SECRET = os.environ.get("GOOGLE_SSO_CLIENT_SECRET", "secret")
+
+    GOOGLE_SSO_ALLOWABLE_DOMAINS = ["compiler.la"]
+
     INSTALLED_APPS.extend(
         [
             "django.contrib.admin",

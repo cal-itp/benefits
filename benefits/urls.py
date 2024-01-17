@@ -22,6 +22,7 @@ urlpatterns = [
     path("eligibility/", include("benefits.eligibility.urls")),
     path("enrollment/", include("benefits.enrollment.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("google_sso/", include("django_google_sso.urls", namespace="django_google_sso")),
     path("oauth/", include("benefits.oauth.urls")),
 ]
 

@@ -84,6 +84,12 @@ resource "azurerm_linux_web_app" "main" {
 
     "HEALTHCHECK_USER_AGENTS" = local.is_dev ? null : "${local.secret_prefix}healthcheck-user-agents)",
 
+    # Google SSO for Admin
+
+    "GOOGLE_SSO_CLIENT_ID" = "${local.secret_prefix}google-sso-client-id",
+    "GOOGLE_SSO_PROJECT_ID" = "${local.secret_prefix}google-sso-project-id",
+    "GOOGLE_SSO_CLIENT_SECRET" = "${local.secret_prefix}google-sso-client-secret",
+
     # Sentry
     "SENTRY_DSN"                = "${local.secret_prefix}sentry-dsn)",
     "SENTRY_ENVIRONMENT"        = local.env_name,
