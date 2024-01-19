@@ -295,13 +295,13 @@ main {
 }
 
 #skip-to-content:focus span {
-  font-size: var(--font-size-18px);
-  line-height: 150%;
-  letter-spacing: 0.9px;
   border: 2px solid var(--focus-color);
-  border-radius: 4px;
-  font-weight: 700;
-  padding: 0 4px;
+  border-radius: calc(4rem / 16);
+  font-size: var(--bs-body-font-size);
+  font-weight: var(--bold-font-weight);
+  letter-spacing: var(--letter-spacing-5);
+  line-height: var(--bs-body-line-height);
+  padding: 0 calc(4rem / 16);
 }
 
 /* Footer */
