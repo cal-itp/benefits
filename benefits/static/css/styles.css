@@ -301,10 +301,6 @@ main {
   padding: 0 calc(4rem / 16);
 }
 
-.bg-danger {
-  display: none;
-}
-
 /* Footer */
 :root {
   --footer-background-color: var(--dark-color);
