@@ -284,16 +284,24 @@ main {
   left: unset !important;
   transform: none;
   overflow: hidden;
-  background: var(--focus-color);
-  font-size: var(--font-size-15px);
-  line-height: var(--bs-body-line-height);
-  letter-spacing: calc(var(--font-size-15px) * var(--letter-spacing-5));
 }
 
 #skip-to-content:focus {
-  height: 21px !important;
+  height: auto;
   outline: none !important;
   box-shadow: none;
+  padding: 1rem 0;
+  background: var(--bs-white);
+}
+
+#skip-to-content:focus span {
+  font-size: var(--font-size-18px);
+  line-height: 150%;
+  letter-spacing: 0.9px;
+  border: 2px solid var(--focus-color);
+  border-radius: 4px;
+  font-weight: 700;
+  padding: 0 4px;
 }
 
 /* Footer */
