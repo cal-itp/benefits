@@ -297,11 +297,12 @@ main {
 #skip-to-content:focus span {
   border: 2px solid var(--focus-color);
   border-radius: calc(4rem / 16);
-  font-size: var(--bs-body-font-size);
   font-weight: var(--bold-font-weight);
-  letter-spacing: var(--letter-spacing-5);
-  line-height: var(--bs-body-line-height);
   padding: 0 calc(4rem / 16);
+}
+
+.bg-danger {
+  display: none;
 }
 
 /* Footer */
