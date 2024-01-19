@@ -41,6 +41,8 @@ if ADMIN:
     GOOGLE_SSO_PROJECT_ID = os.environ.get("GOOGLE_SSO_PROJECT_ID", "benefits-admin")
     GOOGLE_SSO_CLIENT_SECRET = os.environ.get("GOOGLE_SSO_CLIENT_SECRET", "secret")
     GOOGLE_SSO_ALLOWABLE_DOMAINS = _filter_empty(os.environ.get("GOOGLE_SSO_ALLOWABLE_DOMAINS", "compiler.la").split(","))
+    GOOGLE_SSO_STAFF_LIST = _filter_empty(os.environ.get("GOOGLE_SSO_STAFF_LIST", "").split(","))
+    GOOGLE_SSO_SUPERUSER_LIST = _filter_empty(os.environ.get("GOOGLE_SSO_SUPERUSER_LIST", "").split(","))
     GOOGLE_SSO_LOGO_URL = "/static/img/icon/google_sso_logo.svg"
     GOOGLE_SSO_SAVE_ACCESS_TOKEN = True
     GOOGLE_SSO_PRE_LOGIN_CALLBACK = "benefits.admin.pre_login_user"
@@ -316,6 +318,7 @@ CSP_SCRIPT_SRC = [
     "https://cdn.amplitude.com/libs/",
     "https://cdn.jsdelivr.net/",
     "*.littlepay.com",
+    "https://code.jquery.com/jquery-3.6.0.min.js",
 ]
 env_script_src = _filter_empty(os.environ.get("DJANGO_CSP_SCRIPT_SRC", "").split(","))
 CSP_SCRIPT_SRC.extend(env_script_src)
