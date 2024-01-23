@@ -56,8 +56,7 @@ docker compose up client
 
 After initialization, the client is running running on `http://localhost:8000` by default.
 
-If `DJANGO_ADMIN=true`, the backend administrative interface can be accessed at the `/admin` route using the superuser account
-you setup as part of initialization.
+The backend administrative interface can be accessed at the `/admin` route using the superuser account you setup as part of initialization.
 
 By default, sample values are used to initialize Django. Alternatively you may:
 

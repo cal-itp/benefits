@@ -8,6 +8,7 @@ The `urlpatterns` list routes URLs to views. For more information please see:
 import logging
 
 from django.conf import settings
+from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import include, path
 
@@ -46,12 +47,6 @@ if settings.DEBUG:
 
     urlpatterns.append(path("testsecret/", test_secret))
 
-
-if settings.ADMIN:
-    from django.contrib import admin
-
-    logger.debug("Register admin urls")
-    urlpatterns.append(path("admin/", admin.site.urls))
-    urlpatterns.append(path("google_sso/", include("django_google_sso.urls", namespace="django_google_sso")))
-else:
-    logger.debug("Skip url registrations for admin")
+logger.debug("Register admin urls")
+urlpatterns.append(path("admin/", admin.site.urls))
+urlpatterns.append(path("google_sso/", include("django_google_sso.urls", namespace="django_google_sso")))

@@ -55,10 +55,10 @@ from django.config import settings
 
 # ...
 
-if settings.ADMIN:
-    # do something when admin is enabled
+if settings.DEBUG:
+    # do something when debug is enabled
 else:
-    # do something else when admin is disabled
+    # do something else when debug is disabled
 ```
 
 Through the [Django model][django-model] framework, `benefits.core.models` instances are used to access the configuration data:

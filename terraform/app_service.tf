@@ -66,7 +66,6 @@ resource "azurerm_linux_web_app" "main" {
     "REQUESTS_READ_TIMEOUT"    = "${local.secret_prefix}requests-read-timeout)",
 
     # Django settings
-    "DJANGO_ADMIN"              = "${local.secret_prefix}django-admin)",
     "DJANGO_ALLOWED_HOSTS"      = "${local.secret_prefix}django-allowed-hosts)",
     "DJANGO_DB_DIR"             = "${local.secret_prefix}django-db-dir)",
     "DJANGO_DEBUG"              = local.is_prod ? null : "${local.secret_prefix}django-debug)",

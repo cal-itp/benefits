@@ -48,13 +48,6 @@ If blank or an invalid key, analytics events aren't captured (though may still b
 
 ## Django
 
-### `DJANGO_ADMIN`
-
-Boolean:
-
-- `True`: activates Django's built-in admin interface for content authoring.
-- `False` (default): skips this activation.
-
 ### `DJANGO_ALLOWED_HOSTS`
 
 !!! warning "Deployment configuration"
