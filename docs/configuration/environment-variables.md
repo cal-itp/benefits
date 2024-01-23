@@ -78,17 +78,6 @@ writable by the Django process._
 
 By default, the base project directory (i.e. the root of the repository).
 
-### `DJANGO_DB_RESET`
-
-!!! warning "Deployment configuration"
-
-    You may change this setting when deploying the app to a non-localhost domain
-
-Boolean:
-
-- `True` (default): deletes the existing database file and runs fresh Django migrations.
-- `False`: Django uses the existing database file.
-
 ### `DJANGO_DEBUG`
 
 !!! warning "Deployment configuration"
@@ -143,42 +132,6 @@ By default the application sends logs to `stdout`.
     [Settings: `SECRET_KEY`](https://docs.djangoproject.com/en/4.0/ref/settings/#secret-key)
 
 Django's primary secret, keep this safe!
-
-### `DJANGO_SUPERUSER_EMAIL`
-
-!!! warning "Deployment configuration"
-
-    You may change this setting when deploying the app to a non-localhost domain
-
-!!! danger "Required configuration"
-
-    This setting is required when `DJANGO_ADMIN` is `true`
-
-The email address of the Django Admin superuser created during initialization.
-
-### `DJANGO_SUPERUSER_PASSWORD`
-
-!!! warning "Deployment configuration"
-
-    You may change this setting when deploying the app to a non-localhost domain
-
-!!! danger "Required configuration"
-
-    This setting is required when `DJANGO_ADMIN` is `true`
-
-The password of the Django Admin superuser created during initialization.
-
-### `DJANGO_SUPERUSER_USERNAME`
-
-!!! warning "Deployment configuration"
-
-    You may change this setting when deploying the app to a non-localhost domain
-
-!!! danger "Required configuration"
-
-    This setting is required when `DJANGO_ADMIN` is `true`
-
-The username of the Django Admin superuser created during initialization.
 
 ### `DJANGO_TRUSTED_ORIGINS`
 
