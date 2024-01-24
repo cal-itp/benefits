@@ -41,6 +41,10 @@
   --font-size-12px: calc(12rem / 16);
   --border-width: calc(2rem / 16);
   --border-radius: calc(3rem / 16);
+  --focus-style: 3px solid var(--focus-color);
+  --focus-border-radius: calc(2rem / 16);
+  --focus-outline-offset: calc(2rem / 16);
+  --focus-border-radius: calc(2rem / 16);
 }
 
 @font-face {
@@ -127,7 +131,7 @@ a:not(.btn):not(.card) {
   text-decoration: underline;
   text-decoration-style: solid;
   font-weight: var(--bold-font-weight);
-  border-radius: calc(2rem / 16); /* for the focus ring */
+  border-radius: var(--focus-border-radius);
 }
 
 a:hover:not(.btn) {
@@ -137,8 +141,8 @@ a:hover:not(.btn) {
 
 a:focus:not(.btn):not(.card):not(.footer-link):not(#skip-to-content),
 a:focus-visible:not(.btn):not(.card):not(.footer-link):not(#skip-to-content) {
-  outline: 3px solid var(--focus-color) !important;
-  outline-offset: 2px !important;
+  outline: var(--focus-style) !important;
+  outline-offset: var(--focus-outline-offset) !important;
 }
 
 a:visited:not(.btn) {
@@ -284,16 +288,21 @@ main {
   left: unset !important;
   transform: none;
   overflow: hidden;
-  background: var(--focus-color);
-  font-size: var(--font-size-15px);
-  line-height: var(--bs-body-line-height);
-  letter-spacing: calc(var(--font-size-15px) * var(--letter-spacing-5));
 }
 
 #skip-to-content:focus {
-  height: 21px !important;
+  height: auto;
   outline: none !important;
   box-shadow: none;
+  padding: 1rem 0;
+  background: var(--bs-white);
+}
+
+#skip-to-content:focus span {
+  outline: var(--focus-style) !important;
+  outline-offset: var(--focus-outline-offset) !important;
+  font-weight: var(--bold-font-weight);
+  border-radius: var(--focus-border-radius);
 }
 
 /* Footer */
