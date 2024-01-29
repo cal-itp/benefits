@@ -1,6 +1,7 @@
 """
 Django settings for benefits project.
 """
+
 import os
 
 from benefits import sentry

@@ -1,6 +1,7 @@
 """
 The eligibility application: view definitions for the eligibility verification flow.
 """
+
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse

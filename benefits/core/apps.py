@@ -1,6 +1,7 @@
 """
 The core application: Houses base templates and reusable models and components.
 """
+
 from django.apps import AppConfig
 
 

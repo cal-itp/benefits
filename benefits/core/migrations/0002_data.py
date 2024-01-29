@@ -1,5 +1,6 @@
 """Data migration which loads configuration data for Benefits.
 """
+
 import json
 import os
 

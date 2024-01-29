@@ -1,6 +1,7 @@
 """
 The enrollment application: analytics implementation.
 """
+
 from benefits.core import analytics as core
 
 

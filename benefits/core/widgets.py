@@ -1,6 +1,7 @@
 """
 The core application: Helper form widgets.
 """
+
 import copy
 from django.forms import widgets
 
