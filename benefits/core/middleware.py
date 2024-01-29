@@ -1,6 +1,7 @@
 """
 The core application: middleware definitions for request/response cycle.
 """
+
 import logging
 
 from django.conf import settings

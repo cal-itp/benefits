@@ -1,6 +1,7 @@
 """
 The enrollment application: URLConf for the benefits enrollment flow.
 """
+
 from django.urls import path
 
 from . import views

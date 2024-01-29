@@ -1,6 +1,7 @@
 """
 The oauth application: Implements OAuth-based authentication
 """
+
 from django.apps import AppConfig
 
 
