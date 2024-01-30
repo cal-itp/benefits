@@ -1,4 +1,6 @@
-import httpx
+import requests
+
+from django.conf import settings
 from loguru import logger
 
 
@@ -12,7 +14,7 @@ def pre_login_user(user, request):
 
         # Request Google user info to get name and email
         url = "https://www.googleapis.com/oauth2/v3/userinfo"
-        response = httpx.get(url, headers=headers)
+        response = requests.get(url, headers=headers, timeout=settings.REQUESTS_TIMEOUT)
         user_data = response.json()
         logger.debug(f"Updating admin user data from Google for user with email: {user_data['email']}")
 
