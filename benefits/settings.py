@@ -22,7 +22,7 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
 
 ADMIN = os.environ.get("DJANGO_ADMIN", "False").lower() == "true"
 
-ALLOWED_HOSTS = _filter_empty(os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(","))
+ALLOWED_HOSTS = _filter_empty(os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(","))
 
 # Application definition
 
