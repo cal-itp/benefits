@@ -14,6 +14,9 @@ body:
         Each release is coordinated by a **Release Manager**. The release manager may assign sub-tasks or ask for help
         as-needed, but is otherwise responsible for all aspects of the release.
 
+        Each release also identifies a **Smoke Tester** responsible for carrying out the [Smoke Tests according to our
+        established procedure](https://docs.google.com/document/d/1ADXWW4mfLJwLKVqtVemPNX9yTqYKqIWfCz1DipAU02g/edit).
+
         After this issue is created, use the checklist to manage the steps
         of the release process, marking items as completed. [Read more about the
         release process](https://docs.calitp.org/benefits/deployment/release/).
@@ -26,6 +29,14 @@ body:
     attributes:
       label: Release manager
       description: GitHub handle of who is responsible for this release; assign this issue to this user
+      placeholder: "@cal-itp-bot"
+    validations:
+      required: true
+  - type: input
+    id: smoke-tester
+    attributes:
+      label: Smoke tester
+      description: GitHub handle of who is responsible for smoke testing this release
       placeholder: "@cal-itp-bot"
     validations:
       required: true
@@ -76,7 +87,8 @@ body:
         - label: QA the app in test
         - label: Ensure `prod` secrets are up to date
         - label: Open a PR for the `test` branch into `prod`, merge
-        - label: QA the app in prod
+        - label: Smoke Test the app in prod
+        - label: Confirm acceptance of Smoke Tests by adding a comment to this issue
         - label: Tag the release on the `prod` branch, push the tag to GitHub (see [docs](https://docs.calitp.org/benefits/deployment/release/#5-tag-the-release) for commands)
         - label: Create a release in GitHub for the tag, generating release notes
         - label: Edit release notes with additional context, images, animations, etc. as-needed
@@ -90,7 +102,8 @@ body:
         - label: Bump the application version
         - label: Ensure `prod` secrets are up to date
         - label: Open a PR from the hotfix branch into `prod`, merge
-        - label: QA the fix in prod
+        - label: Smoke Test the fix in prod
+        - label: Confirm acceptance of Smoke Tests by adding a comment to this issue
         - label: Tag the release on `prod`, push the tag to GitHub (see [docs](https://docs.calitp.org/benefits/deployment/release/#5-tag-the-release) for commands)
         - label: Create a release in GitHub for the tag, generating release notes
         - label: Edit release notes with additional context, images, animations, etc. as-needed
