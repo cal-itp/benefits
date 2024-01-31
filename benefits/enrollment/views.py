@@ -1,6 +1,7 @@
 """
 The enrollment application: view definitions for the benefits enrollment flow.
 """
+
 import logging
 
 from django.http import JsonResponse

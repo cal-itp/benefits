@@ -1,6 +1,7 @@
 """
 The core application: context processors for enriching request context data.
 """
+
 from django.conf import settings
 
 from . import models, session

@@ -1,6 +1,7 @@
 """
 Django settings for benefits project.
 """
+
 import os
 
 from benefits import sentry
@@ -191,7 +192,6 @@ LANGUAGES = [("en", "English"), ("es", "Español")]
 LOCALE_PATHS = [os.path.join(BASE_DIR, "benefits", "locale")]
 
 USE_I18N = True
-USE_L10N = True
 
 TIME_ZONE = "UTC"
 USE_TZ = True

@@ -1,6 +1,7 @@
 """
 The eligibility application: URLConf for the eligibility verification flow.
 """
+
 from django.urls import path
 
 from . import views

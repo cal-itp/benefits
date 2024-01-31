@@ -1,6 +1,7 @@
 """
 The enrollment application: Form definitions for results from Hosted Card Verification Flow.
 """
+
 from django import forms
 
 

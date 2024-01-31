@@ -1,6 +1,7 @@
 """
 The eligibility application: Form definition for the eligibility verification flow.
 """
+
 import logging
 
 from django import forms

@@ -57,7 +57,7 @@
                   },
                   onTokenize: function (response) {
                       /* This function executes when the
-                      /* card/address verification returns
+                      /* card verification returns
                       /* successfully with a token from enrollment server */
                       amplitude.getInstance().logEvent(closedEvent, {status: "success"});
 
@@ -67,7 +67,7 @@
                   },
                   onVerificationFailure: function (response) {
                       /* This function executes when the
-                      /* card/address verification fails and server
+                      /* card verification fails and server
                       /* return verification failure message */
                       amplitude.getInstance().logEvent(closedEvent, {status: "fail"});
 

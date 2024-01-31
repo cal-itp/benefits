@@ -1,6 +1,7 @@
 """
 The core application: Common model definitions.
 """
+
 import importlib
 import logging
 

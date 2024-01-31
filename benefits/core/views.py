@@ -1,6 +1,7 @@
 """
 The core application: view definition for the root of the webapp.
 """
+
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
 from django.template import loader
 from django.template.response import TemplateResponse

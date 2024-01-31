@@ -1,6 +1,7 @@
 """
 The core application: URLConf for the root of the webapp.
 """
+
 import logging
 
 from django.urls import path, register_converter

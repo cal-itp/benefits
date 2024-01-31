@@ -1,6 +1,7 @@
 """
 The oauth application: analytics implementation.
 """
+
 from benefits.core import analytics as core, session
 
 

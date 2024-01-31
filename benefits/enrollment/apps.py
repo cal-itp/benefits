@@ -1,6 +1,7 @@
 """
 The enrollment application: Allows user to enroll payment device for benefits.
 """
+
 from django.apps import AppConfig
 
 
