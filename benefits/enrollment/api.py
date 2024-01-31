@@ -1,6 +1,7 @@
 """
 The enrollment application: Benefits Enrollment API implementation.
 """
+
 import logging
 from tempfile import NamedTemporaryFile
 import time

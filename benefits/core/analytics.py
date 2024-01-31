@@ -1,6 +1,7 @@
 """
 The core application: analytics implementation.
 """
+
 import itertools
 import json
 import logging

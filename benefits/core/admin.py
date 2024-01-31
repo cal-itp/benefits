@@ -1,6 +1,7 @@
 """
 The core application: Admin interface configuration.
 """
+
 from django.conf import settings
 
 

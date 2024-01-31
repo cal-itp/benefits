@@ -1,7 +1,7 @@
 nav:
   - Home:
       - README.md
-      - use-cases
+      - enrollment-pathways
   - getting-started
   - product-and-design
   - development
