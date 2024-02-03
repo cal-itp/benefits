@@ -40,11 +40,11 @@ This use case describes a feature in the[ Cal-ITP Benefits app](https://benefits
 
 - Suppose the debit or credit card expires or is canceled by the issuer. In that case, the transit rider must repeat the basic flow to register a new debit or credit card.
 
-- When the initial transit benefit enrollment period ends after one year from the date of enrollment, the transit rider must repeat the basic flow to re-enroll. 
+- When the initial transit benefit enrollment period ends after one year from the date of enrollment, the transit rider must repeat the basic flow to re-enroll.
 
-- Suppose the transit rider attempts to re-enroll for a transit benefit as a CalFresh Program participant three months after their enrollment period started. The app will inform them they must wait re-enroll within 14 days of the benefit expiration. 
+- Suppose the transit rider attempts to re-enroll for a transit benefit as a CalFresh Program participant three months after their enrollment period started. The app will inform them they must wait re-enroll within 14 days of the benefit expiration.
 
-- Suppose the transit rider doesn’t re-enroll for a transit benefit after one year, but continues paying for transit using the card they registered. The transit operator will charge the rider full fare. 
+- Suppose the transit rider doesn’t re-enroll for a transit benefit after one year, but continues paying for transit using the card they registered. The transit operator will charge the rider full fare.
 
 - If the transit rider uses more than one debit or credit card to pay for transit, they repeat the basic flow for each card.
 
@@ -70,8 +70,6 @@ The transit rider receives a fare reduction each time they use the debit or cred
 
 ## **Example Scenario**
 
-A Calfresh Program participant uses public transit regularly. They don’t have a car and depend on buses to get to appointments and do errands that take too long to use their bicycle. Even though this person already qualifies for benefits from the California Department of Social Services, they had to navigate another extensive, in-person eligibility process with different requirements to qualify for reduced fares from their local transit agency. They now receive a 50% fare reduction but have to pay for transit rides using the closed loop card provided by the operator to receive the reduced fare. It’s frustrating and inconvenient to reload this closed loop card in $10 payments every week, especially because they sometimes they could use the money tied up on the card to make ends meet. In summary, this person pays for daily expenses using three forms of payment: their EBT card for eligibles items, their agency card for transportation, and their bank card for everything else. 
+A Calfresh Program participant uses public transit regularly. They don’t have a car and depend on buses to get to appointments and do errands that take too long to use their bicycle. Even though this person already qualifies for benefits from the California Department of Social Services, they had to navigate another extensive, in-person eligibility process with different requirements to qualify for reduced fares from their local transit agency. They now receive a 50% fare reduction but have to pay for transit rides using the closed loop card provided by the operator to receive the reduced fare. It’s frustrating and inconvenient to reload this closed loop card in $10 payments every week, especially because they sometimes they could use the money tied up on the card to make ends meet. In summary, this person pays for daily expenses using three forms of payment: their EBT card for eligibles items, their agency card for transportation, and their bank card for everything else.
 
 The transit operator serving their region of California implements contactless payments on fixed bus routes throughout the service area. This rider uses [benefits.calitp.org](benefits.calitp.org) on their mobile device to confirm their participation in the CalFresh Program offered by CDSS and registers their debit card for reduced fares. They tap to pay when boarding buses in their area and are automatically charged the reduced fare. While they still need to manage funds on their EBT card *and* their bank card, they no longer need to use their transit operator card to pay for transit. Best of all, they have complete access to all funds in their weekly budget. If other expenses are higher one week, they can allocate additional funds to those areas and ride transit less.
-
-
