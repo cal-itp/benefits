@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 import pytest
 
-from benefits.core.models import SecretNameValidator, EligibilityType, EligibilityVerifier, TransitAgency
+from benefits.core.models import SecretNameValidator, SecretValueField, EligibilityType, EligibilityVerifier, TransitAgency
 
 
 @pytest.mark.parametrize(
@@ -39,6 +39,18 @@ def test_SecretNameValidator_invalid(secret_name):
     # an unsuccessful validation raises django.core.exceptions.ValidationError
     with pytest.raises(ValidationError):
         validator(secret_name)
+
+
+def test_SecretValueField_init():
+    field = SecretValueField()
+
+    assert SecretValueField.NAME_VALIDATOR in field.validators
+    assert field.max_length == 127
+    assert field.blank is False
+    assert field.null is False
+    assert field.allow_unicode is False
+    assert field.description is not None
+    assert field.description != ""
 
 
 @pytest.mark.django_db

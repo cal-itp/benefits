@@ -40,6 +40,38 @@ class SecretNameValidator(RegexValidator):
         super().__init__(*args, **kwargs)
 
 
+class SecretValueField(models.SlugField):
+    """Field that handles retrieving a value from a secret store.
+
+    The field value is the name of the secret to be retrieved.
+
+    The secret value itself MUST NEVER be stored in this field.
+    """
+
+    NAME_VALIDATOR = SecretNameValidator()
+
+    description = """Field that handles retrieving a value from a secret store.
+
+    The field value is the name of the secret to be retrieved. Must be between 1-127 alphanumeric ASCII characters or hyphen
+    characters.
+
+    The secret value itself MUST NEVER be stored in this field.
+    """
+
+    def __init__(self, *args, **kwargs):
+        kwargs["validators"] = [self.NAME_VALIDATOR]
+        # although the validator also checks for a max length of 127
+        # this setting enforces the length at the database column level as well
+        kwargs["max_length"] = 127
+        # similar to max_length, enforce at the field (form) validation level to not allow blanks
+        kwargs["blank"] = False
+        # similar to blank, enforce at the database level that null is not allowed
+        kwargs["null"] = False
+        # the default is False, but this is more explicit
+        kwargs["allow_unicode"] = False
+        super().__init__(*args, **kwargs)
+
+
 class PemData(models.Model):
     """API Certificate or Key in PEM format."""
 
