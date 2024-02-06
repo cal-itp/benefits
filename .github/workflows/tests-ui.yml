@@ -22,7 +22,7 @@ jobs:
           docker compose up --detach client
 
       - name: Run Lighthouse tests for a11y
-        uses: treosh/lighthouse-ci-action@10.1.0
+        uses: treosh/lighthouse-ci-action@11.4.0
         with:
           urls: |
             http://localhost:8000
