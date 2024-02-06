@@ -13,6 +13,8 @@ from django.urls import reverse
 
 import requests
 
+from benefits.secrets import get_secret_by_name
+
 
 logger = logging.getLogger(__name__)
 
@@ -104,7 +106,7 @@ class AuthProvider(models.Model):
     sign_out_button_template = models.TextField(null=True)
     sign_out_link_template = models.TextField(null=True)
     client_name = models.TextField()
-    client_id = models.TextField()
+    client_id_secret_name = SecretValueField()
     authority = models.TextField()
     scope = models.TextField(null=True)
     claim = models.TextField(null=True)
@@ -117,6 +119,10 @@ class AuthProvider(models.Model):
     @property
     def supports_sign_out(self):
         return bool(self.sign_out_button_template) or bool(self.sign_out_link_template)
+
+    @property
+    def client_id(self):
+        return get_secret_by_name(self.client_id_secret_name)
 
 
 class EligibilityType(models.Model):

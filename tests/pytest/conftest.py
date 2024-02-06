@@ -47,7 +47,7 @@ def model_AuthProvider():
         sign_out_button_template="core/includes/button--sign-out--senior.html",
         sign_out_link_template="core/includes/link--sign-out--senior.html",
         client_name="Client",
-        client_id="1234",
+        client_id_secret_name="1234",
         authority="https://example.com",
     )
 

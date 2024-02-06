@@ -119,7 +119,6 @@ resource "azurerm_linux_web_app" "main" {
     "SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT"                  = "${local.secret_prefix}sbmtd-payment-processor-client-cert)"
     "SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY"      = "${local.secret_prefix}sbmtd-payment-processor-client-cert-private-key)"
     "SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA"          = "${local.secret_prefix}sbmtd-payment-processor-client-cert-root-ca)"
-    "AUTH_PROVIDER_CLIENT_ID"                              = "${local.secret_prefix}auth-provider-client-id)"
     "AUTH_PROVIDER_AUTHORITY"                              = "${local.secret_prefix}auth-provider-authority)"
     "SENIOR_AUTH_PROVIDER_CLIENT_NAME"                     = "${local.secret_prefix}senior-auth-provider-client-name)"
     "SENIOR_AUTH_PROVIDER_SCOPE"                           = "${local.secret_prefix}senior-auth-provider-scope)"

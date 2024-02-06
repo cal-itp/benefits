@@ -53,6 +53,11 @@ def test_SecretValueField_init():
     assert field.description != ""
 
 
+@pytest.fixture
+def mock_get_secret_by_name(mocker):
+    return mocker.patch("benefits.core.models.get_secret_by_name", return_value="secret value!")
+
+
 @pytest.mark.django_db
 def test_PemData_str(model_PemData):
     assert str(model_PemData) == model_PemData.label
@@ -86,6 +91,14 @@ def test_PemData_data_remote(model_PemData, mocker):
 def test_model_AuthProvider(model_AuthProvider):
     assert not model_AuthProvider.supports_claims_verification
     assert model_AuthProvider.supports_sign_out
+
+
+@pytest.mark.django_db
+def test_model_AuthProvider_client_id(model_AuthProvider, mock_get_secret_by_name):
+    secret_value = model_AuthProvider.client_id
+
+    mock_get_secret_by_name.assert_called_once_with(model_AuthProvider.client_id_secret_name)
+    assert secret_value == mock_get_secret_by_name.return_value
 
 
 @pytest.mark.django_db
