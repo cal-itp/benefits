@@ -4,7 +4,9 @@ The core application: Common model definitions.
 
 import importlib
 import logging
+import re
 
+from django.core.validators import RegexValidator
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
@@ -13,6 +15,29 @@ import requests
 
 
 logger = logging.getLogger(__name__)
+
+
+class SecretNameValidator(RegexValidator):
+    """RegexValidator that validates a secret name.
+
+    Azure KeyVault currently enforces the following rules:
+
+    * The value must be between 1 and 127 characters long.
+    * Secret names can only contain alphanumeric characters and dashes.
+
+    Read more about Azure KeyVault naming rules:
+    https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-name-rules#microsoftkeyvault
+
+    Read more about Django validators:
+    https://docs.djangoproject.com/en/5.0/ref/validators/#module-django.core.validators
+    """
+
+    def __init__(self, *args, **kwargs):
+        kwargs["regex"] = re.compile(r"^[-a-zA-Z0-9]{1,127}$", re.ASCII)
+        kwargs["message"] = (
+            "Enter a valid secret name of between 1-127 alphanumeric ASCII characters and the hyphen character only."
+        )
+        super().__init__(*args, **kwargs)
 
 
 class PemData(models.Model):

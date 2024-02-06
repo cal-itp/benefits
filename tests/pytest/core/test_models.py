@@ -1,7 +1,44 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
+
 import pytest
 
-from benefits.core.models import EligibilityType, EligibilityVerifier, TransitAgency
+from benefits.core.models import SecretNameValidator, EligibilityType, EligibilityVerifier, TransitAgency
+
+
+@pytest.mark.parametrize(
+    "secret_name",
+    [
+        "a",
+        "1",
+        "one",
+        "one-two-three",
+        "1-2-3",
+        "this-is-a-really-long-secret-name-in-fact-it-is-the-absolute-maximum-length-of-127-characters-to-be-exact-and-now-it-has-enough",  # noqa: E501
+    ],
+)
+def test_SecretNameValidator_valid(secret_name):
+    validator = SecretNameValidator()
+
+    # a successful validation does not raise an Exception and returns None
+    assert validator(secret_name) is None
+
+
+@pytest.mark.parametrize(
+    "secret_name",
+    [
+        "",
+        "!",
+        "underscores_not_allowed",
+        "this-is-a-really-long-secret-name-in-fact-it-much-much-longer-than-the-absolute-maximum-length-of-127-characters-and-now-it-has-enough-to-be-too-long",  # noqa: E501
+    ],
+)
+def test_SecretNameValidator_invalid(secret_name):
+    validator = SecretNameValidator()
+
+    # an unsuccessful validation raises django.core.exceptions.ValidationError
+    with pytest.raises(ValidationError):
+        validator(secret_name)
 
 
 @pytest.mark.django_db
