@@ -1,31 +1,30 @@
 import pytest
 
 from benefits.admin import pre_login_user
-from unittest.mock import patch
-from requests import Session
 
 
 @pytest.mark.django_db
-@patch.object(Session, "get")
-def test_pre_login_user(mock_token_get, model_AdminUser):
+def test_pre_login_user(mocker, model_AdminUser):
     assert model_AdminUser.email == "user@compiler.la"
     assert model_AdminUser.first_name == ""
     assert model_AdminUser.last_name == ""
     assert model_AdminUser.username == ""
 
-    with patch("benefits.admin.requests.get") as mock_response_get:
-        mock_token_get.return_value = "TOKEN"
-        response_object = {
-            "username": "admin@compiler.la",
-            "given_name": "Admin",
-            "family_name": "User",
-            "email": "admin@compiler.la",
-        }
-        mock_response_get.json.return_value = response_object
+    response_from_google = {
+        "username": "admin@compiler.la",
+        "given_name": "Admin",
+        "family_name": "User",
+        "email": "admin@compiler.la",
+    }
 
-        pre_login_user(model_AdminUser, mock_token_get)
+    mocked_request = mocker.Mock()
+    mocked_response = mocker.Mock()
+    mocked_response.json.return_value = response_from_google
+    mocker.patch("benefits.admin.requests.get", return_value=mocked_response)
 
-        assert model_AdminUser.email == response_object["email"]
-        assert model_AdminUser.first_name == response_object["first_name"]
-        assert model_AdminUser.last_name == response_object["family_name"]
-        assert model_AdminUser.username == response_object["user_name"]
+    pre_login_user(model_AdminUser, mocked_request)
+
+    assert model_AdminUser.email == response_from_google["email"]
+    assert model_AdminUser.first_name == response_from_google["given_name"]
+    assert model_AdminUser.last_name == response_from_google["family_name"]
+    assert model_AdminUser.username == response_from_google["username"]
