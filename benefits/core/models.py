@@ -67,8 +67,6 @@ class SecretValueField(models.SlugField):
         kwargs["max_length"] = 127
         # similar to max_length, enforce at the field (form) validation level to not allow blanks
         kwargs["blank"] = False
-        # similar to blank, enforce at the database level that null is not allowed
-        kwargs["null"] = False
         # the default is False, but this is more explicit
         kwargs["allow_unicode"] = False
         super().__init__(*args, **kwargs)
@@ -164,7 +162,7 @@ class EligibilityVerifier(models.Model):
     active = models.BooleanField(default=False)
     api_url = models.TextField(null=True)
     api_auth_header = models.TextField(null=True)
-    api_auth_key = models.TextField(null=True)
+    api_auth_key_secret_name = SecretValueField(null=True)
     eligibility_type = models.ForeignKey(EligibilityType, on_delete=models.PROTECT)
     # public key is used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier
     public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT, null=True)
@@ -182,6 +180,13 @@ class EligibilityVerifier(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def api_auth_key(self):
+        if self.api_auth_key_secret_name is not None:
+            return get_secret_by_name(self.api_auth_key_secret_name)
+        else:
+            return None
 
     @property
     def public_key_data(self):
