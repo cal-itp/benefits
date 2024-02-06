@@ -32,8 +32,10 @@ def RUNTIME_ENVIRONMENT():
 
     # usage of django.conf.settings.ALLOWED_HOSTS here (rather than the module variable directly)
     # is to ensure dynamic calculation, e.g. for unit tests and elsewhere this setting is needed
-    env = "dev"
-    if "test-benefits.calitp.org" in settings.ALLOWED_HOSTS:
+    env = "local"
+    if "dev-benefits.calitp.org" in settings.ALLOWED_HOSTS:
+        env = "dev"
+    elif "test-benefits.calitp.org" in settings.ALLOWED_HOSTS:
         env = "test"
     elif "benefits.calitp.org" in settings.ALLOWED_HOSTS:
         env = "prod"
