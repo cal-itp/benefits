@@ -4,7 +4,7 @@ from django.middleware.locale import LocaleMiddleware
 
 import pytest
 
-# from pytest_socket import disable_socket
+from pytest_socket import disable_socket
 
 from benefits.core import session
 from benefits.core.models import AuthProvider, EligibilityType, EligibilityVerifier, PaymentProcessor, PemData, TransitAgency
@@ -12,8 +12,7 @@ from django.contrib.auth.models import User
 
 
 def pytest_runtest_setup():
-    # disable_socket()
-    pass
+    disable_socket()
 
 
 @pytest.fixture
