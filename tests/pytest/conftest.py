@@ -40,9 +40,7 @@ def mock_models_get_secret_by_name(mocker):
 
 @pytest.fixture
 def model_PemData():
-    data = PemData.objects.create(
-        text="-----BEGIN PUBLIC KEY-----\nPEM DATA\n-----END PUBLIC KEY-----\n", label="Test public key"
-    )
+    data = PemData.objects.create(text_secret_name="pem-secret-data", label="Test public key")
 
     return data
 

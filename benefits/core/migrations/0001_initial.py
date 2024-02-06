@@ -92,8 +92,13 @@ class Migration(migrations.Migration):
             fields=[
                 ("id", models.AutoField(primary_key=True, serialize=False)),
                 ("label", models.TextField()),
-                ("text", models.TextField(null=True)),
                 ("remote_url", models.TextField(null=True)),
+                (
+                    "text_secret_name",
+                    benefits.core.models.SecretValueField(
+                        max_length=127, null=True, validators=[benefits.core.models.SecretNameValidator()]
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(

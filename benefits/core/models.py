@@ -2,6 +2,7 @@
 The core application: Common model definitions.
 """
 
+from functools import cached_property
 import importlib
 import logging
 import re
@@ -78,23 +79,31 @@ class PemData(models.Model):
     id = models.AutoField(primary_key=True)
     # Human description of the PEM data
     label = models.TextField()
-    # The data in utf-8 encoded PEM text format
-    text = models.TextField(null=True)
+    # The name of a secret with data in utf-8 encoded PEM text format
+    text_secret_name = SecretValueField(null=True)
     # Public URL hosting the utf-8 encoded PEM text
     remote_url = models.TextField(null=True)
 
     def __str__(self):
         return self.label
 
-    @property
+    @cached_property
     def data(self):
-        if self.text:
-            return self.text
-        elif self.remote_url:
-            self.text = requests.get(self.remote_url, timeout=settings.REQUESTS_TIMEOUT).text
+        """
+        Attempts to get data from `remote_url` or `text_secret_name`, with the latter taking precendence if both are defined.
+        """
+        remote_data = None
+        secret_data = None
 
-        self.save()
-        return self.text
+        if self.remote_url:
+            remote_data = requests.get(self.remote_url, timeout=settings.REQUESTS_TIMEOUT).text
+        if self.text_secret_name:
+            try:
+                secret_data = get_secret_by_name(self.text_secret_name)
+            except Exception:
+                secret_data = None
+
+        return secret_data if secret_data is not None else remote_data
 
 
 class AuthProvider(models.Model):

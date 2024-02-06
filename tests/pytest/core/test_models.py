@@ -6,6 +6,12 @@ import pytest
 from benefits.core.models import SecretNameValidator, SecretValueField, EligibilityType, EligibilityVerifier, TransitAgency
 
 
+@pytest.fixture
+def mock_requests_get_pem_data(mocker):
+    # intercept and spy on the GET request
+    return mocker.patch("benefits.core.models.requests.get", return_value=mocker.Mock(text="PEM text"))
+
+
 @pytest.mark.parametrize(
     "secret_name",
     [
@@ -59,27 +65,58 @@ def test_PemData_str(model_PemData):
 
 
 @pytest.mark.django_db
-def test_PemData_data_text(model_PemData):
-    assert model_PemData.text
-    assert model_PemData.data == model_PemData.text
-
-
-@pytest.mark.django_db
-def test_PemData_data_remote(model_PemData, mocker):
-    model_PemData.text = None
-    model_PemData.remote_url = "http://localhost/publickey"
-
-    # intercept and spy on the GET request
-    requests_spy = mocker.patch("benefits.core.models.requests.get", return_value=mocker.Mock(text="PEM text"))
-
-    assert not model_PemData.text
+def test_PemData_data_text_secret_name(model_PemData, mock_models_get_secret_by_name):
+    # a secret name and not remote URL, should use secret value
 
     data = model_PemData.data
 
-    assert model_PemData.text
-    assert data == "PEM text"
-    assert data == model_PemData.text
-    requests_spy.assert_called_once_with(model_PemData.remote_url, timeout=settings.REQUESTS_TIMEOUT)
+    mock_models_get_secret_by_name.assert_called_once_with(model_PemData.text_secret_name)
+    assert data == mock_models_get_secret_by_name.return_value
+
+
+@pytest.mark.django_db
+def test_PemData_data_remote(model_PemData, mock_requests_get_pem_data):
+    # a remote URL and no secret name, should use remote value
+
+    model_PemData.text_secret_name = None
+    model_PemData.remote_url = "http://localhost/publickey"
+
+    assert not model_PemData.text_secret_name
+
+    data = model_PemData.data
+
+    mock_requests_get_pem_data.assert_called_once_with(model_PemData.remote_url, timeout=settings.REQUESTS_TIMEOUT)
+    assert data == mock_requests_get_pem_data.return_value.text
+
+
+@pytest.mark.django_db
+def test_PemData_data_text_secret_name_and_remote__uses_text_secret(
+    model_PemData, mock_models_get_secret_by_name, mock_requests_get_pem_data
+):
+    # a remote URL and the secret value is not None, should use the secret value
+
+    model_PemData.remote_url = "http://localhost/publickey"
+
+    data = model_PemData.data
+
+    mock_models_get_secret_by_name.assert_called_once_with(model_PemData.text_secret_name)
+    mock_requests_get_pem_data.assert_called_once_with(model_PemData.remote_url, timeout=settings.REQUESTS_TIMEOUT)
+    assert data == mock_models_get_secret_by_name.return_value
+
+
+@pytest.mark.django_db
+def test_PemData_data_text_secret_name_and_remote__uses_remote(
+    model_PemData, mock_models_get_secret_by_name, mock_requests_get_pem_data
+):
+    # a remote URL and the secret value is None, should use remote value
+    model_PemData.remote_url = "http://localhost/publickey"
+    mock_models_get_secret_by_name.return_value = None
+
+    data = model_PemData.data
+
+    mock_models_get_secret_by_name.assert_called_once_with(model_PemData.text_secret_name)
+    mock_requests_get_pem_data.assert_called_once_with(model_PemData.remote_url, timeout=settings.REQUESTS_TIMEOUT)
+    assert data == mock_requests_get_pem_data.return_value.text
 
 
 @pytest.mark.django_db
