@@ -1,6 +1,6 @@
 import pytest
 
-from benefits.admin import pre_login_user
+from benefits.core.admin import pre_login_user
 
 
 @pytest.mark.django_db
@@ -20,7 +20,7 @@ def test_pre_login_user(mocker, model_AdminUser):
     mocked_request = mocker.Mock()
     mocked_response = mocker.Mock()
     mocked_response.json.return_value = response_from_google
-    mocker.patch("benefits.admin.requests.get", return_value=mocked_response)
+    mocker.patch("benefits.core.admin.requests.get", return_value=mocked_response)
 
     pre_login_user(model_AdminUser, mocked_request)
 
