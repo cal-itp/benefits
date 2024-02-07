@@ -2,6 +2,7 @@ import logging
 import os
 import sys
 
+from azure.core.exceptions import ClientAuthenticationError
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
 from django.conf import settings
@@ -34,8 +35,18 @@ def get_secret_by_name(secret_name, client=None):
         credential = DefaultAzureCredential()
         client = SecretClient(vault_url=vault_url, credential=credential)
 
-    secret = client.get_secret(secret_name)
-    return secret.value
+    secret_value = None
+
+    if client is not None:
+        try:
+            secret = client.get_secret(secret_name)
+            secret_value = secret.value
+        except ClientAuthenticationError:
+            logger.error("Could not authenticate to Azure KeyVault")
+    else:
+        logger.error("Azure KeyVault SecretClient was not configured")
+
+    return secret_value
 
 
 if __name__ == "__main__":
