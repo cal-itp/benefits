@@ -3,12 +3,10 @@ from django.contrib.sessions.middleware import SessionMiddleware
 from django.middleware.locale import LocaleMiddleware
 
 import pytest
-
 from pytest_socket import disable_socket
 
 from benefits.core import session
 from benefits.core.models import AuthProvider, EligibilityType, EligibilityVerifier, PaymentProcessor, PemData, TransitAgency
-from django.contrib.auth.models import User
 
 
 def pytest_runtest_setup():
@@ -32,21 +30,6 @@ def app_request(rf):
     session.reset(app_request)
 
     return app_request
-
-
-@pytest.fixture
-def model_AdminUser():
-    user = User.objects.create(
-        email="user@compiler.la",
-        first_name="",
-        last_name="",
-        username="",
-        is_active=True,
-        is_staff=True,
-        is_superuser=True,
-    )
-
-    return user
 
 
 @pytest.fixture
