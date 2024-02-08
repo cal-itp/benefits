@@ -126,6 +126,18 @@ By default the application sends logs to `stdout`.
 
 Django's primary secret, keep this safe!
 
+### `DJANGO_SUPERUSER_EMAIL`
+
+The email address of the Django Admin superuser created when resetting the database.
+
+### `DJANGO_SUPERUSER_PASSWORD`
+
+The password of the Django Admin superuser created when resetting the database.
+
+### `DJANGO_SUPERUSER_USERNAME`
+
+The username of the Django Admin superuser created when resetting the database.
+
 ### `DJANGO_TRUSTED_ORIGINS`
 
 !!! warning "Deployment configuration"
