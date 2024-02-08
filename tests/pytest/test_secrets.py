@@ -1,7 +1,8 @@
-import pytest
 from azure.core.exceptions import ClientAuthenticationError
+from django.core.exceptions import ValidationError
+import pytest
 
-from benefits.secrets import KEY_VAULT_URL, get_secret_by_name
+from benefits.secrets import KEY_VAULT_URL, SecretNameValidator, NAME_VALIDATOR, get_secret_by_name
 
 
 @pytest.fixture(autouse=True)
@@ -14,12 +15,65 @@ def mock_DefaultAzureCredential(mocker):
 
 @pytest.fixture
 def secret_name():
-    return "the secret name"
+    return "the-secret-name"
 
 
 @pytest.fixture
 def secret_value():
     return "the secret value"
+
+
+@pytest.mark.parametrize(
+    "secret_name",
+    [
+        "a",
+        "1",
+        "one",
+        "one-two-three",
+        "1-2-3",
+        "this-is-a-really-long-secret-name-in-fact-it-is-the-absolute-maximum-length-of-127-characters-to-be-exact-and-now-it-has-enough",  # noqa: E501
+    ],
+)
+def test_SecretNameValidator_valid(secret_name):
+    validator = SecretNameValidator()
+
+    # a successful validation does not raise an Exception and returns None
+    assert validator(secret_name) is None
+    assert NAME_VALIDATOR(secret_name) is None
+
+
+@pytest.mark.parametrize(
+    "secret_name",
+    [
+        "",
+        "!",
+        "underscores_not_allowed",
+        "this-is-a-really-long-secret-name-in-fact-it-much-much-longer-than-the-absolute-maximum-length-of-127-characters-and-now-it-has-enough-to-be-too-long",  # noqa: E501
+    ],
+)
+def test_SecretNameValidator_invalid(secret_name):
+    validator = SecretNameValidator()
+
+    # an unsuccessful validation raises django.core.exceptions.ValidationError
+    with pytest.raises(ValidationError):
+        validator(secret_name)
+
+    with pytest.raises(ValidationError):
+        NAME_VALIDATOR(secret_name)
+
+
+@pytest.mark.parametrize(
+    "secret_name",
+    [
+        "",
+        "!",
+        "underscores_not_allowed",
+        "this-is-a-really-long-secret-name-in-fact-it-much-much-longer-than-the-absolute-maximum-length-of-127-characters-and-now-it-has-enough-to-be-too-long",  # noqa: E501
+    ],
+)
+def test_get_secret_by_name__invalid_name(secret_name):
+    with pytest.raises(ValidationError):
+        get_secret_by_name(secret_name)
 
 
 @pytest.mark.parametrize("runtime_env", ["dev", "test", "prod"])

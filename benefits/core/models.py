@@ -5,42 +5,17 @@ The core application: Common model definitions.
 from functools import cached_property
 import importlib
 import logging
-import re
 
-from django.core.validators import RegexValidator
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
 import requests
 
-from benefits.secrets import get_secret_by_name
+from benefits.secrets import NAME_VALIDATOR, get_secret_by_name
 
 
 logger = logging.getLogger(__name__)
-
-
-class SecretNameValidator(RegexValidator):
-    """RegexValidator that validates a secret name.
-
-    Azure KeyVault currently enforces the following rules:
-
-    * The value must be between 1 and 127 characters long.
-    * Secret names can only contain alphanumeric characters and dashes.
-
-    Read more about Azure KeyVault naming rules:
-    https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-name-rules#microsoftkeyvault
-
-    Read more about Django validators:
-    https://docs.djangoproject.com/en/5.0/ref/validators/#module-django.core.validators
-    """
-
-    def __init__(self, *args, **kwargs):
-        kwargs["regex"] = re.compile(r"^[-a-zA-Z0-9]{1,127}$", re.ASCII)
-        kwargs["message"] = (
-            "Enter a valid secret name of between 1-127 alphanumeric ASCII characters and the hyphen character only."
-        )
-        super().__init__(*args, **kwargs)
 
 
 class SecretValueField(models.SlugField):
@@ -51,8 +26,6 @@ class SecretValueField(models.SlugField):
     The secret value itself MUST NEVER be stored in this field.
     """
 
-    NAME_VALIDATOR = SecretNameValidator()
-
     description = """Field that handles retrieving a value from a secret store.
 
     The field value is the name of the secret to be retrieved. Must be between 1-127 alphanumeric ASCII characters or hyphen
@@ -62,7 +35,7 @@ class SecretValueField(models.SlugField):
     """
 
     def __init__(self, *args, **kwargs):
-        kwargs["validators"] = [self.NAME_VALIDATOR]
+        kwargs["validators"] = [NAME_VALIDATOR]
         # although the validator also checks for a max length of 127
         # this setting enforces the length at the database column level as well
         kwargs["max_length"] = 127
