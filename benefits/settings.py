@@ -4,6 +4,8 @@ Django settings for benefits project.
 
 import os
 
+from django.conf import settings
+
 from benefits import sentry
 
 
@@ -23,6 +25,22 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
 ADMIN = os.environ.get("DJANGO_ADMIN", "False").lower() == "true"
 
 ALLOWED_HOSTS = _filter_empty(os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(","))
+
+
+def RUNTIME_ENVIRONMENT():
+    """Helper calculates the current runtime environment from ALLOWED_HOSTS."""
+
+    # usage of django.conf.settings.ALLOWED_HOSTS here (rather than the module variable directly)
+    # is to ensure dynamic calculation, e.g. for unit tests and elsewhere this setting is needed
+    env = "local"
+    if "dev-benefits.calitp.org" in settings.ALLOWED_HOSTS:
+        env = "dev"
+    elif "test-benefits.calitp.org" in settings.ALLOWED_HOSTS:
+        env = "test"
+    elif "benefits.calitp.org" in settings.ALLOWED_HOSTS:
+        env = "prod"
+    return env
+
 
 # Application definition
 

@@ -219,7 +219,9 @@ Enables [sending events to Sentry](../../deployment/troubleshooting/#error-monit
 
     [`environment` config value](https://docs.sentry.io/platforms/python/configuration/options/#environment)
 
-Segments errors by which deployment they occur in. This defaults to `local`, and can be set to match one of the [environment names](../../deployment/infrastructure/#environments).
+Segments errors by which deployment they occur in. This defaults to `dev`, and can be set to match one of the [environment names](../../deployment/infrastructure/#environments).
+
+`local` may also be used for local testing of the Sentry integration.
 
 ### `SENTRY_REPORT_URI`
 

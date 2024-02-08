@@ -8,6 +8,7 @@ The `urlpatterns` list routes URLs to views. For more information please see:
 import logging
 
 from django.conf import settings
+from django.http import HttpResponse
 from django.urls import include, path
 
 logger = logging.getLogger(__name__)
@@ -33,6 +34,18 @@ if settings.DEBUG:
         raise RuntimeError("Test error")
 
     urlpatterns.append(path("error/", trigger_error))
+
+    # simple route to read a pre-defined "secret"
+    # this "secret" does not contain sensitive information
+    # and is only configured in the dev environment for testing/debugging
+
+    def test_secret(request):
+        from benefits.secrets import get_secret_by_name
+
+        return HttpResponse(get_secret_by_name("testsecret"))
+
+    urlpatterns.append(path("testsecret/", test_secret))
+
 
 if settings.ADMIN:
     from django.contrib import admin
