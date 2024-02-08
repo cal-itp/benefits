@@ -142,6 +142,7 @@ def test_get_secret_by_name__local__returns_environment_variable(mocker, setting
     settings.RUNTIME_ENVIRONMENT = lambda: "local"
 
     env_spy = mocker.patch("benefits.secrets.os.environ.get", return_value=secret_value)
+    env_secret_name = secret_name.replace("-", "_")
     client_cls = mocker.patch("benefits.secrets.SecretClient")
     client = client_cls.return_value
 
@@ -149,5 +150,5 @@ def test_get_secret_by_name__local__returns_environment_variable(mocker, setting
 
     client_cls.assert_not_called()
     client.get_secret.assert_not_called()
-    env_spy.assert_called_once_with(secret_name)
+    env_spy.assert_called_once_with(env_secret_name)
     assert actual_value == secret_value

@@ -52,7 +52,8 @@ def get_secret_by_name(secret_name, client=None):
 
     if runtime_env == "local":
         logger.debug("Runtime environment is local, reading from environment instead of Azure KeyVault.")
-        return os.environ.get(secret_name)
+        env_secret_name = secret_name.replace("-", "_")
+        return os.environ.get(env_secret_name)
 
     elif client is None:
         # construct the KeyVault URL from the runtime environment
