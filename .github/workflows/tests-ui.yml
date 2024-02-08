@@ -18,7 +18,7 @@ jobs:
 
       - name: Start app
         run: |
-          touch .env
+          cp .env.sample .env
           docker compose up --detach client
 
       - name: Run Lighthouse tests for a11y
