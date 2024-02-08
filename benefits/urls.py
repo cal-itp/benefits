@@ -39,5 +39,6 @@ if settings.ADMIN:
 
     logger.debug("Register admin urls")
     urlpatterns.append(path("admin/", admin.site.urls))
+    urlpatterns.append(path("google_sso/", include("django_google_sso.urls", namespace="django_google_sso")))
 else:
     logger.debug("Skip url registrations for admin")

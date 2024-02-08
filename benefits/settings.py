@@ -22,7 +22,7 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
 
 ADMIN = os.environ.get("DJANGO_ADMIN", "False").lower() == "true"
 
-ALLOWED_HOSTS = _filter_empty(os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(","))
+ALLOWED_HOSTS = _filter_empty(os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(","))
 
 # Application definition
 
@@ -37,11 +37,27 @@ INSTALLED_APPS = [
 ]
 
 if ADMIN:
+    GOOGLE_SSO_CLIENT_ID = os.environ.get("GOOGLE_SSO_CLIENT_ID", "secret")
+    GOOGLE_SSO_PROJECT_ID = os.environ.get("GOOGLE_SSO_PROJECT_ID", "benefits-admin")
+    GOOGLE_SSO_CLIENT_SECRET = os.environ.get("GOOGLE_SSO_CLIENT_SECRET", "secret")
+    GOOGLE_SSO_ALLOWABLE_DOMAINS = _filter_empty(os.environ.get("GOOGLE_SSO_ALLOWABLE_DOMAINS", "compiler.la").split(","))
+    GOOGLE_SSO_STAFF_LIST = _filter_empty(os.environ.get("GOOGLE_SSO_STAFF_LIST", "").split(","))
+    GOOGLE_SSO_SUPERUSER_LIST = _filter_empty(os.environ.get("GOOGLE_SSO_SUPERUSER_LIST", "").split(","))
+    GOOGLE_SSO_LOGO_URL = "/static/img/icon/google_sso_logo.svg"
+    GOOGLE_SSO_SAVE_ACCESS_TOKEN = True
+    GOOGLE_SSO_PRE_LOGIN_CALLBACK = "benefits.core.admin.pre_login_user"
+    GOOGLE_SSO_SCOPES = [
+        "openid",
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.googleapis.com/auth/userinfo.profile",
+    ]
+
     INSTALLED_APPS.extend(
         [
             "django.contrib.admin",
             "django.contrib.auth",
             "django.contrib.contenttypes",
+            "django_google_sso",  # Add django_google_sso
         ]
     )
 
@@ -282,7 +298,11 @@ if RECAPTCHA_ENABLED:
 if len(env_frame_src) > 0:
     CSP_FRAME_SRC = env_frame_src
 
-CSP_IMG_SRC = ["'self'", "data:"]
+CSP_IMG_SRC = [
+    "'self'",
+    "data:",
+    "*.googleusercontent.com",
+]
 
 # Configuring strict Content Security Policy
 # https://django-csp.readthedocs.io/en/latest/nonce.html
@@ -294,9 +314,11 @@ if sentry.SENTRY_CSP_REPORT_URI:
     CSP_REPORT_URI = [sentry.SENTRY_CSP_REPORT_URI]
 
 CSP_SCRIPT_SRC = [
+    "'self'",
     "https://cdn.amplitude.com/libs/",
     "https://cdn.jsdelivr.net/",
     "*.littlepay.com",
+    "https://code.jquery.com/jquery-3.6.0.min.js",
 ]
 env_script_src = _filter_empty(os.environ.get("DJANGO_CSP_SCRIPT_SRC", "").split(","))
 CSP_SCRIPT_SRC.extend(env_script_src)
