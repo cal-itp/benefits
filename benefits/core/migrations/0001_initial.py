@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ("client_name", models.TextField()),
                 (
                     "client_id_secret_name",
-                    benefits.core.models.SecretValueField(max_length=127, validators=[benefits.secrets.SecretNameValidator()]),
+                    benefits.core.models.SecretNameField(max_length=127, validators=[benefits.secrets.SecretNameValidator()]),
                 ),
                 ("authority", models.TextField()),
                 ("scope", models.TextField(null=True)),
@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                 ("api_auth_header", models.TextField(null=True)),
                 (
                     "api_auth_key_secret_name",
-                    benefits.core.models.SecretValueField(
+                    benefits.core.models.SecretNameField(
                         max_length=127, null=True, validators=[benefits.secrets.SecretNameValidator()]
                     ),
                 ),
@@ -94,7 +94,7 @@ class Migration(migrations.Migration):
                 ("remote_url", models.TextField(null=True)),
                 (
                     "text_secret_name",
-                    benefits.core.models.SecretValueField(
+                    benefits.core.models.SecretNameField(
                         max_length=127, null=True, validators=[benefits.secrets.SecretNameValidator()]
                     ),
                 ),

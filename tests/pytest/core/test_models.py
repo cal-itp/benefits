@@ -2,7 +2,7 @@ from django.conf import settings
 
 import pytest
 
-from benefits.core.models import SecretValueField, EligibilityType, EligibilityVerifier, TransitAgency
+from benefits.core.models import SecretNameField, EligibilityType, EligibilityVerifier, TransitAgency
 import benefits.secrets
 
 
@@ -12,8 +12,8 @@ def mock_requests_get_pem_data(mocker):
     return mocker.patch("benefits.core.models.requests.get", return_value=mocker.Mock(text="PEM text"))
 
 
-def test_SecretValueField_init():
-    field = SecretValueField()
+def test_SecretNameField_init():
+    field = SecretNameField()
 
     assert benefits.secrets.NAME_VALIDATOR in field.validators
     assert field.max_length == 127

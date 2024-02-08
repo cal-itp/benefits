@@ -18,18 +18,15 @@ from benefits.secrets import NAME_VALIDATOR, get_secret_by_name
 logger = logging.getLogger(__name__)
 
 
-class SecretValueField(models.SlugField):
-    """Field that handles retrieving a value from a secret store.
-
-    The field value is the name of the secret to be retrieved.
+class SecretNameField(models.SlugField):
+    """Field that stores the name of a secret held in a secret store.
 
     The secret value itself MUST NEVER be stored in this field.
     """
 
-    description = """Field that handles retrieving a value from a secret store.
+    description = """Field that stores the name of a secret held in a secret store.
 
-    The field value is the name of the secret to be retrieved. Must be between 1-127 alphanumeric ASCII characters or hyphen
-    characters.
+    Secret names must be between 1-127 alphanumeric ASCII characters or hyphen characters.
 
     The secret value itself MUST NEVER be stored in this field.
     """
@@ -53,7 +50,7 @@ class PemData(models.Model):
     # Human description of the PEM data
     label = models.TextField()
     # The name of a secret with data in utf-8 encoded PEM text format
-    text_secret_name = SecretValueField(null=True)
+    text_secret_name = SecretNameField(null=True)
     # Public URL hosting the utf-8 encoded PEM text
     remote_url = models.TextField(null=True)
 
@@ -86,7 +83,7 @@ class AuthProvider(models.Model):
     sign_out_button_template = models.TextField(null=True)
     sign_out_link_template = models.TextField(null=True)
     client_name = models.TextField()
-    client_id_secret_name = SecretValueField()
+    client_id_secret_name = SecretNameField()
     authority = models.TextField()
     scope = models.TextField(null=True)
     claim = models.TextField(null=True)
@@ -144,7 +141,7 @@ class EligibilityVerifier(models.Model):
     active = models.BooleanField(default=False)
     api_url = models.TextField(null=True)
     api_auth_header = models.TextField(null=True)
-    api_auth_key_secret_name = SecretValueField(null=True)
+    api_auth_key_secret_name = SecretNameField(null=True)
     eligibility_type = models.ForeignKey(EligibilityType, on_delete=models.PROTECT)
     # public key is used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier
     public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT, null=True)
