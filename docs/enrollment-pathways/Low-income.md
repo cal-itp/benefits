@@ -10,7 +10,7 @@ This use case describes a feature in the[ Cal-ITP Benefits app](https://benefits
 
 **Precondition:** The California transit operator offers fixed route service, has installed and tested validator hardware necessary to collect fares using contactless payment on bus or rail lines, and the operator has a policy in place to offer a transit discount to low-income riders.
 
-## **Basic Flow**
+## Basic Flow
 
 1. The transit rider visits the web application at [benefits.calitp.org](benefits.calitp.org) in a browser on their desktop computer.
 
