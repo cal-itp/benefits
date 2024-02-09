@@ -62,6 +62,10 @@ The transit rider receives a fare reduction each time they use the debit or cred
 
 - The transit rider can enroll in a transit benefit from home when convenient; they do not have to visit a transit agency in person.
 
+- The transit rider does not have to prove income eligibility with the transit agency. The app simply uses their participation in the CalFresh program to confirm eligibility for a transit benefit.
+
+- The transit agency doesn't have to craft and policy for a low-icome discount; they simply use the approach implemented in the Cal-ITP Benefits application. As more agencies adopt the application, they also adopt a standard policy for transit benefits. 
+
 - Secure state and federal solutions manage the transit rider’s personal identifiable information (PII): [Login.gov](Login.gov) and the California Department of Technology Identity Gateway (IdG). Transit riders do not have to share personal information with local transit operators.
 
 - Benefit enrollment takes minutes rather than days or weeks.
