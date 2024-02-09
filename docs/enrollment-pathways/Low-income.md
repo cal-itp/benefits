@@ -36,7 +36,7 @@ This use case describes a feature in the Cal-ITP Benefits app that allows Califo
 
 - Suppose the transit rider cannot authenticate with [Login.gov](Login.gov), or will not create an account. In either case, the app cannot determine their Calfresh Program participation status and they cannot enroll their contactless debit or credit card for a reduced fare.
 
-- Suppose the CDT Identity Gateway returns a status of FALSE for Calfresh Program participation status. In that case, the Cal-ITP Benefits app will not allow the transit rider to enroll their contactless debit or credit card for a reduced fare.
+- Suppose the IdG returns a status of `FALSE` for CalFresh Program participation status. In that case, the Cal-ITP Benefits app will not allow the transit rider to enroll their contactless debit or credit card for a reduced fare.
 
 - Suppose the debit or credit card expires or is canceled by the issuer. In that case, the transit rider must repeat the basic flow to register a new debit or credit card.
 
