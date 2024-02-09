@@ -12,7 +12,7 @@ This use case describes a feature in the Cal-ITP Benefits app that allows Califo
 
 ## Basic Flow
 
-1. The transit rider visits the web application at [benefits.calitp.org](benefits.calitp.org) in a browser on their desktop computer.
+1. The transit rider visits the web application at `benefits.calitp.org` in a browser on their desktop computer.
 
 2. The transit rider chooses the transit operator that serves their area.
 
