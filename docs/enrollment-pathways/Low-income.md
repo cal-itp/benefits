@@ -20,7 +20,7 @@ This use case describes a feature in the Cal-ITP Benefits app that allows Califo
 
 4. The transit rider authenticates with their existing [Login.gov](Login.gov) account or, if they don’t have one, creates a [Login.gov](Login.gov) account.
 
-5. The Cal-ITP Benefits app interfaces with the [California Department of Transportation](https://dot.ca.gov/) Identity Gateway (IdG) to verify benefit eligibility. The IdG uses personal information shared by [Login.gov](Login.gov) to verify Calfresh participation status.
+5. The Cal-ITP Benefits app interfaces with the [California Department of Transportation](https://dot.ca.gov/) Identity Gateway (IdG) to verify benefit eligibility. The IdG uses personal information shared by [Login.gov](Login.gov) to verify CalFresh participation status.
 
 6. The IdG uses the response provided by the California Department of Social Services (CDSS) to determine the rider’s eligibility for a transit benefit.
 
