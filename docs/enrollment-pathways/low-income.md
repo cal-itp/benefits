@@ -30,7 +30,7 @@ This use case describes a feature in the Cal-ITP Benefits app that allows Califo
 
 9. The app registers the low-income benefit with the transit rider’s debit or credit card.
 
-## **Alternative Flows**
+## Alternative Flows
 
 - Suppose the transit rider does not have a desktop computer. In this case, they open the web application at `benefits.calitp.org` in a mobile browser on their iOS or Android tablet or mobile device to complete enrollment using the basic flow.
 
@@ -48,11 +48,11 @@ This use case describes a feature in the Cal-ITP Benefits app that allows Califo
 
 - If the transit rider uses more than one debit or credit card to pay for transit, they repeat the basic flow for each card.
 
-## **Postcondition**
+## Postcondition
 
 The transit rider receives a fare reduction each time they use the debit or credit card they registered to pay for transit rides. The number of times they can use the card to pay for transit is unlimited, but the benefit expires one year after enrollment.
 
-## **Benefits**
+## Benefits
 
 - The transit rider no longer needs cash to pay for transit rides.
 
@@ -68,7 +68,7 @@ The transit rider receives a fare reduction each time they use the debit or cred
 
 - Benefit enrollment doesn’t require online accounts with private companies.
 
-## **Example Scenario**
+## Example Scenario
 
 A CalFresh Program participant uses public transit regularly. They don’t have a car and depend on buses to get to appointments and do errands that take too long to use their bicycle. Even though this person already qualifies for benefits from the California Department of Social Services, they had to navigate another extensive, in-person eligibility process with different requirements to qualify for reduced fares from their local transit agency. They now receive a 50% fare reduction but have to pay for transit rides using the closed loop card provided by the operator to receive the reduced fare. It’s frustrating and inconvenient to reload this closed loop card in $10 payments every week, especially because they sometimes they could use the money tied up on the card to make ends meet. In summary, this person pays for daily expenses using three forms of payment: their Electronic Benefits Transfer (EBT) card for eligible items, their agency card for transportation, and their bank card (or cash) for everything else.
 
