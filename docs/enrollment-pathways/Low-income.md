@@ -2,7 +2,7 @@
 
 ## Overview
 
-This use case describes a feature in the[ Cal-ITP Benefits app](https://benefits.calitp.org) that allows Californians to verify their active participation in the CalFresh Program—as a proxy for low-income status—to receive reduced fares for transit when paying by contactless debit or credit card at participating transit operators in California.
+This use case describes a feature in the Cal-ITP Benefits app that allows Californians to verify their active participation in the CalFresh Program—as a proxy for low-income status—to receive reduced fares for transit when paying by contactless debit or credit card at participating transit operators in California.
 
 **Actor:** A person who uses public transit in California. For benefit eligibility, a “low-income rider” is a person who has received [CalFresh benefits](https://www.cdss.ca.gov/food-nutrition/calfresh) in any of the previous three months.
 
