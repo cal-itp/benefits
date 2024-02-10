@@ -11,7 +11,41 @@ This use case describes a feature in the Cal-ITP Benefits app that allows Califo
 **Precondition:** The California transit operator offers fixed route service, has installed and tested validator hardware necessary to collect fares using contactless payment on bus or rail lines, and the operator has a policy in place to offer a transit discount to low-income riders.
 
 ## Basic Flow
-
+```mermaid
+sequenceDiagram
+autonumber
+%% Low-income Rider Enrollment Pathway
+    actor Transit Rider
+    participant Benefits as Benefits app
+    participant IdG as Identity Gateway
+    participant Login.gov
+    participant CDSS
+    participant Littlepay
+Transit Rider->>Benefits: visits benefits.calitp.org
+    activate Benefits
+Benefits-->>IdG: eligibility verification
+    activate IdG
+Transit Rider->>Login.gov: account authentication
+    activate Login.gov
+IdG-->>Login.gov: requests required PII
+    activate Login.gov
+    Note right of Login.gov: first name<br>last name<br>Social Security number<br>date of birth
+Login.gov-->>IdG: returns required PII
+    deactivate Login.gov
+IdG-->>CDSS: check Calfresh enrollment status
+    activate CDSS
+CDSS-->>IdG: return Calfresh enrollment status
+    deactivate CDSS
+IdG-->>Benefits: eligibility response
+    deactivate IdG
+    deactivate Login.gov
+Benefits-->>Littlepay: payment enrollment start
+    activate Littlepay
+Transit Rider->>Littlepay: provides debit or credit card details
+Littlepay-->>Benefits: payment method enrollment confirmation
+    deactivate Littlepay
+    deactivate Benefits
+```
 1. The transit rider visits the web application at `benefits.calitp.org` in a browser on their desktop computer.
 
 2. The transit rider chooses the transit operator that serves their area.
