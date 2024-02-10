@@ -30,7 +30,7 @@ See our Product Roadmap for more information on planned feature development and 
             'cScale5': '#4b0082', 'cScaleLabel5': '#ffffff',
             'cScale6': '#000000', 'cScaleLabel6': '#ffffff'
         }
-    } 
+    }
 }%%
 
 timeline
@@ -39,30 +39,30 @@ title Cal-ITP Benefits Product Roadmap
 ----
 %% Cal-ITP Benefits Epics (2024)
           section 2024
-          
+
           Q1<br>Now
           : Benefits admin tool (Foundation)
         %%: SacRT - Launch Older Adults enrollment pathway
           : SBMTD - Launch Mobility Pass enrollment pathway
           : Release low-income riders enrollment pathway
           : Migrate to Littlepay Backoffice API
-          
-          Q2<br>Next  
-          : Benefits admin tool (Agency configuration) 
+
+          Q2<br>Next
+          : Benefits admin tool (Agency configuration)
           : Release enhancements to Veterans pathway
           : Support for expiring benefits (low-income)
 
-          Q3<br>Planned 
+          Q3<br>Planned
           : Benefits admin tool (Agency users)
           : Benefits admin tool (In-person eligibility verification)
           : Release Medicare cardholder enrollment pathway
-          
+
           Q4<br>Planned
           : Release riders with disabilities enrollment pathway
 
 %% Cal-ITP Benefits Epics (2025)
           section 2025
-          
+
           Q1
           : Support benefits reciprocity between CA transit agencies
           : Implement evolved organizing principles for app UX
