@@ -51,106 +51,58 @@ def load_data(app, *args, **kwargs):
         ),
     )
 
-    default_client_private_key = """
------BEGIN RSA PRIVATE KEY-----
-MIIEpAIBAAKCAQEA1pt0ZoOuPEVPJJS+5r884zcjZLkZZ2GcPwr79XOLDbOi46on
-Ca79kjRnhS0VUK96SwUPS0z9J5mDA5LSNL2RoxFb5QGaevnJY828NupzTNdUd0sY
-JK3kRjKUggHWuB55hwJcH/Dx7I3DNH4NL68UAlK+VjwJkfYPrhq/bl5z8ZiurvBa
-5C1mDxhFpcTZlCfxQoas7D1d+uPACF6mEMbQNd3RaIaSREO50NvNywXIIt/OmCiR
-qI7JtOcn4eyh1I4j9WtlbMhRJLfwPMAgY5epTsWcURmhVofF2wVoFbib3JGCfA7t
-z/gmP5YoEKnf/cumKmF3e9LrZb8zwm7bTHUViwIDAQABAoIBAQCIv0XMjNvZS9DC
-XoXGQtVpcxj6dXfaiDgnc7hZDubsNCr3JtT5NqgdIYdVNQUABNDIPNEiCkzFjuwM
-uuF2+dRzM/x6UCs/cSsCjXYBCCOwMwV/fjpEJQnwMQqwTLulVsXZYYeSUtXVBf/8
-0tVULRty34apLFhsyX30UtboXQdESfpmm5ZsqsZJlYljw+M7JxRMneQclI19y/ya
-hPWlfhLB9OffVEJXGaWx1NSYnKoCMKqE/+4krROr6V62xXaNyX6WtU6XiT7C6R5A
-PBxfhmoeFdVCF6a+Qq0v2fKThYoZnV4sn2q2An9YPfynFYnlgzdfnAFSejsqxQd0
-fxYLOtMBAoGBAP1jxjHDJngZ1N+ymw9MIpRgr3HeuMP5phiSTbY2tu9lPzQd+TMX
-fhr1bQh2Fd/vU0u7X0yPnTWtUrLlCdGnWPpXivx95GNGgUUIk2HStFdrRx+f2Qvk
-G8vtLgmSbjQ26UiHzxi9Wa0a41PWIA3TixkcFrS2X29Qc4yd6pVHmicfAoGBANjR
-Z8aaDkSKLkq5Nk1T7I0E1+mtPoH1tPV/FJClXjJrvfDuYHBeOyUpipZddnZuPGWA
-IW2tFIsMgJQtgpvgs52NFI7pQGJRUPK/fTG+Ycocxo78TkLr/RIj8Kj5brXsbZ9P
-3/WBX5GAISTSp1ab8xVgK/Tm07hGupKVqnY2lCAVAoGAIql0YjhE2ecGtLcU+Qm8
-LTnwpg4GjmBnNTNGSCfB7IuYEsQK489R49Qw3xhwM5rkdRajmbCHm+Eiz+/+4NwY
-kt5I1/NMu7vYUR40MwyEuPSm3Q+bvEGu/71pL8wFIUVlshNJ5CN60fA8qqo+5kVK
-4Ntzy7Kq6WpC9Dhh75vE3ZcCgYEAty99uXtxsJD6+aEwcvcENkUwUztPQ6ggAwci
-je9Z/cmwCj6s9mN3HzfQ4qgGrZsHpk4ycCK655xhilBFOIQJ3YRUKUaDYk4H0YDe
-Osf6gTP8wtQDH2GZSNlavLk5w7UFDYQD2b47y4fw+NaOEYvjPl0p5lmb6ebAPZb8
-FbKZRd0CgYBC1HTbA+zMEqDdY4MWJJLC6jZsjdxOGhzjrCtWcIWEGMDF7oDDEoix
-W3j2hwm4C6vaNkH9XX1dr5+q6gq8vJQdbYoExl22BGMiNbfI3+sLRk0zBYL//W6c
-tSREgR4EjosqQfbkceLJ2JT1wuNjInI0eR9H3cRugvlDTeWtbdJ5qA==
------END RSA PRIVATE KEY-----
-"""
-
     client_private_key = PemData.objects.create(
-        text=os.environ.get("CLIENT_PRIVATE_KEY", default_client_private_key),
+        text_secret_name="client-private-key",
         label="Benefits client private key",
     )
 
-    default_client_public_key = """
------BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1pt0ZoOuPEVPJJS+5r88
-4zcjZLkZZ2GcPwr79XOLDbOi46onCa79kjRnhS0VUK96SwUPS0z9J5mDA5LSNL2R
-oxFb5QGaevnJY828NupzTNdUd0sYJK3kRjKUggHWuB55hwJcH/Dx7I3DNH4NL68U
-AlK+VjwJkfYPrhq/bl5z8ZiurvBa5C1mDxhFpcTZlCfxQoas7D1d+uPACF6mEMbQ
-Nd3RaIaSREO50NvNywXIIt/OmCiRqI7JtOcn4eyh1I4j9WtlbMhRJLfwPMAgY5ep
-TsWcURmhVofF2wVoFbib3JGCfA7tz/gmP5YoEKnf/cumKmF3e9LrZb8zwm7bTHUV
-iwIDAQAB
------END PUBLIC KEY-----
-"""
-
     client_public_key = PemData.objects.create(
-        text=os.environ.get("CLIENT_PUBLIC_KEY", default_client_public_key),
+        text_secret_name="client-public-key",
         label="Benefits client public key",
     )
 
-    dummy_cert_text = """
------BEGIN CERTIFICATE-----
-PEM DATA
------END CERTIFICATE-----
-"""
-
     mst_payment_processor_client_cert = PemData.objects.create(
-        text=os.environ.get("MST_PAYMENT_PROCESSOR_CLIENT_CERT", dummy_cert_text),
+        text_secret_name="mst-payment-processor-client-cert",
         label="MST payment processor client certificate",
     )
 
     mst_payment_processor_client_cert_private_key = PemData.objects.create(
-        text=os.environ.get("MST_PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY", client_private_key.text),
+        text_secret_name="mst-payment-processor-client-cert-private-key",
         label="MST payment processor client certificate private key",
     )
 
     mst_payment_processor_client_cert_root_ca = PemData.objects.create(
-        text=os.environ.get("MST_PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA", dummy_cert_text),
+        text_secret_name="mst-payment-processor-client-cert-root-ca",
         label="MST payment processor client certificate root CA",
     )
 
     sacrt_payment_processor_client_cert = PemData.objects.create(
-        text=os.environ.get("SACRT_PAYMENT_PROCESSOR_CLIENT_CERT", dummy_cert_text),
+        text_secret_name="sacrt-payment-processor-client-cert",
         label="SacRT payment processor client certificate",
     )
 
     sacrt_payment_processor_client_cert_private_key = PemData.objects.create(
-        text=os.environ.get("SACRT_PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY", client_private_key.text),
+        text_secret_name="sacrt-payment-processor-client-cert-private-key",
         label="SacRT payment processor client certificate private key",
     )
 
     sacrt_payment_processor_client_cert_root_ca = PemData.objects.create(
-        text=os.environ.get("SACRT_PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA", dummy_cert_text),
+        text_secret_name="sacrt-payment-processor-client-cert-root-ca",
         label="SacRT payment processor client certificate root CA",
     )
 
     sbmtd_payment_processor_client_cert = PemData.objects.create(
-        text=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT", dummy_cert_text),
+        text_secret_name="sbmtd-payment-processor-client-cert",
         label="SBMTD payment processor client certificate",
     )
 
     sbmtd_payment_processor_client_cert_private_key = PemData.objects.create(
-        text=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT_PRIVATE_KEY", client_private_key.text),
+        text_secret_name="sbmtd-payment-processor-client-cert-private-key",
         label="SBMTD payment processor client certificate private key",
     )
 
     sbmtd_payment_processor_client_cert_root_ca = PemData.objects.create(
-        text=os.environ.get("SBMTD_PAYMENT_PROCESSOR_CLIENT_CERT_ROOT_CA", dummy_cert_text),
+        text_secret_name="sbmtd-payment-processor-client-cert-root-ca",
         label="SBMTD payment processor client certificate root CA",
     )
 
@@ -160,7 +112,7 @@ PEM DATA
         sign_out_button_template="core/includes/button--sign-out--login-gov.html",
         sign_out_link_template="core/includes/link--sign-out--login-gov.html",
         client_name=os.environ.get("SENIOR_AUTH_PROVIDER_CLIENT_NAME", "senior-benefits-oauth-client-name"),
-        client_id=os.environ.get("AUTH_PROVIDER_CLIENT_ID", "benefits-oauth-client-id"),
+        client_id_secret_name="auth-provider-client-id",
         authority=os.environ.get("AUTH_PROVIDER_AUTHORITY", "https://example.com"),
         scope=os.environ.get("SENIOR_AUTH_PROVIDER_SCOPE", "verify:senior"),
         claim=os.environ.get("SENIOR_AUTH_PROVIDER_CLAIM", "senior"),
@@ -171,7 +123,7 @@ PEM DATA
         sign_out_button_template="core/includes/button--sign-out--login-gov.html",
         sign_out_link_template="core/includes/link--sign-out--login-gov.html",
         client_name=os.environ.get("VETERAN_AUTH_PROVIDER_CLIENT_NAME", "veteran-benefits-oauth-client-name"),
-        client_id=os.environ.get("AUTH_PROVIDER_CLIENT_ID", "benefits-oauth-client-id"),
+        client_id_secret_name="auth-provider-client-id",
         authority=os.environ.get("AUTH_PROVIDER_AUTHORITY", "https://example.com"),
         scope=os.environ.get("VETERAN_AUTH_PROVIDER_SCOPE", "verify:veteran"),
         claim=os.environ.get("VETERAN_AUTH_PROVIDER_CLAIM", "veteran"),
@@ -203,7 +155,7 @@ PEM DATA
         active=os.environ.get("COURTESY_CARD_VERIFIER_ACTIVE", "True").lower() == "true",
         api_url=os.environ.get("COURTESY_CARD_VERIFIER_API_URL", "http://server:8000/verify"),
         api_auth_header=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_HEADER", "X-Server-API-Key"),
-        api_auth_key=os.environ.get("COURTESY_CARD_VERIFIER_API_AUTH_KEY", "server-auth-token"),
+        api_auth_key_secret_name="courtesy-card-verifier-api-auth-key",
         eligibility_type=mst_courtesy_card_type,
         public_key=mst_server_public_key,
         jwe_cek_enc=os.environ.get("COURTESY_CARD_VERIFIER_JWE_CEK_ENC", "A256CBC-HS512"),
@@ -238,7 +190,7 @@ PEM DATA
         active=os.environ.get("MOBILITY_PASS_VERIFIER_ACTIVE", "True").lower() == "true",
         api_url=os.environ.get("MOBILITY_PASS_VERIFIER_API_URL", "http://server:8000/verify"),
         api_auth_header=os.environ.get("MOBILITY_PASS_VERIFIER_API_AUTH_HEADER", "X-Server-API-Key"),
-        api_auth_key=os.environ.get("MOBILITY_PASS_VERIFIER_API_AUTH_KEY", "server-auth-token"),
+        api_auth_key_secret_name="mobility-pass-verifier-api-auth-key",
         eligibility_type=sbmtd_mobility_pass_type,
         public_key=sbmtd_server_public_key,
         jwe_cek_enc=os.environ.get("MOBILITY_PASS_VERIFIER_JWE_CEK_ENC", "A256CBC-HS512"),

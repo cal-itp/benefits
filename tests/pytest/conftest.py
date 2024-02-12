@@ -32,11 +32,15 @@ def app_request(rf):
     return app_request
 
 
+# autouse this fixture so we never call out to the real secret store
+@pytest.fixture(autouse=True)
+def mock_models_get_secret_by_name(mocker):
+    return mocker.patch("benefits.core.models.get_secret_by_name", return_value="secret value!")
+
+
 @pytest.fixture
 def model_PemData():
-    data = PemData.objects.create(
-        text="-----BEGIN PUBLIC KEY-----\nPEM DATA\n-----END PUBLIC KEY-----\n", label="Test public key"
-    )
+    data = PemData.objects.create(text_secret_name="pem-secret-data", label="Test public key")
 
     return data
 
@@ -47,7 +51,7 @@ def model_AuthProvider():
         sign_out_button_template="core/includes/button--sign-out--senior.html",
         sign_out_link_template="core/includes/link--sign-out--senior.html",
         client_name="Client",
-        client_id="1234",
+        client_id_secret_name="1234",
         authority="https://example.com",
     )
 
@@ -108,7 +112,7 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         active=True,
         api_url="https://example.com/verify",
         api_auth_header="X-API-AUTH",
-        api_auth_key="secret-key",
+        api_auth_key_secret_name="secret-key",
         eligibility_type=model_EligibilityType,
         public_key=model_PemData,
         selection_label_template="eligibility/includes/selection-label.html",

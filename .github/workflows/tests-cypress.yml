@@ -15,7 +15,7 @@ jobs:
 
       - name: Start app
         run: |
-          touch .env
+          cp .env.sample .env
           docker compose up --detach client server
 
       - name: Run Cypress tests
