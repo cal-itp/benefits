@@ -19,3 +19,7 @@ bin/init.sh
 # DJANGO_SUPERUSER_USERNAME, DJANGO_SUPERUSER_EMAIL, and DJANGO_SUPERUSER_PASSWORD
 
 python manage.py createsuperuser --no-input
+
+# load sample data fixtures
+
+python manage.py loaddata benefits/core/migrations/local_fixtures.json
