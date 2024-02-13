@@ -5,7 +5,7 @@
   "service": "dev",
   "runServices": ["dev", "docs", "server"],
   "workspaceFolder": "/home/calitp/app",
-  "postStartCommand": ["/bin/bash", "bin/init.sh"],
+  "postStartCommand": ["/bin/bash", "bin/reset_db.sh"],
   "postAttachCommand": ["/bin/bash", ".devcontainer/postAttach.sh"],
   "customizations": {
     "vscode": {

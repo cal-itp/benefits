@@ -10,9 +10,9 @@ DB_FILE="${DB_DIR}/django.db"
 # -f forces the delete (and avoids an error when the file doesn't exist)
 rm -f "${DB_FILE}"
 
-# run database migrations
+# run database migrations and other initialization
 
-python manage.py migrate
+bin/init.sh
 
 # create a superuser account for backend admin access
 # set username, email, and password using environment variables
