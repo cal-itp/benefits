@@ -22,8 +22,6 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
 
-ADMIN = os.environ.get("DJANGO_ADMIN", "False").lower() == "true"
-
 ALLOWED_HOSTS = _filter_empty(os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(","))
 
 
