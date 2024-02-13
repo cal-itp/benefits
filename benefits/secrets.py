@@ -52,8 +52,15 @@ def get_secret_by_name(secret_name, client=None):
 
     if runtime_env == "local":
         logger.debug("Runtime environment is local, reading from environment instead of Azure KeyVault.")
+        # environment variable names cannot contain the hyphen character
+        # assume the variable name is the same but with underscores instead
         env_secret_name = secret_name.replace("-", "_")
-        return os.environ.get(env_secret_name)
+        secret_value = os.environ.get(env_secret_name)
+        # we have to replace literal newlines here with the actual newline character
+        # to support local environment variables values that span multiple lines (e.g. PEM keys/certs)
+        # because the VS Code Python extension doesn't support multiline environment variables
+        # https://code.visualstudio.com/docs/python/environments#_environment-variables
+        return secret_value.replace("\\n", "\n")
 
     elif client is None:
         # construct the KeyVault URL from the runtime environment
