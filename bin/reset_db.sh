@@ -15,7 +15,7 @@ rm -f "${DB_FILE}"
 python manage.py migrate
 
 # create a superuser account for backend admin access
-# (set username, email, and password using environment variables
-# DJANGO_SUPERUSER_USERNAME, DJANGO_SUPERUSER_EMAIL, and DJANGO_SUPERUSER_PASSWORD)
+# set username, email, and password using environment variables
+# DJANGO_SUPERUSER_USERNAME, DJANGO_SUPERUSER_EMAIL, and DJANGO_SUPERUSER_PASSWORD
 
 python manage.py createsuperuser --no-input
