@@ -134,6 +134,7 @@ ROOT_URLCONF = "benefits.urls"
 
 template_ctx_processors = [
     "django.template.context_processors.request",
+    "django.contrib.auth.context_processors.auth",
     "django.contrib.messages.context_processors.messages",
     "benefits.core.context_processors.agency",
     "benefits.core.context_processors.active_agencies",
@@ -149,13 +150,6 @@ if DEBUG:
             "benefits.core.context_processors.debug",
         ]
     )
-
-template_ctx_processors.extend(
-    [
-        "django.contrib.auth.context_processors.auth",
-        "django.contrib.messages.context_processors.messages",
-    ]
-)
 
 TEMPLATES = [
     {
