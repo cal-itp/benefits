@@ -16,7 +16,8 @@ jobs:
       - name: Start app
         run: |
           cp .env.sample .env
-          docker compose up --detach client server
+          docker compose up --detach server
+          docker compose run --detach --service-ports client bin/test_start.sh
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
