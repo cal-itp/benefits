@@ -131,6 +131,7 @@ Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is
    ./init.sh <env>
    ```
 
+1. Create a local `terraform.tfvars` file (ignored by git) from the sample; fill in the `*_OBJECT_ID` variables with values from the Azure Pipeline definition.
 1. Make changes to Terraform files.
 1. Preview the changes, as necessary.
 
