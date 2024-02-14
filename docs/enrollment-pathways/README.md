@@ -19,7 +19,7 @@ See our Product Roadmap for more information on planned feature development and 
 ```mermaid
 timeline
 ---
-title Cal-ITP Benefits Product Roadmap
+title: Cal-ITP Benefits Product Roadmap
 ----
 %% Cal-ITP Benefits Epics (2024)
           section 2024
