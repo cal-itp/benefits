@@ -1,8 +1,8 @@
+import pytest
 from azure.core.exceptions import ClientAuthenticationError
 from django.core.exceptions import ValidationError
-import pytest
 
-from benefits.secrets import KEY_VAULT_URL, SecretNameValidator, NAME_VALIDATOR, get_secret_by_name
+from benefits.secrets import KEY_VAULT_URL, NAME_VALIDATOR, SecretNameValidator, get_secret_by_name
 
 
 @pytest.fixture(autouse=True)
@@ -138,10 +138,13 @@ def test_get_secret_by_name__unauthenticated_client__returns_None(mocker, runtim
     assert actual_value is None
 
 
-def test_get_secret_by_name__local__returns_environment_variable(mocker, settings, secret_name, secret_value):
+def test_get_secret_by_name__local__returns_environment_variable(mocker, settings, secret_name):
     settings.RUNTIME_ENVIRONMENT = lambda: "local"
 
-    env_spy = mocker.patch("benefits.secrets.os.environ.get", return_value=secret_value)
+    secret_value_literal_newlines = "the\\nsecret\\nvalue"
+    expected_secret_value = secret_value_literal_newlines.replace("\\n", "\n")
+
+    env_spy = mocker.patch("benefits.secrets.os.environ.get", return_value=secret_value_literal_newlines)
     env_secret_name = secret_name.replace("-", "_")
     client_cls = mocker.patch("benefits.secrets.SecretClient")
     client = client_cls.return_value
@@ -151,4 +154,4 @@ def test_get_secret_by_name__local__returns_environment_variable(mocker, setting
     client_cls.assert_not_called()
     client.get_secret.assert_not_called()
     env_spy.assert_called_once_with(env_secret_name)
-    assert actual_value == secret_value
+    assert actual_value == expected_secret_value

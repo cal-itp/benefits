@@ -6,6 +6,30 @@ The sections below outline in more detail the application environment variables 
 
 See other topic pages in this section for more specific environment variable configurations.
 
+!!! warning "Multiline environment variables"
+
+    Although Docker, bash, etc. support multiline values directly in e.g. an .env file:
+
+    ```bash
+    multi_line_value='first line
+    second line
+    third line'
+    ```
+
+    The VS Code Python extension does not parse multiline values: https://code.visualstudio.com/docs/python/environments#_environment-variables
+
+    When specifying multiline values for local usage, use the literal newline character `\n` but maintain the single quote wrapper:
+
+    ```bash
+    multi_line_value='first line\nsecond line\third line'
+    ```
+
+    A quick bash script to convert direct multiline values to their literal newline character equivalent is:
+
+    ```bash
+    echo "${multi_line_value//$'\n'/\\n}"
+    ```
+
 ## Amplitude
 
 !!! tldr "Amplitude API docs"
