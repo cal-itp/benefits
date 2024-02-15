@@ -11,6 +11,7 @@ This use case describes a feature in the Cal-ITP Benefits app that allows Califo
 **Precondition:** The California transit operator offers fixed route service, has installed and tested validator hardware necessary to collect fares using contactless payment on bus or rail lines, and the operator has a policy in place to offer a transit discount to low-income riders.
 
 ## Basic Flow
+
 ```mermaid
 sequenceDiagram
 autonumber
@@ -46,23 +47,24 @@ Littlepay-->>Benefits: payment method enrollment confirmation
     deactivate Littlepay
     deactivate Benefits
 ```
+
 1. The transit rider visits the web application at `benefits.calitp.org` in a browser on their desktop computer.
 
-2. The transit rider chooses the transit operator that serves their area.
+1. The transit rider chooses the transit operator that serves their area.
 
-3. The transit rider chooses to verify their eligibility as a participant in the [CalFresh Program](https://www.cdss.ca.gov/food-nutrition/calfresh).
+1. The transit rider chooses to verify their eligibility as a participant in the [CalFresh Program](https://www.cdss.ca.gov/food-nutrition/calfresh).
 
-4. The transit rider authenticates with their existing [Login.gov](Login.gov) account or, if they don’t have one, creates a [Login.gov](Login.gov) account.
+1. The transit rider authenticates with their existing [Login.gov](Login.gov) account or, if they don’t have one, creates a [Login.gov](Login.gov) account.
 
-5. The Cal-ITP Benefits app interfaces with the [California Department of Technology Identity Gateway](https://digitalidstrategy.cdt.ca.gov/primary-elements.html) (IdG) to verify benefit eligibility. The IdG uses personal information shared by [Login.gov](Login.gov) to verify CalFresh participation status.
+1. The Cal-ITP Benefits app interfaces with the [California Department of Technology Identity Gateway](https://digitalidstrategy.cdt.ca.gov/primary-elements.html) (IdG) to verify benefit eligibility. The IdG uses personal information shared by [Login.gov](Login.gov) to verify CalFresh participation status.
 
-6. The IdG uses the response provided by the California Department of Social Services (CDSS) to determine the rider’s eligibility for a transit benefit.
+1. The IdG uses the response provided by the California Department of Social Services (CDSS) to determine the rider’s eligibility for a transit benefit.
 
-7. The IdG then passes the response from CDSS as low-income status = TRUE to the Cal-ITP Benefits app to indicate the person is eligible for a benefit.
+1. The IdG then passes the response from CDSS as low-income status = TRUE to the Cal-ITP Benefits app to indicate the person is eligible for a benefit.
 
-8. The transit rider provides the debit or credit card details they use to pay for transit to Littlepay, the payment processor that facilitates transit fare collection.
+1. The transit rider provides the debit or credit card details they use to pay for transit to Littlepay, the payment processor that facilitates transit fare collection.
 
-9. The app registers the low-income benefit with the transit rider’s debit or credit card.
+1. The app registers the low-income benefit with the transit rider’s debit or credit card.
 
 ## Alternative Flows
 
