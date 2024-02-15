@@ -2,7 +2,8 @@
 
 The first steps of the Getting Started guide mention [creating an `.env` file][getting-started_create-env].
 
-The sections below outline in more detail the application environment variables that you may want to override, and their purpose. In App Service, this is more generally called the ["configuration"][app-service-config].
+The sections below outline in more detail the application environment variables that you may want to override, and their purpose.
+In Azure App Services, this is more generally called the ["configuration"][app-service-config].
 
 See other topic pages in this section for more specific environment variable configurations.
 
@@ -71,6 +72,39 @@ writable by the Django process._
 
 By default, the base project directory (i.e. the root of the repository).
 
+### `DJANGO_DB_FILE`
+
+!!! info "Local configuration"
+
+    This setting only affects the app running on localhost
+
+The name of the Django database file to use locally (during both normal app startup and for resetting the database).
+
+By default, `django.db`.
+
+### `DJANGO_DB_FIXTURES`
+
+!!! info "Local configuration"
+
+    This setting only affects the app running on localhost
+
+A path, relative to the repository root, of Django data fixtures to load when resetting the database.
+
+The file must end in `fixtures.json` for the script to process it correctly.
+
+By default, `benefits/core/migrations/local_fixtures.json`.
+
+### `DJANGO_DB_RESET`
+
+!!! info "Local configuration"
+
+    This setting only affects the app running on localhost
+
+Boolean:
+
+- `True` (default): deletes the existing database file and runs fresh Django migrations.
+- `False`: Django uses the existing database file.
+
 ### `DJANGO_DEBUG`
 
 !!! warning "Deployment configuration"
@@ -79,7 +113,7 @@ By default, the base project directory (i.e. the root of the repository).
 
 !!! tldr "Django docs"
 
-    [Settings: `DEBUG`](https://docs.djangoproject.com/en/4.0/ref/settings/#debug)
+    [Settings: `DEBUG`](https://docs.djangoproject.com/en/5.0/ref/settings/#debug)
 
 Boolean:
 
@@ -128,13 +162,25 @@ Django's primary secret, keep this safe!
 
 ### `DJANGO_SUPERUSER_EMAIL`
 
+!!! info "Local configuration"
+
+    This setting only affects the app running on localhost
+
 The email address of the Django Admin superuser created when resetting the database.
 
 ### `DJANGO_SUPERUSER_PASSWORD`
 
+!!! info "Local configuration"
+
+    This setting only affects the app running on localhost
+
 The password of the Django Admin superuser created when resetting the database.
 
 ### `DJANGO_SUPERUSER_USERNAME`
+
+!!! info "Local configuration"
+
+    This setting only affects the app running on localhost
 
 The username of the Django Admin superuser created when resetting the database.
 

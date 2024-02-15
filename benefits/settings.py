@@ -166,7 +166,7 @@ DATABASE_DIR = os.environ.get("DJANGO_DB_DIR", BASE_DIR)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(DATABASE_DIR, "django.db"),
+        "NAME": os.path.join(DATABASE_DIR, os.environ.get("DJANGO_DB_FILE", "django.db")),
     }
 }
 
