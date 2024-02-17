@@ -6,6 +6,12 @@ _Agency Cards_ is a generic term for reduced fare programs offered by Transit Pr
 Agency cards are different from our other use cases in that eligibility verification happens on the agency side (offline) rather
 than through the Benefits app, and the Benefits app then checks for a valid Agency Card via an [Eligibility API call](https://docs.calitp.org/eligibility-api/specification/).
 
+## Demonstration
+
+The video walkthough below demonstrates the flow for an agency card user to confirm transit benefit eligibility and enroll their bank card for reduced fares via LittlePay:
+
+https://github.com/cal-itp/benefits/assets/6279581/67ee56d7-968e-4b53-838f-04fdf8cbb534
+
 ## Architecture
 
 In order to support an Agency Cards deployment, the Transit Provider produces a list of eligible users
