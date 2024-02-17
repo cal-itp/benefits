@@ -6,9 +6,9 @@ Currently, the app uses [Login.gov's Identity Assurance Level 2 (IAL2)](https://
 
 ## Demonstration
 
-Here's a GIF showing what the flow looks like, having older adults confirm eligibility via Login.gov and enroll via LittlePay:
+The video walkthough below demonstrates the flow for an older adult who has a Login.gov account to confirm transit benefit eligibility and enroll their bank card for reduced fares via LittlePay:
 
-![Demonstration of the sign-up process for a senior confirming eligibility via Login.gov and enrolling via Littlepay](img/senior-success.gif){ width="350" }
+https://github.com/cal-itp/benefits/assets/6279581/139c77fa-ac75-4189-8b20-61d91051b264
 
 ## Process
 
