@@ -57,7 +57,7 @@ If blank or an invalid key, analytics events aren't captured (though may still b
 
 !!! tldr "Django docs"
 
-    [Settings: `ALLOWS_HOSTS`](https://docs.djangoproject.com/en/4.0/ref/settings/#allowed-hosts)
+    [Settings: `ALLOWS_HOSTS`](https://docs.djangoproject.com/en/5.0/ref/settings/#allowed-hosts)
 
 A list of strings representing the host/domain names that this Django site can serve.
 
@@ -142,7 +142,7 @@ From inside the container, the app is always listening on port `8000`.
 
 !!! tldr "Django docs"
 
-    [Settings: `LOGGING_CONFIG`](https://docs.djangoproject.com/en/4.0/ref/settings/#logging-config)
+    [Settings: `LOGGING_CONFIG`](https://docs.djangoproject.com/en/5.0/ref/settings/#logging-config)
 
 The log level used in the application's logging configuration.
 
@@ -156,7 +156,7 @@ By default the application sends logs to `stdout`.
 
 !!! tldr "Django docs"
 
-    [Settings: `SECRET_KEY`](https://docs.djangoproject.com/en/4.0/ref/settings/#secret-key)
+    [Settings: `SECRET_KEY`](https://docs.djangoproject.com/en/5.0/ref/settings/#secret-key)
 
 Django's primary secret, keep this safe!
 
@@ -192,7 +192,7 @@ The username of the Django Admin superuser created when resetting the database.
 
 !!! tldr "Django docs"
 
-    [Settings: `CSRF_TRUSTED_ORIGINS`](https://docs.djangoproject.com/en/4.0/ref/settings/#csrf-trusted-origins)
+    [Settings: `CSRF_TRUSTED_ORIGINS`](https://docs.djangoproject.com/en/5.0/ref/settings/#csrf-trusted-origins)
 
 Comma-separated list of hosts which are trusted origins for unsafe requests (e.g. POST)
 
