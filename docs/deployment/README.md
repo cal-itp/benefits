@@ -1,6 +1,6 @@
 # Overview
 
-[dev-benefits.calitp.org][dev-benefits] is currently deployed into a Microsoft Azure account provided by [California Department of Technology (CDT)'s Office of Enterprise Technology (OET)][oet], a.k.a. the "DevSecOps" team. More specifically, it uses [custom containers][app-service-containers] on [Azure App Service][app-service]. [More about the infrastructure.](infrastructure.md)
+The Benefits app is currently deployed into a Microsoft Azure account provided by [California Department of Technology (CDT)'s Office of Enterprise Technology (OET)][oet], a.k.a. the "DevSecOps" team. More specifically, it uses [custom containers][app-service-containers] on [Azure App Service][app-service]. [More about the infrastructure.](infrastructure.md)
 
 ## Deployment process
 
@@ -20,18 +20,18 @@ You can view what Git commit is deployed for a given environment by visitng the 
 
 ## Configuration
 
-[Configuration settings](../configuration/README.md) are stored as Application Configuration variables in Azure.
-[Data](../configuration/data.md) is loaded via Django data migrations.
+Sensitive [configuration settings](../configuration/README.md) are maintained as Application Configuration variables in Azure,
+referencing [Azure Key Vault secrets](https://azure.microsoft.com/en-us/products/key-vault/). Other non-sensitive configuration
+is maintained directly in the configuration database via the [Django Admin](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/).
 
 ## Docker images
 
 Docker images for each of the deploy branches are available from GitHub Container Registry (GHCR):
 
-* [Repository Package page](https://github.com/cal-itp/benefits/pkgs/container/benefits)
-* Image path: `ghcr.io/cal-itp/benefits`
-* Image tags: `dev`, `test`, `prod`
+- [Repository Package page](https://github.com/cal-itp/benefits/pkgs/container/benefits)
+- Image path: `ghcr.io/cal-itp/benefits`
+- Image tags: `dev`, `test`, `prod`
 
-[dev-benefits]: https://dev-benefits.calitp.org
 [oet]: https://techblog.cdt.ca.gov/2020/06/cdt-taking-the-lead-in-digital-transformation/
 [app-service-containers]: https://docs.microsoft.com/en-us/azure/app-service/configure-custom-container
 [app-service]: https://docs.microsoft.com/en-us/azure/app-service/overview
