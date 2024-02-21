@@ -209,6 +209,9 @@ class PaymentProcessor(models.Model):
     api_access_token_endpoint = models.TextField()
     api_access_token_request_key = models.TextField()
     api_access_token_request_val = models.TextField()
+    client_id = models.TextField()
+    client_secret_name = SecretNameField()
+    audience = models.TextField()
     card_tokenize_url = models.TextField()
     card_tokenize_func = models.TextField()
     card_tokenize_env = models.TextField()
@@ -221,6 +224,10 @@ class PaymentProcessor(models.Model):
     customer_endpoint = models.TextField()
     customers_endpoint = models.TextField()
     group_endpoint = models.TextField()
+
+    @property
+    def client_secret(self):
+        return get_secret_by_name(self.client_secret_name)
 
     def __str__(self):
         return self.name

@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
+from littlepay.api.client import Client
 
 from benefits.core import models, session
 from benefits.core.middleware import (
@@ -37,8 +38,15 @@ def token(request):
     """View handler for the enrollment auth token."""
     if not session.enrollment_token_valid(request):
         agency = session.agency(request)
-        response = api.Client(agency).access_token()
-        session.update(request, enrollment_token=response.access_token, enrollment_token_exp=response.expiry)
+        payment_processor = agency.payment_processor
+        client = Client(
+            base_url=payment_processor.api_base_url,
+            client_id=payment_processor.client_id,
+            client_secret=payment_processor.client_secret,
+            audience=payment_processor.audience,
+        )
+        response = client.request_card_tokenization_access()
+        session.update(request, enrollment_token=response.get("access_token"), enrollment_token_exp=response.get("expires_at"))
 
     data = {"token": session.enrollment_token(request)}
 
