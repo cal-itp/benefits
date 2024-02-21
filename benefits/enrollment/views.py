@@ -45,6 +45,7 @@ def token(request):
             client_secret=payment_processor.client_secret,
             audience=payment_processor.audience,
         )
+        client.oauth.ensure_active_token(client.token)
         response = client.request_card_tokenization_access()
         session.update(request, enrollment_token=response.get("access_token"), enrollment_token_exp=response.get("expires_at"))
 

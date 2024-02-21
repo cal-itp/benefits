@@ -49,11 +49,11 @@ def test_token_ineligible(client):
 def test_token_refresh(mocker, client):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
-    mock_client = mocker.patch("benefits.enrollment.views.Client.request_card_tokenization_access")
+    mock_client = mocker.patch("benefits.enrollment.views.Client")
     mock_token = {}
     mock_token["access_token"] = "access_token"
     mock_token["expires_at"] = time.time() + 10000
-    mock_client.return_value = mock_token
+    mock_client.return_value.request_card_tokenization_access = lambda: mock_token
 
     path = reverse(ROUTE_TOKEN)
     response = client.get(path)
