@@ -1,8 +1,8 @@
 # Configuration data
 
-!!! example "Data migration file"
+!!! example "Sample data fixtures"
 
-    [`benefits/core/migrations/0002_data.py`][data-migration]
+    [`benefits/core/migrations/local_fixtures.json`][sample-fixtures]
 
 !!! tldr "Django docs"
 
@@ -10,14 +10,15 @@
 
 ## Introduction
 
-Django [data migrations](https://docs.djangoproject.com/en/4.0/topics/migrations/#data-migrations) are used to load the database with instances of the app's model classes, defined in [`benefits/core/models.py`][core-models].
+The app's model classes are defined in [`benefits/core/models.py`][core-models].
 
 Migrations are run as the application starts up. See the [`bin/init.sh`][init] script.
 
 The sample values provided in the repository are sufficient to run the app locally and interact with e.g. the sample Transit
-Agencies.
+Agencies. [Django fixtures][django-fixtures] are used to load the database with sample data when running locally.
 
-During the [deployment](../deployment/README.md) process, environment-specific values are set in environment variables and are read by the data migration file to build that environment's configuration database. See the [data migration file][data-migration] for the environment variable names.
+During the [deployment](../deployment/README.md) process, some environment-specific values are set in environment variables and
+read dynamically at runtime. Most configuration values are managed directly in the Django Admin interface at the `/admin` endpoint.
 
 ## Sample data
 
@@ -37,32 +38,24 @@ Some configuration data is not available with the samples in the repository:
 - Payment processor configuration for the enrollment phase
 - Amplitude configuration for capturing analytics events
 
-### Sample transit agency: `ABC`
+## Rebuilding the configuration database locally
 
-- Presents the user a choice between two different eligibility pathways
-- One eligibility verifier requires authentication
-- One eligibility verifier does not require authentication
+A local Django database will be initialized upon first startup of the devcontainer.
 
-### Sample transit agency: `DefTL`
-
-- Single eligibility pathway, no choice presented to the user
-- Eligibility verifier does not require authentication
-
-## Building the configuration database
-
-When the data migration changes, the configuration database needs to be rebuilt.
-
-The file is called `django.db` and the following commands will rebuild it.
-
-Run these commands from within the repository root, inside the devcontainer:
+To rebuild the local Django database, run the [`bin/reset_db.sh`][reset-db] script from within the repository root,
+inside the devcontainer:
 
 ```bash
-bin/init.sh
+bin/reset_db.sh
 ```
 
+See the [Django Environment Variables](environment-variables.md#django) section for details about how to configure the local
+database rebuild.
+
 [core-models]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/models.py
-[django-load-initial-data]: https://docs.djangoproject.com/en/4.0/howto/initial-data/
+[django-fixtures]: https://docs.djangoproject.com/en/5.0/topics/db/fixtures/
+[django-load-initial-data]: https://docs.djangoproject.com/en/5.0/howto/initial-data/
 [eligibility-server]: https://docs.calitp.org/eligibility-server
-[data-migration]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations/0002_data.py
-[helper-migration]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations/0003_data_migration_order.py
 [init]: https://github.com/cal-itp/benefits/blob/dev/bin/init.sh
+[reset-db]: https://github.com/cal-itp/benefits/blob/dev/bin/reset_db.sh
+[sample-fixtures]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations/local_fixtures.json

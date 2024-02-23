@@ -96,4 +96,4 @@ All code changes are reviewed by at least one other member of the engineering te
 [interconnections]: deployment/infrastructure/#system-interconnections
 [hosting]: deployment/
 [littlepay]: https://littlepay.com/
-[i18n]: https://docs.djangoproject.com/en/4.0/topics/i18n/
+[i18n]: https://docs.djangoproject.com/en/5.0/topics/i18n/

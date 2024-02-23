@@ -22,8 +22,6 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
 
-ADMIN = os.environ.get("DJANGO_ADMIN", "False").lower() == "true"
-
 ALLOWED_HOSTS = _filter_empty(os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(","))
 
 
@@ -45,39 +43,33 @@ def RUNTIME_ENVIRONMENT():
 # Application definition
 
 INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
     "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.staticfiles",
+    "django_google_sso",
     "benefits.core",
     "benefits.enrollment",
     "benefits.eligibility",
     "benefits.oauth",
 ]
 
-if ADMIN:
-    GOOGLE_SSO_CLIENT_ID = os.environ.get("GOOGLE_SSO_CLIENT_ID", "secret")
-    GOOGLE_SSO_PROJECT_ID = os.environ.get("GOOGLE_SSO_PROJECT_ID", "benefits-admin")
-    GOOGLE_SSO_CLIENT_SECRET = os.environ.get("GOOGLE_SSO_CLIENT_SECRET", "secret")
-    GOOGLE_SSO_ALLOWABLE_DOMAINS = _filter_empty(os.environ.get("GOOGLE_SSO_ALLOWABLE_DOMAINS", "compiler.la").split(","))
-    GOOGLE_SSO_STAFF_LIST = _filter_empty(os.environ.get("GOOGLE_SSO_STAFF_LIST", "").split(","))
-    GOOGLE_SSO_SUPERUSER_LIST = _filter_empty(os.environ.get("GOOGLE_SSO_SUPERUSER_LIST", "").split(","))
-    GOOGLE_SSO_LOGO_URL = "/static/img/icon/google_sso_logo.svg"
-    GOOGLE_SSO_SAVE_ACCESS_TOKEN = True
-    GOOGLE_SSO_PRE_LOGIN_CALLBACK = "benefits.core.admin.pre_login_user"
-    GOOGLE_SSO_SCOPES = [
-        "openid",
-        "https://www.googleapis.com/auth/userinfo.email",
-        "https://www.googleapis.com/auth/userinfo.profile",
-    ]
-
-    INSTALLED_APPS.extend(
-        [
-            "django.contrib.admin",
-            "django.contrib.auth",
-            "django.contrib.contenttypes",
-            "django_google_sso",  # Add django_google_sso
-        ]
-    )
+GOOGLE_SSO_CLIENT_ID = os.environ.get("GOOGLE_SSO_CLIENT_ID", "secret")
+GOOGLE_SSO_PROJECT_ID = os.environ.get("GOOGLE_SSO_PROJECT_ID", "benefits-admin")
+GOOGLE_SSO_CLIENT_SECRET = os.environ.get("GOOGLE_SSO_CLIENT_SECRET", "secret")
+GOOGLE_SSO_ALLOWABLE_DOMAINS = _filter_empty(os.environ.get("GOOGLE_SSO_ALLOWABLE_DOMAINS", "compiler.la").split(","))
+GOOGLE_SSO_STAFF_LIST = _filter_empty(os.environ.get("GOOGLE_SSO_STAFF_LIST", "").split(","))
+GOOGLE_SSO_SUPERUSER_LIST = _filter_empty(os.environ.get("GOOGLE_SSO_SUPERUSER_LIST", "").split(","))
+GOOGLE_SSO_LOGO_URL = "/static/img/icon/google_sso_logo.svg"
+GOOGLE_SSO_SAVE_ACCESS_TOKEN = True
+GOOGLE_SSO_PRE_LOGIN_CALLBACK = "benefits.core.admin.pre_login_user"
+GOOGLE_SSO_SCOPES = [
+    "openid",
+    "https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/userinfo.profile",
+]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -91,15 +83,9 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "csp.middleware.CSPMiddleware",
     "benefits.core.middleware.ChangedLanguageEvent",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
 ]
-
-if ADMIN:
-    MIDDLEWARE.extend(
-        [
-            "django.contrib.auth.middleware.AuthenticationMiddleware",
-            "django.contrib.messages.middleware.MessageMiddleware",
-        ]
-    )
 
 if DEBUG:
     MIDDLEWARE.append("benefits.core.middleware.DebugSession")
@@ -138,7 +124,7 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 # SSL terminates before getting to Django, and NGINX adds this header to indicate
 # if the original request was secure or not
 #
-# See https://docs.djangoproject.com/en/4.0/ref/settings/#secure-proxy-ssl-header
+# See https://docs.djangoproject.com/en/5.0/ref/settings/#secure-proxy-ssl-header
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
@@ -146,6 +132,7 @@ ROOT_URLCONF = "benefits.urls"
 
 template_ctx_processors = [
     "django.template.context_processors.request",
+    "django.contrib.auth.context_processors.auth",
     "django.contrib.messages.context_processors.messages",
     "benefits.core.context_processors.agency",
     "benefits.core.context_processors.active_agencies",
@@ -159,14 +146,6 @@ if DEBUG:
         [
             "django.template.context_processors.debug",
             "benefits.core.context_processors.debug",
-        ]
-    )
-
-if ADMIN:
-    template_ctx_processors.extend(
-        [
-            "django.contrib.auth.context_processors.auth",
-            "django.contrib.messages.context_processors.messages",
         ]
     )
 
@@ -187,31 +166,27 @@ DATABASE_DIR = os.environ.get("DJANGO_DB_DIR", BASE_DIR)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(DATABASE_DIR, "django.db"),
+        "NAME": os.path.join(DATABASE_DIR, os.environ.get("DJANGO_DB_FILE", "django.db")),
     }
 }
 
 # Password validation
 
-AUTH_PASSWORD_VALIDATORS = []
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
+]
 
-if ADMIN:
-    AUTH_PASSWORD_VALIDATORS.extend(
-        [
-            {
-                "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-            },
-            {
-                "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-            },
-            {
-                "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-            },
-            {
-                "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-            },
-        ]
-    )
 
 # Internationalization
 

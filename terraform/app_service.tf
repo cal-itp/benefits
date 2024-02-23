@@ -66,15 +66,10 @@ resource "azurerm_linux_web_app" "main" {
     "REQUESTS_READ_TIMEOUT"    = "${local.secret_prefix}requests-read-timeout)",
 
     # Django settings
-    "DJANGO_ADMIN"              = "${local.secret_prefix}django-admin)",
-    "DJANGO_ALLOWED_HOSTS"      = "${local.secret_prefix}django-allowed-hosts)",
-    "DJANGO_DB_DIR"             = "${local.secret_prefix}django-db-dir)",
-    "DJANGO_DB_RESET"           = "${local.secret_prefix}django-db-reset)",
-    "DJANGO_DEBUG"              = local.is_prod ? null : "${local.secret_prefix}django-debug)",
-    "DJANGO_LOG_LEVEL"          = "${local.secret_prefix}django-log-level)",
-    "DJANGO_SUPERUSER_EMAIL"    = "${local.secret_prefix}django-superuser-email)",
-    "DJANGO_SUPERUSER_PASSWORD" = "${local.secret_prefix}django-superuser-password)",
-    "DJANGO_SUPERUSER_USERNAME" = "${local.secret_prefix}django-superuser-username)",
+    "DJANGO_ALLOWED_HOSTS" = "${local.secret_prefix}django-allowed-hosts)",
+    "DJANGO_DB_DIR"        = "${local.secret_prefix}django-db-dir)",
+    "DJANGO_DEBUG"         = local.is_prod ? null : "${local.secret_prefix}django-debug)",
+    "DJANGO_LOG_LEVEL"     = "${local.secret_prefix}django-log-level)",
 
     "DJANGO_RECAPTCHA_SECRET_KEY" = local.is_dev ? null : "${local.secret_prefix}django-recaptcha-secret-key)",
     "DJANGO_RECAPTCHA_SITE_KEY"   = local.is_dev ? null : "${local.secret_prefix}django-recaptcha-site-key)",
@@ -86,96 +81,18 @@ resource "azurerm_linux_web_app" "main" {
 
     # Google SSO for Admin
 
-    "GOOGLE_SSO_CLIENT_ID" = "${local.secret_prefix}google-sso-client-id",
-    "GOOGLE_SSO_PROJECT_ID" = "${local.secret_prefix}google-sso-project-id",
-    "GOOGLE_SSO_CLIENT_SECRET" = "${local.secret_prefix}google-sso-client-secret",
+    "GOOGLE_SSO_CLIENT_ID"         = "${local.secret_prefix}google-sso-client-id",
+    "GOOGLE_SSO_PROJECT_ID"        = "${local.secret_prefix}google-sso-project-id",
+    "GOOGLE_SSO_CLIENT_SECRET"     = "${local.secret_prefix}google-sso-client-secret",
     "GOOGLE_SSO_ALLOWABLE_DOMAINS" = "${local.secret_prefix}google-sso-allowable-domains",
-    "GOOGLE_SSO_STAFF_LIST" = "${local.secret_prefix}google-sso-staff-list",
-    "GOOGLE_SSO_SUPERUSER_LIST" = "${local.secret_prefix}google-sso-superuser-list"
+    "GOOGLE_SSO_STAFF_LIST"        = "${local.secret_prefix}google-sso-staff-list",
+    "GOOGLE_SSO_SUPERUSER_LIST"    = "${local.secret_prefix}google-sso-superuser-list"
 
     # Sentry
     "SENTRY_DSN"                = "${local.secret_prefix}sentry-dsn)",
     "SENTRY_ENVIRONMENT"        = local.env_name,
     "SENTRY_REPORT_URI"         = "${local.secret_prefix}sentry-report-uri)",
     "SENTRY_TRACES_SAMPLE_RATE" = "${local.secret_prefix}sentry-traces-sample-rate)",
-
-    # Environment variables for data migration
-    "MST_SENIOR_GROUP_ID"                                  = "${local.secret_prefix}mst-senior-group-id)",
-    "MST_VETERAN_GROUP_ID"                                 = "${local.secret_prefix}mst-veteran-group-id)",
-    "MST_COURTESY_CARD_GROUP_ID"                           = "${local.secret_prefix}mst-courtesy-card-group-id)"
-    "SACRT_SENIOR_GROUP_ID"                                = "${local.secret_prefix}sacrt-senior-group-id)"
-    "SBMTD_SENIOR_GROUP_ID"                                = "${local.secret_prefix}sbmtd-senior-group-id)",
-    "SBMTD_MOBILITY_PASS_GROUP_ID"                         = "${local.secret_prefix}sbmtd-mobility-pass-group-id)"
-    "MST_SERVER_PUBLIC_KEY_URL"                            = "${local.secret_prefix}mst-server-public-key-url)"
-    "SBMTD_SERVER_PUBLIC_KEY_URL"                          = "${local.secret_prefix}sbmtd-server-public-key-url)"
-    "AUTH_PROVIDER_AUTHORITY"                              = "${local.secret_prefix}auth-provider-authority)"
-    "SENIOR_AUTH_PROVIDER_CLIENT_NAME"                     = "${local.secret_prefix}senior-auth-provider-client-name)"
-    "SENIOR_AUTH_PROVIDER_SCOPE"                           = "${local.secret_prefix}senior-auth-provider-scope)"
-    "SENIOR_AUTH_PROVIDER_CLAIM"                           = "${local.secret_prefix}senior-auth-provider-claim)"
-    "SENIOR_AUTH_PROVIDER_SCHEME"                          = "${local.secret_prefix}senior-auth-provider-scheme)"
-    "VETERAN_AUTH_PROVIDER_CLIENT_NAME"                    = "${local.secret_prefix}veteran-auth-provider-client-name)"
-    "VETERAN_AUTH_PROVIDER_SCOPE"                          = "${local.secret_prefix}veteran-auth-provider-scope)"
-    "VETERAN_AUTH_PROVIDER_CLAIM"                          = "${local.secret_prefix}veteran-auth-provider-claim)"
-    "VETERAN_AUTH_PROVIDER_SCHEME"                         = "${local.secret_prefix}veteran-auth-provider-scheme)"
-    "MST_SENIOR_VERIFIER_NAME"                             = "${local.secret_prefix}mst-senior-verifier-name)"
-    "MST_SENIOR_VERIFIER_ACTIVE"                           = "${local.secret_prefix}mst-senior-verifier-active)"
-    "MST_VETERAN_VERIFIER_NAME"                            = "${local.secret_prefix}mst-veteran-verifier-name)"
-    "MST_VETERAN_VERIFIER_ACTIVE"                          = "${local.secret_prefix}mst-veteran-verifier-active)"
-    "COURTESY_CARD_VERIFIER_NAME"                          = "${local.secret_prefix}courtesy-card-verifier-name)"
-    "COURTESY_CARD_VERIFIER_ACTIVE"                        = "${local.secret_prefix}courtesy-card-verifier-active)"
-    "COURTESY_CARD_VERIFIER_API_URL"                       = "${local.secret_prefix}courtesy-card-verifier-api-url)"
-    "COURTESY_CARD_VERIFIER_API_AUTH_HEADER"               = "${local.secret_prefix}courtesy-card-verifier-api-auth-header)"
-    "COURTESY_CARD_VERIFIER_JWE_CEK_ENC"                   = "${local.secret_prefix}courtesy-card-verifier-jwe-cek-enc)"
-    "COURTESY_CARD_VERIFIER_JWE_ENCRYPTION_ALG"            = "${local.secret_prefix}courtesy-card-verifier-jwe-encryption-alg)"
-    "COURTESY_CARD_VERIFIER_JWS_SIGNING_ALG"               = "${local.secret_prefix}courtesy-card-verifier-jws-signing-alg)"
-    "SACRT_SENIOR_VERIFIER_NAME"                           = "${local.secret_prefix}sacrt-senior-verifier-name)"
-    "SACRT_SENIOR_VERIFIER_ACTIVE"                         = "${local.secret_prefix}sacrt-senior-verifier-active)"
-    "SBMTD_SENIOR_VERIFIER_NAME"                           = "${local.secret_prefix}sbmtd-senior-verifier-name)"
-    "SBMTD_SENIOR_VERIFIER_ACTIVE"                         = "${local.secret_prefix}sbmtd-senior-verifier-active)"
-    "MST_PAYMENT_PROCESSOR_NAME"                           = "${local.secret_prefix}mst-payment-processor-name)"
-    "MST_PAYMENT_PROCESSOR_API_BASE_URL"                   = "${local.secret_prefix}mst-payment-processor-api-base-url)"
-    "MST_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_ENDPOINT"      = "${local.secret_prefix}mst-payment-processor-api-access-token-endpoint)"
-    "MST_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_KEY"   = "${local.secret_prefix}mst-payment-processor-api-access-token-request-key)"
-    "MST_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_VAL"   = "${local.secret_prefix}mst-payment-processor-api-access-token-request-val)"
-    "MST_PAYMENT_PROCESSOR_CARD_TOKENIZE_URL"              = "${local.secret_prefix}mst-payment-processor-card-tokenize-url)"
-    "MST_PAYMENT_PROCESSOR_CARD_TOKENIZE_FUNC"             = "${local.secret_prefix}mst-payment-processor-card-tokenize-func)"
-    "MST_PAYMENT_PROCESSOR_CARD_TOKENIZE_ENV"              = "${local.secret_prefix}mst-payment-processor-card-tokenize-env)"
-    "SACRT_PAYMENT_PROCESSOR_NAME"                         = "${local.secret_prefix}sacrt-payment-processor-name)"
-    "SACRT_PAYMENT_PROCESSOR_API_BASE_URL"                 = "${local.secret_prefix}sacrt-payment-processor-api-base-url)"
-    "SACRT_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_ENDPOINT"    = "${local.secret_prefix}sacrt-payment-processor-api-access-token-endpoint)"
-    "SACRT_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_KEY" = "${local.secret_prefix}sacrt-payment-processor-api-access-token-request-key)"
-    "SACRT_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_VAL" = "${local.secret_prefix}sacrt-payment-processor-api-access-token-request-val)"
-    "SACRT_PAYMENT_PROCESSOR_CARD_TOKENIZE_URL"            = "${local.secret_prefix}sacrt-payment-processor-card-tokenize-url)"
-    "SACRT_PAYMENT_PROCESSOR_CARD_TOKENIZE_FUNC"           = "${local.secret_prefix}sacrt-payment-processor-card-tokenize-func)"
-    "SACRT_PAYMENT_PROCESSOR_CARD_TOKENIZE_ENV"            = "${local.secret_prefix}sacrt-payment-processor-card-tokenize-env)"
-    "SBMTD_PAYMENT_PROCESSOR_NAME"                         = "${local.secret_prefix}sbmtd-payment-processor-name)"
-    "SBMTD_PAYMENT_PROCESSOR_API_BASE_URL"                 = "${local.secret_prefix}sbmtd-payment-processor-api-base-url)"
-    "SBMTD_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_ENDPOINT"    = "${local.secret_prefix}sbmtd-payment-processor-api-access-token-endpoint)"
-    "SBMTD_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_KEY" = "${local.secret_prefix}sbmtd-payment-processor-api-access-token-request-key)"
-    "SBMTD_PAYMENT_PROCESSOR_API_ACCESS_TOKEN_REQUEST_VAL" = "${local.secret_prefix}sbmtd-payment-processor-api-access-token-request-val)"
-    "SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_URL"            = "${local.secret_prefix}sbmtd-payment-processor-card-tokenize-url)"
-    "SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_FUNC"           = "${local.secret_prefix}sbmtd-payment-processor-card-tokenize-func)"
-    "SBMTD_PAYMENT_PROCESSOR_CARD_TOKENIZE_ENV"            = "${local.secret_prefix}sbmtd-payment-processor-card-tokenize-env)"
-    "MOBILITY_PASS_VERIFIER_NAME"                          = "${local.secret_prefix}mobility-pass-verifier-name)"
-    "MOBILITY_PASS_VERIFIER_ACTIVE"                        = "${local.secret_prefix}mobility-pass-verifier-active)"
-    "MOBILITY_PASS_VERIFIER_API_URL"                       = "${local.secret_prefix}mobility-pass-verifier-api-url)"
-    "MOBILITY_PASS_VERIFIER_API_AUTH_HEADER"               = "${local.secret_prefix}mobility-pass-verifier-api-auth-header)"
-    "MOBILITY_PASS_VERIFIER_JWE_CEK_ENC"                   = "${local.secret_prefix}mobility-pass-verifier-jwe-cek-enc)"
-    "MOBILITY_PASS_VERIFIER_JWE_ENCRYPTION_ALG"            = "${local.secret_prefix}mobility-pass-verifier-jwe-encryption-alg)"
-    "MOBILITY_PASS_VERIFIER_JWS_SIGNING_ALG"               = "${local.secret_prefix}mobility-pass-verifier-jws-signing-alg)"
-    "MST_AGENCY_SHORT_NAME"                                = "${local.secret_prefix}mst-agency-short-name)"
-    "MST_AGENCY_LONG_NAME"                                 = "${local.secret_prefix}mst-agency-long-name)"
-    "MST_AGENCY_JWS_SIGNING_ALG"                           = "${local.secret_prefix}mst-agency-jws-signing-alg)"
-    "SACRT_AGENCY_SHORT_NAME"                              = "${local.secret_prefix}sacrt-agency-short-name)"
-    "SACRT_AGENCY_LONG_NAME"                               = "${local.secret_prefix}sacrt-agency-long-name)"
-    "SACRT_AGENCY_MERCHANT_ID"                             = "${local.secret_prefix}sacrt-agency-merchant-id)"
-    "SACRT_AGENCY_ACTIVE"                                  = "${local.secret_prefix}sacrt-agency-active)"
-    "SACRT_AGENCY_JWS_SIGNING_ALG"                         = "${local.secret_prefix}sacrt-agency-jws-signing-alg)"
-    "SBMTD_AGENCY_SHORT_NAME"                              = "${local.secret_prefix}sbmtd-agency-short-name)"
-    "SBMTD_AGENCY_LONG_NAME"                               = "${local.secret_prefix}sbmtd-agency-long-name)"
-    "SBMTD_AGENCY_MERCHANT_ID"                             = "${local.secret_prefix}sbmtd-agency-merchant-id)"
-    "SBMTD_AGENCY_ACTIVE"                                  = "${local.secret_prefix}sbmtd-agency-active)"
-    "SBMTD_AGENCY_JWS_SIGNING_ALG"                         = "${local.secret_prefix}sbmtd-agency-jws-signing-alg)"
   }
 
   storage_account {
