@@ -62,6 +62,7 @@ def test_token_refresh(mocker, client):
     data = response.json()
     assert "token" in data
     assert data["token"] == mock_token["access_token"]
+    # mock_client.oauth.ensure_active_token.assert_called_once()
 
 
 @pytest.mark.django_db
