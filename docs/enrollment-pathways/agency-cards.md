@@ -10,7 +10,7 @@ than through the Benefits app, and the Benefits app then checks for a valid Agen
 
 The video walkthough below demonstrates the flow for an agency card user to confirm transit benefit eligibility and enroll their bank card for reduced fares via LittlePay:
 
-![Demonstration of the sign-up process for an agency card user confirming eligibility via the Eligibility Server and enrolling via Littlepay](https://github-production-user-asset-6210df.s3.amazonaws.com/6279581/305587680-67ee56d7-968e-4b53-838f-04fdf8cbb534.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240220%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240220T214537Z&X-Amz-Expires=300&X-Amz-Signature=2d2ec95ef30cea975b05ed0e60774cabf502b980a9509244188c837cf83a1a4d&X-Amz-SignedHeaders=host&actor_id=3673236&key_id=0&repo_id=285501392){ width="350" }
+<iframe src="https://drive.google.com/file/d/192mAPmf2HtXTwy9oq72R-NsB1UbXl52K/preview" width="640" height="480" allow="autoplay"></iframe>
 
 ## Architecture
 
