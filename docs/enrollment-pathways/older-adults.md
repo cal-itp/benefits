@@ -8,7 +8,7 @@ Currently, the app uses [Login.gov's Identity Assurance Level 2 (IAL2)](https://
 
 The video walkthough below demonstrates the flow for an older adult who has a Login.gov account to confirm transit benefit eligibility and enroll their bank card for reduced fares via LittlePay:
 
-![Demonstration of the sign-up process for a senior confirming eligibility via Login.gov and enrolling via Littlepay](https://github-production-user-asset-6210df.s3.amazonaws.com/6279581/305587214-139c77fa-ac75-4189-8b20-61d91051b264.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20240220%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240220T214403Z&X-Amz-Expires=300&X-Amz-Signature=8b06c9bc8f6afc89623600f0b6ecebffeaed5509c8442dd4ff48732b49451f50&X-Amz-SignedHeaders=host&actor_id=3673236&key_id=0&repo_id=285501392){ width="350" }
+<iframe src="https://drive.google.com/file/d/11XvTQCAjfIwkVBGWnJ8dRJd5g7qAO9nY/preview" width="640" height="480" allow="autoplay"></iframe>
 
 ## Process
 
