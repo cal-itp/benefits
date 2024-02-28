@@ -98,7 +98,7 @@ def index(request):
                 analytics.returned_error(request, str(e))
                 raise Exception(f"{e}: {e.response.json()}")
         except Exception as e:
-            analytics.returned_error(request, e)
+            analytics.returned_error(request, str(e))
             raise e
         else:
             analytics.returned_success(request, eligibility.group_id)
