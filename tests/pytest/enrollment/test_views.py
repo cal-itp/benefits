@@ -36,6 +36,22 @@ def mocked_analytics_module(mocked_analytics_module):
     return mocked_analytics_module(benefits.enrollment.views)
 
 
+@pytest.fixture
+def mocked_funding_source():
+    return FundingSourceResponse(
+        id="0",
+        card_first_digits="0000",
+        card_last_digits="0000",
+        card_expiry_month="12",
+        card_expiry_year="2024",
+        card_scheme="visa",
+        form_factor="physical",
+        participant_id="cst",
+        is_fpan=False,
+        related_funding_sources=[],
+    )
+
+
 @pytest.mark.django_db
 def test_token_ineligible(client):
     path = reverse(ROUTE_TOKEN)
@@ -131,30 +147,41 @@ def test_index_eligible_post_valid_form_failure(mocker, client, card_tokenize_fo
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
-def test_index_eligible_post_valid_form_success(
-    mocker, client, card_tokenize_form_data, mocked_analytics_module, model_EligibilityType
+def test_index_eligible_post_valid_form_customer_already_enrolled(
+    mocker, client, card_tokenize_form_data, mocked_analytics_module, model_EligibilityType, mocked_funding_source
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
-    mock_funding_source = FundingSourceResponse(
-        id="0",
-        card_first_digits="0000",
-        card_last_digits="0000",
-        card_expiry_month="12",
-        card_expiry_year="2024",
-        card_scheme="visa",
-        form_factor="physical",
-        participant_id="cst",
-        is_fpan=False,
-        related_funding_sources=[],
-    )
-    mock_client.get_funding_source_by_token.return_value = mock_funding_source
+    mock_client.get_funding_source_by_token.return_value = mocked_funding_source
+    mock_error_response = mocker.Mock(status_code=409)
+    mock_client.link_concession_group_funding_source.side_effect = HTTPError(response=mock_error_response)
 
     path = reverse(ROUTE_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     mock_client.link_concession_group_funding_source.assert_called_once_with(
-        funding_source_id=mock_funding_source.id, group_id=model_EligibilityType.group_id
+        funding_source_id=mocked_funding_source.id, group_id=model_EligibilityType.group_id
+    )
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_SUCCESS
+    mocked_analytics_module.returned_success.assert_called_once()
+    assert model_EligibilityType.group_id in mocked_analytics_module.returned_success.call_args.args
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+def test_index_eligible_post_valid_form_success(
+    mocker, client, card_tokenize_form_data, mocked_analytics_module, model_EligibilityType, mocked_funding_source
+):
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+    mock_client.get_funding_source_by_token.return_value = mocked_funding_source
+
+    path = reverse(ROUTE_INDEX)
+    response = client.post(path, card_tokenize_form_data)
+
+    mock_client.link_concession_group_funding_source.assert_called_once_with(
+        funding_source_id=mocked_funding_source.id, group_id=model_EligibilityType.group_id
     )
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
