@@ -36,87 +36,6 @@
     }
   },
   {
-    "model": "core.pemdata",
-    "pk": 5,
-    "fields": {
-      "label": "(MST) payment processor client certificate",
-      "text_secret_name": "mst-payment-processor-client-cert",
-      "remote_url": null
-    }
-  },
-  {
-    "model": "core.pemdata",
-    "pk": 6,
-    "fields": {
-      "label": "(MST) payment processor client certificate private key",
-      "text_secret_name": "mst-payment-processor-client-cert-private-key",
-      "remote_url": null
-    }
-  },
-  {
-    "model": "core.pemdata",
-    "pk": 7,
-    "fields": {
-      "label": "(MST) payment processor client certificate root CA",
-      "text_secret_name": "mst-payment-processor-client-cert-root-ca",
-      "remote_url": null
-    }
-  },
-  {
-    "model": "core.pemdata",
-    "pk": 8,
-    "fields": {
-      "label": "(SacRT) payment processor client certificate",
-      "text_secret_name": "sacrt-payment-processor-client-cert",
-      "remote_url": null
-    }
-  },
-  {
-    "model": "core.pemdata",
-    "pk": 9,
-    "fields": {
-      "label": "(SacRT) payment processor client certificate private key",
-      "text_secret_name": "sacrt-payment-processor-client-cert-private-key",
-      "remote_url": null
-    }
-  },
-  {
-    "model": "core.pemdata",
-    "pk": 10,
-    "fields": {
-      "label": "(SacRT) payment processor client certificate root CA",
-      "text_secret_name": "sacrt-payment-processor-client-cert-root-ca",
-      "remote_url": null
-    }
-  },
-  {
-    "model": "core.pemdata",
-    "pk": 11,
-    "fields": {
-      "label": "(SBMTD) payment processor client certificate",
-      "text_secret_name": "sbmtd-payment-processor-client-cert",
-      "remote_url": null
-    }
-  },
-  {
-    "model": "core.pemdata",
-    "pk": 12,
-    "fields": {
-      "label": "(SBMTD) payment processor client certificate private key",
-      "text_secret_name": "sbmtd-payment-processor-client-cert-private-key",
-      "remote_url": null
-    }
-  },
-  {
-    "model": "core.pemdata",
-    "pk": 13,
-    "fields": {
-      "label": "(SBMTD) payment processor client certificate root CA",
-      "text_secret_name": "sbmtd-payment-processor-client-cert-root-ca",
-      "remote_url": null
-    }
-  },
-  {
     "model": "core.authprovider",
     "pk": 1,
     "fields": {
@@ -324,18 +243,12 @@
     "fields": {
       "name": "(MST) test payment processor",
       "api_base_url": "http://server:8000",
-      "api_access_token_endpoint": "access-token",
-      "api_access_token_request_key": "request_access",
-      "api_access_token_request_val": "REQUEST_ACCESS",
+      "client_id": "",
+      "client_secret_name": "",
+      "audience": "",
       "card_tokenize_url": "http://server:8000/static/tokenize.js",
       "card_tokenize_func": "tokenize",
-      "card_tokenize_env": "test",
-      "client_cert": 5,
-      "client_cert_private_key": 6,
-      "client_cert_root_ca": 7,
-      "customer_endpoint": "customer",
-      "customers_endpoint": "customers",
-      "group_endpoint": "group"
+      "card_tokenize_env": "test"
     }
   },
   {
@@ -344,18 +257,12 @@
     "fields": {
       "name": "(SacRT) test payment processor",
       "api_base_url": "http://server:8000",
-      "api_access_token_endpoint": "access-token",
-      "api_access_token_request_key": "request_access",
-      "api_access_token_request_val": "REQUEST_ACCESS",
+      "client_id": "",
+      "client_secret_name": "",
+      "audience": "",
       "card_tokenize_url": "http://server:8000/static/tokenize.js",
       "card_tokenize_func": "tokenize",
-      "card_tokenize_env": "test",
-      "client_cert": 8,
-      "client_cert_private_key": 9,
-      "client_cert_root_ca": 10,
-      "customer_endpoint": "customer",
-      "customers_endpoint": "customers",
-      "group_endpoint": "group"
+      "card_tokenize_env": "test"
     }
   },
   {
@@ -364,18 +271,12 @@
     "fields": {
       "name": "(SBMTD) test payment processor",
       "api_base_url": "http://server:8000",
-      "api_access_token_endpoint": "access-token",
-      "api_access_token_request_key": "request_access",
-      "api_access_token_request_val": "REQUEST_ACCESS",
+      "client_id": "",
+      "client_secret_name": "",
+      "audience": "",
       "card_tokenize_url": "http://server:8000/static/tokenize.js",
       "card_tokenize_func": "tokenize",
-      "card_tokenize_env": "test",
-      "client_cert": 11,
-      "client_cert_private_key": 12,
-      "client_cert_root_ca": 13,
-      "customer_endpoint": "customer",
-      "customers_endpoint": "customers",
-      "group_endpoint": "group"
+      "card_tokenize_env": "test"
     }
   },
   {

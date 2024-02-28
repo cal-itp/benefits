@@ -130,25 +130,16 @@ def model_EligibilityVerifier_AuthProvider_with_verification(model_AuthProvider_
 
 
 @pytest.fixture
-def model_PaymentProcessor(model_PemData):
+def model_PaymentProcessor():
     payment_processor = PaymentProcessor.objects.create(
         name="Test Payment Processor",
         api_base_url="https://example.com/payments",
-        api_access_token_endpoint="token",
-        api_access_token_request_key="X-API-TOKEN",
-        api_access_token_request_val="secret-value",
         client_id="client_id",
         client_secret_name="client_secret_name",
         audience="audience",
         card_tokenize_url="https://example.com/payments/tokenize.js",
         card_tokenize_func="tokenize",
         card_tokenize_env="test",
-        client_cert=model_PemData,
-        client_cert_private_key=model_PemData,
-        client_cert_root_ca=model_PemData,
-        customer_endpoint="customer",
-        customers_endpoint="customers",
-        group_endpoint="group",
     )
 
     return payment_processor
