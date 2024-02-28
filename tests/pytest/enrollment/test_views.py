@@ -2,6 +2,8 @@ import time
 
 from django.urls import reverse
 
+from littlepay.api.funding_sources import FundingSourceResponse
+from requests import HTTPError
 import pytest
 
 from benefits.core.middleware import TEMPLATE_USER_ERROR
@@ -49,11 +51,12 @@ def test_token_ineligible(client):
 def test_token_refresh(mocker, client):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
-    mock_client = mocker.patch("benefits.enrollment.views.Client")
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
     mock_token = {}
     mock_token["access_token"] = "access_token"
     mock_token["expires_at"] = time.time() + 10000
-    mock_client.return_value.request_card_tokenization_access = lambda: mock_token
+    mock_client.request_card_tokenization_access.return_value = mock_token
 
     path = reverse(ROUTE_TOKEN)
     response = client.get(path)
@@ -62,7 +65,7 @@ def test_token_refresh(mocker, client):
     data = response.json()
     assert "token" in data
     assert data["token"] == mock_token["access_token"]
-    # mock_client.oauth.ensure_active_token.assert_called_once()
+    mock_client.oauth.ensure_active_token.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -110,13 +113,19 @@ def test_index_eligible_post_invalid_form(client, invalid_form_data):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
 def test_index_eligible_post_valid_form_failure(mocker, client, card_tokenize_form_data):
-    mock_response = mocker.Mock()
-    mock_response.success = False
-    mock_response.message = "Mock error message"
-    mocker.patch("benefits.enrollment.views.api.Client.enroll", return_value=mock_response)
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+
+    # any status_code that isn't 409 is considered an error
+    mock_error = {"message": "Mock error message"}
+    mock_error_response = mocker.Mock(status_code=400, **mock_error)
+    mock_error_response.json.return_value = mock_error
+    mock_client.link_concession_group_funding_source.side_effect = HTTPError(
+        response=mock_error_response,
+    )
 
     path = reverse(ROUTE_INDEX)
-    with pytest.raises(Exception, match=mock_response.message):
+    with pytest.raises(Exception, match=mock_error["message"]):
         client.post(path, card_tokenize_form_data)
 
 
@@ -125,13 +134,28 @@ def test_index_eligible_post_valid_form_failure(mocker, client, card_tokenize_fo
 def test_index_eligible_post_valid_form_success(
     mocker, client, card_tokenize_form_data, mocked_analytics_module, model_EligibilityType
 ):
-    mock_response = mocker.Mock()
-    mock_response.success = True
-    mocker.patch("benefits.enrollment.views.api.Client.enroll", return_value=mock_response)
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+    mock_funding_source = FundingSourceResponse(
+        id="0",
+        card_first_digits="0000",
+        card_last_digits="0000",
+        card_expiry_month="12",
+        card_expiry_year="2024",
+        card_scheme="visa",
+        form_factor="physical",
+        participant_id="cst",
+        is_fpan=False,
+        related_funding_sources=[],
+    )
+    mock_client.get_funding_source_by_token.return_value = mock_funding_source
 
     path = reverse(ROUTE_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
+    mock_client.link_concession_group_funding_source.assert_called_once_with(
+        funding_source_id=mock_funding_source.id, group_id=model_EligibilityType.group_id
+    )
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
     mocked_analytics_module.returned_success.assert_called_once()
