@@ -3,8 +3,6 @@ set -ex
 
 # whether to reset database file, defaults to true
 DB_RESET="${DJANGO_DB_RESET:-true}"
-# optional fixtures to import
-FIXTURES="${DJANGO_DB_FIXTURES}"
 
 if [[ $DB_RESET = true ]]; then
     # construct the path to the database file from environment or default
@@ -25,11 +23,11 @@ else
     echo "DB_RESET is false, skipping"
 fi
 
-valid_fixtures=$( echo $FIXTURES | grep -e fixtures\.json$ )
+valid_fixtures=$(echo "$DJANGO_DB_FIXTURES" | grep -e fixtures\.json$)
 
 if [[ -n "$valid_fixtures" ]]; then
     # load data fixtures
-    python manage.py loaddata "$FIXTURES"
+    python manage.py loaddata "$DJANGO_DB_FIXTURES"
 else
     echo "No JSON fixtures to load"
 fi
