@@ -15,7 +15,7 @@ dependencies = [
     "django-google-sso==5.0.0",
     "eligibility-api==2023.9.1",
     "requests==2.31.0",
-    "sentry-sdk==1.40.5",
+    "sentry-sdk==1.40.6",
     "six==1.16.0",
 ]
 
