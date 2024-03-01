@@ -1,5 +1,7 @@
 *.db
 *.env
+*fixtures.json
+!benefits/core/migrations/local_fixtures.json
 *.mo
 *.tfbackend
 *.tmp

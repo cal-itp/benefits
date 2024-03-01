@@ -21,25 +21,31 @@ will install `cypress` and its dependencies on your machine. Make sure to run th
 
    If not, [install Node.js](https://nodejs.org/en/download/) locally.
 
-2. Start the the application container:
+1. Start the local eligibility verification server:
 
    ```bash
-   docker compose up -d client
+   docker compose up --detach server
    ```
 
-3. Change into the `cypress` directory:
+1. Start the the application:
+
+   ```bash
+   docker compose run --detach --service-ports client bin/test_start.sh
+   ```
+
+1. Change into the `cypress` directory:
 
    ```bash
    cd tests/cypress
    ```
 
-4. Install all packages and `cypress`. Verify `cypress` installation succeeds:
+1. Install all packages and `cypress`. Verify `cypress` installation succeeds:
 
    ```bash
    npm install
    ```
 
-5. Run `cypress` with test environment variables and configuration variables:
+1. Run `cypress` with test environment variables and configuration variables:
 
    ```bash
    CYPRESS_baseUrl=http://localhost:8000 npm run cypress:open

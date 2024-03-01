@@ -2,9 +2,34 @@
 
 The first steps of the Getting Started guide mention [creating an `.env` file][getting-started_create-env].
 
-The sections below outline in more detail the application environment variables that you may want to override, and their purpose. In App Service, this is more generally called the ["configuration"][app-service-config].
+The sections below outline in more detail the application environment variables that you may want to override, and their purpose.
+In Azure App Services, this is more generally called the ["configuration"][app-service-config].
 
 See other topic pages in this section for more specific environment variable configurations.
+
+!!! warning "Multiline environment variables"
+
+    Although Docker, bash, etc. support multiline values directly in e.g. an .env file:
+
+    ```bash
+    multi_line_value='first line
+    second line
+    third line'
+    ```
+
+    The VS Code Python extension does not parse multiline values: https://code.visualstudio.com/docs/python/environments#_environment-variables
+
+    When specifying multiline values for local usage, use the literal newline character `\n` but maintain the single quote wrapper:
+
+    ```bash
+    multi_line_value='first line\nsecond line\third line'
+    ```
+
+    A quick bash script to convert direct multiline values to their literal newline character equivalent is:
+
+    ```bash
+    echo "${multi_line_value//$'\n'/\\n}"
+    ```
 
 ## Amplitude
 
@@ -24,13 +49,6 @@ If blank or an invalid key, analytics events aren't captured (though may still b
 
 ## Django
 
-### `DJANGO_ADMIN`
-
-Boolean:
-
-- `True`: activates Django's built-in admin interface for content authoring.
-- `False` (default): skips this activation.
-
 ### `DJANGO_ALLOWED_HOSTS`
 
 !!! warning "Deployment configuration"
@@ -39,7 +57,7 @@ Boolean:
 
 !!! tldr "Django docs"
 
-    [Settings: `ALLOWS_HOSTS`](https://docs.djangoproject.com/en/4.0/ref/settings/#allowed-hosts)
+    [Settings: `ALLOWS_HOSTS`](https://docs.djangoproject.com/en/5.0/ref/settings/#allowed-hosts)
 
 A list of strings representing the host/domain names that this Django site can serve.
 
@@ -54,11 +72,33 @@ writable by the Django process._
 
 By default, the base project directory (i.e. the root of the repository).
 
+### `DJANGO_DB_FILE`
+
+!!! info "Local configuration"
+
+    This setting only affects the app running on localhost
+
+The name of the Django database file to use locally (during both normal app startup and for resetting the database).
+
+By default, `django.db`.
+
+### `DJANGO_DB_FIXTURES`
+
+!!! info "Local configuration"
+
+    This setting only affects the app running on localhost
+
+A path, relative to the repository root, of Django data fixtures to load when resetting the database.
+
+The file must end in `fixtures.json` for the script to process it correctly.
+
+By default, `benefits/core/migrations/local_fixtures.json`.
+
 ### `DJANGO_DB_RESET`
 
-!!! warning "Deployment configuration"
+!!! info "Local configuration"
 
-    You may change this setting when deploying the app to a non-localhost domain
+    This setting only affects the app running on localhost
 
 Boolean:
 
@@ -73,7 +113,7 @@ Boolean:
 
 !!! tldr "Django docs"
 
-    [Settings: `DEBUG`](https://docs.djangoproject.com/en/4.0/ref/settings/#debug)
+    [Settings: `DEBUG`](https://docs.djangoproject.com/en/5.0/ref/settings/#debug)
 
 Boolean:
 
@@ -102,7 +142,7 @@ From inside the container, the app is always listening on port `8000`.
 
 !!! tldr "Django docs"
 
-    [Settings: `LOGGING_CONFIG`](https://docs.djangoproject.com/en/4.0/ref/settings/#logging-config)
+    [Settings: `LOGGING_CONFIG`](https://docs.djangoproject.com/en/5.0/ref/settings/#logging-config)
 
 The log level used in the application's logging configuration.
 
@@ -116,45 +156,33 @@ By default the application sends logs to `stdout`.
 
 !!! tldr "Django docs"
 
-    [Settings: `SECRET_KEY`](https://docs.djangoproject.com/en/4.0/ref/settings/#secret-key)
+    [Settings: `SECRET_KEY`](https://docs.djangoproject.com/en/5.0/ref/settings/#secret-key)
 
 Django's primary secret, keep this safe!
 
 ### `DJANGO_SUPERUSER_EMAIL`
 
-!!! warning "Deployment configuration"
+!!! info "Local configuration"
 
-    You may change this setting when deploying the app to a non-localhost domain
+    This setting only affects the app running on localhost
 
-!!! danger "Required configuration"
-
-    This setting is required when `DJANGO_ADMIN` is `true`
-
-The email address of the Django Admin superuser created during initialization.
+The email address of the Django Admin superuser created when resetting the database.
 
 ### `DJANGO_SUPERUSER_PASSWORD`
 
-!!! warning "Deployment configuration"
+!!! info "Local configuration"
 
-    You may change this setting when deploying the app to a non-localhost domain
+    This setting only affects the app running on localhost
 
-!!! danger "Required configuration"
-
-    This setting is required when `DJANGO_ADMIN` is `true`
-
-The password of the Django Admin superuser created during initialization.
+The password of the Django Admin superuser created when resetting the database.
 
 ### `DJANGO_SUPERUSER_USERNAME`
 
-!!! warning "Deployment configuration"
+!!! info "Local configuration"
 
-    You may change this setting when deploying the app to a non-localhost domain
+    This setting only affects the app running on localhost
 
-!!! danger "Required configuration"
-
-    This setting is required when `DJANGO_ADMIN` is `true`
-
-The username of the Django Admin superuser created during initialization.
+The username of the Django Admin superuser created when resetting the database.
 
 ### `DJANGO_TRUSTED_ORIGINS`
 
@@ -164,7 +192,7 @@ The username of the Django Admin superuser created during initialization.
 
 !!! tldr "Django docs"
 
-    [Settings: `CSRF_TRUSTED_ORIGINS`](https://docs.djangoproject.com/en/4.0/ref/settings/#csrf-trusted-origins)
+    [Settings: `CSRF_TRUSTED_ORIGINS`](https://docs.djangoproject.com/en/5.0/ref/settings/#csrf-trusted-origins)
 
 Comma-separated list of hosts which are trusted origins for unsafe requests (e.g. POST)
 
@@ -219,7 +247,9 @@ Enables [sending events to Sentry](../../deployment/troubleshooting/#error-monit
 
     [`environment` config value](https://docs.sentry.io/platforms/python/configuration/options/#environment)
 
-Segments errors by which deployment they occur in. This defaults to `local`, and can be set to match one of the [environment names](../../deployment/infrastructure/#environments).
+Segments errors by which deployment they occur in. This defaults to `dev`, and can be set to match one of the [environment names](../../deployment/infrastructure/#environments).
+
+`local` may also be used for local testing of the Sentry integration.
 
 ### `SENTRY_REPORT_URI`
 

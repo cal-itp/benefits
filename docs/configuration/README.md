@@ -13,7 +13,7 @@ startup.
 
 The model objects defined in the data migration file are also loaded into and seed Django's database at application startup time.
 
- See the [Setting secrets](../deployment/secrets) section for how to set secret values for a deployment.
+See the [Setting secrets](../deployment/secrets) section for how to set secret values for a deployment.
 
 ## Django settings
 
@@ -55,10 +55,10 @@ from django.config import settings
 
 # ...
 
-if settings.ADMIN:
-    # do something when admin is enabled
+if settings.DEBUG:
+    # do something when debug is enabled
 else:
-    # do something else when admin is disabled
+    # do something else when debug is disabled
 ```
 
 Through the [Django model][django-model] framework, `benefits.core.models` instances are used to access the configuration data:
@@ -77,9 +77,9 @@ else:
 [benefits-manage]: https://github.com/cal-itp/benefits/blob/dev/manage.py
 [benefits-settings]: https://github.com/cal-itp/benefits/blob/dev/benefits/settings.py
 [benefits-wsgi]: https://github.com/cal-itp/benefits/blob/dev/benefits/wsgi.py
-[django-model]: https://docs.djangoproject.com/en/4.0/topics/db/models/
-[django-settings]: https://docs.djangoproject.com/en/4.0/topics/settings/
-[django-using-settings]: https://docs.djangoproject.com/en/4.0/topics/settings/#using-settings-in-python-code
+[django-model]: https://docs.djangoproject.com/en/5.0/topics/db/models/
+[django-settings]: https://docs.djangoproject.com/en/5.0/topics/settings/
+[django-using-settings]: https://docs.djangoproject.com/en/5.0/topics/settings/#using-settings-in-python-code
 [env-vars]: environment-variables.md
 [data]: data.md
 [getting-started]: ../getting-started/README.md
