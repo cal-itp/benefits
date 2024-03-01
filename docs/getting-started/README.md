@@ -12,10 +12,10 @@ git clone https://github.com/cal-itp/benefits
 
 ## Create an environment file
 
-The application is configured with defaults to run locally, but an `.env` file is required to run with Docker Compose. This file can be empty, or environment overrides can be added as needed:
+The application is configured with defaults to run locally, but an `.env` file is required to run with Docker Compose. Start from the existing sample:
 
 ```bash
-touch .env
+cp .env.sample .env
 ```
 
 E.g. to change the localhost port from the default `8000` to `9000`, add the following line to your `.env` file:
@@ -56,8 +56,7 @@ docker compose up client
 
 After initialization, the client is running running on `http://localhost:8000` by default.
 
-If `DJANGO_ADMIN=true`, the backend administrative interface can be accessed at the `/admin` route using the superuser account
-you setup as part of initialization.
+The backend administrative interface can be accessed at the `/admin` route using the superuser account you setup as part of initialization.
 
 By default, sample values are used to initialize Django. Alternatively you may:
 

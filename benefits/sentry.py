@@ -3,6 +3,7 @@ import shutil
 import os
 import subprocess
 
+from django.conf import settings
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.scrubber import EventScrubber, DEFAULT_DENYLIST
@@ -11,7 +12,6 @@ from benefits import VERSION
 
 logger = logging.getLogger(__name__)
 
-SENTRY_ENVIRONMENT = os.environ.get("SENTRY_ENVIRONMENT", "local")
 SENTRY_CSP_REPORT_URI = None
 
 
@@ -80,19 +80,21 @@ def get_traces_sample_rate():
 
 
 def configure():
-    SENTRY_DSN = os.environ.get("SENTRY_DSN")
-    if SENTRY_DSN:
+    sentry_dsn = os.environ.get("SENTRY_DSN")
+    sentry_environment = os.environ.get("SENTRY_ENVIRONMENT", settings.RUNTIME_ENVIRONMENT())
+
+    if sentry_dsn:
         release = get_release()
-        logger.info(f"Enabling Sentry for environment '{SENTRY_ENVIRONMENT}', release '{release}'...")
+        logger.info(f"Enabling Sentry for environment '{sentry_environment}', release '{release}'...")
 
         # https://docs.sentry.io/platforms/python/configuration/
         sentry_sdk.init(
-            dsn=SENTRY_DSN,
+            dsn=sentry_dsn,
             integrations=[
                 DjangoIntegration(),
             ],
             traces_sample_rate=get_traces_sample_rate(),
-            environment=SENTRY_ENVIRONMENT,
+            environment=sentry_environment,
             release=release,
             in_app_include=["benefits"],
             # send_default_pii must be False (the default) for a custom EventScrubber/denylist

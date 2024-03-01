@@ -20,7 +20,7 @@ The following California transit agencies have launched Cal-ITP Benefits for the
 | Transit agency                                  | Older adults | Agency card | Veterans | Initial agency launch |
 | ----------------------------------------------- | ------------ | ----------- | -------- | --------------------- |
 | **Monterey-Salinas Transit**                    | Live         | Live        | Live     | 05/2021               |
-| **Santa Barbara Metropolitan Transit District** | Live         | In test     |          | 10/2023               |
+| **Santa Barbara Metropolitan Transit District** | Live         | Live        |          | 10/2023               |
 | **Sacramento Regional Transit District**        | In test      |             |          |                       |
 
 ## Supported enrollment pathways
@@ -32,6 +32,7 @@ The Cal-ITP Benefits app supports the following enrollment pathways that use the
 | [**Older adults**](/benefits/enrollment-pathways/older-adults) | [Login.gov ID Proofed](https://developers.login.gov/attributes/)                      | Live   | [08/2022](https://github.com/cal-itp/benefits/releases/tag/2022.08.1) |
 | [**Agency cards**](/benefits/enrollment-pathways/agency-cards) | [Eligibility API](https://docs.calitp.org/eligibility-api/specification/)             | Live   | [11/2022](https://github.com/cal-itp/benefits/releases/tag/2022.11.1) |
 | [**Veterans**](/benefits/enrollment-pathways/veterans)         | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live   | [09/2023](https://github.com/cal-itp/benefits/releases/tag/2023.09.1) |
+| [**Low-income**](/benefits/enrollment-pathways/low-income)     | CalFresh Confirm API | In development   |  |
 
 Read more about each [enrollment pathway](/benefits/enrollment-pathways/).
 
@@ -96,4 +97,4 @@ All code changes are reviewed by at least one other member of the engineering te
 [interconnections]: deployment/infrastructure/#system-interconnections
 [hosting]: deployment/
 [littlepay]: https://littlepay.com/
-[i18n]: https://docs.djangoproject.com/en/4.0/topics/i18n/
+[i18n]: https://docs.djangoproject.com/en/5.0/topics/i18n/

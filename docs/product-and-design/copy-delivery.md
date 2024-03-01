@@ -10,9 +10,9 @@ Translation strings include all application copy, including:
 - In-line link URLs
 - Error messages (like [no script](https://github.com/cal-itp/benefits/blob/dev/benefits/core/templates/core/includes/noscript.html), [no cookies](https://github.com/cal-itp/benefits/blob/dev/benefits/core/templates/core/includes/nocookies.html) warnings)
 
-## Cal-ITP Benefits Application Copy (Configurable Strings)
+## Cal-ITP Benefits Application Copy
 
-The human-readable version of the English and Spanish translation strings for the application are delivered to Design and Engineering by Product, and live at this link: [Cal-ITP Benefits Application Copy (Configurable Strings)](https://docs.google.com/spreadsheets/d/1_Gi_YbJr4ZuXCOsnOWaewvHqUO1nC1nKqiVDHvw0118/edit#gid=0).
+The human-readable version of the English and Spanish translation strings for the application are delivered to Design and Engineering by Product, and live at this link: [Cal-ITP Benefits Application Copy](https://docs.google.com/spreadsheets/d/1_Gi_YbJr4ZuXCOsnOWaewvHqUO1nC1nKqiVDHvw0118/edit#gid=0).
 
 By tabs:
 
@@ -27,14 +27,14 @@ By tabs:
 - Engage with copy writers to get the English language copy drafted, proofed and ready for design.
 - Engage with client editorial/communications team to ensure English language and Spanish language copy are edited according to client style guides.
 - Engage all necessary stakeholders to get English language copy approved and ready for design.
-- Compile copy in [Cal-ITP Benefits Application Copy (Configurable Strings)](https://docs.google.com/spreadsheets/d/1_Gi_YbJr4ZuXCOsnOWaewvHqUO1nC1nKqiVDHvw0118/edit#gid=0), ready to be used by Design, so Design can sync the spreadsheet to Figma.
+- Compile copy in [Cal-ITP Benefits Application Copy](https://docs.google.com/spreadsheets/d/1_Gi_YbJr4ZuXCOsnOWaewvHqUO1nC1nKqiVDHvw0118/edit#gid=0), ready to be used by Design, so Design can sync the spreadsheet to Figma.
 - Engage with the translation agency, [iBabbleOn](https://ibabbleon.com/), to get Spanish translations ready for Engineering.
 - Transfer translations from iBabbleOn to the spreadsheet, in proper format.
 - Ensure English and Spanish copy is ready for Engineering.
 
 ### Design
 
-- Sync copy from [Cal-ITP Benefits Application Copy (Configurable Strings)](https://docs.google.com/spreadsheets/d/1_Gi_YbJr4ZuXCOsnOWaewvHqUO1nC1nKqiVDHvw0118/edit#gid=0) into Figma.
+- Sync copy from [Cal-ITP Benefits Application Copy](https://docs.google.com/spreadsheets/d/1_Gi_YbJr4ZuXCOsnOWaewvHqUO1nC1nKqiVDHvw0118/edit#gid=0) into Figma.
 - Ensure the string is in the appropriate column (e.g. `Subtitle`, `ButtonLabel`)
 
 ### Engineering

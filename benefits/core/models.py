@@ -2,6 +2,7 @@
 The core application: Common model definitions.
 """
 
+from functools import cached_property
 import importlib
 import logging
 
@@ -11,8 +12,35 @@ from django.urls import reverse
 
 import requests
 
+from benefits.secrets import NAME_VALIDATOR, get_secret_by_name
+
 
 logger = logging.getLogger(__name__)
+
+
+class SecretNameField(models.SlugField):
+    """Field that stores the name of a secret held in a secret store.
+
+    The secret value itself MUST NEVER be stored in this field.
+    """
+
+    description = """Field that stores the name of a secret held in a secret store.
+
+    Secret names must be between 1-127 alphanumeric ASCII characters or hyphen characters.
+
+    The secret value itself MUST NEVER be stored in this field.
+    """
+
+    def __init__(self, *args, **kwargs):
+        kwargs["validators"] = [NAME_VALIDATOR]
+        # although the validator also checks for a max length of 127
+        # this setting enforces the length at the database column level as well
+        kwargs["max_length"] = 127
+        # similar to max_length, enforce at the field (form) validation level to not allow blanks
+        kwargs["blank"] = False
+        # the default is False, but this is more explicit
+        kwargs["allow_unicode"] = False
+        super().__init__(*args, **kwargs)
 
 
 class PemData(models.Model):
@@ -21,23 +49,31 @@ class PemData(models.Model):
     id = models.AutoField(primary_key=True)
     # Human description of the PEM data
     label = models.TextField()
-    # The data in utf-8 encoded PEM text format
-    text = models.TextField(null=True)
+    # The name of a secret with data in utf-8 encoded PEM text format
+    text_secret_name = SecretNameField(null=True)
     # Public URL hosting the utf-8 encoded PEM text
     remote_url = models.TextField(null=True)
 
     def __str__(self):
         return self.label
 
-    @property
+    @cached_property
     def data(self):
-        if self.text:
-            return self.text
-        elif self.remote_url:
-            self.text = requests.get(self.remote_url, timeout=settings.REQUESTS_TIMEOUT).text
+        """
+        Attempts to get data from `remote_url` or `text_secret_name`, with the latter taking precendence if both are defined.
+        """
+        remote_data = None
+        secret_data = None
 
-        self.save()
-        return self.text
+        if self.remote_url:
+            remote_data = requests.get(self.remote_url, timeout=settings.REQUESTS_TIMEOUT).text
+        if self.text_secret_name:
+            try:
+                secret_data = get_secret_by_name(self.text_secret_name)
+            except Exception:
+                secret_data = None
+
+        return secret_data if secret_data is not None else remote_data
 
 
 class AuthProvider(models.Model):
@@ -47,7 +83,7 @@ class AuthProvider(models.Model):
     sign_out_button_template = models.TextField(null=True)
     sign_out_link_template = models.TextField(null=True)
     client_name = models.TextField()
-    client_id = models.TextField()
+    client_id_secret_name = SecretNameField()
     authority = models.TextField()
     scope = models.TextField(null=True)
     claim = models.TextField(null=True)
@@ -60,6 +96,10 @@ class AuthProvider(models.Model):
     @property
     def supports_sign_out(self):
         return bool(self.sign_out_button_template) or bool(self.sign_out_link_template)
+
+    @property
+    def client_id(self):
+        return get_secret_by_name(self.client_id_secret_name)
 
 
 class EligibilityType(models.Model):
@@ -101,7 +141,7 @@ class EligibilityVerifier(models.Model):
     active = models.BooleanField(default=False)
     api_url = models.TextField(null=True)
     api_auth_header = models.TextField(null=True)
-    api_auth_key = models.TextField(null=True)
+    api_auth_key_secret_name = SecretNameField(null=True)
     eligibility_type = models.ForeignKey(EligibilityType, on_delete=models.PROTECT)
     # public key is used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier
     public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT, null=True)
@@ -119,6 +159,13 @@ class EligibilityVerifier(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def api_auth_key(self):
+        if self.api_auth_key_secret_name is not None:
+            return get_secret_by_name(self.api_auth_key_secret_name)
+        else:
+            return None
 
     @property
     def public_key_data(self):

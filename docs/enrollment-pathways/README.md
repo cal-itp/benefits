@@ -14,17 +14,9 @@ See our [Milestones][milestones] for current work tracked against specific featu
 
 ## Product roadmap
 
-See our [Product Roadmap][roadmap] for more information on planned feature development and prioritization.
+See our Product Roadmap for more information on planned feature development and prioritization.
 
-<iframe src="https://docs.google.com/document/d/1IFoa8Ye0IXwGXXwxFjMrm1s3617Dbv6l-E-aCB0kgnA/edit#"
-        width="100%"
-        height="718"
-        frameborder="0"
-        marginheight="0"
-        marginwidth="0"
-        embedded=true>
-    Loading…
-</iframe>
+![Cal-ITP Benefits Product Roadmap](img/roadmap.png)
 
 [board]: https://github.com/orgs/cal-itp/projects/8/views/1
 [milestones]: https://github.com/cal-itp/benefits/milestones
