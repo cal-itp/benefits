@@ -11,7 +11,7 @@ dependencies = [
     "azure-keyvault-secrets==4.8.0",
     "azure-identity==1.15.0",
     "Django==5.0.2",
-    "django-csp==3.7",
+    "django-csp==3.8",
     "django-google-sso==5.0.0",
     "eligibility-api==2023.9.1",
     "requests==2.31.0",
