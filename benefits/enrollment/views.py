@@ -18,6 +18,7 @@ from benefits.core.middleware import (
     pageview_decorator,
 )
 from benefits.core.views import ROUTE_LOGGED_OUT
+from benefits.enrollment.middleware import TEMPLATE_RETRY
 from . import analytics, forms
 
 
@@ -27,7 +28,6 @@ ROUTE_SUCCESS = "enrollment:success"
 ROUTE_TOKEN = "enrollment:token"
 
 TEMPLATE_INDEX = "enrollment/index.html"
-TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SUCCESS = "enrollment/success.html"
 
 

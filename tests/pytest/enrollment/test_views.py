@@ -8,6 +8,7 @@ import pytest
 
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.core.views import ROUTE_LOGGED_OUT
+from benefits.enrollment.middleware import TEMPLATE_RETRY
 from benefits.enrollment.views import (
     ROUTE_INDEX,
     ROUTE_TOKEN,
@@ -15,7 +16,6 @@ from benefits.enrollment.views import (
     ROUTE_RETRY,
     TEMPLATE_INDEX,
     TEMPLATE_SUCCESS,
-    TEMPLATE_RETRY,
 )
 
 import benefits.enrollment.views
