@@ -18,7 +18,7 @@ from benefits.core.middleware import (
     pageview_decorator,
 )
 from benefits.core.views import ROUTE_LOGGED_OUT
-from benefits.enrollment.middleware import TEMPLATE_RETRY
+from benefits.enrollment.middleware import TEMPLATE_RETRY, HandleEnrollmentError
 from . import analytics, forms
 
 
@@ -35,6 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
+@decorator_from_middleware(HandleEnrollmentError)
 def token(request):
     """View handler for the enrollment auth token."""
     if not session.enrollment_token_valid(request):
@@ -56,6 +57,7 @@ def token(request):
 
 
 @decorator_from_middleware(EligibleSessionRequired)
+@decorator_from_middleware(HandleEnrollmentError)
 def index(request):
     """View handler for the enrollment landing page."""
     session.update(request, origin=reverse(ROUTE_INDEX))
@@ -126,6 +128,7 @@ def index(request):
 
 
 @decorator_from_middleware(EligibleSessionRequired)
+@decorator_from_middleware(HandleEnrollmentError)
 def retry(request):
     """View handler for a recoverable failure condition."""
     if request.method == "POST":
@@ -137,7 +140,6 @@ def retry(request):
             analytics.returned_error(request, "Invalid retry submission.")
             raise Exception("Invalid retry submission.")
     else:
-        analytics.returned_error(request, "This view method only supports POST.")
         raise Exception("This view method only supports POST.")
 
 
