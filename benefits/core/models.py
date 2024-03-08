@@ -206,21 +206,16 @@ class PaymentProcessor(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField()
     api_base_url = models.TextField()
-    api_access_token_endpoint = models.TextField()
-    api_access_token_request_key = models.TextField()
-    api_access_token_request_val = models.TextField()
+    client_id = models.TextField()
+    client_secret_name = SecretNameField()
+    audience = models.TextField()
     card_tokenize_url = models.TextField()
     card_tokenize_func = models.TextField()
     card_tokenize_env = models.TextField()
-    # The certificate used for client certificate authentication to the API
-    client_cert = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
-    # The private key, used to sign the certificate
-    client_cert_private_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
-    # The root CA bundle, used to verify the server.
-    client_cert_root_ca = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
-    customer_endpoint = models.TextField()
-    customers_endpoint = models.TextField()
-    group_endpoint = models.TextField()
+
+    @property
+    def client_secret(self):
+        return get_secret_by_name(self.client_secret_name)
 
     def __str__(self):
         return self.name
