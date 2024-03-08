@@ -16,7 +16,7 @@ dependencies = [
     "eligibility-api==2023.9.1",
     "calitp-littlepay@git+https://github.com/cal-itp/littlepay",
     "requests==2.31.0",
-    "sentry-sdk==1.40.6",
+    "sentry-sdk==1.41.0",
     "six==1.16.0",
 ]
 
