@@ -10,6 +10,12 @@ This use case describes a feature in the [Cal-ITP Benefits app](https://benefits
 
 **Precondition:** The California transit provider delivering fixed route service has installed and tested validator hardware necessary to collect fares using contactless payment on bus or rail lines, and the provider has a policy to offer a transit discount for US veterans.
 
+## Demonstration
+
+Here's a video showing what the flow looks like, having veterans confirm eligibility via Login.gov and enroll via Littlepay:
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/BJOpJ9fZe98?si=IuvJqqkSESRWM_md&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 ## Basic flow
 
 ```mermaid
