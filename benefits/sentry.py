@@ -100,7 +100,7 @@ def configure():
             # send_default_pii must be False (the default) for a custom EventScrubber/denylist
             # https://docs.sentry.io/platforms/python/data-management/sensitive-data/#event_scrubber
             send_default_pii=False,
-            event_scrubber=EventScrubber(denylist=get_denylist()),
+            event_scrubber=EventScrubber(denylist=get_denylist(), recursive=True),
         )
 
         # override the module-level variable when configuration happens, if set
