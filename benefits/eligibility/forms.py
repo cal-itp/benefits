@@ -9,7 +9,6 @@ from django.utils.translation import gettext_lazy as _
 
 from benefits.core import models, recaptcha, widgets
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -160,17 +159,17 @@ class MSTCourtesyCard(EligibilityVerificationForm):
 
 
 class SBMTDMobilityPass(EligibilityVerificationForm):
-    """EligibilityVerification form for the SBMTD Mobility Pass."""
+    """EligibilityVerification form for the SBMTD Reduced Fare Mobility ID."""
 
     def __init__(self, *args, **kwargs):
         super().__init__(
             title=_("Agency card information"),
             headline=_("Let’s see if we can confirm your eligibility."),
-            blurb=_("Please input your Mobility Pass number and last name below to confirm your eligibility."),
-            name_label=_("Last name (as it appears on Mobility Pass card)"),
+            blurb=_("Please input your Reduced Fare Mobility ID number and last name below to confirm your eligibility."),
+            name_label=_("Last name (as it appears on Reduced Fare Mobility ID card)"),
             name_placeholder="Garcia",
-            name_help_text=_("We use this to help confirm your Mobility Pass."),
-            sub_label=_("SBMTD Mobility Pass number"),
+            name_help_text=_("We use this to help confirm your Reduced Fare Mobility ID."),
+            sub_label=_("SBMTD Reduced Fare Mobility ID number"),
             sub_help_text=_("This is a 4-digit number on the back of your card."),
             sub_placeholder="1234",
             name_max_length=255,
