@@ -1,6 +1,6 @@
 [project]
 name = "benefits"
-version = "2024.03.1"
+version = "2024.03.2"
 description = "Cal-ITP Benefits is an application that enables automated eligibility verification and enrollment for transit benefits onto customers’ existing contactless bank (credit/debit) cards."
 readme = "README.md"
 license = { file = "LICENSE" }
