@@ -12,6 +12,14 @@ def mock_requests_get_pem_data(mocker):
     return mocker.patch("benefits.core.models.requests.get", return_value=mocker.Mock(text="PEM text"))
 
 
+@pytest.fixture
+def model_EligibilityType_does_not_support_expiration(model_EligibilityType):
+    model_EligibilityType.supports_expiration = False
+    model_EligibilityType.save()
+
+    return model_EligibilityType
+
+
 def test_SecretNameField_init():
     field = SecretNameField()
 
@@ -178,6 +186,12 @@ def test_EligibilityType_get_names(model_EligibilityType):
 @pytest.mark.django_db
 def test_EligibilityVerifier_str(model_EligibilityVerifier):
     assert str(model_EligibilityVerifier) == model_EligibilityVerifier.name
+
+
+@pytest.mark.django_db
+def test_EligibilityType_supports_expiration_False(model_EligibilityType_does_not_support_expiration):
+    # test will fail if any error is raised
+    model_EligibilityType_does_not_support_expiration.full_clean()
 
 
 class SampleFormClass:
