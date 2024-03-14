@@ -7,6 +7,7 @@ import importlib
 import logging
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 
@@ -134,6 +135,22 @@ class EligibilityType(models.Model):
         if isinstance(eligibility_types, EligibilityType):
             eligibility_types = [eligibility_types]
         return [t.name for t in eligibility_types if isinstance(t, EligibilityType)]
+
+    def clean(self):
+        supports_expiration = self.supports_expiration
+        expiration_days = self.expiration_days
+        expiration_reenrollment_days = self.expiration_reenrollment_days
+
+        if supports_expiration:
+            errors = {}
+            message = "When support_expiration is True, this value must be greater than 0."
+            if expiration_days is None or expiration_days <= 0:
+                errors.update(expiration_days=ValidationError(message))
+            if expiration_reenrollment_days is None or expiration_reenrollment_days <= 0:
+                errors.update(expiration_reenrollment_days=ValidationError(message))
+
+            if errors:
+                raise ValidationError(errors)
 
 
 class EligibilityVerifier(models.Model):
