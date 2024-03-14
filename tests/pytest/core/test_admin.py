@@ -72,6 +72,12 @@ def eligibility_type_form_data(supports_expiration=False, expiration_days=None, 
         "supports_expiration": supports_expiration,
     }
 
+    if expiration_days:
+        form_data.update(expiration_days=expiration_days)
+
+    if expiration_reenrollment_days:
+        form_data.update(expiration_reenrollment_days=expiration_reenrollment_days)
+
     return form_data
 
 
@@ -80,3 +86,103 @@ def test_EligibilityTypeForm_supports_expiration_False():
     form_data = eligibility_type_form_data(supports_expiration=False)
     form = EligibilityTypeForm(form_data)
     assert form.is_valid()
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "valid_expiration_reenrollment_days",
+    ["1", "14", "30"],
+    ids=lambda n: f"negative expiration_days, valid expiration_enrollment_days ({n})",
+)
+def test_EligibilityTypeForm_supports_expiration_True_negative_expiration_days(valid_expiration_reenrollment_days):
+    form_data = eligibility_type_form_data(
+        supports_expiration=True, expiration_days=-20, expiration_reenrollment_days=valid_expiration_reenrollment_days
+    )
+    form = EligibilityTypeForm(form_data)
+
+    # assert state of the form
+    assert not form.is_valid()
+    assert len(form.errors) == 1
+
+    # assert state of specific field
+    errors = form.errors["expiration_days"]
+    assert len(errors) == 2
+
+    # error message coming from PositiveSmallIntegerField validation
+    assert errors[0] == "Ensure this value is greater than or equal to 0."
+    # our custom validation message for when supports_expiration is True
+    assert errors[1] == "When support_expiration is True, this value must be greater than 0."
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "valid_expiration_reenrollment_days",
+    ["1", "14", "30"],
+    ids=lambda n: f"zero expiration days, valid expiration_enrollment_days ({n})",
+)
+def test_EligibilityTypeForm_supports_expiration_True_zero_expiration_days(valid_expiration_reenrollment_days):
+    form_data = eligibility_type_form_data(
+        supports_expiration=True, expiration_days=0, expiration_reenrollment_days=valid_expiration_reenrollment_days
+    )
+    form = EligibilityTypeForm(form_data)
+
+    # assert state of the form
+    assert not form.is_valid()
+    assert len(form.errors) == 1
+
+    # assert state of specific field
+    errors = form.errors["expiration_days"]
+    assert len(errors) == 1
+
+    # our custom validation message for when supports_expiration is True
+    assert errors[0] == "When support_expiration is True, this value must be greater than 0."
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "valid_expiration_days",
+    ["1", "14", "30"],
+    ids=lambda n: f"valid expiration_days ({n}), negative expiration_reenrollment_days",
+)
+def test_EligibilityTypeForm_supports_expiration_True_negative_expiration_reenrollment_days(valid_expiration_days):
+    form_data = eligibility_type_form_data(
+        supports_expiration=True, expiration_days=valid_expiration_days, expiration_reenrollment_days=-20
+    )
+    form = EligibilityTypeForm(form_data)
+
+    # assert state of the form
+    assert not form.is_valid()
+    assert len(form.errors) == 1
+
+    # assert state of specific field
+    errors = form.errors["expiration_reenrollment_days"]
+    assert len(errors) == 2
+
+    # error message coming from PositiveSmallIntegerField validation
+    assert errors[0] == "Ensure this value is greater than or equal to 0."
+    # our custom validation message for when supports_expiration is True
+    assert errors[1] == "When support_expiration is True, this value must be greater than 0."
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "valid_expiration_days",
+    ["1", "14", "30"],
+    ids=lambda n: f"valid expiration_days ({n}), zero expiration_reenrollment_days",
+)
+def test_EligibilityTypeForm_supports_expiration_True_zero_expiration_reenrollment_days(valid_expiration_days):
+    form_data = eligibility_type_form_data(
+        supports_expiration=True, expiration_days=valid_expiration_days, expiration_reenrollment_days=0
+    )
+    form = EligibilityTypeForm(form_data)
+
+    # assert state of the form
+    assert not form.is_valid()
+    assert len(form.errors) == 1
+
+    # assert state of specific field
+    errors = form.errors["expiration_reenrollment_days"]
+    assert len(errors) == 1
+
+    # our custom validation message for when supports_expiration is True
+    assert errors[0] == "When support_expiration is True, this value must be greater than 0."
