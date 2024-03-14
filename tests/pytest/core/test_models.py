@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
 
 import pytest
 
@@ -15,6 +16,37 @@ def mock_requests_get_pem_data(mocker):
 @pytest.fixture
 def model_EligibilityType_does_not_support_expiration(model_EligibilityType):
     model_EligibilityType.supports_expiration = False
+    model_EligibilityType.expiration_days = 0
+    model_EligibilityType.save()
+
+    return model_EligibilityType
+
+
+@pytest.fixture
+def model_EligibilityType_zero_expiration_days(model_EligibilityType):
+    model_EligibilityType.supports_expiration = True
+    model_EligibilityType.expiration_days = 0
+    model_EligibilityType.expiration_reenrollment_days = 14
+    model_EligibilityType.save()
+
+    return model_EligibilityType
+
+
+@pytest.fixture
+def model_EligibilityType_zero_expiration_reenrollment_days(model_EligibilityType):
+    model_EligibilityType.supports_expiration = True
+    model_EligibilityType.expiration_days = 14
+    model_EligibilityType.expiration_reenrollment_days = 0
+    model_EligibilityType.save()
+
+    return model_EligibilityType
+
+
+@pytest.fixture
+def model_EligibilityType_supports_expiration(model_EligibilityType):
+    model_EligibilityType.supports_expiration = True
+    model_EligibilityType.expiration_days = 365
+    model_EligibilityType.expiration_reenrollment_days = 14
     model_EligibilityType.save()
 
     return model_EligibilityType
@@ -192,6 +224,35 @@ def test_EligibilityVerifier_str(model_EligibilityVerifier):
 def test_EligibilityType_supports_expiration_False(model_EligibilityType_does_not_support_expiration):
     # test will fail if any error is raised
     model_EligibilityType_does_not_support_expiration.full_clean()
+
+
+@pytest.mark.django_db
+def test_EligibilityType_zero_expiration_days(model_EligibilityType_zero_expiration_days):
+    with pytest.raises(ValidationError) as exception_info:
+        model_EligibilityType_zero_expiration_days.full_clean()
+
+    error_dict = exception_info.value.error_dict
+    assert len(error_dict["expiration_days"]) == 1
+    assert error_dict["expiration_days"][0].message == "When support_expiration is True, this value must be greater than 0."
+
+
+@pytest.mark.django_db
+def test_EligibilityType_zero_expiration_reenrollment_days(model_EligibilityType_zero_expiration_reenrollment_days):
+    with pytest.raises(ValidationError) as exception_info:
+        model_EligibilityType_zero_expiration_reenrollment_days.full_clean()
+
+    error_dict = exception_info.value.error_dict
+    assert len(error_dict["expiration_reenrollment_days"]) == 1
+    assert (
+        error_dict["expiration_reenrollment_days"][0].message
+        == "When support_expiration is True, this value must be greater than 0."
+    )
+
+
+@pytest.mark.django_db
+def test_EligibilityType_supports_expiration(model_EligibilityType_supports_expiration):
+    # test will fail if any error is raised
+    model_EligibilityType_supports_expiration.full_clean()
 
 
 class SampleFormClass:
