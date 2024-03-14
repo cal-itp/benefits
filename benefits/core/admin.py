@@ -5,6 +5,7 @@ The core application: Admin interface configuration.
 import logging
 import requests
 
+from django import forms
 from django.conf import settings
 from django.contrib import admin
 from . import models
@@ -16,7 +17,6 @@ GOOGLE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo"
 
 
 for model in [
-    models.EligibilityType,
     models.EligibilityVerifier,
     models.PaymentProcessor,
     models.PemData,
@@ -24,6 +24,20 @@ for model in [
 ]:
     logger.debug(f"Register {model.__name__}")
     admin.site.register(model)
+
+
+class EligibilityTypeForm(forms.ModelForm):
+    class Meta:
+        model = models.EligibilityType
+        exclude = []
+
+
+class EligibilityTypeAdmin(admin.ModelAdmin):
+    form = EligibilityTypeForm
+
+
+logger.debug(f"Register {models.EligibilityType.__name__} with custom admin {EligibilityTypeAdmin.__name__}")
+admin.site.register(models.EligibilityType, EligibilityTypeAdmin)
 
 
 def pre_login_user(user, request):
