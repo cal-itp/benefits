@@ -1,7 +1,7 @@
 import pytest
 from django.contrib.auth.models import User
 import benefits.core.admin
-from benefits.core.admin import GOOGLE_USER_INFO_URL, pre_login_user
+from benefits.core.admin import GOOGLE_USER_INFO_URL, pre_login_user, EligibilityTypeForm
 
 
 @pytest.fixture
@@ -62,3 +62,21 @@ def test_pre_login_user_no_session_token(mocker, model_AdminUser):
     assert model_AdminUser.last_name == ""
     assert model_AdminUser.username == ""
     logger_spy.warning.assert_called_once()
+
+
+def eligibility_type_form_data(supports_expiration=False, expiration_days=None, expiration_reenrollment_days=None):
+    form_data = {
+        "name": "calfresh",
+        "label": "CalFresh recipients",
+        "group_id": "123",
+        "supports_expiration": supports_expiration,
+    }
+
+    return form_data
+
+
+@pytest.mark.django_db
+def test_EligibilityTypeForm_supports_expiration_False():
+    form_data = eligibility_type_form_data(supports_expiration=False)
+    form = EligibilityTypeForm(form_data)
+    assert form.is_valid()
