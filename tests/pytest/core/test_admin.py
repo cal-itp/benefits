@@ -186,3 +186,17 @@ def test_EligibilityTypeForm_supports_expiration_True_zero_expiration_reenrollme
 
     # our custom validation message for when supports_expiration is True
     assert errors[0] == "When support_expiration is True, this value must be greater than 0."
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("expiration_days", ["1", "14", "3000"], ids=lambda n: f"expiration_days ({n})")
+@pytest.mark.parametrize(
+    "expiration_reenrollment_days", ["1", "14", "3000"], ids=lambda n: f"expiration_reenrollment_days ({n})"
+)
+def test_EligibilityTypeForm_supports_expiration_True_valid(expiration_days, expiration_reenrollment_days):
+    form_data = eligibility_type_form_data(
+        supports_expiration=True, expiration_days=expiration_days, expiration_reenrollment_days=expiration_reenrollment_days
+    )
+    form = EligibilityTypeForm(form_data)
+
+    assert form.is_valid()
