@@ -109,6 +109,9 @@ class EligibilityType(models.Model):
     name = models.TextField()
     label = models.TextField()
     group_id = models.TextField()
+    supports_expiration = models.BooleanField(default=False)
+    expiration_days = models.PositiveSmallIntegerField(null=True, blank=True)
+    expiration_reenrollment_days = models.PositiveSmallIntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.label
