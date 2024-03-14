@@ -8,6 +8,7 @@ import requests
 from django import forms
 from django.conf import settings
 from django.contrib import admin
+from django.core.exceptions import ValidationError
 from . import models
 
 logger = logging.getLogger(__name__)
@@ -30,6 +31,19 @@ class EligibilityTypeForm(forms.ModelForm):
     class Meta:
         model = models.EligibilityType
         exclude = []
+
+    def clean(self):
+        cleaned_data = super().clean()
+        supports_expiration = cleaned_data.get("supports_expiration")
+        expiration_days = cleaned_data.get("expiration_days")
+        expiration_reenrollment_days = cleaned_data.get("expiration_reenrollment_days")
+
+        if supports_expiration:
+            message = "When support_expiration is True, this value must be greater than 0."
+            if expiration_days is None or expiration_days <= 0:
+                self.add_error("expiration_days", ValidationError(message))
+            if expiration_reenrollment_days is None or expiration_reenrollment_days <= 0:
+                self.add_error("expiration_reenrollment_days", ValidationError(message))
 
 
 class EligibilityTypeAdmin(admin.ModelAdmin):
