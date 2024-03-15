@@ -20,7 +20,7 @@
 | benefits/eligibility/\_\_init\_\_.py |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/analytics.py    |       30 |        4 |        4 |        2 |     82% |22, 38->40, 40->exit, 46, 56, 61 |
 | benefits/eligibility/apps.py         |        5 |        0 |        0 |        0 |    100% |           |
-| benefits/eligibility/forms.py        |       54 |        8 |       12 |        6 |     79% |39, 116, 118, 120, 130, 136, 143, 166 |
+| benefits/eligibility/forms.py        |       54 |        8 |       12 |        6 |     79% |38, 115, 117, 119, 129, 135, 142, 165 |
 | benefits/eligibility/urls.py         |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/verify.py       |       15 |        0 |        6 |        0 |    100% |           |
 | benefits/eligibility/views.py        |      104 |        2 |       58 |        3 |     97% |42, 66, 124->exit |
