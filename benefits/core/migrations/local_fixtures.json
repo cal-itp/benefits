@@ -269,7 +269,7 @@
       "jws_signing_alg": null,
       "auth_provider": 1,
       "selection_label_template": "eligibility/includes/selection-label--calfresh.html",
-      "start_template": "",
+      "start_template": "eligibility/start--calfresh.html",
       "form_class": null
     }
   },
