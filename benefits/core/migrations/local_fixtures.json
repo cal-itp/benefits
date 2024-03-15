@@ -118,6 +118,15 @@
     }
   },
   {
+    "model": "core.eligibilitytype",
+    "pk": 7,
+    "fields": {
+      "name": "calfresh",
+      "label": "CalFresh",
+      "group_id": "group123"
+    }
+  },
+  {
     "model": "core.eligibilityverifier",
     "pk": 1,
     "fields": {
@@ -238,6 +247,26 @@
     }
   },
   {
+    "model": "core.eligibilityverifier",
+    "pk": 7,
+    "fields": {
+      "name": "CalFresh oauth claims via Login.gov",
+      "active": true,
+      "api_url": null,
+      "api_auth_header": null,
+      "api_auth_key_secret_name": null,
+      "eligibility_type": 7,
+      "public_key": null,
+      "jwe_cek_enc": null,
+      "jwe_encryption_alg": null,
+      "jws_signing_alg": null,
+      "auth_provider": 1,
+      "selection_label_template": "eligibility/includes/selection-label--calfresh.html",
+      "start_template": "",
+      "form_class": null
+    }
+  },
+  {
     "model": "core.paymentprocessor",
     "pk": 1,
     "fields": {
@@ -299,8 +328,8 @@
       "eligibility_index_template": "eligibility/index--mst.html",
       "enrollment_success_template": "enrollment/success--mst.html",
       "help_template": "core/includes/help--mst.html",
-      "eligibility_types": [1, 2, 3],
-      "eligibility_verifiers": [1, 2, 3]
+      "eligibility_types": [1, 7, 2, 3],
+      "eligibility_verifiers": [1, 7, 2, 3]
     }
   },
   {

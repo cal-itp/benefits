@@ -1,0 +1,42 @@
+{% extends "core/includes/modal.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block modal-content %}
+    <h2 class="me-4 me-md-0">{% translate "Learn more about the transit benefit for CalFresh Cardholders" %}</h2>
+    <div class="row">
+        <h3 class="pt-4">{% translate "How do I know if I'm eligible for the transit benefit for CalFresh Cardholders?" %}</h3>
+        <p class="pt-1">
+            {% blocktranslate trimmed %}
+                We verify your eligibility as a CalFresh Cardholder by confirming you have received funds in your
+                CalFresh account at any point in the last three months. This means you are eligible for a transit
+                benefit even if you did not receive funds in your CalFresh account this month or last month.
+            {% endblocktranslate %}
+        </p>
+
+        <h3 class="pt-4">{% translate "Will this transit benefit change my CalFresh account?" %}</h3>
+        <p class="pt-1">
+            {% blocktranslate trimmed %}
+                No. Your monthly CalFresh allotment will not change.
+            {% endblocktranslate %}
+        </p>
+        <h3 class="pt-4">{% translate "Do I need my Golden State Advantage card to enroll?" %}</h3>
+        <p class="pt-1">
+            {% blocktranslate trimmed %}
+                No, you do not need your physical EBT card to enroll. We use information from Login.gov and the California
+                Department of Social Services to enroll you in the benefit.
+            {% endblocktranslate %}
+        </p>
+        <h3 class="pt-4">{% translate "Can I use my Golden State Advantage card to pay for transit rides?" %}</h3>
+        <p class="pt-1">
+            {% blocktranslate trimmed %}
+                No. You can not use your EBT or P-EBT card to pay for public transportation. When you tap to ride, use your personal
+                contactless debit or credit card to pay for public transportation.
+            {% endblocktranslate %}
+        </p>
+
+        <p class="pt-4 d-block d-sm-none">
+            <a href="#" data-bs-dismiss="modal" aria-label="Close">{% translate "Go back" %}</a>
+        </p>
+    </div>
+{% endblock modal-content %}

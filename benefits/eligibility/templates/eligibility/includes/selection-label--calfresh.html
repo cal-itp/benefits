@@ -1,0 +1,18 @@
+{% extends "eligibility/includes/selection-label.html" %}
+{% load i18n %}
+
+{% block label %}
+    {% translate "CalFresh Cardholder" %}
+{% endblock label %}
+
+{% block description %}
+    {% translate "You must have" %}
+    {% comment %} modal-trigger needs to be refactored to support translating the text {% endcomment %}
+    {% include "core/includes/modal-trigger.html" with modal="modal--calfresh" text="recently received CalFresh funds" period=True %}
+    {% include "eligibility/includes/modal--calfresh.html" with id="modal--calfresh" size="modal-lg" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
+
+    {% translate "This transit benefit will remain active for one year. You will need to verify your identity with" %}
+    {% include "core/includes/modal-trigger.html" with classes="border-0 bg-transparent p-0 login" modal="modal--login-gov-veteran" login=True period=True %}
+    {% include "eligibility/includes/modal--login-gov-help.html" with id="modal--login-gov-calfresh" size="modal-lg" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
+
+{% endblock description %}
