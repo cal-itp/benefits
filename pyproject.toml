@@ -12,7 +12,7 @@ dependencies = [
     "azure-identity==1.15.0",
     "Django==5.0.3",
     "django-csp==3.8",
-    "django-google-sso==6.0.1",
+    "django-google-sso==6.0.2",
     "eligibility-api==2023.9.1",
     "calitp-littlepay==2024.3.1",
     "requests==2.31.0",
