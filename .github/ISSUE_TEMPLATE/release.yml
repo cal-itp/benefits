@@ -91,6 +91,7 @@ body:
         - label: Confirm acceptance of Smoke Tests by adding a comment to this issue
         - label: Tag the release on the `prod` branch, push the tag to GitHub (see [docs](https://docs.calitp.org/benefits/deployment/release/#5-tag-the-release) for commands)
         - label: Create a release in GitHub for the tag, generating release notes
+        - label: Edit release notes to link back to this Release process issue
         - label: Edit release notes with additional context, images, animations, etc. as-needed
   - type: checkboxes
     id: hotfix-checklist
@@ -106,6 +107,7 @@ body:
         - label: Confirm acceptance of Smoke Tests by adding a comment to this issue
         - label: Tag the release on `prod`, push the tag to GitHub (see [docs](https://docs.calitp.org/benefits/deployment/release/#5-tag-the-release) for commands)
         - label: Create a release in GitHub for the tag, generating release notes
+        - label: Edit release notes to link back to this Release process issue
         - label: Edit release notes with additional context, images, animations, etc. as-needed
         - label: Create a branch off `dev`
         - label: Open a PR from `prod` into that branch, merge
