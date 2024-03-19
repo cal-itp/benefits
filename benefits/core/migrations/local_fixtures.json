@@ -131,6 +131,7 @@
     "pk": 1,
     "fields": {
       "name": "(MST) oauth claims via Login.gov",
+      "display_order": 1,
       "active": true,
       "api_url": null,
       "api_auth_header": null,
@@ -151,6 +152,7 @@
     "pk": 2,
     "fields": {
       "name": "(MST) VA.gov - veteran",
+      "display_order": 3,
       "active": true,
       "api_url": null,
       "api_auth_header": null,
@@ -171,6 +173,7 @@
     "pk": 3,
     "fields": {
       "name": "(MST) eligibility server verifier",
+      "display_order": 4,
       "active": true,
       "api_url": "http://server:8000/verify",
       "api_auth_header": "X-Server-API-Key",
@@ -191,6 +194,7 @@
     "pk": 4,
     "fields": {
       "name": "(SacRT) oauth claims via Login.gov",
+      "display_order": 5,
       "active": false,
       "api_url": null,
       "api_auth_header": null,
@@ -211,6 +215,7 @@
     "pk": 5,
     "fields": {
       "name": "(SBMTD) oauth claims via Login.gov",
+      "display_order": 6,
       "active": false,
       "api_url": null,
       "api_auth_header": null,
@@ -231,6 +236,7 @@
     "pk": 6,
     "fields": {
       "name": "(SBMTD) eligibility server verifier",
+      "display_order": 7,
       "active": true,
       "api_url": "http://server:8000/verify",
       "api_auth_header": "X-Server-API-Key",
@@ -251,6 +257,7 @@
     "pk": 7,
     "fields": {
       "name": "CalFresh oauth claims via Login.gov",
+      "display_order": 2,
       "active": true,
       "api_url": null,
       "api_auth_header": null,
