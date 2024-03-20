@@ -7,8 +7,8 @@
 
 {% block description %}
     {% translate "You must have" %}
-    {% comment %} modal-trigger needs to be refactored to support translating the text {% endcomment %}
-    {% include "core/includes/modal-trigger.html" with modal="modal--calfresh" text="recently received CalFresh funds" period=True %}
+    {% translate "recently received CalFresh funds" as calfresh_modal_link %}
+    {% include "core/includes/modal-trigger.html" with modal="modal--calfresh" text=calfresh_modal_link period=True %}
     {% include "eligibility/includes/modal--calfresh.html" with id="modal--calfresh" size="modal-lg" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
 
     {% translate "This transit benefit will remain active for one year. You will need to verify your identity with" %}
