@@ -113,6 +113,7 @@ class EligibilityType(models.Model):
     supports_expiration = models.BooleanField(default=False)
     expiration_days = models.PositiveSmallIntegerField(null=True, blank=True)
     expiration_reenrollment_days = models.PositiveSmallIntegerField(null=True, blank=True)
+    enrollment_index_template = models.TextField(default="enrollment/index.html")
 
     def __str__(self):
         return self.label

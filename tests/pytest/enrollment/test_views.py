@@ -13,7 +13,6 @@ from benefits.enrollment.views import (
     ROUTE_TOKEN,
     ROUTE_SUCCESS,
     ROUTE_RETRY,
-    TEMPLATE_INDEX,
     TEMPLATE_SUCCESS,
     TEMPLATE_RETRY,
 )
@@ -101,12 +100,12 @@ def test_token_valid(mocker, client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
-def test_index_eligible_get(client):
+def test_index_eligible_get(client, model_EligibilityType):
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
+    assert response.template_name == model_EligibilityType.enrollment_index_template
     assert "forms" in response.context_data
     assert "cta_button" in response.context_data
     assert "card_tokenize_env" in response.context_data
