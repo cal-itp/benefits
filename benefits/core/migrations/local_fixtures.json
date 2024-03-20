@@ -256,7 +256,7 @@
     "model": "core.eligibilityverifier",
     "pk": 7,
     "fields": {
-      "name": "CalFresh oauth claims via Login.gov",
+      "name": "(MST) CalFresh oauth claims via Login.gov",
       "display_order": 2,
       "active": true,
       "api_url": null,
