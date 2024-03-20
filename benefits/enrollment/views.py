@@ -11,7 +11,7 @@ from django.utils.decorators import decorator_from_middleware
 from littlepay.api.client import Client
 from requests.exceptions import HTTPError
 
-from benefits.core import models, session
+from benefits.core import session
 from benefits.core.middleware import (
     EligibleSessionRequired,
     VerifierSessionRequired,
@@ -26,7 +26,6 @@ ROUTE_RETRY = "enrollment:retry"
 ROUTE_SUCCESS = "enrollment:success"
 ROUTE_TOKEN = "enrollment:token"
 
-TEMPLATE_INDEX = "enrollment/index.html"
 TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SUCCESS = "enrollment/success.html"
 
@@ -61,6 +60,7 @@ def index(request):
     session.update(request, origin=reverse(ROUTE_INDEX))
 
     agency = session.agency(request)
+    eligibility = session.eligibility(request)
     payment_processor = agency.payment_processor
 
     # POST back after payment processor form, process card token
@@ -68,9 +68,6 @@ def index(request):
         form = forms.CardTokenizeSuccessForm(request.POST)
         if not form.is_valid():
             raise Exception("Invalid card token form")
-
-        eligibility = session.eligibility(request)
-        logger.debug(f"Session contains an {models.EligibilityType.__name__}")
 
         logger.debug("Read tokenized card")
         card_token = form.cleaned_data.get("card_token")
@@ -122,7 +119,7 @@ def index(request):
 
         logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
 
-        return TemplateResponse(request, TEMPLATE_INDEX, context)
+        return TemplateResponse(request, eligibility.enrollment_index_template, context)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
