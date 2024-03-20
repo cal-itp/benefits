@@ -158,6 +158,7 @@ class EligibilityVerifier(models.Model):
 
     id = models.AutoField(primary_key=True)
     name = models.TextField()
+    display_order = models.PositiveSmallIntegerField(default=0, blank=False, null=False)
     active = models.BooleanField(default=False)
     api_url = models.TextField(null=True)
     api_auth_header = models.TextField(null=True)
@@ -176,6 +177,9 @@ class EligibilityVerifier(models.Model):
     start_template = models.TextField(null=True)
     # reference to a form class used by this Verifier, e.g. benefits.app.forms.FormClass
     form_class = models.TextField(null=True)
+
+    class Meta:
+        ordering = ["display_order"]
 
     def __str__(self):
         return self.name

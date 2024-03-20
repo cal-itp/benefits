@@ -118,10 +118,20 @@
     }
   },
   {
+    "model": "core.eligibilitytype",
+    "pk": 7,
+    "fields": {
+      "name": "calfresh",
+      "label": "CalFresh",
+      "group_id": "group123"
+    }
+  },
+  {
     "model": "core.eligibilityverifier",
     "pk": 1,
     "fields": {
       "name": "(MST) oauth claims via Login.gov",
+      "display_order": 1,
       "active": true,
       "api_url": null,
       "api_auth_header": null,
@@ -142,6 +152,7 @@
     "pk": 2,
     "fields": {
       "name": "(MST) VA.gov - veteran",
+      "display_order": 3,
       "active": true,
       "api_url": null,
       "api_auth_header": null,
@@ -162,6 +173,7 @@
     "pk": 3,
     "fields": {
       "name": "(MST) eligibility server verifier",
+      "display_order": 4,
       "active": true,
       "api_url": "http://server:8000/verify",
       "api_auth_header": "X-Server-API-Key",
@@ -182,6 +194,7 @@
     "pk": 4,
     "fields": {
       "name": "(SacRT) oauth claims via Login.gov",
+      "display_order": 5,
       "active": false,
       "api_url": null,
       "api_auth_header": null,
@@ -202,6 +215,7 @@
     "pk": 5,
     "fields": {
       "name": "(SBMTD) oauth claims via Login.gov",
+      "display_order": 6,
       "active": false,
       "api_url": null,
       "api_auth_header": null,
@@ -222,6 +236,7 @@
     "pk": 6,
     "fields": {
       "name": "(SBMTD) eligibility server verifier",
+      "display_order": 7,
       "active": true,
       "api_url": "http://server:8000/verify",
       "api_auth_header": "X-Server-API-Key",
@@ -235,6 +250,27 @@
       "selection_label_template": "eligibility/includes/selection-label--sbmtd-mobility-pass.html",
       "start_template": "eligibility/start--sbmtd-mobility-pass.html",
       "form_class": "benefits.eligibility.forms.SBMTDMobilityPass"
+    }
+  },
+  {
+    "model": "core.eligibilityverifier",
+    "pk": 7,
+    "fields": {
+      "name": "(MST) CalFresh oauth claims via Login.gov",
+      "display_order": 2,
+      "active": true,
+      "api_url": null,
+      "api_auth_header": null,
+      "api_auth_key_secret_name": null,
+      "eligibility_type": 7,
+      "public_key": null,
+      "jwe_cek_enc": null,
+      "jwe_encryption_alg": null,
+      "jws_signing_alg": null,
+      "auth_provider": 1,
+      "selection_label_template": "eligibility/includes/selection-label--calfresh.html",
+      "start_template": "",
+      "form_class": null
     }
   },
   {
@@ -299,8 +335,8 @@
       "eligibility_index_template": "eligibility/index--mst.html",
       "enrollment_success_template": "enrollment/success--mst.html",
       "help_template": "core/includes/help--mst.html",
-      "eligibility_types": [1, 2, 3],
-      "eligibility_verifiers": [1, 2, 3]
+      "eligibility_types": [1, 7, 2, 3],
+      "eligibility_verifiers": [1, 7, 2, 3]
     }
   },
   {

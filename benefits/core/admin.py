@@ -5,6 +5,7 @@ The core application: Admin interface configuration.
 import logging
 import requests
 
+from adminsortable2.admin import SortableAdminMixin
 from django.conf import settings
 from django.contrib import admin
 from . import models
@@ -17,13 +18,17 @@ GOOGLE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo"
 
 for model in [
     models.EligibilityType,
-    models.EligibilityVerifier,
     models.PaymentProcessor,
     models.PemData,
     models.TransitAgency,
 ]:
     logger.debug(f"Register {model.__name__}")
     admin.site.register(model)
+
+
+@admin.register(models.EligibilityVerifier)
+class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):
+    pass
 
 
 def pre_login_user(user, request):
