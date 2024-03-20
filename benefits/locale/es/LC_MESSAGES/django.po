@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-03-13 22:40+0000\n"
+"POT-Creation-Date: 2024-03-20 18:12+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -469,6 +469,45 @@ msgid "A phone number with a phone plan associated with your name"
 msgstr ""
 "Un número de teléfono en el cual pueda recibir llamadas o mensajes de texto"
 
+msgid "Learn more about the transit benefit for CalFresh Cardholders"
+msgstr ""
+
+msgid ""
+"How do I know if I'm eligible for the transit benefit for CalFresh "
+"Cardholders?"
+msgstr ""
+
+msgid ""
+"We verify your eligibility as a CalFresh Cardholder by confirming you have "
+"received funds in your CalFresh account at any point in the last three "
+"months. This means you are eligible for a transit benefit even if you did "
+"not receive funds in your CalFresh account this month or last month."
+msgstr ""
+
+msgid "Will this transit benefit change my CalFresh account?"
+msgstr ""
+
+msgid "No. Your monthly CalFresh allotment will not change."
+msgstr ""
+
+msgid "Do I need my Golden State Advantage card to enroll?"
+msgstr ""
+
+msgid ""
+"No, you do not need your physical EBT card to enroll. We use information "
+"from Login.gov and the California Department of Social Services to enroll "
+"you in the benefit."
+msgstr ""
+
+msgid "Can I use my Golden State Advantage card to pay for transit rides?"
+msgstr ""
+
+msgid ""
+"No. You can not use your EBT or P-EBT card to pay for public transportation. "
+"When you tap to ride, use your personal contactless debit or credit card to "
+"pay for public transportation."
+msgstr ""
+
 msgid "Go back"
 msgstr "Volver"
 
@@ -488,6 +527,20 @@ msgid ""
 msgstr ""
 "Utilizamos Login.gov para verificar su identidad para asegurarnos de que "
 "seas elegible para el beneficio de tránsito que seleccionaste."
+
+msgid "CalFresh Cardholder"
+msgstr ""
+
+msgid "You must have"
+msgstr ""
+
+msgid "recently received CalFresh funds"
+msgstr ""
+
+msgid ""
+"This transit benefit will remain active for one year. You will need to "
+"verify your identity with"
+msgstr ""
 
 msgid "MST Courtesy Card"
 msgstr "Tarjeta de cortesía de MST"
