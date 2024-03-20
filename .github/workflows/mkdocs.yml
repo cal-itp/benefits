@@ -48,16 +48,15 @@ jobs:
           mkdocs build
 
       - name: Install Netlify CLI
-        run: npm install --location=global netlify-cli
+        run: npm install --location=global netlify-cli@17.x.x
 
       - name: Deploy Preview to Netlify
         run: |
           netlify deploy \
+            --alias="${GITHUB_REPOSITORY#*/}-${{ github.event.number }}" \
+            --auth=${{ secrets.NETLIFY_AUTH_TOKEN }} \
             --dir="site" \
-            --alias="${GITHUB_REPOSITORY#*/}-${{ github.event.number }}"
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_PREVIEW_APP_SITE_ID }}
+            --site=${{ secrets.NETLIFY_PREVIEW_APP_SITE_ID }}
 
       - name: Find existing comment
         uses: peter-evans/find-comment@v3
