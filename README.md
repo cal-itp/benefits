@@ -6,12 +6,12 @@
 |------------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
 | benefits/\_\_init\_\_.py             |        6 |        2 |        0 |        0 |     67% |       5-7 |
 | benefits/core/\_\_init\_\_.py        |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/core/admin.py               |       24 |        0 |        4 |        0 |    100% |           |
+| benefits/core/admin.py               |       28 |        0 |        6 |        0 |    100% |           |
 | benefits/core/analytics.py           |       89 |       20 |       16 |        3 |     69% |115-117, 122, 128-150, 161 |
 | benefits/core/apps.py                |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/core/context\_processors.py |       30 |        2 |        8 |        1 |     92% |    64, 74 |
 | benefits/core/middleware.py          |       91 |        5 |       22 |        3 |     93% |38-39, 58-59, 78->83, 146 |
-| benefits/core/models.py              |      212 |        3 |       62 |        1 |     99% |74-75, 188 |
+| benefits/core/models.py              |      215 |        3 |       62 |        1 |     99% |74-75, 192 |
 | benefits/core/recaptcha.py           |       13 |        5 |        4 |        1 |     53% |     26-32 |
 | benefits/core/session.py             |      153 |        2 |       32 |        0 |     99% |     52-53 |
 | benefits/core/urls.py                |       24 |        0 |        2 |        0 |    100% |           |
@@ -40,10 +40,10 @@
 | benefits/oauth/views.py              |       73 |        0 |       26 |        0 |    100% |           |
 | benefits/secrets.py                  |       48 |        8 |       10 |        1 |     81% |     90-99 |
 | benefits/sentry.py                   |       57 |       12 |       14 |        1 |     79% |19, 24-25, 30, 34-35, 63-64, 87-108 |
-| benefits/settings.py                 |      118 |        6 |       22 |        8 |     90% |91, 112->117, 128->131, 145, 290, 292, 307, 319 |
+| benefits/settings.py                 |      118 |        6 |       22 |        8 |     90% |92, 113->118, 129->132, 146, 291, 293, 308, 320 |
 | benefits/urls.py                     |       22 |        7 |        2 |        1 |     67% |     34-48 |
 | benefits/wsgi.py                     |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                            **TOTAL** | **1474** |  **104** |  **386** |   **36** | **92%** |           |
+|                            **TOTAL** | **1481** |  **104** |  **388** |   **36** | **92%** |           |
 
 
 ## Setup coverage badge
