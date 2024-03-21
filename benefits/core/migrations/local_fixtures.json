@@ -187,7 +187,7 @@
       "selection_label_template": "eligibility/includes/selection-label--mst-courtesy-card.html",
       "start_template": "eligibility/start--mst-courtesy-card.html",
       "form_class": "benefits.eligibility.forms.MSTCourtesyCard",
-      "help_template": "core/includes/help--mst.html"
+      "help_template": "core/includes/help--mst-courtesy-card.html"
     }
   },
   {
@@ -251,7 +251,7 @@
       "selection_label_template": "eligibility/includes/selection-label--sbmtd-mobility-pass.html",
       "start_template": "eligibility/start--sbmtd-mobility-pass.html",
       "form_class": "benefits.eligibility.forms.SBMTDMobilityPass",
-      "help_template": "core/includes/help--sbmtd.html"
+      "help_template": "core/includes/help--sbmtd-mobility-pass.html"
     }
   },
   {
