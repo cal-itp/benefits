@@ -24,6 +24,11 @@ def session_reset_spy(mocker):
 @pytest.fixture
 def mocked_active_agency(mocker):
     mock_agency = mocker.Mock()
+
+    # ensure agency.eligibility_verifiers is iterable
+    eligibility_verifiers = mocker.MagicMock()
+    mock_agency.eligibility_verifiers = eligibility_verifiers
+
     mock_agency.index_url = "/agency"
     mocker.patch("benefits.core.session.agency", return_value=mock_agency)
     mocker.patch("benefits.core.session.active_agency", return_value=True)
