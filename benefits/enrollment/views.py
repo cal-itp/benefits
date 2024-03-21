@@ -18,7 +18,7 @@ from benefits.core.middleware import (
     pageview_decorator,
 )
 from benefits.core.views import ROUTE_LOGGED_OUT
-from . import analytics, forms
+from . import analytics, expiration, forms
 
 
 ROUTE_INDEX = "enrollment:index"
@@ -84,25 +84,56 @@ def index(request):
         client.oauth.ensure_active_token(client.token)
 
         funding_source = client.get_funding_source_by_token(card_token)
+        group_id = eligibility.group_id
 
         try:
-            client.link_concession_group_funding_source(funding_source_id=funding_source.id, group_id=eligibility.group_id)
-        except HTTPError as e:
-            # 409 means that customer already belongs to a concession group.
-            # the response JSON will look like:
-            # {"errors":[{"detail":"Conflict (409) - Customer already belongs to a concession group."}]}
-            if e.response.status_code == 409:
+            group_funding_sources = client.get_concession_group_linked_funding_sources(group_id)
+            matching_group_funding_source = None
+            for group_funding_source in group_funding_sources:
+                if group_funding_source.id == funding_source.id:
+                    matching_group_funding_source = group_funding_source
+                    break
+
+            # funding source is already linked to the group
+            if matching_group_funding_source:
+                # if no expiration date, return success
+                if matching_group_funding_source.concession_expiry is None:
+                    analytics.returned_success(request, group_id)
+                    return success(request)
+                # else if expiration date has passed, then re-enroll
+                elif expiration.is_expired(matching_group_funding_source):
+                    client.link_concession_group_funding_source(funding_source_id=funding_source.id, group_id=group_id)
+                    analytics.returned_success(request, group_id)
+                    return success(request)
+                # else expiration date hasn't passed, so calculate re-enrollment date and show user
+                else:
+                    reenrollment_date = expiration.calculate_reenrollment_date(  # noqa
+                        matching_group_funding_source, eligibility.expiration_reenrollment_days
+                    )
+
+                    analytics.returned_error(request, "Funding source already enrolled and has not expired")
+                    # todo for #1921: show reenrollment_date to user
+            # funding source has not been linked to the group yet
+            else:
+                # if eligibility_type does not supports_expiration, then just link it
+                if not eligibility.supports_expiration:
+                    client.link_concession_group_funding_source(funding_source_id=funding_source.id, group_id=group_id)
+                # else eligibility_type supports_expiration, so calculate expiration date from today and include in request
+                else:
+                    expiry_date = expiration.calculate_expiry_date(matching_group_funding_source, eligibility.expiration_days)
+                    client.link_concession_group_funding_source(
+                        funding_source_id=funding_source.id, group_id=group_id, expiry_date=expiry_date
+                    )
+
                 analytics.returned_success(request, eligibility.group_id)
                 return success(request)
-            else:
-                analytics.returned_error(request, str(e))
-                raise Exception(f"{e}: {e.response.json()}")
+
+        except HTTPError as e:
+            analytics.returned_error(request, str(e))
+            raise Exception(f"{e}: {e.response.json()}")
         except Exception as e:
             analytics.returned_error(request, str(e))
             raise e
-        else:
-            analytics.returned_success(request, eligibility.group_id)
-            return success(request)
 
     # GET enrollment index
     else:
