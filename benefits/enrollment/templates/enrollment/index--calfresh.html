@@ -1,0 +1,16 @@
+{% extends "enrollment/index.html" %}
+{% load i18n %}
+
+{% block media-items %}
+  <div class="col-12 col-sm-12 col-lg-8">
+    <ul class="media-list mx-0 px-0 d-flex justify-content-center flex-column">
+      {% include "enrollment/includes/media-item--bankcardcheck--index--calfresh.html" %}
+    </ul>
+  </div>
+{% endblock media-items %}
+
+{% block additional-info %}
+  <div class="col-12 col-sm-12 col-lg-8">
+    <p>Info alert here</p>
+  </div>
+{% endblock additional-info %}
