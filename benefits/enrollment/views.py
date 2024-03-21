@@ -102,9 +102,9 @@ def index(request):
                     return success(request)
                 # else if expiration date has passed, then re-enroll
                 elif expiration.is_expired(matching_group_funding_source):
-                    client.link_concession_group_funding_source(funding_source_id=funding_source.id, group_id=group_id)
-                    analytics.returned_success(request, group_id)
-                    return success(request)
+                    return _link_concession_group_funding_source(
+                        request, eligibility, client, matching_group_funding_source, group_id
+                    )
                 # else expiration date hasn't passed, so calculate re-enrollment date and show user
                 else:
                     reenrollment_date = expiration.calculate_reenrollment_date(  # noqa
@@ -115,18 +115,9 @@ def index(request):
                     # todo for #1921: show reenrollment_date to user
             # funding source has not been linked to the group yet
             else:
-                # if eligibility_type does not supports_expiration, then just link it
-                if not eligibility.supports_expiration:
-                    client.link_concession_group_funding_source(funding_source_id=funding_source.id, group_id=group_id)
-                # else eligibility_type supports_expiration, so calculate expiration date from today and include in request
-                else:
-                    expiry_date = expiration.calculate_expiry_date(matching_group_funding_source, eligibility.expiration_days)
-                    client.link_concession_group_funding_source(
-                        funding_source_id=funding_source.id, group_id=group_id, expiry_date=expiry_date
-                    )
-
-                analytics.returned_success(request, eligibility.group_id)
-                return success(request)
+                return _link_concession_group_funding_source(
+                    request, eligibility, client, matching_group_funding_source, group_id
+                )
 
         except HTTPError as e:
             analytics.returned_error(request, str(e))
@@ -154,6 +145,21 @@ def index(request):
         logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
 
         return TemplateResponse(request, TEMPLATE_INDEX, context)
+
+
+def _link_concession_group_funding_source(request, eligibility, client: Client, matching_group_funding_source, group_id):
+    # if eligibility_type does not supports_expiration, then just link it
+    if not eligibility.supports_expiration:
+        client.link_concession_group_funding_source(funding_source_id=matching_group_funding_source.id, group_id=group_id)
+    # else eligibility_type supports_expiration, so calculate expiration date from today and include in request
+    else:
+        expiry_date = expiration.calculate_expiry_date(matching_group_funding_source, eligibility.expiration_days)
+        client.link_concession_group_funding_source(
+            funding_source_id=matching_group_funding_source.id, group_id=group_id, expiry_date=expiry_date
+        )
+
+    analytics.returned_success(request, eligibility.group_id)
+    return success(request)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
