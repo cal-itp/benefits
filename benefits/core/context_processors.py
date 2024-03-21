@@ -7,10 +7,17 @@ from django.conf import settings
 from . import models, session
 
 
+def unique_values(original_list):
+    # dict.fromkeys gets the unique values and preserves order
+    return list(dict.fromkeys(original_list))
+
+
 def _agency_context(agency):
     return {
         "eligibility_index_url": agency.eligibility_index_url,
-        "help_template": agency.help_template,
+        "help_templates": unique_values(
+            [v.help_template for v in agency.eligibility_verifiers.all() if v.help_template is not None]
+        ),
         "info_url": agency.info_url,
         "long_name": agency.long_name,
         "phone": agency.phone,

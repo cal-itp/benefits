@@ -186,7 +186,8 @@
       "auth_provider": null,
       "selection_label_template": "eligibility/includes/selection-label--mst-courtesy-card.html",
       "start_template": "eligibility/start--mst-courtesy-card.html",
-      "form_class": "benefits.eligibility.forms.MSTCourtesyCard"
+      "form_class": "benefits.eligibility.forms.MSTCourtesyCard",
+      "help_template": "core/includes/help--mst.html"
     }
   },
   {
@@ -249,7 +250,8 @@
       "auth_provider": null,
       "selection_label_template": "eligibility/includes/selection-label--sbmtd-mobility-pass.html",
       "start_template": "eligibility/start--sbmtd-mobility-pass.html",
-      "form_class": "benefits.eligibility.forms.SBMTDMobilityPass"
+      "form_class": "benefits.eligibility.forms.SBMTDMobilityPass",
+      "help_template": "core/includes/help--sbmtd.html"
     }
   },
   {
@@ -334,7 +336,6 @@
       "index_template": "core/index--mst.html",
       "eligibility_index_template": "eligibility/index--mst.html",
       "enrollment_success_template": "enrollment/success--mst.html",
-      "help_template": "core/includes/help--mst.html",
       "eligibility_types": [1, 7, 2, 3],
       "eligibility_verifiers": [1, 7, 2, 3]
     }
@@ -358,7 +359,6 @@
       "index_template": "core/index--sacrt.html",
       "eligibility_index_template": "eligibility/index--sacrt.html",
       "enrollment_success_template": "enrollment/success--sacrt.html",
-      "help_template": null,
       "eligibility_types": [4],
       "eligibility_verifiers": [4]
     }
@@ -382,7 +382,6 @@
       "index_template": "core/index--sbmtd.html",
       "eligibility_index_template": "eligibility/index--sbmtd.html",
       "enrollment_success_template": "enrollment/success--sbmtd.html",
-      "help_template": "core/includes/help--sbmtd.html",
       "eligibility_types": [5, 6],
       "eligibility_verifiers": [5, 6]
     }
