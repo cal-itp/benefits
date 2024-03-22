@@ -4,6 +4,7 @@
   --bs-blue: var(--primary-color);
   --bs-primary: var(--primary-color);
   --bs-primary-rgb: var(--primary-color-rgb);
+  --bs-warning: #fff1d0;
   --text-primary-color: #212121;
   --bs-body-color: var(--text-primary-color);
   --bs-body-text-align: left;
@@ -839,6 +840,8 @@ a.card:focus-visible {
   --alert-box-border-width: calc(8rem / 16);
   --alert-box--heading-margin-bottom: calc(4rem / 16);
   --alert-box--heading-line-height: calc(27rem / 16);
+  --alert-box-border-color--warning: #fdb714;
+  --alert-box-background-color--warning: var(--bs-warning);
 }
 
 .alert-box {
@@ -852,6 +855,11 @@ a.card:focus-visible {
 .alert-box
   a:focus-visible:not(.btn):not(.card):not(.footer-link):not(#skip-to-content) {
   outline-color: var(--primary-color) !important;
+}
+
+.alert-box--warning {
+  background-color: var(--alert-box-background-color--warning);
+  border-left-color: var(--alert-box-border-color--warning);
 }
 
 .alert-box--heading {
