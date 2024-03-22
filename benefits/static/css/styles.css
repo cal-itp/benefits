@@ -834,6 +834,33 @@ a.card:focus-visible {
   background-image: url("/static/img/modal-trigger--selected.svg");
 }
 
+:root {
+  --alert-box-padding: calc(16rem / 16);
+  --alert-box-border-width: calc(8rem / 16);
+  --alert-box--heading-margin-bottom: calc(4rem / 16);
+  --alert-box--heading-line-height: calc(27rem / 16);
+}
+
+.alert-box {
+  border-left-width: var(--alert-box-border-width);
+  border-left-style: solid;
+  padding: var(--alert-box-padding);
+  color: var(--text-primary-color);
+}
+
+.alert-box a:focus:not(.btn):not(.card):not(.footer-link):not(#skip-to-content),
+.alert-box
+  a:focus-visible:not(.btn):not(.card):not(.footer-link):not(#skip-to-content) {
+  outline-color: var(--primary-color) !important;
+}
+
+.alert-box--heading {
+  font-size: var(--font-size-18px);
+  line-height: var(--alert-box--heading-line-height);
+  letter-spacing: var(--letter-spacing-5);
+  margin-bottom: var(--alert-box--heading-margin-bottom);
+}
+
 /* Enrollment Success */
 /* Custom in-line log out button for Enrollment Success, in paragraph */
 
