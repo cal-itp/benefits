@@ -323,6 +323,11 @@ class TransitAgency(models.Model):
         """This Agency's public key as a string."""
         return self.public_key.data
 
+    @property
+    def active_verifiers(self):
+        """This Agency's eligibility verifiers that are active."""
+        return self.eligibility_verifiers.filter(active=True)
+
     @staticmethod
     def by_id(id):
         """Get a TransitAgency instance by its ID."""

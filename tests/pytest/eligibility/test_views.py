@@ -85,8 +85,12 @@ def test_index_get_agency_multiple_verifiers(
 ):
     # override the mocked session agency with a mock agency that has multiple verifiers
     mock_agency = mocker.Mock(spec=model_TransitAgency)
-    mock_agency.eligibility_verifiers.filter.return_value = [model_EligibilityVerifier, model_EligibilityVerifier]
-    mock_agency.eligibility_verifiers.count.return_value = 2
+
+    # mock the active_verifiers property on the class - https://stackoverflow.com/a/55642462
+    type(mock_agency).active_verifiers = mocker.PropertyMock(
+        return_value=[model_EligibilityVerifier, model_EligibilityVerifier]
+    )
+
     mock_agency.index_url = "/agency"
     mock_agency.eligibility_index_template = "eligibility/index.html"
     mocked_session_agency.return_value = mock_agency
@@ -107,8 +111,10 @@ def test_index_get_agency_single_verifier(
 ):
     # override the mocked session agency with a mock agency that has a single verifier
     mock_agency = mocker.Mock(spec=model_TransitAgency)
-    mock_agency.eligibility_verifiers.filter.return_value = [model_EligibilityVerifier]
-    mock_agency.eligibility_verifiers.count.return_value = 1
+
+    # mock the active_verifiers property on the class - https://stackoverflow.com/a/55642462
+    type(mock_agency).active_verifiers = mocker.PropertyMock(return_value=[model_EligibilityVerifier])
+
     mock_agency.index_url = "/agency"
     mock_agency.eligibility_index_template = "eligibility/index.html"
     mocked_session_agency.return_value = mock_agency

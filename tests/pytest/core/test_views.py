@@ -27,7 +27,7 @@ def mocked_active_agency(mocker):
 
     # ensure agency.eligibility_verifiers is iterable
     eligibility_verifiers = mocker.MagicMock()
-    mock_agency.eligibility_verifiers = eligibility_verifiers
+    mock_agency.active_verifiers = eligibility_verifiers
 
     mock_agency.index_url = "/agency"
     mocker.patch("benefits.core.session.agency", return_value=mock_agency)
