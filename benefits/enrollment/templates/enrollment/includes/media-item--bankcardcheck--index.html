@@ -5,6 +5,10 @@
     {% include "core/includes/icon.html" with name="bankcardcheck" %}
 {% endblock icon %}
 
+{% block heading_wrapper %}
+    {% with heading_tag="h2" %}{{ block.super }}{% endwith %}
+{% endblock heading_wrapper %}
+
 {% block heading %}
     {% translate "The next step is to connect your contactless card to your transit benefit" %}
 {% endblock heading %}
