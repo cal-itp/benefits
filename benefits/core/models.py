@@ -172,7 +172,7 @@ class EligibilityVerifier(models.Model):
     jwe_encryption_alg = models.TextField(null=True)
     # The JWS-compatible signing algorithm
     jws_signing_alg = models.TextField(null=True)
-    auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True)
+    auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True, blank=True)
     selection_label_template = models.TextField()
     start_template = models.TextField(null=True)
     # reference to a form class used by this Verifier, e.g. benefits.app.forms.FormClass
