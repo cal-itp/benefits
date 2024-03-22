@@ -13,45 +13,6 @@ def mock_requests_get_pem_data(mocker):
     return mocker.patch("benefits.core.models.requests.get", return_value=mocker.Mock(text="PEM text"))
 
 
-@pytest.fixture
-def model_EligibilityType_does_not_support_expiration(model_EligibilityType):
-    model_EligibilityType.supports_expiration = False
-    model_EligibilityType.expiration_days = 0
-    model_EligibilityType.save()
-
-    return model_EligibilityType
-
-
-@pytest.fixture
-def model_EligibilityType_zero_expiration_days(model_EligibilityType):
-    model_EligibilityType.supports_expiration = True
-    model_EligibilityType.expiration_days = 0
-    model_EligibilityType.expiration_reenrollment_days = 14
-    model_EligibilityType.save()
-
-    return model_EligibilityType
-
-
-@pytest.fixture
-def model_EligibilityType_zero_expiration_reenrollment_days(model_EligibilityType):
-    model_EligibilityType.supports_expiration = True
-    model_EligibilityType.expiration_days = 14
-    model_EligibilityType.expiration_reenrollment_days = 0
-    model_EligibilityType.save()
-
-    return model_EligibilityType
-
-
-@pytest.fixture
-def model_EligibilityType_supports_expiration(model_EligibilityType):
-    model_EligibilityType.supports_expiration = True
-    model_EligibilityType.expiration_days = 365
-    model_EligibilityType.expiration_reenrollment_days = 14
-    model_EligibilityType.save()
-
-    return model_EligibilityType
-
-
 def test_SecretNameField_init():
     field = SecretNameField()
 
@@ -354,6 +315,23 @@ def test_PaymentProcessor_str(model_PaymentProcessor):
 @pytest.mark.django_db
 def test_TransitAgency_str(model_TransitAgency):
     assert str(model_TransitAgency) == model_TransitAgency.long_name
+
+
+@pytest.mark.django_db
+def test_TransitAgency_active_verifiers(model_TransitAgency, model_EligibilityVerifier):
+    # add another to the list of verifiers by cloning the original
+    # https://stackoverflow.com/a/48149675/453168
+    new_verifier = EligibilityVerifier.objects.get(pk=model_EligibilityVerifier.id)
+    new_verifier.pk = None
+    new_verifier.active = False
+    new_verifier.save()
+
+    model_TransitAgency.eligibility_verifiers.add(new_verifier)
+
+    assert model_TransitAgency.eligibility_verifiers.count() == 2
+    assert model_TransitAgency.active_verifiers.count() == 1
+
+    assert model_TransitAgency.active_verifiers[0] == model_EligibilityVerifier
 
 
 @pytest.mark.django_db

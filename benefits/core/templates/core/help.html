@@ -110,8 +110,10 @@
           {% endblocktranslate %}
         </p>
 
-        {% if agency and agency.help_template %}
-          {% include agency.help_template %}
+        {% if agency and agency.help_templates %}
+          {% for help_template in agency.help_templates %}
+            {% include help_template %}
+          {% endfor %}
         {% endif %}
 
         <h2 class="h2-sm pt-4 pt-lg-8" id="littlepay">{% translate "What is Littlepay?" %}</h2>

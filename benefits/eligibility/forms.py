@@ -25,7 +25,7 @@ class EligibilityVerifierSelectionForm(forms.Form):
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        verifiers = agency.eligibility_verifiers.filter(active=True)
+        verifiers = agency.active_verifiers
 
         self.classes = "col-lg-8"
         # second element is not used since we render the whole label using selection_label_template,

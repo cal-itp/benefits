@@ -177,6 +177,7 @@ class EligibilityVerifier(models.Model):
     start_template = models.TextField(null=True)
     # reference to a form class used by this Verifier, e.g. benefits.app.forms.FormClass
     form_class = models.TextField(null=True)
+    help_template = models.TextField(null=True)
 
     class Meta:
         ordering = ["display_order"]
@@ -269,7 +270,6 @@ class TransitAgency(models.Model):
     index_template = models.TextField()
     eligibility_index_template = models.TextField()
     enrollment_success_template = models.TextField()
-    help_template = models.TextField(null=True)
 
     def __str__(self):
         return self.long_name
@@ -322,6 +322,11 @@ class TransitAgency(models.Model):
     def public_key_data(self):
         """This Agency's public key as a string."""
         return self.public_key.data
+
+    @property
+    def active_verifiers(self):
+        """This Agency's eligibility verifiers that are active."""
+        return self.eligibility_verifiers.filter(active=True)
 
     @staticmethod
     def by_id(id):
