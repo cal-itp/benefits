@@ -106,6 +106,45 @@ def model_EligibilityType():
 
 
 @pytest.fixture
+def model_EligibilityType_does_not_support_expiration(model_EligibilityType):
+    model_EligibilityType.supports_expiration = False
+    model_EligibilityType.expiration_days = 0
+    model_EligibilityType.save()
+
+    return model_EligibilityType
+
+
+@pytest.fixture
+def model_EligibilityType_zero_expiration_days(model_EligibilityType):
+    model_EligibilityType.supports_expiration = True
+    model_EligibilityType.expiration_days = 0
+    model_EligibilityType.expiration_reenrollment_days = 14
+    model_EligibilityType.save()
+
+    return model_EligibilityType
+
+
+@pytest.fixture
+def model_EligibilityType_zero_expiration_reenrollment_days(model_EligibilityType):
+    model_EligibilityType.supports_expiration = True
+    model_EligibilityType.expiration_days = 14
+    model_EligibilityType.expiration_reenrollment_days = 0
+    model_EligibilityType.save()
+
+    return model_EligibilityType
+
+
+@pytest.fixture
+def model_EligibilityType_supports_expiration(model_EligibilityType):
+    model_EligibilityType.supports_expiration = True
+    model_EligibilityType.expiration_days = 365
+    model_EligibilityType.expiration_reenrollment_days = 14
+    model_EligibilityType.save()
+
+    return model_EligibilityType
+
+
+@pytest.fixture
 def model_EligibilityVerifier(model_PemData, model_EligibilityType):
     verifier = EligibilityVerifier.objects.create(
         name="Test Verifier",

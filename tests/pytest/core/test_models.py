@@ -13,45 +13,6 @@ def mock_requests_get_pem_data(mocker):
     return mocker.patch("benefits.core.models.requests.get", return_value=mocker.Mock(text="PEM text"))
 
 
-@pytest.fixture
-def model_EligibilityType_does_not_support_expiration(model_EligibilityType):
-    model_EligibilityType.supports_expiration = False
-    model_EligibilityType.expiration_days = 0
-    model_EligibilityType.save()
-
-    return model_EligibilityType
-
-
-@pytest.fixture
-def model_EligibilityType_zero_expiration_days(model_EligibilityType):
-    model_EligibilityType.supports_expiration = True
-    model_EligibilityType.expiration_days = 0
-    model_EligibilityType.expiration_reenrollment_days = 14
-    model_EligibilityType.save()
-
-    return model_EligibilityType
-
-
-@pytest.fixture
-def model_EligibilityType_zero_expiration_reenrollment_days(model_EligibilityType):
-    model_EligibilityType.supports_expiration = True
-    model_EligibilityType.expiration_days = 14
-    model_EligibilityType.expiration_reenrollment_days = 0
-    model_EligibilityType.save()
-
-    return model_EligibilityType
-
-
-@pytest.fixture
-def model_EligibilityType_supports_expiration(model_EligibilityType):
-    model_EligibilityType.supports_expiration = True
-    model_EligibilityType.expiration_days = 365
-    model_EligibilityType.expiration_reenrollment_days = 14
-    model_EligibilityType.save()
-
-    return model_EligibilityType
-
-
 def test_SecretNameField_init():
     field = SecretNameField()
 
