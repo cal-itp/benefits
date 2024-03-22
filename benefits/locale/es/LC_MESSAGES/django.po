@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-03-20 18:12+0000\n"
+"POT-Creation-Date: 2024-03-22 21:01+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -245,6 +245,42 @@ msgstr "Volver al inicio"
 msgid "Previous Page"
 msgstr "Página Anterior"
 
+msgid ""
+"How do I know if I'm eligible for the transit benefit for CalFresh "
+"Cardholders?"
+msgstr ""
+
+msgid ""
+"We verify your eligibility as a CalFresh Cardholder by confirming you have "
+"received funds in your CalFresh account at any point in the last three "
+"months. This means you are eligible for a transit benefit even if you did "
+"not receive funds in your CalFresh account this month or last month."
+msgstr ""
+
+msgid "Will this transit benefit change my CalFresh account?"
+msgstr ""
+
+msgid "No. Your monthly CalFresh allotment will not change."
+msgstr ""
+
+msgid "Do I need my Golden State Advantage card to enroll?"
+msgstr ""
+
+msgid ""
+"No, you do not need your physical EBT card to enroll. We use information "
+"from Login.gov and the California Department of Social Services to enroll "
+"you in the benefit."
+msgstr ""
+
+msgid "Can I use my Golden State Advantage card to pay for transit rides?"
+msgstr ""
+
+msgid ""
+"No. You can not use your EBT or P-EBT card to pay for public transportation. "
+"When you tap to ride, use your personal contactless debit or credit card to "
+"pay for public transportation."
+msgstr ""
+
 msgid "What is a Courtesy Card?"
 msgstr "¿Qué es una tarjeta de cortesía?"
 
@@ -422,26 +458,6 @@ msgstr ""
 msgid "Learn more about contactless cards"
 msgstr "Más información sobre las tarjetas sin contacto"
 
-msgid "Your current Courtesy Card number"
-msgstr "Su número actual de tarjeta de cortesía"
-
-msgid ""
-"You do not need to have your physical card, but you will need to know the "
-"number. The number starts with a number sign (#) followed by five digits."
-msgstr ""
-"No necesita tener su tarjeta física, pero necesitará saber el número. El "
-"número comienza con un signo de número (#) seguido de cinco dígitos."
-
-msgid "Your current Reduced Fare Mobility ID number"
-msgstr "Su número actual de Reduced Fare Mobility ID"
-
-msgid ""
-"You do not need to have your physical card, but you will need your 4-digit "
-"Reduced Fare Mobility ID number on the back of the card."
-msgstr ""
-"No necesita tener su tarjeta física, pero necesitará su número de cuatro "
-"dígitos de Reduced Fare Mobility ID en el reverso de la tarjeta."
-
 msgid "A Login.gov account with identity verification"
 msgstr "Una cuenta de Login.gov con verificación de identidad"
 
@@ -469,43 +485,27 @@ msgid "A phone number with a phone plan associated with your name"
 msgstr ""
 "Un número de teléfono en el cual pueda recibir llamadas o mensajes de texto"
 
+msgid "Your current Courtesy Card number"
+msgstr "Su número actual de tarjeta de cortesía"
+
+msgid ""
+"You do not need to have your physical card, but you will need to know the "
+"number. The number starts with a number sign (#) followed by five digits."
+msgstr ""
+"No necesita tener su tarjeta física, pero necesitará saber el número. El "
+"número comienza con un signo de número (#) seguido de cinco dígitos."
+
+msgid "Your current Reduced Fare Mobility ID number"
+msgstr "Su número actual de Reduced Fare Mobility ID"
+
+msgid ""
+"You do not need to have your physical card, but you will need your 4-digit "
+"Reduced Fare Mobility ID number on the back of the card."
+msgstr ""
+"No necesita tener su tarjeta física, pero necesitará su número de cuatro "
+"dígitos de Reduced Fare Mobility ID en el reverso de la tarjeta."
+
 msgid "Learn more about the transit benefit for CalFresh Cardholders"
-msgstr ""
-
-msgid ""
-"How do I know if I'm eligible for the transit benefit for CalFresh "
-"Cardholders?"
-msgstr ""
-
-msgid ""
-"We verify your eligibility as a CalFresh Cardholder by confirming you have "
-"received funds in your CalFresh account at any point in the last three "
-"months. This means you are eligible for a transit benefit even if you did "
-"not receive funds in your CalFresh account this month or last month."
-msgstr ""
-
-msgid "Will this transit benefit change my CalFresh account?"
-msgstr ""
-
-msgid "No. Your monthly CalFresh allotment will not change."
-msgstr ""
-
-msgid "Do I need my Golden State Advantage card to enroll?"
-msgstr ""
-
-msgid ""
-"No, you do not need your physical EBT card to enroll. We use information "
-"from Login.gov and the California Department of Social Services to enroll "
-"you in the benefit."
-msgstr ""
-
-msgid "Can I use my Golden State Advantage card to pay for transit rides?"
-msgstr ""
-
-msgid ""
-"No. You can not use your EBT or P-EBT card to pay for public transportation. "
-"When you tap to ride, use your personal contactless debit or credit card to "
-"pay for public transportation."
 msgstr ""
 
 msgid "Go back"
@@ -609,6 +609,15 @@ msgstr "Elija la opción de beneficio"
 msgid "Choose the transit benefit you would like to enroll in"
 msgstr "Elija el beneficio de tránsito al que le gustaría inscribirse"
 
+msgid "CalFresh benefit overview"
+msgstr ""
+
+msgid "You selected a CalFresh Cardholder transit benefit."
+msgstr ""
+
+msgid "Get started with"
+msgstr "Comience con"
+
 msgid "Agency card overview"
 msgstr "Descripción de la tarjeta de agencia"
 
@@ -626,9 +635,6 @@ msgstr "Descripción de beneficios para adultos mayores"
 
 msgid "You selected an Older Adult transit benefit."
 msgstr "Ha seleccionado un beneficio de tránsito para adultos mayores."
-
-msgid "Get started with"
-msgstr "Comience con"
 
 msgid "Veterans benefit overview"
 msgstr "Descripción de beneficios para veteranos"
@@ -651,6 +657,18 @@ msgstr "¡Está bien! Usted aún puede ser elegible para nuestro programa."
 #, python-format
 msgid "Please reach out to %(short_name)s for assistance."
 msgstr "Comuníquese con %(short_name)s para obtener ayuda."
+
+msgid "Do not enter information from your EBT card."
+msgstr ""
+
+msgid "Read our guidance on the CalFresh benefit"
+msgstr ""
+
+msgid ""
+"You can’t pay for transit using the CalFresh funds on your Golden State "
+"Advantage card. Please provide details from your contactless debit or credit "
+"card issued by Visa or Mastercard and use that card to pay for transit."
+msgstr ""
 
 msgid ""
 "The next step is to connect your contactless card to your transit benefit"
