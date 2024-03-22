@@ -4,10 +4,12 @@
         {% endblock icon %}
     </div>
     <div class="media-body">
-        <h3 class="media-body--heading">
+        {% block heading_wrapper %}
+            <{{ heading_tag|default:"h3" }} class="media-body--heading h3">
             {% block heading %}
             {% endblock heading %}
-        </h3>
+            </{{ heading_tag|default:"h3" }}>
+        {% endblock heading_wrapper %}
         {% block body %}
         {% endblock body %}
     </div>
