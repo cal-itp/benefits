@@ -1,5 +1,9 @@
-{% extends "core/includes/alert-box--warning.html" %}
+{% extends "core/includes/alert-box.html" %}
 {% load i18n %}
+
+{% block alert-wrapper %}
+    {% with alert_class="alert-box--warning media-list-icon-left-margin" %}{{ block.super }}{% endwith %}
+{% endblock alert-wrapper %}
 
 {% block alert-heading %}
     {% translate "Do not enter information from your EBT card." %}
