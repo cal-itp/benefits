@@ -51,9 +51,9 @@ class PemData(models.Model):
     # Human description of the PEM data
     label = models.TextField()
     # The name of a secret with data in utf-8 encoded PEM text format
-    text_secret_name = SecretNameField(null=True)
+    text_secret_name = SecretNameField(null=True, blank=True)
     # Public URL hosting the utf-8 encoded PEM text
-    remote_url = models.TextField(null=True)
+    remote_url = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.label
@@ -81,13 +81,13 @@ class AuthProvider(models.Model):
     """An entity that provides authentication for eligibility verifiers."""
 
     id = models.AutoField(primary_key=True)
-    sign_out_button_template = models.TextField(null=True)
-    sign_out_link_template = models.TextField(null=True)
+    sign_out_button_template = models.TextField(null=True, blank=True)
+    sign_out_link_template = models.TextField(null=True, blank=True)
     client_name = models.TextField()
     client_id_secret_name = SecretNameField()
     authority = models.TextField()
-    scope = models.TextField(null=True)
-    claim = models.TextField(null=True)
+    scope = models.TextField(null=True, blank=True)
+    claim = models.TextField(null=True, blank=True)
     scheme = models.TextField()
 
     @property
@@ -160,24 +160,24 @@ class EligibilityVerifier(models.Model):
     name = models.TextField()
     display_order = models.PositiveSmallIntegerField(default=0, blank=False, null=False)
     active = models.BooleanField(default=False)
-    api_url = models.TextField(null=True)
-    api_auth_header = models.TextField(null=True)
-    api_auth_key_secret_name = SecretNameField(null=True)
+    api_url = models.TextField(null=True, blank=True)
+    api_auth_header = models.TextField(null=True, blank=True)
+    api_auth_key_secret_name = SecretNameField(null=True, blank=True)
     eligibility_type = models.ForeignKey(EligibilityType, on_delete=models.PROTECT)
     # public key is used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier
-    public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT, null=True)
+    public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT, null=True, blank=True)
     # The JWE-compatible Content Encryption Key (CEK) key-length and mode
-    jwe_cek_enc = models.TextField(null=True)
+    jwe_cek_enc = models.TextField(null=True, blank=True)
     # The JWE-compatible encryption algorithm
-    jwe_encryption_alg = models.TextField(null=True)
+    jwe_encryption_alg = models.TextField(null=True, blank=True)
     # The JWS-compatible signing algorithm
-    jws_signing_alg = models.TextField(null=True)
-    auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True)
+    jws_signing_alg = models.TextField(null=True, blank=True)
+    auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True, blank=True)
     selection_label_template = models.TextField()
-    start_template = models.TextField(null=True)
+    start_template = models.TextField(null=True, blank=True)
     # reference to a form class used by this Verifier, e.g. benefits.app.forms.FormClass
-    form_class = models.TextField(null=True)
-    help_template = models.TextField(null=True)
+    form_class = models.TextField(null=True, blank=True)
+    help_template = models.TextField(null=True, blank=True)
 
     class Meta:
         ordering = ["display_order"]
