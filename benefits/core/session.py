@@ -32,24 +32,20 @@ _VERIFIER = "verifier"
 
 def agency(request):
     """Get the agency from the request's session, or None"""
-    logger.debug("Get session agency")
     try:
         return models.TransitAgency.by_id(request.session[_AGENCY])
     except (KeyError, models.TransitAgency.DoesNotExist):
-        logger.debug("Can't get agency from session")
         return None
 
 
 def active_agency(request):
     """True if the request's session is configured with an active agency. False otherwise."""
-    logger.debug("Get session active agency flag")
     a = agency(request)
     return a and a.active
 
 
 def context_dict(request):
     """The request's session context as a dict."""
-    logger.debug("Get session context dict")
     return {
         _AGENCY: agency(request).slug if active_agency(request) else None,
         _DEBUG: debug(request),
@@ -69,7 +65,6 @@ def context_dict(request):
 
 def debug(request):
     """Get the DEBUG flag from the request's session."""
-    logger.debug("Get session debug flag")
     return bool(request.session.get(_DEBUG, False))
 
 
@@ -84,7 +79,6 @@ def did(request):
 
     See more: https://help.amplitude.com/hc/en-us/articles/115003135607-Track-unique-users-in-Amplitude
     """
-    logger.debug("Get session did")
     d = request.session.get(_DID)
     if not d:
         reset(request)
@@ -94,7 +88,6 @@ def did(request):
 
 def eligibility(request):
     """Get the confirmed models.EligibilityType from the request's session, or None"""
-    logger.debug("Get session confirmed eligibility")
     eligibility = request.session.get(_ELIGIBILITY)
     if eligibility:
         return models.EligibilityType.get(eligibility)
@@ -104,41 +97,32 @@ def eligibility(request):
 
 def eligible(request):
     """True if the request's session is configured with an active agency and has confirmed eligibility. False otherwise."""
-    logger.debug("Get session eligible flag")
     return active_agency(request) and agency(request).supports_type(eligibility(request))
 
 
 def enrollment_token(request):
     """Get the enrollment token from the request's session, or None."""
-    logger.debug("Get session enrollment token")
     return request.session.get(_ENROLLMENT_TOKEN)
 
 
 def enrollment_token_expiry(request):
     """Get the enrollment token's expiry time from the request's session, or None."""
-    logger.debug("Get session enrollment token expiry")
     return request.session.get(_ENROLLMENT_TOKEN_EXP)
 
 
 def enrollment_token_valid(request):
     """True if the request's session is configured with a valid token. False otherwise."""
     if bool(enrollment_token(request)):
-        logger.debug("Session contains an enrollment token")
         exp = enrollment_token_expiry(request)
-
         # ensure token does not expire in the next 5 seconds
         valid = exp is None or exp > (time.time() + 5)
-
-        logger.debug(f"Session enrollment token is {'valid' if valid else 'expired'}")
         return valid
     else:
-        logger.debug("Session does not contain a valid enrollment token")
         return False
 
 
 def language(request):
     """Get the language configured for the request."""
-    logger.debug("Get session language")
     return request.LANGUAGE_CODE
 
 
@@ -154,19 +138,16 @@ def logout(request):
 
 def oauth_token(request):
     """Get the oauth token from the request's session, or None"""
-    logger.debug("Get session oauth token")
     return request.session.get(_OAUTH_TOKEN)
 
 
 def oauth_claim(request):
     """Get the oauth claim from the request's session, or None"""
-    logger.debug("Get session oauth claim")
     return request.session.get(_OAUTH_CLAIM)
 
 
 def origin(request):
     """Get the origin for the request's session, or the default core:index."""
-    logger.debug("Get session origin")
     return request.session.get(_ORIGIN, reverse("core:index"))
 
 
@@ -201,7 +182,6 @@ def start(request):
 
     See more: https://help.amplitude.com/hc/en-us/articles/115002323627-Tracking-Sessions
     """
-    logger.debug("Get session time")
     s = request.session.get(_START)
     if not s:
         reset(request)
@@ -223,7 +203,6 @@ def uid(request):
     here a value is set on anonymous users anyway, as the users never sign-in
     and become de-anonymized to this app / Amplitude.
     """
-    logger.debug("Get session uid")
     u = request.session.get(_UID)
     if not u:
         reset(request)
@@ -245,13 +224,10 @@ def update(
 ):
     """Update the request's session with non-null values."""
     if agency is not None and isinstance(agency, models.TransitAgency):
-        logger.debug(f"Update session {_AGENCY}")
         request.session[_AGENCY] = agency.id
     if debug is not None:
-        logger.debug(f"Update session {_DEBUG}")
         request.session[_DEBUG] = debug
     if eligibility_types is not None and isinstance(eligibility_types, list):
-        logger.debug(f"Update session {_ELIGIBILITY}")
         if len(eligibility_types) > 1:
             raise NotImplementedError("Multiple eligibilities are not supported at this time.")
         elif len(eligibility_types) == 1:
@@ -263,28 +239,21 @@ def update(
             # empty list, clear session eligibility
             request.session[_ELIGIBILITY] = None
     if enrollment_token is not None:
-        logger.debug(f"Update session {_ENROLLMENT_TOKEN}")
         request.session[_ENROLLMENT_TOKEN] = enrollment_token
         request.session[_ENROLLMENT_TOKEN_EXP] = enrollment_token_exp
     if oauth_token is not None:
-        logger.debug(f"Update session {_OAUTH_TOKEN}")
         request.session[_OAUTH_TOKEN] = oauth_token
     if oauth_claim is not None:
-        logger.debug(f"Update session {_OAUTH_CLAIM}")
         request.session[_OAUTH_CLAIM] = oauth_claim
     if origin is not None:
-        logger.debug(f"Update session {_ORIGIN}")
         request.session[_ORIGIN] = origin
     if verifier is not None and isinstance(verifier, models.EligibilityVerifier):
-        logger.debug(f"Update session {_VERIFIER}")
         request.session[_VERIFIER] = verifier.id
 
 
 def verifier(request):
     """Get the verifier from the request's session, or None"""
-    logger.debug("Get session verifier")
     try:
         return models.EligibilityVerifier.by_id(request.session[_VERIFIER])
     except (KeyError, models.EligibilityVerifier.DoesNotExist):
-        logger.debug("Can't get verifier from session")
         return None
