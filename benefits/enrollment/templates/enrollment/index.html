@@ -42,7 +42,7 @@
           .done(function() {
           $.get("{{ access_token_url }}", function(data) {
               $(".loading").remove();
-              $(".invisible").removeClass("invisible");
+              $(".invisible").removeClass("invisible").addClass("visible");
 
               $("#{{ cta_button }}").on("click", function() {
                   amplitude.getInstance().logEvent(startedEvent, {
