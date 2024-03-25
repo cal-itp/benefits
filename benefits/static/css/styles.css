@@ -680,6 +680,12 @@ footer .footer-links li a.footer-link:visited {
   margin-right: var(--media-item-icon-margin);
 }
 
+.media-list-icon-left-margin {
+  margin-left: calc(
+    var(--media-item-icon-size) + var(--media-item-icon-margin)
+  );
+}
+
 .media-list .media .media-body--details,
 .media-list .media .media-body--items li:first-child {
   padding-top: calc(5rem / 16);
