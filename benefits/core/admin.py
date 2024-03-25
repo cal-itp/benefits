@@ -17,6 +17,7 @@ GOOGLE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo"
 
 
 for model in [
+    models.AuthProvider,
     models.EligibilityType,
     models.PaymentProcessor,
     models.PemData,
