@@ -1,7 +1,7 @@
 {% block alert-wrapper %}
-    <div class="alert-box {{ alert_class }}">
+    <div class="alert-box border-start p-3 text-body {{ alert_class }}">
         {% block alert-heading-wrapper %}
-            <{{ heading_tag|default:"h3" }} class="alert-box--heading">
+            <{{ heading_tag|default:"h3" }} class="alert-box--heading lh-base ls-base mb-1">
             {% block alert-heading %}
             {% endblock alert-heading %}
             </{{ heading_tag|default:"h3" }}>

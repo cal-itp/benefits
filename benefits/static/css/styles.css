@@ -4,7 +4,6 @@
   --bs-blue: var(--primary-color);
   --bs-primary: var(--primary-color);
   --bs-primary-rgb: var(--primary-color-rgb);
-  --bs-warning: #fff1d0;
   --text-primary-color: #212121;
   --bs-body-color: var(--text-primary-color);
   --bs-body-text-align: left;
@@ -835,19 +834,13 @@ a.card:focus-visible {
 }
 
 :root {
-  --alert-box-padding: calc(16rem / 16);
   --alert-box-border-width: calc(8rem / 16);
-  --alert-box--heading-margin-bottom: calc(4rem / 16);
-  --alert-box--heading-line-height: calc(27rem / 16);
+  --alert-box-background-color--warning: #fff1d0;
   --alert-box-border-color--warning: #fdb714;
-  --alert-box-background-color--warning: var(--bs-warning);
 }
 
 .alert-box {
-  border-left-width: var(--alert-box-border-width);
-  border-left-style: solid;
-  padding: var(--alert-box-padding);
-  color: var(--text-primary-color);
+  border-left-width: var(--alert-box-border-width) !important;
 }
 
 .alert-box a:focus:not(.btn):not(.card):not(.footer-link):not(#skip-to-content),
@@ -858,14 +851,11 @@ a.card:focus-visible {
 
 .alert-box--warning {
   background-color: var(--alert-box-background-color--warning);
-  border-left-color: var(--alert-box-border-color--warning);
+  border-left-color: var(--alert-box-border-color--warning) !important;
 }
 
 .alert-box--heading {
   font-size: var(--font-size-18px);
-  line-height: var(--alert-box--heading-line-height);
-  letter-spacing: var(--letter-spacing-5);
-  margin-bottom: var(--alert-box--heading-margin-bottom);
 }
 
 /* Enrollment Success */
