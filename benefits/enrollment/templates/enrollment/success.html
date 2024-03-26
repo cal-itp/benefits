@@ -21,10 +21,17 @@
   <div class="col-12 col-sm-12 col-lg-9">
     <div class="row flex-column-reverse flex-lg-row">
       <div class="col-12 col-lg-7">
-        <p class="pt-lg-4 mt-lg-3">
-          {% block success-message %}
-          {% endblock success-message %}
-        </p>
+        {# djlint:off #}
+        {% if enrollment.supports_expiration %}
+          <h2 class="h3 mb-1">{% translate "Your benefit will expire on" %} {{ enrollment.expires|date }}.</h2>
+          <p>
+        {% else %}
+          <p class="pt-lg-4 mt-lg-3">
+        {% endif %}
+            {% block success-message %}
+            {% endblock success-message %}
+          </p>
+        {# djlint:on #}
         <p class="pt-4">{% translate "Thank you for using Cal-ITP Benefits!" %}</p>
       </div>
       <div class="col-12 col-lg-5">
