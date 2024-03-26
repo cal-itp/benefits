@@ -69,6 +69,16 @@ def debug(request):
     return {"debug": session.context_dict(request)}
 
 
+def enrollment(request):
+    """Context processor adds enrollment information to request context."""
+    data = {
+        "expires": session.enrollment_expiry(request),
+        "supports_expiration": session.eligibility(request).supports_expiration if session.eligible(request) else None,
+    }
+
+    return {"enrollment": data}
+
+
 def origin(request):
     """Context processor adds session.origin to request context."""
     origin = session.origin(request)
