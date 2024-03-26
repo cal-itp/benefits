@@ -260,11 +260,14 @@ def test_reset_eligibility(app_request):
 
 @pytest.mark.django_db
 def test_reset_enrollment(app_request):
+    app_request.session[session._ENROLLMENT_EXP] = "1234567890"
     app_request.session[session._ENROLLMENT_TOKEN] = "enrollmenttoken123"
     app_request.session[session._ENROLLMENT_TOKEN_EXP] = "1234567890"
 
     session.reset(app_request)
 
+    assert session.enrollment_expiry(app_request) is None
+    assert session.enrollment_reenrollment(app_request) is None
     assert session.enrollment_token(app_request) is None
     assert session.enrollment_token_expiry(app_request) is None
     assert not session.enrollment_token_valid(app_request)

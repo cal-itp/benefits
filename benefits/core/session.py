@@ -180,6 +180,7 @@ def reset(request):
     request.session[_AGENCY] = None
     request.session[_ELIGIBILITY] = None
     request.session[_ORIGIN] = reverse("core:index")
+    request.session[_ENROLLMENT_EXP] = None
     request.session[_ENROLLMENT_TOKEN] = None
     request.session[_ENROLLMENT_TOKEN_EXP] = None
     request.session[_OAUTH_TOKEN] = None
