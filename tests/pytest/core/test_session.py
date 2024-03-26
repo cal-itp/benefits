@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta, timezone
 import time
 
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -72,6 +73,66 @@ def test_eligibile_True(model_TransitAgency, app_request):
     session.update(app_request, agency=model_TransitAgency, eligibility_types=[eligibility.name])
 
     assert session.eligible(app_request)
+
+
+@pytest.mark.django_db
+def test_enrollment_expiry_default(app_request):
+    assert session.enrollment_expiry(app_request) is None
+
+
+@pytest.mark.django_db
+def test_enrollment_expiry_not_datetime(app_request):
+    session.update(app_request, enrollment_expiry="2024-03-25T00:00:00Z")
+
+    assert session.enrollment_expiry(app_request) is None
+
+
+@pytest.mark.django_db
+def test_enrollment_expiry_datetime_timezone_utc(app_request):
+    expiry = datetime.now(tz=timezone.utc)
+
+    session.update(app_request, enrollment_expiry=expiry)
+
+    assert session.enrollment_expiry(app_request) == expiry
+
+
+@pytest.mark.django_db
+def test_enrollment_expiry_datetime_timezone_naive(app_request):
+    expiry = datetime.now()
+    assert expiry.tzinfo is None
+
+    session.update(app_request, enrollment_expiry=expiry)
+    session_expiry = session.enrollment_expiry(app_request)
+
+    assert all(
+        [
+            session_expiry.year == expiry.year,
+            session_expiry.month == expiry.month,
+            session_expiry.day == expiry.day,
+            session_expiry.hour == expiry.hour,
+            session_expiry.minute == expiry.minute,
+            session_expiry.second == expiry.second,
+            session_expiry.tzinfo == timezone.utc,
+        ]
+    )
+
+
+@pytest.mark.django_db
+def test_enrollment_reenrollment(app_request, model_EligibilityType_supports_expiration, model_TransitAgency):
+    model_TransitAgency.eligibility_types.add(model_EligibilityType_supports_expiration)
+    model_TransitAgency.save()
+
+    expiry = datetime.now(tz=timezone.utc)
+    expected_reenrollment = expiry - timedelta(days=model_EligibilityType_supports_expiration.expiration_reenrollment_days)
+
+    session.update(
+        app_request,
+        agency=model_TransitAgency,
+        eligibility_types=[model_EligibilityType_supports_expiration.name],
+        enrollment_expiry=expiry,
+    )
+
+    assert session.enrollment_reenrollment(app_request) == expected_reenrollment
 
 
 @pytest.mark.django_db
