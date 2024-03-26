@@ -2,7 +2,7 @@
 The core application: helpers to work with request sessions.
 """
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import hashlib
 import logging
 import time
@@ -108,6 +108,17 @@ def enrollment_expiry(request):
     expiry = request.session.get(_ENROLLMENT_EXP)
     if expiry:
         return datetime.fromtimestamp(expiry, tz=timezone.utc)
+    else:
+        return None
+
+
+def enrollment_reenrollment(request):
+    """Get the reenrollment date for a user's enrollment from session, or None."""
+    expiry = enrollment_expiry(request)
+    elig = eligibility(request)
+
+    if elig and elig.supports_expiration and expiry:
+        return expiry - timedelta(days=elig.expiration_reenrollment_days)
     else:
         return None
 

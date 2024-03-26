@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import pytest
 
 from benefits.core import session
@@ -18,7 +18,7 @@ def test_enrollment_default(app_request):
     context = enrollment(app_request)
 
     assert "enrollment" in context
-    assert context["enrollment"] == {"expires": None, "supports_expiration": None}
+    assert context["enrollment"] == {"expires": None, "reenrollment": None, "supports_expiration": False}
 
 
 @pytest.mark.django_db
@@ -27,6 +27,7 @@ def test_enrollment_expiration(app_request, model_EligibilityType_supports_expir
     model_TransitAgency.save()
 
     expiry = datetime.now(tz=timezone.utc)
+    reenrollment = expiry - timedelta(days=model_EligibilityType_supports_expiration.expiration_reenrollment_days)
 
     session.update(
         app_request,
@@ -37,4 +38,4 @@ def test_enrollment_expiration(app_request, model_EligibilityType_supports_expir
 
     context = enrollment(app_request)
 
-    assert context["enrollment"] == {"expires": expiry, "supports_expiration": True}
+    assert context["enrollment"] == {"expires": expiry, "reenrollment": reenrollment, "supports_expiration": True}

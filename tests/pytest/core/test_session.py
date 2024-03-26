@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import time
 
 from django.contrib.sessions.middleware import SessionMiddleware
@@ -115,6 +115,24 @@ def test_enrollment_expiry_datetime_timezone_naive(app_request):
             session_expiry.tzinfo == timezone.utc,
         ]
     )
+
+
+@pytest.mark.django_db
+def test_enrollment_reenrollment(app_request, model_EligibilityType_supports_expiration, model_TransitAgency):
+    model_TransitAgency.eligibility_types.add(model_EligibilityType_supports_expiration)
+    model_TransitAgency.save()
+
+    expiry = datetime.now(tz=timezone.utc)
+    expected_reenrollment = expiry - timedelta(days=model_EligibilityType_supports_expiration.expiration_reenrollment_days)
+
+    session.update(
+        app_request,
+        agency=model_TransitAgency,
+        eligibility_types=[model_EligibilityType_supports_expiration.name],
+        enrollment_expiry=expiry,
+    )
+
+    assert session.enrollment_reenrollment(app_request) == expected_reenrollment
 
 
 @pytest.mark.django_db
