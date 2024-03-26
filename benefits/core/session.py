@@ -2,6 +2,7 @@
 The core application: helpers to work with request sessions.
 """
 
+from datetime import datetime, timezone
 import hashlib
 import logging
 import time
@@ -20,7 +21,8 @@ _DEBUG = "debug"
 _DID = "did"
 _ELIGIBILITY = "eligibility"
 _ENROLLMENT_TOKEN = "enrollment_token"
-_ENROLLMENT_TOKEN_EXP = "enrollment_token_exp"
+_ENROLLMENT_TOKEN_EXP = "enrollment_token_expiry"
+_ENROLLMENT_EXP = "enrollment_expiry"
 _LANG = "lang"
 _OAUTH_CLAIM = "oauth_claim"
 _OAUTH_TOKEN = "oauth_token"
@@ -51,6 +53,7 @@ def context_dict(request):
         _DEBUG: debug(request),
         _DID: did(request),
         _ELIGIBILITY: eligibility(request),
+        _ENROLLMENT_EXP: enrollment_expiry(request),
         _ENROLLMENT_TOKEN: enrollment_token(request),
         _ENROLLMENT_TOKEN_EXP: enrollment_token_expiry(request),
         _LANG: language(request),
@@ -98,6 +101,15 @@ def eligibility(request):
 def eligible(request):
     """True if the request's session is configured with an active agency and has confirmed eligibility. False otherwise."""
     return active_agency(request) and agency(request).supports_type(eligibility(request))
+
+
+def enrollment_expiry(request):
+    """Get the expiry date for a user's enrollment from session, or None."""
+    expiry = request.session.get(_ENROLLMENT_EXP)
+    if expiry:
+        return datetime.fromtimestamp(expiry, tz=timezone.utc)
+    else:
+        return None
 
 
 def enrollment_token(request):
@@ -215,6 +227,7 @@ def update(
     agency=None,
     debug=None,
     eligibility_types=None,
+    enrollment_expiry=None,
     enrollment_token=None,
     enrollment_token_exp=None,
     oauth_token=None,
@@ -238,6 +251,15 @@ def update(
         else:
             # empty list, clear session eligibility
             request.session[_ELIGIBILITY] = None
+    if isinstance(enrollment_expiry, datetime):
+        if enrollment_expiry.tzinfo is None or enrollment_expiry.tzinfo.utcoffset(enrollment_expiry) is None:
+            # this is a naive datetime instance, update tzinfo for UTC
+            # see notes under https://docs.python.org/3/library/datetime.html#datetime.datetime.timestamp
+            # > There is no method to obtain the POSIX timestamp directly from a naive datetime instance representing UTC time.
+            # > If your application uses this convention and your system timezone is not set to UTC, you can obtain the POSIX
+            # > timestamp by supplying tzinfo=timezone.utc
+            enrollment_expiry = enrollment_expiry.replace(tzinfo=timezone.utc)
+        request.session[_ENROLLMENT_EXP] = enrollment_expiry.timestamp()
     if enrollment_token is not None:
         request.session[_ENROLLMENT_TOKEN] = enrollment_token
         request.session[_ENROLLMENT_TOKEN_EXP] = enrollment_token_exp
