@@ -1,6 +1,8 @@
+from datetime import timedelta
 import time
 
 from django.urls import reverse
+from django.utils import timezone
 
 from littlepay.api.funding_sources import FundingSourceResponse
 from littlepay.api.groups import GroupFundingSourceResponse
@@ -16,6 +18,7 @@ from benefits.enrollment.views import (
     ROUTE_RETRY,
     TEMPLATE_SUCCESS,
     TEMPLATE_RETRY,
+    _calculate_expiry,
 )
 
 import benefits.enrollment.views
@@ -213,6 +216,32 @@ def test_index_eligible_post_valid_form_success(
     assert response.template_name == TEMPLATE_SUCCESS
     mocked_analytics_module.returned_success.assert_called_once()
     assert model_EligibilityType.group_id in mocked_analytics_module.returned_success.call_args.args
+
+
+def test_calculate_expiry():
+    expiration_days = 365
+
+    expiry_date = _calculate_expiry(expiration_days)
+
+    assert expiry_date == (
+        timezone.localtime(timezone=timezone.get_default_timezone()) + timedelta(days=expiration_days + 1)
+    ).replace(hour=0, minute=0, second=0, microsecond=0)
+
+
+def test_calculate_expiry_specific_date(mocker):
+    expiration_days = 14
+    mocker.patch(
+        "benefits.enrollment.views.timezone.now",
+        return_value=timezone.make_aware(
+            value=timezone.datetime(2024, 3, 1, 13, 37, 11, 5), timezone=timezone.get_fixed_timezone(offset=0)
+        ),
+    )
+
+    expiry_date = _calculate_expiry(expiration_days)
+
+    assert expiry_date == timezone.make_aware(
+        value=timezone.datetime(2024, 3, 16, 0, 0, 0, 0), timezone=timezone.get_default_timezone()
+    )
 
 
 @pytest.mark.django_db

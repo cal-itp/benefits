@@ -3,10 +3,12 @@ The enrollment application: view definitions for the benefits enrollment flow.
 """
 
 import logging
+from datetime import timedelta
 
 from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.decorators import decorator_from_middleware
 from littlepay.api.client import Client
 from requests.exceptions import HTTPError
@@ -186,8 +188,13 @@ def _is_within_reenrollment_window(concession_expiry, enrollment_reenrollment_da
 
 
 def _calculate_expiry(expiration_days):
-    """Returns the expiry datetime."""
-    pass
+    """Returns the expiry datetime, which should be midnight in our configured timezone of the (N + 1)th day from now,
+    where N is expiration_days."""
+    default_time_zone = timezone.get_default_timezone()
+    expiry_date = timezone.localtime(timezone=default_time_zone) + timedelta(days=expiration_days + 1)
+    expiry_datetime = expiry_date.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    return expiry_datetime
 
 
 @decorator_from_middleware(EligibleSessionRequired)
