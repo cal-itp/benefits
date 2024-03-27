@@ -81,25 +81,29 @@ def index(request):
         client.oauth.ensure_active_token(client.token)
 
         funding_source = client.get_funding_source_by_token(card_token)
+        group_id = eligibility.group_id
 
         try:
-            client.link_concession_group_funding_source(funding_source_id=funding_source.id, group_id=eligibility.group_id)
-        except HTTPError as e:
-            # 409 means that customer already belongs to a concession group.
-            # the response JSON will look like:
-            # {"errors":[{"detail":"Conflict (409) - Customer already belongs to a concession group."}]}
-            if e.response.status_code == 409:
-                analytics.returned_success(request, eligibility.group_id)
-                return success(request)
+            group_funding_source = _get_group_funding_source(
+                client=client, group_id=group_id, funding_source_id=funding_source.id
+            )
+
+            already_enrolled = group_funding_source is not None
+
+            if not already_enrolled:
+                # enroll user with no expiration date, return success
+                client.link_concession_group_funding_source(group_id=group_id, funding_source_id=funding_source.id)
+                return _success(request, group_id)
             else:
-                analytics.returned_error(request, str(e))
-                raise Exception(f"{e}: {e.response.json()}")
+                # no action, return success
+                return _success(request, group_id)
+
+        except HTTPError as e:
+            analytics.returned_error(request, str(e))
+            raise Exception(f"{e}: {e.response.json()}")
         except Exception as e:
             analytics.returned_error(request, str(e))
             raise e
-        else:
-            analytics.returned_success(request, eligibility.group_id)
-            return success(request)
 
     # GET enrollment index
     else:
@@ -120,6 +124,22 @@ def index(request):
         logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
 
         return TemplateResponse(request, eligibility.enrollment_index_template, context)
+
+
+def _success(request, group_id):
+    analytics.returned_success(request, group_id)
+    return success(request)
+
+
+def _get_group_funding_source(client: Client, group_id, funding_source_id):
+    group_funding_sources = client.get_concession_group_linked_funding_sources(group_id)
+    matching_group_funding_source = None
+    for group_funding_source in group_funding_sources:
+        if group_funding_source.id == funding_source_id:
+            matching_group_funding_source = group_funding_source
+            break
+
+    return matching_group_funding_source
 
 
 @decorator_from_middleware(EligibleSessionRequired)

@@ -3,6 +3,7 @@ import time
 from django.urls import reverse
 
 from littlepay.api.funding_sources import FundingSourceResponse
+from littlepay.api.groups import GroupFundingSourceResponse
 from requests import HTTPError
 import pytest
 
@@ -48,6 +49,17 @@ def mocked_funding_source():
         participant_id="cst",
         is_fpan=False,
         related_funding_sources=[],
+    )
+
+
+@pytest.fixture
+def mocked_group_funding_source_no_expiration(mocked_funding_source):
+    return GroupFundingSourceResponse(
+        id=mocked_funding_source.id,
+        participant_id=mocked_funding_source.participant_id,
+        concession_expiry=None,
+        concession_created_at=None,
+        concession_updated_at=None,
     )
 
 
@@ -131,7 +143,6 @@ def test_index_eligible_post_valid_form_http_error(mocker, client, card_tokenize
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
 
-    # any status_code that isn't 409 is considered an error
     mock_error = {"message": "Mock error message"}
     mock_error_response = mocker.Mock(status_code=400, **mock_error)
     mock_error_response.json.return_value = mock_error
@@ -160,20 +171,23 @@ def test_index_eligible_post_valid_form_failure(mocker, client, card_tokenize_fo
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
 def test_index_eligible_post_valid_form_customer_already_enrolled(
-    mocker, client, card_tokenize_form_data, mocked_analytics_module, model_EligibilityType, mocked_funding_source
+    mocker,
+    client,
+    card_tokenize_form_data,
+    mocked_analytics_module,
+    model_EligibilityType,
+    mocked_funding_source,
+    mocked_group_funding_source_no_expiration,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
-    mock_error_response = mocker.Mock(status_code=409)
-    mock_client.link_concession_group_funding_source.side_effect = HTTPError(response=mock_error_response)
+
+    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_no_expiration)
 
     path = reverse(ROUTE_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
-    mock_client.link_concession_group_funding_source.assert_called_once_with(
-        funding_source_id=mocked_funding_source.id, group_id=model_EligibilityType.group_id
-    )
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
     mocked_analytics_module.returned_success.assert_called_once()
