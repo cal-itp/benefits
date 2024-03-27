@@ -204,7 +204,11 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, "benefits", "locale")]
 
 USE_I18N = True
 
-TIME_ZONE = "UTC"
+# See https://docs.djangoproject.com/en/5.0/ref/settings/#std-setting-TIME_ZONE
+# > Note that this isn’t necessarily the time zone of the server.
+# > When USE_TZ is True, this is the default time zone that Django will use to display datetimes in templates
+# > and to interpret datetimes entered in forms.
+TIME_ZONE = "America/Los_Angeles"
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
