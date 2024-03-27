@@ -216,6 +216,16 @@ def test_EligibilityType_supports_expiration(model_EligibilityType_supports_expi
     model_EligibilityType_supports_expiration.full_clean()
 
 
+@pytest.mark.django_db
+def test_EligibilityType_enrollment_index_template(model_EligibilityType):
+    assert model_EligibilityType.enrollment_index_template == "enrollment/index.html"
+
+    model_EligibilityType.enrollment_index_template = "test/enrollment.html"
+    model_EligibilityType.save()
+
+    assert model_EligibilityType.enrollment_index_template == "test/enrollment.html"
+
+
 class SampleFormClass:
     """A class for testing EligibilityVerifier form references."""
 
