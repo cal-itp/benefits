@@ -103,7 +103,10 @@ def index(request):
 
                 if not already_enrolled:
                     # enroll user with an expiration date, return success
-                    pass
+                    client.link_concession_group_funding_source(
+                        group_id=group_id, funding_source_id=funding_source.id, expiry_date=session.enrollment_expiry(request)
+                    )
+                    return _success(request, group_id)
                 else:
                     if has_no_expiration_date:
                         # update expiration of existing enrollment, return success
