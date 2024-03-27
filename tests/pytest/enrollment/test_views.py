@@ -273,6 +273,37 @@ def test_index_eligible_post_valid_form_success_supports_expiration(
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+def test_index_eligible_post_valid_form_success_supports_expiration_no_expiration(
+    mocker,
+    client,
+    card_tokenize_form_data,
+    mocked_analytics_module,
+    model_EligibilityType_supports_expiration,
+    mocked_funding_source,
+    mocked_group_funding_source_no_expiration,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+    mock_client.get_funding_source_by_token.return_value = mocked_funding_source
+
+    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_no_expiration)
+
+    path = reverse(ROUTE_INDEX)
+    response = client.post(path, card_tokenize_form_data)
+
+    mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
+        funding_source_id=mocked_funding_source.id,
+        group_id=model_EligibilityType_supports_expiration.group_id,
+        expiry_date=mocker.ANY,
+    )
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_SUCCESS
+    mocked_analytics_module.returned_success.assert_called_once()
+    assert model_EligibilityType_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+
+
+@pytest.mark.django_db
 def test_index_ineligible(client):
     path = reverse(ROUTE_INDEX)
 

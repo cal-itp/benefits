@@ -110,7 +110,12 @@ def index(request):
                 else:
                     if has_no_expiration_date:
                         # update expiration of existing enrollment, return success
-                        pass
+                        client.update_concession_group_funding_source_expiry(
+                            group_id=group_id,
+                            funding_source_id=funding_source.id,
+                            expiry_date=session.enrollment_expiry(request),
+                        )
+                        return _success(request, group_id)
                     else:
                         is_expired = _is_expired(group_funding_source.concession_expiry)
                         is_within_reenrollment_window = _is_within_reenrollment_window(
