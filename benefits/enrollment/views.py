@@ -89,14 +89,47 @@ def index(request):
             )
 
             already_enrolled = group_funding_source is not None
+            has_no_expiration_date = already_enrolled and group_funding_source.concession_expiry is None
+            has_expiration_date = already_enrolled and group_funding_source.concession_expiry is not None
 
-            if not already_enrolled:
-                # enroll user with no expiration date, return success
-                client.link_concession_group_funding_source(group_id=group_id, funding_source_id=funding_source.id)
-                return _success(request, group_id)
-            else:
-                # no action, return success
-                return _success(request, group_id)
+            if eligibility.supports_expiration:
+                # set expiry on session
+                if has_expiration_date:
+                    session.update(request, enrollment_expiry=group_funding_source.concession_expiry)
+                else:
+                    session.update(request, enrollment_expiry=_calculate_expiry(eligibility.expiration_days))
+
+                if not already_enrolled:
+                    # enroll user with an expiration date, return success
+                    pass
+                else:
+                    if has_no_expiration_date:
+                        # update expiration of existing enrollment, return success
+                        pass
+                    else:
+                        is_expired = _is_expired(group_funding_source.concession_expiry)
+                        is_within_reenrollment_window = _is_within_reenrollment_window(
+                            group_funding_source.concession_expiry, session.enrollment_reenrollment(request)
+                        )
+
+                        if is_expired or is_within_reenrollment_window:
+                            # update expiration of existing enrollment, return success
+                            pass
+                        else:
+                            # re-enrollment error, return enrollment error with expiration and reenrollment_date
+                            pass
+            else:  # eligibility does not support expiration
+                if not already_enrolled:
+                    # enroll user with no expiration date, return success
+                    client.link_concession_group_funding_source(group_id=group_id, funding_source_id=funding_source.id)
+                    return _success(request, group_id)
+                else:
+                    if has_no_expiration_date:
+                        # no action, return success
+                        return _success(request, group_id)
+                    else:
+                        # remove expiration date, return success
+                        pass
 
         except HTTPError as e:
             analytics.returned_error(request, str(e))
@@ -140,6 +173,21 @@ def _get_group_funding_source(client: Client, group_id, funding_source_id):
             break
 
     return matching_group_funding_source
+
+
+def _is_expired(concession_expiry):
+    """Returns whether the passed in datetime is expired or not."""
+    pass
+
+
+def _is_within_reenrollment_window(concession_expiry, enrollment_reenrollment_date):
+    """Returns whether the passed in datetime is within the reenrollment window."""
+    pass
+
+
+def _calculate_expiry(expiration_days):
+    """Returns the expiry datetime."""
+    pass
 
 
 @decorator_from_middleware(EligibleSessionRequired)
