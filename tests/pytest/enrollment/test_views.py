@@ -16,6 +16,7 @@ from benefits.enrollment.views import (
     ROUTE_TOKEN,
     ROUTE_SUCCESS,
     ROUTE_RETRY,
+    TEMPLATE_REENROLLMENT_ERROR,
     TEMPLATE_SUCCESS,
     TEMPLATE_RETRY,
     _calculate_expiry,
@@ -497,6 +498,41 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_within_re
     assert response.template_name == TEMPLATE_SUCCESS
     mocked_analytics_module.returned_success.assert_called_once()
     assert model_EligibilityType_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures(
+    "mocked_session_agency",
+    "mocked_session_verifier",
+    "mocked_session_eligibility",
+    "model_EligibilityType_supports_expiration",
+)
+def test_index_eligible_post_valid_form_success_supports_expiration_is_not_expired_yet(
+    mocker,
+    client,
+    card_tokenize_form_data,
+    mocked_analytics_module,
+    mocked_funding_source,
+    mocked_group_funding_source_with_expiration,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+    mock_client.get_funding_source_by_token.return_value = mocked_funding_source
+
+    # mock that a funding source already exists, doesn't matter what concession_expiry is
+    mocker.patch(
+        "benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiration
+    )
+
+    mocker.patch("benefits.enrollment.views._is_expired", return_value=False)
+    mocker.patch("benefits.enrollment.views._is_within_reenrollment_window", return_value=False)
+
+    path = reverse(ROUTE_INDEX)
+    response = client.post(path, card_tokenize_form_data)
+
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_REENROLLMENT_ERROR
+    mocked_analytics_module.returned_error.assert_called_once()
 
 
 @pytest.mark.django_db

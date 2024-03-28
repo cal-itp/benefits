@@ -28,6 +28,7 @@ ROUTE_RETRY = "enrollment:retry"
 ROUTE_SUCCESS = "enrollment:success"
 ROUTE_TOKEN = "enrollment:token"
 
+TEMPLATE_REENROLLMENT_ERROR = "enrollment/reenrollment-error.html"
 TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SUCCESS = "enrollment/success.html"
 
@@ -132,7 +133,7 @@ def index(request):
                             return _success(request, group_id)
                         else:
                             # re-enrollment error, return enrollment error with expiration and reenrollment_date
-                            pass
+                            return reenrollment_error(request)
             else:  # eligibility does not support expiration
                 if not already_enrolled:
                     # enroll user with no expiration date, return success
@@ -208,6 +209,12 @@ def _calculate_expiry(expiration_days):
     expiry_datetime = expiry_date.replace(hour=0, minute=0, second=0, microsecond=0)
 
     return expiry_datetime
+
+
+def reenrollment_error(request):
+    """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
+    analytics.returned_error(request, "Re-enrollment error")
+    return TemplateResponse(request, TEMPLATE_REENROLLMENT_ERROR)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
