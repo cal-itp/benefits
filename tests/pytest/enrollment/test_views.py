@@ -19,6 +19,7 @@ from benefits.enrollment.views import (
     TEMPLATE_SUCCESS,
     TEMPLATE_RETRY,
     _calculate_expiry,
+    _is_expired,
 )
 
 import benefits.enrollment.views
@@ -312,6 +313,42 @@ def test_index_eligible_post_valid_form_success_supports_expiration_no_expiratio
     assert response.template_name == TEMPLATE_SUCCESS
     mocked_analytics_module.returned_success.assert_called_once()
     assert model_EligibilityType_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+
+
+def test_is_expired_concession_expiry_is_in_the_past(mocker):
+    concession_expiry = timezone.make_aware(timezone.datetime(2023, 12, 31), timezone.get_default_timezone())
+
+    # mock datetime of "now" to be specific date for testing
+    mocker.patch(
+        "benefits.enrollment.views.timezone.now",
+        return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 10, 30), timezone.get_default_timezone()),
+    )
+
+    assert _is_expired(concession_expiry)
+
+
+def test_is_expired_concession_expiry_is_in_the_future(mocker):
+    concession_expiry = timezone.make_aware(timezone.datetime(2024, 1, 1, 17, 34), timezone.get_default_timezone())
+
+    # mock datetime of "now" to be specific date for testing
+    mocker.patch(
+        "benefits.enrollment.views.timezone.now",
+        return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 11, 5), timezone.get_default_timezone()),
+    )
+
+    assert not _is_expired(concession_expiry)
+
+
+def test_is_expired_concession_expiry_equals_now(mocker):
+    concession_expiry = timezone.make_aware(timezone.datetime(2024, 1, 1, 13, 37), timezone.get_default_timezone())
+
+    # mock datetime of "now" to be specific date for testing
+    mocker.patch(
+        "benefits.enrollment.views.timezone.now",
+        return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 13, 37), timezone.get_default_timezone()),
+    )
+
+    assert _is_expired(concession_expiry)
 
 
 @pytest.mark.django_db

@@ -192,7 +192,7 @@ def _get_group_funding_source(client: Client, group_id, funding_source_id):
 
 def _is_expired(concession_expiry):
     """Returns whether the passed in datetime is expired or not."""
-    pass
+    return concession_expiry <= timezone.now()
 
 
 def _is_within_reenrollment_window(concession_expiry, enrollment_reenrollment_date):
