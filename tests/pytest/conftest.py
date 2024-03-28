@@ -1,6 +1,7 @@
 from unittest.mock import create_autospec
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.middleware.locale import LocaleMiddleware
+from django.utils import timezone
 
 import pytest
 from pytest_socket import disable_socket
@@ -254,6 +255,15 @@ def mocked_session_eligibility(mocker, model_EligibilityType):
 @pytest.fixture
 def mocked_session_oauth_token(mocker):
     return mocker.patch("benefits.core.session.oauth_token", autospec=True, return_value="token")
+
+
+@pytest.fixture
+def mocked_session_enrollment_expiry(mocker):
+    return mocker.patch(
+        "benefits.core.session.enrollment_expiry",
+        autospec=True,
+        return_value=timezone.make_aware(timezone.datetime(2024, 1, 1), timezone=timezone.get_default_timezone()),
+    )
 
 
 @pytest.fixture
