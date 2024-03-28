@@ -731,6 +731,21 @@ msgstr "Espere por favor..."
 msgid "Enroll"
 msgstr "Inscribir"
 
+msgid "Your CalFresh Cardholder transit benefit does not expire until"
+msgstr ""
+
+msgid "You can re-enroll for this benefit beginning on"
+msgstr ""
+
+msgid "Please try again then."
+msgstr ""
+
+msgid "Enrollment error"
+msgstr ""
+
+msgid "You are still enrolled in this benefit"
+msgstr ""
+
 msgid "Unable to register card"
 msgstr "No se pudo registrar la tarjeta"
 
