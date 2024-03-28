@@ -124,7 +124,12 @@ def index(request):
 
                         if is_expired or is_within_reenrollment_window:
                             # update expiration of existing enrollment, return success
-                            pass
+                            client.update_concession_group_funding_source_expiry(
+                                group_id=group_id,
+                                funding_source_id=funding_source.id,
+                                expiry_date=session.enrollment_expiry(request),
+                            )
+                            return _success(request, group_id)
                         else:
                             # re-enrollment error, return enrollment error with expiration and reenrollment_date
                             pass
