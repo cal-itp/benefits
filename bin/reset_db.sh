@@ -23,7 +23,7 @@ else
     echo "DB_RESET is false, skipping"
 fi
 
-valid_fixtures=$(echo "$DJANGO_DB_FIXTURES" | grep -e fixtures\.json$)
+valid_fixtures=$(echo "$DJANGO_DB_FIXTURES" | grep -e fixtures\.json$ || test $? = 1)
 
 if [[ -n "$valid_fixtures" ]]; then
     # load data fixtures
