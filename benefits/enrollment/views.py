@@ -196,8 +196,8 @@ def _is_expired(concession_expiry):
 
 
 def _is_within_reenrollment_window(concession_expiry, enrollment_reenrollment_date):
-    """Returns whether the passed in datetime is within the reenrollment window."""
-    pass
+    """Returns if we are currently within the reenrollment window."""
+    return enrollment_reenrollment_date <= timezone.now() < concession_expiry
 
 
 def _calculate_expiry(expiration_days):
