@@ -3,10 +3,12 @@ The enrollment application: view definitions for the benefits enrollment flow.
 """
 
 import logging
+from datetime import timedelta
 
 from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.decorators import decorator_from_middleware
 from littlepay.api.client import Client
 from requests.exceptions import HTTPError
@@ -84,25 +86,75 @@ def index(request):
         client.oauth.ensure_active_token(client.token)
 
         funding_source = client.get_funding_source_by_token(card_token)
+        group_id = eligibility.group_id
 
         try:
-            client.link_concession_group_funding_source(funding_source_id=funding_source.id, group_id=eligibility.group_id)
+            group_funding_source = _get_group_funding_source(
+                client=client, group_id=group_id, funding_source_id=funding_source.id
+            )
+
+            already_enrolled = group_funding_source is not None
+            has_no_expiration_date = already_enrolled and group_funding_source.concession_expiry is None
+            has_expiration_date = already_enrolled and group_funding_source.concession_expiry is not None
+
+            if eligibility.supports_expiration:
+                # set expiry on session
+                if has_expiration_date:
+                    session.update(request, enrollment_expiry=group_funding_source.concession_expiry)
+                else:
+                    session.update(request, enrollment_expiry=_calculate_expiry(eligibility.expiration_days))
+
+                if not already_enrolled:
+                    # enroll user with an expiration date, return success
+                    client.link_concession_group_funding_source(
+                        group_id=group_id, funding_source_id=funding_source.id, expiry_date=session.enrollment_expiry(request)
+                    )
+                    return _success(request, group_id)
+                else:
+                    if has_no_expiration_date:
+                        # update expiration of existing enrollment, return success
+                        client.link_concession_group_funding_source(
+                            group_id=group_id,
+                            funding_source_id=funding_source.id,
+                            expiry_date=session.enrollment_expiry(request),
+                        )
+                        return _success(request, group_id)
+                    else:
+                        is_expired = _is_expired(group_funding_source.concession_expiry)
+                        is_within_reenrollment_window = _is_within_reenrollment_window(
+                            group_funding_source.concession_expiry, session.enrollment_reenrollment(request)
+                        )
+
+                        if is_expired or is_within_reenrollment_window:
+                            # update expiration of existing enrollment, return success
+                            client.link_concession_group_funding_source(
+                                group_id=group_id,
+                                funding_source_id=funding_source.id,
+                                expiry_date=session.enrollment_expiry(request),
+                            )
+                            return _success(request, group_id)
+                        else:
+                            # re-enrollment error, return enrollment error with expiration and reenrollment_date
+                            pass
+            else:  # eligibility does not support expiration
+                if not already_enrolled:
+                    # enroll user with no expiration date, return success
+                    client.link_concession_group_funding_source(group_id=group_id, funding_source_id=funding_source.id)
+                    return _success(request, group_id)
+                else:
+                    if has_no_expiration_date:
+                        # no action, return success
+                        return _success(request, group_id)
+                    else:
+                        # remove expiration date, return success
+                        pass
+
         except HTTPError as e:
-            # 409 means that customer already belongs to a concession group.
-            # the response JSON will look like:
-            # {"errors":[{"detail":"Conflict (409) - Customer already belongs to a concession group."}]}
-            if e.response.status_code == 409:
-                analytics.returned_success(request, eligibility.group_id)
-                return success(request)
-            else:
-                analytics.returned_error(request, str(e))
-                raise Exception(f"{e}: {e.response.json()}")
+            analytics.returned_error(request, str(e))
+            raise Exception(f"{e}: {e.response.json()}")
         except Exception as e:
             analytics.returned_error(request, str(e))
             raise e
-        else:
-            analytics.returned_success(request, eligibility.group_id)
-            return success(request)
 
     # GET enrollment index
     else:
@@ -123,6 +175,42 @@ def index(request):
         logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
 
         return TemplateResponse(request, TEMPLATE_INDEX, context)
+
+
+def _success(request, group_id):
+    analytics.returned_success(request, group_id)
+    return success(request)
+
+
+def _get_group_funding_source(client: Client, group_id, funding_source_id):
+    group_funding_sources = client.get_concession_group_linked_funding_sources(group_id)
+    matching_group_funding_source = None
+    for group_funding_source in group_funding_sources:
+        if group_funding_source.id == funding_source_id:
+            matching_group_funding_source = group_funding_source
+            break
+
+    return matching_group_funding_source
+
+
+def _is_expired(concession_expiry):
+    """Returns whether the passed in datetime is expired or not."""
+    return concession_expiry >= timezone.now()
+
+
+def _is_within_reenrollment_window(concession_expiry, enrollment_reenrollment_date):
+    """Returns whether the passed in datetime is within the reenrollment window."""
+    pass
+
+
+def _calculate_expiry(expiration_days):
+    """Returns the expiry datetime, which should be midnight in our configured timezone of the (N + 1)th day from now,
+    where N is expiration_days."""
+    default_time_zone = timezone.get_default_timezone()
+    expiry_date = timezone.localtime(timezone=default_time_zone) + timedelta(days=expiration_days + 1)
+    expiry_datetime = expiry_date.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    return expiry_datetime
 
 
 @decorator_from_middleware(EligibleSessionRequired)

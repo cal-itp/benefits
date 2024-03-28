@@ -1,8 +1,11 @@
+from datetime import timedelta
 import time
 
 from django.urls import reverse
+from django.utils import timezone
 
 from littlepay.api.funding_sources import FundingSourceResponse
+from littlepay.api.groups import GroupFundingSourceResponse
 from requests import HTTPError
 import pytest
 
@@ -16,6 +19,8 @@ from benefits.enrollment.views import (
     TEMPLATE_INDEX,
     TEMPLATE_SUCCESS,
     TEMPLATE_RETRY,
+    _calculate_expiry,
+    _is_expired,
 )
 
 import benefits.enrollment.views
@@ -49,6 +54,28 @@ def mocked_funding_source():
         participant_id="cst",
         is_fpan=False,
         related_funding_sources=[],
+    )
+
+
+@pytest.fixture
+def mocked_group_funding_source_no_expiration(mocked_funding_source):
+    return GroupFundingSourceResponse(
+        id=mocked_funding_source.id,
+        participant_id=mocked_funding_source.participant_id,
+        concession_expiry=None,
+        concession_created_at=None,
+        concession_updated_at=None,
+    )
+
+
+@pytest.fixture
+def mocked_group_funding_source_with_expiration(mocked_funding_source):
+    return GroupFundingSourceResponse(
+        id=mocked_funding_source.id,
+        participant_id=mocked_funding_source.participant_id,
+        concession_expiry="2023-01-01T00:00:00Z",
+        concession_created_at="2021-01-01T00:00:00Z",
+        concession_updated_at="2021-01-01T00:00:00Z",
     )
 
 
@@ -132,7 +159,6 @@ def test_index_eligible_post_valid_form_http_error(mocker, client, card_tokenize
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
 
-    # any status_code that isn't 409 is considered an error
     mock_error = {"message": "Mock error message"}
     mock_error_response = mocker.Mock(status_code=400, **mock_error)
     mock_error_response.json.return_value = mock_error
@@ -161,20 +187,23 @@ def test_index_eligible_post_valid_form_failure(mocker, client, card_tokenize_fo
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
 def test_index_eligible_post_valid_form_customer_already_enrolled(
-    mocker, client, card_tokenize_form_data, mocked_analytics_module, model_EligibilityType, mocked_funding_source
+    mocker,
+    client,
+    card_tokenize_form_data,
+    mocked_analytics_module,
+    model_EligibilityType,
+    mocked_funding_source,
+    mocked_group_funding_source_no_expiration,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
-    mock_error_response = mocker.Mock(status_code=409)
-    mock_client.link_concession_group_funding_source.side_effect = HTTPError(response=mock_error_response)
+
+    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_no_expiration)
 
     path = reverse(ROUTE_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
-    mock_client.link_concession_group_funding_source.assert_called_once_with(
-        funding_source_id=mocked_funding_source.id, group_id=model_EligibilityType.group_id
-    )
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
     mocked_analytics_module.returned_success.assert_called_once()
@@ -200,6 +229,163 @@ def test_index_eligible_post_valid_form_success(
     assert response.template_name == TEMPLATE_SUCCESS
     mocked_analytics_module.returned_success.assert_called_once()
     assert model_EligibilityType.group_id in mocked_analytics_module.returned_success.call_args.args
+
+
+def test_calculate_expiry():
+    expiration_days = 365
+
+    expiry_date = _calculate_expiry(expiration_days)
+
+    assert expiry_date == (
+        timezone.localtime(timezone=timezone.get_default_timezone()) + timedelta(days=expiration_days + 1)
+    ).replace(hour=0, minute=0, second=0, microsecond=0)
+
+
+def test_calculate_expiry_specific_date(mocker):
+    expiration_days = 14
+    mocker.patch(
+        "benefits.enrollment.views.timezone.now",
+        return_value=timezone.make_aware(
+            value=timezone.datetime(2024, 3, 1, 13, 37, 11, 5), timezone=timezone.get_fixed_timezone(offset=0)
+        ),
+    )
+
+    expiry_date = _calculate_expiry(expiration_days)
+
+    assert expiry_date == timezone.make_aware(
+        value=timezone.datetime(2024, 3, 16, 0, 0, 0, 0), timezone=timezone.get_default_timezone()
+    )
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+def test_index_eligible_post_valid_form_success_supports_expiration(
+    mocker,
+    client,
+    card_tokenize_form_data,
+    mocked_analytics_module,
+    model_EligibilityType_supports_expiration,
+    mocked_funding_source,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+    mock_client.get_funding_source_by_token.return_value = mocked_funding_source
+
+    path = reverse(ROUTE_INDEX)
+    response = client.post(path, card_tokenize_form_data)
+
+    mock_client.link_concession_group_funding_source.assert_called_once_with(
+        funding_source_id=mocked_funding_source.id,
+        group_id=model_EligibilityType_supports_expiration.group_id,
+        expiry_date=mocker.ANY,
+    )
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_SUCCESS
+    mocked_analytics_module.returned_success.assert_called_once()
+    assert model_EligibilityType_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+def test_index_eligible_post_valid_form_success_supports_expiration_no_expiration(
+    mocker,
+    client,
+    card_tokenize_form_data,
+    mocked_analytics_module,
+    model_EligibilityType_supports_expiration,
+    mocked_funding_source,
+    mocked_group_funding_source_no_expiration,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+    mock_client.get_funding_source_by_token.return_value = mocked_funding_source
+
+    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_no_expiration)
+
+    path = reverse(ROUTE_INDEX)
+    response = client.post(path, card_tokenize_form_data)
+
+    mock_client.link_concession_group_funding_source.assert_called_once_with(
+        funding_source_id=mocked_funding_source.id,
+        group_id=model_EligibilityType_supports_expiration.group_id,
+        expiry_date=mocker.ANY,
+    )
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_SUCCESS
+    mocked_analytics_module.returned_success.assert_called_once()
+    assert model_EligibilityType_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+
+
+def test_is_expired_concession_expiry_earlier_than_now(mocker):
+    concession_expiry = timezone.make_aware(timezone.datetime(2023, 12, 31), timezone.get_default_timezone())
+
+    # mock datetime of "now" to be specific date for testing
+    mocker.patch(
+        "benefits.enrollment.views.timezone.now",
+        return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 10, 30), timezone.get_default_timezone()),
+    )
+
+    assert not _is_expired(concession_expiry)
+
+
+def test_is_expired_concession_expiry_after_now(mocker):
+    concession_expiry = timezone.make_aware(timezone.datetime(2024, 1, 1, 17, 34), timezone.get_default_timezone())
+
+    # mock datetime of "now" to be specific date for testing
+    mocker.patch(
+        "benefits.enrollment.views.timezone.now",
+        return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 11, 5), timezone.get_default_timezone()),
+    )
+
+    assert _is_expired(concession_expiry)
+
+
+def test_is_expired_concession_expiry_equals_now(mocker):
+    # mock datetime of "now" to be specific date for testing
+    mocker.patch(
+        "benefits.enrollment.views.timezone.now",
+        return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 13, 37), timezone.get_default_timezone()),
+    )
+
+    concession_expiry = timezone.make_aware(timezone.datetime(2024, 1, 1, 13, 37), timezone.get_default_timezone())
+
+    assert _is_expired(concession_expiry)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+def test_index_eligible_post_valid_form_success_supports_expiration_is_expired(
+    mocker,
+    client,
+    card_tokenize_form_data,
+    mocked_analytics_module,
+    model_EligibilityType_supports_expiration,
+    mocked_funding_source,
+    mocked_group_funding_source_with_expiration,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+    mock_client.get_funding_source_by_token.return_value = mocked_funding_source
+
+    # mock that a funding source already exists, doesn't matter what concession_expiry is
+    mocker.patch(
+        "benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiration
+    )
+
+    mocker.patch("benefits.enrollment.views._is_expired", return_value=True)
+
+    path = reverse(ROUTE_INDEX)
+    response = client.post(path, card_tokenize_form_data)
+
+    mock_client.link_concession_group_funding_source.assert_called_once_with(
+        funding_source_id=mocked_funding_source.id,
+        group_id=model_EligibilityType_supports_expiration.group_id,
+        expiry_date=mocker.ANY,
+    )
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_SUCCESS
+    mocked_analytics_module.returned_success.assert_called_once()
+    assert model_EligibilityType_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
 
 
 @pytest.mark.django_db

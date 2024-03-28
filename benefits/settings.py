@@ -204,7 +204,7 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, "benefits", "locale")]
 
 USE_I18N = True
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "America/Los_Angeles"
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
