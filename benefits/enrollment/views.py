@@ -144,7 +144,7 @@ def index(request):
                         return _success(request, group_id)
                     else:
                         # remove expiration date, return success
-                        pass
+                        raise NotImplementedError("Removing expiration date is currently not supported")
 
         except HTTPError as e:
             analytics.returned_error(request, str(e))
