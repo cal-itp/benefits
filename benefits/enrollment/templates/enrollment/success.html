@@ -13,7 +13,7 @@
 
 {% block headline %}
   <div class="col-lg-8">
-    <h1 class="pb-lg-5 pb-4">{% translate "Success! Your transit benefit is now connected to your card." %}</h1>
+    <h1 class="pb-lg-4 mb-lg-3 pb-4">{% translate "Success! Your transit benefit is now connected to your card." %}</h1>
   </div>
 {% endblock headline %}
 
@@ -23,7 +23,7 @@
       <div class="col-12 col-lg-7">
         {# djlint:off #}
         {% if enrollment.supports_expiration %}
-          <h2 class="h3 mb-1">{% translate "Your benefit will expire on" %} {{ enrollment.expires|date }}.</h2>
+          <h2 class="h3 mt-lg-3 mb-1">{% translate "Your benefit will expire on" %} {{ enrollment.expires|date }}.</h2>
           <p>
         {% else %}
           <p class="pt-lg-4 mt-lg-3">
