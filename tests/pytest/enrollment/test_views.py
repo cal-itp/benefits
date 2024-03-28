@@ -19,6 +19,7 @@ from benefits.enrollment.views import (
     TEMPLATE_REENROLLMENT_ERROR,
     TEMPLATE_SUCCESS,
     TEMPLATE_RETRY,
+    _get_group_funding_source,
     _calculate_expiry,
     _is_expired,
     _is_within_reenrollment_window,
@@ -183,6 +184,30 @@ def test_index_eligible_post_valid_form_failure(mocker, client, card_tokenize_fo
     path = reverse(ROUTE_INDEX)
     with pytest.raises(Exception, match=r"some other exception"):
         client.post(path, card_tokenize_form_data)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("model_EligibilityType")
+def test_get_group_funding_sources_funding_source_not_enrolled_yet(mocker, mocked_funding_source):
+    mock_client = mocker.Mock()
+    mock_client.get_concession_group_linked_funding_sources.return_value = []
+
+    matching_group_funding_source = _get_group_funding_source(mock_client, "group123", mocked_funding_source.id)
+
+    assert matching_group_funding_source is None
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("model_EligibilityType")
+def test_get_group_funding_sources_funding_source_already_enrolled(
+    mocker, mocked_funding_source, mocked_group_funding_source_no_expiration
+):
+    mock_client = mocker.Mock()
+    mock_client.get_concession_group_linked_funding_sources.return_value = [mocked_group_funding_source_no_expiration]
+
+    matching_group_funding_source = _get_group_funding_source(mock_client, "group123", mocked_funding_source.id)
+
+    assert matching_group_funding_source == mocked_group_funding_source_no_expiration
 
 
 @pytest.mark.django_db
