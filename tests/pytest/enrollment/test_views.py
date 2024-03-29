@@ -60,7 +60,7 @@ def mocked_funding_source():
 
 
 @pytest.fixture
-def mocked_group_funding_source_no_expiration(mocked_funding_source):
+def mocked_group_funding_source_no_expiry(mocked_funding_source):
     return GroupFundingSourceResponse(
         id=mocked_funding_source.id,
         participant_id=mocked_funding_source.participant_id,
@@ -71,7 +71,7 @@ def mocked_group_funding_source_no_expiration(mocked_funding_source):
 
 
 @pytest.fixture
-def mocked_group_funding_source_with_expiration(mocked_funding_source):
+def mocked_group_funding_source_with_expiry(mocked_funding_source):
     return GroupFundingSourceResponse(
         id=mocked_funding_source.id,
         participant_id=mocked_funding_source.participant_id,
@@ -200,32 +200,32 @@ def test_get_group_funding_sources_funding_source_not_enrolled_yet(mocker, mocke
 @pytest.mark.django_db
 @pytest.mark.usefixtures("model_EligibilityType")
 def test_get_group_funding_sources_funding_source_already_enrolled(
-    mocker, mocked_funding_source, mocked_group_funding_source_no_expiration
+    mocker, mocked_funding_source, mocked_group_funding_source_no_expiry
 ):
     mock_client = mocker.Mock()
-    mock_client.get_concession_group_linked_funding_sources.return_value = [mocked_group_funding_source_no_expiration]
+    mock_client.get_concession_group_linked_funding_sources.return_value = [mocked_group_funding_source_no_expiry]
 
     matching_group_funding_source = _get_group_funding_source(mock_client, "group123", mocked_funding_source.id)
 
-    assert matching_group_funding_source == mocked_group_funding_source_no_expiration
+    assert matching_group_funding_source == mocked_group_funding_source_no_expiry
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
-def test_index_eligible_post_valid_form_customer_already_enrolled(
+def test_index_eligible_post_valid_form_customer_already_enrolled_no_expiry(
     mocker,
     client,
     card_tokenize_form_data,
     mocked_analytics_module,
     model_EligibilityType,
     mocked_funding_source,
-    mocked_group_funding_source_no_expiration,
+    mocked_group_funding_source_no_expiry,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
-    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_no_expiration)
+    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_no_expiry)
 
     path = reverse(ROUTE_INDEX)
     response = client.post(path, card_tokenize_form_data)
@@ -238,7 +238,7 @@ def test_index_eligible_post_valid_form_customer_already_enrolled(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
-def test_index_eligible_post_valid_form_success(
+def test_index_eligible_post_valid_form_success_no_expiry(
     mocker, client, card_tokenize_form_data, mocked_analytics_module, model_EligibilityType, mocked_funding_source
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
@@ -314,21 +314,21 @@ def test_index_eligible_post_valid_form_success_supports_expiration(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
-def test_index_eligible_post_valid_form_success_supports_expiration_no_expiration(
+def test_index_eligible_post_valid_form_success_supports_expiration_no_expiry(
     mocker,
     client,
     card_tokenize_form_data,
     mocked_analytics_module,
     model_EligibilityType_supports_expiration,
     mocked_funding_source,
-    mocked_group_funding_source_no_expiration,
+    mocked_group_funding_source_no_expiry,
     mocked_session_enrollment_expiry,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
-    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_no_expiration)
+    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_no_expiry)
 
     path = reverse(ROUTE_INDEX)
     response = client.post(path, card_tokenize_form_data)
@@ -389,7 +389,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_expired(
     mocked_analytics_module,
     model_EligibilityType_supports_expiration,
     mocked_funding_source,
-    mocked_group_funding_source_with_expiration,
+    mocked_group_funding_source_with_expiry,
     mocked_session_enrollment_expiry,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
@@ -397,9 +397,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_expired(
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
     # mock that a funding source already exists, doesn't matter what concession_expiry is
-    mocker.patch(
-        "benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiration
-    )
+    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry)
 
     mocker.patch("benefits.enrollment.views._is_expired", return_value=True)
 
@@ -501,7 +499,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_within_re
     mocked_analytics_module,
     model_EligibilityType_supports_expiration,
     mocked_funding_source,
-    mocked_group_funding_source_with_expiration,
+    mocked_group_funding_source_with_expiry,
     mocked_session_enrollment_expiry,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
@@ -509,9 +507,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_within_re
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
     # mock that a funding source already exists, doesn't matter what concession_expiry is
-    mocker.patch(
-        "benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiration
-    )
+    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry)
 
     mocker.patch("benefits.enrollment.views._is_within_reenrollment_window", return_value=True)
 
@@ -542,16 +538,14 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_not_expir
     card_tokenize_form_data,
     mocked_analytics_module,
     mocked_funding_source,
-    mocked_group_funding_source_with_expiration,
+    mocked_group_funding_source_with_expiry,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
     # mock that a funding source already exists, doesn't matter what concession_expiry is
-    mocker.patch(
-        "benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiration
-    )
+    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry)
 
     mocker.patch("benefits.enrollment.views._is_expired", return_value=False)
     mocker.patch("benefits.enrollment.views._is_within_reenrollment_window", return_value=False)
@@ -573,16 +567,14 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_has_
     mocked_analytics_module,
     model_EligibilityType,
     mocked_funding_source,
-    mocked_group_funding_source_with_expiration,
+    mocked_group_funding_source_with_expiry,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
     # mock that a funding source already exists, doesn't matter what concession_expiry is
-    mocker.patch(
-        "benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiration
-    )
+    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry)
 
     path = reverse(ROUTE_INDEX)
     with pytest.raises(NotImplementedError):
