@@ -92,12 +92,10 @@ def index(request):
             )
 
             already_enrolled = group_funding_source is not None
-            has_no_expiration_date = already_enrolled and group_funding_source.concession_expiry is None
-            has_expiration_date = already_enrolled and group_funding_source.concession_expiry is not None
 
             if eligibility.supports_expiration:
                 # set expiry on session
-                if has_expiration_date:
+                if already_enrolled and group_funding_source.concession_expiry is not None:
                     session.update(request, enrollment_expiry=group_funding_source.concession_expiry)
                 else:
                     session.update(request, enrollment_expiry=_calculate_expiry(eligibility.expiration_days))
@@ -108,8 +106,8 @@ def index(request):
                         group_id=group_id, funding_source_id=funding_source.id, expiry_date=session.enrollment_expiry(request)
                     )
                     return _success(request, group_id)
-                else:
-                    if has_no_expiration_date:
+                else:  # already_enrolled
+                    if group_funding_source.concession_expiry is None:
                         # update expiration of existing enrollment, return success
                         client.update_concession_group_funding_source_expiry(
                             group_id=group_id,
@@ -139,8 +137,8 @@ def index(request):
                     # enroll user with no expiration date, return success
                     client.link_concession_group_funding_source(group_id=group_id, funding_source_id=funding_source.id)
                     return _success(request, group_id)
-                else:
-                    if has_no_expiration_date:
+                else:  # already_enrolled
+                    if group_funding_source.concession_expiry is None:
                         # no action, return success
                         return _success(request, group_id)
                     else:
