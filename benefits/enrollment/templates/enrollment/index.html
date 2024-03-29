@@ -42,7 +42,10 @@
           .done(function() {
           $.get("{{ access_token_url }}", function(data) {
               $(".loading").remove();
-              $(".invisible").removeClass("invisible");
+              // remove invisible and add back visible, so we aren't left with
+              // a div with an empty class attribute
+              // (this is purely for clarity when reviewing the HTML, no UX impact)
+              $(".invisible").removeClass("invisible").addClass("visible");
 
               $("#{{ cta_button }}").on("click", function() {
                   amplitude.getInstance().logEvent(startedEvent, {
