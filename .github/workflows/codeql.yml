@@ -15,9 +15,28 @@ on:
     - cron: "24 9 * * 6"
 
 jobs:
+  setup:
+    name: Set up CodeQL analysis
+    runs-on: ubuntu-latest
+    # Required permissions
+    permissions:
+      pull-requests: read
+    outputs:
+      # changes is a JSON array with names of all filters matching any of the changed files
+      languages: ${{ steps.filter.outputs.changes }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            javascript: "**.js"
+            python: "**.py"
+
   codeql:
     name: CodeQL Analyze
     runs-on: ubuntu-latest
+    needs: setup
     permissions:
       actions: read
       contents: read
@@ -26,7 +45,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ["javascript", "python"]
+        # Parse JSON array containing names of all filters matching any of changed files
+        # e.g. ['javascript', 'python'] if both file types had changes
+        language: ${{ fromJSON(needs.setup.outputs.languages) }}
 
     steps:
       - name: Checkout repository
