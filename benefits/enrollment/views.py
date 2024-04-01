@@ -104,7 +104,7 @@ def index(request):
                     client.link_concession_group_funding_source(
                         group_id=group_id, funding_source_id=funding_source.id, expiry_date=session.enrollment_expiry(request)
                     )
-                    return _success(request, group_id)
+                    return success(request)
                 else:  # already_enrolled
                     if group_funding_source.concession_expiry is None:
                         # update expiration of existing enrollment, return success
@@ -113,7 +113,7 @@ def index(request):
                             funding_source_id=funding_source.id,
                             expiry_date=session.enrollment_expiry(request),
                         )
-                        return _success(request, group_id)
+                        return success(request)
                     else:
                         is_expired = _is_expired(group_funding_source.concession_expiry)
                         is_within_reenrollment_window = _is_within_reenrollment_window(
@@ -127,7 +127,7 @@ def index(request):
                                 funding_source_id=funding_source.id,
                                 expiry_date=session.enrollment_expiry(request),
                             )
-                            return _success(request, group_id)
+                            return success(request)
                         else:
                             # re-enrollment error, return enrollment error with expiration and reenrollment_date
                             return reenrollment_error(request)
@@ -135,11 +135,11 @@ def index(request):
                 if not already_enrolled:
                     # enroll user with no expiration date, return success
                     client.link_concession_group_funding_source(group_id=group_id, funding_source_id=funding_source.id)
-                    return _success(request, group_id)
+                    return success(request)
                 else:  # already_enrolled
                     if group_funding_source.concession_expiry is None:
                         # no action, return success
-                        return _success(request, group_id)
+                        return success(request)
                     else:
                         # remove expiration date, return success
                         raise NotImplementedError("Removing expiration date is currently not supported")
@@ -170,11 +170,6 @@ def index(request):
         logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
 
         return TemplateResponse(request, eligibility.enrollment_index_template, context)
-
-
-def _success(request, group_id):
-    analytics.returned_success(request, group_id)
-    return success(request)
 
 
 def _get_group_funding_source(client: Client, group_id, funding_source_id):
@@ -231,6 +226,7 @@ def retry(request):
 
 
 @pageview_decorator
+@decorator_from_middleware(EligibleSessionRequired)
 @decorator_from_middleware(VerifierSessionRequired)
 def success(request):
     """View handler for the final success page."""
@@ -239,10 +235,12 @@ def success(request):
 
     agency = session.agency(request)
     verifier = session.verifier(request)
+    eligibility = session.eligibility(request)
 
     if session.logged_in(request) and verifier.auth_provider.supports_sign_out:
         # overwrite origin for a logged in user
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
 
+    analytics.returned_success(request, eligibility.group_id)
     return TemplateResponse(request, agency.enrollment_success_template)

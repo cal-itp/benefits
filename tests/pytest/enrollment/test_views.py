@@ -666,8 +666,8 @@ def test_success_no_verifier(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_success_authentication_logged_in(mocker, client, model_TransitAgency):
+@pytest.mark.usefixtures("mocked_session_verifier_auth_required", "mocked_session_eligibility")
+def test_success_authentication_logged_in(mocker, client, model_TransitAgency, mocked_analytics_module):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = True
     mock_session.agency.return_value = model_TransitAgency
@@ -678,11 +678,12 @@ def test_success_authentication_logged_in(mocker, client, model_TransitAgency):
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
     assert {"origin": reverse(ROUTE_LOGGED_OUT)} in mock_session.update.call_args
+    mocked_analytics_module.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_success_authentication_not_logged_in(mocker, client, model_TransitAgency):
+@pytest.mark.usefixtures("mocked_session_verifier_auth_required", "mocked_session_eligibility")
+def test_success_authentication_not_logged_in(mocker, client, model_TransitAgency, mocked_analytics_module):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = False
     mock_session.agency.return_value = model_TransitAgency
@@ -692,13 +693,15 @@ def test_success_authentication_not_logged_in(mocker, client, model_TransitAgenc
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
+    mocked_analytics_module.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier_auth_not_required")
-def test_success_no_authentication(client):
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier_auth_not_required", "mocked_session_eligibility")
+def test_success_no_authentication(client, mocked_analytics_module):
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
+    mocked_analytics_module.returned_success.assert_called_once()
