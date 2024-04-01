@@ -72,7 +72,6 @@ def index(request):
         if not form.is_valid():
             raise Exception("Invalid card token form")
 
-        logger.debug("Read tokenized card")
         card_token = form.cleaned_data.get("card_token")
 
         client = Client(
