@@ -15,9 +15,28 @@ on:
     - cron: "24 9 * * 6"
 
 jobs:
+  setup:
+    name: Set up CodeQL analysis
+    runs-on: ubuntu-latest
+    # Required permissions
+    permissions:
+      pull-requests: read
+    outputs:
+      # changes is a JSON array with names of all filters matching any of the changed files
+      languages: ${{ steps.filter.outputs.changes }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            javascript: "**.js"
+            python: "**.py"
+
   codeql:
     name: CodeQL Analyze
     runs-on: ubuntu-latest
+    needs: setup
     permissions:
       actions: read
       contents: read
@@ -26,7 +45,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ["javascript", "python"]
+        # Parse JSON array containing names of all filters matching any of changed files
+        # e.g. ['javascript', 'python'] if both file types had changes
+        language: ${{ fromJSON(needs.setup.outputs.languages) }}
 
     steps:
       - name: Checkout repository
@@ -36,10 +57,10 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
-          # If you wish to specify custom queries, you can do so here or in a config file.
-          # By default, queries listed here will override any specified in a config file.
-          # Prefix the list here with "+" to use these queries and those in the config file.
-          # queries: ./path/to/local/query, your-org/your-repo/queries@main
+          # https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning#specifying-configuration-details-using-the-config-input
+          config: |
+            paths-ignore:
+              - tests
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
