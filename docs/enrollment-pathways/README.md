@@ -46,7 +46,7 @@ title Cal-ITP Benefits Product Roadmap
 
           Q2<br>Now
           : Deploy low-income riders enrollment pathway
-          : Support for expiring benefits (low-income)    
+          : Support for expiring benefits (low-income)
           : Benefits admin tool (Agency configuration)
           : Release enhancements to Veterans pathway
 
