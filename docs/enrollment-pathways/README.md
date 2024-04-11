@@ -14,7 +14,7 @@ See our [Milestones][milestones] for current work tracked against specific featu
 
 ## Product roadmap
 
-Our product roadmap captures what we're currently building, what we've built, and what we plan to build in the future. We update it at the end of each quarter or when priorities change. 
+Our product roadmap captures what we're currently building, what we've built, and what we plan to build in the future. We update it at the end of each quarter or when priorities change.
 
 ```mermaid
 timeline
@@ -31,7 +31,7 @@ timeline
           : Deploy low-income riders enrollment pathway
           : Support for expiring benefits (low-income)
           : Benefits admin tool (Agency configuration)
-          : Improved UX for agency card enrollment  
+          : Improved UX for agency card enrollment
           %% : Release enhancements to Veterans pathway
 
           Q3<br>Next
