@@ -141,12 +141,16 @@ class MSTCourtesyCard(EligibilityVerificationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(
             title=_("Agency card information"),
-            headline=_("Let’s see if we can confirm your eligibility."),
-            blurb=_("Please input your Courtesy Card number and last name below to confirm your eligibility."),
-            name_label=_("Last name (as it appears on Courtesy Card)"),
+            headline=_("Let’s find the record of your transit benefit."),
+            blurb=_(
+                "We use the information on your MST Courtesy Card to find the record of your transit benefit in our system."
+            ),
+            name_label=_("Last Name"),
             name_placeholder="Garcia",
-            name_help_text=_("We use this to help confirm your Courtesy Card."),
-            sub_label=_("MST Courtesy Card number"),
+            name_help_text=_(
+                "Please enter your last name the same way it is printed on your card, including capital letters and hyphens."
+            ),
+            sub_label=_("Courtesy Card number"),
             sub_help_text=_("This is a 5-digit number on the front and back of your card."),
             sub_placeholder="12345",
             name_max_length=255,
@@ -164,12 +168,17 @@ class SBMTDMobilityPass(EligibilityVerificationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(
             title=_("Agency card information"),
-            headline=_("Let’s see if we can confirm your eligibility."),
-            blurb=_("Please input your Reduced Fare Mobility ID number and last name below to confirm your eligibility."),
-            name_label=_("Last name (as it appears on Reduced Fare Mobility ID card)"),
+            headline=_("Let’s find the record of your transit benefit."),
+            blurb=_(
+                "We use the information on your SBMTD Reduced Fare Mobility ID card to find the record of your transit "
+                + "benefit in our system."
+            ),
+            name_label=_("Last Name"),
             name_placeholder="Garcia",
-            name_help_text=_("We use this to help confirm your Reduced Fare Mobility ID."),
-            sub_label=_("SBMTD Reduced Fare Mobility ID number"),
+            name_help_text=_(
+                "Please enter your last name the same way it is printed on your card, including capital letters and hyphens."
+            ),
+            sub_label=_("Reduced Fare Mobility ID card number"),
             sub_help_text=_("This is a 4-digit number on the back of your card."),
             sub_placeholder="1234",
             name_max_length=255,
