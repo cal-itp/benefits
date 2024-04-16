@@ -21,7 +21,7 @@ class EligibilityVerifierSelectionForm(forms.Form):
 
     verifier = forms.ChoiceField(label="", widget=widgets.VerifierRadioSelect)
     # sets label to empty string so the radio_select template can override the label style
-    submit_value = _("Choose this Benefit")
+    submit_value = _("Choose this benefit")
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
