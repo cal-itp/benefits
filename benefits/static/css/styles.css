@@ -566,7 +566,8 @@ footer .footer-links li a.footer-link:visited {
   padding-top: var(--form-input-gap);
 }
 
-.form-container .form-control-label {
+.form-container .form-control-label,
+.form-container .required-label {
   font-size: var(--font-size-16px);
   font-weight: var(--medium-font-weight);
   line-height: var(--form-field-header-line-height);
