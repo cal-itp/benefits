@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-04-18 14:27-0700\n"
+"POT-Creation-Date: 2024-04-19 13:13-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -303,7 +303,7 @@ msgstr ""
 msgid "Choose this benefit"
 msgstr ""
 
-msgid "Check eligibility"
+msgid "Find my record"
 msgstr ""
 
 msgid "Checking"
@@ -318,38 +318,34 @@ msgstr ""
 msgid "Agency card information"
 msgstr ""
 
-msgid "Let’s see if we can confirm your eligibility."
+msgid "Let’s find the record of your transit benefit."
 msgstr ""
 
 msgid ""
-"Please input your Courtesy Card number and last name below to confirm your "
-"eligibility."
+"We use the information on your MST Courtesy Card to find the record of your "
+"transit benefit in our system."
 msgstr ""
 
-msgid "Last name (as it appears on Courtesy Card)"
+msgid "Last Name"
 msgstr ""
 
-msgid "We use this to help confirm your Courtesy Card."
+msgid ""
+"Please enter your last name the same way it is printed on your card, "
+"including capital letters and hyphens."
 msgstr ""
 
-msgid "MST Courtesy Card number"
+msgid "Courtesy Card number"
 msgstr ""
 
 msgid "This is a 5-digit number on the front and back of your card."
 msgstr ""
 
 msgid ""
-"Please input your Reduced Fare Mobility ID number and last name below to "
-"confirm your eligibility."
+"We use the information on your SBMTD Reduced Fare Mobility ID card to find "
+"the record of your transit benefit in our system."
 msgstr ""
 
-msgid "Last name (as it appears on Reduced Fare Mobility ID card)"
-msgstr ""
-
-msgid "We use this to help confirm your Reduced Fare Mobility ID."
-msgstr ""
-
-msgid "SBMTD Reduced Fare Mobility ID number"
+msgid "Reduced Fare Mobility ID card number"
 msgstr ""
 
 msgid "This is a 4-digit number on the back of your card."

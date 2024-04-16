@@ -45,7 +45,7 @@ class EligibilityVerificationForm(forms.Form):
     id = "form-eligibility-verification"
     method = "POST"
 
-    submit_value = _("Check eligibility")
+    submit_value = _("Find my record")
     submitting_value = _("Checking")
 
     _error_messages = {
