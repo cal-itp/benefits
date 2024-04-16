@@ -16,7 +16,7 @@
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-line-height: 1.5; /* Displayed as 150% on Figma */
   --heading-line-height: 1.3; /* Displayed as 130% on Figma */
-  --form-field-header-line-height: 1.25; /*Displayed as 125% on Figma */
+  --form-field-text-line-height: 1.25; /*Displayed as 125% on Figma */
   --h4-line-height: 1.2; /* Displayed as 120% on Figma */
   --letter-spacing-2: 0.02; /* Displayed as 2% on Figma */
   --letter-spacing-3: 0.03; /* Displayed as 3% on Figma */
@@ -570,8 +570,8 @@ footer .footer-links li a.footer-link:visited {
 .form-container .required-label {
   font-size: var(--font-size-16px);
   font-weight: var(--medium-font-weight);
-  line-height: var(--form-field-header-line-height);
-  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
+  line-height: var(--form-field-text-line-height);
+  letter-spacing: calc(var(--font-size-16px) * var(--letter-spacing-5));
   padding-bottom: calc(12rem / 16);
 }
 
@@ -594,6 +594,8 @@ footer .footer-links li a.footer-link:visited {
 
 .form-text {
   font-size: var(--font-size-14px);
+  line-height: var(--form-field-text-line-height);
+  letter-spacing: var(--letter-spacing-5);
 }
 
 /* Forms: Radio Buttons */
