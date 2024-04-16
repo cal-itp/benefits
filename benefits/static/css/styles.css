@@ -553,13 +553,7 @@ footer .footer-links li a.footer-link:visited {
 /* Form Container: Must use .form-container parent to use these styles */
 
 :root {
-  --form-input-gap: calc(22rem / 16);
-}
-
-@media (min-width: 992px) {
-  :root {
-    --form-input-gap: calc(42rem / 16);
-  }
+  --form-input-gap: calc(24rem / 16);
 }
 
 .form-container .form-group:not(:first-child) {
