@@ -212,17 +212,8 @@ def reenrollment_error(request):
 @decorator_from_middleware(EligibleSessionRequired)
 def retry(request):
     """View handler for a recoverable failure condition."""
-    if request.method == "POST":
-        analytics.returned_retry(request)
-        form = forms.CardTokenizeFailForm(request.POST)
-        if form.is_valid():
-            return TemplateResponse(request, TEMPLATE_RETRY)
-        else:
-            analytics.returned_error(request, "Invalid retry submission.")
-            raise Exception("Invalid retry submission.")
-    else:
-        analytics.returned_error(request, "This view method only supports POST.")
-        raise Exception("This view method only supports POST.")
+    analytics.returned_retry(request)
+    return TemplateResponse(request, TEMPLATE_RETRY)
 
 
 @pageview_decorator
