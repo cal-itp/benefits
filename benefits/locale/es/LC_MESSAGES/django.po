@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-04-18 14:01-0700\n"
+"POT-Creation-Date: 2024-04-18 14:27-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -705,13 +705,13 @@ msgstr "Conecta su tarjeta"
 msgid "Unable to register card"
 msgstr "No se pudo registrar la tarjeta"
 
-msgid "We couldn’t connect your card"
-msgstr "No pudimos conectar su tarjeta"
-
-msgid "You can try again or reach out to your transit provider for assistance."
+msgid "The card information may not have been entered correctly."
 msgstr ""
-"Puede intentarlo de nuevo o comunicarse con su proveedor de transporte local "
-"para obtener ayuda."
+
+msgid ""
+"Please check the details on your card and try again, or contact your transit "
+"agency for help."
+msgstr ""
 
 msgid "Try again"
 msgstr "Intentar otra vez"
