@@ -63,10 +63,9 @@ def mocked_funding_source():
 def mocked_group_funding_source_no_expiry(mocked_funding_source):
     return GroupFundingSourceResponse(
         id=mocked_funding_source.id,
-        participant_id=mocked_funding_source.participant_id,
-        concession_expiry=None,
-        concession_created_at=None,
-        concession_updated_at=None,
+        created_date=None,
+        updated_date=None,
+        expiry_date=None,
     )
 
 
@@ -74,10 +73,9 @@ def mocked_group_funding_source_no_expiry(mocked_funding_source):
 def mocked_group_funding_source_with_expiry(mocked_funding_source):
     return GroupFundingSourceResponse(
         id=mocked_funding_source.id,
-        participant_id=mocked_funding_source.participant_id,
-        concession_expiry="2023-01-01T00:00:00Z",
-        concession_created_at="2021-01-01T00:00:00Z",
-        concession_updated_at="2021-01-01T00:00:00Z",
+        created_date="2023-01-01T00:00:00Z",
+        updated_date="2021-01-01T00:00:00Z",
+        expiry_date="2021-01-01T00:00:00Z",
     )
 
 
