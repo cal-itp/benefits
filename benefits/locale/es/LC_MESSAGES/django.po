@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-04-18 13:56-0700\n"
+"POT-Creation-Date: 2024-04-18 14:01-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -239,7 +239,7 @@ msgstr ""
 msgid "Go Back"
 msgstr "Volver"
 
-msgid "Return Home"
+msgid "Return home"
 msgstr "Volver al inicio"
 
 msgid "Previous Page"
