@@ -94,8 +94,8 @@ def index(request):
 
             if eligibility.supports_expiration:
                 # set expiry on session
-                if already_enrolled and group_funding_source.concession_expiry is not None:
-                    session.update(request, enrollment_expiry=group_funding_source.concession_expiry)
+                if already_enrolled and group_funding_source.expiry_date is not None:
+                    session.update(request, enrollment_expiry=group_funding_source.expiry_date)
                 else:
                     session.update(request, enrollment_expiry=_calculate_expiry(eligibility.expiration_days))
 
@@ -106,7 +106,7 @@ def index(request):
                     )
                     return success(request)
                 else:  # already_enrolled
-                    if group_funding_source.concession_expiry is None:
+                    if group_funding_source.expiry_date is None:
                         # update expiration of existing enrollment, return success
                         client.update_concession_group_funding_source_expiry(
                             group_id=group_id,
@@ -115,9 +115,9 @@ def index(request):
                         )
                         return success(request)
                     else:
-                        is_expired = _is_expired(group_funding_source.concession_expiry)
+                        is_expired = _is_expired(group_funding_source.expiry_date)
                         is_within_reenrollment_window = _is_within_reenrollment_window(
-                            group_funding_source.concession_expiry, session.enrollment_reenrollment(request)
+                            group_funding_source.expiry_date, session.enrollment_reenrollment(request)
                         )
 
                         if is_expired or is_within_reenrollment_window:
@@ -137,7 +137,7 @@ def index(request):
                     client.link_concession_group_funding_source(group_id=group_id, funding_source_id=funding_source.id)
                     return success(request)
                 else:  # already_enrolled
-                    if group_funding_source.concession_expiry is None:
+                    if group_funding_source.expiry_date is None:
                         # no action, return success
                         return success(request)
                     else:
@@ -183,14 +183,14 @@ def _get_group_funding_source(client: Client, group_id, funding_source_id):
     return matching_group_funding_source
 
 
-def _is_expired(concession_expiry):
+def _is_expired(expiry_date):
     """Returns whether the passed in datetime is expired or not."""
-    return concession_expiry <= timezone.now()
+    return expiry_date <= timezone.now()
 
 
-def _is_within_reenrollment_window(concession_expiry, enrollment_reenrollment_date):
+def _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date):
     """Returns if we are currently within the reenrollment window."""
-    return enrollment_reenrollment_date <= timezone.now() < concession_expiry
+    return enrollment_reenrollment_date <= timezone.now() < expiry_date
 
 
 def _calculate_expiry(expiration_days):
