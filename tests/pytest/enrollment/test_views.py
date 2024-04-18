@@ -63,10 +63,9 @@ def mocked_funding_source():
 def mocked_group_funding_source_no_expiry(mocked_funding_source):
     return GroupFundingSourceResponse(
         id=mocked_funding_source.id,
-        participant_id=mocked_funding_source.participant_id,
-        concession_expiry=None,
-        concession_created_at=None,
-        concession_updated_at=None,
+        created_date=None,
+        updated_date=None,
+        expiry_date=None,
     )
 
 
@@ -74,10 +73,9 @@ def mocked_group_funding_source_no_expiry(mocked_funding_source):
 def mocked_group_funding_source_with_expiry(mocked_funding_source):
     return GroupFundingSourceResponse(
         id=mocked_funding_source.id,
-        participant_id=mocked_funding_source.participant_id,
-        concession_expiry="2023-01-01T00:00:00Z",
-        concession_created_at="2021-01-01T00:00:00Z",
-        concession_updated_at="2021-01-01T00:00:00Z",
+        created_date="2023-01-01T00:00:00Z",
+        updated_date="2021-01-01T00:00:00Z",
+        expiry_date="2021-01-01T00:00:00Z",
     )
 
 
@@ -353,8 +351,8 @@ def test_index_eligible_post_valid_form_success_supports_expiration_no_expiry(
     assert model_EligibilityType_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
 
 
-def test_is_expired_concession_expiry_is_in_the_past(mocker):
-    concession_expiry = timezone.make_aware(timezone.datetime(2023, 12, 31), timezone.get_default_timezone())
+def test_is_expired_expiry_date_is_in_the_past(mocker):
+    expiry_date = timezone.make_aware(timezone.datetime(2023, 12, 31), timezone.get_default_timezone())
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
@@ -362,11 +360,11 @@ def test_is_expired_concession_expiry_is_in_the_past(mocker):
         return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 10, 30), timezone.get_default_timezone()),
     )
 
-    assert _is_expired(concession_expiry)
+    assert _is_expired(expiry_date)
 
 
-def test_is_expired_concession_expiry_is_in_the_future(mocker):
-    concession_expiry = timezone.make_aware(timezone.datetime(2024, 1, 1, 17, 34), timezone.get_default_timezone())
+def test_is_expired_expiry_date_is_in_the_future(mocker):
+    expiry_date = timezone.make_aware(timezone.datetime(2024, 1, 1, 17, 34), timezone.get_default_timezone())
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
@@ -374,11 +372,11 @@ def test_is_expired_concession_expiry_is_in_the_future(mocker):
         return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 11, 5), timezone.get_default_timezone()),
     )
 
-    assert not _is_expired(concession_expiry)
+    assert not _is_expired(expiry_date)
 
 
-def test_is_expired_concession_expiry_equals_now(mocker):
-    concession_expiry = timezone.make_aware(timezone.datetime(2024, 1, 1, 13, 37), timezone.get_default_timezone())
+def test_is_expired_expiry_date_equals_now(mocker):
+    expiry_date = timezone.make_aware(timezone.datetime(2024, 1, 1, 13, 37), timezone.get_default_timezone())
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
@@ -386,7 +384,7 @@ def test_is_expired_concession_expiry_equals_now(mocker):
         return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 13, 37), timezone.get_default_timezone()),
     )
 
-    assert _is_expired(concession_expiry)
+    assert _is_expired(expiry_date)
 
 
 @pytest.mark.django_db
@@ -405,7 +403,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_expired(
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
-    # mock that a funding source already exists, doesn't matter what concession_expiry is
+    # mock that a funding source already exists, doesn't matter what expiry_date is
     mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry)
 
     mocker.patch("benefits.enrollment.views._is_expired", return_value=True)
@@ -426,7 +424,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_expired(
 
 def test_is_within_enrollment_window_True(mocker):
     enrollment_reenrollment_date = timezone.make_aware(timezone.datetime(2023, 2, 1), timezone=timezone.get_default_timezone())
-    concession_expiry = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
+    expiry_date = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
@@ -434,14 +432,14 @@ def test_is_within_enrollment_window_True(mocker):
         return_value=timezone.make_aware(timezone.datetime(2023, 2, 15, 15, 30), timezone=timezone.get_default_timezone()),
     )
 
-    is_within_reenrollment_window = _is_within_reenrollment_window(concession_expiry, enrollment_reenrollment_date)
+    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
 
     assert is_within_reenrollment_window
 
 
 def test_is_within_enrollment_window_before_window(mocker):
     enrollment_reenrollment_date = timezone.make_aware(timezone.datetime(2023, 2, 1), timezone=timezone.get_default_timezone())
-    concession_expiry = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
+    expiry_date = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
@@ -449,14 +447,14 @@ def test_is_within_enrollment_window_before_window(mocker):
         return_value=timezone.make_aware(timezone.datetime(2023, 1, 15, 15, 30), timezone=timezone.get_default_timezone()),
     )
 
-    is_within_reenrollment_window = _is_within_reenrollment_window(concession_expiry, enrollment_reenrollment_date)
+    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
 
     assert not is_within_reenrollment_window
 
 
 def test_is_within_enrollment_window_after_window(mocker):
     enrollment_reenrollment_date = timezone.make_aware(timezone.datetime(2023, 2, 1), timezone=timezone.get_default_timezone())
-    concession_expiry = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
+    expiry_date = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
@@ -464,14 +462,14 @@ def test_is_within_enrollment_window_after_window(mocker):
         return_value=timezone.make_aware(timezone.datetime(2023, 3, 15, 15, 30), timezone=timezone.get_default_timezone()),
     )
 
-    is_within_reenrollment_window = _is_within_reenrollment_window(concession_expiry, enrollment_reenrollment_date)
+    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
 
     assert not is_within_reenrollment_window
 
 
 def test_is_within_enrollment_window_equal_reenrollment_date(mocker):
     enrollment_reenrollment_date = timezone.make_aware(timezone.datetime(2023, 2, 1), timezone=timezone.get_default_timezone())
-    concession_expiry = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
+    expiry_date = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
@@ -479,22 +477,22 @@ def test_is_within_enrollment_window_equal_reenrollment_date(mocker):
         return_value=enrollment_reenrollment_date,
     )
 
-    is_within_reenrollment_window = _is_within_reenrollment_window(concession_expiry, enrollment_reenrollment_date)
+    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
 
     assert is_within_reenrollment_window
 
 
-def test_is_within_enrollment_window_equal_concession_expiry(mocker):
+def test_is_within_enrollment_window_equal_expiry_date(mocker):
     enrollment_reenrollment_date = timezone.make_aware(timezone.datetime(2023, 2, 1), timezone=timezone.get_default_timezone())
-    concession_expiry = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
+    expiry_date = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
         "benefits.enrollment.views.timezone.now",
-        return_value=concession_expiry,
+        return_value=expiry_date,
     )
 
-    is_within_reenrollment_window = _is_within_reenrollment_window(concession_expiry, enrollment_reenrollment_date)
+    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
 
     assert not is_within_reenrollment_window
 
@@ -515,7 +513,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_within_re
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
-    # mock that a funding source already exists, doesn't matter what concession_expiry is
+    # mock that a funding source already exists, doesn't matter what expiry_date is
     mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry)
 
     mocker.patch("benefits.enrollment.views._is_within_reenrollment_window", return_value=True)
@@ -553,7 +551,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_not_expir
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
-    # mock that a funding source already exists, doesn't matter what concession_expiry is
+    # mock that a funding source already exists, doesn't matter what expiry_date is
     mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry)
 
     mocker.patch("benefits.enrollment.views._is_expired", return_value=False)
@@ -582,7 +580,7 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_has_
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
-    # mock that a funding source already exists, doesn't matter what concession_expiry is
+    # mock that a funding source already exists, doesn't matter what expiry_date is
     mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry)
 
     path = reverse(ROUTE_INDEX)
