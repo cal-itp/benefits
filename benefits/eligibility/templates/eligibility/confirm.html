@@ -10,14 +10,20 @@
 {% endblock nav-buttons %}
 
 {% block headline %}
-  <div class="col-lg-8">
+  <div class="col-lg-6">
     <h1>{{ form.headline }}</h1>
   </div>
 {% endblock headline %}
 
-{% block explanatory-text %}
-  <p class="pt-4 pb-4">{{ form.blurb }}</p>
-{% endblock explanatory-text %}
+{% block explanatory-text-wrapper %}
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      {% block explanatory-text %}
+        <p class="pt-4 pb-4">{{ form.blurb }}</p>
+      {% endblock explanatory-text %}
+    </div>
+  </div>
+{% endblock explanatory-text-wrapper %}
 
 {% block inner-content %}
   <div class="container">
