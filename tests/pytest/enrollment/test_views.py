@@ -311,7 +311,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration(
     mock_client.link_concession_group_funding_source.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
         group_id=model_EligibilityType_supports_expiration.group_id,
-        expiry_date=mocked_session_enrollment_expiry.return_value,
+        expiry=mocked_session_enrollment_expiry.return_value,
     )
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
@@ -343,7 +343,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_no_expiry(
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
         group_id=model_EligibilityType_supports_expiration.group_id,
-        expiry_date=mocked_session_enrollment_expiry.return_value,
+        expiry=mocked_session_enrollment_expiry.return_value,
     )
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
@@ -414,7 +414,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_expired(
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
         group_id=model_EligibilityType_supports_expiration.group_id,
-        expiry_date=mocked_session_enrollment_expiry.return_value,
+        expiry=mocked_session_enrollment_expiry.return_value,
     )
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS
@@ -524,7 +524,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_within_re
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
         group_id=model_EligibilityType_supports_expiration.group_id,
-        expiry_date=mocked_session_enrollment_expiry.return_value,
+        expiry=mocked_session_enrollment_expiry.return_value,
     )
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SUCCESS

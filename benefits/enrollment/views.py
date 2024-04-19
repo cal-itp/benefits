@@ -102,7 +102,7 @@ def index(request):
                 if not already_enrolled:
                     # enroll user with an expiration date, return success
                     client.link_concession_group_funding_source(
-                        group_id=group_id, funding_source_id=funding_source.id, expiry_date=session.enrollment_expiry(request)
+                        group_id=group_id, funding_source_id=funding_source.id, expiry=session.enrollment_expiry(request)
                     )
                     return success(request)
                 else:  # already_enrolled
@@ -111,7 +111,7 @@ def index(request):
                         client.update_concession_group_funding_source_expiry(
                             group_id=group_id,
                             funding_source_id=funding_source.id,
-                            expiry_date=session.enrollment_expiry(request),
+                            expiry=session.enrollment_expiry(request),
                         )
                         return success(request)
                     else:
@@ -125,7 +125,7 @@ def index(request):
                             client.update_concession_group_funding_source_expiry(
                                 group_id=group_id,
                                 funding_source_id=funding_source.id,
-                                expiry_date=session.enrollment_expiry(request),
+                                expiry=session.enrollment_expiry(request),
                             )
                             return success(request)
                         else:
