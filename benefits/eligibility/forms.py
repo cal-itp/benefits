@@ -68,6 +68,8 @@ class EligibilityVerificationForm(forms.Form):
         sub_input_mode=None,
         sub_max_length=None,
         sub_pattern=None,
+        sub_custom_validity=None,
+        name_custom_validity=None,
         *args,
         **kwargs,
     ):
@@ -117,6 +119,8 @@ class EligibilityVerificationForm(forms.Form):
             sub_widget.attrs.update({"inputmode": sub_input_mode})
         if sub_max_length:
             sub_widget.attrs.update({"maxlength": sub_max_length})
+        if sub_custom_validity:
+            sub_widget.attrs.update({"data-custom-validity": sub_custom_validity})
 
         self.fields["sub"] = forms.CharField(
             label=sub_label,
@@ -127,6 +131,8 @@ class EligibilityVerificationForm(forms.Form):
         name_widget = widgets.FormControlTextInput(placeholder=name_placeholder)
         if name_max_length:
             name_widget.attrs.update({"maxlength": name_max_length})
+        if name_custom_validity:
+            name_widget.attrs.update({"data-custom-validity": name_custom_validity})
 
         self.fields["name"] = forms.CharField(label=name_label, widget=name_widget, help_text=name_help_text)
 
@@ -157,6 +163,8 @@ class MSTCourtesyCard(EligibilityVerificationForm):
             sub_input_mode="numeric",
             sub_max_length=5,
             sub_pattern=r"\d{5}",
+            sub_custom_validity=_("Please enter a 5-digit number."),
+            name_custom_validity=_("Please enter your last name."),
             *args,
             **kwargs,
         )
@@ -185,6 +193,8 @@ class SBMTDMobilityPass(EligibilityVerificationForm):
             sub_input_mode="numeric",
             sub_max_length=4,
             sub_pattern=r"\d{4}",
+            sub_custom_validity=_("Please enter a 4-digit number."),
+            name_custom_validity=_("Please enter your last name."),
             *args,
             **kwargs,
         )

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-04-22 12:32-0700\n"
+"POT-Creation-Date: 2024-04-19 14:24-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -340,6 +340,12 @@ msgstr ""
 msgid "This is a 5-digit number on the front and back of your card."
 msgstr ""
 
+msgid "Please enter a 5-digit number."
+msgstr ""
+
+msgid "Please enter your last name."
+msgstr ""
+
 msgid ""
 "We use the information on your SBMTD Reduced Fare Mobility ID card to find "
 "the record of your transit benefit in our system."
@@ -349,6 +355,9 @@ msgid "Reduced Fare Mobility ID card number"
 msgstr ""
 
 msgid "This is a 4-digit number on the back of your card."
+msgstr ""
+
+msgid "Please enter a 4-digit number."
 msgstr ""
 
 msgid "Your contactless card details"
