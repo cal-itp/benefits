@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-03-22 21:01+0000\n"
+"POT-Creation-Date: 2024-04-16 10:32-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -300,7 +300,7 @@ msgstr ""
 msgid "Which transit benefit would you like to enroll in?"
 msgstr ""
 
-msgid "Choose this Benefit"
+msgid "Choose this benefit"
 msgstr ""
 
 msgid "Check eligibility"
@@ -439,19 +439,20 @@ msgid ""
 "verify your identity with"
 msgstr ""
 
-msgid "MST Courtesy Card"
+msgid "Courtesy Card"
 msgstr ""
 
 msgid ""
-"This option is for people who have a current Courtesy Card or an MST RIDES "
-"eligibility card."
+"This option is for people who have a current MST Courtesy Card or an MST "
+"RIDES eligibility card."
 msgstr ""
 
-msgid "SBMTD Reduced Fare Mobility ID"
+msgid "Reduced Fare Mobility ID"
 msgstr ""
 
 msgid ""
-"This option is for people who have a current SBMTD Reduced Fare Mobility ID."
+"This option is for people who have a current SBMTD Reduced Fare Mobility ID, "
+"which used to be called a Mobility Pass. "
 msgstr ""
 
 msgid "Older Adult"
@@ -473,7 +474,7 @@ msgstr ""
 #, python-format
 msgid ""
 "Cal-ITP doesn’t save any of your information. All MST transit benefits "
-"reduce fares by 50%% for buses on fixed routes."
+"reduce fares by 50%% for bus service on fixed routes."
 msgstr ""
 
 #, python-format
@@ -482,9 +483,10 @@ msgid ""
 "reduce fares by 50%% for light rail."
 msgstr ""
 
+#, python-format
 msgid ""
 "Cal-ITP doesn’t save any of your information. All SBMTD transit benefits "
-"give riders a reduced bus fare."
+"reduce fares by 50%% for bus service on fixed routes."
 msgstr ""
 
 msgid "Choose benefit option"
