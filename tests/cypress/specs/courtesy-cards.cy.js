@@ -16,7 +16,7 @@ describe("Courtesy Cards", () => {
     cy.get("#name").type(users.eligible.name);
     cy.get("#form-eligibility-verification button[type='submit']").click();
 
-    cy.contains("Your eligibility is confirmed!");
+    cy.contains("We found your record!");
   });
 
   it("Rejects an ineligible user", () => {
