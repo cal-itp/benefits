@@ -10,14 +10,15 @@
 {% endblock heading_wrapper %}
 
 {% block heading %}
-    {% translate "The next step is to connect your contactless card to your transit benefit" %}
+    {% translate "The next step is to enroll the contactless card you will use to tap to ride for a reduced fare." %}
 {% endblock heading %}
 
 {% block body %}
     <div class="media-body--details">
         <p>
-            {% translate "You will be directed to our payment partner, " %}
-            {% include "core/includes/modal-trigger.html" with modal="modal--littlepay" text="Littlepay" period=True %}
+            {% translate "You will be directed to our partner, " %}
+            {% include "core/includes/modal-trigger.html" with modal="modal--littlepay" text="Littlepay" period=False %}
+            {% translate ", to enter your contactless card details." %}
             {% translate "We don’t store your information, and you won’t be charged." %}
         </p>
         <p>{% translate "Please use a debit or credit card by Visa or Mastercard." %}</p>

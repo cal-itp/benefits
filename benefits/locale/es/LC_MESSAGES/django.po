@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-04-25 12:29-0700\n"
+"POT-Creation-Date: 2024-04-25 14:33-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -680,6 +680,19 @@ msgstr "Será dirigido a nuestro socio de pagos, "
 msgid "We don’t store your information, and you won’t be charged."
 msgstr "No almacenamos su información y no se le cobrará."
 
+msgid ""
+"The next step is to enroll the contactless card you will use to tap to ride "
+"for a reduced fare."
+msgstr ""
+"El siguiente paso es inscribir la tarjeta de pago sin contacto que usará "
+"para viajar y obtener una tarifa reducida"
+
+msgid "You will be directed to our partner, "
+msgstr "Será dirigido a nuestro socio, "
+
+msgid ", to enter your contactless card details."
+msgstr ", para introducir los datos de su tarjeta de pago sin contacto."
+
 msgid "Please use a debit or credit card by Visa or Mastercard."
 msgstr "Utilice una tarjeta de débito o crédito de Visa o Mastercard."
 
@@ -689,14 +702,16 @@ msgstr "Más información sobre Littlepay"
 msgid "Eligibility confirmation"
 msgstr "Confirmación de elegibilidad"
 
-msgid "Your eligibility is confirmed!<br>You’re nearly there."
-msgstr "¡Su elegibilidad está confirmada!<br>Ya falta poco."
+msgid "We found your record!<br>Now let’s enroll your contactless card."
+msgstr ""
+"¡Encontramos su registro!<br>Ahora inscribamos su tarjeta de pago sin "
+"contacto."
 
 msgid "Please wait..."
 msgstr "Espere por favor..."
 
-msgid "Connect your Card"
-msgstr "Conecta su tarjeta"
+msgid "Enroll"
+msgstr "Inscribir"
 
 msgid "Unable to register card"
 msgstr "No se pudo registrar la tarjeta"

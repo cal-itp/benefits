@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-04-25 12:29-0700\n"
+"POT-Creation-Date: 2024-04-25 14:33-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -568,6 +568,17 @@ msgstr ""
 msgid "We don’t store your information, and you won’t be charged."
 msgstr ""
 
+msgid ""
+"The next step is to enroll the contactless card you will use to tap to ride "
+"for a reduced fare."
+msgstr ""
+
+msgid "You will be directed to our partner, "
+msgstr ""
+
+msgid ", to enter your contactless card details."
+msgstr ""
+
 msgid "Please use a debit or credit card by Visa or Mastercard."
 msgstr ""
 
@@ -577,13 +588,13 @@ msgstr ""
 msgid "Eligibility confirmation"
 msgstr ""
 
-msgid "Your eligibility is confirmed!<br>You’re nearly there."
+msgid "We found your record!<br>Now let’s enroll your contactless card."
 msgstr ""
 
 msgid "Please wait..."
 msgstr ""
 
-msgid "Connect your Card"
+msgid "Enroll"
 msgstr ""
 
 msgid "Unable to register card"
