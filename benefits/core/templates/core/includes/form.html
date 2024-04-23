@@ -70,7 +70,7 @@
           }
         }
 
-        $("#{{ form.id }}").on("click", function(e) {
+        $("button[type=submit]", "#{{ form.id }}").on("click", function(e) {
             // revalidate all fields
             $("[data-custom-validity]").each(function() {
               let input_element = $(this)[0];
