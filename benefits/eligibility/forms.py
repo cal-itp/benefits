@@ -48,11 +48,6 @@ class EligibilityVerificationForm(forms.Form):
     submit_value = _("Find my record")
     submitting_value = _("Checking")
 
-    _error_messages = {
-        "invalid": _("Check your input. The format looks wrong."),
-        "missing": _("This field is required."),
-    }
-
     def __init__(
         self,
         title,

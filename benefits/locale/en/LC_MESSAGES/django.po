@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-04-19 14:24-0700\n"
+"POT-Creation-Date: 2024-04-23 12:11-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -307,12 +307,6 @@ msgid "Find my record"
 msgstr ""
 
 msgid "Checking"
-msgstr ""
-
-msgid "Check your input. The format looks wrong."
-msgstr ""
-
-msgid "This field is required."
 msgstr ""
 
 msgid "Agency card information"
