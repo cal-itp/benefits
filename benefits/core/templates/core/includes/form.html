@@ -76,10 +76,6 @@
             {% endfor %}
         });
 
-        {% for field in form %}
-        $("#{{ field.id_for_label }}").on("change", (e) => validate(e.target));
-        {% endfor %}
-
         {% endif %}
     });
     </script>
