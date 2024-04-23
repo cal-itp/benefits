@@ -24,5 +24,5 @@
 {% endblock explanatory-text %}
 
 {% block inner-content %}
-  {% include "core/includes/form.html" with form=form %}
+  {% include "core/includes/form.html" with form=form use_custom_validity=True %}
 {% endblock inner-content %}

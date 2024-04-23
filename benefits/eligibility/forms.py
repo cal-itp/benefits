@@ -30,8 +30,10 @@ class EligibilityVerifierSelectionForm(forms.Form):
         self.classes = "col-lg-8"
         # second element is not used since we render the whole label using selection_label_template,
         # therefore set to None
-        self.fields["verifier"].choices = [(v.id, None) for v in verifiers]
-        self.fields["verifier"].widget.selection_label_templates = {v.id: v.selection_label_template for v in verifiers}
+        verifier_field = self.fields["verifier"]
+        verifier_field.choices = [(v.id, None) for v in verifiers]
+        verifier_field.widget.selection_label_templates = {v.id: v.selection_label_template for v in verifiers}
+        verifier_field.widget.attrs.update({"data-custom-validity": _("Please choose a transit benefit.")})
 
     def clean(self):
         if not recaptcha.verify(self.data):

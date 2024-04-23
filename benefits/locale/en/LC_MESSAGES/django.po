@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-04-23 12:11-0700\n"
+"POT-Creation-Date: 2024-04-25 12:29-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -301,6 +301,9 @@ msgid "Which transit benefit would you like to enroll in?"
 msgstr ""
 
 msgid "Choose this benefit"
+msgstr ""
+
+msgid "Please choose a transit benefit."
 msgstr ""
 
 msgid "Find my record"
