@@ -72,8 +72,12 @@
 
         $("#{{ form.id }}").on("click", function(e) {
             // revalidate all fields
-            {% for field in form %}validate($("#{{ field.id_for_label }}")[0]);
-            {% endfor %}
+            $("[data-custom-validity]").each(function() {
+              let input_element = $(this)[0];
+              if (input_element) {
+                validate(input_element);
+              }
+            });
         });
 
         {% endif %}
