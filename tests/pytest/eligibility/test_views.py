@@ -12,7 +12,6 @@ from benefits.eligibility.views import (
     ROUTE_ENROLLMENT,
     ROUTE_UNVERIFIED,
     TEMPLATE_CONFIRM,
-    TEMPLATE_UNVERIFIED,
 )
 
 import benefits.eligibility.views
@@ -343,4 +342,4 @@ def test_unverified(client, mocked_analytics_module):
 
     mocked_analytics_module.returned_fail.assert_called_once()
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_UNVERIFIED
+    assert response.template_name == "eligibility/unverified.html"
