@@ -12,17 +12,19 @@
 
   <div class="container">
     <h1 class="h2 text-center">
-      <span class="icon d-block pb-5">
-        {% include "core/includes/icon.html" with name="idcardquestion" %}
-      </span>
-      {% translate "Your eligibility could not be verified." %}
+      <span class="icon d-block pb-5">{% include "core/includes/icon.html" with name="idcardquestion" %}</span>
+      {% block unverified-headline %}
+        {% translate "Your eligibility could not be verified." %}
+      {% endblock unverified-headline %}
     </h1>
 
     <div class="row justify-content-center">
       <div class="col-lg-8 pt-4">
         <p>
-          {% translate "That’s okay! You may still be eligible for our program." %}
-          {% blocktranslate with short_name=agency.short_name %}Please reach out to {{ short_name }} for assistance.{% endblocktranslate %}
+          {% block unverified-body %}
+            {% translate "That’s okay! You may still be eligible for our program." %}
+            {% blocktranslate with short_name=agency.short_name %}Please reach out to {{ short_name }} for assistance.{% endblocktranslate %}
+          {% endblock unverified-body %}
         </p>
       </div>
     </div>
@@ -32,7 +34,9 @@
     </div>
 
     <div class="row pt-8 justify-content-center">
-      <div class="col-lg-3 col-8">{% include "core/includes/button--index.html" %}</div>
+      {% block unverified-call-to-action %}
+        <div class="col-lg-3 col-8">{% include "core/includes/button--index.html" %}</div>
+      {% endblock unverified-call-to-action %}
     </div>
 
   </div>

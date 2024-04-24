@@ -118,6 +118,7 @@ def confirm(request):
 
     # GET from an unverified user, present the form
     if request.method == "GET":
+        session.update(request, origin=reverse(ROUTE_CONFIRM))
         return TemplateResponse(request, TEMPLATE_CONFIRM, context)
     # POST form submission, process form data, make Eligibility Verification API call
     elif request.method == "POST":
