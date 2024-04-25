@@ -623,28 +623,19 @@ def test_retry_ineligible(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_eligibility")
-def test_retry_get(client):
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_retry_get(client, mocked_analytics_module):
     path = reverse(ROUTE_RETRY)
-    with pytest.raises(Exception, match=r"POST"):
-        client.get(path)
+    response = client.get(path)
 
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_eligibility")
-def test_retry_invalid_form(mocker, client):
-    mocker.patch("benefits.enrollment.views.forms.CardTokenizeFailForm.is_valid", return_value=False)
-
-    path = reverse(ROUTE_RETRY)
-    with pytest.raises(Exception, match=r"Invalid"):
-        client.post(path)
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_RETRY
+    mocked_analytics_module.returned_retry.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
-def test_retry_valid_form(mocker, client, mocked_analytics_module):
-    mocker.patch("benefits.enrollment.views.forms.CardTokenizeFailForm.is_valid", return_value=True)
-
+def test_retry_valid_form(client, mocked_analytics_module):
     path = reverse(ROUTE_RETRY)
     response = client.post(path)
 
