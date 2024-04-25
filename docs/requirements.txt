@@ -1,6 +1,6 @@
 mdx_truly_sane_lists
-mkdocs==1.5.3
+mkdocs==1.6.0
 mkdocs-awesome-pages-plugin
 mkdocs-macros-plugin
-mkdocs-material==9.5.18
+mkdocs-material==9.5.19
 mkdocs-redirects
