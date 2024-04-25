@@ -14,7 +14,7 @@
 {% block headline %}
   <div class="col-lg-8">
     <h1 class="pb-lg-8 pb-4">
-      {% translate "Your eligibility is confirmed!<br>You’re nearly there." %}
+      {% translate "We found your record!<br>Now let’s enroll your contactless card." %}
     </h1>
   </div>
 {% endblock headline %}
@@ -116,7 +116,7 @@
   <button type="button" class="btn btn-primary btn-lg loading" role="status" disabled>{% translate "Please wait..." %}</button>
   <div class="invisible">
     <button id="{{ cta_button }}" href="#{{ cta_button }}" class="btn btn-lg btn-primary" role="button">
-      {% translate "Connect your Card" %}
+      {% translate "Enroll" %}
     </button>
   </div>
 {% endblock call-to-action-button %}
