@@ -60,7 +60,7 @@
           $(this).trigger("submitting");
         });
 
-        {% if use_custom_validity %}
+        {% if form.use_custom_validity %}
         const validate = function(input_element) {
           input_element.setCustomValidity(""); // clearing message sets input_element.validity.customError back to false
 

@@ -16,6 +16,8 @@ def test_MSTCourtesyCard():
     assert name_attrs["maxlength"] == 255
     assert name_attrs["data-custom-validity"] == "Please enter your last name."
 
+    assert form.use_custom_validity
+
 
 def test_SBMTDMobilityPass():
     form = SBMTDMobilityPass(data={"sub": "1234", "name": "Barbara"})
@@ -31,3 +33,5 @@ def test_SBMTDMobilityPass():
     name_attrs = form.fields["name"].widget.attrs
     assert name_attrs["maxlength"] == 255
     assert name_attrs["data-custom-validity"] == "Please enter your last name."
+
+    assert form.use_custom_validity

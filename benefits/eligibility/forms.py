@@ -34,6 +34,7 @@ class EligibilityVerifierSelectionForm(forms.Form):
         verifier_field.choices = [(v.id, None) for v in verifiers]
         verifier_field.widget.selection_label_templates = {v.id: v.selection_label_template for v in verifiers}
         verifier_field.widget.attrs.update({"data-custom-validity": _("Please choose a transit benefit.")})
+        self.use_custom_validity = True
 
     def clean(self):
         if not recaptcha.verify(self.data):
@@ -118,6 +119,7 @@ class EligibilityVerificationForm(forms.Form):
             sub_widget.attrs.update({"maxlength": sub_max_length})
         if sub_custom_validity:
             sub_widget.attrs.update({"data-custom-validity": sub_custom_validity})
+            self.use_custom_validity = True
 
         self.fields["sub"] = forms.CharField(
             label=sub_label,
@@ -130,6 +132,7 @@ class EligibilityVerificationForm(forms.Form):
             name_widget.attrs.update({"maxlength": name_max_length})
         if name_custom_validity:
             name_widget.attrs.update({"data-custom-validity": name_custom_validity})
+            self.use_custom_validity = True
 
         self.fields["name"] = forms.CharField(label=name_label, widget=name_widget, help_text=name_help_text)
 
