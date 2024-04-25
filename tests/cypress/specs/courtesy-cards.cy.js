@@ -26,7 +26,7 @@ describe("Courtesy Cards", () => {
     cy.get("#name").type(users.ineligible.name);
     cy.get("#form-eligibility-verification button[type='submit']").click();
 
-    cy.contains("could not be verified");
+    cy.contains("may not have been entered correctly");
   });
 
   it("Validates an empty name field", () => {
