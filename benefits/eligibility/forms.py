@@ -30,8 +30,11 @@ class EligibilityVerifierSelectionForm(forms.Form):
         self.classes = "col-lg-8"
         # second element is not used since we render the whole label using selection_label_template,
         # therefore set to None
-        self.fields["verifier"].choices = [(v.id, None) for v in verifiers]
-        self.fields["verifier"].widget.selection_label_templates = {v.id: v.selection_label_template for v in verifiers}
+        verifier_field = self.fields["verifier"]
+        verifier_field.choices = [(v.id, None) for v in verifiers]
+        verifier_field.widget.selection_label_templates = {v.id: v.selection_label_template for v in verifiers}
+        verifier_field.widget.attrs.update({"data-custom-validity": _("Please choose a transit benefit.")})
+        self.use_custom_validity = True
 
     def clean(self):
         if not recaptcha.verify(self.data):
@@ -48,11 +51,6 @@ class EligibilityVerificationForm(forms.Form):
     submit_value = _("Find my record")
     submitting_value = _("Checking")
 
-    _error_messages = {
-        "invalid": _("Check your input. The format looks wrong."),
-        "missing": _("This field is required."),
-    }
-
     def __init__(
         self,
         title,
@@ -68,6 +66,8 @@ class EligibilityVerificationForm(forms.Form):
         sub_input_mode=None,
         sub_max_length=None,
         sub_pattern=None,
+        sub_custom_validity=None,
+        name_custom_validity=None,
         *args,
         **kwargs,
     ):
@@ -117,6 +117,9 @@ class EligibilityVerificationForm(forms.Form):
             sub_widget.attrs.update({"inputmode": sub_input_mode})
         if sub_max_length:
             sub_widget.attrs.update({"maxlength": sub_max_length})
+        if sub_custom_validity:
+            sub_widget.attrs.update({"data-custom-validity": sub_custom_validity})
+            self.use_custom_validity = True
 
         self.fields["sub"] = forms.CharField(
             label=sub_label,
@@ -127,6 +130,9 @@ class EligibilityVerificationForm(forms.Form):
         name_widget = widgets.FormControlTextInput(placeholder=name_placeholder)
         if name_max_length:
             name_widget.attrs.update({"maxlength": name_max_length})
+        if name_custom_validity:
+            name_widget.attrs.update({"data-custom-validity": name_custom_validity})
+            self.use_custom_validity = True
 
         self.fields["name"] = forms.CharField(label=name_label, widget=name_widget, help_text=name_help_text)
 
@@ -157,6 +163,8 @@ class MSTCourtesyCard(EligibilityVerificationForm):
             sub_input_mode="numeric",
             sub_max_length=5,
             sub_pattern=r"\d{5}",
+            sub_custom_validity=_("Please enter a 5-digit number."),
+            name_custom_validity=_("Please enter your last name."),
             *args,
             **kwargs,
         )
@@ -185,6 +193,8 @@ class SBMTDMobilityPass(EligibilityVerificationForm):
             sub_input_mode="numeric",
             sub_max_length=4,
             sub_pattern=r"\d{4}",
+            sub_custom_validity=_("Please enter a 4-digit number."),
+            name_custom_validity=_("Please enter your last name."),
             *args,
             **kwargs,
         )

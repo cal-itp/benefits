@@ -59,7 +59,29 @@
         $("#{{ form.id }}").on("submit", function(e) {
           $(this).trigger("submitting");
         });
-      });
+
+        {% if form.use_custom_validity %}
+        const validate = function(input_element) {
+          input_element.setCustomValidity(""); // clearing message sets input_element.validity.customError back to false
+
+          const valid = input_element.checkValidity();
+          if (!valid) {
+            input_element.setCustomValidity(input_element.dataset.customValidity);
+          }
+        }
+
+        $("button[type=submit]", "#{{ form.id }}").on("click", function(e) {
+            // revalidate all fields
+            $("[data-custom-validity]").each(function() {
+              let input_element = $(this)[0];
+              if (input_element) {
+                validate(input_element);
+              }
+            });
+        });
+
+        {% endif %}
+    });
     </script>
 
     {% if request.recaptcha %}
