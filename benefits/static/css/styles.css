@@ -16,6 +16,7 @@
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-line-height: 1.5; /* Displayed as 150% on Figma */
   --heading-line-height: 1.3; /* Displayed as 130% on Figma */
+  --form-field-text-line-height: 1.25; /*Displayed as 125% on Figma */
   --h4-line-height: 1.2; /* Displayed as 120% on Figma */
   --letter-spacing-2: 0.02; /* Displayed as 2% on Figma */
   --letter-spacing-3: 0.03; /* Displayed as 3% on Figma */
@@ -552,23 +553,19 @@ footer .footer-links li a.footer-link:visited {
 /* Form Container: Must use .form-container parent to use these styles */
 
 :root {
-  --form-input-gap: calc(22rem / 16);
-}
-
-@media (min-width: 992px) {
-  :root {
-    --form-input-gap: calc(42rem / 16);
-  }
+  --form-input-gap: calc(24rem / 16);
 }
 
 .form-container .form-group:not(:first-child) {
   padding-top: var(--form-input-gap);
 }
 
-.form-container .form-control-label {
-  font-size: var(--bs-body-font-size);
+.form-container .form-control-label,
+.form-container .required-label {
+  font-size: var(--font-size-16px);
   font-weight: var(--medium-font-weight);
-  letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
+  line-height: var(--form-field-text-line-height);
+  letter-spacing: calc(var(--font-size-16px) * var(--letter-spacing-5));
   padding-bottom: calc(12rem / 16);
 }
 
@@ -591,6 +588,8 @@ footer .footer-links li a.footer-link:visited {
 
 .form-text {
   font-size: var(--font-size-14px);
+  line-height: var(--form-field-text-line-height);
+  letter-spacing: var(--letter-spacing-5);
 }
 
 /* Forms: Radio Buttons */
