@@ -25,11 +25,11 @@
 | benefits/eligibility/verify.py       |       15 |        0 |        6 |        0 |    100% |           |
 | benefits/eligibility/views.py        |      104 |        2 |       58 |        3 |     97% |42, 66, 124->exit |
 | benefits/enrollment/\_\_init\_\_.py  |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment/analytics.py     |       14 |        2 |        4 |        2 |     78% |13->15, 16, 31 |
+| benefits/enrollment/analytics.py     |       14 |        3 |        4 |        2 |     72% |13->15, 16, 26, 31 |
 | benefits/enrollment/apps.py          |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/forms.py         |       12 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/urls.py          |        4 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment/views.py         |      127 |        0 |       46 |        1 |     99% |  179->178 |
+| benefits/enrollment/views.py         |      120 |        0 |       42 |        1 |     99% |  179->178 |
 | benefits/oauth/\_\_init\_\_.py       |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/oauth/analytics.py          |       33 |       11 |        2 |        0 |     69% |22, 29, 36, 43, 50-51, 56, 61, 66, 71, 76 |
 | benefits/oauth/apps.py               |       11 |        0 |        0 |        0 |    100% |           |
@@ -43,7 +43,7 @@
 | benefits/settings.py                 |      118 |        6 |       22 |        8 |     90% |92, 113->118, 129->132, 147, 296, 298, 313, 325 |
 | benefits/urls.py                     |       22 |        7 |        2 |        1 |     67% |     34-48 |
 | benefits/wsgi.py                     |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                            **TOTAL** | **1524** |  **103** |  **416** |   **37** | **92%** |           |
+|                            **TOTAL** | **1517** |  **104** |  **412** |   **37** | **92%** |           |
 
 
 ## Setup coverage badge
