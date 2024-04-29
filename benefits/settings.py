@@ -207,6 +207,11 @@ USE_I18N = True
 TIME_ZONE = "UTC"
 USE_TZ = True
 
+# https://docs.djangoproject.com/en/5.0/topics/i18n/formatting/#creating-custom-format-files
+FORMAT_MODULE_PATH = [
+    "benefits.locale",
+]
+
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = "/static/"
