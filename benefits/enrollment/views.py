@@ -24,6 +24,7 @@ ROUTE_SUCCESS = "enrollment:success"
 ROUTE_TOKEN = "enrollment:token"
 
 TEMPLATE_RETRY = "enrollment/retry.html"
+TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
 
 
 logger = logging.getLogger(__name__)
@@ -87,6 +88,9 @@ def index(request):
             if e.response.status_code == 409:
                 analytics.returned_success(request, eligibility.group_id)
                 return success(request)
+            elif e.response.status_code >= 500:
+                analytics.returned_error(request, str(e))
+                return system_error(request)
             else:
                 analytics.returned_error(request, str(e))
                 raise Exception(f"{e}: {e.response.json()}")
@@ -142,6 +146,12 @@ def retry(request):
     """View handler for a recoverable failure condition."""
     analytics.returned_retry(request)
     return TemplateResponse(request, TEMPLATE_RETRY)
+
+
+@decorator_from_middleware(EligibleSessionRequired)
+def system_error(request):
+    """View handler for an enrollment system error."""
+    return TemplateResponse(request, TEMPLATE_SYSTEM_ERROR)
 
 
 @pageview_decorator
