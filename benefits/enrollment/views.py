@@ -22,6 +22,7 @@ ROUTE_INDEX = "enrollment:index"
 ROUTE_REENROLLMENT_ERROR = "enrollment:reenrollment-error"
 ROUTE_RETRY = "enrollment:retry"
 ROUTE_SUCCESS = "enrollment:success"
+ROUTE_SYSTEM_ERROR = "enrollment:system-error"
 ROUTE_TOKEN = "enrollment:token"
 
 TEMPLATE_RETRY = "enrollment/retry.html"
@@ -44,8 +45,20 @@ def token(request):
             audience=payment_processor.audience,
         )
         client.oauth.ensure_active_token(client.token)
-        response = client.request_card_tokenization_access()
-        session.update(request, enrollment_token=response.get("access_token"), enrollment_token_exp=response.get("expires_at"))
+
+        try:
+            response = client.request_card_tokenization_access()
+        except Exception as e:
+            if isinstance(e, HTTPError) and e.response.status_code >= 500:
+                sentry_sdk.capture_exception(e)
+                data = {"redirect": reverse(ROUTE_SYSTEM_ERROR)}
+                return JsonResponse(data)
+            else:
+                raise e
+        else:
+            session.update(
+                request, enrollment_token=response.get("access_token"), enrollment_token_exp=response.get("expires_at")
+            )
 
     data = {"token": session.enrollment_token(request)}
 
