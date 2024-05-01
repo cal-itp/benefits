@@ -14,4 +14,5 @@ urlpatterns = [
     path("token", views.token, name="token"),
     path("retry", views.retry, name="retry"),
     path("success", views.success, name="success"),
+    path("system_error", views.system_error, name="system_error"),
 ]
