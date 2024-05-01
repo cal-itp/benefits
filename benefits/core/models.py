@@ -142,6 +142,7 @@ class EligibilityType(models.Model):
         supports_expiration = self.supports_expiration
         expiration_days = self.expiration_days
         expiration_reenrollment_days = self.expiration_reenrollment_days
+        reenrollment_error_template = self.reenrollment_error_template
 
         if supports_expiration:
             errors = {}
@@ -150,6 +151,8 @@ class EligibilityType(models.Model):
                 errors.update(expiration_days=ValidationError(message))
             if expiration_reenrollment_days is None or expiration_reenrollment_days <= 0:
                 errors.update(expiration_reenrollment_days=ValidationError(message))
+            if reenrollment_error_template is None:
+                errors.update(reenrollment_error_template=ValidationError("Required when supports expiration is True."))
 
             if errors:
                 raise ValidationError(errors)
