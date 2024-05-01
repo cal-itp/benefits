@@ -178,6 +178,7 @@ class EligibilityVerifier(models.Model):
     start_template = models.TextField(null=True, blank=True)
     # reference to a form class used by this Verifier, e.g. benefits.app.forms.FormClass
     form_class = models.TextField(null=True, blank=True)
+    unverified_template = models.TextField(default="eligibility/unverified.html")
     help_template = models.TextField(null=True, blank=True)
 
     class Meta:
