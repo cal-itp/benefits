@@ -246,9 +246,11 @@ msgid "Previous Page"
 msgstr "Página Anterior"
 
 msgid ""
-"How do I know if I'm eligible for the transit benefit for CalFresh "
+"How do I know if I’m eligible for the transit benefit for CalFresh "
 "Cardholders?"
 msgstr ""
+"¿Cómo sé si soy elegible para el beneficio de tránsito para los titulares de "
+"la tarjeta CalFresh?"
 
 msgid ""
 "We verify your eligibility as a CalFresh Cardholder by confirming you have "
@@ -258,7 +260,7 @@ msgid ""
 msgstr ""
 
 msgid "Will this transit benefit change my CalFresh account?"
-msgstr ""
+msgstr "¿Este beneficio de tránsito cambiará mi cuenta de CalFresh?"
 
 msgid "No. Your monthly CalFresh allotment will not change."
 msgstr ""
@@ -274,12 +276,17 @@ msgstr ""
 
 msgid "Can I use my Golden State Advantage card to pay for transit rides?"
 msgstr ""
+"¿Puedo usar mi tarjeta Golden State Advantage para pagar los viajes en "
+"transporte público?"
 
 msgid ""
 "No. You can not use your EBT or P-EBT card to pay for public transportation. "
 "When you tap to ride, use your personal contactless debit or credit card to "
 "pay for public transportation."
 msgstr ""
+"No. No puede usar su tarjeta EBT o P-EBT para pagar el transporte público. "
+"Cuando toque para viajar, use su tarjeta personal de débito o crédito sin "
+"contacto para pagar el transporte público."
 
 msgid "What is a Courtesy Card?"
 msgstr "¿Qué es una tarjeta de cortesía?"
@@ -612,6 +619,8 @@ msgstr ""
 
 msgid "You selected a CalFresh Cardholder transit benefit."
 msgstr ""
+"Ha seleccionado un beneficio de tránsito para titulares de la tarjeta "
+"CalFresh."
 
 msgid "Get started with"
 msgstr "Comience con"
@@ -733,18 +742,20 @@ msgstr "Inscribir"
 
 msgid "Your CalFresh Cardholder transit benefit does not expire until"
 msgstr ""
+"Su beneficio de tránsito para titulares de la tarjeta CalFresh no expira "
+"hasta el"
 
 msgid "You can re-enroll for this benefit beginning on"
-msgstr ""
+msgstr "Puede volver a inscribirse a este beneficio a partir del"
 
 msgid "Please try again then."
-msgstr ""
+msgstr "Por favor, inténtelo de nuevo hasta entonces."
 
 msgid "Enrollment error"
-msgstr ""
+msgstr "Error de inscripción"
 
 msgid "You are still enrolled in this benefit"
-msgstr ""
+msgstr "Todavía está inscrito en este beneficio"
 
 msgid "Unable to register card"
 msgstr "No se pudo registrar la tarjeta"
@@ -794,7 +805,7 @@ msgid "Success! Your transit benefit is now connected to your card."
 msgstr "¡Éxito! Su beneficio de tránsito ahora está conectado a su tarjeta."
 
 msgid "Your benefit will expire on"
-msgstr ""
+msgstr "Su beneficio expirará el"
 
 msgid "Thank you for using Cal-ITP Benefits!"
 msgstr "¡Gracias por usar Cal-ITP Benefits!"

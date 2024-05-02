@@ -184,7 +184,7 @@ msgid "Previous Page"
 msgstr ""
 
 msgid ""
-"How do I know if I'm eligible for the transit benefit for CalFresh "
+"How do I know if I’m eligible for the transit benefit for CalFresh "
 "Cardholders?"
 msgstr ""
 
