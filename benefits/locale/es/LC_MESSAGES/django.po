@@ -258,21 +258,29 @@ msgid ""
 "months. This means you are eligible for a transit benefit even if you did "
 "not receive funds in your CalFresh account this month or last month."
 msgstr ""
+"Verificamos su elegibilidad como titular de la tarjeta CalFresh comprobando "
+"si ha recibido fondos en su cuenta en algún momento en los últimos tres "
+"meses. Esto significa que usted es elegible para un beneficio de tránsito, "
+"incluso si no recibió fondos en su cuenta de CalFresh este mes o el mes "
+"pasado."
 
 msgid "Will this transit benefit change my CalFresh account?"
 msgstr "¿Este beneficio de tránsito cambiará mi cuenta de CalFresh?"
 
 msgid "No. Your monthly CalFresh allotment will not change."
-msgstr ""
+msgstr "No. Su asignación mensual de CalFresh no cambiará."
 
 msgid "Do I need my Golden State Advantage card to enroll?"
-msgstr ""
+msgstr "¿Necesito mi tarjeta Golden State Advantage para inscribirme?"
 
 msgid ""
 "No, you do not need your physical EBT card to enroll. We use information "
 "from Login.gov and the California Department of Social Services to enroll "
 "you in the benefit."
 msgstr ""
+"No, no necesita su tarjeta EBT física para inscribirse. Utilizamos la "
+"información de Login.gov y el Departamento de Servicios Sociales de "
+"California para inscribirle en el beneficio."
 
 msgid "Can I use my Golden State Advantage card to pay for transit rides?"
 msgstr ""
@@ -510,6 +518,8 @@ msgstr "No necesita tener su tarjeta física, pero necesitará saber su número.
 
 msgid "Learn more about the transit benefit for CalFresh Cardholders"
 msgstr ""
+"Obtenga más información sobre el beneficio de tránsito para los titulares de "
+"la tarjeta CalFresh"
 
 msgid "Go back"
 msgstr "Volver"
@@ -532,18 +542,20 @@ msgstr ""
 "seas elegible para el beneficio de tránsito que seleccionaste."
 
 msgid "CalFresh Cardholder"
-msgstr ""
+msgstr "Titular de la tarjeta CalFresh"
 
 msgid "You must have"
-msgstr ""
+msgstr "Debe haber"
 
 msgid "recently received CalFresh funds"
-msgstr ""
+msgstr "recibido fondos de CalFresh recientemente"
 
 msgid ""
 "This transit benefit will remain active for one year. You will need to "
 "verify your identity with"
 msgstr ""
+"Este beneficio de tránsito permanecerá activo por un año. Necesitará "
+"verificar su identidad con"
 
 msgid "Courtesy Card"
 msgstr "Tarjeta de cortesía de MST"
