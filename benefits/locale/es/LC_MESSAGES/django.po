@@ -532,7 +532,7 @@ msgstr ""
 "seas elegible para el beneficio de tránsito que seleccionaste."
 
 msgid "CalFresh Cardholder"
-msgstr ""
+msgstr "Titular de la tarjeta CalFresh"
 
 msgid "You must have"
 msgstr ""
