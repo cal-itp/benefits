@@ -211,6 +211,19 @@ def test_EligibilityType_zero_expiration_reenrollment_days(model_EligibilityType
 
 
 @pytest.mark.django_db
+def test_EligibilityType_missing_reenrollment_template(model_EligibilityType_supports_expiration):
+    model_EligibilityType_supports_expiration.reenrollment_error_template = None
+    model_EligibilityType_supports_expiration.save()
+
+    with pytest.raises(ValidationError) as exception_info:
+        model_EligibilityType_supports_expiration.full_clean()
+
+    error_dict = exception_info.value.error_dict
+    assert len(error_dict["reenrollment_error_template"]) == 1
+    assert error_dict["reenrollment_error_template"][0].message == "Required when supports expiration is True."
+
+
+@pytest.mark.django_db
 def test_EligibilityType_supports_expiration(model_EligibilityType_supports_expiration):
     # test will fail if any error is raised
     model_EligibilityType_supports_expiration.full_clean()

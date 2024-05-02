@@ -139,6 +139,7 @@ def model_EligibilityType_supports_expiration(model_EligibilityType):
     model_EligibilityType.supports_expiration = True
     model_EligibilityType.expiration_days = 365
     model_EligibilityType.expiration_reenrollment_days = 14
+    model_EligibilityType.reenrollment_error_template = "enrollment/reenrollment-error--calfresh.html"
     model_EligibilityType.save()
 
     return model_EligibilityType
