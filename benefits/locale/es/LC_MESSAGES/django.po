@@ -510,6 +510,8 @@ msgstr "No necesita tener su tarjeta física, pero necesitará saber su número.
 
 msgid "Learn more about the transit benefit for CalFresh Cardholders"
 msgstr ""
+"Obtenga más información sobre el beneficio de tránsito para los titulares de "
+"la tarjeta CalFresh"
 
 msgid "Go back"
 msgstr "Volver"
