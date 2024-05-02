@@ -535,15 +535,17 @@ msgid "CalFresh Cardholder"
 msgstr "Titular de la tarjeta CalFresh"
 
 msgid "You must have"
-msgstr ""
+msgstr "Debe haber"
 
 msgid "recently received CalFresh funds"
-msgstr ""
+msgstr "recibido fondos de CalFresh recientemente"
 
 msgid ""
 "This transit benefit will remain active for one year. You will need to "
 "verify your identity with"
 msgstr ""
+"Este beneficio de tránsito permanecerá activo por un año. Necesitará "
+"verificar su identidad con"
 
 msgid "Courtesy Card"
 msgstr "Tarjeta de cortesía de MST"
