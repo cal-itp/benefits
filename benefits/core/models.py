@@ -100,6 +100,9 @@ class AuthProvider(models.Model):
     def client_id(self):
         return get_secret_by_name(self.client_id_secret_name)
 
+    def __str__(self) -> str:
+        return self.client_name
+
 
 class EligibilityType(models.Model):
     """A single conditional eligibility type."""

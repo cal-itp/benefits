@@ -96,6 +96,7 @@ def test_PemData_data_text_secret_name_and_remote__uses_remote(
 def test_model_AuthProvider(model_AuthProvider):
     assert not model_AuthProvider.supports_claims_verification
     assert model_AuthProvider.supports_sign_out
+    assert str(model_AuthProvider) == model_AuthProvider.client_name
 
 
 @pytest.mark.django_db
