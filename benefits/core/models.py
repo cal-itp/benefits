@@ -37,8 +37,6 @@ class SecretNameField(models.SlugField):
         # although the validator also checks for a max length of 127
         # this setting enforces the length at the database column level as well
         kwargs["max_length"] = 127
-        # similar to max_length, enforce at the field (form) validation level to not allow blanks
-        kwargs["blank"] = False
         # the default is False, but this is more explicit
         kwargs["allow_unicode"] = False
         super().__init__(*args, **kwargs)
@@ -101,6 +99,9 @@ class AuthProvider(models.Model):
     @property
     def client_id(self):
         return get_secret_by_name(self.client_id_secret_name)
+
+    def __str__(self) -> str:
+        return self.client_name
 
 
 class EligibilityType(models.Model):
