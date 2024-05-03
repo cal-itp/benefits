@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-05-03 15:20+0000\n"
+"POT-Creation-Date: 2024-05-03 18:34+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -751,7 +751,7 @@ msgid "Eligibility confirmation"
 msgstr "Confirmación de elegibilidad"
 
 msgid "Your eligibility is confirmed!<br>You’re almost there."
-msgstr ""
+msgstr "¡Su elegibilidad está confirmada!<br>Ya falta poco."
 
 msgid "Please wait..."
 msgstr "Espere por favor..."
