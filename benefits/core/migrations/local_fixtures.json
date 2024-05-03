@@ -87,7 +87,8 @@
     "fields": {
       "name": "courtesy_card",
       "label": "(MST) Courtesy Card Discount",
-      "group_id": "group123"
+      "group_id": "group123",
+      "enrollment_index_template": "enrollment/index--agency-card.html"
     }
   },
   {
@@ -114,7 +115,8 @@
     "fields": {
       "name": "mobility_pass",
       "label": "(SBMTD) Mobility Pass Discount",
-      "group_id": "group123"
+      "group_id": "group123",
+      "enrollment_index_template": "enrollment/index--agency-card.html"
     }
   },
   {
