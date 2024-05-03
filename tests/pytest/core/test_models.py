@@ -25,6 +25,13 @@ def test_SecretNameField_init():
     assert field.description != ""
 
 
+def test_SecretNameField_init_null_blank():
+    field = SecretNameField(blank=True, null=True)
+
+    assert field.blank is True
+    assert field.null is True
+
+
 @pytest.mark.django_db
 def test_PemData_str(model_PemData):
     assert str(model_PemData) == model_PemData.label
