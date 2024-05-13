@@ -10,6 +10,7 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from littlepay.api.client import Client
 from requests.exceptions import HTTPError
+import sentry_sdk
 
 from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
@@ -90,6 +91,7 @@ def index(request):
                 return success(request)
             elif e.response.status_code >= 500:
                 analytics.returned_error(request, str(e))
+                sentry_sdk.capture_exception(e)
 
                 # overwrite origin so that CTA takes user to agency index
                 session.update(request, origin=agency.index_url)
