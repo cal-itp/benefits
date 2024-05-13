@@ -90,6 +90,9 @@ def index(request):
                 return success(request)
             elif e.response.status_code >= 500:
                 analytics.returned_error(request, str(e))
+
+                # overwrite origin so that CTA takes user to agency index
+                session.update(request, origin=agency.index_url)
                 return system_error(request)
             else:
                 analytics.returned_error(request, str(e))
