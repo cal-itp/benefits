@@ -24,7 +24,6 @@ ROUTE_SUCCESS = "enrollment:success"
 ROUTE_TOKEN = "enrollment:token"
 
 TEMPLATE_RETRY = "enrollment/retry.html"
-TEMPLATE_SUCCESS = "enrollment/success.html"
 
 
 logger = logging.getLogger(__name__)
@@ -152,7 +151,7 @@ def success(request):
     request.path = "/enrollment/success"
     session.update(request, origin=reverse(ROUTE_SUCCESS))
 
-    agency = session.agency(request)
+    eligibility = session.eligibility(request)
     verifier = session.verifier(request)
 
     if session.logged_in(request) and verifier.auth_provider.supports_sign_out:
@@ -160,4 +159,4 @@ def success(request):
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
 
-    return TemplateResponse(request, agency.enrollment_success_template)
+    return TemplateResponse(request, eligibility.enrollment_success_template)
