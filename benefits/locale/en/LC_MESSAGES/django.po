@@ -706,6 +706,20 @@ msgstr ""
 msgid "If you are on a public or shared computer, don’t forget to sign out of "
 msgstr ""
 
+msgid "System enrollment error"
+msgstr ""
+
+msgid "Our enrollment system is not working right now."
+msgstr ""
+
+msgid ""
+"We’re working to solve the problem. Please wait 48 hours and try to enroll "
+"again, or contact your transit agency for help."
+msgstr ""
+
+msgid "Sign out of"
+msgstr ""
+
 msgid "Start over"
 msgstr ""
 
