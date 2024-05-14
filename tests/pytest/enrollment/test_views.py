@@ -131,10 +131,19 @@ def test_index_eligible_post_invalid_form(client, invalid_form_data):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("status_code", [500, 501, 502, 503, 504])
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_eligibility")
 def test_index_eligible_post_valid_form_http_error_500(
-    mocker, client, mocked_analytics_module, mocked_sentry_sdk_module, card_tokenize_form_data, status_code
+    mocker,
+    client,
+    mocked_session_agency,
+    mocked_analytics_module,
+    mocked_sentry_sdk_module,
+    card_tokenize_form_data,
+    status_code,
 ):
+    mock_session = mocker.patch("benefits.enrollment.views.session")
+    mock_session.agency.return_value = mocked_session_agency.return_value
+
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
 
@@ -150,6 +159,7 @@ def test_index_eligible_post_valid_form_http_error_500(
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SYSTEM_ERROR
+    assert {"origin": mocked_session_agency.return_value.index_url} in mock_session.update.call_args
     mocked_analytics_module.returned_error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
