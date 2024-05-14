@@ -93,8 +93,6 @@ def index(request):
                 analytics.returned_error(request, str(e))
                 sentry_sdk.capture_exception(e)
 
-                # overwrite origin so that CTA takes user to agency index
-                session.update(request, origin=agency.index_url)
                 return system_error(request)
             else:
                 analytics.returned_error(request, str(e))
@@ -156,6 +154,11 @@ def retry(request):
 @decorator_from_middleware(EligibleSessionRequired)
 def system_error(request):
     """View handler for an enrollment system error."""
+
+    # overwrite origin so that CTA takes user to agency index
+    agency = session.agency(request)
+    session.update(request, origin=agency.index_url)
+
     return TemplateResponse(request, TEMPLATE_SYSTEM_ERROR)
 
 
