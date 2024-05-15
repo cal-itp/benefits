@@ -875,9 +875,11 @@ msgstr ""
 "exista."
 
 msgid "We’re working on fixing a problem."
-msgstr ""
+msgstr "Estamos trabajando para solucionar un problema."
 
 msgid ""
 "There is a problem with the Benefits application, and we’re working to fix "
 "it. Please try again in a little while."
 msgstr ""
+"Hay un problema con la aplicación de Beneficios y estamos trabajando para "
+"solucionarlo. Inténtelo más tarde en un rato."
