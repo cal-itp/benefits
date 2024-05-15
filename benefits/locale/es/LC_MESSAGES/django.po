@@ -776,8 +776,8 @@ msgstr "Error de inscripción"
 msgid "You are still enrolled in this benefit"
 msgstr "Todavía está inscrito en este beneficio"
 
-msgid "Unable to register card"
-msgstr "No se pudo registrar la tarjeta"
+msgid "Unable to enroll card"
+msgstr "No se pudo inscribir la tarjeta"
 
 msgid "The card information may not have been entered correctly."
 msgstr ""
