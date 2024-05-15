@@ -92,6 +92,18 @@ class ViewedPageEvent(Event):
 
     def __init__(self, request):
         super().__init__(request, "viewed page")
+        # Add UTM codes
+        utm_campaign = request.GET.get("utm_campaign")
+        utm_source = request.GET.get("utm_source")
+        utm_medium = request.GET.get("utm_medium")
+        utm_content = request.GET.get("utm_content")
+        utm_id = request.GET.get("utm_id")
+        self.update_event_properties(
+            utm_campaign=utm_campaign, utm_source=utm_source, utm_medium=utm_medium, utm_content=utm_content, utm_id=utm_id
+        )
+        self.update_user_properties(
+            utm_campaign=utm_campaign, utm_source=utm_source, utm_medium=utm_medium, utm_content=utm_content, utm_id=utm_id
+        )
 
 
 class ChangedLanguageEvent(Event):

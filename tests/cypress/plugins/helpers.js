@@ -26,6 +26,6 @@ export const selectCourtesyCard = () => {
   cy.location("pathname").should("eq", `/eligibility/${agency.slug}`);
 
   cy.contains("MST Courtesy Card").click();
-  cy.contains("Choose this Benefit").click();
+  cy.contains("Choose this benefit").click();
   cy.contains("Continue").click();
 };

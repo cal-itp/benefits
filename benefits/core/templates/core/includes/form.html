@@ -11,16 +11,16 @@
         {% for field in form %}
           <div class="row form-group mb-0">
             <div class="col-12">
+              {# djlint:off #}
               {% if field.label %}
-                <label for="{{ field.id_for_label }}" class="form-control-label">
-                  {{ field.label }}
-                  {% if field.field.required %}<span class="required-label text-body">*</span>{% endif %}
-                </label>
+              <label for="{{ field.id_for_label }}" class="form-control-label">{{ field.label }}{% if field.field.required %}<span class="required-label text-body">*</span>{% endif %}
+              </label>
               {% endif %}
+              {# djlint:on #}
 
               {{ field }}
 
-              {% if field.help_text %}<small class="d-block mt-2 form-text text-body">{{ field.help_text }}</small>{% endif %}
+              {% if field.help_text %}<small class="d-block mt-2 pt-1 form-text text-body">{{ field.help_text }}</small>{% endif %}
             </div>
           </div>
         {% endfor %}
@@ -59,7 +59,29 @@
         $("#{{ form.id }}").on("submit", function(e) {
           $(this).trigger("submitting");
         });
-      });
+
+        {% if form.use_custom_validity %}
+        const validate = function(input_element) {
+          input_element.setCustomValidity(""); // clearing message sets input_element.validity.customError back to false
+
+          const valid = input_element.checkValidity();
+          if (!valid) {
+            input_element.setCustomValidity(input_element.dataset.customValidity);
+          }
+        }
+
+        $("button[type=submit]", "#{{ form.id }}").on("click", function(e) {
+            // revalidate all fields
+            $("[data-custom-validity]").each(function() {
+              let input_element = $(this)[0];
+              if (input_element) {
+                validate(input_element);
+              }
+            });
+        });
+
+        {% endif %}
+    });
     </script>
 
     {% if request.recaptcha %}

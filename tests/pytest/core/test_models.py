@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
 
 import pytest
 
@@ -22,6 +23,13 @@ def test_SecretNameField_init():
     assert field.allow_unicode is False
     assert field.description is not None
     assert field.description != ""
+
+
+def test_SecretNameField_init_null_blank():
+    field = SecretNameField(blank=True, null=True)
+
+    assert field.blank is True
+    assert field.null is True
 
 
 @pytest.mark.django_db
@@ -88,6 +96,7 @@ def test_PemData_data_text_secret_name_and_remote__uses_remote(
 def test_model_AuthProvider(model_AuthProvider):
     assert not model_AuthProvider.supports_claims_verification
     assert model_AuthProvider.supports_sign_out
+    assert str(model_AuthProvider) == model_AuthProvider.client_name
 
 
 @pytest.mark.django_db
@@ -178,6 +187,64 @@ def test_EligibilityType_get_names(model_EligibilityType):
 @pytest.mark.django_db
 def test_EligibilityVerifier_str(model_EligibilityVerifier):
     assert str(model_EligibilityVerifier) == model_EligibilityVerifier.name
+
+
+@pytest.mark.django_db
+def test_EligibilityType_supports_expiration_False(model_EligibilityType_does_not_support_expiration):
+    # test will fail if any error is raised
+    model_EligibilityType_does_not_support_expiration.full_clean()
+
+
+@pytest.mark.django_db
+def test_EligibilityType_zero_expiration_days(model_EligibilityType_zero_expiration_days):
+    with pytest.raises(ValidationError) as exception_info:
+        model_EligibilityType_zero_expiration_days.full_clean()
+
+    error_dict = exception_info.value.error_dict
+    assert len(error_dict["expiration_days"]) == 1
+    assert error_dict["expiration_days"][0].message == "When support_expiration is True, this value must be greater than 0."
+
+
+@pytest.mark.django_db
+def test_EligibilityType_zero_expiration_reenrollment_days(model_EligibilityType_zero_expiration_reenrollment_days):
+    with pytest.raises(ValidationError) as exception_info:
+        model_EligibilityType_zero_expiration_reenrollment_days.full_clean()
+
+    error_dict = exception_info.value.error_dict
+    assert len(error_dict["expiration_reenrollment_days"]) == 1
+    assert (
+        error_dict["expiration_reenrollment_days"][0].message
+        == "When support_expiration is True, this value must be greater than 0."
+    )
+
+
+@pytest.mark.django_db
+def test_EligibilityType_missing_reenrollment_template(model_EligibilityType_supports_expiration):
+    model_EligibilityType_supports_expiration.reenrollment_error_template = None
+    model_EligibilityType_supports_expiration.save()
+
+    with pytest.raises(ValidationError) as exception_info:
+        model_EligibilityType_supports_expiration.full_clean()
+
+    error_dict = exception_info.value.error_dict
+    assert len(error_dict["reenrollment_error_template"]) == 1
+    assert error_dict["reenrollment_error_template"][0].message == "Required when supports expiration is True."
+
+
+@pytest.mark.django_db
+def test_EligibilityType_supports_expiration(model_EligibilityType_supports_expiration):
+    # test will fail if any error is raised
+    model_EligibilityType_supports_expiration.full_clean()
+
+
+@pytest.mark.django_db
+def test_EligibilityType_enrollment_index_template(model_EligibilityType):
+    assert model_EligibilityType.enrollment_index_template == "enrollment/index.html"
+
+    model_EligibilityType.enrollment_index_template = "test/enrollment.html"
+    model_EligibilityType.save()
+
+    assert model_EligibilityType.enrollment_index_template == "test/enrollment.html"
 
 
 class SampleFormClass:
@@ -279,6 +346,23 @@ def test_PaymentProcessor_str(model_PaymentProcessor):
 @pytest.mark.django_db
 def test_TransitAgency_str(model_TransitAgency):
     assert str(model_TransitAgency) == model_TransitAgency.long_name
+
+
+@pytest.mark.django_db
+def test_TransitAgency_active_verifiers(model_TransitAgency, model_EligibilityVerifier):
+    # add another to the list of verifiers by cloning the original
+    # https://stackoverflow.com/a/48149675/453168
+    new_verifier = EligibilityVerifier.objects.get(pk=model_EligibilityVerifier.id)
+    new_verifier.pk = None
+    new_verifier.active = False
+    new_verifier.save()
+
+    model_TransitAgency.eligibility_verifiers.add(new_verifier)
+
+    assert model_TransitAgency.eligibility_verifiers.count() == 2
+    assert model_TransitAgency.active_verifiers.count() == 1
+
+    assert model_TransitAgency.active_verifiers[0] == model_EligibilityVerifier
 
 
 @pytest.mark.django_db

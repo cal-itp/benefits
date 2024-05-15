@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block page-title %}
-  {% translate "Unable to register card" %}
+  {% translate "Unable to enroll card" %}
 {% endblock page-title %}
 
 {% block main-content %}
@@ -12,13 +12,13 @@
 
   <div class="container">
     <h1 class="h2 text-center">
-      <span class="icon d-block pb-5">{% include "core/includes/icon.html" with name="bankcardquestion" %}</span>
-      {% translate "We couldn’t connect your card" %}
+      <span class="icon d-block pb-4">{% include "core/includes/icon.html" with name="bankcardquestion" %}</span>
+      {% translate "The card information may not have been entered correctly." %}
     </h1>
 
     <div class="row justify-content-center">
       <div class="col-lg-8 pt-4">
-        <p>{% translate "You can try again or reach out to your transit provider for assistance." %}</p>
+        <p>{% translate "Please check the details on your card and try again, or contact your transit agency for help." %}</p>
       </div>
     </div>
 

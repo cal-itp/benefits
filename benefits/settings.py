@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.staticfiles",
+    "adminsortable2",
     "django_google_sso",
     "benefits.core",
     "benefits.enrollment",
@@ -138,6 +139,7 @@ template_ctx_processors = [
     "benefits.core.context_processors.active_agencies",
     "benefits.core.context_processors.analytics",
     "benefits.core.context_processors.authentication",
+    "benefits.core.context_processors.enrollment",
     "benefits.core.context_processors.origin",
 ]
 
@@ -204,6 +206,11 @@ USE_I18N = True
 
 TIME_ZONE = "UTC"
 USE_TZ = True
+
+# https://docs.djangoproject.com/en/5.0/topics/i18n/formatting/#creating-custom-format-files
+FORMAT_MODULE_PATH = [
+    "benefits.locale",
+]
 
 # Static files (CSS, JavaScript, Images)
 

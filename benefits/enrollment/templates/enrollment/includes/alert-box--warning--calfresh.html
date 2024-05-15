@@ -1,0 +1,19 @@
+{% extends "core/includes/alert-box.html" %}
+{% load i18n %}
+
+{% block alert-wrapper %}
+    {% with alert_class="alert-box--warning media-list-icon-left-margin" %}{{ block.super }}{% endwith %}
+{% endblock alert-wrapper %}
+
+{% block alert-heading %}
+    {% translate "Do not enter information from your EBT card." %}
+{% endblock alert-heading %}
+
+{% block alert-body %}
+    {% translate "Read our guidance on the CalFresh benefit" as calfresh_modal_link %}
+    <p>
+        {% translate "You can’t pay for transit using the CalFresh funds on your Golden State Advantage card. Please provide details from your contactless debit or credit card issued by Visa or Mastercard and use that card to pay for transit." %}
+        {% include "core/includes/modal-trigger.html" with modal="modal--calfresh" text=calfresh_modal_link period=True %}
+    </p>
+    {% include "eligibility/includes/modal--calfresh.html" with id="modal--calfresh" size="modal-lg" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
+{% endblock alert-body %}
