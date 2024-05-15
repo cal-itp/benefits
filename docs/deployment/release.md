@@ -87,7 +87,7 @@ git checkout prod
 
 git reset --hard origin/prod
 
-git tag YYYY.0M.R
+git tag -a YYYY.0M.R
 
 git push origin YYYY.0M.R
 ```
