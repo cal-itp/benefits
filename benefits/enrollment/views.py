@@ -11,22 +11,18 @@ from django.utils.decorators import decorator_from_middleware
 from littlepay.api.client import Client
 from requests.exceptions import HTTPError
 
-from benefits.core import models, session
-from benefits.core.middleware import (
-    EligibleSessionRequired,
-    VerifierSessionRequired,
-    pageview_decorator,
-)
+from benefits.core import session
+from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
 from benefits.core.views import ROUTE_LOGGED_OUT
+
 from . import analytics, forms
 
-
 ROUTE_INDEX = "enrollment:index"
+ROUTE_REENROLLMENT_ERROR = "enrollment:reenrollment-error"
 ROUTE_RETRY = "enrollment:retry"
 ROUTE_SUCCESS = "enrollment:success"
 ROUTE_TOKEN = "enrollment:token"
 
-TEMPLATE_INDEX = "enrollment/index.html"
 TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SUCCESS = "enrollment/success.html"
 
@@ -61,6 +57,7 @@ def index(request):
     session.update(request, origin=reverse(ROUTE_INDEX))
 
     agency = session.agency(request)
+    eligibility = session.eligibility(request)
     payment_processor = agency.payment_processor
 
     # POST back after payment processor form, process card token
@@ -68,9 +65,6 @@ def index(request):
         form = forms.CardTokenizeSuccessForm(request.POST)
         if not form.is_valid():
             raise Exception("Invalid card token form")
-
-        eligibility = session.eligibility(request)
-        logger.debug(f"Session contains an {models.EligibilityType.__name__}")
 
         logger.debug("Read tokenized card")
         card_token = form.cleaned_data.get("card_token")
@@ -122,23 +116,33 @@ def index(request):
 
         logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
 
-        return TemplateResponse(request, TEMPLATE_INDEX, context)
+        return TemplateResponse(request, eligibility.enrollment_index_template, context)
+
+
+@decorator_from_middleware(EligibleSessionRequired)
+def reenrollment_error(request):
+    """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
+    eligibility = session.eligibility(request)
+    verifier = session.verifier(request)
+
+    if eligibility.reenrollment_error_template is None:
+        raise Exception(f"Re-enrollment error with null template on: {eligibility.label}")
+
+    if session.logged_in(request) and verifier.auth_provider.supports_sign_out:
+        # overwrite origin for a logged in user
+        # if they click the logout button, they are taken to the new route
+        session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
+
+    analytics.returned_error(request, "Re-enrollment error.")
+
+    return TemplateResponse(request, eligibility.reenrollment_error_template)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
 def retry(request):
     """View handler for a recoverable failure condition."""
-    if request.method == "POST":
-        analytics.returned_retry(request)
-        form = forms.CardTokenizeFailForm(request.POST)
-        if form.is_valid():
-            return TemplateResponse(request, TEMPLATE_RETRY)
-        else:
-            analytics.returned_error(request, "Invalid retry submission.")
-            raise Exception("Invalid retry submission.")
-    else:
-        analytics.returned_error(request, "This view method only supports POST.")
-        raise Exception("This view method only supports POST.")
+    analytics.returned_retry(request)
+    return TemplateResponse(request, TEMPLATE_RETRY)
 
 
 @pageview_decorator

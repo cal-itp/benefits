@@ -24,7 +24,6 @@ ROUTE_ENROLLMENT = "enrollment:index"
 
 TEMPLATE_START = "eligibility/start.html"
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
-TEMPLATE_UNVERIFIED = "eligibility/unverified.html"
 
 
 @decorator_from_middleware(RecaptchaEnabled)
@@ -119,6 +118,7 @@ def confirm(request):
 
     # GET from an unverified user, present the form
     if request.method == "GET":
+        session.update(request, origin=reverse(ROUTE_CONFIRM))
         return TemplateResponse(request, TEMPLATE_CONFIRM, context)
     # POST form submission, process form data, make Eligibility Verification API call
     elif request.method == "POST":
@@ -171,4 +171,4 @@ def unverified(request):
 
     analytics.returned_fail(request, types_to_verify)
 
-    return TemplateResponse(request, TEMPLATE_UNVERIFIED)
+    return TemplateResponse(request, verifier.unverified_template)

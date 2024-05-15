@@ -7,10 +7,15 @@ from django.conf import settings
 from . import models, session
 
 
+def unique_values(original_list):
+    # dict.fromkeys gets the unique values and preserves order
+    return list(dict.fromkeys(original_list))
+
+
 def _agency_context(agency):
     return {
         "eligibility_index_url": agency.eligibility_index_url,
-        "help_template": agency.help_template,
+        "help_templates": unique_values([v.help_template for v in agency.active_verifiers if v.help_template is not None]),
         "info_url": agency.info_url,
         "long_name": agency.long_name,
         "phone": agency.phone,
@@ -62,6 +67,21 @@ def authentication(request):
 def debug(request):
     """Context processor adds debug information to request context."""
     return {"debug": session.context_dict(request)}
+
+
+def enrollment(request):
+    """Context processor adds enrollment information to request context."""
+    eligibility = session.eligibility(request)
+    expiry = session.enrollment_expiry(request)
+    reenrollment = session.enrollment_reenrollment(request)
+
+    data = {
+        "expires": expiry,
+        "reenrollment": reenrollment,
+        "supports_expiration": eligibility.supports_expiration if eligibility else False,
+    }
+
+    return {"enrollment": data}
 
 
 def origin(request):

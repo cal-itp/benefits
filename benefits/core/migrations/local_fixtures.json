@@ -87,7 +87,8 @@
     "fields": {
       "name": "courtesy_card",
       "label": "(MST) Courtesy Card Discount",
-      "group_id": "group123"
+      "group_id": "group123",
+      "enrollment_index_template": "enrollment/index--agency-card.html"
     }
   },
   {
@@ -114,6 +115,16 @@
     "fields": {
       "name": "mobility_pass",
       "label": "(SBMTD) Mobility Pass Discount",
+      "group_id": "group123",
+      "enrollment_index_template": "enrollment/index--agency-card.html"
+    }
+  },
+  {
+    "model": "core.eligibilitytype",
+    "pk": 7,
+    "fields": {
+      "name": "calfresh",
+      "label": "CalFresh",
       "group_id": "group123"
     }
   },
@@ -122,6 +133,7 @@
     "pk": 1,
     "fields": {
       "name": "(MST) oauth claims via Login.gov",
+      "display_order": 1,
       "active": true,
       "api_url": null,
       "api_auth_header": null,
@@ -142,6 +154,7 @@
     "pk": 2,
     "fields": {
       "name": "(MST) VA.gov - veteran",
+      "display_order": 3,
       "active": true,
       "api_url": null,
       "api_auth_header": null,
@@ -162,6 +175,7 @@
     "pk": 3,
     "fields": {
       "name": "(MST) eligibility server verifier",
+      "display_order": 4,
       "active": true,
       "api_url": "http://server:8000/verify",
       "api_auth_header": "X-Server-API-Key",
@@ -174,7 +188,9 @@
       "auth_provider": null,
       "selection_label_template": "eligibility/includes/selection-label--mst-courtesy-card.html",
       "start_template": "eligibility/start--mst-courtesy-card.html",
-      "form_class": "benefits.eligibility.forms.MSTCourtesyCard"
+      "form_class": "benefits.eligibility.forms.MSTCourtesyCard",
+      "unverified_template": "eligibility/unverified--mst-courtesy-card.html",
+      "help_template": "core/includes/help--mst-courtesy-card.html"
     }
   },
   {
@@ -182,6 +198,7 @@
     "pk": 4,
     "fields": {
       "name": "(SacRT) oauth claims via Login.gov",
+      "display_order": 5,
       "active": false,
       "api_url": null,
       "api_auth_header": null,
@@ -202,6 +219,7 @@
     "pk": 5,
     "fields": {
       "name": "(SBMTD) oauth claims via Login.gov",
+      "display_order": 6,
       "active": false,
       "api_url": null,
       "api_auth_header": null,
@@ -222,6 +240,7 @@
     "pk": 6,
     "fields": {
       "name": "(SBMTD) eligibility server verifier",
+      "display_order": 7,
       "active": true,
       "api_url": "http://server:8000/verify",
       "api_auth_header": "X-Server-API-Key",
@@ -234,7 +253,31 @@
       "auth_provider": null,
       "selection_label_template": "eligibility/includes/selection-label--sbmtd-mobility-pass.html",
       "start_template": "eligibility/start--sbmtd-mobility-pass.html",
-      "form_class": "benefits.eligibility.forms.SBMTDMobilityPass"
+      "form_class": "benefits.eligibility.forms.SBMTDMobilityPass",
+      "unverified_template": "eligibility/unverified--sbmtd-mobility-pass.html",
+      "help_template": "core/includes/help--sbmtd-mobility-pass.html"
+    }
+  },
+  {
+    "model": "core.eligibilityverifier",
+    "pk": 7,
+    "fields": {
+      "name": "(MST) CalFresh oauth claims via Login.gov",
+      "display_order": 2,
+      "active": true,
+      "api_url": null,
+      "api_auth_header": null,
+      "api_auth_key_secret_name": null,
+      "eligibility_type": 7,
+      "public_key": null,
+      "jwe_cek_enc": null,
+      "jwe_encryption_alg": null,
+      "jws_signing_alg": null,
+      "auth_provider": 1,
+      "selection_label_template": "eligibility/includes/selection-label--calfresh.html",
+      "start_template": "eligibility/start--calfresh.html",
+      "form_class": null,
+      "help_template": "core/includes/help--calfresh.html"
     }
   },
   {
@@ -298,9 +341,8 @@
       "index_template": "core/index--mst.html",
       "eligibility_index_template": "eligibility/index--mst.html",
       "enrollment_success_template": "enrollment/success--mst.html",
-      "help_template": "core/includes/help--mst.html",
-      "eligibility_types": [1, 2, 3],
-      "eligibility_verifiers": [1, 2, 3]
+      "eligibility_types": [1, 7, 2, 3],
+      "eligibility_verifiers": [1, 7, 2, 3]
     }
   },
   {
@@ -322,7 +364,6 @@
       "index_template": "core/index--sacrt.html",
       "eligibility_index_template": "eligibility/index--sacrt.html",
       "enrollment_success_template": "enrollment/success--sacrt.html",
-      "help_template": null,
       "eligibility_types": [4],
       "eligibility_verifiers": [4]
     }
@@ -346,7 +387,6 @@
       "index_template": "core/index--sbmtd.html",
       "eligibility_index_template": "eligibility/index--sbmtd.html",
       "enrollment_success_template": "enrollment/success--sbmtd.html",
-      "help_template": "core/includes/help--sbmtd.html",
       "eligibility_types": [5, 6],
       "eligibility_verifiers": [5, 6]
     }

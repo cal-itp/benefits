@@ -7,6 +7,7 @@ import importlib
 import logging
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 
@@ -36,8 +37,6 @@ class SecretNameField(models.SlugField):
         # although the validator also checks for a max length of 127
         # this setting enforces the length at the database column level as well
         kwargs["max_length"] = 127
-        # similar to max_length, enforce at the field (form) validation level to not allow blanks
-        kwargs["blank"] = False
         # the default is False, but this is more explicit
         kwargs["allow_unicode"] = False
         super().__init__(*args, **kwargs)
@@ -50,9 +49,9 @@ class PemData(models.Model):
     # Human description of the PEM data
     label = models.TextField()
     # The name of a secret with data in utf-8 encoded PEM text format
-    text_secret_name = SecretNameField(null=True)
+    text_secret_name = SecretNameField(null=True, blank=True)
     # Public URL hosting the utf-8 encoded PEM text
-    remote_url = models.TextField(null=True)
+    remote_url = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.label
@@ -80,13 +79,13 @@ class AuthProvider(models.Model):
     """An entity that provides authentication for eligibility verifiers."""
 
     id = models.AutoField(primary_key=True)
-    sign_out_button_template = models.TextField(null=True)
-    sign_out_link_template = models.TextField(null=True)
+    sign_out_button_template = models.TextField(null=True, blank=True)
+    sign_out_link_template = models.TextField(null=True, blank=True)
     client_name = models.TextField()
     client_id_secret_name = SecretNameField()
     authority = models.TextField()
-    scope = models.TextField(null=True)
-    claim = models.TextField(null=True)
+    scope = models.TextField(null=True, blank=True)
+    claim = models.TextField(null=True, blank=True)
     scheme = models.TextField()
 
     @property
@@ -101,6 +100,9 @@ class AuthProvider(models.Model):
     def client_id(self):
         return get_secret_by_name(self.client_id_secret_name)
 
+    def __str__(self) -> str:
+        return self.client_name
+
 
 class EligibilityType(models.Model):
     """A single conditional eligibility type."""
@@ -109,6 +111,11 @@ class EligibilityType(models.Model):
     name = models.TextField()
     label = models.TextField()
     group_id = models.TextField()
+    supports_expiration = models.BooleanField(default=False)
+    expiration_days = models.PositiveSmallIntegerField(null=True, blank=True)
+    expiration_reenrollment_days = models.PositiveSmallIntegerField(null=True, blank=True)
+    enrollment_index_template = models.TextField(default="enrollment/index.html")
+    reenrollment_error_template = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.label
@@ -132,30 +139,55 @@ class EligibilityType(models.Model):
             eligibility_types = [eligibility_types]
         return [t.name for t in eligibility_types if isinstance(t, EligibilityType)]
 
+    def clean(self):
+        supports_expiration = self.supports_expiration
+        expiration_days = self.expiration_days
+        expiration_reenrollment_days = self.expiration_reenrollment_days
+        reenrollment_error_template = self.reenrollment_error_template
+
+        if supports_expiration:
+            errors = {}
+            message = "When support_expiration is True, this value must be greater than 0."
+            if expiration_days is None or expiration_days <= 0:
+                errors.update(expiration_days=ValidationError(message))
+            if expiration_reenrollment_days is None or expiration_reenrollment_days <= 0:
+                errors.update(expiration_reenrollment_days=ValidationError(message))
+            if reenrollment_error_template is None:
+                errors.update(reenrollment_error_template=ValidationError("Required when supports expiration is True."))
+
+            if errors:
+                raise ValidationError(errors)
+
 
 class EligibilityVerifier(models.Model):
     """An entity that verifies eligibility."""
 
     id = models.AutoField(primary_key=True)
     name = models.TextField()
+    display_order = models.PositiveSmallIntegerField(default=0, blank=False, null=False)
     active = models.BooleanField(default=False)
-    api_url = models.TextField(null=True)
-    api_auth_header = models.TextField(null=True)
-    api_auth_key_secret_name = SecretNameField(null=True)
+    api_url = models.TextField(null=True, blank=True)
+    api_auth_header = models.TextField(null=True, blank=True)
+    api_auth_key_secret_name = SecretNameField(null=True, blank=True)
     eligibility_type = models.ForeignKey(EligibilityType, on_delete=models.PROTECT)
     # public key is used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier
-    public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT, null=True)
+    public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT, null=True, blank=True)
     # The JWE-compatible Content Encryption Key (CEK) key-length and mode
-    jwe_cek_enc = models.TextField(null=True)
+    jwe_cek_enc = models.TextField(null=True, blank=True)
     # The JWE-compatible encryption algorithm
-    jwe_encryption_alg = models.TextField(null=True)
+    jwe_encryption_alg = models.TextField(null=True, blank=True)
     # The JWS-compatible signing algorithm
-    jws_signing_alg = models.TextField(null=True)
-    auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True)
+    jws_signing_alg = models.TextField(null=True, blank=True)
+    auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True, blank=True)
     selection_label_template = models.TextField()
-    start_template = models.TextField(null=True)
+    start_template = models.TextField(null=True, blank=True)
     # reference to a form class used by this Verifier, e.g. benefits.app.forms.FormClass
-    form_class = models.TextField(null=True)
+    form_class = models.TextField(null=True, blank=True)
+    unverified_template = models.TextField(default="eligibility/unverified.html")
+    help_template = models.TextField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["display_order"]
 
     def __str__(self):
         return self.name
@@ -245,7 +277,6 @@ class TransitAgency(models.Model):
     index_template = models.TextField()
     eligibility_index_template = models.TextField()
     enrollment_success_template = models.TextField()
-    help_template = models.TextField(null=True)
 
     def __str__(self):
         return self.long_name
@@ -298,6 +329,11 @@ class TransitAgency(models.Model):
     def public_key_data(self):
         """This Agency's public key as a string."""
         return self.public_key.data
+
+    @property
+    def active_verifiers(self):
+        """This Agency's eligibility verifiers that are active."""
+        return self.eligibility_verifiers.filter(active=True)
 
     @staticmethod
     def by_id(id):

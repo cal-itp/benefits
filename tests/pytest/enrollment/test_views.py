@@ -1,24 +1,22 @@
 import time
 
+import pytest
 from django.urls import reverse
-
 from littlepay.api.funding_sources import FundingSourceResponse
 from requests import HTTPError
-import pytest
 
+import benefits.enrollment.views
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.core.views import ROUTE_LOGGED_OUT
 from benefits.enrollment.views import (
     ROUTE_INDEX,
-    ROUTE_TOKEN,
-    ROUTE_SUCCESS,
+    ROUTE_REENROLLMENT_ERROR,
     ROUTE_RETRY,
-    TEMPLATE_INDEX,
+    ROUTE_SUCCESS,
+    ROUTE_TOKEN,
     TEMPLATE_SUCCESS,
     TEMPLATE_RETRY,
 )
-
-import benefits.enrollment.views
 
 
 @pytest.fixture
@@ -101,12 +99,12 @@ def test_token_valid(mocker, client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
-def test_index_eligible_get(client):
+def test_index_eligible_get(client, model_EligibilityType):
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
+    assert response.template_name == model_EligibilityType.enrollment_index_template
     assert "forms" in response.context_data
     assert "cta_button" in response.context_data
     assert "card_tokenize_env" in response.context_data
@@ -213,6 +211,38 @@ def test_index_ineligible(client):
 
 
 @pytest.mark.django_db
+def test_reenrollment_error_ineligible(client):
+    path = reverse(ROUTE_REENROLLMENT_ERROR)
+
+    response = client.get(path)
+
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_USER_ERROR
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+def test_reenrollment_error_eligibility_no_error_template(client):
+    path = reverse(ROUTE_REENROLLMENT_ERROR)
+
+    with pytest.raises(Exception, match="Re-enrollment error with null template"):
+        client.get(path)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier")
+def test_reenrollment_error(client, model_EligibilityType_supports_expiration, mocked_session_eligibility):
+    mocked_session_eligibility.return_value = model_EligibilityType_supports_expiration
+
+    path = reverse(ROUTE_REENROLLMENT_ERROR)
+
+    response = client.get(path)
+
+    assert response.status_code == 200
+    assert response.template_name == model_EligibilityType_supports_expiration.reenrollment_error_template
+
+
+@pytest.mark.django_db
 def test_retry_ineligible(client):
     path = reverse(ROUTE_RETRY)
 
@@ -223,28 +253,19 @@ def test_retry_ineligible(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_eligibility")
-def test_retry_get(client):
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_retry_get(client, mocked_analytics_module):
     path = reverse(ROUTE_RETRY)
-    with pytest.raises(Exception, match=r"POST"):
-        client.get(path)
+    response = client.get(path)
 
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_eligibility")
-def test_retry_invalid_form(mocker, client):
-    mocker.patch("benefits.enrollment.views.forms.CardTokenizeFailForm.is_valid", return_value=False)
-
-    path = reverse(ROUTE_RETRY)
-    with pytest.raises(Exception, match=r"Invalid"):
-        client.post(path)
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_RETRY
+    mocked_analytics_module.returned_retry.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
-def test_retry_valid_form(mocker, client, mocked_analytics_module):
-    mocker.patch("benefits.enrollment.views.forms.CardTokenizeFailForm.is_valid", return_value=True)
-
+def test_retry_valid_form(client, mocked_analytics_module):
     path = reverse(ROUTE_RETRY)
     response = client.post(path)
 
