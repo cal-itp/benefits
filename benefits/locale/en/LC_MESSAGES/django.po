@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-05-03 15:20+0000\n"
+"POT-Creation-Date: 2024-05-15 15:30+0000\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -633,7 +633,7 @@ msgstr ""
 msgid "You are still enrolled in this benefit"
 msgstr ""
 
-msgid "Unable to register card"
+msgid "Unable to enroll card"
 msgstr ""
 
 msgid "The card information may not have been entered correctly."
