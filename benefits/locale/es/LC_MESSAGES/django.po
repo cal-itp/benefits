@@ -781,11 +781,15 @@ msgstr "No se pudo inscribir la tarjeta"
 
 msgid "The card information may not have been entered correctly."
 msgstr ""
+"Es posible que la información de la tarjeta no se haya ingresado "
+"correctamente."
 
 msgid ""
 "Please check the details on your card and try again, or contact your transit "
 "agency for help."
 msgstr ""
+"Verifique los datos de tu tarjeta e inténtelo de nuevo, o contacte a su "
+"agencia de tránsito para obtener ayuda."
 
 msgid ""
 "You were not charged anything today. When boarding an MST fixed route bus, "
