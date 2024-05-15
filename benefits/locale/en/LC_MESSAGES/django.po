@@ -633,7 +633,7 @@ msgstr ""
 msgid "You are still enrolled in this benefit"
 msgstr ""
 
-msgid "Unable to register card"
+msgid "Unable to enroll card"
 msgstr ""
 
 msgid "The card information may not have been entered correctly."
