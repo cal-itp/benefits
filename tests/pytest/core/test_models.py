@@ -247,6 +247,13 @@ def test_EligibilityType_enrollment_index_template(model_EligibilityType):
     assert model_EligibilityType.enrollment_index_template == "test/enrollment.html"
 
 
+@pytest.mark.django_db
+def test_EligibilityType_enrollment_success_template():
+    new_eligibility_type = EligibilityType.objects.create()
+
+    assert new_eligibility_type.enrollment_success_template == "enrollment/success.html"
+
+
 class SampleFormClass:
     """A class for testing EligibilityVerifier form references."""
 
