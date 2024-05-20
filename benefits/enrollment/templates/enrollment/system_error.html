@@ -6,7 +6,7 @@
 {% endblock classes %}
 
 {% block page-title %}
-  {% translate "System enrollment error" %}
+  {% translate "Enrollment system down" %}
 {% endblock page-title %}
 
 {% block main-content %}
@@ -18,12 +18,14 @@
 
     <div class="row justify-content-center">
       <div class="col-lg-8 pt-4">
-        <p>{% translate "We’re working to solve the problem. Please wait 48 hours and try to enroll again, or contact your transit agency for help." %}</p>
+        <p>
+          {% translate "We’re working to solve the problem. Please wait 48 hours and try to enroll again, or contact your transit agency for help." %}
+        </p>
       </div>
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-lg-8">{% include "core/includes/agency-links.html" %}</div>
+      <div class="col-lg-8">{% include "core/includes/agency-links.html" %}</div>
     </div>
 
     <div class="row pt-8 justify-content-center">
@@ -32,7 +34,7 @@
           {% url "oauth:logout" as sign_out_url %}
           {% translate "Sign out of" as button_text %}
           <a href="{{ sign_out_url }}" class="btn btn-lg btn-primary login">
-          {{ button_text }} <span class="fallback-text white-logo">Login.gov</span>
+            {{ button_text }} <span class="fallback-text white-logo">Login.gov</span>
           </a>
         {% else %}
           {% include "core/includes/button--origin.html" %}
