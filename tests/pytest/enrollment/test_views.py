@@ -14,7 +14,6 @@ from benefits.enrollment.views import (
     ROUTE_RETRY,
     ROUTE_SUCCESS,
     ROUTE_TOKEN,
-    TEMPLATE_SUCCESS,
     TEMPLATE_RETRY,
 )
 
@@ -174,7 +173,7 @@ def test_index_eligible_post_valid_form_customer_already_enrolled(
         funding_source_id=mocked_funding_source.id, group_id=model_EligibilityType.group_id
     )
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_SUCCESS
+    assert response.template_name == model_EligibilityType.enrollment_success_template
     mocked_analytics_module.returned_success.assert_called_once()
     assert model_EligibilityType.group_id in mocked_analytics_module.returned_success.call_args.args
 
@@ -195,7 +194,7 @@ def test_index_eligible_post_valid_form_success(
         funding_source_id=mocked_funding_source.id, group_id=model_EligibilityType.group_id
     )
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_SUCCESS
+    assert response.template_name == model_EligibilityType.enrollment_success_template
     mocked_analytics_module.returned_success.assert_called_once()
     assert model_EligibilityType.group_id in mocked_analytics_module.returned_success.call_args.args
 
@@ -286,38 +285,42 @@ def test_success_no_verifier(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_success_authentication_logged_in(mocker, client, model_TransitAgency):
+def test_success_authentication_logged_in(mocker, client, model_TransitAgency, model_EligibilityType):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = True
     mock_session.agency.return_value = model_TransitAgency
+    mock_session.eligibility.return_value = model_EligibilityType
 
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_SUCCESS
+    assert response.template_name == model_EligibilityType.enrollment_success_template
     assert {"origin": reverse(ROUTE_LOGGED_OUT)} in mock_session.update.call_args
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_success_authentication_not_logged_in(mocker, client, model_TransitAgency):
+def test_success_authentication_not_logged_in(mocker, client, model_TransitAgency, model_EligibilityType):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = False
     mock_session.agency.return_value = model_TransitAgency
+    mock_session.eligibility.return_value = model_EligibilityType
 
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_SUCCESS
+    assert response.template_name == model_EligibilityType.enrollment_success_template
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier_auth_not_required")
-def test_success_no_authentication(client):
+def test_success_no_authentication(mocker, client, model_EligibilityType):
+    mock_session = mocker.patch("benefits.enrollment.views.session")
+    mock_session.eligibility.return_value = model_EligibilityType
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_SUCCESS
+    assert response.template_name == model_EligibilityType.enrollment_success_template

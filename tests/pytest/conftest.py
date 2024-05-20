@@ -100,7 +100,12 @@ def model_AuthProvider_without_verification_no_sign_out(model_AuthProvider):
 
 @pytest.fixture
 def model_EligibilityType():
-    eligibility = EligibilityType.objects.create(name="test", label="Test Eligibility Type", group_id="1234")
+    eligibility = EligibilityType.objects.create(
+        name="test",
+        label="Test Eligibility Type",
+        group_id="1234",
+        enrollment_success_template="enrollment/success.html",
+    )
 
     return eligibility
 
@@ -202,7 +207,6 @@ def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityV
         jws_signing_alg="alg",
         index_template="core/agency-index.html",
         eligibility_index_template="eligibility/index.html",
-        enrollment_success_template="enrollment/success.html",
     )
 
     # add many-to-many relationships after creation, need ID on both sides

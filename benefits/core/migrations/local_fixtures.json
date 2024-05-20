@@ -69,7 +69,8 @@
     "fields": {
       "name": "senior",
       "label": "(MST) Senior Discount",
-      "group_id": "group123"
+      "group_id": "group123",
+      "enrollment_success_template": "enrollment/success--mst.html"
     }
   },
   {
@@ -78,7 +79,8 @@
     "fields": {
       "name": "veteran",
       "label": "(MST) Veteran Discount",
-      "group_id": "group123"
+      "group_id": "group123",
+      "enrollment_success_template": "enrollment/success--mst.html"
     }
   },
   {
@@ -88,7 +90,8 @@
       "name": "courtesy_card",
       "label": "(MST) Courtesy Card Discount",
       "group_id": "group123",
-      "enrollment_index_template": "enrollment/index--agency-card.html"
+      "enrollment_index_template": "enrollment/index--agency-card.html",
+      "enrollment_success_template": "enrollment/success--mst-courtesy-card.html"
     }
   },
   {
@@ -97,7 +100,8 @@
     "fields": {
       "name": "senior",
       "label": "(SacRT) Senior Discount",
-      "group_id": "group123"
+      "group_id": "group123",
+      "enrollment_success_template": "enrollment/success--sacrt.html"
     }
   },
   {
@@ -106,7 +110,8 @@
     "fields": {
       "name": "senior",
       "label": "(SBMTD) Senior Discount",
-      "group_id": "group123"
+      "group_id": "group123",
+      "enrollment_success_template": "enrollment/success--sbmtd.html"
     }
   },
   {
@@ -116,7 +121,8 @@
       "name": "mobility_pass",
       "label": "(SBMTD) Mobility Pass Discount",
       "group_id": "group123",
-      "enrollment_index_template": "enrollment/index--agency-card.html"
+      "enrollment_index_template": "enrollment/index--agency-card.html",
+      "enrollment_success_template": "enrollment/success--sbmtd-mobility-pass.html"
     }
   },
   {
@@ -340,7 +346,6 @@
       "jws_signing_alg": "RS256",
       "index_template": "core/index--mst.html",
       "eligibility_index_template": "eligibility/index--mst.html",
-      "enrollment_success_template": "enrollment/success--mst.html",
       "eligibility_types": [1, 7, 2, 3],
       "eligibility_verifiers": [1, 7, 2, 3]
     }
@@ -363,7 +368,6 @@
       "jws_signing_alg": "RS256",
       "index_template": "core/index--sacrt.html",
       "eligibility_index_template": "eligibility/index--sacrt.html",
-      "enrollment_success_template": "enrollment/success--sacrt.html",
       "eligibility_types": [4],
       "eligibility_verifiers": [4]
     }
@@ -386,7 +390,6 @@
       "jws_signing_alg": "RS256",
       "index_template": "core/index--sbmtd.html",
       "eligibility_index_template": "eligibility/index--sbmtd.html",
-      "enrollment_success_template": "enrollment/success--sbmtd.html",
       "eligibility_types": [5, 6],
       "eligibility_verifiers": [5, 6]
     }
