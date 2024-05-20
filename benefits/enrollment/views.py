@@ -10,6 +10,7 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from littlepay.api.client import Client
 from requests.exceptions import HTTPError
+import sentry_sdk
 
 from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
@@ -24,6 +25,7 @@ ROUTE_SUCCESS = "enrollment:success"
 ROUTE_TOKEN = "enrollment:token"
 
 TEMPLATE_RETRY = "enrollment/retry.html"
+TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
 
 
 logger = logging.getLogger(__name__)
@@ -87,6 +89,11 @@ def index(request):
             if e.response.status_code == 409:
                 analytics.returned_success(request, eligibility.group_id)
                 return success(request)
+            elif e.response.status_code >= 500:
+                analytics.returned_error(request, str(e))
+                sentry_sdk.capture_exception(e)
+
+                return system_error(request)
             else:
                 analytics.returned_error(request, str(e))
                 raise Exception(f"{e}: {e.response.json()}")
@@ -142,6 +149,17 @@ def retry(request):
     """View handler for a recoverable failure condition."""
     analytics.returned_retry(request)
     return TemplateResponse(request, TEMPLATE_RETRY)
+
+
+@decorator_from_middleware(EligibleSessionRequired)
+def system_error(request):
+    """View handler for an enrollment system error."""
+
+    # overwrite origin so that CTA takes user to agency index
+    agency = session.agency(request)
+    session.update(request, origin=agency.index_url)
+
+    return TemplateResponse(request, TEMPLATE_SYSTEM_ERROR)
 
 
 @pageview_decorator

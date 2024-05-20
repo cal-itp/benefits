@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-05-16 19:45+0000\n"
+"POT-Creation-Date: 2024-05-20 21:48+0000\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -896,6 +896,23 @@ msgstr "¡Gracias por usar Cal-ITP Benefits!"
 msgid "If you are on a public or shared computer, don’t forget to sign out of "
 msgstr ""
 "Si está en una computadora pública o compartida, no olvide cerrar sesión en "
+
+msgid "Enrollment system down"
+msgstr "El sistema de inscripción no funciona"
+
+msgid "Our enrollment system is not working right now."
+msgstr "Nuestro sistema de inscripción no está funcionando en este momento."
+
+msgid ""
+"We’re working to solve the problem. Please wait 48 hours and try to enroll "
+"again, or contact your transit agency for help."
+msgstr ""
+"Estamos trabajando para resolver el problema. Espere 48 horas e intente "
+"inscribirse nuevamente, o contacte a su agencia de tránsito para obtener "
+"ayuda."
+
+msgid "Sign out of"
+msgstr "Cierre sesión de"
 
 msgid "Start over"
 msgstr "Comenzar de nuevo"
