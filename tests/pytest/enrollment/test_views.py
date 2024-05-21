@@ -105,7 +105,7 @@ def test_token_valid(mocker, client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
-def test_token_http_error_500(mocker, client, mocked_analytics_module):
+def test_token_http_error_500(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
@@ -128,6 +128,7 @@ def test_token_http_error_500(mocker, client, mocked_analytics_module):
     assert data["redirect"] == reverse(ROUTE_SYSTEM_ERROR)
     mocked_analytics_module.failed_access_token_request.assert_called_once()
     assert 500 in mocked_analytics_module.failed_access_token_request.call_args.args
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
