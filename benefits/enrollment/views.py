@@ -50,6 +50,7 @@ def token(request):
             response = client.request_card_tokenization_access()
         except Exception as e:
             if isinstance(e, HTTPError) and e.response.status_code >= 500:
+                analytics.failed_access_token_request(request, e.response.status_code)
                 sentry_sdk.capture_exception(e)
                 data = {"redirect": reverse(ROUTE_SYSTEM_ERROR)}
                 return JsonResponse(data)
