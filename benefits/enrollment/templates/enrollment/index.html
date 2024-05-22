@@ -45,6 +45,7 @@
                 // https://stackoverflow.com/a/42469170
                 // use 'assign' because 'replace' was giving strange Back button behavior
                 window.location.assign(data.redirect);
+                return;
               }
 
               $(".loading").remove();
