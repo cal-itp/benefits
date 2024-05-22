@@ -99,14 +99,11 @@ def test_authorize_success(mocked_oauth_create_client, mocked_analytics_module, 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_analytics_module")
-@pytest.mark.parametrize("flag", ["true", "True", "tRuE"])
-def test_authorize_success_with_claim_true(
-    mocked_session_verifier_auth_required, mocked_oauth_create_client, app_request, flag
-):
+def test_authorize_success_with_claim_true(mocked_session_verifier_auth_required, mocked_oauth_create_client, app_request):
     verifier = mocked_session_verifier_auth_required.return_value
     verifier.auth_provider.claim = "claim"
     mocked_oauth_client = mocked_oauth_create_client.return_value
-    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": flag}}
+    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "1"}}
 
     result = authorize(app_request)
 
@@ -118,14 +115,15 @@ def test_authorize_success_with_claim_true(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_analytics_module")
-@pytest.mark.parametrize("flag", ["false", "False", "fAlSe"])
 def test_authorize_success_with_claim_false(
-    mocked_session_verifier_auth_required, mocked_oauth_create_client, app_request, flag
+    mocked_session_verifier_auth_required,
+    mocked_oauth_create_client,
+    app_request,
 ):
     verifier = mocked_session_verifier_auth_required.return_value
     verifier.auth_provider.claim = "claim"
     mocked_oauth_client = mocked_oauth_create_client.return_value
-    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": flag}}
+    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "0"}}
 
     result = authorize(app_request)
 
