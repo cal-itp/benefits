@@ -50,6 +50,7 @@ def token(request):
         try:
             response = client.request_card_tokenization_access()
         except Exception as e:
+            logger.debug("Error occurred while requesting access token", exc_info=e)
             sentry_sdk.capture_exception(e)
 
             if isinstance(e, HTTPError):
