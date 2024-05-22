@@ -39,14 +39,14 @@ def token(request):
     if not session.enrollment_token_valid(request):
         agency = session.agency(request)
         payment_processor = agency.payment_processor
-        client = Client(
-            base_url=payment_processor.api_base_url,
-            client_id=payment_processor.client_id,
-            client_secret=payment_processor.client_secret,
-            audience=payment_processor.audience,
-        )
 
         try:
+            client = Client(
+                base_url=payment_processor.api_base_url,
+                client_id=payment_processor.client_id,
+                client_secret=payment_processor.client_secret,
+                audience=payment_processor.audience,
+            )
             client.oauth.ensure_active_token(client.token)
             response = client.request_card_tokenization_access()
         except Exception as e:
