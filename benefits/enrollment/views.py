@@ -21,6 +21,7 @@ from . import analytics, forms
 ROUTE_INDEX = "enrollment:index"
 ROUTE_REENROLLMENT_ERROR = "enrollment:reenrollment-error"
 ROUTE_RETRY = "enrollment:retry"
+ROUTE_SERVER_ERROR = "core:server-error"
 ROUTE_SUCCESS = "enrollment:success"
 ROUTE_SYSTEM_ERROR = "enrollment:system-error"
 ROUTE_TOKEN = "enrollment:token"
@@ -51,12 +52,21 @@ def token(request):
         except Exception as e:
             sentry_sdk.capture_exception(e)
 
-            if isinstance(e, HTTPError) and e.response.status_code >= 500:
-                analytics.failed_access_token_request(request, e.response.status_code)
-                data = {"redirect": reverse(ROUTE_SYSTEM_ERROR)}
-                return JsonResponse(data)
+            if isinstance(e, HTTPError):
+                status_code = e.response.status_code
+
+                if e.response.status_code >= 500:
+                    redirect = reverse(ROUTE_SYSTEM_ERROR)
+                else:
+                    redirect = reverse(ROUTE_SERVER_ERROR)
             else:
-                raise e
+                status_code = None
+                redirect = reverse(ROUTE_SERVER_ERROR)
+
+            analytics.failed_access_token_request(request, status_code)
+
+            data = {"redirect": redirect}
+            return JsonResponse(data)
         else:
             session.update(
                 request, enrollment_token=response.get("access_token"), enrollment_token_exp=response.get("expires_at")
