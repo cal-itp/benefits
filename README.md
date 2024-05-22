@@ -25,11 +25,11 @@
 | benefits/eligibility/verify.py       |       15 |        0 |        6 |        0 |    100% |           |
 | benefits/eligibility/views.py        |      104 |        2 |       58 |        3 |     97% |41, 65, 124->exit |
 | benefits/enrollment/\_\_init\_\_.py  |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment/analytics.py     |       14 |        3 |        4 |        2 |     72% |13->15, 16, 26, 31 |
+| benefits/enrollment/analytics.py     |       21 |        4 |        6 |        3 |     74% |13->15, 16, 24->exit, 35, 40, 45 |
 | benefits/enrollment/apps.py          |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/forms.py         |       12 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/urls.py          |        4 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment/views.py         |       97 |        1 |       34 |        1 |     98% |       140 |
+| benefits/enrollment/views.py         |      106 |        2 |       36 |        2 |     97% |   59, 155 |
 | benefits/locale/\_\_init\_\_.py      |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/\_\_init\_\_.py   |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/formats.py        |        1 |        0 |        0 |        0 |    100% |           |
@@ -48,7 +48,7 @@
 | benefits/settings.py                 |      119 |        6 |       22 |        8 |     90% |92, 113->118, 129->132, 147, 297, 299, 314, 326 |
 | benefits/urls.py                     |       22 |        7 |        2 |        1 |     67% |     34-48 |
 | benefits/wsgi.py                     |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                            **TOTAL** | **1518** |   **99** |  **410** |   **33** | **92%** |           |
+|                            **TOTAL** | **1534** |  **101** |  **414** |   **35** | **92%** |           |
 
 
 ## Setup coverage badge
