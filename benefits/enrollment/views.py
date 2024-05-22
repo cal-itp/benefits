@@ -45,9 +45,9 @@ def token(request):
             client_secret=payment_processor.client_secret,
             audience=payment_processor.audience,
         )
-        client.oauth.ensure_active_token(client.token)
 
         try:
+            client.oauth.ensure_active_token(client.token)
             response = client.request_card_tokenization_access()
         except Exception as e:
             logger.debug("Error occurred while requesting access token", exc_info=e)

@@ -184,6 +184,28 @@ def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, 
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
+    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+
+    mock_client.oauth.ensure_active_token.side_effect = ConnectionError()
+
+    path = reverse(ROUTE_TOKEN)
+    response = client.get(path)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "token" not in data
+    assert "redirect" in data
+    assert data["redirect"] == reverse(ROUTE_SERVER_ERROR)
+    mocked_analytics_module.failed_access_token_request.assert_called_once()
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+
+@pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
 def test_index_eligible_get(client, model_EligibilityType):
     path = reverse(ROUTE_INDEX)
