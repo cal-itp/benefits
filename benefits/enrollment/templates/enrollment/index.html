@@ -94,7 +94,11 @@
                       /* 400 or 500 will return. */
                       amplitude.getInstance().logEvent(closedEvent, {status: "error", error: response});
 
-                      var form = $("form#{{ form_retry }}");
+                      if (response.status >= 500) {
+                        var form = $("form#{{ form_system_error }}");
+                      } else {
+                        var form = $("form#{{ form_server_error }}");
+                      }
                       form.submit();
                   },
                   onCancel: function () {
