@@ -88,7 +88,11 @@ git checkout prod
 git reset --hard origin/prod
 
 git tag -a YYYY.0M.R
+```
 
+Git will open your default text editor and prompt you for the tag annotation. For the tag annotation, use the title of the `release`-tagged Issue that kicked off the release. Finally, after closing the text editor:
+
+```bash
 git push origin YYYY.0M.R
 ```
 
