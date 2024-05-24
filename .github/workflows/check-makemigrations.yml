@@ -27,3 +27,12 @@ jobs:
 
       - name: Install Python dependencies
         run: pip install -e .[dev,test]
+
+      - name: Run ./bin/makemigrations.sh
+        run: |
+          if ./bin/makemigrations.sh | grep -q 'No changes detected';
+          then
+             exit 0;
+          else
+             exit 1;
+          fi
