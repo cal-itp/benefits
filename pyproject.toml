@@ -16,7 +16,7 @@ dependencies = [
     "django-google-sso==6.2.0",
     "eligibility-api==2023.9.1",
     "calitp-littlepay==2024.4.1",
-    "requests==2.31.0",
+    "requests==2.32.2",
     "sentry-sdk==2.1.1",
     "six==1.16.0",
 ]
