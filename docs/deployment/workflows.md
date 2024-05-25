@@ -23,16 +23,15 @@ Using the `github.actor` and built-in `GITHUB_TOKEN` secret
 
 ### 3. Build and push image to GitHub Container Registry (GHCR)
 
-Build the root [`Dockerfile`][dockerfile], tagging with both the branch name (e.g. `dev`) and the SHA from the HEAD commit.
+Build the root [`Dockerfile`][dockerfile], tagging with the SHA from the HEAD commit.
 
 Push this image:tag into [GHCR][ghcr].
 
 ### 4. App Service deploy
 
-Each Azure App Service instance is configured to [listen to a webhook from GitHub, then deploy the image][webhook].
+Push the new image:tag to the Azure App Service instance.
 
 [deploy]: https://github.com/cal-itp/benefits/blob/dev/.github/workflows/deploy.yml
 [dockerfile]: https://github.com/cal-itp/benefits/blob/dev/Dockerfile
 [ghcr]: https://github.com/features/packages
 [gh-actions-trigger]: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
-[webhook]: https://docs.microsoft.com/en-us/azure/app-service/deploy-ci-cd-custom-container

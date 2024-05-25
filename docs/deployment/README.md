@@ -30,7 +30,6 @@ Docker images for each of the deploy branches are available from GitHub Containe
 
 - [Repository Package page](https://github.com/cal-itp/benefits/pkgs/container/benefits)
 - Image path: `ghcr.io/cal-itp/benefits`
-- Image tags: `dev`, `test`, `prod`
 
 [oet]: https://techblog.cdt.ca.gov/2020/06/cdt-taking-the-lead-in-digital-transformation/
 [app-service-containers]: https://docs.microsoft.com/en-us/azure/app-service/configure-custom-container
