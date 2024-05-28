@@ -14,14 +14,13 @@ import sentry_sdk
 
 from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
-from benefits.core.views import ROUTE_LOGGED_OUT
+from benefits.core.views import ROUTE_LOGGED_OUT, ROUTE_SERVER_ERROR
 
 from . import analytics, forms
 
 ROUTE_INDEX = "enrollment:index"
 ROUTE_REENROLLMENT_ERROR = "enrollment:reenrollment-error"
 ROUTE_RETRY = "enrollment:retry"
-ROUTE_SERVER_ERROR = "core:server-error"
 ROUTE_SUCCESS = "enrollment:success"
 ROUTE_SYSTEM_ERROR = "enrollment:system-error"
 ROUTE_TOKEN = "enrollment:token"
