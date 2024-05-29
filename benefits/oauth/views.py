@@ -64,6 +64,8 @@ def authorize(request):
     verifier_claim = verifier.auth_provider.claim
     stored_claim = None
 
+    error_claim = None
+
     if verifier_claim:
         userinfo = token.get("userinfo")
 
@@ -76,10 +78,11 @@ def authorize(request):
             elif claim_value == 1:
                 # if userinfo contains our claim and the flag is 1 (true), store the *claim*
                 stored_claim = verifier_claim
+            elif claim_value >= 10:
+                error_claim = claim_value
 
     session.update(request, oauth_token=id_token, oauth_claim=stored_claim)
-
-    analytics.finished_sign_in(request)
+    analytics.finished_sign_in(request, error=error_claim)
 
     return redirect(ROUTE_CONFIRM)
 
