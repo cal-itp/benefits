@@ -69,11 +69,12 @@ def authorize(request):
 
         if userinfo:
             claim_value = userinfo.get(verifier_claim)
-            # the claim comes back in userinfo like { "claim": "True" | "False" }
+            # the claim comes back in userinfo like { "claim": "1" | "0" }
+            claim_value = int(claim_value) if claim_value else None
             if claim_value is None:
                 logger.warning(f"userinfo did not contain: {verifier_claim}")
-            elif claim_value.lower() == "true":
-                # if userinfo contains our claim and the flag is true, store the *claim*
+            elif claim_value == 1:
+                # if userinfo contains our claim and the flag is 1 (true), store the *claim*
                 stored_claim = verifier_claim
 
     session.update(request, oauth_token=id_token, oauth_claim=stored_claim)
