@@ -32,8 +32,10 @@ class CanceledSignInEvent(OAuthEvent):
 class FinishedSignInEvent(OAuthEvent):
     """Analytics event representing the end of the OAuth sign in flow."""
 
-    def __init__(self, request):
+    def __init__(self, request, error=None):
         super().__init__(request, "finished sign in")
+        if error is not None:
+            self.update_event_properties(error_code=error)
 
 
 class StartedSignOutEvent(OAuthEvent):
@@ -61,9 +63,9 @@ def canceled_sign_in(request):
     core.send_event(CanceledSignInEvent(request))
 
 
-def finished_sign_in(request):
+def finished_sign_in(request, error=None):
     """Send the "finished sign in" analytics event."""
-    core.send_event(FinishedSignInEvent(request))
+    core.send_event(FinishedSignInEvent(request, error))
 
 
 def started_sign_out(request):
