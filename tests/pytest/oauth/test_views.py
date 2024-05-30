@@ -145,10 +145,9 @@ def test_authorize_success_without_verifier_claim(
 
     result = authorize(app_request)
 
-    mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
     assert session.oauth_claim(app_request) is None
-    assert result.status_code == 302
-    assert result.url == reverse(ROUTE_CONFIRM)
+    assert result.status_code == 200
+    assert result.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
