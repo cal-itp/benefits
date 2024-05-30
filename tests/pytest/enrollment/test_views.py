@@ -354,7 +354,7 @@ def test_success_no_verifier(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
+@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
 def test_success_authentication_logged_in(mocker, client, model_TransitAgency, model_EligibilityType):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = True
@@ -370,7 +370,7 @@ def test_success_authentication_logged_in(mocker, client, model_TransitAgency, m
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
+@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
 def test_success_authentication_not_logged_in(mocker, client, model_TransitAgency, model_EligibilityType):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = False
@@ -385,7 +385,7 @@ def test_success_authentication_not_logged_in(mocker, client, model_TransitAgenc
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier_auth_not_required")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier_does_not_use_auth_verification")
 def test_success_no_authentication(mocker, client, model_EligibilityType):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.eligibility.return_value = model_EligibilityType

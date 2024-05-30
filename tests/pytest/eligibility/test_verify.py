@@ -52,10 +52,12 @@ def test_eligibility_from_api_no_verified_types(
 
 
 @pytest.mark.django_db
-def test_eligibility_from_oauth_auth_not_required(mocked_session_verifier_auth_not_required, model_TransitAgency):
-    # mocked_session_verifier_auth_not_required is Mocked version of the session.verifier() function
+def test_eligibility_from_oauth_does_not_use_auth_verification(
+    mocked_session_verifier_does_not_use_auth_verification, model_TransitAgency
+):
+    # mocked_session_verifier_does_not_use_auth_verification is Mocked version of the session.verifier() function
     # call it (with a None request) to return a verifier object
-    verifier = mocked_session_verifier_auth_not_required(None)
+    verifier = mocked_session_verifier_does_not_use_auth_verification(None)
 
     types = eligibility_from_oauth(verifier, "claim", model_TransitAgency)
 
@@ -63,10 +65,10 @@ def test_eligibility_from_oauth_auth_not_required(mocked_session_verifier_auth_n
 
 
 @pytest.mark.django_db
-def test_eligibility_from_oauth_auth_claim_mismatch(mocked_session_verifier_auth_required, model_TransitAgency):
-    # mocked_session_verifier_auth_required is Mocked version of the session.verifier() function
+def test_eligibility_from_oauth_auth_claim_mismatch(mocked_session_verifier_uses_auth_verification, model_TransitAgency):
+    # mocked_session_verifier_uses_auth_verification is Mocked version of the session.verifier() function
     # call it (with a None request) to return a verifier object
-    verifier = mocked_session_verifier_auth_required(None)
+    verifier = mocked_session_verifier_uses_auth_verification(None)
     verifier.auth_claim = "claim"
 
     types = eligibility_from_oauth(verifier, "some_other_claim", model_TransitAgency)
@@ -76,11 +78,11 @@ def test_eligibility_from_oauth_auth_claim_mismatch(mocked_session_verifier_auth
 
 @pytest.mark.django_db
 def test_eligibility_from_oauth_auth_claim_match(
-    mocked_session_verifier_auth_required, model_EligibilityType, model_TransitAgency
+    mocked_session_verifier_uses_auth_verification, model_EligibilityType, model_TransitAgency
 ):
-    # mocked_session_verifier_auth_required is Mocked version of the session.verifier() function
+    # mocked_session_verifier_uses_auth_verification is Mocked version of the session.verifier() function
     # call it (with a None request) to return a verifier object
-    verifier = mocked_session_verifier_auth_required.return_value
+    verifier = mocked_session_verifier_uses_auth_verification.return_value
     verifier.auth_provider.claim = "claim"
     verifier.eligibility_type = model_EligibilityType
 

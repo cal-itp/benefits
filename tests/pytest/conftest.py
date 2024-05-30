@@ -274,7 +274,7 @@ def mocked_session_verifier_oauth(mocker, model_EligibilityVerifier_AuthProvider
 
 
 @pytest.fixture
-def mocked_session_verifier_auth_required(
+def mocked_session_verifier_uses_auth_verification(
     mocker, model_EligibilityVerifier_AuthProvider_with_verification, mocked_session_verifier_oauth
 ):
     mock_verifier = mocker.Mock(spec=model_EligibilityVerifier_AuthProvider_with_verification)
@@ -291,11 +291,11 @@ def mocked_session_verifier_auth_required(
 
 
 @pytest.fixture
-def mocked_session_verifier_auth_not_required(mocked_session_verifier_auth_required):
-    # mocked_session_verifier_auth_required.return_value is the Mock(spec=model_EligibilityVerifier) from that fixture
-    mocked_session_verifier_auth_required.return_value.is_auth_required = False
-    mocked_session_verifier_auth_required.return_value.uses_auth_verification = False
-    return mocked_session_verifier_auth_required
+def mocked_session_verifier_does_not_use_auth_verification(mocked_session_verifier_uses_auth_verification):
+    # mocked_session_verifier_uses_auth_verification.return_value is the Mock(spec=model_EligibilityVerifier) from that fixture
+    mocked_session_verifier_uses_auth_verification.return_value.is_auth_required = False
+    mocked_session_verifier_uses_auth_verification.return_value.uses_auth_verification = False
+    return mocked_session_verifier_uses_auth_verification
 
 
 @pytest.fixture
