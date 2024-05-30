@@ -230,9 +230,7 @@ def test_confirm_get_unverified(mocker, client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures(
-    "mocked_session_agency", "mocked_session_eligibility", "mocked_session_verifier_does_not_use_auth_verification"
-)
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility", "mocked_session_verifier")
 def test_confirm_get_verified(client, mocked_session_update):
     path = reverse(ROUTE_CONFIRM)
     response = client.get(path)
