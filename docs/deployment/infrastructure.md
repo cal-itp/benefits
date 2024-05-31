@@ -2,6 +2,44 @@
 
 The infrastructure is configured as code via [Terraform](https://www.terraform.io/), for [various reasons](https://techcommunity.microsoft.com/t5/fasttrack-for-azure/the-benefits-of-infrastructure-as-code/ba-p/2069350).
 
+## Getting started
+
+Since the Benefits app is deployed into a Microsoft Azure account provided by the California Department of Technology (CDT)'s Office of Enterprise Technology (OET) team, you'll need to request access from them to the `CDT Digital CA` directory so you can get into the [Azure portal](https://portal.azure.com), and to the `California Department of Technology` directory so you can access [Azure DevOps](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP).
+
+The Azure portal is where you can view the infrastructure resources for Benefits. Azure DevOps is where our [infrastructure pipeline](https://github.com/cal-itp/benefits/blob/dev/terraform/azure-pipelines.yml) is run to build and deploy those infrastructure resources.
+
+## Environments
+
+Within the `CDT Digital CA` directory, there are two [Subscriptions](https://learn.microsoft.com/en-us/microsoft-365/enterprise/subscriptions-licenses-accounts-and-tenants-for-microsoft-cloud-offerings?view=o365-worldwide#subscriptions), with Resource Groups under each. (Refer to Azure's documentation for [switching directories](https://learn.microsoft.com/en-us/azure/devtest/offer/how-to-change-directory-tenants-visual-studio-azure).)
+
+Each of our environments corresponds to a single Resource Group, [Terraform Workspace](https://developer.hashicorp.com/terraform/language/state/workspaces), and branch.
+
+| Environment | Subscription          | Resource Group                | Workspace | Branch |
+| ----------- | --------------------- | ----------------------------- | --------- | ------ |
+| Dev         | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-D-001` | `dev`     | `dev`  |
+| Test        | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-T-001` | `test`    | `test` |
+| Prod        | `CDT/ODI Production`  | `RG-CDT-PUB-VIP-CALITP-P-001` | `default` | `prod` |
+
+All resources in these Resource Groups should be reflected in Terraform in this repository. The exceptions are:
+
+- Secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
+- [Things managed by DevSecOps](#ownership)
+
+## Ownership
+
+The following things in Azure are managed by the California Department of Technology (CDT)'s DevSecOps (OET) team:
+
+- Subcriptions
+- [Resource Groups](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal)
+- Networking
+- Front Door
+  - Web Application Firewall (WAF)
+  - Distributed denial-of-service (DDoS) protection
+- IAM
+- Service connections
+
+You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources), meaning they are managed outside of Terraform.
+
 ## Architecture
 
 ### System interconnections
@@ -71,13 +109,15 @@ flowchart LR
 
 ## Getting started
 
-Since the Benefits app is deployed into a Microsoft Azure account provided by the California Department of Technology (CDT)'s Office of Enterprise Technology (OET) team, you'll need to request access from them to the `CDT Digital CA` directory so you can get into the Azure portal, and to the `California Department of Technology` directory so you can access Azure DevOps.
+Since the Benefits app is deployed into a Microsoft Azure account provided by the California Department of Technology (CDT)'s Office of Enterprise Technology (OET) team, you'll need to request access from them to the `CDT Digital CA` directory so you can get into the [Azure portal](https://portal.azure.com), and to the `California Department of Technology` directory so you can access [Azure DevOps](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP).
 
 The Azure portal is where you can view the infrastructure resources for Benefits. Azure DevOps is where our [infrastructure pipeline](https://github.com/cal-itp/benefits/blob/dev/terraform/azure-pipelines.yml) is run to build and deploy those infrastructure resources.
 
 ## Environments
 
-Within the `CDT Digital CA` directory ([how to switch](https://learn.microsoft.com/en-us/azure/devtest/offer/how-to-change-directory-tenants-visual-studio-azure)), there are two [Subscriptions](https://learn.microsoft.com/en-us/microsoft-365/enterprise/subscriptions-licenses-accounts-and-tenants-for-microsoft-cloud-offerings?view=o365-worldwide#subscriptions), with Resource Groups under each. Each environment corresponds to a single Resource Group, [Terraform Workspace](https://developer.hashicorp.com/terraform/language/state/workspaces), and branch.
+Within the `CDT Digital CA` directory, there are two [Subscriptions](https://learn.microsoft.com/en-us/microsoft-365/enterprise/subscriptions-licenses-accounts-and-tenants-for-microsoft-cloud-offerings?view=o365-worldwide#subscriptions), with Resource Groups under each. (Refer to Azure's documentation for [switching directories](https://learn.microsoft.com/en-us/azure/devtest/offer/how-to-change-directory-tenants-visual-studio-azure).)
+
+Each of our environments corresponds to a single Resource Group, [Terraform Workspace](https://developer.hashicorp.com/terraform/language/state/workspaces), and branch.
 
 | Environment | Subscription          | Resource Group                | Workspace | Branch |
 | ----------- | --------------------- | ----------------------------- | --------- | ------ |
@@ -90,9 +130,7 @@ All resources in these Resource Groups should be reflected in Terraform in this 
 - Secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
 - [Things managed by DevSecOps](#ownership)
 
-You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources).
-
-For browsing the [Azure portal](https://portal.azure.com), you can [switch your `Default subscription filter`](https://docs.microsoft.com/en-us/azure/azure-portal/set-preferences).
+You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources), meaning they are managed outside of Terraform.
 
 ## Ownership
 
