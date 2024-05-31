@@ -42,6 +42,8 @@ You'll see these referenced in Terraform as [data sources](https://developer.has
 
 ## Architecture
 
+These diagrams show a high-level view of the architecture per environment, including some external systems (e.g. analytics, error monitoring, eligibility servers).
+
 ### System interconnections
 
 ```mermaid
