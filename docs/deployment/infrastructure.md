@@ -138,15 +138,6 @@ Use the following shorthand for conveying the Resource Type as part of the Resou
 | Subnet           | `SNET`     |
 | Front Door       | `FD`       |
 
-## Making changes
-
-[![Build Status](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_apis/build/status/cal-itp.benefits%20Infra?branchName=dev)](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_build/latest?definitionId=828&branchName=dev)
-
-Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is pushed to any branch on GitHub, then [`apply`](https://www.terraform.io/cli/commands/apply)'d when merged to `dev`. While other automation for this project is done through GitHub Actions, we use an Azure Pipeline (above) for a couple of reasons:
-
-- Easier authentication with the Azure API using a service connnection
-- Log output is hidden, avoiding accidentally leaking secrets
-
 ### Local development
 
 1. Get access to the Azure account through the DevSecOps team.
@@ -186,34 +177,14 @@ lifecycle {
 }
 ```
 
-### Naming conventions
+## Making changes
 
-The DevSecOps team sets the following naming convention for Resources:
+[![Build Status](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_apis/build/status/cal-itp.benefits%20Infra?branchName=dev)](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_build/latest?definitionId=828&branchName=dev)
 
-```
-<<Resource Type>>-<<Department>>-<<Public/Private>>-<<Project Category>>-<<Project Name>>-<<Region>><<OS Type>>-<<Environment>>-<<Sequence Number>>
-```
+Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is pushed to any branch on GitHub, then [`apply`](https://www.terraform.io/cli/commands/apply)'d when merged to `dev`. While other automation for this project is done through GitHub Actions, we use an Azure Pipeline (above) for a couple of reasons:
 
-#### Sample Names
-
-- `RG-CDT-PUB-VIP-BNSCN-E-D-001`
-- `ASP-CDT-PUB-VIP-BNSCN-EL-P-001`
-- `AS-CDT-PUB-VIP-BNSCN-EL-D-001`
-
-#### Resource Types
-
-Use the following shorthand for conveying the Resource Type as part of the Resource Name:
-
-| Resource         | Convention |
-| ---------------- | ---------- |
-| App Service      | `AS`       |
-| App Service Plan | `ASP`      |
-| Virtual Network  | `VNET`     |
-| Resource Group   | `RG`       |
-| Virtual Machine  | `VM`       |
-| Database         | `DB`       |
-| Subnet           | `SNET`     |
-| Front Door       | `FD`       |
+- Easier authentication with the Azure API using a service connnection
+- Log output is hidden, avoiding accidentally leaking secrets
 
 ## Azure environment setup
 
