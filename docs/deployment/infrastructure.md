@@ -174,7 +174,7 @@ When configuration changes to infrastructure resources are needed, they should b
    terraform plan
    ```
 
-1. [Submit the changes via pull request.](../development/commits-branches-merging/)
+1. [Submit the changes via pull request.](../../development/commits-branches-merging)
 
 !!! info "Azure tags"
     For Azure resources, you need to [ignore changes](https://www.terraform.io/language/meta-arguments/lifecycle#ignore_changes) to tags, since they are [automatically created by an Azure Policy managed by CDT](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/tag-policies).
