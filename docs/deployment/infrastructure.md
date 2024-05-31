@@ -138,9 +138,9 @@ Use the following shorthand for conveying the Resource Type as part of the Resou
 | Subnet           | `SNET`     |
 | Front Door       | `FD`       |
 
-### Local development
+### Set up for local development
 
-1. Get access to the Azure account through the DevSecOps team.
+1. [Get access to the Azure account through the DevSecOps team.](#getting-started)
 1. Install dependencies:
 
    - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
@@ -160,6 +160,11 @@ Use the following shorthand for conveying the Resource Type as part of the Resou
    ```
 
 1. Create a local `terraform.tfvars` file (ignored by git) from the sample; fill in the `*_OBJECT_ID` variables with values from the Azure Pipeline definition.
+
+## Making changes
+
+When configuration changes to infrastructure resources are needed, they should be made to the resource definitions in Terraform and submitted via pull request.
+
 1. Make changes to Terraform files.
 1. Preview the changes, as necessary.
 
@@ -169,19 +174,22 @@ Use the following shorthand for conveying the Resource Type as part of the Resou
 
 1. [Submit the changes via pull request.](../development/commits-branches-merging/)
 
-For Azure resources, you need to [ignore changes](https://www.terraform.io/language/meta-arguments/lifecycle#ignore_changes) to tags, since they are [automatically created by Azure Policy](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/tag-policies).
+!!! info "Azure tags"
+    For Azure resources, you need to [ignore changes](https://www.terraform.io/language/meta-arguments/lifecycle#ignore_changes) to tags, since they are [automatically created by an Azure Policy managed by CDT](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/tag-policies).
 
-```hcl
-lifecycle {
-  ignore_changes = [tags]
-}
-```
+    ```hcl
+    lifecycle {
+        ignore_changes = [tags]
+    }
+    ```
 
-## Making changes
+## Infrastructure pipeline
 
 [![Build Status](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_apis/build/status/cal-itp.benefits%20Infra?branchName=dev)](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_build/latest?definitionId=828&branchName=dev)
 
-Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is pushed to any branch on GitHub, then [`apply`](https://www.terraform.io/cli/commands/apply)'d when merged to `dev`. While other automation for this project is done through GitHub Actions, we use an Azure Pipeline (above) for a couple of reasons:
+When code is pushed to any branch on GitHub, our infrastructure pipeline in Azure DevOps runs [`terraform plan`](https://www.terraform.io/cli/commands/plan). When the pull request is merged into `dev`, the pipeline runs [`terraform apply`](https://www.terraform.io/cli/commands/apply).
+
+While other automation for this project is done through GitHub Actions, we use an Azure Pipeline for a couple of reasons:
 
 - Easier authentication with the Azure API using a service connnection
 - Log output is hidden, avoiding accidentally leaking secrets
