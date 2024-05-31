@@ -75,19 +75,6 @@ Since the Benefits app is deployed into a Microsoft Azure account provided by th
 
 The Azure portal is where you can view the infrastructure resources for Benefits. Azure DevOps is where our [infrastructure pipeline](https://github.com/cal-itp/benefits/blob/dev/terraform/azure-pipelines.yml) is run to build and deploy those infrastructure resources.
 
-## Ownership
-
-The following things in Azure are managed by the California Department of Technology (CDT)'s DevSecOps (OET) team:
-
-- Subcriptions
-- [Resource Groups](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal)
-- Networking
-- Front Door
-  - Web Application Firewall (WAF)
-  - Distributed denial-of-service (DDoS) protection
-- IAM
-- Service connections
-
 ## Environments
 
 Within the `CDT Digital CA` directory ([how to switch](https://learn.microsoft.com/en-us/azure/devtest/offer/how-to-change-directory-tenants-visual-studio-azure)), there are two [Subscriptions](https://learn.microsoft.com/en-us/microsoft-365/enterprise/subscriptions-licenses-accounts-and-tenants-for-microsoft-cloud-offerings?view=o365-worldwide#subscriptions), with Resource Groups under each. Each environment corresponds to a single Resource Group, [Terraform Workspace](https://developer.hashicorp.com/terraform/language/state/workspaces), and branch.
@@ -106,6 +93,19 @@ All resources in these Resource Groups should be reflected in Terraform in this 
 You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources).
 
 For browsing the [Azure portal](https://portal.azure.com), you can [switch your `Default subscription filter`](https://docs.microsoft.com/en-us/azure/azure-portal/set-preferences).
+
+## Ownership
+
+The following things in Azure are managed by the California Department of Technology (CDT)'s DevSecOps (OET) team:
+
+- Subcriptions
+- [Resource Groups](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal)
+- Networking
+- Front Door
+  - Web Application Firewall (WAF)
+  - Distributed denial-of-service (DDoS) protection
+- IAM
+- Service connections
 
 ## Making changes
 
