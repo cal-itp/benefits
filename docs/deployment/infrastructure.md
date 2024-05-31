@@ -198,8 +198,9 @@ While other automation for this project is done through GitHub Actions, we use a
 
 ## Azure environment setup
 
-The following steps are required to set up the environment:
+These steps were followed when setting up our Azure deployment for the first time:
 
+- CDT team creates the [resources that they own](#ownership)
 - `terraform apply`
 - Set up Slack notifications by [creating a Slack email](https://slack.com/help/articles/206819278-Send-emails-to-Slack) for the [#notify-benefits](https://cal-itp.slack.com/archives/C022HHSEE3F) channel, then [setting it as a Secret in the Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-portal#add-a-secret-to-key-vault) named `slack-benefits-notify-email`
 - Set required [App Service configuration](../configuration/environment-variables.md) and [configuration](../configuration/data.md) by setting values in Key Vault (the mapping is defined in [app_service.tf](https://github.com/cal-itp/benefits/blob/dev/terraform/app_service.tf))
