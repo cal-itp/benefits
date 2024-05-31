@@ -25,7 +25,7 @@ All resources in these Resource Groups should be reflected in Terraform in this 
 - Secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
 - [Things managed by DevSecOps](#ownership)
 
-## Ownership
+### Ownership
 
 The following things in Azure are managed by the California Department of Technology (CDT)'s DevSecOps (OET) team:
 
@@ -40,11 +40,11 @@ The following things in Azure are managed by the California Department of Techno
 
 You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources), meaning they are managed outside of Terraform.
 
-## Architecture
+### Architecture
 
 These diagrams show a high-level view of the architecture per environment, including some external systems (e.g. analytics, error monitoring, eligibility servers).
 
-### Benefits application
+#### Benefits application
 
 ```mermaid
 flowchart LR
@@ -71,7 +71,7 @@ flowchart LR
 
 [Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview) and handles TLS termination. Front Door is managed by the DevSecOps team.
 
-### System interconnections
+#### System interconnections
 
 ```mermaid
 flowchart LR
@@ -138,6 +138,8 @@ Use the following shorthand for conveying the Resource Type as part of the Resou
 | Subnet           | `SNET`     |
 | Front Door       | `FD`       |
 
+## Making changes
+
 ### Set up for local development
 
 1. [Get access to the Azure account through the DevSecOps team.](#getting-started)
@@ -161,7 +163,7 @@ Use the following shorthand for conveying the Resource Type as part of the Resou
 
 1. Create a local `terraform.tfvars` file (ignored by git) from the sample; fill in the `*_OBJECT_ID` variables with values from the Azure Pipeline definition.
 
-## Making changes
+### Development process
 
 When configuration changes to infrastructure resources are needed, they should be made to the resource definitions in Terraform and submitted via pull request.
 
@@ -183,7 +185,7 @@ When configuration changes to infrastructure resources are needed, they should b
     }
     ```
 
-## Infrastructure pipeline
+### Infrastructure pipeline
 
 [![Build Status](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_apis/build/status/cal-itp.benefits%20Infra?branchName=dev)](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_build/latest?definitionId=828&branchName=dev)
 
