@@ -69,6 +69,12 @@ flowchart LR
 
 [Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview) and handles TLS termination. Front Door is managed by the DevSecOps team.
 
+## Getting started
+
+Since the Benefits app is deployed into a Microsoft Azure account provided by the California Department of Technology (CDT)'s Office of Enterprise Technology (OET) team, you'll need to request access from them to the `CDT Digital CA` directory so you can get into the Azure portal, and to the `California Department of Technology` directory so you can access Azure DevOps.
+
+The Azure portal is where you can view the infrastructure resources for Benefits. Azure DevOps is where our [infrastructure pipeline](https://github.com/cal-itp/benefits/blob/dev/terraform/azure-pipelines.yml) is run to build and deploy those infrastructure resources.
+
 ## Ownership
 
 The following things in Azure are managed by the California Department of Technology (CDT)'s DevSecOps (OET) team:
