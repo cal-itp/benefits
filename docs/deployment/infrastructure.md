@@ -44,6 +44,33 @@ You'll see these referenced in Terraform as [data sources](https://developer.has
 
 These diagrams show a high-level view of the architecture per environment, including some external systems (e.g. analytics, error monitoring, eligibility servers).
 
+### Benefits application
+
+```mermaid
+flowchart LR
+    internet[Public internet]
+    frontdoor[Front Door]
+    django[Django application]
+    interconnections[Other system interconnections]
+
+    internet --> Cloudflare
+    Cloudflare --> frontdoor
+    django <--> interconnections
+
+    subgraph Azure
+        frontdoor --> NGINX
+
+        subgraph App Service
+            subgraph Custom container
+                direction TB
+                NGINX --> django
+            end
+        end
+    end
+```
+
+[Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview) and handles TLS termination. Front Door is managed by the DevSecOps team.
+
 ### System interconnections
 
 ```mermaid
@@ -81,33 +108,6 @@ flowchart LR
     Login.gov -->|User attributes| idg
     idg -->|User attributes| benefits
 ```
-
-### Benefits application
-
-```mermaid
-flowchart LR
-    internet[Public internet]
-    frontdoor[Front Door]
-    django[Django application]
-    interconnections[Other system interconnections]
-
-    internet --> Cloudflare
-    Cloudflare --> frontdoor
-    django <--> interconnections
-
-    subgraph Azure
-        frontdoor --> NGINX
-
-        subgraph App Service
-            subgraph Custom container
-                direction TB
-                NGINX --> django
-            end
-        end
-    end
-```
-
-[Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview) and handles TLS termination. Front Door is managed by the DevSecOps team.
 
 ### Naming conventions
 
