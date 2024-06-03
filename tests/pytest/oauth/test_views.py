@@ -138,6 +138,27 @@ def test_authorize_success_with_claim_false(
 
 
 @pytest.mark.django_db
+def test_authorize_success_with_claim_error(
+    mocked_session_verifier_uses_auth_verification,
+    mocked_oauth_create_client,
+    mocked_analytics_module,
+    app_request,
+):
+    verifier = mocked_session_verifier_uses_auth_verification.return_value
+    verifier.auth_provider.claim = "claim"
+    mocked_oauth_client = mocked_oauth_create_client.return_value
+    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "10"}}
+
+    result = authorize(app_request)
+
+    mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
+    mocked_analytics_module.finished_sign_in.assert_called_with(app_request, error=10)
+    assert session.oauth_claim(app_request) is None
+    assert result.status_code == 302
+    assert result.url == reverse(ROUTE_CONFIRM)
+
+
+@pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_analytics_module")
 def test_authorize_success_without_verifier_claim(
     mocked_session_verifier_uses_auth_verification, mocked_oauth_create_client, app_request
