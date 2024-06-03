@@ -1,5 +1,4 @@
 name: benefits
-version: "3.8"
 
 services:
   client:
