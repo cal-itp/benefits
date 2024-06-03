@@ -55,7 +55,7 @@ def token(request):
             if isinstance(e, HTTPError):
                 status_code = e.response.status_code
 
-                if e.response.status_code >= 500:
+                if status_code >= 500:
                     redirect = reverse(ROUTE_SYSTEM_ERROR)
                 else:
                     redirect = reverse(ROUTE_SERVER_ERROR)
