@@ -1,11 +1,5 @@
 name: Check for up-to-date Django migrations
-on:
-  pull_request:
-    paths:
-      - "benefits/**"
-  push:
-    paths:
-      - "benefits/**"
+on: [push, pull_request]
 
 jobs:
   check-makemigrations:
