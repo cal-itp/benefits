@@ -12,6 +12,7 @@ from .middleware import pageview_decorator, index_or_agencyindex_origin_decorato
 ROUTE_ELIGIBILITY = "eligibility:index"
 ROUTE_HELP = "core:help"
 ROUTE_LOGGED_OUT = "core:logged_out"
+ROUTE_SERVER_ERROR = "core:server-error"
 
 TEMPLATE_INDEX = "core/index.html"
 TEMPLATE_AGENCY = "core/agency-index.html"

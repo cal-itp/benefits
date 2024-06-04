@@ -1,6 +1,7 @@
 import time
 
 import pytest
+from authlib.integrations.base_client.errors import UnsupportedTokenTypeError
 from django.urls import reverse
 from littlepay.api.funding_sources import FundingSourceResponse
 from requests import HTTPError
@@ -12,6 +13,7 @@ from benefits.enrollment.views import (
     ROUTE_INDEX,
     ROUTE_REENROLLMENT_ERROR,
     ROUTE_RETRY,
+    ROUTE_SERVER_ERROR,
     ROUTE_SUCCESS,
     ROUTE_SYSTEM_ERROR,
     ROUTE_TOKEN,
@@ -128,6 +130,78 @@ def test_token_http_error_500(mocker, client, mocked_analytics_module, mocked_se
     assert data["redirect"] == reverse(ROUTE_SYSTEM_ERROR)
     mocked_analytics_module.failed_access_token_request.assert_called_once()
     assert 500 in mocked_analytics_module.failed_access_token_request.call_args.args
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
+    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+
+    mock_error = {"message": "Mock error message"}
+    mock_error_response = mocker.Mock(status_code=400, **mock_error)
+    mock_error_response.json.return_value = mock_error
+    mock_client.request_card_tokenization_access.side_effect = HTTPError(
+        response=mock_error_response,
+    )
+
+    path = reverse(ROUTE_TOKEN)
+    response = client.get(path)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "token" not in data
+    assert "redirect" in data
+    assert data["redirect"] == reverse(ROUTE_SERVER_ERROR)
+    mocked_analytics_module.failed_access_token_request.assert_called_once()
+    assert 400 in mocked_analytics_module.failed_access_token_request.call_args.args
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
+    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+
+    mock_client.request_card_tokenization_access.side_effect = UnsupportedTokenTypeError()
+
+    path = reverse(ROUTE_TOKEN)
+    response = client.get(path)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "token" not in data
+    assert "redirect" in data
+    assert data["redirect"] == reverse(ROUTE_SERVER_ERROR)
+    mocked_analytics_module.failed_access_token_request.assert_called_once()
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
+    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+
+    mock_client.oauth.ensure_active_token.side_effect = ConnectionError()
+
+    path = reverse(ROUTE_TOKEN)
+    response = client.get(path)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "token" not in data
+    assert "redirect" in data
+    assert data["redirect"] == reverse(ROUTE_SERVER_ERROR)
+    mocked_analytics_module.failed_access_token_request.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 

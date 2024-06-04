@@ -14,7 +14,7 @@ import sentry_sdk
 
 from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
-from benefits.core.views import ROUTE_LOGGED_OUT
+from benefits.core.views import ROUTE_LOGGED_OUT, ROUTE_SERVER_ERROR
 
 from . import analytics, forms
 
@@ -38,25 +38,35 @@ def token(request):
     if not session.enrollment_token_valid(request):
         agency = session.agency(request)
         payment_processor = agency.payment_processor
-        client = Client(
-            base_url=payment_processor.api_base_url,
-            client_id=payment_processor.client_id,
-            client_secret=payment_processor.client_secret,
-            audience=payment_processor.audience,
-        )
-        client.oauth.ensure_active_token(client.token)
 
         try:
+            client = Client(
+                base_url=payment_processor.api_base_url,
+                client_id=payment_processor.client_id,
+                client_secret=payment_processor.client_secret,
+                audience=payment_processor.audience,
+            )
+            client.oauth.ensure_active_token(client.token)
             response = client.request_card_tokenization_access()
         except Exception as e:
+            logger.debug("Error occurred while requesting access token", exc_info=e)
             sentry_sdk.capture_exception(e)
 
-            if isinstance(e, HTTPError) and e.response.status_code >= 500:
-                analytics.failed_access_token_request(request, e.response.status_code)
-                data = {"redirect": reverse(ROUTE_SYSTEM_ERROR)}
-                return JsonResponse(data)
+            if isinstance(e, HTTPError):
+                status_code = e.response.status_code
+
+                if status_code >= 500:
+                    redirect = reverse(ROUTE_SYSTEM_ERROR)
+                else:
+                    redirect = reverse(ROUTE_SERVER_ERROR)
             else:
-                raise e
+                status_code = None
+                redirect = reverse(ROUTE_SERVER_ERROR)
+
+            analytics.failed_access_token_request(request, status_code)
+
+            data = {"redirect": redirect}
+            return JsonResponse(data)
         else:
             session.update(
                 request, enrollment_token=response.get("access_token"), enrollment_token_exp=response.get("expires_at")

@@ -50,4 +50,5 @@ urlpatterns = [
     path("<agency:agency>", views.agency_index, name="agency_index"),
     path("<agency:agency>/publickey", views.agency_public_key, name="agency_public_key"),
     path("logged_out", views.logged_out, name="logged_out"),
+    path("error", views.server_error, name="server-error"),
 ]
