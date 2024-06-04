@@ -93,6 +93,51 @@ Depending upon the choice of enrollment pathway, the _Next phase_ above may be:
 
 ## Identity proofing
 
+In this phase, Cal-ITP Benefits takes the user through an [OpenID Connect (OIDC)](https://openid.net/developers/how-connect-works/)
+flow as a Client (RP) of the CDT Identity Gateway (the Identity Provider or IDP), via Login.gov.
+
+The CDT Identity Gateway transforms PII from Login.gov into anonymized boolean claims that are later used in
+[eligibility verification](#eligibility-verification).
+
+!!! example "Entrypoint"
+
+    [`benefits/oauth/views.py`][oauth-views]
+
+!!! example "Key supporting files"
+
+    [`benefits/oauth/client.py`][oauth-client]
+
+    [`benefits/oauth/redirects.py`][oauth-redirects]
+
+```mermaid
+flowchart LR
+    session[(session)]
+
+    start((Initial setup))
+    style start stroke-dasharray: 5 5
+
+    benefits[Benefits app]
+    idg[["`CDT
+    Identity Gateway`"]]
+    logingov[[Login.gov]]
+    claims((Claims received))
+
+    next>"`_Eligibility
+    verification_`"]
+    style next stroke-width:2px
+
+    start -- 1. Clicks login button --> benefits
+    %% invisible links help with diagram layout
+    start ~~~ session
+
+    benefits -- 2. OIDC authorize_redirect --> idg
+    idg <-. "3. PII exchange" .-> logingov
+    idg -- 4. OIDC token authorization --> claims
+
+    claims -- 5. continue --> next
+    claims -. update .-> session
+```
+
 ## Eligibility verification
 
 ## Enrollment
@@ -100,3 +145,6 @@ Depending upon the choice of enrollment pathway, the _Next phase_ above may be:
 [core-models]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/models.py
 [core-session]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/session.py
 [core-views]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/views.py
+[oauth-client]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/client.py
+[oauth-redirects]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/redirects.py
+[oauth-views]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/views.py
