@@ -25,10 +25,6 @@ resource "azurerm_linux_web_app" "main" {
   site_config {
     ftps_state             = "Disabled"
     vnet_route_all_enabled = true
-    application_stack {
-      docker_image     = "ghcr.io/cal-itp/benefits"
-      docker_image_tag = local.env_name
-    }
   }
 
   identity {
@@ -52,8 +48,7 @@ resource "azurerm_linux_web_app" "main" {
     # app setting used solely for refreshing secrets - see https://github.com/MicrosoftDocs/azure-docs/issues/79855#issuecomment-1265664801
     "change_me_to_refresh_secrets" = "change me in the portal to refresh all secrets",
 
-    "DOCKER_ENABLE_CI"                    = "true",
-    "DOCKER_REGISTRY_SERVER_URL"          = "https://ghcr.io/",
+    "DOCKER_ENABLE_CI"                    = "false",
     "WEBSITE_HTTPLOGGING_RETENTION_DAYS"  = "99999",
     "WEBSITE_TIME_ZONE"                   = "America/Los_Angeles",
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false",
@@ -107,6 +102,22 @@ resource "azurerm_linux_web_app" "main" {
   lifecycle {
     prevent_destroy = true
     ignore_changes  = [tags]
+  }
+}
+
+resource "azurerm_app_service_source_control" "main" {
+  app_id           = azurerm_linux_web_app.main.id
+  repo_url         = "https://github.com/cal-itp/benefits"
+  branch           = local.env_name
+  rollback_enabled = true
+
+  github_action_configuration {
+    generate_workflow_file = false
+
+    container_configuration {
+      image_name   = "cal-itp/benefits"
+      registry_url = "https://ghcr.io/"
+    }
   }
 }
 
