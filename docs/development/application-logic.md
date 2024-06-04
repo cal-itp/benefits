@@ -140,11 +140,57 @@ flowchart LR
 
 ## Eligibility verification
 
+In this phase, Cal-ITP Benefits verifies the user's claims using one of two methods:
+
+- Claims validation, using claims previously stored in the user's session during [Identity proofing](#identity-proofing)
+- Eligibility API verification, using non-PII claims provided by the user in an HTML form submission
+
+!!! example "Entrypoint"
+
+    [`benefits/eligibility/views.py`][eligibility-views]
+
+!!! example "Key supporting files"
+
+    [`benefits/eligibility/verify.py`][eligibility-verify]
+
+```mermaid
+flowchart LR
+    session[(session)]
+
+    start(("`Previous
+    phase`"))
+    style start stroke-dasharray: 5 5
+
+    claims[Session claims check]
+    form[HTTP form POST]
+    server[[Eligibility Verification server]]
+    eligible{Eligible?}
+
+    next>"`_Enrollment_`"]
+    style next stroke-width:2px
+
+    stop{{Stop}}
+
+    start -- Eligibility API verification --> form
+    form -- Eligibility API call --> server
+    server --> eligible
+
+    start -- Claims validation --> claims
+    session -. read .-> claims
+    claims --> eligible
+
+    eligible -- Yes --> next
+    eligible -- No --> stop
+    eligible -. update .-> session
+```
+
 ## Enrollment
 
 [core-models]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/models.py
 [core-session]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/session.py
 [core-views]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/views.py
+[eligibility-verify]: https://github.com/cal-itp/benefits/blob/dev/benefits/eligibility/verify.py
+[eligibility-views]: https://github.com/cal-itp/benefits/blob/dev/benefits/eligibility/views.py
 [oauth-client]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/client.py
 [oauth-redirects]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/redirects.py
 [oauth-views]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/views.py
