@@ -131,18 +131,22 @@ def index(request):
 
     # GET enrollment index
     else:
-        tokenize_retry_form = forms.CardTokenizeFailForm(ROUTE_RETRY)
+        tokenize_retry_form = forms.CardTokenizeFailForm(ROUTE_RETRY, "form-card-tokenize-fail-retry")
+        tokenize_server_error_form = forms.CardTokenizeFailForm(ROUTE_SERVER_ERROR, "form-card-tokenize-fail-server-error")
+        tokenize_system_error_form = forms.CardTokenizeFailForm(ROUTE_SYSTEM_ERROR, "form-card-tokenize-fail-system-error")
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
         context = {
-            "forms": [tokenize_retry_form, tokenize_success_form],
+            "forms": [tokenize_retry_form, tokenize_server_error_form, tokenize_system_error_form, tokenize_success_form],
             "cta_button": "tokenize_card",
             "card_tokenize_env": agency.payment_processor.card_tokenize_env,
             "card_tokenize_func": agency.payment_processor.card_tokenize_func,
             "card_tokenize_url": agency.payment_processor.card_tokenize_url,
             "token_field": "card_token",
             "form_retry": tokenize_retry_form.id,
+            "form_server_error": tokenize_server_error_form.id,
             "form_success": tokenize_success_form.id,
+            "form_system_error": tokenize_system_error_form.id,
         }
 
         logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
