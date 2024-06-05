@@ -43,6 +43,41 @@ Each of these directories contains a standalone Django app registered in the [se
 All of the common logic and [database models and migrations](./models-migrations.md) are defined in `benefits.core`, and this
 app is imported by the other apps.
 
+## Django request pipeline
+
+Each request to the Benefits app is ultimately a [Django request](https://docs.djangoproject.com/en/5.0/ref/request-response/)
+and goes through the [Django HTTP request pipeline](https://docs.djangoproject.com/en/5.0/topics/http/).
+
+Benefits uses middleware to pre- and post-process requests for (view) access control, session configuration, and analytics.
+Benefits also uses context processors to enrich the Django template context with data needed for rendering on the front-end.
+
+!!! example "Key supporting files"
+
+    [`benefits/core/context_processors.py`][core-context-processors]
+
+    [`benefits/core/middleware.py`][core-middleware]
+
+In general, the flow of a Django request looks like:
+
+```mermaid
+flowchart LR
+    user((User))
+    style user stroke-width:2px
+
+    pre_middleware[Request middleware]
+    view_middleware[View-specific middleware]
+    context[Context processors]
+    view[View function]
+    post_middleware[Response middleware]
+
+    user -- Request --> pre_middleware
+    pre_middleware -- Request --> view_middleware
+    view_middleware -- Request --> context
+    context -- Request --> view
+    view -- Response --> post_middleware
+    post_middleware -- Response --> user
+```
+
 ## Initial setup
 
 In this phase, the user makes the initial selections that will configure the rest of their journey.
@@ -237,6 +272,8 @@ benefits->>littlepay: enroll funding source in group
     deactivate benefits
 ```
 
+[core-context-processors]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/context_processors.py
+[core-middleware]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/middleware.py
 [core-models]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/models.py
 [core-session]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/session.py
 [core-views]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/views.py
