@@ -186,11 +186,64 @@ flowchart LR
 
 ## Enrollment
 
+In this final phase, the user registers their contactless payment card with a concession group configured within the
+payment processor (Littlepay).
+
+**_Cal-ITP Benefits never processes, transmits, nor stores the user's payment card details._**
+
+!!! example "Entrypoint"
+
+    [`benefits/enrollment/views.py`][enrollment-views]
+
+!!! example "Supporting packages"
+
+    [`cal-itp/littlepay`][littlepay]
+
+```mermaid
+sequenceDiagram
+autonumber
+%% Enrollment phase
+    actor user as User
+    participant benefits as Benefits app
+    participant littlepay as Littlepay
+
+user->>benefits: starts enrollment phase
+    activate user
+benefits-->>user: display enrollment index
+user->>littlepay: GET tokenization lib (AJAX)
+littlepay-->>user: tokenization lib .js
+user->>benefits: GET card tokenization access token (AJAX)
+    deactivate user
+    activate benefits
+benefits->>littlepay: GET API access token
+littlepay-->>benefits: access token
+benefits->>littlepay: GET card tokenization access token
+littlepay-->>benefits: access token
+benefits-->>user: access token
+    deactivate benefits
+    activate user
+user->>user: click to initiate payment card collection
+user-->>user: display Littlepay overlay
+user->>littlepay: provides debit or credit card details
+littlepay-->>user: card token
+user->>benefits: POST back card token
+    deactivate user
+    activate benefits
+benefits->>littlepay: GET API access token
+littlepay-->>benefits: access token
+benefits->>littlepay: GET funding source from card token
+littlepay-->>benefits: funding source
+benefits->>littlepay: enroll funding source in group
+    deactivate benefits
+```
+
 [core-models]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/models.py
 [core-session]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/session.py
 [core-views]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/views.py
 [eligibility-verify]: https://github.com/cal-itp/benefits/blob/dev/benefits/eligibility/verify.py
 [eligibility-views]: https://github.com/cal-itp/benefits/blob/dev/benefits/eligibility/views.py
+[enrollment-views]: https://github.com/cal-itp/benefits/blob/dev/benefits/enrollment/views.py
+[littlepay]: https://github.com/cal-itp/littlepay
 [oauth-client]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/client.py
 [oauth-redirects]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/redirects.py
 [oauth-views]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/views.py
