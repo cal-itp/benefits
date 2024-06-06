@@ -45,8 +45,7 @@ resource "azurerm_linux_web_app" "main" {
   }
 
   app_settings = {
-    "DOCKER_ENABLE_CI"                    = "false",
-    "WEBSITE_HTTPLOGGING_RETENTION_DAYS"  = "99999",
+    "DOCKER_REGISTRY_SERVER_URL"          = "https://ghcr.io/"
     "WEBSITE_TIME_ZONE"                   = "America/Los_Angeles",
     "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false",
     "WEBSITES_PORT"                       = "8000",
@@ -103,19 +102,9 @@ resource "azurerm_linux_web_app" "main" {
 }
 
 resource "azurerm_app_service_source_control" "main" {
-  app_id           = azurerm_linux_web_app.main.id
-  repo_url         = "https://github.com/cal-itp/benefits"
-  branch           = local.env_name
-  rollback_enabled = true
-
-  github_action_configuration {
-    generate_workflow_file = false
-
-    container_configuration {
-      image_name   = "cal-itp/benefits"
-      registry_url = "https://ghcr.io/"
-    }
-  }
+  app_id   = azurerm_linux_web_app.main.id
+  repo_url = "https://github.com/cal-itp/benefits"
+  branch   = local.env_name
 }
 
 resource "azurerm_app_service_custom_hostname_binding" "main" {
