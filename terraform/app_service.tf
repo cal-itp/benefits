@@ -45,9 +45,6 @@ resource "azurerm_linux_web_app" "main" {
   }
 
   app_settings = {
-    # app setting used solely for refreshing secrets - see https://github.com/MicrosoftDocs/azure-docs/issues/79855#issuecomment-1265664801
-    "change_me_to_refresh_secrets" = "change me in the portal to refresh all secrets",
-
     "DOCKER_ENABLE_CI"                    = "false",
     "WEBSITE_HTTPLOGGING_RETENTION_DAYS"  = "99999",
     "WEBSITE_TIME_ZONE"                   = "America/Los_Angeles",
