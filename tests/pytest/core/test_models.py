@@ -238,13 +238,15 @@ def test_EligibilityType_supports_expiration(model_EligibilityType_supports_expi
 
 
 @pytest.mark.django_db
-def test_EligibilityType_enrollment_index_template(model_EligibilityType):
-    assert model_EligibilityType.enrollment_index_template == "enrollment/index.html"
+def test_EligibilityType_enrollment_index_template():
+    new_eligibility_type = EligibilityType.objects.create()
 
-    model_EligibilityType.enrollment_index_template = "test/enrollment.html"
-    model_EligibilityType.save()
+    assert new_eligibility_type.enrollment_index_template == "enrollment/index.html"
 
-    assert model_EligibilityType.enrollment_index_template == "test/enrollment.html"
+    new_eligibility_type.enrollment_index_template = "test/enrollment.html"
+    new_eligibility_type.save()
+
+    assert new_eligibility_type.enrollment_index_template == "test/enrollment.html"
 
 
 @pytest.mark.django_db
