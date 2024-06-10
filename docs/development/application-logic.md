@@ -129,7 +129,7 @@ Depending upon the choice of enrollment pathway, the _Next phase_ above may be:
 ## Identity proofing
 
 In this phase, Cal-ITP Benefits takes the user through an [OpenID Connect (OIDC)](https://openid.net/developers/how-connect-works/)
-flow as a Client (RP) of the CDT Identity Gateway (the Identity Provider or IDP), via Login.gov.
+flow as a Client (the Relying Party or RP) of the CDT Identity Gateway (the Identity Provider or IDP), via Login.gov.
 
 The CDT Identity Gateway transforms PII from Login.gov into anonymized boolean claims that are later used in
 [eligibility verification](#eligibility-verification).
