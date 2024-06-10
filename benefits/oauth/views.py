@@ -6,7 +6,7 @@ from django.utils.decorators import decorator_from_middleware
 
 from benefits.core import session
 from . import analytics, redirects
-from .client import oauth
+from .client import oauth, register_providers
 from .middleware import VerifierUsesAuthVerificationSessionRequired
 
 
@@ -18,6 +18,9 @@ ROUTE_START = "eligibility:start"
 ROUTE_CONFIRM = "eligibility:confirm"
 ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_POST_LOGOUT = "oauth:post_logout"
+
+
+register_providers(oauth)
 
 
 @decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
