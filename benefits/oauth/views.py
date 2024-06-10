@@ -6,7 +6,7 @@ from django.utils.decorators import decorator_from_middleware
 
 from benefits.core import session
 from . import analytics, redirects
-from .client import oauth, register_providers
+from .client import oauth, register_provider
 from .middleware import VerifierUsesAuthVerificationSessionRequired
 
 
@@ -20,14 +20,12 @@ ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_POST_LOGOUT = "oauth:post_logout"
 
 
-register_providers(oauth)
-
-
 @decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
 def login(request):
     """View implementing OIDC authorize_redirect."""
     verifier = session.verifier(request)
-    oauth_client = oauth.create_client(verifier.auth_provider.client_name)
+
+    oauth_client = register_provider(oauth, verifier.auth_provider)
 
     if not oauth_client:
         raise Exception(f"oauth_client not registered: {verifier.auth_provider.client_name}")
