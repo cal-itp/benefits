@@ -2,7 +2,7 @@ name: Check for up-to-date Django migrations and messages
 on: [push, pull_request]
 
 jobs:
-  check-makemigrations:
+  check-migrations-and-messages:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
