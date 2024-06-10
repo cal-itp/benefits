@@ -23,7 +23,7 @@ services:
     ports:
       - "${DJANGO_LOCAL_PORT:-8000}:8000"
     volumes:
-      - ./:/home/calitp/app
+      - ./:/calitp/app
 
   docs:
     image: benefits_client:dev
@@ -32,7 +32,7 @@ services:
     ports:
       - "8001"
     volumes:
-      - ./:/home/calitp/app
+      - ./:/calitp/app
 
   server:
     image: ghcr.io/cal-itp/eligibility-server:dev
