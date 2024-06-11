@@ -1,8 +1,8 @@
-name: Check for up-to-date Django migrations
+name: Check for up-to-date Django migrations and messages
 on: [push, pull_request]
 
 jobs:
-  check-makemigrations:
+  check-migrations-and-messages:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -26,7 +26,23 @@ jobs:
         run: |
           if ./bin/makemigrations.sh | grep -q 'No changes detected';
           then
-             exit 0;
+            exit 0;
           else
-             exit 1;
+            exit 1;
+          fi
+
+      - name: Run ./bin/makemessages.sh
+        run: |
+          ./bin/makemessages.sh
+
+          set -x # show commands
+
+          git add benefits
+
+          # message files are up-to-date if the only differences are from the updated timestamp
+          if echo $(git diff --cached --shortstat) | grep -q '2 files changed, 2 insertions(+), 2 deletions(-)';
+          then
+            exit 0;
+          else
+            exit 1;
           fi
