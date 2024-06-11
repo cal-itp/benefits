@@ -95,6 +95,8 @@ In this phase, the user makes the initial selections that will configure the res
 ```mermaid
 flowchart LR
     session[(session)]
+    analytics[[analytics]]
+
     start((Start))
     pick_agency["`Agency picker
     modal`"]
@@ -116,8 +118,9 @@ flowchart LR
 
     eligibility -- 4. continue --> next
 
-    agency -. update -.-> session
-    eligibility -. update -.-> session
+    agency -. update -.-o session
+    eligibility -. update -.-o session
+    eligibility -. selected eligibility verifier -.-o analytics
 ```
 
 Depending upon the choice of enrollment pathway, the _Next phase_ above may be:
@@ -147,6 +150,7 @@ The CDT Identity Gateway transforms PII from Login.gov into anonymized boolean c
 ```mermaid
 flowchart LR
     session[(session)]
+    analytics[[analytics]]
 
     start((Initial setup))
     style start stroke-dasharray: 5 5
@@ -166,11 +170,14 @@ flowchart LR
     start ~~~ session
 
     benefits -- 2. OIDC authorize_redirect --> idg
+    benefits -. started sign in  -.-o analytics
+
     idg <-. "3. PII exchange" .-> logingov
     idg -- 4. OIDC token authorization --> claims
 
     claims -- 5. continue --> next
-    claims -. update .-> session
+    claims -. update .-o session
+    claims -. finished sign in -.-o analytics
 ```
 
 ## Eligibility verification
@@ -191,6 +198,7 @@ In this phase, Cal-ITP Benefits verifies the user's claims using one of two meth
 ```mermaid
 flowchart LR
     session[(session)]
+    analytics[[analytics]]
 
     start(("`Previous
     phase`"))
@@ -208,15 +216,18 @@ flowchart LR
 
     start -- Eligibility API verification --> form
     form -- Eligibility API call --> server
+    form -. started eligibility -.-o analytics
     server --> eligible
 
     start -- Claims validation --> claims
-    session -. read .-> claims
+    session -.-o claims
     claims --> eligible
+    claims -. started eligibility -.-o analytics
 
     eligible -- Yes --> next
     eligible -- No --> stop
-    eligible -. update .-> session
+    eligible -. update .-o session
+    eligible -. returned eligibility -.-o analytics
 ```
 
 ## Enrollment
@@ -241,6 +252,7 @@ autonumber
     actor user as User
     participant benefits as Benefits app
     participant littlepay as Littlepay
+    participant analytics as Analytics
 
 user->>benefits: starts enrollment phase
     activate user
@@ -259,8 +271,10 @@ benefits-->>user: access token
     activate user
 user->>user: click to initiate payment card collection
 user-->>user: display Littlepay overlay
+user-->>analytics: started payment connection
 user->>littlepay: provides debit or credit card details
 littlepay-->>user: card token
+user-->>analytics: closed payment connection
 user->>benefits: POST back card token
     deactivate user
     activate benefits
@@ -269,6 +283,7 @@ littlepay-->>benefits: access token
 benefits->>littlepay: GET funding source from card token
 littlepay-->>benefits: funding source
 benefits->>littlepay: enroll funding source in group
+benefits-->>analytics: returned enrollment
     deactivate benefits
 ```
 
