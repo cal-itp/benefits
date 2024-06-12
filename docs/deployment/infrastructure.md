@@ -40,11 +40,11 @@ The following things in Azure are managed by the California Department of Techno
 
 You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources), meaning they are managed outside of Terraform.
 
-### Architecture
+## Architecture
 
 These diagrams show a high-level view of the architecture per environment, including some external systems (e.g. analytics, error monitoring, eligibility servers).
 
-#### Benefits application
+### Benefits application
 
 ```mermaid
 flowchart LR
@@ -71,7 +71,7 @@ flowchart LR
 
 [Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview) and handles TLS termination. Front Door is managed by the DevSecOps team.
 
-#### System interconnections
+### System interconnections
 
 ```mermaid
 flowchart LR
@@ -109,7 +109,7 @@ flowchart LR
     idg -->|User attributes| benefits
 ```
 
-### Naming conventions
+## Naming conventions
 
 The DevSecOps team sets the following naming convention for Resources:
 
@@ -117,13 +117,13 @@ The DevSecOps team sets the following naming convention for Resources:
 <<Resource Type>>-<<Department>>-<<Public/Private>>-<<Project Category>>-<<Project Name>>-<<Region>><<OS Type>>-<<Environment>>-<<Sequence Number>>
 ```
 
-#### Sample Names
+### Sample Names
 
 - `RG-CDT-PUB-VIP-BNSCN-E-D-001`
 - `ASP-CDT-PUB-VIP-BNSCN-EL-P-001`
 - `AS-CDT-PUB-VIP-BNSCN-EL-D-001`
 
-#### Resource Types
+### Resource Types
 
 Use the following shorthand for conveying the Resource Type as part of the Resource Name:
 
