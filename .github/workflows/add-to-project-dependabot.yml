@@ -18,7 +18,7 @@ jobs:
       - uses: EndBug/project-fields@v2
         with:
           operation: set
-          fields: Effort
-          values: 1
+          fields: Effort,Status
+          values: 1,In review
           project_url: https://github.com/orgs/cal-itp/projects/${{ secrets.GH_PROJECT }}
           github_token: ${{ secrets.GH_PROJECTS_TOKEN }}
