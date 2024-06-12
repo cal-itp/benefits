@@ -6,9 +6,6 @@ import logging
 
 from authlib.integrations.django_client import OAuth
 
-from benefits.core.models import AuthProvider
-
-
 logger = logging.getLogger(__name__)
 
 oauth = OAuth()
@@ -42,23 +39,32 @@ def _authorize_params(scheme):
     return params
 
 
-def register_providers(oauth_registry):
+def _register_provider(oauth_registry, provider):
     """
-    Register OAuth clients into the given registry, using configuration from AuthProvider models.
+    Register OAuth clients into the given registry, using configuration from AuthProvider model.
 
     Adapted from https://stackoverflow.com/a/64174413.
     """
-    logger.info("Registering OAuth clients")
+    logger.debug(f"Registering OAuth client: {provider.client_name}")
 
-    providers = AuthProvider.objects.all()
+    client = oauth_registry.register(
+        provider.client_name,
+        client_id=provider.client_id,
+        server_metadata_url=_server_metadata_url(provider.authority),
+        client_kwargs=_client_kwargs(provider.scope),
+        authorize_params=_authorize_params(provider.scheme),
+    )
 
-    for provider in providers:
-        logger.debug(f"Registering OAuth client: {provider.client_name}")
+    return client
 
-        oauth_registry.register(
-            provider.client_name,
-            client_id=provider.client_id,
-            server_metadata_url=_server_metadata_url(provider.authority),
-            client_kwargs=_client_kwargs(provider.scope),
-            authorize_params=_authorize_params(provider.scheme),
-        )
+
+def create_client(oauth_registry, provider):
+    """
+    Returns an OAuth client, registering it if needed.
+    """
+    client = oauth_registry.create_client(provider.client_name)
+
+    if client is None:
+        client = _register_provider(oauth_registry, provider)
+
+    return client
