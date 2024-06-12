@@ -11,7 +11,7 @@ resource "azurerm_service_plan" "main" {
 }
 
 locals {
-  data_mount = "/home/calitp/app/data"
+  data_mount = "/calitp/app/data"
 }
 
 resource "azurerm_linux_web_app" "main" {
