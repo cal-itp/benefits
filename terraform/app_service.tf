@@ -106,6 +106,14 @@ resource "azurerm_app_service_source_control" "main" {
   repo_url               = "https://github.com/cal-itp/benefits"
   branch                 = local.env_name
   use_manual_integration = true
+
+  github_action_configuration {
+    generate_workflow_file = false
+    container_configuration {
+      registry_url = "https://ghcr.io/"
+      image_name   = "cal-itp/benefits"
+    }
+  }
 }
 
 resource "azurerm_app_service_custom_hostname_binding" "main" {
