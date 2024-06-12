@@ -4,7 +4,9 @@ The infrastructure is configured as code via [Terraform](https://www.terraform.i
 
 ## Environments
 
-Within the `CDT Digital CA` directory ([how to switch](https://learn.microsoft.com/en-us/azure/devtest/offer/how-to-change-directory-tenants-visual-studio-azure)), there are two [Subscriptions](https://learn.microsoft.com/en-us/microsoft-365/enterprise/subscriptions-licenses-accounts-and-tenants-for-microsoft-cloud-offerings?view=o365-worldwide#subscriptions), with Resource Groups under each. Each environment corresponds to a single Resource Group, [Terraform Workspace](https://developer.hashicorp.com/terraform/language/state/workspaces), and branch.
+Within the `CDT Digital CA` directory, there are two [Subscriptions](https://learn.microsoft.com/en-us/microsoft-365/enterprise/subscriptions-licenses-accounts-and-tenants-for-microsoft-cloud-offerings?view=o365-worldwide#subscriptions), with Resource Groups under each. (Refer to Azure's documentation for [switching directories](https://learn.microsoft.com/en-us/azure/devtest/offer/how-to-change-directory-tenants-visual-studio-azure).)
+
+Each of our environments corresponds to a single Resource Group, [Terraform Workspace](https://developer.hashicorp.com/terraform/language/state/workspaces), and branch.
 
 | Environment | Subscription          | Resource Group                | Workspace | Branch |
 | ----------- | --------------------- | ----------------------------- | --------- | ------ |
@@ -16,10 +18,6 @@ All resources in these Resource Groups should be reflected in Terraform in this 
 
 - Secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
 - [Things managed by DevSecOps](#ownership)
-
-You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources).
-
-For browsing the [Azure portal](https://portal.azure.com), you can [switch your `Default subscription filter`](https://docs.microsoft.com/en-us/azure/azure-portal/set-preferences).
 
 ### Ownership
 
@@ -34,7 +32,11 @@ The following things in Azure are managed by the California Department of Techno
 - IAM
 - Service connections
 
+You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources), meaning they are managed outside of Terraform.
+
 ### Architecture
+
+These diagrams show a high-level view of the architecture per environment, including some external systems (e.g. analytics, error monitoring, eligibility servers).
 
 #### Benefits application
 
@@ -44,14 +46,11 @@ flowchart LR
     frontdoor[Front Door]
     django[Django application]
     interconnections[Other system interconnections]
-
     internet --> Cloudflare
     Cloudflare --> frontdoor
     django <--> interconnections
-
     subgraph Azure
         frontdoor --> NGINX
-
         subgraph App Service
             subgraph Custom container
                 direction TB
