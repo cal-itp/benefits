@@ -52,11 +52,14 @@ flowchart LR
     frontdoor[Front Door]
     django[Django application]
     interconnections[Other system interconnections]
+
     internet --> Cloudflare
     Cloudflare --> frontdoor
     django <--> interconnections
+
     subgraph Azure
         frontdoor --> NGINX
+
         subgraph App Service
             subgraph Custom container
                 direction TB
@@ -134,7 +137,6 @@ Use the following shorthand for conveying the Resource Type as part of the Resou
 | Database         | `DB`       |
 | Subnet           | `SNET`     |
 | Front Door       | `FD`       |
-
 
 ## Making changes
 
