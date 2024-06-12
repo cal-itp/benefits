@@ -2,9 +2,68 @@
 
 The infrastructure is configured as code via [Terraform](https://www.terraform.io/), for [various reasons](https://techcommunity.microsoft.com/t5/fasttrack-for-azure/the-benefits-of-infrastructure-as-code/ba-p/2069350).
 
-## Architecture
+## Environments
 
-### System interconnections
+Within the `CDT Digital CA` directory ([how to switch](https://learn.microsoft.com/en-us/azure/devtest/offer/how-to-change-directory-tenants-visual-studio-azure)), there are two [Subscriptions](https://learn.microsoft.com/en-us/microsoft-365/enterprise/subscriptions-licenses-accounts-and-tenants-for-microsoft-cloud-offerings?view=o365-worldwide#subscriptions), with Resource Groups under each. Each environment corresponds to a single Resource Group, [Terraform Workspace](https://developer.hashicorp.com/terraform/language/state/workspaces), and branch.
+
+| Environment | Subscription          | Resource Group                | Workspace | Branch |
+| ----------- | --------------------- | ----------------------------- | --------- | ------ |
+| Dev         | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-D-001` | `dev`     | `dev`  |
+| Test        | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-T-001` | `test`    | `test` |
+| Prod        | `CDT/ODI Production`  | `RG-CDT-PUB-VIP-CALITP-P-001` | `default` | `prod` |
+
+All resources in these Resource Groups should be reflected in Terraform in this repository. The exceptions are:
+
+- Secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
+- [Things managed by DevSecOps](#ownership)
+
+You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources).
+
+For browsing the [Azure portal](https://portal.azure.com), you can [switch your `Default subscription filter`](https://docs.microsoft.com/en-us/azure/azure-portal/set-preferences).
+
+### Ownership
+
+The following things in Azure are managed by the California Department of Technology (CDT)'s DevSecOps (OET) team:
+
+- Subcriptions
+- [Resource Groups](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal)
+- Networking
+- Front Door
+  - Web Application Firewall (WAF)
+  - Distributed denial-of-service (DDoS) protection
+- IAM
+- Service connections
+
+### Architecture
+
+#### Benefits application
+
+```mermaid
+flowchart LR
+    internet[Public internet]
+    frontdoor[Front Door]
+    django[Django application]
+    interconnections[Other system interconnections]
+
+    internet --> Cloudflare
+    Cloudflare --> frontdoor
+    django <--> interconnections
+
+    subgraph Azure
+        frontdoor --> NGINX
+
+        subgraph App Service
+            subgraph Custom container
+                direction TB
+                NGINX --> django
+            end
+        end
+    end
+```
+
+[Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview) and handles TLS termination. Front Door is managed by the DevSecOps team.
+
+#### System interconnections
 
 ```mermaid
 flowchart LR
@@ -42,64 +101,35 @@ flowchart LR
     idg -->|User attributes| benefits
 ```
 
-### Benefits application
+### Naming conventions
 
-```mermaid
-flowchart LR
-    internet[Public internet]
-    frontdoor[Front Door]
-    django[Django application]
-    interconnections[Other system interconnections]
+The DevSecOps team sets the following naming convention for Resources:
 
-    internet --> Cloudflare
-    Cloudflare --> frontdoor
-    django <--> interconnections
-
-    subgraph Azure
-        frontdoor --> NGINX
-
-        subgraph App Service
-            subgraph Custom container
-                direction TB
-                NGINX --> django
-            end
-        end
-    end
+```
+<<Resource Type>>-<<Department>>-<<Public/Private>>-<<Project Category>>-<<Project Name>>-<<Region>><<OS Type>>-<<Environment>>-<<Sequence Number>>
 ```
 
-[Front Door](https://docs.microsoft.com/en-us/azure/frontdoor/front-door-overview) also includes the [Web Application Firewall (WAF)](https://docs.microsoft.com/en-us/azure/web-application-firewall/afds/afds-overview) and handles TLS termination. Front Door is managed by the DevSecOps team.
+#### Sample Names
 
-## Ownership
+- `RG-CDT-PUB-VIP-BNSCN-E-D-001`
+- `ASP-CDT-PUB-VIP-BNSCN-EL-P-001`
+- `AS-CDT-PUB-VIP-BNSCN-EL-D-001`
 
-The following things in Azure are managed by the California Department of Technology (CDT)'s DevSecOps (OET) team:
+#### Resource Types
 
-- Subcriptions
-- [Resource Groups](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal)
-- Networking
-- Front Door
-  - Web Application Firewall (WAF)
-  - Distributed denial-of-service (DDoS) protection
-- IAM
-- Service connections
+Use the following shorthand for conveying the Resource Type as part of the Resource Name:
 
-## Environments
+| Resource         | Convention |
+| ---------------- | ---------- |
+| App Service      | `AS`       |
+| App Service Plan | `ASP`      |
+| Virtual Network  | `VNET`     |
+| Resource Group   | `RG`       |
+| Virtual Machine  | `VM`       |
+| Database         | `DB`       |
+| Subnet           | `SNET`     |
+| Front Door       | `FD`       |
 
-Within the `CDT Digital CA` directory ([how to switch](https://learn.microsoft.com/en-us/azure/devtest/offer/how-to-change-directory-tenants-visual-studio-azure)), there are two [Subscriptions](https://learn.microsoft.com/en-us/microsoft-365/enterprise/subscriptions-licenses-accounts-and-tenants-for-microsoft-cloud-offerings?view=o365-worldwide#subscriptions), with Resource Groups under each. Each environment corresponds to a single Resource Group, [Terraform Workspace](https://developer.hashicorp.com/terraform/language/state/workspaces), and branch.
-
-| Environment | Subscription          | Resource Group                | Workspace | Branch |
-| ----------- | --------------------- | ----------------------------- | --------- | ------ |
-| Dev         | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-D-001` | `dev`     | `dev`  |
-| Test        | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-T-001` | `test`    | `test` |
-| Prod        | `CDT/ODI Production`  | `RG-CDT-PUB-VIP-CALITP-P-001` | `default` | `prod` |
-
-All resources in these Resource Groups should be reflected in Terraform in this repository. The exceptions are:
-
-- Secrets, such as values under [Key Vault](https://azure.microsoft.com/en-us/services/key-vault/). [`prevent_destroy`](https://developer.hashicorp.com/terraform/tutorials/state/resource-lifecycle#prevent-resource-deletion) is used on these Resources.
-- [Things managed by DevSecOps](#ownership)
-
-You'll see these referenced in Terraform as [data sources](https://developer.hashicorp.com/terraform/language/data-sources).
-
-For browsing the [Azure portal](https://portal.azure.com), you can [switch your `Default subscription filter`](https://docs.microsoft.com/en-us/azure/azure-portal/set-preferences).
 
 ## Making changes
 
@@ -148,35 +178,6 @@ lifecycle {
   ignore_changes = [tags]
 }
 ```
-
-### Naming conventions
-
-The DevSecOps team sets the following naming convention for Resources:
-
-```
-<<Resource Type>>-<<Department>>-<<Public/Private>>-<<Project Category>>-<<Project Name>>-<<Region>><<OS Type>>-<<Environment>>-<<Sequence Number>>
-```
-
-#### Sample Names
-
-- `RG-CDT-PUB-VIP-BNSCN-E-D-001`
-- `ASP-CDT-PUB-VIP-BNSCN-EL-P-001`
-- `AS-CDT-PUB-VIP-BNSCN-EL-D-001`
-
-#### Resource Types
-
-Use the following shorthand for conveying the Resource Type as part of the Resource Name:
-
-| Resource         | Convention |
-| ---------------- | ---------- |
-| App Service      | `AS`       |
-| App Service Plan | `ASP`      |
-| Virtual Network  | `VNET`     |
-| Resource Group   | `RG`       |
-| Virtual Machine  | `VM`       |
-| Database         | `DB`       |
-| Subnet           | `SNET`     |
-| Front Door       | `FD`       |
 
 ## Azure environment setup
 
