@@ -138,16 +138,9 @@ Use the following shorthand for conveying the Resource Type as part of the Resou
 
 ## Making changes
 
-[![Build Status](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_apis/build/status/cal-itp.benefits%20Infra?branchName=dev)](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_build/latest?definitionId=828&branchName=dev)
+### Set up for local development
 
-Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is pushed to any branch on GitHub, then [`apply`](https://www.terraform.io/cli/commands/apply)'d when merged to `dev`. While other automation for this project is done through GitHub Actions, we use an Azure Pipeline (above) for a couple of reasons:
-
-- Easier authentication with the Azure API using a service connnection
-- Log output is hidden, avoiding accidentally leaking secrets
-
-### Local development
-
-1. Get access to the Azure account through the DevSecOps team.
+1. [Get access to the Azure account through the DevSecOps team.](#getting-started)
 1. Install dependencies:
 
    - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
@@ -167,6 +160,11 @@ Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is
    ```
 
 1. Create a local `terraform.tfvars` file (ignored by git) from the sample; fill in the `*_OBJECT_ID` variables with values from the Azure Pipeline definition.
+
+### Development process
+
+When configuration changes to infrastructure resources are needed, they should be made to the resource definitions in Terraform and submitted via pull request.
+
 1. Make changes to Terraform files.
 1. Preview the changes, as necessary.
 
@@ -174,20 +172,33 @@ Terraform is [`plan`](https://www.terraform.io/cli/commands/plan)'d when code is
    terraform plan
    ```
 
-1. [Submit the changes via pull request.](../development/commits-branches-merging/)
+1. [Submit the changes via pull request.](../../development/commits-branches-merging)
 
-For Azure resources, you need to [ignore changes](https://www.terraform.io/language/meta-arguments/lifecycle#ignore_changes) to tags, since they are [automatically created by Azure Policy](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/tag-policies).
+!!! info "Azure tags"
+    For Azure resources, you need to [ignore changes](https://www.terraform.io/language/meta-arguments/lifecycle#ignore_changes) to tags, since they are [automatically created by an Azure Policy managed by CDT](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/tag-policies).
 
-```hcl
-lifecycle {
-  ignore_changes = [tags]
-}
-```
+    ```hcl
+    lifecycle {
+        ignore_changes = [tags]
+    }
+    ```
+
+### Infrastructure pipeline
+
+[![Build Status](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_apis/build/status/cal-itp.benefits%20Infra?branchName=dev)](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_build/latest?definitionId=828&branchName=dev)
+
+When code is pushed to any branch on GitHub, our infrastructure pipeline in Azure DevOps runs [`terraform plan`](https://www.terraform.io/cli/commands/plan). When the pull request is merged into `dev`, the pipeline runs [`terraform apply`](https://www.terraform.io/cli/commands/apply).
+
+While other automation for this project is done through GitHub Actions, we use an Azure Pipeline for a couple of reasons:
+
+- Easier authentication with the Azure API using a service connnection
+- Log output is hidden, avoiding accidentally leaking secrets
 
 ## Azure environment setup
 
-The following steps are required to set up the environment:
+These steps were followed when setting up our Azure deployment for the first time:
 
+- CDT team creates the [resources that they own](#ownership)
 - `terraform apply`
 - Set up Slack notifications by [creating a Slack email](https://slack.com/help/articles/206819278-Send-emails-to-Slack) for the [#notify-benefits](https://cal-itp.slack.com/archives/C022HHSEE3F) channel, then [setting it as a Secret in the Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-portal#add-a-secret-to-key-vault) named `slack-benefits-notify-email`
 - Set required [App Service configuration](../configuration/environment-variables.md) and [configuration](../configuration/data.md) by setting values in Key Vault (the mapping is defined in [app_service.tf](https://github.com/cal-itp/benefits/blob/dev/terraform/app_service.tf))
