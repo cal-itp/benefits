@@ -39,7 +39,7 @@ def _authorize_params(scheme):
     return params
 
 
-def register_provider(oauth_registry, provider):
+def _register_provider(oauth_registry, provider):
     """
     Register OAuth clients into the given registry, using configuration from AuthProvider model.
 
@@ -54,5 +54,17 @@ def register_provider(oauth_registry, provider):
         client_kwargs=_client_kwargs(provider.scope),
         authorize_params=_authorize_params(provider.scheme),
     )
+
+    return client
+
+
+def create_client(oauth_registry, provider):
+    """
+    Returns an OAuth client, registering it if needed.
+    """
+    client = oauth_registry.create_client(provider.client_name)
+
+    if client is None:
+        client = _register_provider(oauth_registry, provider)
 
     return client

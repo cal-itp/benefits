@@ -1,7 +1,7 @@
 import pytest
 
 from benefits.core.models import AuthProvider
-from benefits.oauth.client import _client_kwargs, _server_metadata_url, _authorize_params, register_provider
+from benefits.oauth.client import _client_kwargs, _server_metadata_url, _authorize_params, _register_provider, create_client
 
 
 def test_client_kwargs():
@@ -48,8 +48,44 @@ def test_register_provider(mocker, mocked_oauth_registry):
     mocker.patch("benefits.oauth.client._server_metadata_url", return_value="https://metadata.url")
     mocker.patch("benefits.oauth.client._authorize_params", return_value={"scheme": "test_scheme"})
 
-    register_provider(mocked_oauth_registry, mocked_client_provider)
+    _register_provider(mocked_oauth_registry, mocked_client_provider)
 
+    mocked_oauth_registry.register.assert_any_call(
+        "client_name_1",
+        client_id="client_id_1",
+        server_metadata_url="https://metadata.url",
+        client_kwargs={"client": "kwargs"},
+        authorize_params={"scheme": "test_scheme"},
+    )
+
+
+@pytest.mark.django_db
+def test_create_client_already_registered(mocker, mocked_oauth_registry):
+    mocked_client_provider = mocker.Mock(spec=AuthProvider)
+    mocked_client_provider.client_name = "client_name_1"
+    mocked_client_provider.client_id = "client_id_1"
+
+    create_client(mocked_oauth_registry, mocked_client_provider)
+
+    mocked_oauth_registry.create_client.assert_any_call("client_name_1")
+    mocked_oauth_registry.register.assert_not_called()
+
+
+@pytest.mark.django_db
+def test_create_client_already_not_registered_yet(mocker, mocked_oauth_registry):
+    mocked_client_provider = mocker.Mock(spec=AuthProvider)
+    mocked_client_provider.client_name = "client_name_1"
+    mocked_client_provider.client_id = "client_id_1"
+
+    mocker.patch("benefits.oauth.client._client_kwargs", return_value={"client": "kwargs"})
+    mocker.patch("benefits.oauth.client._server_metadata_url", return_value="https://metadata.url")
+    mocker.patch("benefits.oauth.client._authorize_params", return_value={"scheme": "test_scheme"})
+
+    mocked_oauth_registry.create_client.return_value = None
+
+    create_client(mocked_oauth_registry, mocked_client_provider)
+
+    mocked_oauth_registry.create_client.assert_any_call("client_name_1")
     mocked_oauth_registry.register.assert_any_call(
         "client_name_1",
         client_id="client_id_1",
