@@ -2,6 +2,12 @@
 
 The infrastructure is configured as code via [Terraform](https://www.terraform.io/), for [various reasons](https://techcommunity.microsoft.com/t5/fasttrack-for-azure/the-benefits-of-infrastructure-as-code/ba-p/2069350).
 
+## Getting started
+
+Since the Benefits app is deployed into a Microsoft Azure account provided by the California Department of Technology (CDT)'s Office of Enterprise Technology (OET) team, you'll need to request access from them to the `CDT Digital CA` directory so you can get into the [Azure portal](https://portal.azure.com), and to the `California Department of Technology` directory so you can access [Azure DevOps](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP).
+
+The Azure portal is where you can view the infrastructure resources for Benefits. Azure DevOps is where our [infrastructure pipeline](https://github.com/cal-itp/benefits/blob/dev/terraform/azure-pipelines.yml) is run to build and deploy those infrastructure resources.
+
 ## Environments
 
 Within the `CDT Digital CA` directory, there are two [Subscriptions](https://learn.microsoft.com/en-us/microsoft-365/enterprise/subscriptions-licenses-accounts-and-tenants-for-microsoft-cloud-offerings?view=o365-worldwide#subscriptions), with Resource Groups under each. (Refer to Azure's documentation for [switching directories](https://learn.microsoft.com/en-us/azure/devtest/offer/how-to-change-directory-tenants-visual-studio-azure).)
