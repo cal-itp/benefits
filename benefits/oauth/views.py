@@ -44,7 +44,7 @@ def login(request):
 def authorize(request):
     """View implementing OIDC token authorization."""
     verifier = session.verifier(request)
-    oauth_client = oauth.create_client(verifier.auth_provider.client_name)
+    oauth_client = register_provider(oauth, verifier.auth_provider)
 
     if not oauth_client:
         raise Exception(f"oauth_client not registered: {verifier.auth_provider.client_name}")
