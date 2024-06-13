@@ -131,7 +131,12 @@
     "fields": {
       "name": "calfresh",
       "label": "CalFresh",
-      "group_id": "group123"
+      "group_id": "group123",
+      "supports_expiration": "True",
+      "expiration_days": 5,
+      "expiration_reenrollment_days": 3,
+      "reenrollment_error_template": "enrollment/reenrollment-error--calfresh.html",
+      "enrollment_success_template": "enrollment/success--mst.html"
     }
   },
   {
