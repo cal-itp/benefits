@@ -37,10 +37,10 @@ timeline
           Q3<br>Next
           : Benefits admin tool (Agency configuration)
           : Benefits admin tool (Agency users)
-          : Release Medicare cardholder enrollment pathway
+          : Benefits admin tool (In-person eligibility verification)
 
           Q4<br>Planned
-          : Benefits admin tool (In-person eligibility verification)
+          : Release Medicare cardholder enrollment pathway
           : Release riders with disabilities enrollment pathway
 
 %% Cal-ITP Benefits Epics (2025)
@@ -51,8 +51,8 @@ timeline
           : Implement evolved organizing principles for app UX
 
           Q2
-          : Support for multiple payment processors
-          : Integration with all MSA payment processors
+          : Support for multiple transit processors
+          : Integration with all MSA transit processors
 
 %%{
     init: {
