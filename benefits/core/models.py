@@ -116,6 +116,7 @@ class EligibilityType(models.Model):
     expiration_reenrollment_days = models.PositiveSmallIntegerField(null=True, blank=True)
     enrollment_index_template = models.TextField(default="enrollment/index.html")
     reenrollment_error_template = models.TextField(null=True, blank=True)
+    enrollment_success_template = models.TextField(default="enrollment/success.html")
 
     def __str__(self):
         return self.label
@@ -276,7 +277,6 @@ class TransitAgency(models.Model):
     jws_signing_alg = models.TextField()
     index_template = models.TextField()
     eligibility_index_template = models.TextField()
-    enrollment_success_template = models.TextField()
 
     def __str__(self):
         return self.long_name

@@ -19,12 +19,12 @@ class CardTokenizeSuccessForm(forms.Form):
 class CardTokenizeFailForm(forms.Form):
     """Form to indicate card tokenization failure to server."""
 
-    id = "form-card-tokenize-fail"
     method = "POST"
 
-    def __init__(self, action_url, *args, **kwargs):
+    def __init__(self, action_url, id, *args, **kwargs):
         # init super with an empty data dict
         # binds and makes immutable this form's data
         # since there are no form fields, the form is also marked as valid
         super().__init__({}, *args, **kwargs)
+        self.id = id
         self.action_url = action_url

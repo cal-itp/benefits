@@ -16,6 +16,15 @@ class ReturnedEnrollmentEvent(core.Event):
             self.update_event_properties(payment_group=payment_group)
 
 
+class FailedAccessTokenRequestEvent(core.Event):
+    """Analytics event representing a failure to acquire an access token for card tokenization."""
+
+    def __init__(self, request, status_code=None):
+        super().__init__(request, "failed access token request")
+        if status_code is not None:
+            self.update_event_properties(status_code=status_code)
+
+
 def returned_error(request, error):
     """Send the "returned enrollment" analytics event with an error status and message."""
     core.send_event(ReturnedEnrollmentEvent(request, status="error", error=error))
@@ -29,3 +38,8 @@ def returned_retry(request):
 def returned_success(request, payment_group):
     """Send the "returned enrollment" analytics event with a success status."""
     core.send_event(ReturnedEnrollmentEvent(request, status="success", payment_group=payment_group))
+
+
+def failed_access_token_request(request, status_code=None):
+    """Send the "failed access token request" analytics event with the response status code."""
+    core.send_event(FailedAccessTokenRequestEvent(request, status_code=status_code))

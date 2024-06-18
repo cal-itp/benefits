@@ -1,0 +1,48 @@
+name: Check for up-to-date Django migrations and messages
+on: [push, pull_request]
+
+jobs:
+  check-migrations-and-messages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Install system packages
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y gettext
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .github/workflows/.python-version
+          cache: pip
+          cache-dependency-path: "**/pyproject.toml"
+
+      - name: Install Python dependencies
+        run: pip install -e .[dev,test]
+
+      - name: Run ./bin/makemigrations.sh
+        run: |
+          if ./bin/makemigrations.sh | grep -q 'No changes detected';
+          then
+            exit 0;
+          else
+            exit 1;
+          fi
+
+      - name: Run ./bin/makemessages.sh
+        run: |
+          ./bin/makemessages.sh
+
+          set -x # show commands
+
+          git add benefits
+
+          # message files are up-to-date if the only differences are from the updated timestamp
+          if echo $(git diff --cached --shortstat) | grep -q '2 files changed, 2 insertions(+), 2 deletions(-)';
+          then
+            exit 0;
+          else
+            exit 1;
+          fi

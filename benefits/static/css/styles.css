@@ -470,9 +470,10 @@ footer .footer-links li a.footer-link:visited {
   }
 }
 
-/* Sign in with Login.gov (white logo) on Eligibility Start */
+/* Sign in with Login.gov (white logo) on Eligibility Start, System Enrollment Error */
 
-.eligibility-start .btn.btn-lg.btn-primary.login {
+.eligibility-start .btn.btn-lg.btn-primary.login,
+.system-enrollment-error .btn.btn-lg.btn-primary.login {
   padding: 10px 0;
 }
 

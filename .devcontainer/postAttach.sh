@@ -3,5 +3,5 @@ set -eu
 
 # initialize pre-commit
 
-git config --global --add safe.directory /home/calitp/app
+git config --global --add safe.directory /calitp/app
 pre-commit install --overwrite
