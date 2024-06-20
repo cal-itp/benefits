@@ -289,4 +289,5 @@ def success(request):
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
 
     analytics.returned_success(request, eligibility.group_id)
-    return TemplateResponse(request, eligibility.enrollment_success_template)
+    context = {"redirect_to": request.path}
+    return TemplateResponse(request, eligibility.enrollment_success_template, context)
