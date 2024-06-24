@@ -66,8 +66,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_8c0b35f1ea7ee6af_models_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.5.3">coverage.py v7.5.3</a>,
-            created at 2024-06-24 16:21 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.5.4">coverage.py v7.5.4</a>,
+            created at 2024-06-24 19:05 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -115,7 +115,7 @@
     <p class="pln"><span class="n"><a id="t31" href="#t31">31</a></span><span class="t">    <span class="str">"""Middleware raises an exception for sessions lacking an agency configuration."""</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t32" href="#t32">32</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t33" href="#t33">33</a></span><span class="t">    <span class="key">def</span> <span class="nam">process_request</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">request</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="par run show_par"><span class="n"><a id="t34" href="#t34">34</a></span><span class="t">        <span class="key">if</span> <span class="nam">session</span><span class="op">.</span><span class="nam">active_agency</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">34&#x202F;&#x219B;&#x202F;38</span><span class="annotate long">line 34 didn't jump to line 38, because the condition on line 34 was always true</span></span></p>
+    <p class="par run show_par"><span class="n"><a id="t34" href="#t34">34</a></span><span class="t">        <span class="key">if</span> <span class="nam">session</span><span class="op">.</span><span class="nam">active_agency</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">34&#x202F;&#x219B;&#x202F;38</span><span class="annotate long">line 34 didn't jump to line 38 because the condition on line 34 was always true</span></span></p>
     <p class="run"><span class="n"><a id="t35" href="#t35">35</a></span><span class="t">            <span class="nam">logger</span><span class="op">.</span><span class="nam">debug</span><span class="op">(</span><span class="str">"Session configured with agency"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t36" href="#t36">36</a></span><span class="t">            <span class="key">return</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t37" href="#t37">37</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -159,7 +159,7 @@
     <p class="pln"><span class="n"><a id="t75" href="#t75">75</a></span><span class="t">    <span class="str">"""Middleware to return healthcheck for user agents specified in HEALTHCHECK_USER_AGENTS."""</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t76" href="#t76">76</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t77" href="#t77">77</a></span><span class="t">    <span class="key">def</span> <span class="nam">process_request</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">request</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="par run show_par"><span class="n"><a id="t78" href="#t78">78</a></span><span class="t">        <span class="key">if</span> <span class="nam">hasattr</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="str">"META"</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">78&#x202F;&#x219B;&#x202F;83</span><span class="annotate long">line 78 didn't jump to line 83, because the condition on line 78 was always true</span></span></p>
+    <p class="par run show_par"><span class="n"><a id="t78" href="#t78">78</a></span><span class="t">        <span class="key">if</span> <span class="nam">hasattr</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="str">"META"</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">78&#x202F;&#x219B;&#x202F;83</span><span class="annotate long">line 78 didn't jump to line 83 because the condition on line 78 was always true</span></span></p>
     <p class="run"><span class="n"><a id="t79" href="#t79">79</a></span><span class="t">            <span class="nam">user_agent</span> <span class="op">=</span> <span class="nam">request</span><span class="op">.</span><span class="nam">META</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">"HTTP_USER_AGENT"</span><span class="op">,</span> <span class="str">""</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t80" href="#t80">80</a></span><span class="t">            <span class="key">if</span> <span class="nam">user_agent</span> <span class="key">in</span> <span class="nam">settings</span><span class="op">.</span><span class="nam">HEALTHCHECK_USER_AGENTS</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t81" href="#t81">81</a></span><span class="t">                <span class="key">return</span> <span class="nam">HttpResponse</span><span class="op">(</span><span class="str">"Healthy"</span><span class="op">,</span> <span class="nam">content_type</span><span class="op">=</span><span class="str">"text/plain"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -255,8 +255,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_8c0b35f1ea7ee6af_models_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.5.3">coverage.py v7.5.3</a>,
-            created at 2024-06-24 16:21 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.5.4">coverage.py v7.5.4</a>,
+            created at 2024-06-24 19:05 +0000
         </p>
     </div>
 </footer>

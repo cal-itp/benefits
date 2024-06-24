@@ -66,8 +66,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_8c0b35f1ea7ee6af_apps_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.5.3">coverage.py v7.5.3</a>,
-            created at 2024-06-24 16:21 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.5.4">coverage.py v7.5.4</a>,
+            created at 2024-06-24 19:05 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -214,10 +214,10 @@
     <p class="pln"><span class="n"><a id="t130" href="#t130">130</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t131" href="#t131">131</a></span><span class="t">    <span class="key">def</span> <span class="nam">send</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">event</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t132" href="#t132">132</a></span><span class="t">        <span class="str">"""Send an analytics event."""</span>&nbsp;</span><span class="r"></span></p>
-    <p class="par run show_par"><span class="n"><a id="t133" href="#t133">133</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="nam">isinstance</span><span class="op">(</span><span class="nam">event</span><span class="op">,</span> <span class="nam">Event</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">133&#x202F;&#x219B;&#x202F;134</span><span class="annotate long">line 133 didn't jump to line 134, because the condition on line 133 was never true</span></span></p>
+    <p class="par run show_par"><span class="n"><a id="t133" href="#t133">133</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="nam">isinstance</span><span class="op">(</span><span class="nam">event</span><span class="op">,</span> <span class="nam">Event</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">133&#x202F;&#x219B;&#x202F;134</span><span class="annotate long">line 133 didn't jump to line 134 because the condition on line 133 was never true</span></span></p>
     <p class="mis show_mis"><span class="n"><a id="t134" href="#t134">134</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="str">"event must be an Event instance"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t135" href="#t135">135</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="par run show_par"><span class="n"><a id="t136" href="#t136">136</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="nam">self</span><span class="op">.</span><span class="nam">api_key</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">136&#x202F;&#x219B;&#x202F;140</span><span class="annotate long">line 136 didn't jump to line 140, because the condition on line 136 was always true</span></span></p>
+    <p class="par run show_par"><span class="n"><a id="t136" href="#t136">136</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="nam">self</span><span class="op">.</span><span class="nam">api_key</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">136&#x202F;&#x219B;&#x202F;140</span><span class="annotate long">line 136 didn't jump to line 140 because the condition on line 136 was always true</span></span></p>
     <p class="run"><span class="n"><a id="t137" href="#t137">137</a></span><span class="t">            <span class="nam">logger</span><span class="op">.</span><span class="nam">warning</span><span class="op">(</span><span class="fst">f"</span><span class="fst">api_key is not configured, cannot send event: </span><span class="op">{</span><span class="nam">event</span><span class="op">}</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t138" href="#t138">138</a></span><span class="t">            <span class="key">return</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t139" href="#t139">139</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -251,7 +251,7 @@
     <p class="pln"><span class="n"><a id="t167" href="#t167">167</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t168" href="#t168">168</a></span><span class="t"><span class="key">def</span> <span class="nam">send_event</span><span class="op">(</span><span class="nam">event</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t169" href="#t169">169</a></span><span class="t">    <span class="str">"""Send an analytics event."""</span>&nbsp;</span><span class="r"></span></p>
-    <p class="par run show_par"><span class="n"><a id="t170" href="#t170">170</a></span><span class="t">    <span class="key">if</span> <span class="nam">isinstance</span><span class="op">(</span><span class="nam">event</span><span class="op">,</span> <span class="nam">Event</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">170&#x202F;&#x219B;&#x202F;173</span><span class="annotate long">line 170 didn't jump to line 173, because the condition on line 170 was always true</span></span></p>
+    <p class="par run show_par"><span class="n"><a id="t170" href="#t170">170</a></span><span class="t">    <span class="key">if</span> <span class="nam">isinstance</span><span class="op">(</span><span class="nam">event</span><span class="op">,</span> <span class="nam">Event</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">170&#x202F;&#x219B;&#x202F;173</span><span class="annotate long">line 170 didn't jump to line 173 because the condition on line 170 was always true</span></span></p>
     <p class="run"><span class="n"><a id="t171" href="#t171">171</a></span><span class="t">        <span class="nam">client</span><span class="op">.</span><span class="nam">send</span><span class="op">(</span><span class="nam">event</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t172" href="#t172">172</a></span><span class="t">    <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t173" href="#t173">173</a></span><span class="t">        <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="str">"event must be an Event instance"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -263,8 +263,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_8c0b35f1ea7ee6af_apps_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.5.3">coverage.py v7.5.3</a>,
-            created at 2024-06-24 16:21 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.5.4">coverage.py v7.5.4</a>,
+            created at 2024-06-24 19:05 +0000
         </p>
     </div>
 </footer>
