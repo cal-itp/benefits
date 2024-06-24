@@ -11,7 +11,7 @@ resource "azurerm_service_plan" "main" {
 }
 
 locals {
-  data_mount = "/home/calitp/app/data"
+  data_mount = "/calitp/app/data"
 }
 
 resource "azurerm_linux_web_app" "main" {
@@ -25,10 +25,6 @@ resource "azurerm_linux_web_app" "main" {
   site_config {
     ftps_state             = "Disabled"
     vnet_route_all_enabled = true
-    application_stack {
-      docker_image     = "ghcr.io/cal-itp/benefits"
-      docker_image_tag = local.env_name
-    }
   }
 
   identity {
@@ -49,14 +45,9 @@ resource "azurerm_linux_web_app" "main" {
   }
 
   app_settings = {
-    # app setting used solely for refreshing secrets - see https://github.com/MicrosoftDocs/azure-docs/issues/79855#issuecomment-1265664801
-    "change_me_to_refresh_secrets" = "change me in the portal to refresh all secrets",
-
-    "DOCKER_ENABLE_CI"                    = "true",
-    "DOCKER_REGISTRY_SERVER_URL"          = "https://ghcr.io/",
-    "WEBSITE_HTTPLOGGING_RETENTION_DAYS"  = "99999",
+    "DOCKER_REGISTRY_SERVER_URL"          = "https://ghcr.io/"
     "WEBSITE_TIME_ZONE"                   = "America/Los_Angeles",
-    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "false",
+    "WEBSITES_ENABLE_APP_SERVICE_STORAGE" = "true",
     "WEBSITES_PORT"                       = "8000",
 
     "ANALYTICS_KEY" = local.is_dev ? null : "${local.secret_prefix}analytics-key)",

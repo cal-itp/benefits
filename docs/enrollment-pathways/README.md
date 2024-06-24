@@ -30,16 +30,17 @@ timeline
           Q2<br>Now
           : Deploy low-income riders enrollment pathway
           : Support for expiring benefits (low-income)
-          : Benefits admin tool (Agency configuration)
           : Improved UX for agency card enrollment
+          : Improved UX for application error states
           %% : Release enhancements to Veterans pathway
 
           Q3<br>Next
+          : Benefits admin tool (Agency configuration)
           : Benefits admin tool (Agency users)
           : Benefits admin tool (In-person eligibility verification)
-          : Release Medicare cardholder enrollment pathway
 
           Q4<br>Planned
+          : Release Medicare cardholder enrollment pathway
           : Release riders with disabilities enrollment pathway
 
 %% Cal-ITP Benefits Epics (2025)
@@ -50,8 +51,8 @@ timeline
           : Implement evolved organizing principles for app UX
 
           Q2
-          : Support for multiple payment processors
-          : Integration with all MSA payment processors
+          : Support for multiple transit processors
+          : Integration with all MSA transit processors
 
 %%{
     init: {

@@ -10,10 +10,11 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from littlepay.api.client import Client
 from requests.exceptions import HTTPError
+import sentry_sdk
 
 from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
-from benefits.core.views import ROUTE_LOGGED_OUT
+from benefits.core.views import ROUTE_LOGGED_OUT, ROUTE_SERVER_ERROR
 
 from . import analytics, forms
 
@@ -21,10 +22,11 @@ ROUTE_INDEX = "enrollment:index"
 ROUTE_REENROLLMENT_ERROR = "enrollment:reenrollment-error"
 ROUTE_RETRY = "enrollment:retry"
 ROUTE_SUCCESS = "enrollment:success"
+ROUTE_SYSTEM_ERROR = "enrollment:system-error"
 ROUTE_TOKEN = "enrollment:token"
 
 TEMPLATE_RETRY = "enrollment/retry.html"
-TEMPLATE_SUCCESS = "enrollment/success.html"
+TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
 
 
 logger = logging.getLogger(__name__)
@@ -36,15 +38,39 @@ def token(request):
     if not session.enrollment_token_valid(request):
         agency = session.agency(request)
         payment_processor = agency.payment_processor
-        client = Client(
-            base_url=payment_processor.api_base_url,
-            client_id=payment_processor.client_id,
-            client_secret=payment_processor.client_secret,
-            audience=payment_processor.audience,
-        )
-        client.oauth.ensure_active_token(client.token)
-        response = client.request_card_tokenization_access()
-        session.update(request, enrollment_token=response.get("access_token"), enrollment_token_exp=response.get("expires_at"))
+
+        try:
+            client = Client(
+                base_url=payment_processor.api_base_url,
+                client_id=payment_processor.client_id,
+                client_secret=payment_processor.client_secret,
+                audience=payment_processor.audience,
+            )
+            client.oauth.ensure_active_token(client.token)
+            response = client.request_card_tokenization_access()
+        except Exception as e:
+            logger.debug("Error occurred while requesting access token", exc_info=e)
+            sentry_sdk.capture_exception(e)
+
+            if isinstance(e, HTTPError):
+                status_code = e.response.status_code
+
+                if status_code >= 500:
+                    redirect = reverse(ROUTE_SYSTEM_ERROR)
+                else:
+                    redirect = reverse(ROUTE_SERVER_ERROR)
+            else:
+                status_code = None
+                redirect = reverse(ROUTE_SERVER_ERROR)
+
+            analytics.failed_access_token_request(request, status_code)
+
+            data = {"redirect": redirect}
+            return JsonResponse(data)
+        else:
+            session.update(
+                request, enrollment_token=response.get("access_token"), enrollment_token_exp=response.get("expires_at")
+            )
 
     data = {"token": session.enrollment_token(request)}
 
@@ -88,6 +114,11 @@ def index(request):
             if e.response.status_code == 409:
                 analytics.returned_success(request, eligibility.group_id)
                 return success(request)
+            elif e.response.status_code >= 500:
+                analytics.returned_error(request, str(e))
+                sentry_sdk.capture_exception(e)
+
+                return system_error(request)
             else:
                 analytics.returned_error(request, str(e))
                 raise Exception(f"{e}: {e.response.json()}")
@@ -100,18 +131,22 @@ def index(request):
 
     # GET enrollment index
     else:
-        tokenize_retry_form = forms.CardTokenizeFailForm(ROUTE_RETRY)
+        tokenize_retry_form = forms.CardTokenizeFailForm(ROUTE_RETRY, "form-card-tokenize-fail-retry")
+        tokenize_server_error_form = forms.CardTokenizeFailForm(ROUTE_SERVER_ERROR, "form-card-tokenize-fail-server-error")
+        tokenize_system_error_form = forms.CardTokenizeFailForm(ROUTE_SYSTEM_ERROR, "form-card-tokenize-fail-system-error")
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
         context = {
-            "forms": [tokenize_retry_form, tokenize_success_form],
+            "forms": [tokenize_retry_form, tokenize_server_error_form, tokenize_system_error_form, tokenize_success_form],
             "cta_button": "tokenize_card",
             "card_tokenize_env": agency.payment_processor.card_tokenize_env,
             "card_tokenize_func": agency.payment_processor.card_tokenize_func,
             "card_tokenize_url": agency.payment_processor.card_tokenize_url,
             "token_field": "card_token",
             "form_retry": tokenize_retry_form.id,
+            "form_server_error": tokenize_server_error_form.id,
             "form_success": tokenize_success_form.id,
+            "form_system_error": tokenize_system_error_form.id,
         }
 
         logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
@@ -145,6 +180,17 @@ def retry(request):
     return TemplateResponse(request, TEMPLATE_RETRY)
 
 
+@decorator_from_middleware(EligibleSessionRequired)
+def system_error(request):
+    """View handler for an enrollment system error."""
+
+    # overwrite origin so that CTA takes user to agency index
+    agency = session.agency(request)
+    session.update(request, origin=agency.index_url)
+
+    return TemplateResponse(request, TEMPLATE_SYSTEM_ERROR)
+
+
 @pageview_decorator
 @decorator_from_middleware(VerifierSessionRequired)
 def success(request):
@@ -152,7 +198,7 @@ def success(request):
     request.path = "/enrollment/success"
     session.update(request, origin=reverse(ROUTE_SUCCESS))
 
-    agency = session.agency(request)
+    eligibility = session.eligibility(request)
     verifier = session.verifier(request)
 
     if session.logged_in(request) and verifier.auth_provider.supports_sign_out:
@@ -160,4 +206,4 @@ def success(request):
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
 
-    return TemplateResponse(request, agency.enrollment_success_template)
+    return TemplateResponse(request, eligibility.enrollment_success_template)

@@ -21,7 +21,7 @@ def test_authverifier_required_no_verifier(app_request, mocked_view, decorated_v
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_auth_not_required")
+@pytest.mark.usefixtures("mocked_session_verifier_does_not_use_auth_verification")
 def test_authverifier_required_no_authverifier(app_request, mocked_view, decorated_view):
     response = decorated_view(app_request)
 

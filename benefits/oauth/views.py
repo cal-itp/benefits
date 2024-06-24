@@ -6,7 +6,7 @@ from django.utils.decorators import decorator_from_middleware
 
 from benefits.core import session
 from . import analytics, redirects
-from .client import oauth
+from .client import oauth, create_client
 from .middleware import VerifierUsesAuthVerificationSessionRequired
 
 
@@ -24,7 +24,8 @@ ROUTE_POST_LOGOUT = "oauth:post_logout"
 def login(request):
     """View implementing OIDC authorize_redirect."""
     verifier = session.verifier(request)
-    oauth_client = oauth.create_client(verifier.auth_provider.client_name)
+
+    oauth_client = create_client(oauth, verifier.auth_provider)
 
     if not oauth_client:
         raise Exception(f"oauth_client not registered: {verifier.auth_provider.client_name}")
@@ -43,7 +44,7 @@ def login(request):
 def authorize(request):
     """View implementing OIDC token authorization."""
     verifier = session.verifier(request)
-    oauth_client = oauth.create_client(verifier.auth_provider.client_name)
+    oauth_client = create_client(oauth, verifier.auth_provider)
 
     if not oauth_client:
         raise Exception(f"oauth_client not registered: {verifier.auth_provider.client_name}")
@@ -64,21 +65,25 @@ def authorize(request):
     verifier_claim = verifier.auth_provider.claim
     stored_claim = None
 
+    error_claim = None
+
     if verifier_claim:
         userinfo = token.get("userinfo")
 
         if userinfo:
             claim_value = userinfo.get(verifier_claim)
-            # the claim comes back in userinfo like { "claim": "True" | "False" }
+            # the claim comes back in userinfo like { "claim": "1" | "0" }
+            claim_value = int(claim_value) if claim_value else None
             if claim_value is None:
                 logger.warning(f"userinfo did not contain: {verifier_claim}")
-            elif claim_value.lower() == "true":
-                # if userinfo contains our claim and the flag is true, store the *claim*
+            elif claim_value == 1:
+                # if userinfo contains our claim and the flag is 1 (true), store the *claim*
                 stored_claim = verifier_claim
+            elif claim_value >= 10:
+                error_claim = claim_value
 
     session.update(request, oauth_token=id_token, oauth_claim=stored_claim)
-
-    analytics.finished_sign_in(request)
+    analytics.finished_sign_in(request, error=error_claim)
 
     return redirect(ROUTE_CONFIRM)
 

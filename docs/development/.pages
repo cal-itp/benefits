@@ -3,6 +3,7 @@ nav:
   - commits-branches-merging.md
   - docker-dynamic-ports.md
   - linting-pre-commit.md
+  - application-logic.md
   - models-migrations.md
   - i18n.md
   - test-server.md

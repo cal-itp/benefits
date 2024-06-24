@@ -1,6 +1,7 @@
 import time
 
 import pytest
+from authlib.integrations.base_client.errors import UnsupportedTokenTypeError
 from django.urls import reverse
 from littlepay.api.funding_sources import FundingSourceResponse
 from requests import HTTPError
@@ -12,9 +13,11 @@ from benefits.enrollment.views import (
     ROUTE_INDEX,
     ROUTE_REENROLLMENT_ERROR,
     ROUTE_RETRY,
+    ROUTE_SERVER_ERROR,
     ROUTE_SUCCESS,
+    ROUTE_SYSTEM_ERROR,
     ROUTE_TOKEN,
-    TEMPLATE_SUCCESS,
+    TEMPLATE_SYSTEM_ERROR,
     TEMPLATE_RETRY,
 )
 
@@ -32,6 +35,11 @@ def invalid_form_data():
 @pytest.fixture
 def mocked_analytics_module(mocked_analytics_module):
     return mocked_analytics_module(benefits.enrollment.views)
+
+
+@pytest.fixture
+def mocked_sentry_sdk_module(mocker):
+    return mocker.patch.object(benefits.enrollment.views, "sentry_sdk")
 
 
 @pytest.fixture
@@ -98,6 +106,106 @@ def test_token_valid(mocker, client):
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_token_http_error_500(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
+    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+
+    mock_error = {"message": "Mock error message"}
+    mock_error_response = mocker.Mock(status_code=500, **mock_error)
+    mock_error_response.json.return_value = mock_error
+    mock_client.request_card_tokenization_access.side_effect = HTTPError(
+        response=mock_error_response,
+    )
+
+    path = reverse(ROUTE_TOKEN)
+    response = client.get(path)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "token" not in data
+    assert "redirect" in data
+    assert data["redirect"] == reverse(ROUTE_SYSTEM_ERROR)
+    mocked_analytics_module.failed_access_token_request.assert_called_once()
+    assert 500 in mocked_analytics_module.failed_access_token_request.call_args.args
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
+    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+
+    mock_error = {"message": "Mock error message"}
+    mock_error_response = mocker.Mock(status_code=400, **mock_error)
+    mock_error_response.json.return_value = mock_error
+    mock_client.request_card_tokenization_access.side_effect = HTTPError(
+        response=mock_error_response,
+    )
+
+    path = reverse(ROUTE_TOKEN)
+    response = client.get(path)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "token" not in data
+    assert "redirect" in data
+    assert data["redirect"] == reverse(ROUTE_SERVER_ERROR)
+    mocked_analytics_module.failed_access_token_request.assert_called_once()
+    assert 400 in mocked_analytics_module.failed_access_token_request.call_args.args
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
+    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+
+    mock_client.request_card_tokenization_access.side_effect = UnsupportedTokenTypeError()
+
+    path = reverse(ROUTE_TOKEN)
+    response = client.get(path)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "token" not in data
+    assert "redirect" in data
+    assert data["redirect"] == reverse(ROUTE_SERVER_ERROR)
+    mocked_analytics_module.failed_access_token_request.assert_called_once()
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
+    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+
+    mock_client.oauth.ensure_active_token.side_effect = ConnectionError()
+
+    path = reverse(ROUTE_TOKEN)
+    response = client.get(path)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "token" not in data
+    assert "redirect" in data
+    assert data["redirect"] == reverse(ROUTE_SERVER_ERROR)
+    mocked_analytics_module.failed_access_token_request.assert_called_once()
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+
+@pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
 def test_index_eligible_get(client, model_EligibilityType):
     path = reverse(ROUTE_INDEX)
@@ -125,12 +233,47 @@ def test_index_eligible_post_invalid_form(client, invalid_form_data):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
-def test_index_eligible_post_valid_form_http_error(mocker, client, card_tokenize_form_data):
+@pytest.mark.parametrize("status_code", [500, 501, 502, 503, 504])
+@pytest.mark.usefixtures("mocked_session_eligibility")
+def test_index_eligible_post_valid_form_http_error_500(
+    mocker,
+    client,
+    mocked_session_agency,
+    mocked_analytics_module,
+    mocked_sentry_sdk_module,
+    card_tokenize_form_data,
+    status_code,
+):
+    mock_session = mocker.patch("benefits.enrollment.views.session")
+    mock_session.agency.return_value = mocked_session_agency.return_value
+
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
 
-    # any status_code that isn't 409 is considered an error
+    mock_error = {"message": "Mock error message"}
+    mock_error_response = mocker.Mock(status_code=status_code, **mock_error)
+    mock_error_response.json.return_value = mock_error
+    mock_client.link_concession_group_funding_source.side_effect = HTTPError(
+        response=mock_error_response,
+    )
+
+    path = reverse(ROUTE_INDEX)
+    response = client.post(path, card_tokenize_form_data)
+
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_SYSTEM_ERROR
+    assert {"origin": mocked_session_agency.return_value.index_url} in mock_session.update.call_args
+    mocked_analytics_module.returned_error.assert_called_once()
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+def test_index_eligible_post_valid_form_http_error_400(mocker, client, card_tokenize_form_data):
+    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client = mock_client_cls.return_value
+
+    # any 400 level status_code that isn't 409 is considered an error
     mock_error = {"message": "Mock error message"}
     mock_error_response = mocker.Mock(status_code=400, **mock_error)
     mock_error_response.json.return_value = mock_error
@@ -174,7 +317,7 @@ def test_index_eligible_post_valid_form_customer_already_enrolled(
         funding_source_id=mocked_funding_source.id, group_id=model_EligibilityType.group_id
     )
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_SUCCESS
+    assert response.template_name == model_EligibilityType.enrollment_success_template
     mocked_analytics_module.returned_success.assert_called_once()
     assert model_EligibilityType.group_id in mocked_analytics_module.returned_success.call_args.args
 
@@ -195,7 +338,7 @@ def test_index_eligible_post_valid_form_success(
         funding_source_id=mocked_funding_source.id, group_id=model_EligibilityType.group_id
     )
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_SUCCESS
+    assert response.template_name == model_EligibilityType.enrollment_success_template
     mocked_analytics_module.returned_success.assert_called_once()
     assert model_EligibilityType.group_id in mocked_analytics_module.returned_success.call_args.args
 
@@ -285,39 +428,43 @@ def test_success_no_verifier(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_success_authentication_logged_in(mocker, client, model_TransitAgency):
+@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
+def test_success_authentication_logged_in(mocker, client, model_TransitAgency, model_EligibilityType):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = True
     mock_session.agency.return_value = model_TransitAgency
+    mock_session.eligibility.return_value = model_EligibilityType
 
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_SUCCESS
+    assert response.template_name == model_EligibilityType.enrollment_success_template
     assert {"origin": reverse(ROUTE_LOGGED_OUT)} in mock_session.update.call_args
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_auth_required")
-def test_success_authentication_not_logged_in(mocker, client, model_TransitAgency):
+@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
+def test_success_authentication_not_logged_in(mocker, client, model_TransitAgency, model_EligibilityType):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = False
     mock_session.agency.return_value = model_TransitAgency
+    mock_session.eligibility.return_value = model_EligibilityType
 
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_SUCCESS
+    assert response.template_name == model_EligibilityType.enrollment_success_template
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier_auth_not_required")
-def test_success_no_authentication(client):
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier_does_not_use_auth_verification")
+def test_success_no_authentication(mocker, client, model_EligibilityType):
+    mock_session = mocker.patch("benefits.enrollment.views.session")
+    mock_session.eligibility.return_value = model_EligibilityType
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_SUCCESS
+    assert response.template_name == model_EligibilityType.enrollment_success_template

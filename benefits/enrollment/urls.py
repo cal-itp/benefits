@@ -15,4 +15,5 @@ urlpatterns = [
     path("reenrollment-error", views.reenrollment_error, name="reenrollment-error"),
     path("retry", views.retry, name="retry"),
     path("success", views.success, name="success"),
+    path("error", views.system_error, name="system-error"),
 ]

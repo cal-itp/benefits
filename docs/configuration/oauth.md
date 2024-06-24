@@ -31,14 +31,9 @@ The [data migration file](./data.md) contains sample values for an `AuthProvider
 The [`benefits.oauth.client`][oauth-client] module defines helpers for registering OAuth clients, and creating instances for
 use in e.g. views.
 
-- `register_providers(oauth_registry)` uses data from `AuthProvider` instances to register clients into the given registry
 - `oauth` is an `authlib.integrations.django_client.OAuth` instance
 
-Providers are registered into this instance once in the [`OAuthAppConfig.ready()`][oauth-app-ready] function at application
-startup.
+Consumers call `benefits.oauth.client.create_client(oauth, provider)` with the name of a client to obtain an Authlib client
+instance. If that client name has not been registered yet, `_register_provider(oauth_registry, provider)` uses data from the given `AuthProvider` instance to register the client into this instance and returns the client object.
 
-Consumers call `oauth.create_client(client_name)` with the name of a previously registered client to obtain an Authlib client
-instance.
-
-[oauth-app-ready]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/__init__.py
 [oauth-client]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/client.py
