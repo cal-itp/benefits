@@ -101,7 +101,7 @@ def cancel(request):
 def logout(request):
     """View implementing OIDC and application sign out."""
     verifier = session.verifier(request)
-    oauth_client = oauth.create_client(verifier.auth_provider.client_name)
+    oauth_client = create_client(oauth, verifier.auth_provider)
 
     if not oauth_client:
         raise Exception(f"oauth_client not registered: {verifier.auth_provider.client_name}")
