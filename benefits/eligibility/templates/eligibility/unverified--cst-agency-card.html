@@ -1,0 +1,15 @@
+{% extends "eligibility/unverified.html" %}
+{% load i18n %}
+
+{% block unverified-headline %}
+    {% translate "Your card information may not have been entered correctly." %}
+{% endblock unverified-headline %}
+
+{% block unverified-body %}
+    {% translate "The number and last name must be entered exactly as they appear on your CST Agency Card. Please check your card and try again, or contact your transit agency for help." %}
+{% endblock unverified-body %}
+
+{% block unverified-call-to-action %}
+    {% translate "Try again" as button_text %}
+    <div class="col-lg-3 col-8">{% include "core/includes/button--origin.html" with button_text=button_text %}</div>
+{% endblock unverified-call-to-action %}
