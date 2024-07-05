@@ -55,8 +55,8 @@ body:
 
         Reference the diagram and discussion on [the release process docs](https://docs.calitp.org/benefits/deployment/release/).
 
-        * `Regular` release: propagates from `dev` to `test`, and then `test` to `prod`. Only possible if `dev` is ready to deploy.
-        * `Hotfix` release: fix is merged into `prod`. After release, fix is propagated to `dev` and `test`.
+        * `Regular` release: propagates from `main` to `test`, and then `test` to `prod`. Only possible if `main` is ready to deploy.
+        * `Hotfix` release: fix is merged into `prod`. After release, fix is propagated to `main` and `test`.
   - type: dropdown
     id: type
     attributes:
@@ -78,12 +78,12 @@ body:
       label: Regular release checklist
       description: Complete these items in sequence as the `Regular` release progresses
       options:
-        - label: Ensure the `dev` branch and secrets are up to date
+        - label: Ensure the `main` branch and secrets are up to date
         - label: Create a branch called release/version from the source branch
         - label: Bump the application version
-        - label: Open a PR for the release branch into `dev`, merge
+        - label: Open a PR for the release branch into `main`, merge
         - label: Ensure `test` secrets are up to date
-        - label: Open another PR from `dev` to `test`, merge
+        - label: Open another PR from `main` to `test`, merge
         - label: QA the app in test
         - label: Ensure `prod` secrets are up to date
         - label: Open a PR for the `test` branch into `prod`, merge
@@ -109,7 +109,7 @@ body:
         - label: Create a release in GitHub for the tag, generating release notes
         - label: Edit release notes to link back to this Release process issue
         - label: Edit release notes with additional context, images, animations, etc. as-needed
-        - label: Create a branch off `dev`
+        - label: Create a branch off `main`
         - label: Open a PR from `prod` into that branch, merge
-        - label: (optional) Adapt hotfix to current state of `dev` in that same branch
-        - label: Merge the PR into `dev`
+        - label: (optional) Adapt hotfix to current state of `main` in that same branch
+        - label: Merge the PR into `main`

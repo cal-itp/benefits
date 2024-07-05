@@ -52,10 +52,10 @@ bin/reset_db.sh
 See the [Django Environment Variables](environment-variables.md#django) section for details about how to configure the local
 database rebuild.
 
-[core-models]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/models.py
+[core-models]: https://github.com/cal-itp/benefits/blob/main/benefits/core/models.py
 [django-fixtures]: https://docs.djangoproject.com/en/5.0/topics/db/fixtures/
 [django-load-initial-data]: https://docs.djangoproject.com/en/5.0/howto/initial-data/
 [eligibility-server]: https://docs.calitp.org/eligibility-server
-[init]: https://github.com/cal-itp/benefits/blob/dev/bin/init.sh
-[reset-db]: https://github.com/cal-itp/benefits/blob/dev/bin/reset_db.sh
-[sample-fixtures]: https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations/local_fixtures.json
+[init]: https://github.com/cal-itp/benefits/blob/main/bin/init.sh
+[reset-db]: https://github.com/cal-itp/benefits/blob/main/bin/reset_db.sh
+[sample-fixtures]: https://github.com/cal-itp/benefits/tree/main/benefits/core/migrations/local_fixtures.json

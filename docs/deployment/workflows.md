@@ -15,7 +15,7 @@ When a deployment workflow runs, the following steps are taken:
 
 ### 1. Checkout code
 
-From the tip of the corresponding branch (e.g. `dev`)
+From the tip of the corresponding branch (e.g. `main`)
 
 ### 2. Authenticate to GHCR
 
@@ -31,7 +31,7 @@ Push this image:tag into [GHCR][ghcr].
 
 Push the new image:tag to the Azure App Service instance.
 
-[deploy]: https://github.com/cal-itp/benefits/blob/dev/.github/workflows/deploy.yml
-[dockerfile]: https://github.com/cal-itp/benefits/blob/dev/Dockerfile
+[deploy]: https://github.com/cal-itp/benefits/blob/main/.github/workflows/deploy.yml
+[dockerfile]: https://github.com/cal-itp/benefits/blob/main/Dockerfile
 [ghcr]: https://github.com/features/packages
 [gh-actions-trigger]: https://docs.github.com/en/actions/reference/events-that-trigger-workflows

@@ -69,4 +69,4 @@ docker compose down
 ```
 
 [docker]: https://www.docker.com/products/docker-desktop
-[data-migration]: (https://github.com/cal-itp/benefits/tree/dev/benefits/core/migrations)
+[data-migration]: (https://github.com/cal-itp/benefits/tree/main/benefits/core/migrations)
