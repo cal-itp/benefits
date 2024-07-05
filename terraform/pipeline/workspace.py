@@ -5,29 +5,30 @@ import os
 import sys
 
 REASON = os.environ["REASON"]
+
 # the name of the variable that Azure Pipelines uses for the source branch
 # depends on the type of run, so need to check both
 SOURCE = os.environ.get("OTHER_SOURCE") or os.environ["INDIVIDUAL_SOURCE"]
+
 TARGET = os.environ["TARGET"]
 
-# the branches that correspond to environments
-ENV_BRANCHES = ["dev", "test", "prod"]
+# branch to workspace mapping
+WORKSPACES = {"main": "dev", "test": "test", "prod": "default"}
+# workspace to service connection mapping
+SERVICE_CONNECTIONS = {"dev": "Development", "test": "Development", "default": "Production"}
 
-if REASON == "PullRequest" and TARGET in ENV_BRANCHES:
+if REASON == "PullRequest" and TARGET in WORKSPACES:
     # it's a pull request against one of the environment branches, so use the
     # target branch
-    environment = TARGET
-elif REASON in ["IndividualCI", "Manual"] and SOURCE in ENV_BRANCHES:
+    workspace = WORKSPACES[TARGET]
+elif REASON in ["IndividualCI", "Manual"] and SOURCE in WORKSPACES:
     # it's being run on one of the environment branches, so use that
-    environment = SOURCE
+    workspace = WORKSPACES[SOURCE]
 else:
     # default to running against dev
-    environment = "dev"
+    workspace = "dev"
 
-# matching logic in ../init.sh
-workspace = "default" if environment == "prod" else environment
-
-service_connection = "Production" if environment == "prod" else "Development"
+service_connection = SERVICE_CONNECTIONS[workspace]
 
 # just for troubleshooting
 if TARGET is not None:
