@@ -48,7 +48,7 @@ steps:
       # service connection
       environmentServiceNameAzureRM: "${{ parameters.service_connection }}"
     # the plan is done as part of the apply (below), so don't bother doing it twice
-    condition: notIn(variables['Build.SourceBranchName'], 'dev', 'test', 'prod')
+    condition: notIn(variables['Build.SourceBranchName'], 'main', 'test', 'prod')
   - task: TerraformTaskV3@3
     displayName: Terraform apply
     inputs:
@@ -60,4 +60,4 @@ steps:
       # service connection
       environmentServiceNameAzureRM: "${{ parameters.service_connection }}"
     # only run on certain branches
-    condition: in(variables['Build.SourceBranchName'], 'dev', 'test', 'prod')
+    condition: in(variables['Build.SourceBranchName'], 'main', 'test', 'prod')

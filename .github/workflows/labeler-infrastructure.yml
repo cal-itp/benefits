@@ -2,7 +2,7 @@ name: Label infrastructure
 
 on:
   pull_request:
-    branches: [dev]
+    branches: [main]
     types: [opened]
     paths:
       - 'docs/deployment/**'
