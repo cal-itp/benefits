@@ -36,7 +36,7 @@ timeline
           : Deploy low-income riders enrollment pathway
           : Benefits admin tool (Agency configuration)
           : Benefits admin tool (Agency users)
-          
+
           Q4<br>Next
           : Benefits admin tool (In-person eligibility verification)
           : Release Medicare cardholder enrollment pathway
