@@ -1,6 +1,6 @@
 [project]
 name = "benefits"
-version = "2024.06.1"
+version = "2024.07.1"
 description = "Cal-ITP Benefits is an application that enables automated eligibility verification and enrollment for transit benefits onto customers’ existing contactless bank (credit/debit) cards."
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -9,15 +9,15 @@ requires-python = ">=3.9"
 dependencies = [
     "Authlib==1.3.1",
     "azure-keyvault-secrets==4.8.0",
-    "azure-identity==1.16.1",
+    "azure-identity==1.17.1",
     "Django==5.0.6",
     "django-csp==3.8",
     "django-admin-sortable2==2.2.1",
     "django-google-sso==6.2.1",
     "eligibility-api==2023.9.1",
-    "calitp-littlepay==2024.6.1",
+    "calitp-littlepay==2024.7.1",
     "requests==2.32.3",
-    "sentry-sdk==2.5.1",
+    "sentry-sdk==2.7.1",
     "six==1.16.0",
 ]
 
