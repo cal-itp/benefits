@@ -27,21 +27,20 @@ timeline
           : SBMTD - Launch Reduced Fare Mobility ID enrollment pathway
           : Migrate to Littlepay Backoffice API
 
-          Q2<br>Now
-          : Deploy low-income riders enrollment pathway
+          Q2<br>Complete
           : Support for expiring benefits (low-income)
           : Improved UX for agency card enrollment
           : Improved UX for application error states
-          %% : Release enhancements to Veterans pathway
 
-          Q3<br>Next
+          Q3<br>Now
+          : Deploy low-income riders enrollment pathway
           : Benefits admin tool (Agency configuration)
           : Benefits admin tool (Agency users)
+          
+          Q4<br>Next
           : Benefits admin tool (In-person eligibility verification)
-
-          Q4<br>Planned
           : Release Medicare cardholder enrollment pathway
-          : Release riders with disabilities enrollment pathway
+          : Support eligibility verification for disabled Veterans
 
 %% Cal-ITP Benefits Epics (2025)
           section 2025
