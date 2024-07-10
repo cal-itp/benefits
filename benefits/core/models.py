@@ -262,7 +262,6 @@ class TransitAgency(models.Model):
     short_name = models.TextField()
     long_name = models.TextField()
     agency_id = models.TextField()
-    merchant_id = models.TextField()
     info_url = models.URLField()
     phone = models.TextField()
     active = models.BooleanField(default=False)
