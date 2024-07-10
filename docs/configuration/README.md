@@ -74,9 +74,9 @@ else:
     # do something when this agency is inactive
 ```
 
-[benefits-manage]: https://github.com/cal-itp/benefits/blob/dev/manage.py
-[benefits-settings]: https://github.com/cal-itp/benefits/blob/dev/benefits/settings.py
-[benefits-wsgi]: https://github.com/cal-itp/benefits/blob/dev/benefits/wsgi.py
+[benefits-manage]: https://github.com/cal-itp/benefits/blob/main/manage.py
+[benefits-settings]: https://github.com/cal-itp/benefits/blob/main/benefits/settings.py
+[benefits-wsgi]: https://github.com/cal-itp/benefits/blob/main/benefits/wsgi.py
 [django-model]: https://docs.djangoproject.com/en/5.0/topics/db/models/
 [django-settings]: https://docs.djangoproject.com/en/5.0/topics/settings/
 [django-using-settings]: https://docs.djangoproject.com/en/5.0/topics/settings/#using-settings-in-python-code

@@ -6,7 +6,7 @@ The infrastructure is configured as code via [Terraform](https://www.terraform.i
 
 Since the Benefits app is deployed into a Microsoft Azure account provided by the California Department of Technology (CDT)'s Office of Enterprise Technology (OET) team, you'll need to request access from them to the `CDT Digital CA` directory so you can get into the [Azure portal](https://portal.azure.com), and to the `California Department of Technology` directory so you can access [Azure DevOps](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP).
 
-The Azure portal is where you can view the infrastructure resources for Benefits. Azure DevOps is where our [infrastructure pipeline](https://github.com/cal-itp/benefits/blob/dev/terraform/azure-pipelines.yml) is run to build and deploy those infrastructure resources.
+The Azure portal is where you can view the infrastructure resources for Benefits. Azure DevOps is where our [infrastructure pipeline](https://github.com/cal-itp/benefits/blob/main/terraform/azure-pipelines.yml) is run to build and deploy those infrastructure resources.
 
 ## Environments
 
@@ -16,7 +16,7 @@ Each of our environments corresponds to a single Resource Group, [Terraform Work
 
 | Environment | Subscription          | Resource Group                | Workspace | Branch |
 | ----------- | --------------------- | ----------------------------- | --------- | ------ |
-| Dev         | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-D-001` | `dev`     | `dev`  |
+| Dev         | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-D-001` | `dev`     | `main`  |
 | Test        | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-T-001` | `test`    | `test` |
 | Prod        | `CDT/ODI Production`  | `RG-CDT-PUB-VIP-CALITP-P-001` | `default` | `prod` |
 
@@ -146,7 +146,7 @@ Use the following shorthand for conveying the Resource Type as part of the Resou
 1. Install dependencies:
 
    - [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
-   - [Terraform](https://www.terraform.io/downloads) - see exact version in [`deploy.yml`](https://github.com/cal-itp/benefits/blob/dev/terraform/pipeline/deploy.yml)
+   - [Terraform](https://www.terraform.io/downloads) - see exact version in [`deploy.yml`](https://github.com/cal-itp/benefits/blob/main/terraform/pipeline/deploy.yml)
 
 1. [Authenticate using the Azure CLI](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/guides/azure_cli).
 
@@ -154,7 +154,7 @@ Use the following shorthand for conveying the Resource Type as part of the Resou
    az login
    ```
 
-1. Outside the [dev container](../../getting-started/), navigate to the [`terraform/`](https://github.com/cal-itp/benefits/tree/dev/terraform) directory.
+1. Outside the [dev container](../../getting-started/), navigate to the [`terraform/`](https://github.com/cal-itp/benefits/tree/main/terraform) directory.
 1. [Initialize Terraform.](https://www.terraform.io/cli/commands/init) You can also use this script later to switch between [environments](#environments).
 
    ```sh
@@ -189,7 +189,7 @@ When configuration changes to infrastructure resources are needed, they should b
 
 [![Build Status](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_apis/build/status/cal-itp.benefits%20Infra?branchName=dev)](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_build/latest?definitionId=828&branchName=dev)
 
-When code is pushed to any branch on GitHub, our infrastructure pipeline in Azure DevOps runs [`terraform plan`](https://www.terraform.io/cli/commands/plan). When the pull request is merged into `dev`, the pipeline runs [`terraform apply`](https://www.terraform.io/cli/commands/apply).
+When code is pushed to any branch on GitHub, our infrastructure pipeline in Azure DevOps runs [`terraform plan`](https://www.terraform.io/cli/commands/plan). When the pull request is merged into `main`, the pipeline runs [`terraform apply`](https://www.terraform.io/cli/commands/apply).
 
 While other automation for this project is done through GitHub Actions, we use an Azure Pipeline for a couple of reasons:
 
@@ -203,6 +203,6 @@ These steps were followed when setting up our Azure deployment for the first tim
 - CDT team creates the [resources that they own](#ownership)
 - `terraform apply`
 - Set up Slack notifications by [creating a Slack email](https://slack.com/help/articles/206819278-Send-emails-to-Slack) for the [#notify-benefits](https://cal-itp.slack.com/archives/C022HHSEE3F) channel, then [setting it as a Secret in the Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-portal#add-a-secret-to-key-vault) named `slack-benefits-notify-email`
-- Set required [App Service configuration](../configuration/environment-variables.md) and [configuration](../configuration/data.md) by setting values in Key Vault (the mapping is defined in [app_service.tf](https://github.com/cal-itp/benefits/blob/dev/terraform/app_service.tf))
+- Set required [App Service configuration](../configuration/environment-variables.md) and [configuration](../configuration/data.md) by setting values in Key Vault (the mapping is defined in [app_service.tf](https://github.com/cal-itp/benefits/blob/main/terraform/app_service.tf))
 
 This is not a complete step-by-step guide; more a list of things to remember. This may be useful as part of [incident response](https://docs.google.com/document/d/1qtev8qItPiTB4Tp9FQ87XsLtWZ4HlNXqoe9vF2VuGcY/edit#).

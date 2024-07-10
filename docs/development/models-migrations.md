@@ -31,6 +31,6 @@ This script:
 
 Commit the new migration file along with the model changes.
 
-[core-models]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/models.py
-[core-migrations]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/migrations/0001_initial.py
-[makemigrations]: https://github.com/cal-itp/benefits/blob/dev/bin/makemigrations.sh
+[core-models]: https://github.com/cal-itp/benefits/blob/main/benefits/core/models.py
+[core-migrations]: https://github.com/cal-itp/benefits/blob/main/benefits/core/migrations/0001_initial.py
+[makemigrations]: https://github.com/cal-itp/benefits/blob/main/bin/makemigrations.sh

@@ -31,7 +31,7 @@ Docker images for each of the deploy branches are available from GitHub Containe
 [oet]: https://techblog.cdt.ca.gov/2020/06/cdt-taking-the-lead-in-digital-transformation/
 [app-service-containers]: https://docs.microsoft.com/en-us/azure/app-service/configure-custom-container
 [app-service]: https://docs.microsoft.com/en-us/azure/app-service/overview
-[deploy-workflow]: https://github.com/cal-itp/benefits/blob/dev/.github/workflows/deploy.yml
-[dockerfile]: https://github.com/cal-itp/benefits/blob/dev/Dockerfile
+[deploy-workflow]: https://github.com/cal-itp/benefits/blob/main/.github/workflows/deploy.yml
+[dockerfile]: https://github.com/cal-itp/benefits/blob/main/Dockerfile
 [az-webapp]: https://azure.microsoft.com/en-us/services/app-service/containers/
 [ghcr]: https://github.com/features/packages

@@ -27,10 +27,10 @@ version numbers look like: `YYYY.0M.R`
 
 ## 1. Prepare release in a branch
 
-Typically changes for a release will move from `dev`, to `test`, to `prod`. This
-assumes `dev` is in a state that it can be deployed without disruption. (This is called a `Regular` release.)
+Typically changes for a release will move from `main`, to `test`, to `prod`. This
+assumes `main` is in a state that it can be deployed without disruption. (This is called a `Regular` release.)
 
-If `dev` or `test` contain in-progress work that is not ready for production,
+If `main` or `test` contain in-progress work that is not ready for production,
 and a hotfix is needed in production, a separate process to test the changes
 before deploying to `prod` must be undertaken. (This is called a `Hotfix` release.)
 
@@ -41,8 +41,8 @@ different circumstances:
 
 ```mermaid
 graph LR
-    A(Release branch) --> B{Are dev and test ready to deploy?};
-    B -->|Yes| C(dev);
+    A(Release branch) --> B{Are main and test ready to deploy?};
+    B -->|Yes| C(main);
     C --> D(test);
     D --> E(prod);
     B -->|No| E;
@@ -54,7 +54,7 @@ upcoming version number.
 ## 2. Bump the application version number
 
 The app code maintains a version number in
-[`benefits/__init__.py`](https://github.com/cal-itp/benefits/blob/dev/benefits/__init__.py),
+[`benefits/__init__.py`](https://github.com/cal-itp/benefits/blob/main/benefits/__init__.py),
 used by the instrumentation and logging systems.
 
 This version number must be updated to match the new version in the same format:

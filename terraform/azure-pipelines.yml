@@ -3,7 +3,7 @@ trigger:
   # https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#pr-triggers
   branches:
     include:
-      - dev
+      - main
       - test
       - prod
   # only run for changes to Terraform files

@@ -65,7 +65,7 @@ def get_secret_by_name(secret_name, client=None):
     elif client is None:
         # construct the KeyVault URL from the runtime environment
         # see https://docs.calitp.org/benefits/deployment/infrastructure/#environments
-        # and https://github.com/cal-itp/benefits/blob/dev/terraform/key_vault.tf
+        # and https://github.com/cal-itp/benefits/blob/main/terraform/key_vault.tf
         vault_url = KEY_VAULT_URL.format(env=runtime_env[0])
         logger.debug(f"Configuring Azure KeyVault secrets client for: {vault_url}")
 

@@ -1,6 +1,6 @@
 # Copy delivery process
 
-The [`locale`](https://github.com/cal-itp/benefits/tree/dev/benefits/locale) folder in this repository contain the `django.po` message files for English and Spanish translation strings for the Benefits application.
+The [`locale`](https://github.com/cal-itp/benefits/tree/main/benefits/locale) folder in this repository contain the `django.po` message files for English and Spanish translation strings for the Benefits application.
 
 Translation strings include all application copy, including:
 
@@ -8,7 +8,7 @@ Translation strings include all application copy, including:
 - Image and illustration alt tags
 - Page titles used in the browser tab
 - In-line link URLs
-- Error messages (like [no script](https://github.com/cal-itp/benefits/blob/dev/benefits/core/templates/core/includes/noscript.html), [no cookies](https://github.com/cal-itp/benefits/blob/dev/benefits/core/templates/core/includes/nocookies.html) warnings)
+- Error messages (like [no script](https://github.com/cal-itp/benefits/blob/main/benefits/core/templates/core/includes/noscript.html), [no cookies](https://github.com/cal-itp/benefits/blob/main/benefits/core/templates/core/includes/nocookies.html) warnings)
 
 ## Cal-ITP Benefits Application Copy
 
