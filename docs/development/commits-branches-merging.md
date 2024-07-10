@@ -32,10 +32,10 @@ git commit -m "feat(eligibility/urls): add path for start"
 
 ## Branches
 
-The default GitHub branch is `dev`. All new feature work should be in the form of Pull Requests (PR) that target `dev` as their
+The default GitHub branch is `main`. All new feature work should be in the form of Pull Requests (PR) that target `main` as their
 base.
 
-In addition to `dev`, the repository has three other long-lived branches:
+In addition to `main`, the repository has three other long-lived branches:
 
 - `test` and `prod` correspond to the Test and Production [deploy environments](../deployment/README.md), respectively.
 - `gh-pages` hosts the compiled documentation, and is always forced-pushed by the
@@ -43,7 +43,7 @@ In addition to `dev`, the repository has three other long-lived branches:
 
 ### Protection rules
 
-[Branch protection rules][gh-branch-protection] are in place on three environment branches (`dev`, `test`, `prod`) to:
+[Branch protection rules][gh-branch-protection] are in place on three environment branches (`main`, `test`, `prod`) to:
 
 - Prevent branch deletion
 - Restrict force-pushing, where appropriate
@@ -76,7 +76,7 @@ PR branches are deleted once their PR is merged.
 Merging of PRs should be done using the _merge commit_ strategy. The PR author should utilize `git rebase -i` to ensure
 their PR commit history is clean, logical, and free of typos.
 
-When merging a PR into `dev`, it is customary to format the merge commit message like:
+When merging a PR into `main`, it is customary to format the merge commit message like:
 
 ```console
 Title of PR (#number)

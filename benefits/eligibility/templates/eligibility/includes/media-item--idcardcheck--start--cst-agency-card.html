@@ -1,0 +1,13 @@
+{% extends "eligibility/includes/media-item--idcardcheck.html" %}
+
+{% load i18n %}
+
+{% block heading %}
+  {% translate "Your current Agency Card number" %}
+{% endblock heading %}
+
+{% block body %}
+  <div class="media-body--details">
+    <p>{% translate "You do not need to have your physical CST Agency Card, but you will need to know the number." %}</p>
+  </div>
+{% endblock body %}

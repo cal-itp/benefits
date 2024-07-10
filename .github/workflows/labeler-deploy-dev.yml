@@ -2,7 +2,7 @@ name: Label dev deploys
 
 on:
   pull_request:
-    branches: [dev]
+    branches: [main]
     types: [opened]
     paths:
       - ".github/workflows/deploy-*.yml"

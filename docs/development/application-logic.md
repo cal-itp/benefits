@@ -28,15 +28,15 @@ flowchart LR
     enrollment --> complete
 ```
 
-The structure of the source code in [`benefits/`](https://github.com/cal-itp/benefits/tree/dev/benefits)
+The structure of the source code in [`benefits/`](https://github.com/cal-itp/benefits/tree/main/benefits)
 generally follows from these phases:
 
-- [`benefits/core/`](https://github.com/cal-itp/benefits/tree/dev/benefits/core) implements shared logic and models, and
+- [`benefits/core/`](https://github.com/cal-itp/benefits/tree/main/benefits/core) implements shared logic and models, and
   defines the user's entrypoint into the app
-- [`benefits/oauth/`](https://github.com/cal-itp/benefits/tree/dev/benefits/oauth) implements identity proofing
-- [`benefits/eligibility/`](https://github.com/cal-itp/benefits/tree/dev/benefits/eligibility) implements eligibility
+- [`benefits/oauth/`](https://github.com/cal-itp/benefits/tree/main/benefits/oauth) implements identity proofing
+- [`benefits/eligibility/`](https://github.com/cal-itp/benefits/tree/main/benefits/eligibility) implements eligibility
   verification
-- [`benefits/enrollment/`](https://github.com/cal-itp/benefits/tree/dev/benefits/enrollment) implements enrollment
+- [`benefits/enrollment/`](https://github.com/cal-itp/benefits/tree/main/benefits/enrollment) implements enrollment
 
 Each of these directories contains a standalone Django app registered in the [settings](../configuration/README.md#django-settings).
 
@@ -287,15 +287,15 @@ benefits-->>analytics: returned enrollment
     deactivate benefits
 ```
 
-[core-context-processors]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/context_processors.py
-[core-middleware]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/middleware.py
-[core-models]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/models.py
-[core-session]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/session.py
-[core-views]: https://github.com/cal-itp/benefits/blob/dev/benefits/core/views.py
-[eligibility-verify]: https://github.com/cal-itp/benefits/blob/dev/benefits/eligibility/verify.py
-[eligibility-views]: https://github.com/cal-itp/benefits/blob/dev/benefits/eligibility/views.py
-[enrollment-views]: https://github.com/cal-itp/benefits/blob/dev/benefits/enrollment/views.py
+[core-context-processors]: https://github.com/cal-itp/benefits/blob/main/benefits/core/context_processors.py
+[core-middleware]: https://github.com/cal-itp/benefits/blob/main/benefits/core/middleware.py
+[core-models]: https://github.com/cal-itp/benefits/blob/main/benefits/core/models.py
+[core-session]: https://github.com/cal-itp/benefits/blob/main/benefits/core/session.py
+[core-views]: https://github.com/cal-itp/benefits/blob/main/benefits/core/views.py
+[eligibility-verify]: https://github.com/cal-itp/benefits/blob/main/benefits/eligibility/verify.py
+[eligibility-views]: https://github.com/cal-itp/benefits/blob/main/benefits/eligibility/views.py
+[enrollment-views]: https://github.com/cal-itp/benefits/blob/main/benefits/enrollment/views.py
 [littlepay]: https://github.com/cal-itp/littlepay
-[oauth-client]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/client.py
-[oauth-redirects]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/redirects.py
-[oauth-views]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/views.py
+[oauth-client]: https://github.com/cal-itp/benefits/blob/main/benefits/oauth/client.py
+[oauth-redirects]: https://github.com/cal-itp/benefits/blob/main/benefits/oauth/redirects.py
+[oauth-views]: https://github.com/cal-itp/benefits/blob/main/benefits/oauth/views.py

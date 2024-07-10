@@ -36,4 +36,4 @@ use in e.g. views.
 Consumers call `benefits.oauth.client.create_client(oauth, provider)` with the name of a client to obtain an Authlib client
 instance. If that client name has not been registered yet, `_register_provider(oauth_registry, provider)` uses data from the given `AuthProvider` instance to register the client into this instance and returns the client object.
 
-[oauth-client]: https://github.com/cal-itp/benefits/blob/dev/benefits/oauth/client.py
+[oauth-client]: https://github.com/cal-itp/benefits/blob/main/benefits/oauth/client.py

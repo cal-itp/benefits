@@ -7,17 +7,17 @@ on:
     types:
       - completed
     branches:
-      - dev
+      - main
   pull_request:
     branches:
-      - dev
+      - main
     paths:
       - "docs/**"
       - "mkdocs.yml"
       - ".github/workflows/mkdocs.yml"
   push:
     branches:
-      - dev
+      - main
     paths:
       - "docs/**"
       - "mkdocs.yml"
@@ -95,7 +95,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v6
         with:
           workflow: tests-pytest.yml
-          branch: dev
+          branch: main
           event: push
           name: coverage-report
           path: docs/tests/coverage

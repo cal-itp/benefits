@@ -9,7 +9,7 @@ The following user attributes are *not* collected:
 - IP address
 - Designated Market Area (DMA)
 
-See the [Amplitude analytics code on GitHub](https://github.com/cal-itp/benefits/blob/dev/benefits/core/templates/core/includes/analytics.html#L30).
+See the [Amplitude analytics code on GitHub](https://github.com/cal-itp/benefits/blob/main/benefits/core/templates/core/includes/analytics.html#L30).
 
 ## User information collected
 

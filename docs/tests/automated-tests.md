@@ -3,7 +3,7 @@
 ## Cypress
 
 Feature and user interface tests are implemented with [`cypress`](https://www.cypress.io/) and can be found in the
-[`tests/cypress`](https://github.com/cal-itp/benefits/tree/dev/tests/cypress) directory in the repository.
+[`tests/cypress`](https://github.com/cal-itp/benefits/tree/main/tests/cypress) directory in the repository.
 
 See the [`cypress` Command Line](https://docs.cypress.io/guides/guides/command-line) guide for more information.
 
@@ -77,4 +77,4 @@ The report files include a local `.gitignore` file, so the entire directory is h
 
 ### Latest coverage report
 
-We also make the latest (from `dev`) coverage report available online here: [Coverage report](../coverage)
+We also make the latest (from `main`) coverage report available online here: [Coverage report](../coverage)
