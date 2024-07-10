@@ -198,7 +198,6 @@ def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityV
         short_name="TEST",
         long_name="Test Transit Agency",
         agency_id="test123",
-        merchant_id="test",
         info_url="https://example.com/test-agency",
         phone="800-555-5555",
         active=True,
