@@ -141,6 +141,35 @@ class EligibilityVerificationForm(forms.Form):
             raise forms.ValidationError("reCAPTCHA failed")
 
 
+class CSTAgencyCard(EligibilityVerificationForm):
+    """EligibilityVerification form for the CST Agency Card."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(
+            title=_("Agency card information"),
+            headline=_("Let’s find the record of your transit benefit."),
+            blurb=_(
+                "We use the information on your CST Agency Card to find the record of your transit benefit in our system."
+            ),
+            name_label=_("Last Name"),
+            name_placeholder="Hernandez-Demarcos",
+            name_help_text=_(
+                "Please enter your last name the same way it is printed on your card, including capital letters and hyphens."
+            ),
+            sub_label=_("Agency Card number"),
+            sub_help_text=_("This is a 5-digit number on the front and back of your card."),
+            sub_placeholder="12345",
+            name_max_length=255,
+            sub_input_mode="numeric",
+            sub_max_length=5,
+            sub_pattern=r"\d{5}",
+            sub_custom_validity=_("Please enter a 5-digit number."),
+            name_custom_validity=_("Please enter your last name."),
+            *args,
+            **kwargs,
+        )
+
+
 class MSTCourtesyCard(EligibilityVerificationForm):
     """EligibilityVerification form for the MST Courtesy Card."""
 
