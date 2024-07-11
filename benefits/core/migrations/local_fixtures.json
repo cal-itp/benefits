@@ -10,15 +10,6 @@
   },
   {
     "model": "core.pemdata",
-    "pk": 2,
-    "fields": {
-      "label": "(SBMTD) eligibility server public key",
-      "text_secret_name": null,
-      "remote_url": "https://raw.githubusercontent.com/cal-itp/eligibility-server/main/keys/server.pub"
-    }
-  },
-  {
-    "model": "core.pemdata",
     "pk": 3,
     "fields": {
       "label": "Benefits client private key",
@@ -102,27 +93,6 @@
       "label": "(SacRT) Senior Discount",
       "group_id": "group123",
       "enrollment_success_template": "enrollment/success--sacrt.html"
-    }
-  },
-  {
-    "model": "core.eligibilitytype",
-    "pk": 5,
-    "fields": {
-      "name": "senior",
-      "label": "(SBMTD) Senior Discount",
-      "group_id": "group123",
-      "enrollment_success_template": "enrollment/success--sbmtd.html"
-    }
-  },
-  {
-    "model": "core.eligibilitytype",
-    "pk": 6,
-    "fields": {
-      "name": "mobility_pass",
-      "label": "(SBMTD) Mobility Pass Discount",
-      "group_id": "group123",
-      "enrollment_index_template": "enrollment/index--agency-card.html",
-      "enrollment_success_template": "enrollment/success--sbmtd-mobility-pass.html"
     }
   },
   {
@@ -227,50 +197,6 @@
   },
   {
     "model": "core.eligibilityverifier",
-    "pk": 5,
-    "fields": {
-      "name": "(SBMTD) oauth claims via Login.gov",
-      "display_order": 6,
-      "active": false,
-      "api_url": null,
-      "api_auth_header": null,
-      "api_auth_key_secret_name": null,
-      "eligibility_type": 5,
-      "public_key": null,
-      "jwe_cek_enc": null,
-      "jwe_encryption_alg": null,
-      "jws_signing_alg": null,
-      "auth_provider": 1,
-      "selection_label_template": "eligibility/includes/selection-label--senior.html",
-      "start_template": "eligibility/start--senior.html",
-      "form_class": null
-    }
-  },
-  {
-    "model": "core.eligibilityverifier",
-    "pk": 6,
-    "fields": {
-      "name": "(SBMTD) eligibility server verifier",
-      "display_order": 7,
-      "active": true,
-      "api_url": "http://server:8000/verify",
-      "api_auth_header": "X-Server-API-Key",
-      "api_auth_key_secret_name": "mobility-pass-verifier-api-auth-key",
-      "eligibility_type": 6,
-      "public_key": 2,
-      "jwe_cek_enc": "A256CBC-HS512",
-      "jwe_encryption_alg": "RSA-OAEP",
-      "jws_signing_alg": "RS256",
-      "auth_provider": null,
-      "selection_label_template": "eligibility/includes/selection-label--sbmtd-mobility-pass.html",
-      "start_template": "eligibility/start--sbmtd-mobility-pass.html",
-      "form_class": "benefits.eligibility.forms.SBMTDMobilityPass",
-      "unverified_template": "eligibility/unverified--sbmtd-mobility-pass.html",
-      "help_template": "core/includes/help--sbmtd-mobility-pass.html"
-    }
-  },
-  {
-    "model": "core.eligibilityverifier",
     "pk": 7,
     "fields": {
       "name": "(MST) CalFresh oauth claims via Login.gov",
@@ -320,20 +246,6 @@
     }
   },
   {
-    "model": "core.paymentprocessor",
-    "pk": 3,
-    "fields": {
-      "name": "(SBMTD) test payment processor",
-      "api_base_url": "http://server:8000",
-      "client_id": "",
-      "client_secret_name": "sbmtd-payment-processor-client-secret",
-      "audience": "",
-      "card_tokenize_url": "http://server:8000/static/tokenize.js",
-      "card_tokenize_func": "tokenize",
-      "card_tokenize_env": "test"
-    }
-  },
-  {
     "model": "core.transitagency",
     "pk": 1,
     "fields": {
@@ -373,27 +285,6 @@
       "eligibility_index_template": "eligibility/index--sacrt.html",
       "eligibility_types": [4],
       "eligibility_verifiers": [4]
-    }
-  },
-  {
-    "model": "core.transitagency",
-    "pk": 3,
-    "fields": {
-      "slug": "sbmtd",
-      "short_name": "SBMTD (local)",
-      "long_name": "Santa Barbara MTD (local)",
-      "agency_id": "sbmtd",
-      "info_url": "https://sbmtd.gov/taptoride/",
-      "phone": "805-963-3366",
-      "active": true,
-      "payment_processor": 3,
-      "private_key": 3,
-      "public_key": 4,
-      "jws_signing_alg": "RS256",
-      "index_template": "core/index--sbmtd.html",
-      "eligibility_index_template": "eligibility/index--sbmtd.html",
-      "eligibility_types": [5, 6],
-      "eligibility_verifiers": [5, 6]
     }
   }
 ]
