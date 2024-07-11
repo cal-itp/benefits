@@ -1,12 +1,12 @@
 const helpers = require("../plugins/helpers");
 const users = require("../fixtures/users.json");
 
-describe("Courtesy Cards", () => {
+describe("Agency Cards", () => {
   beforeEach(() => {
     cy.visit("/");
 
     helpers.selectAgency();
-    helpers.selectCourtesyCard();
+    helpers.selectAgencyCard();
   });
 
   it("Confirms an eligible user", () => {
