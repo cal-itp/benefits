@@ -87,16 +87,6 @@
   },
   {
     "model": "core.eligibilitytype",
-    "pk": 4,
-    "fields": {
-      "name": "senior",
-      "label": "(SacRT) Senior Discount",
-      "group_id": "group123",
-      "enrollment_success_template": "enrollment/success--sacrt.html"
-    }
-  },
-  {
-    "model": "core.eligibilitytype",
     "pk": 7,
     "fields": {
       "name": "calfresh",
@@ -176,27 +166,6 @@
   },
   {
     "model": "core.eligibilityverifier",
-    "pk": 4,
-    "fields": {
-      "name": "(SacRT) oauth claims via Login.gov",
-      "display_order": 5,
-      "active": false,
-      "api_url": null,
-      "api_auth_header": null,
-      "api_auth_key_secret_name": null,
-      "eligibility_type": 4,
-      "public_key": null,
-      "jwe_cek_enc": null,
-      "jwe_encryption_alg": null,
-      "jws_signing_alg": null,
-      "auth_provider": 1,
-      "selection_label_template": "eligibility/includes/selection-label--senior.html",
-      "start_template": "eligibility/start--senior.html",
-      "form_class": null
-    }
-  },
-  {
-    "model": "core.eligibilityverifier",
     "pk": 7,
     "fields": {
       "name": "(MST) CalFresh oauth claims via Login.gov",
@@ -232,20 +201,6 @@
     }
   },
   {
-    "model": "core.paymentprocessor",
-    "pk": 2,
-    "fields": {
-      "name": "(SacRT) test payment processor",
-      "api_base_url": "http://server:8000",
-      "client_id": "",
-      "client_secret_name": "sacrt-payment-processor-client-secret",
-      "audience": "",
-      "card_tokenize_url": "http://server:8000/static/tokenize.js",
-      "card_tokenize_func": "tokenize",
-      "card_tokenize_env": "test"
-    }
-  },
-  {
     "model": "core.transitagency",
     "pk": 1,
     "fields": {
@@ -264,27 +219,6 @@
       "eligibility_index_template": "eligibility/index--mst.html",
       "eligibility_types": [1, 7, 2, 3],
       "eligibility_verifiers": [1, 7, 2, 3]
-    }
-  },
-  {
-    "model": "core.transitagency",
-    "pk": 2,
-    "fields": {
-      "slug": "sacrt",
-      "short_name": "SacRT (local)",
-      "long_name": "Sacramento Regional Transit (local)",
-      "agency_id": "sacrt",
-      "info_url": "https://sacrt.com/",
-      "phone": "916-321-2877",
-      "active": true,
-      "payment_processor": 2,
-      "private_key": 3,
-      "public_key": 4,
-      "jws_signing_alg": "RS256",
-      "index_template": "core/index--sacrt.html",
-      "eligibility_index_template": "eligibility/index--sacrt.html",
-      "eligibility_types": [4],
-      "eligibility_verifiers": [4]
     }
   }
 ]
