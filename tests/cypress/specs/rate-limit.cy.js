@@ -10,7 +10,7 @@ describe("Rate limiting feature spec", () => {
     cy.visit("/");
 
     helpers.selectAgency();
-    helpers.selectCourtesyCard();
+    helpers.selectAgencyCard();
   });
 
   it("Limits excess requests", () => {
