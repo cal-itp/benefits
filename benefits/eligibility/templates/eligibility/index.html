@@ -25,4 +25,12 @@
 
 {% block inner-content %}
   {% include "core/includes/form.html" with form=form %}
+  <script nonce="{{ request.csp_nonce }}">
+    $(".modal").on("click", function(event) {
+      if (!(event.target instanceof HTMLAnchorElement)) {
+          event.preventDefault();
+          event.stopPropagation();
+      }
+    });
+  </script>
 {% endblock inner-content %}
