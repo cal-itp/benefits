@@ -10,7 +10,7 @@
   },
   {
     "model": "core.pemdata",
-    "pk": 3,
+    "pk": 2,
     "fields": {
       "label": "Benefits client private key",
       "text_secret_name": "client-private-key",
@@ -19,7 +19,7 @@
   },
   {
     "model": "core.pemdata",
-    "pk": 4,
+    "pk": 3,
     "fields": {
       "label": "Benefits client public key",
       "text_secret_name": "client-public-key",
@@ -87,7 +87,7 @@
   },
   {
     "model": "core.eligibilitytype",
-    "pk": 7,
+    "pk": 4,
     "fields": {
       "name": "calfresh",
       "label": "CalFresh",
@@ -166,7 +166,7 @@
   },
   {
     "model": "core.eligibilityverifier",
-    "pk": 7,
+    "pk": 4,
     "fields": {
       "name": "(CST) CalFresh oauth claims via Login.gov",
       "display_order": 2,
@@ -174,7 +174,7 @@
       "api_url": null,
       "api_auth_header": null,
       "api_auth_key_secret_name": null,
-      "eligibility_type": 7,
+      "eligibility_type": 4,
       "public_key": null,
       "jwe_cek_enc": null,
       "jwe_encryption_alg": null,
@@ -212,13 +212,13 @@
       "phone": "1-800-555-5555",
       "active": true,
       "payment_processor": 1,
-      "private_key": 3,
-      "public_key": 4,
+      "private_key": 2,
+      "public_key": 3,
       "jws_signing_alg": "RS256",
       "index_template": "core/index--cst.html",
       "eligibility_index_template": "eligibility/index--cst.html",
-      "eligibility_types": [1, 7, 2, 3],
-      "eligibility_verifiers": [1, 7, 2, 3]
+      "eligibility_types": [1, 2, 3, 4],
+      "eligibility_verifiers": [1, 2, 3, 4]
     }
   }
 ]
