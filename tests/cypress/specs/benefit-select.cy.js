@@ -10,7 +10,7 @@ describe("Benefit selection", () => {
 
   it("User sees 4 radio buttons", () => {
     cy.get("input:radio").should("have.length", 4);
-    cy.contains("Courtesy Card");
+    cy.contains("Agency Card");
     cy.contains("65 years");
   });
 
