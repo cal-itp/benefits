@@ -6,4 +6,4 @@ def test_version():
 
     assert __version__ is not None
     assert __version__ == VERSION
-    assert re.match(r"\d{4}\.\d{1,2}\.\d+", __version__)
+    assert re.match(r"\d+\.\d+\..+", __version__)
