@@ -3,7 +3,7 @@
     "model": "core.pemdata",
     "pk": 1,
     "fields": {
-      "label": "(MST) eligibility server public key",
+      "label": "(CST) eligibility server public key",
       "text_secret_name": null,
       "remote_url": "https://raw.githubusercontent.com/cal-itp/eligibility-server/main/keys/server.pub"
     }
@@ -12,15 +12,6 @@
     "model": "core.pemdata",
     "pk": 2,
     "fields": {
-      "label": "(SBMTD) eligibility server public key",
-      "text_secret_name": null,
-      "remote_url": "https://raw.githubusercontent.com/cal-itp/eligibility-server/main/keys/server.pub"
-    }
-  },
-  {
-    "model": "core.pemdata",
-    "pk": 3,
-    "fields": {
       "label": "Benefits client private key",
       "text_secret_name": "client-private-key",
       "remote_url": null
@@ -28,7 +19,7 @@
   },
   {
     "model": "core.pemdata",
-    "pk": 4,
+    "pk": 3,
     "fields": {
       "label": "Benefits client public key",
       "text_secret_name": "client-public-key",
@@ -68,9 +59,9 @@
     "pk": 1,
     "fields": {
       "name": "senior",
-      "label": "(MST) Senior Discount",
+      "label": "(CST) Senior Discount",
       "group_id": "group123",
-      "enrollment_success_template": "enrollment/success--mst.html"
+      "enrollment_success_template": "enrollment/success--cst.html"
     }
   },
   {
@@ -78,56 +69,25 @@
     "pk": 2,
     "fields": {
       "name": "veteran",
-      "label": "(MST) Veteran Discount",
+      "label": "(CST) Veteran Discount",
       "group_id": "group123",
-      "enrollment_success_template": "enrollment/success--mst.html"
+      "enrollment_success_template": "enrollment/success--cst.html"
     }
   },
   {
     "model": "core.eligibilitytype",
     "pk": 3,
     "fields": {
-      "name": "courtesy_card",
-      "label": "(MST) Courtesy Card Discount",
+      "name": "agency_card",
+      "label": "(CST) Agency Card Discount",
       "group_id": "group123",
       "enrollment_index_template": "enrollment/index--agency-card.html",
-      "enrollment_success_template": "enrollment/success--mst-courtesy-card.html"
+      "enrollment_success_template": "enrollment/success--cst-agency-card.html"
     }
   },
   {
     "model": "core.eligibilitytype",
     "pk": 4,
-    "fields": {
-      "name": "senior",
-      "label": "(SacRT) Senior Discount",
-      "group_id": "group123",
-      "enrollment_success_template": "enrollment/success--sacrt.html"
-    }
-  },
-  {
-    "model": "core.eligibilitytype",
-    "pk": 5,
-    "fields": {
-      "name": "senior",
-      "label": "(SBMTD) Senior Discount",
-      "group_id": "group123",
-      "enrollment_success_template": "enrollment/success--sbmtd.html"
-    }
-  },
-  {
-    "model": "core.eligibilitytype",
-    "pk": 6,
-    "fields": {
-      "name": "mobility_pass",
-      "label": "(SBMTD) Mobility Pass Discount",
-      "group_id": "group123",
-      "enrollment_index_template": "enrollment/index--agency-card.html",
-      "enrollment_success_template": "enrollment/success--sbmtd-mobility-pass.html"
-    }
-  },
-  {
-    "model": "core.eligibilitytype",
-    "pk": 7,
     "fields": {
       "name": "calfresh",
       "label": "CalFresh",
@@ -136,14 +96,14 @@
       "expiration_days": 5,
       "expiration_reenrollment_days": 3,
       "reenrollment_error_template": "enrollment/reenrollment-error--calfresh.html",
-      "enrollment_success_template": "enrollment/success--mst.html"
+      "enrollment_success_template": "enrollment/success--cst.html"
     }
   },
   {
     "model": "core.eligibilityverifier",
     "pk": 1,
     "fields": {
-      "name": "(MST) oauth claims via Login.gov",
+      "name": "(CST) oauth claims via Login.gov",
       "display_order": 1,
       "active": true,
       "api_url": null,
@@ -164,7 +124,7 @@
     "model": "core.eligibilityverifier",
     "pk": 2,
     "fields": {
-      "name": "(MST) VA.gov - veteran",
+      "name": "(CST) VA.gov - veteran",
       "display_order": 3,
       "active": true,
       "api_url": null,
@@ -185,101 +145,36 @@
     "model": "core.eligibilityverifier",
     "pk": 3,
     "fields": {
-      "name": "(MST) eligibility server verifier",
+      "name": "(CST) eligibility server verifier",
       "display_order": 4,
       "active": true,
       "api_url": "http://server:8000/verify",
       "api_auth_header": "X-Server-API-Key",
-      "api_auth_key_secret_name": "courtesy-card-verifier-api-auth-key",
+      "api_auth_key_secret_name": "agency-card-verifier-api-auth-key",
       "eligibility_type": 3,
       "public_key": 1,
       "jwe_cek_enc": "A256CBC-HS512",
       "jwe_encryption_alg": "RSA-OAEP",
       "jws_signing_alg": "RS256",
       "auth_provider": null,
-      "selection_label_template": "eligibility/includes/selection-label--mst-courtesy-card.html",
-      "start_template": "eligibility/start--mst-courtesy-card.html",
-      "form_class": "benefits.eligibility.forms.MSTCourtesyCard",
-      "unverified_template": "eligibility/unverified--mst-courtesy-card.html",
-      "help_template": "core/includes/help--mst-courtesy-card.html"
+      "selection_label_template": "eligibility/includes/selection-label--cst-agency-card.html",
+      "start_template": "eligibility/start--cst-agency-card.html",
+      "form_class": "benefits.eligibility.forms.CSTAgencyCard",
+      "unverified_template": "eligibility/unverified--cst-agency-card.html",
+      "help_template": "core/includes/help--cst-agency-card.html"
     }
   },
   {
     "model": "core.eligibilityverifier",
     "pk": 4,
     "fields": {
-      "name": "(SacRT) oauth claims via Login.gov",
-      "display_order": 5,
-      "active": false,
-      "api_url": null,
-      "api_auth_header": null,
-      "api_auth_key_secret_name": null,
-      "eligibility_type": 4,
-      "public_key": null,
-      "jwe_cek_enc": null,
-      "jwe_encryption_alg": null,
-      "jws_signing_alg": null,
-      "auth_provider": 1,
-      "selection_label_template": "eligibility/includes/selection-label--senior.html",
-      "start_template": "eligibility/start--senior.html",
-      "form_class": null
-    }
-  },
-  {
-    "model": "core.eligibilityverifier",
-    "pk": 5,
-    "fields": {
-      "name": "(SBMTD) oauth claims via Login.gov",
-      "display_order": 6,
-      "active": false,
-      "api_url": null,
-      "api_auth_header": null,
-      "api_auth_key_secret_name": null,
-      "eligibility_type": 5,
-      "public_key": null,
-      "jwe_cek_enc": null,
-      "jwe_encryption_alg": null,
-      "jws_signing_alg": null,
-      "auth_provider": 1,
-      "selection_label_template": "eligibility/includes/selection-label--senior.html",
-      "start_template": "eligibility/start--senior.html",
-      "form_class": null
-    }
-  },
-  {
-    "model": "core.eligibilityverifier",
-    "pk": 6,
-    "fields": {
-      "name": "(SBMTD) eligibility server verifier",
-      "display_order": 7,
-      "active": true,
-      "api_url": "http://server:8000/verify",
-      "api_auth_header": "X-Server-API-Key",
-      "api_auth_key_secret_name": "mobility-pass-verifier-api-auth-key",
-      "eligibility_type": 6,
-      "public_key": 2,
-      "jwe_cek_enc": "A256CBC-HS512",
-      "jwe_encryption_alg": "RSA-OAEP",
-      "jws_signing_alg": "RS256",
-      "auth_provider": null,
-      "selection_label_template": "eligibility/includes/selection-label--sbmtd-mobility-pass.html",
-      "start_template": "eligibility/start--sbmtd-mobility-pass.html",
-      "form_class": "benefits.eligibility.forms.SBMTDMobilityPass",
-      "unverified_template": "eligibility/unverified--sbmtd-mobility-pass.html",
-      "help_template": "core/includes/help--sbmtd-mobility-pass.html"
-    }
-  },
-  {
-    "model": "core.eligibilityverifier",
-    "pk": 7,
-    "fields": {
-      "name": "(MST) CalFresh oauth claims via Login.gov",
+      "name": "(CST) CalFresh oauth claims via Login.gov",
       "display_order": 2,
       "active": true,
       "api_url": null,
       "api_auth_header": null,
       "api_auth_key_secret_name": null,
-      "eligibility_type": 7,
+      "eligibility_type": 4,
       "public_key": null,
       "jwe_cek_enc": null,
       "jwe_encryption_alg": null,
@@ -295,38 +190,10 @@
     "model": "core.paymentprocessor",
     "pk": 1,
     "fields": {
-      "name": "(MST) test payment processor",
+      "name": "(CST) test payment processor",
       "api_base_url": "http://server:8000",
       "client_id": "",
-      "client_secret_name": "mst-payment-processor-client-secret",
-      "audience": "",
-      "card_tokenize_url": "http://server:8000/static/tokenize.js",
-      "card_tokenize_func": "tokenize",
-      "card_tokenize_env": "test"
-    }
-  },
-  {
-    "model": "core.paymentprocessor",
-    "pk": 2,
-    "fields": {
-      "name": "(SacRT) test payment processor",
-      "api_base_url": "http://server:8000",
-      "client_id": "",
-      "client_secret_name": "sacrt-payment-processor-client-secret",
-      "audience": "",
-      "card_tokenize_url": "http://server:8000/static/tokenize.js",
-      "card_tokenize_func": "tokenize",
-      "card_tokenize_env": "test"
-    }
-  },
-  {
-    "model": "core.paymentprocessor",
-    "pk": 3,
-    "fields": {
-      "name": "(SBMTD) test payment processor",
-      "api_base_url": "http://server:8000",
-      "client_id": "",
-      "client_secret_name": "sbmtd-payment-processor-client-secret",
+      "client_secret_name": "cst-payment-processor-client-secret",
       "audience": "",
       "card_tokenize_url": "http://server:8000/static/tokenize.js",
       "card_tokenize_func": "tokenize",
@@ -337,63 +204,21 @@
     "model": "core.transitagency",
     "pk": 1,
     "fields": {
-      "slug": "mst",
-      "short_name": "MST (local)",
-      "long_name": "Monterey-Salinas Transit (local)",
-      "agency_id": "mst",
-      "info_url": "https://mst.org/benefits",
-      "phone": "888-678-2871",
+      "slug": "cst",
+      "short_name": "CST (local)",
+      "long_name": "California State Transit (local)",
+      "agency_id": "cst",
+      "info_url": "https://www.agency-website.com",
+      "phone": "1-800-555-5555",
       "active": true,
       "payment_processor": 1,
-      "private_key": 3,
-      "public_key": 4,
+      "private_key": 2,
+      "public_key": 3,
       "jws_signing_alg": "RS256",
-      "index_template": "core/index--mst.html",
-      "eligibility_index_template": "eligibility/index--mst.html",
-      "eligibility_types": [1, 7, 2, 3],
-      "eligibility_verifiers": [1, 7, 2, 3]
-    }
-  },
-  {
-    "model": "core.transitagency",
-    "pk": 2,
-    "fields": {
-      "slug": "sacrt",
-      "short_name": "SacRT (local)",
-      "long_name": "Sacramento Regional Transit (local)",
-      "agency_id": "sacrt",
-      "info_url": "https://sacrt.com/",
-      "phone": "916-321-2877",
-      "active": true,
-      "payment_processor": 2,
-      "private_key": 3,
-      "public_key": 4,
-      "jws_signing_alg": "RS256",
-      "index_template": "core/index--sacrt.html",
-      "eligibility_index_template": "eligibility/index--sacrt.html",
-      "eligibility_types": [4],
-      "eligibility_verifiers": [4]
-    }
-  },
-  {
-    "model": "core.transitagency",
-    "pk": 3,
-    "fields": {
-      "slug": "sbmtd",
-      "short_name": "SBMTD (local)",
-      "long_name": "Santa Barbara MTD (local)",
-      "agency_id": "sbmtd",
-      "info_url": "https://sbmtd.gov/taptoride/",
-      "phone": "805-963-3366",
-      "active": true,
-      "payment_processor": 3,
-      "private_key": 3,
-      "public_key": 4,
-      "jws_signing_alg": "RS256",
-      "index_template": "core/index--sbmtd.html",
-      "eligibility_index_template": "eligibility/index--sbmtd.html",
-      "eligibility_types": [5, 6],
-      "eligibility_verifiers": [5, 6]
+      "index_template": "core/index--cst.html",
+      "eligibility_index_template": "eligibility/index--cst.html",
+      "eligibility_types": [1, 2, 3, 4],
+      "eligibility_verifiers": [1, 2, 3, 4]
     }
   }
 ]

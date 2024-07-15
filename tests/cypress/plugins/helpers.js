@@ -22,10 +22,10 @@ export const selectAgency = () => {
   return agency;
 };
 
-export const selectCourtesyCard = () => {
+export const selectAgencyCard = () => {
   cy.location("pathname").should("eq", `/eligibility/${agency.slug}`);
 
-  cy.contains("MST Courtesy Card").click();
+  cy.contains("CST Agency Card").click();
   cy.contains("Choose this benefit").click();
   cy.contains("Continue").click();
 };
