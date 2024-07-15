@@ -2,6 +2,7 @@
 time) so that all the necessary pipeline variables are available."""
 
 import os
+import re
 import sys
 
 REASON = os.environ["REASON"]
@@ -11,22 +12,27 @@ REASON = os.environ["REASON"]
 SOURCE = os.environ.get("OTHER_SOURCE") or os.environ["INDIVIDUAL_SOURCE"]
 
 TARGET = os.environ["TARGET"]
+IS_TAG = os.environ["IS_TAG"].lower() == "true"
 
-# branch to workspace mapping
-WORKSPACES = {"main": "dev", "test": "test", "prod": "default"}
 # workspace to service connection mapping
 SERVICE_CONNECTIONS = {"dev": "Development", "test": "Development", "default": "Production"}
 
-if REASON == "PullRequest" and TARGET in WORKSPACES:
-    # it's a pull request against one of the environment branches, so use the
-    # target branch
-    workspace = WORKSPACES[TARGET]
-elif REASON in ["IndividualCI", "Manual"] and SOURCE in WORKSPACES:
-    # it's being run on one of the environment branches, so use that
-    workspace = WORKSPACES[SOURCE]
+if REASON == "PullRequest" and TARGET == "main":
+    # it's a pull request against main, this is for the dev environment
+    environment = "dev"
+elif REASON in ["IndividualCI", "Manual"] and SOURCE == "main":
+    # it's being run on the main branch, this is for the dev environment
+    environment = "dev"
+elif REASON in ["IndividualCI"] and IS_TAG and re.fullmatch(r"20\d\d.\d\d.\d+-rc\d+", SOURCE):
+    environment = "test"
+elif REASON in ["IndividualCI"] and IS_TAG and re.fullmatch(r"20\d\d.\d\d.\d+", SOURCE):
+    environment = "prod"
 else:
     # default to running against dev
-    workspace = "dev"
+    environment = "dev"
+
+# matching logic in ../init.sh
+workspace = "default" if environment == "prod" else environment
 
 service_connection = SERVICE_CONNECTIONS[workspace]
 
