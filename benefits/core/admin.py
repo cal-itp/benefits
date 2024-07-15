@@ -34,6 +34,10 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):
 
 def pre_login_user(user, request):
     logger.debug(f"Running pre-login callback for user: {user.username}")
+    add_google_sso_userinfo(user, request)
+
+
+def add_google_sso_userinfo(user, request):
     token = request.session.get("google_sso_access_token")
     if token:
         headers = {
