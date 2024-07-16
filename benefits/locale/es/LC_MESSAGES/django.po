@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-07-09 10:45-0700\n"
+"POT-Creation-Date: 2024-07-17 12:05-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -998,6 +998,20 @@ msgstr ""
 msgid "Sign out of"
 msgstr "Cierre sesión de"
 
+msgid "Service is down"
+msgstr "El servicio está inactivo"
+
+msgid "There was a problem with the service that checks your identity."
+msgstr "Hubo un problema con el servicio que verifica su identidad."
+
+msgid ""
+"We’re working to solve the problem. Please wait 24 hours and try to enroll "
+"again, or contact your transit agency for help."
+msgstr ""
+"Estamos trabajando para resolver el problema. Espere 24 horas e intente "
+"inscribirse nuevamente, o contacte a su agencia de tránsito para obtener "
+"ayuda."
+
 msgid "Start over"
 msgstr "Comenzar de nuevo"
 
@@ -1013,9 +1027,6 @@ msgstr ""
 
 msgid "Start Here"
 msgstr "Comenzar aquí"
-
-msgid "Service is down"
-msgstr "El servicio está inactivo"
 
 msgid "Sorry! Service for this site is down."
 msgstr "¡Lo sentimos! El servicio para este sitio está inactivo."
