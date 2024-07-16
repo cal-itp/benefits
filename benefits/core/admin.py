@@ -41,7 +41,19 @@ class EligibilityTypeAdmin(admin.ModelAdmin):
 
 @admin.register(models.EligibilityVerifier)
 class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):
-    pass
+    def get_exclude(self, request, obj=None):
+        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+            return [
+                "api_auth_header",
+                "api_auth_key_secret_name",
+                "public_key",
+                "jwe_cek_enc",
+                "jwe_encryption_alg",
+                "jws_signing_alg",
+                "form_class",
+            ]
+        else:
+            return super().get_exclude(request, obj)
 
 
 @admin.register(models.PaymentProcessor)
