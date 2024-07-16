@@ -36,6 +36,7 @@ def mocked_sentry_sdk_module(mocker):
 @pytest.fixture
 def mocked_oauth_client_or_error_redirect__client(mocked_oauth_create_client):
     mocked_oauth_create_client.return_value.authorize_redirect.return_value = HttpResponse("authorize redirect")
+    mocked_oauth_create_client.return_value.authorize_access_token.return_value = HttpResponse("authorize access token")
     return mocked_oauth_create_client
 
 
@@ -109,12 +110,12 @@ def test_login(mocked_oauth_client_or_error_redirect__client, mocked_analytics_m
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
-def test_authorize_no_oauth_client(mocked_oauth_create_client, app_request):
-    mocked_oauth_create_client.return_value = None
+@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification", "mocked_oauth_client_or_error_redirect__error")
+def test_authorize_oauth_client_init_error(app_request):
+    result = authorize(app_request)
 
-    with pytest.raises(Exception, match=r"oauth_client"):
-        authorize(app_request)
+    assert result.status_code == 302
+    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
 
 
 @pytest.mark.django_db
@@ -127,8 +128,8 @@ def test_authorize_no_session_verifier(app_request):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
-def test_authorize_fail(mocked_oauth_create_client, app_request):
-    mocked_oauth_client = mocked_oauth_create_client.return_value
+def test_authorize_fail(mocked_oauth_client_or_error_redirect__client, app_request):
+    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = None
 
     assert not session.logged_in(app_request)
@@ -143,8 +144,8 @@ def test_authorize_fail(mocked_oauth_create_client, app_request):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
-def test_authorize_success(mocked_oauth_create_client, mocked_analytics_module, app_request):
-    mocked_oauth_client = mocked_oauth_create_client.return_value
+def test_authorize_success(mocked_oauth_client_or_error_redirect__client, mocked_analytics_module, app_request):
+    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token"}
 
     result = authorize(app_request)
@@ -160,11 +161,11 @@ def test_authorize_success(mocked_oauth_create_client, mocked_analytics_module, 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_analytics_module")
 def test_authorize_success_with_claim_true(
-    mocked_session_verifier_uses_auth_verification, mocked_oauth_create_client, app_request
+    mocked_session_verifier_uses_auth_verification, mocked_oauth_client_or_error_redirect__client, app_request
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
     verifier.auth_provider.claim = "claim"
-    mocked_oauth_client = mocked_oauth_create_client.return_value
+    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "1"}}
 
     result = authorize(app_request)
@@ -179,12 +180,12 @@ def test_authorize_success_with_claim_true(
 @pytest.mark.usefixtures("mocked_analytics_module")
 def test_authorize_success_with_claim_false(
     mocked_session_verifier_uses_auth_verification,
-    mocked_oauth_create_client,
+    mocked_oauth_client_or_error_redirect__client,
     app_request,
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
     verifier.auth_provider.claim = "claim"
-    mocked_oauth_client = mocked_oauth_create_client.return_value
+    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "0"}}
 
     result = authorize(app_request)
@@ -198,13 +199,13 @@ def test_authorize_success_with_claim_false(
 @pytest.mark.django_db
 def test_authorize_success_with_claim_error(
     mocked_session_verifier_uses_auth_verification,
-    mocked_oauth_create_client,
+    mocked_oauth_client_or_error_redirect__client,
     mocked_analytics_module,
     app_request,
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
     verifier.auth_provider.claim = "claim"
-    mocked_oauth_client = mocked_oauth_create_client.return_value
+    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "10"}}
 
     result = authorize(app_request)
@@ -219,11 +220,11 @@ def test_authorize_success_with_claim_error(
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_analytics_module")
 def test_authorize_success_without_verifier_claim(
-    mocked_session_verifier_uses_auth_verification, mocked_oauth_create_client, app_request
+    mocked_session_verifier_uses_auth_verification, mocked_oauth_client_or_error_redirect__client, app_request
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
     verifier.auth_provider.claim = ""
-    mocked_oauth_client = mocked_oauth_create_client.return_value
+    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "True"}}
 
     result = authorize(app_request)
@@ -243,11 +244,14 @@ def test_authorize_success_without_verifier_claim(
     ],
 )
 def test_authorize_success_without_claim_in_response(
-    mocked_session_verifier_uses_auth_verification, mocked_oauth_create_client, app_request, access_token_response
+    mocked_session_verifier_uses_auth_verification,
+    mocked_oauth_client_or_error_redirect__client,
+    app_request,
+    access_token_response,
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
     verifier.auth_provider.claim = "claim"
-    mocked_oauth_client = mocked_oauth_create_client.return_value
+    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = access_token_response
 
     result = authorize(app_request)

@@ -78,10 +78,15 @@ def login(request):
 def authorize(request):
     """View implementing OIDC token authorization."""
     verifier = session.verifier(request)
-    oauth_client = create_client(oauth, verifier.auth_provider)
 
-    if not oauth_client:
-        raise Exception(f"oauth_client not registered: {verifier.auth_provider.client_name}")
+    oauth_client_result = _oauth_client_or_error_redirect(verifier.auth_provider)
+
+    if hasattr(oauth_client_result, "authorize_access_token"):
+        # this looks like an oauth_client since it has the method we need
+        oauth_client = oauth_client_result
+    else:
+        # this does not look like an oauth_client, it's an error redirect
+        return oauth_client_result
 
     logger.debug("Attempting to authorize OAuth access token")
     token = oauth_client.authorize_access_token(request)
