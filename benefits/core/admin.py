@@ -32,7 +32,11 @@ class AuthProviderAdmin(admin.ModelAdmin):
 
 @admin.register(models.EligibilityType)
 class EligibilityTypeAdmin(admin.ModelAdmin):
-    pass
+    def get_exclude(self, request, obj=None):
+        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+            return []
+        else:
+            return super().get_exclude(request, obj)
 
 
 @admin.register(models.EligibilityVerifier)
