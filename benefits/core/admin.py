@@ -125,6 +125,17 @@ class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
         else:
             return super().get_exclude(request, obj)
 
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+            return [
+                "agency_id",
+                "payment_processor",
+                "index_template",
+                "eligibility_index_template",
+            ]
+        else:
+            return super().get_readonly_fields(request, obj)
+
 
 def pre_login_user(user, request):
     logger.debug(f"Running pre-login callback for user: {user.username}")
