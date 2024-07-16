@@ -6,7 +6,18 @@ import pytest
 from benefits.core import session
 from benefits.core.middleware import ROUTE_INDEX, TEMPLATE_USER_ERROR
 
-from benefits.oauth.views import ROUTE_START, ROUTE_CONFIRM, ROUTE_UNVERIFIED, login, authorize, cancel, logout, post_logout
+from benefits.oauth.views import (
+    ROUTE_START,
+    ROUTE_CONFIRM,
+    ROUTE_UNVERIFIED,
+    TEMPLATE_SYSTEM_ERROR,
+    login,
+    authorize,
+    cancel,
+    logout,
+    post_logout,
+    system_error,
+)
 import benefits.oauth.views
 
 
@@ -280,6 +291,27 @@ def test_post_logout(app_request, mocked_analytics_module):
 @pytest.mark.django_db
 def test_post_logout_no_session_verifier(app_request):
     result = post_logout(app_request)
+
+    assert result.status_code == 200
+    assert result.template_name == TEMPLATE_USER_ERROR
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_system_error(app_request, model_TransitAgency):
+    origin = reverse(ROUTE_START)
+    session.update(app_request, origin=origin)
+
+    result = system_error(app_request)
+
+    assert result.status_code == 200
+    assert result.template_name == TEMPLATE_SYSTEM_ERROR
+    assert session.origin(app_request) == model_TransitAgency.index_url
+
+
+@pytest.mark.django_db
+def test_system_error_no_agency(app_request):
+    result = system_error(app_request)
 
     assert result.status_code == 200
     assert result.template_name == TEMPLATE_USER_ERROR

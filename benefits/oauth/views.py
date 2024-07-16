@@ -1,10 +1,12 @@
 import logging
 
 from django.shortcuts import redirect
+from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 
 from benefits.core import session
+from benefits.core.middleware import AgencySessionRequired
 from . import analytics, redirects
 from .client import oauth, create_client
 from .middleware import VerifierUsesAuthVerificationSessionRequired
@@ -18,6 +20,8 @@ ROUTE_START = "eligibility:start"
 ROUTE_CONFIRM = "eligibility:confirm"
 ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_POST_LOGOUT = "oauth:post_logout"
+
+TEMPLATE_SYSTEM_ERROR = "oauth/system_error.html"
 
 
 @decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
@@ -130,3 +134,14 @@ def post_logout(request):
 
     origin = session.origin(request)
     return redirect(origin)
+
+
+@decorator_from_middleware(AgencySessionRequired)
+def system_error(request):
+    """View handler for an oauth system error."""
+
+    # overwrite origin so that CTA takes user to agency index
+    agency = session.agency(request)
+    session.update(request, origin=agency.index_url)
+
+    return TemplateResponse(request, TEMPLATE_SYSTEM_ERROR)
