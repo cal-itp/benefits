@@ -102,6 +102,16 @@ class PaymentProcessorAdmin(admin.ModelAdmin):  # pragma: no cover
         else:
             return super().get_exclude(request, obj)
 
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+            return [
+                "card_tokenize_url",
+                "card_tokenize_func",
+                "card_tokenize_env",
+            ]
+        else:
+            return super().get_readonly_fields(request, obj)
+
 
 @admin.register(models.TransitAgency)
 class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
