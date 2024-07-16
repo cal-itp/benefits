@@ -1,7 +1,7 @@
 import pytest
 from django.contrib.auth.models import User, Group
 import benefits.core.admin
-from benefits.core.admin import GOOGLE_USER_INFO_URL, CALITP_GROUP_NAME, pre_login_user
+from benefits.core.admin import GOOGLE_USER_INFO_URL, STAFF_GROUP_NAME, pre_login_user
 
 
 @pytest.fixture
@@ -73,5 +73,5 @@ def test_pre_login_user_add_staff_to_group(mocker, model_AdminUser):
 
     pre_login_user(model_AdminUser, mocked_request)
 
-    calitp_group = Group.objects.get(name=CALITP_GROUP_NAME)
+    calitp_group = Group.objects.get(name=STAFF_GROUP_NAME)
     assert model_AdminUser.groups.contains(calitp_group)

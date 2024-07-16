@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 GOOGLE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo"
-CALITP_GROUP_NAME = "Cal-ITP"
+STAFF_GROUP_NAME = "Cal-ITP"
 
 
 for model in [
@@ -63,5 +63,5 @@ def add_google_sso_userinfo(user, request):
 
 def add_staff_user_to_group(user, request):
     if user.email in settings.GOOGLE_SSO_STAFF_LIST:
-        calitp_staff_group = Group.objects.get(name=CALITP_GROUP_NAME)
+        calitp_staff_group = Group.objects.get(name=STAFF_GROUP_NAME)
         user.groups.add(calitp_staff_group)
