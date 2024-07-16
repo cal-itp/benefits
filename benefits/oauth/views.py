@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
+import sentry_sdk
 
 from benefits.core import session
 from benefits.core.middleware import AgencySessionRequired
@@ -20,8 +21,33 @@ ROUTE_START = "eligibility:start"
 ROUTE_CONFIRM = "eligibility:confirm"
 ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_POST_LOGOUT = "oauth:post_logout"
+ROUTE_SYSTEM_ERROR = "oauth:system-error"
 
 TEMPLATE_SYSTEM_ERROR = "oauth/system_error.html"
+
+
+def _oauth_client_or_error_redirect(auth_provider):
+    """Calls `benefits.oauth.client.create_client()`.
+
+    If a client is created successfully, return it; Otherwise, return a redirect response to the `oauth:system-error` route.
+    """
+
+    oauth_client = None
+    exception = None
+
+    try:
+        oauth_client = create_client(oauth, auth_provider)
+    except Exception as ex:
+        exception = ex
+
+    if not oauth_client and not exception:
+        exception = Exception(f"oauth_client not registered: {auth_provider.client_name}")
+
+    if exception:
+        sentry_sdk.capture_exception(exception)
+        return redirect(ROUTE_SYSTEM_ERROR)
+
+    return oauth_client
 
 
 @decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
