@@ -63,5 +63,5 @@ def add_google_sso_userinfo(user, request):
 
 def add_staff_user_to_group(user, request):
     if user.email in settings.GOOGLE_SSO_STAFF_LIST:
-        calitp_staff_group = Group.objects.get(name=STAFF_GROUP_NAME)
-        user.groups.add(calitp_staff_group)
+        staff_group = Group.objects.get(name=STAFF_GROUP_NAME)
+        user.groups.add(staff_group)

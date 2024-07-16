@@ -73,5 +73,5 @@ def test_pre_login_user_add_staff_to_group(mocker, model_AdminUser):
 
     pre_login_user(model_AdminUser, mocked_request)
 
-    calitp_group = Group.objects.get(name=STAFF_GROUP_NAME)
-    assert model_AdminUser.groups.contains(calitp_group)
+    staff_group = Group.objects.get(name=STAFF_GROUP_NAME)
+    assert model_AdminUser.groups.contains(staff_group)
