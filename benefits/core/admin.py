@@ -23,7 +23,11 @@ admin.site.register(models.PemData)
 
 @admin.register(models.AuthProvider)
 class AuthProviderAdmin(admin.ModelAdmin):
-    pass
+    def get_exclude(self, request, obj=None):
+        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+            return ["client_id_secret_name"]
+        else:
+            return super().get_exclude(request, obj)
 
 
 @admin.register(models.EligibilityType)
