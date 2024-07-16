@@ -37,6 +37,7 @@ def mocked_sentry_sdk_module(mocker):
 def mocked_oauth_client_or_error_redirect__client(mocked_oauth_create_client):
     mocked_oauth_create_client.return_value.authorize_redirect.return_value = HttpResponse("authorize redirect")
     mocked_oauth_create_client.return_value.authorize_access_token.return_value = HttpResponse("authorize access token")
+    mocked_oauth_create_client.return_value.load_server_metadata.return_value = HttpResponse("load server metadata")
     return mocked_oauth_create_client
 
 
@@ -283,12 +284,12 @@ def test_cancel_no_session_verifier(app_request):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
-def test_logout_no_oauth_client(mocked_oauth_create_client, app_request):
-    mocked_oauth_create_client.return_value = None
+@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification", "mocked_oauth_client_or_error_redirect__error")
+def test_logout_oauth_client_init_error(app_request):
+    result = authorize(app_request)
 
-    with pytest.raises(Exception, match=r"oauth_client"):
-        logout(app_request)
+    assert result.status_code == 302
+    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
 
 
 @pytest.mark.django_db
@@ -301,12 +302,12 @@ def test_logout_no_session_verifier(app_request):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
-def test_logout(mocker, mocked_oauth_create_client, mocked_analytics_module, app_request):
+def test_logout(mocker, mocked_oauth_client_or_error_redirect__client, mocked_analytics_module, app_request):
     # logout internally calls deauthorize_redirect
     # this mocks that function and a success response
     # and returns a spy object we can use to validate calls
     message = "logout successful"
-    mocked_oauth_client = mocked_oauth_create_client.return_value
+    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_redirect = mocker.patch("benefits.oauth.views.redirects.deauthorize_redirect", return_value=HttpResponse(message))
 
     token = "token"

@@ -140,10 +140,16 @@ def cancel(request):
 def logout(request):
     """View implementing OIDC and application sign out."""
     verifier = session.verifier(request)
-    oauth_client = create_client(oauth, verifier.auth_provider)
 
-    if not oauth_client:
-        raise Exception(f"oauth_client not registered: {verifier.auth_provider.client_name}")
+    oauth_client_result = _oauth_client_or_error_redirect(verifier.auth_provider)
+
+    if hasattr(oauth_client_result, "load_server_metadata"):
+        # this looks like an oauth_client since it has the method we need
+        # (called in redirects.deauthorize_redirect)
+        oauth_client = oauth_client_result
+    else:
+        # this does not look like an oauth_client, it's an error redirect
+        return oauth_client_result
 
     analytics.started_sign_out(request)
 
