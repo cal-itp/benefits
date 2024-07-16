@@ -34,6 +34,12 @@ def mocked_sentry_sdk_module(mocker):
 
 
 @pytest.fixture
+def mocked_oauth_client_or_error_redirect__client(mocked_oauth_create_client):
+    mocked_oauth_create_client.return_value.authorize_redirect.return_value = HttpResponse("authorize redirect")
+    return mocked_oauth_create_client
+
+
+@pytest.fixture
 def mocked_oauth_client_or_error_redirect__error(mocked_oauth_create_client):
     mocked_oauth_create_client.side_effect = Exception("Side effect")
     return mocked_oauth_create_client
@@ -73,6 +79,15 @@ def test_oauth_client_or_error_oauth_client(model_AuthProvider_with_verification
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification", "mocked_oauth_client_or_error_redirect__error")
+def test_login_oauth_client_init_error(app_request):
+    result = login(app_request)
+
+    assert result.status_code == 302
+    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+
+
+@pytest.mark.django_db
 def test_login_no_session_verifier(app_request):
     result = login(app_request)
 
@@ -81,18 +96,13 @@ def test_login_no_session_verifier(app_request):
 
 
 @pytest.mark.django_db
-def test_login(
-    mocked_oauth_create_client, mocked_session_verifier_uses_auth_verification, mocked_analytics_module, app_request
-):
+@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
+def test_login(mocked_oauth_client_or_error_redirect__client, mocked_analytics_module, app_request):
     assert not session.logged_in(app_request)
-
-    mocked_oauth_client = mocked_oauth_create_client.return_value
-    mocked_oauth_client.authorize_redirect.return_value = HttpResponse("authorize redirect")
+    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
 
     login(app_request)
 
-    mocked_verifier = mocked_session_verifier_uses_auth_verification.return_value
-    mocked_oauth_create_client.assert_called_once_with(mocked_verifier.auth_provider.client_name)
     mocked_oauth_client.authorize_redirect.assert_called_with(app_request, "https://testserver/oauth/authorize")
     mocked_analytics_module.started_sign_in.assert_called_once()
     assert not session.logged_in(app_request)

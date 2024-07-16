@@ -55,10 +55,14 @@ def login(request):
     """View implementing OIDC authorize_redirect."""
     verifier = session.verifier(request)
 
-    oauth_client = create_client(oauth, verifier.auth_provider)
+    oauth_client_result = _oauth_client_or_error_redirect(verifier.auth_provider)
 
-    if not oauth_client:
-        raise Exception(f"oauth_client not registered: {verifier.auth_provider.client_name}")
+    if hasattr(oauth_client_result, "authorize_redirect"):
+        # this looks like an oauth_client since it has the method we need
+        oauth_client = oauth_client_result
+    else:
+        # this does not look like an oauth_client, it's an error redirect
+        return oauth_client_result
 
     route = reverse(ROUTE_AUTH)
     redirect_uri = redirects.generate_redirect_uri(request, route)
