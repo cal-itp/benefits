@@ -58,7 +58,15 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):
 
 @admin.register(models.PaymentProcessor)
 class PaymentProcessorAdmin(admin.ModelAdmin):
-    pass
+    def get_exclude(self, request, obj=None):
+        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+            return [
+                "client_id",
+                "client_secret_name",
+                "audience",
+            ]
+        else:
+            return super().get_exclude(request, obj)
 
 
 @admin.register(models.TransitAgency)
