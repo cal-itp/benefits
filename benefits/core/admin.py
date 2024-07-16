@@ -49,6 +49,16 @@ class EligibilityTypeAdmin(admin.ModelAdmin):  # pragma: no cover
         else:
             return super().get_exclude(request, obj)
 
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+            return [
+                "enrollment_index_template",
+                "reenrollment_error_template",
+                "enrollment_success_template",
+            ]
+        else:
+            return super().get_readonly_fields(request, obj)
+
 
 @admin.register(models.EligibilityVerifier)
 class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):  # pragma: no cover
