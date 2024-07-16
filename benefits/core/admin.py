@@ -29,6 +29,17 @@ class AuthProviderAdmin(admin.ModelAdmin):  # pragma: no cover
         else:
             return super().get_exclude(request, obj)
 
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+            return [
+                "sign_out_button_template",
+                "sign_out_link_template",
+                "authority",
+                "scheme",
+            ]
+        else:
+            return super().get_readonly_fields(request, obj)
+
 
 @admin.register(models.EligibilityType)
 class EligibilityTypeAdmin(admin.ModelAdmin):  # pragma: no cover
