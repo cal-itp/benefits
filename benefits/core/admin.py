@@ -71,7 +71,15 @@ class PaymentProcessorAdmin(admin.ModelAdmin):
 
 @admin.register(models.TransitAgency)
 class TransitAgencyAdmin(admin.ModelAdmin):
-    pass
+    def get_exclude(self, request, obj=None):
+        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+            return [
+                "private_key",
+                "public_key",
+                "jws_signing_alg",
+            ]
+        else:
+            return super().get_exclude(request, obj)
 
 
 def pre_login_user(user, request):
