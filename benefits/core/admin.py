@@ -17,20 +17,32 @@ logger = logging.getLogger(__name__)
 GOOGLE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo"
 STAFF_GROUP_NAME = "Cal-ITP"
 
+logger.debug("Register models with admin site")
+admin.site.register(models.PemData)
 
-for model in [
-    models.AuthProvider,
-    models.EligibilityType,
-    models.PaymentProcessor,
-    models.PemData,
-    models.TransitAgency,
-]:
-    logger.debug(f"Register {model.__name__}")
-    admin.site.register(model)
+
+@admin.register(models.AuthProvider)
+class AuthProviderAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.EligibilityType)
+class EligibilityTypeAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(models.EligibilityVerifier)
 class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.PaymentProcessor)
+class PaymentProcessorAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.TransitAgency)
+class TransitAgencyAdmin(admin.ModelAdmin):
     pass
 
 
