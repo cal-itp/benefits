@@ -76,6 +76,19 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):  #
         else:
             return super().get_exclude(request, obj)
 
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+            return [
+                "api_url",
+                "auth_provider",
+                "selection_label_template",
+                "start_template",
+                "unverified_template",
+                "help_template",
+            ]
+        else:
+            return super().get_readonly_fields(request, obj)
+
 
 @admin.register(models.PaymentProcessor)
 class PaymentProcessorAdmin(admin.ModelAdmin):  # pragma: no cover
