@@ -17,7 +17,7 @@ Single sign-on authentication is supported by the admin interface using [`django
 
 !!! info "`settings.py`"
 
-    Configuration of `django-google-sso` in [Benefits settings](https://github.com/cal-itp/benefits/blob/4625f250f48eb9071d9b8fdc79e4dfc6cb2ee625/benefits/settings.py#L61-L74)
+    Configuration of `django-google-sso` in [Benefits settings](https://github.com/cal-itp/benefits/blob/main/benefits/settings.py#L60-L73)
 
 These environment variables must be set in your `.env` file to use the admin interface locally:
 
