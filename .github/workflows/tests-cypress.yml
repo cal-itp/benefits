@@ -1,6 +1,6 @@
 name: Cypress tests
 
-on: push
+on: [push, workflow_call]
 
 defaults:
   run:
