@@ -8,12 +8,14 @@ import requests
 from adminsortable2.admin import SortableAdminMixin
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth.models import Group
 from . import models
 
 logger = logging.getLogger(__name__)
 
 
 GOOGLE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo"
+STAFF_GROUP_NAME = "Cal-ITP"
 
 
 for model in [
@@ -34,6 +36,11 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):
 
 def pre_login_user(user, request):
     logger.debug(f"Running pre-login callback for user: {user.username}")
+    add_google_sso_userinfo(user, request)
+    add_staff_user_to_group(user, request)
+
+
+def add_google_sso_userinfo(user, request):
     token = request.session.get("google_sso_access_token")
     if token:
         headers = {
@@ -52,3 +59,9 @@ def pre_login_user(user, request):
         user.save()
     else:
         logger.warning("google_sso_access_token not found in session.")
+
+
+def add_staff_user_to_group(user, request):
+    if user.email in settings.GOOGLE_SSO_STAFF_LIST:
+        staff_group = Group.objects.get(name=STAFF_GROUP_NAME)
+        user.groups.add(staff_group)

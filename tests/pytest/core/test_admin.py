@@ -1,7 +1,7 @@
 import pytest
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 import benefits.core.admin
-from benefits.core.admin import GOOGLE_USER_INFO_URL, pre_login_user
+from benefits.core.admin import GOOGLE_USER_INFO_URL, STAFF_GROUP_NAME, pre_login_user
 
 
 @pytest.fixture
@@ -62,3 +62,16 @@ def test_pre_login_user_no_session_token(mocker, model_AdminUser):
     assert model_AdminUser.last_name == ""
     assert model_AdminUser.username == ""
     logger_spy.warning.assert_called_once()
+
+
+@pytest.mark.django_db
+def test_pre_login_user_add_staff_to_group(mocker, model_AdminUser):
+    mocked_request = mocker.Mock()
+    mocked_request.session.get.return_value = None
+
+    mocker.patch.object(benefits.core.admin.settings, "GOOGLE_SSO_STAFF_LIST", [model_AdminUser.email])
+
+    pre_login_user(model_AdminUser, mocked_request)
+
+    staff_group = Group.objects.get(name=STAFF_GROUP_NAME)
+    assert model_AdminUser.groups.contains(staff_group)

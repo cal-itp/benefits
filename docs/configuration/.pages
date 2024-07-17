@@ -2,6 +2,7 @@ nav:
   - README.md
   - environment-variables.md
   - data.md
+  - admin-interface.md
   - content-security-policy.md
   - oauth.md
   - rate-limit.md
