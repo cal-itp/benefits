@@ -112,7 +112,7 @@ def test_login_no_session_verifier(app_request):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
-def test_login(mocked_oauth_client_or_error_redirect__client, mocked_analytics_module, app_request):
+def test_login(app_request, mocked_oauth_client_or_error_redirect__client, mocked_analytics_module):
     assert not session.logged_in(app_request)
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     # fake a permanent redirect response from the client
@@ -236,7 +236,7 @@ def test_authorize_success(mocked_oauth_client_or_error_redirect__client, mocked
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_analytics_module")
 def test_authorize_success_with_claim_true(
-    mocked_session_verifier_uses_auth_verification, mocked_oauth_client_or_error_redirect__client, app_request
+    app_request, mocked_session_verifier_uses_auth_verification, mocked_oauth_client_or_error_redirect__client
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
     verifier.auth_provider.claim = "claim"
@@ -254,9 +254,7 @@ def test_authorize_success_with_claim_true(
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_analytics_module")
 def test_authorize_success_with_claim_false(
-    mocked_session_verifier_uses_auth_verification,
-    mocked_oauth_client_or_error_redirect__client,
-    app_request,
+    app_request, mocked_session_verifier_uses_auth_verification, mocked_oauth_client_or_error_redirect__client
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
     verifier.auth_provider.claim = "claim"
@@ -273,10 +271,10 @@ def test_authorize_success_with_claim_false(
 
 @pytest.mark.django_db
 def test_authorize_success_with_claim_error(
+    app_request,
     mocked_session_verifier_uses_auth_verification,
     mocked_oauth_client_or_error_redirect__client,
     mocked_analytics_module,
-    app_request,
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
     verifier.auth_provider.claim = "claim"
@@ -295,7 +293,7 @@ def test_authorize_success_with_claim_error(
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_analytics_module")
 def test_authorize_success_without_verifier_claim(
-    mocked_session_verifier_uses_auth_verification, mocked_oauth_client_or_error_redirect__client, app_request
+    app_request, mocked_session_verifier_uses_auth_verification, mocked_oauth_client_or_error_redirect__client
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
     verifier.auth_provider.claim = ""
@@ -319,9 +317,9 @@ def test_authorize_success_without_verifier_claim(
     ],
 )
 def test_authorize_success_without_claim_in_response(
+    app_request,
     mocked_session_verifier_uses_auth_verification,
     mocked_oauth_client_or_error_redirect__client,
-    app_request,
     access_token_response,
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
@@ -339,7 +337,7 @@ def test_authorize_success_without_claim_in_response(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
-def test_cancel(mocked_analytics_module, app_request):
+def test_cancel(app_request, mocked_analytics_module):
     unverified_route = reverse(ROUTE_UNVERIFIED)
 
     result = cancel(app_request)
@@ -376,7 +374,7 @@ def test_logout_no_session_verifier(app_request):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
-def test_logout(mocker, mocked_oauth_client_or_error_redirect__client, mocked_analytics_module, app_request):
+def test_logout(app_request, mocker, mocked_oauth_client_or_error_redirect__client, mocked_analytics_module):
     # logout internally calls deauthorize_redirect
     # this mocks that function and a success response
     # and returns a spy object we can use to validate calls
@@ -390,7 +388,7 @@ def test_logout(mocker, mocked_oauth_client_or_error_redirect__client, mocked_an
 
     result = logout(app_request)
 
-    mocked_redirect.assert_called_with(mocked_oauth_client, token, "https://testserver/oauth/post_logout")
+    mocked_redirect.assert_called_with(app_request, mocked_oauth_client, token, "https://testserver/oauth/post_logout")
     mocked_analytics_module.started_sign_out.assert_called_once()
     assert result.status_code == 200
     assert message in str(result.content)
