@@ -69,19 +69,22 @@ def login(request):
     logger.debug(f"OAuth authorize_redirect with redirect_uri: {redirect_uri}")
 
     analytics.started_sign_in(request)
+    exception = None
+    result = None
 
     try:
         result = oauth_client.authorize_redirect(request, redirect_uri)
     except Exception as ex:
-        analytics.error(request, message=str(ex), operation="authorize_redirect")
-        sentry_sdk.capture_exception(ex)
-        result = redirect(redirects.ROUTE_SYSTEM_ERROR)
+        exception = ex
 
-    if result.status_code >= 400:
-        analytics.error(request, message=result.status_code, operation="authorize_redirect")
-        sentry_sdk.capture_exception(
-            Exception(f"authorize_redirect error response [{result.status_code}]: {result.content.decode()}")
-        )
+    if result and result.status_code >= 400:
+        exception = Exception(f"authorize_redirect error response [{result.status_code}]: {result.content.decode()}")
+    elif result is None:
+        exception = Exception("authorize_redirect returned None")
+
+    if exception:
+        analytics.error(request, message=str(exception), operation="authorize_redirect")
+        sentry_sdk.capture_exception(exception)
         result = redirect(redirects.ROUTE_SYSTEM_ERROR)
 
     return result
@@ -103,18 +106,20 @@ def authorize(request):
 
     logger.debug("Attempting to authorize OAuth access token")
     token = None
+    exception = None
 
     try:
         token = oauth_client.authorize_access_token(request)
     except Exception as ex:
-        analytics.error(request, message=str(ex), operation="authorize_access_token")
-        sentry_sdk.capture_exception(ex)
-        return redirect(redirects.ROUTE_SYSTEM_ERROR)
+        exception = ex
 
     if token is None:
         logger.warning("Could not authorize OAuth access token")
-        analytics.error(request, message="token was None", operation="authorize_access_token")
-        sentry_sdk.capture_exception(Exception("oauth_client.authorize_access_token returned None"))
+        exception = Exception("oauth_client.authorize_access_token returned None")
+
+    if exception:
+        analytics.error(request, message=str(exception), operation="authorize_access_token")
+        sentry_sdk.capture_exception(exception)
         return redirect(redirects.ROUTE_SYSTEM_ERROR)
 
     logger.debug("OAuth access token authorized")
