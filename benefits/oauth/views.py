@@ -20,7 +20,6 @@ ROUTE_AUTH = "oauth:authorize"
 ROUTE_CONFIRM = "eligibility:confirm"
 ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_POST_LOGOUT = "oauth:post_logout"
-ROUTE_SYSTEM_ERROR = "oauth:system-error"
 
 TEMPLATE_SYSTEM_ERROR = "oauth/system_error.html"
 
@@ -44,7 +43,7 @@ def _oauth_client_or_error_redirect(auth_provider):
 
     if exception:
         sentry_sdk.capture_exception(exception)
-        return redirect(ROUTE_SYSTEM_ERROR)
+        return redirect(redirects.ROUTE_SYSTEM_ERROR)
 
     return oauth_client
 
@@ -74,13 +73,13 @@ def login(request):
         result = oauth_client.authorize_redirect(request, redirect_uri)
     except Exception as ex:
         sentry_sdk.capture_exception(ex)
-        result = redirect(ROUTE_SYSTEM_ERROR)
+        result = redirect(redirects.ROUTE_SYSTEM_ERROR)
 
     if result.status_code >= 400:
         sentry_sdk.capture_exception(
             Exception(f"authorize_redirect error response [{result.status_code}]: {result.content.decode()}")
         )
-        result = redirect(ROUTE_SYSTEM_ERROR)
+        result = redirect(redirects.ROUTE_SYSTEM_ERROR)
 
     return result
 
@@ -106,12 +105,12 @@ def authorize(request):
         token = oauth_client.authorize_access_token(request)
     except Exception as ex:
         sentry_sdk.capture_exception(ex)
-        return redirect(ROUTE_SYSTEM_ERROR)
+        return redirect(redirects.ROUTE_SYSTEM_ERROR)
 
     if token is None:
         logger.warning("Could not authorize OAuth access token")
         sentry_sdk.capture_exception(Exception("oauth_client.authorize_access_token returned None"))
-        return redirect(ROUTE_SYSTEM_ERROR)
+        return redirect(redirects.ROUTE_SYSTEM_ERROR)
 
     logger.debug("OAuth access token authorized")
 

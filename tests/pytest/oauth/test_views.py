@@ -8,9 +8,9 @@ from benefits.core.middleware import ROUTE_INDEX, TEMPLATE_USER_ERROR
 
 from benefits.eligibility.views import ROUTE_START
 
+from benefits.oauth.redirects import ROUTE_SYSTEM_ERROR
 from benefits.oauth.views import (
     ROUTE_CONFIRM,
-    ROUTE_SYSTEM_ERROR,
     ROUTE_UNVERIFIED,
     TEMPLATE_SYSTEM_ERROR,
     _oauth_client_or_error_redirect,

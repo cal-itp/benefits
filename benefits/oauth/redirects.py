@@ -1,6 +1,10 @@
 from django.shortcuts import redirect
 from django.utils.http import urlencode
 
+import sentry_sdk
+
+ROUTE_SYSTEM_ERROR = "oauth:system-error"
+
 
 def deauthorize_redirect(oauth_client, token, redirect_uri):
     """Helper implements OIDC signout via the `end_session_endpoint`."""
@@ -9,7 +13,12 @@ def deauthorize_redirect(oauth_client, token, redirect_uri):
     # See https://github.com/lepture/authlib/issues/331#issuecomment-827295954 for more
     #
     # The implementation here was adapted from the same ticket: https://github.com/lepture/authlib/issues/331#issue-838728145
-    metadata = oauth_client.load_server_metadata()
+    try:
+        metadata = oauth_client.load_server_metadata()
+    except Exception as ex:
+        sentry_sdk.capture_exception(ex)
+        return redirect(ROUTE_SYSTEM_ERROR)
+
     end_session_endpoint = metadata.get("end_session_endpoint")
 
     params = dict(id_token_hint=token, post_logout_redirect_uri=redirect_uri)
