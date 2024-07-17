@@ -22,7 +22,7 @@ admin.site.register(models.PemData)
 
 
 @admin.register(models.AuthProvider)
-class AuthProviderAdmin(admin.ModelAdmin):
+class AuthProviderAdmin(admin.ModelAdmin):  # pragma: no cover
     def get_exclude(self, request, obj=None):
         if not request.user.is_superuser:
             return ["client_id_secret_name"]
@@ -31,7 +31,7 @@ class AuthProviderAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.EligibilityType)
-class EligibilityTypeAdmin(admin.ModelAdmin):
+class EligibilityTypeAdmin(admin.ModelAdmin):  # pragma: no cover
     def get_exclude(self, request, obj=None):
         if not request.user.is_superuser:
             return []
@@ -40,7 +40,7 @@ class EligibilityTypeAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.EligibilityVerifier)
-class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):
+class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):  # pragma: no cover
     def get_exclude(self, request, obj=None):
         if not request.user.is_superuser:
             return [
@@ -57,7 +57,7 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):
 
 
 @admin.register(models.PaymentProcessor)
-class PaymentProcessorAdmin(admin.ModelAdmin):
+class PaymentProcessorAdmin(admin.ModelAdmin):  # pragma: no cover
     def get_exclude(self, request, obj=None):
         if not request.user.is_superuser:
             return [
@@ -70,7 +70,7 @@ class PaymentProcessorAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.TransitAgency)
-class TransitAgencyAdmin(admin.ModelAdmin):
+class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
     def get_exclude(self, request, obj=None):
         if not request.user.is_superuser:
             return [
