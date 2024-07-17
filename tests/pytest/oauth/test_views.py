@@ -102,12 +102,45 @@ def test_login_no_session_verifier(app_request):
 def test_login(mocked_oauth_client_or_error_redirect__client, mocked_analytics_module, app_request):
     assert not session.logged_in(app_request)
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
+    # fake a permanent redirect response from the client
+    mocked_oauth_client.authorize_redirect.return_value.status_code = 301
 
     login(app_request)
 
     mocked_oauth_client.authorize_redirect.assert_called_with(app_request, "https://testserver/oauth/authorize")
     mocked_analytics_module.started_sign_in.assert_called_once()
     assert not session.logged_in(app_request)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
+def test_login_authorize_redirect_exception(
+    app_request, mocked_oauth_client_or_error_redirect__client, mocked_sentry_sdk_module
+):
+    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
+    mocked_oauth_client.authorize_redirect.side_effect = Exception("Side effect")
+
+    result = login(app_request)
+
+    assert result.status_code == 302
+    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
+@pytest.mark.parametrize("status_code", [400, 401, 403, 404, 500, 501, 503])
+def test_login_authorize_redirect_error_response(
+    app_request, mocked_oauth_client_or_error_redirect__client, mocked_sentry_sdk_module, status_code
+):
+    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
+    mocked_oauth_client.authorize_redirect.return_value.status_code = status_code
+
+    result = login(app_request)
+
+    assert result.status_code == 302
+    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
