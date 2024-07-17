@@ -24,7 +24,7 @@ admin.site.register(models.PemData)
 @admin.register(models.AuthProvider)
 class AuthProviderAdmin(admin.ModelAdmin):
     def get_exclude(self, request, obj=None):
-        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+        if not request.user.is_superuser:
             return ["client_id_secret_name"]
         else:
             return super().get_exclude(request, obj)
@@ -33,7 +33,7 @@ class AuthProviderAdmin(admin.ModelAdmin):
 @admin.register(models.EligibilityType)
 class EligibilityTypeAdmin(admin.ModelAdmin):
     def get_exclude(self, request, obj=None):
-        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+        if not request.user.is_superuser:
             return []
         else:
             return super().get_exclude(request, obj)
@@ -42,7 +42,7 @@ class EligibilityTypeAdmin(admin.ModelAdmin):
 @admin.register(models.EligibilityVerifier)
 class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):
     def get_exclude(self, request, obj=None):
-        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+        if not request.user.is_superuser:
             return [
                 "api_auth_header",
                 "api_auth_key_secret_name",
@@ -59,7 +59,7 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):
 @admin.register(models.PaymentProcessor)
 class PaymentProcessorAdmin(admin.ModelAdmin):
     def get_exclude(self, request, obj=None):
-        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+        if not request.user.is_superuser:
             return [
                 "client_id",
                 "client_secret_name",
@@ -72,7 +72,7 @@ class PaymentProcessorAdmin(admin.ModelAdmin):
 @admin.register(models.TransitAgency)
 class TransitAgencyAdmin(admin.ModelAdmin):
     def get_exclude(self, request, obj=None):
-        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+        if not request.user.is_superuser:
             return [
                 "private_key",
                 "public_key",
