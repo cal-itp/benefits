@@ -24,7 +24,7 @@ ROUTE_POST_LOGOUT = "oauth:post_logout"
 TEMPLATE_SYSTEM_ERROR = "oauth/system_error.html"
 
 
-def _oauth_client_or_error_redirect(auth_provider):
+def _oauth_client_or_error_redirect(request, auth_provider):
     """Calls `benefits.oauth.client.create_client()`.
 
     If a client is created successfully, return it; Otherwise, return a redirect response to the `oauth:system-error` route.
@@ -42,6 +42,7 @@ def _oauth_client_or_error_redirect(auth_provider):
         exception = Exception(f"oauth_client not registered: {auth_provider.client_name}")
 
     if exception:
+        analytics.error(request, message=str(exception), operation="init")
         sentry_sdk.capture_exception(exception)
         return redirect(redirects.ROUTE_SYSTEM_ERROR)
 
@@ -53,7 +54,7 @@ def login(request):
     """View implementing OIDC authorize_redirect."""
     verifier = session.verifier(request)
 
-    oauth_client_result = _oauth_client_or_error_redirect(verifier.auth_provider)
+    oauth_client_result = _oauth_client_or_error_redirect(request, verifier.auth_provider)
 
     if hasattr(oauth_client_result, "authorize_redirect"):
         # this looks like an oauth_client since it has the method we need
@@ -89,7 +90,7 @@ def authorize(request):
     """View implementing OIDC token authorization."""
     verifier = session.verifier(request)
 
-    oauth_client_result = _oauth_client_or_error_redirect(verifier.auth_provider)
+    oauth_client_result = _oauth_client_or_error_redirect(request, verifier.auth_provider)
 
     if hasattr(oauth_client_result, "authorize_access_token"):
         # this looks like an oauth_client since it has the method we need
@@ -158,7 +159,7 @@ def logout(request):
     """View implementing OIDC and application sign out."""
     verifier = session.verifier(request)
 
-    oauth_client_result = _oauth_client_or_error_redirect(verifier.auth_provider)
+    oauth_client_result = _oauth_client_or_error_redirect(request, verifier.auth_provider)
 
     if hasattr(oauth_client_result, "load_server_metadata"):
         # this looks like an oauth_client since it has the method we need
