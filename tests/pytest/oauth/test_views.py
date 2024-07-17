@@ -160,11 +160,13 @@ def test_login_authorize_redirect_error_response(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification", "mocked_oauth_client_or_error_redirect__error")
-def test_authorize_oauth_client_init_error(app_request):
+def test_authorize_oauth_client_init_error(app_request, mocked_analytics_module, mocked_sentry_sdk_module):
     result = authorize(app_request)
 
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    mocked_analytics_module.error.assert_called_once()
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -177,7 +179,9 @@ def test_authorize_no_session_verifier(app_request):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
-def test_authorize_error(mocked_oauth_client_or_error_redirect__client, mocked_sentry_sdk_module, app_request):
+def test_authorize_error(
+    mocked_oauth_client_or_error_redirect__client, mocked_analytics_module, mocked_sentry_sdk_module, app_request
+):
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.side_effect = Exception("Side effect")
 
@@ -189,12 +193,15 @@ def test_authorize_error(mocked_oauth_client_or_error_redirect__client, mocked_s
     assert not session.logged_in(app_request)
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    mocked_analytics_module.error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
-def test_authorize_empty_token(mocked_oauth_client_or_error_redirect__client, mocked_sentry_sdk_module, app_request):
+def test_authorize_empty_token(
+    mocked_oauth_client_or_error_redirect__client, mocked_analytics_module, mocked_sentry_sdk_module, app_request
+):
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = None
 
@@ -206,6 +213,7 @@ def test_authorize_empty_token(mocked_oauth_client_or_error_redirect__client, mo
     assert not session.logged_in(app_request)
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    mocked_analytics_module.error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 

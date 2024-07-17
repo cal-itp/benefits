@@ -107,11 +107,13 @@ def authorize(request):
     try:
         token = oauth_client.authorize_access_token(request)
     except Exception as ex:
+        analytics.error(request, message=str(ex), operation="authorize_access_token")
         sentry_sdk.capture_exception(ex)
         return redirect(redirects.ROUTE_SYSTEM_ERROR)
 
     if token is None:
         logger.warning("Could not authorize OAuth access token")
+        analytics.error(request, message="token was None", operation="authorize_access_token")
         sentry_sdk.capture_exception(Exception("oauth_client.authorize_access_token returned None"))
         return redirect(redirects.ROUTE_SYSTEM_ERROR)
 
