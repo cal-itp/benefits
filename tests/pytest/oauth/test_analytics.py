@@ -1,6 +1,6 @@
 import pytest
 
-from benefits.oauth.analytics import OAuthEvent, FinishedSignInEvent
+from benefits.oauth.analytics import OAuthErrorEvent, OAuthEvent, FinishedSignInEvent
 
 
 @pytest.mark.django_db
@@ -22,6 +22,16 @@ def test_OAuthEvent_verifier_no_client_name_when_does_not_use_auth_verification(
     event = OAuthEvent(app_request, "event type")
 
     assert "auth_provider" not in event.event_properties
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
+def test_OAuthErrorEvent(app_request):
+    event_default = OAuthErrorEvent(app_request, "the message", "the operation")
+
+    assert event_default.event_type == "oauth error"
+    assert event_default.event_properties["message"] == "the message"
+    assert event_default.event_properties["operation"] == "the operation"
 
 
 @pytest.mark.django_db
