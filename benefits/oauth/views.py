@@ -17,7 +17,6 @@ logger = logging.getLogger(__name__)
 
 
 ROUTE_AUTH = "oauth:authorize"
-ROUTE_START = "eligibility:start"
 ROUTE_CONFIRM = "eligibility:confirm"
 ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_POST_LOGOUT = "oauth:post_logout"
@@ -101,11 +100,18 @@ def authorize(request):
         return oauth_client_result
 
     logger.debug("Attempting to authorize OAuth access token")
-    token = oauth_client.authorize_access_token(request)
+    token = None
+
+    try:
+        token = oauth_client.authorize_access_token(request)
+    except Exception as ex:
+        sentry_sdk.capture_exception(ex)
+        return redirect(ROUTE_SYSTEM_ERROR)
 
     if token is None:
         logger.warning("Could not authorize OAuth access token")
-        return redirect(ROUTE_START)
+        sentry_sdk.capture_exception(Exception("oauth_client.authorize_access_token returned None"))
+        return redirect(ROUTE_SYSTEM_ERROR)
 
     logger.debug("OAuth access token authorized")
 

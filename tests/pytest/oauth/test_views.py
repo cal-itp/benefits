@@ -6,8 +6,9 @@ import pytest
 from benefits.core import session
 from benefits.core.middleware import ROUTE_INDEX, TEMPLATE_USER_ERROR
 
+from benefits.eligibility.views import ROUTE_START
+
 from benefits.oauth.views import (
-    ROUTE_START,
     ROUTE_CONFIRM,
     ROUTE_SYSTEM_ERROR,
     ROUTE_UNVERIFIED,
@@ -162,7 +163,24 @@ def test_authorize_no_session_verifier(app_request):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
-def test_authorize_fail(mocked_oauth_client_or_error_redirect__client, app_request):
+def test_authorize_error(mocked_oauth_client_or_error_redirect__client, mocked_sentry_sdk_module, app_request):
+    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
+    mocked_oauth_client.authorize_access_token.side_effect = Exception("Side effect")
+
+    assert not session.logged_in(app_request)
+
+    result = authorize(app_request)
+
+    mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
+    assert not session.logged_in(app_request)
+    assert result.status_code == 302
+    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
+def test_authorize_empty_token(mocked_oauth_client_or_error_redirect__client, mocked_sentry_sdk_module, app_request):
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = None
 
@@ -173,7 +191,8 @@ def test_authorize_fail(mocked_oauth_client_or_error_redirect__client, app_reque
     mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
     assert not session.logged_in(app_request)
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_START)
+    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
