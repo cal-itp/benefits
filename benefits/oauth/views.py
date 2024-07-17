@@ -73,10 +73,12 @@ def login(request):
     try:
         result = oauth_client.authorize_redirect(request, redirect_uri)
     except Exception as ex:
+        analytics.error(request, message=str(ex), operation="authorize_redirect")
         sentry_sdk.capture_exception(ex)
         result = redirect(redirects.ROUTE_SYSTEM_ERROR)
 
     if result.status_code >= 400:
+        analytics.error(request, message=result.status_code, operation="authorize_redirect")
         sentry_sdk.capture_exception(
             Exception(f"authorize_redirect error response [{result.status_code}]: {result.content.decode()}")
         )
