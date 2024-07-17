@@ -186,7 +186,7 @@ def logout(request):
 
     # send the user through the end_session_endpoint, redirecting back to
     # the post_logout route
-    return redirects.deauthorize_redirect(oauth_client, token, redirect_uri)
+    return redirects.deauthorize_redirect(request, oauth_client, token, redirect_uri)
 
 
 @decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
