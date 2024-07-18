@@ -1,6 +1,6 @@
 [project]
 name = "benefits"
-version = "2024.07.1"
+dynamic = ["version"]
 description = "Cal-ITP Benefits is an application that enables automated eligibility verification and enrollment for transit benefits onto customers’ existing contactless bank (credit/debit) cards."
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -27,6 +27,7 @@ dev = [
     "djlint",
     "flake8",
     "pre-commit",
+    "setuptools_scm>=8"
 ]
 test = [
     "coverage",
@@ -42,7 +43,7 @@ Documentation = "https://docs.calitp.org/benefits"
 Issues = "https://github.com/cal-itp/benefits/issues"
 
 [build-system]
-requires = ["setuptools>=65", "wheel"]
+requires = ["setuptools>=65", "wheel", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [tool.black]
@@ -78,3 +79,6 @@ markers = [
 
 [tool.setuptools]
 packages = ["benefits"]
+
+[tool.setuptools_scm]
+# intentionally left blank, but we need the section header to activate the tool

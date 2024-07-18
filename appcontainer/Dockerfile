@@ -7,6 +7,9 @@ RUN python -m pip install --upgrade pip
 COPY appcontainer/nginx.conf /etc/nginx/nginx.conf
 COPY appcontainer/proxy.conf /calitp/run/proxy.conf
 
+# copy files needed for version metadata
+COPY .git .git
+
 # copy source files
 COPY manage.py manage.py
 COPY bin bin

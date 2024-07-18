@@ -5,18 +5,44 @@ on:
   push:
     branches:
       - main
-      - test
-      - prod
+    tags:
+      # pre-release tag
+      - "202[3-9].[0-9][0-9].[0-9]+-rc[0-9]+"
+      # release tags
+      - "202[3-9].[0-9][0-9].[0-9]+"
 
 defaults:
   run:
     shell: bash
 
+concurrency:
+  # this ternary operator like expression gives us the name of the deployment environment (see https://docs.github.com/en/actions/learn-github-actions/expressions#example)
+  group: ${{ github.ref_type != 'tag' && github.ref_name || contains(github.ref, '-rc') && 'test' || 'prod' }}
+  cancel-in-progress: true
+
 jobs:
+  tests-ui:
+    uses: ./.github/workflows/tests-ui.yml
+    if: github.ref_type == 'tag'
+
+  tests-pytest:
+    uses: ./.github/workflows/tests-pytest.yml
+    if: github.ref_type == 'tag'
+
+  tests-cypress:
+    uses: ./.github/workflows/tests-cypress.yml
+    if: github.ref_type == 'tag'
+
+  check-migrations-and-messages:
+    uses: ./.github/workflows/check-migrations-and-messages.yml
+    if: github.ref_type == 'tag'
+
   deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_name }}
-    concurrency: ${{ github.ref_name }}
+    needs:
+      [tests-ui, tests-pytest, tests-cypress, check-migrations-and-messages]
+    if: (!cancelled())
+    environment: ${{ github.ref_type != 'tag' && github.ref_name || contains(github.ref, '-rc') && 'test' || 'prod' }}
 
     steps:
       - name: Checkout
@@ -69,3 +95,23 @@ jobs:
           app-name: ${{ vars.AZURE_WEBAPP_NAME }}
           images: ghcr.io/${{ github.repository }}:${{ github.sha }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+
+  release:
+    needs: deploy
+    if: ${{ github.ref_type == 'tag' && !contains(github.ref, '-rc') }}
+    runs-on: ubuntu-latest
+    permissions:
+      # https://github.com/softprops/action-gh-release#permissions
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          prerelease: false
+          generate_release_notes: true
