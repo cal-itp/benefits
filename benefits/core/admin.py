@@ -17,21 +17,69 @@ logger = logging.getLogger(__name__)
 GOOGLE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo"
 STAFF_GROUP_NAME = "Cal-ITP"
 
+logger.debug("Register models with admin site")
+admin.site.register(models.PemData)
 
-for model in [
-    models.AuthProvider,
-    models.EligibilityType,
-    models.PaymentProcessor,
-    models.PemData,
-    models.TransitAgency,
-]:
-    logger.debug(f"Register {model.__name__}")
-    admin.site.register(model)
+
+@admin.register(models.AuthProvider)
+class AuthProviderAdmin(admin.ModelAdmin):  # pragma: no cover
+    def get_exclude(self, request, obj=None):
+        if not request.user.is_superuser:
+            return ["client_id_secret_name"]
+        else:
+            return super().get_exclude(request, obj)
+
+
+@admin.register(models.EligibilityType)
+class EligibilityTypeAdmin(admin.ModelAdmin):  # pragma: no cover
+    def get_exclude(self, request, obj=None):
+        if not request.user.is_superuser:
+            return []
+        else:
+            return super().get_exclude(request, obj)
 
 
 @admin.register(models.EligibilityVerifier)
-class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):
-    pass
+class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):  # pragma: no cover
+    def get_exclude(self, request, obj=None):
+        if not request.user.is_superuser:
+            return [
+                "api_auth_header",
+                "api_auth_key_secret_name",
+                "public_key",
+                "jwe_cek_enc",
+                "jwe_encryption_alg",
+                "jws_signing_alg",
+                "form_class",
+            ]
+        else:
+            return super().get_exclude(request, obj)
+
+
+@admin.register(models.PaymentProcessor)
+class PaymentProcessorAdmin(admin.ModelAdmin):  # pragma: no cover
+    def get_exclude(self, request, obj=None):
+        if not request.user.is_superuser:
+            return [
+                "client_id",
+                "client_secret_name",
+                "audience",
+            ]
+        else:
+            return super().get_exclude(request, obj)
+
+
+@admin.register(models.TransitAgency)
+class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
+    def get_exclude(self, request, obj=None):
+        if not request.user.is_superuser:
+            return [
+                "private_key",
+                "public_key",
+                "jws_signing_alg",
+            ]
+        else:
+            return super().get_exclude(request, obj)
 
 
 def pre_login_user(user, request):
