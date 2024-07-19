@@ -30,7 +30,7 @@ class AuthProviderAdmin(admin.ModelAdmin):  # pragma: no cover
             return super().get_exclude(request, obj)
 
     def get_readonly_fields(self, request, obj=None):
-        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+        if not request.user.is_superuser:
             return [
                 "sign_out_button_template",
                 "sign_out_link_template",
@@ -50,7 +50,7 @@ class EligibilityTypeAdmin(admin.ModelAdmin):  # pragma: no cover
             return super().get_exclude(request, obj)
 
     def get_readonly_fields(self, request, obj=None):
-        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+        if not request.user.is_superuser:
             return [
                 "enrollment_index_template",
                 "reenrollment_error_template",
@@ -77,7 +77,7 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):  #
             return super().get_exclude(request, obj)
 
     def get_readonly_fields(self, request, obj=None):
-        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+        if not request.user.is_superuser:
             return [
                 "api_url",
                 "auth_provider",
@@ -103,7 +103,7 @@ class PaymentProcessorAdmin(admin.ModelAdmin):  # pragma: no cover
             return super().get_exclude(request, obj)
 
     def get_readonly_fields(self, request, obj=None):
-        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+        if not request.user.is_superuser:
             return [
                 "card_tokenize_url",
                 "card_tokenize_func",
@@ -126,7 +126,7 @@ class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
             return super().get_exclude(request, obj)
 
     def get_readonly_fields(self, request, obj=None):
-        if request.user.groups.contains(Group.objects.get(name=STAFF_GROUP_NAME)):
+        if not request.user.is_superuser:
             return [
                 "agency_id",
                 "payment_processor",
