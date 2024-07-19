@@ -51,12 +51,11 @@ steps:
       environmentServiceNameAzureRM: "${{ parameters.service_connection }}"
     # the plan is done as part of the apply (below), so don't bother doing it twice
     condition: |
-      ${{ and(
-            ne(variables['Build.SourceBranchName'], 'main'),
-            ne(parameters.tag_type, 'test'),
-            ne(parameters.tag_type, 'prod')
-          )
-      }}
+      and(
+        ne(variables['Build.SourceBranchName'], 'main'),
+        ne('${{ parameters.tag_type }}', 'test'),
+        ne('${{ parameters.tag_type }}', 'prod')
+      )
   - task: TerraformTaskV3@3
     displayName: Terraform apply
     inputs:
@@ -69,9 +68,8 @@ steps:
       environmentServiceNameAzureRM: "${{ parameters.service_connection }}"
     # only run on main branch OR if it's a tag for test or prod
     condition: |
-      ${{ or(
-            eq(variables['Build.SourceBranchName'], 'main'),
-            eq(parameters.tag_type, 'test'),
-            eq(parameters.tag_type, 'prod')
-          )
-      }}
+      or(
+        eq(variables['Build.SourceBranchName'], 'main'),
+        eq('${{ parameters.tag_type }}', 'test'),
+        eq('${{ parameters.tag_type }}', 'prod')
+      )
