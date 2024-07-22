@@ -29,6 +29,17 @@ class AuthProviderAdmin(admin.ModelAdmin):  # pragma: no cover
         else:
             return super().get_exclude(request, obj)
 
+    def get_readonly_fields(self, request, obj=None):
+        if not request.user.is_superuser:
+            return [
+                "sign_out_button_template",
+                "sign_out_link_template",
+                "authority",
+                "scheme",
+            ]
+        else:
+            return super().get_readonly_fields(request, obj)
+
 
 @admin.register(models.EligibilityType)
 class EligibilityTypeAdmin(admin.ModelAdmin):  # pragma: no cover
@@ -37,6 +48,16 @@ class EligibilityTypeAdmin(admin.ModelAdmin):  # pragma: no cover
             return []
         else:
             return super().get_exclude(request, obj)
+
+    def get_readonly_fields(self, request, obj=None):
+        if not request.user.is_superuser:
+            return [
+                "enrollment_index_template",
+                "reenrollment_error_template",
+                "enrollment_success_template",
+            ]
+        else:
+            return super().get_readonly_fields(request, obj)
 
 
 @admin.register(models.EligibilityVerifier)
@@ -55,6 +76,19 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):  #
         else:
             return super().get_exclude(request, obj)
 
+    def get_readonly_fields(self, request, obj=None):
+        if not request.user.is_superuser:
+            return [
+                "api_url",
+                "auth_provider",
+                "selection_label_template",
+                "start_template",
+                "unverified_template",
+                "help_template",
+            ]
+        else:
+            return super().get_readonly_fields(request, obj)
+
 
 @admin.register(models.PaymentProcessor)
 class PaymentProcessorAdmin(admin.ModelAdmin):  # pragma: no cover
@@ -68,6 +102,16 @@ class PaymentProcessorAdmin(admin.ModelAdmin):  # pragma: no cover
         else:
             return super().get_exclude(request, obj)
 
+    def get_readonly_fields(self, request, obj=None):
+        if not request.user.is_superuser:
+            return [
+                "card_tokenize_url",
+                "card_tokenize_func",
+                "card_tokenize_env",
+            ]
+        else:
+            return super().get_readonly_fields(request, obj)
+
 
 @admin.register(models.TransitAgency)
 class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
@@ -80,6 +124,17 @@ class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
             ]
         else:
             return super().get_exclude(request, obj)
+
+    def get_readonly_fields(self, request, obj=None):
+        if not request.user.is_superuser:
+            return [
+                "agency_id",
+                "payment_processor",
+                "index_template",
+                "eligibility_index_template",
+            ]
+        else:
+            return super().get_readonly_fields(request, obj)
 
 
 def pre_login_user(user, request):
