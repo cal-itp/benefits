@@ -15,6 +15,14 @@ class OAuthEvent(core.Event):
             self.update_event_properties(auth_provider=verifier.auth_provider.client_name)
 
 
+class OAuthErrorEvent(OAuthEvent):
+    """Analytics event representing an error using an OAuth client."""
+
+    def __init__(self, request, message, operation):
+        super().__init__(request, "oauth error")
+        self.update_event_properties(message=message, operation=operation)
+
+
 class StartedSignInEvent(OAuthEvent):
     """Analytics event representing the beginning of the OAuth sign in flow."""
 
@@ -51,6 +59,11 @@ class FinishedSignOutEvent(OAuthEvent):
     def __init__(self, request):
         super().__init__(request, "finished sign out")
         self.update_event_properties(origin=session.origin(request))
+
+
+def error(request, message, operation):
+    """Send the "oauth error" analytics event, specifying the message and operation"""
+    core.send_event(OAuthErrorEvent(request, message, operation))
 
 
 def started_sign_in(request):

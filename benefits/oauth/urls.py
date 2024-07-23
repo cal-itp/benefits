@@ -11,4 +11,5 @@ urlpatterns = [
     path("cancel", views.cancel, name="cancel"),
     path("logout", views.logout, name="logout"),
     path("post_logout", views.post_logout, name="post_logout"),
+    path("error", views.system_error, name="system-error"),
 ]
