@@ -55,6 +55,20 @@
     }
   },
   {
+    "model": "core.authprovider",
+    "pk": 3,
+    "fields": {
+      "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
+      "sign_out_link_template": "core/includes/link--sign-out--login-gov.html",
+      "client_name": "calfresh-benefits-oauth-client-name",
+      "client_id_secret_name": "auth-provider-client-id",
+      "authority": "https://example.com",
+      "scope": "verify:calfresh",
+      "claim": "calfresh",
+      "scheme": "dev-cal-itp_benefits"
+    }
+  },
+  {
     "model": "core.eligibilitytype",
     "pk": 1,
     "fields": {
@@ -179,7 +193,7 @@
       "jwe_cek_enc": null,
       "jwe_encryption_alg": null,
       "jws_signing_alg": null,
-      "auth_provider": 1,
+      "auth_provider": 3,
       "selection_label_template": "eligibility/includes/selection-label--calfresh.html",
       "start_template": "eligibility/start--calfresh.html",
       "form_class": null,
