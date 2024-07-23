@@ -10,7 +10,7 @@
 | benefits/core/analytics.py           |       96 |       20 |       16 |        3 |     71% |127-129, 134, 140-162, 173 |
 | benefits/core/apps.py                |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/core/context\_processors.py |       38 |        2 |        8 |        1 |     93% |    69, 94 |
-| benefits/core/middleware.py          |       91 |        5 |       22 |        3 |     93% |38-39, 58-59, 78->83, 146 |
+| benefits/core/middleware.py          |       91 |        3 |       22 |        2 |     96% |58-59, 78->83, 146 |
 | benefits/core/models.py              |      224 |        3 |       66 |        1 |     99% |72-73, 201 |
 | benefits/core/recaptcha.py           |       13 |        5 |        4 |        1 |     53% |     26-32 |
 | benefits/core/session.py             |      142 |        1 |       40 |        0 |     99% |        51 |
@@ -36,19 +36,19 @@
 | benefits/locale/es/\_\_init\_\_.py   |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/es/formats.py        |        1 |        0 |        0 |        0 |    100% |           |
 | benefits/oauth/\_\_init\_\_.py       |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/oauth/analytics.py          |       35 |       10 |        4 |        0 |     74% |22, 29, 45, 52-53, 58, 63, 68, 73, 78 |
+| benefits/oauth/analytics.py          |       41 |       10 |        4 |        0 |     78% |30, 37, 53, 60-61, 71, 76, 81, 86, 91 |
 | benefits/oauth/apps.py               |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/oauth/client.py             |       23 |        0 |        4 |        0 |    100% |           |
-| benefits/oauth/middleware.py         |       13 |        0 |        4 |        0 |    100% |           |
-| benefits/oauth/redirects.py          |       14 |        0 |        2 |        0 |    100% |           |
+| benefits/oauth/middleware.py         |       23 |        0 |        6 |        0 |    100% |           |
+| benefits/oauth/redirects.py          |       22 |        0 |        2 |        0 |    100% |           |
 | benefits/oauth/urls.py               |        4 |        0 |        0 |        0 |    100% |           |
-| benefits/oauth/views.py              |       77 |        0 |       28 |        1 |     99% |    70->85 |
+| benefits/oauth/views.py              |      125 |        1 |       42 |        2 |     98% |136->151, 179 |
 | benefits/secrets.py                  |       48 |        8 |       10 |        1 |     81% |     90-99 |
 | benefits/sentry.py                   |       57 |       12 |       14 |        1 |     79% |19, 24-25, 30, 34-35, 63-64, 87-108 |
 | benefits/settings.py                 |      119 |        6 |       22 |        8 |     90% |92, 113->118, 129->132, 147, 301, 303, 318, 330 |
 | benefits/urls.py                     |       22 |        7 |        2 |        1 |     67% |     34-48 |
 | benefits/wsgi.py                     |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                            **TOTAL** | **1592** |   **99** |  **436** |   **36** | **93%** |           |
+|                            **TOTAL** | **1664** |   **98** |  **452** |   **36** | **93%** |           |
 
 
 ## Setup coverage badge
