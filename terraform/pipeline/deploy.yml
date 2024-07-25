@@ -3,8 +3,6 @@ parameters:
     type: string
   - name: workspace
     type: string
-  - name: tag_type
-    type: string
 
 steps:
   # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformInstaller#readme
@@ -38,6 +36,14 @@ steps:
       workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
       # service connection
       environmentServiceNameAzureRM: "${{ parameters.service_connection }}"
+  - bash: |
+      TAG_TYPE=$(python terraform/pipeline/tag.py)
+      echo "##vso[task.setvariable variable=tag_type;]$TAG_TYPE"
+    displayName: Set tag-type variable
+    env:
+      REASON: $(Build.Reason)
+      INDIVIDUAL_SOURCE: $[variables['Build.SourceBranchName']]
+      IS_TAG: $[startsWith(variables['Build.SourceBranch'], 'refs/tags/')]
   - task: TerraformTaskV3@3
     displayName: Terraform plan
     inputs:
@@ -53,8 +59,8 @@ steps:
     condition: |
       and(
         ne(variables['Build.SourceBranchName'], 'main'),
-        ne('${{ parameters.tag_type }}', 'test'),
-        ne('${{ parameters.tag_type }}', 'prod')
+        ne(variables['tag_type'], 'test'),
+        ne(variables['tag_type'], 'prod')
       )
   - task: TerraformTaskV3@3
     displayName: Terraform apply
@@ -70,6 +76,6 @@ steps:
     condition: |
       or(
         eq(variables['Build.SourceBranchName'], 'main'),
-        eq('${{ parameters.tag_type }}', 'test'),
-        eq('${{ parameters.tag_type }}', 'prod')
+        eq(variables['tag_type'], 'test'),
+        eq(variables['tag_type'], 'prod')
       )
