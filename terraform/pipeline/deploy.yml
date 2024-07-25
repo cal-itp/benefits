@@ -3,8 +3,6 @@ parameters:
     type: string
   - name: workspace
     type: string
-  - name: tag_type
-    type: string
 
 steps:
   # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformInstaller#readme
@@ -38,6 +36,18 @@ steps:
       workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
       # service connection
       environmentServiceNameAzureRM: "${{ parameters.service_connection }}"
+  - bash: |
+      echo "REASON is $REASON, INDIVIDUAL_SOURCE is $INDIVIDUAL_SOURCE, SOURCE_BRANCH is $SOURCE_BRANCH"
+      TAG_TYPE=$(python terraform/pipeline/tag.py)
+      echo "##vso[task.setvariable variable=tag_type]$TAG_TYPE"
+    displayName: Set tag-type variable
+    env:
+      REASON: $(Build.Reason)
+      INDIVIDUAL_SOURCE: $(Build.SourceBranchName)
+      SOURCE_BRANCH: $(Build.SourceBranch)
+  - bash: |
+      echo $(tag_type)
+    displayName: Display tag-type variable
   - task: TerraformTaskV3@3
     displayName: Terraform plan
     inputs:
@@ -51,12 +61,11 @@ steps:
       environmentServiceNameAzureRM: "${{ parameters.service_connection }}"
     # the plan is done as part of the apply (below), so don't bother doing it twice
     condition: |
-      ${{ and(
-            ne(variables['Build.SourceBranchName'], 'main'),
-            ne(parameters.tag_type, 'test'),
-            ne(parameters.tag_type, 'prod')
-          )
-      }}
+      and(
+        ne(variables['Build.SourceBranchName'], 'main'),
+        ne(variables['tag_type'], 'test'),
+        ne(variables['tag_type'], 'prod')
+      )
   - task: TerraformTaskV3@3
     displayName: Terraform apply
     inputs:
@@ -69,9 +78,8 @@ steps:
       environmentServiceNameAzureRM: "${{ parameters.service_connection }}"
     # only run on main branch OR if it's a tag for test or prod
     condition: |
-      ${{ or(
-            eq(variables['Build.SourceBranchName'], 'main'),
-            eq(parameters.tag_type, 'test'),
-            eq(parameters.tag_type, 'prod')
-          )
-      }}
+      or(
+        eq(variables['Build.SourceBranchName'], 'main'),
+        eq(variables['tag_type'], 'test'),
+        eq(variables['tag_type'], 'prod')
+      )
