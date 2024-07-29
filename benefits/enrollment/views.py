@@ -186,6 +186,9 @@ def index(request):
         tokenize_system_error_form = forms.CardTokenizeFailForm(ROUTE_SYSTEM_ERROR, "form-card-tokenize-fail-system-error")
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
+        # mapping from Django's I18N LANGUAGE_CODE to Littlepay's overlay language code
+        overlay_language = {"en": "en", "es": "es-419"}.get(request.LANGUAGE_CODE, "en")
+
         context = {
             "forms": [tokenize_retry_form, tokenize_server_error_form, tokenize_system_error_form, tokenize_success_form],
             "cta_button": "tokenize_card",
@@ -197,6 +200,7 @@ def index(request):
             "form_server_error": tokenize_server_error_form.id,
             "form_success": tokenize_success_form.id,
             "form_system_error": tokenize_system_error_form.id,
+            "overlay_language": overlay_language,
         }
 
         logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')

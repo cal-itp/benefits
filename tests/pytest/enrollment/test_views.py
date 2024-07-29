@@ -249,6 +249,18 @@ def test_index_eligible_get(client, model_EligibilityType):
     assert "token_field" in response.context_data
     assert "form_retry" in response.context_data
     assert "form_success" in response.context_data
+    assert "overlay_language" in response.context_data
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+@pytest.mark.parametrize("LANGUAGE_CODE, overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")])
+def test_index_eligible_get_changed_language(client, LANGUAGE_CODE, overlay_language):
+    path = reverse(ROUTE_INDEX)
+    client.post(reverse("set_language"), data={"language": LANGUAGE_CODE})
+    response = client.get(path)
+
+    assert response.context_data["overlay_language"] == overlay_language
 
 
 @pytest.mark.django_db
