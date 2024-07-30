@@ -18,4 +18,10 @@ if REASON == "IndividualCI" and IS_TAG:
 else:
     tag_type = None
 
-print(tag_type)
+print(f"REASON: {REASON}")
+print(f"INDIVIDUAL_SOURCE: {SOURCE}")
+print(f"SOURCE_BRANCH: {SOURCE_BRANCH}")
+print(f"Tag type: {tag_type}")
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-variables-scripts?view=azure-devops&tabs=bash#about-tasksetvariable
+print(f"##vso[task.setvariable variable=tag_type]{tag_type}")
