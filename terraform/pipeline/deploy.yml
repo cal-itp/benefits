@@ -36,18 +36,12 @@ steps:
       workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
       # service connection
       environmentServiceNameAzureRM: "${{ parameters.service_connection }}"
-  - bash: |
-      echo "REASON is $REASON, INDIVIDUAL_SOURCE is $INDIVIDUAL_SOURCE, SOURCE_BRANCH is $SOURCE_BRANCH"
-      TAG_TYPE=$(python terraform/pipeline/tag.py)
-      echo "##vso[task.setvariable variable=tag_type]$TAG_TYPE"
+  - bash: python terraform/pipeline/tag.py
     displayName: Set tag-type variable
     env:
       REASON: $(Build.Reason)
       INDIVIDUAL_SOURCE: $(Build.SourceBranchName)
       SOURCE_BRANCH: $(Build.SourceBranch)
-  - bash: |
-      echo $(tag_type)
-    displayName: Display tag-type variable
   - task: TerraformTaskV3@3
     displayName: Terraform plan
     inputs:
