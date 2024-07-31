@@ -94,11 +94,7 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):  #
 class TransitProcessorAdmin(admin.ModelAdmin):  # pragma: no cover
     def get_exclude(self, request, obj=None):
         if not request.user.is_superuser:
-            return [
-                "client_id",
-                "client_secret_name",
-                "audience",
-            ]
+            return []
         else:
             return super().get_exclude(request, obj)
 
@@ -121,6 +117,9 @@ class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
                 "private_key",
                 "public_key",
                 "jws_signing_alg",
+                "transit_processor_client_id",
+                "transit_processor_client_secret_name",
+                "transit_processor_audience",
             ]
         else:
             return super().get_exclude(request, obj)
