@@ -90,8 +90,8 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):  #
             return super().get_readonly_fields(request, obj)
 
 
-@admin.register(models.PaymentProcessor)
-class PaymentProcessorAdmin(admin.ModelAdmin):  # pragma: no cover
+@admin.register(models.TransitProcessor)
+class TransitProcessorAdmin(admin.ModelAdmin):  # pragma: no cover
     def get_exclude(self, request, obj=None):
         if not request.user.is_superuser:
             return [
