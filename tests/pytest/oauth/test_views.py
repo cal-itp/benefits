@@ -52,14 +52,14 @@ def mocked_oauth_client_or_error_redirect__error(mocked_oauth_create_client):
 @pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
 def test_oauth_client_or_error_redirect_no_oauth_client(
     app_request,
-    model_AuthProvider_with_verification,
+    model_ClaimsProvider_with_verification,
     mocked_oauth_create_client,
     mocked_analytics_module,
     mocked_sentry_sdk_module,
 ):
     mocked_oauth_create_client.return_value = None
 
-    result = _oauth_client_or_error_redirect(app_request, model_AuthProvider_with_verification)
+    result = _oauth_client_or_error_redirect(app_request, model_ClaimsProvider_with_verification)
 
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_SYSTEM_ERROR)
@@ -70,9 +70,9 @@ def test_oauth_client_or_error_redirect_no_oauth_client(
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification", "mocked_oauth_client_or_error_redirect__error")
 def test_oauth_client_or_error_redirect_oauth_client_exception(
-    app_request, model_AuthProvider_with_verification, mocked_analytics_module, mocked_sentry_sdk_module
+    app_request, model_ClaimsProvider_with_verification, mocked_analytics_module, mocked_sentry_sdk_module
 ):
-    result = _oauth_client_or_error_redirect(app_request, model_AuthProvider_with_verification)
+    result = _oauth_client_or_error_redirect(app_request, model_ClaimsProvider_with_verification)
 
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_SYSTEM_ERROR)
@@ -83,9 +83,9 @@ def test_oauth_client_or_error_redirect_oauth_client_exception(
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification", "mocked_oauth_create_client")
 def test_oauth_client_or_error_oauth_client(
-    app_request, model_AuthProvider_with_verification, mocked_analytics_module, mocked_sentry_sdk_module
+    app_request, model_ClaimsProvider_with_verification, mocked_analytics_module, mocked_sentry_sdk_module
 ):
-    result = _oauth_client_or_error_redirect(app_request, model_AuthProvider_with_verification)
+    result = _oauth_client_or_error_redirect(app_request, model_ClaimsProvider_with_verification)
 
     assert hasattr(result, "authorize_redirect")
     mocked_analytics_module.error.assert_not_called()

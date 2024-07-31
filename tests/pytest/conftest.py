@@ -7,7 +7,7 @@ import pytest
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import AuthProvider, EligibilityType, EligibilityVerifier, TransitProcessor, PemData, TransitAgency
+from benefits.core.models import ClaimsProvider, EligibilityType, EligibilityVerifier, TransitProcessor, PemData, TransitAgency
 
 
 def pytest_runtest_setup():
@@ -47,8 +47,8 @@ def model_PemData():
 
 
 @pytest.fixture
-def model_AuthProvider():
-    auth_provider = AuthProvider.objects.create(
+def model_ClaimsProvider():
+    auth_provider = ClaimsProvider.objects.create(
         sign_out_button_template="core/includes/button--sign-out--senior.html",
         sign_out_link_template="core/includes/link--sign-out--senior.html",
         client_name="Client",
@@ -60,43 +60,43 @@ def model_AuthProvider():
 
 
 @pytest.fixture
-def model_AuthProvider_with_verification(model_AuthProvider):
-    model_AuthProvider.scope = "scope"
-    model_AuthProvider.claim = "claim"
-    model_AuthProvider.save()
+def model_ClaimsProvider_with_verification(model_ClaimsProvider):
+    model_ClaimsProvider.scope = "scope"
+    model_ClaimsProvider.claim = "claim"
+    model_ClaimsProvider.save()
 
-    return model_AuthProvider
-
-
-@pytest.fixture
-def model_AuthProvider_with_verification_no_sign_out(model_AuthProvider):
-    model_AuthProvider.scope = "scope"
-    model_AuthProvider.claim = "claim"
-    model_AuthProvider.sign_out_button_template = None
-    model_AuthProvider.sign_out_link_template = None
-    model_AuthProvider.save()
-
-    return model_AuthProvider
+    return model_ClaimsProvider
 
 
 @pytest.fixture
-def model_AuthProvider_without_verification(model_AuthProvider):
-    model_AuthProvider.scope = None
-    model_AuthProvider.claim = None
-    model_AuthProvider.save()
+def model_ClaimsProvider_with_verification_no_sign_out(model_ClaimsProvider):
+    model_ClaimsProvider.scope = "scope"
+    model_ClaimsProvider.claim = "claim"
+    model_ClaimsProvider.sign_out_button_template = None
+    model_ClaimsProvider.sign_out_link_template = None
+    model_ClaimsProvider.save()
 
-    return model_AuthProvider
+    return model_ClaimsProvider
 
 
 @pytest.fixture
-def model_AuthProvider_without_verification_no_sign_out(model_AuthProvider):
-    model_AuthProvider.scope = None
-    model_AuthProvider.claim = None
-    model_AuthProvider.sign_out_button_template = None
-    model_AuthProvider.sign_out_link_template = None
-    model_AuthProvider.save()
+def model_ClaimsProvider_without_verification(model_ClaimsProvider):
+    model_ClaimsProvider.scope = None
+    model_ClaimsProvider.claim = None
+    model_ClaimsProvider.save()
 
-    return model_AuthProvider
+    return model_ClaimsProvider
+
+
+@pytest.fixture
+def model_ClaimsProvider_without_verification_no_sign_out(model_ClaimsProvider):
+    model_ClaimsProvider.scope = None
+    model_ClaimsProvider.claim = None
+    model_ClaimsProvider.sign_out_button_template = None
+    model_ClaimsProvider.sign_out_link_template = None
+    model_ClaimsProvider.save()
+
+    return model_ClaimsProvider
 
 
 @pytest.fixture
@@ -168,8 +168,10 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
 
 
 @pytest.fixture
-def model_EligibilityVerifier_AuthProvider_with_verification(model_AuthProvider_with_verification, model_EligibilityVerifier):
-    model_EligibilityVerifier.auth_provider = model_AuthProvider_with_verification
+def model_EligibilityVerifier_ClaimsProvider_with_verification(
+    model_ClaimsProvider_with_verification, model_EligibilityVerifier
+):
+    model_EligibilityVerifier.auth_provider = model_ClaimsProvider_with_verification
     model_EligibilityVerifier.save()
 
     return model_EligibilityVerifier
@@ -276,23 +278,25 @@ def mocked_session_verifier(mocker, model_EligibilityVerifier):
 
 
 @pytest.fixture
-def mocked_session_verifier_oauth(mocker, model_EligibilityVerifier_AuthProvider_with_verification):
+def mocked_session_verifier_oauth(mocker, model_EligibilityVerifier_ClaimsProvider_with_verification):
     return mocker.patch(
-        "benefits.core.session.verifier", autospec=True, return_value=model_EligibilityVerifier_AuthProvider_with_verification
+        "benefits.core.session.verifier",
+        autospec=True,
+        return_value=model_EligibilityVerifier_ClaimsProvider_with_verification,
     )
 
 
 @pytest.fixture
 def mocked_session_verifier_uses_auth_verification(
-    model_EligibilityVerifier_AuthProvider_with_verification, mocked_session_verifier_oauth
+    model_EligibilityVerifier_ClaimsProvider_with_verification, mocked_session_verifier_oauth
 ):
-    mock_verifier = model_EligibilityVerifier_AuthProvider_with_verification
-    mock_verifier.name = model_EligibilityVerifier_AuthProvider_with_verification.name
+    mock_verifier = model_EligibilityVerifier_ClaimsProvider_with_verification
+    mock_verifier.name = model_EligibilityVerifier_ClaimsProvider_with_verification.name
     mock_verifier.auth_provider.sign_out_button_template = (
-        model_EligibilityVerifier_AuthProvider_with_verification.auth_provider.sign_out_button_template
+        model_EligibilityVerifier_ClaimsProvider_with_verification.auth_provider.sign_out_button_template
     )
     mock_verifier.auth_provider.sign_out_link_template = (
-        model_EligibilityVerifier_AuthProvider_with_verification.auth_provider.sign_out_link_template
+        model_EligibilityVerifier_ClaimsProvider_with_verification.auth_provider.sign_out_link_template
     )
     mocked_session_verifier_oauth.return_value = mock_verifier
     return mocked_session_verifier_oauth
@@ -300,10 +304,10 @@ def mocked_session_verifier_uses_auth_verification(
 
 @pytest.fixture
 def mocked_session_verifier_does_not_use_auth_verification(
-    mocked_session_verifier_uses_auth_verification, model_AuthProvider_without_verification
+    mocked_session_verifier_uses_auth_verification, model_ClaimsProvider_without_verification
 ):
     mocked_verifier = mocked_session_verifier_uses_auth_verification
-    mocked_verifier.auth_provider = model_AuthProvider_without_verification
+    mocked_verifier.auth_provider = model_ClaimsProvider_without_verification
     return mocked_verifier
 
 

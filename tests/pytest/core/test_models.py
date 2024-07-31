@@ -93,40 +93,40 @@ def test_PemData_data_text_secret_name_and_remote__uses_remote(
 
 
 @pytest.mark.django_db
-def test_model_AuthProvider(model_AuthProvider):
-    assert not model_AuthProvider.supports_claims_verification
-    assert model_AuthProvider.supports_sign_out
-    assert str(model_AuthProvider) == model_AuthProvider.client_name
+def test_model_ClaimsProvider(model_ClaimsProvider):
+    assert not model_ClaimsProvider.supports_claims_verification
+    assert model_ClaimsProvider.supports_sign_out
+    assert str(model_ClaimsProvider) == model_ClaimsProvider.client_name
 
 
 @pytest.mark.django_db
-def test_model_AuthProvider_client_id(model_AuthProvider, mock_models_get_secret_by_name):
-    secret_value = model_AuthProvider.client_id
+def test_model_ClaimsProvider_client_id(model_ClaimsProvider, mock_models_get_secret_by_name):
+    secret_value = model_ClaimsProvider.client_id
 
-    mock_models_get_secret_by_name.assert_called_once_with(model_AuthProvider.client_id_secret_name)
+    mock_models_get_secret_by_name.assert_called_once_with(model_ClaimsProvider.client_id_secret_name)
     assert secret_value == mock_models_get_secret_by_name.return_value
 
 
 @pytest.mark.django_db
-def test_model_AuthProvider_with_verification(model_AuthProvider_with_verification):
-    assert model_AuthProvider_with_verification.supports_claims_verification
+def test_model_ClaimsProvider_with_verification(model_ClaimsProvider_with_verification):
+    assert model_ClaimsProvider_with_verification.supports_claims_verification
 
 
 @pytest.mark.django_db
-def test_model_AuthProvider_with_verification_no_sign_out(model_AuthProvider_with_verification_no_sign_out):
-    assert model_AuthProvider_with_verification_no_sign_out.supports_claims_verification
-    assert not model_AuthProvider_with_verification_no_sign_out.supports_sign_out
+def test_model_ClaimsProvider_with_verification_no_sign_out(model_ClaimsProvider_with_verification_no_sign_out):
+    assert model_ClaimsProvider_with_verification_no_sign_out.supports_claims_verification
+    assert not model_ClaimsProvider_with_verification_no_sign_out.supports_sign_out
 
 
 @pytest.mark.django_db
-def test_model_AuthProvider_without_verification(model_AuthProvider_without_verification):
-    assert not model_AuthProvider_without_verification.supports_claims_verification
+def test_model_ClaimsProvider_without_verification(model_ClaimsProvider_without_verification):
+    assert not model_ClaimsProvider_without_verification.supports_claims_verification
 
 
 @pytest.mark.django_db
-def test_model_AuthProvider_without_verification_no_sign_out(model_AuthProvider_without_verification_no_sign_out):
-    assert not model_AuthProvider_without_verification_no_sign_out.supports_claims_verification
-    assert not model_AuthProvider_without_verification_no_sign_out.supports_sign_out
+def test_model_ClaimsProvider_without_verification_no_sign_out(model_ClaimsProvider_without_verification_no_sign_out):
+    assert not model_ClaimsProvider_without_verification_no_sign_out.supports_claims_verification
+    assert not model_ClaimsProvider_without_verification_no_sign_out.supports_sign_out
 
 
 @pytest.mark.django_db
@@ -292,47 +292,47 @@ def test_EligibilityVerifier_by_id_nonmatching():
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_with_AuthProvider_with_verification(
-    model_EligibilityVerifier, model_AuthProvider_with_verification
+def test_EligibilityVerifier_with_ClaimsProvider_with_verification(
+    model_EligibilityVerifier, model_ClaimsProvider_with_verification
 ):
-    model_EligibilityVerifier.auth_provider = model_AuthProvider_with_verification
+    model_EligibilityVerifier.auth_provider = model_ClaimsProvider_with_verification
 
     assert model_EligibilityVerifier.is_auth_required
     assert model_EligibilityVerifier.uses_auth_verification
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_with_AuthProvider_with_verification_no_sign_out(
-    model_EligibilityVerifier, model_AuthProvider_with_verification_no_sign_out
+def test_EligibilityVerifier_with_ClaimsProvider_with_verification_no_sign_out(
+    model_EligibilityVerifier, model_ClaimsProvider_with_verification_no_sign_out
 ):
-    model_EligibilityVerifier.auth_provider = model_AuthProvider_with_verification_no_sign_out
+    model_EligibilityVerifier.auth_provider = model_ClaimsProvider_with_verification_no_sign_out
 
     assert model_EligibilityVerifier.is_auth_required
     assert model_EligibilityVerifier.uses_auth_verification
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_with_AuthProvider_without_verification(
-    model_EligibilityVerifier, model_AuthProvider_without_verification
+def test_EligibilityVerifier_with_ClaimsProvider_without_verification(
+    model_EligibilityVerifier, model_ClaimsProvider_without_verification
 ):
-    model_EligibilityVerifier.auth_provider = model_AuthProvider_without_verification
+    model_EligibilityVerifier.auth_provider = model_ClaimsProvider_without_verification
 
     assert model_EligibilityVerifier.is_auth_required
     assert not model_EligibilityVerifier.uses_auth_verification
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_with_AuthProvider_without_verification_no_sign_out(
-    model_EligibilityVerifier, model_AuthProvider_without_verification_no_sign_out
+def test_EligibilityVerifier_with_ClaimsProvider_without_verification_no_sign_out(
+    model_EligibilityVerifier, model_ClaimsProvider_without_verification_no_sign_out
 ):
-    model_EligibilityVerifier.auth_provider = model_AuthProvider_without_verification_no_sign_out
+    model_EligibilityVerifier.auth_provider = model_ClaimsProvider_without_verification_no_sign_out
 
     assert model_EligibilityVerifier.is_auth_required
     assert not model_EligibilityVerifier.uses_auth_verification
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_without_AuthProvider(model_EligibilityVerifier):
+def test_EligibilityVerifier_without_ClaimsProvider(model_EligibilityVerifier):
     model_EligibilityVerifier.auth_provider = None
 
     assert not model_EligibilityVerifier.is_auth_required

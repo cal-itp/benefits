@@ -75,8 +75,8 @@ class PemData(models.Model):
         return secret_data if secret_data is not None else remote_data
 
 
-class AuthProvider(models.Model):
-    """An entity that provides authentication for eligibility verifiers."""
+class ClaimsProvider(models.Model):
+    """An entity that provides claims for eligibility verification."""
 
     id = models.AutoField(primary_key=True)
     sign_out_button_template = models.TextField(null=True, blank=True)
@@ -179,7 +179,7 @@ class EligibilityVerifier(models.Model):
     jwe_encryption_alg = models.TextField(null=True, blank=True)
     # The JWS-compatible signing algorithm
     jws_signing_alg = models.TextField(null=True, blank=True)
-    auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True, blank=True)
+    auth_provider = models.ForeignKey(ClaimsProvider, on_delete=models.PROTECT, null=True, blank=True)
     selection_label_template = models.TextField()
     start_template = models.TextField(null=True, blank=True)
     # reference to a form class used by this Verifier, e.g. benefits.app.forms.FormClass

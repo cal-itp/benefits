@@ -27,7 +27,7 @@
     }
   },
   {
-    "model": "core.authprovider",
+    "model": "core.claimsprovider",
     "pk": 1,
     "fields": {
       "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
@@ -41,7 +41,7 @@
     }
   },
   {
-    "model": "core.authprovider",
+    "model": "core.claimsprovider",
     "pk": 2,
     "fields": {
       "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
@@ -55,7 +55,7 @@
     }
   },
   {
-    "model": "core.authprovider",
+    "model": "core.claimsprovider",
     "pk": 3,
     "fields": {
       "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
