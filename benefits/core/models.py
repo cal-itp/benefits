@@ -79,14 +79,22 @@ class ClaimsProvider(models.Model):
     """An entity that provides claims for eligibility verification."""
 
     id = models.AutoField(primary_key=True)
-    sign_out_button_template = models.TextField(null=True, blank=True)
-    sign_out_link_template = models.TextField(null=True, blank=True)
-    client_name = models.TextField()
-    client_id_secret_name = SecretNameField()
-    authority = models.TextField()
-    scope = models.TextField(null=True, blank=True)
-    claim = models.TextField(null=True, blank=True)
-    scheme = models.TextField()
+    sign_out_button_template = models.TextField(null=True, blank=True, help_text="Template that renders sign-out button")
+    sign_out_link_template = models.TextField(null=True, blank=True, help_text="Template that renders sign-out link")
+    client_name = models.TextField(help_text="Unique identifier used to register this claims provider with Authlib registry")
+    client_id_secret_name = SecretNameField(
+        help_text="The name of the secret containing the client ID for this claims provider"
+    )
+    authority = models.TextField(help_text="The fully qualified HTTPS domain name for an OAuth authority server")
+    scope = models.TextField(
+        null=True,
+        blank=True,
+        help_text="A space-separated list of identifiers used to specify what access privileges are being requested",
+    )
+    claim = models.TextField(
+        null=True, blank=True, help_text="The name of the claim (name/value pair) that is used to verify eligibility"
+    )
+    scheme = models.TextField(help_text="The authentication scheme to use")
 
     @property
     def supports_claims_verification(self):
