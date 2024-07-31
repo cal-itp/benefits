@@ -86,7 +86,7 @@ def index(request):
     agency = session.agency(request)
     eligibility = session.eligibility(request)
 
-    # POST back after payment processor form, process card token
+    # POST back after transit processor form, process card token
     if request.method == "POST":
         form = forms.CardTokenizeSuccessForm(request.POST)
         if not form.is_valid():
