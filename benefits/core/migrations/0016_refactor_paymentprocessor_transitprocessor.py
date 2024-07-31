@@ -14,4 +14,9 @@ class Migration(migrations.Migration):
             old_name="PaymentProcessor",
             new_name="TransitProcessor",
         ),
+        migrations.RenameField(
+            model_name="transitagency",
+            old_name="payment_processor",
+            new_name="transit_processor",
+        ),
     ]

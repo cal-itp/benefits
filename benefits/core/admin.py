@@ -129,7 +129,7 @@ class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
         if not request.user.is_superuser:
             return [
                 "agency_id",
-                "payment_processor",
+                "transit_processor",
                 "index_template",
                 "eligibility_index_template",
             ]

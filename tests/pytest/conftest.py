@@ -177,7 +177,7 @@ def model_EligibilityVerifier_AuthProvider_with_verification(model_AuthProvider_
 
 @pytest.fixture
 def model_TransitProcessor():
-    payment_processor = TransitProcessor.objects.create(
+    transit_processor = TransitProcessor.objects.create(
         name="Test Payment Processor",
         api_base_url="https://example.com/payments",
         client_id="client_id",
@@ -188,7 +188,7 @@ def model_TransitProcessor():
         card_tokenize_env="test",
     )
 
-    return payment_processor
+    return transit_processor
 
 
 @pytest.fixture
@@ -201,7 +201,7 @@ def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityV
         info_url="https://example.com/test-agency",
         phone="800-555-5555",
         active=True,
-        payment_processor=model_TransitProcessor,
+        transit_processor=model_TransitProcessor,
         private_key=model_PemData,
         public_key=model_PemData,
         jws_signing_alg="alg",

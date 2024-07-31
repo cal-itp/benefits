@@ -267,7 +267,7 @@ class TransitAgency(models.Model):
     active = models.BooleanField(default=False)
     eligibility_types = models.ManyToManyField(EligibilityType)
     eligibility_verifiers = models.ManyToManyField(EligibilityVerifier)
-    payment_processor = models.ForeignKey(TransitProcessor, on_delete=models.PROTECT)
+    transit_processor = models.ForeignKey(TransitProcessor, on_delete=models.PROTECT)
     # The Agency's private key, used to sign tokens created on behalf of this Agency
     private_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
     # The public key corresponding to the Agency's private key, used by Eligibility Verification servers to encrypt responses

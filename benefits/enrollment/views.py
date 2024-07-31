@@ -39,14 +39,14 @@ def token(request):
     """View handler for the enrollment auth token."""
     if not session.enrollment_token_valid(request):
         agency = session.agency(request)
-        payment_processor = agency.payment_processor
+        transit_processor = agency.transit_processor
 
         try:
             client = Client(
-                base_url=payment_processor.api_base_url,
-                client_id=payment_processor.client_id,
-                client_secret=payment_processor.client_secret,
-                audience=payment_processor.audience,
+                base_url=transit_processor.api_base_url,
+                client_id=transit_processor.client_id,
+                client_secret=transit_processor.client_secret,
+                audience=transit_processor.audience,
             )
             client.oauth.ensure_active_token(client.token)
             response = client.request_card_tokenization_access()
@@ -86,7 +86,7 @@ def index(request):
 
     agency = session.agency(request)
     eligibility = session.eligibility(request)
-    payment_processor = agency.payment_processor
+    transit_processor = agency.transit_processor
 
     # POST back after payment processor form, process card token
     if request.method == "POST":
@@ -97,10 +97,10 @@ def index(request):
         card_token = form.cleaned_data.get("card_token")
 
         client = Client(
-            base_url=payment_processor.api_base_url,
-            client_id=payment_processor.client_id,
-            client_secret=payment_processor.client_secret,
-            audience=payment_processor.audience,
+            base_url=transit_processor.api_base_url,
+            client_id=transit_processor.client_id,
+            client_secret=transit_processor.client_secret,
+            audience=transit_processor.audience,
         )
         client.oauth.ensure_active_token(client.token)
 
@@ -192,9 +192,9 @@ def index(request):
         context = {
             "forms": [tokenize_retry_form, tokenize_server_error_form, tokenize_system_error_form, tokenize_success_form],
             "cta_button": "tokenize_card",
-            "card_tokenize_env": agency.payment_processor.card_tokenize_env,
-            "card_tokenize_func": agency.payment_processor.card_tokenize_func,
-            "card_tokenize_url": agency.payment_processor.card_tokenize_url,
+            "card_tokenize_env": agency.transit_processor.card_tokenize_env,
+            "card_tokenize_func": agency.transit_processor.card_tokenize_func,
+            "card_tokenize_url": agency.transit_processor.card_tokenize_url,
             "token_field": "card_token",
             "form_retry": tokenize_retry_form.id,
             "form_server_error": tokenize_server_error_form.id,
