@@ -48,7 +48,7 @@ def model_PemData():
 
 @pytest.fixture
 def model_ClaimsProvider():
-    auth_provider = ClaimsProvider.objects.create(
+    claims_provider = ClaimsProvider.objects.create(
         sign_out_button_template="core/includes/button--sign-out--senior.html",
         sign_out_link_template="core/includes/link--sign-out--senior.html",
         client_name="Client",
@@ -56,7 +56,7 @@ def model_ClaimsProvider():
         authority="https://example.com",
     )
 
-    return auth_provider
+    return claims_provider
 
 
 @pytest.fixture

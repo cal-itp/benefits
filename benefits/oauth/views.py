@@ -24,7 +24,7 @@ ROUTE_POST_LOGOUT = "oauth:post_logout"
 TEMPLATE_SYSTEM_ERROR = "oauth/system_error.html"
 
 
-def _oauth_client_or_error_redirect(request, auth_provider):
+def _oauth_client_or_error_redirect(request, claims_provider):
     """Calls `benefits.oauth.client.create_client()`.
 
     If a client is created successfully, return it; Otherwise, return a redirect response to the `oauth:system-error` route.
@@ -34,12 +34,12 @@ def _oauth_client_or_error_redirect(request, auth_provider):
     exception = None
 
     try:
-        oauth_client = create_client(oauth, auth_provider)
+        oauth_client = create_client(oauth, claims_provider)
     except Exception as ex:
         exception = ex
 
     if not oauth_client and not exception:
-        exception = Exception(f"oauth_client not registered: {auth_provider.client_name}")
+        exception = Exception(f"oauth_client not registered: {claims_provider.client_name}")
 
     if exception:
         analytics.error(request, message=str(exception), operation="init")
