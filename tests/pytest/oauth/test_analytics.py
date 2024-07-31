@@ -8,12 +8,12 @@ def test_OAuthEvent_verifier_client_name_when_uses_auth_verification(
     app_request, mocked_session_verifier_uses_auth_verification
 ):
     mocked_verifier = mocked_session_verifier_uses_auth_verification(app_request)
-    mocked_verifier.auth_provider.client_name = "ClientName"
+    mocked_verifier.claims_provider.client_name = "ClientName"
 
     event = OAuthEvent(app_request, "event type")
 
     assert "auth_provider" in event.event_properties
-    assert event.event_properties["auth_provider"] == mocked_verifier.auth_provider.client_name
+    assert event.event_properties["auth_provider"] == mocked_verifier.claims_provider.client_name
 
 
 @pytest.mark.django_db

@@ -12,7 +12,7 @@ class OAuthEvent(core.Event):
         super().__init__(request, event_type)
         verifier = session.verifier(request)
         if verifier and verifier.uses_auth_verification:
-            self.update_event_properties(auth_provider=verifier.auth_provider.client_name)
+            self.update_event_properties(auth_provider=verifier.claims_provider.client_name)
 
 
 class OAuthErrorEvent(OAuthEvent):

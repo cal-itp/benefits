@@ -295,7 +295,7 @@ def test_EligibilityVerifier_by_id_nonmatching():
 def test_EligibilityVerifier_with_ClaimsProvider_with_verification(
     model_EligibilityVerifier, model_ClaimsProvider_with_verification
 ):
-    model_EligibilityVerifier.auth_provider = model_ClaimsProvider_with_verification
+    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_with_verification
 
     assert model_EligibilityVerifier.is_auth_required
     assert model_EligibilityVerifier.uses_auth_verification
@@ -305,7 +305,7 @@ def test_EligibilityVerifier_with_ClaimsProvider_with_verification(
 def test_EligibilityVerifier_with_ClaimsProvider_with_verification_no_sign_out(
     model_EligibilityVerifier, model_ClaimsProvider_with_verification_no_sign_out
 ):
-    model_EligibilityVerifier.auth_provider = model_ClaimsProvider_with_verification_no_sign_out
+    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_with_verification_no_sign_out
 
     assert model_EligibilityVerifier.is_auth_required
     assert model_EligibilityVerifier.uses_auth_verification
@@ -315,7 +315,7 @@ def test_EligibilityVerifier_with_ClaimsProvider_with_verification_no_sign_out(
 def test_EligibilityVerifier_with_ClaimsProvider_without_verification(
     model_EligibilityVerifier, model_ClaimsProvider_without_verification
 ):
-    model_EligibilityVerifier.auth_provider = model_ClaimsProvider_without_verification
+    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_without_verification
 
     assert model_EligibilityVerifier.is_auth_required
     assert not model_EligibilityVerifier.uses_auth_verification
@@ -325,7 +325,7 @@ def test_EligibilityVerifier_with_ClaimsProvider_without_verification(
 def test_EligibilityVerifier_with_ClaimsProvider_without_verification_no_sign_out(
     model_EligibilityVerifier, model_ClaimsProvider_without_verification_no_sign_out
 ):
-    model_EligibilityVerifier.auth_provider = model_ClaimsProvider_without_verification_no_sign_out
+    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_without_verification_no_sign_out
 
     assert model_EligibilityVerifier.is_auth_required
     assert not model_EligibilityVerifier.uses_auth_verification
@@ -333,7 +333,7 @@ def test_EligibilityVerifier_with_ClaimsProvider_without_verification_no_sign_ou
 
 @pytest.mark.django_db
 def test_EligibilityVerifier_without_ClaimsProvider(model_EligibilityVerifier):
-    model_EligibilityVerifier.auth_provider = None
+    model_EligibilityVerifier.claims_provider = None
 
     assert not model_EligibilityVerifier.is_auth_required
     assert not model_EligibilityVerifier.uses_auth_verification

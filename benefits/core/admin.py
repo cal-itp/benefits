@@ -80,7 +80,7 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):  #
         if not request.user.is_superuser:
             return [
                 "api_url",
-                "auth_provider",
+                "claims_provider",
                 "selection_label_template",
                 "start_template",
                 "unverified_template",

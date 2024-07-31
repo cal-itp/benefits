@@ -187,7 +187,7 @@ class EligibilityVerifier(models.Model):
     jwe_encryption_alg = models.TextField(null=True, blank=True)
     # The JWS-compatible signing algorithm
     jws_signing_alg = models.TextField(null=True, blank=True)
-    auth_provider = models.ForeignKey(ClaimsProvider, on_delete=models.PROTECT, null=True, blank=True)
+    claims_provider = models.ForeignKey(ClaimsProvider, on_delete=models.PROTECT, null=True, blank=True)
     selection_label_template = models.TextField()
     start_template = models.TextField(null=True, blank=True)
     # reference to a form class used by this Verifier, e.g. benefits.app.forms.FormClass
@@ -216,12 +216,12 @@ class EligibilityVerifier(models.Model):
     @property
     def is_auth_required(self):
         """True if this Verifier requires authentication. False otherwise."""
-        return self.auth_provider is not None
+        return self.claims_provider is not None
 
     @property
     def uses_auth_verification(self):
         """True if this Verifier verifies via the auth provider. False otherwise."""
-        return self.is_auth_required and self.auth_provider.supports_claims_verification
+        return self.is_auth_required and self.claims_provider.supports_claims_verification
 
     def form_instance(self, *args, **kwargs):
         """Return an instance of this verifier's form, or None."""

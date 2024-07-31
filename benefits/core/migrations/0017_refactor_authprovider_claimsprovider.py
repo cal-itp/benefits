@@ -103,4 +103,9 @@ class Migration(migrations.Migration):
             name="sign_out_link_template",
             field=models.TextField(blank=True, help_text="Template that renders sign-out link", null=True),
         ),
+        migrations.RenameField(
+            model_name="eligibilityverifier",
+            old_name="auth_provider",
+            new_name="claims_provider",
+        ),
     ]

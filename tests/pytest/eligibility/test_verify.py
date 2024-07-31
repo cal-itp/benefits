@@ -83,7 +83,7 @@ def test_eligibility_from_oauth_auth_claim_match(
     # mocked_session_verifier_uses_auth_verification is Mocked version of the session.verifier() function
     # call it (with a None request) to return a verifier object
     verifier = mocked_session_verifier_uses_auth_verification.return_value
-    verifier.auth_provider.claim = "claim"
+    verifier.claims_provider.claim = "claim"
     verifier.eligibility_type = model_EligibilityType
 
     types = eligibility_from_oauth(verifier, "claim", model_TransitAgency)

@@ -239,7 +239,7 @@ def test_authorize_success_with_claim_true(
     app_request, mocked_session_verifier_uses_auth_verification, mocked_oauth_client_or_error_redirect__client
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
-    verifier.auth_provider.claim = "claim"
+    verifier.claims_provider.claim = "claim"
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "1"}}
 
@@ -257,7 +257,7 @@ def test_authorize_success_with_claim_false(
     app_request, mocked_session_verifier_uses_auth_verification, mocked_oauth_client_or_error_redirect__client
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
-    verifier.auth_provider.claim = "claim"
+    verifier.claims_provider.claim = "claim"
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "0"}}
 
@@ -277,7 +277,7 @@ def test_authorize_success_with_claim_error(
     mocked_analytics_module,
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
-    verifier.auth_provider.claim = "claim"
+    verifier.claims_provider.claim = "claim"
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "10"}}
 
@@ -296,7 +296,7 @@ def test_authorize_success_without_verifier_claim(
     app_request, mocked_session_verifier_uses_auth_verification, mocked_oauth_client_or_error_redirect__client
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
-    verifier.auth_provider.claim = ""
+    verifier.claims_provider.claim = ""
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "True"}}
 
@@ -323,7 +323,7 @@ def test_authorize_success_without_claim_in_response(
     access_token_response,
 ):
     verifier = mocked_session_verifier_uses_auth_verification.return_value
-    verifier.auth_provider.claim = "claim"
+    verifier.claims_provider.claim = "claim"
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = access_token_response
 

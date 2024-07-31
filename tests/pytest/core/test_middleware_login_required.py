@@ -27,7 +27,7 @@ def test_login_auth_required(app_request, mocked_view, decorated_view):
 
 @pytest.mark.django_db
 def test_login_auth_not_required(app_request, model_EligibilityVerifier, mocked_view, decorated_view):
-    model_EligibilityVerifier.auth_provider = None
+    model_EligibilityVerifier.claims_provider = None
     assert not model_EligibilityVerifier.is_auth_required
     session.update(app_request, verifier=model_EligibilityVerifier)
 

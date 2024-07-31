@@ -54,7 +54,7 @@ def login(request):
     """View implementing OIDC authorize_redirect."""
     verifier = session.verifier(request)
 
-    oauth_client_result = _oauth_client_or_error_redirect(request, verifier.auth_provider)
+    oauth_client_result = _oauth_client_or_error_redirect(request, verifier.claims_provider)
 
     if hasattr(oauth_client_result, "authorize_redirect"):
         # this looks like an oauth_client since it has the method we need
@@ -95,7 +95,7 @@ def authorize(request):
     """View implementing OIDC token authorization."""
     verifier = session.verifier(request)
 
-    oauth_client_result = _oauth_client_or_error_redirect(request, verifier.auth_provider)
+    oauth_client_result = _oauth_client_or_error_redirect(request, verifier.claims_provider)
 
     if hasattr(oauth_client_result, "authorize_access_token"):
         # this looks like an oauth_client since it has the method we need
@@ -128,7 +128,7 @@ def authorize(request):
     id_token = token["id_token"]
 
     # We store the returned claim in case it can be used later in eligibility verification.
-    verifier_claim = verifier.auth_provider.claim
+    verifier_claim = verifier.claims_provider.claim
     stored_claim = None
 
     error_claim = None
@@ -168,7 +168,7 @@ def logout(request):
     """View implementing OIDC and application sign out."""
     verifier = session.verifier(request)
 
-    oauth_client_result = _oauth_client_or_error_redirect(request, verifier.auth_provider)
+    oauth_client_result = _oauth_client_or_error_redirect(request, verifier.claims_provider)
 
     if hasattr(oauth_client_result, "load_server_metadata"):
         # this looks like an oauth_client since it has the method we need

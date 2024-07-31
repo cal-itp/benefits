@@ -171,7 +171,7 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
 def model_EligibilityVerifier_ClaimsProvider_with_verification(
     model_ClaimsProvider_with_verification, model_EligibilityVerifier
 ):
-    model_EligibilityVerifier.auth_provider = model_ClaimsProvider_with_verification
+    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_with_verification
     model_EligibilityVerifier.save()
 
     return model_EligibilityVerifier
@@ -292,11 +292,11 @@ def mocked_session_verifier_uses_auth_verification(
 ):
     mock_verifier = model_EligibilityVerifier_ClaimsProvider_with_verification
     mock_verifier.name = model_EligibilityVerifier_ClaimsProvider_with_verification.name
-    mock_verifier.auth_provider.sign_out_button_template = (
-        model_EligibilityVerifier_ClaimsProvider_with_verification.auth_provider.sign_out_button_template
+    mock_verifier.claims_provider.sign_out_button_template = (
+        model_EligibilityVerifier_ClaimsProvider_with_verification.claims_provider.sign_out_button_template
     )
-    mock_verifier.auth_provider.sign_out_link_template = (
-        model_EligibilityVerifier_ClaimsProvider_with_verification.auth_provider.sign_out_link_template
+    mock_verifier.claims_provider.sign_out_link_template = (
+        model_EligibilityVerifier_ClaimsProvider_with_verification.claims_provider.sign_out_link_template
     )
     mocked_session_verifier_oauth.return_value = mock_verifier
     return mocked_session_verifier_oauth
@@ -307,7 +307,7 @@ def mocked_session_verifier_does_not_use_auth_verification(
     mocked_session_verifier_uses_auth_verification, model_ClaimsProvider_without_verification
 ):
     mocked_verifier = mocked_session_verifier_uses_auth_verification
-    mocked_verifier.auth_provider = model_ClaimsProvider_without_verification
+    mocked_verifier.claims_provider = model_ClaimsProvider_without_verification
     return mocked_verifier
 
 
