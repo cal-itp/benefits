@@ -39,14 +39,13 @@ def token(request):
     """View handler for the enrollment auth token."""
     if not session.enrollment_token_valid(request):
         agency = session.agency(request)
-        transit_processor = agency.transit_processor
 
         try:
             client = Client(
-                base_url=transit_processor.api_base_url,
-                client_id=transit_processor.client_id,
-                client_secret=transit_processor.client_secret,
-                audience=transit_processor.audience,
+                base_url=agency.transit_processor.api_base_url,
+                client_id=agency.transit_processor_client_id,
+                client_secret=agency.transit_processor_client_secret,
+                audience=agency.transit_processor_audience,
             )
             client.oauth.ensure_active_token(client.token)
             response = client.request_card_tokenization_access()
@@ -86,7 +85,6 @@ def index(request):
 
     agency = session.agency(request)
     eligibility = session.eligibility(request)
-    transit_processor = agency.transit_processor
 
     # POST back after payment processor form, process card token
     if request.method == "POST":
@@ -97,10 +95,10 @@ def index(request):
         card_token = form.cleaned_data.get("card_token")
 
         client = Client(
-            base_url=transit_processor.api_base_url,
-            client_id=transit_processor.client_id,
-            client_secret=transit_processor.client_secret,
-            audience=transit_processor.audience,
+            base_url=agency.transit_processor.api_base_url,
+            client_id=agency.transit_processor_client_id,
+            client_secret=agency.transit_processor_client_secret,
+            audience=agency.transit_processor_audience,
         )
         client.oauth.ensure_active_token(client.token)
 
