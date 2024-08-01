@@ -62,7 +62,7 @@ Littlepay-->>Benefits: payment method enrollment confirmation
 
 1. The IdG then passes the response from CDSS as low-income status = TRUE to the Cal-ITP Benefits app to indicate the person is eligible for a benefit.
 
-1. The transit rider provides the debit or credit card details they use to pay for transit to Littlepay, the payment processor that facilitates transit fare collection.
+1. The transit rider provides the debit or credit card details they use to pay for transit to Littlepay, the transit processor that facilitates transit fare collection.
 
 1. The app registers the low-income benefit with the transit rider’s debit or credit card.
 

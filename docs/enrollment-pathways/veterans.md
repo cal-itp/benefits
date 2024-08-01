@@ -60,7 +60,7 @@ Littlepay-->>Benefits: payment method enrollment confirmation
 5. The Cal-ITP Benefits app interfaces with the [California Department of Technology](https://cdt.ca.gov/) Identity Gateway (IdG) to verify benefit eligibility. The IdG requests the required personal information to verify veteran status from [Login.gov](https://Login.gov).
 6. The IdG utilizes the [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) provided by the US Department of Veterans Affairs to determine the rider’s veteran status.
 7. The IdG passes the response from [VA.gov](https://VA.gov) as veteran status = TRUE to the Cal-ITP Benefits app to indicate the person is eligible for a benefit.
-8. The transit rider provides the debit or credit card details they use to pay for transit to Littlepay, the payment processor that facilitates transit fare collection.
+8. The transit rider provides the debit or credit card details they use to pay for transit to Littlepay, the transit processor that facilitates transit fare collection.
 9. The app registers the veteran benefit with the transit rider’s debit or credit card.
 
 ## Alternative flows
