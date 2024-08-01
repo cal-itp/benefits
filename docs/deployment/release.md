@@ -1,10 +1,12 @@
-# Making a release
+# Making a regular release
 
 This list outlines the manual steps needed to make a new release of the
 `benefits` app.
 
-A release is made by merging changes into the `prod` branch, which kicks off a
-deployment to the production environment. More details on the deployment steps
+A release is made by pushing an annotated tag. The name of the tag must use
+the version number format mentioned below. This kicks off a deployment to the
+production environment and creates a GitHub release. The version number for the
+app and the release will be the tag’s name. More details on the deployment steps
 can be found under [Workflows](./workflows.md).
 
 The list of releases can be found on the [repository Releases page](https://github.com/cal-itp/benefits/tags)
@@ -25,77 +27,42 @@ version numbers look like: `YYYY.0M.R`
 - `R` is the 1-based release counter for the given year and month;
   e.g. `1` for the first release of the month, `2` for the second, and so on.
 
-## 1. Prepare release in a branch
+Version numbers for release candidates append `-rcR`, where `R` is the 1-based release counter for the anticipated release. For example, the first release candidate for the `2024.01.1` release would be `2024.01.1-rc1`.
 
-Typically changes for a release will move from `main`, to `test`, to `prod`. This
-assumes `main` is in a state that it can be deployed without disruption. (This is called a `Regular` release.)
-
-If `main` or `test` contain in-progress work that is not ready for production,
-and a hotfix is needed in production, a separate process to test the changes
-before deploying to `prod` must be undertaken. (This is called a `Hotfix` release.)
-
-As implied in the previous step, all releases follow the same version number format.
-
-The following diagram shows how a release should propagate to `prod` under
-different circumstances:
-
-```mermaid
-graph LR
-    A(Release branch) --> B{Are main and test ready to deploy?};
-    B -->|Yes| C(main);
-    C --> D(test);
-    D --> E(prod);
-    B -->|No| E;
-```
-
-By convention the release branch is called `release/YYYY.0M.R` using the
-upcoming version number.
-
-## 2. Bump the application version number
-
-The app code maintains a version number in
-[`benefits/__init__.py`](https://github.com/cal-itp/benefits/blob/main/benefits/__init__.py),
-used by the instrumentation and logging systems.
-
-This version number must be updated to match the new version in the same format:
-`YYYY.0M.R`
-
-## 3. Open a PR
-
-Initially from the release branch to the target environment branch, following
-the merge sequence in the diagram above.
-
-## 4. Merge the PR
-
-After checks pass and review approval is given, merge the PR to kick off the
-deployment.
-
-Repeat steps 3 and 4 for each deployment environment target, again following the
-merge sequence in the diagram above.
-
-## 5. Tag the release
-
-Once the deploy has completed to `prod`, the version can be tagged and pushed to
-GitHub.
-
-From a local terminal:
+## 1. Create a release candidate tag on `main` and push it
 
 ```bash
 git fetch
+git checkout main
+git reset --hard origin/main
+git tag -a YYYY.0M.R-rcR
+```
 
-git checkout prod
+Git will open your default text editor and prompt you for the tag annotation. For the tag annotation, use the release candidate version. Finally, after closing the text editor:
 
-git reset --hard origin/prod
+```bash
+git push origin YYYY.0M.R-rcR
+```
 
+This builds a new package and deploys to the Azure test environments. No GitHub release is created for release candidates.
+
+## 2. Create a release tag on `main` and push it
+
+```bash
+git fetch
+git checkout main
+git reset --hard origin/main
 git tag -a YYYY.0M.R
 ```
 
-Git will open your default text editor and prompt you for the tag annotation. For the tag annotation, use the title of the `release`-tagged Issue that kicked off the release. Finally, after closing the text editor:
+Git will open your default text editor and prompt you for the tag annotation. For the tag annotation, use the title of the Release process issue that kicked off the release. Finally, after closing the text editor:
 
 ```bash
 git push origin YYYY.0M.R
 ```
 
-## 6. [Generate release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
+This builds the package and deploys to the Azure production environments. A GitHub release is created.
 
-Also add a written description, and include screenshots/animations of new/updated pages/workflows.
+## 3. [Generate release notes](https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes)
+
+Edit release notes with additional context, images, animations, etc. as-needed and link to the Release process issue.
