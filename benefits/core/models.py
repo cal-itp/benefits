@@ -240,7 +240,7 @@ class TransitProcessor(models.Model):
     name = models.TextField(help_text="Primary internal display name for this TransitProcessor instance, e.g. in the Admin.")
     api_base_url = models.TextField(help_text="The absolute base URL for the TransitProcessor's API, including https://.")
     card_tokenize_url = models.TextField(
-        help_text="The abolute URL for the client-side card tokenization library provided by the TransitProcessor."
+        help_text="The absolute URL for the client-side card tokenization library provided by the TransitProcessor."
     )
     card_tokenize_func = models.TextField(
         help_text="The function from the card tokenization library to call on the client to initiate the process."

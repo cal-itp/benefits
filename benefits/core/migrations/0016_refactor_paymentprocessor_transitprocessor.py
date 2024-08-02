@@ -118,7 +118,7 @@ class Migration(migrations.Migration):
             model_name="transitprocessor",
             name="card_tokenize_url",
             field=models.TextField(
-                help_text="The abolute URL for the client-side card tokenization library provided by the TransitProcessor."
+                help_text="The absolute URL for the client-side card tokenization library provided by the TransitProcessor."
             ),
         ),
         migrations.AlterField(
