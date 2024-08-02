@@ -189,7 +189,7 @@ class EligibilityVerifier(models.Model):
     eligibility_api_jws_signing_alg = models.TextField(null=True, blank=True)
     claims_provider = models.ForeignKey(ClaimsProvider, on_delete=models.PROTECT, null=True, blank=True)
     selection_label_template = models.TextField()
-    eligibility_start_template = models.TextField(null=True, blank=True)
+    eligibility_start_template = models.TextField(default="eligibility/start.html")
     # reference to a form class used by this Verifier, e.g. benefits.app.forms.FormClass
     eligibility_form_class = models.TextField(null=True, blank=True)
     eligibility_unverified_template = models.TextField(default="eligibility/unverified.html")
