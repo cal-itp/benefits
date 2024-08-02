@@ -22,7 +22,6 @@ ROUTE_CONFIRM = "eligibility:confirm"
 ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_ENROLLMENT = "enrollment:index"
 
-TEMPLATE_START = "eligibility/start.html"
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
 
 
@@ -78,9 +77,8 @@ def start(request):
     session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))
 
     verifier = session.verifier(request)
-    template = verifier.eligibility_start_template or TEMPLATE_START
 
-    return TemplateResponse(request, template)
+    return TemplateResponse(request, verifier.eligibility_start_template)
 
 
 @decorator_from_middleware(AgencySessionRequired)
