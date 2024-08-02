@@ -71,7 +71,7 @@ class SampleVerificationForm(EligibilityVerificationForm):
 
 @pytest.fixture
 def model_EligibilityVerifier_with_form_class(mocker, model_EligibilityVerifier):
-    model_EligibilityVerifier.form_class = f"{__name__}.SampleVerificationForm"
+    model_EligibilityVerifier.eligibility_form_class = f"{__name__}.SampleVerificationForm"
     model_EligibilityVerifier.save()
     mocker.patch("benefits.eligibility.views.session.verifier", return_value=model_EligibilityVerifier)
     return model_EligibilityVerifier
