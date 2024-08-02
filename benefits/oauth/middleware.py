@@ -28,7 +28,7 @@ class VerifierUsesAuthVerificationSessionRequired(VerifierSessionRequired):
             # all good, the chosen verifier is configured correctly
             return None
         elif not (verifier.api_url or verifier.form_class):
-            # the chosen verifier doesn't have Eligibility API config OR auth provider config
+            # the chosen verifier doesn't have Eligibility API config OR claims provider config
             # this is likely a misconfiguration on the backend, not a user error
             message = f"Verifier with no API or IDP config: {verifier.name} (id={verifier.id})"
             analytics.error(request, message=message, operation=request.path)
