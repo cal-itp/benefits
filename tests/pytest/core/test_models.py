@@ -297,7 +297,6 @@ def test_EligibilityVerifier_with_ClaimsProvider_with_verification(
 ):
     model_EligibilityVerifier.claims_provider = model_ClaimsProvider_with_verification
 
-    assert model_EligibilityVerifier.is_auth_required
     assert model_EligibilityVerifier.uses_auth_verification
 
 
@@ -307,7 +306,6 @@ def test_EligibilityVerifier_with_ClaimsProvider_with_verification_no_sign_out(
 ):
     model_EligibilityVerifier.claims_provider = model_ClaimsProvider_with_verification_no_sign_out
 
-    assert model_EligibilityVerifier.is_auth_required
     assert model_EligibilityVerifier.uses_auth_verification
 
 
@@ -317,7 +315,6 @@ def test_EligibilityVerifier_with_ClaimsProvider_without_verification(
 ):
     model_EligibilityVerifier.claims_provider = model_ClaimsProvider_without_verification
 
-    assert model_EligibilityVerifier.is_auth_required
     assert not model_EligibilityVerifier.uses_auth_verification
 
 
@@ -327,7 +324,6 @@ def test_EligibilityVerifier_with_ClaimsProvider_without_verification_no_sign_ou
 ):
     model_EligibilityVerifier.claims_provider = model_ClaimsProvider_without_verification_no_sign_out
 
-    assert model_EligibilityVerifier.is_auth_required
     assert not model_EligibilityVerifier.uses_auth_verification
 
 
@@ -335,7 +331,6 @@ def test_EligibilityVerifier_with_ClaimsProvider_without_verification_no_sign_ou
 def test_EligibilityVerifier_without_ClaimsProvider(model_EligibilityVerifier):
     model_EligibilityVerifier.claims_provider = None
 
-    assert not model_EligibilityVerifier.is_auth_required
     assert not model_EligibilityVerifier.uses_auth_verification
 
 

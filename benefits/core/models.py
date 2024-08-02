@@ -214,14 +214,9 @@ class EligibilityVerifier(models.Model):
         return self.public_key.data
 
     @property
-    def is_auth_required(self):
-        """True if this Verifier requires authentication. False otherwise."""
-        return self.claims_provider is not None
-
-    @property
     def uses_auth_verification(self):
-        """True if this Verifier verifies via the auth provider. False otherwise."""
-        return self.is_auth_required and self.claims_provider.supports_claims_verification
+        """True if this Verifier verifies via the claims provider. False otherwise."""
+        return self.claims_provider is not None and self.claims_provider.supports_claims_verification
 
     def form_instance(self, *args, **kwargs):
         """Return an instance of this verifier's form, or None."""
