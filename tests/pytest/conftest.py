@@ -156,11 +156,11 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
     verifier = EligibilityVerifier.objects.create(
         name="Test Verifier",
         active=True,
-        api_url="https://example.com/verify",
-        api_auth_header="X-API-AUTH",
-        api_auth_key_secret_name="secret-key",
+        eligibility_api_url="https://example.com/verify",
+        eligibility_api_auth_header="X-API-AUTH",
+        eligibility_api_auth_key_secret_name="secret-key",
         eligibility_type=model_EligibilityType,
-        public_key=model_PemData,
+        eligibility_api_public_key=model_PemData,
         selection_label_template="eligibility/includes/selection-label.html",
     )
 
