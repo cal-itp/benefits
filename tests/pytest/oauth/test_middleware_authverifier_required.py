@@ -34,7 +34,7 @@ def test_authverifier_required_no_verifier(app_request, mocked_view, decorated_v
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_does_not_use_auth_verification")
+@pytest.mark.usefixtures("mocked_session_verifier_does_not_use_claims_verification")
 def test_authverifier_required_no_authverifier(app_request, mocked_view, decorated_view):
     response = decorated_view(app_request)
 
@@ -49,15 +49,15 @@ def test_authverifier_required_misconfigured_verifier(
     app_request,
     mocked_view,
     decorated_view,
-    mocked_session_verifier_does_not_use_auth_verification,
+    mocked_session_verifier_does_not_use_claims_verification,
     mocked_analytics_module,
     mocked_sentry_sdk_module,
     api_url,
     form_class,
 ):
     # fake a misconfigured verifier
-    mocked_session_verifier_does_not_use_auth_verification.return_value.api_url = api_url
-    mocked_session_verifier_does_not_use_auth_verification.return_value.form_class = form_class
+    mocked_session_verifier_does_not_use_claims_verification.return_value.api_url = api_url
+    mocked_session_verifier_does_not_use_claims_verification.return_value.form_class = form_class
 
     response = decorated_view(app_request)
 

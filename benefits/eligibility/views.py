@@ -102,7 +102,7 @@ def confirm(request):
     types_to_verify = agency.type_names_to_verify(verifier)
 
     # GET for OAuth verification
-    if request.method == "GET" and verifier.uses_auth_verification:
+    if request.method == "GET" and verifier.uses_claims_verification:
         analytics.started_eligibility(request, types_to_verify)
 
         verified_types = verify.eligibility_from_oauth(verifier, session.oauth_claim(request), agency)

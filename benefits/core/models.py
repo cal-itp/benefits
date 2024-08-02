@@ -214,7 +214,7 @@ class EligibilityVerifier(models.Model):
         return self.public_key.data
 
     @property
-    def uses_auth_verification(self):
+    def uses_claims_verification(self):
         """True if this Verifier verifies via the claims provider. False otherwise."""
         return self.claims_provider is not None and self.claims_provider.supports_claims_verification
 

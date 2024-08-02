@@ -55,7 +55,7 @@ def authentication(request):
             "logged_in": session.logged_in(request),
         }
 
-        if verifier.uses_auth_verification:
+        if verifier.uses_claims_verification:
             data["sign_out_button_template"] = verifier.claims_provider.sign_out_button_template
             data["sign_out_link_template"] = verifier.claims_provider.sign_out_link_template
 

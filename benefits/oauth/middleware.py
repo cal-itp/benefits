@@ -24,7 +24,7 @@ class VerifierUsesAuthVerificationSessionRequired(VerifierSessionRequired):
 
         verifier = session.verifier(request)
 
-        if verifier.uses_auth_verification:
+        if verifier.uses_claims_verification:
             # all good, the chosen verifier is configured correctly
             return None
         elif not (verifier.api_url or verifier.form_class):

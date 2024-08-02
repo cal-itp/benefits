@@ -108,25 +108,25 @@ def test_model_ClaimsProvider_client_id(model_ClaimsProvider, mock_models_get_se
 
 
 @pytest.mark.django_db
-def test_model_ClaimsProvider_with_verification(model_ClaimsProvider_with_verification):
-    assert model_ClaimsProvider_with_verification.supports_claims_verification
+def test_model_ClaimsProvider_with_scope_and_claim(model_ClaimsProvider_with_scope_and_claim):
+    assert model_ClaimsProvider_with_scope_and_claim.supports_claims_verification
 
 
 @pytest.mark.django_db
-def test_model_ClaimsProvider_with_verification_no_sign_out(model_ClaimsProvider_with_verification_no_sign_out):
-    assert model_ClaimsProvider_with_verification_no_sign_out.supports_claims_verification
-    assert not model_ClaimsProvider_with_verification_no_sign_out.supports_sign_out
+def test_model_ClaimsProvider_with_scope_and_claim_no_sign_out(model_ClaimsProvider_with_scope_and_claim_no_sign_out):
+    assert model_ClaimsProvider_with_scope_and_claim_no_sign_out.supports_claims_verification
+    assert not model_ClaimsProvider_with_scope_and_claim_no_sign_out.supports_sign_out
 
 
 @pytest.mark.django_db
-def test_model_ClaimsProvider_without_verification(model_ClaimsProvider_without_verification):
-    assert not model_ClaimsProvider_without_verification.supports_claims_verification
+def test_model_ClaimsProvider_no_scope_and_claim(model_ClaimsProvider_no_scope_and_claim):
+    assert not model_ClaimsProvider_no_scope_and_claim.supports_claims_verification
 
 
 @pytest.mark.django_db
-def test_model_ClaimsProvider_without_verification_no_sign_out(model_ClaimsProvider_without_verification_no_sign_out):
-    assert not model_ClaimsProvider_without_verification_no_sign_out.supports_claims_verification
-    assert not model_ClaimsProvider_without_verification_no_sign_out.supports_sign_out
+def test_model_ClaimsProvider_no_scope_and_claim_no_sign_out(model_ClaimsProvider_no_scope_and_claim_no_sign_out):
+    assert not model_ClaimsProvider_no_scope_and_claim_no_sign_out.supports_claims_verification
+    assert not model_ClaimsProvider_no_scope_and_claim_no_sign_out.supports_sign_out
 
 
 @pytest.mark.django_db
@@ -292,46 +292,46 @@ def test_EligibilityVerifier_by_id_nonmatching():
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_with_ClaimsProvider_with_verification(
-    model_EligibilityVerifier, model_ClaimsProvider_with_verification
+def test_EligibilityVerifier_with_ClaimsProvider_with_scope_and_claim(
+    model_EligibilityVerifier, model_ClaimsProvider_with_scope_and_claim
 ):
-    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_with_verification
+    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_with_scope_and_claim
 
-    assert model_EligibilityVerifier.uses_auth_verification
+    assert model_EligibilityVerifier.uses_claims_verification
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_with_ClaimsProvider_with_verification_no_sign_out(
-    model_EligibilityVerifier, model_ClaimsProvider_with_verification_no_sign_out
+def test_EligibilityVerifier_with_ClaimsProvider_with_scope_and_claim_no_sign_out(
+    model_EligibilityVerifier, model_ClaimsProvider_with_scope_and_claim_no_sign_out
 ):
-    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_with_verification_no_sign_out
+    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_with_scope_and_claim_no_sign_out
 
-    assert model_EligibilityVerifier.uses_auth_verification
+    assert model_EligibilityVerifier.uses_claims_verification
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_with_ClaimsProvider_without_verification(
-    model_EligibilityVerifier, model_ClaimsProvider_without_verification
+def test_EligibilityVerifier_with_ClaimsProvider_no_scope_and_claim(
+    model_EligibilityVerifier, model_ClaimsProvider_no_scope_and_claim
 ):
-    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_without_verification
+    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_no_scope_and_claim
 
-    assert not model_EligibilityVerifier.uses_auth_verification
+    assert not model_EligibilityVerifier.uses_claims_verification
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_with_ClaimsProvider_without_verification_no_sign_out(
-    model_EligibilityVerifier, model_ClaimsProvider_without_verification_no_sign_out
+def test_EligibilityVerifier_with_ClaimsProvider_no_scope_and_claim_no_sign_out(
+    model_EligibilityVerifier, model_ClaimsProvider_no_scope_and_claim_no_sign_out
 ):
-    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_without_verification_no_sign_out
+    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_no_scope_and_claim_no_sign_out
 
-    assert not model_EligibilityVerifier.uses_auth_verification
+    assert not model_EligibilityVerifier.uses_claims_verification
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_without_ClaimsProvider(model_EligibilityVerifier):
+def test_EligibilityVerifier_no_ClaimsProvider(model_EligibilityVerifier):
     model_EligibilityVerifier.claims_provider = None
 
-    assert not model_EligibilityVerifier.uses_auth_verification
+    assert not model_EligibilityVerifier.uses_claims_verification
 
 
 @pytest.mark.django_db
