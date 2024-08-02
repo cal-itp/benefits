@@ -6,7 +6,7 @@ from benefits.core import analytics as core
 
 
 class ReturnedEnrollmentEvent(core.Event):
-    """Analytics event representing the end of payment processor enrollment request."""
+    """Analytics event representing the end of transit processor enrollment request."""
 
     def __init__(self, request, status, error=None, payment_group=None):
         super().__init__(request, "returned enrollment")

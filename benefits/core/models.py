@@ -233,22 +233,19 @@ class EligibilityVerifier(models.Model):
         return EligibilityVerifier.objects.get(id=id)
 
 
-class PaymentProcessor(models.Model):
-    """An entity that processes payments for transit agencies."""
+class TransitProcessor(models.Model):
+    """An entity that applies transit agency fare rules to rider transactions."""
 
     id = models.AutoField(primary_key=True)
-    name = models.TextField()
-    api_base_url = models.TextField()
-    client_id = models.TextField()
-    client_secret_name = SecretNameField()
-    audience = models.TextField()
-    card_tokenize_url = models.TextField()
-    card_tokenize_func = models.TextField()
-    card_tokenize_env = models.TextField()
-
-    @property
-    def client_secret(self):
-        return get_secret_by_name(self.client_secret_name)
+    name = models.TextField(help_text="Primary internal display name for this TransitProcessor instance, e.g. in the Admin.")
+    api_base_url = models.TextField(help_text="The absolute base URL for the TransitProcessor's API, including https://.")
+    card_tokenize_url = models.TextField(
+        help_text="The absolute URL for the client-side card tokenization library provided by the TransitProcessor."
+    )
+    card_tokenize_func = models.TextField(
+        help_text="The function from the card tokenization library to call on the client to initiate the process."
+    )
+    card_tokenize_env = models.TextField(help_text="The environment in which card tokenization is occurring.")
 
     def __str__(self):
         return self.name
@@ -267,7 +264,17 @@ class TransitAgency(models.Model):
     active = models.BooleanField(default=False)
     eligibility_types = models.ManyToManyField(EligibilityType)
     eligibility_verifiers = models.ManyToManyField(EligibilityVerifier)
-    payment_processor = models.ForeignKey(PaymentProcessor, on_delete=models.PROTECT)
+    transit_processor = models.ForeignKey(TransitProcessor, on_delete=models.PROTECT)
+    transit_processor_client_id = models.TextField(
+        help_text="This agency's client_id value used to access the TransitProcessor's API.", default=""
+    )
+    transit_processor_client_secret_name = SecretNameField(
+        help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
+        default="",
+    )
+    transit_processor_audience = models.TextField(
+        help_text="This agency's audience value used to access the TransitProcessor's API.", default=""
+    )
     # The Agency's private key, used to sign tokens created on behalf of this Agency
     private_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
     # The public key corresponding to the Agency's private key, used by Eligibility Verification servers to encrypt responses
@@ -333,6 +340,10 @@ class TransitAgency(models.Model):
     def active_verifiers(self):
         """This Agency's eligibility verifiers that are active."""
         return self.eligibility_verifiers.filter(active=True)
+
+    @property
+    def transit_processor_client_secret(self):
+        return get_secret_by_name(self.transit_processor_client_secret_name)
 
     @staticmethod
     def by_id(id):

@@ -70,7 +70,7 @@ The Benefits application doesn't collect or store any user data directly, and we
 Sensitive user information exists in the following places:
 
 - To enroll in a senior discount, users need to [provide personal information to Login.gov](https://benefits.calitp.org/help#login-gov-verify).
-- Users need to [provide their credit or debit card information to our payment processor (Littlepay)](https://benefits.calitp.org/help#littlepay) to enroll in a discount.
+- Users need to [provide their credit or debit card information to our transit processor (Littlepay)](https://benefits.calitp.org/help#littlepay) to enroll in a discount.
 
 None of that information is accessible to the Benefits system/team.
 

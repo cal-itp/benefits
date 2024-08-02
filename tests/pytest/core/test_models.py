@@ -348,8 +348,8 @@ def test_EligiblityVerifier_api_auth_key(model_EligibilityVerifier, mock_models_
 
 
 @pytest.mark.django_db
-def test_PaymentProcessor_str(model_PaymentProcessor):
-    assert str(model_PaymentProcessor) == model_PaymentProcessor.name
+def test_TransitProcessor_str(model_TransitProcessor):
+    assert str(model_TransitProcessor) == model_TransitProcessor.name
 
 
 @pytest.mark.django_db

@@ -233,7 +233,7 @@ flowchart LR
 ## Enrollment
 
 In this final phase, the user registers their contactless payment card with a concession group configured within the
-payment processor (Littlepay).
+transit processor (Littlepay).
 
 **_Cal-ITP Benefits never processes, transmits, nor stores the user's payment card details._**
 

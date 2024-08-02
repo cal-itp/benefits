@@ -35,7 +35,7 @@ Some configuration data is not available with the samples in the repository:
 
 - OAuth configuration to enable authentication (read more about [OAuth configuration](oauth.md))
 - reCAPTCHA configuration for user-submitted forms
-- Payment processor configuration for the enrollment phase
+- Transit processor configuration for the enrollment phase
 - Amplitude configuration for capturing analytics events
 
 ## Rebuilding the configuration database locally

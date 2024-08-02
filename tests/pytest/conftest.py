@@ -7,7 +7,7 @@ import pytest
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import AuthProvider, EligibilityType, EligibilityVerifier, PaymentProcessor, PemData, TransitAgency
+from benefits.core.models import AuthProvider, EligibilityType, EligibilityVerifier, TransitProcessor, PemData, TransitAgency
 
 
 def pytest_runtest_setup():
@@ -176,23 +176,20 @@ def model_EligibilityVerifier_AuthProvider_with_verification(model_AuthProvider_
 
 
 @pytest.fixture
-def model_PaymentProcessor():
-    payment_processor = PaymentProcessor.objects.create(
-        name="Test Payment Processor",
-        api_base_url="https://example.com/payments",
-        client_id="client_id",
-        client_secret_name="client_secret_name",
-        audience="audience",
-        card_tokenize_url="https://example.com/payments/tokenize.js",
+def model_TransitProcessor():
+    transit_processor = TransitProcessor.objects.create(
+        name="Test Transit Processor",
+        api_base_url="https://example.com/enrollments",
+        card_tokenize_url="https://example.com/enrollments/card-tokenize.js",
         card_tokenize_func="tokenize",
         card_tokenize_env="test",
     )
 
-    return payment_processor
+    return transit_processor
 
 
 @pytest.fixture
-def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityVerifier, model_PaymentProcessor):
+def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityVerifier, model_TransitProcessor):
     agency = TransitAgency.objects.create(
         slug="test",
         short_name="TEST",
@@ -201,7 +198,10 @@ def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityV
         info_url="https://example.com/test-agency",
         phone="800-555-5555",
         active=True,
-        payment_processor=model_PaymentProcessor,
+        transit_processor=model_TransitProcessor,
+        transit_processor_client_id="client_id",
+        transit_processor_client_secret_name="client_secret_name",
+        transit_processor_audience="audience",
         private_key=model_PemData,
         public_key=model_PemData,
         jws_signing_alg="alg",
