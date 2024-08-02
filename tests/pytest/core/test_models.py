@@ -265,6 +265,11 @@ class SampleFormClass:
 
 
 @pytest.mark.django_db
+def test_EligibilityVerifier_eligibility_start_template(model_EligibilityVerifier):
+    assert model_EligibilityVerifier.eligibility_start_template == "eligibility/start.html"
+
+
+@pytest.mark.django_db
 def test_EligibilityVerifier_eligibility_form_instance(model_EligibilityVerifier):
     model_EligibilityVerifier.eligibility_form_class = f"{__name__}.SampleFormClass"
     model_EligibilityVerifier.save()
