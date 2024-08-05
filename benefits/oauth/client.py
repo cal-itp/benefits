@@ -41,7 +41,7 @@ def _authorize_params(scheme):
 
 def _register_provider(oauth_registry, provider):
     """
-    Register OAuth clients into the given registry, using configuration from AuthProvider model.
+    Register OAuth clients into the given registry, using configuration from ClaimsProvider model.
 
     Adapted from https://stackoverflow.com/a/64174413.
     """

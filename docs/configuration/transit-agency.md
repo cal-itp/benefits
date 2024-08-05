@@ -18,8 +18,8 @@ Note that a `TransitAgency` model requires:
   - `help_template`: _Required for agencies_ - Agency-specific help questions and answers
   - `selection_label_template`: _Required for verifiers_ - Text and optional modals for the radio button form on the Eligibility Index page
   - `start_template`: _Required for verifiers_ - Text and optional custom styles for call to action button on the Eligibility Start page
-  - `sign_out_button_template`: _Required for auth providers_ - Sign out link button, used on any page after sign in
-  - `sign_out_link_template`: _Required for auth providers_ - Sign out link text, used on any page after sign in
+  - `sign_out_button_template`: _Required for claims providers_ - Sign out link button, used on any page after sign in
+  - `sign_out_link_template`: _Required for claims providers_ - Sign out link text, used on any page after sign in
 
 Also note that these steps assume the transit agency is using Littlepay as their transit processor. Support for integration with [other transit processors](https://www.camobilitymarketplace.org/contracts/) may be added in the future.
 

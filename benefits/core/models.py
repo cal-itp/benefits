@@ -75,18 +75,26 @@ class PemData(models.Model):
         return secret_data if secret_data is not None else remote_data
 
 
-class AuthProvider(models.Model):
-    """An entity that provides authentication for eligibility verifiers."""
+class ClaimsProvider(models.Model):
+    """An entity that provides claims for eligibility verification."""
 
     id = models.AutoField(primary_key=True)
-    sign_out_button_template = models.TextField(null=True, blank=True)
-    sign_out_link_template = models.TextField(null=True, blank=True)
-    client_name = models.TextField()
-    client_id_secret_name = SecretNameField()
-    authority = models.TextField()
-    scope = models.TextField(null=True, blank=True)
-    claim = models.TextField(null=True, blank=True)
-    scheme = models.TextField()
+    sign_out_button_template = models.TextField(null=True, blank=True, help_text="Template that renders sign-out button")
+    sign_out_link_template = models.TextField(null=True, blank=True, help_text="Template that renders sign-out link")
+    client_name = models.TextField(help_text="Unique identifier used to register this claims provider with Authlib registry")
+    client_id_secret_name = SecretNameField(
+        help_text="The name of the secret containing the client ID for this claims provider"
+    )
+    authority = models.TextField(help_text="The fully qualified HTTPS domain name for an OAuth authority server")
+    scope = models.TextField(
+        null=True,
+        blank=True,
+        help_text="A space-separated list of identifiers used to specify what access privileges are being requested",
+    )
+    claim = models.TextField(
+        null=True, blank=True, help_text="The name of the claim (name/value pair) that is used to verify eligibility"
+    )
+    scheme = models.TextField(help_text="The authentication scheme to use")
 
     @property
     def supports_claims_verification(self):
@@ -179,7 +187,7 @@ class EligibilityVerifier(models.Model):
     jwe_encryption_alg = models.TextField(null=True, blank=True)
     # The JWS-compatible signing algorithm
     jws_signing_alg = models.TextField(null=True, blank=True)
-    auth_provider = models.ForeignKey(AuthProvider, on_delete=models.PROTECT, null=True, blank=True)
+    claims_provider = models.ForeignKey(ClaimsProvider, on_delete=models.PROTECT, null=True, blank=True)
     selection_label_template = models.TextField()
     start_template = models.TextField(null=True, blank=True)
     # reference to a form class used by this Verifier, e.g. benefits.app.forms.FormClass
@@ -206,14 +214,9 @@ class EligibilityVerifier(models.Model):
         return self.public_key.data
 
     @property
-    def is_auth_required(self):
-        """True if this Verifier requires authentication. False otherwise."""
-        return self.auth_provider is not None
-
-    @property
-    def uses_auth_verification(self):
-        """True if this Verifier verifies via the auth provider. False otherwise."""
-        return self.is_auth_required and self.auth_provider.supports_claims_verification
+    def uses_claims_verification(self):
+        """True if this Verifier verifies via the claims provider. False otherwise."""
+        return self.claims_provider is not None and self.claims_provider.supports_claims_verification
 
     def form_instance(self, *args, **kwargs):
         """Return an instance of this verifier's form, or None."""

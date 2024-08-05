@@ -4,28 +4,28 @@ from benefits.oauth.analytics import OAuthErrorEvent, OAuthEvent, FinishedSignIn
 
 
 @pytest.mark.django_db
-def test_OAuthEvent_verifier_client_name_when_uses_auth_verification(
-    app_request, mocked_session_verifier_uses_auth_verification
+def test_OAuthEvent_verifier_client_name_when_uses_claims_verification(
+    app_request, mocked_session_verifier_uses_claims_verification
 ):
-    mocked_verifier = mocked_session_verifier_uses_auth_verification(app_request)
-    mocked_verifier.auth_provider.client_name = "ClientName"
+    mocked_verifier = mocked_session_verifier_uses_claims_verification(app_request)
+    mocked_verifier.claims_provider.client_name = "ClientName"
 
     event = OAuthEvent(app_request, "event type")
 
     assert "auth_provider" in event.event_properties
-    assert event.event_properties["auth_provider"] == mocked_verifier.auth_provider.client_name
+    assert event.event_properties["auth_provider"] == mocked_verifier.claims_provider.client_name
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_does_not_use_auth_verification")
-def test_OAuthEvent_verifier_no_client_name_when_does_not_use_auth_verification(app_request):
+@pytest.mark.usefixtures("mocked_session_verifier_does_not_use_claims_verification")
+def test_OAuthEvent_verifier_no_client_name_when_does_not_use_claims_verification(app_request):
     event = OAuthEvent(app_request, "event type")
 
     assert "auth_provider" not in event.event_properties
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_uses_auth_verification")
+@pytest.mark.usefixtures("mocked_session_verifier_uses_claims_verification")
 def test_OAuthErrorEvent(app_request):
     event_default = OAuthErrorEvent(app_request, "the message", "the operation")
 

@@ -21,8 +21,8 @@ logger.debug("Register models with admin site")
 admin.site.register(models.PemData)
 
 
-@admin.register(models.AuthProvider)
-class AuthProviderAdmin(admin.ModelAdmin):  # pragma: no cover
+@admin.register(models.ClaimsProvider)
+class ClaimsProviderAdmin(admin.ModelAdmin):  # pragma: no cover
     def get_exclude(self, request, obj=None):
         if not request.user.is_superuser:
             return ["client_id_secret_name"]
@@ -80,7 +80,7 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):  #
         if not request.user.is_superuser:
             return [
                 "api_url",
-                "auth_provider",
+                "claims_provider",
                 "selection_label_template",
                 "start_template",
                 "unverified_template",

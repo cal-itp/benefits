@@ -172,9 +172,9 @@ def test_index_calls_session_logout(client, session_logout_spy):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures(
-    "mocked_session_agency", "mocked_verifier_selection_form", "mocked_session_verifier_uses_auth_verification"
+    "mocked_session_agency", "mocked_verifier_selection_form", "mocked_session_verifier_uses_claims_verification"
 )
-def test_start_verifier_auth_required_logged_in(mocker, client):
+def test_start_verifier_uses_claims_verification_logged_in(mocker, client):
     mock_session = mocker.patch("benefits.eligibility.views.session")
     mock_session.logged_in.return_value = True
 
@@ -186,9 +186,9 @@ def test_start_verifier_auth_required_logged_in(mocker, client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures(
-    "mocked_session_agency", "mocked_verifier_selection_form", "mocked_session_verifier_uses_auth_verification"
+    "mocked_session_agency", "mocked_verifier_selection_form", "mocked_session_verifier_uses_claims_verification"
 )
-def test_start_verifier_auth_required_not_logged_in(mocker, client):
+def test_start_verifier_uses_claims_verification_not_logged_in(mocker, client):
     mock_session = mocker.patch("benefits.eligibility.views.session")
     mock_session.logged_in.return_value = False
 
@@ -200,9 +200,9 @@ def test_start_verifier_auth_required_not_logged_in(mocker, client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures(
-    "mocked_session_agency", "mocked_verifier_selection_form", "mocked_session_verifier_does_not_use_auth_verification"
+    "mocked_session_agency", "mocked_verifier_selection_form", "mocked_session_verifier_does_not_use_claims_verification"
 )
-def test_start_verifier_auth_not_required(client):
+def test_start_verifier_does_not_use_claims_verification(client):
     path = reverse(ROUTE_START)
     response = client.get(path)
 

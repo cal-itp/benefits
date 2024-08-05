@@ -246,7 +246,7 @@ def reenrollment_error(request):
     if eligibility.reenrollment_error_template is None:
         raise Exception(f"Re-enrollment error with null template on: {eligibility.label}")
 
-    if session.logged_in(request) and verifier.auth_provider.supports_sign_out:
+    if session.logged_in(request) and verifier.claims_provider.supports_sign_out:
         # overwrite origin for a logged in user
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
@@ -285,7 +285,7 @@ def success(request):
     eligibility = session.eligibility(request)
     verifier = session.verifier(request)
 
-    if session.logged_in(request) and verifier.auth_provider.supports_sign_out:
+    if session.logged_in(request) and verifier.claims_provider.supports_sign_out:
         # overwrite origin for a logged in user
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))

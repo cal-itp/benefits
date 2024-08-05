@@ -16,7 +16,7 @@ def decorated_view(mocked_view):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_oauth")
-def test_login_auth_required(app_request, mocked_view, decorated_view):
+def test_login_verifier_uses_claims_verification(app_request, mocked_view, decorated_view):
     response = decorated_view(app_request)
 
     mocked_view.assert_not_called()
@@ -26,9 +26,9 @@ def test_login_auth_required(app_request, mocked_view, decorated_view):
 
 
 @pytest.mark.django_db
-def test_login_auth_not_required(app_request, model_EligibilityVerifier, mocked_view, decorated_view):
-    model_EligibilityVerifier.auth_provider = None
-    assert not model_EligibilityVerifier.is_auth_required
+def test_login_verifier_does_not_use_claims_verification(app_request, model_EligibilityVerifier, mocked_view, decorated_view):
+    model_EligibilityVerifier.claims_provider = None
+    assert not model_EligibilityVerifier.uses_claims_verification
     session.update(app_request, verifier=model_EligibilityVerifier)
 
     decorated_view(app_request)
