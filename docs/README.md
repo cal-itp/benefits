@@ -38,7 +38,7 @@ Read more about each [enrollment pathway](/benefits/enrollment-pathways/).
 
 ## Technical and security details
 
-`benefits` is a [Django 5][django] web application. The application talks to one or more [Eligibility Verification APIs](https://docs.calitp.org/eligibility-api/specification) or authentication providers. These APIs and the application itself are
+`benefits` is a [Django 5][django] web application. The application talks to one or more [Eligibility Verification APIs](https://docs.calitp.org/eligibility-api/specification) or claims providers. These APIs and the application itself are
 designed for privacy and security of user information:
 
 - The API communicates with signed and encrypted JSON Web Tokens containing only the most necessary of user data for the purpose of eligibility verification
