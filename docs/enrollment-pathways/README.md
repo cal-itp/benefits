@@ -34,12 +34,12 @@ timeline
 
           Q3<br>Now
           : Deploy low-income riders enrollment pathway
-          : Benefits admin tool (Agency configuration)
           : Benefits admin tool (Agency users)
+          : Benefits admin tool (In-person eligibility verification)
 
           Q4<br>Next
-          : Benefits admin tool (In-person eligibility verification)
           : Release Medicare cardholder enrollment pathway
+          : Benefits admin tool (Agency configuration)
           : Support eligibility verification for disabled Veterans
 
 %% Cal-ITP Benefits Epics (2025)
