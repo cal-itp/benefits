@@ -258,25 +258,18 @@ class TransitAgency(models.Model):
     """An agency offering transit service."""
 
     id = models.AutoField(primary_key=True)
-    slug = models.TextField()
-    short_name = models.TextField()
-    long_name = models.TextField()
-    info_url = models.URLField()
-    phone = models.TextField()
-    active = models.BooleanField(default=False)
+    active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
     eligibility_types = models.ManyToManyField(EligibilityType)
     eligibility_verifiers = models.ManyToManyField(EligibilityVerifier)
-    transit_processor = models.ForeignKey(TransitProcessor, on_delete=models.PROTECT)
-    transit_processor_client_id = models.TextField(
-        help_text="This agency's client_id value used to access the TransitProcessor's API.", default=""
+    slug = models.TextField(help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}")
+    short_name = models.TextField(help_text="The user-facing short name for this agency. Often an uppercase acronym.")
+    long_name = models.TextField(
+        help_text="The user-facing long name for this agency. Often the short_name acronym, spelled out."
     )
-    transit_processor_client_secret_name = SecretNameField(
-        help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
-        default="",
-    )
-    transit_processor_audience = models.TextField(
-        help_text="This agency's audience value used to access the TransitProcessor's API.", default=""
-    )
+    info_url = models.URLField(help_text="URL of a website/page with more information about the agency's discounts")
+    phone = models.TextField(help_text="Agency customer support phone number")
+    index_template = models.TextField(help_text="The template used for this agency's landing page")
+    eligibility_index_template = models.TextField(help_text="The template used for this agency's eligibility landing page")
     eligibility_api_id = models.TextField(help_text="The identifier for this agency used in Eligibility API calls.")
     eligibility_api_private_key = models.ForeignKey(
         PemData,
@@ -293,8 +286,17 @@ class TransitAgency(models.Model):
     eligibility_api_jws_signing_alg = models.TextField(
         help_text="The JWS-compatible signing algorithm used in Eligibility API calls."
     )
-    index_template = models.TextField()
-    eligibility_index_template = models.TextField()
+    transit_processor = models.ForeignKey(TransitProcessor, on_delete=models.PROTECT)
+    transit_processor_audience = models.TextField(
+        help_text="This agency's audience value used to access the TransitProcessor's API.", default=""
+    )
+    transit_processor_client_id = models.TextField(
+        help_text="This agency's client_id value used to access the TransitProcessor's API.", default=""
+    )
+    transit_processor_client_secret_name = SecretNameField(
+        help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
+        default="",
+    )
 
     def __str__(self):
         return self.long_name
