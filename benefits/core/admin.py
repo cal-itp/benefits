@@ -114,9 +114,9 @@ class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
     def get_exclude(self, request, obj=None):
         if not request.user.is_superuser:
             return [
-                "private_key",
-                "public_key",
-                "jws_signing_alg",
+                "eligibility_api_private_key",
+                "eligibility_api_public_key",
+                "eligibility_api_jws_signing_alg",
                 "transit_processor_client_id",
                 "transit_processor_client_secret_name",
                 "transit_processor_audience",
@@ -127,7 +127,7 @@ class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
             return [
-                "agency_id",
+                "eligibility_api_id",
                 "transit_processor",
                 "index_template",
                 "eligibility_index_template",
