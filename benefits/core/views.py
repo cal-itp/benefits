@@ -6,7 +6,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFou
 from django.template import loader
 from django.template.response import TemplateResponse
 
-from . import session
+from . import models, session
 from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator
 
 ROUTE_ELIGIBILITY = "eligibility:index"
@@ -33,7 +33,7 @@ def index(request):
 
 
 @pageview_decorator
-def agency_index(request, agency):
+def agency_index(request, agency: models.TransitAgency):
     """View handler for an agency entry page."""
     session.reset(request)
     session.update(request, agency=agency, origin=agency.index_url)
@@ -42,9 +42,9 @@ def agency_index(request, agency):
 
 
 @pageview_decorator
-def agency_public_key(request, agency):
+def agency_public_key(request, agency: models.TransitAgency):
     """View handler returns an agency's public key as plain text."""
-    return HttpResponse(agency.public_key_data, content_type="text/plain")
+    return HttpResponse(agency.eligibility_api_public_key_data, content_type="text/plain")
 
 
 @pageview_decorator
