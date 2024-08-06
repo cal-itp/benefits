@@ -22,7 +22,6 @@ ROUTE_CONFIRM = "eligibility:confirm"
 ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_ENROLLMENT = "enrollment:index"
 
-TEMPLATE_START = "eligibility/start.html"
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
 
 
@@ -78,9 +77,8 @@ def start(request):
     session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))
 
     verifier = session.verifier(request)
-    template = verifier.start_template or TEMPLATE_START
 
-    return TemplateResponse(request, template)
+    return TemplateResponse(request, verifier.eligibility_start_template)
 
 
 @decorator_from_middleware(AgencySessionRequired)
@@ -111,7 +109,7 @@ def confirm(request):
         else:
             return redirect(unverified_view)
 
-    form = verifier.form_instance()
+    form = verifier.eligibility_form_instance()
 
     # GET/POST for Eligibility API verification
     context = {"form": form}
@@ -124,7 +122,7 @@ def confirm(request):
     elif request.method == "POST":
         analytics.started_eligibility(request, types_to_verify)
 
-        form = verifier.form_instance(data=request.POST)
+        form = verifier.eligibility_form_instance(data=request.POST)
         # form was not valid, allow for correction/resubmission
         if not form.is_valid():
             if recaptcha.has_error(form):
@@ -171,4 +169,4 @@ def unverified(request):
 
     analytics.returned_fail(request, types_to_verify)
 
-    return TemplateResponse(request, verifier.unverified_template)
+    return TemplateResponse(request, verifier.eligibility_unverified_template)

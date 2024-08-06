@@ -265,13 +265,18 @@ class SampleFormClass:
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_form_instance(model_EligibilityVerifier):
-    model_EligibilityVerifier.form_class = f"{__name__}.SampleFormClass"
+def test_EligibilityVerifier_eligibility_start_template(model_EligibilityVerifier):
+    assert model_EligibilityVerifier.eligibility_start_template == "eligibility/start.html"
+
+
+@pytest.mark.django_db
+def test_EligibilityVerifier_eligibility_form_instance(model_EligibilityVerifier):
+    model_EligibilityVerifier.eligibility_form_class = f"{__name__}.SampleFormClass"
     model_EligibilityVerifier.save()
 
     args = (1, "2")
     kwargs = {"one": 1, "two": "2"}
-    form_instance = model_EligibilityVerifier.form_instance(*args, **kwargs)
+    form_instance = model_EligibilityVerifier.eligibility_form_instance(*args, **kwargs)
 
     assert isinstance(form_instance, SampleFormClass)
     assert form_instance.args == args
@@ -335,10 +340,10 @@ def test_EligibilityVerifier_no_ClaimsProvider(model_EligibilityVerifier):
 
 
 @pytest.mark.django_db
-def test_EligiblityVerifier_api_auth_key(model_EligibilityVerifier, mock_models_get_secret_by_name):
-    secret_value = model_EligibilityVerifier.api_auth_key
+def test_EligiblityVerifier_eligibility_api_auth_key(model_EligibilityVerifier, mock_models_get_secret_by_name):
+    secret_value = model_EligibilityVerifier.eligibility_api_auth_key
 
-    mock_models_get_secret_by_name.assert_called_once_with(model_EligibilityVerifier.api_auth_key_secret_name)
+    mock_models_get_secret_by_name.assert_called_once_with(model_EligibilityVerifier.eligibility_api_auth_key_secret_name)
     assert secret_value == mock_models_get_secret_by_name.return_value
 
 

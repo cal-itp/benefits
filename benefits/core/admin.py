@@ -65,13 +65,13 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):  #
     def get_exclude(self, request, obj=None):
         if not request.user.is_superuser:
             return [
-                "api_auth_header",
-                "api_auth_key_secret_name",
-                "public_key",
-                "jwe_cek_enc",
-                "jwe_encryption_alg",
-                "jws_signing_alg",
-                "form_class",
+                "eligibility_api_auth_header",
+                "eligibility_api_auth_key_secret_name",
+                "eligibility_api_public_key",
+                "eligibility_api_jwe_cek_enc",
+                "eligibility_api_jwe_encryption_alg",
+                "eligibility_api_jws_signing_alg",
+                "eligibility_form_class",
             ]
         else:
             return super().get_exclude(request, obj)
@@ -79,12 +79,12 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):  #
     def get_readonly_fields(self, request, obj=None):
         if not request.user.is_superuser:
             return [
-                "api_url",
                 "claims_provider",
-                "selection_label_template",
-                "start_template",
-                "unverified_template",
+                "eligibility_api_url",
+                "eligibility_start_template",
+                "eligibility_unverified_template",
                 "help_template",
+                "selection_label_template",
             ]
         else:
             return super().get_readonly_fields(request, obj)

@@ -175,24 +175,24 @@ class EligibilityVerifier(models.Model):
     name = models.TextField()
     display_order = models.PositiveSmallIntegerField(default=0, blank=False, null=False)
     active = models.BooleanField(default=False)
-    api_url = models.TextField(null=True, blank=True)
-    api_auth_header = models.TextField(null=True, blank=True)
-    api_auth_key_secret_name = SecretNameField(null=True, blank=True)
+    eligibility_api_url = models.TextField(null=True, blank=True)
+    eligibility_api_auth_header = models.TextField(null=True, blank=True)
+    eligibility_api_auth_key_secret_name = SecretNameField(null=True, blank=True)
     eligibility_type = models.ForeignKey(EligibilityType, on_delete=models.PROTECT)
     # public key is used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier
-    public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT, null=True, blank=True)
+    eligibility_api_public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT, null=True, blank=True)
     # The JWE-compatible Content Encryption Key (CEK) key-length and mode
-    jwe_cek_enc = models.TextField(null=True, blank=True)
+    eligibility_api_jwe_cek_enc = models.TextField(null=True, blank=True)
     # The JWE-compatible encryption algorithm
-    jwe_encryption_alg = models.TextField(null=True, blank=True)
+    eligibility_api_jwe_encryption_alg = models.TextField(null=True, blank=True)
     # The JWS-compatible signing algorithm
-    jws_signing_alg = models.TextField(null=True, blank=True)
+    eligibility_api_jws_signing_alg = models.TextField(null=True, blank=True)
     claims_provider = models.ForeignKey(ClaimsProvider, on_delete=models.PROTECT, null=True, blank=True)
     selection_label_template = models.TextField()
-    start_template = models.TextField(null=True, blank=True)
+    eligibility_start_template = models.TextField(default="eligibility/start.html")
     # reference to a form class used by this Verifier, e.g. benefits.app.forms.FormClass
-    form_class = models.TextField(null=True, blank=True)
-    unverified_template = models.TextField(default="eligibility/unverified.html")
+    eligibility_form_class = models.TextField(null=True, blank=True)
+    eligibility_unverified_template = models.TextField(default="eligibility/unverified.html")
     help_template = models.TextField(null=True, blank=True)
 
     class Meta:
@@ -202,29 +202,29 @@ class EligibilityVerifier(models.Model):
         return self.name
 
     @property
-    def api_auth_key(self):
-        if self.api_auth_key_secret_name is not None:
-            return get_secret_by_name(self.api_auth_key_secret_name)
+    def eligibility_api_auth_key(self):
+        if self.eligibility_api_auth_key_secret_name is not None:
+            return get_secret_by_name(self.eligibility_api_auth_key_secret_name)
         else:
             return None
 
     @property
-    def public_key_data(self):
+    def eligibility_api_public_key_data(self):
         """This Verifier's public key as a string."""
-        return self.public_key.data
+        return self.eligibility_api_public_key.data
 
     @property
     def uses_claims_verification(self):
         """True if this Verifier verifies via the claims provider. False otherwise."""
         return self.claims_provider is not None and self.claims_provider.supports_claims_verification
 
-    def form_instance(self, *args, **kwargs):
+    def eligibility_form_instance(self, *args, **kwargs):
         """Return an instance of this verifier's form, or None."""
-        if not bool(self.form_class):
+        if not bool(self.eligibility_form_class):
             return None
 
         # inspired by https://stackoverflow.com/a/30941292
-        module_name, class_name = self.form_class.rsplit(".", 1)
+        module_name, class_name = self.eligibility_form_class.rsplit(".", 1)
         FormClass = getattr(importlib.import_module(module_name), class_name)
 
         return FormClass(*args, **kwargs)

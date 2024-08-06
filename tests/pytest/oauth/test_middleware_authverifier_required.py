@@ -56,8 +56,8 @@ def test_authverifier_required_misconfigured_verifier(
     form_class,
 ):
     # fake a misconfigured verifier
-    mocked_session_verifier_does_not_use_claims_verification.return_value.api_url = api_url
-    mocked_session_verifier_does_not_use_claims_verification.return_value.form_class = form_class
+    mocked_session_verifier_does_not_use_claims_verification.return_value.eligibility_api_url = api_url
+    mocked_session_verifier_does_not_use_claims_verification.return_value.eligibility_form_class = form_class
 
     response = decorated_view(app_request)
 

@@ -14,10 +14,10 @@ Note that a `TransitAgency` model requires:
 - HTML templates for various buttons, text and other user interface elements of the flow, including:
   - `index_template`: _Required for agencies_ - Text for agency direct entry page
   - `eligibility_index_template`: _Required for agencies_ - Text for Eligibility Index page
+  - `selection_label_template`: _Required for verifiers_ - Text and optional modals for the radio button form on the Eligibility Index page
+  - `eligibility_start_template`: _Required for verifiers_ - Text and optional custom styles for call to action button on the Eligibility Start page
   - `enrollment_success_template`: _Required for agencies_ - Text for Enrollment Success page
   - `help_template`: _Required for agencies_ - Agency-specific help questions and answers
-  - `selection_label_template`: _Required for verifiers_ - Text and optional modals for the radio button form on the Eligibility Index page
-  - `start_template`: _Required for verifiers_ - Text and optional custom styles for call to action button on the Eligibility Start page
   - `sign_out_button_template`: _Required for claims providers_ - Sign out link button, used on any page after sign in
   - `sign_out_link_template`: _Required for claims providers_ - Sign out link text, used on any page after sign in
 
