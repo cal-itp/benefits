@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_8c0b35f1ea7ee6af_analytics_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.0">coverage.py v7.6.0</a>,
-            created at 2024-08-06 18:30 +0000
+            created at 2024-08-06 19:09 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -149,13 +149,13 @@
     <p class="exc show_exc"><span class="n"><a id="t65" href="#t65">65</a></span><span class="t">    <span class="key">def</span> <span class="nam">get_exclude</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">request</span><span class="op">,</span> <span class="nam">obj</span><span class="op">=</span><span class="key">None</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t66" href="#t66">66</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="nam">request</span><span class="op">.</span><span class="nam">user</span><span class="op">.</span><span class="nam">is_superuser</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t67" href="#t67">67</a></span><span class="t">            <span class="key">return</span> <span class="op">[</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t68" href="#t68">68</a></span><span class="t">                <span class="str">"api_auth_header"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t69" href="#t69">69</a></span><span class="t">                <span class="str">"api_auth_key_secret_name"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t70" href="#t70">70</a></span><span class="t">                <span class="str">"public_key"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t71" href="#t71">71</a></span><span class="t">                <span class="str">"jwe_cek_enc"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t72" href="#t72">72</a></span><span class="t">                <span class="str">"jwe_encryption_alg"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t73" href="#t73">73</a></span><span class="t">                <span class="str">"jws_signing_alg"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t">                <span class="str">"form_class"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t68" href="#t68">68</a></span><span class="t">                <span class="str">"eligibility_api_auth_header"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t69" href="#t69">69</a></span><span class="t">                <span class="str">"eligibility_api_auth_key_secret_name"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t70" href="#t70">70</a></span><span class="t">                <span class="str">"eligibility_api_public_key"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t71" href="#t71">71</a></span><span class="t">                <span class="str">"eligibility_api_jwe_cek_enc"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t72" href="#t72">72</a></span><span class="t">                <span class="str">"eligibility_api_jwe_encryption_alg"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t73" href="#t73">73</a></span><span class="t">                <span class="str">"eligibility_api_jws_signing_alg"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t">                <span class="str">"eligibility_form_class"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t75" href="#t75">75</a></span><span class="t">            <span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t76" href="#t76">76</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t77" href="#t77">77</a></span><span class="t">            <span class="key">return</span> <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">get_exclude</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">obj</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -163,12 +163,12 @@
     <p class="exc show_exc"><span class="n"><a id="t79" href="#t79">79</a></span><span class="t">    <span class="key">def</span> <span class="nam">get_readonly_fields</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">request</span><span class="op">,</span> <span class="nam">obj</span><span class="op">=</span><span class="key">None</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t80" href="#t80">80</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="nam">request</span><span class="op">.</span><span class="nam">user</span><span class="op">.</span><span class="nam">is_superuser</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t81" href="#t81">81</a></span><span class="t">            <span class="key">return</span> <span class="op">[</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t82" href="#t82">82</a></span><span class="t">                <span class="str">"api_url"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t83" href="#t83">83</a></span><span class="t">                <span class="str">"claims_provider"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t84" href="#t84">84</a></span><span class="t">                <span class="str">"selection_label_template"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t85" href="#t85">85</a></span><span class="t">                <span class="str">"start_template"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t86" href="#t86">86</a></span><span class="t">                <span class="str">"unverified_template"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t87" href="#t87">87</a></span><span class="t">                <span class="str">"help_template"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t82" href="#t82">82</a></span><span class="t">                <span class="str">"claims_provider"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t83" href="#t83">83</a></span><span class="t">                <span class="str">"eligibility_api_url"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t84" href="#t84">84</a></span><span class="t">                <span class="str">"eligibility_start_template"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t85" href="#t85">85</a></span><span class="t">                <span class="str">"eligibility_unverified_template"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t86" href="#t86">86</a></span><span class="t">                <span class="str">"help_template"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t87" href="#t87">87</a></span><span class="t">                <span class="str">"selection_label_template"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t88" href="#t88">88</a></span><span class="t">            <span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t89" href="#t89">89</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t90" href="#t90">90</a></span><span class="t">            <span class="key">return</span> <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">get_readonly_fields</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">obj</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -260,7 +260,7 @@
             <a class="nav" href="z_8c0b35f1ea7ee6af_analytics_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.0">coverage.py v7.6.0</a>,
-            created at 2024-08-06 18:30 +0000
+            created at 2024-08-06 19:09 +0000
         </p>
     </div>
 </footer>
