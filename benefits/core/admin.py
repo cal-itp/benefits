@@ -60,8 +60,8 @@ class EligibilityTypeAdmin(admin.ModelAdmin):  # pragma: no cover
             return super().get_readonly_fields(request, obj)
 
 
-@admin.register(models.EligibilityVerifier)
-class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):  # pragma: no cover
+@admin.register(models.EnrollmentFlow)
+class SortableEnrollmentFlowAdmin(SortableAdminMixin, admin.ModelAdmin):  # pragma: no cover
     def get_exclude(self, request, obj=None):
         if not request.user.is_superuser:
             return [

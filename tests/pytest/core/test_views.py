@@ -2,7 +2,7 @@ from django.urls import reverse
 
 import pytest
 
-from benefits.core.models import EligibilityVerifier, TransitAgency
+from benefits.core.models import EnrollmentFlow, TransitAgency
 import benefits.core.session
 from benefits.core.views import (
     ROUTE_HELP,
@@ -63,7 +63,7 @@ def test_index_single_agency(mocker, model_TransitAgency, client, session_reset_
 
 
 @pytest.mark.django_db
-def test_agency_index_single_verifier(mocker, model_TransitAgency, client, session_reset_spy, mocked_session_update):
+def test_agency_index_single_flow(mocker, model_TransitAgency, client, session_reset_spy, mocked_session_update):
     mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=[model_TransitAgency])
 
     response = client.get(model_TransitAgency.index_url)
@@ -76,16 +76,16 @@ def test_agency_index_single_verifier(mocker, model_TransitAgency, client, sessi
 
 
 @pytest.mark.django_db
-def test_agency_index_multiple_verifier(
-    mocker, model_TransitAgency, model_EligibilityVerifier, client, session_reset_spy, mocked_session_update
+def test_agency_index_multiple_flow(
+    mocker, model_TransitAgency, model_EnrollmentFlow, client, session_reset_spy, mocked_session_update
 ):
-    # add another to the list of verifiers by cloning the original
+    # add another to the list of flows by cloning the original
     # https://stackoverflow.com/a/48149675/453168
-    new_verifier = EligibilityVerifier.objects.get(pk=model_EligibilityVerifier.id)
-    new_verifier.pk = None
-    new_verifier.save()
+    new_flow = EnrollmentFlow.objects.get(pk=model_EnrollmentFlow.id)
+    new_flow.pk = None
+    new_flow.save()
 
-    model_TransitAgency.eligibility_verifiers.add(new_verifier)
+    model_TransitAgency.enrollment_flows.add(new_flow)
     mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=[model_TransitAgency])
 
     response = client.get(model_TransitAgency.index_url)

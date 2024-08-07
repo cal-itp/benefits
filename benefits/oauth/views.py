@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 import sentry_sdk
 
-from benefits.core import session
+from benefits.core import models, session
 from benefits.core.middleware import AgencySessionRequired
 from . import analytics, redirects
 from .client import oauth, create_client
@@ -24,7 +24,7 @@ ROUTE_POST_LOGOUT = "oauth:post_logout"
 TEMPLATE_SYSTEM_ERROR = "oauth/system_error.html"
 
 
-def _oauth_client_or_error_redirect(request, verifier):
+def _oauth_client_or_error_redirect(request, flow: models.EnrollmentFlow):
     """Calls `benefits.oauth.client.create_client()`.
 
     If a client is created successfully, return it; Otherwise, return a redirect response to the `oauth:system-error` route.
@@ -34,12 +34,12 @@ def _oauth_client_or_error_redirect(request, verifier):
     exception = None
 
     try:
-        oauth_client = create_client(oauth, verifier)
+        oauth_client = create_client(oauth, flow)
     except Exception as ex:
         exception = ex
 
     if not oauth_client and not exception:
-        exception = Exception(f"oauth_client not registered: {verifier.claims_provider.client_name}")
+        exception = Exception(f"oauth_client not registered: {flow.claims_provider.client_name}")
 
     if exception:
         analytics.error(request, message=str(exception), operation="init")

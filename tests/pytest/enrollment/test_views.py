@@ -829,7 +829,7 @@ def test_retry_valid_form(client, mocked_analytics_module):
 
 
 @pytest.mark.django_db
-def test_success_no_verifier(client):
+def test_success_no_flow(client):
     path = reverse(ROUTE_SUCCESS)
 
     response = client.get(path)
