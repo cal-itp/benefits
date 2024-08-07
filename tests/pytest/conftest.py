@@ -124,7 +124,6 @@ def model_EligibilityType_supports_expiration(model_EligibilityType):
 def model_EnrollmentFlow(model_PemData, model_EligibilityType, model_ClaimsProvider):
     flow = EnrollmentFlow.objects.create(
         name="Test Flow",
-        active=True,
         eligibility_api_url="https://example.com/verify",
         eligibility_api_auth_header="X-API-AUTH",
         eligibility_api_auth_key_secret_name="secret-key",

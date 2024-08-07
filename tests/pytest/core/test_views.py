@@ -25,9 +25,8 @@ def session_reset_spy(mocker):
 def mocked_active_agency(mocker):
     mock_agency = mocker.Mock()
 
-    # ensure agency.eligibility_verifiers is iterable
-    eligibility_verifiers = mocker.MagicMock()
-    mock_agency.active_verifiers = eligibility_verifiers
+    # ensure agency.enrollment_flows is iterable
+    mock_agency.enrollment_flows = mocker.MagicMock()
 
     mock_agency.index_url = "/agency"
     mocker.patch("benefits.core.session.agency", return_value=mock_agency)

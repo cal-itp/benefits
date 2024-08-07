@@ -162,7 +162,6 @@ class EnrollmentFlow(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField()
     display_order = models.PositiveSmallIntegerField(default=0, blank=False, null=False)
-    active = models.BooleanField(default=False)
     eligibility_api_url = models.TextField(null=True, blank=True)
     eligibility_api_auth_header = models.TextField(null=True, blank=True)
     eligibility_api_auth_key_secret_name = SecretNameField(null=True, blank=True)
@@ -358,11 +357,6 @@ class TransitAgency(models.Model):
     def eligibility_api_public_key_data(self):
         """This Agency's public key as a string."""
         return self.eligibility_api_public_key.data
-
-    @property
-    def active_verifiers(self):
-        """This Agency's eligibility verifiers that are active."""
-        return self.eligibility_verifiers.filter(active=True)
 
     @property
     def transit_processor_client_secret(self):

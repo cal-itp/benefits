@@ -89,7 +89,6 @@
     "fields": {
       "name": "(CST) oauth claims via Login.gov",
       "display_order": 1,
-      "active": true,
       "eligibility_type": 1,
       "claims_provider": 1,
       "selection_label_template": "eligibility/includes/selection-label--senior.html",
@@ -104,7 +103,6 @@
     "fields": {
       "name": "(CST) VA.gov - veteran",
       "display_order": 3,
-      "active": true,
       "eligibility_type": 2,
       "claims_provider": 1,
       "selection_label_template": "eligibility/includes/selection-label--veteran.html",
@@ -119,7 +117,6 @@
     "fields": {
       "name": "(CST) eligibility server flow",
       "display_order": 4,
-      "active": true,
       "eligibility_api_url": "http://server:8000/verify",
       "eligibility_api_auth_header": "X-Server-API-Key",
       "eligibility_api_auth_key_secret_name": "agency-card-flow-api-auth-key",
@@ -141,7 +138,6 @@
     "fields": {
       "name": "(CST) CalFresh oauth claims via Login.gov",
       "display_order": 2,
-      "active": true,
       "eligibility_type": 4,
       "claims_provider": 1,
       "selection_label_template": "eligibility/includes/selection-label--calfresh.html",
