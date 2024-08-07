@@ -19,4 +19,8 @@ class Migration(migrations.Migration):
             old_name="eligibility_verifiers",
             new_name="enrollment_flows",
         ),
+        migrations.RemoveField(
+            model_name="enrollmentflow",
+            name="active",
+        ),
     ]

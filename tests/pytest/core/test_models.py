@@ -335,23 +335,6 @@ def test_TransitAgency_str(model_TransitAgency):
 
 
 @pytest.mark.django_db
-def test_TransitAgency_active_verifiers(model_TransitAgency, model_EnrollmentFlow):
-    # add another to the list of verifiers by cloning the original
-    # https://stackoverflow.com/a/48149675/453168
-    new_verifier = EnrollmentFlow.objects.get(pk=model_EnrollmentFlow.id)
-    new_verifier.pk = None
-    new_verifier.active = False
-    new_verifier.save()
-
-    model_TransitAgency.eligibility_verifiers.add(new_verifier)
-
-    assert model_TransitAgency.eligibility_verifiers.count() == 2
-    assert model_TransitAgency.active_verifiers.count() == 1
-
-    assert model_TransitAgency.active_verifiers[0] == model_EnrollmentFlow
-
-
-@pytest.mark.django_db
 def test_TransitAgency_get_type_id_matching(model_TransitAgency):
     eligibility = model_TransitAgency.eligibility_types.first()
     result = model_TransitAgency.get_type_id(eligibility.name)
