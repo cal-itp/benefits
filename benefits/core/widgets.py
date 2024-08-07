@@ -19,11 +19,11 @@ class FormControlTextInput(widgets.TextInput):
             self.attrs.update({"placeholder": placeholder})
 
 
-class VerifierRadioSelect(widgets.RadioSelect):
-    """A radio select input styled for the Eligibility Verifier"""
+class FlowRadioSelect(widgets.RadioSelect):
+    """A radio select input styled for the Enrollment Flow."""
 
-    template_name = "core/widgets/verifier-radio-select.html"
-    option_template_name = "core/widgets/verifier-radio-select-option.html"
+    template_name = "core/widgets/flow-radio-select.html"
+    option_template_name = "core/widgets/flow-radio-select-option.html"
 
     def __init__(self, selection_label_templates=(), *args, **kwargs):
         super().__init__(*args, **kwargs)

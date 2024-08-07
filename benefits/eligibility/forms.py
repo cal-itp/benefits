@@ -12,28 +12,28 @@ from benefits.core import models, recaptcha, widgets
 logger = logging.getLogger(__name__)
 
 
-class EligibilityVerifierSelectionForm(forms.Form):
-    """Form to capture eligibility verifier selection."""
+class EnrollmentFlowSelectionForm(forms.Form):
+    """Form to capture enrollment flow selection."""
 
     action_url = "eligibility:index"
-    id = "form-verifier-selection"
+    id = "form-flow-selection"
     method = "POST"
 
-    verifier = forms.ChoiceField(label="", widget=widgets.VerifierRadioSelect)
+    flow = forms.ChoiceField(label="", widget=widgets.FlowRadioSelect)
     # sets label to empty string so the radio_select template can override the label style
     submit_value = _("Choose this benefit")
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        verifiers = agency.enrollment_flows.all()
+        flows = agency.enrollment_flows.all()
 
         self.classes = "col-lg-8"
         # second element is not used since we render the whole label using selection_label_template,
         # therefore set to None
-        verifier_field = self.fields["verifier"]
-        verifier_field.choices = [(v.id, None) for v in verifiers]
-        verifier_field.widget.selection_label_templates = {v.id: v.selection_label_template for v in verifiers}
-        verifier_field.widget.attrs.update({"data-custom-validity": _("Please choose a transit benefit.")})
+        flow_field = self.fields["flow"]
+        flow_field.choices = [(f.id, None) for f in flows]
+        flow_field.widget.selection_label_templates = {f.id: f.selection_label_template for f in flows}
+        flow_field.widget.attrs.update({"data-custom-validity": _("Please choose a transit benefit.")})
         self.use_custom_validity = True
 
     def clean(self):
@@ -71,7 +71,7 @@ class EligibilityVerificationForm(forms.Form):
         *args,
         **kwargs,
     ):
-        """Initialize a new EligibilityVerifier form.
+        """Initialize a new EligibilityVerification form.
 
         Args:
             title (str): The page (i.e. tab) title for the form's page.
@@ -92,14 +92,14 @@ class EligibilityVerificationForm(forms.Form):
 
             sub_help_text (str): Extra help text for the sub form field.
 
-            name_max_length (int): The maximum length accepted for the 'name' API field before sending to this verifier
+            name_max_length (int): The maximum length accepted for the 'name' API field before sending an API request
 
             sub_input_mode (str): Input mode can be "numeric", "tel", "search", etc. to override default "text" keyboard on
                                   mobile devices
 
-            sub_max_length (int): The maximum length accepted for the 'sub' API field before sending to this verifier
+            sub_max_length (int): The maximum length accepted for the 'sub' API field before sending an API request
 
-            sub_pattern (str): A regular expression used to validate the 'sub' API field before sending to this verifier
+            sub_pattern (str): A regular expression used to validate the 'sub' API field before sending an API request
 
         Extra args and kwargs are passed through to the underlying django.forms.Form.
         """
