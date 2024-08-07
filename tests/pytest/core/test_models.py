@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 import pytest
 
-from benefits.core.models import SecretNameField, EligibilityType, EligibilityVerifier, TransitAgency
+from benefits.core.models import SecretNameField, EligibilityType, EnrollmentFlow, TransitAgency
 import benefits.secrets
 
 
@@ -167,8 +167,8 @@ def test_EligibilityType_get_names(model_EligibilityType):
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_str(model_EligibilityVerifier):
-    assert str(model_EligibilityVerifier) == model_EligibilityVerifier.name
+def test_EnrollmentFlow_str(model_EnrollmentFlow):
+    assert str(model_EnrollmentFlow) == model_EnrollmentFlow.name
 
 
 @pytest.mark.django_db
@@ -247,18 +247,18 @@ class SampleFormClass:
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_eligibility_start_template(model_EligibilityVerifier):
-    assert model_EligibilityVerifier.eligibility_start_template == "eligibility/start.html"
+def test_EnrollmentFlow_eligibility_start_template(model_EnrollmentFlow):
+    assert model_EnrollmentFlow.eligibility_start_template == "eligibility/start.html"
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_eligibility_form_instance(model_EligibilityVerifier):
-    model_EligibilityVerifier.eligibility_form_class = f"{__name__}.SampleFormClass"
-    model_EligibilityVerifier.save()
+def test_EnrollmentFlow_eligibility_form_instance(model_EnrollmentFlow):
+    model_EnrollmentFlow.eligibility_form_class = f"{__name__}.SampleFormClass"
+    model_EnrollmentFlow.save()
 
     args = (1, "2")
     kwargs = {"one": 1, "two": "2"}
-    form_instance = model_EligibilityVerifier.eligibility_form_instance(*args, **kwargs)
+    form_instance = model_EnrollmentFlow.eligibility_form_instance(*args, **kwargs)
 
     assert isinstance(form_instance, SampleFormClass)
     assert form_instance.args == args
@@ -266,69 +266,62 @@ def test_EligibilityVerifier_eligibility_form_instance(model_EligibilityVerifier
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_by_id_matching(model_EligibilityVerifier):
-    verifier = EligibilityVerifier.by_id(model_EligibilityVerifier.id)
+def test_EnrollmentFlow_by_id_matching(model_EnrollmentFlow):
+    flow = EnrollmentFlow.by_id(model_EnrollmentFlow.id)
 
-    assert verifier == model_EligibilityVerifier
-
-
-@pytest.mark.django_db
-def test_EligibilityVerifier_by_id_nonmatching():
-    with pytest.raises(EligibilityVerifier.DoesNotExist):
-        EligibilityVerifier.by_id(99999)
+    assert flow == model_EnrollmentFlow
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_with_scope_and_claim(model_EligibilityVerifier_with_scope_and_claim):
-
-    assert model_EligibilityVerifier_with_scope_and_claim.uses_claims_verification
+def test_EnrollmentFlow_by_id_nonmatching():
+    with pytest.raises(EnrollmentFlow.DoesNotExist):
+        EnrollmentFlow.by_id(99999)
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_with_scope_and_claim_no_sign_out(
-    model_EligibilityVerifier_with_scope_and_claim, model_ClaimsProvider_no_sign_out
+def test_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow_with_scope_and_claim):
+
+    assert model_EnrollmentFlow_with_scope_and_claim.uses_claims_verification
+
+
+@pytest.mark.django_db
+def test_EnrollmentFlow_with_scope_and_claim_no_sign_out(
+    model_EnrollmentFlow_with_scope_and_claim, model_ClaimsProvider_no_sign_out
 ):
-    model_EligibilityVerifier_with_scope_and_claim.claims_provider = model_ClaimsProvider_no_sign_out
+    model_EnrollmentFlow_with_scope_and_claim.claims_provider = model_ClaimsProvider_no_sign_out
 
-    assert model_EligibilityVerifier_with_scope_and_claim.uses_claims_verification
-
-
-@pytest.mark.django_db
-def test_EligibilityVerifier_no_scope_and_claim(model_EligibilityVerifier):
-
-    assert not model_EligibilityVerifier.uses_claims_verification
+    assert model_EnrollmentFlow_with_scope_and_claim.uses_claims_verification
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_no_scope_and_claim_no_sign_out(model_EligibilityVerifier, model_ClaimsProvider_no_sign_out):
-    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_no_sign_out
+def test_EnrollmentFlow_no_scope_and_claim(model_EnrollmentFlow):
 
-    assert not model_EligibilityVerifier.uses_claims_verification
-
-
-@pytest.mark.django_db
-def test_EligibilityVerifier_no_ClaimsProvider(model_EligibilityVerifier):
-    model_EligibilityVerifier.claims_provider = None
-
-    assert not model_EligibilityVerifier.uses_claims_verification
+    assert not model_EnrollmentFlow.uses_claims_verification
 
 
 @pytest.mark.django_db
-def test_EligiblityVerifier_eligibility_api_auth_key(model_EligibilityVerifier, mock_models_get_secret_by_name):
-    secret_value = model_EligibilityVerifier.eligibility_api_auth_key
+def test_EnrollmentFlow_no_scope_and_claim_no_sign_out(model_EnrollmentFlow, model_ClaimsProvider_no_sign_out):
+    model_EnrollmentFlow.claims_provider = model_ClaimsProvider_no_sign_out
 
-    mock_models_get_secret_by_name.assert_called_once_with(model_EligibilityVerifier.eligibility_api_auth_key_secret_name)
+    assert not model_EnrollmentFlow.uses_claims_verification
+
+
+@pytest.mark.django_db
+def test_EnrollmentFlow_eligibility_api_auth_key(model_EnrollmentFlow, mock_models_get_secret_by_name):
+    secret_value = model_EnrollmentFlow.eligibility_api_auth_key
+
+    mock_models_get_secret_by_name.assert_called_once_with(model_EnrollmentFlow.eligibility_api_auth_key_secret_name)
     assert secret_value == mock_models_get_secret_by_name.return_value
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_no_claims_scheme(model_EligibilityVerifier):
-    assert model_EligibilityVerifier.claims_scheme == model_EligibilityVerifier.claims_provider.scheme
+def test_EnrollmentFlow_no_claims_scheme(model_EnrollmentFlow):
+    assert model_EnrollmentFlow.claims_scheme == model_EnrollmentFlow.claims_provider.scheme
 
 
 @pytest.mark.django_db
-def test_EligibilityVerifier_with_claims_scheme(model_EligibilityVerifier_with_claims_scheme):
-    assert model_EligibilityVerifier_with_claims_scheme.claims_scheme == "scheme"
+def test_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow_with_claims_scheme):
+    assert model_EnrollmentFlow_with_claims_scheme.claims_scheme == "scheme"
 
 
 @pytest.mark.django_db
@@ -342,10 +335,10 @@ def test_TransitAgency_str(model_TransitAgency):
 
 
 @pytest.mark.django_db
-def test_TransitAgency_active_verifiers(model_TransitAgency, model_EligibilityVerifier):
+def test_TransitAgency_active_verifiers(model_TransitAgency, model_EnrollmentFlow):
     # add another to the list of verifiers by cloning the original
     # https://stackoverflow.com/a/48149675/453168
-    new_verifier = EligibilityVerifier.objects.get(pk=model_EligibilityVerifier.id)
+    new_verifier = EnrollmentFlow.objects.get(pk=model_EnrollmentFlow.id)
     new_verifier.pk = None
     new_verifier.active = False
     new_verifier.save()
@@ -355,7 +348,7 @@ def test_TransitAgency_active_verifiers(model_TransitAgency, model_EligibilityVe
     assert model_TransitAgency.eligibility_verifiers.count() == 2
     assert model_TransitAgency.active_verifiers.count() == 1
 
-    assert model_TransitAgency.active_verifiers[0] == model_EligibilityVerifier
+    assert model_TransitAgency.active_verifiers[0] == model_EnrollmentFlow
 
 
 @pytest.mark.django_db
@@ -420,19 +413,19 @@ def test_TransitAgency_types_to_verify(model_TransitAgency):
     model_TransitAgency.eligibility_types.add(new_eligibility)
     assert model_TransitAgency.eligibility_types.count() == 2
 
-    verifier = model_TransitAgency.eligibility_verifiers.first()
-    assert verifier.eligibility_type == eligibility
+    flow = model_TransitAgency.enrollment_flows.first()
+    assert flow.eligibility_type == eligibility
 
-    result = model_TransitAgency.types_to_verify(verifier)
+    result = model_TransitAgency.types_to_verify(flow)
     assert len(result) == 1
     assert eligibility in result
 
 
 @pytest.mark.django_db
-def test_TransitAgency_type_names_to_verify(model_TransitAgency, model_EligibilityVerifier):
-    expected = [t.name for t in model_TransitAgency.types_to_verify(model_EligibilityVerifier)]
+def test_TransitAgency_type_names_to_verify(model_TransitAgency, model_EnrollmentFlow):
+    expected = [t.name for t in model_TransitAgency.types_to_verify(model_EnrollmentFlow)]
 
-    result = model_TransitAgency.type_names_to_verify(model_EligibilityVerifier)
+    result = model_TransitAgency.type_names_to_verify(model_EnrollmentFlow)
 
     assert result == expected
 
