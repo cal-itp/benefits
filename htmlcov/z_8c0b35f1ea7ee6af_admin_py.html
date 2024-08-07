@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_8c0b35f1ea7ee6af_analytics_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.0">coverage.py v7.6.0</a>,
-            created at 2024-08-07 20:16 +0000
+            created at 2024-08-07 21:09 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -198,9 +198,9 @@
     <p class="exc show_exc"><span class="n"><a id="t114" href="#t114">114</a></span><span class="t">    <span class="key">def</span> <span class="nam">get_exclude</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">request</span><span class="op">,</span> <span class="nam">obj</span><span class="op">=</span><span class="key">None</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t115" href="#t115">115</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="nam">request</span><span class="op">.</span><span class="nam">user</span><span class="op">.</span><span class="nam">is_superuser</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t116" href="#t116">116</a></span><span class="t">            <span class="key">return</span> <span class="op">[</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t117" href="#t117">117</a></span><span class="t">                <span class="str">"private_key"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t118" href="#t118">118</a></span><span class="t">                <span class="str">"public_key"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t119" href="#t119">119</a></span><span class="t">                <span class="str">"jws_signing_alg"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t117" href="#t117">117</a></span><span class="t">                <span class="str">"eligibility_api_private_key"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t118" href="#t118">118</a></span><span class="t">                <span class="str">"eligibility_api_public_key"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t119" href="#t119">119</a></span><span class="t">                <span class="str">"eligibility_api_jws_signing_alg"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t120" href="#t120">120</a></span><span class="t">                <span class="str">"transit_processor_client_id"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t121" href="#t121">121</a></span><span class="t">                <span class="str">"transit_processor_client_secret_name"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t122" href="#t122">122</a></span><span class="t">                <span class="str">"transit_processor_audience"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -211,7 +211,7 @@
     <p class="exc show_exc"><span class="n"><a id="t127" href="#t127">127</a></span><span class="t">    <span class="key">def</span> <span class="nam">get_readonly_fields</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">request</span><span class="op">,</span> <span class="nam">obj</span><span class="op">=</span><span class="key">None</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t128" href="#t128">128</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="nam">request</span><span class="op">.</span><span class="nam">user</span><span class="op">.</span><span class="nam">is_superuser</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t129" href="#t129">129</a></span><span class="t">            <span class="key">return</span> <span class="op">[</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t130" href="#t130">130</a></span><span class="t">                <span class="str">"agency_id"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t130" href="#t130">130</a></span><span class="t">                <span class="str">"eligibility_api_id"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t131" href="#t131">131</a></span><span class="t">                <span class="str">"transit_processor"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t132" href="#t132">132</a></span><span class="t">                <span class="str">"index_template"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t133" href="#t133">133</a></span><span class="t">                <span class="str">"eligibility_index_template"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -260,7 +260,7 @@
             <a class="nav" href="z_8c0b35f1ea7ee6af_analytics_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.0">coverage.py v7.6.0</a>,
-            created at 2024-08-07 20:16 +0000
+            created at 2024-08-07 21:09 +0000
         </p>
     </div>
 </footer>
