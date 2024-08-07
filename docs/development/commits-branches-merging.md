@@ -37,17 +37,22 @@ base.
 
 In addition to `main`, the repository has three other long-lived branches:
 
-- `test` and `prod` correspond to the Test and Production [deploy environments](../deployment/README.md), respectively.
+- `test` and `prod` are read-only (no longer actively used) and correspond to the Test and Production [deploy environments](../deployment/README.md), respectively. The last release using these branches was [2024.07.1](https://github.com/cal-itp/benefits/releases/tag/2024.07.1).
 - `gh-pages` hosts the compiled documentation, and is always forced-pushed by the
   [docs build process](../getting-started/documentation.md#deploying).
 
 ### Protection rules
 
-[Branch protection rules][gh-branch-protection] are in place on three environment branches (`main`, `test`, `prod`) to:
+[Branch protection rules][gh-branch-protection] are in place on `main` to:
 
 - Prevent branch deletion
 - Restrict force-pushing, where appropriate
 - Require passing status checks before merging into the target branch is allowed
+
+[Branch protection rules][gh-branch-protection] are in place on `test` and `prod` to:
+
+- Prevent branch deletion
+- Lock the branch, making it read-only so that users cannot push to the branch since the branch is no longer used
 
 ### PR branches
 
