@@ -258,16 +258,38 @@ class TransitAgency(models.Model):
     """An agency offering transit service."""
 
     id = models.AutoField(primary_key=True)
-    slug = models.TextField()
-    short_name = models.TextField()
-    long_name = models.TextField()
-    agency_id = models.TextField()
-    info_url = models.URLField()
-    phone = models.TextField()
-    active = models.BooleanField(default=False)
+    active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
     eligibility_types = models.ManyToManyField(EligibilityType)
     eligibility_verifiers = models.ManyToManyField(EligibilityVerifier)
+    slug = models.TextField(help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}")
+    short_name = models.TextField(help_text="The user-facing short name for this agency. Often an uppercase acronym.")
+    long_name = models.TextField(
+        help_text="The user-facing long name for this agency. Often the short_name acronym, spelled out."
+    )
+    info_url = models.URLField(help_text="URL of a website/page with more information about the agency's discounts")
+    phone = models.TextField(help_text="Agency customer support phone number")
+    index_template = models.TextField(help_text="The template used for this agency's landing page")
+    eligibility_index_template = models.TextField(help_text="The template used for this agency's eligibility landing page")
+    eligibility_api_id = models.TextField(help_text="The identifier for this agency used in Eligibility API calls.")
+    eligibility_api_private_key = models.ForeignKey(
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        help_text="Private key used to sign Eligibility API tokens created on behalf of this Agency.",
+    )
+    eligibility_api_public_key = models.ForeignKey(
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        help_text="Public key corresponding to the agency's private key, used by Eligibility Verification servers to encrypt responses.",  # noqa: E501
+    )
+    eligibility_api_jws_signing_alg = models.TextField(
+        help_text="The JWS-compatible signing algorithm used in Eligibility API calls."
+    )
     transit_processor = models.ForeignKey(TransitProcessor, on_delete=models.PROTECT)
+    transit_processor_audience = models.TextField(
+        help_text="This agency's audience value used to access the TransitProcessor's API.", default=""
+    )
     transit_processor_client_id = models.TextField(
         help_text="This agency's client_id value used to access the TransitProcessor's API.", default=""
     )
@@ -275,17 +297,6 @@ class TransitAgency(models.Model):
         help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
         default="",
     )
-    transit_processor_audience = models.TextField(
-        help_text="This agency's audience value used to access the TransitProcessor's API.", default=""
-    )
-    # The Agency's private key, used to sign tokens created on behalf of this Agency
-    private_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
-    # The public key corresponding to the Agency's private key, used by Eligibility Verification servers to encrypt responses
-    public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT)
-    # The JWS-compatible signing algorithm
-    jws_signing_alg = models.TextField()
-    index_template = models.TextField()
-    eligibility_index_template = models.TextField()
 
     def __str__(self):
         return self.long_name
@@ -325,19 +336,19 @@ class TransitAgency(models.Model):
         return reverse("eligibility:agency_index", args=[self.slug])
 
     @property
-    def public_key_url(self):
+    def eligibility_api_public_key_url(self):
         """Public-facing URL to the TransitAgency's public key."""
         return reverse("core:agency_public_key", args=[self.slug])
 
     @property
-    def private_key_data(self):
+    def eligibility_api_private_key_data(self):
         """This Agency's private key as a string."""
-        return self.private_key.data
+        return self.eligibility_api_private_key.data
 
     @property
-    def public_key_data(self):
+    def eligibility_api_public_key_data(self):
         """This Agency's public key as a string."""
-        return self.public_key.data
+        return self.eligibility_api_public_key.data
 
     @property
     def active_verifiers(self):
