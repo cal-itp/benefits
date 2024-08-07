@@ -10,7 +10,7 @@ from django.utils.decorators import decorator_from_middleware
 
 from benefits.core import recaptcha, session
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RecaptchaEnabled, FlowSessionRequired
-from benefits.core.models import EligibilityVerifier
+from benefits.core.models import EnrollmentFlow
 from . import analytics, forms, verify
 
 
@@ -27,7 +27,7 @@ TEMPLATE_CONFIRM = "eligibility/confirm.html"
 
 @decorator_from_middleware(RecaptchaEnabled)
 def index(request, agency=None):
-    """View handler for the eligibility verifier selection form."""
+    """View handler for the enrollment flow selection form."""
 
     if agency is None:
         # see if session has an agency
@@ -43,17 +43,17 @@ def index(request, agency=None):
     # this may or may not require OAuth, with a different set of scope/claims than what is already stored
     session.logout(request)
 
-    context = {"form": forms.EligibilityVerifierSelectionForm(agency=agency)}
+    context = {"form": forms.EnrollmentFlowSelectionForm(agency=agency)}
 
     if request.method == "POST":
-        form = forms.EligibilityVerifierSelectionForm(data=request.POST, agency=agency)
+        form = forms.EnrollmentFlowSelectionForm(data=request.POST, agency=agency)
 
         if form.is_valid():
-            verifier_id = form.cleaned_data.get("verifier")
-            verifier = EligibilityVerifier.objects.get(id=verifier_id)
-            session.update(request, verifier=verifier)
+            flow_id = form.cleaned_data.get("flow")
+            flow = EnrollmentFlow.objects.get(id=flow_id)
+            session.update(request, flow=flow)
 
-            types_to_verify = agency.type_names_to_verify(verifier)
+            types_to_verify = agency.type_names_to_verify(flow)
             analytics.selected_verifier(request, types_to_verify)
 
             eligibility_start = reverse(ROUTE_START)

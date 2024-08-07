@@ -239,7 +239,7 @@ def test_EligibilityType_enrollment_success_template():
 
 
 class SampleFormClass:
-    """A class for testing EligibilityVerifier form references."""
+    """A class for testing EligibilityVerificationForm references."""
 
     def __init__(self, *args, **kwargs):
         self.args = args
