@@ -15,7 +15,7 @@ def decorated_view(mocked_view):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_oauth")
+@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification")
 def test_login_flow_uses_claims_verification(app_request, mocked_view, decorated_view):
     response = decorated_view(app_request)
 
@@ -29,7 +29,7 @@ def test_login_flow_uses_claims_verification(app_request, mocked_view, decorated
 def test_login_flow_does_not_use_claims_verification(app_request, model_EnrollmentFlow, mocked_view, decorated_view):
     model_EnrollmentFlow.claims_provider = None
     assert not model_EnrollmentFlow.uses_claims_verification
-    session.update(app_request, verifier=model_EnrollmentFlow)
+    session.update(app_request, flow=model_EnrollmentFlow)
 
     decorated_view(app_request)
 
@@ -37,7 +37,7 @@ def test_login_flow_does_not_use_claims_verification(app_request, model_Enrollme
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_oauth")
+@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification")
 def test_logged_in(app_request, mocked_view, decorated_view):
     # log in
     session.update(app_request, oauth_token="something")

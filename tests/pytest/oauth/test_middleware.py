@@ -4,14 +4,14 @@ from django.utils.decorators import decorator_from_middleware
 import pytest
 
 from benefits.core.middleware import TEMPLATE_USER_ERROR
-from benefits.oauth.middleware import VerifierUsesAuthVerificationSessionRequired
+from benefits.oauth.middleware import FlowUsesClaimsVerificationSessionRequired
 import benefits.oauth.middleware
 from benefits.oauth.redirects import ROUTE_SYSTEM_ERROR
 
 
 @pytest.fixture
 def decorated_view(mocked_view):
-    return decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)(mocked_view)
+    return decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)(mocked_view)
 
 
 @pytest.fixture
@@ -25,7 +25,7 @@ def mocked_sentry_sdk_module(mocker):
 
 
 @pytest.mark.django_db
-def test_authverifier_required_no_verifier(app_request, mocked_view, decorated_view):
+def test_flow_using_claims_verification_required__no_flow(app_request, mocked_view, decorated_view):
     response = decorated_view(app_request)
 
     mocked_view.assert_not_called()
@@ -34,8 +34,8 @@ def test_authverifier_required_no_verifier(app_request, mocked_view, decorated_v
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_does_not_use_claims_verification")
-def test_authverifier_required_no_authverifier(app_request, mocked_view, decorated_view):
+@pytest.mark.usefixtures("mocked_session_flow_does_not_use_claims_verification")
+def test_flow_using_claims_verification_required__no_claimsprovider(app_request, mocked_view, decorated_view):
     response = decorated_view(app_request)
 
     mocked_view.assert_not_called()
@@ -45,19 +45,19 @@ def test_authverifier_required_no_authverifier(app_request, mocked_view, decorat
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(("api_url", "form_class"), [(None, None), (None, ""), ("", None), ("", "")])
-def test_authverifier_required_misconfigured_verifier(
+def test_flow_using_claims_verification_required__misconfigured_flow(
     app_request,
     mocked_view,
     decorated_view,
-    mocked_session_verifier_does_not_use_claims_verification,
+    mocked_session_flow_does_not_use_claims_verification,
     mocked_analytics_module,
     mocked_sentry_sdk_module,
     api_url,
     form_class,
 ):
-    # fake a misconfigured verifier
-    mocked_session_verifier_does_not_use_claims_verification.return_value.eligibility_api_url = api_url
-    mocked_session_verifier_does_not_use_claims_verification.return_value.eligibility_form_class = form_class
+    # fake a misconfigured flow
+    mocked_session_flow_does_not_use_claims_verification.return_value.eligibility_api_url = api_url
+    mocked_session_flow_does_not_use_claims_verification.return_value.eligibility_form_class = form_class
 
     response = decorated_view(app_request)
 
@@ -69,8 +69,8 @@ def test_authverifier_required_misconfigured_verifier(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_oauth")
-def test_authverifier_required_authverifier(app_request, mocked_view, decorated_view):
+@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification")
+def test_flow_using_claims_verification_required__configured(app_request, mocked_view, decorated_view):
     decorated_view(app_request)
 
     mocked_view.assert_called_once()

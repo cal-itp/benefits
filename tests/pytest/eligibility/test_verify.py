@@ -53,11 +53,10 @@ def test_eligibility_from_api_no_verified_types(
 
 @pytest.mark.django_db
 def test_eligibility_from_oauth_does_not_use_claims_verification(
-    mocked_session_verifier_does_not_use_claims_verification, model_TransitAgency
+    mocked_session_flow_does_not_use_claims_verification, model_TransitAgency
 ):
-    # mocked_session_verifier_does_not_use_claims_verification is Mocked version of the session.verifier() function
-    # call it (with a None request) to return a verifier object
-    verifier = mocked_session_verifier_does_not_use_claims_verification(None)
+    # mocked_session_flow_does_not_use_claims_verification is Mocked version of the session.flow() function
+    verifier = mocked_session_flow_does_not_use_claims_verification.return_value
 
     types = eligibility_from_oauth(verifier, "claim", model_TransitAgency)
 
@@ -65,27 +64,25 @@ def test_eligibility_from_oauth_does_not_use_claims_verification(
 
 
 @pytest.mark.django_db
-def test_eligibility_from_oauth_claim_mismatch(mocked_session_verifier_uses_claims_verification, model_TransitAgency):
-    # mocked_session_verifier_uses_claims_verification is Mocked version of the session.verifier() function
-    # call it (with a None request) to return a verifier object
-    verifier = mocked_session_verifier_uses_claims_verification(None)
-    verifier.claim = "claim"
+def test_eligibility_from_oauth_claim_mismatch(mocked_session_flow_uses_claims_verification, model_TransitAgency):
+    # mocked_session_flow_uses_claims_verification is Mocked version of the session.flow() function
+    flow = mocked_session_flow_uses_claims_verification.return_value
+    flow.claims_claim = "claim"
 
-    types = eligibility_from_oauth(verifier, "some_other_claim", model_TransitAgency)
+    types = eligibility_from_oauth(flow, "some_other_claim", model_TransitAgency)
 
     assert types == []
 
 
 @pytest.mark.django_db
 def test_eligibility_from_oauth_claim_match(
-    mocked_session_verifier_uses_claims_verification, model_EligibilityType, model_TransitAgency
+    mocked_session_flow_uses_claims_verification, model_EligibilityType, model_TransitAgency
 ):
-    # mocked_session_verifier_uses_claims_verification is Mocked version of the session.verifier() function
-    # call it (with a None request) to return a verifier object
-    verifier = mocked_session_verifier_uses_claims_verification.return_value
-    verifier.claims_claim = "claim"
-    verifier.eligibility_type = model_EligibilityType
+    # mocked_session_flow_uses_claims_verification is Mocked version of the session.flow() function
+    flow = mocked_session_flow_uses_claims_verification.return_value
+    flow.claims_claim = "claim"
+    flow.eligibility_type = model_EligibilityType
 
-    types = eligibility_from_oauth(verifier, "claim", model_TransitAgency)
+    types = eligibility_from_oauth(flow, "claim", model_TransitAgency)
 
     assert types == [model_EligibilityType.name]

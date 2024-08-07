@@ -250,40 +250,22 @@ def mocked_session_enrollment_expiry(mocker):
 
 
 @pytest.fixture
-def mocked_session_verifier(mocker, model_EnrollmentFlow):
-    return mocker.patch("benefits.core.session.verifier", autospec=True, return_value=model_EnrollmentFlow)
+def mocked_session_flow(mocker, model_EnrollmentFlow):
+    return mocker.patch("benefits.core.session.flow", autospec=True, return_value=model_EnrollmentFlow)
 
 
 @pytest.fixture
-def mocked_session_verifier_oauth(mocker, model_EnrollmentFlow_with_scope_and_claim):
+def mocked_session_flow_uses_claims_verification(mocker, model_EnrollmentFlow_with_scope_and_claim):
     return mocker.patch(
-        "benefits.core.session.verifier",
+        "benefits.core.session.flow",
         autospec=True,
         return_value=model_EnrollmentFlow_with_scope_and_claim,
     )
 
 
 @pytest.fixture
-def mocked_session_verifier_no_scope_and_claim_oauth(mocker, model_EnrollmentFlow):
-    return mocker.patch(
-        "benefits.core.session.verifier",
-        autospec=True,
-        return_value=model_EnrollmentFlow,
-    )
-
-
-@pytest.fixture
-def mocked_session_verifier_uses_claims_verification(model_EnrollmentFlow_with_scope_and_claim, mocked_session_verifier_oauth):
-    mocked_session_verifier_oauth.return_value = model_EnrollmentFlow_with_scope_and_claim
-    return mocked_session_verifier_oauth
-
-
-@pytest.fixture
-def mocked_session_verifier_does_not_use_claims_verification(
-    model_EnrollmentFlow, mocked_session_verifier_no_scope_and_claim_oauth
-):
-    mocked_session_verifier_no_scope_and_claim_oauth.return_value = model_EnrollmentFlow
-    return mocked_session_verifier_no_scope_and_claim_oauth
+def mocked_session_flow_does_not_use_claims_verification(mocked_session_flow):
+    return mocked_session_flow
 
 
 @pytest.fixture

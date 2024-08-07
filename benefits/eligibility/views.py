@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 
 from benefits.core import recaptcha, session
-from benefits.core.middleware import AgencySessionRequired, LoginRequired, RecaptchaEnabled, VerifierSessionRequired
+from benefits.core.middleware import AgencySessionRequired, LoginRequired, RecaptchaEnabled, FlowSessionRequired
 from benefits.core.models import EligibilityVerifier
 from . import analytics, forms, verify
 
@@ -71,20 +71,20 @@ def index(request, agency=None):
 
 
 @decorator_from_middleware(AgencySessionRequired)
-@decorator_from_middleware(VerifierSessionRequired)
+@decorator_from_middleware(FlowSessionRequired)
 def start(request):
     """View handler for the eligibility verification getting started screen."""
     session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))
 
-    verifier = session.verifier(request)
+    flow = session.flow(request)
 
-    return TemplateResponse(request, verifier.eligibility_start_template)
+    return TemplateResponse(request, flow.eligibility_start_template)
 
 
 @decorator_from_middleware(AgencySessionRequired)
 @decorator_from_middleware(LoginRequired)
 @decorator_from_middleware(RecaptchaEnabled)
-@decorator_from_middleware(VerifierSessionRequired)
+@decorator_from_middleware(FlowSessionRequired)
 def confirm(request):
     """View handler for the eligibility verification form."""
 
@@ -96,20 +96,20 @@ def confirm(request):
     unverified_view = reverse(ROUTE_UNVERIFIED)
 
     agency = session.agency(request)
-    verifier = session.verifier(request)
-    types_to_verify = agency.type_names_to_verify(verifier)
+    flow = session.flow(request)
+    types_to_verify = agency.type_names_to_verify(flow)
 
     # GET for OAuth verification
-    if request.method == "GET" and verifier.uses_claims_verification:
+    if request.method == "GET" and flow.uses_claims_verification:
         analytics.started_eligibility(request, types_to_verify)
 
-        verified_types = verify.eligibility_from_oauth(verifier, session.oauth_claim(request), agency)
+        verified_types = verify.eligibility_from_oauth(flow, session.oauth_claim(request), agency)
         if verified_types:
             return verified(request, verified_types)
         else:
             return redirect(unverified_view)
 
-    form = verifier.eligibility_form_instance()
+    form = flow.eligibility_form_instance()
 
     # GET/POST for Eligibility API verification
     context = {"form": form}
@@ -122,7 +122,7 @@ def confirm(request):
     elif request.method == "POST":
         analytics.started_eligibility(request, types_to_verify)
 
-        form = verifier.eligibility_form_instance(data=request.POST)
+        form = flow.eligibility_form_instance(data=request.POST)
         # form was not valid, allow for correction/resubmission
         if not form.is_valid():
             if recaptcha.has_error(form):
@@ -131,7 +131,7 @@ def confirm(request):
             return TemplateResponse(request, TEMPLATE_CONFIRM, context)
 
         # form is valid, make Eligibility Verification request to get the verified types
-        verified_types = verify.eligibility_from_api(verifier, form, agency)
+        verified_types = verify.eligibility_from_api(flow, form, agency)
 
         # form was not valid, allow for correction/resubmission
         if verified_types is None:
@@ -159,14 +159,14 @@ def verified(request, verified_types):
 
 
 @decorator_from_middleware(AgencySessionRequired)
-@decorator_from_middleware(VerifierSessionRequired)
+@decorator_from_middleware(FlowSessionRequired)
 def unverified(request):
     """View handler for the unverified eligibility page."""
 
     agency = session.agency(request)
-    verifier = session.verifier(request)
-    types_to_verify = agency.type_names_to_verify(verifier)
+    flow = session.flow(request)
+    types_to_verify = agency.type_names_to_verify(flow)
 
     analytics.returned_fail(request, types_to_verify)
 
-    return TemplateResponse(request, verifier.eligibility_unverified_template)
+    return TemplateResponse(request, flow.eligibility_unverified_template)

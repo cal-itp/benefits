@@ -83,15 +83,15 @@ class HealthcheckUserAgents(MiddlewareMixin):
         return self.get_response(request)
 
 
-class VerifierSessionRequired(MiddlewareMixin):
-    """Middleware raises an exception for sessions lacking an eligibility verifier configuration."""
+class FlowSessionRequired(MiddlewareMixin):
+    """Middleware raises an exception for sessions lacking a configured enrollment flow."""
 
     def process_request(self, request):
-        if session.verifier(request):
-            logger.debug("Session configured with eligibility verifier")
+        if session.flow(request):
+            logger.debug("Session configured with enrollment flow")
             return None
         else:
-            logger.debug("Session not configured with eligibility verifier")
+            logger.debug("Session not configured with enrollment flow")
             return user_error(request)
 
 
@@ -129,9 +129,9 @@ class LoginRequired(MiddlewareMixin):
     """Middleware that checks whether a user is logged in."""
 
     def process_view(self, request, view_func, view_args, view_kwargs):
-        # only require login if verifier uses claims verification
-        verifier = session.verifier(request)
-        if not verifier or not verifier.uses_claims_verification or session.logged_in(request):
+        # only require login if flow uses claims verification
+        flow = session.flow(request)
+        if not flow or not flow.uses_claims_verification or session.logged_in(request):
             # pass through
             return None
 
