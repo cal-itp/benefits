@@ -48,16 +48,16 @@ def analytics(request):
 
 def authentication(request):
     """Context processor adds authentication information to request context."""
-    verifier = session.verifier(request)
+    flow = session.flow(request)
 
-    if verifier:
+    if flow:
         data = {
             "logged_in": session.logged_in(request),
         }
 
-        if verifier.uses_claims_verification:
-            data["sign_out_button_template"] = verifier.claims_provider.sign_out_button_template
-            data["sign_out_link_template"] = verifier.claims_provider.sign_out_link_template
+        if flow.uses_claims_verification:
+            data["sign_out_button_template"] = flow.claims_provider.sign_out_button_template
+            data["sign_out_link_template"] = flow.claims_provider.sign_out_link_template
 
         return {"authentication": data}
     else:
