@@ -52,14 +52,14 @@ def mocked_oauth_client_or_error_redirect__error(mocked_oauth_create_client):
 @pytest.mark.usefixtures("mocked_session_verifier_uses_claims_verification")
 def test_oauth_client_or_error_redirect_no_oauth_client(
     app_request,
-    model_ClaimsProvider_with_scope_and_claim,
+    model_EligibilityVerifier_with_scope_and_claim,
     mocked_oauth_create_client,
     mocked_analytics_module,
     mocked_sentry_sdk_module,
 ):
     mocked_oauth_create_client.return_value = None
 
-    result = _oauth_client_or_error_redirect(app_request, model_ClaimsProvider_with_scope_and_claim)
+    result = _oauth_client_or_error_redirect(app_request, model_EligibilityVerifier_with_scope_and_claim)
 
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_SYSTEM_ERROR)
@@ -70,9 +70,9 @@ def test_oauth_client_or_error_redirect_no_oauth_client(
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_uses_claims_verification", "mocked_oauth_client_or_error_redirect__error")
 def test_oauth_client_or_error_redirect_oauth_client_exception(
-    app_request, model_ClaimsProvider_with_scope_and_claim, mocked_analytics_module, mocked_sentry_sdk_module
+    app_request, model_EligibilityVerifier_with_scope_and_claim, mocked_analytics_module, mocked_sentry_sdk_module
 ):
-    result = _oauth_client_or_error_redirect(app_request, model_ClaimsProvider_with_scope_and_claim)
+    result = _oauth_client_or_error_redirect(app_request, model_EligibilityVerifier_with_scope_and_claim)
 
     assert result.status_code == 302
     assert result.url == reverse(ROUTE_SYSTEM_ERROR)
@@ -83,9 +83,9 @@ def test_oauth_client_or_error_redirect_oauth_client_exception(
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_verifier_uses_claims_verification", "mocked_oauth_create_client")
 def test_oauth_client_or_error_oauth_client(
-    app_request, model_ClaimsProvider_with_scope_and_claim, mocked_analytics_module, mocked_sentry_sdk_module
+    app_request, model_EligibilityVerifier_with_scope_and_claim, mocked_analytics_module, mocked_sentry_sdk_module
 ):
-    result = _oauth_client_or_error_redirect(app_request, model_ClaimsProvider_with_scope_and_claim)
+    result = _oauth_client_or_error_redirect(app_request, model_EligibilityVerifier_with_scope_and_claim)
 
     assert hasattr(result, "authorize_redirect")
     mocked_analytics_module.error.assert_not_called()
@@ -239,7 +239,7 @@ def test_authorize_success_with_claim_true(
     app_request, mocked_session_verifier_uses_claims_verification, mocked_oauth_client_or_error_redirect__client
 ):
     verifier = mocked_session_verifier_uses_claims_verification.return_value
-    verifier.claims_provider.claim = "claim"
+    verifier.claims_claim = "claim"
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "1"}}
 
@@ -257,7 +257,7 @@ def test_authorize_success_with_claim_false(
     app_request, mocked_session_verifier_uses_claims_verification, mocked_oauth_client_or_error_redirect__client
 ):
     verifier = mocked_session_verifier_uses_claims_verification.return_value
-    verifier.claims_provider.claim = "claim"
+    verifier.claims_claim = "claim"
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "0"}}
 
@@ -277,7 +277,7 @@ def test_authorize_success_with_claim_error(
     mocked_analytics_module,
 ):
     verifier = mocked_session_verifier_uses_claims_verification.return_value
-    verifier.claims_provider.claim = "claim"
+    verifier.claims_claim = "claim"
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "10"}}
 
@@ -296,9 +296,9 @@ def test_authorize_success_without_verifier_claim(
     app_request, mocked_session_verifier_uses_claims_verification, mocked_oauth_client_or_error_redirect__client
 ):
     verifier = mocked_session_verifier_uses_claims_verification.return_value
-    verifier.claims_provider.claim = ""
+    verifier.claims_claim = ""
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
-    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "True"}}
+    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "1"}}
 
     result = authorize(app_request)
 
@@ -323,7 +323,7 @@ def test_authorize_success_without_claim_in_response(
     access_token_response,
 ):
     verifier = mocked_session_verifier_uses_claims_verification.return_value
-    verifier.claims_provider.claim = "claim"
+    verifier.claims_claim = "claim"
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = access_token_response
 

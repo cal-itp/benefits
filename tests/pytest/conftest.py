@@ -60,38 +60,7 @@ def model_ClaimsProvider():
 
 
 @pytest.fixture
-def model_ClaimsProvider_with_scope_and_claim(model_ClaimsProvider):
-    model_ClaimsProvider.scope = "scope"
-    model_ClaimsProvider.claim = "claim"
-    model_ClaimsProvider.save()
-
-    return model_ClaimsProvider
-
-
-@pytest.fixture
-def model_ClaimsProvider_with_scope_and_claim_no_sign_out(model_ClaimsProvider):
-    model_ClaimsProvider.scope = "scope"
-    model_ClaimsProvider.claim = "claim"
-    model_ClaimsProvider.sign_out_button_template = None
-    model_ClaimsProvider.sign_out_link_template = None
-    model_ClaimsProvider.save()
-
-    return model_ClaimsProvider
-
-
-@pytest.fixture
-def model_ClaimsProvider_no_scope_and_claim(model_ClaimsProvider):
-    model_ClaimsProvider.scope = None
-    model_ClaimsProvider.claim = None
-    model_ClaimsProvider.save()
-
-    return model_ClaimsProvider
-
-
-@pytest.fixture
-def model_ClaimsProvider_no_scope_and_claim_no_sign_out(model_ClaimsProvider):
-    model_ClaimsProvider.scope = None
-    model_ClaimsProvider.claim = None
+def model_ClaimsProvider_no_sign_out(model_ClaimsProvider):
     model_ClaimsProvider.sign_out_button_template = None
     model_ClaimsProvider.sign_out_link_template = None
     model_ClaimsProvider.save()
@@ -152,7 +121,7 @@ def model_EligibilityType_supports_expiration(model_EligibilityType):
 
 
 @pytest.fixture
-def model_EligibilityVerifier(model_PemData, model_EligibilityType):
+def model_EligibilityVerifier(model_PemData, model_EligibilityType, model_ClaimsProvider):
     verifier = EligibilityVerifier.objects.create(
         name="Test Verifier",
         active=True,
@@ -162,16 +131,25 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType):
         eligibility_type=model_EligibilityType,
         eligibility_api_public_key=model_PemData,
         selection_label_template="eligibility/includes/selection-label.html",
+        claims_provider=model_ClaimsProvider,
+        claims_scheme_override="",
     )
 
     return verifier
 
 
 @pytest.fixture
-def model_EligibilityVerifier_ClaimsProvider_with_scope_and_claim(
-    model_ClaimsProvider_with_scope_and_claim, model_EligibilityVerifier
-):
-    model_EligibilityVerifier.claims_provider = model_ClaimsProvider_with_scope_and_claim
+def model_EligibilityVerifier_with_scope_and_claim(model_EligibilityVerifier):
+    model_EligibilityVerifier.claims_scope = "scope"
+    model_EligibilityVerifier.claims_claim = "claim"
+    model_EligibilityVerifier.save()
+
+    return model_EligibilityVerifier
+
+
+@pytest.fixture
+def model_EligibilityVerifier_with_claims_scheme(model_EligibilityVerifier):
+    model_EligibilityVerifier.claims_scheme_override = "scheme"
     model_EligibilityVerifier.save()
 
     return model_EligibilityVerifier
@@ -278,25 +256,34 @@ def mocked_session_verifier(mocker, model_EligibilityVerifier):
 
 
 @pytest.fixture
-def mocked_session_verifier_oauth(mocker, model_EligibilityVerifier_ClaimsProvider_with_scope_and_claim):
+def mocked_session_verifier_oauth(mocker, model_EligibilityVerifier_with_scope_and_claim):
     return mocker.patch(
         "benefits.core.session.verifier",
         autospec=True,
-        return_value=model_EligibilityVerifier_ClaimsProvider_with_scope_and_claim,
+        return_value=model_EligibilityVerifier_with_scope_and_claim,
+    )
+
+
+@pytest.fixture
+def mocked_session_verifier_no_scope_and_claim_oauth(mocker, model_EligibilityVerifier):
+    return mocker.patch(
+        "benefits.core.session.verifier",
+        autospec=True,
+        return_value=model_EligibilityVerifier,
     )
 
 
 @pytest.fixture
 def mocked_session_verifier_uses_claims_verification(
-    model_EligibilityVerifier_ClaimsProvider_with_scope_and_claim, mocked_session_verifier_oauth
+    model_EligibilityVerifier_with_scope_and_claim, mocked_session_verifier_oauth
 ):
-    mock_verifier = model_EligibilityVerifier_ClaimsProvider_with_scope_and_claim
-    mock_verifier.name = model_EligibilityVerifier_ClaimsProvider_with_scope_and_claim.name
+    mock_verifier = model_EligibilityVerifier_with_scope_and_claim
+    mock_verifier.name = model_EligibilityVerifier_with_scope_and_claim.name
     mock_verifier.claims_provider.sign_out_button_template = (
-        model_EligibilityVerifier_ClaimsProvider_with_scope_and_claim.claims_provider.sign_out_button_template
+        model_EligibilityVerifier_with_scope_and_claim.claims_provider.sign_out_button_template
     )
     mock_verifier.claims_provider.sign_out_link_template = (
-        model_EligibilityVerifier_ClaimsProvider_with_scope_and_claim.claims_provider.sign_out_link_template
+        model_EligibilityVerifier_with_scope_and_claim.claims_provider.sign_out_link_template
     )
     mocked_session_verifier_oauth.return_value = mock_verifier
     return mocked_session_verifier_oauth
@@ -304,11 +291,14 @@ def mocked_session_verifier_uses_claims_verification(
 
 @pytest.fixture
 def mocked_session_verifier_does_not_use_claims_verification(
-    mocked_session_verifier_uses_claims_verification, model_ClaimsProvider_no_scope_and_claim
+    model_EligibilityVerifier, mocked_session_verifier_no_scope_and_claim_oauth
 ):
-    mocked_verifier = mocked_session_verifier_uses_claims_verification
-    mocked_verifier.claims_provider = model_ClaimsProvider_no_scope_and_claim
-    return mocked_verifier
+    mock_verifier = model_EligibilityVerifier
+    mock_verifier.name = model_EligibilityVerifier.name
+    mock_verifier.claims_provider.sign_out_button_template = model_EligibilityVerifier.claims_provider.sign_out_button_template
+    mock_verifier.claims_provider.sign_out_link_template = model_EligibilityVerifier.claims_provider.sign_out_link_template
+    mocked_session_verifier_no_scope_and_claim_oauth.return_value = mock_verifier
+    return mocked_session_verifier_no_scope_and_claim_oauth
 
 
 @pytest.fixture
