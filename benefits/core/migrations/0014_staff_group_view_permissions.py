@@ -1,12 +1,6 @@
-from django.contrib.auth.management import create_permissions
 from django.db import migrations
 
-
-def create_all_permissions(apps, schema_editor):
-    for app_config in apps.get_app_configs():
-        app_config.models_module = True
-        create_permissions(app_config, apps=apps, verbosity=0)
-        app_config.models_module = None
+from benefits.core.migrations import create_all_permissions
 
 
 def add_view_permissions(apps, schema_editor):
