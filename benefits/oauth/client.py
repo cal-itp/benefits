@@ -39,32 +39,32 @@ def _authorize_params(scheme):
     return params
 
 
-def _register_provider(oauth_registry, provider):
+def _register_provider(oauth_registry, verifier):
     """
-    Register OAuth clients into the given registry, using configuration from ClaimsProvider model.
+    Register OAuth clients into the given registry, using configuration from ClaimsProvider and EligibilityVerifier models.
 
     Adapted from https://stackoverflow.com/a/64174413.
     """
-    logger.debug(f"Registering OAuth client: {provider.client_name}")
+    logger.debug(f"Registering OAuth client: {verifier.claims_provider.client_name}")
 
     client = oauth_registry.register(
-        provider.client_name,
-        client_id=provider.client_id,
-        server_metadata_url=_server_metadata_url(provider.authority),
-        client_kwargs=_client_kwargs(provider.scope),
-        authorize_params=_authorize_params(provider.scheme),
+        verifier.claims_provider.client_name,
+        client_id=verifier.claims_provider.client_id,
+        server_metadata_url=_server_metadata_url(verifier.claims_provider.authority),
+        client_kwargs=_client_kwargs(verifier.claims_scope),
+        authorize_params=_authorize_params(verifier.claims_scheme),
     )
 
     return client
 
 
-def create_client(oauth_registry, provider):
+def create_client(oauth_registry, verifier):
     """
     Returns an OAuth client, registering it if needed.
     """
-    client = oauth_registry.create_client(provider.client_name)
+    client = oauth_registry.create_client(verifier.claims_provider.client_name)
 
     if client is None:
-        client = _register_provider(oauth_registry, provider)
+        client = _register_provider(oauth_registry, verifier)
 
     return client
