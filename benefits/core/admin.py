@@ -85,6 +85,7 @@ class SortableEligibilityVerifierAdmin(SortableAdminMixin, admin.ModelAdmin):  #
                 "eligibility_unverified_template",
                 "help_template",
                 "selection_label_template",
+                "claims_scheme_override",
             ]
         else:
             return super().get_readonly_fields(request, obj)
