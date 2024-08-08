@@ -86,19 +86,7 @@ class ClaimsProvider(models.Model):
         help_text="The name of the secret containing the client ID for this claims provider"
     )
     authority = models.TextField(help_text="The fully qualified HTTPS domain name for an OAuth authority server")
-    scope = models.TextField(
-        null=True,
-        blank=True,
-        help_text="A space-separated list of identifiers used to specify what access privileges are being requested",
-    )
-    claim = models.TextField(
-        null=True, blank=True, help_text="The name of the claim (name/value pair) that is used to verify eligibility"
-    )
     scheme = models.TextField(help_text="The authentication scheme to use")
-
-    @property
-    def supports_claims_verification(self):
-        return bool(self.scope) and bool(self.claim)
 
     @property
     def supports_sign_out(self):
@@ -194,6 +182,14 @@ class EligibilityVerifier(models.Model):
     eligibility_form_class = models.TextField(null=True, blank=True)
     eligibility_unverified_template = models.TextField(default="eligibility/unverified.html")
     help_template = models.TextField(null=True, blank=True)
+    claims_scope = models.TextField(
+        null=True,
+        blank=True,
+        help_text="A space-separated list of identifiers used to specify what access privileges are being requested",
+    )
+    claims_claim = models.TextField(
+        null=True, blank=True, help_text="The name of the claim (name/value pair) that is used to verify eligibility"
+    )
 
     class Meta:
         ordering = ["display_order"]
@@ -214,9 +210,13 @@ class EligibilityVerifier(models.Model):
         return self.eligibility_api_public_key.data
 
     @property
+    def supports_claims_verification(self):
+        return bool(self.claims_scope) and bool(self.claims_claim)
+
+    @property
     def uses_claims_verification(self):
         """True if this Verifier verifies via the claims provider. False otherwise."""
-        return self.claims_provider is not None and self.claims_provider.supports_claims_verification
+        return self.claims_provider is not None and self.supports_claims_verification
 
     def eligibility_form_instance(self, *args, **kwargs):
         """Return an instance of this verifier's form, or None."""
@@ -234,6 +234,24 @@ class EligibilityVerifier(models.Model):
         """Get an EligibilityVerifier instance by its ID."""
         logger.debug(f"Get {EligibilityVerifier.__name__} by id: {id}")
         return EligibilityVerifier.objects.get(id=id)
+
+    _claims_scheme = models.TextField(
+        help_text="The authentication scheme to use (Optional). If blank, defaults to the value in Claims providers",
+        default=None,
+        null=True,
+        blank=True,
+        verbose_name="Claims scheme",
+    )
+
+    @property
+    def claims_scheme(self):
+        if self._claims_scheme is None:
+            return self.claims_provider.scheme
+        return self._claims_scheme
+
+    @claims_scheme.setter
+    def _set_claims_scheme(self, value):
+        self._claims_scheme = value
 
 
 class TransitProcessor(models.Model):
