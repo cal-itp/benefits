@@ -160,27 +160,18 @@ class EnrollmentFlow(models.Model):
     """Represents a user journey through the Benefits app for a single eligibility type."""
 
     id = models.AutoField(primary_key=True)
-    name = models.TextField()
+    name = models.TextField(
+        help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests."  # noqa: 501
+    )
     display_order = models.PositiveSmallIntegerField(default=0, blank=False, null=False)
-    eligibility_api_url = models.TextField(null=True, blank=True)
-    eligibility_api_auth_header = models.TextField(null=True, blank=True)
-    eligibility_api_auth_key_secret_name = SecretNameField(null=True, blank=True)
     eligibility_type = models.ForeignKey(EligibilityType, on_delete=models.PROTECT)
-    # public key is used to encrypt Eligibility API requests and to verify signed Eligibility API responses
-    eligibility_api_public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT, null=True, blank=True)
-    # The JWE-compatible Content Encryption Key (CEK) key-length and mode
-    eligibility_api_jwe_cek_enc = models.TextField(null=True, blank=True)
-    # The JWE-compatible encryption algorithm
-    eligibility_api_jwe_encryption_alg = models.TextField(null=True, blank=True)
-    # The JWS-compatible signing algorithm
-    eligibility_api_jws_signing_alg = models.TextField(null=True, blank=True)
-    claims_provider = models.ForeignKey(ClaimsProvider, on_delete=models.PROTECT, null=True, blank=True)
-    selection_label_template = models.TextField()
-    eligibility_start_template = models.TextField(default="eligibility/start.html")
-    # reference to a form class used by this flow, e.g. benefits.eligibility.forms.FormClass
-    eligibility_form_class = models.TextField(null=True, blank=True)
-    eligibility_unverified_template = models.TextField(default="eligibility/unverified.html")
-    help_template = models.TextField(null=True, blank=True)
+    claims_provider = models.ForeignKey(
+        ClaimsProvider,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        help_text="An entity that provides claims for eligibility verification for this flow.",
+    )
     claims_scope = models.TextField(
         null=True,
         blank=True,
@@ -195,6 +186,62 @@ class EnrollmentFlow(models.Model):
         null=True,
         blank=True,
         verbose_name="Claims scheme",
+    )
+    eligibility_api_url = models.TextField(
+        null=True, blank=True, help_text="Fully qualified URL for an Eligibility API server used by this flow."
+    )
+    eligibility_api_auth_header = models.TextField(
+        null=True,
+        blank=True,
+        help_text="The auth header to send in Eligibility API requests for this flow.",
+    )
+    eligibility_api_auth_key_secret_name = SecretNameField(
+        null=True,
+        blank=True,
+        help_text="The name of a secret containing the value of the auth header to send in Eligibility API requests for this flow.",  # noqa: 501
+    )
+    eligibility_api_public_key = models.ForeignKey(
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        help_text="The public key used to encrypt Eligibility API requests and to verify signed Eligibility API responses for this flow.",  # noqa: E501
+    )
+    eligibility_api_jwe_cek_enc = models.TextField(
+        null=True,
+        blank=True,
+        help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode to use in Eligibility API requests for this flow.",  # noqa: E501
+    )
+    eligibility_api_jwe_encryption_alg = models.TextField(
+        null=True,
+        blank=True,
+        help_text="The JWE-compatible encryption algorithm to use in Eligibility API requests for this flow.",
+    )
+    eligibility_api_jws_signing_alg = models.TextField(
+        null=True,
+        blank=True,
+        help_text="The JWS-compatible signing algorithm to use in Eligibility API requests for this flow.",
+    )
+    selection_label_template = models.TextField(
+        help_text="Path to a Django template that defines the end-user UI for selecting this flow among other options."
+    )
+    eligibility_start_template = models.TextField(
+        default="eligibility/start.html", help_text="Path to a Django template for the informational page of this flow."
+    )
+    eligibility_form_class = models.TextField(
+        null=True,
+        blank=True,
+        help_text="The fully qualified Python path of a form class used by this flow, e.g. benefits.eligibility.forms.FormClass",  # noqa: E501
+    )
+    eligibility_unverified_template = models.TextField(
+        default="eligibility/unverified.html",
+        help_text="Path to a Django template that defines the page when a user fails eligibility verification for this flow.",
+    )
+    help_template = models.TextField(
+        null=True,
+        blank=True,
+        help_text="Path to a Django template that defines the help text for this enrollment flow, used in building the dynamic help page for an agency",  # noqa: E501
     )
 
     class Meta:
