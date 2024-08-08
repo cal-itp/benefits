@@ -65,13 +65,13 @@ PR branches are typically named with a [conventional type][conventional-commits]
 E.g.
 
 ```bash
-git checkout -b feat/verifier-radio-buttons
+git checkout -b feat/flow-multi-select
 ```
 
 and
 
 ```bash
-git checkout -b refactor/verifier-model
+git checkout -b refactor/flow-model
 ```
 
 PR branches are deleted once their PR is merged.
