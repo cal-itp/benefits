@@ -22,9 +22,9 @@ for more details about what features are available. Specifically, from Authlib w
 
 ## Django configuration
 
-OAuth settings are configured as instances of the [`ClaimsProvider` model](../development/models-migrations.md).
+OAuth settings are configured as instances of the [`ClaimsProvider` model](../development/models-migrations.md) and [`EligibilityVerifier` model](../development/models-migrations.md).
 
-The [data migration file](./data.md) contains sample values for a `ClaimsProvider` configuration. You can set values for a real Open ID Connect provider in environment variables so that they are used instead of the sample values.
+The [data migration file](./data.md) contains sample values for a `ClaimsProvider` and `EligibilityVerifier` configuration. You can set values for a real Open ID Connect provider in environment variables so that they are used instead of the sample values.
 
 ## Django usage
 
@@ -33,7 +33,7 @@ use in e.g. views.
 
 - `oauth` is an `authlib.integrations.django_client.OAuth` instance
 
-Consumers call `benefits.oauth.client.create_client(oauth, provider)` with the name of a client to obtain an Authlib client
-instance. If that client name has not been registered yet, `_register_provider(oauth_registry, provider)` uses data from the given `ClaimsProvider` instance to register the client into this instance and returns the client object.
+Consumers call `benefits.oauth.client.create_client(oauth, verifier)` with the name of a client to obtain an Authlib client
+instance. If that client name has not been registered yet, `_register_provider(oauth_registry, verifier)` uses data from the given `ClaimsProvider` and `EligibilityVerifier` instances to register the client into this instance and returns the client object.
 
 [oauth-client]: https://github.com/cal-itp/benefits/blob/main/benefits/oauth/client.py
