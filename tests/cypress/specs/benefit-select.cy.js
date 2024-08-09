@@ -1,6 +1,6 @@
 const helpers = require("../plugins/helpers");
 
-const verifier_selection_url = "/eligibility";
+const flow_selection_url = "/eligibility";
 
 describe("Benefit selection", () => {
   beforeEach(() => {
@@ -17,9 +17,9 @@ describe("Benefit selection", () => {
   it("User must select a radio button, or else see a validation message", () => {
     cy.get("input:radio").should("have.length", 4);
     cy.get("input:radio:checked").should("have.length", 0);
-    cy.get("#form-verifier-selection").submit();
+    cy.get("#form-flow-selection").submit();
 
-    cy.url().should("include", verifier_selection_url);
+    cy.url().should("include", flow_selection_url);
     cy.get("input:radio:checked").should("have.length", 0);
     cy.get("input:invalid").should("have.length", 4);
     cy.get("input:radio")

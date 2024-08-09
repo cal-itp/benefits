@@ -304,12 +304,12 @@ def test_reset_start(app_request):
 
 
 @pytest.mark.django_db
-def test_reset_verifier(app_request):
-    app_request.session[session._VERIFIER] = "verifier"
+def test_reset_flow(app_request):
+    app_request.session[session._FLOW] = "flow"
 
     session.reset(app_request)
 
-    assert session.verifier(app_request) is None
+    assert session.flow(app_request) is None
 
 
 @pytest.mark.django_db
@@ -456,14 +456,14 @@ def test_update_origin(app_request):
 
 
 @pytest.mark.django_db
-def test_update_verifier(app_request):
-    verifier = models.EligibilityVerifier.objects.first()
+def test_update_flow(app_request):
+    flow = models.EnrollmentFlow.objects.first()
 
-    session.update(app_request, verifier=verifier)
+    session.update(app_request, flow=flow)
 
-    assert session.verifier(app_request) == verifier
+    assert session.flow(app_request) == flow
 
 
 @pytest.mark.django_db
-def test_verifier_default(app_request):
-    assert session.verifier(app_request) is None
+def test_flow_default(app_request):
+    assert session.flow(app_request) is None

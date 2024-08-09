@@ -59,7 +59,7 @@ def test_Event_reads_session(app_request, mocker):
     session_spy.language.assert_called_once_with(app_request)
     session_spy.start.assert_called_once_with(app_request)
     session_spy.uid.assert_called_once_with(app_request)
-    session_spy.verifier.assert_called_once_with(app_request)
+    session_spy.flow.assert_called_once_with(app_request)
 
 
 @pytest.mark.django_db

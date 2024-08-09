@@ -6,11 +6,11 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 import sentry_sdk
 
-from benefits.core import session
+from benefits.core import models, session
 from benefits.core.middleware import AgencySessionRequired
 from . import analytics, redirects
 from .client import oauth, create_client
-from .middleware import VerifierUsesAuthVerificationSessionRequired
+from .middleware import FlowUsesClaimsVerificationSessionRequired
 
 
 logger = logging.getLogger(__name__)
@@ -24,7 +24,7 @@ ROUTE_POST_LOGOUT = "oauth:post_logout"
 TEMPLATE_SYSTEM_ERROR = "oauth/system_error.html"
 
 
-def _oauth_client_or_error_redirect(request, verifier):
+def _oauth_client_or_error_redirect(request, flow: models.EnrollmentFlow):
     """Calls `benefits.oauth.client.create_client()`.
 
     If a client is created successfully, return it; Otherwise, return a redirect response to the `oauth:system-error` route.
@@ -34,12 +34,12 @@ def _oauth_client_or_error_redirect(request, verifier):
     exception = None
 
     try:
-        oauth_client = create_client(oauth, verifier)
+        oauth_client = create_client(oauth, flow)
     except Exception as ex:
         exception = ex
 
     if not oauth_client and not exception:
-        exception = Exception(f"oauth_client not registered: {verifier.claims_provider.client_name}")
+        exception = Exception(f"oauth_client not registered: {flow.claims_provider.client_name}")
 
     if exception:
         analytics.error(request, message=str(exception), operation="init")
@@ -49,12 +49,12 @@ def _oauth_client_or_error_redirect(request, verifier):
     return oauth_client
 
 
-@decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
+@decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
 def login(request):
     """View implementing OIDC authorize_redirect."""
-    verifier = session.verifier(request)
+    flow = session.flow(request)
 
-    oauth_client_result = _oauth_client_or_error_redirect(request, verifier)
+    oauth_client_result = _oauth_client_or_error_redirect(request, flow)
 
     if hasattr(oauth_client_result, "authorize_redirect"):
         # this looks like an oauth_client since it has the method we need
@@ -90,12 +90,12 @@ def login(request):
     return result
 
 
-@decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
+@decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
 def authorize(request):
     """View implementing OIDC token authorization."""
-    verifier = session.verifier(request)
+    flow = session.flow(request)
 
-    oauth_client_result = _oauth_client_or_error_redirect(request, verifier)
+    oauth_client_result = _oauth_client_or_error_redirect(request, flow)
 
     if hasattr(oauth_client_result, "authorize_access_token"):
         # this looks like an oauth_client since it has the method we need
@@ -128,23 +128,23 @@ def authorize(request):
     id_token = token["id_token"]
 
     # We store the returned claim in case it can be used later in eligibility verification.
-    verifier_claim = verifier.claims_claim
+    flow_claim = flow.claims_claim
     stored_claim = None
 
     error_claim = None
 
-    if verifier_claim:
+    if flow_claim:
         userinfo = token.get("userinfo")
 
         if userinfo:
-            claim_value = userinfo.get(verifier_claim)
+            claim_value = userinfo.get(flow_claim)
             # the claim comes back in userinfo like { "claim": "1" | "0" }
             claim_value = int(claim_value) if claim_value else None
             if claim_value is None:
-                logger.warning(f"userinfo did not contain: {verifier_claim}")
+                logger.warning(f"userinfo did not contain: {flow_claim}")
             elif claim_value == 1:
                 # if userinfo contains our claim and the flag is 1 (true), store the *claim*
-                stored_claim = verifier_claim
+                stored_claim = flow_claim
             elif claim_value >= 10:
                 error_claim = claim_value
 
@@ -154,7 +154,7 @@ def authorize(request):
     return redirect(ROUTE_CONFIRM)
 
 
-@decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
+@decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
 def cancel(request):
     """View implementing cancellation of OIDC authorization."""
 
@@ -163,12 +163,12 @@ def cancel(request):
     return redirect(ROUTE_UNVERIFIED)
 
 
-@decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
+@decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
 def logout(request):
     """View implementing OIDC and application sign out."""
-    verifier = session.verifier(request)
+    flow = session.flow(request)
 
-    oauth_client_result = _oauth_client_or_error_redirect(request, verifier)
+    oauth_client_result = _oauth_client_or_error_redirect(request, flow)
 
     if hasattr(oauth_client_result, "load_server_metadata"):
         # this looks like an oauth_client since it has the method we need
@@ -194,7 +194,7 @@ def logout(request):
     return redirects.deauthorize_redirect(request, oauth_client, token, redirect_uri)
 
 
-@decorator_from_middleware(VerifierUsesAuthVerificationSessionRequired)
+@decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
 def post_logout(request):
     """View routes the user to their origin after sign out."""
 

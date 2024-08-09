@@ -45,8 +45,8 @@ class Event:
 
         agency = session.agency(request)
         agency_name = agency.long_name if agency else None
-        verifier = session.verifier(request)
-        verifier_name = verifier.name if verifier else None
+        flow = session.flow(request)
+        verifier_name = flow.name if flow else None
         eligibility_types = session.eligibility(request)
         eligibility_types = EligibilityType.get_names(eligibility_types) if eligibility_types else None
 

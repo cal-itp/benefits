@@ -15,7 +15,7 @@ from requests.exceptions import HTTPError
 import sentry_sdk
 
 from benefits.core import session
-from benefits.core.middleware import EligibleSessionRequired, VerifierSessionRequired, pageview_decorator
+from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
 from benefits.core.views import ROUTE_LOGGED_OUT, ROUTE_SERVER_ERROR
 
 from . import analytics, forms
@@ -241,12 +241,12 @@ def _calculate_expiry(expiration_days):
 def reenrollment_error(request):
     """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
     eligibility = session.eligibility(request)
-    verifier = session.verifier(request)
+    flow = session.flow(request)
 
     if eligibility.reenrollment_error_template is None:
         raise Exception(f"Re-enrollment error with null template on: {eligibility.label}")
 
-    if session.logged_in(request) and verifier.claims_provider.supports_sign_out:
+    if session.logged_in(request) and flow.claims_provider.supports_sign_out:
         # overwrite origin for a logged in user
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
@@ -276,16 +276,16 @@ def system_error(request):
 
 @pageview_decorator
 @decorator_from_middleware(EligibleSessionRequired)
-@decorator_from_middleware(VerifierSessionRequired)
+@decorator_from_middleware(FlowSessionRequired)
 def success(request):
     """View handler for the final success page."""
     request.path = "/enrollment/success"
     session.update(request, origin=reverse(ROUTE_SUCCESS))
 
     eligibility = session.eligibility(request)
-    verifier = session.verifier(request)
+    flow = session.flow(request)
 
-    if session.logged_in(request) and verifier.claims_provider.supports_sign_out:
+    if session.logged_in(request) and flow.claims_provider.supports_sign_out:
         # overwrite origin for a logged in user
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
