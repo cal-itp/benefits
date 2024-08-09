@@ -1,6 +1,6 @@
 import pytest
 
-from benefits.core.models import ClaimsProvider
+from benefits.core.models import EligibilityVerifier
 from benefits.oauth.client import _client_kwargs, _server_metadata_url, _authorize_params, _register_provider, create_client
 
 
@@ -40,9 +40,9 @@ def test_authorize_params_no_scheme():
 
 @pytest.mark.django_db
 def test_register_provider(mocker, mocked_oauth_registry):
-    mocked_client_provider = mocker.Mock(spec=ClaimsProvider)
-    mocked_client_provider.client_name = "client_name_1"
-    mocked_client_provider.client_id = "client_id_1"
+    mocked_client_provider = mocker.Mock(spec=EligibilityVerifier)
+    mocked_client_provider.claims_provider.client_name = "client_name_1"
+    mocked_client_provider.claims_provider.client_id = "client_id_1"
 
     mocker.patch("benefits.oauth.client._client_kwargs", return_value={"client": "kwargs"})
     mocker.patch("benefits.oauth.client._server_metadata_url", return_value="https://metadata.url")
@@ -61,9 +61,9 @@ def test_register_provider(mocker, mocked_oauth_registry):
 
 @pytest.mark.django_db
 def test_create_client_already_registered(mocker, mocked_oauth_registry):
-    mocked_client_provider = mocker.Mock(spec=ClaimsProvider)
-    mocked_client_provider.client_name = "client_name_1"
-    mocked_client_provider.client_id = "client_id_1"
+    mocked_client_provider = mocker.Mock(spec=EligibilityVerifier)
+    mocked_client_provider.claims_provider.client_name = "client_name_1"
+    mocked_client_provider.claims_provider.client_id = "client_id_1"
 
     create_client(mocked_oauth_registry, mocked_client_provider)
 
@@ -73,9 +73,9 @@ def test_create_client_already_registered(mocker, mocked_oauth_registry):
 
 @pytest.mark.django_db
 def test_create_client_already_not_registered_yet(mocker, mocked_oauth_registry):
-    mocked_client_provider = mocker.Mock(spec=ClaimsProvider)
-    mocked_client_provider.client_name = "client_name_1"
-    mocked_client_provider.client_id = "client_id_1"
+    mocked_client_provider = mocker.Mock(spec=EligibilityVerifier)
+    mocked_client_provider.claims_provider.client_name = "client_name_1"
+    mocked_client_provider.claims_provider.client_id = "client_id_1"
 
     mocker.patch("benefits.oauth.client._client_kwargs", return_value={"client": "kwargs"})
     mocker.patch("benefits.oauth.client._server_metadata_url", return_value="https://metadata.url")
