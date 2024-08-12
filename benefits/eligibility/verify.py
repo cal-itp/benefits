@@ -32,7 +32,7 @@ def eligibility_from_api(verifier: models.EligibilityVerifier, form, agency: mod
 
 
 def eligibility_from_oauth(verifier, oauth_claim, agency):
-    if verifier.uses_claims_verification and verifier.claims_provider.claim == oauth_claim:
+    if verifier.uses_claims_verification and verifier.claims_claim == oauth_claim:
         return agency.type_names_to_verify(verifier)
     else:
         return []

@@ -32,39 +32,9 @@
     "fields": {
       "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
       "sign_out_link_template": "core/includes/link--sign-out--login-gov.html",
-      "client_name": "senior-benefits-oauth-client-name",
+      "client_name": "benefits-oauth-client-name",
       "client_id_secret_name": "claims-provider-client-id",
       "authority": "https://example.com",
-      "scope": "verify:senior",
-      "claim": "senior",
-      "scheme": "dev-cal-itp_benefits"
-    }
-  },
-  {
-    "model": "core.claimsprovider",
-    "pk": 2,
-    "fields": {
-      "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
-      "sign_out_link_template": "core/includes/link--sign-out--login-gov.html",
-      "client_name": "veteran-benefits-oauth-client-name",
-      "client_id_secret_name": "claims-provider-client-id",
-      "authority": "https://example.com",
-      "scope": "verify:veteran",
-      "claim": "veteran",
-      "scheme": "vagov"
-    }
-  },
-  {
-    "model": "core.claimsprovider",
-    "pk": 3,
-    "fields": {
-      "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
-      "sign_out_link_template": "core/includes/link--sign-out--login-gov.html",
-      "client_name": "calfresh-benefits-oauth-client-name",
-      "client_id_secret_name": "claims-provider-client-id",
-      "authority": "https://example.com",
-      "scope": "verify:calfresh",
-      "claim": "calfresh",
       "scheme": "dev-cal-itp_benefits"
     }
   },
@@ -123,7 +93,9 @@
       "eligibility_type": 1,
       "claims_provider": 1,
       "selection_label_template": "eligibility/includes/selection-label--senior.html",
-      "eligibility_start_template": "eligibility/start--senior.html"
+      "eligibility_start_template": "eligibility/start--senior.html",
+      "claims_scope": "verify:senior",
+      "claims_claim": "senior"
     }
   },
   {
@@ -134,9 +106,11 @@
       "display_order": 3,
       "active": true,
       "eligibility_type": 2,
-      "claims_provider": 2,
+      "claims_provider": 1,
       "selection_label_template": "eligibility/includes/selection-label--veteran.html",
-      "eligibility_start_template": "eligibility/start--veteran.html"
+      "eligibility_start_template": "eligibility/start--veteran.html",
+      "claims_scope": "verify:veteran",
+      "claims_claim": "veteran"
     }
   },
   {
@@ -169,10 +143,12 @@
       "display_order": 2,
       "active": true,
       "eligibility_type": 4,
-      "claims_provider": 3,
+      "claims_provider": 1,
       "selection_label_template": "eligibility/includes/selection-label--calfresh.html",
       "eligibility_start_template": "eligibility/start--calfresh.html",
-      "help_template": "core/includes/help--calfresh.html"
+      "help_template": "core/includes/help--calfresh.html",
+      "claims_scope": "verify:calfresh",
+      "claims_claim": "calfresh"
     }
   },
   {
