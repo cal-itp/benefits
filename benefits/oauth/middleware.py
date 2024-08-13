@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 import sentry_sdk
 
 from benefits.core import session
-from benefits.core.middleware import VerifierSessionRequired, user_error
+from benefits.core.middleware import FlowSessionRequired, user_error
 
 from . import analytics
 from .redirects import ROUTE_SYSTEM_ERROR
@@ -13,28 +13,28 @@ from .redirects import ROUTE_SYSTEM_ERROR
 logger = logging.getLogger(__name__)
 
 
-class VerifierUsesAuthVerificationSessionRequired(VerifierSessionRequired):
-    """Middleware raises an exception for sessions lacking an eligibility verifier that uses auth verification."""
+class FlowUsesClaimsVerificationSessionRequired(FlowSessionRequired):
+    """Middleware raises an exception for sessions lacking an enrollment flow that uses claims verification."""
 
     def process_request(self, request):
         result = super().process_request(request)
         if result:
-            # from the base middleware class, the session didn't have a verifier
+            # from the base middleware class, the session didn't have an enrollment flow
             return result
 
-        verifier = session.verifier(request)
+        flow = session.flow(request)
 
-        if verifier.uses_claims_verification:
-            # all good, the chosen verifier is configured correctly
+        if flow.uses_claims_verification:
+            # all good, the chosen flow is configured correctly
             return None
-        elif not (verifier.eligibility_api_url or verifier.eligibility_form_class):
-            # the chosen verifier doesn't have Eligibility API config OR claims provider config
+        elif not (flow.eligibility_api_url or flow.eligibility_form_class):
+            # the chosen flow doesn't have Eligibility API config OR claims provider config
             # this is likely a misconfiguration on the backend, not a user error
-            message = f"Verifier with no API or IDP config: {verifier.name} (id={verifier.id})"
+            message = f"Flow with no API or claims config: {flow.name} (id={flow.id})"
             analytics.error(request, message=message, operation=request.path)
             sentry_sdk.capture_exception(Exception(message))
             return redirect(ROUTE_SYSTEM_ERROR)
         else:
-            # the chosen verifier was for Eligibility API
-            logger.debug("Session not configured with eligibility verifier that uses auth verification")
+            # the chosen flow was for Eligibility API
+            logger.debug("Session not configured with enrollment flow that uses claims verification")
             return user_error(request)

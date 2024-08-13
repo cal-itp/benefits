@@ -6,6 +6,8 @@ import logging
 
 from authlib.integrations.django_client import OAuth
 
+from benefits.core import models
+
 logger = logging.getLogger(__name__)
 
 oauth = OAuth()
@@ -39,32 +41,32 @@ def _authorize_params(scheme):
     return params
 
 
-def _register_provider(oauth_registry, verifier):
+def _register_provider(oauth_registry: OAuth, flow: models.EnrollmentFlow):
     """
-    Register OAuth clients into the given registry, using configuration from ClaimsProvider and EligibilityVerifier models.
+    Register OAuth clients into the given registry, using configuration from ClaimsProvider and EnrollmentFlow models.
 
     Adapted from https://stackoverflow.com/a/64174413.
     """
-    logger.debug(f"Registering OAuth client: {verifier.claims_provider.client_name}")
+    logger.debug(f"Registering OAuth client: {flow.claims_provider.client_name}")
 
     client = oauth_registry.register(
-        verifier.claims_provider.client_name,
-        client_id=verifier.claims_provider.client_id,
-        server_metadata_url=_server_metadata_url(verifier.claims_provider.authority),
-        client_kwargs=_client_kwargs(verifier.claims_scope),
-        authorize_params=_authorize_params(verifier.claims_scheme),
+        flow.claims_provider.client_name,
+        client_id=flow.claims_provider.client_id,
+        server_metadata_url=_server_metadata_url(flow.claims_provider.authority),
+        client_kwargs=_client_kwargs(flow.claims_scope),
+        authorize_params=_authorize_params(flow.claims_scheme),
     )
 
     return client
 
 
-def create_client(oauth_registry, verifier):
+def create_client(oauth_registry: OAuth, flow: models.EnrollmentFlow):
     """
     Returns an OAuth client, registering it if needed.
     """
-    client = oauth_registry.create_client(verifier.claims_provider.client_name)
+    client = oauth_registry.create_client(flow.claims_provider.client_name)
 
     if client is None:
-        client = _register_provider(oauth_registry, verifier)
+        client = _register_provider(oauth_registry, flow)
 
     return client

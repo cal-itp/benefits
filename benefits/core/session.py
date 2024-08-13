@@ -23,13 +23,13 @@ _ELIGIBILITY = "eligibility"
 _ENROLLMENT_TOKEN = "enrollment_token"
 _ENROLLMENT_TOKEN_EXP = "enrollment_token_expiry"
 _ENROLLMENT_EXP = "enrollment_expiry"
+_FLOW = "flow"
 _LANG = "lang"
 _OAUTH_CLAIM = "oauth_claim"
 _OAUTH_TOKEN = "oauth_token"
 _ORIGIN = "origin"
 _START = "start"
 _UID = "uid"
-_VERIFIER = "verifier"
 
 
 def agency(request):
@@ -52,6 +52,7 @@ def context_dict(request):
         _AGENCY: agency(request).slug if active_agency(request) else None,
         _DEBUG: debug(request),
         _DID: did(request),
+        _FLOW: flow(request),
         _ELIGIBILITY: eligibility(request),
         _ENROLLMENT_EXP: enrollment_expiry(request),
         _ENROLLMENT_TOKEN: enrollment_token(request),
@@ -62,7 +63,6 @@ def context_dict(request):
         _ORIGIN: origin(request),
         _START: start(request),
         _UID: uid(request),
-        _VERIFIER: verifier(request),
     }
 
 
@@ -178,6 +178,7 @@ def reset(request):
     """Reset the session for the request."""
     logger.debug("Reset session")
     request.session[_AGENCY] = None
+    request.session[_FLOW] = None
     request.session[_ELIGIBILITY] = None
     request.session[_ORIGIN] = reverse("core:index")
     request.session[_ENROLLMENT_EXP] = None
@@ -185,7 +186,6 @@ def reset(request):
     request.session[_ENROLLMENT_TOKEN_EXP] = None
     request.session[_OAUTH_TOKEN] = None
     request.session[_OAUTH_CLAIM] = None
-    request.session[_VERIFIER] = None
 
     if _UID not in request.session or not request.session[_UID]:
         logger.debug("Reset session time and uid")
@@ -238,6 +238,7 @@ def update(
     request,
     agency=None,
     debug=None,
+    flow=None,
     eligibility_types=None,
     enrollment_expiry=None,
     enrollment_token=None,
@@ -245,7 +246,6 @@ def update(
     oauth_token=None,
     oauth_claim=None,
     origin=None,
-    verifier=None,
 ):
     """Update the request's session with non-null values."""
     if agency is not None and isinstance(agency, models.TransitAgency):
@@ -281,13 +281,13 @@ def update(
         request.session[_OAUTH_CLAIM] = oauth_claim
     if origin is not None:
         request.session[_ORIGIN] = origin
-    if verifier is not None and isinstance(verifier, models.EligibilityVerifier):
-        request.session[_VERIFIER] = verifier.id
+    if flow is not None and isinstance(flow, models.EnrollmentFlow):
+        request.session[_FLOW] = flow.id
 
 
-def verifier(request):
-    """Get the verifier from the request's session, or None"""
+def flow(request) -> models.EnrollmentFlow | None:
+    """Get the EnrollmentFlow from the request's session, or None"""
     try:
-        return models.EligibilityVerifier.by_id(request.session[_VERIFIER])
-    except (KeyError, models.EligibilityVerifier.DoesNotExist):
+        return models.EnrollmentFlow.by_id(request.session[_FLOW])
+    except (KeyError, models.EnrollmentFlow.DoesNotExist):
         return None

@@ -7,7 +7,7 @@ import pytest
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import ClaimsProvider, EligibilityType, EligibilityVerifier, TransitProcessor, PemData, TransitAgency
+from benefits.core.models import ClaimsProvider, EligibilityType, EnrollmentFlow, TransitProcessor, PemData, TransitAgency
 
 
 def pytest_runtest_setup():
@@ -121,10 +121,9 @@ def model_EligibilityType_supports_expiration(model_EligibilityType):
 
 
 @pytest.fixture
-def model_EligibilityVerifier(model_PemData, model_EligibilityType, model_ClaimsProvider):
-    verifier = EligibilityVerifier.objects.create(
-        name="Test Verifier",
-        active=True,
+def model_EnrollmentFlow(model_PemData, model_EligibilityType, model_ClaimsProvider):
+    flow = EnrollmentFlow.objects.create(
+        name="Test Flow",
         eligibility_api_url="https://example.com/verify",
         eligibility_api_auth_header="X-API-AUTH",
         eligibility_api_auth_key_secret_name="secret-key",
@@ -135,24 +134,24 @@ def model_EligibilityVerifier(model_PemData, model_EligibilityType, model_Claims
         claims_scheme_override="",
     )
 
-    return verifier
+    return flow
 
 
 @pytest.fixture
-def model_EligibilityVerifier_with_scope_and_claim(model_EligibilityVerifier):
-    model_EligibilityVerifier.claims_scope = "scope"
-    model_EligibilityVerifier.claims_claim = "claim"
-    model_EligibilityVerifier.save()
+def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow):
+    model_EnrollmentFlow.claims_scope = "scope"
+    model_EnrollmentFlow.claims_claim = "claim"
+    model_EnrollmentFlow.save()
 
-    return model_EligibilityVerifier
+    return model_EnrollmentFlow
 
 
 @pytest.fixture
-def model_EligibilityVerifier_with_claims_scheme(model_EligibilityVerifier):
-    model_EligibilityVerifier.claims_scheme_override = "scheme"
-    model_EligibilityVerifier.save()
+def model_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow):
+    model_EnrollmentFlow.claims_scheme_override = "scheme"
+    model_EnrollmentFlow.save()
 
-    return model_EligibilityVerifier
+    return model_EnrollmentFlow
 
 
 @pytest.fixture
@@ -169,7 +168,7 @@ def model_TransitProcessor():
 
 
 @pytest.fixture
-def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityVerifier, model_TransitProcessor):
+def model_TransitAgency(model_PemData, model_EligibilityType, model_EnrollmentFlow, model_TransitProcessor):
     agency = TransitAgency.objects.create(
         slug="test",
         short_name="TEST",
@@ -191,7 +190,7 @@ def model_TransitAgency(model_PemData, model_EligibilityType, model_EligibilityV
 
     # add many-to-many relationships after creation, need ID on both sides
     agency.eligibility_types.add(model_EligibilityType)
-    agency.eligibility_verifiers.add(model_EligibilityVerifier)
+    agency.enrollment_flows.add(model_EnrollmentFlow)
     agency.save()
 
     return agency
@@ -251,54 +250,22 @@ def mocked_session_enrollment_expiry(mocker):
 
 
 @pytest.fixture
-def mocked_session_verifier(mocker, model_EligibilityVerifier):
-    return mocker.patch("benefits.core.session.verifier", autospec=True, return_value=model_EligibilityVerifier)
+def mocked_session_flow(mocker, model_EnrollmentFlow):
+    return mocker.patch("benefits.core.session.flow", autospec=True, return_value=model_EnrollmentFlow)
 
 
 @pytest.fixture
-def mocked_session_verifier_oauth(mocker, model_EligibilityVerifier_with_scope_and_claim):
+def mocked_session_flow_uses_claims_verification(mocker, model_EnrollmentFlow_with_scope_and_claim):
     return mocker.patch(
-        "benefits.core.session.verifier",
+        "benefits.core.session.flow",
         autospec=True,
-        return_value=model_EligibilityVerifier_with_scope_and_claim,
+        return_value=model_EnrollmentFlow_with_scope_and_claim,
     )
 
 
 @pytest.fixture
-def mocked_session_verifier_no_scope_and_claim_oauth(mocker, model_EligibilityVerifier):
-    return mocker.patch(
-        "benefits.core.session.verifier",
-        autospec=True,
-        return_value=model_EligibilityVerifier,
-    )
-
-
-@pytest.fixture
-def mocked_session_verifier_uses_claims_verification(
-    model_EligibilityVerifier_with_scope_and_claim, mocked_session_verifier_oauth
-):
-    mock_verifier = model_EligibilityVerifier_with_scope_and_claim
-    mock_verifier.name = model_EligibilityVerifier_with_scope_and_claim.name
-    mock_verifier.claims_provider.sign_out_button_template = (
-        model_EligibilityVerifier_with_scope_and_claim.claims_provider.sign_out_button_template
-    )
-    mock_verifier.claims_provider.sign_out_link_template = (
-        model_EligibilityVerifier_with_scope_and_claim.claims_provider.sign_out_link_template
-    )
-    mocked_session_verifier_oauth.return_value = mock_verifier
-    return mocked_session_verifier_oauth
-
-
-@pytest.fixture
-def mocked_session_verifier_does_not_use_claims_verification(
-    model_EligibilityVerifier, mocked_session_verifier_no_scope_and_claim_oauth
-):
-    mock_verifier = model_EligibilityVerifier
-    mock_verifier.name = model_EligibilityVerifier.name
-    mock_verifier.claims_provider.sign_out_button_template = model_EligibilityVerifier.claims_provider.sign_out_button_template
-    mock_verifier.claims_provider.sign_out_link_template = model_EligibilityVerifier.claims_provider.sign_out_link_template
-    mocked_session_verifier_no_scope_and_claim_oauth.return_value = mock_verifier
-    return mocked_session_verifier_no_scope_and_claim_oauth
+def mocked_session_flow_does_not_use_claims_verification(mocked_session_flow):
+    return mocked_session_flow
 
 
 @pytest.fixture

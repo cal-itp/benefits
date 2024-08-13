@@ -12,10 +12,10 @@ def unique_values(original_list):
     return list(dict.fromkeys(original_list))
 
 
-def _agency_context(agency):
+def _agency_context(agency: models.TransitAgency):
     return {
         "eligibility_index_url": agency.eligibility_index_url,
-        "help_templates": unique_values([v.help_template for v in agency.active_verifiers if v.help_template]),
+        "help_templates": unique_values([f.help_template for f in agency.enrollment_flows.all() if f.help_template]),
         "info_url": agency.info_url,
         "long_name": agency.long_name,
         "phone": agency.phone,
@@ -48,16 +48,16 @@ def analytics(request):
 
 def authentication(request):
     """Context processor adds authentication information to request context."""
-    verifier = session.verifier(request)
+    flow = session.flow(request)
 
-    if verifier:
+    if flow:
         data = {
             "logged_in": session.logged_in(request),
         }
 
-        if verifier.uses_claims_verification:
-            data["sign_out_button_template"] = verifier.claims_provider.sign_out_button_template
-            data["sign_out_link_template"] = verifier.claims_provider.sign_out_link_template
+        if flow.uses_claims_verification:
+            data["sign_out_button_template"] = flow.claims_provider.sign_out_button_template
+            data["sign_out_link_template"] = flow.claims_provider.sign_out_link_template
 
         return {"authentication": data}
     else:

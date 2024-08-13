@@ -234,7 +234,7 @@ def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
 def test_index_eligible_get(client, model_EligibilityType):
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
@@ -253,7 +253,7 @@ def test_index_eligible_get(client, model_EligibilityType):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
 @pytest.mark.parametrize("LANGUAGE_CODE, overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")])
 def test_index_eligible_get_changed_language(client, LANGUAGE_CODE, overlay_language):
     path = reverse(ROUTE_INDEX)
@@ -365,7 +365,7 @@ def test_get_group_funding_sources_funding_source_already_enrolled(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
 def test_index_eligible_post_valid_form_success_does_not_support_expiration_customer_already_enrolled_no_expiry(
     mocker,
     client,
@@ -393,7 +393,7 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_cust
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
 def test_index_eligible_post_valid_form_success_does_not_support_expiration_no_expiry(
     mocker,
     client,
@@ -447,7 +447,7 @@ def test_calculate_expiry_specific_date(mocker):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
 def test_index_eligible_post_valid_form_success_supports_expiration(
     mocker,
     client,
@@ -476,7 +476,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
 def test_index_eligible_post_valid_form_success_supports_expiration_no_expiry(
     mocker,
     client,
@@ -544,7 +544,7 @@ def test_is_expired_expiry_date_equals_now(mocker):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
 def test_index_eligible_post_valid_form_success_supports_expiration_is_expired(
     mocker,
     client,
@@ -654,7 +654,7 @@ def test_is_within_enrollment_window_equal_expiry_date(mocker):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
 def test_index_eligible_post_valid_form_success_supports_expiration_is_within_reenrollment_window(
     mocker,
     client,
@@ -689,7 +689,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_within_re
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
 def test_index_eligible_post_valid_form_success_supports_expiration_is_not_expired_yet(
     mocker,
     client,
@@ -718,7 +718,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_not_expir
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
 def test_index_eligible_post_valid_form_success_does_not_support_expiration_has_expiration_date(
     mocker,
     client,
@@ -775,7 +775,7 @@ def test_reenrollment_error_ineligible(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
 def test_reenrollment_error_eligibility_no_error_template(client):
     path = reverse(ROUTE_REENROLLMENT_ERROR)
 
@@ -784,7 +784,7 @@ def test_reenrollment_error_eligibility_no_error_template(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_verifier")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
 def test_reenrollment_error(client, model_EligibilityType_supports_expiration, mocked_session_eligibility):
     mocked_session_eligibility.return_value = model_EligibilityType_supports_expiration
 
@@ -829,7 +829,7 @@ def test_retry_valid_form(client, mocked_analytics_module):
 
 
 @pytest.mark.django_db
-def test_success_no_verifier(client):
+def test_success_no_flow(client):
     path = reverse(ROUTE_SUCCESS)
 
     response = client.get(path)
@@ -839,7 +839,7 @@ def test_success_no_verifier(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_uses_claims_verification", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification", "mocked_session_eligibility")
 def test_success_authentication_logged_in(mocker, client, model_TransitAgency, model_EligibilityType, mocked_analytics_module):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = True
@@ -856,7 +856,7 @@ def test_success_authentication_logged_in(mocker, client, model_TransitAgency, m
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_verifier_uses_claims_verification", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification", "mocked_session_eligibility")
 def test_success_authentication_not_logged_in(
     mocker, client, model_TransitAgency, model_EligibilityType, mocked_analytics_module
 ):
@@ -875,7 +875,7 @@ def test_success_authentication_not_logged_in(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures(
-    "mocked_session_agency", "mocked_session_verifier_does_not_use_claims_verification", "mocked_session_eligibility"
+    "mocked_session_agency", "mocked_session_flow_does_not_use_claims_verification", "mocked_session_eligibility"
 )
 def test_success_no_authentication(mocker, client, model_EligibilityType, mocked_analytics_module):
     mock_session = mocker.patch("benefits.enrollment.views.session")

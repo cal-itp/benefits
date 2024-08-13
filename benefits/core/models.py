@@ -156,32 +156,22 @@ class EligibilityType(models.Model):
                 raise ValidationError(errors)
 
 
-class EligibilityVerifier(models.Model):
-    """An entity that verifies eligibility."""
+class EnrollmentFlow(models.Model):
+    """Represents a user journey through the Benefits app for a single eligibility type."""
 
     id = models.AutoField(primary_key=True)
-    name = models.TextField()
+    name = models.TextField(
+        help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests."  # noqa: 501
+    )
     display_order = models.PositiveSmallIntegerField(default=0, blank=False, null=False)
-    active = models.BooleanField(default=False)
-    eligibility_api_url = models.TextField(null=True, blank=True)
-    eligibility_api_auth_header = models.TextField(null=True, blank=True)
-    eligibility_api_auth_key_secret_name = SecretNameField(null=True, blank=True)
     eligibility_type = models.ForeignKey(EligibilityType, on_delete=models.PROTECT)
-    # public key is used to encrypt requests targeted at this Verifier and to verify signed responses from this verifier
-    eligibility_api_public_key = models.ForeignKey(PemData, related_name="+", on_delete=models.PROTECT, null=True, blank=True)
-    # The JWE-compatible Content Encryption Key (CEK) key-length and mode
-    eligibility_api_jwe_cek_enc = models.TextField(null=True, blank=True)
-    # The JWE-compatible encryption algorithm
-    eligibility_api_jwe_encryption_alg = models.TextField(null=True, blank=True)
-    # The JWS-compatible signing algorithm
-    eligibility_api_jws_signing_alg = models.TextField(null=True, blank=True)
-    claims_provider = models.ForeignKey(ClaimsProvider, on_delete=models.PROTECT, null=True, blank=True)
-    selection_label_template = models.TextField()
-    eligibility_start_template = models.TextField(default="eligibility/start.html")
-    # reference to a form class used by this Verifier, e.g. benefits.app.forms.FormClass
-    eligibility_form_class = models.TextField(null=True, blank=True)
-    eligibility_unverified_template = models.TextField(default="eligibility/unverified.html")
-    help_template = models.TextField(null=True, blank=True)
+    claims_provider = models.ForeignKey(
+        ClaimsProvider,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        help_text="An entity that provides claims for eligibility verification for this flow.",
+    )
     claims_scope = models.TextField(
         null=True,
         blank=True,
@@ -196,6 +186,62 @@ class EligibilityVerifier(models.Model):
         null=True,
         blank=True,
         verbose_name="Claims scheme",
+    )
+    eligibility_api_url = models.TextField(
+        null=True, blank=True, help_text="Fully qualified URL for an Eligibility API server used by this flow."
+    )
+    eligibility_api_auth_header = models.TextField(
+        null=True,
+        blank=True,
+        help_text="The auth header to send in Eligibility API requests for this flow.",
+    )
+    eligibility_api_auth_key_secret_name = SecretNameField(
+        null=True,
+        blank=True,
+        help_text="The name of a secret containing the value of the auth header to send in Eligibility API requests for this flow.",  # noqa: 501
+    )
+    eligibility_api_public_key = models.ForeignKey(
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        help_text="The public key used to encrypt Eligibility API requests and to verify signed Eligibility API responses for this flow.",  # noqa: E501
+    )
+    eligibility_api_jwe_cek_enc = models.TextField(
+        null=True,
+        blank=True,
+        help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode to use in Eligibility API requests for this flow.",  # noqa: E501
+    )
+    eligibility_api_jwe_encryption_alg = models.TextField(
+        null=True,
+        blank=True,
+        help_text="The JWE-compatible encryption algorithm to use in Eligibility API requests for this flow.",
+    )
+    eligibility_api_jws_signing_alg = models.TextField(
+        null=True,
+        blank=True,
+        help_text="The JWS-compatible signing algorithm to use in Eligibility API requests for this flow.",
+    )
+    selection_label_template = models.TextField(
+        help_text="Path to a Django template that defines the end-user UI for selecting this flow among other options."
+    )
+    eligibility_start_template = models.TextField(
+        default="eligibility/start.html", help_text="Path to a Django template for the informational page of this flow."
+    )
+    eligibility_form_class = models.TextField(
+        null=True,
+        blank=True,
+        help_text="The fully qualified Python path of a form class used by this flow, e.g. benefits.eligibility.forms.FormClass",  # noqa: E501
+    )
+    eligibility_unverified_template = models.TextField(
+        default="eligibility/unverified.html",
+        help_text="Path to a Django template that defines the page when a user fails eligibility verification for this flow.",
+    )
+    help_template = models.TextField(
+        null=True,
+        blank=True,
+        help_text="Path to a Django template that defines the help text for this enrollment flow, used in building the dynamic help page for an agency",  # noqa: E501
     )
 
     class Meta:
@@ -213,16 +259,16 @@ class EligibilityVerifier(models.Model):
 
     @property
     def eligibility_api_public_key_data(self):
-        """This Verifier's public key as a string."""
+        """This flow's Eligibility API public key as a string."""
         return self.eligibility_api_public_key.data
 
     @property
     def uses_claims_verification(self):
-        """True if this Verifier verifies via the claims provider and has a scope and claim. False otherwise."""
+        """True if this flow verifies via the claims provider and has a scope and claim. False otherwise."""
         return self.claims_provider is not None and bool(self.claims_scope) and bool(self.claims_claim)
 
     def eligibility_form_instance(self, *args, **kwargs):
-        """Return an instance of this verifier's form, or None."""
+        """Return an instance of this flow's EligibilityForm, or None."""
         if not bool(self.eligibility_form_class):
             return None
 
@@ -234,9 +280,9 @@ class EligibilityVerifier(models.Model):
 
     @staticmethod
     def by_id(id):
-        """Get an EligibilityVerifier instance by its ID."""
-        logger.debug(f"Get {EligibilityVerifier.__name__} by id: {id}")
-        return EligibilityVerifier.objects.get(id=id)
+        """Get an EnrollmentFlow instance by its ID."""
+        logger.debug(f"Get {EnrollmentFlow.__name__} by id: {id}")
+        return EnrollmentFlow.objects.get(id=id)
 
     @property
     def claims_scheme(self):
@@ -269,7 +315,7 @@ class TransitAgency(models.Model):
     id = models.AutoField(primary_key=True)
     active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
     eligibility_types = models.ManyToManyField(EligibilityType)
-    eligibility_verifiers = models.ManyToManyField(EligibilityVerifier)
+    enrollment_flows = models.ManyToManyField(EnrollmentFlow)
     slug = models.TextField(help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}")
     short_name = models.TextField(help_text="The user-facing short name for this agency. Often an uppercase acronym.")
     long_name = models.TextField(
@@ -322,17 +368,17 @@ class TransitAgency(models.Model):
         """True if the eligibility_type is one of this agency's types. False otherwise."""
         return isinstance(eligibility_type, EligibilityType) and eligibility_type in self.eligibility_types.all()
 
-    def types_to_verify(self, eligibility_verifier):
+    def types_to_verify(self, flow: EnrollmentFlow):
         """List of eligibility types to verify for this agency."""
-        # compute set intersection of agency and verifier type ids
+        # compute set intersection of agency and flow type ids
         agency_types = set(self.eligibility_types.values_list("id", flat=True))
-        verifier_types = {eligibility_verifier.eligibility_type.id}
-        supported_types = list(agency_types & verifier_types)
+        flow_types = {flow.eligibility_type.id}
+        supported_types = list(agency_types & flow_types)
         return EligibilityType.get_many(supported_types)
 
-    def type_names_to_verify(self, verifier):
+    def type_names_to_verify(self, flow: EnrollmentFlow):
         """List of names of the eligibility types to check for this agency."""
-        return EligibilityType.get_names(self.types_to_verify(verifier))
+        return EligibilityType.get_names(self.types_to_verify(flow))
 
     @property
     def index_url(self):
@@ -358,11 +404,6 @@ class TransitAgency(models.Model):
     def eligibility_api_public_key_data(self):
         """This Agency's public key as a string."""
         return self.eligibility_api_public_key.data
-
-    @property
-    def active_verifiers(self):
-        """This Agency's eligibility verifiers that are active."""
-        return self.eligibility_verifiers.filter(active=True)
 
     @property
     def transit_processor_client_secret(self):
