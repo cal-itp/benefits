@@ -22,17 +22,14 @@ def test_enrollment_default(app_request):
 
 
 @pytest.mark.django_db
-def test_enrollment_expiration(app_request, model_EligibilityType_supports_expiration, model_TransitAgency):
-    model_TransitAgency.eligibility_types.add(model_EligibilityType_supports_expiration)
-    model_TransitAgency.save()
+def test_enrollment_expiration(app_request, model_EnrollmentFlow_supports_expiration):
 
     expiry = datetime.now(tz=timezone.utc)
-    reenrollment = expiry - timedelta(days=model_EligibilityType_supports_expiration.expiration_reenrollment_days)
+    reenrollment = expiry - timedelta(days=model_EnrollmentFlow_supports_expiration.expiration_reenrollment_days)
 
     session.update(
         app_request,
-        agency=model_TransitAgency,
-        eligibility_types=[model_EligibilityType_supports_expiration.name],
+        flow=model_EnrollmentFlow_supports_expiration,
         enrollment_expiry=expiry,
     )
 

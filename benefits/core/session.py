@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 _AGENCY = "agency"
 _DEBUG = "debug"
 _DID = "did"
-_ELIGIBILITY = "eligibility"
+_ELIGIBLE = "eligibility"
 _ENROLLMENT_TOKEN = "enrollment_token"
 _ENROLLMENT_TOKEN_EXP = "enrollment_token_expiry"
 _ENROLLMENT_EXP = "enrollment_expiry"
@@ -53,7 +53,7 @@ def context_dict(request):
         _DEBUG: debug(request),
         _DID: did(request),
         _FLOW: flow(request),
-        _ELIGIBILITY: eligibility(request),
+        _ELIGIBLE: eligible(request),
         _ENROLLMENT_EXP: enrollment_expiry(request),
         _ENROLLMENT_TOKEN: enrollment_token(request),
         _ENROLLMENT_TOKEN_EXP: enrollment_token_expiry(request),
@@ -89,18 +89,9 @@ def did(request):
     return str(d)
 
 
-def eligibility(request):
-    """Get the confirmed models.EligibilityType from the request's session, or None"""
-    eligibility = request.session.get(_ELIGIBILITY)
-    if eligibility:
-        return models.EligibilityType.get(eligibility)
-    else:
-        return None
-
-
 def eligible(request):
-    """True if the request's session is configured with an active agency and has confirmed eligibility. False otherwise."""
-    return active_agency(request) and agency(request).supports_type(eligibility(request))
+    """True if the request's session has confirmed eligibility. False otherwise."""
+    return request.session.get(_ELIGIBLE)
 
 
 def enrollment_expiry(request):
@@ -115,10 +106,10 @@ def enrollment_expiry(request):
 def enrollment_reenrollment(request):
     """Get the reenrollment date for a user's enrollment from session, or None."""
     expiry = enrollment_expiry(request)
-    elig = eligibility(request)
+    enrollment_flow = flow(request)
 
-    if elig and elig.supports_expiration and expiry:
-        return expiry - timedelta(days=elig.expiration_reenrollment_days)
+    if enrollment_flow and enrollment_flow.supports_expiration and expiry:
+        return expiry - timedelta(days=enrollment_flow.expiration_reenrollment_days)
     else:
         return None
 
@@ -179,7 +170,7 @@ def reset(request):
     logger.debug("Reset session")
     request.session[_AGENCY] = None
     request.session[_FLOW] = None
-    request.session[_ELIGIBILITY] = None
+    request.session[_ELIGIBLE] = False
     request.session[_ORIGIN] = reverse("core:index")
     request.session[_ENROLLMENT_EXP] = None
     request.session[_ENROLLMENT_TOKEN] = None
@@ -239,7 +230,7 @@ def update(
     agency=None,
     debug=None,
     flow=None,
-    eligibility_types=None,
+    eligible=None,
     enrollment_expiry=None,
     enrollment_token=None,
     enrollment_token_exp=None,
@@ -252,17 +243,8 @@ def update(
         request.session[_AGENCY] = agency.id
     if debug is not None:
         request.session[_DEBUG] = debug
-    if eligibility_types is not None and isinstance(eligibility_types, list):
-        if len(eligibility_types) > 1:
-            raise NotImplementedError("Multiple eligibilities are not supported at this time.")
-        elif len(eligibility_types) == 1:
-            # get the eligibility corresponding to the session's agency
-            a = models.TransitAgency.by_id(request.session[_AGENCY])
-            t = str(eligibility_types[0]).strip()
-            request.session[_ELIGIBILITY] = a.get_type_id(t)
-        else:
-            # empty list, clear session eligibility
-            request.session[_ELIGIBILITY] = None
+    if eligible is not None:
+        request.session[_ELIGIBLE] = bool(eligible)
     if isinstance(enrollment_expiry, datetime):
         if enrollment_expiry.tzinfo is None or enrollment_expiry.tzinfo.utcoffset(enrollment_expiry) is None:
             # this is a naive datetime instance, update tzinfo for UTC

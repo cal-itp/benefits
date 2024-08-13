@@ -52,25 +52,20 @@ def test_did_default(app_request, mocker):
 
 
 @pytest.mark.django_db
-def test_eligibility_default(app_request):
-    assert session.eligibility(app_request) is None
-
-
-@pytest.mark.django_db
 def test_eligibile_False(app_request):
     agency = models.TransitAgency.objects.first()
-    eligibility = []
+    eligible = False
 
-    session.update(app_request, agency=agency, eligibility_types=eligibility)
+    session.update(app_request, agency=agency, eligible=eligible)
 
     assert not session.eligible(app_request)
 
 
 @pytest.mark.django_db
 def test_eligibile_True(model_TransitAgency, app_request):
-    eligibility = model_TransitAgency.eligibility_types.first()
+    eligible = True
 
-    session.update(app_request, agency=model_TransitAgency, eligibility_types=[eligibility.name])
+    session.update(app_request, agency=model_TransitAgency, eligible=eligible)
 
     assert session.eligible(app_request)
 
@@ -118,17 +113,15 @@ def test_enrollment_expiry_datetime_timezone_naive(app_request):
 
 
 @pytest.mark.django_db
-def test_enrollment_reenrollment(app_request, model_EligibilityType_supports_expiration, model_TransitAgency):
-    model_TransitAgency.eligibility_types.add(model_EligibilityType_supports_expiration)
-    model_TransitAgency.save()
+def test_enrollment_reenrollment(app_request, model_EnrollmentFlow_supports_expiration):
 
     expiry = datetime.now(tz=timezone.utc)
-    expected_reenrollment = expiry - timedelta(days=model_EligibilityType_supports_expiration.expiration_reenrollment_days)
+    expected_reenrollment = expiry - timedelta(days=model_EnrollmentFlow_supports_expiration.expiration_reenrollment_days)
 
     session.update(
         app_request,
-        agency=model_TransitAgency,
-        eligibility_types=[model_EligibilityType_supports_expiration.name],
+        flow=model_EnrollmentFlow_supports_expiration,
+        eligible=True,
         enrollment_expiry=expiry,
     )
 
@@ -251,11 +244,11 @@ def test_reset_agency(model_TransitAgency, app_request):
 
 @pytest.mark.django_db
 def test_reset_eligibility(app_request):
-    app_request.session[session._ELIGIBILITY] = ["type1"]
+    app_request.session[session._ELIGIBLE] = ["type1"]
 
     session.reset(app_request)
 
-    assert session.eligibility(app_request) is None
+    assert session.eligible(app_request) is False
 
 
 @pytest.mark.django_db
@@ -409,25 +402,11 @@ def test_update_debug_True(app_request):
 
 
 @pytest.mark.django_db
-def test_update_eligibility_empty(app_request):
-    session.update(app_request, eligibility_types=[])
+@pytest.mark.parametrize("argument, result", [(True, True), (False, False)])
+def test_update_eligible(app_request, argument, result):
+    session.update(app_request, eligible=argument)
 
-    assert session.eligibility(app_request) is None
-
-
-@pytest.mark.django_db
-def test_update_eligibility_many(model_EligibilityType, app_request):
-    with pytest.raises(NotImplementedError):
-        assert session.update(app_request, eligibility_types=[model_EligibilityType, model_EligibilityType])
-
-
-@pytest.mark.django_db
-def test_update_eligibility_single(model_TransitAgency, app_request):
-    eligibility = model_TransitAgency.eligibility_types.first()
-
-    session.update(app_request, agency=model_TransitAgency, eligibility_types=[eligibility.name])
-
-    assert session.eligibility(app_request) == eligibility
+    assert session.eligible(app_request) is result
 
 
 @pytest.mark.django_db

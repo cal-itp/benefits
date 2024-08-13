@@ -35,9 +35,9 @@ def index(request, agency=None):
         if agency is None:
             return TemplateResponse(request, "200-user-error.html")
         else:
-            session.update(request, eligibility_types=[], origin=agency.index_url)
+            session.update(request, eligible=False, origin=agency.index_url)
     else:
-        session.update(request, agency=agency, eligibility_types=[], origin=reverse(ROUTE_CORE_INDEX))
+        session.update(request, agency=agency, eligible=False, origin=reverse(ROUTE_CORE_INDEX))
 
     # clear any prior OAuth token as the user is choosing their desired flow
     # this may or may not require OAuth, with a different set of scope/claims than what is already stored
@@ -53,8 +53,7 @@ def index(request, agency=None):
             flow = EnrollmentFlow.objects.get(id=flow_id)
             session.update(request, flow=flow)
 
-            types_to_verify = agency.type_names_to_verify(flow)
-            analytics.selected_verifier(request, types_to_verify)
+            analytics.selected_verifier(request, flow.system_name)
 
             eligibility_start = reverse(ROUTE_START)
             response = redirect(eligibility_start)
@@ -74,7 +73,7 @@ def index(request, agency=None):
 @decorator_from_middleware(FlowSessionRequired)
 def start(request):
     """View handler for the eligibility verification getting started screen."""
-    session.update(request, eligibility_types=[], origin=reverse(ROUTE_START))
+    session.update(request, eligible=False, origin=reverse(ROUTE_START))
 
     flow = session.flow(request)
 
@@ -90,22 +89,21 @@ def confirm(request):
 
     # GET from an already verified user, no need to verify again
     if request.method == "GET" and session.eligible(request):
-        eligibility = session.eligibility(request)
-        return verified(request, [eligibility.name])
+        return verified(request)
 
     unverified_view = reverse(ROUTE_UNVERIFIED)
 
     agency = session.agency(request)
     flow = session.flow(request)
-    types_to_verify = agency.type_names_to_verify(flow)
 
     # GET for OAuth verification
     if request.method == "GET" and flow.uses_claims_verification:
-        analytics.started_eligibility(request, types_to_verify)
+        analytics.started_eligibility(request, flow.system_name)
 
-        verified_types = verify.eligibility_from_oauth(flow, session.oauth_claim(request), agency)
-        if verified_types:
-            return verified(request, verified_types)
+        is_verified = verify.eligibility_from_oauth(flow, session.oauth_claim(request), agency)
+
+        if is_verified:
+            return verified(request)
         else:
             return redirect(unverified_view)
 
@@ -120,7 +118,7 @@ def confirm(request):
         return TemplateResponse(request, TEMPLATE_CONFIRM, context)
     # POST form submission, process form data, make Eligibility Verification API call
     elif request.method == "POST":
-        analytics.started_eligibility(request, types_to_verify)
+        analytics.started_eligibility(request, flow.system_name)
 
         form = flow.eligibility_form_instance(data=request.POST)
         # form was not valid, allow for correction/resubmission
@@ -130,30 +128,31 @@ def confirm(request):
             context["form"] = form
             return TemplateResponse(request, TEMPLATE_CONFIRM, context)
 
-        # form is valid, make Eligibility Verification request to get the verified types
-        verified_types = verify.eligibility_from_api(flow, form, agency)
+        # form is valid, make Eligibility Verification request to get the verified confirmation
+        is_verified = verify.eligibility_from_api(flow, form, agency)
 
         # form was not valid, allow for correction/resubmission
-        if verified_types is None:
-            analytics.returned_error(request, types_to_verify, form.errors)
+        if is_verified is None:
+            analytics.returned_error(request, flow.system_name, form.errors)
             context["form"] = form
             return TemplateResponse(request, TEMPLATE_CONFIRM, context)
-        # no types were verified
-        elif len(verified_types) == 0:
+        # no type was verified
+        elif not is_verified:
             return redirect(unverified_view)
-        # type(s) were verified
+        # type was verified
         else:
-            return verified(request, verified_types)
+            return verified(request)
 
 
 @decorator_from_middleware(AgencySessionRequired)
 @decorator_from_middleware(LoginRequired)
-def verified(request, verified_types):
+def verified(request):
     """View handler for the verified eligibility page."""
 
-    analytics.returned_success(request, verified_types)
+    flow = session.flow(request)
+    analytics.returned_success(request, flow.system_name)
 
-    session.update(request, eligibility_types=verified_types)
+    session.update(request, eligible=True)
 
     return redirect(ROUTE_ENROLLMENT)
 
@@ -163,10 +162,8 @@ def verified(request, verified_types):
 def unverified(request):
     """View handler for the unverified eligibility page."""
 
-    agency = session.agency(request)
     flow = session.flow(request)
-    types_to_verify = agency.type_names_to_verify(flow)
 
-    analytics.returned_fail(request, types_to_verify)
+    analytics.returned_fail(request, flow.system_name)
 
     return TemplateResponse(request, flow.eligibility_unverified_template)

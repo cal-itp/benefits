@@ -224,7 +224,7 @@ def test_confirm_get_unverified(mocker, client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility", "mocked_session_flow")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible", "mocked_session_flow")
 def test_confirm_get_verified(client, mocked_session_update):
     path = reverse(ROUTE_CONFIRM)
     response = client.get(path)
@@ -236,8 +236,8 @@ def test_confirm_get_verified(client, mocked_session_update):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow_uses_claims_verification", "mocked_session_oauth_token")
-def test_confirm_get_oauth_verified(mocker, client, model_EligibilityType, mocked_session_update, mocked_analytics_module):
-    mocker.patch("benefits.eligibility.verify.eligibility_from_oauth", return_value=[model_EligibilityType])
+def test_confirm_get_oauth_verified(mocker, client, mocked_session_update, mocked_analytics_module):
+    mocker.patch("benefits.eligibility.verify.eligibility_from_oauth", return_value=True)
 
     path = reverse(ROUTE_CONFIRM)
     response = client.get(path)
@@ -318,10 +318,10 @@ def test_confirm_post_valid_form_eligibility_unverified(mocker, client, form_dat
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_form_class")
 def test_confirm_post_valid_form_eligibility_verified(
-    mocker, client, form_data, mocked_session_eligibility, mocked_session_update, mocked_analytics_module
+    mocker, client, form_data, mocked_session_eligible, mocked_session_update, mocked_analytics_module
 ):
-    eligibility = mocked_session_eligibility.return_value
-    mocker.patch("benefits.eligibility.verify.eligibility_from_api", return_value=[eligibility])
+    eligible = mocked_session_eligible.return_value
+    mocker.patch("benefits.eligibility.verify.eligibility_from_api", return_value=eligible)
 
     path = reverse(ROUTE_CONFIRM)
     response = client.post(path, form_data)
