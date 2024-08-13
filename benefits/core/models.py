@@ -100,71 +100,14 @@ class ClaimsProvider(models.Model):
         return self.client_name
 
 
-class EligibilityType(models.Model):
-    """A single conditional eligibility type."""
-
-    id = models.AutoField(primary_key=True)
-    name = models.TextField()
-    label = models.TextField()
-    group_id = models.TextField()
-    supports_expiration = models.BooleanField(default=False)
-    expiration_days = models.PositiveSmallIntegerField(null=True, blank=True)
-    expiration_reenrollment_days = models.PositiveSmallIntegerField(null=True, blank=True)
-    enrollment_index_template = models.TextField(default="enrollment/index.html")
-    reenrollment_error_template = models.TextField(null=True, blank=True)
-    enrollment_success_template = models.TextField(default="enrollment/success.html")
-
-    def __str__(self):
-        return self.label
-
-    @staticmethod
-    def get(id):
-        """Get an EligibilityType instance by its id."""
-        logger.debug(f"Get {EligibilityType.__name__} by id: {id}")
-        return EligibilityType.objects.get(pk=id)
-
-    @staticmethod
-    def get_many(ids):
-        """Get a list of EligibilityType instances from a list of ids."""
-        logger.debug(f"Get {EligibilityType.__name__} list by ids: {ids}")
-        return EligibilityType.objects.filter(id__in=ids)
-
-    @staticmethod
-    def get_names(eligibility_types):
-        """Convert a list of EligibilityType to a list of their names"""
-        if isinstance(eligibility_types, EligibilityType):
-            eligibility_types = [eligibility_types]
-        return [t.name for t in eligibility_types if isinstance(t, EligibilityType)]
-
-    def clean(self):
-        supports_expiration = self.supports_expiration
-        expiration_days = self.expiration_days
-        expiration_reenrollment_days = self.expiration_reenrollment_days
-        reenrollment_error_template = self.reenrollment_error_template
-
-        if supports_expiration:
-            errors = {}
-            message = "When support_expiration is True, this value must be greater than 0."
-            if expiration_days is None or expiration_days <= 0:
-                errors.update(expiration_days=ValidationError(message))
-            if expiration_reenrollment_days is None or expiration_reenrollment_days <= 0:
-                errors.update(expiration_reenrollment_days=ValidationError(message))
-            if reenrollment_error_template is None:
-                errors.update(reenrollment_error_template=ValidationError("Required when supports expiration is True."))
-
-            if errors:
-                raise ValidationError(errors)
-
-
 class EnrollmentFlow(models.Model):
     """Represents a user journey through the Benefits app for a single eligibility type."""
 
     id = models.AutoField(primary_key=True)
-    name = models.TextField(
+    system_name = models.TextField(
         help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests."  # noqa: 501
     )
     display_order = models.PositiveSmallIntegerField(default=0, blank=False, null=False)
-    eligibility_type = models.ForeignKey(EligibilityType, on_delete=models.PROTECT)
     claims_provider = models.ForeignKey(
         ClaimsProvider,
         on_delete=models.PROTECT,
@@ -243,12 +186,38 @@ class EnrollmentFlow(models.Model):
         blank=True,
         help_text="Path to a Django template that defines the help text for this enrollment flow, used in building the dynamic help page for an agency",  # noqa: E501
     )
+    label = models.TextField(
+        null=True,
+        help_text="A human readable label, not shown to end-users. Used as the display text in Admin.",
+    )
+    group_id = models.TextField(null=True, help_text="Reference to the TransitProcessor group for user enrollment")
+    supports_expiration = models.BooleanField(
+        default=False, help_text="Indicates if the enrollment expires or does not expire"
+    )
+    expiration_days = models.PositiveSmallIntegerField(
+        null=True, blank=True, help_text="If the enrollment supports expiration, number of days before the eligibility expires"
+    )
+    expiration_reenrollment_days = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True,
+        help_text="If the enrollment supports expiration, number of days preceding the expiration date during which a user can re-enroll in the eligibilty",  # noqa: E501
+    )
+    enrollment_index_template = models.TextField(
+        default="enrollment/index.html",
+        help_text="Template for the Eligibility Confirmation page (which is the index of the enrollment Django app)",
+    )
+    reenrollment_error_template = models.TextField(
+        null=True, blank=True, help_text="Template for a re-enrollment error associated with the enrollment flow"
+    )
+    enrollment_success_template = models.TextField(
+        default="enrollment/success.html", help_text="Template for a successful enrollment associated with the enrollment flow"
+    )
 
     class Meta:
         ordering = ["display_order"]
 
     def __str__(self):
-        return self.name
+        return self.label
 
     @property
     def eligibility_api_auth_key(self):
@@ -284,6 +253,25 @@ class EnrollmentFlow(models.Model):
         logger.debug(f"Get {EnrollmentFlow.__name__} by id: {id}")
         return EnrollmentFlow.objects.get(id=id)
 
+    def clean(self):
+        supports_expiration = self.supports_expiration
+        expiration_days = self.expiration_days
+        expiration_reenrollment_days = self.expiration_reenrollment_days
+        reenrollment_error_template = self.reenrollment_error_template
+
+        if supports_expiration:
+            errors = {}
+            message = "When support_expiration is True, this value must be greater than 0."
+            if expiration_days is None or expiration_days <= 0:
+                errors.update(expiration_days=ValidationError(message))
+            if expiration_reenrollment_days is None or expiration_reenrollment_days <= 0:
+                errors.update(expiration_reenrollment_days=ValidationError(message))
+            if reenrollment_error_template is None:
+                errors.update(reenrollment_error_template=ValidationError("Required when supports expiration is True."))
+
+            if errors:
+                raise ValidationError(errors)
+
     @property
     def claims_scheme(self):
         if not self.claims_scheme_override:
@@ -314,7 +302,6 @@ class TransitAgency(models.Model):
 
     id = models.AutoField(primary_key=True)
     active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
-    eligibility_types = models.ManyToManyField(EligibilityType)
     enrollment_flows = models.ManyToManyField(EnrollmentFlow)
     slug = models.TextField(help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}")
     short_name = models.TextField(help_text="The user-facing short name for this agency. Often an uppercase acronym.")
@@ -355,30 +342,6 @@ class TransitAgency(models.Model):
 
     def __str__(self):
         return self.long_name
-
-    def get_type_id(self, name):
-        """Get the id of the EligibilityType identified by the given name for this agency."""
-        eligibility = self.eligibility_types.all().filter(name=name)
-        if eligibility.count() == 1:
-            return eligibility[0].id
-        else:
-            raise Exception("name does not correspond to a single eligibility type for agency")
-
-    def supports_type(self, eligibility_type):
-        """True if the eligibility_type is one of this agency's types. False otherwise."""
-        return isinstance(eligibility_type, EligibilityType) and eligibility_type in self.eligibility_types.all()
-
-    def types_to_verify(self, flow: EnrollmentFlow):
-        """List of eligibility types to verify for this agency."""
-        # compute set intersection of agency and flow type ids
-        agency_types = set(self.eligibility_types.values_list("id", flat=True))
-        flow_types = {flow.eligibility_type.id}
-        supported_types = list(agency_types & flow_types)
-        return EligibilityType.get_many(supported_types)
-
-    def type_names_to_verify(self, flow: EnrollmentFlow):
-        """List of names of the eligibility types to check for this agency."""
-        return EligibilityType.get_names(self.types_to_verify(flow))
 
     @property
     def index_url(self):

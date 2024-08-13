@@ -39,57 +39,14 @@
     }
   },
   {
-    "model": "core.eligibilitytype",
-    "pk": 1,
-    "fields": {
-      "name": "senior",
-      "label": "(CST) Senior Discount",
-      "group_id": "group123",
-      "enrollment_success_template": "enrollment/success--cst.html"
-    }
-  },
-  {
-    "model": "core.eligibilitytype",
-    "pk": 2,
-    "fields": {
-      "name": "veteran",
-      "label": "(CST) Veteran Discount",
-      "group_id": "group123",
-      "enrollment_success_template": "enrollment/success--cst.html"
-    }
-  },
-  {
-    "model": "core.eligibilitytype",
-    "pk": 3,
-    "fields": {
-      "name": "agency_card",
-      "label": "(CST) Agency Card Discount",
-      "group_id": "group123",
-      "enrollment_index_template": "enrollment/index--agency-card.html",
-      "enrollment_success_template": "enrollment/success--cst-agency-card.html"
-    }
-  },
-  {
-    "model": "core.eligibilitytype",
-    "pk": 4,
-    "fields": {
-      "name": "calfresh",
-      "label": "CalFresh",
-      "group_id": "group123",
-      "supports_expiration": "True",
-      "expiration_days": 5,
-      "expiration_reenrollment_days": 3,
-      "reenrollment_error_template": "enrollment/reenrollment-error--calfresh.html",
-      "enrollment_success_template": "enrollment/success--cst.html"
-    }
-  },
-  {
     "model": "core.enrollmentflow",
     "pk": 1,
     "fields": {
-      "name": "(CST) oauth claims via Login.gov",
+      "system_name": "senior",
+      "label": "(CST) Senior Discount",
+      "group_id": "group123",
+      "enrollment_success_template": "enrollment/success--cst.html",
       "display_order": 1,
-      "eligibility_type": 1,
       "claims_provider": 1,
       "selection_label_template": "eligibility/includes/selection-label--senior.html",
       "eligibility_start_template": "eligibility/start--senior.html",
@@ -101,9 +58,11 @@
     "model": "core.enrollmentflow",
     "pk": 2,
     "fields": {
-      "name": "(CST) VA.gov - veteran",
+      "system_name": "veteran",
+      "label": "(CST) Veteran Discount",
+      "group_id": "group123",
+      "enrollment_success_template": "enrollment/success--cst.html",
       "display_order": 3,
-      "eligibility_type": 2,
       "claims_provider": 1,
       "selection_label_template": "eligibility/includes/selection-label--veteran.html",
       "eligibility_start_template": "eligibility/start--veteran.html",
@@ -115,12 +74,15 @@
     "model": "core.enrollmentflow",
     "pk": 3,
     "fields": {
-      "name": "(CST) eligibility server flow",
+      "system_name": "agency_card",
+      "label": "(CST) Agency Card Discount",
+      "group_id": "group123",
+      "enrollment_index_template": "enrollment/index--agency-card.html",
+      "enrollment_success_template": "enrollment/success--cst-agency-card.html",
       "display_order": 4,
       "eligibility_api_url": "http://server:8000/verify",
       "eligibility_api_auth_header": "X-Server-API-Key",
       "eligibility_api_auth_key_secret_name": "agency-card-flow-api-auth-key",
-      "eligibility_type": 3,
       "eligibility_api_public_key": 1,
       "eligibility_api_jwe_cek_enc": "A256CBC-HS512",
       "eligibility_api_jwe_encryption_alg": "RSA-OAEP",
@@ -136,9 +98,15 @@
     "model": "core.enrollmentflow",
     "pk": 4,
     "fields": {
-      "name": "(CST) CalFresh oauth claims via Login.gov",
+      "system_name": "calfresh",
+      "label": "CalFresh",
+      "group_id": "group123",
+      "supports_expiration": "True",
+      "expiration_days": 5,
+      "expiration_reenrollment_days": 3,
+      "reenrollment_error_template": "enrollment/reenrollment-error--calfresh.html",
+      "enrollment_success_template": "enrollment/success--cst.html",
       "display_order": 2,
-      "eligibility_type": 4,
       "claims_provider": 1,
       "selection_label_template": "eligibility/includes/selection-label--calfresh.html",
       "eligibility_start_template": "eligibility/start--calfresh.html",
@@ -163,7 +131,6 @@
     "pk": 1,
     "fields": {
       "active": true,
-      "eligibility_types": [1, 2, 3, 4],
       "enrollment_flows": [1, 2, 3, 4],
       "slug": "cst",
       "short_name": "CST (local)",

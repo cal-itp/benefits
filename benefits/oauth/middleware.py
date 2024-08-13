@@ -30,7 +30,7 @@ class FlowUsesClaimsVerificationSessionRequired(FlowSessionRequired):
         elif not (flow.eligibility_api_url or flow.eligibility_form_class):
             # the chosen flow doesn't have Eligibility API config OR claims provider config
             # this is likely a misconfiguration on the backend, not a user error
-            message = f"Flow with no API or claims config: {flow.name} (id={flow.id})"
+            message = f"Flow with no API or claims config: {flow.system_name} (id={flow.id})"
             analytics.error(request, message=message, operation=request.path)
             sentry_sdk.capture_exception(Exception(message))
             return redirect(ROUTE_SYSTEM_ERROR)

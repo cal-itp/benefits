@@ -7,7 +7,7 @@ import pytest
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import ClaimsProvider, EligibilityType, EnrollmentFlow, TransitProcessor, PemData, TransitAgency
+from benefits.core.models import ClaimsProvider, EnrollmentFlow, TransitProcessor, PemData, TransitAgency
 
 
 def pytest_runtest_setup():
@@ -69,69 +69,19 @@ def model_ClaimsProvider_no_sign_out(model_ClaimsProvider):
 
 
 @pytest.fixture
-def model_EligibilityType():
-    eligibility = EligibilityType.objects.create(
-        name="test",
-        label="Test Eligibility Type",
-        group_id="1234",
-        enrollment_success_template="enrollment/success.html",
-    )
-
-    return eligibility
-
-
-@pytest.fixture
-def model_EligibilityType_does_not_support_expiration(model_EligibilityType):
-    model_EligibilityType.supports_expiration = False
-    model_EligibilityType.expiration_days = 0
-    model_EligibilityType.save()
-
-    return model_EligibilityType
-
-
-@pytest.fixture
-def model_EligibilityType_zero_expiration_days(model_EligibilityType):
-    model_EligibilityType.supports_expiration = True
-    model_EligibilityType.expiration_days = 0
-    model_EligibilityType.expiration_reenrollment_days = 14
-    model_EligibilityType.save()
-
-    return model_EligibilityType
-
-
-@pytest.fixture
-def model_EligibilityType_zero_expiration_reenrollment_days(model_EligibilityType):
-    model_EligibilityType.supports_expiration = True
-    model_EligibilityType.expiration_days = 14
-    model_EligibilityType.expiration_reenrollment_days = 0
-    model_EligibilityType.save()
-
-    return model_EligibilityType
-
-
-@pytest.fixture
-def model_EligibilityType_supports_expiration(model_EligibilityType):
-    model_EligibilityType.supports_expiration = True
-    model_EligibilityType.expiration_days = 365
-    model_EligibilityType.expiration_reenrollment_days = 14
-    model_EligibilityType.reenrollment_error_template = "enrollment/reenrollment-error--calfresh.html"
-    model_EligibilityType.save()
-
-    return model_EligibilityType
-
-
-@pytest.fixture
-def model_EnrollmentFlow(model_PemData, model_EligibilityType, model_ClaimsProvider):
+def model_EnrollmentFlow(model_PemData, model_ClaimsProvider):
     flow = EnrollmentFlow.objects.create(
-        name="Test Flow",
+        system_name="Test Flow",
         eligibility_api_url="https://example.com/verify",
         eligibility_api_auth_header="X-API-AUTH",
         eligibility_api_auth_key_secret_name="secret-key",
-        eligibility_type=model_EligibilityType,
         eligibility_api_public_key=model_PemData,
         selection_label_template="eligibility/includes/selection-label.html",
         claims_provider=model_ClaimsProvider,
         claims_scheme_override="",
+        label="Test flow label",
+        group_id="group123",
+        enrollment_success_template="enrollment/success.html",
     )
 
     return flow
@@ -155,6 +105,46 @@ def model_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow):
 
 
 @pytest.fixture
+def model_EnrollmentFlow_does_not_support_expiration(model_EnrollmentFlow):
+    model_EnrollmentFlow.supports_expiration = False
+    model_EnrollmentFlow.expiration_days = 0
+    model_EnrollmentFlow.save()
+
+    return model_EnrollmentFlow
+
+
+@pytest.fixture
+def model_EnrollmentFlow_zero_expiration_days(model_EnrollmentFlow):
+    model_EnrollmentFlow.supports_expiration = True
+    model_EnrollmentFlow.expiration_days = 0
+    model_EnrollmentFlow.expiration_reenrollment_days = 14
+    model_EnrollmentFlow.save()
+
+    return model_EnrollmentFlow
+
+
+@pytest.fixture
+def model_EnrollmentFlow_zero_expiration_reenrollment_days(model_EnrollmentFlow):
+    model_EnrollmentFlow.supports_expiration = True
+    model_EnrollmentFlow.expiration_days = 14
+    model_EnrollmentFlow.expiration_reenrollment_days = 0
+    model_EnrollmentFlow.save()
+
+    return model_EnrollmentFlow
+
+
+@pytest.fixture
+def model_EnrollmentFlow_supports_expiration(model_EnrollmentFlow):
+    model_EnrollmentFlow.supports_expiration = True
+    model_EnrollmentFlow.expiration_days = 365
+    model_EnrollmentFlow.expiration_reenrollment_days = 14
+    model_EnrollmentFlow.reenrollment_error_template = "enrollment/reenrollment-error--calfresh.html"
+    model_EnrollmentFlow.save()
+
+    return model_EnrollmentFlow
+
+
+@pytest.fixture
 def model_TransitProcessor():
     transit_processor = TransitProcessor.objects.create(
         name="Test Transit Processor",
@@ -168,7 +158,7 @@ def model_TransitProcessor():
 
 
 @pytest.fixture
-def model_TransitAgency(model_PemData, model_EligibilityType, model_EnrollmentFlow, model_TransitProcessor):
+def model_TransitAgency(model_PemData, model_EnrollmentFlow, model_TransitProcessor):
     agency = TransitAgency.objects.create(
         slug="test",
         short_name="TEST",
@@ -189,7 +179,6 @@ def model_TransitAgency(model_PemData, model_EligibilityType, model_EnrollmentFl
     )
 
     # add many-to-many relationships after creation, need ID on both sides
-    agency.eligibility_types.add(model_EligibilityType)
     agency.enrollment_flows.add(model_EnrollmentFlow)
     agency.save()
 
@@ -230,9 +219,8 @@ def mocked_session_agency(mocker, model_TransitAgency):
 
 
 @pytest.fixture
-def mocked_session_eligibility(mocker, model_EligibilityType):
-    mocker.patch("benefits.core.session.eligible", autospec=True, return_value=True)
-    return mocker.patch("benefits.core.session.eligibility", autospec=True, return_value=model_EligibilityType)
+def mocked_session_eligible(mocker):
+    return mocker.patch("benefits.core.session.eligible", autospec=True, return_value=True)
 
 
 @pytest.fixture
