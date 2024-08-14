@@ -13,7 +13,6 @@ from django.conf import settings
 import requests
 
 from benefits import VERSION
-from benefits.core.models import EligibilityType
 from . import session
 
 
@@ -46,9 +45,8 @@ class Event:
         agency = session.agency(request)
         agency_name = agency.long_name if agency else None
         flow = session.flow(request)
-        verifier_name = flow.name if flow else None
-        eligibility_types = session.eligibility(request)
-        eligibility_types = EligibilityType.get_names(eligibility_types) if eligibility_types else None
+        verifier_name = flow.system_name if flow else None
+        eligibility_types = [flow.system_name] if flow else None
 
         self.update_event_properties(
             path=request.path,

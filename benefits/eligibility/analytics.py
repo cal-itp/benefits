@@ -8,8 +8,10 @@ from benefits.core import analytics as core
 class EligibilityEvent(core.Event):
     """Base analytics event for eligibility verification."""
 
-    def __init__(self, request, event_type, eligibility_types):
+    def __init__(self, request, event_type, flow_name):
         super().__init__(request, event_type)
+        # pass a (converted from string to list) flow_name to preserve analytics reporting
+        eligibility_types = [flow_name]
         # overwrite core.Event eligibility_types
         self.update_event_properties(eligibility_types=eligibility_types)
         self.update_user_properties(eligibility_types=eligibility_types)
