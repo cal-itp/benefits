@@ -3,10 +3,9 @@ from django.urls import reverse
 
 import pytest
 
+from benefits.routes import routes
 from benefits.core import session
-from benefits.core.middleware import ROUTE_INDEX, TEMPLATE_USER_ERROR
-
-from benefits.eligibility.views import ROUTE_START
+from benefits.core.middleware import TEMPLATE_USER_ERROR
 
 from benefits.oauth.redirects import ROUTE_SYSTEM_ERROR
 from benefits.oauth.views import (
@@ -402,7 +401,7 @@ def test_logout(app_request, mocker, mocked_oauth_client_or_error_redirect__clie
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification")
 def test_post_logout(app_request, mocked_analytics_module):
-    origin = reverse(ROUTE_INDEX)
+    origin = reverse(routes.INDEX)
     session.update(app_request, origin=origin)
 
     result = post_logout(app_request)

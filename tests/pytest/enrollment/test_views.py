@@ -10,14 +10,13 @@ from littlepay.api.funding_sources import FundingSourceResponse
 from littlepay.api.groups import GroupFundingSourceResponse
 from requests import HTTPError
 
+from benefits.routes import routes
 import benefits.enrollment.views
 from benefits.core.middleware import TEMPLATE_USER_ERROR
-from benefits.core.views import ROUTE_LOGGED_OUT
 from benefits.enrollment.views import (
     ROUTE_INDEX,
     ROUTE_REENROLLMENT_ERROR,
     ROUTE_RETRY,
-    ROUTE_SERVER_ERROR,
     ROUTE_SUCCESS,
     ROUTE_SYSTEM_ERROR,
     ROUTE_TOKEN,
@@ -183,7 +182,7 @@ def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_se
     data = response.json()
     assert "token" not in data
     assert "redirect" in data
-    assert data["redirect"] == reverse(ROUTE_SERVER_ERROR)
+    assert data["redirect"] == reverse(routes.SERVER_ERROR)
     mocked_analytics_module.failed_access_token_request.assert_called_once()
     assert 400 in mocked_analytics_module.failed_access_token_request.call_args.args
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
@@ -206,7 +205,7 @@ def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, 
     data = response.json()
     assert "token" not in data
     assert "redirect" in data
-    assert data["redirect"] == reverse(ROUTE_SERVER_ERROR)
+    assert data["redirect"] == reverse(routes.SERVER_ERROR)
     mocked_analytics_module.failed_access_token_request.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
@@ -228,7 +227,7 @@ def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_
     data = response.json()
     assert "token" not in data
     assert "redirect" in data
-    assert data["redirect"] == reverse(ROUTE_SERVER_ERROR)
+    assert data["redirect"] == reverse(routes.SERVER_ERROR)
     mocked_analytics_module.failed_access_token_request.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
@@ -847,7 +846,7 @@ def test_success_authentication_logged_in(mocker, client, model_TransitAgency, m
 
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow.enrollment_success_template
-    assert {"origin": reverse(ROUTE_LOGGED_OUT)} in mock_session.update.call_args
+    assert {"origin": reverse(routes.LOGGED_OUT)} in mock_session.update.call_args
     mocked_analytics_module.returned_success.assert_called_once()
 
 

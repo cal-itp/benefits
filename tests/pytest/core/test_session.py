@@ -5,8 +5,8 @@ from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse
 import pytest
 
+from benefits.routes import routes
 from benefits.core import models, session
-from benefits.core.middleware import ROUTE_INDEX
 
 
 @pytest.mark.django_db
@@ -228,7 +228,7 @@ def test_origin_default(rf):
     app_request.session.save()
 
     assert session._ORIGIN not in app_request.session
-    assert session.origin(app_request) == reverse(ROUTE_INDEX)
+    assert session.origin(app_request) == reverse(routes.INDEX)
 
 
 @pytest.mark.django_db
@@ -283,7 +283,7 @@ def test_reset_origin(app_request):
 
     session.reset(app_request)
 
-    assert session.origin(app_request) == reverse(ROUTE_INDEX)
+    assert session.origin(app_request) == reverse(routes.INDEX)
 
 
 @pytest.mark.django_db

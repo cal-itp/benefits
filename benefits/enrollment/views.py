@@ -14,9 +14,9 @@ from littlepay.api.client import Client
 from requests.exceptions import HTTPError
 import sentry_sdk
 
+from benefits.routes import routes
 from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
-from benefits.core.views import ROUTE_LOGGED_OUT, ROUTE_SERVER_ERROR
 
 from . import analytics, forms
 
@@ -59,10 +59,10 @@ def token(request):
                 if status_code >= 500:
                     redirect = reverse(ROUTE_SYSTEM_ERROR)
                 else:
-                    redirect = reverse(ROUTE_SERVER_ERROR)
+                    redirect = reverse(routes.SERVER_ERROR)
             else:
                 status_code = None
-                redirect = reverse(ROUTE_SERVER_ERROR)
+                redirect = reverse(routes.SERVER_ERROR)
 
             analytics.failed_access_token_request(request, status_code)
 
@@ -248,7 +248,7 @@ def reenrollment_error(request):
     if session.logged_in(request) and flow.claims_provider.supports_sign_out:
         # overwrite origin for a logged in user
         # if they click the logout button, they are taken to the new route
-        session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
+        session.update(request, origin=reverse(routes.LOGGED_OUT))
 
     analytics.returned_error(request, "Re-enrollment error.")
 
@@ -286,7 +286,7 @@ def success(request):
     if session.logged_in(request) and flow.claims_provider.supports_sign_out:
         # overwrite origin for a logged in user
         # if they click the logout button, they are taken to the new route
-        session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
+        session.update(request, origin=reverse(routes.LOGGED_OUT))
 
     analytics.returned_success(request, flow.group_id)
     context = {"redirect_to": request.path}

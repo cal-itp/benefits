@@ -10,6 +10,7 @@ import uuid
 
 from django.urls import reverse
 
+from benefits.routes import routes
 from . import models
 
 
@@ -161,8 +162,8 @@ def oauth_claim(request):
 
 
 def origin(request):
-    """Get the origin for the request's session, or the default core:index."""
-    return request.session.get(_ORIGIN, reverse("core:index"))
+    """Get the origin for the request's session, or default to the index route."""
+    return request.session.get(_ORIGIN, reverse(routes.INDEX))
 
 
 def reset(request):
@@ -171,7 +172,7 @@ def reset(request):
     request.session[_AGENCY] = None
     request.session[_FLOW] = None
     request.session[_ELIGIBLE] = False
-    request.session[_ORIGIN] = reverse("core:index")
+    request.session[_ORIGIN] = reverse(routes.INDEX)
     request.session[_ENROLLMENT_EXP] = None
     request.session[_ENROLLMENT_TOKEN] = None
     request.session[_ENROLLMENT_TOKEN_EXP] = None

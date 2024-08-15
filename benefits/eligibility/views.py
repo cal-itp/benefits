@@ -8,6 +8,7 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 
+from benefits.routes import routes
 from benefits.core import recaptcha, session
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RecaptchaEnabled, FlowSessionRequired
 from benefits.core.models import EnrollmentFlow
@@ -37,7 +38,7 @@ def index(request, agency=None):
         else:
             session.update(request, eligible=False, origin=agency.index_url)
     else:
-        session.update(request, agency=agency, eligible=False, origin=reverse(ROUTE_CORE_INDEX))
+        session.update(request, agency=agency, eligible=False, origin=agency.index_url)
 
     # clear any prior OAuth token as the user is choosing their desired flow
     # this may or may not require OAuth, with a different set of scope/claims than what is already stored

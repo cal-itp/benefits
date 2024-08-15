@@ -14,6 +14,7 @@ from django.urls import reverse
 
 import requests
 
+from benefits.routes import routes
 from benefits.secrets import NAME_VALIDATOR, get_secret_by_name
 
 
@@ -355,7 +356,7 @@ class TransitAgency(models.Model):
     @property
     def index_url(self):
         """Public-facing URL to the TransitAgency's landing page."""
-        return reverse("core:agency_index", args=[self.slug])
+        return reverse(routes.AGENCY_INDEX, args=[self.slug])
 
     @property
     def eligibility_index_url(self):
