@@ -135,7 +135,7 @@ class LoginRequired(MiddlewareMixin):
             # pass through
             return None
 
-        return redirect("oauth:login")
+        return redirect(routes.OAUTH_LOGIN)
 
 
 class RecaptchaEnabled(MiddlewareMixin):

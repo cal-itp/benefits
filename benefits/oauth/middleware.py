@@ -3,11 +3,11 @@ import logging
 from django.shortcuts import redirect
 import sentry_sdk
 
+from benefits.routes import routes
 from benefits.core import session
 from benefits.core.middleware import FlowSessionRequired, user_error
 
 from . import analytics
-from .redirects import ROUTE_SYSTEM_ERROR
 
 
 logger = logging.getLogger(__name__)
@@ -33,7 +33,7 @@ class FlowUsesClaimsVerificationSessionRequired(FlowSessionRequired):
             message = f"Flow with no API or claims config: {flow.system_name} (id={flow.id})"
             analytics.error(request, message=message, operation=request.path)
             sentry_sdk.capture_exception(Exception(message))
-            return redirect(ROUTE_SYSTEM_ERROR)
+            return redirect(routes.OAUTH_SYSTEM_ERROR)
         else:
             # the chosen flow was for Eligibility API
             logger.debug("Session not configured with enrollment flow that uses claims verification")

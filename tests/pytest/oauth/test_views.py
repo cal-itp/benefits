@@ -6,8 +6,6 @@ import pytest
 from benefits.routes import routes
 from benefits.core import session
 from benefits.core.middleware import TEMPLATE_USER_ERROR
-
-from benefits.oauth.redirects import ROUTE_SYSTEM_ERROR
 from benefits.oauth.views import (
     ROUTE_CONFIRM,
     ROUTE_UNVERIFIED,
@@ -61,7 +59,7 @@ def test_oauth_client_or_error_redirect_no_oauth_client(
     result = _oauth_client_or_error_redirect(app_request, model_EnrollmentFlow_with_scope_and_claim)
 
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)
     mocked_analytics_module.error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
@@ -74,7 +72,7 @@ def test_oauth_client_or_error_redirect_oauth_client_exception(
     result = _oauth_client_or_error_redirect(app_request, model_EnrollmentFlow_with_scope_and_claim)
 
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)
     mocked_analytics_module.error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
@@ -97,7 +95,7 @@ def test_login_oauth_client_init_error(app_request, mocked_analytics_module):
     result = login(app_request)
 
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)
     mocked_analytics_module.error.assert_called_once()
 
 
@@ -135,7 +133,7 @@ def test_login_authorize_redirect_exception(
     result = login(app_request)
 
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)
     mocked_analytics_module.error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
@@ -152,7 +150,7 @@ def test_login_authorize_redirect_error_response(
     result = login(app_request)
 
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)
     mocked_analytics_module.error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
@@ -163,7 +161,7 @@ def test_authorize_oauth_client_init_error(app_request, mocked_analytics_module,
     result = authorize(app_request)
 
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)
     mocked_analytics_module.error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
@@ -191,7 +189,7 @@ def test_authorize_error(
     mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
     assert not session.logged_in(app_request)
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)
     mocked_analytics_module.error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
@@ -211,7 +209,7 @@ def test_authorize_empty_token(
     mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
     assert not session.logged_in(app_request)
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)
     mocked_analytics_module.error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
@@ -360,7 +358,7 @@ def test_logout_oauth_client_init_error(app_request):
     result = authorize(app_request)
 
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)
 
 
 @pytest.mark.django_db

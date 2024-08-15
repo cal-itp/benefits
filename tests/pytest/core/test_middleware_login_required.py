@@ -3,10 +3,9 @@ from django.utils.decorators import decorator_from_middleware
 
 import pytest
 
+from benefits.routes import routes
 from benefits.core import session
 from benefits.core.middleware import LoginRequired
-
-ROUTE_LOGIN = "oauth:login"
 
 
 @pytest.fixture
@@ -22,7 +21,7 @@ def test_login_flow_uses_claims_verification(app_request, mocked_view, decorated
     mocked_view.assert_not_called()
 
     assert response.status_code == 302
-    assert response.headers["Location"] == reverse(ROUTE_LOGIN)
+    assert response.headers["Location"] == reverse(routes.OAUTH_LOGIN)
 
 
 @pytest.mark.django_db
