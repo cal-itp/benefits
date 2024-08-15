@@ -116,6 +116,16 @@ class Routes:
         """Enrollment error not caused by the user."""
         return "enrollment:system-error"
 
+    @property
+    def IN_PERSON_ELIGIBILITY(self):
+        """In-person (e.g. agency assisted) eligibility"""
+        return "in_person:eligibility"
+
+    @property
+    def IN_PERSON_ENROLLMENT(self):
+        """In-person (e.g. agency assisted) enrollment"""
+        return "in_person:enrollment"
+
     @staticmethod
     def name(route: str) -> str:
         """Returns just the name portion of the app:name structure of the route."""

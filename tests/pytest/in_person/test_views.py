@@ -2,11 +2,11 @@ from django.urls import reverse
 
 import pytest
 
-from benefits.in_person.views import ROUTE_ELIGIBILITY, ROUTE_ENROLLMENT
+from benefits.routes import routes
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("viewname", [ROUTE_ELIGIBILITY, ROUTE_ENROLLMENT])
+@pytest.mark.parametrize("viewname", [routes.IN_PERSON_ELIGIBILITY, routes.IN_PERSON_ENROLLMENT])
 def test_view_not_logged_in(client, viewname):
     path = reverse(viewname)
 
@@ -18,7 +18,7 @@ def test_view_not_logged_in(client, viewname):
 # admin_client is a fixture from pytest
 # https://pytest-django.readthedocs.io/en/latest/helpers.html#admin-client-django-test-client-logged-in-as-admin
 def test_eligibility_logged_in(admin_client):
-    path = reverse(ROUTE_ELIGIBILITY)
+    path = reverse(routes.IN_PERSON_ELIGIBILITY)
 
     response = admin_client.get(path)
     assert response.status_code == 200
@@ -26,7 +26,7 @@ def test_eligibility_logged_in(admin_client):
 
 
 def test_enrollment_logged_in(admin_client):
-    path = reverse(ROUTE_ENROLLMENT)
+    path = reverse(routes.IN_PERSON_ENROLLMENT)
 
     response = admin_client.get(path)
     assert response.status_code == 200
