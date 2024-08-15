@@ -14,8 +14,6 @@ from benefits.core.middleware import AgencySessionRequired, LoginRequired, Recap
 from benefits.core.models import EnrollmentFlow
 from . import analytics, forms, verify
 
-ROUTE_ENROLLMENT = "enrollment:index"
-
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
 
 
@@ -148,7 +146,7 @@ def verified(request):
 
     session.update(request, eligible=True)
 
-    return redirect(ROUTE_ENROLLMENT)
+    return redirect(routes.ENROLLMENT_INDEX)
 
 
 @decorator_from_middleware(AgencySessionRequired)

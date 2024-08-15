@@ -86,6 +86,36 @@ class Routes:
         """The user's eligibility was not verified."""
         return "eligibility:unverified"
 
+    @property
+    def ENROLLMENT_INDEX(self):
+        """Start of the enrollment phase."""
+        return "enrollment:index"
+
+    @property
+    def ENROLLMENT_TOKEN(self):
+        """Acquire a TransitProcessor API token for enrollment."""
+        return "enrollment:token"
+
+    @property
+    def ENROLLMENT_SUCCESS(self):
+        """User has successfully enrolled and completed a Benefits flow."""
+        return "enrollment:success"
+
+    @property
+    def ENROLLMENT_RETRY(self):
+        """User entered their card details incorrectly or another recoverable problem."""
+        return "enrollment:retry"
+
+    @property
+    def ENROLLMENT_REENROLLMENT_ERROR(self):
+        """User tried to enroll when they are already enrolled in an expiring discount."""
+        return "enrollment:reenrollment-error"
+
+    @property
+    def ENROLLMENT_SYSTEM_ERROR(self):
+        """Enrollment error not caused by the user."""
+        return "enrollment:system-error"
+
     @staticmethod
     def name(route: str) -> str:
         """Returns just the name portion of the app:name structure of the route."""

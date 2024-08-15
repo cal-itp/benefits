@@ -20,13 +20,6 @@ from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequire
 
 from . import analytics, forms
 
-ROUTE_INDEX = "enrollment:index"
-ROUTE_REENROLLMENT_ERROR = "enrollment:reenrollment-error"
-ROUTE_RETRY = "enrollment:retry"
-ROUTE_SUCCESS = "enrollment:success"
-ROUTE_SYSTEM_ERROR = "enrollment:system-error"
-ROUTE_TOKEN = "enrollment:token"
-
 TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
 
@@ -57,7 +50,7 @@ def token(request):
                 status_code = e.response.status_code
 
                 if status_code >= 500:
-                    redirect = reverse(ROUTE_SYSTEM_ERROR)
+                    redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
                 else:
                     redirect = reverse(routes.SERVER_ERROR)
             else:
@@ -81,7 +74,7 @@ def token(request):
 @decorator_from_middleware(EligibleSessionRequired)
 def index(request):
     """View handler for the enrollment landing page."""
-    session.update(request, origin=reverse(ROUTE_INDEX))
+    session.update(request, origin=reverse(routes.ENROLLMENT_INDEX))
 
     agency = session.agency(request)
     flow = session.flow(request)
@@ -179,9 +172,11 @@ def index(request):
 
     # GET enrollment index
     else:
-        tokenize_retry_form = forms.CardTokenizeFailForm(ROUTE_RETRY, "form-card-tokenize-fail-retry")
-        tokenize_server_error_form = forms.CardTokenizeFailForm(ROUTE_SERVER_ERROR, "form-card-tokenize-fail-server-error")
-        tokenize_system_error_form = forms.CardTokenizeFailForm(ROUTE_SYSTEM_ERROR, "form-card-tokenize-fail-system-error")
+        tokenize_retry_form = forms.CardTokenizeFailForm(routes.ENROLLMENT_RETRY, "form-card-tokenize-fail-retry")
+        tokenize_server_error_form = forms.CardTokenizeFailForm(routes.SERVER_ERROR, "form-card-tokenize-fail-server-error")
+        tokenize_system_error_form = forms.CardTokenizeFailForm(
+            routes.ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
+        )
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
         # mapping from Django's I18N LANGUAGE_CODE to Littlepay's overlay language code
@@ -279,7 +274,7 @@ def system_error(request):
 def success(request):
     """View handler for the final success page."""
     request.path = "/enrollment/success"
-    session.update(request, origin=reverse(ROUTE_SUCCESS))
+    session.update(request, origin=reverse(routes.ENROLLMENT_SUCCESS))
 
     flow = session.flow(request)
 

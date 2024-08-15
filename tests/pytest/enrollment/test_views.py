@@ -14,12 +14,6 @@ from benefits.routes import routes
 import benefits.enrollment.views
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.enrollment.views import (
-    ROUTE_INDEX,
-    ROUTE_REENROLLMENT_ERROR,
-    ROUTE_RETRY,
-    ROUTE_SUCCESS,
-    ROUTE_SYSTEM_ERROR,
-    ROUTE_TOKEN,
     TEMPLATE_SYSTEM_ERROR,
     TEMPLATE_RETRY,
     _get_group_funding_source,
@@ -87,7 +81,7 @@ def mocked_group_funding_source_with_expiry(mocked_funding_source):
 
 @pytest.mark.django_db
 def test_token_ineligible(client):
-    path = reverse(ROUTE_TOKEN)
+    path = reverse(routes.ENROLLMENT_TOKEN)
 
     response = client.get(path)
 
@@ -107,7 +101,7 @@ def test_token_refresh(mocker, client):
     mock_token["expires_at"] = time.time() + 10000
     mock_client.request_card_tokenization_access.return_value = mock_token
 
-    path = reverse(ROUTE_TOKEN)
+    path = reverse(routes.ENROLLMENT_TOKEN)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -123,7 +117,7 @@ def test_token_valid(mocker, client):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=True)
     mocker.patch("benefits.core.session.enrollment_token", return_value="enrollment_token")
 
-    path = reverse(ROUTE_TOKEN)
+    path = reverse(routes.ENROLLMENT_TOKEN)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -147,14 +141,14 @@ def test_token_http_error_500(mocker, client, mocked_analytics_module, mocked_se
         response=mock_error_response,
     )
 
-    path = reverse(ROUTE_TOKEN)
+    path = reverse(routes.ENROLLMENT_TOKEN)
     response = client.get(path)
 
     assert response.status_code == 200
     data = response.json()
     assert "token" not in data
     assert "redirect" in data
-    assert data["redirect"] == reverse(ROUTE_SYSTEM_ERROR)
+    assert data["redirect"] == reverse(routes.ENROLLMENT_SYSTEM_ERROR)
     mocked_analytics_module.failed_access_token_request.assert_called_once()
     assert 500 in mocked_analytics_module.failed_access_token_request.call_args.args
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
@@ -175,7 +169,7 @@ def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_se
         response=mock_error_response,
     )
 
-    path = reverse(ROUTE_TOKEN)
+    path = reverse(routes.ENROLLMENT_TOKEN)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -198,7 +192,7 @@ def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, 
 
     mock_client.request_card_tokenization_access.side_effect = UnsupportedTokenTypeError()
 
-    path = reverse(ROUTE_TOKEN)
+    path = reverse(routes.ENROLLMENT_TOKEN)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -220,7 +214,7 @@ def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_
 
     mock_client.oauth.ensure_active_token.side_effect = ConnectionError()
 
-    path = reverse(ROUTE_TOKEN)
+    path = reverse(routes.ENROLLMENT_TOKEN)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -235,7 +229,7 @@ def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_get(client, model_EnrollmentFlow):
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -255,7 +249,7 @@ def test_index_eligible_get(client, model_EnrollmentFlow):
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 @pytest.mark.parametrize("LANGUAGE_CODE, overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")])
 def test_index_eligible_get_changed_language(client, LANGUAGE_CODE, overlay_language):
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
     client.post(reverse("set_language"), data={"language": LANGUAGE_CODE})
     response = client.get(path)
 
@@ -265,7 +259,7 @@ def test_index_eligible_get_changed_language(client, LANGUAGE_CODE, overlay_lang
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_invalid_form(client, invalid_form_data):
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
 
     with pytest.raises(Exception, match=r"form"):
         client.post(path, invalid_form_data)
@@ -298,7 +292,7 @@ def test_index_eligible_post_valid_form_http_error_500(
         response=mock_error_response,
     )
 
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     assert response.status_code == 200
@@ -321,7 +315,7 @@ def test_index_eligible_post_valid_form_http_error_400(mocker, client, card_toke
         response=mock_error_response,
     )
 
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
     with pytest.raises(Exception, match=mock_error["message"]):
         client.post(path, card_tokenize_form_data)
 
@@ -334,7 +328,7 @@ def test_index_eligible_post_valid_form_failure(mocker, client, card_tokenize_fo
 
     mock_client.link_concession_group_funding_source.side_effect = Exception("some other exception")
 
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
     with pytest.raises(Exception, match=r"some other exception"):
         client.post(path, card_tokenize_form_data)
 
@@ -380,7 +374,7 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_cust
 
     mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_no_expiry)
 
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     assert response.status_code == 200
@@ -403,7 +397,7 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_no_e
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     mock_client.link_concession_group_funding_source.assert_called_once_with(
@@ -456,7 +450,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration(
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     mock_client.link_concession_group_funding_source.assert_called_once_with(
@@ -488,7 +482,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_no_expiry(
 
     mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_no_expiry)
 
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
@@ -559,7 +553,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_expired(
 
     mocker.patch("benefits.enrollment.views._is_expired", return_value=True)
 
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
@@ -669,7 +663,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_within_re
 
     mocker.patch("benefits.enrollment.views._is_within_reenrollment_window", return_value=True)
 
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
@@ -704,7 +698,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_not_expir
     mocker.patch("benefits.enrollment.views._is_expired", return_value=False)
     mocker.patch("benefits.enrollment.views._is_within_reenrollment_window", return_value=False)
 
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     assert response.status_code == 200
@@ -730,7 +724,7 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_has_
     # mock that a funding source already exists, doesn't matter what expiry_date is
     mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry)
 
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
     with pytest.raises(NotImplementedError):
         client.post(path, card_tokenize_form_data)
 
@@ -751,7 +745,7 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_has_
 
 @pytest.mark.django_db
 def test_index_ineligible(client):
-    path = reverse(ROUTE_INDEX)
+    path = reverse(routes.ENROLLMENT_INDEX)
 
     response = client.get(path)
 
@@ -761,7 +755,7 @@ def test_index_ineligible(client):
 
 @pytest.mark.django_db
 def test_reenrollment_error_ineligible(client):
-    path = reverse(ROUTE_REENROLLMENT_ERROR)
+    path = reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
 
     response = client.get(path)
 
@@ -772,7 +766,7 @@ def test_reenrollment_error_ineligible(client):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_reenrollment_error_eligibility_no_error_template(client):
-    path = reverse(ROUTE_REENROLLMENT_ERROR)
+    path = reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
 
     with pytest.raises(Exception, match="Re-enrollment error with null template"):
         client.get(path)
@@ -783,7 +777,7 @@ def test_reenrollment_error_eligibility_no_error_template(client):
 def test_reenrollment_error(client, model_EnrollmentFlow_supports_expiration, mocked_session_eligible):
     mocked_session_eligible.return_value = model_EnrollmentFlow_supports_expiration
 
-    path = reverse(ROUTE_REENROLLMENT_ERROR)
+    path = reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
 
     response = client.get(path)
 
@@ -793,7 +787,7 @@ def test_reenrollment_error(client, model_EnrollmentFlow_supports_expiration, mo
 
 @pytest.mark.django_db
 def test_retry_ineligible(client):
-    path = reverse(ROUTE_RETRY)
+    path = reverse(routes.ENROLLMENT_RETRY)
 
     response = client.post(path)
 
@@ -804,7 +798,7 @@ def test_retry_ineligible(client):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_retry_get(client, mocked_analytics_module):
-    path = reverse(ROUTE_RETRY)
+    path = reverse(routes.ENROLLMENT_RETRY)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -815,7 +809,7 @@ def test_retry_get(client, mocked_analytics_module):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_retry_valid_form(client, mocked_analytics_module):
-    path = reverse(ROUTE_RETRY)
+    path = reverse(routes.ENROLLMENT_RETRY)
     response = client.post(path)
 
     assert response.status_code == 200
@@ -825,7 +819,7 @@ def test_retry_valid_form(client, mocked_analytics_module):
 
 @pytest.mark.django_db
 def test_success_no_flow(client):
-    path = reverse(ROUTE_SUCCESS)
+    path = reverse(routes.ENROLLMENT_SUCCESS)
 
     response = client.get(path)
 
@@ -841,7 +835,7 @@ def test_success_authentication_logged_in(mocker, client, model_TransitAgency, m
     mock_session.agency.return_value = model_TransitAgency
     mock_session.flow.return_value = model_EnrollmentFlow
 
-    path = reverse(ROUTE_SUCCESS)
+    path = reverse(routes.ENROLLMENT_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -860,7 +854,7 @@ def test_success_authentication_not_logged_in(
     mock_session.agency.return_value = model_TransitAgency
     mock_session.flow.return_value = model_EnrollmentFlow
 
-    path = reverse(ROUTE_SUCCESS)
+    path = reverse(routes.ENROLLMENT_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -876,7 +870,7 @@ def test_success_no_authentication(mocker, client, model_EnrollmentFlow, mocked_
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.flow.return_value = model_EnrollmentFlow
 
-    path = reverse(ROUTE_SUCCESS)
+    path = reverse(routes.ENROLLMENT_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
