@@ -1,4 +1,4 @@
-# Medicare cardholders use case
+# Medicare cardholders
 
 ## Overview
 
