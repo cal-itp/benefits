@@ -51,7 +51,7 @@ Littlepay-->>Benefits: card enrollment confirmation
 
 1. The transit rider authenticates with their existing Medicare.gov account or, if they don’t have one, creates a Medicare.gov account using their Medicare card.
 
-1. The Cal-ITP Benefits app interfaces with the [California Department of Technology Identity Gateway](https://digitalidstrategy.cdt.ca.gov/primary-elements.html) (IdG) to verify benefit eligibility. The IdG uses successful authentication with Medicare.gov and personal information shared by the Blue Button API to verify Medicare status.
+1. The Cal-ITP Benefits app interfaces with the [California Department of Technology Identity Gateway](https://digitalidstrategy.cdt.ca.gov/primary-elements.html) (IdG) to verify benefit eligibility. The IdG uses successful authentication with Medicare.gov and personal information shared by the [Blue Button API](https://bluebutton.cms.gov/) to verify Medicare status.
 
 1. The IdG uses the response provided by Blue Button API to determine the rider’s eligibility for a transit benefit.
 
