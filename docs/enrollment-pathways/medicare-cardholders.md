@@ -32,7 +32,7 @@ Medicare->>IdG: authentication confirmation
 IdG-->>BB API: requests required PII
     activate BB API
 BB API-->>IdG: returns required PII
-    deactivate BB API   
+    deactivate BB API
 IdG-->>Benefits: eligibility response
     deactivate IdG
 Benefits-->>Littlepay: card enrollment start
@@ -95,7 +95,6 @@ The transit rider receives a fare reduction each time they use the debit or cred
 
 ## Example Scenario
 
-A 46-year old person with End-Stage Renal Disease (ESRD) uses public transit to get to and from dialysis treatments. They have undergone dialysis treatments for the last four months and are now covered by Medicare. In order to save on transportation expenses, they scheduled an appointment with their local transit agency and made a special trip to complete the in-person eligibility process to qualify for reduced transit fares. They now receive a 50% fare reduction but have to pay for transit rides using the closed-loop card provided by the operator to receive the reduced fare. It’s frustrating and inconvenient to reload this closed-loop agency card in $10 payments every week, especially because they sometimes could use the money tied up on the card to make ends meet. In summary, this person pays for daily expenses using several forms of payment: their agency card for transportation and their debit card or cash for everything else.  
+A 46-year old person with End-Stage Renal Disease (ESRD) uses public transit to get to and from dialysis treatments. They have undergone dialysis treatments for the last four months and are now covered by Medicare. In order to save on transportation expenses, they scheduled an appointment with their local transit agency and made a special trip to complete the in-person eligibility process to qualify for reduced transit fares. They now receive a 50% fare reduction but have to pay for transit rides using the closed-loop card provided by the operator to receive the reduced fare. It’s frustrating and inconvenient to reload this closed-loop agency card in $10 payments every week, especially because they sometimes could use the money tied up on the card to make ends meet. In summary, this person pays for daily expenses using several forms of payment: their agency card for transportation and their debit card or cash for everything else.
 
 The transit operator serving their region of California implements contactless payments on fixed bus routes throughout the service area. This rider opens the Cal-ITP Benefits web application at home, completes the workflow to digitally confirm they are enrolled in Medicare, and registers their debit card for reduced fares. Now, when they tap-to-pay when boarding the bus, they are automatically charged the reduced fare. They no longer need to use their closed-loop agency card to pay for transit and have complete access to all funds in their weekly budget.
-
