@@ -16,9 +16,6 @@ from .middleware import FlowUsesClaimsVerificationSessionRequired
 
 logger = logging.getLogger(__name__)
 
-ROUTE_CONFIRM = "eligibility:confirm"
-ROUTE_UNVERIFIED = "eligibility:unverified"
-
 TEMPLATE_SYSTEM_ERROR = "oauth/system_error.html"
 
 
@@ -149,7 +146,7 @@ def authorize(request):
     session.update(request, oauth_token=id_token, oauth_claim=stored_claim)
     analytics.finished_sign_in(request, error=error_claim)
 
-    return redirect(ROUTE_CONFIRM)
+    return redirect(routes.ELIGIBILITY_CONFIRM)
 
 
 @decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
@@ -158,7 +155,7 @@ def cancel(request):
 
     analytics.canceled_sign_in(request)
 
-    return redirect(ROUTE_UNVERIFIED)
+    return redirect(routes.ELIGIBILITY_UNVERIFIED)
 
 
 @decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)

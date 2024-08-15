@@ -7,6 +7,7 @@ import logging
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
+from benefits.routes import routes
 from benefits.core import models, recaptcha, widgets
 
 logger = logging.getLogger(__name__)
@@ -15,7 +16,7 @@ logger = logging.getLogger(__name__)
 class EnrollmentFlowSelectionForm(forms.Form):
     """Form to capture enrollment flow selection."""
 
-    action_url = "eligibility:index"
+    action_url = routes.ELIGIBILITY_INDEX
     id = "form-flow-selection"
     method = "POST"
 
@@ -44,7 +45,7 @@ class EnrollmentFlowSelectionForm(forms.Form):
 class EligibilityVerificationForm(forms.Form):
     """Form to collect eligibility verification details."""
 
-    action_url = "eligibility:confirm"
+    action_url = routes.ELIGIBILITY_CONFIRM
     id = "form-eligibility-verification"
     method = "POST"
 

@@ -61,6 +61,31 @@ class Routes:
         """OAuth error not caused by the user."""
         return "oauth:system-error"
 
+    @property
+    def ELIGIBILITY_INDEX(self):
+        """Start of eligibility phase, the user picks a flow."""
+        return "eligibility:index"
+
+    @property
+    def ELIGIBILITY_AGENCY_INDEX(self):
+        """The user picks a flow and a transit agency is configured for them."""
+        return "eligibility:agency_index"
+
+    @property
+    def ELIGIBILITY_START(self):
+        """Flow-specific eligibility information."""
+        return "eligibility:start"
+
+    @property
+    def ELIGIBILITY_CONFIRM(self):
+        """Agency card specific eligibility form."""
+        return "eligibility:confirm"
+
+    @property
+    def ELIGIBILITY_UNVERIFIED(self):
+        """The user's eligibility was not verified."""
+        return "eligibility:unverified"
+
     @staticmethod
     def name(route: str) -> str:
         """Returns just the name portion of the app:name structure of the route."""

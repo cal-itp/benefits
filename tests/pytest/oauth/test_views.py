@@ -7,8 +7,6 @@ from benefits.routes import routes
 from benefits.core import session
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.oauth.views import (
-    ROUTE_CONFIRM,
-    ROUTE_UNVERIFIED,
     TEMPLATE_SYSTEM_ERROR,
     _oauth_client_or_error_redirect,
     login,
@@ -227,7 +225,7 @@ def test_authorize_success(mocked_oauth_client_or_error_redirect__client, mocked
     assert session.logged_in(app_request)
     assert session.oauth_token(app_request) == "token"
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_CONFIRM)
+    assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
 
 
 @pytest.mark.django_db
@@ -245,7 +243,7 @@ def test_authorize_success_with_claim_true(
     mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
     assert session.oauth_claim(app_request) == "claim"
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_CONFIRM)
+    assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
 
 
 @pytest.mark.django_db
@@ -263,7 +261,7 @@ def test_authorize_success_with_claim_false(
     mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
     assert session.oauth_claim(app_request) is None
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_CONFIRM)
+    assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
 
 
 @pytest.mark.django_db
@@ -284,7 +282,7 @@ def test_authorize_success_with_claim_error(
     mocked_analytics_module.finished_sign_in.assert_called_with(app_request, error=10)
     assert session.oauth_claim(app_request) is None
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_CONFIRM)
+    assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
 
 
 @pytest.mark.django_db
@@ -329,13 +327,13 @@ def test_authorize_success_without_claim_in_response(
     mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
     assert session.oauth_claim(app_request) is None
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_CONFIRM)
+    assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification")
 def test_cancel(app_request, mocked_analytics_module):
-    unverified_route = reverse(ROUTE_UNVERIFIED)
+    unverified_route = reverse(routes.ELIGIBILITY_UNVERIFIED)
 
     result = cancel(app_request)
 
@@ -420,7 +418,7 @@ def test_post_logout_no_session_flow(app_request):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency")
 def test_system_error(app_request, model_TransitAgency):
-    origin = reverse(ROUTE_START)
+    origin = reverse(routes.ELIGIBILITY_START)
     session.update(app_request, origin=origin)
 
     result = system_error(app_request)

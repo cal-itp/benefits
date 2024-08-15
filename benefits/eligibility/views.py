@@ -14,13 +14,6 @@ from benefits.core.middleware import AgencySessionRequired, LoginRequired, Recap
 from benefits.core.models import EnrollmentFlow
 from . import analytics, forms, verify
 
-
-ROUTE_CORE_INDEX = "core:index"
-ROUTE_INDEX = "eligibility:index"
-ROUTE_START = "eligibility:start"
-ROUTE_LOGIN = "oauth:login"
-ROUTE_CONFIRM = "eligibility:confirm"
-ROUTE_UNVERIFIED = "eligibility:unverified"
 ROUTE_ENROLLMENT = "enrollment:index"
 
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
@@ -56,7 +49,7 @@ def index(request, agency=None):
 
             analytics.selected_verifier(request, flow.system_name)
 
-            eligibility_start = reverse(ROUTE_START)
+            eligibility_start = reverse(routes.ELIGIBILITY_START)
             response = redirect(eligibility_start)
         else:
             # form was not valid, allow for correction/resubmission
@@ -74,7 +67,7 @@ def index(request, agency=None):
 @decorator_from_middleware(FlowSessionRequired)
 def start(request):
     """View handler for the eligibility verification getting started screen."""
-    session.update(request, eligible=False, origin=reverse(ROUTE_START))
+    session.update(request, eligible=False, origin=reverse(routes.ELIGIBILITY_START))
 
     flow = session.flow(request)
 
@@ -92,7 +85,7 @@ def confirm(request):
     if request.method == "GET" and session.eligible(request):
         return verified(request)
 
-    unverified_view = reverse(ROUTE_UNVERIFIED)
+    unverified_view = reverse(routes.ELIGIBILITY_UNVERIFIED)
 
     agency = session.agency(request)
     flow = session.flow(request)
@@ -115,7 +108,7 @@ def confirm(request):
 
     # GET from an unverified user, present the form
     if request.method == "GET":
-        session.update(request, origin=reverse(ROUTE_CONFIRM))
+        session.update(request, origin=reverse(routes.ELIGIBILITY_CONFIRM))
         return TemplateResponse(request, TEMPLATE_CONFIRM, context)
     # POST form submission, process form data, make Eligibility Verification API call
     elif request.method == "POST":
