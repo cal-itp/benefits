@@ -109,7 +109,7 @@ class Routes:
     @property
     def ENROLLMENT_REENROLLMENT_ERROR(self):
         """User tried to enroll when they are already enrolled in an expiring discount."""
-        return "enrollment:reenrollment-error"
+        return "enrollment:reenrollment_error"
 
     @property
     def ENROLLMENT_SYSTEM_ERROR(self):
