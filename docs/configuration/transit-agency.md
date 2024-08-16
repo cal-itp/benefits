@@ -6,7 +6,6 @@ Then, the following steps are done by the Cal-ITP team to configure a new transi
 
 Note that a `TransitAgency` model requires:
 
-- a list of supported `EligibilityType`s
 - a list of `EnrollmentFlows`s available to the agency's users
 - a `TransitProcessor` for enrolling the user's contactless card for discounts
 - an `info_url` and `phone` for users to contact customer service
@@ -30,9 +29,9 @@ For development and testing, only a Littlepay customer group is needed since the
 ### Steps
 
 1. Cal-ITP uses the transit agency's Littlepay merchant ID to create a customer group in the Littlepay QA environment for each type of eligibility (e.g. senior).
-1. For each group that's created, a group ID will be returned and should be set as the `group_id` on a new `EligibilityType` in the Benefits database. (See [Configuration data](../data/) for more on loading the database.)
+1. For each group that's created, a group ID will be returned and should be set as the `group_id` on a new `EnrollmentFlow` in the Benefits database. (See [Configuration data](../data/) for more on loading the database.)
 1. Cal-ITP creates a new `EnrollmentFlow` in the database for each supported eligibility type. This will require configuration for either [API](https://docs.calitp.org/eligibility-api/specification/)-based verification or verification through an [OAuth Open ID Connect claims provider](../oauth/) (e.g. sandbox Login.gov) -- either way, this resource should be meant for testing.
-1. Cal-ITP creates a new `TransitAgency` in the database and associates it with the new `EligibilityType`s and `EnrollmentFlow`s as well as the existing Littlepay `TransitProcessor`.
+1. Cal-ITP creates a new `TransitAgency` in the database and associates it with the new `EnrollmentFlow`s as well as the existing Littlepay `TransitProcessor`.
 
 ## Configuration for production validation
 
@@ -44,8 +43,8 @@ For production validation, both a customer group and discount product are needed
 1. Transit agency staff takes a screenshot of the discount product in the Merchant Portal, making sure the browser URL is visible, and sends that to Cal-ITP.
 1. Cal-ITP creates a customer group **for testing purposes** in production Littlepay.
 1. Cal-ITP associates the group with the product.
-1. Cal-ITP creates a new `EligibilityType` **for testing purposes** in the Benefits database and sets the `group_id` to the ID of the newly-created group.
-1. Cal-ITP creates a new `EnrollmentFlow` with configuration **for a testing environment** to ensure successful eligibility verification. (For example, use sandbox Login.gov instead of production Login.gov.)
+1. Cal-ITP creates a new `EnrollmentFlow` **for testing purposes** in the Benefits database and sets the `group_id` to the ID of the newly-created group.
+1. Cal-ITP configures the newly created `EnrollmentFlow` **for a testing environment** to ensure successful eligibility verification. (For example, use sandbox Login.gov instead of production Login.gov.)
 1. Cal-ITP creates a new `TransitProcessor` **for testing purposes** with configuration for production Littlepay.
 1. Cal-ITP updates the existing `TransitAgency` (created [previously](#configuration-for-development-and-testing)) with associations to the eligibility types, enrollment flows, and transit processor that were just created for testing.
 
@@ -66,8 +65,8 @@ Once production validation is done, the transit agency can be added to the produ
 
 1. Cal-ITP creates a customer group **for production use** in production Littlepay.
 1. Cal-ITP associates the group with the discount product created [previously during production validation](#configuration-for-production-validation).
-1. Cal-ITP sets that group's ID as the `group_id` for a new `EligibilityType` in the Benefits database.
-1. Cal-ITP creates a new `EnrollmentFlow` with configuration for the **production** eligibility verification system.
+1. Cal-ITP sets that group's ID as the `group_id` for a new `EnrollmentFlow` in the Benefits database.
+1. Cal-ITP configures the newly created `EnrollmentFlow` for the **production** eligibility verification system.
 1. Cal-ITP creates a new `TransitAgency` in the database with proper associations to eligibility types, enrollment flows, and transit processor.
 
 ### Cleanup
@@ -76,4 +75,4 @@ At this point, the customer group that was created in production Littlepay for t
 
 1. Remove the association between the test customer group and discount product.
 1. Delete the test customer group.
-1. Remove temporary `EligibilityType`s, `EnrollmentFlow`s, and `TransitProcessor` that were [created](#steps_1) in the Benefits test environment.
+1. Remove temporary `EnrollmentFlow`s and `TransitProcessor` that were [created](#steps_1) in the Benefits test environment.
