@@ -71,14 +71,14 @@ def debug(request):
 
 def enrollment(request):
     """Context processor adds enrollment information to request context."""
-    eligibility = session.eligibility(request)
+    flow = session.flow(request)
     expiry = session.enrollment_expiry(request)
     reenrollment = session.enrollment_reenrollment(request)
 
     data = {
         "expires": expiry,
         "reenrollment": reenrollment,
-        "supports_expiration": eligibility.supports_expiration if eligibility else False,
+        "supports_expiration": flow.supports_expiration if flow else False,
     }
 
     return {"enrollment": data}

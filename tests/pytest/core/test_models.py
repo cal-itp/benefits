@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 import pytest
 
-from benefits.core.models import SecretNameField, EligibilityType, EnrollmentFlow, TransitAgency
+from benefits.core.models import SecretNameField, EnrollmentFlow, TransitAgency
 import benefits.secrets
 
 
@@ -112,75 +112,20 @@ def test_model_ClaimsProvider_no_sign_out(model_ClaimsProvider_no_sign_out):
 
 
 @pytest.mark.django_db
-def test_model_EligibilityType_str(model_EligibilityType):
-    assert str(model_EligibilityType) == model_EligibilityType.label
-
-
-@pytest.mark.django_db
-def test_EligibilityType_get_matching(model_EligibilityType):
-    eligibility = EligibilityType.get(model_EligibilityType.id)
-
-    assert eligibility == model_EligibilityType
-
-
-@pytest.mark.django_db
-def test_EligibilityType_get_nonmatching():
-    with pytest.raises(EligibilityType.DoesNotExist):
-        EligibilityType.get(99999)
-
-
-@pytest.mark.django_db
-def test_EligibilityType_get_many_matching(model_EligibilityType):
-    new_type = EligibilityType.get(model_EligibilityType.id)
-    new_type.pk = None
-    new_type.save()
-
-    result = EligibilityType.get_many([model_EligibilityType.id, new_type.id])
-
-    assert len(result) == 2
-    assert model_EligibilityType in result
-    assert new_type in result
-
-
-@pytest.mark.django_db
-def test_EligibilityType_get_many_nonmatching():
-    result = EligibilityType.get_many([99998, 99999])
-
-    assert len(result) == 0
-
-
-@pytest.mark.django_db
-def test_EligibilityType_get_many_somematching(model_EligibilityType):
-    result = EligibilityType.get_many([model_EligibilityType.id, 99999])
-
-    assert len(result) == 1
-    assert model_EligibilityType in result
-
-
-@pytest.mark.django_db
-def test_EligibilityType_get_names(model_EligibilityType):
-    expected = [model_EligibilityType.name]
-
-    result = EligibilityType.get_names([model_EligibilityType])
-
-    assert result == expected
-
-
-@pytest.mark.django_db
 def test_EnrollmentFlow_str(model_EnrollmentFlow):
-    assert str(model_EnrollmentFlow) == model_EnrollmentFlow.name
+    assert str(model_EnrollmentFlow) == model_EnrollmentFlow.label
 
 
 @pytest.mark.django_db
-def test_EligibilityType_supports_expiration_False(model_EligibilityType_does_not_support_expiration):
+def test_EnrollmentFlow_supports_expiration_False(model_EnrollmentFlow_does_not_support_expiration):
     # test will fail if any error is raised
-    model_EligibilityType_does_not_support_expiration.full_clean()
+    model_EnrollmentFlow_does_not_support_expiration.full_clean()
 
 
 @pytest.mark.django_db
-def test_EligibilityType_zero_expiration_days(model_EligibilityType_zero_expiration_days):
+def test_EnrollmentFlow_zero_expiration_days(model_EnrollmentFlow_zero_expiration_days):
     with pytest.raises(ValidationError) as exception_info:
-        model_EligibilityType_zero_expiration_days.full_clean()
+        model_EnrollmentFlow_zero_expiration_days.full_clean()
 
     error_dict = exception_info.value.error_dict
     assert len(error_dict["expiration_days"]) == 1
@@ -188,9 +133,9 @@ def test_EligibilityType_zero_expiration_days(model_EligibilityType_zero_expirat
 
 
 @pytest.mark.django_db
-def test_EligibilityType_zero_expiration_reenrollment_days(model_EligibilityType_zero_expiration_reenrollment_days):
+def test_EnrollmentFlow_zero_expiration_reenrollment_days(model_EnrollmentFlow_zero_expiration_reenrollment_days):
     with pytest.raises(ValidationError) as exception_info:
-        model_EligibilityType_zero_expiration_reenrollment_days.full_clean()
+        model_EnrollmentFlow_zero_expiration_reenrollment_days.full_clean()
 
     error_dict = exception_info.value.error_dict
     assert len(error_dict["expiration_reenrollment_days"]) == 1
@@ -201,12 +146,12 @@ def test_EligibilityType_zero_expiration_reenrollment_days(model_EligibilityType
 
 
 @pytest.mark.django_db
-def test_EligibilityType_missing_reenrollment_template(model_EligibilityType_supports_expiration):
-    model_EligibilityType_supports_expiration.reenrollment_error_template = None
-    model_EligibilityType_supports_expiration.save()
+def test_EnrollmentFlow_missing_reenrollment_template(model_EnrollmentFlow_supports_expiration):
+    model_EnrollmentFlow_supports_expiration.reenrollment_error_template = None
+    model_EnrollmentFlow_supports_expiration.save()
 
     with pytest.raises(ValidationError) as exception_info:
-        model_EligibilityType_supports_expiration.full_clean()
+        model_EnrollmentFlow_supports_expiration.full_clean()
 
     error_dict = exception_info.value.error_dict
     assert len(error_dict["reenrollment_error_template"]) == 1
@@ -214,28 +159,28 @@ def test_EligibilityType_missing_reenrollment_template(model_EligibilityType_sup
 
 
 @pytest.mark.django_db
-def test_EligibilityType_supports_expiration(model_EligibilityType_supports_expiration):
+def test_EnrollmentFlow_supports_expiration(model_EnrollmentFlow_supports_expiration):
     # test will fail if any error is raised
-    model_EligibilityType_supports_expiration.full_clean()
+    model_EnrollmentFlow_supports_expiration.full_clean()
 
 
 @pytest.mark.django_db
-def test_EligibilityType_enrollment_index_template():
-    new_eligibility_type = EligibilityType.objects.create()
+def test_EnrollmentFlow_enrollment_index_template():
+    new_flow = EnrollmentFlow.objects.create()
 
-    assert new_eligibility_type.enrollment_index_template == "enrollment/index.html"
+    assert new_flow.enrollment_index_template == "enrollment/index.html"
 
-    new_eligibility_type.enrollment_index_template = "test/enrollment.html"
-    new_eligibility_type.save()
+    new_flow.enrollment_index_template = "test/enrollment.html"
+    new_flow.save()
 
-    assert new_eligibility_type.enrollment_index_template == "test/enrollment.html"
+    assert new_flow.enrollment_index_template == "test/enrollment.html"
 
 
 @pytest.mark.django_db
-def test_EligibilityType_enrollment_success_template():
-    new_eligibility_type = EligibilityType.objects.create()
+def test_EnrollmentFlow_enrollment_success_template():
+    new_flow = EnrollmentFlow.objects.create()
 
-    assert new_eligibility_type.enrollment_success_template == "enrollment/success.html"
+    assert new_flow.enrollment_success_template == "enrollment/success.html"
 
 
 class SampleFormClass:
@@ -332,85 +277,6 @@ def test_TransitProcessor_str(model_TransitProcessor):
 @pytest.mark.django_db
 def test_TransitAgency_str(model_TransitAgency):
     assert str(model_TransitAgency) == model_TransitAgency.long_name
-
-
-@pytest.mark.django_db
-def test_TransitAgency_get_type_id_matching(model_TransitAgency):
-    eligibility = model_TransitAgency.eligibility_types.first()
-    result = model_TransitAgency.get_type_id(eligibility.name)
-
-    assert result == eligibility.id
-
-
-@pytest.mark.django_db
-def test_TransitAgency_get_type_id_manymatching(model_TransitAgency):
-    eligibility = model_TransitAgency.eligibility_types.first()
-    new_eligibility = EligibilityType.get(eligibility.id)
-    new_eligibility.pk = None
-    new_eligibility.save()
-    model_TransitAgency.eligibility_types.add(new_eligibility)
-
-    with pytest.raises(Exception, match=r"name"):
-        model_TransitAgency.get_type_id(eligibility.name)
-
-
-@pytest.mark.django_db
-def test_TransitAgency_get_type_id_nonmatching(model_TransitAgency):
-    with pytest.raises(Exception, match=r"name"):
-        model_TransitAgency.get_type_id("something")
-
-
-@pytest.mark.django_db
-def test_TransitAgency_supports_type_matching(model_TransitAgency):
-    eligibility = model_TransitAgency.eligibility_types.first()
-
-    assert model_TransitAgency.supports_type(eligibility)
-
-
-@pytest.mark.django_db
-def test_TransitAgency_supports_type_nonmatching(model_TransitAgency):
-    eligibility = model_TransitAgency.eligibility_types.first()
-    new_eligibility = EligibilityType.get(eligibility.id)
-    new_eligibility.pk = None
-    new_eligibility.save()
-
-    assert not model_TransitAgency.supports_type(new_eligibility)
-
-
-@pytest.mark.django_db
-def test_TransitAgency_supports_type_wrongtype(model_TransitAgency):
-    eligibility = model_TransitAgency.eligibility_types.first()
-
-    assert not model_TransitAgency.supports_type(eligibility.name)
-
-
-@pytest.mark.django_db
-def test_TransitAgency_types_to_verify(model_TransitAgency):
-    eligibility = model_TransitAgency.eligibility_types.first()
-    new_eligibility = EligibilityType.get(eligibility.id)
-    new_eligibility.pk = None
-    new_eligibility.save()
-
-    assert eligibility != new_eligibility
-
-    model_TransitAgency.eligibility_types.add(new_eligibility)
-    assert model_TransitAgency.eligibility_types.count() == 2
-
-    flow = model_TransitAgency.enrollment_flows.first()
-    assert flow.eligibility_type == eligibility
-
-    result = model_TransitAgency.types_to_verify(flow)
-    assert len(result) == 1
-    assert eligibility in result
-
-
-@pytest.mark.django_db
-def test_TransitAgency_type_names_to_verify(model_TransitAgency, model_EnrollmentFlow):
-    expected = [t.name for t in model_TransitAgency.types_to_verify(model_EnrollmentFlow)]
-
-    result = model_TransitAgency.type_names_to_verify(model_EnrollmentFlow)
-
-    assert result == expected
 
 
 @pytest.mark.django_db

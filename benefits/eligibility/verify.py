@@ -21,18 +21,19 @@ def eligibility_from_api(flow: models.EnrollmentFlow, form, agency: models.Trans
         timeout=settings.REQUESTS_TIMEOUT,
     )
 
-    response = client.verify(sub, name, agency.type_names_to_verify(flow))
+    response = client.verify(sub, name, [flow.system_name])
 
     if response.error and any(response.error):
         return None
-    elif any(response.eligibility):
-        return list(response.eligibility)
+    # response.eligibility is a single item list containing the type of eligibility we are trying to verify, e.g. ["senior"]
+    elif flow.system_name in response.eligibility:
+        return True
     else:
-        return []
+        return False
 
 
 def eligibility_from_oauth(flow: models.EnrollmentFlow, oauth_claim, agency: models.TransitAgency):
     if flow.uses_claims_verification and flow.claims_claim == oauth_claim:
-        return agency.type_names_to_verify(flow)
+        return True
     else:
-        return []
+        return False

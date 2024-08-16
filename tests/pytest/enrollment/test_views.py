@@ -97,7 +97,7 @@ def test_token_ineligible(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_refresh(mocker, client):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
@@ -119,7 +119,7 @@ def test_token_refresh(mocker, client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_valid(mocker, client):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=True)
     mocker.patch("benefits.core.session.enrollment_token", return_value="enrollment_token")
@@ -134,7 +134,7 @@ def test_token_valid(mocker, client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_http_error_500(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
@@ -162,7 +162,7 @@ def test_token_http_error_500(mocker, client, mocked_analytics_module, mocked_se
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
@@ -190,7 +190,7 @@ def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_se
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
@@ -212,7 +212,7 @@ def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, 
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
@@ -234,13 +234,13 @@ def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
-def test_index_eligible_get(client, model_EligibilityType):
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
+def test_index_eligible_get(client, model_EnrollmentFlow):
     path = reverse(ROUTE_INDEX)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == model_EligibilityType.enrollment_index_template
+    assert response.template_name == model_EnrollmentFlow.enrollment_index_template
     assert "forms" in response.context_data
     assert "cta_button" in response.context_data
     assert "card_tokenize_env" in response.context_data
@@ -253,7 +253,7 @@ def test_index_eligible_get(client, model_EligibilityType):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 @pytest.mark.parametrize("LANGUAGE_CODE, overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")])
 def test_index_eligible_get_changed_language(client, LANGUAGE_CODE, overlay_language):
     path = reverse(ROUTE_INDEX)
@@ -264,7 +264,7 @@ def test_index_eligible_get_changed_language(client, LANGUAGE_CODE, overlay_lang
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_invalid_form(client, invalid_form_data):
     path = reverse(ROUTE_INDEX)
 
@@ -274,12 +274,12 @@ def test_index_eligible_post_invalid_form(client, invalid_form_data):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize("status_code", [500, 501, 502, 503, 504])
-@pytest.mark.usefixtures("mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_http_error_500(
     mocker,
     client,
     mocked_session_agency,
-    model_EligibilityType,
+    model_EnrollmentFlow_does_not_support_expiration,
     mocked_analytics_module,
     mocked_sentry_sdk_module,
     card_tokenize_form_data,
@@ -287,7 +287,7 @@ def test_index_eligible_post_valid_form_http_error_500(
 ):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.agency.return_value = mocked_session_agency.return_value
-    mock_session.eligibility.return_value = model_EligibilityType
+    mock_session.flow.return_value = model_EnrollmentFlow_does_not_support_expiration
 
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
@@ -310,7 +310,7 @@ def test_index_eligible_post_valid_form_http_error_500(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_http_error_400(mocker, client, card_tokenize_form_data):
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
@@ -328,7 +328,7 @@ def test_index_eligible_post_valid_form_http_error_400(mocker, client, card_toke
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_failure(mocker, client, card_tokenize_form_data):
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
@@ -341,7 +341,7 @@ def test_index_eligible_post_valid_form_failure(mocker, client, card_tokenize_fo
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("model_EligibilityType")
+@pytest.mark.usefixtures("model_EnrollmentFlow")
 def test_get_group_funding_sources_funding_source_not_enrolled_yet(mocker, mocked_funding_source):
     mock_client = mocker.Mock()
     mock_client.get_concession_group_linked_funding_sources.return_value = []
@@ -352,7 +352,7 @@ def test_get_group_funding_sources_funding_source_not_enrolled_yet(mocker, mocke
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("model_EligibilityType")
+@pytest.mark.usefixtures("model_EnrollmentFlow")
 def test_get_group_funding_sources_funding_source_already_enrolled(
     mocker, mocked_funding_source, mocked_group_funding_source_no_expiry
 ):
@@ -365,13 +365,13 @@ def test_get_group_funding_sources_funding_source_already_enrolled(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_success_does_not_support_expiration_customer_already_enrolled_no_expiry(
     mocker,
     client,
     card_tokenize_form_data,
     mocked_analytics_module,
-    model_EligibilityType_does_not_support_expiration,
+    model_EnrollmentFlow_does_not_support_expiration,
     mocked_funding_source,
     mocked_group_funding_source_no_expiry,
 ):
@@ -385,21 +385,19 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_cust
     response = client.post(path, card_tokenize_form_data)
 
     assert response.status_code == 200
-    assert response.template_name == model_EligibilityType_does_not_support_expiration.enrollment_success_template
+    assert response.template_name == model_EnrollmentFlow_does_not_support_expiration.enrollment_success_template
     mocked_analytics_module.returned_success.assert_called_once()
-    assert (
-        model_EligibilityType_does_not_support_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
-    )
+    assert model_EnrollmentFlow_does_not_support_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_success_does_not_support_expiration_no_expiry(
     mocker,
     client,
     card_tokenize_form_data,
     mocked_analytics_module,
-    model_EligibilityType_does_not_support_expiration,
+    model_EnrollmentFlow_does_not_support_expiration,
     mocked_funding_source,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
@@ -410,14 +408,12 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_no_e
     response = client.post(path, card_tokenize_form_data)
 
     mock_client.link_concession_group_funding_source.assert_called_once_with(
-        funding_source_id=mocked_funding_source.id, group_id=model_EligibilityType_does_not_support_expiration.group_id
+        funding_source_id=mocked_funding_source.id, group_id=model_EnrollmentFlow_does_not_support_expiration.group_id
     )
     assert response.status_code == 200
-    assert response.template_name == model_EligibilityType_does_not_support_expiration.enrollment_success_template
+    assert response.template_name == model_EnrollmentFlow_does_not_support_expiration.enrollment_success_template
     mocked_analytics_module.returned_success.assert_called_once()
-    assert (
-        model_EligibilityType_does_not_support_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
-    )
+    assert model_EnrollmentFlow_does_not_support_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
 
 
 def test_calculate_expiry():
@@ -447,13 +443,13 @@ def test_calculate_expiry_specific_date(mocker):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_success_supports_expiration(
     mocker,
     client,
     card_tokenize_form_data,
     mocked_analytics_module,
-    model_EligibilityType_supports_expiration,
+    model_EnrollmentFlow_supports_expiration,
     mocked_funding_source,
     mocked_session_enrollment_expiry,
 ):
@@ -466,23 +462,23 @@ def test_index_eligible_post_valid_form_success_supports_expiration(
 
     mock_client.link_concession_group_funding_source.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
-        group_id=model_EligibilityType_supports_expiration.group_id,
+        group_id=model_EnrollmentFlow_supports_expiration.group_id,
         expiry=mocked_session_enrollment_expiry.return_value,
     )
     assert response.status_code == 200
-    assert response.template_name == model_EligibilityType_supports_expiration.enrollment_success_template
+    assert response.template_name == model_EnrollmentFlow_supports_expiration.enrollment_success_template
     mocked_analytics_module.returned_success.assert_called_once()
-    assert model_EligibilityType_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+    assert model_EnrollmentFlow_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_success_supports_expiration_no_expiry(
     mocker,
     client,
     card_tokenize_form_data,
     mocked_analytics_module,
-    model_EligibilityType_supports_expiration,
+    model_EnrollmentFlow_supports_expiration,
     mocked_funding_source,
     mocked_group_funding_source_no_expiry,
     mocked_session_enrollment_expiry,
@@ -498,13 +494,13 @@ def test_index_eligible_post_valid_form_success_supports_expiration_no_expiry(
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
-        group_id=model_EligibilityType_supports_expiration.group_id,
+        group_id=model_EnrollmentFlow_supports_expiration.group_id,
         expiry=mocked_session_enrollment_expiry.return_value,
     )
     assert response.status_code == 200
-    assert response.template_name == model_EligibilityType_supports_expiration.enrollment_success_template
+    assert response.template_name == model_EnrollmentFlow_supports_expiration.enrollment_success_template
     mocked_analytics_module.returned_success.assert_called_once()
-    assert model_EligibilityType_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+    assert model_EnrollmentFlow_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
 
 
 def test_is_expired_expiry_date_is_in_the_past(mocker):
@@ -544,13 +540,13 @@ def test_is_expired_expiry_date_equals_now(mocker):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_success_supports_expiration_is_expired(
     mocker,
     client,
     card_tokenize_form_data,
     mocked_analytics_module,
-    model_EligibilityType_supports_expiration,
+    model_EnrollmentFlow_supports_expiration,
     mocked_funding_source,
     mocked_group_funding_source_with_expiry,
     mocked_session_enrollment_expiry,
@@ -569,13 +565,13 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_expired(
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
-        group_id=model_EligibilityType_supports_expiration.group_id,
+        group_id=model_EnrollmentFlow_supports_expiration.group_id,
         expiry=mocked_session_enrollment_expiry.return_value,
     )
     assert response.status_code == 200
-    assert response.template_name == model_EligibilityType_supports_expiration.enrollment_success_template
+    assert response.template_name == model_EnrollmentFlow_supports_expiration.enrollment_success_template
     mocked_analytics_module.returned_success.assert_called_once()
-    assert model_EligibilityType_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+    assert model_EnrollmentFlow_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
 
 
 def test_is_within_enrollment_window_True(mocker):
@@ -654,13 +650,13 @@ def test_is_within_enrollment_window_equal_expiry_date(mocker):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_success_supports_expiration_is_within_reenrollment_window(
     mocker,
     client,
     card_tokenize_form_data,
     mocked_analytics_module,
-    model_EligibilityType_supports_expiration,
+    model_EnrollmentFlow_supports_expiration,
     mocked_funding_source,
     mocked_group_funding_source_with_expiry,
     mocked_session_enrollment_expiry,
@@ -679,17 +675,17 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_within_re
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
-        group_id=model_EligibilityType_supports_expiration.group_id,
+        group_id=model_EnrollmentFlow_supports_expiration.group_id,
         expiry=mocked_session_enrollment_expiry.return_value,
     )
     assert response.status_code == 200
-    assert response.template_name == model_EligibilityType_supports_expiration.enrollment_success_template
+    assert response.template_name == model_EnrollmentFlow_supports_expiration.enrollment_success_template
     mocked_analytics_module.returned_success.assert_called_once()
-    assert model_EligibilityType_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+    assert model_EnrollmentFlow_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_success_supports_expiration_is_not_expired_yet(
     mocker,
     client,
@@ -697,7 +693,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_not_expir
     mocked_analytics_module,
     mocked_funding_source,
     mocked_group_funding_source_with_expiry,
-    model_EligibilityType_supports_expiration,
+    model_EnrollmentFlow_supports_expiration,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
     mock_client = mock_client_cls.return_value
@@ -713,18 +709,18 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_not_expir
     response = client.post(path, card_tokenize_form_data)
 
     assert response.status_code == 200
-    assert response.template_name == model_EligibilityType_supports_expiration.reenrollment_error_template
+    assert response.template_name == model_EnrollmentFlow_supports_expiration.reenrollment_error_template
     mocked_analytics_module.returned_error.assert_called_once()
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_success_does_not_support_expiration_has_expiration_date(
     mocker,
     client,
     card_tokenize_form_data,
     mocked_analytics_module,
-    model_EligibilityType_does_not_support_expiration,
+    model_EnrollmentFlow_does_not_support_expiration,
     mocked_funding_source,
     mocked_group_funding_source_with_expiry,
 ):
@@ -743,14 +739,14 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_has_
     #
     # mock_client.link_concession_group_funding_source.assert_called_once_with(
     #     funding_source_id=mocked_funding_source.id,
-    #     group_id=model_EligibilityType_does_not_support_expiration.group_id,
+    #     group_id=model_EnrollmentFlow_does_not_support_expiration.group_id,
     #     expiry_date=None,
     # )
     # assert response.status_code == 200
-    # assert response.template_name == model_EligibilityType_does_not_support_expiration.enrollment_success_template
+    # assert response.template_name == model_EnrollmentFlow_does_not_support_expiration.enrollment_success_template
     # mocked_analytics_module.returned_success.assert_called_once()
     # assert (
-    #     model_EligibilityType_does_not_support_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+    #     model_EnrollmentFlow_does_not_support_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
     # )
 
 
@@ -775,7 +771,7 @@ def test_reenrollment_error_ineligible(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_reenrollment_error_eligibility_no_error_template(client):
     path = reverse(ROUTE_REENROLLMENT_ERROR)
 
@@ -785,15 +781,15 @@ def test_reenrollment_error_eligibility_no_error_template(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_reenrollment_error(client, model_EligibilityType_supports_expiration, mocked_session_eligibility):
-    mocked_session_eligibility.return_value = model_EligibilityType_supports_expiration
+def test_reenrollment_error(client, model_EnrollmentFlow_supports_expiration, mocked_session_eligible):
+    mocked_session_eligible.return_value = model_EnrollmentFlow_supports_expiration
 
     path = reverse(ROUTE_REENROLLMENT_ERROR)
 
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == model_EligibilityType_supports_expiration.reenrollment_error_template
+    assert response.template_name == model_EnrollmentFlow_supports_expiration.reenrollment_error_template
 
 
 @pytest.mark.django_db
@@ -807,7 +803,7 @@ def test_retry_ineligible(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_retry_get(client, mocked_analytics_module):
     path = reverse(ROUTE_RETRY)
     response = client.get(path)
@@ -818,7 +814,7 @@ def test_retry_get(client, mocked_analytics_module):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_retry_valid_form(client, mocked_analytics_module):
     path = reverse(ROUTE_RETRY)
     response = client.post(path)
@@ -839,51 +835,51 @@ def test_success_no_flow(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification", "mocked_session_eligibility")
-def test_success_authentication_logged_in(mocker, client, model_TransitAgency, model_EligibilityType, mocked_analytics_module):
+@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification", "mocked_session_eligible")
+def test_success_authentication_logged_in(mocker, client, model_TransitAgency, model_EnrollmentFlow, mocked_analytics_module):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = True
     mock_session.agency.return_value = model_TransitAgency
-    mock_session.eligibility.return_value = model_EligibilityType
+    mock_session.flow.return_value = model_EnrollmentFlow
 
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == model_EligibilityType.enrollment_success_template
+    assert response.template_name == model_EnrollmentFlow.enrollment_success_template
     assert {"origin": reverse(ROUTE_LOGGED_OUT)} in mock_session.update.call_args
     mocked_analytics_module.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification", "mocked_session_eligibility")
+@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification", "mocked_session_eligible")
 def test_success_authentication_not_logged_in(
-    mocker, client, model_TransitAgency, model_EligibilityType, mocked_analytics_module
+    mocker, client, model_TransitAgency, model_EnrollmentFlow, mocked_analytics_module
 ):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = False
     mock_session.agency.return_value = model_TransitAgency
-    mock_session.eligibility.return_value = model_EligibilityType
+    mock_session.flow.return_value = model_EnrollmentFlow
 
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == model_EligibilityType.enrollment_success_template
+    assert response.template_name == model_EnrollmentFlow.enrollment_success_template
     mocked_analytics_module.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures(
-    "mocked_session_agency", "mocked_session_flow_does_not_use_claims_verification", "mocked_session_eligibility"
+    "mocked_session_agency", "mocked_session_flow_does_not_use_claims_verification", "mocked_session_eligible"
 )
-def test_success_no_authentication(mocker, client, model_EligibilityType, mocked_analytics_module):
+def test_success_no_authentication(mocker, client, model_EnrollmentFlow, mocked_analytics_module):
     mock_session = mocker.patch("benefits.enrollment.views.session")
-    mock_session.eligibility.return_value = model_EligibilityType
+    mock_session.flow.return_value = model_EnrollmentFlow
 
     path = reverse(ROUTE_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == model_EligibilityType.enrollment_success_template
+    assert response.template_name == model_EnrollmentFlow.enrollment_success_template
     mocked_analytics_module.returned_success.assert_called_once()

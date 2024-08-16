@@ -55,7 +55,6 @@ def test_Event_reads_session(app_request, mocker):
 
     session_spy.agency.assert_called_once_with(app_request)
     session_spy.did.assert_called_once_with(app_request)
-    session_spy.eligibility.assert_called_once_with(app_request)
     session_spy.language.assert_called_once_with(app_request)
     session_spy.start.assert_called_once_with(app_request)
     session_spy.uid.assert_called_once_with(app_request)

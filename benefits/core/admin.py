@@ -41,25 +41,6 @@ class ClaimsProviderAdmin(admin.ModelAdmin):  # pragma: no cover
             return super().get_readonly_fields(request, obj)
 
 
-@admin.register(models.EligibilityType)
-class EligibilityTypeAdmin(admin.ModelAdmin):  # pragma: no cover
-    def get_exclude(self, request, obj=None):
-        if not request.user.is_superuser:
-            return []
-        else:
-            return super().get_exclude(request, obj)
-
-    def get_readonly_fields(self, request, obj=None):
-        if not request.user.is_superuser:
-            return [
-                "enrollment_index_template",
-                "reenrollment_error_template",
-                "enrollment_success_template",
-            ]
-        else:
-            return super().get_readonly_fields(request, obj)
-
-
 @admin.register(models.EnrollmentFlow)
 class SortableEnrollmentFlowAdmin(SortableAdminMixin, admin.ModelAdmin):  # pragma: no cover
     def get_exclude(self, request, obj=None):
@@ -86,6 +67,9 @@ class SortableEnrollmentFlowAdmin(SortableAdminMixin, admin.ModelAdmin):  # prag
                 "help_template",
                 "selection_label_template",
                 "claims_scheme_override",
+                "enrollment_index_template",
+                "reenrollment_error_template",
+                "enrollment_success_template",
             ]
         else:
             return super().get_readonly_fields(request, obj)

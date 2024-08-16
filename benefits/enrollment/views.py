@@ -84,7 +84,7 @@ def index(request):
     session.update(request, origin=reverse(ROUTE_INDEX))
 
     agency = session.agency(request)
-    eligibility = session.eligibility(request)
+    flow = session.flow(request)
 
     # POST back after transit processor form, process card token
     if request.method == "POST":
@@ -103,7 +103,7 @@ def index(request):
         client.oauth.ensure_active_token(client.token)
 
         funding_source = client.get_funding_source_by_token(card_token)
-        group_id = eligibility.group_id
+        group_id = flow.group_id
 
         try:
             group_funding_source = _get_group_funding_source(
@@ -112,12 +112,12 @@ def index(request):
 
             already_enrolled = group_funding_source is not None
 
-            if eligibility.supports_expiration:
+            if flow.supports_expiration:
                 # set expiry on session
                 if already_enrolled and group_funding_source.expiry_date is not None:
                     session.update(request, enrollment_expiry=group_funding_source.expiry_date)
                 else:
-                    session.update(request, enrollment_expiry=_calculate_expiry(eligibility.expiration_days))
+                    session.update(request, enrollment_expiry=_calculate_expiry(flow.expiration_days))
 
                 if not already_enrolled:
                     # enroll user with an expiration date, return success
@@ -203,7 +203,7 @@ def index(request):
 
         logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
 
-        return TemplateResponse(request, eligibility.enrollment_index_template, context)
+        return TemplateResponse(request, flow.enrollment_index_template, context)
 
 
 def _get_group_funding_source(client: Client, group_id, funding_source_id):
@@ -240,11 +240,10 @@ def _calculate_expiry(expiration_days):
 @decorator_from_middleware(EligibleSessionRequired)
 def reenrollment_error(request):
     """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
-    eligibility = session.eligibility(request)
     flow = session.flow(request)
 
-    if eligibility.reenrollment_error_template is None:
-        raise Exception(f"Re-enrollment error with null template on: {eligibility.label}")
+    if flow.reenrollment_error_template is None:
+        raise Exception(f"Re-enrollment error with null template on: {flow}")
 
     if session.logged_in(request) and flow.claims_provider.supports_sign_out:
         # overwrite origin for a logged in user
@@ -253,7 +252,7 @@ def reenrollment_error(request):
 
     analytics.returned_error(request, "Re-enrollment error.")
 
-    return TemplateResponse(request, eligibility.reenrollment_error_template)
+    return TemplateResponse(request, flow.reenrollment_error_template)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
@@ -282,7 +281,6 @@ def success(request):
     request.path = "/enrollment/success"
     session.update(request, origin=reverse(ROUTE_SUCCESS))
 
-    eligibility = session.eligibility(request)
     flow = session.flow(request)
 
     if session.logged_in(request) and flow.claims_provider.supports_sign_out:
@@ -290,6 +288,6 @@ def success(request):
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
 
-    analytics.returned_success(request, eligibility.group_id)
+    analytics.returned_success(request, flow.group_id)
     context = {"redirect_to": request.path}
-    return TemplateResponse(request, eligibility.enrollment_success_template, context)
+    return TemplateResponse(request, flow.enrollment_success_template, context)
