@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_7435199c01eb52ab_redirects_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.1">coverage.py v7.6.1</a>,
-            created at 2024-08-16 19:07 +0000
+            created at 2024-08-16 21:19 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -114,7 +114,7 @@
     <p class="run"><span class="n"><a id="t30" href="#t30">30</a></span><span class="t">        <span class="key">elif</span> <span class="key">not</span> <span class="op">(</span><span class="nam">flow</span><span class="op">.</span><span class="nam">eligibility_api_url</span> <span class="key">or</span> <span class="nam">flow</span><span class="op">.</span><span class="nam">eligibility_form_class</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t31" href="#t31">31</a></span><span class="t">            <span class="com"># the chosen flow doesn't have Eligibility API config OR claims provider config</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t32" href="#t32">32</a></span><span class="t">            <span class="com"># this is likely a misconfiguration on the backend, not a user error</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t33" href="#t33">33</a></span><span class="t">            <span class="nam">message</span> <span class="op">=</span> <span class="fst">f"</span><span class="fst">Flow with no API or claims config: </span><span class="op">{</span><span class="nam">flow</span><span class="op">.</span><span class="nam">name</span><span class="op">}</span><span class="fst"> (id=</span><span class="op">{</span><span class="nam">flow</span><span class="op">.</span><span class="nam">id</span><span class="op">}</span><span class="fst">)</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t33" href="#t33">33</a></span><span class="t">            <span class="nam">message</span> <span class="op">=</span> <span class="fst">f"</span><span class="fst">Flow with no API or claims config: </span><span class="op">{</span><span class="nam">flow</span><span class="op">.</span><span class="nam">system_name</span><span class="op">}</span><span class="fst"> (id=</span><span class="op">{</span><span class="nam">flow</span><span class="op">.</span><span class="nam">id</span><span class="op">}</span><span class="fst">)</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t34" href="#t34">34</a></span><span class="t">            <span class="nam">analytics</span><span class="op">.</span><span class="nam">error</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">message</span><span class="op">=</span><span class="nam">message</span><span class="op">,</span> <span class="nam">operation</span><span class="op">=</span><span class="nam">request</span><span class="op">.</span><span class="nam">path</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t35" href="#t35">35</a></span><span class="t">            <span class="nam">sentry_sdk</span><span class="op">.</span><span class="nam">capture_exception</span><span class="op">(</span><span class="nam">Exception</span><span class="op">(</span><span class="nam">message</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t36" href="#t36">36</a></span><span class="t">            <span class="key">return</span> <span class="nam">redirect</span><span class="op">(</span><span class="nam">ROUTE_SYSTEM_ERROR</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -131,7 +131,7 @@
             <a class="nav" href="z_7435199c01eb52ab_redirects_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.1">coverage.py v7.6.1</a>,
-            created at 2024-08-16 19:07 +0000
+            created at 2024-08-16 21:19 +0000
         </p>
     </div>
 </footer>
