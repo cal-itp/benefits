@@ -19,7 +19,7 @@ class Routes:
     @property
     def SERVER_ERROR(self):
         """Generic 500 handler."""
-        return "core:server-error"
+        return "core:server_error"
 
     @property
     def AGENCY_INDEX(self):
@@ -59,7 +59,7 @@ class Routes:
     @property
     def OAUTH_SYSTEM_ERROR(self):
         """OAuth error not caused by the user."""
-        return "oauth:system-error"
+        return "oauth:system_error"
 
     @property
     def ELIGIBILITY_INDEX(self):
@@ -114,7 +114,7 @@ class Routes:
     @property
     def ENROLLMENT_SYSTEM_ERROR(self):
         """Enrollment error not caused by the user."""
-        return "enrollment:system-error"
+        return "enrollment:system_error"
 
     @property
     def IN_PERSON_ELIGIBILITY(self):
