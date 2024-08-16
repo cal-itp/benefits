@@ -364,11 +364,6 @@ class TransitAgency(models.Model):
         return reverse(routes.ELIGIBILITY_AGENCY_INDEX, args=[self.slug])
 
     @property
-    def eligibility_api_public_key_url(self):
-        """Public-facing URL to the TransitAgency's public key."""
-        return reverse("core:agency_public_key", args=[self.slug])
-
-    @property
     def eligibility_api_private_key_data(self):
         """This Agency's private key as a string."""
         return self.eligibility_api_private_key.data
