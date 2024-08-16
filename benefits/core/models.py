@@ -404,7 +404,6 @@ class TransitAgency(models.Model):
         group = user.groups.first()
 
         if group is not None:
-            # TransitAgency to Group is one-to-one, so there will be either 0 or 1 returned
-            return TransitAgency.objects.filter(group=group).first()
+            return group.transitagency
         else:
             return None
