@@ -8,7 +8,7 @@ import logging
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.db import models
 from django.urls import reverse
 
@@ -398,3 +398,13 @@ class TransitAgency(models.Model):
         """Get all TransitAgency instances marked active."""
         logger.debug(f"Get all active {TransitAgency.__name__}")
         return TransitAgency.objects.filter(active=True)
+
+    @staticmethod
+    def for_user(user: User):
+        group = user.groups.first()
+
+        if group is not None:
+            # TransitAgency to Group is one-to-one, so there will be either 0 or 1 returned
+            return TransitAgency.objects.filter(group=group).first()
+        else:
+            return None
