@@ -6,7 +6,7 @@
 {% endblock classes %}
 
 {% block nav-buttons %}
-  {% url "eligibility:index" as url %}
+  {% url routes.ELIGIBILITY_INDEX as url %}
   {% include "core/includes/button--previous-page.html" with url=url %}
 {% endblock nav-buttons %}
 

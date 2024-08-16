@@ -6,6 +6,5 @@
 {% endblock title %}
 
 {% block call-to-action %}
-  {% url "eligibility:index" as url_continue %}
-  <a href="{{ url_continue }}" class="btn btn-lg btn-primary">{% translate "Get Started" %}</a>
+  <a href="{% url routes.ELIGIBILITY_INDEX %}" class="btn btn-lg btn-primary">{% translate "Get Started" %}</a>
 {% endblock call-to-action %}

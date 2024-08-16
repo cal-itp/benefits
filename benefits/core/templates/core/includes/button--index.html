@@ -1,6 +1,5 @@
 {% load i18n %}
 
-{% url "core:index" as href %}
 {% translate "Return home" as default_button_text %}
 
-<a href="{{ href }}" class="btn btn-lg btn-primary">{{ button_text | default:default_button_text }}</a>
+<a href="{% url routes.INDEX %}" class="btn btn-lg btn-primary">{{ button_text | default:default_button_text }}</a>
