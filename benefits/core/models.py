@@ -8,6 +8,7 @@ import logging
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import Group
 from django.db import models
 from django.urls import reverse
 
@@ -338,6 +339,14 @@ class TransitAgency(models.Model):
     transit_processor_client_secret_name = SecretNameField(
         help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
         default="",
+    )
+    group = models.OneToOneField(
+        Group,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        default=None,
+        help_text="The group of users who can access this TransitAgency.",
     )
 
     def __str__(self):
