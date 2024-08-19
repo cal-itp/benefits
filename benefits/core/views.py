@@ -43,6 +43,12 @@ def agency_public_key(request, agency: models.TransitAgency):
 
 
 @pageview_decorator
+def agency_card(request, agency: models.TransitAgency):
+    """View handler forwards the request to the agency's Agency Card (e.g. Eligibility API) flow, or returns a user error."""
+    pass
+
+
+@pageview_decorator
 def help(request):
     """View handler for the help page."""
     return TemplateResponse(request, TEMPLATE_HELP)

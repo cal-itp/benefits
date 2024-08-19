@@ -27,6 +27,11 @@ class Routes:
         return "core:agency_index"
 
     @property
+    def AGENCY_CARD(self):
+        """Agency card flow redirect for an agency."""
+        return "core:agency_card"
+
+    @property
     def AGENCY_PUBLIC_KEY(self):
         """Agency's eligibility API public key."""
         return "core:agency_public_key"
