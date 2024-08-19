@@ -4,7 +4,7 @@ The core application: context processors for enriching request context data.
 
 from django.conf import settings
 
-from benefits.routes import Routes, routes as app_routes
+from benefits.routes import routes as app_routes
 
 from . import models, session
 
@@ -99,12 +99,4 @@ def origin(request):
 def routes(request):
     """Context processor adds information about each application route to the context."""
 
-    # get a dict[str,str] mapping property name --> value
-    # for each @property in the Routes collection
-    routes_dict = dict(
-        (prop, str(getattr(app_routes, prop)))
-        for prop in dir(app_routes)
-        if prop not in dir(Routes) or isinstance(getattr(Routes, prop), property)
-    )
-
-    return {"routes": routes_dict}
+    return {"routes": app_routes.to_dict()}

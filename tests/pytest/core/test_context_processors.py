@@ -41,11 +41,12 @@ def test_enrollment_expiration(app_request, model_EnrollmentFlow_supports_expira
 
 @pytest.mark.django_db
 def test_routes(app_request):
+    app_routes_dict = app_routes.to_dict()
+
     context = routes(app_request)
     assert "routes" in context
 
     context_routes = context["routes"]
-    for prop in dir(app_routes):
-        if isinstance(prop, property):
-            assert prop in context_routes
-            assert context_routes[prop] == getattr(app_routes, prop)
+    for route_name in app_routes_dict.keys():
+        assert route_name in context_routes
+        assert context_routes[route_name] == app_routes_dict[route_name]

@@ -126,6 +126,10 @@ class Routes:
         """In-person (e.g. agency assisted) enrollment"""
         return "in_person:enrollment"
 
+    def to_dict(self) -> dict[str, str]:
+        """Get a mapping of property name --> value for each `@property` in the Routes collection."""
+        return {prop: str(getattr(self, prop)) for prop in dir(Routes) if isinstance(getattr(Routes, prop), property)}
+
     @staticmethod
     def name(route: str) -> str:
         """Returns just the name portion of the app:name structure of the route."""
