@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth.models import Group, User
 from django.core.exceptions import ValidationError
 
 import pytest
@@ -330,3 +331,32 @@ def test_TransitAgency_all_active(model_TransitAgency):
     assert len(result) > 0
     assert model_TransitAgency in result
     assert inactive_agency not in result
+
+
+@pytest.mark.django_db
+def test_TransitAgency_for_user_in_group(model_TransitAgency):
+    group = Group.objects.create(name="test_group")
+
+    agency_for_user = TransitAgency.by_id(model_TransitAgency.id)
+    agency_for_user.pk = None
+    agency_for_user.staff_group = group
+    agency_for_user.save()
+
+    user = User.objects.create_user(username="test_user", email="test_user@example.com", password="test", is_staff=True)
+    user.groups.add(group)
+
+    assert TransitAgency.for_user(user) == agency_for_user
+
+
+@pytest.mark.django_db
+def test_TransitAgency_for_user_not_in_group(model_TransitAgency):
+    group = Group.objects.create(name="test_group")
+
+    agency_for_user = TransitAgency.by_id(model_TransitAgency.id)
+    agency_for_user.pk = None
+    agency_for_user.staff_group = group
+    agency_for_user.save()
+
+    user = User.objects.create_user(username="test_user", email="test_user@example.com", password="test", is_staff=True)
+
+    assert TransitAgency.for_user(user) is None
