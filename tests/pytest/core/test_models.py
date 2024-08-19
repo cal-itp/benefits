@@ -339,7 +339,7 @@ def test_TransitAgency_for_user_in_group(model_TransitAgency):
 
     agency_for_user = TransitAgency.by_id(model_TransitAgency.id)
     agency_for_user.pk = None
-    agency_for_user.group = group
+    agency_for_user.staff_group = group
     agency_for_user.save()
 
     user = User.objects.create_user(username="test_user", email="test_user@example.com", password="test", is_staff=True)
@@ -354,7 +354,7 @@ def test_TransitAgency_for_user_not_in_group(model_TransitAgency):
 
     agency_for_user = TransitAgency.by_id(model_TransitAgency.id)
     agency_for_user.pk = None
-    agency_for_user.group = group
+    agency_for_user.staff_group = group
     agency_for_user.save()
 
     user = User.objects.create_user(username="test_user", email="test_user@example.com", password="test", is_staff=True)

@@ -340,7 +340,7 @@ class TransitAgency(models.Model):
         help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
         default="",
     )
-    group = models.OneToOneField(
+    staff_group = models.OneToOneField(
         Group,
         on_delete=models.PROTECT,
         null=True,
