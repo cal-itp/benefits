@@ -360,3 +360,13 @@ def test_TransitAgency_for_user_not_in_group(model_TransitAgency):
     user = User.objects.create_user(username="test_user", email="test_user@example.com", password="test", is_staff=True)
 
     assert TransitAgency.for_user(user) is None
+
+
+@pytest.mark.django_db
+def test_TransitAgency_for_user_in_group_not_linked_to_any_agency():
+    group = Group.objects.create(name="another test group")
+
+    user = User.objects.create_user(username="test_user", email="test_user@example.com", password="test", is_staff=True)
+    user.groups.add(group)
+
+    assert TransitAgency.for_user(user) is None
