@@ -403,7 +403,7 @@ class TransitAgency(models.Model):
     def for_user(user: User):
         group = user.groups.first()
 
-        if group is not None:
+        if group is not None and hasattr(group, "transitagency"):
             return group.transitagency
         else:
             return None
