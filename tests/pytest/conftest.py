@@ -69,16 +69,10 @@ def model_ClaimsProvider_no_sign_out(model_ClaimsProvider):
 
 
 @pytest.fixture
-def model_EnrollmentFlow(model_PemData, model_ClaimsProvider):
+def model_EnrollmentFlow():
     flow = EnrollmentFlow.objects.create(
         system_name="Test Flow",
-        eligibility_api_url="https://example.com/verify",
-        eligibility_api_auth_header="X-API-AUTH",
-        eligibility_api_auth_key_secret_name="secret-key",
-        eligibility_api_public_key=model_PemData,
         selection_label_template="eligibility/includes/selection-label.html",
-        claims_provider=model_ClaimsProvider,
-        claims_scheme_override="",
         label="Test flow label",
         group_id="group123",
         enrollment_success_template="enrollment/success.html",
@@ -88,7 +82,20 @@ def model_EnrollmentFlow(model_PemData, model_ClaimsProvider):
 
 
 @pytest.fixture
-def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow):
+def model_EnrollmentFlow_with_eligibility_api(model_EnrollmentFlow, model_PemData):
+    model_EnrollmentFlow.eligibility_api_url = "https://example.com/verify"
+    model_EnrollmentFlow.eligibility_api_auth_header = "X-API-AUTH"
+    model_EnrollmentFlow.eligibility_api_auth_key_secret_name = "secret-key"
+    model_EnrollmentFlow.eligibility_api_public_key = model_PemData
+    model_EnrollmentFlow.eligibility_form_class = "benefits.eligibility.forms.CSTAgencyCard"
+    model_EnrollmentFlow.save()
+
+    return model_EnrollmentFlow
+
+
+@pytest.fixture
+def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow, model_ClaimsProvider):
+    model_EnrollmentFlow.claims_provider = model_ClaimsProvider
     model_EnrollmentFlow.claims_scope = "scope"
     model_EnrollmentFlow.claims_claim = "claim"
     model_EnrollmentFlow.save()
@@ -97,11 +104,11 @@ def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow):
 
 
 @pytest.fixture
-def model_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow):
-    model_EnrollmentFlow.claims_scheme_override = "scheme"
-    model_EnrollmentFlow.save()
+def model_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow_with_scope_and_claim):
+    model_EnrollmentFlow_with_scope_and_claim.claims_scheme_override = "scheme"
+    model_EnrollmentFlow_with_scope_and_claim.save()
 
-    return model_EnrollmentFlow
+    return model_EnrollmentFlow_with_scope_and_claim
 
 
 @pytest.fixture
@@ -243,16 +250,14 @@ def mocked_session_flow(mocker, model_EnrollmentFlow):
 
 
 @pytest.fixture
-def mocked_session_flow_uses_claims_verification(mocker, model_EnrollmentFlow_with_scope_and_claim):
-    return mocker.patch(
-        "benefits.core.session.flow",
-        autospec=True,
-        return_value=model_EnrollmentFlow_with_scope_and_claim,
-    )
+def mocked_session_flow_uses_claims_verification(mocked_session_flow, model_EnrollmentFlow_with_scope_and_claim):
+    mocked_session_flow.return_value = model_EnrollmentFlow_with_scope_and_claim
+    return mocked_session_flow
 
 
 @pytest.fixture
-def mocked_session_flow_does_not_use_claims_verification(mocked_session_flow):
+def mocked_session_flow_does_not_use_claims_verification(mocked_session_flow, model_EnrollmentFlow_with_eligibility_api):
+    mocked_session_flow.return_value = model_EnrollmentFlow_with_eligibility_api
     return mocked_session_flow
 
 

@@ -15,36 +15,40 @@ def mock_api_client_verify(mocker):
 
 
 @pytest.mark.django_db
-def test_eligibility_from_api_error(mocker, model_TransitAgency, model_EnrollmentFlow, mock_api_client_verify, form):
+def test_eligibility_from_api_error(
+    mocker, model_TransitAgency, model_EnrollmentFlow_with_eligibility_api, mock_api_client_verify, form
+):
     api_errors = {"name": "Name error"}
     api_response = mocker.Mock(error=api_errors)
     mock_api_client_verify.return_value = api_response
 
-    response = eligibility_from_api(model_EnrollmentFlow, form, model_TransitAgency)
+    response = eligibility_from_api(model_EnrollmentFlow_with_eligibility_api, form, model_TransitAgency)
 
     assert response is None
 
 
 @pytest.mark.django_db
-def test_eligibility_from_api_verified_types(mocker, model_TransitAgency, model_EnrollmentFlow, mock_api_client_verify, form):
+def test_eligibility_from_api_verified_types(
+    mocker, model_TransitAgency, model_EnrollmentFlow_with_eligibility_api, mock_api_client_verify, form
+):
     verified_types = ["Test Flow"]
     api_response = mocker.Mock(eligibility=verified_types, error=None)
     mock_api_client_verify.return_value = api_response
 
-    response = eligibility_from_api(model_EnrollmentFlow, form, model_TransitAgency)
+    response = eligibility_from_api(model_EnrollmentFlow_with_eligibility_api, form, model_TransitAgency)
 
     assert response is True
 
 
 @pytest.mark.django_db
 def test_eligibility_from_api_no_verified_types(
-    mocker, model_TransitAgency, model_EnrollmentFlow, mock_api_client_verify, form
+    mocker, model_TransitAgency, model_EnrollmentFlow_with_eligibility_api, mock_api_client_verify, form
 ):
     verified_types = []
     api_response = mocker.Mock(eligibility=verified_types, error=None)
     mock_api_client_verify.return_value = api_response
 
-    response = eligibility_from_api(model_EnrollmentFlow, form, model_TransitAgency)
+    response = eligibility_from_api(model_EnrollmentFlow_with_eligibility_api, form, model_TransitAgency)
 
     assert response is False
 

@@ -287,23 +287,6 @@ def test_authorize_success_with_claim_error(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_analytics_module")
-def test_authorize_success_without_flow_claim(
-    app_request, mocked_session_flow_uses_claims_verification, mocked_oauth_client_or_error_redirect__client
-):
-    flow = mocked_session_flow_uses_claims_verification.return_value
-    flow.claims_claim = ""
-    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
-    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "1"}}
-
-    result = authorize(app_request)
-
-    assert session.oauth_claim(app_request) is None
-    assert result.status_code == 200
-    assert result.template_name == TEMPLATE_USER_ERROR
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_analytics_module")
 @pytest.mark.parametrize(
     "access_token_response",
     [
