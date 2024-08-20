@@ -3,11 +3,13 @@ The core application: view definition for the root of the webapp.
 """
 
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
+from django.shortcuts import redirect
 from django.template import loader
 from django.template.response import TemplateResponse
 
+from benefits.routes import routes
 from . import models, session
-from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator
+from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator, user_error
 
 TEMPLATE_INDEX = "core/index.html"
 TEMPLATE_AGENCY = "core/agency-index.html"
@@ -45,7 +47,20 @@ def agency_public_key(request, agency: models.TransitAgency):
 @pageview_decorator
 def agency_card(request, agency: models.TransitAgency):
     """View handler forwards the request to the agency's Agency Card (e.g. Eligibility API) flow, or returns a user error."""
-    pass
+    session.reset(request)
+    session.update(request, agency=agency, origin=agency.index_url)
+
+    eligibility_api_flow = (
+        agency.enrollment_flows.filter(eligibility_api_url__isnull=False, eligibility_form_class__isnull=False)
+        .order_by("id")
+        .last()
+    )
+
+    if eligibility_api_flow:
+        session.update(request, flow=eligibility_api_flow)
+        return redirect(routes.ELIGIBILITY_CONFIRM)
+    else:
+        return user_error(request)
 
 
 @pageview_decorator

@@ -3,6 +3,7 @@ from django.urls import reverse
 import pytest
 
 from benefits.routes import routes
+from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.core.models import EnrollmentFlow, TransitAgency
 from benefits.core.views import (
     TEMPLATE_INDEX,
@@ -101,6 +102,75 @@ def test_agency_public_key(client, model_TransitAgency):
     assert response.status_code == 200
     assert response.headers["Content-Type"] == "text/plain"
     assert response.content.decode("utf-8") == model_TransitAgency.eligibility_api_public_key_data
+
+
+@pytest.mark.django_db
+def test_agency_card_with_eligibility_api_flow(
+    client, model_TransitAgency, model_EnrollmentFlow_with_eligibility_api, mocked_session_update, mocked_session_reset
+):
+    model_TransitAgency.enrollment_flows.clear()
+    model_TransitAgency.enrollment_flows.add(model_EnrollmentFlow_with_eligibility_api)
+    model_TransitAgency.save()
+
+    url = reverse(routes.AGENCY_CARD, args=[model_TransitAgency.slug])
+    response = client.get(url)
+
+    assert response.status_code == 302
+    assert response.url == reverse(routes.ELIGIBILITY_CONFIRM)
+
+    mocked_session_reset.assert_called()
+    update_calls = mocked_session_update.mock_calls
+    assert len(update_calls) == 2
+    assert update_calls[0].kwargs["agency"] == model_TransitAgency
+    assert update_calls[0].kwargs["origin"] == model_TransitAgency.index_url
+    assert update_calls[1].kwargs["flow"] == model_EnrollmentFlow_with_eligibility_api
+
+
+@pytest.mark.django_db
+def test_agency_card_with_multiple_eligibility_api_flows(
+    client, model_TransitAgency, model_EnrollmentFlow_with_eligibility_api, mocked_session_update
+):
+    new_flow = EnrollmentFlow.objects.get(pk=model_EnrollmentFlow_with_eligibility_api.id)
+    new_flow.label = "New flow"
+    new_flow.system_name = "new"
+    new_flow.pk = None
+    new_flow.save()
+
+    # note the order these are added to the TransitAgency doesn't matter (and thus, their sorting within that agency)
+    # it is the order they were created in the database that is used for the query
+    # we always expect new_flow to be the one to match
+    model_TransitAgency.enrollment_flows.clear()
+    model_TransitAgency.enrollment_flows.add(model_EnrollmentFlow_with_eligibility_api)
+    model_TransitAgency.enrollment_flows.add(new_flow)
+    model_TransitAgency.save()
+
+    url = reverse(routes.AGENCY_CARD, args=[model_TransitAgency.slug])
+    response = client.get(url)
+
+    assert response.status_code == 302
+    assert response.url == reverse(routes.ELIGIBILITY_CONFIRM)
+    assert mocked_session_update.mock_calls[1].kwargs["flow"] == new_flow
+
+
+@pytest.mark.django_db
+def test_agency_card_without_eligibility_api_flow(
+    client, model_TransitAgency, model_EnrollmentFlow_with_scope_and_claim, mocked_session_update, mocked_session_reset
+):
+    model_TransitAgency.enrollment_flows.clear()
+    model_TransitAgency.enrollment_flows.add(model_EnrollmentFlow_with_scope_and_claim)
+    model_TransitAgency.save()
+
+    url = reverse(routes.AGENCY_CARD, args=[model_TransitAgency.slug])
+    response = client.get(url)
+
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_USER_ERROR
+
+    mocked_session_reset.assert_called()
+
+    mocked_session_update.assert_called_once()
+    assert mocked_session_update.mock_calls[0].kwargs["agency"] == model_TransitAgency
+    assert mocked_session_update.mock_calls[0].kwargs["origin"] == model_TransitAgency.index_url
 
 
 @pytest.mark.django_db
