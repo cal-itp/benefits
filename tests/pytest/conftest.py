@@ -263,4 +263,4 @@ def mocked_session_flow_does_not_use_claims_verification(mocked_session_flow, mo
 
 @pytest.fixture
 def mocked_session_update(mocker):
-    return mocker.patch("benefits.eligibility.views.session.update")
+    return mocker.patch("benefits.core.session.update")
