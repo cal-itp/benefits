@@ -4,6 +4,8 @@ The core application: context processors for enriching request context data.
 
 from django.conf import settings
 
+from benefits.routes import routes as app_routes
+
 from . import models, session
 
 
@@ -92,3 +94,9 @@ def origin(request):
         return {"origin": origin}
     else:
         return {}
+
+
+def routes(request):
+    """Context processor adds information about each application route to the context."""
+
+    return {"routes": app_routes.to_dict()}

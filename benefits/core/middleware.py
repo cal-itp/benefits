@@ -13,13 +13,13 @@ from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
 
+from benefits.routes import routes
 from . import analytics, recaptcha, session
 
 
 logger = logging.getLogger(__name__)
 
 HEALTHCHECK_PATH = "/healthcheck"
-ROUTE_INDEX = "core:index"
 TEMPLATE_USER_ERROR = "200-user-error.html"
 
 
@@ -135,7 +135,7 @@ class LoginRequired(MiddlewareMixin):
             # pass through
             return None
 
-        return redirect("oauth:login")
+        return redirect(routes.OAUTH_LOGIN)
 
 
 class RecaptchaEnabled(MiddlewareMixin):
@@ -152,13 +152,13 @@ class RecaptchaEnabled(MiddlewareMixin):
 
 
 class IndexOrAgencyIndexOrigin(MiddlewareMixin):
-    """Middleware sets the session.origin to either the core:index or core:agency_index depending on agency config."""
+    """Middleware sets the session.origin to either the index or agency index route, depending on agency config."""
 
     def process_request(self, request):
         if session.active_agency(request):
             session.update(request, origin=session.agency(request).index_url)
         else:
-            session.update(request, origin=reverse(ROUTE_INDEX))
+            session.update(request, origin=reverse(routes.INDEX))
         return None
 
 

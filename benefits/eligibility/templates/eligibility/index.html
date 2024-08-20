@@ -10,7 +10,7 @@
 {% endblock page-title %}
 
 {% block nav-buttons %}
-  {% url "core:index" as url %}
+  {% url routes.INDEX as url %}
   {% include "core/includes/button--previous-page.html" with url=url %}
 {% endblock nav-buttons %}
 

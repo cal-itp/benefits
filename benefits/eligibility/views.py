@@ -8,19 +8,11 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 
+from benefits.routes import routes
 from benefits.core import recaptcha, session
 from benefits.core.middleware import AgencySessionRequired, LoginRequired, RecaptchaEnabled, FlowSessionRequired
 from benefits.core.models import EnrollmentFlow
 from . import analytics, forms, verify
-
-
-ROUTE_CORE_INDEX = "core:index"
-ROUTE_INDEX = "eligibility:index"
-ROUTE_START = "eligibility:start"
-ROUTE_LOGIN = "oauth:login"
-ROUTE_CONFIRM = "eligibility:confirm"
-ROUTE_UNVERIFIED = "eligibility:unverified"
-ROUTE_ENROLLMENT = "enrollment:index"
 
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
 
@@ -37,7 +29,7 @@ def index(request, agency=None):
         else:
             session.update(request, eligible=False, origin=agency.index_url)
     else:
-        session.update(request, agency=agency, eligible=False, origin=reverse(ROUTE_CORE_INDEX))
+        session.update(request, agency=agency, eligible=False, origin=agency.index_url)
 
     # clear any prior OAuth token as the user is choosing their desired flow
     # this may or may not require OAuth, with a different set of scope/claims than what is already stored
@@ -55,7 +47,7 @@ def index(request, agency=None):
 
             analytics.selected_verifier(request, flow.system_name)
 
-            eligibility_start = reverse(ROUTE_START)
+            eligibility_start = reverse(routes.ELIGIBILITY_START)
             response = redirect(eligibility_start)
         else:
             # form was not valid, allow for correction/resubmission
@@ -73,7 +65,7 @@ def index(request, agency=None):
 @decorator_from_middleware(FlowSessionRequired)
 def start(request):
     """View handler for the eligibility verification getting started screen."""
-    session.update(request, eligible=False, origin=reverse(ROUTE_START))
+    session.update(request, eligible=False, origin=reverse(routes.ELIGIBILITY_START))
 
     flow = session.flow(request)
 
@@ -91,7 +83,7 @@ def confirm(request):
     if request.method == "GET" and session.eligible(request):
         return verified(request)
 
-    unverified_view = reverse(ROUTE_UNVERIFIED)
+    unverified_view = reverse(routes.ELIGIBILITY_UNVERIFIED)
 
     agency = session.agency(request)
     flow = session.flow(request)
@@ -114,7 +106,7 @@ def confirm(request):
 
     # GET from an unverified user, present the form
     if request.method == "GET":
-        session.update(request, origin=reverse(ROUTE_CONFIRM))
+        session.update(request, origin=reverse(routes.ELIGIBILITY_CONFIRM))
         return TemplateResponse(request, TEMPLATE_CONFIRM, context)
     # POST form submission, process form data, make Eligibility Verification API call
     elif request.method == "POST":
@@ -154,7 +146,7 @@ def verified(request):
 
     session.update(request, eligible=True)
 
-    return redirect(ROUTE_ENROLLMENT)
+    return redirect(routes.ENROLLMENT_INDEX)
 
 
 @decorator_from_middleware(AgencySessionRequired)

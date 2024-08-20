@@ -5,8 +5,8 @@ import pytest
 
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.oauth.middleware import FlowUsesClaimsVerificationSessionRequired
+from benefits.routes import routes
 import benefits.oauth.middleware
-from benefits.oauth.redirects import ROUTE_SYSTEM_ERROR
 
 
 @pytest.fixture
@@ -65,7 +65,7 @@ def test_flow_using_claims_verification_required__misconfigured_flow(
     mocked_analytics_module.error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
     assert response.status_code == 302
-    assert response.url == reverse(ROUTE_SYSTEM_ERROR)
+    assert response.url == reverse(routes.OAUTH_SYSTEM_ERROR)
 
 
 @pytest.mark.django_db

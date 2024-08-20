@@ -5,7 +5,7 @@
 {% endblock page-title %}
 
 {% block nav-buttons %}
-  {% url "eligibility:start" as url_previous %}
+  {% url routes.ELIGIBILITY_START as url_previous %}
   {% include "core/includes/button--previous-page.html" with url=url_previous %}
 {% endblock nav-buttons %}
 

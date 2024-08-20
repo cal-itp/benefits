@@ -14,18 +14,11 @@ from littlepay.api.client import Client
 from requests.exceptions import HTTPError
 import sentry_sdk
 
+from benefits.routes import routes
 from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
-from benefits.core.views import ROUTE_LOGGED_OUT, ROUTE_SERVER_ERROR
 
 from . import analytics, forms
-
-ROUTE_INDEX = "enrollment:index"
-ROUTE_REENROLLMENT_ERROR = "enrollment:reenrollment-error"
-ROUTE_RETRY = "enrollment:retry"
-ROUTE_SUCCESS = "enrollment:success"
-ROUTE_SYSTEM_ERROR = "enrollment:system-error"
-ROUTE_TOKEN = "enrollment:token"
 
 TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
@@ -57,12 +50,12 @@ def token(request):
                 status_code = e.response.status_code
 
                 if status_code >= 500:
-                    redirect = reverse(ROUTE_SYSTEM_ERROR)
+                    redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
                 else:
-                    redirect = reverse(ROUTE_SERVER_ERROR)
+                    redirect = reverse(routes.SERVER_ERROR)
             else:
                 status_code = None
-                redirect = reverse(ROUTE_SERVER_ERROR)
+                redirect = reverse(routes.SERVER_ERROR)
 
             analytics.failed_access_token_request(request, status_code)
 
@@ -81,7 +74,7 @@ def token(request):
 @decorator_from_middleware(EligibleSessionRequired)
 def index(request):
     """View handler for the enrollment landing page."""
-    session.update(request, origin=reverse(ROUTE_INDEX))
+    session.update(request, origin=reverse(routes.ENROLLMENT_INDEX))
 
     agency = session.agency(request)
     flow = session.flow(request)
@@ -179,9 +172,11 @@ def index(request):
 
     # GET enrollment index
     else:
-        tokenize_retry_form = forms.CardTokenizeFailForm(ROUTE_RETRY, "form-card-tokenize-fail-retry")
-        tokenize_server_error_form = forms.CardTokenizeFailForm(ROUTE_SERVER_ERROR, "form-card-tokenize-fail-server-error")
-        tokenize_system_error_form = forms.CardTokenizeFailForm(ROUTE_SYSTEM_ERROR, "form-card-tokenize-fail-system-error")
+        tokenize_retry_form = forms.CardTokenizeFailForm(routes.ENROLLMENT_RETRY, "form-card-tokenize-fail-retry")
+        tokenize_server_error_form = forms.CardTokenizeFailForm(routes.SERVER_ERROR, "form-card-tokenize-fail-server-error")
+        tokenize_system_error_form = forms.CardTokenizeFailForm(
+            routes.ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
+        )
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
         # mapping from Django's I18N LANGUAGE_CODE to Littlepay's overlay language code
@@ -248,7 +243,7 @@ def reenrollment_error(request):
     if session.logged_in(request) and flow.claims_provider.supports_sign_out:
         # overwrite origin for a logged in user
         # if they click the logout button, they are taken to the new route
-        session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
+        session.update(request, origin=reverse(routes.LOGGED_OUT))
 
     analytics.returned_error(request, "Re-enrollment error.")
 
@@ -279,14 +274,14 @@ def system_error(request):
 def success(request):
     """View handler for the final success page."""
     request.path = "/enrollment/success"
-    session.update(request, origin=reverse(ROUTE_SUCCESS))
+    session.update(request, origin=reverse(routes.ENROLLMENT_SUCCESS))
 
     flow = session.flow(request)
 
     if session.logged_in(request) and flow.claims_provider.supports_sign_out:
         # overwrite origin for a logged in user
         # if they click the logout button, they are taken to the new route
-        session.update(request, origin=reverse(ROUTE_LOGGED_OUT))
+        session.update(request, origin=reverse(routes.LOGGED_OUT))
 
     analytics.returned_success(request, flow.group_id)
     context = {"redirect_to": request.path}

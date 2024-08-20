@@ -1,10 +1,10 @@
 from django.urls import reverse
 
-
-from benefits.oauth.redirects import ROUTE_SYSTEM_ERROR, deauthorize_redirect, generate_redirect_uri
-import benefits.oauth.redirects
-
 import pytest
+
+from benefits.oauth.redirects import deauthorize_redirect, generate_redirect_uri
+import benefits.oauth.redirects
+from benefits.routes import routes
 
 
 @pytest.fixture
@@ -39,7 +39,7 @@ def test_deauthorize_redirect_load_server_metadata_error(
     result = deauthorize_redirect(app_request, mocked_oauth_client, "token", "https://localhost/redirect_uri")
 
     assert result.status_code == 302
-    assert result.url == reverse(ROUTE_SYSTEM_ERROR)
+    assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)
     mocked_analytics_module.error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 

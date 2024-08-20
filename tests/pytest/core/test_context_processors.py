@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta, timezone
 import pytest
 
+from benefits.routes import routes as app_routes
 from benefits.core import session
-from benefits.core.context_processors import unique_values, enrollment
+from benefits.core.context_processors import unique_values, enrollment, routes
 
 
 def test_unique_values():
@@ -36,3 +37,16 @@ def test_enrollment_expiration(app_request, model_EnrollmentFlow_supports_expira
     context = enrollment(app_request)
 
     assert context["enrollment"] == {"expires": expiry, "reenrollment": reenrollment, "supports_expiration": True}
+
+
+@pytest.mark.django_db
+def test_routes(app_request):
+    app_routes_dict = app_routes.to_dict()
+
+    context = routes(app_request)
+    assert "routes" in context
+
+    context_routes = context["routes"]
+    for route_name in app_routes_dict.keys():
+        assert route_name in context_routes
+        assert context_routes[route_name] == app_routes_dict[route_name]

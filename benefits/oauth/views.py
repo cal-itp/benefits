@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 import sentry_sdk
 
+from benefits.routes import routes
 from benefits.core import models, session
 from benefits.core.middleware import AgencySessionRequired
 from . import analytics, redirects
@@ -15,19 +16,13 @@ from .middleware import FlowUsesClaimsVerificationSessionRequired
 
 logger = logging.getLogger(__name__)
 
-
-ROUTE_AUTH = "oauth:authorize"
-ROUTE_CONFIRM = "eligibility:confirm"
-ROUTE_UNVERIFIED = "eligibility:unverified"
-ROUTE_POST_LOGOUT = "oauth:post_logout"
-
 TEMPLATE_SYSTEM_ERROR = "oauth/system_error.html"
 
 
 def _oauth_client_or_error_redirect(request, flow: models.EnrollmentFlow):
     """Calls `benefits.oauth.client.create_client()`.
 
-    If a client is created successfully, return it; Otherwise, return a redirect response to the `oauth:system-error` route.
+    If a client is created successfully, return it; Otherwise, return a redirect response to OAuth system error.
     """
 
     oauth_client = None
@@ -44,7 +39,7 @@ def _oauth_client_or_error_redirect(request, flow: models.EnrollmentFlow):
     if exception:
         analytics.error(request, message=str(exception), operation="init")
         sentry_sdk.capture_exception(exception)
-        return redirect(redirects.ROUTE_SYSTEM_ERROR)
+        return redirect(routes.OAUTH_SYSTEM_ERROR)
 
     return oauth_client
 
@@ -63,7 +58,7 @@ def login(request):
         # this does not look like an oauth_client, it's an error redirect
         return oauth_client_result
 
-    route = reverse(ROUTE_AUTH)
+    route = reverse(routes.OAUTH_AUTHORIZE)
     redirect_uri = redirects.generate_redirect_uri(request, route)
 
     logger.debug(f"OAuth authorize_redirect with redirect_uri: {redirect_uri}")
@@ -85,7 +80,7 @@ def login(request):
     if exception:
         analytics.error(request, message=str(exception), operation="authorize_redirect")
         sentry_sdk.capture_exception(exception)
-        result = redirect(redirects.ROUTE_SYSTEM_ERROR)
+        result = redirect(routes.OAUTH_SYSTEM_ERROR)
 
     return result
 
@@ -120,7 +115,7 @@ def authorize(request):
     if exception:
         analytics.error(request, message=str(exception), operation="authorize_access_token")
         sentry_sdk.capture_exception(exception)
-        return redirect(redirects.ROUTE_SYSTEM_ERROR)
+        return redirect(routes.OAUTH_SYSTEM_ERROR)
 
     logger.debug("OAuth access token authorized")
 
@@ -151,7 +146,7 @@ def authorize(request):
     session.update(request, oauth_token=id_token, oauth_claim=stored_claim)
     analytics.finished_sign_in(request, error=error_claim)
 
-    return redirect(ROUTE_CONFIRM)
+    return redirect(routes.ELIGIBILITY_CONFIRM)
 
 
 @decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
@@ -160,7 +155,7 @@ def cancel(request):
 
     analytics.canceled_sign_in(request)
 
-    return redirect(ROUTE_UNVERIFIED)
+    return redirect(routes.ELIGIBILITY_UNVERIFIED)
 
 
 @decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
@@ -184,7 +179,7 @@ def logout(request):
     token = session.oauth_token(request)
     session.logout(request)
 
-    route = reverse(ROUTE_POST_LOGOUT)
+    route = reverse(routes.OAUTH_POST_LOGOUT)
     redirect_uri = redirects.generate_redirect_uri(request, route)
 
     logger.debug(f"OAuth end_session_endpoint with redirect_uri: {redirect_uri}")

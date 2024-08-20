@@ -3,9 +3,8 @@ from django.utils.http import urlencode
 
 import sentry_sdk
 
+from benefits.routes import routes
 from . import analytics
-
-ROUTE_SYSTEM_ERROR = "oauth:system-error"
 
 
 def deauthorize_redirect(request, oauth_client, token, redirect_uri):
@@ -20,7 +19,7 @@ def deauthorize_redirect(request, oauth_client, token, redirect_uri):
     except Exception as ex:
         analytics.error(request, message=str(ex), operation="load_server_metadata")
         sentry_sdk.capture_exception(ex)
-        return redirect(ROUTE_SYSTEM_ERROR)
+        return redirect(routes.OAUTH_SYSTEM_ERROR)
 
     end_session_endpoint = metadata.get("end_session_endpoint")
 
