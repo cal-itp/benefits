@@ -39,6 +39,15 @@ def agency_index(request, agency: models.TransitAgency):
 
 
 @pageview_decorator
+def agency_eligibility_index(request, agency: models.TransitAgency):
+    """View handler forwards the request to the agency's Eligibility Index (e.g. flow selection) page."""
+    session.reset(request)
+    session.update(request, agency=agency, origin=agency.index_url)
+
+    return redirect(routes.ELIGIBILITY_INDEX)
+
+
+@pageview_decorator
 def agency_public_key(request, agency: models.TransitAgency):
     """View handler returns an agency's public key as plain text."""
     return HttpResponse(agency.eligibility_api_public_key_data, content_type="text/plain")

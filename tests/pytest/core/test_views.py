@@ -167,7 +167,18 @@ def test_agency_card_without_eligibility_api_flow(
     assert response.template_name == TEMPLATE_USER_ERROR
 
     mocked_session_reset.assert_called()
+    mocked_session_update.assert_called_once()
+    assert mocked_session_update.mock_calls[0].kwargs["agency"] == model_TransitAgency
+    assert mocked_session_update.mock_calls[0].kwargs["origin"] == model_TransitAgency.index_url
 
+
+@pytest.mark.django_db
+def test_agency_eligibility_index(client, model_TransitAgency, mocked_session_update):
+    url = reverse(routes.AGENCY_ELIGIBILITY_INDEX, args=[model_TransitAgency.slug])
+    response = client.get(url)
+
+    assert response.status_code == 302
+    assert response.url == reverse(routes.ELIGIBILITY_INDEX)
     mocked_session_update.assert_called_once()
     assert mocked_session_update.mock_calls[0].kwargs["agency"] == model_TransitAgency
     assert mocked_session_update.mock_calls[0].kwargs["origin"] == model_TransitAgency.index_url

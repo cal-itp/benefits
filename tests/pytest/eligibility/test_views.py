@@ -72,7 +72,6 @@ def model_EnrollmentFlow_with_form_class(mocker, model_EnrollmentFlow):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency")
 def test_index_get_agency_multiple_flows(mocker, model_TransitAgency, model_EnrollmentFlow, mocked_session_agency, client):
     # override the mocked session agency with a mock agency that has multiple flows
     mock_agency = mocker.Mock(spec=model_TransitAgency)
@@ -96,7 +95,6 @@ def test_index_get_agency_multiple_flows(mocker, model_TransitAgency, model_Enro
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency")
 def test_index_get_agency_single_flow(mocker, model_TransitAgency, model_EnrollmentFlow, mocked_session_agency, client):
     # override the mocked session agency with a mock agency that has a single flow
     mock_agency = mocker.Mock(spec=model_TransitAgency)

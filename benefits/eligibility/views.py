@@ -17,19 +17,12 @@ from . import analytics, forms, verify
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
 
 
+@decorator_from_middleware(AgencySessionRequired)
 @decorator_from_middleware(RecaptchaEnabled)
-def index(request, agency=None):
+def index(request):
     """View handler for the enrollment flow selection form."""
-
-    if agency is None:
-        # see if session has an agency
-        agency = session.agency(request)
-        if agency is None:
-            return TemplateResponse(request, "200-user-error.html")
-        else:
-            session.update(request, eligible=False, origin=agency.index_url)
-    else:
-        session.update(request, agency=agency, eligible=False, origin=agency.index_url)
+    agency = session.agency(request)
+    session.update(request, eligible=False, origin=agency.index_url)
 
     # clear any prior OAuth token as the user is choosing their desired flow
     # this may or may not require OAuth, with a different set of scope/claims than what is already stored

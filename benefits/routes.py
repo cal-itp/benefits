@@ -32,6 +32,11 @@ class Routes:
         return "core:agency_card"
 
     @property
+    def AGENCY_ELIGIBILITY_INDEX(self):
+        """The user picks a flow and a transit agency is configured for them."""
+        return "core:agency_eligibility_index"
+
+    @property
     def AGENCY_PUBLIC_KEY(self):
         """Agency's eligibility API public key."""
         return "core:agency_public_key"
@@ -70,11 +75,6 @@ class Routes:
     def ELIGIBILITY_INDEX(self):
         """Start of eligibility phase, the user picks a flow."""
         return "eligibility:index"
-
-    @property
-    def ELIGIBILITY_AGENCY_INDEX(self):
-        """The user picks a flow and a transit agency is configured for them."""
-        return "eligibility:agency_index"
 
     @property
     def ELIGIBILITY_START(self):
