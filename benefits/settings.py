@@ -43,7 +43,7 @@ def RUNTIME_ENVIRONMENT():
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
+    "benefits.apps.BenefitsAdminConfig",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.messages",
@@ -73,6 +73,7 @@ GOOGLE_SSO_SCOPES = [
     "https://www.googleapis.com/auth/userinfo.profile",
 ]
 SSO_SHOW_FORM_ON_ADMIN_PAGE = False
+STAFF_GROUP_NAME = "Cal-ITP"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
