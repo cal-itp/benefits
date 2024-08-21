@@ -75,3 +75,20 @@ def test_pre_login_user_add_staff_to_group(mocker, model_AdminUser):
 
     staff_group = Group.objects.get(name=STAFF_GROUP_NAME)
     assert model_AdminUser.groups.contains(staff_group)
+
+
+@pytest.mark.django_db
+def test_pre_login_user_does_not_add_transit_staff_to_group(mocker, model_AdminUser):
+    mocked_request = mocker.Mock()
+    mocked_request.session.get.return_value = None
+
+    mocker.patch.object(benefits.core.admin.settings, "GOOGLE_SSO_STAFF_LIST", [model_AdminUser.email])
+    mocker.patch.object(benefits.core.admin.settings, "GOOGLE_SSO_ALLOWABLE_DOMAINS", ["cst.org"])
+    agency_user = User.objects.create_user(username="agency_user", email="manager@cst.org", is_staff=True)
+
+    pre_login_user(agency_user, mocked_request)
+
+    # assert that a transit agency user does not get added to the Cal-ITP user group
+    staff_group = Group.objects.get(name=STAFF_GROUP_NAME)
+    assert staff_group.user_set.count() == 0
+    assert agency_user.groups.count() == 0
