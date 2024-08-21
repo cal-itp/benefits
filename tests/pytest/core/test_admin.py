@@ -78,12 +78,12 @@ def test_pre_login_user_add_staff_to_group(mocker, model_AdminUser):
 
 
 @pytest.mark.django_db
-def test_pre_login_user_does_not_add_transit_staff_to_group(mocker, model_AdminUser):
+def test_pre_login_user_does_not_add_transit_staff_to_group(mocker, model_AdminUser, settings):
     mocked_request = mocker.Mock()
     mocked_request.session.get.return_value = None
 
-    mocker.patch.object(benefits.core.admin.settings, "GOOGLE_SSO_STAFF_LIST", [model_AdminUser.email])
-    mocker.patch.object(benefits.core.admin.settings, "GOOGLE_SSO_ALLOWABLE_DOMAINS", ["cst.org"])
+    settings.GOOGLE_SSO_STAFF_LIST = [model_AdminUser.email]
+    settings.GOOGLE_SSO_ALLOWABLE_DOMAINS = ["cst.org"]
     agency_user = User.objects.create_user(username="agency_user", email="manager@cst.org", is_staff=True)
 
     pre_login_user(agency_user, mocked_request)
