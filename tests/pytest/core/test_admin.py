@@ -1,7 +1,8 @@
 import pytest
+from django.conf import settings
 from django.contrib.auth.models import User, Group
 import benefits.core.admin
-from benefits.core.admin import GOOGLE_USER_INFO_URL, STAFF_GROUP_NAME, pre_login_user
+from benefits.core.admin import GOOGLE_USER_INFO_URL, pre_login_user
 
 
 @pytest.fixture
@@ -73,7 +74,7 @@ def test_pre_login_user_add_staff_to_group(mocker, model_AdminUser):
 
     pre_login_user(model_AdminUser, mocked_request)
 
-    staff_group = Group.objects.get(name=STAFF_GROUP_NAME)
+    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
     assert model_AdminUser.groups.contains(staff_group)
 
 
@@ -90,6 +91,6 @@ def test_pre_login_user_does_not_add_transit_staff_to_group(mocker, settings):
     pre_login_user(agency_user, mocked_request)
 
     # assert that a transit agency user does not get added to the Cal-ITP user group
-    staff_group = Group.objects.get(name=STAFF_GROUP_NAME)
+    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
     assert staff_group.user_set.count() == 0
     assert agency_user.groups.count() == 0
