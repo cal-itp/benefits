@@ -43,7 +43,7 @@ def RUNTIME_ENVIRONMENT():
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
+    "benefits.apps.BenefitsAdminConfig",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.messages",
@@ -73,6 +73,7 @@ GOOGLE_SSO_SCOPES = [
     "https://www.googleapis.com/auth/userinfo.profile",
 ]
 SSO_SHOW_FORM_ON_ADMIN_PAGE = False
+STAFF_GROUP_NAME = "Cal-ITP"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -337,6 +338,7 @@ CSP_STYLE_SRC = [
     "'unsafe-inline'",
     "https://california.azureedge.net/",
     "https://fonts.googleapis.com/css",
+    "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/",
 ]
 env_style_src = _filter_empty(os.environ.get("DJANGO_CSP_STYLE_SRC", "").split(","))
 CSP_STYLE_SRC.extend(env_style_src)

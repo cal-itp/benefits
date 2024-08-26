@@ -1,0 +1,60 @@
+@import "../variables.css";
+
+/* Buttons */
+/* Primary Button: Use all three classes: btn btn-lg btn-primary */
+/* Set button width in parent with Bootstrap column */
+/* Height: 60px on Desktop; 72 on mobile*/
+
+:root {
+  --primary-button-padding: 19px 0;
+}
+
+@media (min-width: 992px) {
+  :root {
+    --primary-button-padding: 13px 0;
+  }
+}
+
+.btn.btn-lg.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  border-width: 2px;
+  font-weight: var(--medium-font-weight);
+  font-size: var(--font-size-20px);
+  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
+  width: 100%;
+  padding: var(--primary-button-padding);
+}
+
+.btn.btn-lg.btn-primary:hover {
+  background-color: var(--hover-color);
+  border-color: var(--hover-color);
+}
+
+.btn.btn-lg.btn-primary:focus,
+.btn.btn-lg.btn-primary:focus-visible,
+.btn.btn-lg:focus,
+.btn.btn-lg:focus-visible,
+.btn-outline-dark:focus,
+.btn-outline-dark:focus-visible,
+.btn-outline-light:focus,
+.btn-ouline-dark:focus-visible {
+  outline: 3px solid var(--focus-color) !important;
+  outline-offset: 2px !important;
+  box-shadow: none !important; /* override CA State Web Template */
+  text-decoration: none;
+}
+
+.btn-text {
+  font-weight: var(--medium-font-weight);
+  font-size: var(--font-size-20px);
+  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
+}
+
+html[data-theme="light"],
+:root {
+  --primary: #ffffff;
+  --secondary: var(--dark-color);
+  --link-fg: #ffffff;
+  --body-quiet-color: var(--dark-color);
+}

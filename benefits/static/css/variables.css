@@ -1,0 +1,49 @@
+:root {
+  --primary-color: #045b86;
+  --primary-color-rgb: 4, 91, 134;
+  --bs-blue: var(--primary-color);
+  --bs-primary: var(--primary-color);
+  --bs-primary-rgb: var(--primary-color-rgb);
+  --text-primary-color: #212121;
+  --bs-body-color: var(--text-primary-color);
+  --bs-body-text-align: left;
+  --bs-body-font-weight: 400;
+  --medium-font-weight: 500;
+  --bold-font-weight: 700;
+  --bs-body-font-size: calc(18rem / 16);
+  --bs-font-sans-serif: Roboto, system-ui, -apple-system, "Segoe UI", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-body-line-height: 1.5; /* Displayed as 150% on Figma */
+  --heading-line-height: 1.3; /* Displayed as 130% on Figma */
+  --form-field-text-line-height: 1.25; /*Displayed as 125% on Figma */
+  --h4-line-height: 1.2; /* Displayed as 120% on Figma */
+  --letter-spacing-2: 0.02; /* Displayed as 2% on Figma */
+  --letter-spacing-3: 0.03; /* Displayed as 3% on Figma */
+  --letter-spacing-5: 0.05; /* Displayed as 5% on Figma */
+  --dark-color: #212121;
+  --hover-color: #044869;
+  --error-color: #ea1010;
+  --selected-color: #562b97;
+  --focus-color: #fdb714;
+  --secondary-bg-color: #fafafa;
+  --error-color-rgb: 234, 16, 16;
+  --bs-danger: var(--error-color);
+  --bs-danger-rgb: var(--error-color-rgb);
+  --standout-color: #323a45;
+  --h1-text-align: left;
+  --h3-font-size: calc(20rem / 16);
+  --font-size-24px: calc(24rem / 16);
+  --font-size-20px: calc(20rem / 16);
+  --font-size-18px: calc(18rem / 16);
+  --font-size-15px: calc(15rem / 16);
+  --font-size-16px: calc(16rem / 16);
+  --font-size-14px: calc(14rem / 16);
+  --font-size-12px: calc(12rem / 16);
+  --border-width: calc(2rem / 16);
+  --border-radius: calc(3rem / 16);
+  --focus-style: 3px solid var(--focus-color);
+  --focus-border-radius: calc(2rem / 16);
+  --focus-outline-offset: calc(2rem / 16);
+  --focus-border-radius: calc(2rem / 16);
+}

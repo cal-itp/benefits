@@ -15,7 +15,6 @@ logger = logging.getLogger(__name__)
 
 
 GOOGLE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo"
-STAFF_GROUP_NAME = "Cal-ITP"
 
 logger.debug("Register models with admin site")
 admin.site.register(models.PemData)
@@ -150,5 +149,5 @@ def add_google_sso_userinfo(user, request):
 
 def add_staff_user_to_group(user, request):
     if user.email in settings.GOOGLE_SSO_STAFF_LIST:
-        staff_group = Group.objects.get(name=STAFF_GROUP_NAME)
+        staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
         user.groups.add(staff_group)
