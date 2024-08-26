@@ -338,6 +338,7 @@ CSP_STYLE_SRC = [
     "'unsafe-inline'",
     "https://california.azureedge.net/",
     "https://fonts.googleapis.com/css",
+    "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/",
 ]
 env_style_src = _filter_empty(os.environ.get("DJANGO_CSP_STYLE_SRC", "").split(","))
 CSP_STYLE_SRC.extend(env_style_src)
