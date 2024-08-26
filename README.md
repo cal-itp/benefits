@@ -5,8 +5,10 @@
 | Name                                 |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
 |------------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
 | benefits/\_\_init\_\_.py             |        6 |        2 |        0 |        0 |     67% |       5-7 |
+| benefits/admin.py                    |       17 |        0 |        2 |        0 |    100% |           |
+| benefits/apps.py                     |        3 |        0 |        0 |        0 |    100% |           |
 | benefits/core/\_\_init\_\_.py        |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/core/admin.py               |       33 |        0 |        4 |        0 |    100% |           |
+| benefits/core/admin.py               |       32 |        0 |        4 |        0 |    100% |           |
 | benefits/core/analytics.py           |       94 |       20 |       16 |        3 |     70% |125-127, 132, 138-160, 171 |
 | benefits/core/apps.py                |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/core/context\_processors.py |       41 |        2 |        8 |        1 |     94% |    71, 96 |
@@ -50,10 +52,10 @@
 | benefits/routes.py                   |       85 |        0 |       54 |        0 |    100% |           |
 | benefits/secrets.py                  |       48 |        8 |       10 |        1 |     81% |     90-99 |
 | benefits/sentry.py                   |       57 |       12 |       14 |        1 |     79% |19, 24-25, 30, 34-35, 63-64, 87-108 |
-| benefits/settings.py                 |      120 |        6 |       22 |        8 |     90% |94, 115->120, 131->134, 150, 304, 306, 321, 333 |
+| benefits/settings.py                 |      121 |        6 |       22 |        8 |     90% |95, 116->121, 132->135, 151, 305, 307, 322, 334 |
 | benefits/urls.py                     |       22 |        7 |        2 |        1 |     67% |     35-49 |
 | benefits/wsgi.py                     |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                            **TOTAL** | **1718** |   **97** |  **496** |   **35** | **93%** |           |
+|                            **TOTAL** | **1738** |   **97** |  **498** |   **35** | **93%** |           |
 
 
 ## Setup coverage badge
