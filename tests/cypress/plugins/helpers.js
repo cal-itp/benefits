@@ -17,13 +17,13 @@ export const selectAgency = () => {
   cy.contains("Choose your Provider").click();
   cy.contains(agency.long_name).click();
 
-  cy.location("pathname").should("eq", `/eligibility/${agency.slug}`);
+  cy.location("pathname").should("eq", `/eligibility/`);
 
   return agency;
 };
 
 export const selectAgencyCard = () => {
-  cy.location("pathname").should("eq", `/eligibility/${agency.slug}`);
+  cy.location("pathname").should("eq", `/eligibility/`);
 
   cy.contains("CST Agency Card").click();
   cy.contains("Choose this benefit").click();

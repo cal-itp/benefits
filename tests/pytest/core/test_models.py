@@ -253,16 +253,21 @@ def test_EnrollmentFlow_no_scope_and_claim_no_sign_out(model_EnrollmentFlow, mod
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_eligibility_api_auth_key(model_EnrollmentFlow, mock_models_get_secret_by_name):
-    secret_value = model_EnrollmentFlow.eligibility_api_auth_key
+def test_EnrollmentFlow_eligibility_api_auth_key(model_EnrollmentFlow_with_eligibility_api, mock_models_get_secret_by_name):
+    secret_value = model_EnrollmentFlow_with_eligibility_api.eligibility_api_auth_key
 
-    mock_models_get_secret_by_name.assert_called_once_with(model_EnrollmentFlow.eligibility_api_auth_key_secret_name)
+    mock_models_get_secret_by_name.assert_called_once_with(
+        model_EnrollmentFlow_with_eligibility_api.eligibility_api_auth_key_secret_name
+    )
     assert secret_value == mock_models_get_secret_by_name.return_value
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_no_claims_scheme(model_EnrollmentFlow):
-    assert model_EnrollmentFlow.claims_scheme == model_EnrollmentFlow.claims_provider.scheme
+def test_EnrollmentFlow_no_claims_scheme(model_EnrollmentFlow_with_scope_and_claim):
+    assert (
+        model_EnrollmentFlow_with_scope_and_claim.claims_scheme
+        == model_EnrollmentFlow_with_scope_and_claim.claims_provider.scheme
+    )
 
 
 @pytest.mark.django_db

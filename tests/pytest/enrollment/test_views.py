@@ -863,16 +863,13 @@ def test_success_authentication_not_logged_in(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures(
-    "mocked_session_agency", "mocked_session_flow_does_not_use_claims_verification", "mocked_session_eligible"
-)
-def test_success_no_authentication(mocker, client, model_EnrollmentFlow, mocked_analytics_module):
-    mock_session = mocker.patch("benefits.enrollment.views.session")
-    mock_session.flow.return_value = model_EnrollmentFlow
-
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
+def test_success_no_authentication(client, mocked_session_flow_does_not_use_claims_verification, mocked_analytics_module):
     path = reverse(routes.ENROLLMENT_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == model_EnrollmentFlow.enrollment_success_template
+    assert (
+        response.template_name == mocked_session_flow_does_not_use_claims_verification.return_value.enrollment_success_template
+    )
     mocked_analytics_module.returned_success.assert_called_once()

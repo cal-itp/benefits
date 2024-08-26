@@ -38,6 +38,6 @@ describe("Spanish language", () => {
 
     cy.get("#header").should("not.contain", "Español");
     cy.get("#header").should("contain", "English");
-    cy.location("pathname").should("eq", `/eligibility/${agency.slug}`);
+    cy.location("pathname").should("eq", `/eligibility/`);
   });
 });
