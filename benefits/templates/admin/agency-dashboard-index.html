@@ -6,22 +6,22 @@
 {% endblock title %}
 
 {% block content %}
-    {% if has_permission_for_in_person %}
     <div class="row">
         <div class="col-lg-12">
             <h1 class="pt-0 pb-3 text-left">{{ agency.long_name }}</h1>
-            <div class="border border-3 p-3">
-                <h2 class="pt-0 pb-2 text-left">In-person enrollment</h2>
-                <p>Verify transit benefit eligibility using agency criteria and complete a rider’s open-loop card enrollment.</p>
-                {% url routes.IN_PERSON_ELIGIBILITY as url_eligibility %}
-                <div class="row pt-4">
-                    <div class="col-lg-2">
-                        <a href="{{ url_eligibility }}" class="btn btn-lg btn-primary d-block">New enrollment</a>
+            {% if has_permission_for_in_person %}
+                <div class="border border-3 p-3">
+                    <h2 class="pt-0 pb-2 text-left">In-person enrollment</h2>
+                    <p>Verify transit benefit eligibility using agency criteria and complete a rider’s open-loop card enrollment.</p>
+                    {% url routes.IN_PERSON_ELIGIBILITY as url_eligibility %}
+                    <div class="row pt-4">
+                        <div class="col-lg-2">
+                            <a href="{{ url_eligibility }}" class="btn btn-lg btn-primary d-block">New enrollment</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
         </div>
     </div>
-    {% endif %}
 
 {% endblock content %}
