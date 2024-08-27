@@ -6,6 +6,7 @@
 {% endblock title %}
 
 {% block content %}
+    {% if has_permission_for_in_person %}
     <div class="row">
         <div class="col-lg-12">
             <h1 class="pt-0 pb-3 text-left">{{ agency.long_name }}</h1>
@@ -21,5 +22,6 @@
             </div>
         </div>
     </div>
+    {% endif %}
 
 {% endblock content %}
