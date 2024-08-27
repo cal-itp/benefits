@@ -347,7 +347,13 @@ class TransitAgency(models.Model):
         null=True,
         blank=True,
         default=None,
-        help_text="The group of users who can access this TransitAgency.",
+        help_text="The group of users associated with this TransitAgency.",
+    )
+    sso_domain = models.TextField(
+        null=True,
+        blank=True,
+        default="",
+        help_text="The email domain of users to automatically add to this agency's staff group upon login.",
     )
 
     def __str__(self):
