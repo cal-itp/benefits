@@ -58,3 +58,8 @@ html[data-theme="light"],
   --link-fg: #ffffff;
   --body-quiet-color: var(--dark-color);
 }
+
+#user-tools,
+#logout-form button {
+  text-transform: unset;
+}
