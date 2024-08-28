@@ -33,4 +33,9 @@ class BenefitsAdminSite(admin.AdminSite):
         else:
             agency = TransitAgency.for_user(request.user)
             session.update(request, agency=agency)
+
+            if agency is not None:
+                has_permission_for_in_person = agency.customer_service_group in request.user.groups.all()
+                context.update({"has_permission_for_in_person": has_permission_for_in_person})
+
             return TemplateResponse(request, "admin/agency-dashboard-index.html", context)

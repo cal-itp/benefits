@@ -124,6 +124,7 @@ def pre_login_user(user, request):
     logger.debug(f"Running pre-login callback for user: {user.username}")
     add_google_sso_userinfo(user, request)
     add_staff_user_to_group(user, request)
+    add_transit_agency_staff_user_to_group(user, request)
 
 
 def add_google_sso_userinfo(user, request):
@@ -150,4 +151,12 @@ def add_google_sso_userinfo(user, request):
 def add_staff_user_to_group(user, request):
     if user.email in settings.GOOGLE_SSO_STAFF_LIST:
         staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
-        user.groups.add(staff_group)
+        staff_group.user_set.add(user)
+
+
+def add_transit_agency_staff_user_to_group(user, request):
+    user_sso_domain = user.email.split("@")[1]
+    if user_sso_domain:
+        agency = models.TransitAgency.objects.filter(sso_domain=user_sso_domain).first()
+        if agency is not None and agency.staff_group:
+            agency.staff_group.user_set.add(user)

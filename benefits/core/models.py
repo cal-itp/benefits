@@ -347,7 +347,23 @@ class TransitAgency(models.Model):
         null=True,
         blank=True,
         default=None,
-        help_text="The group of users who can access this TransitAgency.",
+        help_text="The group of users associated with this TransitAgency.",
+        related_name="transit_agency",
+    )
+    sso_domain = models.TextField(
+        null=True,
+        blank=True,
+        default="",
+        help_text="The email domain of users to automatically add to this agency's staff group upon login.",
+    )
+    customer_service_group = models.OneToOneField(
+        Group,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        default=None,
+        help_text="The group of users who are allowed to do in-person eligibility verification and enrollment.",
+        related_name="+",
     )
 
     def __str__(self):
@@ -397,9 +413,9 @@ class TransitAgency(models.Model):
 
     @staticmethod
     def for_user(user: User):
-        group = user.groups.first()
+        for group in user.groups.all():
+            if hasattr(group, "transit_agency"):
+                return group.transit_agency  # this is looking at the TransitAgency's staff_group
 
-        if group is not None and hasattr(group, "transitagency"):
-            return group.transitagency
-        else:
-            return None
+        # the loop above returns the first match found. Return None if no match was found.
+        return None
