@@ -37,4 +37,6 @@ def eligibility(request):
 
 
 def enrollment(request):
-    return TemplateResponse(request, "in_person/enrollment.html")
+    context = {**admin_site.each_context(request)}
+
+    return TemplateResponse(request, "in_person/enrollment.html", context)
