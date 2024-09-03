@@ -8,8 +8,16 @@
                 <h2 class="p-0 m-0 text-left">In-person enrollment</h2>
             </div>
             <div class="border border-3 border-top-0 p-3">
-                <p>Provide the rider's contactless debit or credit card details.</p>
-                <iframe class="card-collection" name="card-collection-iframe"></iframe>
+                <div class="loading">
+                    <p>
+                        <span class="spinner-border align-middle text-primary" role="status"></span>
+                        <span class="fw-bold p-2">Please wait...</span>
+                    </p>
+                </div>
+                <div class="invisible">
+                    <p>Provide the rider's contactless debit or credit card details.</p>
+                    <iframe class="invisible card-collection" name="card-collection-iframe"></iframe>
+                </div>
             </div>
         </div>
     </div>
@@ -33,6 +41,9 @@
                   window.location.assign(data.redirect);
                   return; // exit early so the rest of this function doesn't execute
                 }
+
+                $(".loading").remove();
+                $(".invisible").removeClass("invisible");
 
                 new Promise((resolve) => {
                     {{ card_tokenize_func }}({
@@ -86,6 +97,7 @@
                 });
         })
         .fail(function(jqxhr, settings, exception) {
+          $(".loading").remove();
           console.log(exception);
         });
 
