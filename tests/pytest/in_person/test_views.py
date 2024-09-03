@@ -5,6 +5,11 @@ import pytest
 from benefits.routes import routes
 
 
+@pytest.fixture
+def invalid_form_data():
+    return {"invalid": "data"}
+
+
 @pytest.mark.django_db
 @pytest.mark.parametrize("viewname", [routes.IN_PERSON_ELIGIBILITY, routes.IN_PERSON_ENROLLMENT])
 def test_view_not_logged_in(client, viewname):
@@ -44,3 +49,12 @@ def test_enrollment_logged_in_get(admin_client):
     assert "form_retry" in response.context_data
     assert "form_success" in response.context_data
     assert "overlay_language" in response.context_data
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
+def test_enrollment_logged_in_post_invalid_form(admin_client, invalid_form_data):
+    path = reverse(routes.IN_PERSON_ENROLLMENT)
+
+    with pytest.raises(Exception, match=r"form"):
+        admin_client.post(path, invalid_form_data)

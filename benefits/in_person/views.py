@@ -3,7 +3,7 @@ from django.template.response import TemplateResponse
 
 from benefits.core import session
 from benefits.enrollment import forms
-from benefits.enrollment.views import enrollment_get_context
+from benefits.enrollment.views import enrollment_get_context, enrollment_post
 from benefits.routes import routes
 
 
@@ -17,10 +17,11 @@ def eligibility(request):
 
 def enrollment(request):
     agency = session.agency(request)
+    flow = session.flow(request)
 
     # POST back after transit processor form, process card token
     if request.method == "POST":
-        pass
+        return enrollment_post(request, agency, flow)
     # GET enrollment page
     else:
         tokenize_retry_form = forms.CardTokenizeFailForm(routes.IN_PERSON_ENROLLMENT_RETRY, "form-card-tokenize-fail-retry")
