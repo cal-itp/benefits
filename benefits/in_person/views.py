@@ -21,7 +21,7 @@ def enrollment(request):
 
     # POST back after transit processor form, process card token
     if request.method == "POST":
-        return enrollment_post(request, agency, flow)
+        return enrollment_post(request, agency, flow, success, reenrollment_error, system_error)
     # GET enrollment page
     else:
         tokenize_retry_form = forms.CardTokenizeFailForm(routes.IN_PERSON_ENROLLMENT_RETRY, "form-card-tokenize-fail-retry")
@@ -47,12 +47,16 @@ def enrollment(request):
 
 
 def reenrollment_error(request):
-    pass
+    return TemplateResponse(request, "in_person/enrollment/reenrollment_error.html")
 
 
 def retry(request):
-    pass
+    return TemplateResponse(request, "in_person/enrollment/retry.html")
 
 
-def system_error(requesT):
-    pass
+def success(request):
+    return TemplateResponse(request, "in_person/enrollment/success.html")
+
+
+def system_error(request):
+    return TemplateResponse(request, "in_person/enrollment/system_error.html")

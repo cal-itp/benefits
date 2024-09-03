@@ -81,7 +81,7 @@ def index(request):
 
     # POST back after transit processor form, process card token
     if request.method == "POST":
-        return enrollment_post(request, agency, flow)
+        return enrollment_post(request, agency, flow, success, reenrollment_error, system_error)
 
     # GET enrollment index
     else:
@@ -107,7 +107,7 @@ def index(request):
         return TemplateResponse(request, flow.enrollment_index_template, context)
 
 
-def enrollment_post(request, agency, flow):
+def enrollment_post(request, agency, flow, success_function, reenrollment_error_function, system_error_function):
     """Processes the card token returned from transit processor form."""
     form = forms.CardTokenizeSuccessForm(request.POST)
     if not form.is_valid():
@@ -143,7 +143,7 @@ def enrollment_post(request, agency, flow):
                 client.link_concession_group_funding_source(
                     group_id=group_id, funding_source_id=funding_source.id, expiry=session.enrollment_expiry(request)
                 )
-                return success(request)
+                return success_function(request)
             else:  # already_enrolled
                 if group_funding_source.expiry_date is None:
                     # update expiration of existing enrollment, return success
@@ -152,7 +152,7 @@ def enrollment_post(request, agency, flow):
                         funding_source_id=funding_source.id,
                         expiry=session.enrollment_expiry(request),
                     )
-                    return success(request)
+                    return success_function(request)
                 else:
                     is_expired = _is_expired(group_funding_source.expiry_date)
                     is_within_reenrollment_window = _is_within_reenrollment_window(
@@ -166,19 +166,19 @@ def enrollment_post(request, agency, flow):
                             funding_source_id=funding_source.id,
                             expiry=session.enrollment_expiry(request),
                         )
-                        return success(request)
+                        return success_function(request)
                     else:
                         # re-enrollment error, return enrollment error with expiration and reenrollment_date
-                        return reenrollment_error(request)
+                        return reenrollment_error_function(request)
         else:  # eligibility does not support expiration
             if not already_enrolled:
                 # enroll user with no expiration date, return success
                 client.link_concession_group_funding_source(group_id=group_id, funding_source_id=funding_source.id)
-                return success(request)
+                return success_function(request)
             else:  # already_enrolled
                 if group_funding_source.expiry_date is None:
                     # no action, return success
-                    return success(request)
+                    return success_function(request)
                 else:
                     # remove expiration date, return success
                     raise NotImplementedError("Removing expiration date is currently not supported")
@@ -188,7 +188,7 @@ def enrollment_post(request, agency, flow):
             analytics.returned_error(request, str(e))
             sentry_sdk.capture_exception(e)
 
-            return system_error(request)
+            return system_error_function(request)
         else:
             analytics.returned_error(request, str(e))
             raise Exception(f"{e}: {e.response.json()}")
