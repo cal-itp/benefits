@@ -103,4 +103,8 @@
 
     </script>
 
+    {% for f in forms %}
+        {% include "core/includes/form.html" with form=f %}
+    {% endfor %}
+
 {% endblock content %}
