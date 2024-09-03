@@ -17,6 +17,8 @@ def test_view_not_logged_in(client, viewname):
 
 # admin_client is a fixture from pytest
 # https://pytest-django.readthedocs.io/en/latest/helpers.html#admin-client-django-test-client-logged-in-as-admin
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency")
 def test_eligibility_logged_in(admin_client):
     path = reverse(routes.IN_PERSON_ELIGIBILITY)
 

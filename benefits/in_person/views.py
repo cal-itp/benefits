@@ -8,6 +8,9 @@ from benefits.routes import routes
 
 
 def eligibility(request):
+    # temporary change for testing only
+    session.update(request, eligible=True)
+
     return TemplateResponse(request, "in_person/eligibility.html")
 
 
