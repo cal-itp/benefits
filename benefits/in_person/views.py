@@ -22,12 +22,14 @@ def enrollment(request):
         pass
     # GET enrollment page
     else:
-        tokenize_retry_form = forms.CardTokenizeFailForm(routes.ENROLLMENT_RETRY, "form-card-tokenize-fail-retry")
+        tokenize_retry_form = forms.CardTokenizeFailForm(routes.IN_PERSON_ENROLLMENT_RETRY, "form-card-tokenize-fail-retry")
         tokenize_server_error_form = forms.CardTokenizeFailForm(routes.SERVER_ERROR, "form-card-tokenize-fail-server-error")
         tokenize_system_error_form = forms.CardTokenizeFailForm(
-            routes.ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
+            routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
         )
-        tokenize_success_form = forms.CardTokenizeSuccessForm(routes.ENROLLMENT_INDEX, auto_id=True, label_suffix="")
+        tokenize_success_form = forms.CardTokenizeSuccessForm(
+            data=None, action_url=routes.IN_PERSON_ENROLLMENT, auto_id=True, label_suffix=""
+        )
 
         context = enrollment_get_context(
             request,
@@ -40,3 +42,15 @@ def enrollment(request):
         context.update(**admin_site.each_context(request))
 
         return TemplateResponse(request, "in_person/enrollment.html", context)
+
+
+def reenrollment_error(request):
+    pass
+
+
+def retry(request):
+    pass
+
+
+def system_error(requesT):
+    pass

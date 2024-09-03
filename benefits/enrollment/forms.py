@@ -11,7 +11,8 @@ class CardTokenizeSuccessForm(forms.Form):
     id = "form-card-tokenize-success"
     method = "POST"
 
-    def __init__(self, action_url, *args, **kwargs):
+    def __init__(self, data, action_url=None, *args, **kwargs):
+        super().__init__(data, *args, **kwargs)
         self.action_url = action_url
 
     # hidden input with no label
