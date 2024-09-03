@@ -27,7 +27,7 @@ def enrollment(request):
         tokenize_system_error_form = forms.CardTokenizeFailForm(
             routes.ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
         )
-        tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
+        tokenize_success_form = forms.CardTokenizeSuccessForm(routes.ENROLLMENT_INDEX, auto_id=True, label_suffix="")
 
         context = enrollment_get_context(
             request,

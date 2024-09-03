@@ -4,15 +4,15 @@ The enrollment application: Form definitions for results from Hosted Card Verifi
 
 from django import forms
 
-from benefits.routes import routes
-
 
 class CardTokenizeSuccessForm(forms.Form):
     """Form to bring client card token back to server."""
 
-    action_url = routes.ENROLLMENT_INDEX
     id = "form-card-tokenize-success"
     method = "POST"
+
+    def __init__(self, action_url, *args, **kwargs):
+        self.action_url = action_url
 
     # hidden input with no label
     card_token = forms.CharField(widget=forms.HiddenInput(), label="")
