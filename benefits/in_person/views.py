@@ -9,7 +9,8 @@ from benefits.routes import routes
 
 def eligibility(request):
     # temporary change for testing only
-    session.update(request, eligible=True)
+    flow = session.agency(request).enrollment_flows.first()
+    session.update(request, eligible=True, flow=flow)
 
     return TemplateResponse(request, "in_person/eligibility.html")
 
