@@ -179,26 +179,42 @@ def index(request):
         )
         tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
 
-        # mapping from Django's I18N LANGUAGE_CODE to Littlepay's overlay language code
-        overlay_language = {"en": "en", "es": "es-419"}.get(request.LANGUAGE_CODE, "en")
-
-        context = {
-            "forms": [tokenize_retry_form, tokenize_server_error_form, tokenize_system_error_form, tokenize_success_form],
-            "cta_button": "tokenize_card",
-            "card_tokenize_env": agency.transit_processor.card_tokenize_env,
-            "card_tokenize_func": agency.transit_processor.card_tokenize_func,
-            "card_tokenize_url": agency.transit_processor.card_tokenize_url,
-            "token_field": "card_token",
-            "form_retry": tokenize_retry_form.id,
-            "form_server_error": tokenize_server_error_form.id,
-            "form_success": tokenize_success_form.id,
-            "form_system_error": tokenize_system_error_form.id,
-            "overlay_language": overlay_language,
-        }
-
+        context = enrollment_get_context(
+            request,
+            agency,
+            tokenize_retry_form=tokenize_retry_form,
+            tokenize_server_error_form=tokenize_server_error_form,
+            tokenize_system_error_form=tokenize_system_error_form,
+            tokenize_success_form=tokenize_success_form,
+        )
         logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
 
         return TemplateResponse(request, flow.enrollment_index_template, context)
+
+
+def enrollment_get_context(
+    request, agency, tokenize_retry_form, tokenize_server_error_form, tokenize_system_error_form, tokenize_success_form
+):
+    """Returns a context object for the template used for a GET request for the enrollment page."""
+
+    # mapping from Django's I18N LANGUAGE_CODE to Littlepay's overlay language code
+    overlay_language = {"en": "en", "es": "es-419"}.get(request.LANGUAGE_CODE, "en")
+
+    context = {
+        "forms": [tokenize_retry_form, tokenize_server_error_form, tokenize_system_error_form, tokenize_success_form],
+        "cta_button": "tokenize_card",
+        "card_tokenize_env": agency.transit_processor.card_tokenize_env,
+        "card_tokenize_func": agency.transit_processor.card_tokenize_func,
+        "card_tokenize_url": agency.transit_processor.card_tokenize_url,
+        "token_field": "card_token",
+        "form_retry": tokenize_retry_form.id,
+        "form_server_error": tokenize_server_error_form.id,
+        "form_success": tokenize_success_form.id,
+        "form_system_error": tokenize_system_error_form.id,
+        "overlay_language": overlay_language,
+    }
+
+    return context
 
 
 def _get_group_funding_source(client: Client, group_id, funding_source_id):
