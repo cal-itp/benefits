@@ -10,7 +10,6 @@ from requests import HTTPError
 
 from benefits.routes import routes
 import benefits.enrollment.views
-import benefits.enrollment.enrollment
 from benefits.enrollment.enrollment import Status
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.enrollment.views import TEMPLATE_SYSTEM_ERROR, TEMPLATE_RETRY
@@ -27,23 +26,13 @@ def invalid_form_data():
 
 
 @pytest.fixture
-def mocked_analytics_module_views(mocked_analytics_module):
+def mocked_analytics_module(mocked_analytics_module):
     return mocked_analytics_module(benefits.enrollment.views)
-
-
-@pytest.fixture
-def mocked_analytics_module_enrollment(mocked_analytics_module):
-    return mocked_analytics_module(benefits.enrollment.enrollment)
 
 
 @pytest.fixture
 def mocked_sentry_sdk_module(mocker):
     return mocker.patch.object(benefits.enrollment.views, "sentry_sdk")
-
-
-@pytest.fixture
-def mocked_sentry_sdk_module_enrollment(mocker):
-    return mocker.patch.object(benefits.enrollment.enrollment, "sentry_sdk")
 
 
 @pytest.fixture
@@ -131,7 +120,7 @@ def test_token_valid(mocker, client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_http_error_500(mocker, client, mocked_analytics_module_views, mocked_sentry_sdk_module):
+def test_token_http_error_500(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
@@ -152,14 +141,14 @@ def test_token_http_error_500(mocker, client, mocked_analytics_module_views, moc
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.ENROLLMENT_SYSTEM_ERROR)
-    mocked_analytics_module_views.failed_access_token_request.assert_called_once()
-    assert 500 in mocked_analytics_module_views.failed_access_token_request.call_args.args
+    mocked_analytics_module.failed_access_token_request.assert_called_once()
+    assert 500 in mocked_analytics_module.failed_access_token_request.call_args.args
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_http_error_400(mocker, client, mocked_analytics_module_views, mocked_sentry_sdk_module):
+def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
@@ -180,14 +169,14 @@ def test_token_http_error_400(mocker, client, mocked_analytics_module_views, moc
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.SERVER_ERROR)
-    mocked_analytics_module_views.failed_access_token_request.assert_called_once()
-    assert 400 in mocked_analytics_module_views.failed_access_token_request.call_args.args
+    mocked_analytics_module.failed_access_token_request.assert_called_once()
+    assert 400 in mocked_analytics_module.failed_access_token_request.call_args.args
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module_views, mocked_sentry_sdk_module):
+def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
@@ -203,13 +192,13 @@ def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module_v
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.SERVER_ERROR)
-    mocked_analytics_module_views.failed_access_token_request.assert_called_once()
+    mocked_analytics_module.failed_access_token_request.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_connection_error(mocker, client, mocked_analytics_module_views, mocked_sentry_sdk_module):
+def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
@@ -225,7 +214,7 @@ def test_token_connection_error(mocker, client, mocked_analytics_module_views, m
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.SERVER_ERROR)
-    mocked_analytics_module_views.failed_access_token_request.assert_called_once()
+    mocked_analytics_module.failed_access_token_request.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
@@ -327,7 +316,7 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration(
     mocker,
     client,
     card_tokenize_form_data,
-    mocked_analytics_module_views,
+    mocked_analytics_module,
     model_EnrollmentFlow_does_not_support_expiration,
 ):
     mocker.patch("benefits.enrollment.views.enroll", return_value=(Status.SUCCESS, None))
@@ -337,11 +326,8 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration(
 
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow_does_not_support_expiration.enrollment_success_template
-    mocked_analytics_module_views.returned_success.assert_called_once()
-    assert (
-        model_EnrollmentFlow_does_not_support_expiration.group_id
-        in mocked_analytics_module_views.returned_success.call_args.args
-    )
+    mocked_analytics_module.returned_success.assert_called_once()
+    assert model_EnrollmentFlow_does_not_support_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
 
 
 @pytest.mark.django_db
@@ -350,7 +336,7 @@ def test_index_eligible_post_valid_form_success_supports_expiration(
     mocker,
     client,
     card_tokenize_form_data,
-    mocked_analytics_module_views,
+    mocked_analytics_module,
     model_EnrollmentFlow_supports_expiration,
 ):
     mocker.patch("benefits.enrollment.views.enroll", return_value=(Status.SUCCESS, None))
@@ -360,8 +346,8 @@ def test_index_eligible_post_valid_form_success_supports_expiration(
 
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow_supports_expiration.enrollment_success_template
-    mocked_analytics_module_views.returned_success.assert_called_once()
-    assert model_EnrollmentFlow_supports_expiration.group_id in mocked_analytics_module_views.returned_success.call_args.args
+    mocked_analytics_module.returned_success.assert_called_once()
+    assert model_EnrollmentFlow_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
 
 
 @pytest.mark.django_db
@@ -370,7 +356,7 @@ def test_index_eligible_post_valid_form_reenrollment_error(
     mocker,
     client,
     card_tokenize_form_data,
-    mocked_analytics_module_views,
+    mocked_analytics_module,
     model_EnrollmentFlow_supports_expiration,
 ):
     mocker.patch("benefits.enrollment.views.enroll", return_value=(Status.REENROLLMENT_ERROR, None))
@@ -380,7 +366,7 @@ def test_index_eligible_post_valid_form_reenrollment_error(
 
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow_supports_expiration.reenrollment_error_template
-    mocked_analytics_module_views.returned_error.assert_called_once()
+    mocked_analytics_module.returned_error.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -437,24 +423,24 @@ def test_retry_ineligible(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_retry_get(client, mocked_analytics_module_views):
+def test_retry_get(client, mocked_analytics_module):
     path = reverse(routes.ENROLLMENT_RETRY)
     response = client.get(path)
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_RETRY
-    mocked_analytics_module_views.returned_retry.assert_called_once()
+    mocked_analytics_module.returned_retry.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_retry_valid_form(client, mocked_analytics_module_views):
+def test_retry_valid_form(client, mocked_analytics_module):
     path = reverse(routes.ENROLLMENT_RETRY)
     response = client.post(path)
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_RETRY
-    mocked_analytics_module_views.returned_retry.assert_called_once()
+    mocked_analytics_module.returned_retry.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -469,9 +455,7 @@ def test_success_no_flow(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification", "mocked_session_eligible")
-def test_success_authentication_logged_in(
-    mocker, client, model_TransitAgency, model_EnrollmentFlow, mocked_analytics_module_views
-):
+def test_success_authentication_logged_in(mocker, client, model_TransitAgency, model_EnrollmentFlow, mocked_analytics_module):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = True
     mock_session.agency.return_value = model_TransitAgency
@@ -483,13 +467,13 @@ def test_success_authentication_logged_in(
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow.enrollment_success_template
     assert {"origin": reverse(routes.LOGGED_OUT)} in mock_session.update.call_args
-    mocked_analytics_module_views.returned_success.assert_called_once()
+    mocked_analytics_module.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification", "mocked_session_eligible")
 def test_success_authentication_not_logged_in(
-    mocker, client, model_TransitAgency, model_EnrollmentFlow, mocked_analytics_module_views
+    mocker, client, model_TransitAgency, model_EnrollmentFlow, mocked_analytics_module
 ):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = False
@@ -501,14 +485,12 @@ def test_success_authentication_not_logged_in(
 
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow.enrollment_success_template
-    mocked_analytics_module_views.returned_success.assert_called_once()
+    mocked_analytics_module.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_success_no_authentication(
-    client, mocked_session_flow_does_not_use_claims_verification, mocked_analytics_module_views
-):
+def test_success_no_authentication(client, mocked_session_flow_does_not_use_claims_verification, mocked_analytics_module):
     path = reverse(routes.ENROLLMENT_SUCCESS)
     response = client.get(path)
 
@@ -516,4 +498,4 @@ def test_success_no_authentication(
     assert (
         response.template_name == mocked_session_flow_does_not_use_claims_verification.return_value.enrollment_success_template
     )
-    mocked_analytics_module_views.returned_success.assert_called_once()
+    mocked_analytics_module.returned_success.assert_called_once()
