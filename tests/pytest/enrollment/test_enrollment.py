@@ -227,6 +227,7 @@ def test_enroll_system_error(
     app_request,
     model_TransitAgency,
     model_EnrollmentFlow_does_not_support_expiration,
+    card_token,
     mocked_analytics_module,
     mocked_sentry_sdk_module,
 ):
@@ -296,3 +297,27 @@ def test_enroll_exception_non_http_error(
     assert isinstance(exception, Exception)
     assert exception.args[0] == "some other exception"
     mocked_analytics_module.returned_error.assert_called_once()
+
+
+@pytest.mark.django_db
+def test_enroll_success_flow_does_not_support_expiration_customer_already_enrolled_no_expiry(
+    mocker,
+    app_request,
+    model_TransitAgency,
+    model_EnrollmentFlow_does_not_support_expiration,
+    card_token,
+    mocked_funding_source,
+    mocked_group_funding_source_no_expiry,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
+    mock_client = mock_client_cls.return_value
+    mock_client.get_funding_source_by_token.return_value = mocked_funding_source
+
+    mocker.patch(
+        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_no_expiry
+    )
+
+    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, card_token)
+
+    assert status is Status.SUCCESS
+    assert exception is None

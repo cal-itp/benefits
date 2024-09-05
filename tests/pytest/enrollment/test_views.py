@@ -329,16 +329,8 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_cust
     card_tokenize_form_data,
     mocked_analytics_module_views,
     model_EnrollmentFlow_does_not_support_expiration,
-    mocked_funding_source,
-    mocked_group_funding_source_no_expiry,
 ):
-    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
-    mock_client = mock_client_cls.return_value
-    mock_client.get_funding_source_by_token.return_value = mocked_funding_source
-
-    mocker.patch(
-        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_no_expiry
-    )
+    mocker.patch("benefits.enrollment.views.enroll", return_value=(Status.SUCCESS, None))
 
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
