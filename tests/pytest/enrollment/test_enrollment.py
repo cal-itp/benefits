@@ -323,3 +323,25 @@ def test_enroll_success_flow_does_not_support_expiration_customer_already_enroll
 
     assert status is Status.SUCCESS
     assert exception is None
+
+
+@pytest.mark.django_db
+def test_enroll_success_flow_does_not_support_expiration_no_expiry(
+    mocker,
+    app_request,
+    model_TransitAgency,
+    model_EnrollmentFlow_does_not_support_expiration,
+    card_token,
+    mocked_funding_source,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
+    mock_client = mock_client_cls.return_value
+    mock_client.get_funding_source_by_token.return_value = mocked_funding_source
+
+    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, card_token)
+
+    mock_client.link_concession_group_funding_source.assert_called_once_with(
+        funding_source_id=mocked_funding_source.id, group_id=model_EnrollmentFlow_does_not_support_expiration.group_id
+    )
+    assert status is Status.SUCCESS
+    assert exception is None

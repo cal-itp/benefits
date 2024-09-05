@@ -323,7 +323,7 @@ def test_index_eligible_post_valid_form_exception(mocker, client, card_tokenize_
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_post_valid_form_success_does_not_support_expiration_customer_already_enrolled_no_expiry(
+def test_index_eligible_post_valid_form_success_does_not_support_expiration(
     mocker,
     client,
     card_tokenize_form_data,
@@ -335,35 +335,6 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_cust
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
-    assert response.status_code == 200
-    assert response.template_name == model_EnrollmentFlow_does_not_support_expiration.enrollment_success_template
-    mocked_analytics_module_views.returned_success.assert_called_once()
-    assert (
-        model_EnrollmentFlow_does_not_support_expiration.group_id
-        in mocked_analytics_module_views.returned_success.call_args.args
-    )
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_post_valid_form_success_does_not_support_expiration_no_expiry(
-    mocker,
-    client,
-    card_tokenize_form_data,
-    mocked_analytics_module_views,
-    model_EnrollmentFlow_does_not_support_expiration,
-    mocked_funding_source,
-):
-    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
-    mock_client = mock_client_cls.return_value
-    mock_client.get_funding_source_by_token.return_value = mocked_funding_source
-
-    path = reverse(routes.ENROLLMENT_INDEX)
-    response = client.post(path, card_tokenize_form_data)
-
-    mock_client.link_concession_group_funding_source.assert_called_once_with(
-        funding_source_id=mocked_funding_source.id, group_id=model_EnrollmentFlow_does_not_support_expiration.group_id
-    )
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow_does_not_support_expiration.enrollment_success_template
     mocked_analytics_module_views.returned_success.assert_called_once()
