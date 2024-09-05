@@ -12,10 +12,10 @@ from requests import HTTPError
 
 from benefits.routes import routes
 import benefits.enrollment.views
+import benefits.enrollment.enrollment
 from benefits.core.middleware import TEMPLATE_USER_ERROR
-from benefits.enrollment.views import (
-    TEMPLATE_SYSTEM_ERROR,
-    TEMPLATE_RETRY,
+from benefits.enrollment.views import TEMPLATE_SYSTEM_ERROR, TEMPLATE_RETRY
+from benefits.enrollment.enrollment import (
     _get_group_funding_source,
     _calculate_expiry,
     _is_expired,
@@ -34,13 +34,23 @@ def invalid_form_data():
 
 
 @pytest.fixture
-def mocked_analytics_module(mocked_analytics_module):
+def mocked_analytics_module_views(mocked_analytics_module):
     return mocked_analytics_module(benefits.enrollment.views)
+
+
+@pytest.fixture
+def mocked_analytics_module_enrollment(mocked_analytics_module):
+    return mocked_analytics_module(benefits.enrollment.enrollment)
 
 
 @pytest.fixture
 def mocked_sentry_sdk_module(mocker):
     return mocker.patch.object(benefits.enrollment.views, "sentry_sdk")
+
+
+@pytest.fixture
+def mocked_sentry_sdk_module_enrollment(mocker):
+    return mocker.patch.object(benefits.enrollment.enrollment, "sentry_sdk")
 
 
 @pytest.fixture
@@ -128,7 +138,7 @@ def test_token_valid(mocker, client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_http_error_500(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
+def test_token_http_error_500(mocker, client, mocked_analytics_module_views, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
@@ -149,14 +159,14 @@ def test_token_http_error_500(mocker, client, mocked_analytics_module, mocked_se
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.ENROLLMENT_SYSTEM_ERROR)
-    mocked_analytics_module.failed_access_token_request.assert_called_once()
-    assert 500 in mocked_analytics_module.failed_access_token_request.call_args.args
+    mocked_analytics_module_views.failed_access_token_request.assert_called_once()
+    assert 500 in mocked_analytics_module_views.failed_access_token_request.call_args.args
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
+def test_token_http_error_400(mocker, client, mocked_analytics_module_views, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
@@ -177,14 +187,14 @@ def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_se
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.SERVER_ERROR)
-    mocked_analytics_module.failed_access_token_request.assert_called_once()
-    assert 400 in mocked_analytics_module.failed_access_token_request.call_args.args
+    mocked_analytics_module_views.failed_access_token_request.assert_called_once()
+    assert 400 in mocked_analytics_module_views.failed_access_token_request.call_args.args
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
+def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module_views, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
@@ -200,13 +210,13 @@ def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, 
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.SERVER_ERROR)
-    mocked_analytics_module.failed_access_token_request.assert_called_once()
+    mocked_analytics_module_views.failed_access_token_request.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
+def test_token_connection_error(mocker, client, mocked_analytics_module_views, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
     mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
@@ -222,7 +232,7 @@ def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.SERVER_ERROR)
-    mocked_analytics_module.failed_access_token_request.assert_called_once()
+    mocked_analytics_module_views.failed_access_token_request.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
@@ -273,8 +283,8 @@ def test_index_eligible_post_valid_form_http_error_500(
     client,
     mocked_session_agency,
     model_EnrollmentFlow_does_not_support_expiration,
-    mocked_analytics_module,
-    mocked_sentry_sdk_module,
+    mocked_analytics_module_enrollment,
+    mocked_sentry_sdk_module_enrollment,
     card_tokenize_form_data,
     status_code,
 ):
@@ -282,7 +292,7 @@ def test_index_eligible_post_valid_form_http_error_500(
     mock_session.agency.return_value = mocked_session_agency.return_value
     mock_session.flow.return_value = model_EnrollmentFlow_does_not_support_expiration
 
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
     mock_client = mock_client_cls.return_value
 
     mock_error = {"message": "Mock error message"}
@@ -298,14 +308,14 @@ def test_index_eligible_post_valid_form_http_error_500(
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SYSTEM_ERROR
     assert {"origin": mocked_session_agency.return_value.index_url} in mock_session.update.call_args
-    mocked_analytics_module.returned_error.assert_called_once()
-    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+    mocked_analytics_module_enrollment.returned_error.assert_called_once()
+    mocked_sentry_sdk_module_enrollment.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_http_error_400(mocker, client, card_tokenize_form_data):
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
     mock_client = mock_client_cls.return_value
 
     mock_error = {"message": "Mock error message"}
@@ -323,7 +333,7 @@ def test_index_eligible_post_valid_form_http_error_400(mocker, client, card_toke
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_failure(mocker, client, card_tokenize_form_data):
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
     mock_client = mock_client_cls.return_value
 
     mock_client.link_concession_group_funding_source.side_effect = Exception("some other exception")
@@ -363,24 +373,29 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_cust
     mocker,
     client,
     card_tokenize_form_data,
-    mocked_analytics_module,
+    mocked_analytics_module_views,
     model_EnrollmentFlow_does_not_support_expiration,
     mocked_funding_source,
     mocked_group_funding_source_no_expiry,
 ):
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
-    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_no_expiry)
+    mocker.patch(
+        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_no_expiry
+    )
 
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow_does_not_support_expiration.enrollment_success_template
-    mocked_analytics_module.returned_success.assert_called_once()
-    assert model_EnrollmentFlow_does_not_support_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+    mocked_analytics_module_views.returned_success.assert_called_once()
+    assert (
+        model_EnrollmentFlow_does_not_support_expiration.group_id
+        in mocked_analytics_module_views.returned_success.call_args.args
+    )
 
 
 @pytest.mark.django_db
@@ -389,11 +404,11 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_no_e
     mocker,
     client,
     card_tokenize_form_data,
-    mocked_analytics_module,
+    mocked_analytics_module_views,
     model_EnrollmentFlow_does_not_support_expiration,
     mocked_funding_source,
 ):
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
@@ -405,8 +420,11 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_no_e
     )
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow_does_not_support_expiration.enrollment_success_template
-    mocked_analytics_module.returned_success.assert_called_once()
-    assert model_EnrollmentFlow_does_not_support_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+    mocked_analytics_module_views.returned_success.assert_called_once()
+    assert (
+        model_EnrollmentFlow_does_not_support_expiration.group_id
+        in mocked_analytics_module_views.returned_success.call_args.args
+    )
 
 
 def test_calculate_expiry():
@@ -422,7 +440,7 @@ def test_calculate_expiry():
 def test_calculate_expiry_specific_date(mocker):
     expiration_days = 14
     mocker.patch(
-        "benefits.enrollment.views.timezone.now",
+        "benefits.enrollment.enrollment.timezone.now",
         return_value=timezone.make_aware(
             value=timezone.datetime(2024, 3, 1, 13, 37, 11, 5), timezone=timezone.get_fixed_timezone(offset=0)
         ),
@@ -441,12 +459,12 @@ def test_index_eligible_post_valid_form_success_supports_expiration(
     mocker,
     client,
     card_tokenize_form_data,
-    mocked_analytics_module,
+    mocked_analytics_module_views,
     model_EnrollmentFlow_supports_expiration,
     mocked_funding_source,
     mocked_session_enrollment_expiry,
 ):
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
@@ -460,8 +478,8 @@ def test_index_eligible_post_valid_form_success_supports_expiration(
     )
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow_supports_expiration.enrollment_success_template
-    mocked_analytics_module.returned_success.assert_called_once()
-    assert model_EnrollmentFlow_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+    mocked_analytics_module_views.returned_success.assert_called_once()
+    assert model_EnrollmentFlow_supports_expiration.group_id in mocked_analytics_module_views.returned_success.call_args.args
 
 
 @pytest.mark.django_db
@@ -470,17 +488,19 @@ def test_index_eligible_post_valid_form_success_supports_expiration_no_expiry(
     mocker,
     client,
     card_tokenize_form_data,
-    mocked_analytics_module,
+    mocked_analytics_module_views,
     model_EnrollmentFlow_supports_expiration,
     mocked_funding_source,
     mocked_group_funding_source_no_expiry,
     mocked_session_enrollment_expiry,
 ):
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
-    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_no_expiry)
+    mocker.patch(
+        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_no_expiry
+    )
 
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
@@ -492,8 +512,8 @@ def test_index_eligible_post_valid_form_success_supports_expiration_no_expiry(
     )
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow_supports_expiration.enrollment_success_template
-    mocked_analytics_module.returned_success.assert_called_once()
-    assert model_EnrollmentFlow_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+    mocked_analytics_module_views.returned_success.assert_called_once()
+    assert model_EnrollmentFlow_supports_expiration.group_id in mocked_analytics_module_views.returned_success.call_args.args
 
 
 def test_is_expired_expiry_date_is_in_the_past(mocker):
@@ -501,7 +521,7 @@ def test_is_expired_expiry_date_is_in_the_past(mocker):
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
-        "benefits.enrollment.views.timezone.now",
+        "benefits.enrollment.enrollment.timezone.now",
         return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 10, 30), timezone.get_default_timezone()),
     )
 
@@ -513,7 +533,7 @@ def test_is_expired_expiry_date_is_in_the_future(mocker):
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
-        "benefits.enrollment.views.timezone.now",
+        "benefits.enrollment.enrollment.timezone.now",
         return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 11, 5), timezone.get_default_timezone()),
     )
 
@@ -525,7 +545,7 @@ def test_is_expired_expiry_date_equals_now(mocker):
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
-        "benefits.enrollment.views.timezone.now",
+        "benefits.enrollment.enrollment.timezone.now",
         return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 13, 37), timezone.get_default_timezone()),
     )
 
@@ -538,20 +558,22 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_expired(
     mocker,
     client,
     card_tokenize_form_data,
-    mocked_analytics_module,
+    mocked_analytics_module_views,
     model_EnrollmentFlow_supports_expiration,
     mocked_funding_source,
     mocked_group_funding_source_with_expiry,
     mocked_session_enrollment_expiry,
 ):
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
     # mock that a funding source already exists, doesn't matter what expiry_date is
-    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry)
+    mocker.patch(
+        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry
+    )
 
-    mocker.patch("benefits.enrollment.views._is_expired", return_value=True)
+    mocker.patch("benefits.enrollment.enrollment._is_expired", return_value=True)
 
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
@@ -563,8 +585,8 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_expired(
     )
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow_supports_expiration.enrollment_success_template
-    mocked_analytics_module.returned_success.assert_called_once()
-    assert model_EnrollmentFlow_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+    mocked_analytics_module_views.returned_success.assert_called_once()
+    assert model_EnrollmentFlow_supports_expiration.group_id in mocked_analytics_module_views.returned_success.call_args.args
 
 
 def test_is_within_enrollment_window_True(mocker):
@@ -573,7 +595,7 @@ def test_is_within_enrollment_window_True(mocker):
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
-        "benefits.enrollment.views.timezone.now",
+        "benefits.enrollment.enrollment.timezone.now",
         return_value=timezone.make_aware(timezone.datetime(2023, 2, 15, 15, 30), timezone=timezone.get_default_timezone()),
     )
 
@@ -588,7 +610,7 @@ def test_is_within_enrollment_window_before_window(mocker):
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
-        "benefits.enrollment.views.timezone.now",
+        "benefits.enrollment.enrollment.timezone.now",
         return_value=timezone.make_aware(timezone.datetime(2023, 1, 15, 15, 30), timezone=timezone.get_default_timezone()),
     )
 
@@ -603,7 +625,7 @@ def test_is_within_enrollment_window_after_window(mocker):
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
-        "benefits.enrollment.views.timezone.now",
+        "benefits.enrollment.enrollment.timezone.now",
         return_value=timezone.make_aware(timezone.datetime(2023, 3, 15, 15, 30), timezone=timezone.get_default_timezone()),
     )
 
@@ -618,7 +640,7 @@ def test_is_within_enrollment_window_equal_reenrollment_date(mocker):
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
-        "benefits.enrollment.views.timezone.now",
+        "benefits.enrollment.enrollment.timezone.now",
         return_value=enrollment_reenrollment_date,
     )
 
@@ -633,7 +655,7 @@ def test_is_within_enrollment_window_equal_expiry_date(mocker):
 
     # mock datetime of "now" to be specific date for testing
     mocker.patch(
-        "benefits.enrollment.views.timezone.now",
+        "benefits.enrollment.enrollment.timezone.now",
         return_value=expiry_date,
     )
 
@@ -648,20 +670,22 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_within_re
     mocker,
     client,
     card_tokenize_form_data,
-    mocked_analytics_module,
+    mocked_analytics_module_views,
     model_EnrollmentFlow_supports_expiration,
     mocked_funding_source,
     mocked_group_funding_source_with_expiry,
     mocked_session_enrollment_expiry,
 ):
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
     # mock that a funding source already exists, doesn't matter what expiry_date is
-    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry)
+    mocker.patch(
+        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry
+    )
 
-    mocker.patch("benefits.enrollment.views._is_within_reenrollment_window", return_value=True)
+    mocker.patch("benefits.enrollment.enrollment._is_within_reenrollment_window", return_value=True)
 
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
@@ -673,8 +697,8 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_within_re
     )
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow_supports_expiration.enrollment_success_template
-    mocked_analytics_module.returned_success.assert_called_once()
-    assert model_EnrollmentFlow_supports_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+    mocked_analytics_module_views.returned_success.assert_called_once()
+    assert model_EnrollmentFlow_supports_expiration.group_id in mocked_analytics_module_views.returned_success.call_args.args
 
 
 @pytest.mark.django_db
@@ -683,27 +707,29 @@ def test_index_eligible_post_valid_form_success_supports_expiration_is_not_expir
     mocker,
     client,
     card_tokenize_form_data,
-    mocked_analytics_module,
+    mocked_analytics_module_views,
     mocked_funding_source,
     mocked_group_funding_source_with_expiry,
     model_EnrollmentFlow_supports_expiration,
 ):
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
     # mock that a funding source already exists, doesn't matter what expiry_date is
-    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry)
+    mocker.patch(
+        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry
+    )
 
-    mocker.patch("benefits.enrollment.views._is_expired", return_value=False)
-    mocker.patch("benefits.enrollment.views._is_within_reenrollment_window", return_value=False)
+    mocker.patch("benefits.enrollment.enrollment._is_expired", return_value=False)
+    mocker.patch("benefits.enrollment.enrollment._is_within_reenrollment_window", return_value=False)
 
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow_supports_expiration.reenrollment_error_template
-    mocked_analytics_module.returned_error.assert_called_once()
+    mocked_analytics_module_views.returned_error.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -712,17 +738,19 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_has_
     mocker,
     client,
     card_tokenize_form_data,
-    mocked_analytics_module,
+    mocked_analytics_module_enrollment,
     model_EnrollmentFlow_does_not_support_expiration,
     mocked_funding_source,
     mocked_group_funding_source_with_expiry,
 ):
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
     # mock that a funding source already exists, doesn't matter what expiry_date is
-    mocker.patch("benefits.enrollment.views._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry)
+    mocker.patch(
+        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry
+    )
 
     path = reverse(routes.ENROLLMENT_INDEX)
     with pytest.raises(NotImplementedError):
@@ -737,9 +765,10 @@ def test_index_eligible_post_valid_form_success_does_not_support_expiration_has_
     # )
     # assert response.status_code == 200
     # assert response.template_name == model_EnrollmentFlow_does_not_support_expiration.enrollment_success_template
-    # mocked_analytics_module.returned_success.assert_called_once()
+    # mocked_analytics_module_enrollment.returned_success.assert_called_once()
     # assert (
-    #     model_EnrollmentFlow_does_not_support_expiration.group_id in mocked_analytics_module.returned_success.call_args.args
+    #     model_EnrollmentFlow_does_not_support_expiration.group_id
+    #     in mocked_analytics_module_enrollment.returned_success.call_args.args
     # )
 
 
@@ -797,24 +826,24 @@ def test_retry_ineligible(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_retry_get(client, mocked_analytics_module):
+def test_retry_get(client, mocked_analytics_module_views):
     path = reverse(routes.ENROLLMENT_RETRY)
     response = client.get(path)
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_RETRY
-    mocked_analytics_module.returned_retry.assert_called_once()
+    mocked_analytics_module_views.returned_retry.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_retry_valid_form(client, mocked_analytics_module):
+def test_retry_valid_form(client, mocked_analytics_module_views):
     path = reverse(routes.ENROLLMENT_RETRY)
     response = client.post(path)
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_RETRY
-    mocked_analytics_module.returned_retry.assert_called_once()
+    mocked_analytics_module_views.returned_retry.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -829,7 +858,9 @@ def test_success_no_flow(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification", "mocked_session_eligible")
-def test_success_authentication_logged_in(mocker, client, model_TransitAgency, model_EnrollmentFlow, mocked_analytics_module):
+def test_success_authentication_logged_in(
+    mocker, client, model_TransitAgency, model_EnrollmentFlow, mocked_analytics_module_views
+):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = True
     mock_session.agency.return_value = model_TransitAgency
@@ -841,13 +872,13 @@ def test_success_authentication_logged_in(mocker, client, model_TransitAgency, m
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow.enrollment_success_template
     assert {"origin": reverse(routes.LOGGED_OUT)} in mock_session.update.call_args
-    mocked_analytics_module.returned_success.assert_called_once()
+    mocked_analytics_module_views.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification", "mocked_session_eligible")
 def test_success_authentication_not_logged_in(
-    mocker, client, model_TransitAgency, model_EnrollmentFlow, mocked_analytics_module
+    mocker, client, model_TransitAgency, model_EnrollmentFlow, mocked_analytics_module_views
 ):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = False
@@ -859,12 +890,14 @@ def test_success_authentication_not_logged_in(
 
     assert response.status_code == 200
     assert response.template_name == model_EnrollmentFlow.enrollment_success_template
-    mocked_analytics_module.returned_success.assert_called_once()
+    mocked_analytics_module_views.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_success_no_authentication(client, mocked_session_flow_does_not_use_claims_verification, mocked_analytics_module):
+def test_success_no_authentication(
+    client, mocked_session_flow_does_not_use_claims_verification, mocked_analytics_module_views
+):
     path = reverse(routes.ENROLLMENT_SUCCESS)
     response = client.get(path)
 
@@ -872,4 +905,4 @@ def test_success_no_authentication(client, mocked_session_flow_does_not_use_clai
     assert (
         response.template_name == mocked_session_flow_does_not_use_claims_verification.return_value.enrollment_success_template
     )
-    mocked_analytics_module.returned_success.assert_called_once()
+    mocked_analytics_module_views.returned_success.assert_called_once()
