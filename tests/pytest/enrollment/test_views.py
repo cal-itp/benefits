@@ -384,46 +384,6 @@ def test_index_eligible_post_valid_form_reenrollment_error(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_post_valid_form_success_does_not_support_expiration_has_expiration_date(
-    mocker,
-    client,
-    card_tokenize_form_data,
-    mocked_analytics_module_enrollment,
-    model_EnrollmentFlow_does_not_support_expiration,
-    mocked_funding_source,
-    mocked_group_funding_source_with_expiry,
-):
-    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
-    mock_client = mock_client_cls.return_value
-    mock_client.get_funding_source_by_token.return_value = mocked_funding_source
-
-    # mock that a funding source already exists, doesn't matter what expiry_date is
-    mocker.patch(
-        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry
-    )
-
-    path = reverse(routes.ENROLLMENT_INDEX)
-    with pytest.raises(NotImplementedError):
-        client.post(path, card_tokenize_form_data)
-
-    # this is what we would assert if removing expiration were supported
-    #
-    # mock_client.link_concession_group_funding_source.assert_called_once_with(
-    #     funding_source_id=mocked_funding_source.id,
-    #     group_id=model_EnrollmentFlow_does_not_support_expiration.group_id,
-    #     expiry_date=None,
-    # )
-    # assert response.status_code == 200
-    # assert response.template_name == model_EnrollmentFlow_does_not_support_expiration.enrollment_success_template
-    # mocked_analytics_module_enrollment.returned_success.assert_called_once()
-    # assert (
-    #     model_EnrollmentFlow_does_not_support_expiration.group_id
-    #     in mocked_analytics_module_enrollment.returned_success.call_args.args
-    # )
-
-
-@pytest.mark.django_db
 def test_index_ineligible(client):
     path = reverse(routes.ENROLLMENT_INDEX)
 

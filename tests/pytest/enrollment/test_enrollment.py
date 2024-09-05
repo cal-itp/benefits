@@ -507,3 +507,35 @@ def test_enroll_reenrollment_error(
     mock_client.link_concession_group_funding_source.assert_not_called()
     assert status is Status.REENROLLMENT_ERROR
     assert exception is None
+
+
+@pytest.mark.django_db
+def test_enroll_does_not_support_expiration_has_expiration_date(
+    mocker,
+    app_request,
+    model_TransitAgency,
+    model_EnrollmentFlow_does_not_support_expiration,
+    card_token,
+    mocked_funding_source,
+    mocked_group_funding_source_with_expiry,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
+    mock_client = mock_client_cls.return_value
+    mock_client.get_funding_source_by_token.return_value = mocked_funding_source
+
+    # mock that a funding source already exists, doesn't matter what expiry_date is
+    mocker.patch(
+        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry
+    )
+
+    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, card_token)
+
+    assert status is Status.EXCEPTION
+    assert isinstance(exception, NotImplementedError)
+
+    # this is what we would assert if removing expiration were supported
+    # mock_client.link_concession_group_funding_source.assert_called_once_with(
+    #     funding_source_id=mocked_funding_source.id,
+    #     group_id=model_EnrollmentFlow_does_not_support_expiration.group_id,
+    #     expiry_date=None,
+    # )
