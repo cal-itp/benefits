@@ -319,5 +319,7 @@ def test_enroll_success_flow_does_not_support_expiration_customer_already_enroll
 
     status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, card_token)
 
+    mock_client.link_concession_group_funding_source.assert_not_called()
+
     assert status is Status.SUCCESS
     assert exception is None
