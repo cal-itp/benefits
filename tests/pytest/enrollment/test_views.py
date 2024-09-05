@@ -11,6 +11,7 @@ from requests import HTTPError
 from benefits.routes import routes
 import benefits.enrollment.views
 import benefits.enrollment.enrollment
+from benefits.enrollment.enrollment import Status
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.enrollment.views import TEMPLATE_SYSTEM_ERROR, TEMPLATE_RETRY
 
@@ -270,13 +271,11 @@ def test_index_eligible_post_invalid_form(client, invalid_form_data):
 @pytest.mark.django_db
 @pytest.mark.parametrize("status_code", [500, 501, 502, 503, 504])
 @pytest.mark.usefixtures("mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_post_valid_form_http_error_500(
+def test_index_eligible_post_valid_form_system_error(
     mocker,
     client,
     mocked_session_agency,
     model_EnrollmentFlow_does_not_support_expiration,
-    mocked_analytics_module_enrollment,
-    mocked_sentry_sdk_module_enrollment,
     card_tokenize_form_data,
     status_code,
 ):
@@ -284,14 +283,18 @@ def test_index_eligible_post_valid_form_http_error_500(
     mock_session.agency.return_value = mocked_session_agency.return_value
     mock_session.flow.return_value = model_EnrollmentFlow_does_not_support_expiration
 
-    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
-    mock_client = mock_client_cls.return_value
-
     mock_error = {"message": "Mock error message"}
     mock_error_response = mocker.Mock(status_code=status_code, **mock_error)
     mock_error_response.json.return_value = mock_error
-    mock_client.link_concession_group_funding_source.side_effect = HTTPError(
-        response=mock_error_response,
+
+    mocker.patch(
+        "benefits.enrollment.views.enroll",
+        return_value=(
+            Status.SYSTEM_ERROR,
+            HTTPError(
+                response=mock_error_response,
+            ),
+        ),
     )
 
     path = reverse(routes.ENROLLMENT_INDEX)
@@ -300,8 +303,6 @@ def test_index_eligible_post_valid_form_http_error_500(
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SYSTEM_ERROR
     assert {"origin": mocked_session_agency.return_value.index_url} in mock_session.update.call_args
-    mocked_analytics_module_enrollment.returned_error.assert_called_once()
-    mocked_sentry_sdk_module_enrollment.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db

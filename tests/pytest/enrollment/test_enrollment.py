@@ -4,13 +4,27 @@ import pytest
 from django.utils import timezone
 from littlepay.api.funding_sources import FundingSourceResponse
 from littlepay.api.groups import GroupFundingSourceResponse
+from requests import HTTPError
 
+import benefits.enrollment.enrollment
 from benefits.enrollment.enrollment import (
+    Status,
+    enroll,
     _get_group_funding_source,
     _calculate_expiry,
     _is_expired,
     _is_within_reenrollment_window,
 )
+
+
+@pytest.fixture
+def mocked_analytics_module(mocked_analytics_module):
+    return mocked_analytics_module(benefits.enrollment.enrollment)
+
+
+@pytest.fixture
+def mocked_sentry_sdk_module(mocker):
+    return mocker.patch.object(benefits.enrollment.enrollment, "sentry_sdk")
 
 
 @pytest.fixture
@@ -198,3 +212,34 @@ def test_is_within_enrollment_window_equal_expiry_date(mocker):
     is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
 
     assert not is_within_reenrollment_window
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("status_code", [500, 501, 502, 503, 504])
+def test_enroll_system_error(
+    mocker,
+    status_code,
+    app_request,
+    model_TransitAgency,
+    model_EnrollmentFlow_does_not_support_expiration,
+    mocked_analytics_module,
+    mocked_sentry_sdk_module,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
+    mock_client = mock_client_cls.return_value
+
+    mock_error = {"message": "Mock error message"}
+    mock_error_response = mocker.Mock(status_code=status_code, **mock_error)
+    mock_error_response.json.return_value = mock_error
+    mock_client.link_concession_group_funding_source.side_effect = HTTPError(
+        response=mock_error_response,
+    )
+
+    status, exception = enroll(
+        app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, "card_token_1234"
+    )
+
+    assert status is Status.SYSTEM_ERROR
+    assert exception is None
+    mocked_analytics_module.returned_error.assert_called_once()
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
