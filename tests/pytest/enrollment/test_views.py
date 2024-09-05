@@ -228,6 +228,8 @@ def test_index_eligible_post_valid_form_system_error(
     model_EnrollmentFlow_does_not_support_expiration,
     card_tokenize_form_data,
     status_code,
+    mocked_analytics_module,
+    mocked_sentry_sdk_module,
 ):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.agency.return_value = mocked_session_agency.return_value
@@ -253,11 +255,13 @@ def test_index_eligible_post_valid_form_system_error(
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_SYSTEM_ERROR
     assert {"origin": mocked_session_agency.return_value.index_url} in mock_session.update.call_args
+    mocked_analytics_module.returned_error.assert_called_once()
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_post_valid_form_exception(mocker, client, card_tokenize_form_data):
+def test_index_eligible_post_valid_form_exception(mocker, client, card_tokenize_form_data, mocked_analytics_module):
     mocker.patch(
         "benefits.enrollment.views.enroll",
         return_value=(
@@ -267,8 +271,11 @@ def test_index_eligible_post_valid_form_exception(mocker, client, card_tokenize_
     )
 
     path = reverse(routes.ENROLLMENT_INDEX)
+
     with pytest.raises(Exception, match=r"some exception"):
         client.post(path, card_tokenize_form_data)
+
+        mocked_analytics_module.returned_error.assert_called_once()
 
 
 @pytest.mark.django_db

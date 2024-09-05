@@ -88,10 +88,16 @@ def index(request):
         match (status):
             case Status.SUCCESS:
                 return success(request)
+
             case Status.SYSTEM_ERROR:
+                analytics.returned_error(request, str(exception))
+                sentry_sdk.capture_exception(exception)
                 return system_error(request)
+
             case Status.EXCEPTION:
+                analytics.returned_error(request, str(exception))
                 raise exception
+
             case Status.REENROLLMENT_ERROR:
                 return reenrollment_error(request)
 

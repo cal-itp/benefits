@@ -6,7 +6,6 @@ from littlepay.api.funding_sources import FundingSourceResponse
 from littlepay.api.groups import GroupFundingSourceResponse
 from requests import HTTPError
 
-import benefits.enrollment.enrollment
 from benefits.enrollment.enrollment import (
     Status,
     enroll,
@@ -15,16 +14,6 @@ from benefits.enrollment.enrollment import (
     _is_expired,
     _is_within_reenrollment_window,
 )
-
-
-@pytest.fixture
-def mocked_analytics_module(mocked_analytics_module):
-    return mocked_analytics_module(benefits.enrollment.enrollment)
-
-
-@pytest.fixture
-def mocked_sentry_sdk_module(mocker):
-    return mocker.patch.object(benefits.enrollment.enrollment, "sentry_sdk")
 
 
 @pytest.fixture
@@ -237,8 +226,6 @@ def test_enroll_system_error(
     status_code,
     app_request,
     card_token,
-    mocked_analytics_module,
-    mocked_sentry_sdk_module,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
     mock_client = mock_client_cls.return_value
@@ -246,16 +233,13 @@ def test_enroll_system_error(
     mock_error = {"message": "Mock error message"}
     mock_error_response = mocker.Mock(status_code=status_code, **mock_error)
     mock_error_response.json.return_value = mock_error
-    mock_client.link_concession_group_funding_source.side_effect = HTTPError(
-        response=mock_error_response,
-    )
+    http_error = HTTPError(response=mock_error_response)
+    mock_client.link_concession_group_funding_source.side_effect = http_error
 
     status, exception = enroll(app_request, card_token)
 
     assert status is Status.SYSTEM_ERROR
-    assert exception is None
-    mocked_analytics_module.returned_error.assert_called_once()
-    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+    assert exception == http_error
 
 
 @pytest.mark.django_db
@@ -264,7 +248,6 @@ def test_enroll_exception_http_error_400(
     mocker,
     app_request,
     card_token,
-    mocked_analytics_module,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
     mock_client = mock_client_cls.return_value
@@ -282,7 +265,6 @@ def test_enroll_exception_http_error_400(
     assert status is Status.EXCEPTION
     assert isinstance(exception, Exception)
     assert exception.args[0] == f"{http_error}: {http_error.response.json()}"
-    mocked_analytics_module.returned_error.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -291,7 +273,6 @@ def test_enroll_exception_non_http_error(
     mocker,
     app_request,
     card_token,
-    mocked_analytics_module,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
     mock_client = mock_client_cls.return_value
@@ -303,7 +284,6 @@ def test_enroll_exception_non_http_error(
     assert status is Status.EXCEPTION
     assert isinstance(exception, Exception)
     assert exception.args[0] == "some other exception"
-    mocked_analytics_module.returned_error.assert_called_once()
 
 
 @pytest.mark.django_db

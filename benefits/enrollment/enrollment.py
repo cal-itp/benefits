@@ -4,10 +4,8 @@ from datetime import timedelta
 from django.utils import timezone
 from littlepay.api.client import Client
 from requests.exceptions import HTTPError
-import sentry_sdk
 
 from benefits.core import session
-from . import analytics
 
 
 class Status(Enum):
@@ -100,16 +98,12 @@ def enroll(request, card_token):
 
     except HTTPError as e:
         if e.response.status_code >= 500:
-            analytics.returned_error(request, str(e))
-            sentry_sdk.capture_exception(e)
-
             status = Status.SYSTEM_ERROR
+            exception = e
         else:
-            analytics.returned_error(request, str(e))
             status = Status.EXCEPTION
             exception = Exception(f"{e}: {e.response.json()}")
     except Exception as e:
-        analytics.returned_error(request, str(e))
         status = Status.EXCEPTION
         exception = e
 
