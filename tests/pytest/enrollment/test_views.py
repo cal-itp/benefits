@@ -307,32 +307,17 @@ def test_index_eligible_post_valid_form_system_error(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_post_valid_form_http_error_400(mocker, client, card_tokenize_form_data):
-    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
-    mock_client = mock_client_cls.return_value
-
-    mock_error = {"message": "Mock error message"}
-    mock_error_response = mocker.Mock(status_code=400, **mock_error)
-    mock_error_response.json.return_value = mock_error
-    mock_client.link_concession_group_funding_source.side_effect = HTTPError(
-        response=mock_error_response,
+def test_index_eligible_post_valid_form_exception(mocker, client, card_tokenize_form_data):
+    mocker.patch(
+        "benefits.enrollment.views.enroll",
+        return_value=(
+            Status.EXCEPTION,
+            Exception("some exception"),
+        ),
     )
 
     path = reverse(routes.ENROLLMENT_INDEX)
-    with pytest.raises(Exception, match=mock_error["message"]):
-        client.post(path, card_tokenize_form_data)
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_post_valid_form_failure(mocker, client, card_tokenize_form_data):
-    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
-    mock_client = mock_client_cls.return_value
-
-    mock_client.link_concession_group_funding_source.side_effect = Exception("some other exception")
-
-    path = reverse(routes.ENROLLMENT_INDEX)
-    with pytest.raises(Exception, match=r"some other exception"):
+    with pytest.raises(Exception, match=r"some exception"):
         client.post(path, card_tokenize_form_data)
 
 

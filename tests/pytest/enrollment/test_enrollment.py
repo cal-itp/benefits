@@ -243,3 +243,55 @@ def test_enroll_system_error(
     assert exception is None
     mocked_analytics_module.returned_error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+
+@pytest.mark.django_db
+def test_enroll_exception_http_error_400(
+    mocker,
+    app_request,
+    model_TransitAgency,
+    model_EnrollmentFlow_does_not_support_expiration,
+    mocked_analytics_module,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
+    mock_client = mock_client_cls.return_value
+
+    mock_error = {"message": "Mock error message"}
+    mock_error_response = mocker.Mock(status_code=400, **mock_error)
+    mock_error_response.json.return_value = mock_error
+    http_error = HTTPError(
+        response=mock_error_response,
+    )
+    mock_client.link_concession_group_funding_source.side_effect = http_error
+
+    status, exception = enroll(
+        app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, "card_token_1234"
+    )
+
+    assert status is Status.EXCEPTION
+    assert isinstance(exception, Exception)
+    assert exception.args[0] == f"{http_error}: {http_error.response.json()}"
+    mocked_analytics_module.returned_error.assert_called_once()
+
+
+@pytest.mark.django_db
+def test_enroll_exception_non_http_error(
+    mocker,
+    app_request,
+    model_TransitAgency,
+    model_EnrollmentFlow_does_not_support_expiration,
+    mocked_analytics_module,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
+    mock_client = mock_client_cls.return_value
+
+    mock_client.link_concession_group_funding_source.side_effect = Exception("some other exception")
+
+    status, exception = enroll(
+        app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, "card_token_1234"
+    )
+
+    assert status is Status.EXCEPTION
+    assert isinstance(exception, Exception)
+    assert exception.args[0] == "some other exception"
+    mocked_analytics_module.returned_error.assert_called_once()
