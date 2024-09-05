@@ -25,7 +25,10 @@ class Status(Enum):
     REENROLLMENT_ERROR = 4
 
 
-def enroll(request, agency, flow, card_token):
+def enroll(request, card_token):
+    agency = session.agency(request)
+    flow = session.flow(request)
+
     client = Client(
         base_url=agency.transit_processor.api_base_url,
         client_id=agency.transit_processor_client_id,

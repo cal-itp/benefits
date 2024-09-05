@@ -230,13 +230,12 @@ def test_is_within_enrollment_window_equal_expiry_date(mocker):
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow_does_not_support_expiration")
 @pytest.mark.parametrize("status_code", [500, 501, 502, 503, 504])
 def test_enroll_system_error(
     mocker,
     status_code,
     app_request,
-    model_TransitAgency,
-    model_EnrollmentFlow_does_not_support_expiration,
     card_token,
     mocked_analytics_module,
     mocked_sentry_sdk_module,
@@ -251,7 +250,7 @@ def test_enroll_system_error(
         response=mock_error_response,
     )
 
-    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, card_token)
+    status, exception = enroll(app_request, card_token)
 
     assert status is Status.SYSTEM_ERROR
     assert exception is None
@@ -260,12 +259,11 @@ def test_enroll_system_error(
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow_does_not_support_expiration")
 def test_enroll_exception_http_error_400(
     mocker,
     app_request,
-    model_TransitAgency,
     card_token,
-    model_EnrollmentFlow_does_not_support_expiration,
     mocked_analytics_module,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
@@ -279,7 +277,7 @@ def test_enroll_exception_http_error_400(
     )
     mock_client.link_concession_group_funding_source.side_effect = http_error
 
-    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, card_token)
+    status, exception = enroll(app_request, card_token)
 
     assert status is Status.EXCEPTION
     assert isinstance(exception, Exception)
@@ -288,11 +286,10 @@ def test_enroll_exception_http_error_400(
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow_does_not_support_expiration")
 def test_enroll_exception_non_http_error(
     mocker,
     app_request,
-    model_TransitAgency,
-    model_EnrollmentFlow_does_not_support_expiration,
     card_token,
     mocked_analytics_module,
 ):
@@ -301,7 +298,7 @@ def test_enroll_exception_non_http_error(
 
     mock_client.link_concession_group_funding_source.side_effect = Exception("some other exception")
 
-    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, card_token)
+    status, exception = enroll(app_request, card_token)
 
     assert status is Status.EXCEPTION
     assert isinstance(exception, Exception)
@@ -310,11 +307,10 @@ def test_enroll_exception_non_http_error(
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow_does_not_support_expiration")
 def test_enroll_success_flow_does_not_support_expiration_customer_already_enrolled_no_expiry(
     mocker,
     app_request,
-    model_TransitAgency,
-    model_EnrollmentFlow_does_not_support_expiration,
     card_token,
     mocked_funding_source,
     mocked_group_funding_source_no_expiry,
@@ -327,7 +323,7 @@ def test_enroll_success_flow_does_not_support_expiration_customer_already_enroll
         "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_no_expiry
     )
 
-    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, card_token)
+    status, exception = enroll(app_request, card_token)
 
     mock_client.link_concession_group_funding_source.assert_not_called()
 
@@ -336,10 +332,10 @@ def test_enroll_success_flow_does_not_support_expiration_customer_already_enroll
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
 def test_enroll_success_flow_does_not_support_expiration_no_expiry(
     mocker,
     app_request,
-    model_TransitAgency,
     model_EnrollmentFlow_does_not_support_expiration,
     card_token,
     mocked_funding_source,
@@ -348,7 +344,7 @@ def test_enroll_success_flow_does_not_support_expiration_no_expiry(
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
-    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, card_token)
+    status, exception = enroll(app_request, card_token)
 
     mock_client.link_concession_group_funding_source.assert_called_once_with(
         funding_source_id=mocked_funding_source.id, group_id=model_EnrollmentFlow_does_not_support_expiration.group_id
@@ -358,10 +354,10 @@ def test_enroll_success_flow_does_not_support_expiration_no_expiry(
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
 def test_enroll_success_flow_supports_expiration(
     mocker,
     app_request,
-    model_TransitAgency,
     model_EnrollmentFlow_supports_expiration,
     card_token,
     mocked_funding_source,
@@ -371,7 +367,7 @@ def test_enroll_success_flow_supports_expiration(
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
-    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_supports_expiration, card_token)
+    status, exception = enroll(app_request, card_token)
 
     mock_client.link_concession_group_funding_source.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
@@ -383,10 +379,10 @@ def test_enroll_success_flow_supports_expiration(
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
 def test_enroll_success_flow_supports_expiration_no_expiry(
     mocker,
     app_request,
-    model_TransitAgency,
     model_EnrollmentFlow_supports_expiration,
     card_token,
     mocked_funding_source,
@@ -401,7 +397,7 @@ def test_enroll_success_flow_supports_expiration_no_expiry(
         "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_no_expiry
     )
 
-    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_supports_expiration, card_token)
+    status, exception = enroll(app_request, card_token)
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
@@ -413,13 +409,10 @@ def test_enroll_success_flow_supports_expiration_no_expiry(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures(
-    "mocked_session_flow"
-)  # reenrollment window is calculated by reading reenrollment days from session flow
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
 def test_enroll_success_flow_supports_expiration_is_expired(
     mocker,
     app_request,
-    model_TransitAgency,
     model_EnrollmentFlow_supports_expiration,
     mocked_funding_source,
     mocked_group_funding_source_with_expiry,
@@ -436,7 +429,7 @@ def test_enroll_success_flow_supports_expiration_is_expired(
 
     mocker.patch("benefits.enrollment.enrollment._is_expired", return_value=True)
 
-    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_supports_expiration, card_token)
+    status, exception = enroll(app_request, card_token)
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
@@ -448,10 +441,10 @@ def test_enroll_success_flow_supports_expiration_is_expired(
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
 def test_enroll_success_flow_supports_expiration_is_within_reenrollment_window(
     mocker,
     app_request,
-    model_TransitAgency,
     model_EnrollmentFlow_supports_expiration,
     card_token,
     mocked_funding_source,
@@ -469,7 +462,7 @@ def test_enroll_success_flow_supports_expiration_is_within_reenrollment_window(
 
     mocker.patch("benefits.enrollment.enrollment._is_within_reenrollment_window", return_value=True)
 
-    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_supports_expiration, card_token)
+    status, exception = enroll(app_request, card_token)
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
@@ -481,11 +474,10 @@ def test_enroll_success_flow_supports_expiration_is_within_reenrollment_window(
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow_supports_expiration")
 def test_enroll_reenrollment_error(
     mocker,
     app_request,
-    model_TransitAgency,
-    model_EnrollmentFlow_supports_expiration,
     card_token,
     mocked_funding_source,
     mocked_group_funding_source_with_expiry,
@@ -502,7 +494,7 @@ def test_enroll_reenrollment_error(
     mocker.patch("benefits.enrollment.enrollment._is_expired", return_value=False)
     mocker.patch("benefits.enrollment.enrollment._is_within_reenrollment_window", return_value=False)
 
-    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_supports_expiration, card_token)
+    status, exception = enroll(app_request, card_token)
 
     mock_client.link_concession_group_funding_source.assert_not_called()
     assert status is Status.REENROLLMENT_ERROR
@@ -510,11 +502,10 @@ def test_enroll_reenrollment_error(
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow_does_not_support_expiration")
 def test_enroll_does_not_support_expiration_has_expiration_date(
     mocker,
     app_request,
-    model_TransitAgency,
-    model_EnrollmentFlow_does_not_support_expiration,
     card_token,
     mocked_funding_source,
     mocked_group_funding_source_with_expiry,
@@ -528,7 +519,7 @@ def test_enroll_does_not_support_expiration_has_expiration_date(
         "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry
     )
 
-    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, card_token)
+    status, exception = enroll(app_request, card_token)
 
     assert status is Status.EXCEPTION
     assert isinstance(exception, NotImplementedError)

@@ -76,8 +76,6 @@ def index(request):
     """View handler for the enrollment landing page."""
     session.update(request, origin=reverse(routes.ENROLLMENT_INDEX))
 
-    agency = session.agency(request)
-    flow = session.flow(request)
     # POST back after transit processor form, process card token
     if request.method == "POST":
         form = forms.CardTokenizeSuccessForm(request.POST)
@@ -85,7 +83,7 @@ def index(request):
             raise Exception("Invalid card token form")
 
         card_token = form.cleaned_data.get("card_token")
-        status, exception = enroll(request, agency, flow, card_token)
+        status, exception = enroll(request, card_token)
 
         match (status):
             case Status.SUCCESS:
@@ -99,6 +97,9 @@ def index(request):
 
     # GET enrollment index
     else:
+        agency = session.agency(request)
+        flow = session.flow(request)
+
         tokenize_retry_form = forms.CardTokenizeFailForm(routes.ENROLLMENT_RETRY, "form-card-tokenize-fail-retry")
         tokenize_server_error_form = forms.CardTokenizeFailForm(routes.SERVER_ERROR, "form-card-tokenize-fail-server-error")
         tokenize_system_error_form = forms.CardTokenizeFailForm(
