@@ -3,9 +3,6 @@ import time
 import pytest
 from authlib.integrations.base_client.errors import UnsupportedTokenTypeError
 from django.urls import reverse
-
-from littlepay.api.funding_sources import FundingSourceResponse
-from littlepay.api.groups import GroupFundingSourceResponse
 from requests import HTTPError
 
 from benefits.routes import routes
@@ -33,42 +30,6 @@ def mocked_analytics_module(mocked_analytics_module):
 @pytest.fixture
 def mocked_sentry_sdk_module(mocker):
     return mocker.patch.object(benefits.enrollment.views, "sentry_sdk")
-
-
-@pytest.fixture
-def mocked_funding_source():
-    return FundingSourceResponse(
-        id="0",
-        card_first_digits="0000",
-        card_last_digits="0000",
-        card_expiry_month="12",
-        card_expiry_year="2024",
-        card_scheme="visa",
-        form_factor="physical",
-        participant_id="cst",
-        is_fpan=False,
-        related_funding_sources=[],
-    )
-
-
-@pytest.fixture
-def mocked_group_funding_source_no_expiry(mocked_funding_source):
-    return GroupFundingSourceResponse(
-        id=mocked_funding_source.id,
-        created_date=None,
-        updated_date=None,
-        expiry_date=None,
-    )
-
-
-@pytest.fixture
-def mocked_group_funding_source_with_expiry(mocked_funding_source):
-    return GroupFundingSourceResponse(
-        id=mocked_funding_source.id,
-        created_date="2023-01-01T00:00:00Z",
-        updated_date="2021-01-01T00:00:00Z",
-        expiry_date="2021-01-01T00:00:00Z",
-    )
 
 
 @pytest.mark.django_db
