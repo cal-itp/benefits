@@ -19,6 +19,7 @@ from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
 
 from . import analytics, forms
+from .enrollment import Status
 
 TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
@@ -117,7 +118,7 @@ def index(request):
                     client.link_concession_group_funding_source(
                         group_id=group_id, funding_source_id=funding_source.id, expiry=session.enrollment_expiry(request)
                     )
-                    return success(request)
+                    status = Status.SUCCESS
                 else:  # already_enrolled
                     if group_funding_source.expiry_date is None:
                         # update expiration of existing enrollment, return success
@@ -126,7 +127,7 @@ def index(request):
                             funding_source_id=funding_source.id,
                             expiry=session.enrollment_expiry(request),
                         )
-                        return success(request)
+                        status = Status.SUCCESS
                     else:
                         is_expired = _is_expired(group_funding_source.expiry_date)
                         is_within_reenrollment_window = _is_within_reenrollment_window(
@@ -140,19 +141,19 @@ def index(request):
                                 funding_source_id=funding_source.id,
                                 expiry=session.enrollment_expiry(request),
                             )
-                            return success(request)
+                            status = Status.SUCCESS
                         else:
                             # re-enrollment error, return enrollment error with expiration and reenrollment_date
-                            return reenrollment_error(request)
+                            status = Status.REENROLLMENT_ERROR
             else:  # eligibility does not support expiration
                 if not already_enrolled:
                     # enroll user with no expiration date, return success
                     client.link_concession_group_funding_source(group_id=group_id, funding_source_id=funding_source.id)
-                    return success(request)
+                    status = Status.SUCCESS
                 else:  # already_enrolled
                     if group_funding_source.expiry_date is None:
                         # no action, return success
-                        return success(request)
+                        status = Status.SUCCESS
                     else:
                         # remove expiration date, return success
                         raise NotImplementedError("Removing expiration date is currently not supported")
@@ -162,13 +163,25 @@ def index(request):
                 analytics.returned_error(request, str(e))
                 sentry_sdk.capture_exception(e)
 
-                return system_error(request)
+                status = Status.SYSTEM_ERROR
             else:
                 analytics.returned_error(request, str(e))
-                raise Exception(f"{e}: {e.response.json()}")
+                status = Status.EXCEPTION
+                exception = Exception(f"{e}: {e.response.json()}")
         except Exception as e:
             analytics.returned_error(request, str(e))
-            raise e
+            status = Status.EXCEPTION
+            exception = e
+
+        match (status):
+            case Status.SUCCESS:
+                return success(request)
+            case Status.SYSTEM_ERROR:
+                return system_error(request)
+            case Status.EXCEPTION:
+                raise exception
+            case Status.REENROLLMENT_ERROR:
+                return reenrollment_error(request)
 
     # GET enrollment index
     else:
