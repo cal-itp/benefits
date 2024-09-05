@@ -53,6 +53,11 @@ def mocked_group_funding_source_no_expiry(mocked_funding_source):
     )
 
 
+@pytest.fixture
+def card_token():
+    return "card_token_1234"
+
+
 @pytest.mark.django_db
 @pytest.mark.usefixtures("model_EnrollmentFlow")
 def test_get_group_funding_sources_funding_source_not_enrolled_yet(mocker, mocked_funding_source):
@@ -235,9 +240,7 @@ def test_enroll_system_error(
         response=mock_error_response,
     )
 
-    status, exception = enroll(
-        app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, "card_token_1234"
-    )
+    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, card_token)
 
     assert status is Status.SYSTEM_ERROR
     assert exception is None
@@ -250,6 +253,7 @@ def test_enroll_exception_http_error_400(
     mocker,
     app_request,
     model_TransitAgency,
+    card_token,
     model_EnrollmentFlow_does_not_support_expiration,
     mocked_analytics_module,
 ):
@@ -264,9 +268,7 @@ def test_enroll_exception_http_error_400(
     )
     mock_client.link_concession_group_funding_source.side_effect = http_error
 
-    status, exception = enroll(
-        app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, "card_token_1234"
-    )
+    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, card_token)
 
     assert status is Status.EXCEPTION
     assert isinstance(exception, Exception)
@@ -280,6 +282,7 @@ def test_enroll_exception_non_http_error(
     app_request,
     model_TransitAgency,
     model_EnrollmentFlow_does_not_support_expiration,
+    card_token,
     mocked_analytics_module,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
@@ -287,9 +290,7 @@ def test_enroll_exception_non_http_error(
 
     mock_client.link_concession_group_funding_source.side_effect = Exception("some other exception")
 
-    status, exception = enroll(
-        app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, "card_token_1234"
-    )
+    status, exception = enroll(app_request, model_TransitAgency, model_EnrollmentFlow_does_not_support_expiration, card_token)
 
     assert status is Status.EXCEPTION
     assert isinstance(exception, Exception)
