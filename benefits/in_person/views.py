@@ -11,7 +11,7 @@ import sentry_sdk
 from benefits.routes import routes
 from benefits.core import session
 from benefits.core.models import EnrollmentFlow
-from benefits.enrollment.enrollment import Status, request_card_tokenization_access
+from benefits.enrollment.enrollment import Status, request_card_tokenization_access, enroll
 
 from benefits.in_person import forms
 
@@ -68,8 +68,27 @@ def token(request):
 
 
 def enrollment(request):
+    # POST back after transit processor form, process card token
     if request.method == "POST":
-        pass
+        form = forms.CardTokenizeSuccessForm(request.POST)
+        if not form.is_valid():
+            raise Exception("Invalid card token form")
+
+        card_token = form.cleaned_data.get("card_token")
+        status, exception = enroll(request, card_token)
+
+        match (status):
+            case Status.SUCCESS:
+                return redirect(routes.IN_PERSON_ENROLLMENT_SUCCESS)
+
+            case Status.SYSTEM_ERROR:
+                return redirect(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
+
+            case Status.EXCEPTION:
+                return redirect(routes.IN_PERSON_GENERIC_ERROR)
+
+            case Status.REENROLLMENT_ERROR:
+                return redirect(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR)
     # GET enrollment index
     else:
         agency = session.agency(request)
@@ -116,3 +135,7 @@ def system_error(request):
 
 def server_error(request):
     return TemplateResponse(request, "in_person/enrollment/server_error.html")
+
+
+def success(request):
+    return TemplateResponse(request, "in_person/enrollment/success.html")

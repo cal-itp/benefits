@@ -10,6 +10,16 @@ from benefits.enrollment.enrollment import Status, CardTokenizationAccessRespons
 from benefits.routes import routes
 
 
+@pytest.fixture
+def card_tokenize_form_data():
+    return {"card_token": "tokenized_card"}
+
+
+@pytest.fixture
+def invalid_form_data():
+    return {"invalid": "data"}
+
+
 @pytest.mark.django_db
 @pytest.mark.parametrize("viewname", [routes.IN_PERSON_ELIGIBILITY, routes.IN_PERSON_ENROLLMENT])
 def test_view_not_logged_in(client, viewname):
@@ -221,6 +231,63 @@ def test_enrollment_logged_in_get(admin_client):
     assert "overlay_language" not in response.context_data
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
+def test_enrollment_post_invalid_form(admin_client, invalid_form_data):
+    path = reverse(routes.IN_PERSON_ENROLLMENT)
+
+    with pytest.raises(Exception, match=r"form"):
+        admin_client.post(path, invalid_form_data)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
+def test_enrollment_post_valid_form_success(mocker, admin_client, card_tokenize_form_data):
+    mocker.patch("benefits.in_person.views.enroll", return_value=(Status.SUCCESS, None))
+
+    path = reverse(routes.IN_PERSON_ENROLLMENT)
+    response = admin_client.post(path, card_tokenize_form_data)
+
+    assert response.status_code == 302
+    assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_SUCCESS)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
+def test_enrollment_post_valid_form_system_error(mocker, admin_client, card_tokenize_form_data):
+    mocker.patch("benefits.in_person.views.enroll", return_value=(Status.SYSTEM_ERROR, None))
+
+    path = reverse(routes.IN_PERSON_ENROLLMENT)
+    response = admin_client.post(path, card_tokenize_form_data)
+
+    assert response.status_code == 302
+    assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
+def test_enrollment_post_valid_form_exception(mocker, admin_client, card_tokenize_form_data):
+    mocker.patch("benefits.in_person.views.enroll", return_value=(Status.EXCEPTION, None))
+
+    path = reverse(routes.IN_PERSON_ENROLLMENT)
+    response = admin_client.post(path, card_tokenize_form_data)
+
+    assert response.status_code == 302
+    assert response.url == reverse(routes.IN_PERSON_GENERIC_ERROR)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
+def test_enrollment_post_valid_form_reenrollment_error(mocker, admin_client, card_tokenize_form_data):
+    mocker.patch("benefits.in_person.views.enroll", return_value=(Status.REENROLLMENT_ERROR, None))
+
+    path = reverse(routes.IN_PERSON_ENROLLMENT)
+    response = admin_client.post(path, card_tokenize_form_data)
+
+    assert response.status_code == 302
+    assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR)
+
+
 def test_reenrollment_error(admin_client):
     path = reverse(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR)
 
@@ -251,3 +318,11 @@ def test_server_error(admin_client):
     response = admin_client.get(path)
 
     assert response.template_name == "in_person/enrollment/server_error.html"
+
+
+def test_success(admin_client):
+    path = reverse(routes.IN_PERSON_ENROLLMENT_SUCCESS)
+
+    response = admin_client.get(path)
+
+    assert response.template_name == "in_person/enrollment/success.html"

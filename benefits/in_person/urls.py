@@ -16,6 +16,7 @@ urlpatterns = [
         name=routes.name(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR),
     ),
     path("enrollment/retry", admin.site.admin_view(views.retry), name=routes.name(routes.IN_PERSON_ENROLLMENT_RETRY)),
+    path("enrollment/success", admin.site.admin_view(views.success), name=routes.name(routes.IN_PERSON_ENROLLMENT_SUCCESS)),
     path(
         "enrollment/error",
         admin.site.admin_view(views.system_error),

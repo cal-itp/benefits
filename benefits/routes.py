@@ -157,6 +157,11 @@ class Routes:
         return "in_person:reenrollment_error"
 
     @property
+    def IN_PERSON_ENROLLMENT_SUCCESS(self):
+        """Successful in-person enrollment"""
+        return "in_person:success"
+
+    @property
     def IN_PERSON_ENROLLMENT_SYSTEM_ERROR(self):
         """Enrollment error not caused by the user during in-person enrollment."""
         return "in_person:system_error"
