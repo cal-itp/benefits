@@ -43,10 +43,12 @@ def enrollment(request):
     else:
         agency = session.agency(request)
 
-        tokenize_retry_form = forms.CardTokenizeFailForm(routes.ENROLLMENT_RETRY, "form-card-tokenize-fail-retry")
-        tokenize_server_error_form = forms.CardTokenizeFailForm(routes.SERVER_ERROR, "form-card-tokenize-fail-server-error")
+        tokenize_retry_form = forms.CardTokenizeFailForm(routes.IN_PERSON_ENROLLMENT_RETRY, "form-card-tokenize-fail-retry")
+        tokenize_server_error_form = forms.CardTokenizeFailForm(
+            routes.IN_PERSON_GENERIC_ERROR, "form-card-tokenize-fail-server-error"
+        )
         tokenize_system_error_form = forms.CardTokenizeFailForm(
-            routes.ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
+            routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
         )
         tokenize_success_form = forms.CardTokenizeSuccessForm(
             action_url=routes.IN_PERSON_ENROLLMENT, auto_id=True, label_suffix=""
@@ -67,3 +69,19 @@ def enrollment(request):
         }
 
         return TemplateResponse(request, "in_person/enrollment.html", context)
+
+
+def reenrollment_error(request):
+    return TemplateResponse(request, "in_person/enrollment/reenrollment_error.html")
+
+
+def retry(request):
+    return TemplateResponse(request, "in_person/enrollment/retry.html")
+
+
+def system_error(request):
+    return TemplateResponse(request, "in_person/enrollment/system_error.html")
+
+
+def server_error(request):
+    return TemplateResponse(request, "in_person/enrollment/server_error.html")

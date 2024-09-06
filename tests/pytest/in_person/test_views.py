@@ -70,3 +70,35 @@ def test_enrollment_logged_in_get(admin_client):
 
     # not supporting internationalization in in_person app yet
     assert "overlay_language" not in response.context_data
+
+
+def test_reenrollment_error(admin_client):
+    path = reverse(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR)
+
+    response = admin_client.get(path)
+
+    assert response.template_name == "in_person/enrollment/reenrollment_error.html"
+
+
+def test_retry(admin_client):
+    path = reverse(routes.IN_PERSON_ENROLLMENT_RETRY)
+
+    response = admin_client.get(path)
+
+    assert response.template_name == "in_person/enrollment/retry.html"
+
+
+def test_system_error(admin_client):
+    path = reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
+
+    response = admin_client.get(path)
+
+    assert response.template_name == "in_person/enrollment/system_error.html"
+
+
+def test_server_error(admin_client):
+    path = reverse(routes.IN_PERSON_GENERIC_ERROR)
+
+    response = admin_client.get(path)
+
+    assert response.template_name == "in_person/enrollment/server_error.html"
