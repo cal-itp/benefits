@@ -11,7 +11,7 @@
                 <div class="loading">
                     <p>
                         <span class="spinner-border align-middle text-primary" role="status"></span>
-                        <span class="fw-bold p-2">Please wait...</span>
+                        <span id="loading-message" class="fw-bold p-2">Please wait...</span>
                     </p>
                 </div>
                 <div class="invisible">
@@ -52,8 +52,8 @@
                   return; // exit early so the rest of this function doesn't execute
                 }
 
-                $(".loading").remove();
-                $(".invisible").removeClass("invisible");
+                $(".loading").addClass("d-none");
+                $(".invisible").removeClass("invisible").addClass("visible");
 
                 new Promise((resolve) => {
                     {{ card_tokenize_func }}({
@@ -68,6 +68,13 @@
                             /* This function executes when the
                             /* card verification returns
                             /* successfully with a token from enrollment server */
+
+                            // hide the iframe
+                            $(".visible").removeClass("visible").addClass("invisible");
+
+                            // show the loading message
+                            $(".loading").removeClass("d-none");
+                            $("#loading-message").text("Registering this contactless card for reduced fares....");
 
                             var form = $("form#{{ form_success }}");
                             $("#{{ token_field }}", form).val(response.token);
