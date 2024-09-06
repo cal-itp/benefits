@@ -27,14 +27,6 @@ def test_eligibility_logged_in(admin_client):
     assert response.template_name == "in_person/eligibility.html"
 
 
-def test_enrollment_logged_in(admin_client):
-    path = reverse(routes.IN_PERSON_ENROLLMENT)
-
-    response = admin_client.get(path)
-    assert response.status_code == 200
-    assert response.template_name == "in_person/enrollment.html"
-
-
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency")
 def test_confirm_post_valid_form_eligibility_verified(admin_client):
@@ -57,3 +49,24 @@ def test_confirm_post_valid_form_eligibility_unverified(admin_client):
 
     assert response.status_code == 200
     assert response.template_name == "in_person/eligibility.html"
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_enrollment_logged_in_get(admin_client):
+    path = reverse(routes.IN_PERSON_ENROLLMENT)
+
+    response = admin_client.get(path)
+    assert response.status_code == 200
+    assert response.template_name == "in_person/enrollment.html"
+    assert "forms" in response.context_data
+    assert "cta_button" in response.context_data
+    assert "card_tokenize_env" in response.context_data
+    assert "card_tokenize_func" in response.context_data
+    assert "card_tokenize_url" in response.context_data
+    assert "token_field" in response.context_data
+    assert "form_retry" in response.context_data
+    assert "form_success" in response.context_data
+
+    # not supporting internationalization in in_person app yet
+    assert "overlay_language" not in response.context_data
