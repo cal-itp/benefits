@@ -10,7 +10,15 @@
             <div class="border border-3 border-top-0 p-3 min-vh-60 d-flex flex-column justify-content-between">
                 <div class="d-flex">
                     <i class="success-icon"></i>
-                    <p>Success! This rider can now use their contactless card to automatically receive a reduced fare when they tap-to-ride.</p>
+                    <div>
+                        <p>Success! This rider can now use their contactless card to automatically receive a reduced fare when they tap-to-ride.</p>
+
+                        {% if enrollment.supports_expiration %}
+                            <p>
+                                <span class="fw-bold my-3">This rider will enjoy a transit benefit until {{ enrollment.expires|date }}.</span> They will need to enroll again at that time to continue receiving reduced fares.
+                            </p>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
