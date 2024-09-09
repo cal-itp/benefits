@@ -1,0 +1,28 @@
+{% extends "admin/agency-base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="border border-3 p-3">
+                <h2 class="p-0 m-0 text-left">In-person enrollment</h2>
+            </div>
+            <div class="border border-3 border-top-0 p-3 min-vh-60 d-flex flex-column justify-content-between">
+                <div class="d-flex">
+                    <i class="success-icon"></i>
+                    <p>Success! This rider can now use their contactless card to automatically receive a reduced fare when they tap-to-ride.</p>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        {% url routes.IN_PERSON_ELIGIBILITY as url_eligibility %}
+                        <a href="{{ url_eligibility }}" class="btn btn-lg btn-outline-primary d-block">New enrollment</a>
+                    </div>
+                    <div class="col-6">
+                        {% url routes.ADMIN_INDEX as url_done %}
+                        <a href="{{ url_done }}" class="btn btn-lg btn-primary d-block">Done</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
