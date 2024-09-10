@@ -24,6 +24,11 @@ class Status(Enum):
 
 
 def enroll(request, card_token):
+    """
+    Attempts to enroll this card into the transit processor group for the flow in the request's session.
+
+    Returns a tuple containing a Status indicating the result of the attempt and any exception that occurred.
+    """
     agency = session.agency(request)
     flow = session.flow(request)
 
