@@ -177,7 +177,9 @@ def index(request):
         tokenize_system_error_form = forms.CardTokenizeFailForm(
             routes.ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
         )
-        tokenize_success_form = forms.CardTokenizeSuccessForm(auto_id=True, label_suffix="")
+        tokenize_success_form = forms.CardTokenizeSuccessForm(
+            action_url=routes.ENROLLMENT_INDEX, auto_id=True, label_suffix=""
+        )
 
         # mapping from Django's I18N LANGUAGE_CODE to Littlepay's overlay language code
         overlay_language = {"en": "en", "es": "es-419"}.get(request.LANGUAGE_CODE, "en")
