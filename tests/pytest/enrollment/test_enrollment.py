@@ -8,6 +8,7 @@ from requests import HTTPError
 
 from benefits.enrollment.enrollment import (
     Status,
+    request_card_tokenization_access,
     enroll,
     _get_group_funding_source,
     _calculate_expiry,
@@ -510,3 +511,85 @@ def test_enroll_does_not_support_expiration_has_expiration_date(
     #     group_id=model_EnrollmentFlow_does_not_support_expiration.group_id,
     #     expiry_date=None,
     # )
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_request_card_tokenization_access(mocker, app_request):
+    mock_response = {}
+    mock_response["access_token"] = "123"
+    mock_response["expires_at"] = "2024-01-01T00:00:00"
+
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
+    mock_client = mock_client_cls.return_value
+    mock_client.request_card_tokenization_access.return_value = mock_response
+
+    response = request_card_tokenization_access(app_request)
+
+    assert response.status is Status.SUCCESS
+    assert response.access_token == "123"
+    assert response.expires_at == "2024-01-01T00:00:00"
+    assert response.exception is None
+    assert response.status_code is None
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_request_card_tokenization_access_system_error(mocker, app_request):
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
+    mock_client = mock_client_cls.return_value
+
+    mock_error = {"message": "Mock error message"}
+    mock_error_response = mocker.Mock(status_code=500, **mock_error)
+    mock_error_response.json.return_value = mock_error
+    http_error = HTTPError(response=mock_error_response)
+
+    mock_client.request_card_tokenization_access.side_effect = http_error
+
+    response = request_card_tokenization_access(app_request)
+
+    assert response.status is Status.SYSTEM_ERROR
+    assert response.access_token is None
+    assert response.expires_at is None
+    assert response.exception == http_error
+    assert response.status_code == 500
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_request_card_tokenization_access_http_400_error(mocker, app_request):
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
+    mock_client = mock_client_cls.return_value
+
+    mock_error = {"message": "Mock error message"}
+    mock_error_response = mocker.Mock(status_code=400, **mock_error)
+    mock_error_response.json.return_value = mock_error
+    http_error = HTTPError(response=mock_error_response)
+
+    mock_client.request_card_tokenization_access.side_effect = http_error
+
+    response = request_card_tokenization_access(app_request)
+
+    assert response.status is Status.EXCEPTION
+    assert response.access_token is None
+    assert response.expires_at is None
+    assert response.exception == http_error
+    assert response.status_code == 400
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency")
+def test_request_card_tokenization_access_exception(mocker, app_request):
+    mock_client_cls = mocker.patch("benefits.enrollment.enrollment.Client")
+    mock_client = mock_client_cls.return_value
+
+    exception = Exception("some exception")
+    mock_client.request_card_tokenization_access.side_effect = exception
+
+    response = request_card_tokenization_access(app_request)
+
+    assert response.status is Status.EXCEPTION
+    assert response.access_token is None
+    assert response.expires_at is None
+    assert response.exception == exception
+    assert response.status_code is None

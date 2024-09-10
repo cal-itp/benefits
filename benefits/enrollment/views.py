@@ -9,8 +9,6 @@ from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from littlepay.api.client import Client
-from requests.exceptions import HTTPError
 import sentry_sdk
 
 from benefits.routes import routes
@@ -18,7 +16,7 @@ from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
 
 from . import analytics, forms
-from .enrollment import Status, enroll
+from .enrollment import Status, request_card_tokenization_access, enroll
 
 TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
@@ -31,44 +29,16 @@ logger = logging.getLogger(__name__)
 def token(request):
     """View handler for the enrollment auth token."""
     if not session.enrollment_token_valid(request):
-        agency = session.agency(request)
+        response = request_card_tokenization_access(request)
 
-        try:
-            client = Client(
-                base_url=agency.transit_processor.api_base_url,
-                client_id=agency.transit_processor_client_id,
-                client_secret=agency.transit_processor_client_secret,
-                audience=agency.transit_processor_audience,
-            )
-            client.oauth.ensure_active_token(client.token)
-            response = client.request_card_tokenization_access()
-            access_token = response.get("access_token")
-            expires_at = response.get("expires_at")
-        except Exception as e:
-            exception = e
+        if response.status is Status.SUCCESS:
+            session.update(request, enrollment_token=response.access_token, enrollment_token_exp=response.expires_at)
+        elif response.status is Status.SYSTEM_ERROR or response.status is Status.EXCEPTION:
+            logger.debug("Error occurred while requesting access token", exc_info=response.exception)
+            sentry_sdk.capture_exception(response.exception)
+            analytics.failed_access_token_request(request, response.status_code)
 
-            if isinstance(e, HTTPError):
-                status_code = e.response.status_code
-
-                if status_code >= 500:
-                    status = Status.SYSTEM_ERROR
-                else:
-                    status = Status.EXCEPTION
-            else:
-                status_code = None
-                status = Status.EXCEPTION
-
-        else:
-            status = Status.SUCCESS
-
-        if status is Status.SUCCESS:
-            session.update(request, enrollment_token=access_token, enrollment_token_exp=expires_at)
-        elif status is Status.SYSTEM_ERROR or status is Status.EXCEPTION:
-            logger.debug("Error occurred while requesting access token", exc_info=exception)
-            sentry_sdk.capture_exception(exception)
-            analytics.failed_access_token_request(request, status_code)
-
-            if status is Status.SYSTEM_ERROR:
+            if response.status is Status.SYSTEM_ERROR:
                 redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
             else:
                 redirect = reverse(routes.SERVER_ERROR)

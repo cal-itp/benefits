@@ -1,5 +1,6 @@
-from enum import Enum
+from dataclasses import dataclass
 from datetime import timedelta
+from enum import Enum
 
 from django.utils import timezone
 from littlepay.api.client import Client
@@ -21,6 +22,53 @@ class Status(Enum):
 
     # REENROLLMENT_ERROR means that the user tried to re-enroll but is not within the reenrollment window
     REENROLLMENT_ERROR = 4
+
+
+@dataclass
+class CardTokenizationAccessResponse:
+    status: Status
+    access_token: str
+    expires_at: str
+    exception: Exception = None
+    status_code: int = None
+
+
+def request_card_tokenization_access(request):
+    """
+    Requests an access token to be used for card tokenization.
+    """
+    agency = session.agency(request)
+
+    try:
+        client = Client(
+            base_url=agency.transit_processor.api_base_url,
+            client_id=agency.transit_processor_client_id,
+            client_secret=agency.transit_processor_client_secret,
+            audience=agency.transit_processor_audience,
+        )
+        client.oauth.ensure_active_token(client.token)
+        response = client.request_card_tokenization_access()
+
+        return CardTokenizationAccessResponse(
+            status=Status.SUCCESS, access_token=response.get("access_token"), expires_at=response.get("expires_at")
+        )
+    except Exception as e:
+        exception = e
+
+        if isinstance(e, HTTPError):
+            status_code = e.response.status_code
+
+            if status_code >= 500:
+                status = Status.SYSTEM_ERROR
+            else:
+                status = Status.EXCEPTION
+        else:
+            status_code = None
+            status = Status.EXCEPTION
+
+    return CardTokenizationAccessResponse(
+        status=status, access_token=None, expires_at=None, exception=exception, status_code=status_code
+    )
 
 
 def enroll(request, card_token):
