@@ -71,8 +71,7 @@ def test_pre_login_user_add_staff_to_group(mocker, model_AdminUser):
     mocked_request = mocker.Mock()
     mocked_request.session.get.return_value = None
 
-    mocker.patch.object(benefits.core.admin.settings, "GOOGLE_SSO_STAFF_LIST", [model_AdminUser.email])
-
+    settings.GOOGLE_SSO_STAFF_LIST = [model_AdminUser.email]
     pre_login_user(model_AdminUser, mocked_request)
 
     staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
