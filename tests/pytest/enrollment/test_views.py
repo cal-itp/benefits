@@ -7,7 +7,7 @@ from requests import HTTPError
 
 from benefits.routes import routes
 import benefits.enrollment.views
-from benefits.enrollment.enrollment import Status
+from benefits.enrollment.enrollment import Status, CardTokenizationAccessResponse
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.enrollment.views import TEMPLATE_SYSTEM_ERROR, TEMPLATE_RETRY
 
@@ -47,12 +47,18 @@ def test_token_ineligible(client):
 def test_token_refresh(mocker, client):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
-    mock_client = mock_client_cls.return_value
     mock_token = {}
     mock_token["access_token"] = "access_token"
     mock_token["expires_at"] = time.time() + 10000
-    mock_client.request_card_tokenization_access.return_value = mock_token
+
+    mocker.patch(
+        "benefits.enrollment.views.request_card_tokenization_access",
+        return_value=CardTokenizationAccessResponse(
+            Status.SUCCESS,
+            access_token=mock_token["access_token"],
+            expires_at=mock_token["expires_at"],
+        ),
+    )
 
     path = reverse(routes.ENROLLMENT_TOKEN)
     response = client.get(path)
@@ -61,7 +67,6 @@ def test_token_refresh(mocker, client):
     data = response.json()
     assert "token" in data
     assert data["token"] == mock_token["access_token"]
-    mock_client.oauth.ensure_active_token.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -81,17 +86,19 @@ def test_token_valid(mocker, client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_http_error_500(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
+def test_token_system_error(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
-
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
-    mock_client = mock_client_cls.return_value
 
     mock_error = {"message": "Mock error message"}
     mock_error_response = mocker.Mock(status_code=500, **mock_error)
     mock_error_response.json.return_value = mock_error
-    mock_client.request_card_tokenization_access.side_effect = HTTPError(
-        response=mock_error_response,
+    http_error = HTTPError(response=mock_error_response)
+
+    mocker.patch(
+        "benefits.enrollment.views.request_card_tokenization_access",
+        return_value=CardTokenizationAccessResponse(
+            Status.SYSTEM_ERROR, access_token=None, expires_at=None, exception=http_error, status_code=500
+        ),
     )
 
     path = reverse(routes.ENROLLMENT_TOKEN)
@@ -112,14 +119,16 @@ def test_token_http_error_500(mocker, client, mocked_analytics_module, mocked_se
 def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
-    mock_client = mock_client_cls.return_value
-
     mock_error = {"message": "Mock error message"}
     mock_error_response = mocker.Mock(status_code=400, **mock_error)
     mock_error_response.json.return_value = mock_error
-    mock_client.request_card_tokenization_access.side_effect = HTTPError(
-        response=mock_error_response,
+    http_error = HTTPError(response=mock_error_response)
+
+    mocker.patch(
+        "benefits.enrollment.views.request_card_tokenization_access",
+        return_value=CardTokenizationAccessResponse(
+            Status.EXCEPTION, access_token=None, expires_at=None, exception=http_error, status_code=400
+        ),
     )
 
     path = reverse(routes.ENROLLMENT_TOKEN)
@@ -140,10 +149,14 @@ def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_se
 def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
-    mock_client = mock_client_cls.return_value
+    exception = UnsupportedTokenTypeError()
 
-    mock_client.request_card_tokenization_access.side_effect = UnsupportedTokenTypeError()
+    mocker.patch(
+        "benefits.enrollment.views.request_card_tokenization_access",
+        return_value=CardTokenizationAccessResponse(
+            Status.EXCEPTION, access_token=None, expires_at=None, exception=exception, status_code=None
+        ),
+    )
 
     path = reverse(routes.ENROLLMENT_TOKEN)
     response = client.get(path)
@@ -162,10 +175,14 @@ def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, 
 def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
-    mock_client_cls = mocker.patch("benefits.enrollment.views.Client")
-    mock_client = mock_client_cls.return_value
+    exception = ConnectionError()
 
-    mock_client.oauth.ensure_active_token.side_effect = ConnectionError()
+    mocker.patch(
+        "benefits.enrollment.views.request_card_tokenization_access",
+        return_value=CardTokenizationAccessResponse(
+            Status.EXCEPTION, access_token=None, expires_at=None, exception=exception, status_code=None
+        ),
+    )
 
     path = reverse(routes.ENROLLMENT_TOKEN)
     response = client.get(path)

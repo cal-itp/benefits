@@ -531,6 +531,7 @@ def test_request_card_tokenization_access(mocker, app_request):
     assert response.expires_at == "2024-01-01T00:00:00"
     assert response.exception is None
     assert response.status_code is None
+    mock_client.oauth.ensure_active_token.assert_called_once()
 
 
 @pytest.mark.django_db
