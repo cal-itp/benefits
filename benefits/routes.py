@@ -122,6 +122,11 @@ class Routes:
         return "enrollment:system_error"
 
     @property
+    def ADMIN_INDEX(self):
+        """Admin index page"""
+        return "admin:index"
+
+    @property
     def IN_PERSON_ELIGIBILITY(self):
         """In-person (e.g. agency assisted) eligibility"""
         return "in_person:eligibility"

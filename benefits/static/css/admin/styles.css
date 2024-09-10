@@ -2,6 +2,7 @@
 
 /* Buttons */
 /* Primary Button: Use all three classes: btn btn-lg btn-primary */
+/* Outline Primary Button: Use all three classes: btn btn-lg btn-outline-primary */
 /* Set button width in parent with Bootstrap column */
 /* Height: 60px on Desktop; 72 on mobile*/
 
@@ -15,8 +16,16 @@
   }
 }
 
+.btn.btn-lg.btn-outline-primary:not(:hover) {
+  color: var(--primary-color);
+}
+
 .btn.btn-lg.btn-primary {
   background-color: var(--primary-color);
+}
+
+.btn.btn-lg.btn-primary,
+.btn.btn-lg.btn-outline-primary {
   border-color: var(--primary-color);
   border-width: 2px;
   font-weight: var(--medium-font-weight);
@@ -26,7 +35,8 @@
   padding: var(--primary-button-padding);
 }
 
-.btn.btn-lg.btn-primary:hover {
+.btn.btn-lg.btn-primary:hover,
+.btn.btn-lg.btn-outline-primary:hover {
   background-color: var(--hover-color);
   border-color: var(--hover-color);
 }
@@ -62,4 +72,20 @@ html[data-theme="light"],
 #user-tools,
 #logout-form button {
   text-transform: unset;
+}
+
+.checkbox-parent .form-group:last-of-type .col-12 {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: start;
+  column-gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.checkbox-parent,
+.checkbox-parent .form-group .col-12,
+.checkbox-parent .form-group .col-12 #id_flow {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
 }
