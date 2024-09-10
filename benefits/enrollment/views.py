@@ -42,29 +42,39 @@ def token(request):
             )
             client.oauth.ensure_active_token(client.token)
             response = client.request_card_tokenization_access()
+            access_token = response.get("access_token")
+            expires_at = response.get("expires_at")
         except Exception as e:
-            logger.debug("Error occurred while requesting access token", exc_info=e)
-            sentry_sdk.capture_exception(e)
+            exception = e
 
             if isinstance(e, HTTPError):
                 status_code = e.response.status_code
 
                 if status_code >= 500:
-                    redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+                    status = Status.SYSTEM_ERROR
                 else:
-                    redirect = reverse(routes.SERVER_ERROR)
+                    status = Status.EXCEPTION
             else:
                 status_code = None
-                redirect = reverse(routes.SERVER_ERROR)
+                status = Status.EXCEPTION
 
+        else:
+            status = Status.SUCCESS
+
+        if status is Status.SUCCESS:
+            session.update(request, enrollment_token=access_token, enrollment_token_exp=expires_at)
+        elif status is Status.SYSTEM_ERROR or status is Status.EXCEPTION:
+            logger.debug("Error occurred while requesting access token", exc_info=exception)
+            sentry_sdk.capture_exception(exception)
             analytics.failed_access_token_request(request, status_code)
+
+            if status is Status.SYSTEM_ERROR:
+                redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+            else:
+                redirect = reverse(routes.SERVER_ERROR)
 
             data = {"redirect": redirect}
             return JsonResponse(data)
-        else:
-            session.update(
-                request, enrollment_token=response.get("access_token"), enrollment_token_exp=response.get("expires_at")
-            )
 
     data = {"token": session.enrollment_token(request)}
 
