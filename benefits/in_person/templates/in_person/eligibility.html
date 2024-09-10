@@ -1,0 +1,30 @@
+{% extends "admin/agency-base.html" %}
+
+{% block title %}
+    Agency dashboard: In-person enrollment
+{% endblock title %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-11 col-md-10 col-lg-6 border border-3 px-0">
+            <div class="border border-3 border-top-0 border-start-0 border-end-0">
+                <h2 class="p-3 m-0 text-left">In-person enrollment</h2>
+            </div>
+            <div class="p-3">{% include "core/includes/form.html" with form=form %}</div>
+            <div class="row d-flex justify-content-start p-3 pt-8">
+                <div class="col-6">
+                    {% url form.cancel_url as url_cancel %}
+                    <a href="{{ url_cancel }}" class="btn btn-lg btn-outline-primary d-block">Cancel</a>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-lg btn-primary d-flex justify-content-center align-items-center"
+                            data-action="submit"
+                            type="submit"
+                            form="{{ form.id }}">
+                        <span class="btn-text">Continue</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
