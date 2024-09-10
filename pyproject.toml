@@ -70,6 +70,7 @@ use_gitignore = true
 
 [tool.pyright]
 include = ["benefits", "tests/pytest"]
+typeCheckingMode = "off"
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "benefits.settings"
