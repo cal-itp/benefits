@@ -5,15 +5,6 @@ import pytest
 from benefits.routes import routes
 
 
-@pytest.fixture
-def mocked_eligibility_auth_request(mocked_eligibility_request_session, mocked_session_agency):
-    """
-    Stub fixture combines mocked_eligibility_request_session and mocked_session_oauth_token
-    so that session behaves like in an authenticated request to the eligibility app
-    """
-    pass
-
-
 @pytest.mark.django_db
 @pytest.mark.parametrize("viewname", [routes.IN_PERSON_ELIGIBILITY, routes.IN_PERSON_ENROLLMENT])
 def test_view_not_logged_in(client, viewname):
