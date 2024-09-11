@@ -72,7 +72,7 @@ GOOGLE_SSO_SCOPES = [
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
 ]
-SSO_SHOW_FORM_ON_ADMIN_PAGE = False
+SSO_SHOW_FORM_ON_ADMIN_PAGE = os.environ.get("SSO_SHOW_FORM_ON_ADMIN_PAGE", "False").lower() == "true"
 STAFF_GROUP_NAME = "Cal-ITP"
 
 MIDDLEWARE = [
