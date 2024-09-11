@@ -15,7 +15,9 @@
   <div class="col-lg-8">
     <h1 class="pb-lg-4 mb-lg-3 pb-4">
       {% block headline-message %}
-        {% translate "Success! Your transit benefit is now connected to your card." %}
+        {% blocktranslate trimmed %}
+          You can now use your contactless card to tap to ride with a reduced fare!
+        {% endblocktranslate %}
       {% endblock headline-message %}
     </h1>
   </div>
