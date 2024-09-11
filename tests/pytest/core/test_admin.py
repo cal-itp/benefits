@@ -1,5 +1,4 @@
 import pytest
-from django.conf import settings
 from django.contrib.auth.models import User, Group
 
 import benefits.core.admin
@@ -67,7 +66,7 @@ def test_pre_login_user_no_session_token(mocker, model_AdminUser):
 
 
 @pytest.mark.django_db
-def test_pre_login_user_add_staff_to_group(mocker, model_AdminUser):
+def test_pre_login_user_add_staff_to_group(mocker, model_AdminUser, settings):
     mocked_request = mocker.Mock()
     mocked_request.session.get.return_value = None
 
