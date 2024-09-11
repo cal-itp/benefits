@@ -33,7 +33,7 @@ class CardTokenizationAccessResponse:
     status_code: int = None
 
 
-def request_card_tokenization_access(request):
+def request_card_tokenization_access(request) -> CardTokenizationAccessResponse:
     """
     Requests an access token to be used for card tokenization.
     """
@@ -71,7 +71,7 @@ def request_card_tokenization_access(request):
     )
 
 
-def enroll(request, card_token):
+def enroll(request, card_token) -> tuple[Status, Exception]:
     """
     Attempts to enroll this card into the transit processor group for the flow in the request's session.
 
