@@ -1,7 +1,8 @@
 import pytest
 from django.conf import settings
 from django.contrib.auth.models import Group, User
-from benefits.admin import BenefitsAdminSite
+from django.urls import reverse
+from benefits.routes import routes
 
 
 @pytest.fixture
@@ -32,8 +33,9 @@ def model_SuperUser(model_User):
 
 
 @pytest.mark.django_db
-def test_admin_override_agency_user_customer_service(app_request, model_AgencyUser, model_TransitAgency):
-    app_request.user = model_AgencyUser
+def test_admin_override_agency_user_customer_service(model_AgencyUser, model_TransitAgency, client):
+    url = reverse(routes.ADMIN_INDEX)
+    client.force_login(model_AgencyUser)
 
     # set up TransitAgency with staff_group and customer_service_group
     model_TransitAgency.pk = None
@@ -45,7 +47,7 @@ def test_admin_override_agency_user_customer_service(app_request, model_AgencyUs
     # add the user to the customer service group
     model_AgencyUser.groups.add(customer_service_group)
 
-    response = BenefitsAdminSite().index(app_request)
+    response = client.get(url)
 
     assert response.status_code == 200
     assert response.template_name == "admin/agency-dashboard-index.html"
@@ -53,15 +55,16 @@ def test_admin_override_agency_user_customer_service(app_request, model_AgencyUs
 
 
 @pytest.mark.django_db
-def test_admin_override_agency_user_not_customer_service(app_request, model_AgencyUser, model_TransitAgency):
-    app_request.user = model_AgencyUser
+def test_admin_override_agency_user_not_customer_service(model_AgencyUser, model_TransitAgency, client):
+    url = reverse(routes.ADMIN_INDEX)
+    client.force_login(model_AgencyUser)
 
     # set up TransitAgency with only a staff_group
     model_TransitAgency.pk = None
     model_TransitAgency.staff_group = Group.objects.get(name="CST")
     model_TransitAgency.save()
 
-    response = BenefitsAdminSite().index(app_request)
+    response = client.get(url)
 
     assert response.status_code == 200
     assert response.template_name == "admin/agency-dashboard-index.html"
@@ -69,18 +72,20 @@ def test_admin_override_agency_user_not_customer_service(app_request, model_Agen
 
 
 @pytest.mark.django_db
-def test_admin_override_staff_group_user(app_request, model_StaffGroupUser):
-    app_request.user = model_StaffGroupUser
-    response = BenefitsAdminSite().index(app_request)
+def test_admin_override_staff_group_user(model_StaffGroupUser, client):
+    url = reverse(routes.ADMIN_INDEX)
+    client.force_login(model_StaffGroupUser)
+    response = client.get(url)
 
     assert response.status_code == 200
     assert response.template_name == "admin/index.html"
 
 
 @pytest.mark.django_db
-def test_admin_override_super_user(app_request, model_SuperUser):
-    app_request.user = model_SuperUser
-    response = BenefitsAdminSite().index(app_request)
+def test_admin_override_super_user(model_SuperUser, client):
+    url = reverse(routes.ADMIN_INDEX)
+    client.force_login(model_SuperUser)
+    response = client.get(url)
 
     assert response.status_code == 200
     assert response.template_name == "admin/index.html"
