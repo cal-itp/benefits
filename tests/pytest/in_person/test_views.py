@@ -159,7 +159,7 @@ def test_token_http_error_400(mocker, admin_client):
     data = response.json()
     assert "token" not in data
     assert "redirect" in data
-    assert data["redirect"] == reverse(routes.IN_PERSON_GENERIC_ERROR)
+    assert data["redirect"] == reverse(routes.IN_PERSON_SERVER_ERROR)
 
 
 @pytest.mark.django_db
@@ -183,7 +183,7 @@ def test_token_misconfigured_client_id(mocker, admin_client):
     data = response.json()
     assert "token" not in data
     assert "redirect" in data
-    assert data["redirect"] == reverse(routes.IN_PERSON_GENERIC_ERROR)
+    assert data["redirect"] == reverse(routes.IN_PERSON_SERVER_ERROR)
 
 
 @pytest.mark.django_db
@@ -207,7 +207,7 @@ def test_token_connection_error(mocker, admin_client):
     data = response.json()
     assert "token" not in data
     assert "redirect" in data
-    assert data["redirect"] == reverse(routes.IN_PERSON_GENERIC_ERROR)
+    assert data["redirect"] == reverse(routes.IN_PERSON_SERVER_ERROR)
 
 
 @pytest.mark.django_db
@@ -273,7 +273,7 @@ def test_enrollment_post_valid_form_exception(mocker, admin_client, card_tokeniz
     response = admin_client.post(path, card_tokenize_form_data)
 
     assert response.status_code == 302
-    assert response.url == reverse(routes.IN_PERSON_GENERIC_ERROR)
+    assert response.url == reverse(routes.IN_PERSON_SERVER_ERROR)
 
 
 @pytest.mark.django_db
@@ -313,7 +313,7 @@ def test_system_error(admin_client):
 
 
 def test_server_error(admin_client):
-    path = reverse(routes.IN_PERSON_GENERIC_ERROR)
+    path = reverse(routes.IN_PERSON_SERVER_ERROR)
 
     response = admin_client.get(path)
 

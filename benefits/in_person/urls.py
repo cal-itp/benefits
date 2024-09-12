@@ -22,5 +22,5 @@ urlpatterns = [
         admin.site.admin_view(views.system_error),
         name=routes.name(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR),
     ),
-    path("error/", admin.site.admin_view(views.server_error), name=routes.name(routes.IN_PERSON_GENERIC_ERROR)),
+    path("error/", admin.site.admin_view(views.server_error), name=routes.name(routes.IN_PERSON_SERVER_ERROR)),
 ]

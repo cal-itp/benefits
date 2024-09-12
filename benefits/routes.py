@@ -142,7 +142,7 @@ class Routes:
         return "in_person:token"
 
     @property
-    def IN_PERSON_GENERIC_ERROR(self):
+    def IN_PERSON_SERVER_ERROR(self):
         """Generic error handler for the in_person app."""
         return "in_person:error"
 

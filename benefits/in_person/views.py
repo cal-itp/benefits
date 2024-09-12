@@ -57,7 +57,7 @@ def token(request):
             if response.status is Status.SYSTEM_ERROR:
                 redirect = reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
             else:
-                redirect = reverse(routes.IN_PERSON_GENERIC_ERROR)
+                redirect = reverse(routes.IN_PERSON_SERVER_ERROR)
 
             data = {"redirect": redirect}
             return JsonResponse(data)
@@ -85,7 +85,7 @@ def enrollment(request):
                 return redirect(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
 
             case Status.EXCEPTION:
-                return redirect(routes.IN_PERSON_GENERIC_ERROR)
+                return redirect(routes.IN_PERSON_SERVER_ERROR)
 
             case Status.REENROLLMENT_ERROR:
                 return redirect(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR)
@@ -95,7 +95,7 @@ def enrollment(request):
 
         tokenize_retry_form = forms.CardTokenizeFailForm(routes.IN_PERSON_ENROLLMENT_RETRY, "form-card-tokenize-fail-retry")
         tokenize_server_error_form = forms.CardTokenizeFailForm(
-            routes.IN_PERSON_GENERIC_ERROR, "form-card-tokenize-fail-server-error"
+            routes.IN_PERSON_SERVER_ERROR, "form-card-tokenize-fail-server-error"
         )
         tokenize_system_error_form = forms.CardTokenizeFailForm(
             routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
