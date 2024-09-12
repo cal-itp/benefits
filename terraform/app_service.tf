@@ -77,7 +77,8 @@ resource "azurerm_linux_web_app" "main" {
     "GOOGLE_SSO_CLIENT_SECRET"     = "${local.secret_prefix}google-sso-client-secret)",
     "GOOGLE_SSO_ALLOWABLE_DOMAINS" = "${local.secret_prefix}google-sso-allowable-domains)",
     "GOOGLE_SSO_STAFF_LIST"        = "${local.secret_prefix}google-sso-staff-list)",
-    "GOOGLE_SSO_SUPERUSER_LIST"    = "${local.secret_prefix}google-sso-superuser-list)"
+    "GOOGLE_SSO_SUPERUSER_LIST"    = "${local.secret_prefix}google-sso-superuser-list)",
+    "SSO_SHOW_FORM_ON_ADMIN_PAGE"  = "${local.secret_prefix}sso-show-form-on-admin-page)"
 
     # Sentry
     "SENTRY_DSN"                = "${local.secret_prefix}sentry-dsn)",
