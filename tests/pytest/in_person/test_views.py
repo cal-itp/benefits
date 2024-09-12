@@ -1,7 +1,12 @@
-from django.urls import reverse
+import time
 
 import pytest
+from authlib.integrations.base_client.errors import UnsupportedTokenTypeError
+from django.urls import reverse
+from requests import HTTPError
 
+
+from benefits.enrollment.enrollment import Status, CardTokenizationAccessResponse
 from benefits.routes import routes
 
 
@@ -49,6 +54,150 @@ def test_confirm_post_valid_form_eligibility_unverified(admin_client):
 
     assert response.status_code == 200
     assert response.template_name == "in_person/eligibility.html"
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
+def test_token_refresh(mocker, admin_client):
+    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+
+    mock_token = {}
+    mock_token["access_token"] = "access_token"
+    mock_token["expires_at"] = time.time() + 10000
+
+    mocker.patch(
+        "benefits.in_person.views.request_card_tokenization_access",
+        return_value=CardTokenizationAccessResponse(
+            Status.SUCCESS,
+            access_token=mock_token["access_token"],
+            expires_at=mock_token["expires_at"],
+        ),
+    )
+
+    path = reverse(routes.IN_PERSON_ENROLLMENT_TOKEN)
+    response = admin_client.get(path)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "token" in data
+    assert data["token"] == mock_token["access_token"]
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
+def test_token_valid(mocker, admin_client):
+    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=True)
+    mocker.patch("benefits.core.session.enrollment_token", return_value="enrollment_token")
+
+    path = reverse(routes.IN_PERSON_ENROLLMENT_TOKEN)
+    response = admin_client.get(path)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "token" in data
+    assert data["token"] == "enrollment_token"
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
+def test_token_system_error(mocker, admin_client):
+    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+
+    mock_error = {"message": "Mock error message"}
+    mock_error_response = mocker.Mock(status_code=500, **mock_error)
+    mock_error_response.json.return_value = mock_error
+    http_error = HTTPError(response=mock_error_response)
+
+    mocker.patch(
+        "benefits.in_person.views.request_card_tokenization_access",
+        return_value=CardTokenizationAccessResponse(
+            Status.SYSTEM_ERROR, access_token=None, expires_at=None, exception=http_error, status_code=500
+        ),
+    )
+
+    path = reverse(routes.IN_PERSON_ENROLLMENT_TOKEN)
+    response = admin_client.get(path)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "token" not in data
+    assert "redirect" in data
+    assert data["redirect"] == reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
+def test_token_http_error_400(mocker, admin_client):
+    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+
+    mock_error = {"message": "Mock error message"}
+    mock_error_response = mocker.Mock(status_code=400, **mock_error)
+    mock_error_response.json.return_value = mock_error
+    http_error = HTTPError(response=mock_error_response)
+
+    mocker.patch(
+        "benefits.in_person.views.request_card_tokenization_access",
+        return_value=CardTokenizationAccessResponse(
+            Status.EXCEPTION, access_token=None, expires_at=None, exception=http_error, status_code=400
+        ),
+    )
+
+    path = reverse(routes.IN_PERSON_ENROLLMENT_TOKEN)
+    response = admin_client.get(path)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "token" not in data
+    assert "redirect" in data
+    assert data["redirect"] == reverse(routes.IN_PERSON_GENERIC_ERROR)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
+def test_token_misconfigured_client_id(mocker, admin_client):
+    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+
+    exception = UnsupportedTokenTypeError()
+
+    mocker.patch(
+        "benefits.in_person.views.request_card_tokenization_access",
+        return_value=CardTokenizationAccessResponse(
+            Status.EXCEPTION, access_token=None, expires_at=None, exception=exception, status_code=None
+        ),
+    )
+
+    path = reverse(routes.IN_PERSON_ENROLLMENT_TOKEN)
+    response = admin_client.get(path)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "token" not in data
+    assert "redirect" in data
+    assert data["redirect"] == reverse(routes.IN_PERSON_GENERIC_ERROR)
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
+def test_token_connection_error(mocker, admin_client):
+    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+
+    exception = ConnectionError()
+
+    mocker.patch(
+        "benefits.in_person.views.request_card_tokenization_access",
+        return_value=CardTokenizationAccessResponse(
+            Status.EXCEPTION, access_token=None, expires_at=None, exception=exception, status_code=None
+        ),
+    )
+
+    path = reverse(routes.IN_PERSON_ENROLLMENT_TOKEN)
+    response = admin_client.get(path)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "token" not in data
+    assert "redirect" in data
+    assert data["redirect"] == reverse(routes.IN_PERSON_GENERIC_ERROR)
 
 
 @pytest.mark.django_db

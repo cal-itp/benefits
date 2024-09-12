@@ -1,14 +1,21 @@
+import logging
+
 from django.contrib.admin import site as admin_site
+from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.shortcuts import redirect
 from django.urls import reverse
+import sentry_sdk
 
 
 from benefits.routes import routes
 from benefits.core import session
 from benefits.core.models import EnrollmentFlow
+from benefits.enrollment.enrollment import Status, request_card_tokenization_access
 
 from benefits.in_person import forms
+
+logger = logging.getLogger(__name__)
 
 
 def eligibility(request):
@@ -34,6 +41,30 @@ def eligibility(request):
         response = TemplateResponse(request, "in_person/eligibility.html", context)
 
     return response
+
+
+def token(request):
+    """View handler for the enrollment auth token."""
+    if not session.enrollment_token_valid(request):
+        response = request_card_tokenization_access(request)
+
+        if response.status is Status.SUCCESS:
+            session.update(request, enrollment_token=response.access_token, enrollment_token_exp=response.expires_at)
+        elif response.status is Status.SYSTEM_ERROR or response.status is Status.EXCEPTION:
+            logger.debug("Error occurred while requesting access token", exc_info=response.exception)
+            sentry_sdk.capture_exception(response.exception)
+
+            if response.status is Status.SYSTEM_ERROR:
+                redirect = reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
+            else:
+                redirect = reverse(routes.IN_PERSON_GENERIC_ERROR)
+
+            data = {"redirect": redirect}
+            return JsonResponse(data)
+
+    data = {"token": session.enrollment_token(request)}
+
+    return JsonResponse(data)
 
 
 def enrollment(request):

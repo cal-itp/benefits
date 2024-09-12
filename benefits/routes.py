@@ -137,6 +137,11 @@ class Routes:
         return "in_person:enrollment"
 
     @property
+    def IN_PERSON_ENROLLMENT_TOKEN(self):
+        """Acquire a TransitProcessor API token for in-person enrollment."""
+        return "in_person:token"
+
+    @property
     def IN_PERSON_GENERIC_ERROR(self):
         """Generic error handler for the in_person app."""
         return "in_person:error"
