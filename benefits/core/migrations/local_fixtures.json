@@ -202,5 +202,53 @@
       "groups": [2],
       "user_permissions": []
     }
+  },
+  {
+    "model": "core.enrollmentevent",
+    "pk": "49328a98-f829-4009-a16a-d71ece9e51e3",
+    "fields": {
+      "transit_agency": 1,
+      "enrollment_flow": 3,
+      "enrollment_method": "digital",
+      "verified_by": "http://server:8000/verify",
+      "enrollment_datetime": "2024-09-13T16:00:00.000Z",
+      "expiration_datetime": null
+    }
+  },
+  {
+    "model": "core.enrollmentevent",
+    "pk": "b1906c39-ae91-4b17-ae71-a93c4d4e546b",
+    "fields": {
+      "transit_agency": 1,
+      "enrollment_flow": 2,
+      "enrollment_method": "in_person",
+      "verified_by": "Test User",
+      "enrollment_datetime": "2024-09-13T15:45:30.000Z",
+      "expiration_datetime": null
+    }
+  },
+  {
+    "model": "core.enrollmentevent",
+    "pk": "b2038a25-ce2a-46f0-80a0-aea49e45e1e9",
+    "fields": {
+      "transit_agency": 1,
+      "enrollment_flow": 1,
+      "enrollment_method": "digital",
+      "verified_by": "benefits-oauth-client-name",
+      "enrollment_datetime": "2024-09-12T18:25:25.000Z",
+      "expiration_datetime": null
+    }
+  },
+  {
+    "model": "core.enrollmentevent",
+    "pk": "cf28906c-5709-4055-b6fd-554563ca1286",
+    "fields": {
+      "transit_agency": 1,
+      "enrollment_flow": 4,
+      "enrollment_method": "digital",
+      "verified_by": "benefits-oauth-client-name",
+      "enrollment_datetime": "2024-09-11T20:00:00.000Z",
+      "expiration_datetime": "2025-09-12T07:00:00.000Z"
+    }
   }
 ]
