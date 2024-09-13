@@ -12,6 +12,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import Group, User
 from django.db import models
 from django.urls import reverse
+from django.utils import timezone
 
 import requests
 
@@ -445,3 +446,8 @@ class EnrollmentEvent(models.Model):
     verified_by = models.TextField()
     enrollment_datetime = models.DateTimeField(default=timezone.now)
     expiration_datetime = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        dt = timezone.localtime(self.enrollment_datetime)
+        ts = dt.strftime("%b %d, %Y, %I:%M %p")
+        return f"{ts}, {self.transit_agency}, {self.enrollment_flow}"

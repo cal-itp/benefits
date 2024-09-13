@@ -409,3 +409,21 @@ def test_EnrollmentEvent_create(model_TransitAgency, model_EnrollmentFlow):
     # enrollment_datetime should equal the given value exactly
     assert event.enrollment_datetime == dt
     assert event.expiration_datetime == expiry
+
+
+@pytest.mark.django_db
+def test_EnrollmentEvent_str(model_TransitAgency, model_EnrollmentFlow):
+    ts = timezone.datetime(2024, 9, 13, 13, 30, 0, tzinfo=timezone.get_default_timezone())
+
+    event = EnrollmentEvent.objects.create(
+        transit_agency=model_TransitAgency,
+        enrollment_flow=model_EnrollmentFlow,
+        enrollment_method=EnrollmentMethods.DIGITAL,
+        verified_by="Test",
+        enrollment_datetime=ts,
+    )
+    event_str = str(event)
+
+    assert "Sep 13, 2024, 01:30 PM" in event_str
+    assert str(event.transit_agency) in event_str
+    assert str(event.enrollment_flow) in event_str
