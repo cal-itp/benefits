@@ -124,6 +124,8 @@ class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
 
 @admin.register(models.EnrollmentEvent)
 class EnrollmentEventAdmin(admin.ModelAdmin):  # pragma: no cover
+    list_display = ("enrollment_datetime", "transit_agency", "enrollment_flow", "enrollment_method", "verified_by")
+
     def has_add_permission(self, request: HttpRequest, obj=None):
         if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.PROD:
             return False
