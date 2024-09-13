@@ -5,6 +5,7 @@ The core application: Common model definitions.
 from functools import cached_property
 import importlib
 import logging
+import uuid
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -422,3 +423,25 @@ class TransitAgency(models.Model):
 
         # the loop above returns the first match found. Return None if no match was found.
         return None
+
+
+class EnrollmentMethods:
+    DIGITAL = "digital"
+    IN_PERSON = "in_person"
+
+
+class EnrollmentEvent(models.Model):
+    """A record of a successful enrollment."""
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
+    transit_agency = models.ForeignKey(TransitAgency, on_delete=models.PROTECT)
+    enrollment_flow = models.ForeignKey(EnrollmentFlow, on_delete=models.PROTECT)
+    enrollment_method = models.TextField(
+        choices={
+            EnrollmentMethods.DIGITAL: EnrollmentMethods.DIGITAL,
+            EnrollmentMethods.IN_PERSON: EnrollmentMethods.IN_PERSON,
+        }
+    )
+    verified_by = models.TextField()
+    enrollment_datetime = models.DateTimeField(default=timezone.now)
+    expiration_datetime = models.DateTimeField(blank=True, null=True)
