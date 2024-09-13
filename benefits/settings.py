@@ -25,18 +25,25 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
 ALLOWED_HOSTS = _filter_empty(os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(","))
 
 
+class RUNTIME_ENVS:
+    LOCAL = "local"
+    DEV = "dev"
+    TEST = "test"
+    PROD = "prod"
+
+
 def RUNTIME_ENVIRONMENT():
     """Helper calculates the current runtime environment from ALLOWED_HOSTS."""
 
     # usage of django.conf.settings.ALLOWED_HOSTS here (rather than the module variable directly)
     # is to ensure dynamic calculation, e.g. for unit tests and elsewhere this setting is needed
-    env = "local"
+    env = RUNTIME_ENVS.LOCAL
     if "dev-benefits.calitp.org" in settings.ALLOWED_HOSTS:
-        env = "dev"
+        env = RUNTIME_ENVS.DEV
     elif "test-benefits.calitp.org" in settings.ALLOWED_HOSTS:
-        env = "test"
+        env = RUNTIME_ENVS.TEST
     elif "benefits.calitp.org" in settings.ALLOWED_HOSTS:
-        env = "prod"
+        env = RUNTIME_ENVS.PROD
     return env
 
 

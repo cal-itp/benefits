@@ -24,5 +24,5 @@ class Migration(migrations.Migration):
                 ("enrollment_flow", models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to="core.enrollmentflow")),
                 ("transit_agency", models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to="core.transitagency")),
             ],
-        ),
+        )
     ]
