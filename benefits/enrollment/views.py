@@ -80,6 +80,7 @@ def index(request):
                     expiration_datetime=expiry,
                 )
                 event.save()
+                analytics.returned_success(request, flow.group_id)
                 return success(request)
 
             case Status.SYSTEM_ERROR:
@@ -181,6 +182,5 @@ def success(request):
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(routes.LOGGED_OUT))
 
-    analytics.returned_success(request, flow.group_id)
     context = {"redirect_to": request.path}
     return TemplateResponse(request, flow.enrollment_success_template, context)
