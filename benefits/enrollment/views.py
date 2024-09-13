@@ -15,6 +15,7 @@ from benefits.routes import routes
 from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
 
+from benefits.core import models
 from . import analytics, forms
 from .enrollment import Status, request_card_tokenization_access, enroll
 
@@ -67,6 +68,18 @@ def index(request):
 
         match (status):
             case Status.SUCCESS:
+                agency = session.agency(request)
+                flow = session.flow(request)
+                expiry = session.enrollment_expiry(request)
+                verified_by = flow.claims_provider.client_name if flow.uses_claims_verification else flow.eligibility_api_url
+                event = models.EnrollmentEvent.objects.create(
+                    transit_agency=agency,
+                    enrollment_flow=flow,
+                    enrollment_method=models.EnrollmentMethods.DIGITAL,
+                    verified_by=verified_by,
+                    expiration_datetime=expiry,
+                )
+                event.save()
                 return success(request)
 
             case Status.SYSTEM_ERROR:
