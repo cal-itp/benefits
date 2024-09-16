@@ -1,4 +1,5 @@
 from unittest.mock import create_autospec
+from django.contrib.auth.models import User
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.middleware.locale import LocaleMiddleware
 from django.utils import timezone
@@ -31,6 +32,11 @@ def app_request(rf):
     session.reset(app_request)
 
     return app_request
+
+
+@pytest.fixture
+def model_User():
+    return User.objects.create(is_active=True, is_staff=True, first_name="Test", last_name="User")
 
 
 # autouse this fixture so we never call out to the real secret store

@@ -6,7 +6,9 @@ from django.urls import reverse
 from requests import HTTPError
 
 
+from benefits.core import models
 from benefits.enrollment.enrollment import Status, CardTokenizationAccessResponse
+import benefits.in_person.views
 from benefits.routes import routes
 
 
@@ -242,11 +244,26 @@ def test_enrollment_post_invalid_form(admin_client, invalid_form_data):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
-def test_enrollment_post_valid_form_success(mocker, admin_client, card_tokenize_form_data):
+def test_enrollment_post_valid_form_success(
+    mocker, admin_client, card_tokenize_form_data, model_TransitAgency, model_EnrollmentFlow, model_User
+):
     mocker.patch("benefits.in_person.views.enroll", return_value=(Status.SUCCESS, None))
+    spy = mocker.spy(benefits.in_person.views.models.EnrollmentEvent.objects, "create")
+
+    # force the model_User to be the logged in user
+    # e.g. the TransitAgency staff person assisting this in-person enrollment
+    admin_client.force_login(model_User)
 
     path = reverse(routes.IN_PERSON_ENROLLMENT)
     response = admin_client.post(path, card_tokenize_form_data)
+
+    spy.assert_called_once_with(
+        transit_agency=model_TransitAgency,
+        enrollment_flow=model_EnrollmentFlow,
+        enrollment_method=models.EnrollmentMethods.IN_PERSON,
+        verified_by=f"{model_User.first_name} {model_User.last_name}",
+        expiration_datetime=None,
+    )
 
     assert response.status_code == 302
     assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_SUCCESS)

@@ -9,8 +9,7 @@ import sentry_sdk
 
 
 from benefits.routes import routes
-from benefits.core import session
-from benefits.core.models import EnrollmentFlow
+from benefits.core import models, session
 from benefits.enrollment.enrollment import Status, request_card_tokenization_access, enroll
 
 from benefits.in_person import forms
@@ -29,7 +28,7 @@ def eligibility(request):
 
         if form.is_valid():
             flow_id = form.cleaned_data.get("flow")
-            flow = EnrollmentFlow.objects.get(id=flow_id)
+            flow = models.EnrollmentFlow.objects.get(id=flow_id)
             session.update(request, flow=flow)
 
             in_person_enrollment = reverse(routes.IN_PERSON_ENROLLMENT)
@@ -79,6 +78,18 @@ def enrollment(request):
 
         match (status):
             case Status.SUCCESS:
+                agency = session.agency(request)
+                flow = session.flow(request)
+                expiry = session.enrollment_expiry(request)
+                verified_by = f"{request.user.first_name} {request.user.last_name}"
+                event = models.EnrollmentEvent.objects.create(
+                    transit_agency=agency,
+                    enrollment_flow=flow,
+                    enrollment_method=models.EnrollmentMethods.IN_PERSON,
+                    verified_by=verified_by,
+                    expiration_datetime=expiry,
+                )
+                event.save()
                 return redirect(routes.IN_PERSON_ENROLLMENT_SUCCESS)
 
             case Status.SYSTEM_ERROR:
