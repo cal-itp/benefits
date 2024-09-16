@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-09-11 12:40-0700\n"
+"POT-Creation-Date: 2024-09-12 16:14-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -457,6 +457,45 @@ msgid ""
 "the transit benefit you selected."
 msgstr ""
 
+msgid "Learn more about the option for Medicare Cardholders"
+msgstr ""
+
+msgid "How do I know if I qualify for the Medicare Cardholder option?"
+msgstr ""
+
+msgid ""
+"You qualify for this option if you have a Medicare card. To enroll you will "
+"need an account with Medicare.gov. You will need to sign up for a Medicare."
+"gov account if you do not currently have one. Deceased Medicare cardholders "
+"do not qualify."
+msgstr ""
+
+msgid "Do I need my Medicare card to enroll?"
+msgstr ""
+
+msgid ""
+"No, you do not need your physical Medicare card to enroll in a transit "
+"benefit. You will need the information on your card to create an account at "
+"Medicare.gov if you have do not currently have an online account."
+msgstr ""
+
+msgid "Do I need to bring my Medicare card when I ride public transportation?"
+msgstr ""
+
+msgid ""
+"No, you do not need your physical Medicare card to use your transit benefit "
+"on public transportation. Once you have enrolled you can use your "
+"contactless debit or credit card to tap to ride with a reduced fare."
+msgstr ""
+
+msgid "What if I qualify for more than one option?"
+msgstr ""
+
+msgid ""
+"You can enroll in any option you qualify for. We recommend enrolling in the "
+"Medicare Cardholder option if you qualify for it."
+msgstr ""
+
 msgid "CalFresh Cardholder"
 msgstr ""
 
@@ -477,6 +516,15 @@ msgstr ""
 msgid ""
 "This option is for people who have a current CST Agency Card or a CST "
 "Paratransit Eligibility Card."
+msgstr ""
+
+msgid "Medicare Cardholder"
+msgstr ""
+
+msgid "You must be"
+msgstr ""
+
+msgid "currently enrolled in Medicare"
 msgstr ""
 
 msgid "Courtesy Card"
