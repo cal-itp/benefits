@@ -136,6 +136,36 @@ class Routes:
         """In-person (e.g. agency assisted) enrollment"""
         return "in_person:enrollment"
 
+    @property
+    def IN_PERSON_ENROLLMENT_TOKEN(self):
+        """Acquire a TransitProcessor API token for in-person enrollment."""
+        return "in_person:token"
+
+    @property
+    def IN_PERSON_SERVER_ERROR(self):
+        """Generic error handler for the in_person app."""
+        return "in_person:error"
+
+    @property
+    def IN_PERSON_ENROLLMENT_RETRY(self):
+        """In-person user entered their card details incorrectly or another recoverable problem."""
+        return "in_person:retry"
+
+    @property
+    def IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR(self):
+        """In-person user tried to enroll when they are already enrolled in an expiring discount."""
+        return "in_person:reenrollment_error"
+
+    @property
+    def IN_PERSON_ENROLLMENT_SUCCESS(self):
+        """Successful in-person enrollment"""
+        return "in_person:success"
+
+    @property
+    def IN_PERSON_ENROLLMENT_SYSTEM_ERROR(self):
+        """Enrollment error not caused by the user during in-person enrollment."""
+        return "in_person:system_error"
+
     def to_dict(self) -> dict[str, str]:
         """Get a mapping of property name --> value for each `@property` in the Routes collection."""
         return {prop: str(getattr(self, prop)) for prop in dir(Routes) if isinstance(getattr(Routes, prop), property)}

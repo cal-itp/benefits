@@ -1,0 +1,126 @@
+{% extends "admin/agency-base.html" %}
+
+{% block content %}
+
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="border border-3 p-3">
+                <h2 class="p-0 m-0 text-left">In-person enrollment</h2>
+            </div>
+            <div class="border border-3 border-top-0 p-3">
+                <div class="loading">
+                    <p>
+                        <span class="spinner-border align-middle text-primary" role="status"></span>
+                        <span id="loading-message" class="fw-bold p-2">Please wait...</span>
+                    </p>
+                </div>
+                <div class="invisible">
+                    <p>Provide the rider's contactless debit or credit card details.</p>
+                    <iframe class="card-collection" name="card-collection-iframe"></iframe>
+                </div>
+                <div class="row d-flex justify-content-start p-3 pt-8">
+                    <div class="col-6">
+                        {% url routes.ADMIN_INDEX as url_cancel %}
+                        <a href="{{ url_cancel }}" class="btn btn-lg btn-outline-primary d-block">Cancel</a>
+                    </div>
+                    <div class="col-6">
+                        {% url routes.IN_PERSON_ELIGIBILITY as url_go_back %}
+                        <a href="{{ url_go_back }}" class="btn btn-lg btn-primary d-block">Go back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--
+        This hidden button is needed by the card tokenisation function's `element` option.
+        The iframe's source isn't set until the button is clicked.
+    -->
+    <div class="d-none">
+        <button id="{{ cta_button }}" href="#{{ cta_button }}" class="btn btn-lg btn-primary" role="button">Enroll</button>
+    </div>
+
+    <script nonce="{{ request.csp_nonce }}">
+
+        $.ajax({ dataType: "script", attrs: { nonce: "{{ request.csp_nonce }}"}, url: "{{ card_tokenize_url }}" })
+            .done(function() {
+            $.get("{% url routes.IN_PERSON_ENROLLMENT_TOKEN %}", function(data) {
+                if (data.redirect) {
+                  // https://stackoverflow.com/a/42469170
+                  // use 'assign' because 'replace' was giving strange Back button behavior
+                  window.location.assign(data.redirect);
+                  return; // exit early so the rest of this function doesn't execute
+                }
+
+                $(".loading").addClass("d-none");
+                $(".invisible").removeClass("invisible").addClass("visible");
+
+                new Promise((resolve) => {
+                    {{ card_tokenize_func }}({
+                        authorization: data.token,
+                        element: '#{{ cta_button }}',
+                        envUrl: '{{ card_tokenize_env }}',
+                        options: {
+                            color: '#046b99',
+                            targetiframename: 'card-collection-iframe'
+                        },
+                        onTokenize: function (response) {
+                            /* This function executes when the
+                            /* card verification returns
+                            /* successfully with a token from enrollment server */
+
+                            // hide the iframe
+                            $(".visible").removeClass("visible").addClass("invisible");
+
+                            // show the loading message
+                            $(".loading").removeClass("d-none");
+                            $("#loading-message").text("Registering this contactless card for reduced fares....");
+
+                            var form = $("form#{{ form_success }}");
+                            $("#{{ token_field }}", form).val(response.token);
+                            form.submit();
+                        },
+                        onVerificationFailure: function (response) {
+                            /* This function executes when the
+                            /* card verification fails and server
+                            /* return verification failure message */
+
+                            var form = $("form#{{ form_retry }}");
+                            form.submit();
+                        },
+                        onError: function (response) {
+                            /* This function executes when the
+                            /* server returns error or token is invalid.
+                            /* 400 or 500 will return. */
+
+                            if (response.status >= 500) {
+                            var form = $("form#{{ form_system_error }}");
+                            } else {
+                            var form = $("form#{{ form_server_error }}");
+                            }
+                            form.submit();
+                        },
+                        onCancel: function () {
+                            /* This function executes when the
+                            /* user cancels and closes the window
+                            /* and returns to home page. */
+
+                            return location.reload();
+                        }
+                    });
+                    resolve();
+                }).then(() => $("#{{ cta_button }}").click())
+                });
+        })
+        .fail(function(jqxhr, settings, exception) {
+          $(".loading").remove();
+          console.log(exception);
+        });
+
+    </script>
+
+    {% for f in forms %}
+        {% include "core/includes/form.html" with form=f %}
+    {% endfor %}
+
+{% endblock content %}

@@ -89,3 +89,10 @@ html[data-theme="light"],
   flex-direction: column;
   row-gap: 1rem;
 }
+
+/* Enrollment */
+iframe.card-collection {
+  border: 0px;
+  width: 100%;
+  height: 60vh;
+}
