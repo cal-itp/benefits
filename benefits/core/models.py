@@ -294,6 +294,9 @@ class TransitProcessor(models.Model):
         help_text="The function from the card tokenization library to call on the client to initiate the process."
     )
     card_tokenize_env = models.TextField(help_text="The environment in which card tokenization is occurring.")
+    portal_url = models.TextField(
+        null=True, blank=True, help_text="The absolute base URL for the TransitProcessor's control portal, including https://."
+    )
 
     def __str__(self):
         return self.name

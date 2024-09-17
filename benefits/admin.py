@@ -36,6 +36,13 @@ class BenefitsAdminSite(admin.AdminSite):
 
             if agency is not None:
                 has_permission_for_in_person = agency.customer_service_group in request.user.groups.all()
-                context.update({"has_permission_for_in_person": has_permission_for_in_person})
+                transit_processor_portal_url = agency.transit_processor.portal_url
+
+                context.update(
+                    {
+                        "has_permission_for_in_person": has_permission_for_in_person,
+                        "transit_processor_portal_url": transit_processor_portal_url,
+                    }
+                )
 
             return TemplateResponse(request, "admin/agency-dashboard-index.html", context)
