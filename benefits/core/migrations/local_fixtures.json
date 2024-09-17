@@ -184,5 +184,23 @@
     "fields": {
       "name": "CST"
     }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$5pS1ll33O6bi2rCCELW8kZ$OvFJJIERCEE0H2RhI8WzKTi+tFhbrfo/sxFdwAUzESI=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "cst-user",
+      "first_name": "CST",
+      "last_name": "User",
+      "email": "user@cst.ca.gov",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-09-17T18:54:46Z",
+      "groups": [2],
+      "user_permissions": []
+    }
   }
 ]
