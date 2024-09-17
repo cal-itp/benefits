@@ -5,7 +5,7 @@
 | Name                                 |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
 |------------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
 | benefits/\_\_init\_\_.py             |        6 |        2 |        0 |        0 |     67% |       5-7 |
-| benefits/admin.py                    |       20 |        0 |        4 |        1 |     96% |    37->41 |
+| benefits/admin.py                    |       21 |        0 |        4 |        1 |     96% |    37->48 |
 | benefits/apps.py                     |        3 |        0 |        0 |        0 |    100% |           |
 | benefits/core/\_\_init\_\_.py        |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/core/admin.py               |       39 |        0 |        8 |        1 |     98% | 159->exit |
@@ -13,7 +13,7 @@
 | benefits/core/apps.py                |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/core/context\_processors.py |       41 |        2 |        8 |        1 |     94% |    71, 96 |
 | benefits/core/middleware.py          |       91 |        3 |       22 |        2 |     96% |58-59, 78->83, 146 |
-| benefits/core/models.py              |      194 |        3 |       58 |        1 |     98% |74-75, 229 |
+| benefits/core/models.py              |      195 |        3 |       58 |        1 |     98% |74-75, 229 |
 | benefits/core/recaptcha.py           |       13 |        5 |        4 |        1 |     53% |     26-32 |
 | benefits/core/session.py             |      132 |        1 |       34 |        0 |     99% |        52 |
 | benefits/core/urls.py                |       25 |        0 |        2 |        0 |    100% |           |
@@ -57,7 +57,7 @@
 | benefits/settings.py                 |      121 |        6 |       22 |        8 |     90% |95, 116->121, 132->135, 151, 305, 307, 322, 334 |
 | benefits/urls.py                     |       22 |        7 |        2 |        1 |     67% |     35-49 |
 | benefits/wsgi.py                     |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                            **TOTAL** | **1905** |   **97** |  **560** |   **41** | **94%** |           |
+|                            **TOTAL** | **1907** |   **97** |  **560** |   **41** | **94%** |           |
 
 
 ## Setup coverage badge
