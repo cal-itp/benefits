@@ -1,10 +1,12 @@
+from datetime import timedelta
 from django.conf import settings
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 import pytest
 
-from benefits.core.models import SecretNameField, EnrollmentFlow, TransitAgency
+from benefits.core.models import SecretNameField, EnrollmentFlow, TransitAgency, EnrollmentEvent, EnrollmentMethods
 import benefits.secrets
 
 
@@ -375,3 +377,53 @@ def test_TransitAgency_for_user_in_group_not_linked_to_any_agency():
     user.groups.add(group)
 
     assert TransitAgency.for_user(user) is None
+
+
+@pytest.mark.django_db
+def test_EnrollmentEvent_create(model_TransitAgency, model_EnrollmentFlow):
+    ts = timezone.now()
+    event = EnrollmentEvent.objects.create(
+        transit_agency=model_TransitAgency,
+        enrollment_flow=model_EnrollmentFlow,
+        enrollment_method=EnrollmentMethods.DIGITAL,
+        verified_by="Test",
+    )
+
+    assert event.transit_agency == model_TransitAgency
+    assert event.enrollment_flow == model_EnrollmentFlow
+    assert event.enrollment_method == EnrollmentMethods.DIGITAL
+    assert event.verified_by == "Test"
+    # default enrollment_datetime should be nearly the same as the timestamp
+    assert event.enrollment_datetime - ts <= timedelta(milliseconds=1)
+
+    dt = timezone.datetime(2024, 9, 13, 13, 30, 0, tzinfo=timezone.get_default_timezone())
+    expiry = dt + timedelta(weeks=52)
+    event = EnrollmentEvent(
+        transit_agency=model_TransitAgency,
+        enrollment_flow=model_EnrollmentFlow,
+        enrollment_method=EnrollmentMethods.DIGITAL,
+        verified_by="Test",
+        enrollment_datetime=dt,
+        expiration_datetime=expiry,
+    )
+    # enrollment_datetime should equal the given value exactly
+    assert event.enrollment_datetime == dt
+    assert event.expiration_datetime == expiry
+
+
+@pytest.mark.django_db
+def test_EnrollmentEvent_str(model_TransitAgency, model_EnrollmentFlow):
+    ts = timezone.datetime(2024, 9, 13, 13, 30, 0, tzinfo=timezone.get_default_timezone())
+
+    event = EnrollmentEvent.objects.create(
+        transit_agency=model_TransitAgency,
+        enrollment_flow=model_EnrollmentFlow,
+        enrollment_method=EnrollmentMethods.DIGITAL,
+        verified_by="Test",
+        enrollment_datetime=ts,
+    )
+    event_str = str(event)
+
+    assert "Sep 13, 2024, 01:30 PM" in event_str
+    assert str(event.transit_agency) in event_str
+    assert str(event.enrollment_flow) in event_str

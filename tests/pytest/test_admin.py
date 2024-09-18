@@ -1,13 +1,8 @@
 import pytest
 from django.conf import settings
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import Group
 from django.urls import reverse
 from benefits.routes import routes
-
-
-@pytest.fixture
-def model_User():
-    return User.objects.create(is_active=True, is_staff=True)
 
 
 @pytest.fixture

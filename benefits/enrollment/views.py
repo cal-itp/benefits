@@ -15,6 +15,7 @@ from benefits.routes import routes
 from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
 
+from benefits.core import models
 from . import analytics, forms
 from .enrollment import Status, request_card_tokenization_access, enroll
 
@@ -67,6 +68,19 @@ def index(request):
 
         match (status):
             case Status.SUCCESS:
+                agency = session.agency(request)
+                flow = session.flow(request)
+                expiry = session.enrollment_expiry(request)
+                verified_by = flow.claims_provider.client_name if flow.uses_claims_verification else flow.eligibility_api_url
+                event = models.EnrollmentEvent.objects.create(
+                    transit_agency=agency,
+                    enrollment_flow=flow,
+                    enrollment_method=models.EnrollmentMethods.DIGITAL,
+                    verified_by=verified_by,
+                    expiration_datetime=expiry,
+                )
+                event.save()
+                analytics.returned_success(request, flow.group_id)
                 return success(request)
 
             case Status.SYSTEM_ERROR:
@@ -168,6 +182,5 @@ def success(request):
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(routes.LOGGED_OUT))
 
-    analytics.returned_success(request, flow.group_id)
     context = {"redirect_to": request.path}
     return TemplateResponse(request, flow.enrollment_success_template, context)

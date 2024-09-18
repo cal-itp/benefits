@@ -9,6 +9,8 @@ from adminsortable2.admin import SortableAdminMixin
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.models import Group
+from django.http import HttpRequest
+
 from . import models
 
 logger = logging.getLogger(__name__)
@@ -120,6 +122,44 @@ class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
             return super().get_readonly_fields(request, obj)
 
 
+@admin.register(models.EnrollmentEvent)
+class EnrollmentEventAdmin(admin.ModelAdmin):  # pragma: no cover
+    list_display = ("enrollment_datetime", "transit_agency", "enrollment_flow", "enrollment_method", "verified_by")
+
+    def get_readonly_fields(self, request: HttpRequest, obj=None):
+        return ["id"]
+
+    def has_add_permission(self, request: HttpRequest, obj=None):
+        if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.PROD:
+            return False
+        elif request.user and (request.user.is_superuser or is_staff_member(request.user)):
+            return True
+        else:
+            return False
+
+    def has_change_permission(self, request: HttpRequest, obj=None):
+        if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.PROD:
+            return False
+        elif request.user and request.user.is_superuser:
+            return True
+        else:
+            return False
+
+    def has_delete_permission(self, request: HttpRequest, obj=None):
+        if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.PROD:
+            return False
+        elif request.user and (request.user.is_superuser or is_staff_member(request.user)):
+            return True
+        else:
+            return False
+
+    def has_view_permission(self, request: HttpRequest, obj=None):
+        if request.user and (request.user.is_superuser or is_staff_member(request.user)):
+            return True
+        else:
+            return False
+
+
 def pre_login_user(user, request):
     logger.debug(f"Running pre-login callback for user: {user.username}")
     add_google_sso_userinfo(user, request)
@@ -160,3 +200,8 @@ def add_transit_agency_staff_user_to_group(user, request):
         agency = models.TransitAgency.objects.filter(sso_domain=user_sso_domain).first()
         if agency is not None and agency.staff_group:
             agency.staff_group.user_set.add(user)
+
+
+def is_staff_member(user):
+    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
+    return staff_group.user_set.contains(user)
