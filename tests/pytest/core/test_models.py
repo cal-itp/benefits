@@ -186,6 +186,13 @@ def test_EnrollmentFlow_enrollment_success_template():
     assert new_flow.enrollment_success_template == "enrollment/success.html"
 
 
+@pytest.mark.django_db
+def test_EnrollmentFlow_supported_methods():
+    new_flow = EnrollmentFlow.objects.create()
+
+    assert new_flow.supported_methods == "digital"
+
+
 class SampleFormClass:
     """A class for testing EligibilityVerificationForm references."""
 

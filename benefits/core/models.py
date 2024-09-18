@@ -104,6 +104,11 @@ class ClaimsProvider(models.Model):
         return self.client_name
 
 
+class EnrollmentMethods:
+    DIGITAL = "digital"
+    IN_PERSON = "in_person"
+
+
 class EnrollmentFlow(models.Model):
     """Represents a user journey through the Benefits app for a single eligibility type."""
 
@@ -215,6 +220,15 @@ class EnrollmentFlow(models.Model):
     )
     enrollment_success_template = models.TextField(
         default="enrollment/success.html", help_text="Template for a successful enrollment associated with the enrollment flow"
+    )
+    supported_methods = models.TextField(
+        choices={
+            EnrollmentMethods.DIGITAL: EnrollmentMethods.DIGITAL,
+            EnrollmentMethods.IN_PERSON: EnrollmentMethods.IN_PERSON,
+            f"{EnrollmentMethods.DIGITAL}, {EnrollmentMethods.IN_PERSON}": f"{EnrollmentMethods.DIGITAL} and {EnrollmentMethods.IN_PERSON}",  # noqa: E501
+        },
+        default=EnrollmentMethods.DIGITAL,
+        help_text="If the flow is supported by digital enrollment, in-person enrollment, or both",
     )
 
     class Meta:
@@ -424,11 +438,6 @@ class TransitAgency(models.Model):
 
         # the loop above returns the first match found. Return None if no match was found.
         return None
-
-
-class EnrollmentMethods:
-    DIGITAL = "digital"
-    IN_PERSON = "in_person"
 
 
 class EnrollmentEvent(models.Model):
