@@ -18,6 +18,7 @@ import requests
 
 from benefits.routes import routes
 from benefits.secrets import NAME_VALIDATOR, get_secret_by_name
+from multiselectfield import MultiSelectField
 
 
 logger = logging.getLogger(__name__)
@@ -102,6 +103,17 @@ class ClaimsProvider(models.Model):
 
     def __str__(self) -> str:
         return self.client_name
+
+
+class EnrollmentMethods:
+    DIGITAL = "digital"
+    IN_PERSON = "in_person"
+
+
+SUPPORTED_METHODS = (
+    (EnrollmentMethods.DIGITAL, EnrollmentMethods.DIGITAL.capitalize()),
+    (EnrollmentMethods.IN_PERSON, EnrollmentMethods.IN_PERSON.replace("_", "-").capitalize()),
+)
 
 
 class EnrollmentFlow(models.Model):
@@ -215,6 +227,13 @@ class EnrollmentFlow(models.Model):
     )
     enrollment_success_template = models.TextField(
         default="enrollment/success.html", help_text="Template for a successful enrollment associated with the enrollment flow"
+    )
+    supported_methods = MultiSelectField(
+        choices=SUPPORTED_METHODS,
+        max_choices=2,
+        max_length=50,
+        default=[EnrollmentMethods.DIGITAL, EnrollmentMethods.IN_PERSON],
+        help_text="If the flow is supported by digital enrollment, in-person enrollment, or both",
     )
 
     class Meta:
@@ -424,11 +443,6 @@ class TransitAgency(models.Model):
 
         # the loop above returns the first match found. Return None if no match was found.
         return None
-
-
-class EnrollmentMethods:
-    DIGITAL = "digital"
-    IN_PERSON = "in_person"
 
 
 class EnrollmentEvent(models.Model):
