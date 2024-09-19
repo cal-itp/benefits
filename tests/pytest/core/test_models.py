@@ -230,6 +230,10 @@ def test_EnrollmentFlow_by_id_nonmatching():
 def test_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow_with_scope_and_claim):
 
     assert model_EnrollmentFlow_with_scope_and_claim.uses_claims_verification
+    assert (
+        model_EnrollmentFlow_with_scope_and_claim.eligibility_verifier
+        == model_EnrollmentFlow_with_scope_and_claim.claims_provider.client_name
+    )
 
 
 @pytest.mark.django_db
@@ -252,6 +256,14 @@ def test_EnrollmentFlow_no_scope_and_claim_no_sign_out(model_EnrollmentFlow, mod
     model_EnrollmentFlow.claims_provider = model_ClaimsProvider_no_sign_out
 
     assert not model_EnrollmentFlow.uses_claims_verification
+
+
+@pytest.mark.django_db
+def test_EnrollmentFlow_eligibility_api(model_EnrollmentFlow_with_eligibility_api):
+    assert (
+        model_EnrollmentFlow_with_eligibility_api.eligibility_verifier
+        == model_EnrollmentFlow_with_eligibility_api.eligibility_api_url
+    )
 
 
 @pytest.mark.django_db

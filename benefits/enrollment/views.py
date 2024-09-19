@@ -71,12 +71,11 @@ def index(request):
                 agency = session.agency(request)
                 flow = session.flow(request)
                 expiry = session.enrollment_expiry(request)
-                verified_by = flow.claims_provider.client_name if flow.uses_claims_verification else flow.eligibility_api_url
                 event = models.EnrollmentEvent.objects.create(
                     transit_agency=agency,
                     enrollment_flow=flow,
                     enrollment_method=models.EnrollmentMethods.DIGITAL,
-                    verified_by=verified_by,
+                    verified_by=flow.eligibility_verifier,
                     expiration_datetime=expiry,
                 )
                 event.save()
