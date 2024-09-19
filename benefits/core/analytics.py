@@ -45,7 +45,7 @@ class Event:
         agency = session.agency(request)
         agency_name = agency.long_name if agency else None
         flow = session.flow(request)
-        verifier_name = flow.system_name if flow else None
+        verifier_name = flow.eligibility_verifier if flow else None
         enrollment_flows = [flow.system_name] if flow else None
 
         self.update_event_properties(
