@@ -133,19 +133,27 @@ def enrollment(request):
 
 
 def reenrollment_error(request):
-    return TemplateResponse(request, "in_person/enrollment/reenrollment_error.html")
+    context = {**admin_site.each_context(request)}
+
+    return TemplateResponse(request, "in_person/enrollment/reenrollment_error.html", context)
 
 
 def retry(request):
-    return TemplateResponse(request, "in_person/enrollment/retry.html")
+    context = {**admin_site.each_context(request)}
+
+    return TemplateResponse(request, "in_person/enrollment/retry.html", context)
 
 
 def system_error(request):
-    return TemplateResponse(request, "in_person/enrollment/system_error.html")
+    context = {**admin_site.each_context(request)}
+
+    return TemplateResponse(request, "in_person/enrollment/system_error.html", context)
 
 
 def server_error(request):
-    return TemplateResponse(request, "in_person/enrollment/server_error.html")
+    context = {**admin_site.each_context(request)}
+
+    return TemplateResponse(request, "in_person/enrollment/server_error.html", context)
 
 
 def success(request):
