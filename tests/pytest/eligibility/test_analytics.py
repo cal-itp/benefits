@@ -4,8 +4,8 @@ from benefits.eligibility.analytics import EligibilityEvent
 
 
 @pytest.mark.django_db
-def test_EligibilityEvent_overwrites_eligibility_types(app_request, mocker, model_EnrollmentFlow):
-    key, type1, type2 = "eligibility_types", "type1", "type2"
+def test_EligibilityEvent_overwrites_enrollment_flows(app_request, mocker, model_EnrollmentFlow):
+    key, type1, type2 = "enrollment_flows", "type1", "type2"
     model_EnrollmentFlow.system_name = type1
     mocker.patch("benefits.core.analytics.session.flow", return_value=model_EnrollmentFlow)
 

@@ -46,12 +46,12 @@ class Event:
         agency_name = agency.long_name if agency else None
         flow = session.flow(request)
         verifier_name = flow.system_name if flow else None
-        eligibility_types = [flow.system_name] if flow else None
+        enrollment_flows = [flow.system_name] if flow else None
 
         self.update_event_properties(
             path=request.path,
             transit_agency=agency_name,
-            eligibility_types=eligibility_types,
+            enrollment_flows=enrollment_flows,
             eligibility_verifier=verifier_name,
         )
 
@@ -66,7 +66,7 @@ class Event:
             referring_domain=refdom,
             user_agent=uagent,
             transit_agency=agency_name,
-            eligibility_types=eligibility_types,
+            enrollment_flows=enrollment_flows,
             eligibility_verifier=verifier_name,
         )
 

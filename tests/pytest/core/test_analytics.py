@@ -69,7 +69,7 @@ def test_Event_sets_default_event_properties(app_request, mocker):
 
     assert "path" in update_spy.call_args.kwargs
     assert "transit_agency" in update_spy.call_args.kwargs
-    assert "eligibility_types" in update_spy.call_args.kwargs
+    assert "enrollment_flows" in update_spy.call_args.kwargs
     assert "eligibility_verifier" in update_spy.call_args.kwargs
 
 
@@ -83,7 +83,7 @@ def test_Event_sets_default_user_properties(app_request, mocker):
     assert "referring_domain" in update_spy.call_args.kwargs
     assert "user_agent" in update_spy.call_args.kwargs
     assert "transit_agency" in update_spy.call_args.kwargs
-    assert "eligibility_types" in update_spy.call_args.kwargs
+    assert "enrollment_flows" in update_spy.call_args.kwargs
     assert "eligibility_verifier" in update_spy.call_args.kwargs
 
 
