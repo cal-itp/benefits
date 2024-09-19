@@ -1,0 +1,29 @@
+{% extends "admin/login.html" %}
+{% load i18n static %}
+
+{% block dark-mode-vars %}
+{% endblock dark-mode-vars %}
+
+{% block title %}
+    Log in | Cal-ITP Benefits Administrator
+{% endblock title %}
+
+{% block extrastyle %}
+    {% comment %} Overriding instead of extending agency-base here to remove jQuery declaration, which admin/login.html includes on its own {% endcomment %}
+    <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+    <link href="{% static "css/admin/styles.css" %}" rel="stylesheet">
+{% endblock extrastyle %}
+
+{% block branding %}
+    <div class="d-flex justify-content-center w-100 bg-primary">
+        <img class="my-3" src="{% static "img/logo-lg.svg" %}" width="220" height="50" alt="California Integrated Travel Project: Benefits logo (large)" />
+    </div>
+
+    <div id="site-name">
+        <h1 class="text-center text-white fs-3 py-3 m-0">Administrator</h1>
+    </div>
+{% endblock branding %}

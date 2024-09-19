@@ -1,5 +1,16 @@
 @import "../variables.css";
 
+/* CSS Variable overrides */
+
+html[data-theme="light"],
+:root {
+  --primary: #ffffff;
+  --secondary: var(--dark-color);
+  --link-fg: #ffffff;
+  --body-quiet-color: var(--dark-color);
+  --button-bg: #ffffff;
+}
+
 /* Buttons */
 /* Primary Button: Use all three classes: btn btn-lg btn-primary */
 /* Outline Primary Button: Use all three classes: btn btn-lg btn-outline-primary */
@@ -20,11 +31,13 @@
   color: var(--primary-color);
 }
 
+.login input[type="submit"],
 .btn.btn-lg.btn-primary {
   background-color: var(--primary-color);
 }
 
 .btn.btn-lg.btn-primary,
+.login input[type="submit"],
 .btn.btn-lg.btn-outline-primary {
   border-color: var(--primary-color);
   border-width: 2px;
@@ -36,6 +49,7 @@
 }
 
 .btn.btn-lg.btn-primary:hover,
+.login input[type="submit"]:hover,
 .btn.btn-lg.btn-outline-primary:hover {
   background-color: var(--hover-color);
   border-color: var(--hover-color);
@@ -48,7 +62,11 @@
 .btn-outline-dark:focus,
 .btn-outline-dark:focus-visible,
 .btn-outline-light:focus,
-.btn-ouline-dark:focus-visible {
+.btn-ouline-dark:focus-visible,
+input[type="text"]:focus,
+input[type="password"]:focus,
+.google-login-btn a:focus,
+.login input[type="submit"]:focus {
   outline: 3px solid var(--focus-color) !important;
   outline-offset: 2px !important;
   box-shadow: none !important; /* override CA State Web Template */
@@ -61,19 +79,13 @@
   letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
 }
 
-html[data-theme="light"],
-:root {
-  --primary: #ffffff;
-  --secondary: var(--dark-color);
-  --link-fg: #ffffff;
-  --body-quiet-color: var(--dark-color);
-}
-
 #user-tools,
-#logout-form button {
+#logout-form button,
+.login .submit-row input[type="submit"] {
   text-transform: unset;
 }
 
+/* Eligibility Page */
 .checkbox-parent .form-group:last-of-type .col-12 {
   display: flex;
   flex-direction: row-reverse;
@@ -90,9 +102,94 @@ html[data-theme="light"],
   row-gap: 1rem;
 }
 
-/* Enrollment */
+/* Enrollment Page*/
 iframe.card-collection {
   border: 0px;
   width: 100%;
   height: 60vh;
+}
+
+/* Login Page */
+.login #header {
+  padding: 0 !important;
+}
+
+.login #branding {
+  flex-direction: column;
+  width: 100%;
+}
+
+.login #container {
+  background: var(--body-bg);
+  border: 1px solid var(--hairline-color);
+  overflow: hidden;
+  width: 28em;
+  min-width: 300px;
+  margin: 100px auto;
+  height: auto;
+}
+
+.login #login-form {
+  display: grid;
+  gap: 1em;
+}
+
+.login .form-row label {
+  display: block;
+  line-height: 2em;
+}
+
+.login .form-row #id_username,
+.login .form-row #id_password {
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login .password-reset-link {
+  text-align: center;
+}
+
+.login .clear {
+  display: none;
+}
+
+/* Login Page: Google SSO Button */
+.login .login-btn-area {
+  width: 100%;
+}
+
+.login .google-login-btn {
+  border: 1px solid var(--bs-primary);
+  background-color: var(--white);
+  height: 100%;
+  border-radius: 4px;
+  padding: 0;
+}
+
+.login .google-login-btn .btn-content {
+  padding: 13.5px 0;
+  border-radius: 4px;
+}
+
+.login .google-btn-logo {
+  padding-right: 20px;
+  background-color: transparent;
+}
+
+.login .google-login-btn:hover {
+  color: var(--white);
+  background-color: var(--bs-primary);
+}
+
+.login .google-login-btn:hover .google-btn-label,
+.login .google-login-btn:hover a {
+  color: var(--bs-white);
+}
+
+.login .google-btn-label {
+  color: var(--bs-primary);
+  width: auto;
+  font-weight: var(--medium-font-weight);
+  font-size: var(--font-size-20px);
 }
