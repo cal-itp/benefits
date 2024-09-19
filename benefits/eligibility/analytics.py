@@ -18,10 +18,10 @@ class EligibilityEvent(core.Event):
 
 
 class SelectedVerifierEvent(EligibilityEvent):
-    """Analytics event representing the user selecting an eligibility verifier."""
+    """Analytics event representing the user selecting an enrollment flow."""
 
-    def __init__(self, request, eligibility_types):
-        super().__init__(request, "selected eligibility verifier", eligibility_types)
+    def __init__(self, request, enrollment_flows):
+        super().__init__(request, "selected enrollment flow", enrollment_flows)
 
 
 class StartedEligibilityEvent(EligibilityEvent):
