@@ -46,7 +46,3 @@ class BenefitsAdminSite(admin.AdminSite):
                 )
 
             return TemplateResponse(request, "admin/agency-dashboard-index.html", context)
-
-
-BenefitsAdminSite.site_header = "Administrator"
-BenefitsAdminSite.site_title = "Cal-ITP Benefits - Administrator"
