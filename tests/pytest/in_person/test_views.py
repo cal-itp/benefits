@@ -305,11 +305,14 @@ def test_enrollment_post_valid_form_reenrollment_error(mocker, admin_client, car
     assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR)
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_flow")
 def test_reenrollment_error(admin_client):
     path = reverse(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR)
 
     response = admin_client.get(path)
 
+    assert response.status_code == 200
     assert response.template_name == "in_person/enrollment/reenrollment_error.html"
 
 

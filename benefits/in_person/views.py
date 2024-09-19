@@ -133,7 +133,11 @@ def enrollment(request):
 
 
 def reenrollment_error(request):
+    """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
     context = {**admin_site.each_context(request)}
+
+    flow = session.flow(request)
+    context["flow_label"] = flow.label
 
     return TemplateResponse(request, "in_person/enrollment/reenrollment_error.html", context)
 
