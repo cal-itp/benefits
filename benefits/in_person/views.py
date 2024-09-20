@@ -97,6 +97,7 @@ def enrollment(request):
                 return redirect(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
 
             case Status.EXCEPTION:
+                sentry_sdk.capture_exception(exception)
                 return redirect(routes.IN_PERSON_SERVER_ERROR)
 
             case Status.REENROLLMENT_ERROR:
