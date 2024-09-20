@@ -22,6 +22,11 @@ def invalid_form_data():
     return {"invalid": "data"}
 
 
+@pytest.fixture
+def mocked_sentry_sdk_module(mocker):
+    return mocker.patch.object(benefits.in_person.views, "sentry_sdk")
+
+
 @pytest.mark.django_db
 @pytest.mark.parametrize("viewname", [routes.IN_PERSON_ELIGIBILITY, routes.IN_PERSON_ENROLLMENT])
 def test_view_not_logged_in(client, viewname):
@@ -112,7 +117,7 @@ def test_token_valid(mocker, admin_client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_system_error(mocker, admin_client):
+def test_token_system_error(mocker, admin_client, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
     mock_error = {"message": "Mock error message"}
@@ -135,6 +140,7 @@ def test_token_system_error(mocker, admin_client):
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -271,7 +277,7 @@ def test_enrollment_post_valid_form_success(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
-def test_enrollment_post_valid_form_system_error(mocker, admin_client, card_tokenize_form_data):
+def test_enrollment_post_valid_form_system_error(mocker, admin_client, card_tokenize_form_data, mocked_sentry_sdk_module):
     mocker.patch("benefits.in_person.views.enroll", return_value=(Status.SYSTEM_ERROR, None))
 
     path = reverse(routes.IN_PERSON_ENROLLMENT)
@@ -279,6 +285,7 @@ def test_enrollment_post_valid_form_system_error(mocker, admin_client, card_toke
 
     assert response.status_code == 302
     assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -330,6 +337,7 @@ def test_system_error(admin_client):
 
     response = admin_client.get(path)
 
+    assert response.status_code == 200
     assert response.template_name == "in_person/enrollment/system_error.html"
 
 

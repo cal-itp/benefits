@@ -93,6 +93,7 @@ def enrollment(request):
                 return redirect(routes.IN_PERSON_ENROLLMENT_SUCCESS)
 
             case Status.SYSTEM_ERROR:
+                sentry_sdk.capture_exception(exception)
                 return redirect(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
 
             case Status.EXCEPTION:
@@ -150,6 +151,7 @@ def retry(request):
 
 
 def system_error(request):
+    """View handler for an enrollment system error."""
     context = {**admin_site.each_context(request)}
 
     return TemplateResponse(request, "in_person/enrollment/system_error.html", context)
