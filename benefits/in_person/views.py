@@ -67,6 +67,7 @@ def token(request):
 
 
 def enrollment(request):
+    """View handler for the in-person enrollment page."""
     # POST back after transit processor form, process card token
     if request.method == "POST":
         form = forms.CardTokenizeSuccessForm(request.POST)
@@ -159,12 +160,14 @@ def system_error(request):
 
 
 def server_error(request):
+    """View handler for errors caused by a misconfiguration or bad request."""
     context = {**admin_site.each_context(request)}
 
     return TemplateResponse(request, "in_person/enrollment/server_error.html", context)
 
 
 def success(request):
+    """View handler for the final success page."""
     context = {**admin_site.each_context(request)}
 
     return TemplateResponse(request, "in_person/enrollment/success.html", context)
