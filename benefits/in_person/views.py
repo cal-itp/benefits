@@ -143,6 +143,7 @@ def reenrollment_error(request):
 
 
 def retry(request):
+    """View handler for card verification failure."""
     context = {**admin_site.each_context(request)}
 
     return TemplateResponse(request, "in_person/enrollment/retry.html", context)

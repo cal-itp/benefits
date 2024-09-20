@@ -321,6 +321,7 @@ def test_retry(admin_client):
 
     response = admin_client.get(path)
 
+    assert response.status_code == 200
     assert response.template_name == "in_person/enrollment/retry.html"
 
 
