@@ -1,7 +1,10 @@
-.github/
-.vscode/
 **/__pycache__/
-.flake8
-.*ignore
+node_modules/
+static/
+.coverage
 *.db
 *.egg-info
+*.log
+*.mo
+.DS_Store
+.env
