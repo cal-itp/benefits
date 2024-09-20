@@ -8,12 +8,12 @@ from benefits.core import analytics as core
 class ReturnedEnrollmentEvent(core.Event):
     """Analytics event representing the end of transit processor enrollment request."""
 
-    def __init__(self, request, status, error=None, payment_group=None):
+    def __init__(self, request, status, error=None, enrollment_group=None):
         super().__init__(request, "returned enrollment")
         if str(status).lower() in ("error", "retry", "success"):
             self.update_event_properties(status=status, error=error)
-        if payment_group is not None:
-            self.update_event_properties(payment_group=payment_group)
+        if enrollment_group is not None:
+            self.update_event_properties(enrollment_group=enrollment_group)
 
 
 class FailedAccessTokenRequestEvent(core.Event):
@@ -35,9 +35,9 @@ def returned_retry(request):
     core.send_event(ReturnedEnrollmentEvent(request, status="retry"))
 
 
-def returned_success(request, payment_group):
+def returned_success(request, enrollment_group):
     """Send the "returned enrollment" analytics event with a success status."""
-    core.send_event(ReturnedEnrollmentEvent(request, status="success", payment_group=payment_group))
+    core.send_event(ReturnedEnrollmentEvent(request, status="success", enrollment_group=enrollment_group))
 
 
 def failed_access_token_request(request, status_code=None):
