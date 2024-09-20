@@ -271,10 +271,10 @@ benefits-->>user: access token
     activate user
 user->>user: click to initiate payment card collection
 user-->>user: display Littlepay overlay
-user-->>analytics: started payment connection
+user-->>analytics: started card tokenization
 user->>littlepay: provides debit or credit card details
 littlepay-->>user: card token
-user-->>analytics: closed payment connection
+user-->>analytics: ended card tokenization
 user->>benefits: POST back card token
     deactivate user
     activate benefits
