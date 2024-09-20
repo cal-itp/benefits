@@ -149,4 +149,6 @@ def server_error(request):
 
 
 def success(request):
-    return TemplateResponse(request, "in_person/enrollment/success.html")
+    context = {**admin_site.each_context(request)}
+
+    return TemplateResponse(request, "in_person/enrollment/success.html", context)
