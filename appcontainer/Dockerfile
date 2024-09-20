@@ -36,8 +36,9 @@ COPY benefits benefits
 # install source as a package
 RUN pip install $(find /build/dist -name benefits*.whl)
 
-# ensure $USER can compile messages in the locale directories
 USER root
+COPY LICENSE LICENSE
+#ensure $USER can compile messages in the locale directories
 RUN chmod -R 777 benefits/locale
 USER $USER
 
