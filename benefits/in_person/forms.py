@@ -28,6 +28,11 @@ class InPersonEligibilityForm(forms.Form):
 
         self.classes = "checkbox-parent"
         flow_field = self.fields["flow"]
+        verified_field = self.fields["verified"]
+
         flow_field.choices = [(f.id, f.label) for f in flows]
-        flow_field.widget.attrs.update({"data-custom-validity": "Please choose a transit benefit."})
+        flow_field.widget.attrs.update({"data-custom-validity": "Please choose an eligibility type."})
+        verified_field.widget.attrs.update(
+            {"data-custom-validity": "Please confirm you have used an agency policy to verify eligibility."}
+        )
         self.use_custom_validity = True
