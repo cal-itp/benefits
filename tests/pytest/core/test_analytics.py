@@ -69,7 +69,6 @@ def test_Event_sets_default_event_properties(app_request, mocker):
 
     assert "path" in update_spy.call_args.kwargs
     assert "transit_agency" in update_spy.call_args.kwargs
-    assert "enrollment_flows" in update_spy.call_args.kwargs
     assert "eligibility_verifier" in update_spy.call_args.kwargs
 
 
@@ -83,8 +82,34 @@ def test_Event_sets_default_user_properties(app_request, mocker):
     assert "referring_domain" in update_spy.call_args.kwargs
     assert "user_agent" in update_spy.call_args.kwargs
     assert "transit_agency" in update_spy.call_args.kwargs
-    assert "enrollment_flows" in update_spy.call_args.kwargs
     assert "eligibility_verifier" in update_spy.call_args.kwargs
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_flow")
+def test_Event_calls_update_enrollment_flows(app_request, mocker, model_EnrollmentFlow):
+    update_spy = mocker.spy(benefits.core.analytics.Event, "update_enrollment_flows")
+
+    Event(app_request, "event_type")
+
+    assert model_EnrollmentFlow in update_spy.call_args.args
+
+
+@pytest.mark.django_db
+def test_Event_update_enrollment_flows(app_request, mocker, model_EnrollmentFlow):
+    event = Event(app_request, "event_type")
+
+    assert "enrollment_flows" not in event.event_properties
+    assert "enrollment_flows" not in event.user_properties
+
+    event_spy = mocker.spy(benefits.core.analytics.Event, "update_event_properties")
+    user_spy = mocker.spy(benefits.core.analytics.Event, "update_user_properties")
+    event.update_enrollment_flows(model_EnrollmentFlow)
+
+    event_spy.assert_called_once()
+    user_spy.assert_called_once()
+    assert event.event_properties["enrollment_flows"] == [model_EnrollmentFlow.system_name]
+    assert event.user_properties["enrollment_flows"] == [model_EnrollmentFlow.system_name]
 
 
 @pytest.mark.django_db

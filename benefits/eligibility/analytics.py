@@ -2,67 +2,62 @@
 The eligibility application: analytics implementation.
 """
 
-from benefits.core import analytics as core
+from benefits.core import analytics as core, models
 
 
 class EligibilityEvent(core.Event):
     """Base analytics event for eligibility verification."""
 
-    def __init__(self, request, event_type, flow_name):
+    def __init__(self, request, event_type, flow: models.EnrollmentFlow):
         super().__init__(request, event_type)
-        # pass a (converted from string to list) flow_name to preserve analytics reporting
-        enrollment_flows = [flow_name]
-        # overwrite core.Event enrollment_flows
-        self.update_event_properties(enrollment_flows=enrollment_flows)
-        self.update_user_properties(enrollment_flows=enrollment_flows)
+        # overwrite core.Event enrollment flow
+        self.update_enrollment_flows(flow)
 
 
 class SelectedVerifierEvent(EligibilityEvent):
     """Analytics event representing the user selecting an enrollment flow."""
 
-    def __init__(self, request, enrollment_flows):
-        super().__init__(request, "selected enrollment flow", enrollment_flows)
+    def __init__(self, request, flow: models.EnrollmentFlow):
+        super().__init__(request, "selected enrollment flow", flow)
 
 
 class StartedEligibilityEvent(EligibilityEvent):
     """Analytics event representing the beginning of an eligibility verification check."""
 
-    def __init__(self, request, enrollment_flows):
-        super().__init__(request, "started eligibility", enrollment_flows)
+    def __init__(self, request, flow: models.EnrollmentFlow):
+        super().__init__(request, "started eligibility", flow)
 
 
 class ReturnedEligibilityEvent(EligibilityEvent):
     """Analytics event representing the end of an eligibility verification check."""
 
-    def __init__(self, request, enrollment_flows, status, error=None):
-        super().__init__(request, "returned eligibility", enrollment_flows)
+    def __init__(self, request, flow: models.EnrollmentFlow, status, error=None):
+        super().__init__(request, "returned eligibility", flow)
         status = str(status).lower()
         if status in ("error", "fail", "success"):
             self.update_event_properties(status=status, error=error)
-        if status == "success":
-            self.update_user_properties(enrollment_flows=enrollment_flows)
 
 
-def selected_verifier(request, enrollment_flows):
+def selected_verifier(request, flow: models.EnrollmentFlow):
     """Send the "selected eligibility verifier" analytics event."""
-    core.send_event(SelectedVerifierEvent(request, enrollment_flows))
+    core.send_event(SelectedVerifierEvent(request, flow))
 
 
-def started_eligibility(request, enrollment_flows):
+def started_eligibility(request, flow: models.EnrollmentFlow):
     """Send the "started eligibility" analytics event."""
-    core.send_event(StartedEligibilityEvent(request, enrollment_flows))
+    core.send_event(StartedEligibilityEvent(request, flow))
 
 
-def returned_error(request, enrollment_flows, error):
+def returned_error(request, flow: models.EnrollmentFlow, error):
     """Send the "returned eligibility" analytics event with an error status."""
-    core.send_event(ReturnedEligibilityEvent(request, enrollment_flows, status="error", error=error))
+    core.send_event(ReturnedEligibilityEvent(request, flow, status="error", error=error))
 
 
-def returned_fail(request, enrollment_flows):
+def returned_fail(request, flow: models.EnrollmentFlow):
     """Send the "returned eligibility" analytics event with a fail status."""
-    core.send_event(ReturnedEligibilityEvent(request, enrollment_flows, status="fail"))
+    core.send_event(ReturnedEligibilityEvent(request, flow, status="fail"))
 
 
-def returned_success(request, enrollment_flows):
+def returned_success(request, flow: models.EnrollmentFlow):
     """Send the "returned eligibility" analytics event with a success status."""
-    core.send_event(ReturnedEligibilityEvent(request, enrollment_flows, status="success"))
+    core.send_event(ReturnedEligibilityEvent(request, flow, status="success"))

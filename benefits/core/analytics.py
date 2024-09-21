@@ -13,7 +13,7 @@ from django.conf import settings
 import requests
 
 from benefits import VERSION
-from . import session
+from . import models, session
 
 
 logger = logging.getLogger(__name__)
@@ -46,12 +46,10 @@ class Event:
         agency_name = agency.long_name if agency else None
         flow = session.flow(request)
         verifier_name = flow.eligibility_verifier if flow else None
-        enrollment_flows = [flow.system_name] if flow else None
 
         self.update_event_properties(
             path=request.path,
             transit_agency=agency_name,
-            enrollment_flows=enrollment_flows,
             eligibility_verifier=verifier_name,
         )
 
@@ -66,9 +64,11 @@ class Event:
             referring_domain=refdom,
             user_agent=uagent,
             transit_agency=agency_name,
-            enrollment_flows=enrollment_flows,
             eligibility_verifier=verifier_name,
         )
+
+        if flow:
+            self.update_enrollment_flows(flow)
 
         # event is initialized, consume next counter
         self.event_id = next(Event._counter)
@@ -83,6 +83,15 @@ class Event:
     def update_user_properties(self, **kwargs):
         """Merge kwargs into the self.user_properties dict."""
         self.user_properties.update(kwargs)
+
+    def update_enrollment_flows(self, flow: models.EnrollmentFlow):
+        enrollment_flows = [flow.system_name]
+        self.update_event_properties(
+            enrollment_flows=enrollment_flows,
+        )
+        self.update_user_properties(
+            enrollment_flows=enrollment_flows,
+        )
 
 
 class ViewedPageEvent(Event):

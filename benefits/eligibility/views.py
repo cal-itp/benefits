@@ -38,7 +38,7 @@ def index(request):
             flow = EnrollmentFlow.objects.get(id=flow_id)
             session.update(request, flow=flow)
 
-            analytics.selected_verifier(request, flow.system_name)
+            analytics.selected_verifier(request, flow)
 
             eligibility_start = reverse(routes.ELIGIBILITY_START)
             response = redirect(eligibility_start)
@@ -83,7 +83,7 @@ def confirm(request):
 
     # GET for OAuth verification
     if request.method == "GET" and flow.uses_claims_verification:
-        analytics.started_eligibility(request, flow.system_name)
+        analytics.started_eligibility(request, flow)
 
         is_verified = verify.eligibility_from_oauth(flow, session.oauth_claim(request), agency)
 
@@ -103,7 +103,7 @@ def confirm(request):
         return TemplateResponse(request, TEMPLATE_CONFIRM, context)
     # POST form submission, process form data, make Eligibility Verification API call
     elif request.method == "POST":
-        analytics.started_eligibility(request, flow.system_name)
+        analytics.started_eligibility(request, flow)
 
         form = flow.eligibility_form_instance(data=request.POST)
         # form was not valid, allow for correction/resubmission
@@ -118,7 +118,7 @@ def confirm(request):
 
         # form was not valid, allow for correction/resubmission
         if is_verified is None:
-            analytics.returned_error(request, flow.system_name, form.errors)
+            analytics.returned_error(request, flow, form.errors)
             context["form"] = form
             return TemplateResponse(request, TEMPLATE_CONFIRM, context)
         # no type was verified
@@ -135,7 +135,7 @@ def verified(request):
     """View handler for the verified eligibility page."""
 
     flow = session.flow(request)
-    analytics.returned_success(request, flow.system_name)
+    analytics.returned_success(request, flow)
 
     session.update(request, eligible=True)
 
@@ -149,6 +149,6 @@ def unverified(request):
 
     flow = session.flow(request)
 
-    analytics.returned_fail(request, flow.system_name)
+    analytics.returned_fail(request, flow)
 
     return TemplateResponse(request, flow.eligibility_unverified_template)
