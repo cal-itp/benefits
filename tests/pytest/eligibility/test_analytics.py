@@ -4,12 +4,14 @@ from benefits.eligibility.analytics import EligibilityEvent
 
 
 @pytest.mark.django_db
-def test_EligibilityEvent_overwrites_eligibility_types(app_request, mocker, model_EnrollmentFlow):
-    key, type1, type2 = "eligibility_types", "type1", "type2"
-    model_EnrollmentFlow.system_name = type1
-    mocker.patch("benefits.core.analytics.session.flow", return_value=model_EnrollmentFlow)
+def test_EligibilityEvent_overwrites_enrollment_flows(app_request, mocker, model_EnrollmentFlow):
+    key, type1, type2 = "enrollment_flows", "type1", "type2"
+    mock_flow = mocker.Mock()
+    mock_flow.system_name = type1
+    mocker.patch("benefits.core.analytics.session.flow", return_value=mock_flow)
 
-    event = EligibilityEvent(app_request, "event_type", type2)
+    model_EnrollmentFlow.system_name = type2
+    event = EligibilityEvent(app_request, "event_type", model_EnrollmentFlow)
 
     # event_properties should have been overwritten
     assert key in event.event_properties

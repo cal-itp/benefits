@@ -2,67 +2,62 @@
 The eligibility application: analytics implementation.
 """
 
-from benefits.core import analytics as core
+from benefits.core import analytics as core, models
 
 
 class EligibilityEvent(core.Event):
     """Base analytics event for eligibility verification."""
 
-    def __init__(self, request, event_type, flow_name):
+    def __init__(self, request, event_type, flow: models.EnrollmentFlow):
         super().__init__(request, event_type)
-        # pass a (converted from string to list) flow_name to preserve analytics reporting
-        eligibility_types = [flow_name]
-        # overwrite core.Event eligibility_types
-        self.update_event_properties(eligibility_types=eligibility_types)
-        self.update_user_properties(eligibility_types=eligibility_types)
+        # overwrite core.Event enrollment flow
+        self.update_enrollment_flows(flow)
 
 
 class SelectedVerifierEvent(EligibilityEvent):
-    """Analytics event representing the user selecting an eligibility verifier."""
+    """Analytics event representing the user selecting an enrollment flow."""
 
-    def __init__(self, request, eligibility_types):
-        super().__init__(request, "selected eligibility verifier", eligibility_types)
+    def __init__(self, request, flow: models.EnrollmentFlow):
+        super().__init__(request, "selected enrollment flow", flow)
 
 
 class StartedEligibilityEvent(EligibilityEvent):
     """Analytics event representing the beginning of an eligibility verification check."""
 
-    def __init__(self, request, eligibility_types):
-        super().__init__(request, "started eligibility", eligibility_types)
+    def __init__(self, request, flow: models.EnrollmentFlow):
+        super().__init__(request, "started eligibility", flow)
 
 
 class ReturnedEligibilityEvent(EligibilityEvent):
     """Analytics event representing the end of an eligibility verification check."""
 
-    def __init__(self, request, eligibility_types, status, error=None):
-        super().__init__(request, "returned eligibility", eligibility_types)
+    def __init__(self, request, flow: models.EnrollmentFlow, status, error=None):
+        super().__init__(request, "returned eligibility", flow)
         status = str(status).lower()
         if status in ("error", "fail", "success"):
             self.update_event_properties(status=status, error=error)
-        if status == "success":
-            self.update_user_properties(eligibility_types=eligibility_types)
 
 
-def selected_verifier(request, eligibility_types):
+def selected_verifier(request, flow: models.EnrollmentFlow):
     """Send the "selected eligibility verifier" analytics event."""
-    core.send_event(SelectedVerifierEvent(request, eligibility_types))
+    core.send_event(SelectedVerifierEvent(request, flow))
 
 
-def started_eligibility(request, eligibility_types):
+def started_eligibility(request, flow: models.EnrollmentFlow):
     """Send the "started eligibility" analytics event."""
-    core.send_event(StartedEligibilityEvent(request, eligibility_types))
+    core.send_event(StartedEligibilityEvent(request, flow))
 
 
-def returned_error(request, eligibility_types, error):
+def returned_error(request, flow: models.EnrollmentFlow, error):
     """Send the "returned eligibility" analytics event with an error status."""
-    core.send_event(ReturnedEligibilityEvent(request, eligibility_types, status="error", error=error))
+    core.send_event(ReturnedEligibilityEvent(request, flow, status="error", error=error))
 
 
-def returned_fail(request, eligibility_types):
+def returned_fail(request, flow: models.EnrollmentFlow):
     """Send the "returned eligibility" analytics event with a fail status."""
-    core.send_event(ReturnedEligibilityEvent(request, eligibility_types, status="fail"))
+    core.send_event(ReturnedEligibilityEvent(request, flow, status="fail"))
 
 
-def returned_success(request, eligibility_types):
+def returned_success(request, flow: models.EnrollmentFlow):
     """Send the "returned eligibility" analytics event with a success status."""
-    core.send_event(ReturnedEligibilityEvent(request, eligibility_types, status="success"))
+    core.send_event(ReturnedEligibilityEvent(request, flow, status="success"))

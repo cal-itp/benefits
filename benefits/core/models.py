@@ -240,6 +240,17 @@ class EnrollmentFlow(models.Model):
         """True if this flow verifies via the claims provider and has a scope and claim. False otherwise."""
         return self.claims_provider is not None and bool(self.claims_scope) and bool(self.claims_claim)
 
+    @property
+    def eligibility_verifier(self):
+        """A str representing the entity that verifies eligibility for this flow.
+
+        Either the client name of the flow's claims provider, or the URL to the eligibility API.
+        """
+        if self.uses_claims_verification:
+            return self.claims_provider.client_name
+        else:
+            return self.eligibility_api_url
+
     def eligibility_form_instance(self, *args, **kwargs):
         """Return an instance of this flow's EligibilityForm, or None."""
         if not bool(self.eligibility_form_class):

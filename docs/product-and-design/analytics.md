@@ -40,14 +40,14 @@ Read more about each property on the [Amplitude documentation](https://help.ampl
 
 The following custom user attributes are collected when the user performs specific actions on the application, like selecing an eligibility type or transit agency:
 
-| User property          | Description                        | Example value(s)                                                                                                  |
-| ---------------------- | ---------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `eligibility_types`    | Eligibility type chosen by user    | `[veteran]`                                                                                                       |
-| `eligibility_verifier` | Eligibility verifier used by user  | `VA.gov - Veteran (MST)`                                                                                          |
-| `referrer`             | URL that the event came from       | `https://benefits.calitp.org/help/`                                                                               |
-| `referring_domain`     | Domain that the event came from    | `benefits.calitp.org`                                                                                             |
-| `transit_agency`       | Agency chosen by the user          | `Monterey-Salinas Transit`                                                                                        |
-| `user_agent`           | User's browser agent               | `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36` |
+| User property          | Description                          | Example value(s)                                                                                                  |
+| ---------------------- | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `enrollment_flows`     | Enrollment flows chosen by user      | `[veteran]`                                                                                                       |
+| `eligibility_verifier` | How eligibility for flow is verified | `cdt-logingov`                                                                                                    |
+| `referrer`             | URL that the event came from         | `https://benefits.calitp.org/help/`                                                                               |
+| `referring_domain`     | Domain that the event came from      | `benefits.calitp.org`                                                                                             |
+| `transit_agency`       | Agency chosen by the user            | `Monterey-Salinas Transit`                                                                                        |
+| `user_agent`           | User's browser agent                 | `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36` |
 
 ## Event information collected
 
@@ -79,9 +79,9 @@ Read more on each of these events on the [Amplitude event documentation for Bene
 
 These events track the progress of a user choosing an eligibility verifier and completing eligibility verification.
 
-- returned eligibility
-- selected eligibility verifier
+- selected enrollment flow
 - started eligibility
+- returned eligibility
 
 Read more on each of these events on the [Amplitude event documentation for Benefits, filtered by Eligibility](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=id%3D1702329975970%26group%3Dcategories%26type%3DString%26operator%3Dis%26values%255B0%255D%3Deligibility%26dateValue%255Btype%255D%3DSINCE).
 
