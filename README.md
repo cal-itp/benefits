@@ -13,7 +13,7 @@
 | benefits/core/apps.py                |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/core/context\_processors.py |       41 |        2 |        8 |        1 |     94% |    71, 96 |
 | benefits/core/middleware.py          |       91 |        3 |       22 |        2 |     96% |58-59, 78->83, 146 |
-| benefits/core/models.py              |      217 |        3 |       62 |        1 |     99% |76-77, 231 |
+| benefits/core/models.py              |      220 |        3 |       62 |        1 |     99% |77-78, 250 |
 | benefits/core/recaptcha.py           |       13 |        5 |        4 |        1 |     53% |     26-32 |
 | benefits/core/session.py             |      132 |        1 |       34 |        0 |     99% |        52 |
 | benefits/core/urls.py                |       25 |        0 |        2 |        0 |    100% |           |
@@ -57,7 +57,7 @@
 | benefits/settings.py                 |      126 |        6 |       22 |        8 |     91% |102, 123->128, 139->142, 158, 312, 314, 329, 341 |
 | benefits/urls.py                     |       22 |        7 |        2 |        1 |     67% |     35-49 |
 | benefits/wsgi.py                     |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                            **TOTAL** | **1961** |   **97** |  **564** |   **40** | **94%** |           |
+|                            **TOTAL** | **1964** |   **97** |  **564** |   **40** | **94%** |           |
 
 
 ## Setup coverage badge
