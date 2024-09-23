@@ -61,7 +61,8 @@
       "selection_label_template": "eligibility/includes/selection-label--senior.html",
       "eligibility_start_template": "eligibility/start--senior.html",
       "claims_scope": "verify:senior",
-      "claims_claim": "senior"
+      "claims_claim": "senior",
+      "supported_enrollment_methods": ["digital", "in_person"]
     }
   },
   {
@@ -77,7 +78,8 @@
       "selection_label_template": "eligibility/includes/selection-label--veteran.html",
       "eligibility_start_template": "eligibility/start--veteran.html",
       "claims_scope": "verify:veteran",
-      "claims_claim": "veteran"
+      "claims_claim": "veteran",
+      "supported_enrollment_methods": ["digital", "in_person"]
     }
   },
   {
@@ -101,7 +103,8 @@
       "eligibility_start_template": "eligibility/start--cst-agency-card.html",
       "eligibility_form_class": "benefits.eligibility.forms.CSTAgencyCard",
       "eligibility_unverified_template": "eligibility/unverified--cst-agency-card.html",
-      "help_template": "core/includes/help--cst-agency-card.html"
+      "help_template": "core/includes/help--cst-agency-card.html",
+      "supported_enrollment_methods": ["digital", "in_person"]
     }
   },
   {
@@ -122,7 +125,8 @@
       "eligibility_start_template": "eligibility/start--calfresh.html",
       "help_template": "core/includes/help--calfresh.html",
       "claims_scope": "verify:calfresh",
-      "claims_claim": "calfresh"
+      "claims_claim": "calfresh",
+      "supported_enrollment_methods": ["digital", "in_person"]
     }
   },
   {
@@ -138,7 +142,35 @@
       "selection_label_template": "eligibility/includes/selection-label--medicare.html",
       "eligibility_start_template": "eligibility/start--medicare.html",
       "claims_scope": "verify:medicare",
-      "claims_claim": "medicare"
+      "claims_claim": "medicare",
+      "supported_enrollment_methods": ["digital", "in_person"]
+    }
+  },
+  {
+    "model": "core.enrollmentflow",
+    "pk": 6,
+    "fields": {
+      "system_name": "in_person_only",
+      "label": "(CST) In-person Only",
+      "group_id": "group123",
+      "supported_enrollment_methods": ["in_person"]
+    }
+  },
+  {
+    "model": "core.enrollmentflow",
+    "pk": 7,
+    "fields": {
+      "system_name": "digital_only",
+      "label": "(CST) Digital Only",
+      "group_id": "group123",
+      "enrollment_success_template": "enrollment/success--cst.html",
+      "display_order": 5,
+      "claims_provider": 1,
+      "selection_label_template": "eligibility/includes/selection-label--senior.html",
+      "eligibility_start_template": "eligibility/start--senior.html",
+      "claims_scope": "verify:senior",
+      "claims_claim": "senior",
+      "supported_enrollment_methods": ["digital"]
     }
   },
   {
