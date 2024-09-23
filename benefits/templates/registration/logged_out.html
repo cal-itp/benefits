@@ -1,0 +1,35 @@
+{% extends "admin/agency-base.html" %}
+{% load static %}
+
+{% block title %}
+    Logged out | Cal-ITP Benefits Administrator
+{% endblock title %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static "admin/css/login.css" %}">
+{% endblock extrastyle %}
+
+{% block bodyclass %}
+    {{ block.super }} login
+{% endblock bodyclass %}
+
+{% block branding %}
+    <div class="d-flex justify-content-center w-100 bg-primary">
+        <img class="my-3" src="{% static "img/logo-lg.svg" %}" width="220" height="50" alt="California Integrated Travel Project: Benefits logo (large)" />
+    </div>
+
+    <div id="site-name">
+        <h1 class="text-center text-white fs-3 py-3 m-0">Administrator</h1>
+    </div>
+{% endblock branding %}
+
+{% block content %}
+
+    <div id="content-main">
+        <p class="text-center mt-4">You have logged out successfully.</p>
+
+        <a class="btn btn-lg btn-outline-primary d-block my-5" href="{% url 'admin:index' %}">Log in again</a>
+    </div>
+
+{% endblock content %}
