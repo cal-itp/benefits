@@ -1,0 +1,20 @@
+{% extends "error-base.html" %}
+
+{% block error-message %}
+    <h3 class="fw-bold h4">Card not found.</h3>
+
+    <p class="my-4">
+        The card information may not have been entered correctly. Please check the details on your card and try again.
+    </p>
+{% endblock error-message %}
+
+{% block cta-buttons %}
+    <div class="col-6">
+        {% url routes.ADMIN_INDEX as url_cancel %}
+        <a href="{{ url_cancel }}" class="btn btn-lg btn-outline-primary d-block">Cancel</a>
+    </div>
+    <div class="col-6">
+        {% url routes.IN_PERSON_ENROLLMENT as url_try_again %}
+        <a href="{{ url_try_again }}" class="btn btn-lg btn-primary d-block">Try again</a>
+    </div>
+{% endblock cta-buttons %}

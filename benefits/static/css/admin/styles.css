@@ -125,6 +125,19 @@ iframe.card-collection {
   min-height: 60vh;
 }
 
+/* Error Pages */
+.error-icon {
+  background-color: var(--bs-danger);
+  mask: url("../../../static/img/icon/exclamation-circle-fill.svg") no-repeat;
+  -webkit-mask: url("../../../static/img/icon/exclamation-circle-fill.svg")
+    no-repeat;
+
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  margin-right: calc(12rem / 16);
+}
+
 /* Login Page */
 .login #header {
   padding: 0 !important;

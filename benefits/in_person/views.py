@@ -67,6 +67,7 @@ def token(request):
 
 
 def enrollment(request):
+    """View handler for the in-person enrollment page."""
     # POST back after transit processor form, process card token
     if request.method == "POST":
         form = forms.CardTokenizeSuccessForm(request.POST)
@@ -93,9 +94,11 @@ def enrollment(request):
                 return redirect(routes.IN_PERSON_ENROLLMENT_SUCCESS)
 
             case Status.SYSTEM_ERROR:
+                sentry_sdk.capture_exception(exception)
                 return redirect(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
 
             case Status.EXCEPTION:
+                sentry_sdk.capture_exception(exception)
                 return redirect(routes.IN_PERSON_SERVER_ERROR)
 
             case Status.REENROLLMENT_ERROR:
@@ -133,22 +136,38 @@ def enrollment(request):
 
 
 def reenrollment_error(request):
-    return TemplateResponse(request, "in_person/enrollment/reenrollment_error.html")
+    """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
+    context = {**admin_site.each_context(request)}
+
+    flow = session.flow(request)
+    context["flow_label"] = flow.label
+
+    return TemplateResponse(request, "in_person/enrollment/reenrollment_error.html", context)
 
 
 def retry(request):
-    return TemplateResponse(request, "in_person/enrollment/retry.html")
+    """View handler for card verification failure."""
+    context = {**admin_site.each_context(request)}
+
+    return TemplateResponse(request, "in_person/enrollment/retry.html", context)
 
 
 def system_error(request):
-    return TemplateResponse(request, "in_person/enrollment/system_error.html")
+    """View handler for an enrollment system error."""
+    context = {**admin_site.each_context(request)}
+
+    return TemplateResponse(request, "in_person/enrollment/system_error.html", context)
 
 
 def server_error(request):
-    return TemplateResponse(request, "in_person/enrollment/server_error.html")
+    """View handler for errors caused by a misconfiguration or bad request."""
+    context = {**admin_site.each_context(request)}
+
+    return TemplateResponse(request, "in_person/enrollment/server_error.html", context)
 
 
 def success(request):
+    """View handler for the final success page."""
     context = {**admin_site.each_context(request)}
 
     return TemplateResponse(request, "in_person/enrollment/success.html", context)
