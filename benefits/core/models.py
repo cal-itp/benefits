@@ -228,7 +228,7 @@ class EnrollmentFlow(models.Model):
     enrollment_success_template = models.TextField(
         default="enrollment/success.html", help_text="Template for a successful enrollment associated with the enrollment flow"
     )
-    supported_methods = MultiSelectField(
+    supported_enrollment_methods = MultiSelectField(
         choices=SUPPORTED_METHODS,
         max_choices=2,
         max_length=50,

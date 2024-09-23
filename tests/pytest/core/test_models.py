@@ -187,10 +187,10 @@ def test_EnrollmentFlow_enrollment_success_template():
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_supported_methods():
+def test_EnrollmentFlow_supported_enrollment_methods():
     new_flow = EnrollmentFlow.objects.create()
 
-    assert new_flow.supported_methods == ["digital", "in_person"]
+    assert new_flow.supported_enrollment_methods == ["digital", "in_person"]
 
 
 class SampleFormClass:

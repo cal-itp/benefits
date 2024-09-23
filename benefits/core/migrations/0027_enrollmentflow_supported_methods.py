@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name="enrollmentflow",
-            name="supported_methods",
+            name="supported_enrollment_methods",
             field=multiselectfield.db.fields.MultiSelectField(
                 choices=[("digital", "Digital"), ("in_person", "In-person")],
                 default=["digital", "in_person"],
