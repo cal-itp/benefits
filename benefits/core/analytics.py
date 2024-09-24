@@ -25,7 +25,7 @@ class Event:
     _counter = itertools.count()
     _domain_re = re.compile(r"^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)", re.IGNORECASE)
 
-    def __init__(self, request, event_type, **kwargs):
+    def __init__(self, request, event_type, enrollment_method=models.EnrollmentMethods.DIGITAL, **kwargs):
         self.app_version = VERSION
         # device_id is generated based on the user_id, and both are set explicitly (per session)
         self.device_id = session.did(request)
@@ -51,6 +51,7 @@ class Event:
             path=request.path,
             transit_agency=agency_name,
             eligibility_verifier=verifier_name,
+            enrollment_method=enrollment_method,
         )
 
         uagent = request.headers.get("user-agent")
@@ -65,6 +66,7 @@ class Event:
             user_agent=uagent,
             transit_agency=agency_name,
             eligibility_verifier=verifier_name,
+            enrollment_method=enrollment_method,
         )
 
         if flow:
