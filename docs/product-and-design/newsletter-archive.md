@@ -16,9 +16,8 @@ If you’re interested in receiving this update delivered directly to your email
 
 - [The August Update](http://5519226.hs-sites.com/cal-itp-benefits-the-august-update)
 
+- [The September Update](http://5519226.hs-sites.com/cal-itp-benefits-the-september-update)
 <!--
-- [The September Update]()
-
 - [The October Update]()
 
 - [The November Update]()
