@@ -77,7 +77,7 @@ Read more on each of these events on the [Amplitude event documentation for Bene
 
 ### Eligibility events
 
-These events track the progress of a user choosing an eligibility verifier and completing eligibility verification.
+These events track the progress of a user choosing an enrollment flow and completing eligibility verification.
 
 - selected enrollment flow
 - started eligibility
@@ -100,5 +100,5 @@ Read more on each of these events on the [Amplitude event documentation for Bene
 Various key metrics are collected and analyzed, including:
 
 - **Number of users who successfully completed authentication**: Users who `started sign in`, `finished sign in`
-- **Number of users who successfully verified eligibility**: Users who completed the above and `selected eligibility verifier`, `started eligibility`, `returned eligibility` with a status of `True`
+- **Number of users who successfully verified eligibility**: Users who completed the above and `selected enrollment flow`, `started eligibility`, `returned eligibility` with a status of `True`
 - **Numbers of users who successfully completed enrollment**: Users who completed all of the above and `started card tokenization`, `ended card tokenization` and `returned enrollment` with a status of `Success`
