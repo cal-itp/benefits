@@ -38,7 +38,7 @@ def index(request):
             flow = EnrollmentFlow.objects.get(id=flow_id)
             session.update(request, flow=flow)
 
-            analytics.selected_verifier(request, flow)
+            analytics.selected_flow(request, flow)
 
             eligibility_start = reverse(routes.ELIGIBILITY_START)
             response = redirect(eligibility_start)

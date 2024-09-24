@@ -147,7 +147,7 @@ def test_index_post_valid_form(client, model_EnrollmentFlow, mocked_session_upda
     assert response.status_code == 302
     assert response.url == reverse(routes.ELIGIBILITY_START)
     assert mocked_session_update.call_args.kwargs["flow"] == model_EnrollmentFlow
-    mocked_analytics_module.selected_verifier.assert_called_once()
+    mocked_analytics_module.selected_flow.assert_called_once()
 
 
 @pytest.mark.django_db
