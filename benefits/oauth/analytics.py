@@ -10,9 +10,9 @@ class OAuthEvent(core.Event):
 
     def __init__(self, request, event_type):
         super().__init__(request, event_type)
-        verifier = session.flow(request)
-        if verifier and verifier.uses_claims_verification:
-            self.update_event_properties(auth_provider=verifier.claims_provider.client_name)
+        flow = session.flow(request)
+        if flow and flow.uses_claims_verification:
+            self.update_event_properties(claims_provider=flow.claims_provider.client_name)
 
 
 class OAuthErrorEvent(OAuthEvent):
