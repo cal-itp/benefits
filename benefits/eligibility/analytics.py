@@ -8,8 +8,8 @@ from benefits.core import analytics as core, models
 class EligibilityEvent(core.Event):
     """Base analytics event for eligibility verification."""
 
-    def __init__(self, request, event_type, flow: models.EnrollmentFlow):
-        super().__init__(request, event_type)
+    def __init__(self, request, event_type, flow: models.EnrollmentFlow, enrollment_method=models.EnrollmentMethods.DIGITAL):
+        super().__init__(request, event_type, enrollment_method)
         # overwrite core.Event enrollment flow
         self.update_enrollment_flows(flow)
 
@@ -24,15 +24,17 @@ class SelectedVerifierEvent(EligibilityEvent):
 class StartedEligibilityEvent(EligibilityEvent):
     """Analytics event representing the beginning of an eligibility verification check."""
 
-    def __init__(self, request, flow: models.EnrollmentFlow):
-        super().__init__(request, "started eligibility", flow)
+    def __init__(self, request, flow: models.EnrollmentFlow, enrollment_method=models.EnrollmentMethods.DIGITAL):
+        super().__init__(request, "started eligibility", flow, enrollment_method)
 
 
 class ReturnedEligibilityEvent(EligibilityEvent):
     """Analytics event representing the end of an eligibility verification check."""
 
-    def __init__(self, request, flow: models.EnrollmentFlow, status, error=None):
-        super().__init__(request, "returned eligibility", flow)
+    def __init__(
+        self, request, flow: models.EnrollmentFlow, status, error=None, enrollment_method=models.EnrollmentMethods.DIGITAL
+    ):
+        super().__init__(request, "returned eligibility", flow, enrollment_method)
         status = str(status).lower()
         if status in ("error", "fail", "success"):
             self.update_event_properties(status=status, error=error)
@@ -43,9 +45,9 @@ def selected_verifier(request, flow: models.EnrollmentFlow):
     core.send_event(SelectedVerifierEvent(request, flow))
 
 
-def started_eligibility(request, flow: models.EnrollmentFlow):
+def started_eligibility(request, flow: models.EnrollmentFlow, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
     """Send the "started eligibility" analytics event."""
-    core.send_event(StartedEligibilityEvent(request, flow))
+    core.send_event(StartedEligibilityEvent(request, flow, enrollment_method=enrollment_method))
 
 
 def returned_error(request, flow: models.EnrollmentFlow, error):
@@ -58,6 +60,6 @@ def returned_fail(request, flow: models.EnrollmentFlow):
     core.send_event(ReturnedEligibilityEvent(request, flow, status="fail"))
 
 
-def returned_success(request, flow: models.EnrollmentFlow):
+def returned_success(request, flow: models.EnrollmentFlow, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
     """Send the "returned eligibility" analytics event with a success status."""
-    core.send_event(ReturnedEligibilityEvent(request, flow, status="success"))
+    core.send_event(ReturnedEligibilityEvent(request, flow, enrollment_method=enrollment_method, status="success"))

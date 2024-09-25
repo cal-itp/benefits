@@ -10,6 +10,7 @@ import sentry_sdk
 
 from benefits.routes import routes
 from benefits.core import models, session
+from benefits.eligibility import analytics as eligibility_analytics
 from benefits.enrollment.enrollment import Status, request_card_tokenization_access, enroll
 
 from benefits.in_person import forms
@@ -34,6 +35,7 @@ def eligibility(request):
             flow_id = form.cleaned_data.get("flow")
             flow = models.EnrollmentFlow.objects.get(id=flow_id)
             session.update(request, flow=flow)
+            eligibility_analytics.started_eligibility(request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
 
             in_person_enrollment = reverse(routes.IN_PERSON_ENROLLMENT)
             response = redirect(in_person_enrollment)
@@ -78,13 +80,14 @@ def enrollment(request):
         if not form.is_valid():
             raise Exception("Invalid card token form")
 
+        flow = session.flow(request)
+        eligibility_analytics.returned_success(request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
         card_token = form.cleaned_data.get("card_token")
         status, exception = enroll(request, card_token)
 
         match (status):
             case Status.SUCCESS:
                 agency = session.agency(request)
-                flow = session.flow(request)
                 expiry = session.enrollment_expiry(request)
                 verified_by = f"{request.user.first_name} {request.user.last_name}"
                 event = models.EnrollmentEvent.objects.create(
