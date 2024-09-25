@@ -35,7 +35,7 @@
   {% endcomment %}
   {% translate "Please wait..." as loading_text %}
   <script nonce="{{ request.csp_nonce }}">
-      var startedEvent = "started payment connection", closedEvent = "closed payment connection";
+      var startedEvent = "started card tokenization", closedEvent = "ended card tokenization";
 
       $.ajax({ dataType: "script", attrs: { nonce: "{{ request.csp_nonce }}"}, url: "{{ card_tokenize_url }}" })
           .done(function() {
