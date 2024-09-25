@@ -19,13 +19,9 @@
                     <iframe class="card-collection" name="card-collection-iframe"></iframe>
                 </div>
                 <div class="row d-flex justify-content-start p-3 pt-8">
-                    <div class="col-6">
+                    <div class="col-12">
                         {% url routes.ADMIN_INDEX as url_cancel %}
                         <a href="{{ url_cancel }}" class="btn btn-lg btn-outline-primary d-block">Cancel</a>
-                    </div>
-                    <div class="col-6">
-                        {% url routes.IN_PERSON_ELIGIBILITY as url_go_back %}
-                        <a href="{{ url_go_back }}" class="btn btn-lg btn-primary d-block">Go back</a>
                     </div>
                 </div>
             </div>
