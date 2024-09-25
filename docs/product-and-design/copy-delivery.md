@@ -28,7 +28,7 @@ The human-readable version of the English and Spanish translation strings for th
 
 Ditto is our copy management system for Benefits and the Cal-ITP sites. It syncs directly with Figma and uses many of the same conventions found in Figma, including components and variables (therefore, it is important to be specific when referring to a Ditto component or a Figma variable).
 
-The Benefits project within Ditto is fully synced with Figma. Product and design may use either Figma or Ditto as their source of truth on copy, though it is recommended that Developers use Figma for all final copy. Compiler is considering using the Github integration that comes with Ditto, but has not formally integrated Ditto into their workflow as of yet.
+The Benefits project within Ditto is fully synced with Figma. Product and design may use either Figma or Ditto as their source of truth on copy, though it is recommended that Developers use Figma for all final copy. Compiler is considering using the GitHub integration that comes with Ditto, but has not formally integrated Ditto into their workflow as of yet.
 
 In the Benefits project, all of the text has been componentized. Agencies are represented in the text as variants on components. Languages are also represented in the text as variants. Currently Benefits has two languages: English and Spanish. English is the assumed default in the copy in Ditto and Spanish is a variant. There are variants within Ditto that include both an agency and Spanish, such as MST-Spanish.
 
