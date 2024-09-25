@@ -177,35 +177,6 @@
     }
   },
   {
-    "model": "core.enrollmentflow",
-    "pk": 6,
-    "fields": {
-      "system_name": "in_person_only",
-      "label": "In-Person Only",
-      "group_id": "group123",
-      "supported_enrollment_methods": ["in_person"],
-      "transit_agency_id": 1
-    }
-  },
-  {
-    "model": "core.enrollmentflow",
-    "pk": 7,
-    "fields": {
-      "system_name": "digital_only",
-      "label": "Digital Only",
-      "group_id": "group123",
-      "enrollment_success_template": "enrollment/success--cst.html",
-      "display_order": 5,
-      "claims_provider": 1,
-      "selection_label_template": "eligibility/includes/selection-label--senior.html",
-      "eligibility_start_template": "eligibility/start--senior.html",
-      "claims_scope": "verify:senior",
-      "claims_claim": "senior",
-      "supported_enrollment_methods": ["digital"],
-      "transit_agency_id": 1
-    }
-  },
-  {
     "model": "core.transitprocessor",
     "pk": 1,
     "fields": {
