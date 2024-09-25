@@ -75,13 +75,14 @@ def model_ClaimsProvider_no_sign_out(model_ClaimsProvider):
 
 
 @pytest.fixture
-def model_EnrollmentFlow():
+def model_EnrollmentFlow(model_TransitAgency):
     flow = EnrollmentFlow.objects.create(
         system_name="Test Flow",
         selection_label_template="eligibility/includes/selection-label.html",
         label="Test flow label",
         group_id="group123",
         enrollment_success_template="enrollment/success.html",
+        transit_agency_id=model_TransitAgency.id,
     )
 
     return flow
@@ -112,6 +113,7 @@ def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow, model_Claims
 @pytest.fixture
 def model_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow_with_scope_and_claim):
     model_EnrollmentFlow_with_scope_and_claim.claims_scheme_override = "scheme"
+    model_EnrollmentFlow_with_scope_and_claim.transit_agency_id = 1
     model_EnrollmentFlow_with_scope_and_claim.save()
 
     return model_EnrollmentFlow_with_scope_and_claim
@@ -171,7 +173,7 @@ def model_TransitProcessor():
 
 
 @pytest.fixture
-def model_TransitAgency(model_PemData, model_EnrollmentFlow, model_TransitProcessor):
+def model_TransitAgency(model_PemData, model_TransitProcessor):
     agency = TransitAgency.objects.create(
         slug="test",
         short_name="TEST",
@@ -190,10 +192,6 @@ def model_TransitAgency(model_PemData, model_EnrollmentFlow, model_TransitProces
         index_template="core/agency-index.html",
         eligibility_index_template="eligibility/index.html",
     )
-
-    # add many-to-many relationships after creation, need ID on both sides
-    agency.enrollment_flows.add(model_EnrollmentFlow)
-    agency.save()
 
     return agency
 
