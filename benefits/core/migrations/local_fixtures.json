@@ -49,6 +49,30 @@
     }
   },
   {
+    "model": "core.transitagency",
+    "pk": 1,
+    "fields": {
+      "active": true,
+      "slug": "cst",
+      "short_name": "CST (local)",
+      "long_name": "California State Transit (local)",
+      "info_url": "https://www.agency-website.com",
+      "phone": "1-800-555-5555",
+      "index_template": "core/index--cst.html",
+      "eligibility_index_template": "eligibility/index--cst.html",
+      "eligibility_api_id": "cst",
+      "eligibility_api_private_key": 2,
+      "eligibility_api_public_key": 3,
+      "eligibility_api_jws_signing_alg": "RS256",
+      "transit_processor": 1,
+      "transit_processor_audience": "",
+      "transit_processor_client_id": "",
+      "transit_processor_client_secret_name": "cst-transit-processor-client-secret",
+      "staff_group": 2,
+      "customer_service_group": 2
+    }
+  },
+  {
     "model": "core.enrollmentflow",
     "pk": 1,
     "fields": {
@@ -62,7 +86,8 @@
       "eligibility_start_template": "eligibility/start--senior.html",
       "claims_scope": "verify:senior",
       "claims_claim": "senior",
-      "supported_enrollment_methods": ["digital", "in_person"]
+      "supported_enrollment_methods": ["digital", "in_person"],
+      "transit_agency_id": 1
     }
   },
   {
@@ -79,7 +104,8 @@
       "eligibility_start_template": "eligibility/start--veteran.html",
       "claims_scope": "verify:veteran",
       "claims_claim": "veteran",
-      "supported_enrollment_methods": ["digital", "in_person"]
+      "supported_enrollment_methods": ["digital", "in_person"],
+      "transit_agency_id": 1
     }
   },
   {
@@ -104,7 +130,8 @@
       "eligibility_form_class": "benefits.eligibility.forms.CSTAgencyCard",
       "eligibility_unverified_template": "eligibility/unverified--cst-agency-card.html",
       "help_template": "core/includes/help--cst-agency-card.html",
-      "supported_enrollment_methods": ["digital", "in_person"]
+      "supported_enrollment_methods": ["digital", "in_person"],
+      "transit_agency_id": 1
     }
   },
   {
@@ -126,7 +153,8 @@
       "help_template": "core/includes/help--calfresh.html",
       "claims_scope": "verify:calfresh",
       "claims_claim": "calfresh",
-      "supported_enrollment_methods": ["digital", "in_person"]
+      "supported_enrollment_methods": ["digital", "in_person"],
+      "transit_agency_id": 1
     }
   },
   {
@@ -144,7 +172,8 @@
       "help_template": "core/includes/help--medicare.html",
       "claims_scope": "verify:medicare",
       "claims_claim": "medicare",
-      "supported_enrollment_methods": ["digital", "in_person"]
+      "supported_enrollment_methods": ["digital", "in_person"],
+      "transit_agency_id": 1
     }
   },
   {
@@ -154,7 +183,8 @@
       "system_name": "in_person_only",
       "label": "(CST) In-person Only",
       "group_id": "group123",
-      "supported_enrollment_methods": ["in_person"]
+      "supported_enrollment_methods": ["in_person"],
+      "transit_agency_id": 1
     }
   },
   {
@@ -171,7 +201,8 @@
       "eligibility_start_template": "eligibility/start--senior.html",
       "claims_scope": "verify:senior",
       "claims_claim": "senior",
-      "supported_enrollment_methods": ["digital"]
+      "supported_enrollment_methods": ["digital"],
+      "transit_agency_id": 1
     }
   },
   {
@@ -184,30 +215,6 @@
       "card_tokenize_func": "tokenize",
       "card_tokenize_env": "test",
       "portal_url": "https://www.transit-processor-portal.com"
-    }
-  },
-  {
-    "model": "core.transitagency",
-    "pk": 1,
-    "fields": {
-      "active": true,
-      "slug": "cst",
-      "short_name": "CST (local)",
-      "long_name": "California State Transit (local)",
-      "info_url": "https://www.agency-website.com",
-      "phone": "1-800-555-5555",
-      "index_template": "core/index--cst.html",
-      "eligibility_index_template": "eligibility/index--cst.html",
-      "eligibility_api_id": "cst",
-      "eligibility_api_private_key": 2,
-      "eligibility_api_public_key": 3,
-      "eligibility_api_jws_signing_alg": "RS256",
-      "transit_processor": 1,
-      "transit_processor_audience": "",
-      "transit_processor_client_id": "",
-      "transit_processor_client_secret_name": "cst-transit-processor-client-secret",
-      "staff_group": 2,
-      "customer_service_group": 2
     }
   },
   {
