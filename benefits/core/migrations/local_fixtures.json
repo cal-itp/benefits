@@ -77,7 +77,7 @@
     "pk": 1,
     "fields": {
       "system_name": "senior",
-      "label": "Senior Discount",
+      "label": "Older Adult",
       "group_id": "group123",
       "enrollment_success_template": "enrollment/success--cst.html",
       "display_order": 2,
@@ -95,7 +95,7 @@
     "pk": 2,
     "fields": {
       "system_name": "veteran",
-      "label": "Veteran Discount",
+      "label": "US Veteran",
       "group_id": "group123",
       "enrollment_success_template": "enrollment/success--cst.html",
       "display_order": 4,
@@ -113,7 +113,7 @@
     "pk": 3,
     "fields": {
       "system_name": "agency_card",
-      "label": "Agency Card Discount",
+      "label": "Agency Card",
       "group_id": "group123",
       "enrollment_index_template": "enrollment/index--agency-card.html",
       "enrollment_success_template": "enrollment/success--cst-agency-card.html",
@@ -139,7 +139,7 @@
     "pk": 4,
     "fields": {
       "system_name": "calfresh",
-      "label": "CalFresh",
+      "label": "CalFresh Cardholder",
       "group_id": "group123",
       "supports_expiration": "True",
       "expiration_days": 5,
@@ -162,7 +162,7 @@
     "pk": 5,
     "fields": {
       "system_name": "medicare",
-      "label": "Medicare Discount",
+      "label": "Medicare Cardholder",
       "group_id": "group123",
       "enrollment_success_template": "enrollment/success--cst.html",
       "display_order": 1,
@@ -181,7 +181,7 @@
     "pk": 6,
     "fields": {
       "system_name": "in_person_only",
-      "label": "In-person Only",
+      "label": "In-Person Only",
       "group_id": "group123",
       "supported_enrollment_methods": ["in_person"],
       "transit_agency_id": 1
