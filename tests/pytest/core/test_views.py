@@ -108,10 +108,6 @@ def test_agency_public_key(client, model_TransitAgency):
 def test_agency_card_with_eligibility_api_flow(
     client, model_TransitAgency, model_EnrollmentFlow_with_eligibility_api, mocked_session_update, mocked_session_reset
 ):
-    model_TransitAgency.enrollment_flows.clear()
-    model_TransitAgency.enrollment_flows.add(model_EnrollmentFlow_with_eligibility_api)
-    model_TransitAgency.save()
-
     url = reverse(routes.AGENCY_CARD, args=[model_TransitAgency.slug])
     response = client.get(url)
 
@@ -134,15 +130,8 @@ def test_agency_card_with_multiple_eligibility_api_flows(
     new_flow.label = "New flow"
     new_flow.system_name = "new"
     new_flow.pk = None
+    new_flow.transit_agency_id = model_TransitAgency.id
     new_flow.save()
-
-    # note the order these are added to the TransitAgency doesn't matter (and thus, their sorting within that agency)
-    # it is the order they were created in the database that is used for the query
-    # we always expect new_flow to be the one to match
-    model_TransitAgency.enrollment_flows.clear()
-    model_TransitAgency.enrollment_flows.add(model_EnrollmentFlow_with_eligibility_api)
-    model_TransitAgency.enrollment_flows.add(new_flow)
-    model_TransitAgency.save()
 
     url = reverse(routes.AGENCY_CARD, args=[model_TransitAgency.slug])
     response = client.get(url)
@@ -156,9 +145,8 @@ def test_agency_card_with_multiple_eligibility_api_flows(
 def test_agency_card_without_eligibility_api_flow(
     client, model_TransitAgency, model_EnrollmentFlow_with_scope_and_claim, mocked_session_update, mocked_session_reset
 ):
-    model_TransitAgency.enrollment_flows.clear()
-    model_TransitAgency.enrollment_flows.add(model_EnrollmentFlow_with_scope_and_claim)
-    model_TransitAgency.save()
+    model_EnrollmentFlow_with_scope_and_claim.transit_agency_id = model_TransitAgency.id
+    model_EnrollmentFlow_with_scope_and_claim.save()
 
     url = reverse(routes.AGENCY_CARD, args=[model_TransitAgency.slug])
     response = client.get(url)
