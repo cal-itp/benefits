@@ -4,6 +4,15 @@ import django.db.models.deletion
 from django.db import migrations, models
 
 
+def migrate_data(apps, schema_editor):
+    TransitAgency = apps.get_model("core", "TransitAgency")
+
+    for agency in TransitAgency.objects.all():
+        for flow in agency.enrollment_flows.all():
+            flow.transit_agency = agency
+            flow.save()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -11,14 +20,15 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name="transitagency",
-            name="enrollment_flows",
-        ),
         migrations.AddField(
             model_name="enrollmentflow",
             name="transit_agency",
             field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.PROTECT, to="core.transitagency"),
             preserve_default=False,
+        ),
+        migrations.RunPython(migrate_data),
+        migrations.RemoveField(
+            model_name="transitagency",
+            name="enrollment_flows",
         ),
     ]
