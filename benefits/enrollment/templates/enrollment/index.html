@@ -56,7 +56,8 @@
               $("#{{ cta_button }}").on("click", function() {
                   amplitude.getInstance().logEvent(startedEvent, {
                       card_tokenize_url: "{{ card_tokenize_url }}",
-                      card_tokenize_func: "{{ card_tokenize_func }}"
+                      card_tokenize_func: "{{ card_tokenize_func }}",
+                      enrollment_method: "{{ enrollment_method }}"
                   });
                   $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ loading_text }}");
               });
@@ -73,7 +74,7 @@
                       /* This function executes when the
                       /* card verification returns
                       /* successfully with a token from enrollment server */
-                      amplitude.getInstance().logEvent(closedEvent, {status: "success"});
+                      amplitude.getInstance().logEvent(closedEvent, {status: "success", enrollment_method: "{{ enrollment_method }}"});
 
                       var form = $("form#{{ form_success }}");
                       $("#{{ token_field }}", form).val(response.token);
@@ -83,7 +84,7 @@
                       /* This function executes when the
                       /* card verification fails and server
                       /* return verification failure message */
-                      amplitude.getInstance().logEvent(closedEvent, {status: "fail"});
+                      amplitude.getInstance().logEvent(closedEvent, {status: "fail", enrollment_method: "{{ enrollment_method }}"});
 
                       var form = $("form#{{ form_retry }}");
                       form.submit();
@@ -92,7 +93,7 @@
                       /* This function executes when the
                       /* server returns error or token is invalid.
                       /* 400 or 500 will return. */
-                      amplitude.getInstance().logEvent(closedEvent, {status: "error", error: response});
+                      amplitude.getInstance().logEvent(closedEvent, {status: "error", error: response, enrollment_method: "{{ enrollment_method }}"});
 
                       if (response.status >= 500) {
                         var form = $("form#{{ form_system_error }}");
@@ -105,7 +106,7 @@
                       /* This function executes when the
                       /* user cancels and closes the window
                       /* and returns to home page. */
-                      amplitude.getInstance().logEvent(closedEvent, {status: "cancel"});
+                      amplitude.getInstance().logEvent(closedEvent, {status: "cancel", enrollment_method: "{{ enrollment_method }}"});
 
                       return location.reload();
                   }
