@@ -44,6 +44,8 @@ class ClaimsProviderAdmin(admin.ModelAdmin):  # pragma: no cover
 
 @admin.register(models.EnrollmentFlow)
 class SortableEnrollmentFlowAdmin(SortableAdminMixin, admin.ModelAdmin):  # pragma: no cover
+    list_display = ("label", "transit_agency", "supported_enrollment_methods")
+
     def get_exclude(self, request, obj=None):
         if not request.user.is_superuser:
             return [
