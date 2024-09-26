@@ -8,6 +8,10 @@ from benefits.core import session
 
 class BenefitsAdminSite(admin.AdminSite):
 
+    site_title = "Cal-ITP Benefits Administrator"
+    site_header = "Administrator"
+    index_title = "Dashboard"
+
     def index(self, request, extra_context=None):
         """
         Display the main admin index page if the user is a superuser or a "staff_group" user.
@@ -42,6 +46,7 @@ class BenefitsAdminSite(admin.AdminSite):
                     {
                         "has_permission_for_in_person": has_permission_for_in_person,
                         "transit_processor_portal_url": transit_processor_portal_url,
+                        "title": f"{agency.long_name} | {self.index_title} | {self.site_title}",
                     }
                 )
 
