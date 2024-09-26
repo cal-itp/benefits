@@ -72,6 +72,7 @@ GOOGLE_SSO_ALLOWABLE_DOMAINS = _filter_empty(os.environ.get("GOOGLE_SSO_ALLOWABL
 GOOGLE_SSO_STAFF_LIST = _filter_empty(os.environ.get("GOOGLE_SSO_STAFF_LIST", "").split(","))
 GOOGLE_SSO_SUPERUSER_LIST = _filter_empty(os.environ.get("GOOGLE_SSO_SUPERUSER_LIST", "").split(","))
 GOOGLE_SSO_LOGO_URL = "/static/img/icon/google_sso_logo.svg"
+GOOGLE_SSO_TEXT = "Log in with Google"
 GOOGLE_SSO_SAVE_ACCESS_TOKEN = True
 GOOGLE_SSO_PRE_LOGIN_CALLBACK = "benefits.core.admin.pre_login_user"
 GOOGLE_SSO_SCOPES = [
