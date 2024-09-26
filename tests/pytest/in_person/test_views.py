@@ -50,7 +50,7 @@ def test_eligibility_logged_in(admin_client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
 def test_confirm_post_valid_form_eligibility_verified(admin_client):
 
     path = reverse(routes.IN_PERSON_ELIGIBILITY)
