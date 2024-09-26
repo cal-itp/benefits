@@ -19,8 +19,8 @@ class ReturnedEnrollmentEvent(core.Event):
 class FailedAccessTokenRequestEvent(core.Event):
     """Analytics event representing a failure to acquire an access token for card tokenization."""
 
-    def __init__(self, request, status_code=None):
-        super().__init__(request, "failed access token request")
+    def __init__(self, request, status_code=None, enrollment_method=models.EnrollmentMethods.DIGITAL):
+        super().__init__(request, "failed access token request", enrollment_method)
         if status_code is not None:
             self.update_event_properties(status_code=status_code)
 
@@ -44,6 +44,6 @@ def returned_success(request, enrollment_group, enrollment_method: str = models.
     )
 
 
-def failed_access_token_request(request, status_code=None):
+def failed_access_token_request(request, status_code=None, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
     """Send the "failed access token request" analytics event with the response status code."""
-    core.send_event(FailedAccessTokenRequestEvent(request, status_code=status_code))
+    core.send_event(FailedAccessTokenRequestEvent(request, status_code=status_code, enrollment_method=enrollment_method))
