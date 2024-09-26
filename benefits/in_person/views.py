@@ -11,6 +11,7 @@ import sentry_sdk
 from benefits.routes import routes
 from benefits.core import models, session
 from benefits.eligibility import analytics as eligibility_analytics
+from benefits.enrollment import analytics as enrollment_analytics
 from benefits.enrollment.enrollment import Status, request_card_tokenization_access, enroll
 
 from benefits.in_person import forms
@@ -98,17 +99,29 @@ def enrollment(request):
                     expiration_datetime=expiry,
                 )
                 event.save()
+                enrollment_analytics.returned_success(
+                    request, flow.group_id, enrollment_method=models.EnrollmentMethods.IN_PERSON
+                )
                 return redirect(routes.IN_PERSON_ENROLLMENT_SUCCESS)
 
             case Status.SYSTEM_ERROR:
+                enrollment_analytics.returned_error(
+                    request, str(exception), enrollment_method=models.EnrollmentMethods.IN_PERSON
+                )
                 sentry_sdk.capture_exception(exception)
                 return redirect(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
 
             case Status.EXCEPTION:
+                enrollment_analytics.returned_error(
+                    request, str(exception), enrollment_method=models.EnrollmentMethods.IN_PERSON
+                )
                 sentry_sdk.capture_exception(exception)
                 return redirect(routes.IN_PERSON_SERVER_ERROR)
 
             case Status.REENROLLMENT_ERROR:
+                enrollment_analytics.returned_error(
+                    request, "Re-enrollment error.", enrollment_method=models.EnrollmentMethods.IN_PERSON
+                )
                 return redirect(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR)
     # GET enrollment index
     else:
@@ -161,6 +174,7 @@ def reenrollment_error(request):
 
 def retry(request):
     """View handler for card verification failure."""
+    enrollment_analytics.returned_retry(request, enrollment_method=models.EnrollmentMethods.IN_PERSON)
     agency = session.agency(request)
     context = {
         **admin_site.each_context(request),
