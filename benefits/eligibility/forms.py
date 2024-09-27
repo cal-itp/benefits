@@ -26,7 +26,7 @@ class EnrollmentFlowSelectionForm(forms.Form):
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        flows = agency.enrollment_flows.all()
+        flows = agency.enrollment_flows.filter(supported_enrollment_methods__contains=models.EnrollmentMethods.DIGITAL)
 
         self.classes = "col-lg-8"
         # second element is not used since we render the whole label using selection_label_template,
