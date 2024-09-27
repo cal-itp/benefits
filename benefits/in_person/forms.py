@@ -24,7 +24,7 @@ class InPersonEligibilityForm(forms.Form):
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        flows = agency.enrollment_flows.all()
+        flows = agency.enrollment_flows.filter(supported_enrollment_methods__contains=models.EnrollmentMethods.IN_PERSON)
 
         self.classes = "checkbox-parent"
         flow_field = self.fields["flow"]
