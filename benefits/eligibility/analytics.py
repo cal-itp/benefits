@@ -17,8 +17,8 @@ class EligibilityEvent(core.Event):
 class SelectedVerifierEvent(EligibilityEvent):
     """Analytics event representing the user selecting an enrollment flow."""
 
-    def __init__(self, request, flow: models.EnrollmentFlow):
-        super().__init__(request, "selected enrollment flow", flow)
+    def __init__(self, request, flow: models.EnrollmentFlow, enrollment_method=models.EnrollmentMethods.DIGITAL):
+        super().__init__(request, "selected enrollment flow", flow, enrollment_method)
 
 
 class StartedEligibilityEvent(EligibilityEvent):
@@ -40,9 +40,9 @@ class ReturnedEligibilityEvent(EligibilityEvent):
             self.update_event_properties(status=status, error=error)
 
 
-def selected_verifier(request, flow: models.EnrollmentFlow):
+def selected_verifier(request, flow: models.EnrollmentFlow, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
     """Send the "selected eligibility verifier" analytics event."""
-    core.send_event(SelectedVerifierEvent(request, flow))
+    core.send_event(SelectedVerifierEvent(request, flow, enrollment_method=enrollment_method))
 
 
 def started_eligibility(request, flow: models.EnrollmentFlow, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
