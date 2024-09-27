@@ -141,6 +141,7 @@
       "claims_provider": 2,
       "selection_label_template": "eligibility/includes/selection-label--medicare.html",
       "eligibility_start_template": "eligibility/start--medicare.html",
+      "help_template": "core/includes/help--medicare.html",
       "claims_scope": "verify:medicare",
       "claims_claim": "medicare",
       "supported_enrollment_methods": ["digital", "in_person"]
