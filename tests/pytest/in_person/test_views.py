@@ -37,6 +37,36 @@ def test_view_not_logged_in(client, viewname):
     assert response.url == "/admin/login/?next=" + path
 
 
+@pytest.mark.django_db
+def test_eligibility_logged_in_filtering_flows(mocker, model_TransitAgency, admin_client):
+    model_TransitAgency.pk = None
+    model_TransitAgency.save()
+
+    digital = models.EnrollmentFlow.objects.create(
+        transit_agency=model_TransitAgency, supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL], label="Digital"
+    )
+    in_person = models.EnrollmentFlow.objects.create(
+        transit_agency=model_TransitAgency,
+        supported_enrollment_methods=[models.EnrollmentMethods.IN_PERSON],
+        label="In-Person",
+    )
+    both = models.EnrollmentFlow.objects.create(
+        transit_agency=model_TransitAgency,
+        supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
+        label="Both",
+    )
+    model_TransitAgency.enrollment_flows.add(digital, in_person, both)
+    mocker.patch("benefits.core.session.agency", autospec=True, return_value=model_TransitAgency)
+
+    path = reverse(routes.IN_PERSON_ELIGIBILITY)
+    response = admin_client.get(path)
+
+    assert model_TransitAgency.enrollment_flows.count() == 3
+    assert len(response.context_data["form"].fields["flow"].choices) == 2
+    assert response.context_data["form"].fields["flow"].choices[0][1] == "In-Person"
+    assert response.context_data["form"].fields["flow"].choices[1][1] == "Both"
+
+
 # admin_client is a fixture from pytest
 # https://pytest-django.readthedocs.io/en/latest/helpers.html#admin-client-django-test-client-logged-in-as-admin
 @pytest.mark.django_db
