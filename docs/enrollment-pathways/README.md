@@ -32,12 +32,12 @@ timeline
           : Improved UX for agency card enrollment
           : Improved UX for application error states
 
-          Q3<br>Now
+          Q3<br>Complete
           : Deploy low-income riders enrollment pathway
           : Benefits admin tool (Agency users)
           : Benefits admin tool (In-person eligibility verification)
 
-          Q4<br>Next
+          Q4<br>Now
           : Release Medicare cardholder enrollment pathway
           : Benefits admin tool (Agency configuration)
           : Support eligibility verification for disabled Veterans
