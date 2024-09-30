@@ -34,7 +34,7 @@ In the Benefits project, all of the text has been componentized. Agencies are re
 
 ### Crowdin
 
-Crowdin is our translation platform. We use iBabbleon to provide our translations. With very simple translations (or more complex if you are fluent or native in the language), Compiler team members can translate the strings of text directly in the Crowdin platform. For anything above our language skills we contact Salim at iBabbleon and ask for the new files to be translated once the language files have been synced from Ditto to Crowdin.
+Crowdin is our translation platform. We use iBabbleon to provide our translations. With very simple translations (or more complex if you are fluent or native in the language), Compiler team members can translate the strings of text directly in the Crowdin platform. For anything above our language skills, Design contacts Salim at iBabbleon and ask for the new files to be translated once the language files have been synced from Ditto to Crowdin.
 
 ## Copy delivery process responsibilities
 
