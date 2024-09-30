@@ -4,10 +4,6 @@
 {% block dark-mode-vars %}
 {% endblock dark-mode-vars %}
 
-{% block title %}
-    Log in | Cal-ITP Benefits Administrator
-{% endblock title %}
-
 {% block extrastyle %}
     {% comment %} Overriding instead of extending agency-base here to remove jQuery declaration, which admin/login.html includes on its own {% endcomment %}
     <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
@@ -24,6 +20,6 @@
     </div>
 
     <div id="site-name">
-        <h1 class="text-center text-white fs-3 py-3 m-0">Administrator</h1>
+        <h1 class="text-center text-white fs-3 py-3 m-0">{{ site_header }}</h1>
     </div>
 {% endblock branding %}

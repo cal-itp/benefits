@@ -317,7 +317,7 @@ def test_enrollment_post_valid_form_reenrollment_error(mocker, admin_client, car
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow")
+@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_agency")
 def test_reenrollment_error(admin_client):
     path = reverse(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR)
 
@@ -327,6 +327,8 @@ def test_reenrollment_error(admin_client):
     assert response.template_name == "in_person/enrollment/reenrollment_error.html"
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_agency")
 def test_retry(admin_client):
     path = reverse(routes.IN_PERSON_ENROLLMENT_RETRY)
 
@@ -336,6 +338,8 @@ def test_retry(admin_client):
     assert response.template_name == "in_person/enrollment/retry.html"
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_agency")
 def test_system_error(admin_client):
     path = reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
 
@@ -345,6 +349,8 @@ def test_system_error(admin_client):
     assert response.template_name == "in_person/enrollment/system_error.html"
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_agency")
 def test_server_error(admin_client):
     path = reverse(routes.IN_PERSON_SERVER_ERROR)
 
@@ -354,6 +360,8 @@ def test_server_error(admin_client):
     assert response.template_name == "in_person/enrollment/server_error.html"
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_agency")
 def test_success(admin_client):
     path = reverse(routes.IN_PERSON_ENROLLMENT_SUCCESS)
 
