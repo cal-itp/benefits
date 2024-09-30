@@ -130,7 +130,7 @@ def test_agency_card_with_multiple_eligibility_api_flows(
     new_flow.label = "New flow"
     new_flow.system_name = "new"
     new_flow.pk = None
-    new_flow.transit_agency_id = model_TransitAgency.id
+    new_flow.transit_agency = model_TransitAgency
     new_flow.save()
 
     url = reverse(routes.AGENCY_CARD, args=[model_TransitAgency.slug])
@@ -145,7 +145,7 @@ def test_agency_card_with_multiple_eligibility_api_flows(
 def test_agency_card_without_eligibility_api_flow(
     client, model_TransitAgency, model_EnrollmentFlow_with_scope_and_claim, mocked_session_update, mocked_session_reset
 ):
-    model_EnrollmentFlow_with_scope_and_claim.transit_agency_id = model_TransitAgency.id
+    model_EnrollmentFlow_with_scope_and_claim.transit_agency = model_TransitAgency
     model_EnrollmentFlow_with_scope_and_claim.save()
 
     url = reverse(routes.AGENCY_CARD, args=[model_TransitAgency.slug])

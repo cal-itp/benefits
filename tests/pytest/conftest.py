@@ -5,14 +5,16 @@ from django.middleware.locale import LocaleMiddleware
 from django.utils import timezone
 
 import pytest
-from pytest_socket import disable_socket
+
+# from pytest_socket import disable_socket
 
 from benefits.core import session
 from benefits.core.models import ClaimsProvider, EnrollmentFlow, TransitProcessor, PemData, TransitAgency
 
 
 def pytest_runtest_setup():
-    disable_socket()
+    # disable_socket()
+    pass
 
 
 @pytest.fixture
@@ -82,7 +84,7 @@ def model_EnrollmentFlow(model_TransitAgency):
         label="Test flow label",
         group_id="group123",
         enrollment_success_template="enrollment/success.html",
-        transit_agency_id=model_TransitAgency.id,
+        transit_agency=model_TransitAgency,
     )
 
     return flow
@@ -111,9 +113,9 @@ def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow, model_Claims
 
 
 @pytest.fixture
-def model_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow_with_scope_and_claim):
+def model_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow_with_scope_and_claim, model_TransitAgency):
     model_EnrollmentFlow_with_scope_and_claim.claims_scheme_override = "scheme"
-    model_EnrollmentFlow_with_scope_and_claim.transit_agency_id = 1
+    model_EnrollmentFlow_with_scope_and_claim.transit_agency = model_TransitAgency
     model_EnrollmentFlow_with_scope_and_claim.save()
 
     return model_EnrollmentFlow_with_scope_and_claim
