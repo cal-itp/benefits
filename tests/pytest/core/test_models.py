@@ -169,7 +169,7 @@ def test_EnrollmentFlow_supports_expiration(model_EnrollmentFlow_supports_expira
 
 @pytest.mark.django_db
 def test_EnrollmentFlow_enrollment_index_template(model_TransitAgency):
-    new_flow = EnrollmentFlow.objects.create(transit_agency_id=model_TransitAgency.id)
+    new_flow = EnrollmentFlow.objects.create(transit_agency=model_TransitAgency)
 
     assert new_flow.enrollment_index_template == "enrollment/index.html"
 
@@ -181,14 +181,14 @@ def test_EnrollmentFlow_enrollment_index_template(model_TransitAgency):
 
 @pytest.mark.django_db
 def test_EnrollmentFlow_enrollment_success_template(model_TransitAgency):
-    new_flow = EnrollmentFlow.objects.create(transit_agency_id=model_TransitAgency.id)
+    new_flow = EnrollmentFlow.objects.create(transit_agency=model_TransitAgency)
 
     assert new_flow.enrollment_success_template == "enrollment/success.html"
 
 
 @pytest.mark.django_db
 def test_EnrollmentFlow_supported_enrollment_methods(model_TransitAgency):
-    new_flow = EnrollmentFlow.objects.create(transit_agency_id=model_TransitAgency.id)
+    new_flow = EnrollmentFlow.objects.create(transit_agency=model_TransitAgency)
 
     assert new_flow.supported_enrollment_methods == ["digital", "in_person"]
 
