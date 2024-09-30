@@ -142,7 +142,12 @@ def enrollment(request):
 
 def reenrollment_error(request):
     """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
-    context = {**admin_site.each_context(request)}
+
+    agency = session.agency(request)
+    context = {
+        **admin_site.each_context(request),
+        "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
+    }
 
     flow = session.flow(request)
     context["flow_label"] = flow.label
@@ -152,27 +157,43 @@ def reenrollment_error(request):
 
 def retry(request):
     """View handler for card verification failure."""
-    context = {**admin_site.each_context(request)}
+    agency = session.agency(request)
+    context = {
+        **admin_site.each_context(request),
+        "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
+    }
 
     return TemplateResponse(request, "in_person/enrollment/retry.html", context)
 
 
 def system_error(request):
     """View handler for an enrollment system error."""
-    context = {**admin_site.each_context(request)}
+    agency = session.agency(request)
+    context = {
+        **admin_site.each_context(request),
+        "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
+    }
 
     return TemplateResponse(request, "in_person/enrollment/system_error.html", context)
 
 
 def server_error(request):
     """View handler for errors caused by a misconfiguration or bad request."""
-    context = {**admin_site.each_context(request)}
+    agency = session.agency(request)
+    context = {
+        **admin_site.each_context(request),
+        "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
+    }
 
     return TemplateResponse(request, "in_person/enrollment/server_error.html", context)
 
 
 def success(request):
     """View handler for the final success page."""
-    context = {**admin_site.each_context(request)}
+    agency = session.agency(request)
+    context = {
+        **admin_site.each_context(request),
+        "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
+    }
 
     return TemplateResponse(request, "in_person/enrollment/success.html", context)
