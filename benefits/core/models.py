@@ -381,7 +381,7 @@ class EnrollmentFlow(models.Model):
         default=[EnrollmentMethods.DIGITAL, EnrollmentMethods.IN_PERSON],
         help_text="If the flow is supported by digital enrollment, in-person enrollment, or both",
     )
-    transit_agency = models.ForeignKey(TransitAgency, on_delete=models.PROTECT)
+    transit_agency = models.ForeignKey(TransitAgency, on_delete=models.PROTECT, null=True, blank=True)
 
     class Meta:
         ordering = ["display_order"]
