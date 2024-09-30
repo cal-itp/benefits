@@ -5,7 +5,7 @@
 | Name                                 |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
 |------------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
 | benefits/\_\_init\_\_.py             |        6 |        2 |        0 |        0 |     67% |       5-7 |
-| benefits/admin.py                    |       21 |        0 |        4 |        1 |     96% |    37->48 |
+| benefits/admin.py                    |       24 |        0 |        4 |        1 |     96% |    41->53 |
 | benefits/apps.py                     |        3 |        0 |        0 |        0 |    100% |           |
 | benefits/core/\_\_init\_\_.py        |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/core/admin.py               |       43 |        0 |        8 |        1 |     98% | 199->exit |
@@ -37,7 +37,7 @@
 | benefits/in\_person/apps.py          |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/forms.py         |       21 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/urls.py          |        6 |        0 |        0 |        0 |    100% |           |
-| benefits/in\_person/views.py         |       90 |        0 |       24 |        2 |     98% |52->64, 104->exit |
+| benefits/in\_person/views.py         |       95 |        0 |       24 |        2 |     98% |56->68, 108->exit |
 | benefits/locale/\_\_init\_\_.py      |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/\_\_init\_\_.py   |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/formats.py        |        1 |        0 |        0 |        0 |    100% |           |
@@ -57,7 +57,7 @@
 | benefits/settings.py                 |      127 |        6 |       22 |        8 |     91% |103, 124->129, 140->143, 159, 313, 315, 330, 342 |
 | benefits/urls.py                     |       22 |        7 |        2 |        1 |     67% |     35-49 |
 | benefits/wsgi.py                     |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                            **TOTAL** | **1965** |   **97** |  **564** |   **40** | **94%** |           |
+|                            **TOTAL** | **1973** |   **97** |  **564** |   **40** | **94%** |           |
 
 
 ## Setup coverage badge
