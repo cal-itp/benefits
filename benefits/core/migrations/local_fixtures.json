@@ -87,7 +87,7 @@
       "claims_scope": "verify:senior",
       "claims_claim": "senior",
       "supported_enrollment_methods": ["digital", "in_person"],
-      "transit_agency_id": 1
+      "transit_agency": 1
     }
   },
   {
@@ -105,7 +105,7 @@
       "claims_scope": "verify:veteran",
       "claims_claim": "veteran",
       "supported_enrollment_methods": ["digital", "in_person"],
-      "transit_agency_id": 1
+      "transit_agency": 1
     }
   },
   {
@@ -131,7 +131,7 @@
       "eligibility_unverified_template": "eligibility/unverified--cst-agency-card.html",
       "help_template": "core/includes/help--cst-agency-card.html",
       "supported_enrollment_methods": ["digital", "in_person"],
-      "transit_agency_id": 1
+      "transit_agency": 1
     }
   },
   {
@@ -154,7 +154,7 @@
       "claims_scope": "verify:calfresh",
       "claims_claim": "calfresh",
       "supported_enrollment_methods": ["digital", "in_person"],
-      "transit_agency_id": 1
+      "transit_agency": 1
     }
   },
   {
@@ -173,7 +173,7 @@
       "claims_scope": "verify:medicare",
       "claims_claim": "medicare",
       "supported_enrollment_methods": ["digital", "in_person"],
-      "transit_agency_id": 1
+      "transit_agency": 1
     }
   },
   {
