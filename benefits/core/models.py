@@ -350,7 +350,7 @@ class EnrollmentFlow(models.Model):
     )
     label = models.TextField(
         null=True,
-        help_text="A human readable label, not shown to end-users. Used as the display text in Admin.",
+        help_text="A human readable label, used as the display text in Admin.",
     )
     group_id = models.TextField(null=True, help_text="Reference to the TransitProcessor group for user enrollment")
     supports_expiration = models.BooleanField(
