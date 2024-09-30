@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="enrollmentflow",
             name="transit_agency",
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.PROTECT, to="core.transitagency"),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to="core.transitagency"),
             preserve_default=False,
         ),
         migrations.RunPython(migrate_data),
