@@ -10,7 +10,7 @@ Translation strings include all application copy, including:
 - In-line link URLs
 - Error messages (like [no script](https://github.com/cal-itp/benefits/blob/main/benefits/core/templates/core/includes/noscript.html), [no cookies](https://github.com/cal-itp/benefits/blob/main/benefits/core/templates/core/includes/nocookies.html) warnings)
 
-Developers create the 'django.po' message files from copy created and implemented by Design and Product. Design and Product use the tools Figma, Ditto, and Crowdin to craft product copy, manage all copy and variantions of copy (e.g. agency-specific copy or Spanish translation copy), and translate copy.
+Developers create and update `django.po` message files for each supported language from copy created and implemented by Design and Product. Design and Product use the tools Figma, Ditto, and Crowdin to craft product copy, manage all copy and variantions of copy (e.g. agency-specific copy or Spanish translation copy), and translate copy.
 
 ## Tools used in Cal-ITP Benefits Application Copy
 
