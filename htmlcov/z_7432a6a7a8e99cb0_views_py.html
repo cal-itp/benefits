@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_9a5e1802ee124b46_formats_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.1">coverage.py v7.6.1</a>,
-            created at 2024-10-01 21:00 +0000
+            created at 2024-10-01 21:23 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -120,7 +120,7 @@
     <p class="run"><span class="n"><a id="t36" href="#t36">36</a></span><span class="t">            <span class="nam">flow_id</span> <span class="op">=</span> <span class="nam">form</span><span class="op">.</span><span class="nam">cleaned_data</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">"flow"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t37" href="#t37">37</a></span><span class="t">            <span class="nam">flow</span> <span class="op">=</span> <span class="nam">models</span><span class="op">.</span><span class="nam">EnrollmentFlow</span><span class="op">.</span><span class="nam">objects</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="nam">id</span><span class="op">=</span><span class="nam">flow_id</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t38" href="#t38">38</a></span><span class="t">            <span class="nam">session</span><span class="op">.</span><span class="nam">update</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">flow</span><span class="op">=</span><span class="nam">flow</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t39" href="#t39">39</a></span><span class="t">            <span class="nam">eligibility_analytics</span><span class="op">.</span><span class="nam">selected_verifier</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">flow</span><span class="op">,</span> <span class="nam">enrollment_method</span><span class="op">=</span><span class="nam">models</span><span class="op">.</span><span class="nam">EnrollmentMethods</span><span class="op">.</span><span class="nam">IN_PERSON</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t39" href="#t39">39</a></span><span class="t">            <span class="nam">eligibility_analytics</span><span class="op">.</span><span class="nam">selected_flow</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">flow</span><span class="op">,</span> <span class="nam">enrollment_method</span><span class="op">=</span><span class="nam">models</span><span class="op">.</span><span class="nam">EnrollmentMethods</span><span class="op">.</span><span class="nam">IN_PERSON</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t40" href="#t40">40</a></span><span class="t">            <span class="nam">eligibility_analytics</span><span class="op">.</span><span class="nam">started_eligibility</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">flow</span><span class="op">,</span> <span class="nam">enrollment_method</span><span class="op">=</span><span class="nam">models</span><span class="op">.</span><span class="nam">EnrollmentMethods</span><span class="op">.</span><span class="nam">IN_PERSON</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t41" href="#t41">41</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t42" href="#t42">42</a></span><span class="t">            <span class="nam">in_person_enrollment</span> <span class="op">=</span> <span class="nam">reverse</span><span class="op">(</span><span class="nam">routes</span><span class="op">.</span><span class="nam">IN_PERSON_ENROLLMENT</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -315,7 +315,7 @@
             <a class="nav" href="z_9a5e1802ee124b46_formats_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.1">coverage.py v7.6.1</a>,
-            created at 2024-10-01 21:00 +0000
+            created at 2024-10-01 21:23 +0000
         </p>
     </div>
 </footer>
