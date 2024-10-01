@@ -51,6 +51,7 @@ Crowdin is our translation platform. We use iBabbleon to provide our translation
 - Engage with client editorial/communications team to ensure English language and Spanish language copy are edited according to client style guides.
 - Ensure copy is synced between Figma, Ditto, and Crowdin.
 - Engage with the translation agency, [iBabbleOn](https://ibabbleon.com/), to get Spanish translations ready for Engineering.
+- Deliver production-ready copy, with Spanish translations, to Engineering at Design Hand-Off meeting via a synced Figma file in the main branch.
 
 ### Engineering
 
