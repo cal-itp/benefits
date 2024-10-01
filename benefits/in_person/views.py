@@ -178,7 +178,10 @@ def reenrollment_error(request):
 
 def retry(request):
     """View handler for card verification failure."""
-    enrollment_analytics.returned_retry(request, enrollment_method=models.EnrollmentMethods.IN_PERSON)
+    # enforce POST-only route for sending analytics
+    if request.method == "POST":
+        enrollment_analytics.returned_retry(request, enrollment_method=models.EnrollmentMethods.IN_PERSON)
+
     agency = session.agency(request)
     context = {
         **admin_site.each_context(request),
