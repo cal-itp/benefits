@@ -15,6 +15,7 @@
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
           crossorigin="anonymous">
     <link href="{% static "css/admin/styles.css" %}" rel="stylesheet">
+    {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
 {% endblock extrastyle %}
 
 {% block branding %}

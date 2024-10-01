@@ -10,6 +10,8 @@ import sentry_sdk
 
 from benefits.routes import routes
 from benefits.core import models, session
+from benefits.eligibility import analytics as eligibility_analytics
+from benefits.enrollment import analytics as enrollment_analytics
 from benefits.enrollment.enrollment import Status, request_card_tokenization_access, enroll
 
 from benefits.in_person import forms
@@ -34,6 +36,8 @@ def eligibility(request):
             flow_id = form.cleaned_data.get("flow")
             flow = models.EnrollmentFlow.objects.get(id=flow_id)
             session.update(request, flow=flow)
+            eligibility_analytics.selected_verifier(request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
+            eligibility_analytics.started_eligibility(request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
 
             in_person_enrollment = reverse(routes.IN_PERSON_ENROLLMENT)
             response = redirect(in_person_enrollment)
@@ -56,6 +60,9 @@ def token(request):
         elif response.status is Status.SYSTEM_ERROR or response.status is Status.EXCEPTION:
             logger.debug("Error occurred while requesting access token", exc_info=response.exception)
             sentry_sdk.capture_exception(response.exception)
+            enrollment_analytics.failed_access_token_request(
+                request, response.status_code, enrollment_method=models.EnrollmentMethods.IN_PERSON
+            )
 
             if response.status is Status.SYSTEM_ERROR:
                 redirect = reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
@@ -78,13 +85,14 @@ def enrollment(request):
         if not form.is_valid():
             raise Exception("Invalid card token form")
 
+        flow = session.flow(request)
+        eligibility_analytics.returned_success(request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
         card_token = form.cleaned_data.get("card_token")
         status, exception = enroll(request, card_token)
 
         match (status):
             case Status.SUCCESS:
                 agency = session.agency(request)
-                flow = session.flow(request)
                 expiry = session.enrollment_expiry(request)
                 verified_by = f"{request.user.first_name} {request.user.last_name}"
                 event = models.EnrollmentEvent.objects.create(
@@ -95,17 +103,29 @@ def enrollment(request):
                     expiration_datetime=expiry,
                 )
                 event.save()
+                enrollment_analytics.returned_success(
+                    request, flow.group_id, enrollment_method=models.EnrollmentMethods.IN_PERSON
+                )
                 return redirect(routes.IN_PERSON_ENROLLMENT_SUCCESS)
 
             case Status.SYSTEM_ERROR:
+                enrollment_analytics.returned_error(
+                    request, str(exception), enrollment_method=models.EnrollmentMethods.IN_PERSON
+                )
                 sentry_sdk.capture_exception(exception)
                 return redirect(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
 
             case Status.EXCEPTION:
+                enrollment_analytics.returned_error(
+                    request, str(exception), enrollment_method=models.EnrollmentMethods.IN_PERSON
+                )
                 sentry_sdk.capture_exception(exception)
                 return redirect(routes.IN_PERSON_SERVER_ERROR)
 
             case Status.REENROLLMENT_ERROR:
+                enrollment_analytics.returned_error(
+                    request, "Re-enrollment error.", enrollment_method=models.EnrollmentMethods.IN_PERSON
+                )
                 return redirect(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR)
     # GET enrollment index
     else:
@@ -129,6 +149,7 @@ def enrollment(request):
             "card_tokenize_env": agency.transit_processor.card_tokenize_env,
             "card_tokenize_func": agency.transit_processor.card_tokenize_func,
             "card_tokenize_url": agency.transit_processor.card_tokenize_url,
+            "enrollment_method": models.EnrollmentMethods.IN_PERSON,
             "token_field": "card_token",
             "form_retry": tokenize_retry_form.id,
             "form_server_error": tokenize_server_error_form.id,
@@ -157,6 +178,10 @@ def reenrollment_error(request):
 
 def retry(request):
     """View handler for card verification failure."""
+    # enforce POST-only route for sending analytics
+    if request.method == "POST":
+        enrollment_analytics.returned_retry(request, enrollment_method=models.EnrollmentMethods.IN_PERSON)
+
     agency = session.agency(request)
     context = {
         **admin_site.each_context(request),
