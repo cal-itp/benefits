@@ -10,8 +10,8 @@ def test_OAuthEvent_flow_client_name_when_uses_claims_verification(app_request, 
 
     event = OAuthEvent(app_request, "event type")
 
-    assert "auth_provider" in event.event_properties
-    assert event.event_properties["auth_provider"] == mocked_flow.claims_provider.client_name
+    assert "claims_provider" in event.event_properties
+    assert event.event_properties["claims_provider"] == mocked_flow.claims_provider.client_name
 
 
 @pytest.mark.django_db
@@ -19,7 +19,7 @@ def test_OAuthEvent_flow_client_name_when_uses_claims_verification(app_request, 
 def test_OAuthEvent_flow_no_client_name_when_does_not_use_claims_verification(app_request):
     event = OAuthEvent(app_request, "event type")
 
-    assert "auth_provider" not in event.event_properties
+    assert "claims_provider" not in event.event_properties
 
 
 @pytest.mark.django_db

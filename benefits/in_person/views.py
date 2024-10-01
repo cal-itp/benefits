@@ -36,7 +36,7 @@ def eligibility(request):
             flow_id = form.cleaned_data.get("flow")
             flow = models.EnrollmentFlow.objects.get(id=flow_id)
             session.update(request, flow=flow)
-            eligibility_analytics.selected_verifier(request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
+            eligibility_analytics.selected_flow(request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
             eligibility_analytics.started_eligibility(request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
 
             in_person_enrollment = reverse(routes.IN_PERSON_ENROLLMENT)

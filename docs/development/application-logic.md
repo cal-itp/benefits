@@ -120,7 +120,7 @@ flowchart LR
 
     agency -. update -.-o session
     eligibility -. update -.-o session
-    eligibility -. selected eligibility verifier -.-o analytics
+    eligibility -. selected enrollment flow -.-o analytics
 ```
 
 Depending upon the choice of enrollment pathway, the _Next phase_ above may be:
