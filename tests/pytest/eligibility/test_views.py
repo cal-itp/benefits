@@ -73,7 +73,7 @@ def model_EnrollmentFlow_with_form_class(mocker, model_EnrollmentFlow):
 
 
 @pytest.mark.django_db
-def test_index_filtering_fows(mocker, model_TransitAgency, client):
+def test_index_filtering_flows(mocker, model_TransitAgency, client):
     digital = models.EnrollmentFlow.objects.create(
         transit_agency=model_TransitAgency,
         supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL],
