@@ -50,7 +50,7 @@ def test_eligibility_logged_in(admin_client):
 
 
 @pytest.mark.django_db
-def test_index_filtering_fows(mocker, model_TransitAgency, admin_client):
+def test_eligibility_logged_in_filtering_flows(mocker, model_TransitAgency, admin_client):
     digital = models.EnrollmentFlow.objects.create(
         transit_agency=model_TransitAgency, supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL], label="Digital"
     )
