@@ -99,7 +99,6 @@ def test_eligibility_post_valid_form_eligibility_verified(
     assert mocked_session_update.call_args.kwargs["flow"] == model_EnrollmentFlow
     mocked_eligibility_analytics_module.selected_flow.assert_called_once()
     mocked_eligibility_analytics_module.started_eligibility.assert_called_once()
-    # mocked_eligibility_analytics_module.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -304,6 +303,7 @@ def test_enrollment_post_valid_form_success(
     mocker,
     admin_client,
     card_tokenize_form_data,
+    mocked_eligibility_analytics_module,
     mocked_enrollment_analytics_module,
     model_TransitAgency,
     model_EnrollmentFlow,
@@ -329,6 +329,7 @@ def test_enrollment_post_valid_form_success(
 
     assert response.status_code == 302
     assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_SUCCESS)
+    mocked_eligibility_analytics_module.returned_success.assert_called_once()
     mocked_enrollment_analytics_module.returned_success.assert_called_once()
 
 
