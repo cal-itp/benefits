@@ -28,6 +28,11 @@ def mocked_eligibility_analytics_module(mocker):
 
 
 @pytest.fixture
+def mocked_enrollment_analytics_module(mocker):
+    return mocker.patch.object(benefits.in_person.views, "enrollment_analytics")
+
+
+@pytest.fixture
 def mocked_sentry_sdk_module(mocker):
     return mocker.patch.object(benefits.in_person.views, "sentry_sdk")
 
@@ -153,7 +158,7 @@ def test_token_valid(mocker, admin_client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_system_error(mocker, admin_client, mocked_sentry_sdk_module):
+def test_token_system_error(mocker, admin_client, mocked_enrollment_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
     mock_error = {"message": "Mock error message"}
@@ -176,12 +181,14 @@ def test_token_system_error(mocker, admin_client, mocked_sentry_sdk_module):
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
+    mocked_enrollment_analytics_module.failed_access_token_request.assert_called_once()
+    assert 500 in mocked_enrollment_analytics_module.failed_access_token_request.call_args.args
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_http_error_400(mocker, admin_client, mocked_sentry_sdk_module):
+def test_token_http_error_400(mocker, admin_client, mocked_enrollment_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
     mock_error = {"message": "Mock error message"}
@@ -204,12 +211,14 @@ def test_token_http_error_400(mocker, admin_client, mocked_sentry_sdk_module):
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.IN_PERSON_SERVER_ERROR)
+    mocked_enrollment_analytics_module.failed_access_token_request.assert_called_once()
+    assert 400 in mocked_enrollment_analytics_module.failed_access_token_request.call_args.args
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_misconfigured_client_id(mocker, admin_client, mocked_sentry_sdk_module):
+def test_token_misconfigured_client_id(mocker, admin_client, mocked_enrollment_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
     exception = UnsupportedTokenTypeError()
@@ -229,12 +238,13 @@ def test_token_misconfigured_client_id(mocker, admin_client, mocked_sentry_sdk_m
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.IN_PERSON_SERVER_ERROR)
+    mocked_enrollment_analytics_module.failed_access_token_request.assert_called_once()
     mocked_sentry_sdk_module.capture_exception_assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_connection_error(mocker, admin_client, mocked_sentry_sdk_module):
+def test_token_connection_error(mocker, admin_client, mocked_enrollment_analytics_module, mocked_sentry_sdk_module):
     mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
 
     exception = ConnectionError()
@@ -254,6 +264,7 @@ def test_token_connection_error(mocker, admin_client, mocked_sentry_sdk_module):
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.IN_PERSON_SERVER_ERROR)
+    mocked_enrollment_analytics_module.failed_access_token_request.assert_called_once()
     mocked_sentry_sdk_module.capture_exception_assert_called_once()
 
 
