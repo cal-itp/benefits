@@ -33,8 +33,10 @@ dev = [
 test = [
     "coverage",
     "pytest",
+    "playwright",
     "pytest-django",
     "pytest-mock",
+    "pytest-playwright",
     "pytest-socket",
 ]
 
