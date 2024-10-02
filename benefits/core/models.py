@@ -105,6 +105,152 @@ class ClaimsProvider(models.Model):
         return self.client_name
 
 
+class TransitProcessor(models.Model):
+    """An entity that applies transit agency fare rules to rider transactions."""
+
+    id = models.AutoField(primary_key=True)
+    name = models.TextField(help_text="Primary internal display name for this TransitProcessor instance, e.g. in the Admin.")
+    api_base_url = models.TextField(help_text="The absolute base URL for the TransitProcessor's API, including https://.")
+    card_tokenize_url = models.TextField(
+        help_text="The absolute URL for the client-side card tokenization library provided by the TransitProcessor."
+    )
+    card_tokenize_func = models.TextField(
+        help_text="The function from the card tokenization library to call on the client to initiate the process."
+    )
+    card_tokenize_env = models.TextField(help_text="The environment in which card tokenization is occurring.")
+    portal_url = models.TextField(
+        null=True, blank=True, help_text="The absolute base URL for the TransitProcessor's control portal, including https://."
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class TransitAgency(models.Model):
+    """An agency offering transit service."""
+
+    id = models.AutoField(primary_key=True)
+    active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
+    slug = models.TextField(help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}")
+    short_name = models.TextField(help_text="The user-facing short name for this agency. Often an uppercase acronym.")
+    long_name = models.TextField(
+        help_text="The user-facing long name for this agency. Often the short_name acronym, spelled out."
+    )
+    info_url = models.URLField(help_text="URL of a website/page with more information about the agency's discounts")
+    phone = models.TextField(help_text="Agency customer support phone number")
+    index_template = models.TextField(help_text="The template used for this agency's landing page")
+    eligibility_index_template = models.TextField(help_text="The template used for this agency's eligibility landing page")
+    eligibility_api_id = models.TextField(help_text="The identifier for this agency used in Eligibility API calls.")
+    eligibility_api_private_key = models.ForeignKey(
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        help_text="Private key used to sign Eligibility API tokens created on behalf of this Agency.",
+    )
+    eligibility_api_public_key = models.ForeignKey(
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        help_text="Public key corresponding to the agency's private key, used by Eligibility Verification servers to encrypt responses.",  # noqa: E501
+    )
+    eligibility_api_jws_signing_alg = models.TextField(
+        help_text="The JWS-compatible signing algorithm used in Eligibility API calls."
+    )
+    transit_processor = models.ForeignKey(TransitProcessor, on_delete=models.PROTECT)
+    transit_processor_audience = models.TextField(
+        help_text="This agency's audience value used to access the TransitProcessor's API.", default=""
+    )
+    transit_processor_client_id = models.TextField(
+        help_text="This agency's client_id value used to access the TransitProcessor's API.", default=""
+    )
+    transit_processor_client_secret_name = SecretNameField(
+        help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
+        default="",
+    )
+    staff_group = models.OneToOneField(
+        Group,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        default=None,
+        help_text="The group of users associated with this TransitAgency.",
+        related_name="transit_agency",
+    )
+    sso_domain = models.TextField(
+        null=True,
+        blank=True,
+        default="",
+        help_text="The email domain of users to automatically add to this agency's staff group upon login.",
+    )
+    customer_service_group = models.OneToOneField(
+        Group,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        default=None,
+        help_text="The group of users who are allowed to do in-person eligibility verification and enrollment.",
+        related_name="+",
+    )
+
+    def __str__(self):
+        return self.long_name
+
+    @property
+    def index_url(self):
+        """Public-facing URL to the TransitAgency's landing page."""
+        return reverse(routes.AGENCY_INDEX, args=[self.slug])
+
+    @property
+    def eligibility_index_url(self):
+        """Public facing URL to the TransitAgency's eligibility page."""
+        return reverse(routes.AGENCY_ELIGIBILITY_INDEX, args=[self.slug])
+
+    @property
+    def eligibility_api_private_key_data(self):
+        """This Agency's private key as a string."""
+        return self.eligibility_api_private_key.data
+
+    @property
+    def eligibility_api_public_key_data(self):
+        """This Agency's public key as a string."""
+        return self.eligibility_api_public_key.data
+
+    @property
+    def transit_processor_client_secret(self):
+        return get_secret_by_name(self.transit_processor_client_secret_name)
+
+    @property
+    def enrollment_flows(self):
+        return self.enrollmentflow_set
+
+    @staticmethod
+    def by_id(id):
+        """Get a TransitAgency instance by its ID."""
+        logger.debug(f"Get {TransitAgency.__name__} by id: {id}")
+        return TransitAgency.objects.get(id=id)
+
+    @staticmethod
+    def by_slug(slug):
+        """Get a TransitAgency instance by its slug."""
+        logger.debug(f"Get {TransitAgency.__name__} by slug: {slug}")
+        return TransitAgency.objects.filter(slug=slug).first()
+
+    @staticmethod
+    def all_active():
+        """Get all TransitAgency instances marked active."""
+        logger.debug(f"Get all active {TransitAgency.__name__}")
+        return TransitAgency.objects.filter(active=True)
+
+    @staticmethod
+    def for_user(user: User):
+        for group in user.groups.all():
+            if hasattr(group, "transit_agency"):
+                return group.transit_agency  # this is looking at the TransitAgency's staff_group
+
+        # the loop above returns the first match found. Return None if no match was found.
+        return None
+
+
 class EnrollmentMethods:
     DIGITAL = "digital"
     IN_PERSON = "in_person"
@@ -204,7 +350,7 @@ class EnrollmentFlow(models.Model):
     )
     label = models.TextField(
         null=True,
-        help_text="A human readable label, not shown to end-users. Used as the display text in Admin.",
+        help_text="A human readable label, used as the display text in Admin.",
     )
     group_id = models.TextField(null=True, help_text="Reference to the TransitProcessor group for user enrollment")
     supports_expiration = models.BooleanField(
@@ -235,6 +381,7 @@ class EnrollmentFlow(models.Model):
         default=[EnrollmentMethods.DIGITAL, EnrollmentMethods.IN_PERSON],
         help_text="If the flow is supported by digital enrollment, in-person enrollment, or both",
     )
+    transit_agency = models.ForeignKey(TransitAgency, on_delete=models.PROTECT, null=True, blank=True)
 
     class Meta:
         ordering = ["display_order"]
@@ -311,149 +458,6 @@ class EnrollmentFlow(models.Model):
         if not self.claims_scheme_override:
             return self.claims_provider.scheme
         return self.claims_scheme_override
-
-
-class TransitProcessor(models.Model):
-    """An entity that applies transit agency fare rules to rider transactions."""
-
-    id = models.AutoField(primary_key=True)
-    name = models.TextField(help_text="Primary internal display name for this TransitProcessor instance, e.g. in the Admin.")
-    api_base_url = models.TextField(help_text="The absolute base URL for the TransitProcessor's API, including https://.")
-    card_tokenize_url = models.TextField(
-        help_text="The absolute URL for the client-side card tokenization library provided by the TransitProcessor."
-    )
-    card_tokenize_func = models.TextField(
-        help_text="The function from the card tokenization library to call on the client to initiate the process."
-    )
-    card_tokenize_env = models.TextField(help_text="The environment in which card tokenization is occurring.")
-    portal_url = models.TextField(
-        null=True, blank=True, help_text="The absolute base URL for the TransitProcessor's control portal, including https://."
-    )
-
-    def __str__(self):
-        return self.name
-
-
-class TransitAgency(models.Model):
-    """An agency offering transit service."""
-
-    id = models.AutoField(primary_key=True)
-    active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
-    enrollment_flows = models.ManyToManyField(EnrollmentFlow)
-    slug = models.TextField(help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}")
-    short_name = models.TextField(help_text="The user-facing short name for this agency. Often an uppercase acronym.")
-    long_name = models.TextField(
-        help_text="The user-facing long name for this agency. Often the short_name acronym, spelled out."
-    )
-    info_url = models.URLField(help_text="URL of a website/page with more information about the agency's discounts")
-    phone = models.TextField(help_text="Agency customer support phone number")
-    index_template = models.TextField(help_text="The template used for this agency's landing page")
-    eligibility_index_template = models.TextField(help_text="The template used for this agency's eligibility landing page")
-    eligibility_api_id = models.TextField(help_text="The identifier for this agency used in Eligibility API calls.")
-    eligibility_api_private_key = models.ForeignKey(
-        PemData,
-        related_name="+",
-        on_delete=models.PROTECT,
-        help_text="Private key used to sign Eligibility API tokens created on behalf of this Agency.",
-    )
-    eligibility_api_public_key = models.ForeignKey(
-        PemData,
-        related_name="+",
-        on_delete=models.PROTECT,
-        help_text="Public key corresponding to the agency's private key, used by Eligibility Verification servers to encrypt responses.",  # noqa: E501
-    )
-    eligibility_api_jws_signing_alg = models.TextField(
-        help_text="The JWS-compatible signing algorithm used in Eligibility API calls."
-    )
-    transit_processor = models.ForeignKey(TransitProcessor, on_delete=models.PROTECT)
-    transit_processor_audience = models.TextField(
-        help_text="This agency's audience value used to access the TransitProcessor's API.", default=""
-    )
-    transit_processor_client_id = models.TextField(
-        help_text="This agency's client_id value used to access the TransitProcessor's API.", default=""
-    )
-    transit_processor_client_secret_name = SecretNameField(
-        help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
-        default="",
-    )
-    staff_group = models.OneToOneField(
-        Group,
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        default=None,
-        help_text="The group of users associated with this TransitAgency.",
-        related_name="transit_agency",
-    )
-    sso_domain = models.TextField(
-        null=True,
-        blank=True,
-        default="",
-        help_text="The email domain of users to automatically add to this agency's staff group upon login.",
-    )
-    customer_service_group = models.OneToOneField(
-        Group,
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        default=None,
-        help_text="The group of users who are allowed to do in-person eligibility verification and enrollment.",
-        related_name="+",
-    )
-
-    def __str__(self):
-        return self.long_name
-
-    @property
-    def index_url(self):
-        """Public-facing URL to the TransitAgency's landing page."""
-        return reverse(routes.AGENCY_INDEX, args=[self.slug])
-
-    @property
-    def eligibility_index_url(self):
-        """Public facing URL to the TransitAgency's eligibility page."""
-        return reverse(routes.AGENCY_ELIGIBILITY_INDEX, args=[self.slug])
-
-    @property
-    def eligibility_api_private_key_data(self):
-        """This Agency's private key as a string."""
-        return self.eligibility_api_private_key.data
-
-    @property
-    def eligibility_api_public_key_data(self):
-        """This Agency's public key as a string."""
-        return self.eligibility_api_public_key.data
-
-    @property
-    def transit_processor_client_secret(self):
-        return get_secret_by_name(self.transit_processor_client_secret_name)
-
-    @staticmethod
-    def by_id(id):
-        """Get a TransitAgency instance by its ID."""
-        logger.debug(f"Get {TransitAgency.__name__} by id: {id}")
-        return TransitAgency.objects.get(id=id)
-
-    @staticmethod
-    def by_slug(slug):
-        """Get a TransitAgency instance by its slug."""
-        logger.debug(f"Get {TransitAgency.__name__} by slug: {slug}")
-        return TransitAgency.objects.filter(slug=slug).first()
-
-    @staticmethod
-    def all_active():
-        """Get all TransitAgency instances marked active."""
-        logger.debug(f"Get all active {TransitAgency.__name__}")
-        return TransitAgency.objects.filter(active=True)
-
-    @staticmethod
-    def for_user(user: User):
-        for group in user.groups.all():
-            if hasattr(group, "transit_agency"):
-                return group.transit_agency  # this is looking at the TransitAgency's staff_group
-
-        # the loop above returns the first match found. Return None if no match was found.
-        return None
 
 
 class EnrollmentEvent(models.Model):

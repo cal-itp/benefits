@@ -120,7 +120,7 @@ def test_EnrollmentFlow_str(model_EnrollmentFlow):
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_supports_expiration_False(model_EnrollmentFlow_does_not_support_expiration):
+def test_EnrollmentFlow_supports_expiration_False(model_EnrollmentFlow, model_EnrollmentFlow_does_not_support_expiration):
     # test will fail if any error is raised
     model_EnrollmentFlow_does_not_support_expiration.full_clean()
 
@@ -168,8 +168,8 @@ def test_EnrollmentFlow_supports_expiration(model_EnrollmentFlow_supports_expira
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_enrollment_index_template():
-    new_flow = EnrollmentFlow.objects.create()
+def test_EnrollmentFlow_enrollment_index_template(model_TransitAgency):
+    new_flow = EnrollmentFlow.objects.create(transit_agency=model_TransitAgency)
 
     assert new_flow.enrollment_index_template == "enrollment/index.html"
 
@@ -180,15 +180,15 @@ def test_EnrollmentFlow_enrollment_index_template():
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_enrollment_success_template():
-    new_flow = EnrollmentFlow.objects.create()
+def test_EnrollmentFlow_enrollment_success_template(model_TransitAgency):
+    new_flow = EnrollmentFlow.objects.create(transit_agency=model_TransitAgency)
 
     assert new_flow.enrollment_success_template == "enrollment/success.html"
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_supported_enrollment_methods():
-    new_flow = EnrollmentFlow.objects.create()
+def test_EnrollmentFlow_supported_enrollment_methods(model_TransitAgency):
+    new_flow = EnrollmentFlow.objects.create(transit_agency=model_TransitAgency)
 
     assert new_flow.supported_enrollment_methods == ["digital", "in_person"]
 
