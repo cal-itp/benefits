@@ -94,6 +94,7 @@ def test_eligibility_post_valid_form_eligibility_verified(
     assert mocked_session_update.call_args.kwargs["flow"] == model_EnrollmentFlow
     mocked_eligibility_analytics_module.selected_flow.assert_called_once()
     mocked_eligibility_analytics_module.started_eligibility.assert_called_once()
+    # mocked_eligibility_analytics_module.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
