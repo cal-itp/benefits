@@ -76,7 +76,7 @@ def test_eligibility_logged_in_filtering_flows(mocker, model_TransitAgency, admi
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_confirm_post_valid_form_eligibility_verified(admin_client):
+def test_eligibility_post_valid_form_eligibility_verified(admin_client):
 
     path = reverse(routes.IN_PERSON_ELIGIBILITY)
     form_data = {"flow": 1, "verified": True}
@@ -88,7 +88,7 @@ def test_confirm_post_valid_form_eligibility_verified(admin_client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency")
-def test_confirm_post_valid_form_eligibility_unverified(admin_client):
+def test_eligibility_post_valid_form_eligibility_unverified(admin_client):
 
     path = reverse(routes.IN_PERSON_ELIGIBILITY)
     form_data = {"flow": 1, "verified": False}
