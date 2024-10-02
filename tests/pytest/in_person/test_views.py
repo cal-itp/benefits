@@ -23,6 +23,11 @@ def invalid_form_data():
 
 
 @pytest.fixture
+def mocked_eligibility_analytics_module(mocker):
+    return mocker.patch.object(benefits.in_person.views, "eligibility_analytics")
+
+
+@pytest.fixture
 def mocked_sentry_sdk_module(mocker):
     return mocker.patch.object(benefits.in_person.views, "sentry_sdk")
 
@@ -76,7 +81,7 @@ def test_eligibility_logged_in_filtering_flows(mocker, model_TransitAgency, admi
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_eligibility_post_valid_form_eligibility_verified(admin_client):
+def test_eligibility_post_valid_form_eligibility_verified(admin_client, mocked_eligibility_analytics_module):
 
     path = reverse(routes.IN_PERSON_ELIGIBILITY)
     form_data = {"flow": 1, "verified": True}
@@ -84,6 +89,8 @@ def test_eligibility_post_valid_form_eligibility_verified(admin_client):
 
     assert response.status_code == 302
     assert response.url == reverse(routes.IN_PERSON_ENROLLMENT)
+    mocked_eligibility_analytics_module.selected_flow.assert_called_once()
+    mocked_eligibility_analytics_module.started_eligibility.assert_called_once()
 
 
 @pytest.mark.django_db
