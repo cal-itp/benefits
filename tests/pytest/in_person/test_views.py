@@ -301,7 +301,13 @@ def test_enrollment_post_invalid_form(admin_client, invalid_form_data):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
 def test_enrollment_post_valid_form_success(
-    mocker, admin_client, card_tokenize_form_data, model_TransitAgency, model_EnrollmentFlow, model_User
+    mocker,
+    admin_client,
+    card_tokenize_form_data,
+    mocked_enrollment_analytics_module,
+    model_TransitAgency,
+    model_EnrollmentFlow,
+    model_User,
 ):
     mocker.patch("benefits.in_person.views.enroll", return_value=(Status.SUCCESS, None))
     spy = mocker.spy(benefits.in_person.views.models.EnrollmentEvent.objects, "create")
@@ -323,11 +329,14 @@ def test_enrollment_post_valid_form_success(
 
     assert response.status_code == 302
     assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_SUCCESS)
+    mocked_enrollment_analytics_module.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
-def test_enrollment_post_valid_form_system_error(mocker, admin_client, card_tokenize_form_data, mocked_sentry_sdk_module):
+def test_enrollment_post_valid_form_system_error(
+    mocker, admin_client, card_tokenize_form_data, mocked_enrollment_analytics_module, mocked_sentry_sdk_module
+):
     mocker.patch("benefits.in_person.views.enroll", return_value=(Status.SYSTEM_ERROR, None))
 
     path = reverse(routes.IN_PERSON_ENROLLMENT)
@@ -335,12 +344,15 @@ def test_enrollment_post_valid_form_system_error(mocker, admin_client, card_toke
 
     assert response.status_code == 302
     assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
+    mocked_enrollment_analytics_module.returned_error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
-def test_enrollment_post_valid_form_exception(mocker, admin_client, card_tokenize_form_data, mocked_sentry_sdk_module):
+def test_enrollment_post_valid_form_exception(
+    mocker, admin_client, card_tokenize_form_data, mocked_enrollment_analytics_module, mocked_sentry_sdk_module
+):
     mocker.patch("benefits.in_person.views.enroll", return_value=(Status.EXCEPTION, None))
 
     path = reverse(routes.IN_PERSON_ENROLLMENT)
@@ -348,12 +360,15 @@ def test_enrollment_post_valid_form_exception(mocker, admin_client, card_tokeniz
 
     assert response.status_code == 302
     assert response.url == reverse(routes.IN_PERSON_SERVER_ERROR)
+    mocked_enrollment_analytics_module.returned_error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
-def test_enrollment_post_valid_form_reenrollment_error(mocker, admin_client, card_tokenize_form_data):
+def test_enrollment_post_valid_form_reenrollment_error(
+    mocker, admin_client, card_tokenize_form_data, mocked_enrollment_analytics_module
+):
     mocker.patch("benefits.in_person.views.enroll", return_value=(Status.REENROLLMENT_ERROR, None))
 
     path = reverse(routes.IN_PERSON_ENROLLMENT)
@@ -361,6 +376,7 @@ def test_enrollment_post_valid_form_reenrollment_error(mocker, admin_client, car
 
     assert response.status_code == 302
     assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR)
+    mocked_enrollment_analytics_module.returned_error.assert_called_once()
 
 
 @pytest.mark.django_db
