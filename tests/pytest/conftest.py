@@ -6,15 +6,14 @@ from django.utils import timezone
 
 import pytest
 
-# from pytest_socket import disable_socket
+from pytest_socket import disable_socket
 
 from benefits.core import session
 from benefits.core.models import ClaimsProvider, EnrollmentFlow, TransitProcessor, PemData, TransitAgency
 
 
 def pytest_runtest_setup():
-    # disable_socket()
-    pass
+    disable_socket()
 
 
 @pytest.fixture
