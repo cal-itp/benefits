@@ -392,13 +392,26 @@ def test_reenrollment_error(admin_client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_flow", "mocked_session_agency")
-def test_retry(admin_client):
+def test_retry(admin_client, mocked_enrollment_analytics_module):
     path = reverse(routes.IN_PERSON_ENROLLMENT_RETRY)
 
     response = admin_client.get(path)
 
     assert response.status_code == 200
     assert response.template_name == "in_person/enrollment/retry.html"
+    mocked_enrollment_analytics_module.returned_retry.assert_not_called()
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_agency")
+def test_retry_post(admin_client, mocked_enrollment_analytics_module):
+    path = reverse(routes.IN_PERSON_ENROLLMENT_RETRY)
+
+    response = admin_client.post(path)
+
+    assert response.status_code == 200
+    assert response.template_name == "in_person/enrollment/retry.html"
+    mocked_enrollment_analytics_module.returned_retry.assert_called_once()
 
 
 @pytest.mark.django_db
