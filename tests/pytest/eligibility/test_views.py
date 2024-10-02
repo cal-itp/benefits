@@ -80,6 +80,7 @@ def test_index_get_agency_multiple_flows(mocker, model_TransitAgency, model_Enro
     mock_manager = mocker.Mock()
     mock_manager.all.return_value = [model_EnrollmentFlow, model_EnrollmentFlow]
     type(mock_agency).enrollment_flows = mocker.PropertyMock(return_value=mock_manager)
+    type(mock_agency).enrollment_flows.filter.return_value = [model_EnrollmentFlow, model_EnrollmentFlow]
 
     mock_agency.index_url = "/agency"
     mock_agency.eligibility_index_template = "eligibility/index.html"
@@ -103,6 +104,7 @@ def test_index_get_agency_single_flow(mocker, model_TransitAgency, model_Enrollm
     mock_manager = mocker.Mock()
     mock_manager.all.return_value = [model_EnrollmentFlow]
     type(mock_agency).enrollment_flows = mocker.PropertyMock(return_value=mock_manager)
+    type(mock_agency).enrollment_flows.filter.return_value = [model_EnrollmentFlow, model_EnrollmentFlow]
 
     mock_agency.index_url = "/agency"
     mock_agency.eligibility_index_template = "eligibility/index.html"
