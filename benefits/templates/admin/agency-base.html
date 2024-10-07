@@ -36,45 +36,46 @@
             {% block welcome-msg %}
                 <span class="text-uppercase text-white">
                     Welcome,
-                    <span class="fw-bold">{% firstof user.get_short_name user.get_username %}</span>. </span>
-                {% endblock welcome-msg %}
-                {% block userlinks %}
-                    {% if user.is_active and user.is_staff %}
-                        {% url 'django-admindocs-docroot' as docsroot %}
-                        {% if docsroot %}<a href="{{ docsroot }}">Documentation</a> /{% endif %}
-                    {% endif %}
-                    {% if user.has_usable_password %}
-                        <a href="{% url 'admin:password_change' %}">Change password</a> /
-                    {% endif %}
-                    <img class="icon" width="15" height="15" src="{% static "img/icon/box-arrow-right.svg" %}" alt="" />
-                    <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="border-0">Log out</button>
-                    </form>
-                {% endblock userlinks %}
-            </div>
-        {% endif %}
-    {% endblock usertools %}
+                    <span class="fw-bold">{% firstof user.get_short_name user.get_username %}</span>.
+                </span>
+            {% endblock welcome-msg %}
+            {% block userlinks %}
+                {% if user.is_active and user.is_staff %}
+                    {% url 'django-admindocs-docroot' as docsroot %}
+                    {% if docsroot %}<a href="{{ docsroot }}">Documentation</a> /{% endif %}
+                {% endif %}
+                {% if user.has_usable_password %}
+                    <a href="{% url 'admin:password_change' %}">Change password</a> /
+                {% endif %}
+                <img class="icon" width="15" height="15" src="{% static "img/icon/box-arrow-right.svg" %}" alt="" />
+                <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="border-0">Log out</button>
+                </form>
+            {% endblock userlinks %}
+        </div>
+    {% endif %}
+{% endblock usertools %}
 
-    {% block coltype %}
-        w-100
-    {% endblock coltype %}
+{% block coltype %}
+    w-100
+{% endblock coltype %}
 
-    {% block bodyclass %}
-        {{ block.super }} dashboard
-    {% endblock bodyclass %}
+{% block bodyclass %}
+    {{ block.super }} dashboard
+{% endblock bodyclass %}
 
-    {% block nav-breadcrumbs %}
-    {% endblock nav-breadcrumbs %}
+{% block nav-breadcrumbs %}
+{% endblock nav-breadcrumbs %}
 
-    {% block nav-sidebar %}
-    {% endblock nav-sidebar %}
+{% block nav-sidebar %}
+{% endblock nav-sidebar %}
 
-    {% block content_title %}
-    {% endblock content_title %}
+{% block content_title %}
+{% endblock content_title %}
 
-    {% block content %}
-    {% endblock content %}
+{% block content %}
+{% endblock content %}
 
-    {% block sidebar %}
-    {% endblock sidebar %}
+{% block sidebar %}
+{% endblock sidebar %}
