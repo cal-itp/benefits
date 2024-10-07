@@ -12,11 +12,5 @@
 {% endblock extrastyle %}
 
 {% block branding %}
-    <div class="d-flex justify-content-center w-100 bg-primary">
-        <img class="my-3" src="{% static "img/logo-lg.svg" %}" width="220" height="50" alt="California Integrated Travel Project: Benefits logo (large)" />
-    </div>
-
-    <div id="site-name">
-        <h1 class="text-center text-white fs-3 py-3 m-0">{{ site_header }}</h1>
-    </div>
+    {% include "admin/includes/branding-login.html" %}
 {% endblock branding %}
