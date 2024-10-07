@@ -253,7 +253,7 @@ def test_enrollment_logged_in_get(admin_client):
 
     response = admin_client.get(path)
     assert response.status_code == 200
-    assert response.template_name == "in_person/enrollment.html"
+    assert response.template_name == "in_person/enrollment/index.html"
     assert "forms" in response.context_data
     assert "cta_button" in response.context_data
     assert "card_tokenize_env" in response.context_data
