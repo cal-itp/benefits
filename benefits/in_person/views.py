@@ -158,7 +158,7 @@ def enrollment(request):
             "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
         }
 
-        return TemplateResponse(request, "in_person/enrollment.html", context)
+        return TemplateResponse(request, "in_person/enrollment/index.html", context)
 
 
 def reenrollment_error(request):
