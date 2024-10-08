@@ -17,5 +17,13 @@ def test_get_started_link(page: Page):
 
     page.get_by_text("California State Transit (dev)").click()
 
+    page.get_by_label("Medicare Cardholder").click()
+
+    page.get_by_text("Choose this benefit").click()
+
+    page.get_by_text("Continue to Medicare.gov").click()
+
+    page.wait_for_timeout(5000)
+
     # # Expects page to have a heading with the name of Installation.
     # expect(page.get("heading", name="Installation")).to_be_visible()

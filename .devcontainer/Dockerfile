@@ -9,13 +9,12 @@ USER $USER
 # install devcontainer requirements
 RUN pip install -e .[dev,test]
 
-# USER root
-# RUN pip install playwright
-# RUN pip install pytest-playwright playwright -U
-# RUN playwright install-deps
+USER root
+RUN pip install pytest-playwright playwright -U
+RUN playwright install-deps
 
-# USER $USER
-# RUN playwright install
+USER $USER
+RUN playwright install
 
 # docs requirements are in a separate file for the GitHub Action
 COPY docs/requirements.txt docs/requirements.txt
