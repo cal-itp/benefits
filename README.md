@@ -20,14 +20,14 @@
 | benefits/core/views.py               |       65 |        0 |       38 |        0 |    100% |           |
 | benefits/core/widgets.py             |       25 |        1 |        6 |        3 |     87% |17, 18->exit, 40->43 |
 | benefits/eligibility/\_\_init\_\_.py |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/eligibility/analytics.py    |       27 |        2 |        2 |        1 |     90% |39->exit, 55, 60 |
+| benefits/eligibility/analytics.py    |       27 |        4 |        2 |        1 |     83% |21, 39->exit, 45, 55, 60 |
 | benefits/eligibility/apps.py         |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/forms.py        |       66 |        2 |       16 |        2 |     95% |   42, 142 |
 | benefits/eligibility/urls.py         |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/verify.py       |       16 |        0 |        6 |        0 |    100% |           |
 | benefits/eligibility/views.py        |       89 |        1 |       58 |        2 |     98% |48, 105->exit |
 | benefits/enrollment/\_\_init\_\_.py  |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment/analytics.py     |       21 |        1 |        6 |        1 |     93% |13->15, 35 |
+| benefits/enrollment/analytics.py     |       21 |        4 |        6 |        3 |     74% |13->15, 16, 24->exit, 35, 40, 49 |
 | benefits/enrollment/apps.py          |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/enrollment.py    |       96 |        0 |       28 |        1 |     99% |  170->169 |
 | benefits/enrollment/forms.py         |       14 |        0 |        0 |        0 |    100% |           |
@@ -37,7 +37,7 @@
 | benefits/in\_person/apps.py          |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/forms.py         |       21 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/urls.py          |        6 |        0 |        0 |        0 |    100% |           |
-| benefits/in\_person/views.py         |      107 |        1 |       26 |        3 |     97% |60->75, 125->exit, 183 |
+| benefits/in\_person/views.py         |      107 |        0 |       26 |        2 |     98% |60->75, 125->exit |
 | benefits/locale/\_\_init\_\_.py      |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/\_\_init\_\_.py   |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/formats.py        |        1 |        0 |        0 |        0 |    100% |           |
@@ -57,7 +57,7 @@
 | benefits/settings.py                 |      127 |        6 |       22 |        8 |     91% |103, 124->129, 140->143, 159, 313, 315, 330, 342 |
 | benefits/urls.py                     |       22 |        7 |        2 |        1 |     67% |     35-49 |
 | benefits/wsgi.py                     |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                            **TOTAL** | **1988** |   **93** |  **568** |   **39** | **94%** |           |
+|                            **TOTAL** | **1988** |   **97** |  **568** |   **40** | **94%** |           |
 
 
 ## Setup coverage badge
