@@ -312,7 +312,7 @@ env_frame_src = _filter_empty(os.environ.get("DJANGO_CSP_FRAME_SRC", "").split("
 if RECAPTCHA_ENABLED:
     env_frame_src.append("https://www.google.com")
 if len(env_frame_src) > 0:
-    CSP_FRAME_SRC = env_frame_src
+    CSP_FRAME_SRC.extend(env_frame_src)
 
 CSP_IMG_SRC = [
     "'self'",
