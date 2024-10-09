@@ -1,6 +1,4 @@
-const { defineConfig } = require("cypress");
-
-module.exports = defineConfig({
+module.exports = {
   downloadsFolder: "downloads",
   fixturesFolder: "fixtures",
   screenshotsFolder: "screenshots",
@@ -15,5 +13,6 @@ module.exports = defineConfig({
     },
     specPattern: "specs/**/*.cy.{js,jsx,ts,tsx}",
     supportFile: false,
+    baseUrl: "http://localhost:11369",
   },
-});
+};
