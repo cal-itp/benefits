@@ -89,7 +89,7 @@ Read more on each of these events on the [Amplitude event documentation for Bene
 
 These events track the progress of a user who has successfully verified their eligibility and is enrolling their payment card with the system.
 
-- ended card tokenization
+- finished card tokenization
 - returned enrollment
 - started card tokenization
 
@@ -101,4 +101,4 @@ Various key metrics are collected and analyzed, including:
 
 - **Number of users who successfully completed authentication**: Users who `started sign in`, `finished sign in`
 - **Number of users who successfully verified eligibility**: Users who completed the above and `selected enrollment flow`, `started eligibility`, `returned eligibility` with a status of `True`
-- **Numbers of users who successfully completed enrollment**: Users who completed all of the above and `started card tokenization`, `ended card tokenization` and `returned enrollment` with a status of `Success`
+- **Numbers of users who successfully completed enrollment**: Users who completed all of the above and `started card tokenization`, `finished card tokenization` and `returned enrollment` with a status of `success`
