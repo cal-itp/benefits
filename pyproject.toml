@@ -44,7 +44,7 @@ Documentation = "https://docs.calitp.org/benefits"
 Issues = "https://github.com/cal-itp/benefits/issues"
 
 [build-system]
-requires = ["setuptools>=65", "wheel", "setuptools-scm>=8"]
+requires = ["setuptools>=65", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [tool.black]
@@ -79,8 +79,9 @@ markers = [
     "request_path: use with session_request to initialize with the given path",
 ]
 
-[tool.setuptools]
-packages = ["benefits"]
+[tool.setuptools.packages.find]
+include = ["benefits*"]
+namespaces = false
 
 [tool.setuptools_scm]
 # intentionally left blank, but we need the section header to activate the tool
