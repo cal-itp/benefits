@@ -274,7 +274,7 @@ user-->>user: display Littlepay overlay
 user-->>analytics: started card tokenization
 user->>littlepay: provides debit or credit card details
 littlepay-->>user: card token
-user-->>analytics: ended card tokenization
+user-->>analytics: finished card tokenization
 user->>benefits: POST back card token
     deactivate user
     activate benefits
