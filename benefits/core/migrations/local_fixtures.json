@@ -85,7 +85,7 @@
       "selection_label_template": "eligibility/includes/selection-label--senior.html",
       "eligibility_start_template": "eligibility/start--senior.html",
       "claims_scope": "verify:senior",
-      "claims_claim": "senior",
+      "claims_eligibility_claim": "senior",
       "supported_enrollment_methods": ["digital", "in_person"],
       "transit_agency": 1
     }
@@ -103,7 +103,7 @@
       "selection_label_template": "eligibility/includes/selection-label--veteran.html",
       "eligibility_start_template": "eligibility/start--veteran.html",
       "claims_scope": "verify:veteran",
-      "claims_claim": "veteran",
+      "claims_eligibility_claim": "veteran",
       "supported_enrollment_methods": ["digital", "in_person"],
       "transit_agency": 1
     }
@@ -152,7 +152,7 @@
       "eligibility_start_template": "eligibility/start--calfresh.html",
       "help_template": "core/includes/help--calfresh.html",
       "claims_scope": "verify:calfresh",
-      "claims_claim": "calfresh",
+      "claims_eligibility_claim": "calfresh",
       "supported_enrollment_methods": ["digital", "in_person"],
       "transit_agency": 1
     }
@@ -171,7 +171,7 @@
       "eligibility_start_template": "eligibility/start--medicare.html",
       "help_template": "core/includes/help--medicare.html",
       "claims_scope": "verify:medicare",
-      "claims_claim": "medicare",
+      "claims_eligibility_claim": "medicare",
       "supported_enrollment_methods": ["digital", "in_person"],
       "transit_agency": 1
     }

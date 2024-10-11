@@ -60,7 +60,7 @@ def test_eligibility_from_oauth_does_not_use_claims_verification(
     # mocked_session_flow_does_not_use_claims_verification is Mocked version of the session.flow() function
     flow = mocked_session_flow_does_not_use_claims_verification.return_value
 
-    response = eligibility_from_oauth(flow, "claim", model_TransitAgency)
+    response = eligibility_from_oauth(flow, ["claim"], model_TransitAgency)
 
     assert response is False
 
@@ -69,9 +69,9 @@ def test_eligibility_from_oauth_does_not_use_claims_verification(
 def test_eligibility_from_oauth_claim_mismatch(mocked_session_flow_uses_claims_verification, model_TransitAgency):
     # mocked_session_flow_uses_claims_verification is Mocked version of the session.flow() function
     flow = mocked_session_flow_uses_claims_verification.return_value
-    flow.claims_claim = "claim"
+    flow.claims_eligibility_claim = "claim"
 
-    response = eligibility_from_oauth(flow, "some_other_claim", model_TransitAgency)
+    response = eligibility_from_oauth(flow, ["some_other_claim"], model_TransitAgency)
 
     assert response is False
 
@@ -80,8 +80,8 @@ def test_eligibility_from_oauth_claim_mismatch(mocked_session_flow_uses_claims_v
 def test_eligibility_from_oauth_claim_match(mocked_session_flow_uses_claims_verification, model_TransitAgency):
     # mocked_session_flow_uses_claims_verification is Mocked version of the session.flow() function
     flow = mocked_session_flow_uses_claims_verification.return_value
-    flow.claims_claim = "claim"
+    flow.claims_eligibility_claim = "claim"
 
-    response = eligibility_from_oauth(flow, "claim", model_TransitAgency)
+    response = eligibility_from_oauth(flow, ["claim"], model_TransitAgency)
 
     assert response is True

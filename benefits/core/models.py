@@ -282,9 +282,10 @@ class EnrollmentFlow(models.Model):
         blank=True,
         help_text="A space-separated list of identifiers used to specify what access privileges are being requested",
     )
-    claims_claim = models.TextField(
-        null=True, blank=True, help_text="The name of the claim (name/value pair) that is used to verify eligibility"
+    claims_eligibility_claim = models.TextField(
+        null=True, blank=True, help_text="The name of the claim that is used to verify eligibility"
     )
+    claims_extra_claims = models.TextField(null=True, blank=True, help_text="A space-separated list of any additional claims")
     claims_scheme_override = models.TextField(
         help_text="The authentication scheme to use (Optional). If blank, defaults to the value in Claims providers",
         default=None,
@@ -404,7 +405,7 @@ class EnrollmentFlow(models.Model):
     @property
     def uses_claims_verification(self):
         """True if this flow verifies via the claims provider and has a scope and claim. False otherwise."""
-        return self.claims_provider is not None and bool(self.claims_scope) and bool(self.claims_claim)
+        return self.claims_provider is not None and bool(self.claims_scope) and bool(self.claims_eligibility_claim)
 
     @property
     def eligibility_verifier(self):
@@ -458,6 +459,13 @@ class EnrollmentFlow(models.Model):
         if not self.claims_scheme_override:
             return self.claims_provider.scheme
         return self.claims_scheme_override
+
+    @property
+    def claims_all_claims(self):
+        claims = [self.claims_eligibility_claim]
+        if self.claims_extra_claims is not None:
+            claims.extend(self.claims_extra_claims.split())
+        return claims
 
 
 class EnrollmentEvent(models.Model):
