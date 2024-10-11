@@ -193,6 +193,13 @@ def test_EnrollmentFlow_supported_enrollment_methods(model_TransitAgency):
     assert new_flow.supported_enrollment_methods == ["digital", "in_person"]
 
 
+@pytest.mark.django_db
+def test_EnrollmentFlow_claims_all_claims(model_EnrollmentFlow_with_scope_and_claim):
+    model_EnrollmentFlow_with_scope_and_claim.claims_extra_claims = "extra_claim1 extra_claim2"
+    model_EnrollmentFlow_with_scope_and_claim.save()
+    assert model_EnrollmentFlow_with_scope_and_claim.claims_all_claims == ["claim", "extra_claim1", "extra_claim2"]
+
+
 class SampleFormClass:
     """A class for testing EligibilityVerificationForm references."""
 

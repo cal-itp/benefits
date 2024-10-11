@@ -105,7 +105,7 @@ def model_EnrollmentFlow_with_eligibility_api(model_EnrollmentFlow, model_PemDat
 def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow, model_ClaimsProvider):
     model_EnrollmentFlow.claims_provider = model_ClaimsProvider
     model_EnrollmentFlow.claims_scope = "scope"
-    model_EnrollmentFlow.claims_claim = "claim"
+    model_EnrollmentFlow.claims_eligibility_claim = "claim"
     model_EnrollmentFlow.save()
 
     return model_EnrollmentFlow
