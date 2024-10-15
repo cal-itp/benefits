@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-10-08 13:36-0700\n"
+"POT-Creation-Date: 2024-10-15 15:13-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -53,6 +53,9 @@ msgstr "Ayuda"
 
 msgid "Privacy Policy"
 msgstr "Póliza de Privacidad"
+
+msgid "Powered by Compiler LLC"
+msgstr "TK Powered by Compiler LLC"
 
 msgid "What is Cal-ITP Benefits?"
 msgstr "¿Qué es Cal-ITP Benefits?"
