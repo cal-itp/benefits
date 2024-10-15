@@ -17,8 +17,7 @@
     <div class="media-body--details">
         <p>
             {% translate "You will be directed to our partner, " %}
-            {% include "core/includes/modal-trigger.html" with modal="modal--littlepay" text="Littlepay" period=False %}
-            {% translate ", to enter your contactless card details." %}
+            <!-- djlint:off --><a href="modal--littlepay" class="{{ classes }}" data-bs-toggle="modal" data-bs-target="#modal--littlepay">Littlepay</a>{% translate ", to enter your contactless card details." %}<!-- djlint:on -->
             {% translate "We don’t store your information, and you won’t be charged." %}
         </p>
         <p>{% translate "Please use a debit or credit card by Visa or Mastercard." %}</p>
