@@ -55,7 +55,7 @@ msgid "Privacy Policy"
 msgstr "Póliza de Privacidad"
 
 msgid "Powered by Compiler LLC"
-msgstr "TK Powered by Compiler LLC"
+msgstr "Desarrollado por Compiler LLC"
 
 msgid "What is Cal-ITP Benefits?"
 msgstr "¿Qué es Cal-ITP Benefits?"
