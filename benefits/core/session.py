@@ -26,7 +26,7 @@ _ENROLLMENT_TOKEN_EXP = "enrollment_token_expiry"
 _ENROLLMENT_EXP = "enrollment_expiry"
 _FLOW = "flow"
 _LANG = "lang"
-_OAUTH_CLAIM = "oauth_claim"
+_OAUTH_CLAIMS = "oauth_claims"
 _OAUTH_TOKEN = "oauth_token"
 _ORIGIN = "origin"
 _START = "start"
@@ -60,7 +60,7 @@ def context_dict(request):
         _ENROLLMENT_TOKEN_EXP: enrollment_token_expiry(request),
         _LANG: language(request),
         _OAUTH_TOKEN: oauth_token(request),
-        _OAUTH_CLAIM: oauth_claim(request),
+        _OAUTH_CLAIMS: oauth_claims(request),
         _ORIGIN: origin(request),
         _START: start(request),
         _UID: uid(request),
@@ -148,7 +148,7 @@ def logged_in(request):
 
 def logout(request):
     """Reset the session claims and tokens."""
-    update(request, oauth_claim=False, oauth_token=False, enrollment_token=False)
+    update(request, oauth_claims=[], oauth_token=False, enrollment_token=False)
 
 
 def oauth_token(request):
@@ -156,9 +156,9 @@ def oauth_token(request):
     return request.session.get(_OAUTH_TOKEN)
 
 
-def oauth_claim(request):
+def oauth_claims(request):
     """Get the oauth claim from the request's session, or None"""
-    return request.session.get(_OAUTH_CLAIM)
+    return request.session.get(_OAUTH_CLAIMS)
 
 
 def origin(request):
@@ -177,7 +177,7 @@ def reset(request):
     request.session[_ENROLLMENT_TOKEN] = None
     request.session[_ENROLLMENT_TOKEN_EXP] = None
     request.session[_OAUTH_TOKEN] = None
-    request.session[_OAUTH_CLAIM] = None
+    request.session[_OAUTH_CLAIMS] = None
 
     if _UID not in request.session or not request.session[_UID]:
         logger.debug("Reset session time and uid")
@@ -236,7 +236,7 @@ def update(
     enrollment_token=None,
     enrollment_token_exp=None,
     oauth_token=None,
-    oauth_claim=None,
+    oauth_claims=None,
     origin=None,
 ):
     """Update the request's session with non-null values."""
@@ -260,8 +260,8 @@ def update(
         request.session[_ENROLLMENT_TOKEN_EXP] = enrollment_token_exp
     if oauth_token is not None:
         request.session[_OAUTH_TOKEN] = oauth_token
-    if oauth_claim is not None:
-        request.session[_OAUTH_CLAIM] = oauth_claim
+    if oauth_claims is not None:
+        request.session[_OAUTH_CLAIMS] = oauth_claims
     if origin is not None:
         request.session[_ORIGIN] = origin
     if flow is not None and isinstance(flow, models.EnrollmentFlow):
