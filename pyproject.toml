@@ -13,7 +13,7 @@ dependencies = [
     "Authlib==1.3.2",
     "azure-keyvault-secrets==4.8.0",
     "azure-identity==1.19.0",
-    "Django==5.1.1",
+    "Django==5.1.2",
     "django-csp==3.8",
     "django-admin-sortable2==2.2.3",
     "django-google-sso==7.1.0",
