@@ -39,7 +39,7 @@ body:
       description: GitHub handle of who is responsible for smoke testing this release
       placeholder: "@cal-itp-bot"
     validations:
-      required: true
+      required: false
   - type: input
     id: version
     attributes:
@@ -48,6 +48,14 @@ body:
       placeholder: YYYY.0M.R
     validations:
       required: true
+  - type: input
+    id: slack
+    attributes:
+      label: Slack thread
+      description: Link to the Slack thread for this release
+      placeholder: "https://slack.com/archives/ABC/XZY"
+    validations:
+      required: false
   - type: markdown
     attributes:
       value: |
