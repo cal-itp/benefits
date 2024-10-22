@@ -81,4 +81,56 @@ class Migration(migrations.Migration):
                 help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}"
             ),
         ),
+        migrations.RenameField(
+            model_name="enrollmentflow",
+            old_name="eligibility_start_template",
+            new_name="eligibility_start_template_override",
+        ),
+        migrations.RenameField(
+            model_name="enrollmentflow",
+            old_name="enrollment_success_template",
+            new_name="enrollment_success_template_override",
+        ),
+        migrations.RenameField(
+            model_name="enrollmentflow",
+            old_name="selection_label_template",
+            new_name="selection_label_template_override",
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="system_name",
+            field=models.SlugField(
+                help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests.",  # noqa: E501
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="eligibility_start_template_override",
+            field=models.TextField(
+                blank=True,
+                default=None,
+                help_text="Override the default template for the informational page of this flow.",
+                null=True,
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="enrollment_success_template_override",
+            field=models.TextField(
+                blank=True,
+                default="enrollment/success.html",
+                help_text="Override the default template for a successful enrollment associated with the enrollment flow",
+                null=True,
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="selection_label_template_override",
+            field=models.TextField(
+                blank=True,
+                default=None,
+                help_text="Override the default template that defines the end-user UI for selecting this flow among other options.",  # noqa
+                null=True,
+            ),
+        ),
     ]

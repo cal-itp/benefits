@@ -320,6 +320,28 @@ def test_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow_with_claims_sche
 
 
 @pytest.mark.django_db
+def test_EnrollmentFlow_template_overrides(model_EnrollmentFlow):
+    assert model_EnrollmentFlow.selection_label_template == model_EnrollmentFlow.selection_label_template_override
+    assert model_EnrollmentFlow.eligibility_start_template == model_EnrollmentFlow.eligibility_start_template_override
+    assert model_EnrollmentFlow.enrollment_success_template == model_EnrollmentFlow.enrollment_success_template_override
+
+    model_EnrollmentFlow.selection_label_template_override = None
+    model_EnrollmentFlow.eligibility_start_template_override = None
+    model_EnrollmentFlow.enrollment_success_template_override = None
+    model_EnrollmentFlow.save()
+
+    assert (
+        model_EnrollmentFlow.selection_label_template
+        == f"eligibility/includes/selection-label--{model_EnrollmentFlow.system_name}.html"
+    )
+    assert model_EnrollmentFlow.eligibility_start_template == f"eligibility/start--{model_EnrollmentFlow.system_name}.html"
+    assert (
+        model_EnrollmentFlow.enrollment_success_template
+        == f"enrollment/success--{model_EnrollmentFlow.transit_agency.slug}.html"
+    )
+
+
+@pytest.mark.django_db
 def test_TransitProcessor_str(model_TransitProcessor):
     assert str(model_TransitProcessor) == model_TransitProcessor.name
 

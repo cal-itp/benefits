@@ -324,7 +324,7 @@ class EnrollmentFlow(models.Model):
     """Represents a user journey through the Benefits app for a single eligibility type."""
 
     id = models.AutoField(primary_key=True)
-    system_name = models.TextField(
+    system_name = models.SlugField(
         help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests."  # noqa: 501
     )
     display_order = models.PositiveSmallIntegerField(default=0, blank=False, null=False)
@@ -387,11 +387,17 @@ class EnrollmentFlow(models.Model):
         blank=True,
         help_text="The JWS-compatible signing algorithm to use in Eligibility API requests for this flow.",
     )
-    selection_label_template = models.TextField(
-        help_text="Path to a Django template that defines the end-user UI for selecting this flow among other options."
+    selection_label_template_override = models.TextField(
+        null=True,
+        blank=True,
+        default=None,
+        help_text="Override the default template that defines the end-user UI for selecting this flow among other options.",
     )
-    eligibility_start_template = models.TextField(
-        default="eligibility/start.html", help_text="Path to a Django template for the informational page of this flow."
+    eligibility_start_template_override = models.TextField(
+        null=True,
+        blank=True,
+        default=None,
+        help_text="Override the default template for the informational page of this flow.",
     )
     eligibility_form_class = models.TextField(
         null=True,
@@ -430,8 +436,11 @@ class EnrollmentFlow(models.Model):
     reenrollment_error_template = models.TextField(
         null=True, blank=True, help_text="Template for a re-enrollment error associated with the enrollment flow"
     )
-    enrollment_success_template = models.TextField(
-        default="enrollment/success.html", help_text="Template for a successful enrollment associated with the enrollment flow"
+    enrollment_success_template_override = models.TextField(
+        null=True,
+        blank=True,
+        default=None,
+        help_text="Override the default template for a successful enrollment associated with the enrollment flow",
     )
     supported_enrollment_methods = MultiSelectField(
         choices=SUPPORTED_METHODS,
@@ -461,6 +470,14 @@ class EnrollmentFlow(models.Model):
         return self.eligibility_api_public_key.data
 
     @property
+    def selection_label_template(self):
+        return self.selection_label_template_override or f"eligibility/includes/selection-label--{self.system_name}.html"
+
+    @property
+    def eligibility_start_template(self):
+        return self.eligibility_start_template_override or f"eligibility/start--{self.system_name}.html"
+
+    @property
     def uses_claims_verification(self):
         """True if this flow verifies via the claims provider and has a scope and claim. False otherwise."""
         return self.claims_provider is not None and bool(self.claims_scope) and bool(self.claims_eligibility_claim)
@@ -475,6 +492,10 @@ class EnrollmentFlow(models.Model):
             return self.claims_provider.client_name
         else:
             return self.eligibility_api_url
+
+    @property
+    def enrollment_success_template(self):
+        return self.enrollment_success_template_override or f"enrollment/success--{self.transit_agency.slug}.html"
 
     def eligibility_form_instance(self, *args, **kwargs):
         """Return an instance of this flow's EligibilityForm, or None."""
