@@ -145,7 +145,7 @@ class TransitAgency(models.Model):
 
     id = models.AutoField(primary_key=True)
     active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
-    slug = models.TextField(help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}")
+    slug = models.SlugField(help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}")
     short_name = models.TextField(help_text="The user-facing short name for this agency. Often an uppercase acronym.")
     long_name = models.TextField(
         help_text="The user-facing long name for this agency. Often the short_name acronym, spelled out."
@@ -154,21 +154,35 @@ class TransitAgency(models.Model):
     phone = models.TextField(help_text="Agency customer support phone number")
     index_template = models.TextField(help_text="The template used for this agency's landing page")
     eligibility_index_template = models.TextField(help_text="The template used for this agency's eligibility landing page")
-    eligibility_api_id = models.TextField(help_text="The identifier for this agency used in Eligibility API calls.")
+    eligibility_api_id = models.TextField(
+        help_text="The identifier for this agency used in Eligibility API calls.",
+        null=True,
+        blank=True,
+        default="",
+    )
     eligibility_api_private_key = models.ForeignKey(
         PemData,
         related_name="+",
         on_delete=models.PROTECT,
         help_text="Private key used to sign Eligibility API tokens created on behalf of this Agency.",
+        null=True,
+        blank=True,
+        default=None,
     )
     eligibility_api_public_key = models.ForeignKey(
         PemData,
         related_name="+",
         on_delete=models.PROTECT,
         help_text="Public key corresponding to the agency's private key, used by Eligibility Verification servers to encrypt responses.",  # noqa: E501
+        null=True,
+        blank=True,
+        default=None,
     )
     eligibility_api_jws_signing_alg = models.TextField(
-        help_text="The JWS-compatible signing algorithm used in Eligibility API calls."
+        help_text="The JWS-compatible signing algorithm used in Eligibility API calls.",
+        null=True,
+        blank=True,
+        default="",
     )
     transit_processor = models.ForeignKey(TransitProcessor, on_delete=models.PROTECT)
     transit_processor_audience = models.TextField(
