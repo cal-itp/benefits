@@ -78,11 +78,14 @@ def model_ClaimsProvider_no_sign_out(model_ClaimsProvider):
 @pytest.fixture
 def model_EnrollmentFlow(model_TransitAgency):
     flow = EnrollmentFlow.objects.create(
-        system_name="Test Flow",
-        selection_label_template="eligibility/includes/selection-label.html",
+        system_name="test",
+        selection_label_template_override="eligibility/includes/selection-label.html",
+        eligibility_start_template_override="eligibility/start.html",
+        eligibility_unverified_template_override="eligibility/unverified.html",
         label="Test flow label",
         group_id="group123",
-        enrollment_success_template="enrollment/success.html",
+        enrollment_index_template_override="enrollment/index.html",
+        enrollment_success_template_override="enrollment/success.html",
         transit_agency=model_TransitAgency,
     )
 
@@ -190,8 +193,8 @@ def model_TransitAgency(model_PemData, model_TransitProcessor):
         eligibility_api_private_key=model_PemData,
         eligibility_api_public_key=model_PemData,
         eligibility_api_jws_signing_alg="alg",
-        index_template="core/agency-index.html",
-        eligibility_index_template="eligibility/index.html",
+        index_template_override="core/agency-index.html",
+        eligibility_index_template_override="eligibility/index.html",
     )
 
     return agency

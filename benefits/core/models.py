@@ -131,30 +131,54 @@ class TransitAgency(models.Model):
 
     id = models.AutoField(primary_key=True)
     active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
-    slug = models.TextField(help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}")
+    slug = models.SlugField(help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}")
     short_name = models.TextField(help_text="The user-facing short name for this agency. Often an uppercase acronym.")
     long_name = models.TextField(
         help_text="The user-facing long name for this agency. Often the short_name acronym, spelled out."
     )
     info_url = models.URLField(help_text="URL of a website/page with more information about the agency's discounts")
     phone = models.TextField(help_text="Agency customer support phone number")
-    index_template = models.TextField(help_text="The template used for this agency's landing page")
-    eligibility_index_template = models.TextField(help_text="The template used for this agency's eligibility landing page")
-    eligibility_api_id = models.TextField(help_text="The identifier for this agency used in Eligibility API calls.")
+    index_template_override = models.TextField(
+        help_text="Override the default template used for this agency's landing page",
+        null=True,
+        blank=True,
+        default=None,
+    )
+    eligibility_index_template_override = models.TextField(
+        help_text="Override the default template used for this agency's eligibility landing page",
+        null=True,
+        blank=True,
+        default=None,
+    )
+    eligibility_api_id = models.TextField(
+        help_text="The identifier for this agency used in Eligibility API calls.",
+        null=True,
+        blank=True,
+        default="",
+    )
     eligibility_api_private_key = models.ForeignKey(
         PemData,
         related_name="+",
         on_delete=models.PROTECT,
         help_text="Private key used to sign Eligibility API tokens created on behalf of this Agency.",
+        null=True,
+        blank=True,
+        default=None,
     )
     eligibility_api_public_key = models.ForeignKey(
         PemData,
         related_name="+",
         on_delete=models.PROTECT,
         help_text="Public key corresponding to the agency's private key, used by Eligibility Verification servers to encrypt responses.",  # noqa: E501
+        null=True,
+        blank=True,
+        default=None,
     )
     eligibility_api_jws_signing_alg = models.TextField(
-        help_text="The JWS-compatible signing algorithm used in Eligibility API calls."
+        help_text="The JWS-compatible signing algorithm used in Eligibility API calls.",
+        null=True,
+        blank=True,
+        default="",
     )
     transit_processor = models.ForeignKey(TransitProcessor, on_delete=models.PROTECT)
     transit_processor_audience = models.TextField(
@@ -196,9 +220,17 @@ class TransitAgency(models.Model):
         return self.long_name
 
     @property
+    def index_template(self):
+        return self.index_template_override or f"core/index--{self.slug}.html"
+
+    @property
     def index_url(self):
         """Public-facing URL to the TransitAgency's landing page."""
         return reverse(routes.AGENCY_INDEX, args=[self.slug])
+
+    @property
+    def eligibility_index_template(self):
+        return self.eligibility_index_template_override or f"eligibility/index--{self.slug}.html"
 
     @property
     def eligibility_index_url(self):
@@ -266,7 +298,7 @@ class EnrollmentFlow(models.Model):
     """Represents a user journey through the Benefits app for a single eligibility type."""
 
     id = models.AutoField(primary_key=True)
-    system_name = models.TextField(
+    system_name = models.SlugField(
         help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests."  # noqa: 501
     )
     display_order = models.PositiveSmallIntegerField(default=0, blank=False, null=False)
@@ -328,20 +360,28 @@ class EnrollmentFlow(models.Model):
         blank=True,
         help_text="The JWS-compatible signing algorithm to use in Eligibility API requests for this flow.",
     )
-    selection_label_template = models.TextField(
-        help_text="Path to a Django template that defines the end-user UI for selecting this flow among other options."
+    selection_label_template_override = models.TextField(
+        null=True,
+        blank=True,
+        default=None,
+        help_text="Override the default template that defines the end-user UI for selecting this flow among other options.",
     )
-    eligibility_start_template = models.TextField(
-        default="eligibility/start.html", help_text="Path to a Django template for the informational page of this flow."
+    eligibility_start_template_override = models.TextField(
+        null=True,
+        blank=True,
+        default=None,
+        help_text="Override the default template for the informational page of this flow.",
     )
     eligibility_form_class = models.TextField(
         null=True,
         blank=True,
         help_text="The fully qualified Python path of a form class used by this flow, e.g. benefits.eligibility.forms.FormClass",  # noqa: E501
     )
-    eligibility_unverified_template = models.TextField(
-        default="eligibility/unverified.html",
-        help_text="Path to a Django template that defines the page when a user fails eligibility verification for this flow.",
+    eligibility_unverified_template_override = models.TextField(
+        help_text="Override the default template that defines the page when a user fails eligibility verification for this flow.",  # noqa: E501
+        blank=True,
+        null=True,
+        default=None,
     )
     help_template = models.TextField(
         null=True,
@@ -350,9 +390,10 @@ class EnrollmentFlow(models.Model):
     )
     label = models.TextField(
         null=True,
+        blank=True,
         help_text="A human readable label, used as the display text in Admin.",
     )
-    group_id = models.TextField(null=True, help_text="Reference to the TransitProcessor group for user enrollment")
+    group_id = models.TextField(null=True, blank=True, help_text="Reference to the TransitProcessor group for user enrollment")
     supports_expiration = models.BooleanField(
         default=False, help_text="Indicates if the enrollment expires or does not expire"
     )
@@ -364,15 +405,20 @@ class EnrollmentFlow(models.Model):
         blank=True,
         help_text="If the enrollment supports expiration, number of days preceding the expiration date during which a user can re-enroll in the eligibilty",  # noqa: E501
     )
-    enrollment_index_template = models.TextField(
-        default="enrollment/index.html",
-        help_text="Template for the Eligibility Confirmation page (which is the index of the enrollment Django app)",
+    enrollment_index_template_override = models.TextField(
+        help_text="Override the default template for the Eligibility Confirmation page (the index of the enrollment app)",
+        null=True,
+        blank=True,
+        default=None,
     )
     reenrollment_error_template = models.TextField(
         null=True, blank=True, help_text="Template for a re-enrollment error associated with the enrollment flow"
     )
-    enrollment_success_template = models.TextField(
-        default="enrollment/success.html", help_text="Template for a successful enrollment associated with the enrollment flow"
+    enrollment_success_template_override = models.TextField(
+        null=True,
+        blank=True,
+        default=None,
+        help_text="Override the default template for a successful enrollment associated with the enrollment flow",
     )
     supported_enrollment_methods = MultiSelectField(
         choices=SUPPORTED_METHODS,
@@ -390,6 +436,13 @@ class EnrollmentFlow(models.Model):
         return self.label
 
     @property
+    def agency_card_name(self):
+        if self.uses_claims_verification:
+            return ""
+        else:
+            return f"{self.transit_agency.slug}-agency-card"
+
+    @property
     def eligibility_api_auth_key(self):
         if self.eligibility_api_auth_key_secret_name is not None:
             return get_secret_by_name(self.eligibility_api_auth_key_secret_name)
@@ -400,6 +453,30 @@ class EnrollmentFlow(models.Model):
     def eligibility_api_public_key_data(self):
         """This flow's Eligibility API public key as a string."""
         return self.eligibility_api_public_key.data
+
+    @property
+    def selection_label_template(self):
+        prefix = "eligibility/includes/selection-label"
+        if self.uses_claims_verification:
+            return self.selection_label_template_override or f"{prefix}--{self.system_name}.html"
+        else:
+            return self.selection_label_template_override or f"{prefix}--{self.agency_card_name}.html"
+
+    @property
+    def eligibility_start_template(self):
+        prefix = "eligibility/start"
+        if self.uses_claims_verification:
+            return self.eligibility_start_template_override or f"{prefix}--{self.system_name}.html"
+        else:
+            return self.eligibility_start_template_override or f"{prefix}--{self.agency_card_name}.html"
+
+    @property
+    def eligibility_unverified_template(self):
+        prefix = "eligibility/unverified"
+        if self.uses_claims_verification:
+            return self.eligibility_unverified_template_override or f"{prefix}.html"
+        else:
+            return self.eligibility_unverified_template_override or f"{prefix}--{self.agency_card_name}.html"
 
     @property
     def uses_claims_verification(self):
@@ -416,6 +493,22 @@ class EnrollmentFlow(models.Model):
             return self.claims_provider.client_name
         else:
             return self.eligibility_api_url
+
+    @property
+    def enrollment_index_template(self):
+        prefix = "enrollment/index"
+        if self.uses_claims_verification:
+            return self.enrollment_index_template_override or f"{prefix}.html"
+        else:
+            return self.enrollment_index_template_override or f"{prefix}--agency-card.html"
+
+    @property
+    def enrollment_success_template(self):
+        prefix = "enrollment/success"
+        if self.uses_claims_verification:
+            return self.enrollment_success_template_override or f"{prefix}--{self.transit_agency.slug}.html"
+        else:
+            return self.enrollment_success_template_override or f"{prefix}--{self.agency_card_name}.html"
 
     def eligibility_form_instance(self, *args, **kwargs):
         """Return an instance of this flow's EligibilityForm, or None."""
