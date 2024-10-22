@@ -11,6 +11,26 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RenameField(
+            model_name="transitagency", old_name="eligibility_index_template", new_name="eligibility_index_template_override"
+        ),
+        migrations.RenameField(model_name="transitagency", old_name="index_template", new_name="index_template_override"),
+        migrations.AlterField(
+            model_name="transitagency",
+            name="eligibility_index_template_override",
+            field=models.TextField(
+                blank=True,
+                default="",
+                help_text="Override the default template used for this agency's eligibility landing page",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="transitagency",
+            name="index_template_override",
+            field=models.TextField(
+                blank=True, default="", help_text="Override the default template used for this agency's landing page"
+            ),
+        ),
         migrations.AlterField(
             model_name="transitagency",
             name="eligibility_api_id",

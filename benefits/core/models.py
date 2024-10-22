@@ -152,8 +152,16 @@ class TransitAgency(models.Model):
     )
     info_url = models.URLField(help_text="URL of a website/page with more information about the agency's discounts")
     phone = models.TextField(help_text="Agency customer support phone number")
-    index_template = models.TextField(help_text="The template used for this agency's landing page")
-    eligibility_index_template = models.TextField(help_text="The template used for this agency's eligibility landing page")
+    index_template_override = models.TextField(
+        help_text="Override the default template used for this agency's landing page",
+        blank=True,
+        default="",
+    )
+    eligibility_index_template_override = models.TextField(
+        help_text="Override the default template used for this agency's eligibility landing page",
+        blank=True,
+        default="",
+    )
     eligibility_api_id = models.TextField(
         help_text="The identifier for this agency used in Eligibility API calls.",
         null=True,
@@ -238,9 +246,17 @@ class TransitAgency(models.Model):
         return self.long_name
 
     @property
+    def index_template(self):
+        return self.index_template_override or f"core/index--{self.slug}.html"
+
+    @property
     def index_url(self):
         """Public-facing URL to the TransitAgency's landing page."""
         return reverse(routes.AGENCY_INDEX, args=[self.slug])
+
+    @property
+    def eligibility_index_template(self):
+        return self.eligibility_index_template_override or f"eligibility/index--{self.slug}.html"
 
     @property
     def eligibility_index_url(self):

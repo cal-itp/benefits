@@ -330,6 +330,19 @@ def test_TransitAgency_str(model_TransitAgency):
 
 
 @pytest.mark.django_db
+def test_TransitAgency_template_overrides(model_TransitAgency):
+    assert model_TransitAgency.index_template == model_TransitAgency.index_template_override
+    assert model_TransitAgency.eligibility_index_template == model_TransitAgency.eligibility_index_template_override
+
+    model_TransitAgency.index_template_override = None
+    model_TransitAgency.eligibility_index_template_override = None
+    model_TransitAgency.save()
+
+    assert model_TransitAgency.index_template == f"core/index--{model_TransitAgency.slug}.html"
+    assert model_TransitAgency.eligibility_index_template == f"eligibility/index--{model_TransitAgency.slug}.html"
+
+
+@pytest.mark.django_db
 def test_TransitAgency_index_url(model_TransitAgency):
     result = model_TransitAgency.index_url
 

@@ -58,8 +58,6 @@
       "long_name": "California State Transit (local)",
       "info_url": "https://www.agency-website.com",
       "phone": "1-800-555-5555",
-      "index_template": "core/index--cst.html",
-      "eligibility_index_template": "eligibility/index--cst.html",
       "eligibility_api_id": "cst",
       "eligibility_api_private_key": 2,
       "eligibility_api_public_key": 3,
