@@ -88,6 +88,16 @@ class Migration(migrations.Migration):
         ),
         migrations.RenameField(
             model_name="enrollmentflow",
+            old_name="eligibility_unverified_template",
+            new_name="eligibility_unverified_template_override",
+        ),
+        migrations.RenameField(
+            model_name="enrollmentflow",
+            old_name="enrollment_index_template",
+            new_name="enrollment_index_template_override",
+        ),
+        migrations.RenameField(
+            model_name="enrollmentflow",
             old_name="enrollment_success_template",
             new_name="enrollment_success_template_override",
         ),
@@ -105,6 +115,16 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name="enrollmentflow",
+            name="selection_label_template_override",
+            field=models.TextField(
+                blank=True,
+                default=None,
+                help_text="Override the default template that defines the end-user UI for selecting this flow among other options.",  # noqa: E501
+                null=True,
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
             name="eligibility_start_template_override",
             field=models.TextField(
                 blank=True,
@@ -115,21 +135,31 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name="enrollmentflow",
-            name="enrollment_success_template_override",
+            name="eligibility_unverified_template_override",
             field=models.TextField(
                 blank=True,
-                default="enrollment/success.html",
-                help_text="Override the default template for a successful enrollment associated with the enrollment flow",
+                default=None,
+                help_text="Override the default template that defines the page when a user fails eligibility verification for this flow.",  # noqa: E501
                 null=True,
             ),
         ),
         migrations.AlterField(
             model_name="enrollmentflow",
-            name="selection_label_template_override",
+            name="enrollment_index_template_override",
             field=models.TextField(
                 blank=True,
                 default=None,
-                help_text="Override the default template that defines the end-user UI for selecting this flow among other options.",  # noqa
+                help_text="Override the default template for the Eligibility Confirmation page (the index of the enrollment app)",  # noqa: E501
+                null=True,
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="enrollment_success_template_override",
+            field=models.TextField(
+                blank=True,
+                default=None,
+                help_text="Override the default template for a successful enrollment associated with the enrollment flow",
                 null=True,
             ),
         ),

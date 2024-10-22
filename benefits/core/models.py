@@ -404,9 +404,11 @@ class EnrollmentFlow(models.Model):
         blank=True,
         help_text="The fully qualified Python path of a form class used by this flow, e.g. benefits.eligibility.forms.FormClass",  # noqa: E501
     )
-    eligibility_unverified_template = models.TextField(
-        default="eligibility/unverified.html",
-        help_text="Path to a Django template that defines the page when a user fails eligibility verification for this flow.",
+    eligibility_unverified_template_override = models.TextField(
+        help_text="Override the default template that defines the page when a user fails eligibility verification for this flow.",  # noqa: E501
+        blank=True,
+        null=True,
+        default=None,
     )
     help_template = models.TextField(
         null=True,
@@ -429,9 +431,11 @@ class EnrollmentFlow(models.Model):
         blank=True,
         help_text="If the enrollment supports expiration, number of days preceding the expiration date during which a user can re-enroll in the eligibilty",  # noqa: E501
     )
-    enrollment_index_template = models.TextField(
-        default="enrollment/index.html",
-        help_text="Template for the Eligibility Confirmation page (which is the index of the enrollment Django app)",
+    enrollment_index_template_override = models.TextField(
+        help_text="Override the default template for the Eligibility Confirmation page (the index of the enrollment app)",
+        null=True,
+        blank=True,
+        default=None,
     )
     reenrollment_error_template = models.TextField(
         null=True, blank=True, help_text="Template for a re-enrollment error associated with the enrollment flow"
@@ -458,6 +462,13 @@ class EnrollmentFlow(models.Model):
         return self.label
 
     @property
+    def agency_card_name(self):
+        if self.uses_claims_verification:
+            return ""
+        else:
+            return f"{self.transit_agency.slug}-agency-card"
+
+    @property
     def eligibility_api_auth_key(self):
         if self.eligibility_api_auth_key_secret_name is not None:
             return get_secret_by_name(self.eligibility_api_auth_key_secret_name)
@@ -471,11 +482,27 @@ class EnrollmentFlow(models.Model):
 
     @property
     def selection_label_template(self):
-        return self.selection_label_template_override or f"eligibility/includes/selection-label--{self.system_name}.html"
+        prefix = "eligibility/includes/selection-label"
+        if self.uses_claims_verification:
+            return self.selection_label_template_override or f"{prefix}--{self.system_name}.html"
+        else:
+            return self.selection_label_template_override or f"{prefix}--{self.agency_card_name}.html"
 
     @property
     def eligibility_start_template(self):
-        return self.eligibility_start_template_override or f"eligibility/start--{self.system_name}.html"
+        prefix = "eligibility/start"
+        if self.uses_claims_verification:
+            return self.eligibility_start_template_override or f"{prefix}--{self.system_name}.html"
+        else:
+            return self.eligibility_start_template_override or f"{prefix}--{self.agency_card_name}.html"
+
+    @property
+    def eligibility_unverified_template(self):
+        prefix = "eligibility/unverified"
+        if self.uses_claims_verification:
+            return self.eligibility_unverified_template_override or f"{prefix}.html"
+        else:
+            return self.eligibility_unverified_template_override or f"{prefix}--{self.agency_card_name}.html"
 
     @property
     def uses_claims_verification(self):
@@ -494,8 +521,20 @@ class EnrollmentFlow(models.Model):
             return self.eligibility_api_url
 
     @property
+    def enrollment_index_template(self):
+        prefix = "enrollment/index"
+        if self.uses_claims_verification:
+            return self.enrollment_index_template_override or f"{prefix}.html"
+        else:
+            return self.enrollment_index_template_override or f"{prefix}--agency-card.html"
+
+    @property
     def enrollment_success_template(self):
-        return self.enrollment_success_template_override or f"enrollment/success--{self.transit_agency.slug}.html"
+        prefix = "enrollment/success"
+        if self.uses_claims_verification:
+            return self.enrollment_success_template_override or f"{prefix}--{self.transit_agency.slug}.html"
+        else:
+            return self.enrollment_success_template_override or f"{prefix}--{self.agency_card_name}.html"
 
     def eligibility_form_instance(self, *args, **kwargs):
         """Return an instance of this flow's EligibilityForm, or None."""

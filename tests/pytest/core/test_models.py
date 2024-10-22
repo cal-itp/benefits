@@ -128,6 +128,19 @@ def test_EnrollmentFlow_str(model_EnrollmentFlow):
 
 
 @pytest.mark.django_db
+def test_EnrollmentFlow_agency_card_name(model_EnrollmentFlow_with_eligibility_api):
+    assert (
+        model_EnrollmentFlow_with_eligibility_api.agency_card_name
+        == f"{model_EnrollmentFlow_with_eligibility_api.transit_agency.slug}-agency-card"
+    )
+
+
+@pytest.mark.django_db
+def test_EnrollmentFlow_agency_card_name__claims(model_EnrollmentFlow_with_scope_and_claim):
+    assert model_EnrollmentFlow_with_scope_and_claim.agency_card_name == ""
+
+
+@pytest.mark.django_db
 def test_EnrollmentFlow_supports_expiration_False(model_EnrollmentFlow, model_EnrollmentFlow_does_not_support_expiration):
     # test will fail if any error is raised
     model_EnrollmentFlow_does_not_support_expiration.full_clean()
@@ -176,29 +189,23 @@ def test_EnrollmentFlow_supports_expiration(model_EnrollmentFlow_supports_expira
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_enrollment_index_template(model_TransitAgency):
-    new_flow = EnrollmentFlow.objects.create(transit_agency=model_TransitAgency)
+def test_EnrollmentFlow_enrollment_index_template(model_EnrollmentFlow_with_scope_and_claim):
+    assert model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template == "enrollment/index.html"
 
-    assert new_flow.enrollment_index_template == "enrollment/index.html"
+    model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template_override = "test/enrollment.html"
+    model_EnrollmentFlow_with_scope_and_claim.save()
 
-    new_flow.enrollment_index_template = "test/enrollment.html"
-    new_flow.save()
-
-    assert new_flow.enrollment_index_template == "test/enrollment.html"
+    assert model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template == "test/enrollment.html"
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_enrollment_success_template(model_TransitAgency):
-    new_flow = EnrollmentFlow.objects.create(transit_agency=model_TransitAgency)
-
-    assert new_flow.enrollment_success_template == "enrollment/success.html"
+def test_EnrollmentFlow_enrollment_success_template(model_EnrollmentFlow_with_scope_and_claim):
+    assert model_EnrollmentFlow_with_scope_and_claim.enrollment_success_template == "enrollment/success.html"
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_supported_enrollment_methods(model_TransitAgency):
-    new_flow = EnrollmentFlow.objects.create(transit_agency=model_TransitAgency)
-
-    assert new_flow.supported_enrollment_methods == ["digital", "in_person"]
+def test_EnrollmentFlow_supported_enrollment_methods(model_EnrollmentFlow_with_scope_and_claim):
+    assert model_EnrollmentFlow_with_scope_and_claim.supported_enrollment_methods == ["digital", "in_person"]
 
 
 @pytest.mark.django_db
@@ -320,24 +327,76 @@ def test_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow_with_claims_sche
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_template_overrides(model_EnrollmentFlow):
-    assert model_EnrollmentFlow.selection_label_template == model_EnrollmentFlow.selection_label_template_override
-    assert model_EnrollmentFlow.eligibility_start_template == model_EnrollmentFlow.eligibility_start_template_override
-    assert model_EnrollmentFlow.enrollment_success_template == model_EnrollmentFlow.enrollment_success_template_override
-
-    model_EnrollmentFlow.selection_label_template_override = None
-    model_EnrollmentFlow.eligibility_start_template_override = None
-    model_EnrollmentFlow.enrollment_success_template_override = None
-    model_EnrollmentFlow.save()
-
+def test_EnrollmentFlow_template_overrides_claims(model_EnrollmentFlow_with_scope_and_claim):
     assert (
-        model_EnrollmentFlow.selection_label_template
-        == f"eligibility/includes/selection-label--{model_EnrollmentFlow.system_name}.html"
+        model_EnrollmentFlow_with_scope_and_claim.selection_label_template
+        == model_EnrollmentFlow_with_scope_and_claim.selection_label_template_override
     )
-    assert model_EnrollmentFlow.eligibility_start_template == f"eligibility/start--{model_EnrollmentFlow.system_name}.html"
     assert (
-        model_EnrollmentFlow.enrollment_success_template
-        == f"enrollment/success--{model_EnrollmentFlow.transit_agency.slug}.html"
+        model_EnrollmentFlow_with_scope_and_claim.eligibility_start_template
+        == model_EnrollmentFlow_with_scope_and_claim.eligibility_start_template_override
+    )
+    assert (
+        model_EnrollmentFlow_with_scope_and_claim.eligibility_unverified_template
+        == model_EnrollmentFlow_with_scope_and_claim.eligibility_unverified_template_override
+    )
+    assert (
+        model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template
+        == model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template_override
+    )
+    assert (
+        model_EnrollmentFlow_with_scope_and_claim.enrollment_success_template
+        == model_EnrollmentFlow_with_scope_and_claim.enrollment_success_template_override
+    )
+
+    model_EnrollmentFlow_with_scope_and_claim.selection_label_template_override = None
+    model_EnrollmentFlow_with_scope_and_claim.eligibility_start_template_override = None
+    model_EnrollmentFlow_with_scope_and_claim.eligibility_unverified_template_override = None
+    model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template_override = None
+    model_EnrollmentFlow_with_scope_and_claim.enrollment_success_template_override = None
+    model_EnrollmentFlow_with_scope_and_claim.save()
+
+    assert (
+        model_EnrollmentFlow_with_scope_and_claim.selection_label_template
+        == f"eligibility/includes/selection-label--{model_EnrollmentFlow_with_scope_and_claim.system_name}.html"
+    )
+    assert (
+        model_EnrollmentFlow_with_scope_and_claim.eligibility_start_template
+        == f"eligibility/start--{model_EnrollmentFlow_with_scope_and_claim.system_name}.html"
+    )
+    assert model_EnrollmentFlow_with_scope_and_claim.eligibility_unverified_template == "eligibility/unverified.html"
+    assert model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template == "enrollment/index.html"
+    assert (
+        model_EnrollmentFlow_with_scope_and_claim.enrollment_success_template
+        == f"enrollment/success--{model_EnrollmentFlow_with_scope_and_claim.transit_agency.slug}.html"
+    )
+
+
+@pytest.mark.django_db
+def test_EnrollmentFlow_template_overrides_eligibility_api(model_EnrollmentFlow_with_eligibility_api):
+    model_EnrollmentFlow_with_eligibility_api.selection_label_template_override = None
+    model_EnrollmentFlow_with_eligibility_api.eligibility_start_template_override = None
+    model_EnrollmentFlow_with_eligibility_api.eligibility_unverified_template_override = None
+    model_EnrollmentFlow_with_eligibility_api.enrollment_index_template_override = None
+    model_EnrollmentFlow_with_eligibility_api.enrollment_success_template_override = None
+    model_EnrollmentFlow_with_eligibility_api.save()
+
+    assert (
+        model_EnrollmentFlow_with_eligibility_api.selection_label_template
+        == f"eligibility/includes/selection-label--{model_EnrollmentFlow_with_eligibility_api.agency_card_name}.html"
+    )
+    assert (
+        model_EnrollmentFlow_with_eligibility_api.eligibility_start_template
+        == f"eligibility/start--{model_EnrollmentFlow_with_eligibility_api.agency_card_name}.html"
+    )
+    assert (
+        model_EnrollmentFlow_with_eligibility_api.eligibility_unverified_template
+        == f"eligibility/unverified--{model_EnrollmentFlow_with_eligibility_api.agency_card_name}.html"
+    )
+    assert model_EnrollmentFlow_with_eligibility_api.enrollment_index_template == "enrollment/index--agency-card.html"
+    assert (
+        model_EnrollmentFlow_with_eligibility_api.enrollment_success_template
+        == f"enrollment/success--{model_EnrollmentFlow_with_eligibility_api.agency_card_name}.html"
     )
 
 
