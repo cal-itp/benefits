@@ -388,9 +388,10 @@ class EnrollmentFlow(models.Model):
     )
     label = models.TextField(
         null=True,
+        blank=True,
         help_text="A human readable label, used as the display text in Admin.",
     )
-    group_id = models.TextField(null=True, help_text="Reference to the TransitProcessor group for user enrollment")
+    group_id = models.TextField(null=True, blank=True, help_text="Reference to the TransitProcessor group for user enrollment")
     supports_expiration = models.BooleanField(
         default=False, help_text="Indicates if the enrollment expires or does not expire"
     )

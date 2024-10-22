@@ -109,6 +109,20 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name="enrollmentflow",
+            name="group_id",
+            field=models.TextField(
+                blank=True, help_text="Reference to the TransitProcessor group for user enrollment", null=True
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="label",
+            field=models.TextField(
+                blank=True, help_text="A human readable label, used as the display text in Admin.", null=True
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
             name="eligibility_start_template_override",
             field=models.TextField(
                 blank=True,
