@@ -190,8 +190,8 @@ def model_TransitAgency(model_PemData, model_TransitProcessor):
         eligibility_api_private_key=model_PemData,
         eligibility_api_public_key=model_PemData,
         eligibility_api_jws_signing_alg="alg",
-        index_template="core/agency-index.html",
-        eligibility_index_template="eligibility/index.html",
+        index_template_override="core/agency-index.html",
+        eligibility_index_template_override="eligibility/index.html",
     )
 
     return agency
