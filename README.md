@@ -13,7 +13,7 @@
 | benefits/core/apps.py                |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/core/context\_processors.py |       41 |        2 |        8 |        1 |     94% |    71, 96 |
 | benefits/core/middleware.py          |       91 |        3 |       22 |        2 |     96% |58-59, 78->83, 146 |
-| benefits/core/models.py              |      223 |        3 |       26 |        1 |     98% |77-78, 397 |
+| benefits/core/models.py              |      230 |        3 |       28 |        1 |     98% |77-78, 398 |
 | benefits/core/recaptcha.py           |       13 |        5 |        4 |        1 |     53% |     26-32 |
 | benefits/core/session.py             |      132 |        1 |       34 |        0 |     99% |        52 |
 | benefits/core/urls.py                |       25 |        0 |        2 |        0 |    100% |           |
@@ -50,14 +50,14 @@
 | benefits/oauth/middleware.py         |       23 |        0 |        6 |        0 |    100% |           |
 | benefits/oauth/redirects.py          |       22 |        0 |        2 |        0 |    100% |           |
 | benefits/oauth/urls.py               |        5 |        0 |        0 |        0 |    100% |           |
-| benefits/oauth/views.py              |      122 |        1 |       30 |        2 |     98% |131->146, 174 |
+| benefits/oauth/views.py              |      123 |        1 |       32 |        2 |     98% |131->148, 176 |
 | benefits/routes.py                   |      106 |        0 |        0 |        0 |    100% |           |
 | benefits/secrets.py                  |       48 |        8 |       10 |        1 |     81% |     90-99 |
 | benefits/sentry.py                   |       57 |       12 |       10 |        1 |     81% |19, 24-25, 30, 34-35, 63-64, 87-108 |
 | benefits/settings.py                 |      127 |        6 |       22 |        8 |     91% |103, 124->129, 140->143, 159, 313, 315, 330, 342 |
 | benefits/urls.py                     |       22 |        7 |        2 |        1 |     67% |     35-49 |
 | benefits/wsgi.py                     |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                            **TOTAL** | **1988** |   **97** |  **354** |   **40** | **94%** |           |
+|                            **TOTAL** | **1996** |   **97** |  **358** |   **40** | **94%** |           |
 
 
 ## Setup coverage badge
