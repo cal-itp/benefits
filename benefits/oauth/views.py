@@ -123,27 +123,29 @@ def authorize(request):
     id_token = token["id_token"]
 
     # We store the returned claim in case it can be used later in eligibility verification.
-    flow_claim = flow.claims_claim
-    stored_claim = None
+    flow_claims = flow.claims_all_claims
+    stored_claims = []
 
     error_claim = None
 
-    if flow_claim:
+    if flow_claims:
         userinfo = token.get("userinfo")
 
         if userinfo:
-            claim_value = userinfo.get(flow_claim)
-            # the claim comes back in userinfo like { "claim": "1" | "0" }
-            claim_value = int(claim_value) if claim_value else None
-            if claim_value is None:
-                logger.warning(f"userinfo did not contain: {flow_claim}")
-            elif claim_value == 1:
-                # if userinfo contains our claim and the flag is 1 (true), store the *claim*
-                stored_claim = flow_claim
-            elif claim_value >= 10:
-                error_claim = claim_value
+            for claim in flow_claims:
+                claim_value = userinfo.get(claim)
+                # the claim comes back in userinfo like { "claim": "1" | "0" }
+                claim_value = int(claim_value) if claim_value else None
+                if claim_value is None:
+                    logger.warning(f"userinfo did not contain: {claim}")
+                elif claim_value == 1:
+                    # if userinfo contains our claim and the flag is 1 (true), store the *claim*
+                    stored_claims.append(claim)
+                elif claim_value >= 10 and claim == flow.claims_eligibility_claim:
+                    # error_claim is only set if claim is the eligibility claim
+                    error_claim = claim_value
 
-    session.update(request, oauth_token=id_token, oauth_claim=stored_claim)
+    session.update(request, oauth_token=id_token, oauth_claims=stored_claims)
     analytics.finished_sign_in(request, error=error_claim)
 
     return redirect(routes.ELIGIBILITY_CONFIRM)

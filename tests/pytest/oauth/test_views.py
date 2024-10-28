@@ -213,10 +213,17 @@ def test_authorize_empty_token(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification")
-def test_authorize_success(mocked_oauth_client_or_error_redirect__client, mocked_analytics_module, app_request):
+def test_authorize_success(
+    mocked_session_flow_uses_claims_verification,
+    mocked_oauth_client_or_error_redirect__client,
+    mocked_analytics_module,
+    app_request,
+):
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token"}
+
+    flow = mocked_session_flow_uses_claims_verification.return_value
+    flow.claims_extra_claims = ""
 
     result = authorize(app_request)
 
@@ -234,14 +241,14 @@ def test_authorize_success_with_claim_true(
     app_request, mocked_session_flow_uses_claims_verification, mocked_oauth_client_or_error_redirect__client
 ):
     flow = mocked_session_flow_uses_claims_verification.return_value
-    flow.claims_claim = "claim"
+    flow.claims_extra_claims = ""
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "1"}}
 
     result = authorize(app_request)
 
     mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
-    assert session.oauth_claim(app_request) == "claim"
+    assert session.oauth_claims(app_request) == ["claim"]
     assert result.status_code == 302
     assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
 
@@ -252,14 +259,14 @@ def test_authorize_success_with_claim_false(
     app_request, mocked_session_flow_uses_claims_verification, mocked_oauth_client_or_error_redirect__client
 ):
     flow = mocked_session_flow_uses_claims_verification.return_value
-    flow.claims_claim = "claim"
+    flow.claims_extra_claims = ""
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "0"}}
 
     result = authorize(app_request)
 
     mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
-    assert session.oauth_claim(app_request) is None
+    assert session.oauth_claims(app_request) == []
     assert result.status_code == 302
     assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
 
@@ -272,7 +279,7 @@ def test_authorize_success_with_claim_error(
     mocked_analytics_module,
 ):
     flow = mocked_session_flow_uses_claims_verification.return_value
-    flow.claims_claim = "claim"
+    flow.claims_extra_claims = ""
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "10"}}
 
@@ -280,7 +287,7 @@ def test_authorize_success_with_claim_error(
 
     mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
     mocked_analytics_module.finished_sign_in.assert_called_with(app_request, error=10)
-    assert session.oauth_claim(app_request) is None
+    assert session.oauth_claims(app_request) == []
     assert result.status_code == 302
     assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
 
@@ -301,14 +308,15 @@ def test_authorize_success_without_claim_in_response(
     access_token_response,
 ):
     flow = mocked_session_flow_uses_claims_verification.return_value
-    flow.claims_claim = "claim"
+    flow.claims_eligibility_claim = "claim"
+    flow.claims_extra_claims = ""
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = access_token_response
 
     result = authorize(app_request)
 
     mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
-    assert session.oauth_claim(app_request) is None
+    assert session.oauth_claims(app_request) == []
     assert result.status_code == 302
     assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
 
@@ -374,7 +382,7 @@ def test_logout(app_request, mocker, mocked_oauth_client_or_error_redirect__clie
     assert not session.logged_in(app_request)
     assert session.enrollment_token(app_request) is False
     assert session.oauth_token(app_request) is False
-    assert session.oauth_claim(app_request) is False
+    assert session.oauth_claims(app_request) == []
 
 
 @pytest.mark.django_db

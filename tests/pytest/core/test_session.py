@@ -199,16 +199,16 @@ def test_logged_in_True(app_request):
 
 @pytest.mark.django_db
 def test_logout(app_request):
-    session.update(app_request, oauth_claim="oauth_claim", oauth_token="oauth_token", enrollment_token="enrollment_token")
+    session.update(app_request, oauth_claims=["oauth_claim"], oauth_token="oauth_token", enrollment_token="enrollment_token")
     assert session.logged_in(app_request)
-    assert session.oauth_claim(app_request)
+    assert session.oauth_claims(app_request)
 
     session.logout(app_request)
 
     assert not session.logged_in(app_request)
     assert not session.enrollment_token(app_request)
     assert not session.oauth_token(app_request)
-    assert not session.oauth_claim(app_request)
+    assert not session.oauth_claims(app_request)
 
 
 @pytest.mark.django_db
@@ -269,12 +269,12 @@ def test_reset_enrollment(app_request):
 @pytest.mark.django_db
 def test_reset_oauth(app_request):
     app_request.session[session._OAUTH_TOKEN] = "oauthtoken456"
-    app_request.session[session._OAUTH_CLAIM] = "claim"
+    app_request.session[session._OAUTH_CLAIMS] = ["claim"]
 
     session.reset(app_request)
 
     assert session.oauth_token(app_request) is None
-    assert session.oauth_claim(app_request) is None
+    assert session.oauth_claims(app_request) is None
 
 
 @pytest.mark.django_db
