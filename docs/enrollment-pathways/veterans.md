@@ -2,13 +2,13 @@
 
 ## Overview
 
-This use case describes a feature in the [Cal-ITP Benefits app](https://benefits.calitp.org) that allows US veterans who use public transit to verify their veteran status and receive reduced fares when paying by contactless debit or credit card at participating transit providers in California.
+This use case describes a feature in the [Cal-ITP Benefits app](https://benefits.calitp.org) that allows U.S. veterans who use public transit to verify their veteran status and receive reduced fares when paying by contactless debit or credit card at participating transit providers in California.
 
-**Actor:** A US veteran who uses public transit in California. For benefit eligibility, a veteran is defined as “a person who served in the active military, naval, or air service, and was discharged or released therefrom under conditions other than dishonorable.” ([source](https://www.ssa.gov/OP_Home/comp2/D-USC-38.html))
+**Actor:** A U.S. veteran who uses public transit in California. For benefit eligibility, a veteran is defined as “a person who served in the active military, naval, or air service, and was discharged or released therefrom under conditions other than dishonorable.” ([source](https://www.ssa.gov/OP_Home/comp2/D-USC-38.html))
 
 **Goal:** To verify a transit rider’s veteran status and enable the rider to receive reduced fares when paying by contactless debit or credit card.
 
-**Precondition:** The California transit provider delivering fixed route service has installed and tested validator hardware necessary to collect fares using contactless payment on bus or rail lines, and the provider has a policy to offer a transit discount for US veterans.
+**Precondition:** The California transit provider delivering fixed route service has installed and tested validator hardware necessary to collect fares using contactless payment on bus or rail lines, and the provider has a policy to offer a transit discount for U.S. veterans.
 
 ## Demonstration
 
@@ -86,6 +86,6 @@ The transit rider receives a fare reduction each time they use the debit or cred
 
 ## Example scenario
 
-A veteran in California uses public transit regularly. They don’t have a car and depend on buses to get to appointments and do errands that take too long to use their bicycle. They receive a 50% fare reduction for being a US veteran but have to pay for transit rides using the closed loop card provided by the agency to receive the reduced fare. It’s frustrating and inconvenient to reload this agency card in $10 payments every week, especially because they sometimes need the money tied up on the card to pay for groceries and medication.
+A veteran in California uses public transit regularly. They don’t have a car and depend on buses to get to appointments and do errands that take too long to use their bicycle. They receive a 50% fare reduction for being a U.S. veteran but have to pay for transit rides using the closed loop card provided by the agency to receive the reduced fare. It’s frustrating and inconvenient to reload this agency card in $10 payments every week, especially because they sometimes need the money tied up on the card to pay for groceries and medication.
 
 The transit provider serving their part of California implements contactless payments on fixed bus routes throughout the service area. This rider uses [benefits.calitp.org](https://benefits.calitp.org) to confirm their veteran status and register their debit card for reduced fares. They tap to pay when boarding buses in their area and are automatically charged the reduced fare. They no longer need to carry one card to pay for transit and another for other purchases. Best of all, they have complete access to all funds in their weekly budget. If food and medication costs are higher one week, they can allocate additional funds to those areas and ride transit less.
