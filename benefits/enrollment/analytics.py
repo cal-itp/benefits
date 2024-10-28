@@ -8,10 +8,18 @@ from benefits.core import analytics as core, models
 class ReturnedEnrollmentEvent(core.Event):
     """Analytics event representing the end of transit processor enrollment request."""
 
-    def __init__(self, request, status, error=None, enrollment_group=None, enrollment_method=models.EnrollmentMethods.DIGITAL):
+    def __init__(
+        self,
+        request,
+        status,
+        error=None,
+        enrollment_group=None,
+        enrollment_method=models.EnrollmentMethods.DIGITAL,
+        extra_claims=None,
+    ):
         super().__init__(request, "returned enrollment", enrollment_method)
         if str(status).lower() in ("error", "retry", "success"):
-            self.update_event_properties(status=status, error=error)
+            self.update_event_properties(status=status, error=error, extra_claims=extra_claims)
         if enrollment_group is not None:
             self.update_event_properties(enrollment_group=enrollment_group)
 
@@ -35,11 +43,15 @@ def returned_retry(request, enrollment_method: str = models.EnrollmentMethods.DI
     core.send_event(ReturnedEnrollmentEvent(request, status="retry", enrollment_method=enrollment_method))
 
 
-def returned_success(request, enrollment_group, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
+def returned_success(request, enrollment_group, enrollment_method: str = models.EnrollmentMethods.DIGITAL, extra_claims=None):
     """Send the "returned enrollment" analytics event with a success status."""
     core.send_event(
         ReturnedEnrollmentEvent(
-            request, status="success", enrollment_group=enrollment_group, enrollment_method=enrollment_method
+            request,
+            status="success",
+            enrollment_group=enrollment_group,
+            enrollment_method=enrollment_method,
+            extra_claims=extra_claims,
         )
     )
 

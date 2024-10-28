@@ -157,8 +157,21 @@ def oauth_token(request):
 
 
 def oauth_claims(request):
-    """Get the oauth claim from the request's session, or None"""
+    """Get the oauth claims from the request's session, or None"""
     return request.session.get(_OAUTH_CLAIMS)
+
+
+def oauth_extra_claims(request):
+    """Get the extra oauth claims from the request's session, or None"""
+    claims = oauth_claims(request)
+    if claims:
+        f = flow(request)
+        if f and f.uses_claims_verification:
+            claims.remove(f.claims_eligibility_claim)
+            return claims
+        raise Exception("Oauth claims but no flow")
+    else:
+        return None
 
 
 def origin(request):

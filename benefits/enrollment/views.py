@@ -71,15 +71,22 @@ def index(request):
                 agency = session.agency(request)
                 flow = session.flow(request)
                 expiry = session.enrollment_expiry(request)
+                oauth_extra_claims = session.oauth_extra_claims(request)
+                # EnrollmentEvent expects a string value for extra_claims
+                if oauth_extra_claims:
+                    str_extra_claims = ", ".join(oauth_extra_claims)
+                else:
+                    str_extra_claims = ""
                 event = models.EnrollmentEvent.objects.create(
                     transit_agency=agency,
                     enrollment_flow=flow,
                     enrollment_method=models.EnrollmentMethods.DIGITAL,
                     verified_by=flow.eligibility_verifier,
                     expiration_datetime=expiry,
+                    extra_claims=str_extra_claims,
                 )
                 event.save()
-                analytics.returned_success(request, flow.group_id)
+                analytics.returned_success(request, flow.group_id, extra_claims=oauth_extra_claims)
                 return success(request)
 
             case Status.SYSTEM_ERROR:
