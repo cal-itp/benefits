@@ -498,13 +498,6 @@ msgstr ""
 msgid "Go back"
 msgstr ""
 
-msgid "Learn more about"
-msgstr ""
-
-msgctxt "image alt text"
-msgid "Login.gov"
-msgstr ""
-
 msgid "Verify your identity with "
 msgstr ""
 

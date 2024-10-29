@@ -648,13 +648,6 @@ msgstr ""
 msgid "Go back"
 msgstr "Volver"
 
-msgid "Learn more about"
-msgstr "Más información sobre"
-
-msgctxt "image alt text"
-msgid "Login.gov"
-msgstr "Login.gov"
-
 msgid "Verify your identity with "
 msgstr "Verifique su identidad con "
 
