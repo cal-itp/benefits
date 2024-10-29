@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-10-28 16:14-0700\n"
+"POT-Creation-Date: 2024-10-28 17:09-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -525,9 +525,7 @@ msgstr ""
 msgid "recently received CalFresh funds"
 msgstr ""
 
-msgid ""
-"This transit benefit will remain active for one year. You will need to "
-"verify your identity with"
+msgid "This transit benefit will remain active for one year."
 msgstr ""
 
 msgid "Agency Card"
@@ -566,8 +564,7 @@ msgstr ""
 msgid "Older Adult"
 msgstr ""
 
-msgid ""
-"You must be 65 years or older. You will need to verify your identity with"
+msgid "You must be 65 years or older."
 msgstr ""
 
 msgid "U.S. Veteran"
@@ -576,7 +573,7 @@ msgstr ""
 msgid ""
 "This option is for people who have served in the active military, naval, or "
 "air service, and who were discharged or released therefrom under conditions "
-"other than dishonorable. You will need to verify your identity with"
+"other than dishonorable."
 msgstr ""
 
 #, python-format
