@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-10-28 17:09-0700\n"
+"POT-Creation-Date: 2024-10-29 11:20-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -650,6 +650,10 @@ msgstr "Volver"
 
 msgid "Verify your identity with "
 msgstr "Verifique su identidad con "
+
+msgctxt "image alt text"
+msgid "Login.gov"
+msgstr "Login.gov"
 
 msgid ""
 "We use Login.gov to verify your identity to make sure you are eligible for "
