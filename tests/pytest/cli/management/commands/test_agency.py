@@ -1,5 +1,6 @@
 import pytest
 
+from benefits.cli.agency.list import List
 from benefits.cli.management.commands.agency import Command
 
 
@@ -7,7 +8,7 @@ from benefits.cli.management.commands.agency import Command
 def test_class():
     assert Command.help == Command.__doc__
     assert Command.name == "agency"
-    assert Command.subcommands == []
+    assert Command.subcommands == [List]
 
 
 @pytest.mark.django_db
@@ -16,3 +17,7 @@ def test_init():
 
     assert "agency" in cmd.subparsers
     assert cmd.subparser == cmd.subparsers["agency"]
+
+    list_cmd = getattr(cmd, "list")
+    assert isinstance(list_cmd, List)
+    assert cmd.default_handler == list_cmd.handle
