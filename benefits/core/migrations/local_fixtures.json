@@ -113,7 +113,7 @@
     "pk": 3,
     "fields": {
       "system_name": "agency_card",
-      "label": "Agency Card",
+      "label": "Agency Cardholder",
       "group_id": "group123",
       "enrollment_index_template": "enrollment/index--agency-card.html",
       "enrollment_success_template": "enrollment/success--cst-agency-card.html",
