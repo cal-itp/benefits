@@ -1,4 +1,6 @@
 from datetime import timedelta
+from pathlib import Path
+
 from django.conf import settings
 from django.contrib.auth.models import Group, User
 from django.core.exceptions import ValidationError
@@ -7,6 +9,7 @@ from django.utils import timezone
 import pytest
 
 from benefits.core.models import (
+    template_path,
     SecretNameField,
     EnrollmentFlow,
     TransitAgency,
@@ -22,6 +25,25 @@ import benefits.secrets
 def mock_requests_get_pem_data(mocker):
     # intercept and spy on the GET request
     return mocker.patch("benefits.core.models.requests.get", return_value=mocker.Mock(text="PEM text"))
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "input_template,expected_path",
+    [
+        ("error.html", f"{settings.BASE_DIR}/benefits/templates/error.html"),
+        ("core/index.html", f"{settings.BASE_DIR}/benefits/core/templates/core/index.html"),
+        ("eligibility/start.html", f"{settings.BASE_DIR}/benefits/eligibility/templates/eligibility/start.html"),
+        ("", None),
+        ("nope.html", None),
+        ("core/not-there.html", None),
+    ],
+)
+def test_template_path(input_template, expected_path):
+    if expected_path:
+        assert template_path(input_template) == Path(expected_path)
+    else:
+        assert template_path(input_template) is None
 
 
 def test_SecretNameField_init():
@@ -525,6 +547,53 @@ def test_agency_logo_small(model_TransitAgency):
 def test_agency_logo_large(model_TransitAgency):
 
     assert agency_logo_large(model_TransitAgency, "local_filename.png") == "agencies/test-lg.png"
+
+
+@pytest.mark.django_db
+def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcessor):
+    model_TransitAgency_inactive.transit_processor = model_TransitProcessor
+
+    model_TransitAgency_inactive.short_name = ""
+    model_TransitAgency_inactive.long_name = ""
+    model_TransitAgency_inactive.phone = ""
+    model_TransitAgency_inactive.info_url = ""
+    model_TransitAgency_inactive.logo_large = ""
+    model_TransitAgency_inactive.logo_small = ""
+    model_TransitAgency_inactive.transit_processor_audience = ""
+    model_TransitAgency_inactive.transit_processor_client_id = ""
+    model_TransitAgency_inactive.transit_processor_client_secret_name = ""
+    # agency is inactive, OK to have incomplete fields
+    model_TransitAgency_inactive.clean()
+
+    # now mark it active and expect failure on clean()
+    model_TransitAgency_inactive.active = True
+    with pytest.raises(ValidationError) as e:
+        model_TransitAgency_inactive.clean()
+
+    errors = e.value.error_dict
+
+    assert "short_name" in errors
+    assert "long_name" in errors
+    assert "phone" in errors
+    assert "info_url" in errors
+    assert "logo_large" in errors
+    assert "logo_small" in errors
+    assert "transit_processor_audience" in errors
+    assert "transit_processor_client_id" in errors
+    assert "transit_processor_client_secret_name" in errors
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("template_attribute", ["index_template_override", "eligibility_index_template_override"])
+def test_TransitAgency_clean_templates(model_TransitAgency_inactive, template_attribute):
+    setattr(model_TransitAgency_inactive, template_attribute, "does/not/exist.html")
+    # agency is inactive, OK to have missing template
+    model_TransitAgency_inactive.clean()
+
+    # now mark it active and expect failure on clean()
+    model_TransitAgency_inactive.active = True
+    with pytest.raises(ValidationError, match="Template not found: does/not/exist.html"):
+        model_TransitAgency_inactive.clean()
 
 
 @pytest.mark.django_db

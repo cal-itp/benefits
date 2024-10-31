@@ -6,8 +6,10 @@ from functools import cached_property
 import importlib
 import logging
 import os
+from pathlib import Path
 import uuid
 
+from django import template
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import Group, User
@@ -23,6 +25,23 @@ from multiselectfield import MultiSelectField
 
 
 logger = logging.getLogger(__name__)
+
+
+def template_path(template_name: str) -> Path:
+    """Get a `pathlib.Path` for the named template, or None if it can't be found.
+
+    A `template_name` is the app-local name, e.g. `enrollment/success.html`.
+
+    Adapted from https://stackoverflow.com/a/75863472.
+    """
+    if template_name:
+        for engine in template.engines.all():
+            for loader in engine.engine.template_loaders:
+                for origin in loader.get_template_sources(template_name):
+                    path = Path(origin.name)
+                    if path.exists() and path.is_file():
+                        return path
+    return None
 
 
 class SecretNameField(models.SlugField):
@@ -281,6 +300,39 @@ class TransitAgency(models.Model):
     def enrollment_flows(self):
         return self.enrollmentflow_set
 
+    def clean(self):
+        if self.active:
+            errors = {}
+            message = "This field is required for active transit agencies."
+            needed = dict(
+                short_name=self.short_name,
+                long_name=self.long_name,
+                phone=self.phone,
+                info_url=self.info_url,
+                logo_large=self.logo_large,
+                logo_small=self.logo_small,
+            )
+            if self.transit_processor:
+                needed.update(
+                    dict(
+                        transit_processor_audience=self.transit_processor_audience,
+                        transit_processor_client_id=self.transit_processor_client_id,
+                        transit_processor_client_secret_name=self.transit_processor_client_secret_name,
+                    )
+                )
+            for k, v in needed.items():
+                if not v:
+                    errors[k] = ValidationError(message)
+            if errors:
+                raise ValidationError(errors)
+
+            # since templates are calculated from the pattern or the override field
+            # we can't add a field-level validation error
+            # so just raise directly for a missing template
+            for t in [self.index_template, self.eligibility_index_template]:
+                if not template_path(t):
+                    raise ValidationError(f"Template not found: {t}")
+
     @staticmethod
     def by_id(id):
         """Get a TransitAgency instance by its ID."""
@@ -510,6 +562,17 @@ class EnrollmentFlow(models.Model):
         return self.claims_provider is not None and bool(self.claims_scope) and bool(self.claims_eligibility_claim)
 
     @property
+    def claims_scheme(self):
+        return self.claims_scheme_override or self.claims_provider.scheme
+
+    @property
+    def claims_all_claims(self):
+        claims = [self.claims_eligibility_claim]
+        if self.claims_extra_claims is not None:
+            claims.extend(self.claims_extra_claims.split())
+        return claims
+
+    @property
     def eligibility_verifier(self):
         """A str representing the entity that verifies eligibility for this flow.
 
@@ -536,23 +599,6 @@ class EnrollmentFlow(models.Model):
         else:
             return self.enrollment_success_template_override or f"{prefix}--{self.agency_card_name}.html"
 
-    def eligibility_form_instance(self, *args, **kwargs):
-        """Return an instance of this flow's EligibilityForm, or None."""
-        if not bool(self.eligibility_form_class):
-            return None
-
-        # inspired by https://stackoverflow.com/a/30941292
-        module_name, class_name = self.eligibility_form_class.rsplit(".", 1)
-        FormClass = getattr(importlib.import_module(module_name), class_name)
-
-        return FormClass(*args, **kwargs)
-
-    @staticmethod
-    def by_id(id):
-        """Get an EnrollmentFlow instance by its ID."""
-        logger.debug(f"Get {EnrollmentFlow.__name__} by id: {id}")
-        return EnrollmentFlow.objects.get(id=id)
-
     def clean(self):
         supports_expiration = self.supports_expiration
         expiration_days = self.expiration_days
@@ -572,18 +618,22 @@ class EnrollmentFlow(models.Model):
             if errors:
                 raise ValidationError(errors)
 
-    @property
-    def claims_scheme(self):
-        if not self.claims_scheme_override:
-            return self.claims_provider.scheme
-        return self.claims_scheme_override
+    def eligibility_form_instance(self, *args, **kwargs):
+        """Return an instance of this flow's EligibilityForm, or None."""
+        if not bool(self.eligibility_form_class):
+            return None
 
-    @property
-    def claims_all_claims(self):
-        claims = [self.claims_eligibility_claim]
-        if self.claims_extra_claims is not None:
-            claims.extend(self.claims_extra_claims.split())
-        return claims
+        # inspired by https://stackoverflow.com/a/30941292
+        module_name, class_name = self.eligibility_form_class.rsplit(".", 1)
+        FormClass = getattr(importlib.import_module(module_name), class_name)
+
+        return FormClass(*args, **kwargs)
+
+    @staticmethod
+    def by_id(id):
+        """Get an EnrollmentFlow instance by its ID."""
+        logger.debug(f"Get {EnrollmentFlow.__name__} by id: {id}")
+        return EnrollmentFlow.objects.get(id=id)
 
 
 class EnrollmentEvent(models.Model):
