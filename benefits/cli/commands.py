@@ -1,6 +1,8 @@
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Callable
 
+from django import template
 from django.core.management.base import BaseCommand
 
 from benefits import VERSION
@@ -108,3 +110,18 @@ class BenefitsCommand(BaseCommand):
         """Parse options into a dataclass instance."""
         options = {k: v for k, v in options.items() if k in dir(self.options_cls)}
         return self.options_cls(**options)
+
+    def template_path(self, template_name: str) -> Path:
+        """Get a `pathlib.Path` for the named template.
+
+        A `template_name` is the app-local name, e.g. `enrollment/success.html`.
+
+        Adapted from https://stackoverflow.com/a/75863472.
+        """
+        for engine in template.engines.all():
+            for loader in engine.engine.template_loaders:
+                for origin in loader.get_template_sources(template_name):
+                    path = Path(origin.name)
+                    if path.exists():
+                        return path
+        raise template.TemplateDoesNotExist(f"Could not find template: {template_name}")

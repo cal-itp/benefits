@@ -10,3 +10,8 @@ def cmd(capfd):
         return capfd.readouterr()
 
     return call
+
+
+@pytest.fixture(autouse=True)
+def db_setup(model_TransitProcessor):
+    pass

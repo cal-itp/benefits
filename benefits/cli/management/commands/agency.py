@@ -1,3 +1,4 @@
+from benefits.cli.agency.create import Create
 from benefits.cli.agency.list import List
 from benefits.cli.commands import BenefitsCommand
 
@@ -7,7 +8,7 @@ class Command(BenefitsCommand):
 
     help = __doc__
     name = "agency"
-    subcommands = [List]
+    subcommands = [List, Create]
 
     def __init__(self, stdout=None, stderr=None, no_color=False, force_color=False):
         # make List the default_subcmd
