@@ -483,6 +483,7 @@ class EnrollmentEvent(models.Model):
     verified_by = models.TextField()
     enrollment_datetime = models.DateTimeField(default=timezone.now)
     expiration_datetime = models.DateTimeField(blank=True, null=True)
+    extra_claims = models.TextField(blank=True, null=True)
 
     def __str__(self):
         dt = timezone.localtime(self.enrollment_datetime)

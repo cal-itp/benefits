@@ -305,7 +305,9 @@ def test_index_eligible_post_valid_form_success_claims(
     mocked_analytics_module,
     model_TransitAgency,
     model_EnrollmentFlow_with_scope_and_claim,
+    mocked_session_oauth_extra_claims,
 ):
+    mocked_session_oauth_extra_claims.return_value = ["claim_1", "claim_2"]
     mocker.patch("benefits.enrollment.views.enroll", return_value=(Status.SUCCESS, None))
     spy = mocker.spy(benefits.enrollment.views.models.EnrollmentEvent.objects, "create")
 
@@ -318,6 +320,7 @@ def test_index_eligible_post_valid_form_success_claims(
         enrollment_method=models.EnrollmentMethods.DIGITAL,
         verified_by=model_EnrollmentFlow_with_scope_and_claim.claims_provider.client_name,
         expiration_datetime=None,
+        extra_claims="claim_1, claim_2",
     )
 
     assert response.status_code == 200
@@ -335,7 +338,9 @@ def test_index_eligible_post_valid_form_success_eligibility_api(
     mocked_analytics_module,
     model_TransitAgency,
     model_EnrollmentFlow_with_eligibility_api,
+    mocked_session_oauth_extra_claims,
 ):
+    mocked_session_oauth_extra_claims.return_value = ["claim_1", "claim_2"]
     mocker.patch("benefits.enrollment.views.enroll", return_value=(Status.SUCCESS, None))
     spy = mocker.spy(benefits.enrollment.views.models.EnrollmentEvent.objects, "create")
 
@@ -348,6 +353,7 @@ def test_index_eligible_post_valid_form_success_eligibility_api(
         enrollment_method=models.EnrollmentMethods.DIGITAL,
         verified_by=model_EnrollmentFlow_with_eligibility_api.eligibility_api_url,
         expiration_datetime=None,
+        extra_claims="claim_1, claim_2",
     )
 
     assert response.status_code == 200

@@ -126,7 +126,7 @@ def authorize(request):
     flow_claims = flow.claims_all_claims
     stored_claims = []
 
-    error_claim = None
+    error_claim = {}
 
     if flow_claims:
         userinfo = token.get("userinfo")
@@ -141,9 +141,8 @@ def authorize(request):
                 elif claim_value == 1:
                     # if userinfo contains our claim and the flag is 1 (true), store the *claim*
                     stored_claims.append(claim)
-                elif claim_value >= 10 and claim == flow.claims_eligibility_claim:
-                    # error_claim is only set if claim is the eligibility claim
-                    error_claim = claim_value
+                elif claim_value >= 10:
+                    error_claim[claim] = claim_value
 
     session.update(request, oauth_token=id_token, oauth_claims=stored_claims)
     analytics.finished_sign_in(request, error=error_claim)

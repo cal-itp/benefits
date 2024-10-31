@@ -237,31 +237,62 @@ def test_authorize_success(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_analytics_module")
+@pytest.mark.parametrize(
+    "extra_claims,userinfo,oauth_claims",
+    [
+        (None, {"claim": 1}, ["claim"]),
+        ("", {"claim": 1}, ["claim"]),
+        ("extra_claim", {"claim": 1, "extra_claim": 1}, ["claim", "extra_claim"]),
+        (
+            "extra_claim_1 extra_claim_2",
+            {"claim": 1, "extra_claim_1": 1, "extra_claim_2": 1},
+            ["claim", "extra_claim_1", "extra_claim_2"],
+        ),
+    ],
+)
 def test_authorize_success_with_claim_true(
-    app_request, mocked_session_flow_uses_claims_verification, mocked_oauth_client_or_error_redirect__client
+    app_request,
+    mocked_session_flow_uses_claims_verification,
+    mocked_oauth_client_or_error_redirect__client,
+    extra_claims,
+    userinfo,
+    oauth_claims,
 ):
     flow = mocked_session_flow_uses_claims_verification.return_value
-    flow.claims_extra_claims = ""
+    flow.claims_extra_claims = extra_claims
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
-    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "1"}}
+    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": userinfo}
 
     result = authorize(app_request)
 
     mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
-    assert session.oauth_claims(app_request) == ["claim"]
+    assert session.oauth_claims(app_request) == oauth_claims
     assert result.status_code == 302
     assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_analytics_module")
+@pytest.mark.parametrize(
+    "extra_claims,userinfo",
+    [
+        (None, {"claim": 0}),
+        ("", {"claim": 0}),
+        ("extra_claim", {"claim": 0, "extra_claim": 0}),
+        ("extra_claim_1 extra_claim_2", {"claim": 0, "extra_claim_1": 0, "extra_claim_2": 0}),
+    ],
+)
 def test_authorize_success_with_claim_false(
-    app_request, mocked_session_flow_uses_claims_verification, mocked_oauth_client_or_error_redirect__client
+    app_request,
+    mocked_session_flow_uses_claims_verification,
+    mocked_oauth_client_or_error_redirect__client,
+    extra_claims,
+    userinfo,
 ):
     flow = mocked_session_flow_uses_claims_verification.return_value
-    flow.claims_extra_claims = ""
+    flow.claims_extra_claims = extra_claims
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
-    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "0"}}
+    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": userinfo}
 
     result = authorize(app_request)
 
@@ -272,21 +303,32 @@ def test_authorize_success_with_claim_false(
 
 
 @pytest.mark.django_db
+@pytest.mark.parametrize(
+    "extra_claims,userinfo",
+    [
+        (None, {"claim": 10}),
+        ("", {"claim": 10}),
+        ("extra_claim", {"claim": 10, "extra_claim": 10}),
+        ("extra_claim_1 extra_claim_2", {"claim": 10, "extra_claim_1": 10, "extra_claim_2": 10}),
+    ],
+)
 def test_authorize_success_with_claim_error(
     app_request,
     mocked_session_flow_uses_claims_verification,
     mocked_oauth_client_or_error_redirect__client,
     mocked_analytics_module,
+    extra_claims,
+    userinfo,
 ):
     flow = mocked_session_flow_uses_claims_verification.return_value
-    flow.claims_extra_claims = ""
+    flow.claims_extra_claims = extra_claims
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
-    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": {"claim": "10"}}
+    mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": userinfo}
 
     result = authorize(app_request)
 
     mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
-    mocked_analytics_module.finished_sign_in.assert_called_with(app_request, error=10)
+    mocked_analytics_module.finished_sign_in.assert_called_with(app_request, error=userinfo)
     assert session.oauth_claims(app_request) == []
     assert result.status_code == 302
     assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)

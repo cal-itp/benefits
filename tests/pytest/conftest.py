@@ -274,3 +274,8 @@ def mocked_session_reset(mocker):
 @pytest.fixture
 def mocked_session_update(mocker):
     return mocker.patch("benefits.core.session.update")
+
+
+@pytest.fixture
+def mocked_session_oauth_extra_claims(mocker):
+    return mocker.patch("benefits.core.session.oauth_extra_claims")
