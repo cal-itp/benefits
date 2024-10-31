@@ -143,7 +143,7 @@ def reenrollment_error(request):
     """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
     flow = session.flow(request)
 
-    if flow.reenrollment_error_template is None:
+    if not flow.reenrollment_error_template:
         raise Exception(f"Re-enrollment error with null template on: {flow}")
 
     if session.logged_in(request) and flow.claims_provider.supports_sign_out:

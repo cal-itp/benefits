@@ -68,8 +68,8 @@ def model_ClaimsProvider():
 
 @pytest.fixture
 def model_ClaimsProvider_no_sign_out(model_ClaimsProvider):
-    model_ClaimsProvider.sign_out_button_template = None
-    model_ClaimsProvider.sign_out_link_template = None
+    model_ClaimsProvider.sign_out_button_template = ""
+    model_ClaimsProvider.sign_out_link_template = ""
     model_ClaimsProvider.save()
 
     return model_ClaimsProvider

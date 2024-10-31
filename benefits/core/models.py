@@ -74,9 +74,9 @@ class PemData(models.Model):
     # Human description of the PEM data
     label = models.TextField()
     # The name of a secret with data in utf-8 encoded PEM text format
-    text_secret_name = SecretNameField(null=True, blank=True)
+    text_secret_name = SecretNameField(default="", blank=True)
     # Public URL hosting the utf-8 encoded PEM text
-    remote_url = models.TextField(null=True, blank=True)
+    remote_url = models.TextField(default="", blank=True)
 
     def __str__(self):
         return self.label
@@ -104,8 +104,8 @@ class ClaimsProvider(models.Model):
     """An entity that provides claims for eligibility verification."""
 
     id = models.AutoField(primary_key=True)
-    sign_out_button_template = models.TextField(null=True, blank=True, help_text="Template that renders sign-out button")
-    sign_out_link_template = models.TextField(null=True, blank=True, help_text="Template that renders sign-out link")
+    sign_out_button_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out button")
+    sign_out_link_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out link")
     client_name = models.TextField(help_text="Unique identifier used to register this claims provider with Authlib registry")
     client_id_secret_name = SecretNameField(
         help_text="The name of the secret containing the client ID for this claims provider"
@@ -139,7 +139,9 @@ class TransitProcessor(models.Model):
     )
     card_tokenize_env = models.TextField(help_text="The environment in which card tokenization is occurring.")
     portal_url = models.TextField(
-        null=True, blank=True, help_text="The absolute base URL for the TransitProcessor's control portal, including https://."
+        default="",
+        blank=True,
+        help_text="The absolute base URL for the TransitProcessor's control portal, including https://.",
     )
 
     def __str__(self):
@@ -165,12 +167,20 @@ class TransitAgency(models.Model):
     id = models.AutoField(primary_key=True)
     active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
     slug = models.SlugField(help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}")
-    short_name = models.TextField(help_text="The user-facing short name for this agency. Often an uppercase acronym.")
-    long_name = models.TextField(
-        help_text="The user-facing long name for this agency. Often the short_name acronym, spelled out."
+    short_name = models.TextField(
+        default="", blank=True, help_text="The user-facing short name for this agency. Often an uppercase acronym."
     )
-    info_url = models.URLField(help_text="URL of a website/page with more information about the agency's discounts")
-    phone = models.TextField(help_text="Agency customer support phone number")
+    long_name = models.TextField(
+        default="",
+        blank=True,
+        help_text="The user-facing long name for this agency. Often the short_name acronym, spelled out.",
+    )
+    info_url = models.URLField(
+        default="",
+        blank=True,
+        help_text="URL of a website/page with more information about the agency's discounts",
+    )
+    phone = models.TextField(default="", blank=True, help_text="Agency customer support phone number")
     index_template_override = models.TextField(
         help_text="Override the default template used for this agency's landing page",
         blank=True,
@@ -183,7 +193,6 @@ class TransitAgency(models.Model):
     )
     eligibility_api_id = models.TextField(
         help_text="The identifier for this agency used in Eligibility API calls.",
-        null=True,
         blank=True,
         default="",
     )
@@ -207,20 +216,27 @@ class TransitAgency(models.Model):
     )
     eligibility_api_jws_signing_alg = models.TextField(
         help_text="The JWS-compatible signing algorithm used in Eligibility API calls.",
-        null=True,
         blank=True,
         default="",
     )
-    transit_processor = models.ForeignKey(TransitProcessor, on_delete=models.PROTECT)
+    transit_processor = models.ForeignKey(
+        TransitProcessor,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        default=None,
+        help_text="This agency's TransitProcessor.",
+    )
     transit_processor_audience = models.TextField(
-        help_text="This agency's audience value used to access the TransitProcessor's API.", default=""
+        help_text="This agency's audience value used to access the TransitProcessor's API.", default="", blank=True
     )
     transit_processor_client_id = models.TextField(
-        help_text="This agency's client_id value used to access the TransitProcessor's API.", default=""
+        help_text="This agency's client_id value used to access the TransitProcessor's API.", default="", blank=True
     )
     transit_processor_client_secret_name = SecretNameField(
         help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
         default="",
+        blank=True,
     )
     staff_group = models.OneToOneField(
         Group,
@@ -232,7 +248,6 @@ class TransitAgency(models.Model):
         related_name="transit_agency",
     )
     sso_domain = models.TextField(
-        null=True,
         blank=True,
         default="",
         help_text="The email domain of users to automatically add to this agency's staff group upon login.",
@@ -247,15 +262,13 @@ class TransitAgency(models.Model):
         related_name="+",
     )
     logo_large = models.ImageField(
-        default=None,
-        null=True,
+        default="",
         blank=True,
         upload_to=agency_logo_large,
         help_text="The large version of the transit agency's logo.",
     )
     logo_small = models.ImageField(
-        default=None,
-        null=True,
+        default="",
         blank=True,
         upload_to=agency_logo_small,
         help_text="The small version of the transit agency's logo.",
@@ -388,32 +401,31 @@ class EnrollmentFlow(models.Model):
         help_text="An entity that provides claims for eligibility verification for this flow.",
     )
     claims_scope = models.TextField(
-        null=True,
         blank=True,
+        default="",
         help_text="A space-separated list of identifiers used to specify what access privileges are being requested",
     )
     claims_eligibility_claim = models.TextField(
-        null=True, blank=True, help_text="The name of the claim that is used to verify eligibility"
+        blank=True, default="", help_text="The name of the claim that is used to verify eligibility"
     )
-    claims_extra_claims = models.TextField(null=True, blank=True, help_text="A space-separated list of any additional claims")
+    claims_extra_claims = models.TextField(blank=True, default="", help_text="A space-separated list of any additional claims")
     claims_scheme_override = models.TextField(
         help_text="The authentication scheme to use (Optional). If blank, defaults to the value in Claims providers",
-        default=None,
-        null=True,
+        default="",
         blank=True,
         verbose_name="Claims scheme",
     )
     eligibility_api_url = models.TextField(
-        null=True, blank=True, help_text="Fully qualified URL for an Eligibility API server used by this flow."
+        blank=True, default="", help_text="Fully qualified URL for an Eligibility API server used by this flow."
     )
     eligibility_api_auth_header = models.TextField(
-        null=True,
         blank=True,
+        default="",
         help_text="The auth header to send in Eligibility API requests for this flow.",
     )
     eligibility_api_auth_key_secret_name = SecretNameField(
-        null=True,
         blank=True,
+        default="",
         help_text="The name of a secret containing the value of the auth header to send in Eligibility API requests for this flow.",  # noqa: 501
     )
     eligibility_api_public_key = models.ForeignKey(
@@ -425,53 +437,53 @@ class EnrollmentFlow(models.Model):
         help_text="The public key used to encrypt Eligibility API requests and to verify signed Eligibility API responses for this flow.",  # noqa: E501
     )
     eligibility_api_jwe_cek_enc = models.TextField(
-        null=True,
         blank=True,
+        default="",
         help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode to use in Eligibility API requests for this flow.",  # noqa: E501
     )
     eligibility_api_jwe_encryption_alg = models.TextField(
-        null=True,
         blank=True,
+        default="",
         help_text="The JWE-compatible encryption algorithm to use in Eligibility API requests for this flow.",
     )
     eligibility_api_jws_signing_alg = models.TextField(
-        null=True,
         blank=True,
+        default="",
         help_text="The JWS-compatible signing algorithm to use in Eligibility API requests for this flow.",
     )
     selection_label_template_override = models.TextField(
-        null=True,
         blank=True,
-        default=None,
+        default="",
         help_text="Override the default template that defines the end-user UI for selecting this flow among other options.",
     )
     eligibility_start_template_override = models.TextField(
-        null=True,
         blank=True,
-        default=None,
+        default="",
         help_text="Override the default template for the informational page of this flow.",
     )
     eligibility_form_class = models.TextField(
-        null=True,
         blank=True,
+        default="",
         help_text="The fully qualified Python path of a form class used by this flow, e.g. benefits.eligibility.forms.FormClass",  # noqa: E501
     )
     eligibility_unverified_template_override = models.TextField(
-        help_text="Override the default template that defines the page when a user fails eligibility verification for this flow.",  # noqa: E501
         blank=True,
-        null=True,
-        default=None,
+        default="",
+        help_text="Override the default template that defines the page when a user fails eligibility verification for this flow.",  # noqa: E501
     )
     help_template = models.TextField(
-        null=True,
         blank=True,
+        default="",
         help_text="Path to a Django template that defines the help text for this enrollment flow, used in building the dynamic help page for an agency",  # noqa: E501
     )
     label = models.TextField(
-        null=True,
+        blank=True,
+        default="",
         help_text="A human readable label, used as the display text in Admin.",
     )
-    group_id = models.TextField(null=True, help_text="Reference to the TransitProcessor group for user enrollment")
+    group_id = models.TextField(
+        blank=True, default="", help_text="Reference to the TransitProcessor group for user enrollment"
+    )
     supports_expiration = models.BooleanField(
         default=False, help_text="Indicates if the enrollment expires or does not expire"
     )
@@ -484,18 +496,16 @@ class EnrollmentFlow(models.Model):
         help_text="If the enrollment supports expiration, number of days preceding the expiration date during which a user can re-enroll in the eligibilty",  # noqa: E501
     )
     enrollment_index_template_override = models.TextField(
-        help_text="Override the default template for the Eligibility Confirmation page (the index of the enrollment app)",
-        null=True,
         blank=True,
-        default=None,
+        default="",
+        help_text="Override the default template for the Eligibility Confirmation page (the index of the enrollment app)",
     )
     reenrollment_error_template = models.TextField(
-        null=True, blank=True, help_text="Template for a re-enrollment error associated with the enrollment flow"
+        blank=True, default="", help_text="Template for a re-enrollment error associated with the enrollment flow"
     )
     enrollment_success_template_override = models.TextField(
-        null=True,
         blank=True,
-        default=None,
+        default="",
         help_text="Override the default template for a successful enrollment associated with the enrollment flow",
     )
     supported_enrollment_methods = MultiSelectField(
@@ -612,7 +622,7 @@ class EnrollmentFlow(models.Model):
                 errors.update(expiration_days=ValidationError(message))
             if expiration_reenrollment_days is None or expiration_reenrollment_days <= 0:
                 errors.update(expiration_reenrollment_days=ValidationError(message))
-            if reenrollment_error_template is None:
+            if not reenrollment_error_template:
                 errors.update(reenrollment_error_template=ValidationError("Required when supports expiration is True."))
 
         if errors:
@@ -671,7 +681,7 @@ class EnrollmentEvent(models.Model):
     verified_by = models.TextField()
     enrollment_datetime = models.DateTimeField(default=timezone.now)
     expiration_datetime = models.DateTimeField(blank=True, null=True)
-    extra_claims = models.TextField(blank=True, null=True)
+    extra_claims = models.TextField(blank=True, default="")
 
     def __str__(self):
         dt = timezone.localtime(self.enrollment_datetime)

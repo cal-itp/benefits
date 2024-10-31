@@ -3,6 +3,9 @@
 import django.db.models.deletion
 from django.db import migrations, models
 
+import benefits.core.models
+import benefits.secrets
+
 
 class Migration(migrations.Migration):
 
@@ -11,6 +14,37 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.AlterField(
+            model_name="pemdata",
+            name="remote_url",
+            field=models.TextField(blank=True, default=""),
+        ),
+        migrations.AlterField(
+            model_name="pemdata",
+            name="text_secret_name",
+            field=benefits.core.models.SecretNameField(
+                blank=True, default="", max_length=127, validators=[benefits.secrets.SecretNameValidator()]
+            ),
+        ),
+        migrations.AlterField(
+            model_name="claimsprovider",
+            name="sign_out_button_template",
+            field=models.TextField(blank=True, default="", help_text="Template that renders sign-out button"),
+        ),
+        migrations.AlterField(
+            model_name="claimsprovider",
+            name="sign_out_link_template",
+            field=models.TextField(blank=True, default="", help_text="Template that renders sign-out link"),
+        ),
+        migrations.AlterField(
+            model_name="transitprocessor",
+            name="portal_url",
+            field=models.TextField(
+                blank=True,
+                default="",
+                help_text="The absolute base URL for the TransitProcessor's control portal, including https://.",
+            ),
+        ),
         migrations.RenameField(
             model_name="transitagency", old_name="eligibility_index_template", new_name="eligibility_index_template_override"
         ),
@@ -35,17 +69,14 @@ class Migration(migrations.Migration):
             model_name="transitagency",
             name="eligibility_api_id",
             field=models.TextField(
-                blank=True, default="", help_text="The identifier for this agency used in Eligibility API calls.", null=True
+                blank=True, default="", help_text="The identifier for this agency used in Eligibility API calls."
             ),
         ),
         migrations.AlterField(
             model_name="transitagency",
             name="eligibility_api_jws_signing_alg",
             field=models.TextField(
-                blank=True,
-                default="",
-                help_text="The JWS-compatible signing algorithm used in Eligibility API calls.",
-                null=True,
+                blank=True, default="", help_text="The JWS-compatible signing algorithm used in Eligibility API calls."
             ),
         ),
         migrations.AlterField(
@@ -81,6 +112,102 @@ class Migration(migrations.Migration):
                 help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}"
             ),
         ),
+        migrations.AlterField(
+            model_name="transitagency",
+            name="info_url",
+            field=models.URLField(
+                default="",
+                blank=True,
+                help_text="URL of a website/page with more information about the agency's discounts",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="transitagency",
+            name="long_name",
+            field=models.TextField(
+                default="",
+                blank=True,
+                help_text="The user-facing long name for this agency. Often the short_name acronym, spelled out.",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="transitagency",
+            name="phone",
+            field=models.TextField(default="", blank=True, help_text="Agency customer support phone number"),
+        ),
+        migrations.AlterField(
+            model_name="transitagency",
+            name="short_name",
+            field=models.TextField(
+                default="", blank=True, help_text="The user-facing short name for this agency. Often an uppercase acronym."
+            ),
+        ),
+        migrations.AlterField(
+            model_name="transitagency",
+            name="logo_large",
+            field=models.ImageField(
+                blank=True,
+                default="",
+                help_text="The large version of the transit agency's logo.",
+                upload_to=benefits.core.models.agency_logo_large,
+            ),
+        ),
+        migrations.AlterField(
+            model_name="transitagency",
+            name="logo_small",
+            field=models.ImageField(
+                blank=True,
+                default="",
+                help_text="The small version of the transit agency's logo.",
+                upload_to=benefits.core.models.agency_logo_small,
+            ),
+        ),
+        migrations.AlterField(
+            model_name="transitagency",
+            name="sso_domain",
+            field=models.TextField(
+                blank=True,
+                default="",
+                help_text="The email domain of users to automatically add to this agency's staff group upon login.",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="transitagency",
+            name="transit_processor",
+            field=models.ForeignKey(
+                blank=True,
+                default=None,
+                help_text="This agency's TransitProcessor.",
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="core.transitprocessor",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="transitagency",
+            name="transit_processor_audience",
+            field=models.TextField(
+                blank=True, default="", help_text="This agency's audience value used to access the TransitProcessor's API."
+            ),
+        ),
+        migrations.AlterField(
+            model_name="transitagency",
+            name="transit_processor_client_id",
+            field=models.TextField(
+                blank=True, default="", help_text="This agency's client_id value used to access the TransitProcessor's API."
+            ),
+        ),
+        migrations.AlterField(
+            model_name="transitagency",
+            name="transit_processor_client_secret_name",
+            field=benefits.core.models.SecretNameField(
+                blank=True,
+                default="",
+                help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
+                max_length=127,
+                validators=[benefits.secrets.SecretNameValidator()],
+            ),
+        ),
         migrations.RenameField(
             model_name="enrollmentflow",
             old_name="eligibility_start_template",
@@ -108,19 +235,11 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name="enrollmentflow",
-            name="system_name",
-            field=models.SlugField(
-                help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests.",  # noqa: E501
-            ),
-        ),
-        migrations.AlterField(
-            model_name="enrollmentflow",
             name="selection_label_template_override",
             field=models.TextField(
                 blank=True,
-                default=None,
+                default="",
                 help_text="Override the default template that defines the end-user UI for selecting this flow among other options.",  # noqa: E501
-                null=True,
             ),
         ),
         migrations.AlterField(
@@ -128,9 +247,8 @@ class Migration(migrations.Migration):
             name="eligibility_start_template_override",
             field=models.TextField(
                 blank=True,
-                default=None,
+                default="",
                 help_text="Override the default template for the informational page of this flow.",
-                null=True,
             ),
         ),
         migrations.AlterField(
@@ -138,9 +256,8 @@ class Migration(migrations.Migration):
             name="eligibility_unverified_template_override",
             field=models.TextField(
                 blank=True,
-                default=None,
+                default="",
                 help_text="Override the default template that defines the page when a user fails eligibility verification for this flow.",  # noqa: E501
-                null=True,
             ),
         ),
         migrations.AlterField(
@@ -148,9 +265,8 @@ class Migration(migrations.Migration):
             name="enrollment_index_template_override",
             field=models.TextField(
                 blank=True,
-                default=None,
+                default="",
                 help_text="Override the default template for the Eligibility Confirmation page (the index of the enrollment app)",  # noqa: E501
-                null=True,
             ),
         ),
         migrations.AlterField(
@@ -158,9 +274,142 @@ class Migration(migrations.Migration):
             name="enrollment_success_template_override",
             field=models.TextField(
                 blank=True,
-                default=None,
+                default="",
                 help_text="Override the default template for a successful enrollment associated with the enrollment flow",
-                null=True,
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="reenrollment_error_template",
+            field=models.TextField(
+                blank=True, default="", help_text="Template for a re-enrollment error associated with the enrollment flow"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="help_template",
+            field=models.TextField(
+                blank=True,
+                default="",
+                help_text="Path to a Django template that defines the help text for this enrollment flow, used in building the dynamic help page for an agency",  # noqa: E501
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentevent",
+            name="extra_claims",
+            field=models.TextField(blank=True, default=""),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="claims_eligibility_claim",
+            field=models.TextField(
+                blank=True, default="", help_text="The name of the claim that is used to verify eligibility"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="claims_extra_claims",
+            field=models.TextField(blank=True, default="", help_text="A space-separated list of any additional claims"),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="claims_scope",
+            field=models.TextField(
+                blank=True,
+                default="",
+                help_text="A space-separated list of identifiers used to specify what access privileges are being requested",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="eligibility_api_auth_header",
+            field=models.TextField(
+                blank=True, default="", help_text="The auth header to send in Eligibility API requests for this flow."
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="eligibility_api_auth_key_secret_name",
+            field=benefits.core.models.SecretNameField(
+                blank=True,
+                default="",
+                help_text="The name of a secret containing the value of the auth header to send in Eligibility API requests for this flow.",  # noqa: E501
+                max_length=127,
+                validators=[benefits.secrets.SecretNameValidator()],
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="eligibility_api_jwe_cek_enc",
+            field=models.TextField(
+                blank=True,
+                default="",
+                help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode to use in Eligibility API requests for this flow.",  # noqa: E501
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="eligibility_api_jwe_encryption_alg",
+            field=models.TextField(
+                blank=True,
+                default="",
+                help_text="The JWE-compatible encryption algorithm to use in Eligibility API requests for this flow.",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="eligibility_api_jws_signing_alg",
+            field=models.TextField(
+                blank=True,
+                default="",
+                help_text="The JWS-compatible signing algorithm to use in Eligibility API requests for this flow.",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="eligibility_api_url",
+            field=models.TextField(
+                blank=True, default="", help_text="Fully qualified URL for an Eligibility API server used by this flow."
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="claims_scheme_override",
+            field=models.TextField(
+                blank=True,
+                default="",
+                help_text="The authentication scheme to use (Optional). If blank, defaults to the value in Claims providers",
+                verbose_name="Claims scheme",
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="system_name",
+            field=models.SlugField(
+                help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests.",  # noqa: E501
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="eligibility_form_class",
+            field=models.TextField(
+                blank=True,
+                default="",
+                help_text="The fully qualified Python path of a form class used by this flow, e.g. benefits.eligibility.forms.FormClass",  # noqa: E501
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="group_id",
+            field=models.TextField(
+                blank=True, default="", help_text="Reference to the TransitProcessor group for user enrollment"
+            ),
+        ),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="label",
+            field=models.TextField(
+                blank=True, default="", help_text="A human readable label, used as the display text in Admin."
             ),
         ),
     ]
