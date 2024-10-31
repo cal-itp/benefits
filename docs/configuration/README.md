@@ -35,7 +35,7 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "benefits.settings")
 ```
 
-Elsewhere, e.g. in [`manage.py`][benefits-manage], this same environment variable is set to ensure `benefits.settings`
+Elsewhere, e.g. in [`cli`][benefits-cli] app, this same environment variable is set to ensure `benefits.settings`
 are loaded for every app command and run.
 
 ## Using configuration in app code
@@ -74,7 +74,7 @@ else:
     # do something when this agency is inactive
 ```
 
-[benefits-manage]: https://github.com/cal-itp/benefits/blob/main/manage.py
+[benefits-cli]: https://github.com/cal-itp/benefits/blob/main/benefits/cli/main.py
 [benefits-settings]: https://github.com/cal-itp/benefits/blob/main/benefits/settings.py
 [benefits-wsgi]: https://github.com/cal-itp/benefits/blob/main/benefits/wsgi.py
 [django-model]: https://docs.djangoproject.com/en/5.0/topics/db/models/

@@ -3,7 +3,7 @@ set -eux
 
 # generate
 
-python manage.py makemigrations
+benefits makemigrations
 
 # reformat with black
 

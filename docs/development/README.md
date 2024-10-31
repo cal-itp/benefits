@@ -51,19 +51,19 @@ The [environment](../configuration/environment-variables.md) can also be overrid
 
 ```jsonc
 {
-    "name": "Django: Benefits Client",
-    "type": "python",
-    "request": "launch",
-    "program": "${workspaceFolder}/manage.py",
-    "args": ["runserver", "--insecure", "0.0.0.0:8000"],
-    "django": true,
-    "env": {
-        // existing field...
-        "DJANGO_DEBUG": "true",
-        // add these 2 entries with the values for reCAPTCHA
-        "DJANGO_RECAPTCHA_SITE_KEY": "<SITE KEY HERE>",
-        "DJANGO_RECAPTCHA_SECRET_KEY": "<SECRET KEY HERE>"
-    }
+  "name": "Django: Benefits Client",
+  "type": "python",
+  "request": "launch",
+  "program": "${workspaceFolder}/benefits/cli/main.py",
+  "args": ["runserver", "--insecure", "0.0.0.0:8000"],
+  "django": true,
+  "env": {
+    // existing field...
+    "DJANGO_DEBUG": "true",
+    // add these 2 entries with the values for reCAPTCHA
+    "DJANGO_RECAPTCHA_SITE_KEY": "<SITE KEY HERE>",
+    "DJANGO_RECAPTCHA_SECRET_KEY": "<SECRET KEY HERE>"
+  }
 }
 ```
 

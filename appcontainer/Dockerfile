@@ -29,7 +29,6 @@ COPY appcontainer/proxy.conf /calitp/run/proxy.conf
 
 # copy runtime files
 COPY --from=build_wheel /build/dist /build/dist
-COPY manage.py manage.py
 COPY bin bin
 COPY benefits benefits
 
