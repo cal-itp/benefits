@@ -23,7 +23,7 @@ The following California transit agencies have launched Cal-ITP Benefits for the
 | ----------------------------------------------- | ------------ | ----------- | -------- | ---------- | -------------------- | --------------------- |
 | **Monterey-Salinas Transit**                    | Live         | Live        | Live     |            |                      | 12/2021               |
 | **Santa Barbara Metropolitan Transit District** | Live         | Live        |          |            |                      | 10/2023               |
-| **Sacramento Regional Transit District**        | In test      |             |          |            |                      |                       |
+| **Sacramento Regional Transit District**        | Live         |             | Live     |            |                      | 10/2024               |
 | **Nevada County Connects**                      | In test      |             |          |            |  In test             |                       |
 
 ## Supported enrollment pathways
