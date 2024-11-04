@@ -52,3 +52,4 @@ services:
       - ./playwright:/playwright
     # https://code.visualstudio.com/docs/remote/create-dev-container#_use-docker-compose
     entrypoint: sleep infinity
+    profiles: ["testing"]
