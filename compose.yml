@@ -47,6 +47,7 @@ services:
       context: .
       dockerfile: playwright/Dockerfile
     image: benefits_client:playwright
+    env_file: playwright/.env
     volumes:
       - ./playwright:/playwright
     # https://code.visualstudio.com/docs/remote/create-dev-container#_use-docker-compose
