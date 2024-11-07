@@ -6,7 +6,15 @@ from django.utils import timezone
 
 import pytest
 
-from benefits.core.models import SecretNameField, EnrollmentFlow, TransitAgency, EnrollmentEvent, EnrollmentMethods
+from benefits.core.models import (
+    SecretNameField,
+    EnrollmentFlow,
+    TransitAgency,
+    EnrollmentEvent,
+    EnrollmentMethods,
+    agency_logo_small,
+    agency_logo_large,
+)
 import benefits.secrets
 
 
@@ -411,6 +419,18 @@ def test_TransitAgency_for_user_in_group_not_linked_to_any_agency():
     user.groups.add(group)
 
     assert TransitAgency.for_user(user) is None
+
+
+@pytest.mark.django_db
+def test_agency_logo_small(model_TransitAgency):
+
+    assert agency_logo_small(model_TransitAgency, "local_filename.png") == "agencies/test-sm.png"
+
+
+@pytest.mark.django_db
+def test_agency_logo_large(model_TransitAgency):
+
+    assert agency_logo_large(model_TransitAgency, "local_filename.png") == "agencies/test-lg.png"
 
 
 @pytest.mark.django_db
