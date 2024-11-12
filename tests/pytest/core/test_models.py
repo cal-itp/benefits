@@ -163,54 +163,6 @@ def test_EnrollmentFlow_agency_card_name__claims(model_EnrollmentFlow_with_scope
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_supports_expiration_False(model_EnrollmentFlow, model_EnrollmentFlow_does_not_support_expiration):
-    # test will fail if any error is raised
-    model_EnrollmentFlow_does_not_support_expiration.full_clean()
-
-
-@pytest.mark.django_db
-def test_EnrollmentFlow_zero_expiration_days(model_EnrollmentFlow_zero_expiration_days):
-    with pytest.raises(ValidationError) as exception_info:
-        model_EnrollmentFlow_zero_expiration_days.full_clean()
-
-    error_dict = exception_info.value.error_dict
-    assert len(error_dict["expiration_days"]) == 1
-    assert error_dict["expiration_days"][0].message == "When support_expiration is True, this value must be greater than 0."
-
-
-@pytest.mark.django_db
-def test_EnrollmentFlow_zero_expiration_reenrollment_days(model_EnrollmentFlow_zero_expiration_reenrollment_days):
-    with pytest.raises(ValidationError) as exception_info:
-        model_EnrollmentFlow_zero_expiration_reenrollment_days.full_clean()
-
-    error_dict = exception_info.value.error_dict
-    assert len(error_dict["expiration_reenrollment_days"]) == 1
-    assert (
-        error_dict["expiration_reenrollment_days"][0].message
-        == "When support_expiration is True, this value must be greater than 0."
-    )
-
-
-@pytest.mark.django_db
-def test_EnrollmentFlow_missing_reenrollment_template(model_EnrollmentFlow_supports_expiration):
-    model_EnrollmentFlow_supports_expiration.reenrollment_error_template = None
-    model_EnrollmentFlow_supports_expiration.save()
-
-    with pytest.raises(ValidationError) as exception_info:
-        model_EnrollmentFlow_supports_expiration.full_clean()
-
-    error_dict = exception_info.value.error_dict
-    assert len(error_dict["reenrollment_error_template"]) == 1
-    assert error_dict["reenrollment_error_template"][0].message == "Required when supports expiration is True."
-
-
-@pytest.mark.django_db
-def test_EnrollmentFlow_supports_expiration(model_EnrollmentFlow_supports_expiration):
-    # test will fail if any error is raised
-    model_EnrollmentFlow_supports_expiration.full_clean()
-
-
-@pytest.mark.django_db
 def test_EnrollmentFlow_enrollment_index_template(model_EnrollmentFlow_with_scope_and_claim):
     assert model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template == "enrollment/index.html"
 
@@ -420,6 +372,55 @@ def test_EnrollmentFlow_template_overrides_eligibility_api(model_EnrollmentFlow_
         model_EnrollmentFlow_with_eligibility_api.enrollment_success_template
         == f"enrollment/success--{model_EnrollmentFlow_with_eligibility_api.agency_card_name}.html"
     )
+
+
+@pytest.mark.django_db
+def test_EnrollmentFlow_clean_does_not_supports_expiration(model_EnrollmentFlow_does_not_support_expiration):
+    # test will fail if any error is raised
+    model_EnrollmentFlow_does_not_support_expiration.clean()
+
+
+@pytest.mark.django_db
+def test_EnrollmentFlow_clean_supports_expiration(model_EnrollmentFlow_supports_expiration):
+    # test will fail if any error is raised
+    model_EnrollmentFlow_supports_expiration.clean()
+
+    model_EnrollmentFlow_supports_expiration.expiration_days = 0
+    model_EnrollmentFlow_supports_expiration.expiration_reenrollment_days = 0
+    model_EnrollmentFlow_supports_expiration.reenrollment_error_template = None
+
+    with pytest.raises(ValidationError) as e:
+        model_EnrollmentFlow_supports_expiration.clean()
+
+    assert "expiration_days" in e.value.error_dict
+    assert "expiration_reenrollment_days" in e.value.error_dict
+    assert "reenrollment_error_template" in e.value.error_dict
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "template_attribute",
+    [
+        "selection_label_template_override",
+        "eligibility_start_template_override",
+        "eligibility_unverified_template_override",
+        "enrollment_index_template_override",
+        "enrollment_success_template_override",
+        "reenrollment_error_template",
+    ],
+)
+def test_EnrollmentFlow_clean_templates(
+    model_EnrollmentFlow_supports_expiration, model_TransitAgency_inactive, template_attribute
+):
+    model_EnrollmentFlow_supports_expiration.transit_agency = model_TransitAgency_inactive
+    setattr(model_EnrollmentFlow_supports_expiration, template_attribute, "does/not/exist.html")
+    # agency is inactive, OK to have bad template fields
+    model_EnrollmentFlow_supports_expiration.clean()
+
+    # now mark it active and expect failure on clean()
+    model_TransitAgency_inactive.active = True
+    with pytest.raises(ValidationError, match="Template not found: does/not/exist.html"):
+        model_EnrollmentFlow_supports_expiration.clean()
 
 
 @pytest.mark.django_db

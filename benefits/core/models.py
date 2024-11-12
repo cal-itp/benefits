@@ -600,13 +600,13 @@ class EnrollmentFlow(models.Model):
             return self.enrollment_success_template_override or f"{prefix}--{self.agency_card_name}.html"
 
     def clean(self):
-        supports_expiration = self.supports_expiration
-        expiration_days = self.expiration_days
-        expiration_reenrollment_days = self.expiration_reenrollment_days
-        reenrollment_error_template = self.reenrollment_error_template
+        errors = {}
 
-        if supports_expiration:
-            errors = {}
+        if self.supports_expiration:
+            expiration_days = self.expiration_days
+            expiration_reenrollment_days = self.expiration_reenrollment_days
+            reenrollment_error_template = self.reenrollment_error_template
+
             message = "When support_expiration is True, this value must be greater than 0."
             if expiration_days is None or expiration_days <= 0:
                 errors.update(expiration_days=ValidationError(message))
@@ -615,8 +615,28 @@ class EnrollmentFlow(models.Model):
             if reenrollment_error_template is None:
                 errors.update(reenrollment_error_template=ValidationError("Required when supports expiration is True."))
 
-            if errors:
-                raise ValidationError(errors)
+        if errors:
+            raise ValidationError(errors)
+
+        if self.transit_agency and self.transit_agency.active:
+            self.transit_agency.clean()
+
+            templates = [
+                self.selection_label_template,
+                self.eligibility_start_template,
+                self.eligibility_unverified_template,
+                self.enrollment_index_template,
+                self.enrollment_success_template,
+            ]
+            if self.supports_expiration:
+                templates.append(self.reenrollment_error_template)
+
+            # since templates are calculated from the pattern or the override field
+            # we can't add a field-level validation error
+            # so just raise directly for a missing template
+            for t in templates:
+                if not template_path(t):
+                    raise ValidationError(f"Template not found: {t}")
 
     def eligibility_form_instance(self, *args, **kwargs):
         """Return an instance of this flow's EligibilityForm, or None."""

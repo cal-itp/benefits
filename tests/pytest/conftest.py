@@ -133,26 +133,6 @@ def model_EnrollmentFlow_does_not_support_expiration(model_EnrollmentFlow):
 
 
 @pytest.fixture
-def model_EnrollmentFlow_zero_expiration_days(model_EnrollmentFlow):
-    model_EnrollmentFlow.supports_expiration = True
-    model_EnrollmentFlow.expiration_days = 0
-    model_EnrollmentFlow.expiration_reenrollment_days = 14
-    model_EnrollmentFlow.save()
-
-    return model_EnrollmentFlow
-
-
-@pytest.fixture
-def model_EnrollmentFlow_zero_expiration_reenrollment_days(model_EnrollmentFlow):
-    model_EnrollmentFlow.supports_expiration = True
-    model_EnrollmentFlow.expiration_days = 14
-    model_EnrollmentFlow.expiration_reenrollment_days = 0
-    model_EnrollmentFlow.save()
-
-    return model_EnrollmentFlow
-
-
-@pytest.fixture
 def model_EnrollmentFlow_supports_expiration(model_EnrollmentFlow):
     model_EnrollmentFlow.supports_expiration = True
     model_EnrollmentFlow.expiration_days = 365
