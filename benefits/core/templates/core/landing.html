@@ -1,5 +1,6 @@
 {% extends "core/base.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block classes %}
   {{ block.super | add:" landing" }}
@@ -9,6 +10,11 @@
   {% block title %}
   {% endblock title %}
 {% endblock page-title %}
+
+{% block preload %}
+  <link rel="preload" as="image" href="{% static "img/benefits-bg-mobile.jpg" %}" media="(max-width: 992px)" />
+  <link rel="preload" as="image" href="{% static "img/benefits-bg-desktop.jpg" %}" media="(min-width: 992px)">
+{% endblock preload %}
 
 {% block main-content %}
   <div class="container">
