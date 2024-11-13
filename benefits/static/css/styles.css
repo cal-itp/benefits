@@ -841,7 +841,7 @@ a.card:focus-visible {
 
 :root {
   --landing-main-height: calc(100vh - 80px); /* Header Height (80px) */
-  --landing-background: url("/static/img/benefits-bg-mobile.jpg") no-repeat
+  --landing-background: url("/static/img/benefits-bg-mobile.webp") no-repeat
     var(--primary-color);
   --landing-box-background: var(--bs-white);
   --landing-box-border: 12px solid var(--primary-color);
@@ -854,7 +854,7 @@ a.card:focus-visible {
     --landing-main-height: calc(
       100vh - 130px
     ); /* 130px = Header Height (80px) + (Footer Link (50px) */
-    --landing-background: url("/static/img/benefits-bg-desktop.jpg") no-repeat;
+    --landing-background: url("/static/img/benefits-bg-desktop.webp") no-repeat;
     --landing-box-background: transparent;
     --landing-box-border: none;
     --landing-text-color: var(--bs-white);
