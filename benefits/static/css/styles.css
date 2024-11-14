@@ -843,6 +843,7 @@ a.card:focus-visible {
   --landing-main-height: calc(100vh - 80px); /* Header Height (80px) */
   --landing-background: url("/static/img/benefits-bg-mobile.webp") no-repeat
     var(--primary-color);
+  --landing-background-fallback-color: #1a1b16; /* same color the left side of the background image */
   --landing-box-background: var(--bs-white);
   --landing-box-border: 12px solid var(--primary-color);
   --landing-text-color: var(--text-primary-color);
@@ -865,6 +866,7 @@ a.card:focus-visible {
 .landing main#main-content {
   background: var(--landing-background);
   background-size: cover;
+  background-color: var(--landing-background-fallback-color);
 }
 
 .landing main#main-content .container .row:first-child {
