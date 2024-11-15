@@ -15,7 +15,7 @@ def unique_values(original_list):
 
 
 def _agency_context(agency: models.TransitAgency):
-    return {
+    agency_context = {
         "eligibility_index_url": agency.eligibility_index_url,
         "help_templates": unique_values([f.help_template for f in agency.enrollment_flows.all() if f.help_template]),
         "info_url": agency.info_url,
@@ -24,6 +24,16 @@ def _agency_context(agency: models.TransitAgency):
         "short_name": agency.short_name,
         "slug": agency.slug,
     }
+
+    if agency.logo_large and agency.logo_small:
+        agency_context.update(
+            {
+                "logo_small_url": agency.logo_small.url,
+                "logo_large_url": agency.logo_large.url,
+            }
+        )
+
+    return agency_context
 
 
 def agency(request):
