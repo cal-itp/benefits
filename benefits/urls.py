@@ -11,6 +11,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import include, path
+from django.conf.urls.static import static
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +37,10 @@ if settings.DEBUG:
         raise RuntimeError("Test error")
 
     urlpatterns.append(path("error/", trigger_error))
+
+    # serve user-uploaded media files
+    # https://docs.djangoproject.com/en/5.1/howto/static-files/#serving-files-uploaded-by-a-user-during-development
+    urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
 
     # simple route to read a pre-defined "secret"
     # this "secret" does not contain sensitive information
