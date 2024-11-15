@@ -12,12 +12,12 @@
                 <a href="{{ agency.eligibility_index_url }}" class="card m-0 d-inline-block">
                     <div class="card-body d-flex flex-row-reverse flex-lg-column justify-content-center align-items-center">
                         <img class="sm d-lg-none ms-auto"
-                             src="{% get_static_prefix %}img/agencies/{{ agency.slug }}-sm.svg"
+                             src="{{ agency.logo_small_url }}"
                              width="52"
                              height="36"
                              alt="{% blocktranslate with agency=agency.short_name %}{{ agency }} logo{% endblocktranslate %}">
                         <img class="lg d-none d-lg-block"
-                             src="{% get_static_prefix %}img/agencies/{{ agency.slug }}-lg.svg"
+                             src="{{ agency.logo_large_url }}"
                              width="148"
                              height="72"
                              alt="{% blocktranslate with agency=agency.short_name %}{{ agency }} logo{% endblocktranslate %}">
