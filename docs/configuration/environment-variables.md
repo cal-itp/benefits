@@ -61,7 +61,7 @@ If blank or an invalid key, analytics events aren't captured (though may still b
 
 A list of strings representing the host/domain names that this Django site can serve.
 
-### `DJANGO_DB_DIR`
+### `DJANGO_STORAGE_DIR`
 
 !!! warning "Deployment configuration"
 
