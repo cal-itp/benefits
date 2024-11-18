@@ -5,6 +5,7 @@ The core application: Common model definitions.
 from functools import cached_property
 import importlib
 import logging
+import os
 import uuid
 
 from django.conf import settings
@@ -126,6 +127,19 @@ class TransitProcessor(models.Model):
         return self.name
 
 
+def _agency_logo(instance, filename, size):
+    base, ext = os.path.splitext(filename)
+    return f"agencies/{instance.slug}-{size}" + ext
+
+
+def agency_logo_small(instance, filename):
+    return _agency_logo(instance, filename, "sm")
+
+
+def agency_logo_large(instance, filename):
+    return _agency_logo(instance, filename, "lg")
+
+
 class TransitAgency(models.Model):
     """An agency offering transit service."""
 
@@ -190,6 +204,20 @@ class TransitAgency(models.Model):
         default=None,
         help_text="The group of users who are allowed to do in-person eligibility verification and enrollment.",
         related_name="+",
+    )
+    logo_large = models.ImageField(
+        default=None,
+        null=True,
+        blank=True,
+        upload_to=agency_logo_large,
+        help_text="The large version of the transit agency's logo.",
+    )
+    logo_small = models.ImageField(
+        default=None,
+        null=True,
+        blank=True,
+        upload_to=agency_logo_small,
+        help_text="The small version of the transit agency's logo.",
     )
 
     def __str__(self):

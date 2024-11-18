@@ -176,11 +176,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "benefits.wsgi.application"
 
-DATABASE_DIR = os.environ.get("DJANGO_DB_DIR", BASE_DIR)
+STORAGE_DIR = os.environ.get("DJANGO_STORAGE_DIR", BASE_DIR)
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(DATABASE_DIR, os.environ.get("DJANGO_DB_FILE", "django.db")),
+        "NAME": os.path.join(STORAGE_DIR, os.environ.get("DJANGO_DB_FILE", "django.db")),
     }
 }
 
@@ -234,13 +234,22 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "benefits", "static")]
 # use Manifest Static Files Storage by default
 STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
     "staticfiles": {
         "BACKEND": os.environ.get(
             "DJANGO_STATICFILES_STORAGE", "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
         )
-    }
+    },
 }
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+#  User-uploaded files
+
+MEDIA_ROOT = os.path.join(STORAGE_DIR, "uploads/")
+
+MEDIA_URL = "/media/"
 
 # Logging configuration
 LOG_LEVEL = os.environ.get("DJANGO_LOG_LEVEL", "DEBUG" if DEBUG else "WARNING")

@@ -58,7 +58,7 @@ resource "azurerm_linux_web_app" "main" {
 
     # Django settings
     "DJANGO_ALLOWED_HOSTS" = "${local.secret_prefix}django-allowed-hosts)",
-    "DJANGO_DB_DIR"        = "${local.secret_prefix}django-db-dir)",
+    "DJANGO_STORAGE_DIR"        = "${local.secret_prefix}django-storage-dir)",
     "DJANGO_DEBUG"         = local.is_prod ? null : "${local.secret_prefix}django-debug)",
     "DJANGO_LOG_LEVEL"     = "${local.secret_prefix}django-log-level)",
 
