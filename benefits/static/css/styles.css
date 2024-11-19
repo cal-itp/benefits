@@ -242,6 +242,7 @@ main {
   left: unset !important;
   transform: none;
   overflow: hidden;
+  height: 0;
 }
 
 #skip-to-content:focus {
