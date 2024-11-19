@@ -15,7 +15,7 @@ dependencies = [
     "azure-identity==1.19.0",
     "Django==5.1.2",
     "django-csp==3.8",
-    "django-admin-sortable2==2.2.3",
+    "django-admin-sortable2==2.2.4",
     "django-google-sso==8.0.0",
     "eligibility-api==2023.9.1",
     "calitp-littlepay==2024.10.1",
