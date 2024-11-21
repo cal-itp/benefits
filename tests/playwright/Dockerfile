@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/playwright/python:v1.48.0-jammy
 
 WORKDIR /playwright
 
-COPY playwright/requirements.txt requirements.txt
+COPY tests/playwright/requirements.txt requirements.txt
 
 RUN python -m pip install --upgrade pip && \
    pip install -r requirements.txt
