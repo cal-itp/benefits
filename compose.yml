@@ -47,9 +47,10 @@ services:
       context: .
       dockerfile: playwright/Dockerfile
     image: benefits_client:playwright
-    env_file: playwright/.env
+    env_file:
+      - path: playwright/.env
+        required: false # avoid throwing an error when running docker compose commands if this .env doesn't exist
     volumes:
       - ./playwright:/playwright
     # https://code.visualstudio.com/docs/remote/create-dev-container#_use-docker-compose
     entrypoint: sleep infinity
-    profiles: ["testing"]
