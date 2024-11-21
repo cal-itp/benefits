@@ -1,5 +1,3 @@
-import os
-
 from playwright.sync_api import Page, expect
 
 
@@ -20,11 +18,11 @@ def test_agency_card_flow(page: Page):
     # Eligibility Confirm - fill out form and submit
     page.get_by_placeholder("12345").click()
 
-    sub = os.environ.get("AGENCY_CARD_SUB")
+    sub = "71162"
     page.get_by_placeholder("12345").fill(sub)
     page.keyboard.press("Tab")
 
-    name = os.environ.get("AGENCY_CARD_NAME")
+    name = "Box"
     page.get_by_placeholder("Hernandez-Demarcos").fill(name)
 
     page.get_by_role("button", name="Find my record").click()
@@ -40,19 +38,19 @@ def test_agency_card_flow(page: Page):
 
     popup.get_by_text("Cardholder name").click()
 
-    cardholder_name = os.environ.get("TRANSIT_PROCESSOR_CARDHOLDER_NAME")
+    cardholder_name = "Test User"
     popup.get_by_label("Cardholder name").fill(cardholder_name)
     popup.keyboard.press("Tab")
 
-    card_number = os.environ.get("TRANSIT_PROCESSOR_CARD_NUMBER")
+    card_number = "4111 1111 1111 1111"
     popup.get_by_label("Card number").fill(card_number)
     popup.keyboard.press("Tab")
 
-    expiration = os.environ.get("TRANSIT_PROCESSOR_CARD_EXPIRATION")
+    expiration = "12/34"
     popup.get_by_label("mm/yy").fill(expiration)
     popup.keyboard.press("Tab")
 
-    security_code = os.environ.get("TRANSIT_PROCESSOR_CARD_SECURITY_CODE")
+    security_code = "123"
     popup.get_by_text("Security code", exact=True).click()
     popup.get_by_label("Security code").fill(security_code)
 
