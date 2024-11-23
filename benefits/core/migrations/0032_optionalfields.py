@@ -45,6 +45,10 @@ class Migration(migrations.Migration):
                 help_text="The absolute base URL for the TransitProcessor's control portal, including https://.",
             ),
         ),
+        migrations.RemoveField(
+            model_name="transitagency",
+            name="eligibility_api_jws_signing_alg",
+        ),
         migrations.RenameField(
             model_name="transitagency", old_name="eligibility_index_template", new_name="eligibility_index_template_override"
         ),
@@ -70,13 +74,6 @@ class Migration(migrations.Migration):
             name="eligibility_api_id",
             field=models.TextField(
                 blank=True, default="", help_text="The identifier for this agency used in Eligibility API calls."
-            ),
-        ),
-        migrations.AlterField(
-            model_name="transitagency",
-            name="eligibility_api_jws_signing_alg",
-            field=models.TextField(
-                blank=True, default="", help_text="The JWS-compatible signing algorithm used in Eligibility API calls."
             ),
         ),
         migrations.AlterField(

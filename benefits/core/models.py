@@ -214,11 +214,6 @@ class TransitAgency(models.Model):
         blank=True,
         default=None,
     )
-    eligibility_api_jws_signing_alg = models.TextField(
-        help_text="The JWS-compatible signing algorithm used in Eligibility API calls.",
-        blank=True,
-        default="",
-    )
     transit_processor = models.ForeignKey(
         TransitProcessor,
         on_delete=models.PROTECT,

@@ -56,7 +56,6 @@
       "eligibility_api_id": "cst",
       "eligibility_api_private_key": 2,
       "eligibility_api_public_key": 3,
-      "eligibility_api_jws_signing_alg": "RS256",
       "transit_processor": 1,
       "transit_processor_audience": "",
       "transit_processor_client_id": "",

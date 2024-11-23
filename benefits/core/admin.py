@@ -104,7 +104,6 @@ class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
             return [
                 "eligibility_api_private_key",
                 "eligibility_api_public_key",
-                "eligibility_api_jws_signing_alg",
                 "transit_processor_client_id",
                 "transit_processor_client_secret_name",
                 "transit_processor_audience",
