@@ -314,8 +314,10 @@ class TransitAgency(models.Model):
         return self.enrollmentflow_set
 
     def clean(self):
+        field_errors = {}
+        template_errors = []
+
         if self.active:
-            errors = {}
             message = "This field is required for active transit agencies."
             needed = dict(
                 short_name=self.short_name,
@@ -333,18 +335,19 @@ class TransitAgency(models.Model):
                         transit_processor_client_secret_name=self.transit_processor_client_secret_name,
                     )
                 )
-            for k, v in needed.items():
-                if not v:
-                    errors[k] = ValidationError(message)
-            if errors:
-                raise ValidationError(errors)
+            field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
             # since templates are calculated from the pattern or the override field
             # we can't add a field-level validation error
-            # so just raise directly for a missing template
+            # so just create directly for a missing template
             for t in [self.index_template, self.eligibility_index_template]:
                 if not template_path(t):
-                    raise ValidationError(f"Template not found: {t}")
+                    template_errors.append(ValidationError(f"Template not found: {t}"))
+
+        if field_errors:
+            raise ValidationError(field_errors)
+        if template_errors:
+            raise ValidationError(template_errors)
 
     @staticmethod
     def by_id(id):
@@ -610,7 +613,8 @@ class EnrollmentFlow(models.Model):
             return self.enrollment_success_template_override or f"{prefix}--{self.agency_card_name}.html"
 
     def clean(self):
-        errors = {}
+        field_errors = {}
+        template_errors = []
 
         if self.supports_expiration:
             expiration_days = self.expiration_days
@@ -619,14 +623,11 @@ class EnrollmentFlow(models.Model):
 
             message = "When support_expiration is True, this value must be greater than 0."
             if expiration_days is None or expiration_days <= 0:
-                errors.update(expiration_days=ValidationError(message))
+                field_errors.update(expiration_days=ValidationError(message))
             if expiration_reenrollment_days is None or expiration_reenrollment_days <= 0:
-                errors.update(expiration_reenrollment_days=ValidationError(message))
+                field_errors.update(expiration_reenrollment_days=ValidationError(message))
             if not reenrollment_error_template:
-                errors.update(reenrollment_error_template=ValidationError("Required when supports expiration is True."))
-
-        if errors:
-            raise ValidationError(errors)
+                field_errors.update(reenrollment_error_template=ValidationError("Required when supports expiration is True."))
 
         if self.transit_agency and self.transit_agency.active:
             self.transit_agency.clean()
@@ -643,10 +644,15 @@ class EnrollmentFlow(models.Model):
 
             # since templates are calculated from the pattern or the override field
             # we can't add a field-level validation error
-            # so just raise directly for a missing template
+            # so just create directly for a missing template
             for t in templates:
                 if not template_path(t):
-                    raise ValidationError(f"Template not found: {t}")
+                    template_errors.append(ValidationError(f"Template not found: {t}"))
+
+        if field_errors:
+            raise ValidationError(field_errors)
+        if template_errors:
+            raise ValidationError(template_errors)
 
     def eligibility_form_instance(self, *args, **kwargs):
         """Return an instance of this flow's EligibilityForm, or None."""
