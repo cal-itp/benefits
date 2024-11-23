@@ -632,6 +632,27 @@ class EnrollmentFlow(models.Model):
         if self.transit_agency and self.transit_agency.active:
             self.transit_agency.clean()
 
+            if self.claims_provider:
+                message = "Required for claims verification."
+                needed = dict(
+                    claims_scope=self.claims_scope,
+                    claims_eligibility_claim=self.claims_eligibility_claim,
+                )
+                field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
+            else:
+                message = "Required for Eligibility API verification."
+                needed = dict(
+                    eligibility_api_auth_header=self.eligibility_api_auth_header,
+                    eligibility_api_auth_key_secret_name=self.eligibility_api_auth_key_secret_name,
+                    eligibility_api_jwe_cek_enc=self.eligibility_api_jwe_cek_enc,
+                    eligibility_api_jwe_encryption_alg=self.eligibility_api_jwe_encryption_alg,
+                    eligibility_api_jws_signing_alg=self.eligibility_api_jws_signing_alg,
+                    eligibility_api_public_key=self.eligibility_api_public_key,
+                    eligibility_api_url=self.eligibility_api_url,
+                    eligibility_form_class=self.eligibility_form_class,
+                )
+                field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
+
             templates = [
                 self.selection_label_template,
                 self.eligibility_start_template,

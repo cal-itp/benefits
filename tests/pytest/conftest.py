@@ -94,10 +94,13 @@ def model_EnrollmentFlow(model_TransitAgency):
 
 @pytest.fixture
 def model_EnrollmentFlow_with_eligibility_api(model_EnrollmentFlow, model_PemData):
-    model_EnrollmentFlow.eligibility_api_url = "https://example.com/verify"
     model_EnrollmentFlow.eligibility_api_auth_header = "X-API-AUTH"
     model_EnrollmentFlow.eligibility_api_auth_key_secret_name = "secret-key"
+    model_EnrollmentFlow.eligibility_api_jwe_cek_enc = "cek-enc"
+    model_EnrollmentFlow.eligibility_api_jwe_encryption_alg = "alg"
+    model_EnrollmentFlow.eligibility_api_jws_signing_alg = "alg"
     model_EnrollmentFlow.eligibility_api_public_key = model_PemData
+    model_EnrollmentFlow.eligibility_api_url = "https://example.com/verify"
     model_EnrollmentFlow.eligibility_form_class = "benefits.eligibility.forms.CSTAgencyCard"
     model_EnrollmentFlow.save()
 

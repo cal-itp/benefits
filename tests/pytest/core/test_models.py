@@ -211,13 +211,13 @@ def test_EnrollmentFlow_eligibility_start_template(model_EnrollmentFlow):
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_eligibility_form_instance(model_EnrollmentFlow):
-    model_EnrollmentFlow.eligibility_form_class = f"{__name__}.SampleFormClass"
-    model_EnrollmentFlow.save()
+def test_EnrollmentFlow_eligibility_form_instance(model_EnrollmentFlow_with_eligibility_api):
+    model_EnrollmentFlow_with_eligibility_api.eligibility_form_class = f"{__name__}.SampleFormClass"
+    model_EnrollmentFlow_with_eligibility_api.save()
 
     args = (1, "2")
     kwargs = {"one": 1, "two": "2"}
-    form_instance = model_EnrollmentFlow.eligibility_form_instance(*args, **kwargs)
+    form_instance = model_EnrollmentFlow_with_eligibility_api.eligibility_form_instance(*args, **kwargs)
 
     assert isinstance(form_instance, SampleFormClass)
     assert form_instance.args == args
@@ -257,24 +257,10 @@ def test_EnrollmentFlow_with_scope_and_claim_no_sign_out(
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_no_scope_and_claim(model_EnrollmentFlow):
-
-    assert not model_EnrollmentFlow.uses_claims_verification
-
-
-@pytest.mark.django_db
 def test_EnrollmentFlow_no_scope_and_claim_no_sign_out(model_EnrollmentFlow, model_ClaimsProvider_no_sign_out):
     model_EnrollmentFlow.claims_provider = model_ClaimsProvider_no_sign_out
 
     assert not model_EnrollmentFlow.uses_claims_verification
-
-
-@pytest.mark.django_db
-def test_EnrollmentFlow_eligibility_api(model_EnrollmentFlow_with_eligibility_api):
-    assert (
-        model_EnrollmentFlow_with_eligibility_api.eligibility_verifier
-        == model_EnrollmentFlow_with_eligibility_api.eligibility_api_url
-    )
 
 
 @pytest.mark.django_db
@@ -293,11 +279,6 @@ def test_EnrollmentFlow_no_claims_scheme(model_EnrollmentFlow_with_scope_and_cla
         model_EnrollmentFlow_with_scope_and_claim.claims_scheme
         == model_EnrollmentFlow_with_scope_and_claim.claims_provider.scheme
     )
-
-
-@pytest.mark.django_db
-def test_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow_with_claims_scheme):
-    assert model_EnrollmentFlow_with_claims_scheme.claims_scheme == "scheme"
 
 
 @pytest.mark.django_db
@@ -375,15 +356,54 @@ def test_EnrollmentFlow_template_overrides_eligibility_api(model_EnrollmentFlow_
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_clean_does_not_supports_expiration(model_EnrollmentFlow_does_not_support_expiration):
-    # test will fail if any error is raised
-    model_EnrollmentFlow_does_not_support_expiration.clean()
+def test_EnrollmentFlow_clean_claims_verification(model_EnrollmentFlow_with_scope_and_claim):
+    model_EnrollmentFlow_with_scope_and_claim.claims_scope = ""
+    model_EnrollmentFlow_with_scope_and_claim.claims_eligibility_claim = ""
+
+    with pytest.raises(ValidationError) as e:
+        model_EnrollmentFlow_with_scope_and_claim.clean()
+
+    error_dict = e.value.error_dict
+    assert "claims_scope" in error_dict
+    assert "claims_eligibility_claim" in error_dict
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_clean_supports_expiration(model_EnrollmentFlow_supports_expiration):
-    # test will fail if any error is raised
-    model_EnrollmentFlow_supports_expiration.clean()
+def test_EnrollmentFlow_clean_eligibility_api_verification(model_EnrollmentFlow_with_eligibility_api):
+    model_EnrollmentFlow_with_eligibility_api.eligibility_api_auth_header = ""
+    model_EnrollmentFlow_with_eligibility_api.eligibility_api_auth_key_secret_name = ""
+    model_EnrollmentFlow_with_eligibility_api.eligibility_api_jwe_cek_enc = ""
+    model_EnrollmentFlow_with_eligibility_api.eligibility_api_jwe_encryption_alg = ""
+    model_EnrollmentFlow_with_eligibility_api.eligibility_api_jws_signing_alg = ""
+    model_EnrollmentFlow_with_eligibility_api.eligibility_api_public_key = None
+    model_EnrollmentFlow_with_eligibility_api.eligibility_api_url = ""
+    model_EnrollmentFlow_with_eligibility_api.eligibility_form_class = ""
+
+    with pytest.raises(ValidationError) as e:
+        model_EnrollmentFlow_with_eligibility_api.clean()
+
+    error_dict = e.value.error_dict
+    assert "eligibility_api_auth_header" in error_dict
+    assert "eligibility_api_auth_key_secret_name" in error_dict
+    assert "eligibility_api_jwe_cek_enc" in error_dict
+    assert "eligibility_api_jwe_encryption_alg" in error_dict
+    assert "eligibility_api_jws_signing_alg" in error_dict
+    assert "eligibility_api_public_key" in error_dict
+    assert "eligibility_api_url" in error_dict
+    assert "eligibility_form_class" in error_dict
+
+
+@pytest.mark.django_db
+def test_EnrollmentFlow_clean_supports_expiration(model_EnrollmentFlow_supports_expiration, model_ClaimsProvider):
+    # fake a valid claims configuration
+    model_EnrollmentFlow_supports_expiration.claims_provider = model_ClaimsProvider
+    model_EnrollmentFlow_supports_expiration.claims_scope = "scope"
+    model_EnrollmentFlow_supports_expiration.claims_eligibility_claim = "claim"
+    # but an invalid reenrollment error template
+    model_EnrollmentFlow_supports_expiration.reenrollment_error_template = "does/not/exist.html"
+
+    with pytest.raises(ValidationError, match="Template not found: does/not/exist.html"):
+        model_EnrollmentFlow_supports_expiration.clean()
 
     model_EnrollmentFlow_supports_expiration.expiration_days = 0
     model_EnrollmentFlow_supports_expiration.expiration_reenrollment_days = 0
@@ -392,9 +412,10 @@ def test_EnrollmentFlow_clean_supports_expiration(model_EnrollmentFlow_supports_
     with pytest.raises(ValidationError) as e:
         model_EnrollmentFlow_supports_expiration.clean()
 
-    assert "expiration_days" in e.value.error_dict
-    assert "expiration_reenrollment_days" in e.value.error_dict
-    assert "reenrollment_error_template" in e.value.error_dict
+    error_dict = e.value.error_dict
+    assert "expiration_days" in error_dict
+    assert "expiration_reenrollment_days" in error_dict
+    assert "reenrollment_error_template" in error_dict
 
 
 @pytest.mark.django_db
@@ -406,21 +427,19 @@ def test_EnrollmentFlow_clean_supports_expiration(model_EnrollmentFlow_supports_
         "eligibility_unverified_template_override",
         "enrollment_index_template_override",
         "enrollment_success_template_override",
-        "reenrollment_error_template",
     ],
 )
 def test_EnrollmentFlow_clean_templates(
-    model_EnrollmentFlow_supports_expiration, model_TransitAgency_inactive, template_attribute
+    model_EnrollmentFlow_with_scope_and_claim, model_TransitAgency_inactive, template_attribute
 ):
-    model_EnrollmentFlow_supports_expiration.transit_agency = model_TransitAgency_inactive
-    setattr(model_EnrollmentFlow_supports_expiration, template_attribute, "does/not/exist.html")
+    setattr(model_EnrollmentFlow_with_scope_and_claim, template_attribute, "does/not/exist.html")
     # agency is inactive, OK to have bad template fields
-    model_EnrollmentFlow_supports_expiration.clean()
+    model_EnrollmentFlow_with_scope_and_claim.clean()
 
     # now mark it active and expect failure on clean()
     model_TransitAgency_inactive.active = True
     with pytest.raises(ValidationError, match="Template not found: does/not/exist.html"):
-        model_EnrollmentFlow_supports_expiration.clean()
+        model_EnrollmentFlow_with_scope_and_claim.clean()
 
 
 @pytest.mark.django_db
