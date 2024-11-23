@@ -395,7 +395,22 @@ class EnrollmentFlow(models.Model):
     system_name = models.SlugField(
         help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests."  # noqa: 501
     )
-    display_order = models.PositiveSmallIntegerField(default=0, blank=False, null=False)
+    label = models.TextField(
+        blank=True,
+        default="",
+        help_text="A human readable label, used as the display text in Admin.",
+    )
+    transit_agency = models.ForeignKey(TransitAgency, on_delete=models.PROTECT, null=True, blank=True)
+    supported_enrollment_methods = MultiSelectField(
+        choices=SUPPORTED_METHODS,
+        max_choices=2,
+        max_length=50,
+        default=[EnrollmentMethods.DIGITAL, EnrollmentMethods.IN_PERSON],
+        help_text="If the flow is supported by digital enrollment, in-person enrollment, or both",
+    )
+    group_id = models.TextField(
+        blank=True, default="", help_text="Reference to the TransitProcessor group for user enrollment"
+    )
     claims_provider = models.ForeignKey(
         ClaimsProvider,
         on_delete=models.PROTECT,
@@ -454,6 +469,11 @@ class EnrollmentFlow(models.Model):
         default="",
         help_text="The JWS-compatible signing algorithm to use in Eligibility API requests for this flow.",
     )
+    eligibility_form_class = models.TextField(
+        blank=True,
+        default="",
+        help_text="The fully qualified Python path of a form class used by this flow, e.g. benefits.eligibility.forms.FormClass",  # noqa: E501
+    )
     selection_label_template_override = models.TextField(
         blank=True,
         default="",
@@ -464,11 +484,6 @@ class EnrollmentFlow(models.Model):
         default="",
         help_text="Override the default template for the informational page of this flow.",
     )
-    eligibility_form_class = models.TextField(
-        blank=True,
-        default="",
-        help_text="The fully qualified Python path of a form class used by this flow, e.g. benefits.eligibility.forms.FormClass",  # noqa: E501
-    )
     eligibility_unverified_template_override = models.TextField(
         blank=True,
         default="",
@@ -478,14 +493,6 @@ class EnrollmentFlow(models.Model):
         blank=True,
         default="",
         help_text="Path to a Django template that defines the help text for this enrollment flow, used in building the dynamic help page for an agency",  # noqa: E501
-    )
-    label = models.TextField(
-        blank=True,
-        default="",
-        help_text="A human readable label, used as the display text in Admin.",
-    )
-    group_id = models.TextField(
-        blank=True, default="", help_text="Reference to the TransitProcessor group for user enrollment"
     )
     supports_expiration = models.BooleanField(
         default=False, help_text="Indicates if the enrollment expires or does not expire"
@@ -511,14 +518,7 @@ class EnrollmentFlow(models.Model):
         default="",
         help_text="Override the default template for a successful enrollment associated with the enrollment flow",
     )
-    supported_enrollment_methods = MultiSelectField(
-        choices=SUPPORTED_METHODS,
-        max_choices=2,
-        max_length=50,
-        default=[EnrollmentMethods.DIGITAL, EnrollmentMethods.IN_PERSON],
-        help_text="If the flow is supported by digital enrollment, in-person enrollment, or both",
-    )
-    transit_agency = models.ForeignKey(TransitAgency, on_delete=models.PROTECT, null=True, blank=True)
+    display_order = models.PositiveSmallIntegerField(default=0, blank=False, null=False)
 
     class Meta:
         ordering = ["display_order"]
