@@ -218,19 +218,6 @@ The number of seconds `requests` will wait for the client to establish a connect
 
 The number of seconds the client will wait for the server to send a response. Defaults to 1 second.
 
-## Cypress tests
-
-!!! tldr "Cypress docs"
-
-    [`CYPRESS_*` variables](https://docs.cypress.io/guides/guides/environment-variables#Option-3-CYPRESS_)
-
-### `CYPRESS_baseUrl`
-
-The base URL for the (running) application, against which all Cypress `.visit()` etc. commands are run.
-
-When Cypress is running inside the devcontainer, this should be `http://localhost:8000`. When Cypress is running outside the
-devcontainer, check the [`DJANGO_LOCAL_PORT`](#django_local_port).
-
 ## Sentry
 
 ### `SENTRY_DSN`
