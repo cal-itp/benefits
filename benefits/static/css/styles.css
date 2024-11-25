@@ -698,6 +698,8 @@ a.card:focus-visible {
 
 .card-row {
   gap: var(--card-gap);
+  width: 75%;
+  margin: 0 auto;
 }
 
 .card .card-body {
