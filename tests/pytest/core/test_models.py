@@ -631,6 +631,18 @@ def test_TransitAgency_clean_templates(model_TransitAgency_inactive, template_at
 
 
 @pytest.mark.django_db
+def test_TransitAgency_clean_dirty_flow(model_TransitAgency, model_EnrollmentFlow, model_ClaimsProvider):
+    # partially setup the EnrollmentFlow
+    # missing scope and claims
+    model_EnrollmentFlow.claims_provider = model_ClaimsProvider
+    model_EnrollmentFlow.transit_agency = model_TransitAgency
+
+    # clean the agency, and expect an invalid EnrollmentFlow error
+    with pytest.raises(ValidationError, match=f"Invalid EnrollmentFlow: {model_EnrollmentFlow.label}"):
+        model_TransitAgency.clean()
+
+
+@pytest.mark.django_db
 def test_EnrollmentEvent_create(model_TransitAgency, model_EnrollmentFlow):
     ts = timezone.now()
     event = EnrollmentEvent.objects.create(
