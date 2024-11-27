@@ -310,7 +310,7 @@ CSP_CONNECT_SRC = ["'self'", "https://api.amplitude.com/"]
 env_connect_src = _filter_empty(os.environ.get("DJANGO_CSP_CONNECT_SRC", "").split(","))
 CSP_CONNECT_SRC.extend(env_connect_src)
 
-CSP_FONT_SRC = ["'self'", "https://california.azureedge.net/", "https://fonts.gstatic.com/"]
+CSP_FONT_SRC = ["'self'", "https://fonts.gstatic.com/"]
 env_font_src = _filter_empty(os.environ.get("DJANGO_CSP_FONT_SRC", "").split(","))
 CSP_FONT_SRC.extend(env_font_src)
 
@@ -353,9 +353,8 @@ if RECAPTCHA_ENABLED:
 CSP_STYLE_SRC = [
     "'self'",
     "'unsafe-inline'",
-    "https://california.azureedge.net/",
     "https://fonts.googleapis.com/css",
-    "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/",
+    "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
 ]
 env_style_src = _filter_empty(os.environ.get("DJANGO_CSP_STYLE_SRC", "").split(","))
 CSP_STYLE_SRC.extend(env_style_src)

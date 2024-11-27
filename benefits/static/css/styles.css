@@ -227,8 +227,9 @@ h4 {
 
 /* Language button */
 #header-container .btn-outline-light {
-  font-size: var(--bs-body-font-size);
-  padding: 3.5px 29.01px; /* 126 x 38px, all screen sizes  */
+  --bs-btn-font-size: var(--bs-body-font-size);
+  --bs-btn-padding-y: 3.5px;
+  --bs-btn-padding-x: 29.01px;
 }
 
 /* Main */
@@ -241,6 +242,7 @@ main {
   left: unset !important;
   transform: none;
   overflow: hidden;
+  height: 0;
 }
 
 #skip-to-content:focus {
@@ -320,6 +322,12 @@ footer .footer-links li a.footer-link:visited {
   }
 }
 
+.btn,
+.btn-lg {
+  --bs-btn-border-radius: var(--border-radius);
+  --bs-btn-hover-bg: #ffffff;
+}
+
 .btn.btn-lg.btn-primary {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
@@ -343,10 +351,10 @@ footer .footer-links li a.footer-link:visited {
 .btn-outline-dark:focus,
 .btn-outline-dark:focus-visible,
 .btn-outline-light:focus,
-.btn-ouline-dark:focus-visible {
-  outline: 3px solid var(--focus-color) !important;
-  outline-offset: 2px !important;
-  box-shadow: none !important; /* override CA State Web Template */
+.btn-ouline-light:focus-visible {
+  outline: 3px solid var(--focus-color);
+  outline-offset: 2px;
+  box-shadow: none;
 }
 
 .btn-text {
@@ -358,7 +366,7 @@ footer .footer-links li a.footer-link:visited {
 /* Previous Button, Language Button */
 .btn-outline-dark,
 .btn-outline-light {
-  border-width: 2px;
+  --bs-btn-border-width: 2px;
 }
 
 /* Custom button: Loading spinner */
