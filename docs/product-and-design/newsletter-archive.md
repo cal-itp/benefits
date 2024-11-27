@@ -19,8 +19,8 @@ If you’re interested in receiving this update delivered directly to your email
 - [The September Update](http://5519226.hs-sites.com/cal-itp-benefits-the-september-update)
 
 - [The October Update](http://5519226.hs-sites.com/cal-itp-benefits-the-october-update)
-<!--
-- [The November Update]()
 
+- [The November Update](http://5519226.hs-sites.com/cal-itp-benefits-the-november-update)
+<!--
 - [The December Update]()
 -->
