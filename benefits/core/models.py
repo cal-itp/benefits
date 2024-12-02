@@ -630,7 +630,7 @@ class EnrollmentFlow(models.Model):
             if not reenrollment_error_template:
                 field_errors.update(reenrollment_error_template=ValidationError("Required when supports expiration is True."))
 
-        if self.transit_agency and self.transit_agency.active:
+        if self.transit_agency:
             if self.claims_provider:
                 message = "Required for claims verification."
                 needed = dict(

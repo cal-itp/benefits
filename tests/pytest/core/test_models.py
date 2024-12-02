@@ -356,10 +356,17 @@ def test_EnrollmentFlow_template_overrides_eligibility_api(model_EnrollmentFlow_
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_clean_claims_verification(model_EnrollmentFlow_with_scope_and_claim):
+def test_EnrollmentFlow_clean_claims_verification(model_EnrollmentFlow_with_scope_and_claim, model_TransitAgency):
+    # remove agency
+    model_EnrollmentFlow_with_scope_and_claim.transit_agency = None
+    # and required fields
     model_EnrollmentFlow_with_scope_and_claim.claims_scope = ""
     model_EnrollmentFlow_with_scope_and_claim.claims_eligibility_claim = ""
+    # clean is OK
+    model_EnrollmentFlow_with_scope_and_claim.clean()
 
+    # reassign agency
+    model_EnrollmentFlow_with_scope_and_claim.transit_agency = model_TransitAgency
     with pytest.raises(ValidationError) as e:
         model_EnrollmentFlow_with_scope_and_claim.clean()
 
@@ -369,7 +376,10 @@ def test_EnrollmentFlow_clean_claims_verification(model_EnrollmentFlow_with_scop
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_clean_eligibility_api_verification(model_EnrollmentFlow_with_eligibility_api):
+def test_EnrollmentFlow_clean_eligibility_api_verification(model_EnrollmentFlow_with_eligibility_api, model_TransitAgency):
+    # remove agency
+    model_EnrollmentFlow_with_eligibility_api.transit_agency = None
+    # and required fields
     model_EnrollmentFlow_with_eligibility_api.eligibility_api_auth_header = ""
     model_EnrollmentFlow_with_eligibility_api.eligibility_api_auth_key_secret_name = ""
     model_EnrollmentFlow_with_eligibility_api.eligibility_api_jwe_cek_enc = ""
@@ -378,7 +388,11 @@ def test_EnrollmentFlow_clean_eligibility_api_verification(model_EnrollmentFlow_
     model_EnrollmentFlow_with_eligibility_api.eligibility_api_public_key = None
     model_EnrollmentFlow_with_eligibility_api.eligibility_api_url = ""
     model_EnrollmentFlow_with_eligibility_api.eligibility_form_class = ""
+    # clean is OK
+    model_EnrollmentFlow_with_eligibility_api.clean()
 
+    # reassign agency
+    model_EnrollmentFlow_with_eligibility_api.transit_agency = model_TransitAgency
     with pytest.raises(ValidationError) as e:
         model_EnrollmentFlow_with_eligibility_api.clean()
 
@@ -429,15 +443,16 @@ def test_EnrollmentFlow_clean_supports_expiration(model_EnrollmentFlow_supports_
         "enrollment_success_template_override",
     ],
 )
-def test_EnrollmentFlow_clean_templates(
-    model_EnrollmentFlow_with_scope_and_claim, model_TransitAgency_inactive, template_attribute
-):
+def test_EnrollmentFlow_clean_templates(model_EnrollmentFlow_with_scope_and_claim, model_TransitAgency, template_attribute):
+    # remove the agency
+    model_EnrollmentFlow_with_scope_and_claim.transit_agency = None
+    # set a bad template field
     setattr(model_EnrollmentFlow_with_scope_and_claim, template_attribute, "does/not/exist.html")
-    # agency is inactive, OK to have bad template fields
+    # no agency assigned, OK
     model_EnrollmentFlow_with_scope_and_claim.clean()
 
-    # now mark it active and expect failure on clean()
-    model_TransitAgency_inactive.active = True
+    # now assign an agency and expect failure on clean()
+    model_EnrollmentFlow_with_scope_and_claim.transit_agency = model_TransitAgency
     with pytest.raises(ValidationError, match="Template not found: does/not/exist.html"):
         model_EnrollmentFlow_with_scope_and_claim.clean()
 
