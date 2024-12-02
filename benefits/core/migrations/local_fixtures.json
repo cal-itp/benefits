@@ -4,7 +4,6 @@
     "pk": 1,
     "fields": {
       "label": "(CST) eligibility server public key",
-      "text_secret_name": null,
       "remote_url": "https://raw.githubusercontent.com/cal-itp/eligibility-server/main/keys/server.pub"
     }
   },
@@ -13,8 +12,7 @@
     "pk": 2,
     "fields": {
       "label": "Benefits client private key",
-      "text_secret_name": "client-private-key",
-      "remote_url": null
+      "text_secret_name": "client-private-key"
     }
   },
   {
@@ -22,8 +20,7 @@
     "pk": 3,
     "fields": {
       "label": "Benefits client public key",
-      "text_secret_name": "client-public-key",
-      "remote_url": null
+      "text_secret_name": "client-public-key"
     }
   },
   {
@@ -56,22 +53,15 @@
       "slug": "cst",
       "short_name": "CST (local)",
       "long_name": "California State Transit (local)",
-      "info_url": "https://www.agency-website.com",
-      "phone": "1-800-555-5555",
-      "index_template": "core/index--cst.html",
-      "eligibility_index_template": "eligibility/index--cst.html",
       "eligibility_api_id": "cst",
       "eligibility_api_private_key": 2,
       "eligibility_api_public_key": 3,
-      "eligibility_api_jws_signing_alg": "RS256",
       "transit_processor": 1,
       "transit_processor_audience": "",
       "transit_processor_client_id": "",
       "transit_processor_client_secret_name": "cst-transit-processor-client-secret",
       "staff_group": 2,
-      "customer_service_group": 2,
-      "logo_large": "agencies/cst-lg.png",
-      "logo_small": "agencies/cst-sm.png"
+      "customer_service_group": 2
     }
   },
   {
@@ -81,11 +71,8 @@
       "system_name": "senior",
       "label": "Older Adult",
       "group_id": "group123",
-      "enrollment_success_template": "enrollment/success--cst.html",
       "display_order": 2,
       "claims_provider": 1,
-      "selection_label_template": "eligibility/includes/selection-label--senior.html",
-      "eligibility_start_template": "eligibility/start--senior.html",
       "claims_scope": "verify:senior",
       "claims_eligibility_claim": "senior",
       "supported_enrollment_methods": ["digital", "in_person"],
@@ -99,11 +86,8 @@
       "system_name": "veteran",
       "label": "U.S. Veteran",
       "group_id": "group123",
-      "enrollment_success_template": "enrollment/success--cst.html",
       "display_order": 4,
       "claims_provider": 1,
-      "selection_label_template": "eligibility/includes/selection-label--veteran.html",
-      "eligibility_start_template": "eligibility/start--veteran.html",
       "claims_scope": "verify:veteran",
       "claims_eligibility_claim": "veteran",
       "supported_enrollment_methods": ["digital", "in_person"],
@@ -117,8 +101,6 @@
       "system_name": "agency_card",
       "label": "Agency Cardholder",
       "group_id": "group123",
-      "enrollment_index_template": "enrollment/index--agency-card.html",
-      "enrollment_success_template": "enrollment/success--cst-agency-card.html",
       "display_order": 4,
       "eligibility_api_url": "http://server:8000/verify",
       "eligibility_api_auth_header": "X-Server-API-Key",
@@ -127,10 +109,7 @@
       "eligibility_api_jwe_cek_enc": "A256CBC-HS512",
       "eligibility_api_jwe_encryption_alg": "RSA-OAEP",
       "eligibility_api_jws_signing_alg": "RS256",
-      "selection_label_template": "eligibility/includes/selection-label--cst-agency-card.html",
-      "eligibility_start_template": "eligibility/start--cst-agency-card.html",
       "eligibility_form_class": "benefits.eligibility.forms.CSTAgencyCard",
-      "eligibility_unverified_template": "eligibility/unverified--cst-agency-card.html",
       "help_template": "core/includes/help--cst-agency-card.html",
       "supported_enrollment_methods": ["digital", "in_person"],
       "transit_agency": 1
@@ -146,12 +125,10 @@
       "supports_expiration": "True",
       "expiration_days": 5,
       "expiration_reenrollment_days": 3,
+      "enrollment_index_template_override": "enrollment/index--calfresh.html",
       "reenrollment_error_template": "enrollment/reenrollment-error--calfresh.html",
-      "enrollment_success_template": "enrollment/success--cst.html",
       "display_order": 2,
       "claims_provider": 1,
-      "selection_label_template": "eligibility/includes/selection-label--calfresh.html",
-      "eligibility_start_template": "eligibility/start--calfresh.html",
       "help_template": "core/includes/help--calfresh.html",
       "claims_scope": "verify:calfresh",
       "claims_eligibility_claim": "calfresh",
@@ -166,11 +143,8 @@
       "system_name": "medicare",
       "label": "Medicare Cardholder",
       "group_id": "group123",
-      "enrollment_success_template": "enrollment/success--cst.html",
       "display_order": 1,
       "claims_provider": 2,
-      "selection_label_template": "eligibility/includes/selection-label--medicare.html",
-      "eligibility_start_template": "eligibility/start--medicare.html",
       "help_template": "core/includes/help--medicare.html",
       "claims_scope": "verify:medicare",
       "claims_eligibility_claim": "medicare",

@@ -65,14 +65,14 @@ class SortableEnrollmentFlowAdmin(SortableAdminMixin, admin.ModelAdmin):  # prag
             return [
                 "claims_provider",
                 "eligibility_api_url",
-                "eligibility_start_template",
-                "eligibility_unverified_template",
+                "eligibility_start_template_override",
+                "eligibility_unverified_template_override",
                 "help_template",
-                "selection_label_template",
+                "selection_label_template_override",
                 "claims_scheme_override",
                 "enrollment_index_template",
                 "reenrollment_error_template",
-                "enrollment_success_template",
+                "enrollment_success_template_override",
             ]
         else:
             return super().get_readonly_fields(request, obj)
@@ -104,7 +104,6 @@ class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
             return [
                 "eligibility_api_private_key",
                 "eligibility_api_public_key",
-                "eligibility_api_jws_signing_alg",
                 "transit_processor_client_id",
                 "transit_processor_client_secret_name",
                 "transit_processor_audience",
@@ -117,8 +116,8 @@ class TransitAgencyAdmin(admin.ModelAdmin):  # pragma: no cover
             return [
                 "eligibility_api_id",
                 "transit_processor",
-                "index_template",
-                "eligibility_index_template",
+                "index_template_override",
+                "eligibility_index_template_override",
             ]
         else:
             return super().get_readonly_fields(request, obj)

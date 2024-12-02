@@ -68,8 +68,8 @@ def model_ClaimsProvider():
 
 @pytest.fixture
 def model_ClaimsProvider_no_sign_out(model_ClaimsProvider):
-    model_ClaimsProvider.sign_out_button_template = None
-    model_ClaimsProvider.sign_out_link_template = None
+    model_ClaimsProvider.sign_out_button_template = ""
+    model_ClaimsProvider.sign_out_link_template = ""
     model_ClaimsProvider.save()
 
     return model_ClaimsProvider
@@ -78,11 +78,14 @@ def model_ClaimsProvider_no_sign_out(model_ClaimsProvider):
 @pytest.fixture
 def model_EnrollmentFlow(model_TransitAgency):
     flow = EnrollmentFlow.objects.create(
-        system_name="Test Flow",
-        selection_label_template="eligibility/includes/selection-label.html",
+        system_name="test",
+        selection_label_template_override="eligibility/includes/selection-label.html",
+        eligibility_start_template_override="eligibility/start.html",
+        eligibility_unverified_template_override="eligibility/unverified.html",
         label="Test flow label",
         group_id="group123",
-        enrollment_success_template="enrollment/success.html",
+        enrollment_index_template_override="enrollment/index.html",
+        enrollment_success_template_override="enrollment/success.html",
         transit_agency=model_TransitAgency,
     )
 
@@ -91,10 +94,13 @@ def model_EnrollmentFlow(model_TransitAgency):
 
 @pytest.fixture
 def model_EnrollmentFlow_with_eligibility_api(model_EnrollmentFlow, model_PemData):
-    model_EnrollmentFlow.eligibility_api_url = "https://example.com/verify"
     model_EnrollmentFlow.eligibility_api_auth_header = "X-API-AUTH"
     model_EnrollmentFlow.eligibility_api_auth_key_secret_name = "secret-key"
+    model_EnrollmentFlow.eligibility_api_jwe_cek_enc = "cek-enc"
+    model_EnrollmentFlow.eligibility_api_jwe_encryption_alg = "alg"
+    model_EnrollmentFlow.eligibility_api_jws_signing_alg = "alg"
     model_EnrollmentFlow.eligibility_api_public_key = model_PemData
+    model_EnrollmentFlow.eligibility_api_url = "https://example.com/verify"
     model_EnrollmentFlow.eligibility_form_class = "benefits.eligibility.forms.CSTAgencyCard"
     model_EnrollmentFlow.save()
 
@@ -124,26 +130,6 @@ def model_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow_with_scope_and_
 def model_EnrollmentFlow_does_not_support_expiration(model_EnrollmentFlow):
     model_EnrollmentFlow.supports_expiration = False
     model_EnrollmentFlow.expiration_days = 0
-    model_EnrollmentFlow.save()
-
-    return model_EnrollmentFlow
-
-
-@pytest.fixture
-def model_EnrollmentFlow_zero_expiration_days(model_EnrollmentFlow):
-    model_EnrollmentFlow.supports_expiration = True
-    model_EnrollmentFlow.expiration_days = 0
-    model_EnrollmentFlow.expiration_reenrollment_days = 14
-    model_EnrollmentFlow.save()
-
-    return model_EnrollmentFlow
-
-
-@pytest.fixture
-def model_EnrollmentFlow_zero_expiration_reenrollment_days(model_EnrollmentFlow):
-    model_EnrollmentFlow.supports_expiration = True
-    model_EnrollmentFlow.expiration_days = 14
-    model_EnrollmentFlow.expiration_reenrollment_days = 0
     model_EnrollmentFlow.save()
 
     return model_EnrollmentFlow
@@ -189,9 +175,10 @@ def model_TransitAgency(model_PemData, model_TransitProcessor):
         eligibility_api_id="test123",
         eligibility_api_private_key=model_PemData,
         eligibility_api_public_key=model_PemData,
-        eligibility_api_jws_signing_alg="alg",
-        index_template="core/agency-index.html",
-        eligibility_index_template="eligibility/index.html",
+        index_template_override="core/agency-index.html",
+        eligibility_index_template_override="eligibility/index.html",
+        logo_large="agencies/cst-lg.png",
+        logo_small="agencies/cst-sm.png",
     )
 
     return agency

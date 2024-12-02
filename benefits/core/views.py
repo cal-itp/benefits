@@ -60,9 +60,7 @@ def agency_card(request, agency: models.TransitAgency):
     session.update(request, agency=agency, origin=agency.index_url)
 
     eligibility_api_flow = (
-        agency.enrollment_flows.filter(eligibility_api_url__isnull=False, eligibility_form_class__isnull=False)
-        .order_by("id")
-        .last()
+        agency.enrollment_flows.exclude(eligibility_api_url="").exclude(eligibility_form_class="").order_by("id").last()
     )
 
     if eligibility_api_flow:
