@@ -46,7 +46,9 @@ services:
     build:
       context: .
       dockerfile: tests/playwright/Dockerfile
+    env_file: .env
     image: benefits_client:playwright
     volumes:
       - ./tests/playwright:/playwright
+      - /tmp/.X11-unix:/tmp/.X11-unix
     command: ./run.sh
