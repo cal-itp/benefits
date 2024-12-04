@@ -53,6 +53,8 @@
       "slug": "cst",
       "short_name": "CST (local)",
       "long_name": "California State Transit (local)",
+      "info_url": "https://www.agency-website.com",
+      "phone": "1-800-555-5555",
       "eligibility_api_id": "cst",
       "eligibility_api_private_key": 2,
       "eligibility_api_public_key": 3,
@@ -61,7 +63,9 @@
       "transit_processor_client_id": "",
       "transit_processor_client_secret_name": "cst-transit-processor-client-secret",
       "staff_group": 2,
-      "customer_service_group": 2
+      "customer_service_group": 2,
+      "logo_large": "agencies/cst-lg.png",
+      "logo_small": "agencies/cst-sm.png"
     }
   },
   {
