@@ -9,6 +9,13 @@ This use case describes a feature in the [Cal-ITP Benefits app](https://benefits
 **Goal:** To verify a transit rider’s Medicare status so they receive reduced fares when paying by contactless debit or credit card.
 
 **Precondition:** The California transit operator offers fixed route service, has installed and tested validator hardware necessary to collect fares using contactless payment on bus or rail lines, and the operator has a policy in place to offer a transit discount to riders enrolled in Medicare.
+
+## Demonstration
+
+This video demonstrates how a Medicare enrollee uses the Cal-ITP Benefits web application to confirm their eligibility for a transit benefit using Medicare.gov and then registers their contactless debit or credit card with Littlepay.
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/YZylD7oAbso?si=1aUb26LYDgkm_SCo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## Basic Flow
 
 ```mermaid
