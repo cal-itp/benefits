@@ -13,7 +13,7 @@
           {% endif %}
 
           {% for option in options %}
-            <div class="radio-input-group d-flex pt-4">{% include option.template_name with widget=option %}</div>
+            <div class="radio-input-group gap-4 gap-md-3 d-flex pt-4">{% include option.template_name with widget=option %}</div>
           {% endfor %}
 
           {% if group %}

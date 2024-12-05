@@ -556,21 +556,10 @@ footer .footer-links li a.footer-link:visited {
 :root {
   --radio-button-size: calc(24rem / 16);
   --radio-input-color: var(--standout-color);
-  --radio-input-gap: calc(24rem / 16);
-}
-
-@media (min-width: 992px) {
-  :root {
-    --radio-input-gap: calc(15rem / 16);
-  }
 }
 
 .radio-label {
   cursor: pointer;
-}
-
-.radio-input-group {
-  gap: var(--radio-input-gap);
 }
 
 .radio-input {
