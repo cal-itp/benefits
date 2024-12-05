@@ -634,12 +634,6 @@ footer .footer-links li a.footer-link:visited {
   margin-bottom: calc(64rem / 16);
 }
 
-.media-list .media .media-line .icon {
-  width: var(--media-item-icon-size);
-  height: var(--media-item-icon-size);
-  margin-right: var(--media-item-icon-margin);
-}
-
 .media-list-icon-left-margin {
   margin-left: calc(
     var(--media-item-icon-size) + var(--media-item-icon-margin)
