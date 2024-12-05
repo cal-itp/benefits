@@ -573,10 +573,6 @@ footer .footer-links li a.footer-link:visited {
   gap: var(--radio-input-gap);
 }
 
-.radio-input-group:not(:first-child) {
-  padding-top: calc(24rem / 16);
-}
-
 .radio-input {
   cursor: pointer;
   -webkit-appearance: none;
