@@ -4,7 +4,7 @@
 
   <label for="{{ id }}" class="pb-4 h2">{% translate "Which transit benefit would you like to enroll in?" %}</label>
 
-  <div {% if id %}id="{{ id }}"{% endif %} class="ps-3 ps-md-0 ps-lg-0 offset-md-1 offset-lg-1 radio-container">
+  <div {% if id %}id="{{ id }}"{% endif %}>
     {% for group, options, index in widget.optgroups %}
       {% if group %}
         <div>
