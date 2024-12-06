@@ -182,7 +182,7 @@ h2,
   }
 
   /* H2: 18px, up to Small width */
-  /* Only used on Landing Page, Eligibility Start */
+  /* Only used on Landing Page */
   .h2-sm-p {
     font-size: var(--bs-body-font-size);
     font-weight: var(--bs-body-font-weight);
