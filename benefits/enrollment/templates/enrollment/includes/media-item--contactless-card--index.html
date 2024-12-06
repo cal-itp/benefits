@@ -1,10 +1,6 @@
 {% extends "core/includes/media-item.html" %}
 {% load i18n %}
 
-{% block icon %}
-    {% include "core/includes/icon.html" with name="bankcardcheck" %}
-{% endblock icon %}
-
 {% block heading_wrapper %}
     {% with heading_tag="h2" %}{{ block.super }}{% endwith %}
 {% endblock heading_wrapper %}
