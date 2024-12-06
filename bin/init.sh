@@ -3,12 +3,12 @@ set -eux
 
 # run database migrations
 
-python manage.py migrate
+benefits migrate
 
 # generate language *.mo files for use by Django
 
-python manage.py compilemessages
+benefits compilemessages
 
 # collect static files
 
-python manage.py collectstatic --no-input
+benefits collectstatic --no-input
