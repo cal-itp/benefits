@@ -32,8 +32,7 @@ jobs:
 
       - name: Run littlepay to get access token
         run: |
-          littlepay switch env ${{ matrix.env }}
-          littlepay switch participant ${{ matrix.participant }}
+          littlepay switch -e ${{ matrix.env }} -p ${{ matrix.participant }}
 
       - name: Report failure to Slack
         if: always()
