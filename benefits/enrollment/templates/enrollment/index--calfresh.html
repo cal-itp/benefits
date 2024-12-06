@@ -2,13 +2,11 @@
 {% load i18n %}
 
 {% block media-items %}
-  <div class="col-12 col-sm-12 col-lg-8">
-    <ul class="mb-5 mx-0 px-0 d-flex list-unstyled justify-content-center flex-column">
-      {% include "enrollment/includes/media-item--contactless-card--index--calfresh.html" %}
-    </ul>
-  </div>
+  <ul class="mb-4 mx-0 px-0 d-flex list-unstyled justify-content-center flex-column">
+    {% include "enrollment/includes/media-item--contactless-card--index--calfresh.html" %}
+  </ul>
 {% endblock media-items %}
 
 {% block additional-info %}
-  <div class="col-12 col-sm-12 col-lg-8">{% include "enrollment/includes/alert-box--warning--calfresh.html" %}</div>
+  {% include "enrollment/includes/alert-box--warning--calfresh.html" %}
 {% endblock additional-info %}
