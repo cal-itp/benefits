@@ -39,10 +39,6 @@ li {
   font-family: var(--bs-body-font-family);
 }
 
-ul li {
-  list-style-type: disc;
-}
-
 /* Paragraph: Body Text */
 /* Same sizes for all screen widths */
 p,
@@ -79,6 +75,10 @@ li {
 
 .ls-base {
   letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
+}
+
+.list-disc {
+  list-style-type: disc;
 }
 
 /* Links */
