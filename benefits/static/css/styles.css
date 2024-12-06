@@ -77,6 +77,10 @@ li {
   letter-spacing: calc(var(--bs-body-font-size) * var(--letter-spacing-5));
 }
 
+.list-disc {
+  list-style-type: disc;
+}
+
 /* Links */
 /* Same sizes for all screen widths: 18px */
 a:not(.btn):not(.card) {
@@ -178,7 +182,7 @@ h2,
   }
 
   /* H2: 18px, up to Small width */
-  /* Only used on Landing Page, Eligibility Start */
+  /* Only used on Landing Page */
   .h2-sm-p {
     font-size: var(--bs-body-font-size);
     font-weight: var(--bs-body-font-weight);
@@ -383,24 +387,24 @@ footer .footer-links li a.footer-link:visited {
 
 :root {
   --login-gov-button-font-size: var(--font-size-20px);
-  --login-gov-button-max-width: 310px;
+  --login-gov-button-padding: 0.5rem;
+  --login-gov-button-line-height: 1;
 }
 
 @media (min-width: 992px) {
   :root {
     --login-gov-button-font-size: var(--font-size-16px);
-    --login-gov-button-max-width: 289px;
+    --login-gov-button-padding: 1rem;
+    --login-gov-button-line-height: 1.5;
   }
 }
 
 .login {
   cursor: pointer;
-  line-height: 1;
-  text-transform: none;
-  letter-spacing: 0;
   font-size: var(--login-gov-button-font-size) !important;
   font-family: "Public Sans", Roboto, system-ui;
-  max-width: var(--login-gov-button-max-width);
+  line-height: var(--login-gov-button-line-height);
+  text-transform: none;
   text-decoration: none;
 }
 
@@ -420,6 +424,11 @@ footer .footer-links li a.footer-link:visited {
   line-height: 1;
 }
 
+.eligibility-start .btn.btn-lg.btn-primary.login {
+  border-width: calc(4rem / 16);
+  padding: var(--login-gov-button-padding);
+}
+
 @media (min-width: 992px) {
   .login .fallback-text {
     margin: 0 0 0 5px;
@@ -428,17 +437,16 @@ footer .footer-links li a.footer-link:visited {
   }
 }
 
-/* Sign in with Login.gov (white logo) on Eligibility Start, System Enrollment Error */
-
-.eligibility-start .btn.btn-lg.btn-primary.login,
-.system-enrollment-error .btn.btn-lg.btn-primary.login {
-  padding: 10px 0;
-}
-
 .login .fallback-text.white-logo {
   background-image: url("/static/img/login-gov-logo-rev.svg");
   width: 130.9887px;
   height: 17px;
+}
+
+/* Sign in with Login.gov (white logo) on System Enrollment Error */
+
+.system-enrollment-error .btn.btn-lg.btn-primary.login {
+  padding: 10px 0;
 }
 
 /* Login.gov modal button (color logo) on Eligibility Index */
@@ -588,48 +596,20 @@ footer .footer-links li a.footer-link:visited {
 
 :root {
   --media-item-icon-size: calc(64rem / 16);
-  --media-item-gap: calc(24rem / 16);
   --media-item-icon-margin: calc(24rem / 16);
-  --media-title-margin-top: calc(24rem / 16);
 }
 
 @media (min-width: 992px) {
   :root {
     --media-item-icon-size: calc(90rem / 16);
-    --media-item-gap: calc(24rem / 16);
     --media-item-icon-margin: calc(32rem / 16);
-    --media-title-margin-top: calc(64rem / 16);
   }
-}
-
-.media-body--details p:not(:first-of-type) {
-  /* All the p within .media-body--details, except for the first p - Any media item with more than one p */
-  padding-top: calc(24rem / 16);
-}
-
-.media-title {
-  margin-top: var(--media-title-margin-top);
-  margin-bottom: calc(24rem / 16);
-}
-
-.media-list {
-  gap: var(--media-item-gap);
-  margin-bottom: calc(64rem / 16);
 }
 
 .media-list-icon-left-margin {
   margin-left: calc(
     var(--media-item-icon-size) + var(--media-item-icon-margin)
   );
-}
-
-.media-list .media .media-body--details,
-.media-list .media .media-body--items li:first-child {
-  padding-top: calc(5rem / 16);
-}
-
-.media-list .media .media-body--items li {
-  list-style-type: disc;
 }
 
 /* Cards */

@@ -1,10 +1,6 @@
 {% extends "core/includes/media-item.html" %}
 {% load i18n %}
 
-{% block heading_wrapper %}
-    {% with heading_tag="h2" %}{{ block.super }}{% endwith %}
-{% endblock heading_wrapper %}
-
 {% block heading %}
     {% translate "The next step is to enroll the contactless card you will use to tap to ride for a reduced fare." %}
 {% endblock heading %}
