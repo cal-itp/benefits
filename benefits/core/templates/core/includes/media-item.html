@@ -1,10 +1,10 @@
-<li class="media d-flex align-items-stretch w-auto">
+<li class="media">
     <div class="media-body">
         {% block heading_wrapper %}
-            <{{ heading_tag|default:"h3" }} class="media-body--heading h3">
-            {% block heading %}
-            {% endblock heading %}
-            </{{ heading_tag|default:"h3" }}>
+            <h2 class="h3">
+                {% block heading %}
+                {% endblock heading %}
+            </h2>
         {% endblock heading_wrapper %}
         {% block body %}
         {% endblock body %}

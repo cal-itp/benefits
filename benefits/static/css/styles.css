@@ -39,6 +39,10 @@ li {
   font-family: var(--bs-body-font-family);
 }
 
+ul li {
+  list-style-type: disc;
+}
+
 /* Paragraph: Body Text */
 /* Same sizes for all screen widths */
 p,
@@ -585,41 +589,20 @@ footer .footer-links li a.footer-link:visited {
 
 :root {
   --media-item-icon-size: calc(64rem / 16);
-  --media-item-gap: calc(24rem / 16);
   --media-item-icon-margin: calc(24rem / 16);
 }
 
 @media (min-width: 992px) {
   :root {
     --media-item-icon-size: calc(90rem / 16);
-    --media-item-gap: calc(24rem / 16);
     --media-item-icon-margin: calc(32rem / 16);
   }
-}
-
-.media-body--details p:not(:first-of-type) {
-  /* All the p within .media-body--details, except for the first p - Any media item with more than one p */
-  padding-top: calc(24rem / 16);
-}
-
-.media-list {
-  gap: var(--media-item-gap);
-  margin-bottom: calc(64rem / 16);
 }
 
 .media-list-icon-left-margin {
   margin-left: calc(
     var(--media-item-icon-size) + var(--media-item-icon-margin)
   );
-}
-
-.media-list .media .media-body--details,
-.media-list .media .media-body--items li:first-child {
-  padding-top: calc(5rem / 16);
-}
-
-.media-list .media .media-body--items li {
-  list-style-type: disc;
 }
 
 /* Cards */

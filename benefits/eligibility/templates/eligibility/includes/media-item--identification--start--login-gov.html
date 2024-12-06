@@ -7,15 +7,15 @@
 {% endblock heading %}
 
 {% block body %}
-  <div class="media-body--details">
+  <div>
     <p>
       {% translate "You will be able to create an account using your email address if you do not already have one. We use your Login.gov account to verify your identity." %}
       {% translate "Learn more about identity verification" as text %}
       {% include "core/includes/modal-trigger.html" with modal="modal--identity-verification" text=text period=True %}
     </p>
-    <div class="media-body--items">
+    <div>
       <p>{% translate "For this process you will need:" %}</p>
-      <ul>
+      <ul class="ms-lg-5 ms-0">
         <li>{% translate "Your state-issued ID card" %}</li>
         <li>{% translate "Your Social Security number" %}</li>
         <li>{% translate "A phone number with a phone plan associated with your name" %}</li>
