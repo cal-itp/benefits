@@ -12,17 +12,15 @@
 {% endblock nav-buttons %}
 
 {% block headline %}
-  <div class="col-lg-8">
-    <h1 class="pb-lg-8 pb-4">
-      {% translate "Your eligibility is confirmed!<br>You’re almost there." %}
-    </h1>
+  <div class="col-lg-6">
+    <h1 class="pb-lg-8 pb-4">{% translate "Your eligibility is confirmed! You’re almost there." %}</h1>
   </div>
 {% endblock headline %}
 
 {% block inner-content %}
   {% block media-items %}
-    <div class="col-12 col-sm-12 col-lg-8">
-      <ul class="d-flex list-unstyled ps-0 pb-5 mb-3">
+    <div class="col-12 col-lg-6">
+      <ul class="d-flex list-unstyled ps-0 mb-0">
         {% include "enrollment/includes/media-item--contactless-card--index.html" %}
       </ul>
     </div>
