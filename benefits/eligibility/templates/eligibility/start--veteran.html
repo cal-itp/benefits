@@ -6,7 +6,7 @@
 {% endblock page-title %}
 
 {% block headline %}
-  <div class="col-lg-8">
+  <div class="col-lg-6">
     <h1>{% translate "You selected a Veteran transit benefit." %}</h1>
   </div>
 {% endblock headline %}
@@ -16,8 +16,8 @@
 {% endblock media-item %}
 
 {% block call-to-action %}
-  <div class="row d-flex justify-content-lg-end">
-    <div class="col-lg-4 offset-2 offset-lg-0 col-sm-8 col-8 d-flex justify-content-lg-end justify-content-center">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-6">
       {% translate "Get started with" as button_text %}
       <a href="{% url routes.OAUTH_LOGIN %}" class="btn btn-lg btn-primary login">
         {{ button_text }} <span class="fallback-text white-logo">Login.gov</span>
