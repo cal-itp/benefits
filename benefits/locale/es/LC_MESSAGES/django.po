@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-12-06 11:23-0800\n"
+"POT-Creation-Date: 2024-12-09 13:27-0800\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -919,6 +919,13 @@ msgstr ""
 "o crédito sin contacto emitida por Visa o Mastercard y use esa tarjeta para "
 "pagar el transporte público."
 
+msgid "Learn more about Littlepay"
+msgstr "Más información sobre Littlepay"
+
+msgid "We found your record! Now let’s enroll your contactless card."
+msgstr ""
+"¡Encontramos su registro! Ahora inscribamos su tarjeta de pago sin contacto."
+
 msgid ""
 "The next step is to connect your contactless card to your transit benefit"
 msgstr ""
@@ -930,6 +937,12 @@ msgstr "Será dirigido a nuestro socio de pagos, "
 
 msgid "We don’t store your information, and you won’t be charged."
 msgstr "No almacenamos su información y no se le cobrará."
+
+msgid "Eligibility confirmation"
+msgstr "Confirmación de elegibilidad"
+
+msgid "Your eligibility is confirmed! You’re almost there."
+msgstr "¡Su elegibilidad está confirmada! Ya falta poco."
 
 msgid ""
 "The next step is to enroll the contactless card you will use to tap to ride "
@@ -946,19 +959,6 @@ msgstr ", para introducir los datos de su tarjeta de pago sin contacto."
 
 msgid "Please use a debit or credit card by Visa or Mastercard."
 msgstr "Utilice una tarjeta de débito o crédito de Visa o Mastercard."
-
-msgid "Learn more about Littlepay"
-msgstr "Más información sobre Littlepay"
-
-msgid "We found your record! Now let’s enroll your contactless card."
-msgstr ""
-"¡Encontramos su registro! Ahora inscribamos su tarjeta de pago sin contacto."
-
-msgid "Eligibility confirmation"
-msgstr "Confirmación de elegibilidad"
-
-msgid "Your eligibility is confirmed! You’re almost there."
-msgstr "¡Su elegibilidad está confirmada! Ya falta poco."
 
 msgid "Please wait..."
 msgstr "Espere por favor..."
