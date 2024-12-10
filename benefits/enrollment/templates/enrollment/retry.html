@@ -11,27 +11,20 @@
   {% endif %}
 
   <div class="container">
-    <h1 class="h2 text-center">
-      <span class="icon d-block pb-4">{% include "core/includes/icon.html" with name="bankcardquestion" %}</span>
-      {% translate "The card information may not have been entered correctly." %}
-    </h1>
-
     <div class="row justify-content-center">
-      <div class="col-lg-8 pt-4">
+      <div class="col-lg-6">
+        <div class="mt-5 py-4 text-center">{% include "core/includes/icon.html" with name="bankcardquestion" %}</div>
+        <h1 class="h2 pt-0 pb-4">{% translate "The card information may not have been entered correctly." %}</h1>
         <p>{% translate "Please check the details on your card and try again, or contact your transit agency for help." %}</p>
+        {% include "core/includes/agency-links.html" %}
+      </div>
+
+      <div class="row pt-8 justify-content-center">
+        <div class="col-lg-6">
+          {% translate "Try again" as button_text %}
+          {% include "core/includes/button--origin.html" with button_text=button_text %}
+        </div>
       </div>
     </div>
-
-    <div class="row justify-content-center">
-      <div class="col-lg-8">{% include "core/includes/agency-links.html" %}</div>
-    </div>
-
-    <div class="row pt-8 justify-content-center">
-      <div class="col-lg-3 col-8">
-        {% translate "Try again" as button_text %}
-        {% include "core/includes/button--origin.html" with button_text=button_text %}
-      </div>
-    </div>
-
   </div>
 {% endblock main-content %}

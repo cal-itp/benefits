@@ -11,21 +11,17 @@
   {% endif %}
 
   <div class="container">
-    <h1 class="h2 text-center">
-      <span class="icon d-block pb-5">{% include "core/includes/icon.html" with name="calendarcheck" %}</span>
-      {% translate "You are still enrolled in this benefit" %}
-    </h1>
-
     <div class="row justify-content-center">
-      <div class="col-lg-8 pt-4">
+      <div class="col-lg-6">
+        <div class="mt-5 py-4 text-center">{% include "core/includes/icon.html" with name="calendarcheck" %}</div>
+        <h1 class="h2 pt-0 pb-4">{% translate "You are still enrolled in this benefit" %}</h1>
         {% block error-message %}
         {% endblock error-message %}
       </div>
-    </div>
 
-    <div class="row pt-8 justify-content-center">
-      <div class="col-lg-3 col-8">{% include "core/includes/button--index.html" %}</div>
+      <div class="row pt-8 justify-content-center">
+        <div class="col-lg-6">{% include "core/includes/button--index.html" %}</div>
+      </div>
     </div>
-
   </div>
 {% endblock main-content %}
