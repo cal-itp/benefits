@@ -10,16 +10,25 @@
   {% include "core/includes/button--previous-page.html" with url=url %}
 {% endblock nav-buttons %}
 
+{% block headline %}
+  <div class="col-lg-6">
+    <h1>
+      {% block headline-text %}
+      {% endblock headline-text %}
+    </h1>
+  </div>
+{% endblock headline %}
+
 {% block inner-content %}
   <div class="col-lg-6">
     <p class="py-4">{% translate "You will need a few items to continue:" %}</p>
-    <ul class="d-flex flex-column gap-4 list-unstyled ps-0 pb-5 mb-3">
-      {% block media-item %}
-      {% endblock media-item %}
-      {% include "eligibility/includes/media-item--contactless-card--start.html" %}
+    <ul class="d-flex flex-column gap-4 list-unstyled ps-0 mb-0">
+      {% block eligibility-item %}
+      {% endblock eligibility-item %}
+      {% include "eligibility/includes/eligibility-item--contactless-card--start.html" %}
     </ul>
   </div>
 {% endblock inner-content %}
 
-{% block call-to-action %}
-{% endblock call-to-action %}
+{% block call-to-action-button %}
+{% endblock call-to-action-button %}

@@ -5,20 +5,14 @@
   {% translate "Agency card overview" %}
 {% endblock page-title %}
 
-{% block headline %}
-  <div class="col-lg-8">
-    <h1>{% translate "You selected a Courtesy Card transit benefit." %}</h1>
-  </div>
-{% endblock headline %}
+{% block headline-text %}
+  {% translate "You selected a Courtesy Card transit benefit." %}
+{% endblock headline-text %}
 
-{% block media-item %}
-  {% include "eligibility/includes/media-item--identification--start--mst-agency-card.html" %}
-{% endblock media-item %}
+{% block eligibility-item %}
+  {% include "eligibility/includes/eligibility-item--identification--start--mst-agency-card.html" %}
+{% endblock eligibility-item %}
 
-{% block call-to-action %}
-  <div class="row d-flex justify-content-lg-end">
-    <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
-      <a href="{% url routes.ELIGIBILITY_CONFIRM %}" class="btn btn-lg btn-primary" role="button">{% translate "Continue" %}</a>
-    </div>
-  </div>
-{% endblock call-to-action %}
+{% block call-to-action-button %}
+  <a href="{% url routes.ELIGIBILITY_CONFIRM %}" class="btn btn-lg btn-primary" role="button">{% translate "Continue" %}</a>
+{% endblock call-to-action-button %}
