@@ -5,11 +5,9 @@
   {% translate "Agency card overview" %}
 {% endblock page-title %}
 
-{% block headline %}
-  <div class="col-lg-6">
-    <h1>{% translate "You selected an Agency Card transit benefit." %}</h1>
-  </div>
-{% endblock headline %}
+{% block headline-text %}
+  {% translate "You selected an Agency Card transit benefit." %}
+{% endblock headline-text %}
 
 {% block eligibility-item %}
   {% include "eligibility/includes/eligibility-item--identification--start--cst-agency-card.html" %}

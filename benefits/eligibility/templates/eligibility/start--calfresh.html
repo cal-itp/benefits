@@ -5,11 +5,9 @@
   {% translate "CalFresh benefit overview" %}
 {% endblock page-title %}
 
-{% block headline %}
-  <div class="col-lg-6">
-    <h1>{% translate "You selected a CalFresh Cardholder transit benefit." %}</h1>
-  </div>
-{% endblock headline %}
+{% block headline-text %}
+  {% translate "You selected a CalFresh Cardholder transit benefit." %}
+{% endblock headline-text %}
 
 {% block eligibility-item %}
   {% include "eligibility/includes/eligibility-item--identification--start--login-gov.html" %}
