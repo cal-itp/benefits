@@ -11,33 +11,25 @@
   {% endif %}
 
   <div class="container">
-    <h1 class="h2 text-center">
-      <span class="icon d-block pb-4">{% include "core/includes/icon.html" with name="idcardquestion" %}</span>
-      {% block unverified-headline %}
-        {% translate "Your eligibility could not be verified." %}
-      {% endblock unverified-headline %}
-    </h1>
-
     <div class="row justify-content-center">
-      <div class="col-lg-8 pt-4">
+      <div class="col-lg-6">
+        <div class="mt-5 py-4 text-center">{% include "core/includes/icon.html" with name="idcardquestion" %}</div>
+        {% block unverified-headline %}
+          <h1 class="h2 pt-0 pb-4">{% translate "Your eligibility could not be verified." %}</h1>
+        {% endblock unverified-headline %}
         <p>
           {% block unverified-body %}
             {% translate "That’s okay! You may still be eligible for our program." %}
             {% blocktranslate with short_name=agency.short_name %}Please reach out to {{ short_name }} for assistance.{% endblocktranslate %}
           {% endblock unverified-body %}
         </p>
+        <p>{% include "core/includes/agency-links.html" %}</p>
       </div>
     </div>
-
-    <div class="row justify-content-center">
-      <div class="col-lg-8">{% include "core/includes/agency-links.html" %}</div>
-    </div>
-
     <div class="row pt-8 justify-content-center">
       {% block unverified-call-to-action %}
-        <div class="col-lg-3 col-8">{% include "core/includes/button--index.html" %}</div>
+        <div class="col-lg-6">{% include "core/includes/button--index.html" %}</div>
       {% endblock unverified-call-to-action %}
     </div>
-
   </div>
 {% endblock main-content %}
