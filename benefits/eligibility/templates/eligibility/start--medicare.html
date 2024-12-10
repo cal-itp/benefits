@@ -11,9 +11,9 @@
     </div>
 {% endblock headline %}
 
-{% block media-item %}
-    {% include "eligibility/includes/media-item--identification--start--medicare.html" %}
-{% endblock media-item %}
+{% block eligibility-item %}
+    {% include "eligibility/includes/eligibility-item--identification--start--medicare.html" %}
+{% endblock eligibility-item %}
 
 {% block call-to-action-button %}
     <a href="{% url routes.OAUTH_LOGIN %}" class="btn btn-lg btn-primary" role="button">{% translate "Continue to Medicare.gov" %}</a>

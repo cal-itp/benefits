@@ -14,9 +14,9 @@
   <div class="col-lg-6">
     <p class="py-4">{% translate "You will need a few items to continue:" %}</p>
     <ul class="d-flex flex-column gap-4 list-unstyled ps-0 mb-0">
-      {% block media-item %}
-      {% endblock media-item %}
-      {% include "eligibility/includes/media-item--contactless-card--start.html" %}
+      {% block eligibility-item %}
+      {% endblock eligibility-item %}
+      {% include "eligibility/includes/eligibility-item--contactless-card--start.html" %}
     </ul>
   </div>
 {% endblock inner-content %}
