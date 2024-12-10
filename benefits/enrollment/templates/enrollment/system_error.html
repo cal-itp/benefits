@@ -1,35 +1,25 @@
 {% extends "core/base.html" %}
 {% load i18n %}
 
-{% block classes %}
-  {{ block.super | add:" system-enrollment-error" }}
-{% endblock classes %}
-
 {% block page-title %}
   {% translate "Enrollment system down" %}
 {% endblock page-title %}
 
 {% block main-content %}
   <div class="container">
-    <h1 class="h2 text-center">
-      <span class="icon d-block pb-4">{% include "core/includes/icon.html" with name="bankcardquestion" %}</span>
-      {% translate "Our enrollment system is not working right now." %}
-    </h1>
-
     <div class="row justify-content-center">
-      <div class="col-lg-8 pt-4">
+      <div class="col-lg-6">
+        <div class="mt-5 py-4 text-center">{% include "core/includes/icon.html" with name="sadbus" %}</div>
+        <h1 class="h2 py-4">{% translate "Our enrollment system is not working right now." %}</h1>
         <p>
           {% translate "We’re working to solve the problem. Please wait 48 hours and try to enroll again, or contact your transit agency for help." %}
         </p>
+        <p>{% include "core/includes/agency-links.html" %}</p>
       </div>
     </div>
 
-    <div class="row justify-content-center">
-      <div class="col-lg-8">{% include "core/includes/agency-links.html" %}</div>
-    </div>
-
     <div class="row pt-8 justify-content-center">
-      <div class="col-lg-3 col-8">
+      <div class="col-lg-6">
         {% if authentication and authentication.sign_out_link_template %}
           {% translate "Sign out of" as button_text %}
           <a href="{% url routes.OAUTH_LOGOUT %}" class="btn btn-lg btn-primary login">
