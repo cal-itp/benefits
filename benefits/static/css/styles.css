@@ -592,26 +592,6 @@ footer .footer-links li a.footer-link:visited {
   outline-offset: 1px !important;
 }
 
-/* Media List */
-
-:root {
-  --media-item-icon-size: calc(64rem / 16);
-  --media-item-icon-margin: calc(24rem / 16);
-}
-
-@media (min-width: 992px) {
-  :root {
-    --media-item-icon-size: calc(90rem / 16);
-    --media-item-icon-margin: calc(32rem / 16);
-  }
-}
-
-.media-list-icon-left-margin {
-  margin-left: calc(
-    var(--media-item-icon-size) + var(--media-item-icon-margin)
-  );
-}
-
 /* Cards */
 
 :root {
