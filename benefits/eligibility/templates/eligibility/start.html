@@ -13,7 +13,7 @@
 {% block inner-content %}
   <div class="col-lg-6">
     <p class="py-4">{% translate "You will need a few items to continue:" %}</p>
-    <ul class="d-flex flex-column gap-4 list-unstyled ps-0 pb-5 mb-3">
+    <ul class="d-flex flex-column gap-4 list-unstyled ps-0 mb-0">
       {% block media-item %}
       {% endblock media-item %}
       {% include "eligibility/includes/media-item--contactless-card--start.html" %}
@@ -21,5 +21,5 @@
   </div>
 {% endblock inner-content %}
 
-{% block call-to-action %}
-{% endblock call-to-action %}
+{% block call-to-action-button %}
+{% endblock call-to-action-button %}

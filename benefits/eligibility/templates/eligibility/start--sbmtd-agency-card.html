@@ -6,7 +6,7 @@
 {% endblock page-title %}
 
 {% block headline %}
-    <div class="col-lg-8">
+    <div class="col-lg-6">
         <h1>{% translate "You selected a Reduced Fare Mobility ID transit benefit." %}</h1>
     </div>
 {% endblock headline %}
@@ -15,10 +15,6 @@
     {% include "eligibility/includes/media-item--identification--start--sbmtd-agency-card.html" %}
 {% endblock media-item %}
 
-{% block call-to-action %}
-    <div class="row d-flex justify-content-lg-end">
-        <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
-            <a href="{% url routes.ELIGIBILITY_CONFIRM %}" class="btn btn-lg btn-primary" role="button">{% translate "Continue" %}</a>
-        </div>
-    </div>
-{% endblock call-to-action %}
+{% block call-to-action-button %}
+    <a href="{% url routes.ELIGIBILITY_CONFIRM %}" class="btn btn-lg btn-primary" role="button">{% translate "Continue" %}</a>
+{% endblock call-to-action-button %}
