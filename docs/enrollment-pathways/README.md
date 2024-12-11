@@ -45,7 +45,7 @@ timeline
           section 2025
 
           Q1<br>Next
-        : Frontend enhancements and optimization
+        : Front-end enhancements and optimization
         : Benefits admin tool (user management)
         : Deploy in-person enrollments to all agencies
       %%: Deploy Connect Card enrollment pathway to SACOG agencies
