@@ -14,6 +14,11 @@ html {
   scroll-padding-top: 101px; /* Header Height (80px) + Skip Nav Height (21px) = 101px */
 }
 
+/* reCAPTCHA: Hide the badge */
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
 body {
   font-size: 100%;
   color: var(--text-primary-color);
