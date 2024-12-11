@@ -5,10 +5,13 @@
   {% translate "Enrollment error" %}
 {% endblock page-title %}
 
-{% block inner-content %}
+{% block nav-buttons %}
   {% if authentication and authentication.sign_out_link_template %}
     {% include authentication.sign_out_link_template %}
   {% endif %}
+{% endblock nav-buttons %}
+
+{% block inner-content %}
   <div class="col-lg-6">
     <div class="mt-5 pt-4 text-center">{% include "core/includes/icon.html" with name="calendarcheck" %}</div>
     <h1 class="h2 py-4">{% translate "You are still enrolled in this benefit" %}</h1>
