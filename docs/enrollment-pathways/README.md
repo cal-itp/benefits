@@ -37,7 +37,7 @@ timeline
           : Benefits admin tool (agency users)
           : Benefits admin tool (in-person eligibility verification)
 
-          Q4<br>Now
+          Q4<br>Complete
           : Deploy Medicare cardholder enrollment pathway
           : Support for multiple identity providers (Medicare.gov)
 
