@@ -7,16 +7,14 @@
 {% endblock page-title %}
 
 {% block inner-content %}
-  <div class="row justify-content-center">
-    <div class="col-lg-6">
-      <div class="mt-5 pt-4 text-center">{% include "core/includes/icon.html" with name="sadbus" %}</div>
-      <h1 class="h2 py-4">
-        {% block headline-text %}
-        {% endblock headline-text %}
-      </h1>
-      {% block paragraphs %}
-      {% endblock paragraphs %}
-    </div>
+  <div class="col-lg-6">
+    <div class="mt-5 pt-4 text-center">{% include "core/includes/icon.html" with name="sadbus" %}</div>
+    <h1 class="h2 py-4">
+      {% block headline-text %}
+      {% endblock headline-text %}
+    </h1>
+    {% block paragraphs %}
+    {% endblock paragraphs %}
   </div>
 {% endblock inner-content %}
 
