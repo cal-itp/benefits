@@ -23,8 +23,8 @@ timeline
           section 2024
 
           Q1<br>Complete
-          : Benefits admin tool (Foundation)
-          : SBMTD - Launch Reduced Fare Mobility ID enrollment pathway
+          : Benefits admin tool (foundation)
+          : Deplay SBMTD Reduced Fare Mobility ID enrollment pathway
           : Migrate to Littlepay Backoffice API
 
           Q2<br>Complete
@@ -34,24 +34,31 @@ timeline
 
           Q3<br>Complete
           : Deploy low-income riders enrollment pathway
-          : Benefits admin tool (Agency users)
-          : Benefits admin tool (In-person eligibility verification)
+          : Benefits admin tool (agency users)
+          : Benefits admin tool (in-person eligibility verification)
 
           Q4<br>Now
-          : Release Medicare cardholder enrollment pathway
-          : Benefits admin tool (Agency configuration)
-          : Support eligibility verification for disabled Veterans
+          : Deploy Medicare cardholder enrollment pathway
+          : Support for multiple identity providers (Medicare.gov)
 
 %% Cal-ITP Benefits Epics (2025)
           section 2025
 
-          Q1
-          : Support benefits reciprocity between CA transit agencies
-          : Implement evolved organizing principles for app UX
+          Q1<br>Next
+        : Frontend enhancements and optimization
+        : Benefits admin tool (user management) 
+        : Deploy in-person enrollments to all agencies
+      %%: Deploy Connect Card enrollment pathway to SACOG agencies
+        : Support for Discover and Amex cards
 
-          Q2
-          : Support for multiple transit processors
-          : Integration with all MSA transit processors
+          Q2<br>Planned
+        : Support for multiple fare processors (Enghouse)
+        : Enhanced Veteran eligibility checks (disability status)
+        : Single eligibility check across multiple benefit options
+        : Benefits admin tool (agency configuration)
+
+          H2<br>Projected
+        : Eligibility check for individuals with disabilities (CA DMV 
 
 %%{
     init: {
