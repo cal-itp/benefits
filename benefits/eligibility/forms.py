@@ -109,7 +109,6 @@ class EligibilityVerificationForm(forms.Form):
         self.headline = headline
         self.blurb = blurb
 
-        self.classes = "mb-fix"
         sub_widget = widgets.FormControlTextInput(placeholder=sub_placeholder)
         if sub_pattern:
             sub_widget.attrs.update({"pattern": sub_pattern})

@@ -1,5 +1,9 @@
 {% extends "core/base.html" %}
 
+{% block classes %}
+  {{ block.super | add:" eligibility-confirm" }}
+{% endblock classes %}
+
 {% block page-title %}
   {{ form.title }}
 {% endblock page-title %}

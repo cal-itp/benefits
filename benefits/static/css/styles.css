@@ -88,10 +88,6 @@ li {
   list-style-type: disc;
 }
 
-.mb-fix {
-  margin-bottom: -40px;
-}
-
 /* Links */
 /* Same sizes for all screen widths: 18px */
 a:not(.btn):not(.card) {
@@ -299,6 +295,10 @@ main {
 footer {
   background: var(--footer-background-color);
   margin-top: 64px;
+}
+
+.eligibility-confirm footer {
+  margin-top: 24px;
 }
 
 footer .footer-links li a.footer-link {
