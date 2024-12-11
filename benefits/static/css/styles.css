@@ -529,7 +529,7 @@ footer .footer-links li a.footer-link:visited {
 }
 
 /* Forms: Text Inputs */
-/* Form Field Container: Must use .form-container parent to use these styles */
+/* Form Field Container: Must use .form-field-container parent to use these styles */
 
 .form-field-container .form-control-label,
 .form-field-container .required-label {
