@@ -121,6 +121,10 @@
         $("button[type=submit]", "#{{ form.id }}").on("click", recaptchaSubmit);
       </script>
     {% endif %}
-
   </form>
+
+  <div class="row d-flex justify-content-center pt-8">
+    <div class="col-12 col-lg-6">{% include "core/includes/recaptcha-text.html" %}</div>
+  </div>
+
 {% endif %}
