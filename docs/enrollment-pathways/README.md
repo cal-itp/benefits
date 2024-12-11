@@ -58,7 +58,7 @@ timeline
         : Benefits admin tool (agency configuration)
 
           H2<br>Projected
-        : Eligibility check for individuals with disabilities (CA DMV
+        : Eligibility check for individuals with disabilities (CA DMV)
 
 %%{
     init: {
