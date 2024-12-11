@@ -58,6 +58,8 @@ li {
   margin: 0;
 }
 
+/* Utility Classes */
+
 @media (min-width: 992px) {
   /* Utility Class: Padding bottom 64px on Desktop */
   /* Pair with pb-4 on Form pages to get 24px on Mobile, 64px on Desktop */
@@ -84,6 +86,10 @@ li {
 
 .list-disc {
   list-style-type: disc;
+}
+
+.mb-fix {
+  margin-bottom: -40px;
 }
 
 /* Links */
@@ -523,18 +529,10 @@ footer .footer-links li a.footer-link:visited {
 }
 
 /* Forms: Text Inputs */
-/* Form Container: Must use .form-container parent to use these styles */
+/* Form Field Container: Must use .form-container parent to use these styles */
 
-:root {
-  --form-input-gap: calc(24rem / 16);
-}
-
-.form-container .form-group:not(:first-child) {
-  padding-top: var(--form-input-gap);
-}
-
-.form-container .form-control-label,
-.form-container .required-label {
+.form-field-container .form-control-label,
+.form-field-container .required-label {
   font-size: var(--font-size-16px);
   font-weight: var(--medium-font-weight);
   line-height: var(--form-field-text-line-height);
@@ -542,7 +540,7 @@ footer .footer-links li a.footer-link:visited {
   padding-bottom: calc(12rem / 16);
 }
 
-.form-container .form-control {
+.form-field-container .form-control {
   border-width: var(--border-width);
   border-radius: var(--border-radius);
   border-color: var(--primary-color);
@@ -552,8 +550,8 @@ footer .footer-links li a.footer-link:visited {
   /* Input height should be 60px */
 }
 
-.form-container .form-control:focus,
-.form-container .form-control:focus-visible {
+.form-field-container .form-control:focus,
+.form-field-container .form-control:focus-visible {
   outline: 3px solid var(--focus-color) !important;
   outline-offset: 2px !important;
   box-shadow: none !important;
