@@ -6,27 +6,20 @@
   {% endblock title %}
 {% endblock page-title %}
 
-{% block main-content %}
-  <div class="container">
-    <h1 class="h2 text-center">
-      <span class="icon d-block pb-4">{% include "core/includes/icon.html" with name="sadbus" %}</span>
-      {% block headline %}
-      {% endblock headline %}
-    </h1>
-
-    <div class="row justify-content-center">
-      <div class="col-lg-6 pt-4">
-        {% block paragraphs %}
-        {% endblock paragraphs %}
-      </div>
-    </div>
-
-    <div class="row pt-8 justify-content-center">
-      <div class="col-lg-3 col-8">
-        {% block button %}
-          {% include "core/includes/button--origin.html" %}
-        {% endblock button %}
-      </div>
+{% block inner-content %}
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="mt-5 pt-4 text-center">{% include "core/includes/icon.html" with name="sadbus" %}</div>
+      <h1 class="h2 py-4">
+        {% block headline-text %}
+        {% endblock headline-text %}
+      </h1>
+      {% block paragraphs %}
+      {% endblock paragraphs %}
     </div>
   </div>
-{% endblock main-content %}
+{% endblock inner-content %}
+
+{% block call-to-action-button %}
+  {% include "core/includes/button--origin.html" %}
+{% endblock call-to-action-button %}

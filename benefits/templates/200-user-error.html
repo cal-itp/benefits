@@ -5,9 +5,9 @@
   {% translate "Start over" %}
 {% endblock title %}
 
-{% block headline %}
+{% block headline-text %}
   {% translate "You may have reached this page on accident." %}
-{% endblock headline %}
+{% endblock headline-text %}
 
 {% block paragraphs %}
   <p>
@@ -15,7 +15,7 @@
   </p>
 {% endblock paragraphs %}
 
-{% block button %}
+{% block call-to-action-button %}
   {% translate "Start Here" as button_text %}
   {% include "core/includes/button--index.html" with button_text=button_text %}
-{% endblock button %}
+{% endblock call-to-action-button %}
