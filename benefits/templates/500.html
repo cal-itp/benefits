@@ -5,6 +5,10 @@
   {% translate "Service is down" %}
 {% endblock title %}
 
+{% block icon %}
+  {% include "core/includes/icon.html" with name="sadbus" %}
+{% endblock icon %}
+
 {% block headline-text %}
   {% translate "We’re working on fixing a problem." %}
 {% endblock headline-text %}

@@ -8,7 +8,10 @@
 
 {% block inner-content %}
   <div class="col-lg-6">
-    <div class="mt-5 pt-4 text-center">{% include "core/includes/icon.html" with name="sadbus" %}</div>
+    <div class="mt-5 pt-4 text-center">
+      {% block icon %}
+      {% endblock icon %}
+    </div>
     <h1 class="h2 py-4">
       {% block headline-text %}
       {% endblock headline-text %}

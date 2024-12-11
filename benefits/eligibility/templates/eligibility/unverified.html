@@ -1,4 +1,4 @@
-{% extends "core/base.html" %}
+{% extends "error.html" %}
 {% load i18n %}
 
 {% block page-title %}
@@ -11,19 +11,23 @@
   {% endif %}
 {% endblock nav-buttons %}
 
-{% block inner-content %}
-  <div class="col-lg-6">
-    <div class="mt-5 pt-4 text-center">{% include "core/includes/icon.html" with name="idcardquestion" %}</div>
-    <h1 class="h2 py-4">{% translate "Your eligibility could not be verified." %}</h1>
-    <p>
-      {% block unverified-body %}
-        {% translate "That’s okay! You may still be eligible for our program." %}
-        {% blocktranslate with short_name=agency.short_name %}Please reach out to {{ short_name }} for assistance.{% endblocktranslate %}
-      {% endblock unverified-body %}
-    </p>
-    {% include "core/includes/agency-links.html" %}
-  </div>
-{% endblock inner-content %}
+{% block icon %}
+  {% include "core/includes/icon.html" with name="idcardquestion" %}
+{% endblock icon %}
+
+{% block headline-text %}
+  {% translate "Your eligibility could not be verified." %}
+{% endblock headline-text %}
+
+{% block paragraphs %}
+  <p>
+    {% block unverified-body %}
+      {% translate "That’s okay! You may still be eligible for our program." %}
+      {% blocktranslate with short_name=agency.short_name %}Please reach out to {{ short_name }} for assistance.{% endblocktranslate %}
+    {% endblock unverified-body %}
+  </p>
+  {% include "core/includes/agency-links.html" %}
+{% endblock paragraphs %}
 
 {% block call-to-action-button %}
   {% include "core/includes/button--index.html" %}
