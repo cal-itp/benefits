@@ -125,6 +125,11 @@ a[target="_blank"]::after {
   vertical-align: text-bottom;
 }
 
+.form-text a[target="_blank"]::after {
+  width: 18px;
+  height: 18px;
+}
+
 /* Headlines */
 /* All headlines */
 h1,
@@ -552,7 +557,7 @@ footer .footer-links li a.footer-link:visited {
 .form-text {
   font-size: var(--font-size-14px);
   line-height: var(--form-field-text-line-height);
-  letter-spacing: var(--letter-spacing-5);
+  letter-spacing: calc(var(--font-size-14px) * var(--letter-spacing-5));
 }
 
 /* Forms: Radio Buttons */
