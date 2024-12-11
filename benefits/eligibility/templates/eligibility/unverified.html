@@ -5,39 +5,24 @@
   {% translate "Unable to confirm eligibility" %}
 {% endblock page-title %}
 
-{% block main-content %}
+{% block inner-content %}
   {% if authentication and authentication.sign_out_link_template %}
     {% include authentication.sign_out_link_template %}
   {% endif %}
 
-  <div class="container">
-    <h1 class="h2 text-center">
-      <span class="icon d-block pb-4">{% include "core/includes/icon.html" with name="idcardquestion" %}</span>
-      {% block unverified-headline %}
-        {% translate "Your eligibility could not be verified." %}
-      {% endblock unverified-headline %}
-    </h1>
-
-    <div class="row justify-content-center">
-      <div class="col-lg-8 pt-4">
-        <p>
-          {% block unverified-body %}
-            {% translate "That’s okay! You may still be eligible for our program." %}
-            {% blocktranslate with short_name=agency.short_name %}Please reach out to {{ short_name }} for assistance.{% endblocktranslate %}
-          {% endblock unverified-body %}
-        </p>
-      </div>
-    </div>
-
-    <div class="row justify-content-center">
-      <div class="col-lg-8">{% include "core/includes/agency-links.html" %}</div>
-    </div>
-
-    <div class="row pt-8 justify-content-center">
-      {% block unverified-call-to-action %}
-        <div class="col-lg-3 col-8">{% include "core/includes/button--index.html" %}</div>
-      {% endblock unverified-call-to-action %}
-    </div>
-
+  <div class="col-lg-6">
+    <div class="mt-5 pt-4 text-center">{% include "core/includes/icon.html" with name="idcardquestion" %}</div>
+    <h1 class="h2 py-4">{% translate "Your eligibility could not be verified." %}</h1>
+    <p>
+      {% block unverified-body %}
+        {% translate "That’s okay! You may still be eligible for our program." %}
+        {% blocktranslate with short_name=agency.short_name %}Please reach out to {{ short_name }} for assistance.{% endblocktranslate %}
+      {% endblock unverified-body %}
+    </p>
+    {% include "core/includes/agency-links.html" %}
   </div>
-{% endblock main-content %}
+{% endblock inner-content %}
+
+{% block call-to-action-button %}
+  {% include "core/includes/button--index.html" %}
+{% endblock call-to-action-button %}
