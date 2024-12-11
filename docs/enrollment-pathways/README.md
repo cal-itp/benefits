@@ -24,7 +24,7 @@ timeline
 
           Q1<br>Complete
           : Benefits admin tool (foundation)
-          : Deplay SBMTD Reduced Fare Mobility ID enrollment pathway
+          : Deploy SBMTD Reduced Fare Mobility ID enrollment pathway
           : Migrate to Littlepay Backoffice API
 
           Q2<br>Complete
