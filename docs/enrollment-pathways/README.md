@@ -49,7 +49,7 @@ timeline
         : Benefits admin tool (user management)
         : Deploy in-person enrollments to all agencies
       %%: Deploy Connect Card enrollment pathway to SACOG agencies
-        : Support for Discover and Amex cards
+        : Support for Discover and American Express cards
 
           Q2<br>Planned
         : Support for multiple fare processors (Enghouse)
