@@ -46,7 +46,7 @@ timeline
 
           Q1<br>Next
         : Frontend enhancements and optimization
-        : Benefits admin tool (user management) 
+        : Benefits admin tool (user management)
         : Deploy in-person enrollments to all agencies
       %%: Deploy Connect Card enrollment pathway to SACOG agencies
         : Support for Discover and Amex cards
@@ -58,7 +58,7 @@ timeline
         : Benefits admin tool (agency configuration)
 
           H2<br>Projected
-        : Eligibility check for individuals with disabilities (CA DMV 
+        : Eligibility check for individuals with disabilities (CA DMV
 
 %%{
     init: {
