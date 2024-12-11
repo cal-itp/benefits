@@ -424,7 +424,9 @@ footer .footer-links li a.footer-link:visited {
   line-height: 1;
 }
 
-.eligibility-start .btn.btn-lg.btn-primary.login {
+/* Sign in with Login.gov (white logo) on System Enrollment Error, Eligibility Start */
+
+.btn.btn-lg.btn-primary.login {
   border-width: calc(4rem / 16);
   padding: var(--login-gov-button-padding);
 }
@@ -441,12 +443,6 @@ footer .footer-links li a.footer-link:visited {
   background-image: url("/static/img/login-gov-logo-rev.svg");
   width: 130.9887px;
   height: 17px;
-}
-
-/* Sign in with Login.gov (white logo) on System Enrollment Error */
-
-.system-enrollment-error .btn.btn-lg.btn-primary.login {
-  padding: 10px 0;
 }
 
 /* Login.gov modal button (color logo) on Eligibility Index */
