@@ -13,12 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Get started"
-msgstr ""
-
-msgid "Get Started"
-msgstr ""
-
 msgid ""
 "The Benefits tool is provided by California Integrated Travel Project (Cal-"
 "ITP), which is a new program from the California Department of "
@@ -328,6 +322,12 @@ msgid ""
 "apply."
 msgstr ""
 
+msgid "Get started"
+msgstr ""
+
+msgid "Get Started"
+msgstr ""
+
 msgid "Get a reduced fare on CST public transportation when you tap to ride"
 msgstr ""
 
@@ -345,6 +345,12 @@ msgstr ""
 msgid "Get a reduced fare on Santa Barbara MTD buses when you tap to ride"
 msgstr ""
 
+msgid "Cal-ITP Benefits connects your transit benefit to your contactless card"
+msgstr ""
+
+msgid "A person holds a contactless debit card next to a card reader on a bus."
+msgstr ""
+
 msgid "Choose transit agency"
 msgstr ""
 
@@ -352,12 +358,6 @@ msgid "Get a reduced fare on public transportation when you tap to ride"
 msgstr ""
 
 msgid "Choose your Provider"
-msgstr ""
-
-msgid "Cal-ITP Benefits connects your transit benefit to your contactless card"
-msgstr ""
-
-msgid "A person holds a contactless debit card next to a card reader on a bus."
 msgstr ""
 
 msgid "Logged out"

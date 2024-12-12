@@ -13,12 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Get started"
-msgstr "Comenzar"
-
-msgid "Get Started"
-msgstr "Comenzar"
-
 msgid ""
 "The Benefits tool is provided by California Integrated Travel Project (Cal-"
 "ITP), which is a new program from the California Department of "
@@ -447,6 +441,12 @@ msgstr ""
 "com/terms\" target=\"_blank\" rel=\"noopener noreferrer\">las Condiciones de "
 "servicio</a> de Google."
 
+msgid "Get started"
+msgstr "Comenzar"
+
+msgid "Get Started"
+msgstr "Comenzar"
+
 msgid "Get a reduced fare on CST public transportation when you tap to ride"
 msgstr ""
 "Obtenga una tarifa reducida en el transporte público CST cuando toque para "
@@ -474,6 +474,15 @@ msgstr ""
 "Obtenga una tarifa reducida en los autobuses del Santa Barbara MTD cuando "
 "toque para viajar"
 
+msgid "Cal-ITP Benefits connects your transit benefit to your contactless card"
+msgstr ""
+"Cal-ITP Benefits conecta su beneficio de tránsito con su tarjeta sin contacto"
+
+msgid "A person holds a contactless debit card next to a card reader on a bus."
+msgstr ""
+"Una persona sostiene una tarjeta de débito junto a un lector de tarjetas en "
+"un autobús."
+
 msgid "Choose transit agency"
 msgstr "Elija la agencia de tránsito"
 
@@ -483,15 +492,6 @@ msgstr ""
 
 msgid "Choose your Provider"
 msgstr "Elija su Proveedor"
-
-msgid "Cal-ITP Benefits connects your transit benefit to your contactless card"
-msgstr ""
-"Cal-ITP Benefits conecta su beneficio de tránsito con su tarjeta sin contacto"
-
-msgid "A person holds a contactless debit card next to a card reader on a bus."
-msgstr ""
-"Una persona sostiene una tarjeta de débito junto a un lector de tarjetas en "
-"un autobús."
 
 msgid "Logged out"
 msgstr "Cierre sesión"
