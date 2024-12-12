@@ -76,15 +76,13 @@
             <div class="col-lg-6">
               {% block headline %}
               {% endblock headline %}
+              {% block explanatory-text-wrapper %}
+                {% block explanatory-text %}
+                {% endblock explanatory-text %}
+              {% endblock explanatory-text-wrapper %}
+              {% block inner-content %}
+              {% endblock inner-content %}
             </div>
-          </div>
-          {% block explanatory-text-wrapper %}
-            {% block explanatory-text %}
-            {% endblock explanatory-text %}
-          {% endblock explanatory-text-wrapper %}
-          <div class="row justify-content-center">
-            {% block inner-content %}
-            {% endblock inner-content %}
           </div>
           {% block call-to-action %}
             <div class="row d-flex justify-content-center pt-8">
