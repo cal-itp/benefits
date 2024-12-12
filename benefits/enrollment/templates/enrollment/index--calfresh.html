@@ -1,7 +1,7 @@
 {% extends "enrollment/index.html" %}
 {% load i18n %}
 
-{% block info %}
+{% block paragraphs %}
   <h2 class="h3 pb-1">{% translate "The next step is to connect your contactless card to your transit benefit" %}</h2>
 
   <p class="mb-4">
@@ -13,4 +13,4 @@
   {% include "enrollment/includes/modal--littlepay.html" with id="modal--littlepay" size="modal-md" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
 
   {% include "enrollment/includes/alert-box--warning--calfresh.html" %}
-{% endblock info %}
+{% endblock paragraphs %}

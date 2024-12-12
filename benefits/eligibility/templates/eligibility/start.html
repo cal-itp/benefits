@@ -18,14 +18,12 @@
 {% endblock headline %}
 
 {% block inner-content %}
-  <div class="col-lg-6">
-    <p class="py-4">{% translate "You will need a few items to continue:" %}</p>
-    <ul class="d-flex flex-column gap-4 list-unstyled ps-0 mb-0">
-      {% block eligibility-item %}
-      {% endblock eligibility-item %}
-      {% include "eligibility/includes/eligibility-item--contactless-card--start.html" %}
-    </ul>
-  </div>
+  <p class="py-4">{% translate "You will need a few items to continue:" %}</p>
+  <ul class="d-flex flex-column gap-4 list-unstyled ps-0 mb-0">
+    {% block eligibility-item %}
+    {% endblock eligibility-item %}
+    {% include "eligibility/includes/eligibility-item--contactless-card--start.html" %}
+  </ul>
 {% endblock inner-content %}
 
 {% block call-to-action-button %}
