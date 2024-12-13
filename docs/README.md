@@ -19,12 +19,13 @@ Benefits is open-source software that is designed, developed, and maintained by 
 
 The following California transit agencies have launched Cal-ITP Benefits for their riders, with the following enrollment pathway options:
 
-| Transit agency                                  | Older adults | Agency card | Veterans | Medicare cardholders | Low-income | Initial agency launch |
-| ----------------------------------------------- | ------------ | ----------- | -------- | -------------------- | -----------| --------------------- |
-| **Monterey-Salinas Transit**                    | Live         | Live        | Live     |  Live                |            | 12/2021               |
-| **Nevada County Connects**                      | In test      |             |          |  In test             |            | 01/2025 (target)      |
-| **Sacramento Regional Transit District**        | Live         |             | Live     |                      |            | 10/2024               |
-| **Santa Barbara Metropolitan Transit District** | Live         | Live        |          |                      |            | 10/2023               |
+| Transit agency                                  | Initial agency launch | Older adults | Agency card | Veterans | Medicare cardholders | Low-income | 
+| ----------------------------------------------- | --------------------- | -----------  | --------    | -------- | ---------------------| ---------- |
+| **Monterey-Salinas Transit**                    | 12/2021               | ✅           | ✅          | ✅       | ✅                   | ―          | 
+| **Santa Barbara Metropolitan Transit District** | 10/2023               | ✅           | ✅          | ―        | ―                    | ―          | 
+| **Sacramento Regional Transit District**        | 10/2024               | ✅           | ―           | ✅       | ―                    | ―          |
+| **Nevada County Connects**                      | 01/2025 (target)      | In test      | ―           | ―        |  In test             | ―          | 
+
 
 ## Supported enrollment pathways
 
