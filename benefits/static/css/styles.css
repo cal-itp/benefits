@@ -140,6 +140,8 @@ a[target="_blank"]::after {
 .form-text a[target="_blank"]::after {
   width: var(--external-link-icon-size-small);
   height: var(--external-link-icon-size-small);
+  mask-size: contain;
+  -webkit-mask-size: contain;
 }
 
 /* Headlines */
