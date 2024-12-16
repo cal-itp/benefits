@@ -113,6 +113,11 @@ a:visited:not(.btn) {
   color: var(--selected-color);
 }
 
+:root {
+  --external-link-icon-size: var(--font-size-24px);
+  --external-link-icon-size-small: var(--font-size-18px);
+}
+
 a[target="_blank"]::after {
   content: " ";
   background-color: currentColor;
@@ -126,15 +131,15 @@ a[target="_blank"]::after {
 
   display: inline-block;
   position: relative;
-  width: 24px;
-  height: 24px;
+  width: var(--external-link-icon-size);
+  height: var(--external-link-icon-size);
   margin-left: 2px;
   vertical-align: text-bottom;
 }
 
 .form-text a[target="_blank"]::after {
-  width: 18px;
-  height: 18px;
+  width: var(--external-link-icon-size-small);
+  height: var(--external-link-icon-size-small);
 }
 
 /* Headlines */
