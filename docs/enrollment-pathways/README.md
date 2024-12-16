@@ -48,33 +48,23 @@ timeline
         : Front-end enhancements and optimization
         : Benefits admin tool (user management)
         : Deploy in-person enrollments to all agencies
-      %%: Deploy Connect Card enrollment pathway to SACOG agencies
         : Support for Discover and American Express cards
+        : Enhanced Veteran eligibility checks (disability status)
 
           Q2<br>Planned
+      %%: Deploy Connect Card enrollment pathway to SACOG agencies
         : Support for multiple fare processors (Enghouse)
-        : Enhanced Veteran eligibility checks (disability status)
         : Single eligibility check across multiple benefit options
         : Benefits admin tool (agency configuration)
 
           H2<br>Projected
         : Eligibility check for individuals with disabilities (CA DMV)
 
-%%{
-    init: {
-        'logLevel': 'debug',
-        'theme': 'default' ,
-        'themeVariables': {
-            'cScale0': '#ffa500', 'cScaleLabel0': '#000000',
-            'cScale1': '#ffff00', 'cScaleLabel1': '#000000',
-            'cScale2': '#ffff00', 'cScaleLabel2': '#000000',
-            'cScale3': '#008000', 'cScaleLabel3': '#ffffff',
-            'cScale4': '#0000ff', 'cScaleLabel4': '#ffffff',
-            'cScale5': '#4b0082', 'cScaleLabel5': '#ffffff',
-            'cScale6': '#000000', 'cScaleLabel6': '#ffffff'
-        }
-    }
-}%%
+%%{init: { 'logLevel': 'debug', 'theme': 'default' , 'themeVariables': {
+              'cScale0': 'orange' , 'cScaleLabel0': 'black',
+              'cScale1': 'yellow' , 'cScaleLabel1': 'black',
+              'cScale2': 'green' , 'cScaleLabel2': 'white'
+       } } }%%
 ```
 [board]: https://github.com/orgs/cal-itp/projects/8/views/1
 [milestones]: https://github.com/cal-itp/benefits/milestones
