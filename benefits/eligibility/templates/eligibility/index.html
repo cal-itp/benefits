@@ -19,6 +19,8 @@
 {% endblock headline %}
 
 {% block inner-content %}
+  {% block form-text %}
+  {% endblock form-text %}
   {% include "core/includes/form.html" with form=form %}
   <script nonce="{{ request.csp_nonce }}">
     $(".modal").on("click", function(event) {

@@ -17,13 +17,8 @@
   <h1>{{ form.headline }}</h1>
 {% endblock headline %}
 
-{% block explanatory-text-wrapper %}
-  {% block explanatory-text %}
-    <p class="pt-4 pb-4">{{ form.blurb }}</p>
-  {% endblock explanatory-text %}
-{% endblock explanatory-text-wrapper %}
-
 {% block inner-content %}
+  <p class="pt-4 pb-4">{{ form.blurb }}</p>
   {% include "core/includes/form.html" with form=form %}
 {% endblock inner-content %}
 
