@@ -304,10 +304,6 @@ footer {
   margin-top: 64px;
 }
 
-.eligibility-confirm footer {
-  margin-top: 24px;
-}
-
 footer .footer-links li a.footer-link {
   color: var(--footer-link-color);
   font-weight: var(--footer-link-font-weight);
