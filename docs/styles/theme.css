@@ -11,8 +11,15 @@
   --md-mermaid-label-fg-color: #000000;
 }
 
-a:not(.md-nav__link):not(.headerlink):not(.md-tabs__link) {
+a {
   text-decoration: underline dotted currentColor auto;
+}
+
+a.headerlink,
+a.md-nav__link,
+a.md-source,
+a.md-tabs__link {
+  text-decoration-line: none;
 }
 
 .md-tabs__link {
