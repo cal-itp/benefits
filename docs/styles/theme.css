@@ -6,7 +6,8 @@
   --md-footer-fg-color--lighter: hsla(0, 0%, 100%, 1);
   --md-footer-bg-color: hsla(0, 0%, 0%, 1);
   --md-footer-bg-color--dark: hsla(0, 0%, 0%, 1);
-  --md-code-hl-comment-color: #0071ce;
+  --md-code-hl-string-color: #b8361f;
+  --md-code-hl-comment-color: #1c7d4d;
   --md-mermaid-label-fg-color: #000000;
 }
 
