@@ -4,7 +4,7 @@
   {% url form.action_url as form_action %}
 
   <form id="{{ form.id }}"
-        class="col-lg-6 {{ form.classes }}"
+        class="{{ form.classes }}"
         action="{{ form_action }}"
         method="{{ form.method | default:"post" | upper }}"
         role="form">
