@@ -19,9 +19,9 @@
 {% endblock headline %}
 
 {% block inner-content %}
-  <div class="row justify-content-center">
-    <div class="col-lg-6">{% include "core/includes/form.html" with form=form %}</div>
-  </div>
+  {% block form-text %}
+  {% endblock form-text %}
+  {% include "core/includes/form.html" with form=form %}
   <script nonce="{{ request.csp_nonce }}">
     $(".modal").on("click", function(event) {
       if (!(event.target instanceof HTMLAnchorElement)) {
