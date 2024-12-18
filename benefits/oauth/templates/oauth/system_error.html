@@ -1,31 +1,17 @@
-{% extends "core/base.html" %}
+{% extends "error-base.html" %}
 {% load i18n %}
 
 {% block page-title %}
   {% translate "Service is down" %}
 {% endblock page-title %}
 
-{% block main-content %}
-  <div class="container">
-    <h1 class="h2 text-center">
-      <span class="icon d-block pb-4">{% include "core/includes/icon.html" with name="sadbus" %}</span>
-      {% translate "There was a problem with the service that checks your identity." %}
-    </h1>
+{% block headline-text %}
+  {% translate "There was a problem with the service that checks your identity." %}
+{% endblock headline-text %}
 
-    <div class="row justify-content-center">
-      <div class="col-lg-8 pt-4">
-        <p>
-          {% translate "We’re working to solve the problem. Please wait 24 hours and try to enroll again, or contact your transit agency for help." %}
-        </p>
-      </div>
-    </div>
-
-    <div class="row justify-content-center">
-      <div class="col-lg-8">{% include "core/includes/agency-links.html" %}</div>
-    </div>
-
-    <div class="row pt-8 justify-content-center">
-      <div class="col-lg-3 col-8">{% include "core/includes/button--origin.html" %}</div>
-    </div>
-  </div>
-{% endblock main-content %}
+{% block paragraphs %}
+  <p>
+    {% translate "We’re working to solve the problem. Please wait 24 hours and try to enroll again, or contact your transit agency for help." %}
+    {% include "core/includes/agency-links.html" %}
+  </p>
+{% endblock paragraphs %}

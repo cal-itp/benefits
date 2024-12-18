@@ -31,7 +31,7 @@ def mock_requests_get_pem_data(mocker):
 @pytest.mark.parametrize(
     "input_template,expected_path",
     [
-        ("error.html", f"{settings.BASE_DIR}/benefits/templates/error.html"),
+        ("error-base.html", f"{settings.BASE_DIR}/benefits/templates/error-base.html"),
         ("core/index.html", f"{settings.BASE_DIR}/benefits/core/templates/core/index.html"),
         ("eligibility/start.html", f"{settings.BASE_DIR}/benefits/eligibility/templates/eligibility/start.html"),
         ("", None),
