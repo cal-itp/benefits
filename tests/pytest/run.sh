@@ -2,7 +2,7 @@
 set -eu
 
 # run normal pytests
-coverage run -m pytest
+coverage run -m pytest tests/pytest
 
 # clean out old coverage results
 rm -rf benefits/static/coverage
