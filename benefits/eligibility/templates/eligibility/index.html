@@ -30,7 +30,9 @@
 {% endblock explanatory-text-wrapper %}
 
 {% block inner-content %}
-  {% include "core/includes/form.html" with form=form %}
+  <div class="row justify-content-center">
+    <div class="col-lg-6">{% include "core/includes/form.html" with form=form %}</div>
+  </div>
   <script nonce="{{ request.csp_nonce }}">
     $(".modal").on("click", function(event) {
       if (!(event.target instanceof HTMLAnchorElement)) {
@@ -40,3 +42,7 @@
     });
   </script>
 {% endblock inner-content %}
+
+{% comment %} Override with empty block to prevent rendering empty divs {% endcomment %}
+{% block call-to-action %}
+{% endblock call-to-action %}

@@ -3,41 +3,39 @@
 
   {% url form.action_url as form_action %}
 
-  <form id="{{ form.id }}" action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
+  <form id="{{ form.id }}"
+        class="{{ form.classes }}"
+        action="{{ form_action }}"
+        method="{{ form.method | default:"post" | upper }}"
+        role="form">
     {% csrf_token %}
 
-    <div class="row form-container justify-content-center">
-      <div class="{{ form.classes }}">
-        {% for field in form %}
-          <div class="row form-group mb-0">
-            <div class="col-12">
-              {# djlint:off #}
-              {% if field.label %}
-              <label for="{{ field.id_for_label }}" class="form-control-label">{{ field.label }}{% if field.field.required %}<span class="required-label text-body">*</span>{% endif %}
-              </label>
-              {% endif %}
-              {# djlint:on #}
+    <div class="form-field-container d-flex flex-column gap-4">
+      {% for field in form %}
+        <div class="form-group mb-0">
+          {# djlint:off #}
+          {% if field.label %}
+          <label for="{{ field.id_for_label }}" class="form-control-label">{{ field.label }}{% if field.field.required %}<span class="required-label text-body">*</span>{% endif %}
+          </label>
+          {% endif %}
+          {# djlint:on #}
 
-              {{ field }}
+          {{ field }}
 
-              {% if field.help_text %}<small class="d-block mt-2 pt-1 form-text text-body">{{ field.help_text }}</small>{% endif %}
-            </div>
-          </div>
-        {% endfor %}
-      </div>
+          {% if field.help_text %}<small class="d-block mt-2 pt-1 form-text text-body">{{ field.help_text }}</small>{% endif %}
+        </div>
+      {% endfor %}
     </div>
 
     {% if form.submit_value %}
-      <div class="row d-flex justify-content-center pt-8">
-        <div class="col-lg-6">
-          <button class="btn btn-lg btn-primary spinner-hidden d-flex justify-content-center align-items-center"
-                  data-action="submit"
-                  type="submit"
-                  form="{{ form.id }}">
-            <span class="btn-text">{{ form.submit_value }}</span>
-            <span class="spinner-border spinner-border-sm"></span>
-          </button>
-        </div>
+      <div class="pt-8">
+        <button class="btn btn-lg btn-primary spinner-hidden d-flex justify-content-center align-items-center"
+                data-action="submit"
+                type="submit"
+                form="{{ form.id }}">
+          <span class="btn-text">{{ form.submit_value }}</span>
+          <span class="spinner-border spinner-border-sm"></span>
+        </button>
       </div>
     {% endif %}
 
@@ -94,6 +92,8 @@
       {% endcomment %}
       <input type="hidden" name="{{ request.recaptcha.data_field }}" value="">
 
+      <div class="pt-8">{% include "core/includes/recaptcha-text.html" %}</div>
+
       <script nonce="{{ request.csp_nonce }}">
         function recaptchaSubmit($event) {
           // checks the validity of the form. Return if invalid; HTML5 validation errors should display
@@ -121,6 +121,5 @@
         $("button[type=submit]", "#{{ form.id }}").on("click", recaptchaSubmit);
       </script>
     {% endif %}
-
   </form>
 {% endif %}
