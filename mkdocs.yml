@@ -10,20 +10,7 @@ theme:
     - navigation.tabs
     - toc.integrate
   palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: blue
-      accent: amber
-      toggle:
-        icon: material/toggle-switch-off-outline
-        name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      primary: blue
-      accent: amber
-      toggle:
-        icon: material/toggle-switch
-        name: Switch to light mode
+    scheme: default
 
 extra:
   analytics:
@@ -41,6 +28,7 @@ plugins:
         "use-cases/courtesy-cards.md": "enrollment-pathways/agency-cards.md"
 
 extra_css:
+  - styles/theme.css
   - https://use.fontawesome.com/releases/v5.13.0/css/all.css
 
 markdown_extensions:

@@ -60,11 +60,19 @@ timeline
           H2<br>Projected
         : Eligibility check for individuals with disabilities (CA DMV)
 
-%%{init: { 'logLevel': 'debug', 'theme': 'default' , 'themeVariables': {
-              'cScale0': 'orange' , 'cScaleLabel0': 'black',
-              'cScale1': 'yellow' , 'cScaleLabel1': 'black',
-              'cScale2': 'green' , 'cScaleLabel2': 'white'
-       } } }%%
+%%{
+  init: {
+    'logLevel': 'debug',
+    'theme': 'default' ,
+    'themeVariables': {
+      'cScale0': 'orange',
+      'cScaleLabel0': 'black',
+      'cScale1': 'yellow',
+      'cScaleLabel1': 'black'
+    }
+  }
+}%%
 ```
+
 [board]: https://github.com/orgs/cal-itp/projects/8/views/1
 [milestones]: https://github.com/cal-itp/benefits/milestones
