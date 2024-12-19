@@ -1,3 +1,9 @@
 <p class="h4 mt-4 d-block">{{ agency_name | default:agency.long_name }}</p>
-<a class="d-table mt-1 fs-base ls-base" href="tel:{{ phone | default:agency.phone }}">{{ phone | default:agency.phone }}</a>
-<a class="d-table mt-1 fs-base ls-base" href="{{ info_url | default:agency.info_url }}" target="_blank" rel="noopener noreferrer">{{ info_url | default:agency.info_url }}</a>
+<ul class="ps-0 d-flex flex-column gap-1 mt-1">
+    <li class="list-unstyled">
+        <a href="tel:{{ phone | default:agency.phone }}">{{ phone | default:agency.phone }}</a>
+    </li>
+    <li class="list-unstyled">
+        <a href="{{ info_url | default:agency.info_url }}" target="_blank" rel="noopener noreferrer">{{ info_url | default:agency.info_url }}</a>
+    </li>
+</ul>
