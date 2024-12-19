@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-12-17 19:14-0800\n"
+"POT-Creation-Date: 2024-12-19 09:26-0800\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -892,6 +892,16 @@ msgstr ""
 
 msgid "Try again"
 msgstr "Inténtelo de nuevo"
+
+msgid "Your eligibility could not be verified."
+msgstr "No se pudo verificar su elegibilidad."
+
+msgid "That’s okay! You may still be eligible for our program."
+msgstr "¡Está bien! Usted aún puede ser elegible para nuestro programa."
+
+#, python-format
+msgid "Please reach out to %(short_name)s for assistance."
+msgstr "Comuníquese con %(short_name)s para obtener ayuda."
 
 msgid "Do not enter information from your EBT card."
 msgstr "No ingrese información de su tarjeta EBT."
