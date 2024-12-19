@@ -16,17 +16,18 @@
 {% endblock icon %}
 
 {% block headline-text %}
-  {% translate "Your eligibility could not be verified." %}
+  {% translate "Your card information may not have been entered correctly." %}
 {% endblock headline-text %}
 
 {% block paragraphs %}
   <p>
-    {% translate "That’s okay! You may still be eligible for our program." %}
-    {% blocktranslate with short_name=agency.short_name %}Please reach out to {{ short_name }} for assistance.{% endblocktranslate %}
+    {% block unverified-body %}
+    {% endblock unverified-body %}
   </p>
   {% include "core/includes/agency-links.html" %}
 {% endblock paragraphs %}
 
 {% block call-to-action-button %}
+  {% translate "Try again" as button_text %}
   {% include "core/includes/button--index.html" %}
 {% endblock call-to-action-button %}
