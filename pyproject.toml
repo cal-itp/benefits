@@ -21,7 +21,7 @@ dependencies = [
     "calitp-littlepay==2024.10.1",
     "requests==2.32.3",
     "sentry-sdk==2.19.2",
-    "six==1.16.0",
+    "six==1.17.0",
     "pillow==11.0.0",
     "django-multiselectfield==0.1.13",
 ]
