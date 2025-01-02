@@ -29,5 +29,5 @@
 
 {% block call-to-action-button %}
   {% translate "Try again" as button_text %}
-  {% include "core/includes/button--index.html" %}
+  {% include "core/includes/button--origin.html" with button_text=button_text %}
 {% endblock call-to-action-button %}
