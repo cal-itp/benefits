@@ -25,3 +25,21 @@ updates:
       include: "scope"
     labels:
       - "dependencies"
+  - package-ecosystem: "docker"
+    directory: "/tests/playwright" # Playwright Docker image
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    labels:
+      - "dependencies"
+  - package-ecosystem: "pip"
+    directory: "/tests/playwright" # Playwright pytest plugin
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    labels:
+      - "dependencies"
