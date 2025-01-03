@@ -9,7 +9,13 @@ import pytest
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import ClaimsProvider, EnrollmentFlow, TransitProcessor, PemData, TransitAgency
+from benefits.core.models import (
+    ClaimsProvider,
+    EnrollmentFlow,
+    TransitProcessor,
+    PemData,
+    TransitAgency,
+)
 
 
 def pytest_runtest_setup():
@@ -42,8 +48,8 @@ def model_User():
 
 # autouse this fixture so we never call out to the real secret store
 @pytest.fixture(autouse=True)
-def mock_models_get_secret_by_name(mocker):
-    return mocker.patch("benefits.core.models.get_secret_by_name", return_value="secret value!")
+def mock_get_secret_by_name(mocker):
+    return mocker.patch("benefits.core.models.common.get_secret_by_name", return_value="secret value!")
 
 
 @pytest.fixture
