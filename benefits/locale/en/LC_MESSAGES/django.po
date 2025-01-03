@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-12-11 12:16-0800\n"
+"POT-Creation-Date: 2024-12-19 09:26-0800\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -678,16 +678,10 @@ msgstr ""
 msgid "You will need a few items to continue:"
 msgstr ""
 
-msgid "Your card information may not have been entered correctly."
-msgstr ""
-
 msgid ""
 "The number and last name must be entered exactly as they appear on your CST "
 "Agency Card. Please check your card and try again, or contact your transit "
 "agency for help."
-msgstr ""
-
-msgid "Try again"
 msgstr ""
 
 msgid ""
@@ -703,6 +697,12 @@ msgid ""
 msgstr ""
 
 msgid "Unable to confirm eligibility"
+msgstr ""
+
+msgid "Your card information may not have been entered correctly."
+msgstr ""
+
+msgid "Try again"
 msgstr ""
 
 msgid "Your eligibility could not be verified."

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-12-11 12:16-0800\n"
+"POT-Creation-Date: 2024-12-19 09:26-0800\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -868,11 +868,6 @@ msgstr "Ha seleccionado un beneficio de tránsito para veteranos."
 msgid "You will need a few items to continue:"
 msgstr "Necesitará algunos artículos para continuar:"
 
-msgid "Your card information may not have been entered correctly."
-msgstr ""
-"Es posible que la información de su tarjeta no se haya ingresado "
-"correctamente."
-
 msgid ""
 "The number and last name must be entered exactly as they appear on your CST "
 "Agency Card. Please check your card and try again, or contact your transit "
@@ -881,9 +876,6 @@ msgstr ""
 "El número y el apellido deben ingresarse exactamente como aparecen en su "
 "tarjeta de agencia de CST. Verifique su tarjeta e inténtelo de nuevo, o "
 "contacte a su agencia de tránsito para obtener ayuda."
-
-msgid "Try again"
-msgstr "Inténtelo de nuevo"
 
 msgid ""
 "The number and last name must be entered exactly as they appear on your MST "
@@ -905,6 +897,14 @@ msgstr ""
 
 msgid "Unable to confirm eligibility"
 msgstr "No se pudo confirmar la elegibilidad"
+
+msgid "Your card information may not have been entered correctly."
+msgstr ""
+"Es posible que la información de su tarjeta no se haya ingresado "
+"correctamente."
+
+msgid "Try again"
+msgstr "Inténtelo de nuevo"
 
 msgid "Your eligibility could not be verified."
 msgstr "No se pudo verificar su elegibilidad."
