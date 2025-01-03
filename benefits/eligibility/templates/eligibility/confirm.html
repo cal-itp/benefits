@@ -26,7 +26,11 @@
 {% endblock explanatory-text-wrapper %}
 
 {% block inner-content %}
-  <div class="container">
-    <div class="row">{% include "core/includes/form.html" with form=form %}</div>
+  <div class="row justify-content-center">
+    <div class="col-lg-6">{% include "core/includes/form.html" with form=form %}</div>
   </div>
 {% endblock inner-content %}
+
+{% comment %} Override with empty block to prevent rendering empty divs {% endcomment %}
+{% block call-to-action %}
+{% endblock call-to-action %}

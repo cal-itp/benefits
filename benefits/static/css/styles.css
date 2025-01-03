@@ -14,6 +14,11 @@ html {
   scroll-padding-top: 101px; /* Header Height (80px) + Skip Nav Height (21px) = 101px */
 }
 
+/* reCAPTCHA: Do not display badge */
+.grecaptcha-badge {
+  display: none;
+}
+
 body {
   font-size: 100%;
   color: var(--text-primary-color);
@@ -52,6 +57,8 @@ li {
   line-height: var(--bs-body-line-height);
   margin: 0;
 }
+
+/* Utility Classes */
 
 @media (min-width: 992px) {
   /* Utility Class: Padding bottom 64px on Desktop */
@@ -106,6 +113,11 @@ a:visited:not(.btn) {
   color: var(--selected-color);
 }
 
+:root {
+  --external-link-icon-size: var(--font-size-24px);
+  --external-link-icon-size-small: var(--font-size-18px);
+}
+
 a[target="_blank"]::after {
   content: " ";
   background-color: currentColor;
@@ -119,10 +131,17 @@ a[target="_blank"]::after {
 
   display: inline-block;
   position: relative;
-  width: 24px;
-  height: 24px;
+  width: var(--external-link-icon-size);
+  height: var(--external-link-icon-size);
   margin-left: 2px;
   vertical-align: text-bottom;
+}
+
+.form-text a[target="_blank"]::after {
+  width: var(--external-link-icon-size-small);
+  height: var(--external-link-icon-size-small);
+  mask-size: contain;
+  -webkit-mask-size: contain;
 }
 
 /* Headlines */
@@ -513,18 +532,10 @@ footer .footer-links li a.footer-link:visited {
 }
 
 /* Forms: Text Inputs */
-/* Form Container: Must use .form-container parent to use these styles */
+/* Form Field Container: Must use .form-field-container parent to use these styles */
 
-:root {
-  --form-input-gap: calc(24rem / 16);
-}
-
-.form-container .form-group:not(:first-child) {
-  padding-top: var(--form-input-gap);
-}
-
-.form-container .form-control-label,
-.form-container .required-label {
+.form-field-container .form-control-label,
+.form-field-container .required-label {
   font-size: var(--font-size-16px);
   font-weight: var(--medium-font-weight);
   line-height: var(--form-field-text-line-height);
@@ -532,7 +543,7 @@ footer .footer-links li a.footer-link:visited {
   padding-bottom: calc(12rem / 16);
 }
 
-.form-container .form-control {
+.form-field-container .form-control {
   border-width: var(--border-width);
   border-radius: var(--border-radius);
   border-color: var(--primary-color);
@@ -542,8 +553,8 @@ footer .footer-links li a.footer-link:visited {
   /* Input height should be 60px */
 }
 
-.form-container .form-control:focus,
-.form-container .form-control:focus-visible {
+.form-field-container .form-control:focus,
+.form-field-container .form-control:focus-visible {
   outline: 3px solid var(--focus-color) !important;
   outline-offset: 2px !important;
   box-shadow: none !important;
@@ -552,7 +563,7 @@ footer .footer-links li a.footer-link:visited {
 .form-text {
   font-size: var(--font-size-14px);
   line-height: var(--form-field-text-line-height);
-  letter-spacing: var(--letter-spacing-5);
+  letter-spacing: calc(var(--font-size-14px) * var(--letter-spacing-5));
 }
 
 /* Forms: Radio Buttons */

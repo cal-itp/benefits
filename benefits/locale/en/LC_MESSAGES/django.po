@@ -320,6 +320,14 @@ msgid ""
 "JavaScript. Please enable JavaScript for this website and"
 msgstr ""
 
+msgid ""
+"This site is protected by reCAPTCHA and the Google <a href=\"https://"
+"policies.google.com/privacy\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">Privacy Policy</a> and <a href=\"https://policies.google.com/"
+"terms\" target=\"_blank\" rel=\"noopener noreferrer\">Terms of Service</a> "
+"apply."
+msgstr ""
+
 msgid "Get a reduced fare on CST public transportation when you tap to ride"
 msgstr ""
 
