@@ -24,5 +24,8 @@ jobs:
       - name: Install Python dependencies
         run: pip install -r ./tests/playwright/requirements.txt
 
+      - name: Ensure browsers are installed
+        run: python -m playwright install --with-deps
+
       - name: Run tests
         run: ./tests/playwright/run.sh
