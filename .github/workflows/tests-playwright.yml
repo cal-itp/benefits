@@ -1,0 +1,28 @@
+name: Playwright
+
+on:
+  workflow_dispatch:
+  push:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  playwright:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .github/workflows/.python-version
+          cache: pip
+          cache-dependency-path: "**/requirements.txt"
+
+      - name: Install Python dependencies
+        run: pip install -r ./tests/playwright/requirements.txt
+
+      - name: Run tests
+        run: ./tests/playwright/run.sh
