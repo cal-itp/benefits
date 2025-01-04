@@ -2,4 +2,4 @@
 
 set -e
 
-pytest
+pytest tests/playwright
