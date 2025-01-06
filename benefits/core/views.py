@@ -12,7 +12,7 @@ from . import models, session
 from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator, user_error
 
 TEMPLATE_INDEX = "core/index.html"
-TEMPLATE_AGENCY = "core/agency-index.html"
+TEMPLATE_AGENCY = "core/index--agency-base.html"
 TEMPLATE_HELP = "core/help.html"
 TEMPLATE_LOGGED_OUT = "core/logged-out.html"
 
