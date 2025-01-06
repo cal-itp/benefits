@@ -23,8 +23,8 @@ timeline
           section 2024
 
           Q1<br>Complete
-          : Benefits admin tool (Foundation)
-          : SBMTD - Launch Reduced Fare Mobility ID enrollment pathway
+          : Benefits admin tool (foundation)
+          : Deploy SBMTD Reduced Fare Mobility ID enrollment pathway
           : Migrate to Littlepay Backoffice API
 
           Q2<br>Complete
@@ -34,40 +34,45 @@ timeline
 
           Q3<br>Complete
           : Deploy low-income riders enrollment pathway
-          : Benefits admin tool (Agency users)
-          : Benefits admin tool (In-person eligibility verification)
+          : Benefits admin tool (agency users)
+          : Benefits admin tool (in-person eligibility verification)
 
-          Q4<br>Now
-          : Release Medicare cardholder enrollment pathway
-          : Benefits admin tool (Agency configuration)
-          : Support eligibility verification for disabled Veterans
+          Q4<br>Complete
+          : Deploy Medicare cardholder enrollment pathway
+          : Support for multiple identity providers (Medicare.gov)
 
 %% Cal-ITP Benefits Epics (2025)
           section 2025
 
-          Q1
-          : Support benefits reciprocity between CA transit agencies
-          : Implement evolved organizing principles for app UX
+          Q1<br>Next
+        : Front-end enhancements and optimization
+        : Benefits admin tool (user management)
+        : Deploy in-person enrollments to all agencies
+        : Support for Discover and American Express cards
+        : Enhanced Veteran eligibility checks (disability status)
 
-          Q2
-          : Support for multiple transit processors
-          : Integration with all MSA transit processors
+          Q2<br>Planned
+      %%: Deploy Connect Card enrollment pathway to SACOG agencies
+        : Support for multiple fare processors (Enghouse)
+        : Single eligibility check across multiple benefit options
+        : Benefits admin tool (agency configuration)
+
+          H2<br>Projected
+        : Eligibility check for individuals with disabilities (CA DMV)
 
 %%{
-    init: {
-        'logLevel': 'debug',
-        'theme': 'default' ,
-        'themeVariables': {
-            'cScale0': '#ffa500', 'cScaleLabel0': '#000000',
-            'cScale1': '#ffff00', 'cScaleLabel1': '#000000',
-            'cScale2': '#ffff00', 'cScaleLabel2': '#000000',
-            'cScale3': '#008000', 'cScaleLabel3': '#ffffff',
-            'cScale4': '#0000ff', 'cScaleLabel4': '#ffffff',
-            'cScale5': '#4b0082', 'cScaleLabel5': '#ffffff',
-            'cScale6': '#000000', 'cScaleLabel6': '#ffffff'
-        }
+  init: {
+    'logLevel': 'debug',
+    'theme': 'default' ,
+    'themeVariables': {
+      'cScale0': 'orange',
+      'cScaleLabel0': 'black',
+      'cScale1': 'yellow',
+      'cScaleLabel1': 'black'
     }
+  }
 }%%
 ```
+
 [board]: https://github.com/orgs/cal-itp/projects/8/views/1
 [milestones]: https://github.com/cal-itp/benefits/milestones

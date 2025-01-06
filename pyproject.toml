@@ -10,18 +10,18 @@ maintainers = [
   { name = "Compiler LLC", email = "dev@compiler.la" }
 ]
 dependencies = [
-    "Authlib==1.3.2",
+    "Authlib==1.4.0",
     "azure-keyvault-secrets==4.9.0",
     "azure-identity==1.19.0",
-    "Django==5.1.3",
+    "Django==5.1.4",
     "django-csp==3.8",
     "django-admin-sortable2==2.2.4",
     "django-google-sso==8.0.0",
     "eligibility-api==2023.9.1",
     "calitp-littlepay==2024.10.1",
     "requests==2.32.3",
-    "sentry-sdk==2.19.0",
-    "six==1.16.0",
+    "sentry-sdk==2.19.2",
+    "six==1.17.0",
     "pillow==11.0.0",
     "django-multiselectfield==0.1.13",
 ]
