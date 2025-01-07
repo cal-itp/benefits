@@ -91,7 +91,12 @@ input[type="password"]:focus,
   display: flex;
   flex-direction: row-reverse;
   justify-content: start;
-  column-gap: 0.5rem;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.form-field-container .form-group:has(div):has(label) div {
+  margin-top: 1rem;
 }
 
 /* Enrollment Page*/
