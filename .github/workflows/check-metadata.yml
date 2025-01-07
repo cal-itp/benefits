@@ -1,0 +1,42 @@
+name: Check eligibility server metadata
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 13 * * *"
+
+jobs:
+  check-metadata:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        agency: [mst, sbmtd]
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .github/workflows/.python-version
+          cache: pip
+
+      - name: Install libraries
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install requests
+
+      - name: Create config file
+        run: |
+          cat > metadata.json <<- EOM
+          ${{ secrets.METADATA_CHECK_CONFIG }}
+          EOM
+
+      - name: Check server metadata
+        run: python .github/workflows/check-metadata.py ${{ matrix.agency }}
+
+      - name: Report failure to Slack
+        if: always()
+        uses: ravsamhq/notify-slack-action@v2
+        with:
+          status: ${{ job.status }}
+          notify_when: "failure"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.ACTION_MONITORING_SLACK }}
