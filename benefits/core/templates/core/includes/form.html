@@ -3,14 +3,10 @@
 
   {% url form.action_url as form_action %}
 
-  <form id="{{ form.id }}"
-        class="{{ form.classes }}"
-        action="{{ form_action }}"
-        method="{{ form.method | default:"post" | upper }}"
-        role="form">
+  <form id="{{ form.id }}" action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
     {% csrf_token %}
 
-    <div class="form-field-container d-flex flex-column gap-4">
+    <div class="form-field-container d-flex flex-column {{ form.classes }}">
       {% for field in form %}
         <div class="form-group mb-0">
           {# djlint:off #}

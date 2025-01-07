@@ -26,7 +26,7 @@ class InPersonEligibilityForm(forms.Form):
         super().__init__(*args, **kwargs)
         flows = agency.enrollment_flows.filter(supported_enrollment_methods__contains=models.EnrollmentMethods.IN_PERSON)
 
-        self.classes = "checkbox-parent"
+        self.classes = "flex-reverse gap-2"
         flow_field = self.fields["flow"]
         verified_field = self.fields["verified"]
 

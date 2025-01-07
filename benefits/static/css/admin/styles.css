@@ -86,20 +86,12 @@ input[type="password"]:focus,
 }
 
 /* Eligibility Page */
-.checkbox-parent .form-group:last-of-type .col-12 {
+/* Checkbox form fields should show the checkbox first, then label */
+.form-field-container .form-group:has(input[type="checkbox"]) {
   display: flex;
   flex-direction: row-reverse;
   justify-content: start;
   column-gap: 0.5rem;
-  margin-top: 2rem;
-}
-
-.checkbox-parent,
-.checkbox-parent .form-group .col-12,
-.checkbox-parent .form-group .col-12 #id_flow {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
 }
 
 /* Enrollment Page*/
