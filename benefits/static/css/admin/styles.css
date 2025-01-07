@@ -85,17 +85,23 @@ input[type="password"]:focus,
   text-transform: unset;
 }
 
-/* Eligibility Page */
+/* Eligibility Page:  In-person Enrollment */
 /* Checkbox form fields should show the checkbox first, then label */
 .form-field-container .form-group:has(input[type="checkbox"]) {
   display: flex;
   flex-direction: row-reverse;
   justify-content: start;
   gap: 0.5rem;
-  margin-top: 1rem;
+  margin-top: 2rem;
 }
 
-.form-field-container .form-group:has(div):has(label) div {
+.form-field-container.in-person-eligibility-form {
+  gap: 1rem;
+}
+
+.form-field-container.in-person-eligibility-form
+  .form-group:has(div):has(label)
+  div {
   margin-top: 1rem;
 }
 
