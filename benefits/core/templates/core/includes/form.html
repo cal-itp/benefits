@@ -3,7 +3,7 @@
 
   {% url form.action_url as form_action %}
 
-  <form id="{{ form.id }}" action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}" role="form">
+  <form id="{{ form.id }}" action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}">
     {% csrf_token %}
 
     <div class="form-field-container d-flex flex-column {{ form.classes }}">
