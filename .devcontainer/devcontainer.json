@@ -4,6 +4,7 @@
   "dockerComposeFile": ["../compose.yml"],
   "service": "dev",
   "runServices": ["dev", "docs", "server"],
+  "forwardPorts": ["docs:8001", "server:8000"],
   "workspaceFolder": "/calitp/app",
   "postStartCommand": ["/bin/bash", "bin/reset_db.sh"],
   "postAttachCommand": ["/bin/bash", ".devcontainer/postAttach.sh"],
