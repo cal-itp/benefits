@@ -6,7 +6,7 @@
   <form id="{{ form.id }}" action="{{ form_action }}" method="{{ form.method | default:"post" | upper }}">
     {% csrf_token %}
 
-    <div class="form-field-container d-flex flex-column {{ form.classes }}">
+    <div class="form-field-container {{ form.classes }}">
       {% for field in form %}
         <div class="form-group mb-0">
           {# djlint:off #}

@@ -87,7 +87,8 @@ input[type="password"]:focus,
 
 /* Eligibility Page:  In-person Enrollment */
 /* Checkbox form fields should show the checkbox first, then label */
-.form-field-container .form-group:has(input[type="checkbox"]) {
+.form-field-container.in-person-eligibility-form
+  .form-group:has(input[type="checkbox"]) {
   display: flex;
   flex-direction: row-reverse;
   justify-content: start;
@@ -96,6 +97,8 @@ input[type="password"]:focus,
 }
 
 .form-field-container.in-person-eligibility-form {
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
 }
 
