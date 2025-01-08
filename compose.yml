@@ -35,7 +35,7 @@ services:
       - ./:/calitp/app
 
   server:
-    image: ghcr.io/cal-itp/eligibility-server:dev
+    image: ghcr.io/cal-itp/eligibility-server:main
     env_file: .devcontainer/server/.env.server
     ports:
       - "8000"
