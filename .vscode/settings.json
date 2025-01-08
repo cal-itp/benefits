@@ -1,8 +1,10 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
+  "djlint.useEditorIndentation": false,
   "[django-html][html]": {
     "editor.defaultFormatter": "monosans.djlint",
+    "editor.tabSize": 2,
     "djlint.enableLinting": true,
     "djlint.profile": "django"
   },
