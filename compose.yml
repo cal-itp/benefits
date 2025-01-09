@@ -9,6 +9,8 @@ services:
     env_file: .env
     ports:
       - "${DJANGO_LOCAL_PORT:-8000}:8000"
+    volumes:
+      - ./:/home/calitp/app/data # matches the path in nginx.conf for media files. set your DJANGO_STORAGE_DIR to `/home/calitp/app/data` so the container can access `django.db` and `uploads/`.
 
   dev:
     build:
