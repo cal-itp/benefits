@@ -568,6 +568,12 @@ footer .footer-links li a.footer-link:visited {
   letter-spacing: calc(var(--font-size-14px) * var(--letter-spacing-5));
 }
 
+.form-field-container.eligibility-verification-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 /* Forms: Radio Buttons */
 
 :root {

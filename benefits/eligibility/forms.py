@@ -108,6 +108,7 @@ class EligibilityVerificationForm(forms.Form):
         self.title = title
         self.headline = headline
         self.blurb = blurb
+        self.classes = "eligibility-verification-form"
 
         sub_widget = widgets.FormControlTextInput(placeholder=sub_placeholder)
         if sub_pattern:
