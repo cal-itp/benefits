@@ -30,15 +30,16 @@ urlpatterns = [
     path("in_person/", include("benefits.in_person.urls")),
 ]
 
-# serve user-uploaded media files
-#
-# the helper function `django.conf.urls.static.static` mentioned in
-# https://docs.djangoproject.com/en/5.1/howto/static-files/#serving-files-uploaded-by-a-user-during-development
-# only works when settings.DEBUG = True, so here we add the URL pattern ourselves so it works regardless of DEBUG.
-prefix = settings.MEDIA_URL
-urlpatterns.extend(
-    [re_path(r"^%s(?P<path>.*)$" % re.escape(prefix.lstrip("/")), serve, {"document_root": settings.MEDIA_ROOT})]
-)
+if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.LOCAL:
+    # serve user-uploaded media files
+    #
+    # the helper function `django.conf.urls.static.static` mentioned in
+    # https://docs.djangoproject.com/en/5.1/howto/static-files/#serving-files-uploaded-by-a-user-during-development
+    # only works when settings.DEBUG = True, so here we add the URL pattern ourselves so it works regardless of DEBUG.
+    prefix = settings.MEDIA_URL
+    urlpatterns.extend(
+        [re_path(r"^%s(?P<path>.*)$" % re.escape(prefix.lstrip("/")), serve, {"document_root": settings.MEDIA_ROOT})]
+    )
 
 if settings.DEBUG:
     # based on
