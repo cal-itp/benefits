@@ -9,13 +9,7 @@ import pytest
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import (
-    ClaimsProvider,
-    EnrollmentFlow,
-    TransitProcessor,
-    PemData,
-    TransitAgency,
-)
+from benefits.core.models import ClaimsProvider, EnrollmentFlow, TransitProcessor, PemData, TransitAgency
 
 
 def pytest_runtest_setup():

@@ -52,6 +52,22 @@ def test_SecretNameField_init_null_blank():
     assert field.null is True
 
 
+def test_SecretNameField_secret_value(mocker, mock_get_secret_by_name):
+    # Create a mock model instance
+    mock_instance = mocker.Mock()
+    mock_instance.test_field = "test-secret-name"
+
+    # Set the field's attname to simulate how Django would set it
+    field = SecretNameField()
+    field.attname = "test_field"
+
+    result = field.secret_value(mock_instance)
+
+    # Verify the secret was retrieved with correct name
+    mock_get_secret_by_name.assert_called_once_with("test-secret-name")
+    assert result == mock_get_secret_by_name.return_value
+
+
 @pytest.mark.django_db
 def test_PemData_str(model_PemData):
     assert str(model_PemData) == model_PemData.label
