@@ -79,13 +79,14 @@ class PemData(models.Model):
         remote_data = None
         secret_data = None
 
-        if self.remote_url:
-            remote_data = requests.get(self.remote_url, timeout=settings.REQUESTS_TIMEOUT).text
         if self.text_secret_name:
             try:
                 secret_field = self._meta.get_field("text_secret_name")
                 secret_data = secret_field.secret_value(self)
             except Exception:
                 secret_data = None
+
+        if secret_data is None and self.remote_url:
+            remote_data = requests.get(self.remote_url, timeout=settings.REQUESTS_TIMEOUT).text
 
         return secret_data if secret_data is not None else remote_data
