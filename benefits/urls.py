@@ -6,12 +6,13 @@ The `urlpatterns` list routes URLs to views. For more information please see:
 """
 
 import logging
+import re
 
 from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponse
-from django.urls import include, path
-from django.conf.urls.static import static
+from django.urls import include, path, re_path
+from django.views.static import serve
 
 logger = logging.getLogger(__name__)
 
@@ -29,6 +30,17 @@ urlpatterns = [
     path("in_person/", include("benefits.in_person.urls")),
 ]
 
+if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.LOCAL:
+    # serve user-uploaded media files
+    #
+    # the helper function `django.conf.urls.static.static` mentioned in
+    # https://docs.djangoproject.com/en/5.1/howto/static-files/#serving-files-uploaded-by-a-user-during-development
+    # only works when settings.DEBUG = True, so here we add the URL pattern ourselves so it works regardless of DEBUG.
+    prefix = settings.MEDIA_URL
+    urlpatterns.extend(
+        [re_path(r"^%s(?P<path>.*)$" % re.escape(prefix.lstrip("/")), serve, {"document_root": settings.MEDIA_ROOT})]
+    )
+
 if settings.DEBUG:
     # based on
     # https://docs.sentry.io/platforms/python/guides/django/#verify
@@ -37,10 +49,6 @@ if settings.DEBUG:
         raise RuntimeError("Test error")
 
     urlpatterns.append(path("error/", trigger_error))
-
-    # serve user-uploaded media files
-    # https://docs.djangoproject.com/en/5.1/howto/static-files/#serving-files-uploaded-by-a-user-during-development
-    urlpatterns.extend(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
 
     # simple route to read a pre-defined "secret"
     # this "secret" does not contain sensitive information
