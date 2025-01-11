@@ -36,6 +36,12 @@ class EligibilityStart:
 
         return EligibilityConfirm(page)
 
+    def get_started_with_login_gov(self):
+        page = self.page
+        page.get_by_role("link", name="Get started with Login.gov").click()
+
+        return LoginGov(page)
+
 
 class EligibilityConfirm:
     def __init__(self, page: Page):
@@ -51,6 +57,30 @@ class EligibilityConfirm:
         page.get_by_placeholder("Hernandez-Demarcos").fill(name)
 
         page.get_by_role("button", name="Find my record").click()
+
+        return EnrollmentIndex(page)
+
+
+class LoginGov:
+    def __init__(self, page: Page):
+        self.page = page
+
+    def sign_in(self, username, password):
+        page = self.page
+        page.get_by_label("Email address").click()
+        page.get_by_label("Email address").fill(username)
+        page.get_by_label("Email address").press("Tab")
+
+        page.get_by_label("Password", exact=True).fill(password)
+
+        page.get_by_role("button", name="Sign in").click()
+
+    def enter_otp(self, one_time_password):
+        page = self.page
+        page.get_by_label("One-time code").click()
+        page.get_by_label("One-time code").fill(one_time_password)
+
+        page.get_by_role("button", name="Submit").click()
 
         return EnrollmentIndex(page)
 
