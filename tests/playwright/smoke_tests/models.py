@@ -42,6 +42,12 @@ class EligibilityStart:
 
         return LoginGov(page)
 
+    def continue_to_medicare_gov(self):
+        page = self.page
+        page.get_by_role("button", name="Continue to Medicare.gov").click()
+
+        return MedicareGov(page)
+
 
 class EligibilityConfirm:
     def __init__(self, page: Page):
@@ -81,6 +87,27 @@ class LoginGov:
         page.get_by_label("One-time code").fill(one_time_password)
 
         page.get_by_role("button", name="Submit").click()
+
+        return EnrollmentIndex(page)
+
+
+class MedicareGov:
+    def __init__(self, page: Page):
+        self.page = page
+
+    def log_in(self, username, password):
+        page = self.page
+
+        page.get_by_label("Username", exact=True).click()
+        page.get_by_label("Username", exact=True).fill(username)
+
+        page.get_by_label("Password").fill(password)
+
+        page.get_by_role("button", name="Log in").click()
+
+    def accept_consent_screen(self):
+        page = self.page
+        page.get_by_role("button", name="Connect").click()
 
         return EnrollmentIndex(page)
 
