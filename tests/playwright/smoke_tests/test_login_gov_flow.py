@@ -1,13 +1,16 @@
 import os
 
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Browser, expect
 import pyotp
 
 from models import Index
 
 
-def test_older_adult_flow(page: Page):
-    page.goto("/")
+def test_older_adult_flow(browser: Browser, base_url):
+    context = browser.new_context(user_agent="cal-itp/benefits-smoke-test")
+    page = context.new_page()
+
+    page.goto(base_url)
 
     index = Index(page)
     eligibility_index = index.select_agency("California State Transit")
@@ -33,8 +36,11 @@ def test_older_adult_flow(page: Page):
     expect(success_message).to_be_visible()
 
 
-def test_us_veteran_flow(page: Page):
-    page.goto("/")
+def test_us_veteran_flow(browser: Browser, base_url):
+    context = browser.new_context(user_agent="cal-itp/benefits-smoke-test")
+    page = context.new_page()
+
+    page.goto(base_url)
 
     index = Index(page)
     eligibility_index = index.select_agency("California State Transit")
@@ -60,8 +66,11 @@ def test_us_veteran_flow(page: Page):
     expect(success_message).to_be_visible()
 
 
-def test_calfresh_cardholder_flow(page: Page):
-    page.goto("/")
+def test_calfresh_cardholder_flow(browser: Browser, base_url):
+    context = browser.new_context(user_agent="cal-itp/benefits-smoke-test")
+    page = context.new_page()
+
+    page.goto(base_url)
 
     index = Index(page)
     eligibility_index = index.select_agency("California State Transit")

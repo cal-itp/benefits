@@ -1,11 +1,14 @@
 import os
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Browser, expect
 
 from models import Index
 
 
-def test_medicare_cardholder_flow(page: Page):
-    page.goto("/")
+def test_medicare_cardholder_flow(browser: Browser, base_url):
+    context = browser.new_context(user_agent="cal-itp/benefits-smoke-test")
+    page = context.new_page()
+
+    page.goto(base_url)
 
     index = Index(page)
     eligibility_index = index.select_agency("California State Transit")
