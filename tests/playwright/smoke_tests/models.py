@@ -1,3 +1,9 @@
+"""
+Page object models for Playwright tests.
+
+https://playwright.dev/python/docs/pom
+"""
+
 from playwright.sync_api import Page
 
 
