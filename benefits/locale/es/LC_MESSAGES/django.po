@@ -6,18 +6,12 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2024-11-12 10:35-0800\n"
+"POT-Creation-Date: 2024-12-16 21:57-0800\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-msgid "Get started"
-msgstr "Comenzar"
-
-msgid "Get Started"
-msgstr "Comenzar"
 
 msgid ""
 "The Benefits tool is provided by California Integrated Travel Project (Cal-"
@@ -434,6 +428,25 @@ msgstr ""
 "Para funcionar correctamente, este sitio web requiere un navegador que "
 "admita JavaScript. Por favor, active JavaScript por este sitio web y"
 
+msgid ""
+"This site is protected by reCAPTCHA and the Google <a href=\"https://"
+"policies.google.com/privacy\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">Privacy Policy</a> and <a href=\"https://policies.google.com/"
+"terms\" target=\"_blank\" rel=\"noopener noreferrer\">Terms of Service</a> "
+"apply."
+msgstr ""
+"Este sitio está protegido por reCAPTCHA y se aplican la <a href=\"https://"
+"policies.google.com/privacy\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">Política de privacidad</a> y <a href=\"https://policies.google."
+"com/terms\" target=\"_blank\" rel=\"noopener noreferrer\">las Condiciones de "
+"servicio</a> de Google."
+
+msgid "Get started"
+msgstr "Comenzar"
+
+msgid "Get Started"
+msgstr "Comenzar"
+
 msgid "Get a reduced fare on CST public transportation when you tap to ride"
 msgstr ""
 "Obtenga una tarifa reducida en el transporte público CST cuando toque para "
@@ -461,6 +474,15 @@ msgstr ""
 "Obtenga una tarifa reducida en los autobuses del Santa Barbara MTD cuando "
 "toque para viajar"
 
+msgid "Cal-ITP Benefits connects your transit benefit to your contactless card"
+msgstr ""
+"Cal-ITP Benefits conecta su beneficio de tránsito con su tarjeta sin contacto"
+
+msgid "A person holds a contactless debit card next to a card reader on a bus."
+msgstr ""
+"Una persona sostiene una tarjeta de débito junto a un lector de tarjetas en "
+"un autobús."
+
 msgid "Choose transit agency"
 msgstr "Elija la agencia de tránsito"
 
@@ -470,15 +492,6 @@ msgstr ""
 
 msgid "Choose your Provider"
 msgstr "Elija su Proveedor"
-
-msgid "Cal-ITP Benefits connects your transit benefit to your contactless card"
-msgstr ""
-"Cal-ITP Benefits conecta su beneficio de tránsito con su tarjeta sin contacto"
-
-msgid "A person holds a contactless debit card next to a card reader on a bus."
-msgstr ""
-"Una persona sostiene una tarjeta de débito junto a un lector de tarjetas en "
-"un autobús."
 
 msgid "Logged out"
 msgstr "Cierre sesión"
@@ -855,11 +868,6 @@ msgstr "Ha seleccionado un beneficio de tránsito para veteranos."
 msgid "You will need a few items to continue:"
 msgstr "Necesitará algunos artículos para continuar:"
 
-msgid "Your card information may not have been entered correctly."
-msgstr ""
-"Es posible que la información de su tarjeta no se haya ingresado "
-"correctamente."
-
 msgid ""
 "The number and last name must be entered exactly as they appear on your CST "
 "Agency Card. Please check your card and try again, or contact your transit "
@@ -868,9 +876,6 @@ msgstr ""
 "El número y el apellido deben ingresarse exactamente como aparecen en su "
 "tarjeta de agencia de CST. Verifique su tarjeta e inténtelo de nuevo, o "
 "contacte a su agencia de tránsito para obtener ayuda."
-
-msgid "Try again"
-msgstr "Inténtelo de nuevo"
 
 msgid ""
 "The number and last name must be entered exactly as they appear on your MST "
@@ -892,6 +897,14 @@ msgstr ""
 
 msgid "Unable to confirm eligibility"
 msgstr "No se pudo confirmar la elegibilidad"
+
+msgid "Your card information may not have been entered correctly."
+msgstr ""
+"Es posible que la información de su tarjeta no se haya ingresado "
+"correctamente."
+
+msgid "Try again"
+msgstr "Inténtelo de nuevo"
 
 msgid "Your eligibility could not be verified."
 msgstr "No se pudo verificar su elegibilidad."
@@ -919,6 +932,13 @@ msgstr ""
 "o crédito sin contacto emitida por Visa o Mastercard y use esa tarjeta para "
 "pagar el transporte público."
 
+msgid "Learn more about Littlepay"
+msgstr "Más información sobre Littlepay"
+
+msgid "We found your record! Now let’s enroll your contactless card."
+msgstr ""
+"¡Encontramos su registro! Ahora inscribamos su tarjeta de pago sin contacto."
+
 msgid ""
 "The next step is to connect your contactless card to your transit benefit"
 msgstr ""
@@ -930,6 +950,12 @@ msgstr "Será dirigido a nuestro socio de pagos, "
 
 msgid "We don’t store your information, and you won’t be charged."
 msgstr "No almacenamos su información y no se le cobrará."
+
+msgid "Eligibility confirmation"
+msgstr "Confirmación de elegibilidad"
+
+msgid "Your eligibility is confirmed! You’re almost there."
+msgstr "¡Su elegibilidad está confirmada! Ya falta poco."
 
 msgid ""
 "The next step is to enroll the contactless card you will use to tap to ride "
@@ -946,20 +972,6 @@ msgstr ", para introducir los datos de su tarjeta de pago sin contacto."
 
 msgid "Please use a debit or credit card by Visa or Mastercard."
 msgstr "Utilice una tarjeta de débito o crédito de Visa o Mastercard."
-
-msgid "Learn more about Littlepay"
-msgstr "Más información sobre Littlepay"
-
-msgid "We found your record!<br>Now let’s enroll your contactless card."
-msgstr ""
-"¡Encontramos su registro!<br>Ahora inscribamos su tarjeta de pago sin "
-"contacto."
-
-msgid "Eligibility confirmation"
-msgstr "Confirmación de elegibilidad"
-
-msgid "Your eligibility is confirmed!<br>You’re almost there."
-msgstr "¡Su elegibilidad está confirmada!<br>Ya falta poco."
 
 msgid "Please wait..."
 msgstr "Espere por favor..."

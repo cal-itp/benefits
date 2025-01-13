@@ -28,7 +28,6 @@ class EnrollmentFlowSelectionForm(forms.Form):
         super().__init__(*args, **kwargs)
         flows = agency.enrollment_flows.filter(supported_enrollment_methods__contains=models.EnrollmentMethods.DIGITAL)
 
-        self.classes = "col-lg-8"
         # second element is not used since we render the whole label using selection_label_template,
         # therefore set to None
         flow_field = self.fields["flow"]
@@ -109,8 +108,8 @@ class EligibilityVerificationForm(forms.Form):
         self.title = title
         self.headline = headline
         self.blurb = blurb
+        self.classes = "eligibility-verification-form"
 
-        self.classes = "col-lg-6"
         sub_widget = widgets.FormControlTextInput(placeholder=sub_placeholder)
         if sub_pattern:
             sub_widget.attrs.update({"pattern": sub_pattern})

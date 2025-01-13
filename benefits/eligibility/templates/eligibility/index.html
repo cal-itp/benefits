@@ -15,21 +15,12 @@
 {% endblock nav-buttons %}
 
 {% block headline %}
-  <div class="col-lg-8">
-    <h1>{% translate "Choose the transit benefit you would like to enroll in" %}</h1>
-  </div>
+  <h1>{% translate "Choose the transit benefit you would like to enroll in" %}</h1>
 {% endblock headline %}
 
-{% block explanatory-text-wrapper %}
-  <div class="row justify-content-center">
-    <div class="col-lg-8">
-      {% block explanatory-text %}
-      {% endblock explanatory-text %}
-    </div>
-  </div>
-{% endblock explanatory-text-wrapper %}
-
 {% block inner-content %}
+  {% block form-text %}
+  {% endblock form-text %}
   {% include "core/includes/form.html" with form=form %}
   <script nonce="{{ request.csp_nonce }}">
     $(".modal").on("click", function(event) {
@@ -40,3 +31,7 @@
     });
   </script>
 {% endblock inner-content %}
+
+{% comment %} Override with empty block to prevent rendering empty divs {% endcomment %}
+{% block call-to-action %}
+{% endblock call-to-action %}

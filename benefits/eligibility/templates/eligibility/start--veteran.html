@@ -5,23 +5,17 @@
   {% translate "Veterans benefit overview" %}
 {% endblock page-title %}
 
-{% block headline %}
-  <div class="col-lg-8">
-    <h1>{% translate "You selected a Veteran transit benefit." %}</h1>
-  </div>
-{% endblock headline %}
+{% block headline-text %}
+  {% translate "You selected a Veteran transit benefit." %}
+{% endblock headline-text %}
 
-{% block media-item %}
-  {% include "eligibility/includes/media-item--idcardcheck--start--login-gov.html" %}
-{% endblock media-item %}
+{% block eligibility-item %}
+  {% include "eligibility/includes/eligibility-item--identification--start--login-gov.html" %}
+{% endblock eligibility-item %}
 
-{% block call-to-action %}
-  <div class="row d-flex justify-content-lg-end">
-    <div class="col-lg-4 offset-2 offset-lg-0 col-sm-8 col-8 d-flex justify-content-lg-end justify-content-center">
-      {% translate "Get started with" as button_text %}
-      <a href="{% url routes.OAUTH_LOGIN %}" class="btn btn-lg btn-primary login">
-        {{ button_text }} <span class="fallback-text white-logo">Login.gov</span>
-      </a>
-    </div>
-  </div>
-{% endblock call-to-action %}
+{% block call-to-action-button %}
+  {% translate "Get started with" as button_text %}
+  <a href="{% url routes.OAUTH_LOGIN %}" class="btn btn-lg btn-primary login">
+    {{ button_text }} <span class="fallback-text white-logo">Login.gov</span>
+  </a>
+{% endblock call-to-action-button %}

@@ -1,43 +1,32 @@
-{% extends "core/base.html" %}
+{% extends "error-base.html" %}
 {% load i18n %}
 
 {% block page-title %}
   {% translate "Unable to confirm eligibility" %}
 {% endblock page-title %}
 
-{% block main-content %}
+{% block nav-buttons %}
   {% if authentication and authentication.sign_out_link_template %}
     {% include authentication.sign_out_link_template %}
   {% endif %}
+{% endblock nav-buttons %}
 
-  <div class="container">
-    <h1 class="h2 text-center">
-      <span class="icon d-block pb-4">{% include "core/includes/icon.html" with name="idcardquestion" %}</span>
-      {% block unverified-headline %}
-        {% translate "Your eligibility could not be verified." %}
-      {% endblock unverified-headline %}
-    </h1>
+{% block icon %}
+  {% include "core/includes/icon.html" with name="idcardquestion" %}
+{% endblock icon %}
 
-    <div class="row justify-content-center">
-      <div class="col-lg-8 pt-4">
-        <p>
-          {% block unverified-body %}
-            {% translate "That’s okay! You may still be eligible for our program." %}
-            {% blocktranslate with short_name=agency.short_name %}Please reach out to {{ short_name }} for assistance.{% endblocktranslate %}
-          {% endblock unverified-body %}
-        </p>
-      </div>
-    </div>
+{% block headline-text %}
+  {% translate "Your eligibility could not be verified." %}
+{% endblock headline-text %}
 
-    <div class="row justify-content-center">
-      <div class="col-lg-8">{% include "core/includes/agency-links.html" %}</div>
-    </div>
+{% block paragraphs %}
+  <p>
+    {% translate "That’s okay! You may still be eligible for our program." %}
+    {% blocktranslate with short_name=agency.short_name %}Please reach out to {{ short_name }} for assistance.{% endblocktranslate %}
+  </p>
+  {% include "core/includes/agency-links.html" %}
+{% endblock paragraphs %}
 
-    <div class="row pt-8 justify-content-center">
-      {% block unverified-call-to-action %}
-        <div class="col-lg-3 col-8">{% include "core/includes/button--index.html" %}</div>
-      {% endblock unverified-call-to-action %}
-    </div>
-
-  </div>
-{% endblock main-content %}
+{% block call-to-action-button %}
+  {% include "core/includes/button--index.html" %}
+{% endblock call-to-action-button %}

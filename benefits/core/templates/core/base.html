@@ -1,4 +1,3 @@
-
 {% load i18n %}
 {% load static %}
 {% get_current_language as LANGUAGE_CODE %}
@@ -70,22 +69,16 @@
         {% endblock nav-buttons %}
         <div class="container main-row">
           <div class="row justify-content-center">
-            {% block headline %}
-            {% endblock headline %}
-          </div>
-          {% block explanatory-text-wrapper %}
-            <div class="col-lg-8">
-              {% block explanatory-text %}
-              {% endblock explanatory-text %}
+            <div class="col-lg-6">
+              {% block headline %}
+              {% endblock headline %}
+              {% block inner-content %}
+              {% endblock inner-content %}
             </div>
-          {% endblock explanatory-text-wrapper %}
-          <div class="row justify-content-center">
-            {% block inner-content %}
-            {% endblock inner-content %}
           </div>
           {% block call-to-action %}
-            <div class="row d-flex justify-content-lg-end pt-8">
-              <div class="col-lg-3 offset-2 offset-sm-2 offset-lg-0 col-sm-8 col-8">
+            <div class="row justify-content-center pt-8">
+              <div class="col-lg-6">
                 {% block call-to-action-button %}
                 {% endblock call-to-action-button %}
               </div>

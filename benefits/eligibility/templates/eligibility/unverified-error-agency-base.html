@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block page-title %}
-  {% translate "Enrollment error" %}
+  {% translate "Unable to confirm eligibility" %}
 {% endblock page-title %}
 
 {% block nav-buttons %}
@@ -12,16 +12,22 @@
 {% endblock nav-buttons %}
 
 {% block icon %}
-  {% include "core/includes/icon.html" with name="calendarcheck" %}
+  {% include "core/includes/icon.html" with name="idcardquestion" %}
 {% endblock icon %}
 
 {% block headline-text %}
-  {% translate "You are still enrolled in this benefit" %}
+  {% translate "Your card information may not have been entered correctly." %}
 {% endblock headline-text %}
 
 {% block paragraphs %}
+  <p>
+    {% block unverified-body %}
+    {% endblock unverified-body %}
+  </p>
+  {% include "core/includes/agency-links.html" %}
 {% endblock paragraphs %}
 
 {% block call-to-action-button %}
-  {% include "core/includes/button--origin.html" %}
+  {% translate "Try again" as button_text %}
+  {% include "core/includes/button--origin.html" with button_text=button_text %}
 {% endblock call-to-action-button %}

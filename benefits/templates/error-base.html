@@ -1,0 +1,19 @@
+{% extends "core/base.html" %}
+
+{% block inner-content %}
+  <div class="mt-5 pt-4 text-center">
+    {% block icon %}
+      {% include "core/includes/icon.html" with name="sadbus" %}
+    {% endblock icon %}
+  </div>
+  <h1 class="h2 py-4">
+    {% block headline-text %}
+    {% endblock headline-text %}
+  </h1>
+  {% block paragraphs %}
+  {% endblock paragraphs %}
+{% endblock inner-content %}
+
+{% block call-to-action-button %}
+  {% include "core/includes/button--origin.html" %}
+{% endblock call-to-action-button %}

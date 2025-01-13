@@ -85,21 +85,27 @@ input[type="password"]:focus,
   text-transform: unset;
 }
 
-/* Eligibility Page */
-.checkbox-parent .form-group:last-of-type .col-12 {
+/* Eligibility Page:  In-person Enrollment */
+/* Checkbox form fields should show the checkbox first, then label */
+.form-field-container.in-person-eligibility-form
+  .form-group:has(input[type="checkbox"]) {
   display: flex;
   flex-direction: row-reverse;
   justify-content: start;
-  column-gap: 0.5rem;
+  gap: 0.5rem;
   margin-top: 2rem;
 }
 
-.checkbox-parent,
-.checkbox-parent .form-group .col-12,
-.checkbox-parent .form-group .col-12 #id_flow {
+.form-field-container.in-person-eligibility-form {
   display: flex;
   flex-direction: column;
-  row-gap: 1rem;
+  gap: 1rem;
+}
+
+.form-field-container.in-person-eligibility-form
+  .form-group:has(div):has(label)
+  div {
+  margin-top: 1rem;
 }
 
 /* Enrollment Page*/

@@ -1,13 +1,13 @@
-{% extends "error.html" %}
+{% extends "error-base.html" %}
 {% load i18n %}
 
-{% block title %}
+{% block page-title %}
   {% translate "Service is down" %}
-{% endblock title %}
+{% endblock page-title %}
 
-{% block headline %}
+{% block headline-text %}
   {% translate "We’re working on fixing a problem." %}
-{% endblock headline %}
+{% endblock headline-text %}
 
 {% block paragraphs %}
   <p>

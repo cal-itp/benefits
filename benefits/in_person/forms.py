@@ -26,7 +26,7 @@ class InPersonEligibilityForm(forms.Form):
         super().__init__(*args, **kwargs)
         flows = agency.enrollment_flows.filter(supported_enrollment_methods__contains=models.EnrollmentMethods.IN_PERSON)
 
-        self.classes = "checkbox-parent"
+        self.classes = "in-person-eligibility-form"
         flow_field = self.fields["flow"]
         verified_field = self.fields["verified"]
 
