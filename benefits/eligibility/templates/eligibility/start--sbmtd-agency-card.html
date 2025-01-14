@@ -2,17 +2,17 @@
 {% load i18n %}
 
 {% block page-title %}
-    {% translate "Agency card overview" %}
+  {% translate "Agency card overview" %}
 {% endblock page-title %}
 
 {% block headline-text %}
-    {% translate "You selected a Reduced Fare Mobility ID transit benefit." %}
+  {% translate "You selected a Reduced Fare Mobility ID transit benefit." %}
 {% endblock headline-text %}
 
 {% block eligibility-item %}
-    {% include "eligibility/includes/eligibility-item--identification--start--sbmtd-agency-card.html" %}
+  {% include "eligibility/includes/eligibility-item--identification--start--sbmtd-agency-card.html" %}
 {% endblock eligibility-item %}
 
 {% block call-to-action-button %}
-    <a href="{% url routes.ELIGIBILITY_CONFIRM %}" class="btn btn-lg btn-primary" role="button">{% translate "Continue" %}</a>
+  <a href="{% url routes.ELIGIBILITY_CONFIRM %}" class="btn btn-lg btn-primary" role="button">{% translate "Continue" %}</a>
 {% endblock call-to-action-button %}

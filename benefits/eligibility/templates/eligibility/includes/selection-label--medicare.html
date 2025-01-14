@@ -2,12 +2,12 @@
 {% load i18n %}
 
 {% block label %}
-    {% translate "Medicare Cardholder" %}
+  {% translate "Medicare Cardholder" %}
 {% endblock label %}
 
 {% block description %}
-    {% translate "You must be" %}
-    {% translate "currently enrolled in Medicare" as medicare_modal_link %}
-    {% include "core/includes/modal-trigger.html" with modal="modal--medicare" text=medicare_modal_link period=True %}
-    {% include "eligibility/includes/modal--medicare.html" with id="modal--medicare" size="modal-lg" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
+  {% translate "You must be" %}
+  {% translate "currently enrolled in Medicare" as medicare_modal_link %}
+  {% include "core/includes/modal-trigger.html" with modal="modal--medicare" text=medicare_modal_link period=True %}
+  {% include "eligibility/includes/modal--medicare.html" with id="modal--medicare" size="modal-lg" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" %}
 {% endblock description %}
