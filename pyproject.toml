@@ -42,6 +42,9 @@ test = [
     "pytest-socket",
 ]
 
+[project.scripts]
+benefits = "benefits.cli.main:main"
+
 [project.urls]
 Changelog = "https://github.com/cal-itp/benefits/releases"
 Code = "https://github.com/cal-itp/benefits"
