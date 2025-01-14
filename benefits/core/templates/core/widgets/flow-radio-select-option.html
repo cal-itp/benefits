@@ -2,11 +2,11 @@
 <input class="radio-input rounded-circle flex-grow-0 flex-shrink-0"
        type="{{ widget.type }}"
        name="{{ widget.name }}"
-       {% if widget.value != None %} value="{{ widget.value|stringformat:'s' }}"{% endif %}
+       {% if widget.value != None %}value="{{ widget.value|stringformat:'s' }}"{% endif %}
        {% include "django/forms/widgets/attrs.html" %}>
 
 {% if widget.wrap_label %}
-  <label{% if widget.attrs.id %} for="{{ widget.attrs.id }}" class="radio-label"{% endif %}>
+  <label {% if widget.attrs.id %}for="{{ widget.attrs.id }}" class="radio-label"{% endif %}>
     {% include widget.selection_label_template %}
   </label>
 {% endif %}

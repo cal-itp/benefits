@@ -1,16 +1,16 @@
 {% extends "error-base.html" %}
 
 {% block error-message %}
-    <h3 class="fw-bold h4">This person is still enrolled in the {{ flow_label }} benefit.</h3>
+  <h3 class="fw-bold h4">This person is still enrolled in the {{ flow_label }} benefit.</h3>
 
-    <p class="my-4">
-        <span class="fw-bold">This rider will enjoy a transit benefit until {{ enrollment.expires|date }}.</span> They can re-enroll for this benefit beginning on {{ enrollment.reenrollment|date }}. Please try again then.
-    </p>
+  <p class="my-4">
+    <span class="fw-bold">This rider will enjoy a transit benefit until {{ enrollment.expires|date }}.</span> They can re-enroll for this benefit beginning on {{ enrollment.reenrollment|date }}. Please try again then.
+  </p>
 {% endblock error-message %}
 
 {% block cta-buttons %}
-    <div class="col-12">
-        {% url routes.ADMIN_INDEX as url_return_to_dashboard %}
-        <a href="{{ url_return_to_dashboard }}" class="btn btn-lg btn-primary d-block">Return to dashboard</a>
-    </div>
+  <div class="col-12">
+    {% url routes.ADMIN_INDEX as url_return_to_dashboard %}
+    <a href="{{ url_return_to_dashboard }}" class="btn btn-lg btn-primary d-block">Return to dashboard</a>
+  </div>
 {% endblock cta-buttons %}

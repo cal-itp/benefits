@@ -2,9 +2,9 @@
 {% load i18n %}
 
 {% block paragraphs %}
-    <p>
-        {% translate "Your CalFresh Cardholder transit benefit does not expire until" %} {{ enrollment.expires|date }}.
-        {% translate "You can re-enroll for this benefit beginning on" %} {{ enrollment.reenrollment|date }}.
-        {% translate "Please try again then." %}
-    </p>
+  <p>
+    {% translate "Your CalFresh Cardholder transit benefit does not expire until" %} {{ enrollment.expires|date }}.
+    {% translate "You can re-enroll for this benefit beginning on" %} {{ enrollment.reenrollment|date }}.
+    {% translate "Please try again then." %}
+  </p>
 {% endblock paragraphs %}

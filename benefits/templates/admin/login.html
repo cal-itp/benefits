@@ -5,12 +5,12 @@
 {% endblock dark-mode-vars %}
 
 {% block extrastyle %}
-    {% comment %} Overriding instead of extending agency-base here to remove jQuery declaration, which admin/login.html includes on its own {% endcomment %}
-    {% include "admin/includes/favicon.html" %}
-    {% include "core/includes/bootstrap-css.html" %}
-    {% include "admin/includes/style-admin.html" %}
+  {% comment %} Overriding instead of extending agency-base here to remove jQuery declaration, which admin/login.html includes on its own {% endcomment %}
+  {% include "admin/includes/favicon.html" %}
+  {% include "core/includes/bootstrap-css.html" %}
+  {% include "admin/includes/style-admin.html" %}
 {% endblock extrastyle %}
 
 {% block branding %}
-    {% include "admin/includes/branding-login.html" %}
+  {% include "admin/includes/branding-login.html" %}
 {% endblock branding %}

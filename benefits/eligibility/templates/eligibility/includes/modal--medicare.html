@@ -3,36 +3,36 @@
 {% load static %}
 
 {% block modal-content %}
-    <h2 class="me-4 me-md-0">{% translate "Learn more about the option for Medicare Cardholders" %}</h2>
-    <div class="row">
-        <h3 class="pt-4">{% translate "How do I know if I qualify for the Medicare Cardholder option?" %}</h3>
-        <p class="pt-1">
-            {% blocktranslate trimmed %}
-                You qualify for this option if you have a Medicare card. To enroll you will need an account with Medicare.gov. You will need to sign up for a Medicare.gov account if you do not currently have one. Deceased Medicare cardholders do not qualify.
-            {% endblocktranslate %}
-        </p>
+  <h2 class="me-4 me-md-0">{% translate "Learn more about the option for Medicare Cardholders" %}</h2>
+  <div class="row">
+    <h3 class="pt-4">{% translate "How do I know if I qualify for the Medicare Cardholder option?" %}</h3>
+    <p class="pt-1">
+      {% blocktranslate trimmed %}
+        You qualify for this option if you have a Medicare card. To enroll you will need an account with Medicare.gov. You will need to sign up for a Medicare.gov account if you do not currently have one. Deceased Medicare cardholders do not qualify.
+      {% endblocktranslate %}
+    </p>
 
-        <h3 class="pt-4">{% translate "Do I need my Medicare card to enroll?" %}</h3>
-        <p class="pt-1">
-            {% blocktranslate trimmed %}
-                No, you do not need your physical Medicare card to enroll in a transit benefit. You will need the information on your card to create an account at Medicare.gov if you do not currently have an online account.
-            {% endblocktranslate %}
-        </p>
-        <h3 class="pt-4">{% translate "Do I need to bring my Medicare card when I ride public transportation?" %}</h3>
-        <p class="pt-1">
-            {% blocktranslate trimmed %}
-                No, you do not need your physical Medicare card to use your transit benefit on public transportation. Once you have enrolled you can use your contactless debit or credit card to tap to ride with a reduced fare.
-            {% endblocktranslate %}
-        </p>
-        <h3 class="pt-4">{% translate "What if I qualify for more than one option?" %}</h3>
-        <p class="pt-1">
-            {% blocktranslate trimmed %}
-                You can enroll in any option you qualify for. We recommend enrolling in the Medicare Cardholder option if you qualify for it.
-            {% endblocktranslate %}
-        </p>
+    <h3 class="pt-4">{% translate "Do I need my Medicare card to enroll?" %}</h3>
+    <p class="pt-1">
+      {% blocktranslate trimmed %}
+        No, you do not need your physical Medicare card to enroll in a transit benefit. You will need the information on your card to create an account at Medicare.gov if you do not currently have an online account.
+      {% endblocktranslate %}
+    </p>
+    <h3 class="pt-4">{% translate "Do I need to bring my Medicare card when I ride public transportation?" %}</h3>
+    <p class="pt-1">
+      {% blocktranslate trimmed %}
+        No, you do not need your physical Medicare card to use your transit benefit on public transportation. Once you have enrolled you can use your contactless debit or credit card to tap to ride with a reduced fare.
+      {% endblocktranslate %}
+    </p>
+    <h3 class="pt-4">{% translate "What if I qualify for more than one option?" %}</h3>
+    <p class="pt-1">
+      {% blocktranslate trimmed %}
+        You can enroll in any option you qualify for. We recommend enrolling in the Medicare Cardholder option if you qualify for it.
+      {% endblocktranslate %}
+    </p>
 
-        <p class="pt-4 d-block d-sm-none">
-            <a href="#" data-bs-dismiss="modal" aria-label="Close">{% translate "Go back" %}</a>
-        </p>
-    </div>
+    <p class="pt-4 d-block d-sm-none">
+      <a href="#" data-bs-dismiss="modal" aria-label="Close">{% translate "Go back" %}</a>
+    </p>
+  </div>
 {% endblock modal-content %}

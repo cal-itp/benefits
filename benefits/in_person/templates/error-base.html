@@ -2,28 +2,28 @@
 {% load static %}
 
 {% block title %}
-    {{ title }}
+  {{ title }}
 {% endblock title %}
 
 {% block content %}
-    <div class="row justify-content-center">
-        <div class="col-lg-6">
-            <div class="border border-3 p-3">
-                <h2 class="p-0 m-0 text-start">In-person enrollment</h2>
-            </div>
-            <div class="border border-3 border-top-0 p-3 min-vh-60 d-flex flex-column justify-content-between">
-                <div class="d-flex">
-                    <i class="error-icon"></i>
-                    <div class="mt-lg-3">
-                        {% block error-message %}
-                        {% endblock error-message %}
-                    </div>
-                </div>
-                <div class="row">
-                    {% block cta-buttons %}
-                    {% endblock cta-buttons %}
-                </div>
-            </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="border border-3 p-3">
+        <h2 class="p-0 m-0 text-start">In-person enrollment</h2>
+      </div>
+      <div class="border border-3 border-top-0 p-3 min-vh-60 d-flex flex-column justify-content-between">
+        <div class="d-flex">
+          <i class="error-icon"></i>
+          <div class="mt-lg-3">
+            {% block error-message %}
+            {% endblock error-message %}
+          </div>
         </div>
+        <div class="row">
+          {% block cta-buttons %}
+          {% endblock cta-buttons %}
+        </div>
+      </div>
     </div>
+  </div>
 {% endblock content %}
