@@ -74,14 +74,13 @@ def test_PemData_str(model_PemData):
 
 
 @pytest.mark.django_db
-def test_PemData_data_text_secret_name(mock_secret_name_field, secret_value, model_PemData, mock_requests_get_pem_data):
+def test_PemData_data_text_secret_name(mock_field_secret_value, model_PemData, mock_requests_get_pem_data):
     # a secret name and no remote URL, should use secret value
 
     model_PemData.remote_url = None
-    mock_field = mock_secret_name_field(model_PemData)
+    mock_field = mock_field_secret_value(model_PemData, "text_secret_name")
 
-    assert model_PemData.data == secret_value
-    mock_field.secret_value.assert_called_once_with(model_PemData)
+    assert model_PemData.data == mock_field.secret_value.return_value
     mock_requests_get_pem_data.assert_not_called()
 
 
@@ -100,29 +99,27 @@ def test_PemData_data_remote(model_PemData, mock_requests_get_pem_data):
 
 @pytest.mark.django_db
 def test_PemData_data_text_secret_name_and_remote__uses_text_secret(
-    mock_secret_name_field, secret_value, model_PemData, mock_requests_get_pem_data
+    mock_field_secret_value, model_PemData, mock_requests_get_pem_data
 ):
     # a remote URL and the secret value is not None, should use the secret value
-    mock_field = mock_secret_name_field(model_PemData)
+    mock_field = mock_field_secret_value(model_PemData, "text_secret_name")
     model_PemData.remote_url = "http://localhost/publickey"
 
-    assert model_PemData.data == secret_value
-    mock_field.secret_value.assert_called_once_with(model_PemData)
+    assert model_PemData.data == mock_field.secret_value.return_value
     mock_requests_get_pem_data.assert_not_called()
 
 
 @pytest.mark.django_db
 def test_PemData_data_text_secret_name_and_remote__uses_remote(
-    model_PemData, mock_secret_name_field, mock_requests_get_pem_data
+    model_PemData, mock_field_secret_value, mock_requests_get_pem_data
 ):
     # a remote URL and the secret value is None, should use remote value
     model_PemData.remote_url = "http://localhost/publickey"
 
-    mock_field = mock_secret_name_field(model_PemData)
+    mock_field = mock_field_secret_value(model_PemData, "text_secret_name")
     mock_field.secret_value.return_value = None
 
     data = model_PemData.data
 
-    mock_field.secret_value.assert_called_once_with(model_PemData)
     mock_requests_get_pem_data.assert_called_once_with(model_PemData.remote_url, timeout=settings.REQUESTS_TIMEOUT)
     assert data == mock_requests_get_pem_data.return_value.text

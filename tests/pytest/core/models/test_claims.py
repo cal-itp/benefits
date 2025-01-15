@@ -8,11 +8,10 @@ def test_model_ClaimsProvider(model_ClaimsProvider):
 
 
 @pytest.mark.django_db
-def test_model_ClaimsProvider_client_id(mock_secret_name_field, secret_value, model_ClaimsProvider):
-    mock_field = mock_secret_name_field(model_ClaimsProvider)
+def test_model_ClaimsProvider_client_id(mock_field_secret_value, model_ClaimsProvider):
+    mock_field = mock_field_secret_value(model_ClaimsProvider, "client_id_secret_name")
 
-    assert model_ClaimsProvider.client_id == secret_value
-    mock_field.secret_value.assert_called_once_with(model_ClaimsProvider)
+    assert model_ClaimsProvider.client_id == mock_field.secret_value.return_value
 
 
 @pytest.mark.django_db

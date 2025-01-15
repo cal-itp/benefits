@@ -7,11 +7,11 @@ def secret_value():
 
 
 @pytest.fixture
-def mock_secret_name_field(mocker, secret_value):
-    def _mock_secret_name_field(model):
-        mock_meta = mocker.patch.object(model, "_meta")
-        mock_field = mock_meta.get_field.return_value
-        mock_field.secret_value.return_value = secret_value
-        return mock_field
+def mock_field_secret_value(mocker, secret_value):
+    def _mock_field_secret_value(model, field_name):
+        field = model._meta.get_field(field_name)
+        mock = mocker.patch.object(field, "secret_value")
+        mock.return_value = secret_value
+        return field
 
-    return _mock_secret_name_field
+    return _mock_field_secret_value

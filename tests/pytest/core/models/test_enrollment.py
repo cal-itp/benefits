@@ -128,12 +128,10 @@ def test_EnrollmentFlow_no_scope_and_claim_no_sign_out(model_EnrollmentFlow, mod
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_eligibility_api_auth_key(
-    mock_secret_name_field, secret_value, model_EnrollmentFlow_with_eligibility_api
-):
-    mock_field = mock_secret_name_field(model_EnrollmentFlow_with_eligibility_api)
+def test_EnrollmentFlow_eligibility_api_auth_key(mock_field_secret_value, model_EnrollmentFlow_with_eligibility_api):
+    mock_field = mock_field_secret_value(model_EnrollmentFlow_with_eligibility_api, "eligibility_api_auth_key_secret_name")
 
-    assert model_EnrollmentFlow_with_eligibility_api.eligibility_api_auth_key == secret_value
+    assert model_EnrollmentFlow_with_eligibility_api.eligibility_api_auth_key == mock_field.secret_value.return_value
     mock_field.secret_value.assert_called_once_with(model_EnrollmentFlow_with_eligibility_api)
 
 
