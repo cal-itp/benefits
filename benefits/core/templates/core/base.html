@@ -161,9 +161,5 @@
         });
       });
     </script>
-
-    {% if request.recaptcha %}
-      <script nonce="{{ request.csp_nonce }}" src="{{ request.recaptcha.script_api }}"></script>
-    {% endif %}
   </body>
 </html>
