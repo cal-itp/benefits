@@ -5,11 +5,6 @@ import benefits.core.admin
 from benefits.core.admin.users import GOOGLE_USER_INFO_URL, is_staff_member, is_staff_member_or_superuser, pre_login_user
 
 
-@pytest.fixture
-def model_AdminUser():
-    return User.objects.create(email="user@calitp.org", first_name="", last_name="", username="")
-
-
 @pytest.mark.django_db
 def test_admin_registered(client):
     response = client.get("/admin", follow=True)
