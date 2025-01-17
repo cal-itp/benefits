@@ -2,7 +2,7 @@ import pytest
 from django.contrib.auth.models import User, Group
 
 import benefits.core.admin
-from benefits.core.admin import GOOGLE_USER_INFO_URL, pre_login_user
+from benefits.core.admin.users import GOOGLE_USER_INFO_URL, pre_login_user
 
 
 @pytest.fixture
@@ -38,7 +38,7 @@ def test_pre_login_user(mocker, model_AdminUser):
     mocked_request = mocker.Mock()
     mocked_response = mocker.Mock()
     mocked_response.json.return_value = response_from_google
-    requests_spy = mocker.patch("benefits.core.admin.requests.get", return_value=mocked_response)
+    requests_spy = mocker.patch("benefits.core.admin.users.requests.get", return_value=mocked_response)
 
     pre_login_user(model_AdminUser, mocked_request)
 
@@ -54,7 +54,7 @@ def test_pre_login_user(mocker, model_AdminUser):
 def test_pre_login_user_no_session_token(mocker, model_AdminUser):
     mocked_request = mocker.Mock()
     mocked_request.session.get.return_value = None
-    logger_spy = mocker.spy(benefits.core.admin, "logger")
+    logger_spy = mocker.spy(benefits.core.admin.users, "logger")
 
     pre_login_user(model_AdminUser, mocked_request)
 
