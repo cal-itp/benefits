@@ -340,6 +340,8 @@ if sentry.SENTRY_CSP_REPORT_URI:
 
 CSP_SCRIPT_SRC = [
     "'self'",
+    "'unsafe-hashes'",
+    "'sha256-MhtPZXr7+LpJUY5qtMutB+qWfQtMaPccfe7QXtCcEYc='",  # hash of 'this.media='all'
     "https://cdn.amplitude.com/libs/",
     "https://cdn.jsdelivr.net/",
     "*.littlepay.com",
