@@ -5,11 +5,6 @@ import benefits.core.admin
 from benefits.core.admin.users import GOOGLE_USER_INFO_URL, is_staff_member, is_staff_or_superuser, pre_login_user
 
 
-@pytest.fixture
-def model_AdminUser():
-    return User.objects.create(email="user@calitp.org", first_name="", last_name="", username="")
-
-
 @pytest.mark.django_db
 def test_admin_registered(client):
     response = client.get("/admin", follow=True)
@@ -22,62 +17,56 @@ def test_admin_registered(client):
 
 
 @pytest.mark.django_db
-def test_is_staff_member_regular_user(model_AdminUser, settings):
-    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
-    assert not staff_group.user_set.contains(model_AdminUser)
-    assert not is_staff_member(model_AdminUser)
+def test_is_staff_member_regular_user(admin_user, staff_group):
+    assert not staff_group.user_set.contains(admin_user)
+    assert not is_staff_member(admin_user)
 
 
 @pytest.mark.django_db
-def test_is_staff_member_staff_user(model_AdminUser, settings):
-    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
-    staff_group.user_set.add(model_AdminUser)
-    assert staff_group.user_set.contains(model_AdminUser)
-    assert is_staff_member(model_AdminUser)
+def test_is_staff_member_staff_user(admin_user, staff_group):
+    staff_group.user_set.add(admin_user)
+
+    assert staff_group.user_set.contains(admin_user)
+    assert is_staff_member(admin_user)
 
 
 @pytest.mark.django_db
-def test_is_staff_member_superuser(model_AdminUser, settings):
-    model_AdminUser.is_superuser = True
-    model_AdminUser.save()
-    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
-    assert not staff_group.user_set.contains(model_AdminUser)
-    assert not is_staff_member(model_AdminUser)
+def test_is_staff_member_superuser(admin_user, staff_group):
+    admin_user.is_superuser = True
+
+    assert not staff_group.user_set.contains(admin_user)
+    assert not is_staff_member(admin_user)
 
 
 @pytest.mark.django_db
-def test_is_staff_or_superuser_regular_user(model_AdminUser, settings):
-    assert not model_AdminUser.is_superuser
+def test_is_staff_or_superuser_regular_user(admin_user, staff_group):
+    admin_user.is_superuser = False
 
-    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
-
-    assert not staff_group.user_set.contains(model_AdminUser)
-    assert not is_staff_or_superuser(model_AdminUser)
+    assert not staff_group.user_set.contains(admin_user)
+    assert not is_staff_or_superuser(admin_user)
 
 
 @pytest.mark.django_db
-def test_is_staff_or_superuser_staff_member(model_AdminUser, settings):
-    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
-    staff_group.user_set.add(model_AdminUser)
+def test_is_staff_or_superuser_staff_member(admin_user, staff_group):
+    admin_user.is_superuser = False
+    staff_group.user_set.add(admin_user)
 
-    assert not model_AdminUser.is_superuser
-    assert is_staff_or_superuser(model_AdminUser)
-
-
-@pytest.mark.django_db
-def test_is_staff_or_superuser_superuser(model_AdminUser):
-    model_AdminUser.is_superuser = True
-    model_AdminUser.save()
-
-    assert is_staff_or_superuser(model_AdminUser)
+    assert is_staff_or_superuser(admin_user)
 
 
 @pytest.mark.django_db
-def test_pre_login_user(mocker, model_AdminUser):
-    assert model_AdminUser.email == "user@calitp.org"
-    assert model_AdminUser.first_name == ""
-    assert model_AdminUser.last_name == ""
-    assert model_AdminUser.username == ""
+def test_is_staff_or_superuser_superuser(admin_user):
+    admin_user.is_superuser = True
+
+    assert is_staff_or_superuser(admin_user)
+
+
+@pytest.mark.django_db
+def test_pre_login_user(mocker, admin_user):
+    admin_user.email == "user@calitp.org"
+    admin_user.first_name == ""
+    admin_user.last_name == ""
+    admin_user.username == ""
 
     response_from_google = {
         "username": "admin@calitp.org",
@@ -91,45 +80,40 @@ def test_pre_login_user(mocker, model_AdminUser):
     mocked_response.json.return_value = response_from_google
     requests_spy = mocker.patch("benefits.core.admin.users.requests.get", return_value=mocked_response)
 
-    pre_login_user(model_AdminUser, mocked_request)
+    pre_login_user(admin_user, mocked_request)
 
     requests_spy.assert_called_once()
     assert GOOGLE_USER_INFO_URL in requests_spy.call_args.args
-    assert model_AdminUser.email == response_from_google["email"]
-    assert model_AdminUser.first_name == response_from_google["given_name"]
-    assert model_AdminUser.last_name == response_from_google["family_name"]
-    assert model_AdminUser.username == response_from_google["username"]
+    assert admin_user.email == response_from_google["email"]
+    assert admin_user.first_name == response_from_google["given_name"]
+    assert admin_user.last_name == response_from_google["family_name"]
+    assert admin_user.username == response_from_google["username"]
 
 
 @pytest.mark.django_db
-def test_pre_login_user_no_session_token(mocker, model_AdminUser):
+def test_pre_login_user_no_session_token(admin_user, mocker):
     mocked_request = mocker.Mock()
     mocked_request.session.get.return_value = None
     logger_spy = mocker.spy(benefits.core.admin.users, "logger")
 
-    pre_login_user(model_AdminUser, mocked_request)
+    pre_login_user(admin_user, mocked_request)
 
-    assert model_AdminUser.email == "user@calitp.org"
-    assert model_AdminUser.first_name == ""
-    assert model_AdminUser.last_name == ""
-    assert model_AdminUser.username == ""
     logger_spy.warning.assert_called_once()
 
 
 @pytest.mark.django_db
-def test_pre_login_user_add_staff_to_group(mocker, model_AdminUser, settings):
+def test_pre_login_user_add_staff_to_group(mocker, admin_user, settings, staff_group):
     mocked_request = mocker.Mock()
     mocked_request.session.get.return_value = None
 
-    settings.GOOGLE_SSO_STAFF_LIST = [model_AdminUser.email]
-    pre_login_user(model_AdminUser, mocked_request)
+    settings.GOOGLE_SSO_STAFF_LIST = [admin_user.email]
+    pre_login_user(admin_user, mocked_request)
 
-    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
-    assert model_AdminUser.groups.contains(staff_group)
+    assert admin_user.groups.contains(staff_group)
 
 
 @pytest.mark.django_db
-def test_pre_login_user_does_not_add_transit_staff_to_group(mocker, settings):
+def test_pre_login_user_does_not_add_transit_staff_to_group(mocker, settings, staff_group):
     mocked_request = mocker.Mock()
     mocked_request.session.get.return_value = None
 
@@ -141,7 +125,6 @@ def test_pre_login_user_does_not_add_transit_staff_to_group(mocker, settings):
     pre_login_user(agency_user, mocked_request)
 
     # assert that a transit agency user does not get added to the Cal-ITP user group
-    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
     assert staff_group.user_set.count() == 0
     assert agency_user.groups.count() == 0
 
