@@ -255,6 +255,9 @@ def test_EnrollmentFlow_clean_eligibility_api_verification(model_EnrollmentFlow_
 
     # reassign agency
     model_EnrollmentFlow_with_eligibility_api.transit_agency = model_TransitAgency
+    # and fields indicating eligibility API verification
+    model_EnrollmentFlow_with_eligibility_api.eligibility_api_url = "https://example.com"
+    model_EnrollmentFlow_with_eligibility_api.eligibility_form_class = "FormClass"
     with pytest.raises(ValidationError) as e:
         model_EnrollmentFlow_with_eligibility_api.clean()
 
@@ -265,8 +268,6 @@ def test_EnrollmentFlow_clean_eligibility_api_verification(model_EnrollmentFlow_
     assert "eligibility_api_jwe_encryption_alg" in error_dict
     assert "eligibility_api_jws_signing_alg" in error_dict
     assert "eligibility_api_public_key" in error_dict
-    assert "eligibility_api_url" in error_dict
-    assert "eligibility_form_class" in error_dict
 
 
 @pytest.mark.django_db
