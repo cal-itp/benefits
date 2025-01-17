@@ -79,6 +79,8 @@
     </script>
 
     {% if request.recaptcha %}
+      <script nonce="{{ request.csp_nonce }}" src="{{ request.recaptcha.script_api }}"></script>
+
       {% comment %}
         Adapted from https://stackoverflow.com/a/63290578/453168
       {% endcomment %}
