@@ -165,10 +165,10 @@ class EnrollmentFlow(models.Model):
 
     @property
     def agency_card_name(self):
-        if self.uses_claims_verification:
-            return ""
-        else:
+        if self.uses_api_verification:
             return f"{self.transit_agency.slug}-agency-card"
+        else:
+            return ""
 
     @property
     def eligibility_api_auth_key(self):
@@ -186,26 +186,26 @@ class EnrollmentFlow(models.Model):
     @property
     def selection_label_template(self):
         prefix = "eligibility/includes/selection-label"
-        if self.uses_claims_verification:
-            return self.selection_label_template_override or f"{prefix}--{self.system_name}.html"
-        else:
+        if self.uses_api_verification:
             return self.selection_label_template_override or f"{prefix}--{self.agency_card_name}.html"
+        else:
+            return self.selection_label_template_override or f"{prefix}--{self.system_name}.html"
 
     @property
     def eligibility_start_template(self):
         prefix = "eligibility/start"
-        if self.uses_claims_verification:
-            return self.eligibility_start_template_override or f"{prefix}--{self.system_name}.html"
-        else:
+        if self.uses_api_verification:
             return self.eligibility_start_template_override or f"{prefix}--{self.agency_card_name}.html"
+        else:
+            return self.eligibility_start_template_override or f"{prefix}--{self.system_name}.html"
 
     @property
     def eligibility_unverified_template(self):
         prefix = "eligibility/unverified"
-        if self.uses_claims_verification:
-            return self.eligibility_unverified_template_override or f"{prefix}.html"
-        else:
+        if self.uses_api_verification:
             return self.eligibility_unverified_template_override or f"{prefix}--{self.agency_card_name}.html"
+        else:
+            return self.eligibility_unverified_template_override or f"{prefix}.html"
 
     @property
     def uses_claims_verification(self):
@@ -242,18 +242,18 @@ class EnrollmentFlow(models.Model):
     @property
     def enrollment_index_template(self):
         prefix = "enrollment/index"
-        if self.uses_claims_verification:
-            return self.enrollment_index_template_override or f"{prefix}.html"
-        else:
+        if self.uses_api_verification:
             return self.enrollment_index_template_override or f"{prefix}--agency-card.html"
+        else:
+            return self.enrollment_index_template_override or f"{prefix}.html"
 
     @property
     def enrollment_success_template(self):
         prefix = "enrollment/success"
-        if self.uses_claims_verification:
-            return self.enrollment_success_template_override or f"{prefix}--{self.transit_agency.slug}.html"
-        else:
+        if self.uses_api_verification:
             return self.enrollment_success_template_override or f"{prefix}--{self.agency_card_name}.html"
+        else:
+            return self.enrollment_success_template_override or f"{prefix}--{self.transit_agency.slug}.html"
 
     def clean(self):
         field_errors = {}
@@ -316,7 +316,7 @@ class EnrollmentFlow(models.Model):
 
     def eligibility_form_instance(self, *args, **kwargs):
         """Return an instance of this flow's EligibilityForm, or None."""
-        if not bool(self.eligibility_form_class):
+        if not self.uses_api_verification:
             return None
 
         # inspired by https://stackoverflow.com/a/30941292
