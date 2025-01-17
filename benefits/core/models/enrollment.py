@@ -213,6 +213,11 @@ class EnrollmentFlow(models.Model):
         return self.claims_provider is not None and bool(self.claims_scope) and bool(self.claims_eligibility_claim)
 
     @property
+    def uses_api_verification(self):
+        """True if this flow verifies via the Eligibility API. False otherwise."""
+        return bool(self.eligibility_api_url) and bool(self.eligibility_form_class)
+
+    @property
     def claims_scheme(self):
         return self.claims_scheme_override or self.claims_provider.scheme
 
@@ -275,7 +280,7 @@ class EnrollmentFlow(models.Model):
                     claims_eligibility_claim=self.claims_eligibility_claim,
                 )
                 field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
-            else:
+            elif self.uses_api_verification:
                 message = "Required for Eligibility API verification."
                 needed = dict(
                     eligibility_api_auth_header=self.eligibility_api_auth_header,
@@ -284,8 +289,6 @@ class EnrollmentFlow(models.Model):
                     eligibility_api_jwe_encryption_alg=self.eligibility_api_jwe_encryption_alg,
                     eligibility_api_jws_signing_alg=self.eligibility_api_jws_signing_alg,
                     eligibility_api_public_key=self.eligibility_api_public_key,
-                    eligibility_api_url=self.eligibility_api_url,
-                    eligibility_form_class=self.eligibility_form_class,
                 )
                 field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
