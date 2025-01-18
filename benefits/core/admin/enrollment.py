@@ -12,9 +12,6 @@ from .users import is_staff_or_superuser
 class EnrollmentEventAdmin(admin.ModelAdmin):
     list_display = ("enrollment_datetime", "transit_agency", "enrollment_flow", "enrollment_method", "verified_by")
 
-    def get_readonly_fields(self, request: HttpRequest, obj=None):
-        return ["id"]
-
     def has_add_permission(self, request: HttpRequest, obj=None):
         if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.PROD:
             return False
