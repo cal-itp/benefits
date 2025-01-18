@@ -37,7 +37,7 @@ class TestEnrollmentEventAdmin:
     )
     def test_has_add_permission(
         self,
-        admin_request,
+        admin_user_request,
         event_admin_model,
         settings,
         runtime_env,
@@ -46,12 +46,7 @@ class TestEnrollmentEventAdmin:
     ):
         settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
 
-        if user_type == "regular":
-            request = admin_request(is_superuser=False, is_staff=False)
-        elif user_type == "staff":
-            request = admin_request(is_superuser=False, is_staff=True)
-        elif user_type == "super":
-            request = admin_request(is_superuser=True, is_staff=False)
+        request = admin_user_request(user_type)
 
         assert event_admin_model.has_add_permission(request) == expected
 
@@ -68,7 +63,7 @@ class TestEnrollmentEventAdmin:
     )
     def test_has_change_permission(
         self,
-        admin_request,
+        admin_user_request,
         event_admin_model,
         settings,
         runtime_env,
@@ -77,12 +72,7 @@ class TestEnrollmentEventAdmin:
     ):
         settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
 
-        if user_type == "regular":
-            request = admin_request(is_superuser=False, is_staff=False)
-        elif user_type == "staff":
-            request = admin_request(is_superuser=False, is_staff=True)
-        elif user_type == "super":
-            request = admin_request(is_superuser=True, is_staff=False)
+        request = admin_user_request(user_type)
 
         assert event_admin_model.has_change_permission(request) == expected
 
@@ -94,13 +84,8 @@ class TestEnrollmentEventAdmin:
             ("super", True),
         ],
     )
-    def test_has_view_permission(self, admin_request, event_admin_model, user_type, expected):
-        if user_type == "regular":
-            request = admin_request(is_superuser=False, is_staff=False)
-        elif user_type == "staff":
-            request = admin_request(is_superuser=False, is_staff=True)
-        elif user_type == "super":
-            request = admin_request(is_superuser=True, is_staff=False)
+    def test_has_view_permission(self, admin_user_request, event_admin_model, user_type, expected):
+        request = admin_user_request(user_type)
 
         assert event_admin_model.has_view_permission(request) == expected
 
@@ -141,13 +126,8 @@ class TestEnrollmentFlowAdmin:
             ("super", None),
         ],
     )
-    def test_get_exclude(self, admin_request, flow_admin_model, user_type, expected):
-        if user_type == "regular":
-            request = admin_request(is_superuser=False, is_staff=False)
-        if user_type == "staff":
-            request = admin_request(is_superuser=False, is_staff=True)
-        elif user_type == "super":
-            request = admin_request(is_superuser=True, is_staff=False)
+    def test_get_exclude(self, admin_user_request, flow_admin_model, user_type, expected):
+        request = admin_user_request(user_type)
 
         excluded = flow_admin_model.get_exclude(request)
 
@@ -195,13 +175,8 @@ class TestEnrollmentFlowAdmin:
             ("super", ()),
         ],
     )
-    def test_get_readonly_fields(self, admin_request, flow_admin_model, user_type, expected):
-        if user_type == "regular":
-            request = admin_request(is_superuser=False, is_staff=False)
-        if user_type == "staff":
-            request = admin_request(is_superuser=False, is_staff=True)
-        elif user_type == "super":
-            request = admin_request(is_superuser=True, is_staff=False)
+    def test_get_readonly_fields(self, admin_user_request, flow_admin_model, user_type, expected):
+        request = admin_user_request(user_type)
 
         readonly = flow_admin_model.get_readonly_fields(request)
 
@@ -220,7 +195,7 @@ class TestEnrollmentFlowAdmin:
     )
     def test_has_add_permission(
         self,
-        admin_request,
+        admin_user_request,
         flow_admin_model,
         settings,
         runtime_env,
@@ -229,11 +204,6 @@ class TestEnrollmentFlowAdmin:
     ):
         settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
 
-        if user_type == "regular":
-            request = admin_request(is_superuser=False, is_staff=False)
-        elif user_type == "staff":
-            request = admin_request(is_superuser=False, is_staff=True)
-        else:
-            request = admin_request(is_superuser=True, is_staff=False)
+        request = admin_user_request(user_type)
 
         assert flow_admin_model.has_add_permission(request) == expected

@@ -16,13 +16,8 @@ def admin_model():
     "user_type,expected",
     [("regular", ["remote_url", "text_secret_name"]), ("staff", ["remote_url", "text_secret_name"]), ("super", None)],
 )
-def test_exclude_fields(admin_request, admin_model, user_type, expected):
-    if user_type == "regular":
-        request = admin_request(is_superuser=False, is_staff=False)
-    if user_type == "staff":
-        request = admin_request(is_superuser=False, is_staff=True)
-    elif user_type == "super":
-        request = admin_request(is_superuser=True, is_staff=False)
+def test_exclude_fields(admin_user_request, admin_model, user_type, expected):
+    request = admin_user_request(user_type)
 
     exclude = admin_model.get_exclude(request)
 
@@ -37,13 +32,8 @@ def test_exclude_fields(admin_request, admin_model, user_type, expected):
     "user_type,expected",
     [("regular", ["label"]), ("staff", ["label"]), ("super", ())],
 )
-def test_readonly_fields(admin_request, admin_model, user_type, expected):
-    if user_type == "regular":
-        request = admin_request(is_superuser=False, is_staff=False)
-    if user_type == "staff":
-        request = admin_request(is_superuser=False, is_staff=True)
-    elif user_type == "super":
-        request = admin_request(is_superuser=True, is_staff=False)
+def test_readonly_fields(admin_user_request, admin_model, user_type, expected):
+    request = admin_user_request(user_type)
 
     readonly = admin_model.get_readonly_fields(request)
 
@@ -56,14 +46,11 @@ def test_readonly_fields(admin_request, admin_model, user_type, expected):
     [("regular", False), ("super", True)],
 )
 def test_has_add_permission(
-    admin_request,
+    admin_user_request,
     admin_model,
     user_type,
     expected,
 ):
-    if user_type == "regular":
-        request = admin_request(is_superuser=False, is_staff=False)
-    elif user_type == "super":
-        request = admin_request(is_superuser=True, is_staff=False)
+    request = admin_user_request(user_type)
 
     assert admin_model.has_add_permission(request) == expected
