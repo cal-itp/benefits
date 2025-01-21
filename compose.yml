@@ -9,6 +9,9 @@ services:
     env_file: .env
     ports:
       - "${DJANGO_LOCAL_PORT:-8000}:8000"
+    volumes:
+      - ./django.db:/home/calitp/app/data/django.db # the app container expects the database to already exist
+      - ./uploads/:/home/calitp/app/data/uploads
 
   dev:
     build:
