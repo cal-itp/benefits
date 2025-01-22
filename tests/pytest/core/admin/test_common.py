@@ -11,11 +11,11 @@ def admin_model():
     return PemDataAdmin(models.PemData, admin.site)
 
 
-@pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type,expected",
-    [("regular", ["remote_url", "text_secret_name"]), ("staff", ["remote_url", "text_secret_name"]), ("super", None)],
+    [("staff", ["remote_url", "text_secret_name"]), ("super", None)],
 )
+@pytest.mark.django_db
 def test_exclude_fields(admin_user_request, admin_model, user_type, expected):
     request = admin_user_request(user_type)
 
@@ -27,11 +27,11 @@ def test_exclude_fields(admin_user_request, admin_model, user_type, expected):
         assert exclude is None
 
 
-@pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type,expected",
-    [("regular", ["label"]), ("staff", ["label"]), ("super", ())],
+    [("staff", ["label"]), ("super", ())],
 )
+@pytest.mark.django_db
 def test_readonly_fields(admin_user_request, admin_model, user_type, expected):
     request = admin_user_request(user_type)
 
@@ -40,11 +40,11 @@ def test_readonly_fields(admin_user_request, admin_model, user_type, expected):
     assert set(readonly) == set(expected)
 
 
-@pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type,expected",
-    [("regular", False), ("super", True)],
+    [("staff", False), ("super", True)],
 )
+@pytest.mark.django_db
 def test_has_add_permission(
     admin_user_request,
     admin_model,

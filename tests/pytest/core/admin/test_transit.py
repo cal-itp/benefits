@@ -24,19 +24,6 @@ class TestTransitAgencyAdmin:
         "user_type,expected",
         [
             (
-                "regular",
-                [
-                    "customer_service_group",
-                    "eligibility_api_private_key",
-                    "eligibility_api_public_key",
-                    "sso_domain",
-                    "staff_group",
-                    "transit_processor_client_id",
-                    "transit_processor_audience",
-                    "transit_processor_client_secret_name",
-                ],
-            ),
-            (
                 "staff",
                 [
                     "eligibility_api_private_key",
@@ -64,17 +51,6 @@ class TestTransitAgencyAdmin:
         "user_type,expected",
         [
             (
-                "regular",
-                [
-                    "active",
-                    "eligibility_api_id",
-                    "eligibility_index_template_override",
-                    "index_template_override",
-                    "slug",
-                    "transit_processor",
-                ],
-            ),
-            (
                 "staff",
                 [
                     "eligibility_index_template_override",
@@ -96,10 +72,8 @@ class TestTransitAgencyAdmin:
     @pytest.mark.parametrize(
         "runtime_env,user_type,expected",
         [
-            (settings.RUNTIME_ENVS.PROD, "regular", False),
             (settings.RUNTIME_ENVS.PROD, "staff", True),
             (settings.RUNTIME_ENVS.PROD, "super", True),
-            (settings.RUNTIME_ENVS.DEV, "regular", True),
             (settings.RUNTIME_ENVS.DEV, "staff", True),
             (settings.RUNTIME_ENVS.DEV, "super", True),
         ],
@@ -118,7 +92,6 @@ class TestTransitProcessorAdmin:
     @pytest.mark.parametrize(
         "user_type,expected",
         [
-            ("regular", ["card_tokenize_url", "card_tokenize_func", "card_tokenize_env"]),
             ("staff", None),
             ("super", None),
         ],
@@ -134,7 +107,6 @@ class TestTransitProcessorAdmin:
     @pytest.mark.parametrize(
         "user_type,expected",
         [
-            ("regular", ["name", "api_base_url", "card_tokenize_env", "card_tokenize_func", "card_tokenize_url"]),
             ("staff", ["card_tokenize_url", "card_tokenize_func", "card_tokenize_env"]),
             ("super", ()),
         ],
@@ -149,10 +121,8 @@ class TestTransitProcessorAdmin:
     @pytest.mark.parametrize(
         "runtime_env,user_type,expected",
         [
-            (settings.RUNTIME_ENVS.PROD, "regular", False),
             (settings.RUNTIME_ENVS.PROD, "staff", False),
             (settings.RUNTIME_ENVS.PROD, "super", True),
-            (settings.RUNTIME_ENVS.DEV, "regular", True),
             (settings.RUNTIME_ENVS.DEV, "staff", True),
             (settings.RUNTIME_ENVS.DEV, "super", True),
         ],

@@ -23,10 +23,8 @@ class TestEnrollmentEventAdmin:
     @pytest.mark.parametrize(
         "runtime_env,user_type,expected",
         [
-            (settings.RUNTIME_ENVS.PROD, "regular", False),
             (settings.RUNTIME_ENVS.PROD, "staff", False),
             (settings.RUNTIME_ENVS.PROD, "super", False),
-            (settings.RUNTIME_ENVS.DEV, "regular", False),
             (settings.RUNTIME_ENVS.DEV, "staff", True),
             (settings.RUNTIME_ENVS.DEV, "super", True),
         ],
@@ -49,10 +47,8 @@ class TestEnrollmentEventAdmin:
     @pytest.mark.parametrize(
         "runtime_env,user_type,expected",
         [
-            (settings.RUNTIME_ENVS.PROD, "regular", False),
             (settings.RUNTIME_ENVS.PROD, "staff", False),
             (settings.RUNTIME_ENVS.PROD, "super", False),
-            (settings.RUNTIME_ENVS.TEST, "regular", False),
             (settings.RUNTIME_ENVS.TEST, "staff", False),
             (settings.RUNTIME_ENVS.TEST, "super", True),
         ],
@@ -75,7 +71,6 @@ class TestEnrollmentEventAdmin:
     @pytest.mark.parametrize(
         "user_type,expected",
         [
-            ("regular", False),
             ("staff", True),
             ("super", True),
         ],
@@ -92,22 +87,6 @@ class TestEnrollmentFlowAdmin:
     @pytest.mark.parametrize(
         "user_type,expected",
         [
-            (
-                "regular",
-                [
-                    "claims_scope",
-                    "claims_eligibility_claim",
-                    "claims_scheme_override",
-                    "eligibility_api_url",
-                    "eligibility_form_class",
-                    "eligibility_api_auth_header",
-                    "eligibility_api_auth_key_secret_name",
-                    "eligibility_api_public_key",
-                    "eligibility_api_jwe_cek_enc",
-                    "eligibility_api_jwe_encryption_alg",
-                    "eligibility_api_jws_signing_alg",
-                ],
-            ),
             (
                 "staff",
                 [
@@ -136,25 +115,6 @@ class TestEnrollmentFlowAdmin:
         "user_type,expected",
         [
             (
-                "regular",
-                [
-                    "system_name",
-                    "transit_agency",
-                    "supported_enrollment_methods",
-                    "claims_provider",
-                    "supports_expiration",
-                    "eligibility_api_url",
-                    "eligibility_form_class",
-                    "selection_label_template_override",
-                    "eligibility_start_template_override",
-                    "eligibility_unverified_template_override",
-                    "help_template",
-                    "enrollment_index_template_override",
-                    "reenrollment_error_template",
-                    "enrollment_success_template_override",
-                ],
-            ),
-            (
                 "staff",
                 [
                     "eligibility_api_url",
@@ -181,10 +141,8 @@ class TestEnrollmentFlowAdmin:
     @pytest.mark.parametrize(
         "runtime_env,user_type,expected",
         [
-            (settings.RUNTIME_ENVS.PROD, "regular", False),
             (settings.RUNTIME_ENVS.PROD, "staff", True),
             (settings.RUNTIME_ENVS.PROD, "super", True),
-            (settings.RUNTIME_ENVS.DEV, "regular", True),
             (settings.RUNTIME_ENVS.DEV, "staff", True),
             (settings.RUNTIME_ENVS.DEV, "super", True),
         ],

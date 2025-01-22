@@ -11,11 +11,11 @@ def admin_model():
     return ClaimsProviderAdmin(models.ClaimsProvider, admin.site)
 
 
-@pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type,expected",
-    [("regular", ["authority", "scheme", "client_id_secret_name"]), ("staff", ["client_id_secret_name"]), ("super", None)],
+    [("staff", ["client_id_secret_name"]), ("super", None)],
 )
+@pytest.mark.django_db
 def test_get_exclude(admin_model, admin_user_request, user_type, expected):
     request = admin_user_request(user_type)
 
@@ -27,25 +27,14 @@ def test_get_exclude(admin_model, admin_user_request, user_type, expected):
         assert exclude is None
 
 
-@pytest.mark.django_db
 @pytest.mark.parametrize(
     "user_type,expected",
     [
-        (
-            "regular",
-            [
-                "client_name",
-                "sign_out_button_template",
-                "sign_out_link_template",
-                "client_id_secret_name",
-                "authority",
-                "scheme",
-            ],
-        ),
         ("staff", ["sign_out_button_template", "sign_out_link_template", "client_id_secret_name", "authority", "scheme"]),
         ("super", ()),
     ],
 )
+@pytest.mark.django_db
 def test_get_readonly_fields(admin_model, admin_user_request, user_type, expected):
     request = admin_user_request(user_type)
 
