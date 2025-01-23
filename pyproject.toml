@@ -39,6 +39,7 @@ test = [
     "pytest",
     "pytest-django",
     "pytest-mock",
+    "pytest-playwright", # only for writing tests. run tests using playwright Docker Compose service
     "pytest-socket",
 ]
 
