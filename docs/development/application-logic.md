@@ -107,16 +107,16 @@ flowchart LR
     next>"`_Next phase_`"]
     style next stroke-width:2px
 
-    start -- "1a. Lands on index" --> pick_agency
-    start -- "1b. Lands on agency index" --> agency
+    start -- "1a: Lands on index" --> pick_agency
+    start -- "1b: Lands on agency index" --> agency
     %% invisible links help with diagram layout
     start ~~~ session
     start ~~~ agency
 
-    pick_agency -- 2. Chooses agency --> agency
-    agency -- 3. Chooses enrollment pathway --> eligibility
+    pick_agency -- "2: Chooses agency" --> agency
+    agency -- "3: Chooses enrollment pathway" --> eligibility
 
-    eligibility -- 4. continue --> next
+    eligibility -- "4: continue" --> next
 
     agency -. update -.-o session
     eligibility -. update -.-o session
@@ -165,17 +165,17 @@ flowchart LR
     verification_`"]
     style next stroke-width:2px
 
-    start -- 1. Clicks login button --> benefits
+    start -- "1: Clicks login button" --> benefits
     %% invisible links help with diagram layout
     start ~~~ session
 
-    benefits -- 2. OIDC authorize_redirect --> idg
+    benefits -- "2: OIDC authorize_redirect" --> idg
     benefits -. started sign in  -.-o analytics
 
-    idg <-. "3. PII exchange" .-> logingov
-    idg -- 4. OIDC token authorization --> claims
+    idg <-. "3: PII exchange" .-> logingov
+    idg -- "4: OIDC token authorization" --> claims
 
-    claims -- 5. continue --> next
+    claims -- "5: continue" --> next
     claims -. update .-o session
     claims -. finished sign in -.-o analytics
 ```
