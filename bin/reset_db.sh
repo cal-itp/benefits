@@ -18,7 +18,7 @@ if [[ $DB_RESET = true ]]; then
     # create a superuser account for backend admin access
     # set username, email, and password using environment variables
     # DJANGO_SUPERUSER_USERNAME, DJANGO_SUPERUSER_EMAIL, and DJANGO_SUPERUSER_PASSWORD
-    python manage.py createsuperuser --no-input
+    benefits createsuperuser --no-input
 else
     echo "DB_RESET is false, skipping"
 fi
@@ -27,7 +27,7 @@ valid_fixtures=$(echo "$DJANGO_DB_FIXTURES" | grep -e fixtures\.json$ || test $?
 
 if [[ -n "$valid_fixtures" ]]; then
     # load data fixtures
-    python manage.py loaddata "$DJANGO_DB_FIXTURES"
+    benefits loaddata "$DJANGO_DB_FIXTURES"
 else
     echo "No JSON fixtures to load"
 fi
