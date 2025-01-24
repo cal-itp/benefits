@@ -200,6 +200,7 @@ def test_TransitAgency_clean_dirty_flow(model_TransitAgency, model_EnrollmentFlo
     # missing scope and claims
     model_EnrollmentFlow.claims_provider = model_ClaimsProvider
     model_EnrollmentFlow.transit_agency = model_TransitAgency
+    model_EnrollmentFlow.save()
 
     # clean the agency, and expect an invalid EnrollmentFlow error
     with pytest.raises(ValidationError, match=f"Invalid EnrollmentFlow: {model_EnrollmentFlow.label}"):
