@@ -57,8 +57,9 @@
         });
 
         // on normal form submit, trigger the custom "submitting" event
-        $("#{{ form.id }}").on("submit", function(e) {
-          $(this).trigger("submitting");
+        form.addEventListener("submit", function(e) {
+          const event = new CustomEvent("submitting");
+          form.dispatchEvent(event);
         });
 
         {% if form.use_custom_validity %}
