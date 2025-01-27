@@ -108,22 +108,27 @@
           // form is client-side valid; taking over the remainder of processing
           $event.preventDefault();
 
+          // assign to a variable since `$event.currentTarget` will be null inside the `grecaptcha.execute` Promise.
+          // https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget
+          let currentTarget = $event.currentTarget;
+
           grecaptcha.ready(function() {
             grecaptcha.execute("{{ request.recaptcha.site_key }}", { action: "submit" }).then(function(token) {
                 // add the token to hidden form element
-                $event.currentTarget.form.elements["{{ request.recaptcha.data_field }}"].value = token;
+                currentTarget.form.elements["{{ request.recaptcha.data_field }}"].value = token;
                 // trigger the custom "submitting" event
                 // since calling .submit() does not trigger the "submit" event
                 // hence the normal handler won't apply
-                $($event.currentTarget.form).trigger("submitting");
+                const customEvent = new CustomEvent("submitting");
+                currentTarget.form.dispatchEvent(customEvent);
                 // submit the form to server
-                $event.currentTarget.form.submit($event.currentTarget);
+                currentTarget.form.submit(currentTarget);
             });
           });
         };
 
         // bind the above handler to button click
-        $("button[type=submit]", "#{{ form.id }}").on("click", recaptchaSubmit);
+        document.querySelector("#{{ form.id }} button[type=submit]").addEventListener("click", recaptchaSubmit);
       </script>
     {% endif %}
   </form>
