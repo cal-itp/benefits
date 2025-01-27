@@ -23,6 +23,16 @@
     <link href="{% static "css/styles.css" %}" rel="stylesheet">
     <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
 
+    <script nonce="{{ request.csp_nonce }}">
+      // critical JS - function for running a callback when document is ready.
+      function ready(callback) {
+        if (document.readyState != "loading") {
+          callback();
+        } else {
+          document.addEventListener("DOMContentLoaded", callback);
+        }
+      };
+    </script>
     <script nonce="{{ request.csp_nonce }}"
             src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
