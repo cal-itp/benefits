@@ -36,7 +36,7 @@
     {% endif %}
 
     <script nonce="{{ request.csp_nonce }}">
-      $(function() {
+      ready(function() {
         // listen for a custom "submitting" event on the form, for button interactions
         $("#{{ form.id }}").on("submitting", function(e) {
           if ("{{ form.submitting_value }}" !== "") {
