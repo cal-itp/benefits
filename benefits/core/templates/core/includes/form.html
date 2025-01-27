@@ -100,17 +100,17 @@
       <div class="pt-8">{% include "core/includes/recaptcha-text.html" %}</div>
 
       <script nonce="{{ request.csp_nonce }}">
-        function recaptchaSubmit($event) {
+        function recaptchaSubmit(event) {
           // checks the validity of the form. Return if invalid; HTML5 validation errors should display
-          if (!$event.currentTarget.form.checkValidity()) {
+          if (!event.currentTarget.form.checkValidity()) {
             return;
           }
           // form is client-side valid; taking over the remainder of processing
-          $event.preventDefault();
+          event.preventDefault();
 
-          // assign to a variable since `$event.currentTarget` will be null inside the `grecaptcha.execute` Promise.
+          // assign to a variable since `event.currentTarget` will be null inside the `grecaptcha.execute` Promise.
           // https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget
-          let currentTarget = $event.currentTarget;
+          let currentTarget = event.currentTarget;
 
           grecaptcha.ready(function() {
             grecaptcha.execute("{{ request.recaptcha.site_key }}", { action: "submit" }).then(function(token) {
