@@ -37,15 +37,22 @@
 
     <script nonce="{{ request.csp_nonce }}">
       ready(function() {
+        let form = document.querySelector("#{{ form.id }}");
+
+        let button = document.querySelector("#{{ form.id }} button[type=submit]");
+        if (!button) {
+          button = document.querySelector("button[type=submit][form={{ form.id }}]")
+        }
+
         // listen for a custom "submitting" event on the form, for button interactions
-        $("#{{ form.id }}").on("submitting", function(e) {
+        form.addEventListener("submitting", function(e) {
           if ("{{ form.submitting_value }}" !== "") {
-            $("button[type=submit]", this)
-              .removeClass("spinner-hidden")
-              .addClass("disabled")
-              .attr("role", "status")
-              .attr("disabled", "true")
-              .children().first().text("{{ form.submitting_value }}");
+            let buttonClasses = button.classList;
+            buttonClasses.remove("spinner-hidden");
+            buttonClasses.add("disabled");
+            button.setAttribute("role", "status");
+            button.setAttribute("disabled", "true");
+            button.children[0].textContent = "{{ form.submitting_value }}";
           }
         });
 
