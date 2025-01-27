@@ -63,23 +63,22 @@
         });
 
         {% if form.use_custom_validity %}
-        const validate = function(input_element) {
-          input_element.setCustomValidity(""); // clearing message sets input_element.validity.customError back to false
+        const validate = function(inputElement) {
+          inputElement.setCustomValidity(""); // clearing message sets inputElement.validity.customError back to false
 
-          const valid = input_element.checkValidity();
+          const valid = inputElement.checkValidity();
           if (!valid) {
-            input_element.setCustomValidity(input_element.dataset.customValidity);
+            inputElement.setCustomValidity(inputElement.dataset.customValidity);
           }
         }
 
-        $("button[type=submit]", "#{{ form.id }}").add("button[type=submit][form={{ form.id }}]").on("click", function(e) {
-            // revalidate all fields
-            $("[data-custom-validity]").each(function() {
-              let input_element = $(this)[0];
-              if (input_element) {
-                validate(input_element);
-              }
-            });
+        button.addEventListener("click", function(e) {
+          // revalidate all fields
+          document.querySelectorAll("[data-custom-validity]").forEach((element) => {
+            if (element) {
+              validate(element);
+            }
+          });
         });
 
         {% endif %}
