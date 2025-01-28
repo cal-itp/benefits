@@ -157,17 +157,17 @@
             async></script>
 
     <script nonce="{{ request.csp_nonce }}">
-      $(function() {
+      ready(function() {
         document.cookie = "testcookie"
         if (document.cookie.indexOf("testcookie") < 0) {
-          $(".nocookies").removeClass("d-none");
+          document.querySelector(".nocookies").classList.remove("d-none");
         }
         else {
           document.cookie = "testcookie; expires=Thu, 01-Jan-1970 00:00:01 GMT";
-          $(".nocookies").addClass("d-none");
+          document.querySelector(".nocookies").classList.add("d-none");
         }
 
-        $("a[href^='https'], a[href^='tel'], [href*='#']").on("click", function(e) {
+        document.querySelector("a[href^='https'], a[href^='tel'], [href*='#']").addEventListener("click", function(e) {
           amplitude.getInstance().logEvent('clicked link', {'href': e.target.href, 'path': window.location.pathname});
         });
       });
