@@ -40,6 +40,8 @@
     <button id="{{ cta_button }}" href="#{{ cta_button }}" class="btn btn-lg btn-primary" role="button">Enroll</button>
   </div>
 
+  {% include "enrollment/includes/jquery.html" %}
+
   <script nonce="{{ request.csp_nonce }}">
         var startedEvent = "started card tokenization", closedEvent = "finished card tokenization";
 

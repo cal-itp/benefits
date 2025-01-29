@@ -36,42 +36,49 @@
     {% endif %}
 
     <script nonce="{{ request.csp_nonce }}">
-      $(function() {
+      ready(function() {
+        let form = document.querySelector("#{{ form.id }}");
+
+        let button = document.querySelector("#{{ form.id }} button[type=submit]");
+        if (!button) {
+          button = document.querySelector("button[type=submit][form={{ form.id }}]")
+        }
+
         // listen for a custom "submitting" event on the form, for button interactions
-        $("#{{ form.id }}").on("submitting", function(e) {
+        form.addEventListener("submitting", function(e) {
           if ("{{ form.submitting_value }}" !== "") {
-            $("button[type=submit]", this)
-              .removeClass("spinner-hidden")
-              .addClass("disabled")
-              .attr("role", "status")
-              .attr("disabled", "true")
-              .children().first().text("{{ form.submitting_value }}");
+            let buttonClasses = button.classList;
+            buttonClasses.remove("spinner-hidden");
+            buttonClasses.add("disabled");
+            button.setAttribute("role", "status");
+            button.setAttribute("disabled", "true");
+            button.children[0].textContent = "{{ form.submitting_value }}";
           }
         });
 
         // on normal form submit, trigger the custom "submitting" event
-        $("#{{ form.id }}").on("submit", function(e) {
-          $(this).trigger("submitting");
+        form.addEventListener("submit", function(e) {
+          const event = new CustomEvent("submitting");
+          form.dispatchEvent(event);
         });
 
         {% if form.use_custom_validity %}
-        const validate = function(input_element) {
-          input_element.setCustomValidity(""); // clearing message sets input_element.validity.customError back to false
+        const validate = function(inputElement) {
+          inputElement.setCustomValidity(""); // clearing message sets inputElement.validity.customError back to false
 
-          const valid = input_element.checkValidity();
+          const valid = inputElement.checkValidity();
           if (!valid) {
-            input_element.setCustomValidity(input_element.dataset.customValidity);
+            inputElement.setCustomValidity(inputElement.dataset.customValidity);
           }
         }
 
-        $("button[type=submit]", "#{{ form.id }}").add("button[type=submit][form={{ form.id }}]").on("click", function(e) {
-            // revalidate all fields
-            $("[data-custom-validity]").each(function() {
-              let input_element = $(this)[0];
-              if (input_element) {
-                validate(input_element);
-              }
-            });
+        button.addEventListener("click", function(e) {
+          // revalidate all fields
+          document.querySelectorAll("[data-custom-validity]").forEach((element) => {
+            if (element) {
+              validate(element);
+            }
+          });
         });
 
         {% endif %}
@@ -93,30 +100,35 @@
       <div class="pt-8">{% include "core/includes/recaptcha-text.html" %}</div>
 
       <script nonce="{{ request.csp_nonce }}">
-        function recaptchaSubmit($event) {
+        function recaptchaSubmit(event) {
           // checks the validity of the form. Return if invalid; HTML5 validation errors should display
-          if (!$event.currentTarget.form.checkValidity()) {
+          if (!event.currentTarget.form.checkValidity()) {
             return;
           }
           // form is client-side valid; taking over the remainder of processing
-          $event.preventDefault();
+          event.preventDefault();
+
+          // assign to a variable since `event.currentTarget` will be null inside the `grecaptcha.execute` Promise.
+          // https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget
+          let currentTarget = event.currentTarget;
 
           grecaptcha.ready(function() {
             grecaptcha.execute("{{ request.recaptcha.site_key }}", { action: "submit" }).then(function(token) {
                 // add the token to hidden form element
-                $event.currentTarget.form.elements["{{ request.recaptcha.data_field }}"].value = token;
+                currentTarget.form.elements["{{ request.recaptcha.data_field }}"].value = token;
                 // trigger the custom "submitting" event
                 // since calling .submit() does not trigger the "submit" event
                 // hence the normal handler won't apply
-                $($event.currentTarget.form).trigger("submitting");
+                const customEvent = new CustomEvent("submitting");
+                currentTarget.form.dispatchEvent(customEvent);
                 // submit the form to server
-                $event.currentTarget.form.submit($event.currentTarget);
+                currentTarget.form.submit(currentTarget);
             });
           });
         };
 
         // bind the above handler to button click
-        $("button[type=submit]", "#{{ form.id }}").on("click", recaptchaSubmit);
+        document.querySelector("#{{ form.id }} button[type=submit]").addEventListener("click", recaptchaSubmit);
       </script>
     {% endif %}
   </form>
