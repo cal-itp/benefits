@@ -1,7 +1,7 @@
+from django.contrib import admin
 from django.urls import path
 
 from benefits.routes import routes
-from benefits.core.admin import admin
 from . import views
 
 

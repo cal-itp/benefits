@@ -65,11 +65,11 @@ class SampleVerificationForm(EligibilityVerificationForm):
 
 
 @pytest.fixture
-def model_EnrollmentFlow_with_form_class(mocker, model_EnrollmentFlow):
-    model_EnrollmentFlow.eligibility_form_class = f"{__name__}.SampleVerificationForm"
-    model_EnrollmentFlow.save()
-    mocker.patch("benefits.eligibility.views.session.flow", return_value=model_EnrollmentFlow)
-    return model_EnrollmentFlow
+def model_EnrollmentFlow_with_form_class(mocker, model_EnrollmentFlow_with_eligibility_api):
+    model_EnrollmentFlow_with_eligibility_api.eligibility_form_class = f"{__name__}.SampleVerificationForm"
+    model_EnrollmentFlow_with_eligibility_api.save()
+    mocker.patch("benefits.eligibility.views.session.flow", return_value=model_EnrollmentFlow_with_eligibility_api)
+    return model_EnrollmentFlow_with_eligibility_api
 
 
 @pytest.mark.django_db
