@@ -50,11 +50,18 @@ def add_transit_agency_staff_user_to_group(user, request):
 
 
 def is_staff_member(user):
+    """Determine if a user is a member of the staff group of Benefits
+
+    The staff group of Benefits is also called the 'Cal-ITP' group (defined in settings.STAFF_GROUP_NAME)
+    and it is not to be confused with Django's concept of 'staff' which simply means users that can log in to the admin.
+    """
+
     staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
     return staff_group.user_set.contains(user)
 
 
 def is_staff_member_or_superuser(user):
+    """Determine if a user is a member of the staff group of Benefits or if it is a superuser."""
     return user.is_superuser or is_staff_member(user)
 
 
