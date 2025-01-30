@@ -12,7 +12,7 @@ from .users import (
     add_transit_agency_staff_user_to_group,
     add_google_sso_userinfo,
     is_staff_member,
-    is_staff_or_superuser,
+    is_staff_member_or_superuser,
     pre_login_user,
 )
 
@@ -28,6 +28,6 @@ __all__ = [
     "add_transit_agency_staff_user_to_group",
     "add_google_sso_userinfo",
     "is_staff_member",
-    "is_staff_or_superuser",
+    "is_staff_member_or_superuser",
     "pre_login_user",
 ]

@@ -2,7 +2,7 @@ import pytest
 from django.contrib.auth.models import User, Group
 
 import benefits.core.admin
-from benefits.core.admin.users import GOOGLE_USER_INFO_URL, is_staff_member, is_staff_or_superuser, pre_login_user
+from benefits.core.admin.users import GOOGLE_USER_INFO_URL, is_staff_member, is_staff_member_or_superuser, pre_login_user
 
 
 @pytest.fixture
@@ -46,30 +46,30 @@ def test_is_staff_member_superuser(model_AdminUser, settings):
 
 
 @pytest.mark.django_db
-def test_is_staff_or_superuser_regular_user(model_AdminUser, settings):
+def test_is_staff_member_or_superuser_regular_user(model_AdminUser, settings):
     assert not model_AdminUser.is_superuser
 
     staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
 
     assert not staff_group.user_set.contains(model_AdminUser)
-    assert not is_staff_or_superuser(model_AdminUser)
+    assert not is_staff_member_or_superuser(model_AdminUser)
 
 
 @pytest.mark.django_db
-def test_is_staff_or_superuser_staff_member(model_AdminUser, settings):
+def test_is_staff_member_or_superuser_staff_member(model_AdminUser, settings):
     staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
     staff_group.user_set.add(model_AdminUser)
 
     assert not model_AdminUser.is_superuser
-    assert is_staff_or_superuser(model_AdminUser)
+    assert is_staff_member_or_superuser(model_AdminUser)
 
 
 @pytest.mark.django_db
-def test_is_staff_or_superuser_superuser(model_AdminUser):
+def test_is_staff_member_or_superuser_superuser(model_AdminUser):
     model_AdminUser.is_superuser = True
     model_AdminUser.save()
 
-    assert is_staff_or_superuser(model_AdminUser)
+    assert is_staff_member_or_superuser(model_AdminUser)
 
 
 @pytest.mark.django_db

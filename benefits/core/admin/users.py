@@ -54,7 +54,7 @@ def is_staff_member(user):
     return staff_group.user_set.contains(user)
 
 
-def is_staff_or_superuser(user):
+def is_staff_member_or_superuser(user):
     return user.is_superuser or is_staff_member(user)
 
 
