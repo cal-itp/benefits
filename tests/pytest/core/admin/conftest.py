@@ -13,14 +13,19 @@ def staff_group(settings):
 
 
 @pytest.fixture
-def admin_request(model_AdminUser, rf, staff_group):
-    def _admin_request(is_superuser=False, is_staff_member=False):
+def admin_user_request(model_AdminUser, rf, staff_group):
+    def _admin_user_request(user_type="staff"):
         request = rf.get("/")
         request.user = model_AdminUser
-        model_AdminUser.is_superuser = is_superuser
+
         model_AdminUser.is_staff = True  # a user can log in if and only if this is True
-        if is_staff_member:
+
+        if user_type == "staff":
+            model_AdminUser.is_superuser = False
             staff_group.user_set.add(model_AdminUser)
+        elif user_type == "super":
+            model_AdminUser.is_superuser = True
+
         return request
 
-    return _admin_request
+    return _admin_user_request
