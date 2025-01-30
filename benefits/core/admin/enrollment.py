@@ -5,7 +5,7 @@ from django.http import HttpRequest
 from adminsortable2.admin import SortableAdminMixin
 
 from benefits.core import models
-from .users import is_staff_member
+from .users import is_staff_member_or_superuser
 
 
 @admin.register(models.EnrollmentEvent)
@@ -18,7 +18,7 @@ class EnrollmentEventAdmin(admin.ModelAdmin):  # pragma: no cover
     def has_add_permission(self, request: HttpRequest, obj=None):
         if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.PROD:
             return False
-        elif request.user and (request.user.is_superuser or is_staff_member(request.user)):
+        elif request.user and is_staff_member_or_superuser(request.user):
             return True
         else:
             return False
@@ -34,13 +34,13 @@ class EnrollmentEventAdmin(admin.ModelAdmin):  # pragma: no cover
     def has_delete_permission(self, request: HttpRequest, obj=None):
         if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.PROD:
             return False
-        elif request.user and (request.user.is_superuser or is_staff_member(request.user)):
+        elif request.user and is_staff_member_or_superuser(request.user):
             return True
         else:
             return False
 
     def has_view_permission(self, request: HttpRequest, obj=None):
-        if request.user and (request.user.is_superuser or is_staff_member(request.user)):
+        if request.user and is_staff_member_or_superuser(request.user):
             return True
         else:
             return False
