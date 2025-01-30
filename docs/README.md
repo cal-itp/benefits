@@ -20,24 +20,23 @@ Benefits is open-source software that is designed, developed, and maintained by 
 The following California transit agencies have launched Cal-ITP Benefits for their riders, with the following enrollment pathway options:
 
 | Transit agency                                  | Initial agency launch | Older adults | Agency card | Veterans | Medicare cardholders | Low-income |
-| ----------------------------------------------- | --------------------- | -----------  | --------    | -------- | ---------------------| ---------- |
+| ----------------------------------------------- | --------------------- | ------------ | ----------- | -------- | -------------------- | ---------- |
 | **Monterey-Salinas Transit**                    | 12/2021               | ✅           | ✅          | ✅       | ✅                   | ―          |
-| **Santa Barbara Metropolitan Transit District** | 10/2023               | ✅           | ✅          | ―        | ―                    | ―          |
-| **Sacramento Regional Transit District**        | 10/2024               | ✅           | ―           | ✅       | ―                    | ―          |
-| **Nevada County Connects**                      | 01/2025 (target)      | In test      | ―           | ―        |  In test             | ―          |
-
+| **Santa Barbara Metropolitan Transit District** | 10/2023               | ✅           | ✅          | ―        | ―                    | ―          |
+| **Sacramento Regional Transit District**        | 10/2024               | ✅           | ―           | ✅       | ✅                   | ―          |
+| **Nevada County Connects**                      | 02/2025 (target)      | In test      | ―           | ―        | In test              | ―          |
 
 ## Supported enrollment pathways
 
 The Cal-ITP Benefits app supports the following enrollment pathways that use the corresponding eligibility verification methods:
 
-| Enrollment pathway                                                             | Eligibility verification                                                              | Status        | Launch                                                                |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- | ------------- | --------------------------------------------------------------------- |
-| [**Older adults**](/benefits/enrollment-pathways/older-adults)                 | [Login.gov ID Proofed](https://developers.login.gov/attributes/)                      | Live          | [08/2022](https://github.com/cal-itp/benefits/releases/tag/2022.08.1) |
-| [**Agency cards**](/benefits/enrollment-pathways/agency-cards)                 | [Eligibility API](https://docs.calitp.org/eligibility-api/specification/)             | Live          | [11/2022](https://github.com/cal-itp/benefits/releases/tag/2022.11.1) |
-| [**Veterans**](/benefits/enrollment-pathways/veterans)                         | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live          | [09/2023](https://github.com/cal-itp/benefits/releases/tag/2023.09.1) |
-| [**Low-income**](/benefits/enrollment-pathways/low-income)                     | CalFresh Confirm API                                                                  | Live          | [07/2024](https://github.com/cal-itp/benefits/releases/tag/2024.07.1) |
-| [**Medicare cardholders**](/benefits/enrollment-pathways/medicare-cardholders) | [Blue Button API](https://bluebutton.cms.gov/developers/#overview)                    | Live          | [09/2024](https://github.com/cal-itp/benefits/releases/tag/2024.09.3) |
+| Enrollment pathway                                                             | Eligibility verification                                                              | Status | Launch                                                                |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- | ------ | --------------------------------------------------------------------- |
+| [**Older adults**](/benefits/enrollment-pathways/older-adults)                 | [Login.gov ID Proofed](https://developers.login.gov/attributes/)                      | Live   | [08/2022](https://github.com/cal-itp/benefits/releases/tag/2022.08.1) |
+| [**Agency cards**](/benefits/enrollment-pathways/agency-cards)                 | [Eligibility API](https://docs.calitp.org/eligibility-api/specification/)             | Live   | [11/2022](https://github.com/cal-itp/benefits/releases/tag/2022.11.1) |
+| [**Veterans**](/benefits/enrollment-pathways/veterans)                         | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live   | [09/2023](https://github.com/cal-itp/benefits/releases/tag/2023.09.1) |
+| [**Low-income**](/benefits/enrollment-pathways/low-income)                     | CalFresh Confirm API                                                                  | Live   | [07/2024](https://github.com/cal-itp/benefits/releases/tag/2024.07.1) |
+| [**Medicare cardholders**](/benefits/enrollment-pathways/medicare-cardholders) | [Blue Button API](https://bluebutton.cms.gov/developers/#overview)                    | Live   | [09/2024](https://github.com/cal-itp/benefits/releases/tag/2024.09.3) |
 
 Read more about each [enrollment pathway](/benefits/enrollment-pathways/).
 
