@@ -53,16 +53,6 @@ class SortableEnrollmentFlowAdmin(SortableAdminMixin, admin.ModelAdmin):
     def get_exclude(self, request, obj=None):
         fields = []
 
-        if not is_staff_member_or_superuser(request.user):
-            fields.extend(
-                [
-                    "claims_scope",
-                    "claims_eligibility_claim",
-                    "claims_scheme_override",
-                    "eligibility_api_url",
-                    "eligibility_form_class",
-                ]
-            )
         if not request.user.is_superuser:
             fields.extend(
                 [
@@ -80,16 +70,6 @@ class SortableEnrollmentFlowAdmin(SortableAdminMixin, admin.ModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         fields = []
 
-        if not is_staff_member_or_superuser(request.user):
-            fields.extend(
-                [
-                    "system_name",
-                    "transit_agency",
-                    "supported_enrollment_methods",
-                    "claims_provider",
-                    "supports_expiration",
-                ]
-            )
         if not request.user.is_superuser:
             fields.extend(
                 [
