@@ -90,10 +90,12 @@ body:
       options:
         - label: Ensure the `main` branch and secrets are up to date
         - label: Ensure `test` secrets are up to date
+        - label: Make a local backup of the `test` database if the current release has any database migrations
         - label: Create an annotated release candidate tag on `main` (`git tag -a YYYY.0M.R-rcR`)
         - label: Push the annotated release candidate tag (`git push origin YYYY.0M.R-rcR`)
         - label: QA the app in test
         - label: Ensure `prod` secrets are up to date
+        - label: Make a local backup of the `prod` database if the current release has any database migrations
         - label: Create an annotated release tag on `main` (`git tag -a YYYY.0M.R`)
         - label: Push the annotated release tag (`git push origin YYYY.0M.R`)
         - label: Smoke Test the app in prod
