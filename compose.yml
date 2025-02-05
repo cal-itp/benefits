@@ -41,3 +41,12 @@ services:
       - "8000"
     volumes:
       - ./.devcontainer:/.devcontainer
+
+  playwright:
+    build:
+      context: .
+      dockerfile: tests/playwright/Dockerfile
+    image: benefits_client:playwright
+    volumes:
+      - ./tests/playwright:/playwright
+    command: ./run.sh
