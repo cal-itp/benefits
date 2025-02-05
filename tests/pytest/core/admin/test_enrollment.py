@@ -180,3 +180,25 @@ class TestEnrollmentFlowAdmin:
         form = form_class(request.POST)
         assert not form.errors
         assert form.is_valid()
+
+    @pytest.mark.parametrize("active", [True, False])
+    def test_EnrollmentFlowForm_staff_member_with_transit_agency(
+        self, admin_user_request, flow_admin_model, model_TransitAgency, active
+    ):
+        model_TransitAgency.active = active
+        model_TransitAgency.save()
+
+        request = admin_user_request()
+
+        # get the Form class that's used in the admin add view as the user would see it
+        form_class = flow_admin_model.get_form(request)
+
+        request.POST = dict(
+            system_name="testflow",
+            supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
+            transit_agency=model_TransitAgency.id,
+        )
+
+        form = form_class(request.POST)
+        assert form.errors
+        assert not form.is_valid()
