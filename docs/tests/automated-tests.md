@@ -23,3 +23,13 @@ The report files include a local `.gitignore` file, so the entire directory is h
 ### Latest coverage report
 
 We also make the latest (from `main`) coverage report available online here: [Coverage report](../coverage)
+
+## Playwright
+
+For testing the app flows from beginning to end, we use Playwright.
+
+To run all Playwright tests locally, open a terminal outside the devcontainer and run:
+
+```bash
+docker compose run --rm playwright
+```
