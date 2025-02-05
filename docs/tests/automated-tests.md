@@ -109,3 +109,21 @@ In `tests/playwright/pytest.ini`, add `--headed` to `addopts`, and run all tests
 ```bash
 docker compose run --rm playwright
 ```
+
+#### Use Playwright GUI tools
+
+Start a bash session inside the `playwright` container:
+
+```bash
+docker compose run --rm playwright /bin/bash
+```
+
+From here, you can use the `playwright` CLI and any of the GUI tools it provides. Run `playwright --help` to see different commands you can run.
+
+For example, to launch a Chrome window with a Playwright Inspector attached to it, run:
+
+```bash
+playwright cr
+```
+
+![Screenshot showing a Chrome window with Playwright Inspector attached to it](img/playwright-inspector.png)
