@@ -201,5 +201,13 @@ class TestEnrollmentFlowAdmin:
         )
 
         form = form_class(request.POST)
-        assert form.errors
+
+        errors = form.errors
+        assert len(errors) == 1
+
+        error = list(errors.values())[0][0]
+        assert (
+            error
+            == "Must configure either claims verification or Eligibility API verification before adding to a transit agency."
+        )
         assert not form.is_valid()
