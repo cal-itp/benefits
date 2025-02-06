@@ -90,16 +90,16 @@ class EnrollmentFlowForm(forms.ModelForm):
             eligibility_form_class = self.get(cleaned_data, "eligibility_form_class")
 
             if cleaned_data.get("claims_provider"):
-                message = "Required for claims verification."
+                message = "Required for claims verification"
                 needed = dict(
                     claims_scope=cleaned_data.get("claims_scope"),
                     claims_eligibility_claim=cleaned_data.get("claims_eligibility_claim"),
                 )
                 for k, v in needed.items():
                     if self.has_field(k) and not v:
-                        field_errors.update({k: ValidationError(message)})
+                        field_errors.update({k: ValidationError(f"{message}.")})
                     elif not v:
-                        non_field_errors.append(ValidationError(message))
+                        non_field_errors.append(ValidationError(f"{message}: {k}"))
             elif eligibility_api_url and eligibility_form_class:
                 message = "Required for Eligibility API verification."
                 needed = dict(
@@ -112,9 +112,9 @@ class EnrollmentFlowForm(forms.ModelForm):
                 )
                 for k, v in needed.items():
                     if self.has_field(k) and not v:
-                        field_errors.update({k: ValidationError(message)})
+                        field_errors.update({k: ValidationError(f"{message}.")})
                     elif not v:
-                        non_field_errors.append(ValidationError(message))
+                        non_field_errors.append(ValidationError(f"{message}: {k}"))
             else:
                 message = (
                     "Must configure either claims verification or Eligibility API verification before"
