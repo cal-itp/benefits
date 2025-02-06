@@ -256,42 +256,9 @@ class EnrollmentFlow(models.Model):
             return self.enrollment_success_template_override or f"{prefix}--{self.transit_agency.slug}.html"
 
     def clean(self):
-        field_errors = {}
         template_errors = []
 
-        if self.supports_expiration:
-            expiration_days = self.expiration_days
-            expiration_reenrollment_days = self.expiration_reenrollment_days
-            reenrollment_error_template = self.reenrollment_error_template
-
-            message = "When support_expiration is True, this value must be greater than 0."
-            if expiration_days is None or expiration_days <= 0:
-                field_errors.update(expiration_days=ValidationError(message))
-            if expiration_reenrollment_days is None or expiration_reenrollment_days <= 0:
-                field_errors.update(expiration_reenrollment_days=ValidationError(message))
-            if not reenrollment_error_template:
-                field_errors.update(reenrollment_error_template=ValidationError("Required when supports expiration is True."))
-
         if self.transit_agency:
-            if self.claims_provider:
-                message = "Required for claims verification."
-                needed = dict(
-                    claims_scope=self.claims_scope,
-                    claims_eligibility_claim=self.claims_eligibility_claim,
-                )
-                field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
-            elif self.uses_api_verification:
-                message = "Required for Eligibility API verification."
-                needed = dict(
-                    eligibility_api_auth_header=self.eligibility_api_auth_header,
-                    eligibility_api_auth_key_secret_name=self.eligibility_api_auth_key_secret_name,
-                    eligibility_api_jwe_cek_enc=self.eligibility_api_jwe_cek_enc,
-                    eligibility_api_jwe_encryption_alg=self.eligibility_api_jwe_encryption_alg,
-                    eligibility_api_jws_signing_alg=self.eligibility_api_jws_signing_alg,
-                    eligibility_api_public_key=self.eligibility_api_public_key,
-                )
-                field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
-
             templates = [
                 self.selection_label_template,
                 self.eligibility_start_template,
@@ -309,8 +276,6 @@ class EnrollmentFlow(models.Model):
                 if not template_path(t):
                     template_errors.append(ValidationError(f"Template not found: {t}"))
 
-        if field_errors:
-            raise ValidationError(field_errors)
         if template_errors:
             raise ValidationError(template_errors)
 
