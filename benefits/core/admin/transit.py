@@ -51,19 +51,13 @@ class TransitAgencyAdmin(admin.ModelAdmin):
 @admin.register(models.TransitProcessor)
 class TransitProcessorAdmin(admin.ModelAdmin):
 
-    def get_readonly_fields(self, request, obj=None):
+    def get_exclude(self, request, obj=None):
         fields = []
 
         if not request.user.is_superuser:
-            fields.extend(
-                [
-                    "card_tokenize_url",
-                    "card_tokenize_func",
-                    "card_tokenize_env",
-                ]
-            )
+            fields.extend(["api_base_url", "card_tokenize_url", "card_tokenize_func", "card_tokenize_env"])
 
-        return fields or super().get_readonly_fields(request, obj)
+        return fields or super().get_exclude(request, obj)
 
     def has_add_permission(self, request):
         if settings.RUNTIME_ENVIRONMENT() != settings.RUNTIME_ENVS.PROD:

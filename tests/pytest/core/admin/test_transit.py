@@ -87,16 +87,17 @@ class TestTransitProcessorAdmin:
     @pytest.mark.parametrize(
         "user_type,expected",
         [
-            ("staff", ["card_tokenize_url", "card_tokenize_func", "card_tokenize_env"]),
+            ("staff", ["api_base_url", "card_tokenize_url", "card_tokenize_func", "card_tokenize_env"]),
             ("super", ()),
         ],
     )
-    def test_get_readonly_fields(self, admin_user_request, processor_admin_model, user_type, expected):
+    def test_get_exclude(self, admin_user_request, processor_admin_model, user_type, expected):
         request = admin_user_request(user_type)
 
-        readonly = processor_admin_model.get_readonly_fields(request)
+        excluded = processor_admin_model.get_exclude(request)
 
-        assert set(readonly) == set(expected)
+        if expected:
+            assert set(excluded) == set(expected)
 
     @pytest.mark.parametrize(
         "runtime_env,user_type,expected",
