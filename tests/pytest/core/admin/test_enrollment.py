@@ -165,3 +165,18 @@ class TestEnrollmentFlowAdmin:
         request = admin_user_request(user_type)
 
         assert flow_admin_model.has_add_permission(request) == expected
+
+    def test_EnrollmentFlowForm_staff_member_no_transit_agency(self, admin_user_request, flow_admin_model):
+        request = admin_user_request()
+
+        # get the Form class that's used in the admin add view as the user would see it
+        form_class = flow_admin_model.get_form(request)
+
+        request.POST = dict(
+            system_name="testflow",
+            supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
+        )
+
+        form = form_class(request.POST)
+        assert not form.errors
+        assert form.is_valid()
