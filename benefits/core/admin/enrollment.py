@@ -49,6 +49,18 @@ class EnrollmentEventAdmin(admin.ModelAdmin):
 
 
 class EnrollmentFlowForm(forms.ModelForm):
+    def has_field(self, field_name):
+        return self.fields.get(field_name) is not None
+
+    def get(self, cleaned_data, field_name):
+        """
+        If the field is present on the form, simply get the value from the cleaned_data.
+
+        If the field is not present on the form, that means the user doesn't have access to the field,
+        so get the value from the form's instance of the object.
+        """
+        return cleaned_data.get(field_name) if self.has_field(field_name) else getattr(self.instance, field_name)
+
     def clean(self):
         cleaned_data = super().clean()
 
@@ -73,14 +85,22 @@ class EnrollmentFlowForm(forms.ModelForm):
         transit_agency = cleaned_data.get("transit_agency")
 
         if transit_agency:
+            # these fields might not be on the form, so use helper method to correctly get the value
+            eligibility_api_url = self.get(cleaned_data, "eligibility_api_url")
+            eligibility_form_class = self.get(cleaned_data, "eligibility_form_class")
+
             if cleaned_data.get("claims_provider"):
                 message = "Required for claims verification."
                 needed = dict(
                     claims_scope=cleaned_data.get("claims_scope"),
                     claims_eligibility_claim=cleaned_data.get("claims_eligibility_claim"),
                 )
-                field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
-            elif cleaned_data.get("eligibility_api_url") and cleaned_data.get("eligibility_form_class"):
+                for k, v in needed.items():
+                    if self.has_field(k) and not v:
+                        field_errors.update({k: ValidationError(message)})
+                    elif not v:
+                        non_field_errors.append(ValidationError(message))
+            elif eligibility_api_url and eligibility_form_class:
                 message = "Required for Eligibility API verification."
                 needed = dict(
                     eligibility_api_auth_header=cleaned_data.get("eligibility_api_auth_header"),
@@ -90,7 +110,17 @@ class EnrollmentFlowForm(forms.ModelForm):
                     eligibility_api_jws_signing_alg=cleaned_data.get("eligibility_api_jws_signing_alg"),
                     eligibility_api_public_key=cleaned_data.get("eligibility_api_public_key"),
                 )
-                field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
+                for k, v in needed.items():
+                    if self.has_field(k) and not v:
+                        field_errors.update({k: ValidationError(message)})
+                    elif not v:
+                        non_field_errors.append(ValidationError(message))
+            else:
+                message = (
+                    "Must configure either claims verification or Eligibility API verification before"
+                    + " adding to a transit agency."
+                )
+                non_field_errors.append(ValidationError(message))
 
         if field_errors:
             raise ValidationError(field_errors)
