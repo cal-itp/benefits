@@ -10,7 +10,7 @@ maintainers = [
   { name = "Compiler LLC", email = "dev@compiler.la" }
 ]
 dependencies = [
-    "Authlib==1.4.0",
+    "Authlib==1.4.1",
     "azure-keyvault-secrets==4.9.0",
     "azure-identity==1.19.0",
     "Django==5.1.5",
