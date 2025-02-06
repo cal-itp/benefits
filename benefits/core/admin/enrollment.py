@@ -103,12 +103,12 @@ class EnrollmentFlowForm(forms.ModelForm):
             elif eligibility_api_url and eligibility_form_class:
                 message = "Required for Eligibility API verification."
                 needed = dict(
-                    eligibility_api_auth_header=cleaned_data.get("eligibility_api_auth_header"),
-                    eligibility_api_auth_key_secret_name=cleaned_data.get("eligibility_api_auth_key_secret_name"),
-                    eligibility_api_jwe_cek_enc=cleaned_data.get("eligibility_api_jwe_cek_enc"),
-                    eligibility_api_jwe_encryption_alg=cleaned_data.get("eligibility_api_jwe_encryption_alg"),
-                    eligibility_api_jws_signing_alg=cleaned_data.get("eligibility_api_jws_signing_alg"),
-                    eligibility_api_public_key=cleaned_data.get("eligibility_api_public_key"),
+                    eligibility_api_auth_header=self.get(cleaned_data, "eligibility_api_auth_header"),
+                    eligibility_api_auth_key_secret_name=self.get(cleaned_data, "eligibility_api_auth_key_secret_name"),
+                    eligibility_api_jwe_cek_enc=self.get(cleaned_data, "eligibility_api_jwe_cek_enc"),
+                    eligibility_api_jwe_encryption_alg=self.get(cleaned_data, "eligibility_api_jwe_encryption_alg"),
+                    eligibility_api_jws_signing_alg=self.get(cleaned_data, "eligibility_api_jws_signing_alg"),
+                    eligibility_api_public_key=self.get(cleaned_data, "eligibility_api_public_key"),
                 )
                 for k, v in needed.items():
                     if self.has_field(k) and not v:
