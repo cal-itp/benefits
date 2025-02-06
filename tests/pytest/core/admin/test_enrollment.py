@@ -186,6 +186,7 @@ class TestEnrollmentFlowAdmin:
         self, admin_user_request, flow_admin_model, model_TransitAgency, active
     ):
         model_TransitAgency.active = active
+        model_TransitAgency.slug = "mst"  # use value that will map to existing templates
         model_TransitAgency.save()
 
         request = admin_user_request()
@@ -194,7 +195,7 @@ class TestEnrollmentFlowAdmin:
         form_class = flow_admin_model.get_form(request)
 
         request.POST = dict(
-            system_name="testflow",
+            system_name="senior",  # use value that will map to existing templates
             supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
             transit_agency=model_TransitAgency.id,
         )
