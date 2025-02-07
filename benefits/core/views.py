@@ -35,7 +35,7 @@ def agency_index(request, agency: models.TransitAgency):
     session.reset(request)
     session.update(request, agency=agency, origin=agency.index_url)
 
-    return TemplateResponse(request, "core/index--agency-base.html", agency.index_context)
+    return TemplateResponse(request, "core/index--agency.html", agency.index_context)
 
 
 @pageview_decorator
