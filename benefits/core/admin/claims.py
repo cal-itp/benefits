@@ -2,7 +2,6 @@ from django.conf import settings
 from django.contrib import admin
 
 from benefits.core import models
-from .users import is_staff_member_or_superuser
 
 
 @admin.register(models.ClaimsProvider)
@@ -33,7 +32,7 @@ class ClaimsProviderAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         if settings.RUNTIME_ENVIRONMENT() != settings.RUNTIME_ENVS.PROD:
             return True
-        elif request.user and is_staff_member_or_superuser(request.user):
+        elif request.user and request.user.is_superuser:
             return True
         else:
             return False

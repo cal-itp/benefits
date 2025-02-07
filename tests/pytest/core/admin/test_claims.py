@@ -48,7 +48,7 @@ def test_get_readonly_fields(admin_model, admin_user_request, user_type, expecte
 @pytest.mark.parametrize(
     "runtime_env,user_type,expected",
     [
-        (settings.RUNTIME_ENVS.PROD, "staff", True),
+        (settings.RUNTIME_ENVS.PROD, "staff", False),
         (settings.RUNTIME_ENVS.PROD, "super", True),
         (settings.RUNTIME_ENVS.DEV, "staff", True),
         (settings.RUNTIME_ENVS.DEV, "super", True),
