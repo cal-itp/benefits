@@ -5,6 +5,10 @@
   {% translate "Get started" %}
 {% endblock title %}
 
+{% block headline %}
+  {% translate headline %}
+{% endblock headline %}
+
 {% block call-to-action %}
   <a href="{% url routes.ELIGIBILITY_INDEX %}" class="btn btn-lg btn-primary">{% translate "Get Started" %}</a>
 {% endblock call-to-action %}
