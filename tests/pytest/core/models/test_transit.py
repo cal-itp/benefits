@@ -34,14 +34,11 @@ def test_TransitAgency_str(model_TransitAgency):
 
 @pytest.mark.django_db
 def test_TransitAgency_template_overrides(model_TransitAgency):
-    assert model_TransitAgency.index_template == model_TransitAgency.index_template_override
     assert model_TransitAgency.eligibility_index_template == model_TransitAgency.eligibility_index_template_override
 
-    model_TransitAgency.index_template_override = ""
     model_TransitAgency.eligibility_index_template_override = ""
     model_TransitAgency.save()
 
-    assert model_TransitAgency.index_template == f"core/index--{model_TransitAgency.slug}.html"
     assert model_TransitAgency.eligibility_index_template == f"eligibility/index--{model_TransitAgency.slug}.html"
 
 
@@ -182,7 +179,7 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("template_attribute", ["index_template_override", "eligibility_index_template_override"])
+@pytest.mark.parametrize("template_attribute", ["eligibility_index_template_override"])
 def test_TransitAgency_clean_templates(model_TransitAgency_inactive, template_attribute):
     setattr(model_TransitAgency_inactive, template_attribute, "does/not/exist.html")
     # agency is inactive, OK to have missing template

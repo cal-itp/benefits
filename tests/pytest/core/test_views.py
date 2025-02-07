@@ -70,7 +70,7 @@ def test_agency_index_single_flow(mocker, model_TransitAgency, client, session_r
     mocked_session_update.assert_called_once()
 
     assert response.status_code == 200
-    assert response.template_name == model_TransitAgency.index_template
+    assert response.template_name == "core/index--agency.html"
 
 
 @pytest.mark.django_db
@@ -91,7 +91,7 @@ def test_agency_index_multiple_flow(
     session_reset_spy.assert_called_once()
     mocked_session_update.assert_called_once()
     assert response.status_code == 200
-    assert response.template_name == model_TransitAgency.index_template
+    assert response.template_name == "core/index--agency.html"
 
 
 @pytest.mark.django_db
