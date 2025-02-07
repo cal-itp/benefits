@@ -73,6 +73,7 @@ class TransitAgency(models.Model):
         verbose_name="Index copy",
         help_text="The copy to use on this transit agency's index page.",
         blank=True,
+        choices=context.Agency,
         default="",
     )
     eligibility_index_template_override = models.TextField(
@@ -163,7 +164,8 @@ class TransitAgency(models.Model):
 
     @property
     def index_context(self):
-        return context.index_context[self.index_context_key].dict()
+        key = context.Agency(self.index_context_key)
+        return context.index_context[key].dict()
 
     @property
     def index_url(self):
