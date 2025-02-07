@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
             name="index_context_key",
             field=models.TextField(
                 blank=True,
-                choices=[("cst", "Cst"), ("mst", "Mst"), ("nevco", "Nevco"), ("sacrt", "Sacrt"), ("sbmtd", "Sbmtd")],
+                choices=[("cst", "CST"), ("mst", "MST"), ("nevco", "NevCo"), ("sacrt", "SacRT"), ("sbmtd", "SBMTD")],
                 default="",
                 help_text="The copy to use on this transit agency's index page.",
                 verbose_name="Index copy",

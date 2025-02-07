@@ -13,11 +13,11 @@ class AgencyIndex:
 
 
 class Agency(models.TextChoices):
-    CST = "cst"
-    MST = "mst"
-    NEVCO = "nevco"
-    SACRT = "sacrt"
-    SBMTD = "sbmtd"
+    CST = "cst", "CST"
+    MST = "mst", "MST"
+    NEVCO = "nevco", "NevCo"
+    SACRT = "sacrt", "SacRT"
+    SBMTD = "sbmtd", "SBMTD"
 
 
 index_context = {
