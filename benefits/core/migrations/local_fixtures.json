@@ -194,6 +194,24 @@
     }
   },
   {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$UOTPdUZcVa1vrGNjw7BEv5$91er7Bp+yGI49FDS6DdWI5MutLwEegEMRHgIOZCfrYs=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "calitp-user",
+      "first_name": "CalITP",
+      "last_name": "User",
+      "email": "user@calitp.org",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-09-17T18:54:46Z",
+      "groups": [1],
+      "user_permissions": []
+    }
+  },
+  {
     "model": "core.enrollmentevent",
     "pk": "49328a98-f829-4009-a16a-d71ece9e51e3",
     "fields": {
