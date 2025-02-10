@@ -5,6 +5,7 @@
   "service": "dev",
   "runServices": ["dev", "docs", "server"],
   "forwardPorts": ["docs:8001", "server:8000"],
+  "otherPortsAttributes": { "onAutoForward": "ignore" },
   "workspaceFolder": "/calitp/app",
   "postStartCommand": ["/bin/bash", "bin/reset_db.sh"],
   "postAttachCommand": ["/bin/bash", ".devcontainer/postAttach.sh"],
