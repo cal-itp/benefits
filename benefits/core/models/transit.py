@@ -55,7 +55,8 @@ class TransitAgency(models.Model):
     id = models.AutoField(primary_key=True)
     active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
     slug = models.SlugField(
-        choices=context.Agency, help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}"
+        choices=context.AgencySlug,
+        help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}",
     )
     short_name = models.TextField(
         default="", blank=True, help_text="The user-facing short name for this agency. Often an uppercase acronym."
@@ -159,7 +160,7 @@ class TransitAgency(models.Model):
 
     @property
     def index_context(self):
-        key = context.Agency(self.slug)
+        key = context.AgencySlug(self.slug)
         return context.index_context[key].dict()
 
     @property
