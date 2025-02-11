@@ -2,6 +2,7 @@ import pytest
 
 from django.contrib import admin
 from django.conf import settings
+from django.forms import forms
 
 from benefits.core import models
 from benefits.core.admin.enrollment import EnrollmentEventAdmin, SortableEnrollmentFlowAdmin
@@ -294,3 +295,45 @@ class TestEnrollmentFlowAdmin:
         assert "eligibility_api_jwe_encryption_alg" in error_dict
         assert "eligibility_api_jws_signing_alg" in error_dict
         assert "eligibility_api_public_key" in error_dict
+
+    def test_EnrollmentFlowForm_clean_supports_expiration(
+        self, admin_user_request, flow_admin_model, model_TransitAgency, model_ClaimsProvider
+    ):
+        model_TransitAgency.slug = "cst"  # use value that will map to existing templates
+        model_TransitAgency.save()
+
+        request = admin_user_request("super")
+
+        request.POST = dict(
+            system_name="senior",  # use value that will map to existing templates
+            supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
+            transit_agency=model_TransitAgency.id,
+            supports_expiration=True,
+            expiration_days=365,
+            expiration_reenrollment_days=14,
+        )
+
+        # fake a valid claims configuration
+        request.POST.update(dict(claims_provider=model_ClaimsProvider.id, claims_scope="scope", claims_claim="claim"))
+
+        # but an invalid reenrollment error template
+        request.POST.update(dict(reenrollment_error_template="does/not/exist.html"))
+
+        form_class = flow_admin_model.get_form(request)
+        form = form_class(request.POST)
+
+        # assert there is a template error
+        assert not form.is_valid()
+        non_field_errors = form.errors[forms.NON_FIELD_ERRORS]
+        assert len(non_field_errors) == 1
+        assert "Template not found" in non_field_errors[0]
+
+        # assert that field errors are added if supports_expiration is True but expiration fields are not set
+        request.POST.update(dict(expiration_days=0, expiration_reenrollment_days=0, reenrollment_error_template=""))
+        form = form_class(request.POST)
+
+        assert not form.is_valid()
+        error_dict = form.errors
+        assert "expiration_days" in error_dict
+        assert "expiration_reenrollment_days" in error_dict
+        assert "reenrollment_error_template" in error_dict
