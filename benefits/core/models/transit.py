@@ -54,7 +54,9 @@ class TransitAgency(models.Model):
 
     id = models.AutoField(primary_key=True)
     active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
-    slug = models.SlugField(help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}")
+    slug = models.SlugField(
+        choices=context.Agency, help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}"
+    )
     short_name = models.TextField(
         default="", blank=True, help_text="The user-facing short name for this agency. Often an uppercase acronym."
     )
@@ -69,13 +71,6 @@ class TransitAgency(models.Model):
         help_text="URL of a website/page with more information about the agency's discounts",
     )
     phone = models.TextField(default="", blank=True, help_text="Agency customer support phone number")
-    index_context_key = models.TextField(
-        verbose_name="Index copy",
-        help_text="The copy to use on this transit agency's index page.",
-        blank=True,
-        choices=context.Agency,
-        default="",
-    )
     eligibility_index_template_override = models.TextField(
         help_text="Override the default template used for this agency's eligibility landing page",
         blank=True,
@@ -164,7 +159,7 @@ class TransitAgency(models.Model):
 
     @property
     def index_context(self):
-        key = context.Agency(self.index_context_key)
+        key = context.Agency(self.slug)
         return context.index_context[key].dict()
 
     @property
@@ -219,7 +214,6 @@ class TransitAgency(models.Model):
                 info_url=self.info_url,
                 logo_large=self.logo_large,
                 logo_small=self.logo_small,
-                index_context_key=self.index_context_key,
             )
             if self.transit_processor:
                 needed.update(

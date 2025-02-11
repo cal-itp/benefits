@@ -136,12 +136,12 @@ def test_TransitAgency_for_user_in_group_not_linked_to_any_agency():
 
 @pytest.mark.django_db
 def test_agency_logo_small(model_TransitAgency):
-    assert agency_logo_small(model_TransitAgency, "local_filename.png") == "agencies/test-sm.png"
+    assert agency_logo_small(model_TransitAgency, "local_filename.png") == "agencies/cst-sm.png"
 
 
 @pytest.mark.django_db
 def test_agency_logo_large(model_TransitAgency):
-    assert agency_logo_large(model_TransitAgency, "local_filename.png") == "agencies/test-lg.png"
+    assert agency_logo_large(model_TransitAgency, "local_filename.png") == "agencies/cst-lg.png"
 
 
 @pytest.mark.django_db
@@ -157,7 +157,6 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
     model_TransitAgency_inactive.transit_processor_audience = ""
     model_TransitAgency_inactive.transit_processor_client_id = ""
     model_TransitAgency_inactive.transit_processor_client_secret_name = ""
-    model_TransitAgency_inactive.index_context_key = ""
     # agency is inactive, OK to have incomplete fields
     model_TransitAgency_inactive.clean()
 
@@ -177,7 +176,6 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
     assert "transit_processor_audience" in errors
     assert "transit_processor_client_id" in errors
     assert "transit_processor_client_secret_name" in errors
-    assert "index_context_key" in errors
 
 
 @pytest.mark.django_db
