@@ -212,17 +212,14 @@ class TestEnrollmentFlowAdmin:
         )
         assert not form.is_valid()
 
+    @pytest.mark.parametrize("user_type", ["staff", "super"])
     def test_EnrollmentFlowForm_clean_claims_verification(
-        self,
-        admin_user_request,
-        flow_admin_model,
-        model_TransitAgency,
-        model_ClaimsProvider,
+        self, admin_user_request, flow_admin_model, model_TransitAgency, model_ClaimsProvider, user_type
     ):
         model_TransitAgency.slug = "mst"  # use value that will map to existing templates
         model_TransitAgency.save()
 
-        request = admin_user_request()
+        request = admin_user_request(user_type)
 
         # fill out the form without a transit agency
         request.POST = dict(
