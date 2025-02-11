@@ -296,13 +296,14 @@ class TestEnrollmentFlowAdmin:
         assert "eligibility_api_jws_signing_alg" in error_dict
         assert "eligibility_api_public_key" in error_dict
 
+    @pytest.mark.parametrize("user_type", ["staff", "super"])
     def test_EnrollmentFlowForm_clean_supports_expiration(
-        self, admin_user_request, flow_admin_model, model_TransitAgency, model_ClaimsProvider
+        self, admin_user_request, flow_admin_model, model_TransitAgency, model_ClaimsProvider, user_type
     ):
         model_TransitAgency.slug = "cst"  # use value that will map to existing templates
         model_TransitAgency.save()
 
-        request = admin_user_request("super")
+        request = admin_user_request(user_type)
 
         request.POST = dict(
             system_name="senior",  # use value that will map to existing templates
@@ -336,4 +337,10 @@ class TestEnrollmentFlowAdmin:
         error_dict = form.errors
         assert "expiration_days" in error_dict
         assert "expiration_reenrollment_days" in error_dict
-        assert "reenrollment_error_template" in error_dict
+
+        if user_type == "staff":
+            non_field_errors = form.errors[forms.NON_FIELD_ERRORS]
+            assert len(non_field_errors) == 1
+            assert "Template not found" in non_field_errors[0]
+        elif user_type == "super":
+            assert "reenrollment_error_template" in error_dict
