@@ -21,6 +21,15 @@ class AgencySlug(models.TextChoices):
     SBMTD = "sbmtd", "sbmtd"
 
 
+class SystemName(models.TextChoices):
+    CALFRESH = "calfresh"
+    COURTESY_CARD = "courtesy_card"
+    MEDICARE = "medicare"
+    OLDER_ADULT = "senior"
+    REDUCED_FARE_MOBILITY_ID = "mobility_pass"
+    VETERAN = "veteran"
+
+
 index_context = {
     AgencySlug.CST: AgencyIndex(headline=_("Get a reduced fare on CST public transportation when you tap to ride")),
     AgencySlug.MST: AgencyIndex(headline=_("Get a reduced fare on MST public transportation when you tap to ride")),

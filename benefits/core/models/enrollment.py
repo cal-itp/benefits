@@ -10,6 +10,8 @@ from multiselectfield import MultiSelectField
 from .common import PemData, SecretNameField, template_path
 from .claims import ClaimsProvider
 from .transit import TransitAgency
+from benefits.core.context import SystemName
+from benefits.in_person.context import eligibility
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +32,8 @@ class EnrollmentFlow(models.Model):
 
     id = models.AutoField(primary_key=True)
     system_name = models.SlugField(
-        help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests."  # noqa: 501
+        choices=SystemName,
+        help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests.",  # noqa: 501
     )
     label = models.TextField(
         blank=True,
@@ -254,6 +257,11 @@ class EnrollmentFlow(models.Model):
             return self.enrollment_success_template_override or f"{prefix}--{self.agency_card_name}.html"
         else:
             return self.enrollment_success_template_override or f"{prefix}--{self.transit_agency.slug}.html"
+
+    @property
+    def in_person_eligibility_context(self):
+        system_name = self.system_name
+        return eligibility[system_name].dict() if system_name in eligibility.keys() else {}
 
     def clean(self):
         template_errors = []
