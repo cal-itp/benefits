@@ -201,12 +201,6 @@ class TransitAgency(models.Model):
         template_errors = []
 
         if self.active:
-            for flow in self.enrollment_flows.all():
-                try:
-                    flow.clean()
-                except ValidationError:
-                    raise ValidationError(f"Invalid EnrollmentFlow: {flow.label}")
-
             message = "This field is required for active transit agencies."
             needed = dict(
                 short_name=self.short_name,
