@@ -6,6 +6,7 @@ from django.contrib.auth.models import Group, User
 from django.db import models
 from django.urls import reverse
 
+from benefits.core import context
 from benefits.routes import routes
 from .common import PemData, SecretNameField, template_path
 
@@ -53,7 +54,10 @@ class TransitAgency(models.Model):
 
     id = models.AutoField(primary_key=True)
     active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
-    slug = models.SlugField(help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}")
+    slug = models.SlugField(
+        choices=context.AgencySlug,
+        help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}",
+    )
     short_name = models.TextField(
         default="", blank=True, help_text="The user-facing short name for this agency. Often an uppercase acronym."
     )
@@ -68,11 +72,6 @@ class TransitAgency(models.Model):
         help_text="URL of a website/page with more information about the agency's discounts",
     )
     phone = models.TextField(default="", blank=True, help_text="Agency customer support phone number")
-    index_template_override = models.TextField(
-        help_text="Override the default template used for this agency's landing page",
-        blank=True,
-        default="",
-    )
     eligibility_index_template_override = models.TextField(
         help_text="Override the default template used for this agency's eligibility landing page",
         blank=True,
@@ -160,8 +159,9 @@ class TransitAgency(models.Model):
         return self.long_name
 
     @property
-    def index_template(self):
-        return self.index_template_override or f"core/index--{self.slug}.html"
+    def index_context(self):
+        key = context.AgencySlug(self.slug)
+        return context.index_context[key].dict()
 
     @property
     def index_url(self):
@@ -229,7 +229,7 @@ class TransitAgency(models.Model):
             # since templates are calculated from the pattern or the override field
             # we can't add a field-level validation error
             # so just create directly for a missing template
-            for t in [self.index_template, self.eligibility_index_template]:
+            for t in [self.eligibility_index_template]:
                 if not template_path(t):
                     template_errors.append(ValidationError(f"Template not found: {t}"))
 

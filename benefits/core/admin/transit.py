@@ -30,7 +30,6 @@ class TransitAgencyAdmin(admin.ModelAdmin):
         if not request.user.is_superuser:
             fields.extend(
                 [
-                    "index_template_override",
                     "eligibility_index_template_override",
                     "eligibility_api_id",
                     "transit_processor",
