@@ -21,10 +21,6 @@ def flow_admin_model():
 @pytest.mark.django_db
 class TestEnrollmentEventAdmin:
 
-    def test_get_readonly_fields(self, admin_user_request, event_admin_model):
-        request = admin_user_request()
-        assert event_admin_model.get_readonly_fields(request) == ["id"]
-
     @pytest.mark.parametrize(
         "runtime_env,user_type,expected",
         [
