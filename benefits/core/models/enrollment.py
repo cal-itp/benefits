@@ -11,6 +11,7 @@ from .common import PemData, SecretNameField, template_path
 from .claims import ClaimsProvider
 from .transit import TransitAgency
 from benefits.core import context as core_context
+from benefits.in_person import context as in_person_context
 
 logger = logging.getLogger(__name__)
 
@@ -256,6 +257,12 @@ class EnrollmentFlow(models.Model):
             return self.enrollment_success_template_override or f"{prefix}--{self.agency_card_name}.html"
         else:
             return self.enrollment_success_template_override or f"{prefix}--{self.transit_agency.slug}.html"
+
+    @property
+    def in_person_eligibility_context(self):
+        system_name = self.system_name
+        eligibility_index = in_person_context.eligibility_index
+        return eligibility_index[system_name].dict() if system_name in eligibility_index.keys() else {}
 
     def clean(self):
         template_errors = []
