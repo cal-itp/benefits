@@ -39,10 +39,10 @@ class InPersonEligibilityForm(forms.Form):
             self.fields[field_id] = forms.BooleanField(
                 required=False,  # `clean()` will handle requiring the specific field
                 label=self.get_policy_details(flow),
-                widget=forms.widgets.CheckboxInput(attrs={"style": "display: none"}),  # start out hidden
+                widget=forms.widgets.CheckboxInput(attrs={"class": "d-none"}),  # start out hidden
             )
             field = self.fields[field_id]
-            field.hide = True
+            field.hide = True  # this is so we can hide the label (see usage in the form template)
             field.widget.attrs.update({"data-custom-validity": self.verified_field_error_message})
 
         self.use_custom_validity = True
