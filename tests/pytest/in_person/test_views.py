@@ -86,7 +86,20 @@ def test_eligibility_logged_in_filtering_flows(mocker, model_TransitAgency, admi
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_eligibility_post_valid_form_eligibility_verified(
+def test_eligibility_post_no_flow_selected(admin_client):
+
+    path = reverse(routes.IN_PERSON_ELIGIBILITY)
+    form_data = {}
+    response = admin_client.post(path, form_data)
+
+    # should return user back to the in-person eligibility index
+    assert response.status_code == 200
+    assert response.template_name == "in_person/eligibility.html"
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
+def test_eligibility_post_flow_selected_and_verified(
     admin_client, model_EnrollmentFlow, mocked_session_update, mocked_eligibility_analytics_module
 ):
 
@@ -103,12 +116,13 @@ def test_eligibility_post_valid_form_eligibility_verified(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_eligibility_post_valid_form_eligibility_unverified(admin_client):
+def test_eligibility_post_flow_selected_and_unverified(admin_client):
 
     path = reverse(routes.IN_PERSON_ELIGIBILITY)
     form_data = {"flow": 1, "verified_1": False}
     response = admin_client.post(path, form_data)
 
+    # should return user back to the in-person eligibility index
     assert response.status_code == 200
     assert response.template_name == "in_person/eligibility.html"
 

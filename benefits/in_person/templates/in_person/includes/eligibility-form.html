@@ -38,6 +38,10 @@
           showCheckbox(flow_id);
           hideOtherCheckboxes(flow_id);
         });
+
+        if (input.checked) {
+          showCheckbox(input.value);
+        }
       });
     });
   </script>
