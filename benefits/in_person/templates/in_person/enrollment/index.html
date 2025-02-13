@@ -1,33 +1,25 @@
-{% extends "admin/agency-base.html" %}
+{% extends "admin/flow-base.html" %}
 
 {% block title %}
   {{ title }}
 {% endblock title %}
 
-{% block content %}
-
-  <div class="row justify-content-center">
-    <div class="col-lg-6">
-      <div class="border border-3 p-3">
-        <h2 class="p-0 m-0 text-start">In-person enrollment</h2>
-      </div>
-      <div class="border border-3 border-top-0 p-3">
-        <div class="loading">
-          <p>
-            <span class="spinner-border align-middle text-primary" role="status"></span>
-            <span id="loading-message" class="fw-bold p-2">Please wait...</span>
-          </p>
-        </div>
-        <div class="invisible">
-          <p>Provide the rider's contactless debit or credit card details.</p>
-          <iframe class="card-collection" name="card-collection-iframe"></iframe>
-        </div>
-        <div class="row d-flex justify-content-start p-3 pt-8">
-          <div class="col-12">
-            {% url routes.ADMIN_INDEX as url_cancel %}
-            <a href="{{ url_cancel }}" class="btn btn-lg btn-outline-primary d-block">Cancel</a>
-          </div>
-        </div>
+{% block flow-content %}
+  <div class="p-3">
+    <div class="loading">
+      <p>
+        <span class="spinner-border align-middle text-primary" role="status"></span>
+        <span id="loading-message" class="fw-bold p-2">Please wait...</span>
+      </p>
+    </div>
+    <div class="invisible">
+      <p>Provide the rider's contactless debit or credit card details.</p>
+      <iframe class="card-collection" name="card-collection-iframe"></iframe>
+    </div>
+    <div class="row d-flex justify-content-start p-3 pt-8">
+      <div class="col-12">
+        {% url routes.ADMIN_INDEX as url_cancel %}
+        <a href="{{ url_cancel }}" class="btn btn-lg btn-outline-primary d-block">Cancel</a>
       </div>
     </div>
   </div>
@@ -138,5 +130,4 @@
   {% for f in forms %}
     {% include "core/includes/form.html" with form=f %}
   {% endfor %}
-
-{% endblock content %}
+{% endblock flow-content %}
