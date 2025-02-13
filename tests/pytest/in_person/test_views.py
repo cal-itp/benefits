@@ -102,7 +102,7 @@ def test_eligibility_post_valid_form_eligibility_verified(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
 def test_eligibility_post_valid_form_eligibility_unverified(admin_client):
 
     path = reverse(routes.IN_PERSON_ELIGIBILITY)
