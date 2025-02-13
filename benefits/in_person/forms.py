@@ -34,7 +34,7 @@ class InPersonEligibilityForm(forms.Form):
         for flow in flows:
             field_id = f"verified_{flow.id}"
             self.fields[field_id] = forms.BooleanField(
-                label=self.get_policy_details(flow), widget=forms.widgets.CheckboxInput(attrs={"style": "display: none"})
+                label=self.get_policy_details(flow), widget=forms.widgets.CheckboxInput(attrs={"class": "d-none"})
             )
             field = self.fields[field_id]
             field.hide = True
