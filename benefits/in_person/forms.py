@@ -28,7 +28,7 @@ class InPersonEligibilityForm(forms.Form):
         self.classes = "in-person-eligibility-form"
         flow_field = self.fields["flow"]
         flow_field.choices = [(f.id, f.label) for f in flows]
-        flow_field.widget.attrs.update({"data-custom-validity": "Please choose an eligibility type."})
+        flow_field.widget.attrs.update({"data-custom-validity": "Choose an eligibility type"})
 
         # dynamically add a BooleanField for each flow
         for flow in flows:
@@ -38,9 +38,7 @@ class InPersonEligibilityForm(forms.Form):
             )
             field = self.fields[field_id]
             field.hide = True
-            field.widget.attrs.update(
-                {"data-custom-validity": "Please confirm you have used an agency policy to verify eligibility."}
-            )
+            field.widget.attrs.update({"data-custom-validity": "Check the box to verify you have confirmed eligibility"})
 
         self.use_custom_validity = True
 
