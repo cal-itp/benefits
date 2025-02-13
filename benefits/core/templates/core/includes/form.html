@@ -8,18 +8,20 @@
 
     <div class="form-field-container {{ form.classes }}">
       {% for field in form %}
-        <div class="form-group mb-0">
-          {# djlint:off #}
-          {% if field.label %}
-          <label for="{{ field.id_for_label }}" class="form-control-label">{{ field.label }}{% if field.field.required %}<span class="required-label text-body">*</span>{% endif %}
-          </label>
-          {% endif %}
-          {# djlint:on #}
+        {% block form-group %}
+          <div class="form-group mb-0">
+            {# djlint:off #}
+            {% if field.label %}
+            <label for="{{ field.id_for_label }}" class="form-control-label">{{ field.label }}{% if field.field.required %}<span class="required-label text-body">*</span>{% endif %}
+            </label>
+            {% endif %}
+            {# djlint:on #}
 
-          {{ field }}
+            {{ field }}
 
-          {% if field.help_text %}<small class="d-block mt-2 pt-1 form-text text-body">{{ field.help_text }}</small>{% endif %}
-        </div>
+            {% if field.help_text %}<small class="d-block mt-2 pt-1 form-text text-body">{{ field.help_text }}</small>{% endif %}
+          </div>
+        {% endblock form-group %}
       {% endfor %}
     </div>
 
@@ -131,5 +133,8 @@
         document.querySelector("#{{ form.id }} button[type=submit]").addEventListener("click", recaptchaSubmit);
       </script>
     {% endif %}
+
+    {% block extra-scripts %}
+    {% endblock extra-scripts %}
   </form>
 {% endif %}

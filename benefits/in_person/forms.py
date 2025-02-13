@@ -18,7 +18,6 @@ class InPersonEligibilityForm(forms.Form):
     method = "POST"
 
     flow = forms.ChoiceField(label="Choose an eligibility type to qualify this rider.", widget=forms.widgets.RadioSelect)
-    verified = forms.BooleanField(label="I have verified this person’s eligibility for a transit benefit.", required=True)
 
     cancel_url = routes.ADMIN_INDEX
 
@@ -28,11 +27,24 @@ class InPersonEligibilityForm(forms.Form):
 
         self.classes = "in-person-eligibility-form"
         flow_field = self.fields["flow"]
-        verified_field = self.fields["verified"]
-
         flow_field.choices = [(f.id, f.label) for f in flows]
         flow_field.widget.attrs.update({"data-custom-validity": "Please choose an eligibility type."})
-        verified_field.widget.attrs.update(
-            {"data-custom-validity": "Please confirm you have used an agency policy to verify eligibility."}
-        )
+
+        # dynamically add a BooleanField for each flow
+        for flow in flows:
+            field_id = f"verified_{flow.id}"
+            self.fields[field_id] = forms.BooleanField(
+                label=self.get_policy_details(flow), widget=forms.widgets.CheckboxInput(attrs={"style": "display: none"})
+            )
+            field = self.fields[field_id]
+            field.hide = True
+            field.widget.attrs.update(
+                {"data-custom-validity": "Please confirm you have used an agency policy to verify eligibility."}
+            )
+
         self.use_custom_validity = True
+
+    def get_policy_details(self, flow: models.EnrollmentFlow):
+        eligibility_context = flow.in_person_eligibility_context
+
+        return eligibility_context["policy_details"] if eligibility_context else None

@@ -1,0 +1,59 @@
+{% extends "core/includes/form.html" %}
+
+{% block form-group %}
+  <div class="form-group mb-0" {% if field.field.hide %}style="display: none"{% endif %}>
+    {# djlint:off #}
+  {% if field.label %}
+  <label for="{{ field.id_for_label }}" class="form-control-label">{{ field.label }}{% if field.field.required %}<span class="required-label text-body">*</span>{% endif %}
+  </label>
+  {% endif %}
+    {# djlint:on #}
+
+    {{ field }}
+
+    {% if field.help_text %}<small class="d-block mt-2 pt-1 form-text text-body">{{ field.help_text }}</small>{% endif %}
+  </div>
+{% endblock form-group %}
+
+{% block extra-scripts %}
+  <script nonce="{{ request.csp_nonce }}">
+    ready(function() {
+      let showCheckbox = function(flow_id) {
+          let checkbox_parent =  document.querySelector("[class^='form-group']:has([id='id_verified_" + flow_id + "'])")
+          checkbox_parent.style.display = "flex";
+
+          let flow_verified_checkbox = checkbox_parent.querySelector("[id='id_verified_" + flow_id + "']");
+          flow_verified_checkbox.style.display = "inline-block";
+          flow_verified_checkbox.required = true;
+
+          let flow_verified_label = checkbox_parent.querySelector("[for='id_verified_" + flow_id + "']");
+          flow_verified_label.style.display = "initial";
+      };
+
+      let hideOtherCheckboxes = function(flow_id) {
+        let other_groups = document.querySelectorAll("[class^='form-group']:has([id^='id_verified_']:not([id='id_verified_" + flow_id + "']))");
+          other_groups.forEach(group => {
+            group.style.display = "none";
+
+            let checkbox = group.querySelector("[id^='id_verified']");
+            checkbox.style.display = "none";
+            checkbox.required = false;
+            checkbox.checked = false;
+
+            group.querySelector("[for^='id_verified']").style.display = "none";
+
+          });
+      };
+
+      /* Add listener to radio buttons. */
+      let flow_radio_buttons = document.querySelectorAll("[id*='id_flow_']");
+      flow_radio_buttons.forEach(input => {
+        input.addEventListener("change", (event) => {
+          let flow_id = event.currentTarget.value;
+          showCheckbox(flow_id);
+          hideOtherCheckboxes(flow_id);
+        });
+      });
+    });
+  </script>
+{% endblock extra-scripts %}
