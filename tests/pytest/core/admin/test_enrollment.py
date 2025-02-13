@@ -170,7 +170,7 @@ class TestEnrollmentFlowAdmin:
         form_class = flow_admin_model.get_form(request)
 
         request.POST = dict(
-            system_name="testflow",
+            system_name="senior",
             supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
         )
 
