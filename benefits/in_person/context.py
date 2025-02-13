@@ -16,11 +16,11 @@ eligibility_index = {
         policy_details="I confirmed this rider’s identity using a government-issued ID and verified they are age 65 or older."
     ),
     SystemName.MEDICARE.value: EligibilityIndex(
-        policy_details="I confirmed this rider’s identity using a government-issued ID and verified they posses a valid "
+        policy_details="I confirmed this rider’s identity using a government-issued ID and verified they possess a valid "
         "Medicare card."
     ),
     SystemName.COURTESY_CARD.value: EligibilityIndex(
-        policy_details="I confirmed this rider’s identity using a government-issued ID and verified they posses an MST "
+        policy_details="I confirmed this rider’s identity using a government-issued ID and verified they possess an MST "
         "Courtesy Card."
     ),
 }
