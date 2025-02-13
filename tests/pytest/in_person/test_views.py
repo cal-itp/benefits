@@ -91,7 +91,7 @@ def test_eligibility_post_valid_form_eligibility_verified(
 ):
 
     path = reverse(routes.IN_PERSON_ELIGIBILITY)
-    form_data = {"flow": 1, "verified": True}
+    form_data = {"flow": 1, "verified_1": True}
     response = admin_client.post(path, form_data)
 
     assert response.status_code == 302
@@ -106,7 +106,7 @@ def test_eligibility_post_valid_form_eligibility_verified(
 def test_eligibility_post_valid_form_eligibility_unverified(admin_client):
 
     path = reverse(routes.IN_PERSON_ELIGIBILITY)
-    form_data = {"flow": 1, "verified": False}
+    form_data = {"flow": 1, "verified_1": False}
     response = admin_client.post(path, form_data)
 
     assert response.status_code == 200
