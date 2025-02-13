@@ -1,6 +1,10 @@
 {% extends "admin/login.html" %}
 {% load i18n static %}
 
+{% block bodyclass %}
+  {{ block.super }} bg-secondary-subtle
+{% endblock bodyclass %}
+
 {% block dark-mode-vars %}
 {% endblock dark-mode-vars %}
 
