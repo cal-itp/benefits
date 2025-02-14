@@ -1,0 +1,22 @@
+{% extends "admin/flow-base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+{% block flow-content %}
+  <div class="p-3 min-vh-60 d-flex flex-column justify-content-between">
+    <div class="d-flex">
+      <i class="error-icon"></i>
+      <div class="mt-lg-3">
+        {% block error-message %}
+        {% endblock error-message %}
+      </div>
+    </div>
+    <div class="row">
+      {% block cta-buttons %}
+      {% endblock cta-buttons %}
+    </div>
+  </div>
+{% endblock flow-content %}
