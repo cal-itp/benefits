@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-02-06 17:39-0800\n"
+"POT-Creation-Date: 2025-02-14 12:53-0800\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -97,7 +97,7 @@ msgctxt "image alt text"
 msgid "Four curved lines on contactless-enabled cards"
 msgstr ""
 
-msgid "Your card must include a Visa or Mastercard logo."
+msgid "Your card must include a Visa, Mastercard, or Discover logo."
 msgstr ""
 
 msgid ""
@@ -504,6 +504,9 @@ msgid "Learn more about the transit benefit for CalFresh Cardholders"
 msgstr ""
 
 msgid "Go back"
+msgstr ""
+
+msgid "Your card must include a Visa or Mastercard logo."
 msgstr ""
 
 msgid "Learn more about"
