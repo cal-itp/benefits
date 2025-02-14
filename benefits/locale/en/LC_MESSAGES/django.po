@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-02-14 12:53-0800\n"
+"POT-Creation-Date: 2025-02-14 13:12-0800\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -438,7 +438,8 @@ msgid "Your contactless card details"
 msgstr ""
 
 msgid ""
-"Your contactless card must be a debit or credit card by Visa or Mastercard."
+"Your contactless card must be a debit or credit card by Visa, Mastercard, or "
+"Discover."
 msgstr ""
 
 msgid "Learn more about contactless cards"
