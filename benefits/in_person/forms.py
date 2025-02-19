@@ -30,7 +30,7 @@ class InPersonEligibilityForm(forms.Form):
 
         self.classes = "in-person-eligibility-form"
         flow_field = self.fields["flow"]
-        flow_field.choices = [(f.id, f.label) for f in flows]
+        flow_field.choices = [(f.id, f.label) for f in flows if self.get_policy_details(f)]
         flow_field.widget.attrs.update({"data-custom-validity": self.flow_field_error_message})
 
         # dynamically add a BooleanField for each flow

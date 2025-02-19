@@ -264,7 +264,7 @@ class EnrollmentFlow(models.Model):
         return eligibility[system_name].dict() if system_name in eligibility.keys() else {}
 
     def clean(self):
-        template_errors = []
+        errors = []
 
         if self.transit_agency:
             templates = [
@@ -282,10 +282,14 @@ class EnrollmentFlow(models.Model):
             # so just create directly for a missing template
             for t in templates:
                 if not template_path(t):
-                    template_errors.append(ValidationError(f"Template not found: {t}"))
+                    errors.append(ValidationError(f"Template not found: {t}"))
 
-        if template_errors:
-            raise ValidationError(template_errors)
+            if EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods:
+                if not self.in_person_eligibility_context:
+                    errors.append(ValidationError(f"In-person eligibility context not found for: {self.system_name}"))
+
+        if errors:
+            raise ValidationError(errors)
 
     def eligibility_form_instance(self, *args, **kwargs):
         """Return an instance of this flow's EligibilityForm, or None."""
