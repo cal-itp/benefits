@@ -416,7 +416,7 @@ def test_logout(app_request, mocker, mocked_oauth_client_or_error_redirect__clie
 
     result = logout(app_request)
 
-    mocked_redirect.assert_called_with(app_request, mocked_oauth_client, token, "https://testserver/oauth/post_logout")
+    mocked_redirect.assert_called_with(app_request, mocked_oauth_client, "https://testserver/oauth/post_logout")
     mocked_analytics_module.started_sign_out.assert_called_once()
     assert result.status_code == 200
     assert message in str(result.content)
