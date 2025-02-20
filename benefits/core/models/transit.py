@@ -161,7 +161,7 @@ class TransitAgency(models.Model):
     @property
     def index_context(self):
         key = core_context.AgencySlug(self.slug)
-        return core_context.index_context[key].dict()
+        return core_context.index[key].dict()
 
     @property
     def index_url(self):

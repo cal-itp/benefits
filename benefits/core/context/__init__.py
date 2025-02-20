@@ -1,3 +1,3 @@
-from .agency import AgencySlug, index_context
+from .agency import AgencySlug, index
 
-__all__ = ["AgencySlug", "index_context"]
+__all__ = ["AgencySlug", "index"]

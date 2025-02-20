@@ -21,7 +21,7 @@ class AgencySlug(models.TextChoices):
     SBMTD = "sbmtd", "sbmtd"
 
 
-index_context = {
+index = {
     AgencySlug.CST: AgencyIndex(headline=_("Get a reduced fare on CST public transportation when you tap to ride")),
     AgencySlug.MST: AgencyIndex(headline=_("Get a reduced fare on MST public transportation when you tap to ride")),
     AgencySlug.NEVCO: AgencyIndex(
