@@ -18,15 +18,16 @@ def mocked_sentry_sdk_module(mocker):
 
 
 def test_deauthorize_redirect(app_request, mocked_oauth_client):
+    mocked_oauth_client.client_id = "test-client-id"
     mocked_oauth_client.load_server_metadata.return_value = {"end_session_endpoint": "https://server/endsession"}
 
-    result = deauthorize_redirect(app_request, mocked_oauth_client, "token", "https://localhost/redirect_uri")
+    result = deauthorize_redirect(app_request, mocked_oauth_client, "https://localhost/redirect_uri")
 
     mocked_oauth_client.load_server_metadata.assert_called()
     assert result.status_code == 302
     assert (
         result.url
-        == "https://server/endsession?id_token_hint=token&post_logout_redirect_uri=https%3A%2F%2Flocalhost%2Fredirect_uri"
+        == "https://server/endsession?client_id=test-client-id&post_logout_redirect_uri=https%3A%2F%2Flocalhost%2Fredirect_uri"
     )
 
 
@@ -36,7 +37,7 @@ def test_deauthorize_redirect_load_server_metadata_error(
 ):
     mocked_oauth_client.load_server_metadata.side_effect = Exception("Side effect")
 
-    result = deauthorize_redirect(app_request, mocked_oauth_client, "token", "https://localhost/redirect_uri")
+    result = deauthorize_redirect(app_request, mocked_oauth_client, "https://localhost/redirect_uri")
 
     assert result.status_code == 302
     assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)
