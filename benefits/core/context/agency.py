@@ -4,14 +4,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
-@dataclass
-class AgencyIndex:
-    headline: str
-
-    def dict(self):
-        return asdict(self)
-
-
 class AgencySlug(models.TextChoices):
     # raw value, display value
     CST = "cst", "cst"
@@ -19,6 +11,14 @@ class AgencySlug(models.TextChoices):
     NEVCO = "nevco", "nevco"
     SACRT = "sacrt", "sacrt"
     SBMTD = "sbmtd", "sbmtd"
+
+
+@dataclass
+class AgencyIndex:
+    headline: str
+
+    def dict(self):
+        return asdict(self)
 
 
 agency_index = {
