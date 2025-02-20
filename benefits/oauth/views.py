@@ -74,7 +74,7 @@ def login(request):
 
     if result and result.status_code >= 400:
         exception = Exception(f"authorize_redirect error response [{result.status_code}]: {result.content.decode()}")
-    elif result is None:
+    elif result is None and exception is None:
         exception = Exception("authorize_redirect returned None")
 
     if exception:
