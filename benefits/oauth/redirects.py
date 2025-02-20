@@ -7,7 +7,7 @@ from benefits.routes import routes
 from . import analytics
 
 
-def deauthorize_redirect(request, oauth_client, token, redirect_uri):
+def deauthorize_redirect(request, oauth_client, redirect_uri):
     """Helper implements OIDC signout via the `end_session_endpoint`."""
 
     # Authlib has not yet implemented `end_session_endpoint` as the OIDC Session Management 1.0 spec is still in draft
@@ -23,7 +23,7 @@ def deauthorize_redirect(request, oauth_client, token, redirect_uri):
 
     end_session_endpoint = metadata.get("end_session_endpoint")
 
-    params = dict(id_token_hint=token, post_logout_redirect_uri=redirect_uri)
+    params = dict(client_id=oauth_client.client_id, post_logout_redirect_uri=redirect_uri)
     encoded_params = urlencode(params)
     end_session_url = f"{end_session_endpoint}?{encoded_params}"
 
