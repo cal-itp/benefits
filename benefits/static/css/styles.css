@@ -122,10 +122,12 @@ a[target="_blank"]::after {
   content: " ";
   background-color: currentColor;
 
-  mask-image: url("/static/img/external-link.svg"),
+  mask-image:
+    url("/static/img/external-link.svg"),
     linear-gradient(transparent, transparent);
   mask-position: center center;
-  -webkit-mask-image: url("/static/img/external-link.svg"),
+  -webkit-mask-image:
+    url("/static/img/external-link.svg"),
     linear-gradient(transparent, transparent);
   -webkit-mask-position: center center;
 

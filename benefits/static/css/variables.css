@@ -11,9 +11,9 @@
   --medium-font-weight: 500;
   --bold-font-weight: 700;
   --bs-body-font-size: calc(18rem / 16);
-  --bs-font-sans-serif: Roboto, system-ui, -apple-system, "Segoe UI",
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-    "Noto Color Emoji";
+  --bs-font-sans-serif:
+    Roboto, system-ui, -apple-system, "Segoe UI", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-body-font-family: var(--bs-font-sans-serif);
   --bs-body-line-height: 1.5; /* Displayed as 150% on Figma */
   --heading-line-height: 1.3; /* Displayed as 130% on Figma */
