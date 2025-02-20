@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group, User
 from django.db import models
 from django.urls import reverse
 
-from benefits.core import context
+from benefits.core import context as core_context
 from benefits.routes import routes
 from .common import PemData, SecretNameField, template_path
 
@@ -55,7 +55,7 @@ class TransitAgency(models.Model):
     id = models.AutoField(primary_key=True)
     active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
     slug = models.SlugField(
-        choices=context.AgencySlug,
+        choices=core_context.AgencySlug,
         help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}",
     )
     short_name = models.TextField(
@@ -160,8 +160,8 @@ class TransitAgency(models.Model):
 
     @property
     def index_context(self):
-        key = context.AgencySlug(self.slug)
-        return context.index_context[key].dict()
+        key = core_context.AgencySlug(self.slug)
+        return core_context.index_context[key].dict()
 
     @property
     def index_url(self):
