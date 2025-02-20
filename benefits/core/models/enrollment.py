@@ -10,6 +10,7 @@ from multiselectfield import MultiSelectField
 from .common import PemData, SecretNameField, template_path
 from .claims import ClaimsProvider
 from .transit import TransitAgency
+from benefits.core import context as core_context
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +31,8 @@ class EnrollmentFlow(models.Model):
 
     id = models.AutoField(primary_key=True)
     system_name = models.SlugField(
-        help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests."  # noqa: 501
+        choices=core_context.SystemName,
+        help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests.",  # noqa: 501
     )
     label = models.TextField(
         blank=True,

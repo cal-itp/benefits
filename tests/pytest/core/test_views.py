@@ -128,7 +128,7 @@ def test_agency_card_with_multiple_eligibility_api_flows(
 ):
     new_flow = EnrollmentFlow.objects.get(pk=model_EnrollmentFlow_with_eligibility_api.id)
     new_flow.label = "New flow"
-    new_flow.system_name = "new"
+    new_flow.system_name = "senior"
     new_flow.pk = None
     new_flow.transit_agency = model_TransitAgency
     new_flow.save()
