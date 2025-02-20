@@ -78,7 +78,7 @@ def model_ClaimsProvider_no_sign_out(model_ClaimsProvider):
 @pytest.fixture
 def model_EnrollmentFlow(model_TransitAgency):
     flow = EnrollmentFlow.objects.create(
-        system_name="test",
+        system_name="senior",
         selection_label_template_override="eligibility/includes/selection-label.html",
         eligibility_start_template_override="eligibility/start.html",
         eligibility_unverified_template_override="eligibility/unverified.html",
