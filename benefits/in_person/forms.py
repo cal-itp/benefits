@@ -48,7 +48,10 @@ class InPersonEligibilityForm(forms.Form):
         self.use_custom_validity = True
 
     def get_policy_details(self, flow: models.EnrollmentFlow):
-        eligibility_context = flow.in_person_eligibility_context
+        try:
+            eligibility_context = flow.in_person_eligibility_context
+        except KeyError:
+            eligibility_context = None
 
         return eligibility_context["policy_details"] if eligibility_context else None
 

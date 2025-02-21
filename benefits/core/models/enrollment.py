@@ -260,9 +260,7 @@ class EnrollmentFlow(models.Model):
 
     @property
     def in_person_eligibility_context(self):
-        system_name = self.system_name
-        eligibility_index = in_person_context.eligibility_index
-        return eligibility_index[system_name].dict() if system_name in eligibility_index.keys() else {}
+        return in_person_context.eligibility_index[self.system_name].dict()
 
     def clean(self):
         template_errors = []
