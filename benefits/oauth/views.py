@@ -176,8 +176,7 @@ def logout(request):
 
     analytics.started_sign_out(request)
 
-    # overwrite the oauth session token, the user is signed out of the app
-    token = session.oauth_token(request)
+    # the user is signed out of the app
     session.logout(request)
 
     route = reverse(routes.OAUTH_POST_LOGOUT)
@@ -187,7 +186,7 @@ def logout(request):
 
     # send the user through the end_session_endpoint, redirecting back to
     # the post_logout route
-    return redirects.deauthorize_redirect(request, oauth_client, token, redirect_uri)
+    return redirects.deauthorize_redirect(request, oauth_client, redirect_uri)
 
 
 @decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
