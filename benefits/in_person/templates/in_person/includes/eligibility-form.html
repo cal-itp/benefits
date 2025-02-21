@@ -1,0 +1,48 @@
+{% extends "core/includes/form.html" %}
+
+{% block extra-scripts %}
+  <script nonce="{{ request.csp_nonce }}">
+    ready(function() {
+      let showCheckbox = function(flow_id) {
+          let checkbox_parent =  document.querySelector("[class^='form-group']:has([id='id_verified_" + flow_id + "'])")
+          checkbox_parent.classList.remove("d-none");
+
+          let flow_verified_checkbox = checkbox_parent.querySelector("[id='id_verified_" + flow_id + "']");
+          flow_verified_checkbox.classList.remove("d-none");
+          flow_verified_checkbox.required = true;
+
+          let flow_verified_label = checkbox_parent.querySelector("[for='id_verified_" + flow_id + "']");
+          flow_verified_label.classList.remove("d-none");
+      };
+
+      let hideOtherCheckboxes = function(flow_id) {
+        let other_groups = document.querySelectorAll("[class^='form-group']:has([id^='id_verified_']:not([id='id_verified_" + flow_id + "']))");
+          other_groups.forEach(group => {
+            group.classList.add("d-none");
+
+            let checkbox = group.querySelector("[id^='id_verified']");
+            checkbox.classList.add("d-none");
+            checkbox.required = false;
+            checkbox.checked = false;
+
+            group.querySelector("[for^='id_verified']").classList.add("d-none");
+
+          });
+      };
+
+      /* Add listener to radio buttons. */
+      let flow_radio_buttons = document.querySelectorAll("[id*='id_flow_']");
+      flow_radio_buttons.forEach(input => {
+        input.addEventListener("change", (event) => {
+          let flow_id = event.currentTarget.value;
+          showCheckbox(flow_id);
+          hideOtherCheckboxes(flow_id);
+        });
+
+        if (input.checked) {
+          showCheckbox(input.value);
+        }
+      });
+    });
+  </script>
+{% endblock extra-scripts %}
