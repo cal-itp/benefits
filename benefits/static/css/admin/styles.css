@@ -9,6 +9,10 @@ html[data-theme="light"],
   --link-fg: #ffffff;
   --body-quiet-color: var(--dark-color);
   --button-bg: #ffffff;
+  --bs-secondary-bg-subtle: #f1f1f1; /* Background color for Admin, lighter than bs-secondary, used with bg-secondary-subtle */
+  --bs-secondary-rgb:
+    197, 196, 196; /* Border color for Admin, used with border-secondary */
+  --bs-secondary: #c5c4c4;
 }
 
 /* Buttons */
