@@ -290,7 +290,9 @@ class EnrollmentFlow(models.Model):
                     in_person_eligibility_context = None
 
                 if not in_person_eligibility_context:
-                    errors.append(ValidationError(f"In-person eligibility context not found for: {self.system_name}"))
+                    errors.append(
+                        ValidationError(f"{self.system_name} not configured for In-person. Please uncheck to continue.")
+                    )
 
         if errors:
             raise ValidationError(errors)

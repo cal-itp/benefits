@@ -260,7 +260,7 @@ def test_EnrollmentFlow_clean_in_person_eligibility_context_not_found(model_Enro
     model_EnrollmentFlow.system_name = "nonexistent_system_name"
 
     with pytest.raises(
-        ValidationError, match=f"In-person eligibility context not found for: {model_EnrollmentFlow.system_name}"
+        ValidationError, match=f"{model_EnrollmentFlow.system_name} not configured for In-person. Please uncheck to continue."
     ):
         model_EnrollmentFlow.clean()
 
