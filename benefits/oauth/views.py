@@ -119,8 +119,8 @@ def authorize(request):
 
     logger.debug("OAuth access token authorized")
 
-    # We store the id_token in the user's session. This is the minimal amount of information needed later to log the user out.
-    id_token = token["id_token"]
+    # oauth_token_authorized will be stored in the user's session to mark the user as authorized
+    oauth_token_authorized = True
 
     # We store the returned claim in case it can be used later in eligibility verification.
     flow_claims = flow.claims_all_claims
@@ -144,7 +144,7 @@ def authorize(request):
                 elif claim_value >= 10:
                     error_claim[claim] = claim_value
 
-    session.update(request, oauth_token=id_token, oauth_claims=stored_claims)
+    session.update(request, oauth_token=oauth_token_authorized, oauth_claims=stored_claims)
     analytics.finished_sign_in(request, error=error_claim)
 
     return redirect(routes.ELIGIBILITY_CONFIRM)
