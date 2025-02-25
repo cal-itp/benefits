@@ -230,7 +230,7 @@ def test_authorize_success(
     mocked_oauth_client.authorize_access_token.assert_called_with(app_request)
     mocked_analytics_module.finished_sign_in.assert_called_once()
     assert session.logged_in(app_request)
-    assert session.oauth_token(app_request) == "token"
+    assert session.oauth_token(app_request) is True
     assert result.status_code == 302
     assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
 
