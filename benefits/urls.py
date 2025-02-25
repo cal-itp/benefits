@@ -48,7 +48,7 @@ if settings.DEBUG:
     def trigger_error(request):
         raise RuntimeError("Test error")
 
-    urlpatterns.append(path("error/", trigger_error))
+    urlpatterns.append(path("testerror/", trigger_error))
 
     # simple route to read a pre-defined "secret"
     # this "secret" does not contain sensitive information
