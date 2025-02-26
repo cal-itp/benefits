@@ -256,6 +256,16 @@ def test_EnrollmentFlow_clean_templates(model_EnrollmentFlow_with_scope_and_clai
 
 
 @pytest.mark.django_db
+def test_EnrollmentFlow_clean_in_person_eligibility_context_not_found(model_EnrollmentFlow):
+    model_EnrollmentFlow.system_name = "nonexistent_system_name"
+
+    with pytest.raises(
+        ValidationError, match=f"{model_EnrollmentFlow.system_name} not configured for In-person. Please uncheck to continue."
+    ):
+        model_EnrollmentFlow.clean()
+
+
+@pytest.mark.django_db
 def test_EnrollmentEvent_create(model_TransitAgency, model_EnrollmentFlow):
     ts = timezone.now()
     event = EnrollmentEvent.objects.create(

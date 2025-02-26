@@ -11,6 +11,7 @@ from .common import PemData, SecretNameField, template_path
 from .claims import ClaimsProvider
 from .transit import TransitAgency
 from benefits.core import context as core_context
+from benefits.in_person import context as in_person_context
 
 logger = logging.getLogger(__name__)
 
@@ -257,8 +258,12 @@ class EnrollmentFlow(models.Model):
         else:
             return self.enrollment_success_template_override or f"{prefix}--{self.transit_agency.slug}.html"
 
+    @property
+    def in_person_eligibility_context(self):
+        return in_person_context.eligibility_index[self.system_name].dict()
+
     def clean(self):
-        template_errors = []
+        errors = []
 
         if self.transit_agency:
             templates = [
@@ -276,10 +281,21 @@ class EnrollmentFlow(models.Model):
             # so just create directly for a missing template
             for t in templates:
                 if not template_path(t):
-                    template_errors.append(ValidationError(f"Template not found: {t}"))
+                    errors.append(ValidationError(f"Template not found: {t}"))
 
-        if template_errors:
-            raise ValidationError(template_errors)
+            if EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods:
+                try:
+                    in_person_eligibility_context = self.in_person_eligibility_context
+                except KeyError:
+                    in_person_eligibility_context = None
+
+                if not in_person_eligibility_context:
+                    errors.append(
+                        ValidationError(f"{self.system_name} not configured for In-person. Please uncheck to continue.")
+                    )
+
+        if errors:
+            raise ValidationError(errors)
 
     def eligibility_form_instance(self, *args, **kwargs):
         """Return an instance of this flow's EligibilityForm, or None."""

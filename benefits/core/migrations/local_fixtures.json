@@ -94,7 +94,7 @@
       "claims_provider": 1,
       "claims_scope": "verify:veteran",
       "claims_eligibility_claim": "veteran",
-      "supported_enrollment_methods": ["digital", "in_person"],
+      "supported_enrollment_methods": ["digital"],
       "transit_agency": 1
     }
   },
@@ -115,7 +115,7 @@
       "eligibility_api_jws_signing_alg": "RS256",
       "eligibility_form_class": "benefits.eligibility.forms.CSTAgencyCard",
       "help_template": "core/includes/help--cst-agency-card.html",
-      "supported_enrollment_methods": ["digital", "in_person"],
+      "supported_enrollment_methods": ["digital"],
       "transit_agency": 1
     }
   },
@@ -136,7 +136,7 @@
       "help_template": "core/includes/help--calfresh.html",
       "claims_scope": "verify:calfresh",
       "claims_eligibility_claim": "calfresh",
-      "supported_enrollment_methods": ["digital", "in_person"],
+      "supported_enrollment_methods": ["digital"],
       "transit_agency": 1
     }
   },

@@ -1,7 +1,7 @@
 {% extends "admin/flow-base.html" %}
 
 {% block flow-content %}
-  <div class="p-3">{% include "core/includes/form.html" with form=form %}</div>
+  <div class="p-3">{% include "in_person/includes/eligibility-form.html" with form=form %}</div>
   <div class="row d-flex justify-content-start p-3 pt-8">
     <div class="col-6">
       {% url form.cancel_url as url_cancel %}
