@@ -18,9 +18,9 @@ def mocked_analytics_module(mocked_analytics_module):
 
 
 @pytest.fixture
-def mocked_eligibility_auth_request(mocked_eligibility_request_session, mocked_session_oauth_token):
+def mocked_eligibility_auth_request(mocked_eligibility_request_session, mocked_session_oauth_authorized):
     """
-    Stub fixture combines mocked_eligibility_request_session and mocked_session_oauth_token
+    Stub fixture combines mocked_eligibility_request_session and mocked_session_oauth_authorized
     so that session behaves like in an authenticated request to the eligibility app
     """
     pass
@@ -260,7 +260,9 @@ def test_confirm_get_verified(client, mocked_session_update):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow_uses_claims_verification", "mocked_session_oauth_token")
+@pytest.mark.usefixtures(
+    "mocked_session_agency", "mocked_session_flow_uses_claims_verification", "mocked_session_oauth_authorized"
+)
 def test_confirm_get_oauth_verified(mocker, client, mocked_session_update, mocked_analytics_module):
     mocker.patch("benefits.eligibility.verify.eligibility_from_oauth", return_value=True)
 
@@ -277,7 +279,7 @@ def test_confirm_get_oauth_verified(mocker, client, mocked_session_update, mocke
 @pytest.mark.usefixtures(
     "mocked_session_agency",
     "mocked_session_flow_uses_claims_verification",
-    "mocked_session_oauth_token",
+    "mocked_session_oauth_authorized",
     "mocked_session_update",
 )
 def test_confirm_get_oauth_unverified(mocker, client):

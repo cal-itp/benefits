@@ -144,7 +144,7 @@ def authorize(request):
                 elif claim_value >= 10:
                     error_claim[claim] = claim_value
 
-    session.update(request, oauth_token=oauth_token_authorized, oauth_claims=stored_claims)
+    session.update(request, oauth_authorized=oauth_token_authorized, oauth_claims=stored_claims)
     analytics.finished_sign_in(request, error=error_claim)
 
     return redirect(routes.ELIGIBILITY_CONFIRM)
