@@ -27,7 +27,7 @@ _ENROLLMENT_EXP = "enrollment_expiry"
 _FLOW = "flow"
 _LANG = "lang"
 _OAUTH_CLAIMS = "oauth_claims"
-_OAUTH_TOKEN = "oauth_token"
+_OAUTH_AUTHORIZED = "oauth_authorized"
 _ORIGIN = "origin"
 _START = "start"
 _UID = "uid"
@@ -59,7 +59,7 @@ def context_dict(request):
         _ENROLLMENT_TOKEN: enrollment_token(request),
         _ENROLLMENT_TOKEN_EXP: enrollment_token_expiry(request),
         _LANG: language(request),
-        _OAUTH_TOKEN: oauth_token(request),
+        _OAUTH_AUTHORIZED: oauth_authorized(request),
         _OAUTH_CLAIMS: oauth_claims(request),
         _ORIGIN: origin(request),
         _START: start(request),
@@ -143,17 +143,17 @@ def language(request):
 
 def logged_in(request):
     """Check if the current session has an OAuth token."""
-    return bool(oauth_token(request))
+    return bool(oauth_authorized(request))
 
 
 def logout(request):
     """Reset the session claims and tokens."""
-    update(request, oauth_claims=[], oauth_token=False, enrollment_token=False)
+    update(request, oauth_claims=[], oauth_authorized=False, enrollment_token=False)
 
 
-def oauth_token(request):
-    """Get the oauth token from the request's session, or None"""
-    return request.session.get(_OAUTH_TOKEN)
+def oauth_authorized(request):
+    """Get the oauth authorization status from the request's session, or None"""
+    return request.session.get(_OAUTH_AUTHORIZED)
 
 
 def oauth_claims(request):
@@ -189,7 +189,7 @@ def reset(request):
     request.session[_ENROLLMENT_EXP] = None
     request.session[_ENROLLMENT_TOKEN] = None
     request.session[_ENROLLMENT_TOKEN_EXP] = None
-    request.session[_OAUTH_TOKEN] = None
+    request.session[_OAUTH_AUTHORIZED] = False
     request.session[_OAUTH_CLAIMS] = None
 
     if _UID not in request.session or not request.session[_UID]:
@@ -248,7 +248,7 @@ def update(
     enrollment_expiry=None,
     enrollment_token=None,
     enrollment_token_exp=None,
-    oauth_token=None,
+    oauth_authorized=None,
     oauth_claims=None,
     origin=None,
 ):
@@ -271,8 +271,8 @@ def update(
     if enrollment_token is not None:
         request.session[_ENROLLMENT_TOKEN] = enrollment_token
         request.session[_ENROLLMENT_TOKEN_EXP] = enrollment_token_exp
-    if oauth_token is not None:
-        request.session[_OAUTH_TOKEN] = oauth_token
+    if oauth_authorized is not None:
+        request.session[_OAUTH_AUTHORIZED] = oauth_authorized
     if oauth_claims is not None:
         request.session[_OAUTH_CLAIMS] = oauth_claims
     if origin is not None:
