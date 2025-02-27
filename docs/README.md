@@ -22,9 +22,9 @@ The following California transit agencies have launched Cal-ITP Benefits for the
 | Transit agency                                  | Initial agency launch | Older adults | Agency card | Veterans | Medicare cardholders | Low-income |
 | ----------------------------------------------- | --------------------- | ------------ | ----------- | -------- | -------------------- | ---------- |
 | **Monterey-Salinas Transit**                    | 12/2021               | ✅           | ✅          | ✅       | ✅                   | ―          |
-| **Santa Barbara Metropolitan Transit District** | 10/2023               | ✅           | ✅          | ―        | ―                    | ―          |
+| **Santa Barbara Metropolitan Transit District** | 10/2023               | ✅           | ✅          | ―        | ✅                   | ―          |
 | **Sacramento Regional Transit District**        | 10/2024               | ✅           | ―           | ✅       | ✅                   | ―          |
-| **Nevada County Connects**                      | 02/2025 (target)      | In test      | ―           | ―        | In test              | ―          |
+| **Nevada County Connects**                      | 03/2025 (target)      | In test      | ―           | ―        | In test              | ―          |
 
 ## Supported enrollment pathways
 
