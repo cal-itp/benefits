@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-02-26 18:43-0800\n"
+"POT-Creation-Date: 2025-02-26 20:37-0800\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,24 +30,28 @@ msgstr ""
 msgid "Get a reduced fare on Santa Barbara MTD buses when you tap to ride"
 msgstr ""
 
+#, python-format
 msgid ""
 "Cal-ITP doesn’t save any of your information. All CST transit benefits "
-"reduce fares by 50% for bus service on fixed routes."
+"reduce fares by 50%% for bus service on fixed routes."
 msgstr ""
 
+#, python-format
 msgid ""
 "Cal-ITP doesn’t save any of your information. All MST transit benefits "
-"reduce fares by 50% for bus service on fixed routes."
+"reduce fares by 50%% for bus service on fixed routes."
 msgstr ""
 
+#, python-format
 msgid ""
 "Cal-ITP doesn’t save any of your information. All Nevada County Connects "
-"transit benefits reduce fares by 50% for bus service on fixed routes."
+"transit benefits reduce fares by 50%% for bus service on fixed routes."
 msgstr ""
 
+#, python-format
 msgid ""
 "Cal-ITP doesn’t save any of your information. All SacRT transit benefits "
-"reduce fares by 50% for bus service on fixed routes."
+"reduce fares by 50%% for bus service on fixed routes."
 msgstr ""
 
 msgid ""
@@ -57,9 +61,10 @@ msgid ""
 "rail tap devices later in the year."
 msgstr ""
 
+#, python-format
 msgid ""
 "Cal-ITP doesn’t save any of your information. All SBMTD transit benefits "
-"reduce fares by 50% for bus service on fixed routes."
+"reduce fares by 50%% for bus service on fixed routes."
 msgstr ""
 
 msgid ""
