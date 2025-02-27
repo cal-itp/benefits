@@ -308,6 +308,8 @@ CSP_DEFAULT_SRC = ["'self'"]
 
 CSP_CONNECT_SRC = ["'self'", "https://api.amplitude.com/"]
 env_connect_src = _filter_empty(os.environ.get("DJANGO_CSP_CONNECT_SRC", "").split(","))
+if RECAPTCHA_ENABLED:
+    env_connect_src.append("https://www.google.com/recaptcha/")
 CSP_CONNECT_SRC.extend(env_connect_src)
 
 CSP_FONT_SRC = ["'self'", "https://fonts.gstatic.com/"]
