@@ -40,7 +40,6 @@ msgstr ""
 "Obtenga una tarifa reducida en los autobuses del Santa Barbara MTD cuando "
 "toque para viajar"
 
-#, python-format
 msgid ""
 "Cal-ITP doesn’t save any of your information. All CST transit benefits "
 "reduce fares by 50% for bus service on fixed routes."
@@ -48,7 +47,6 @@ msgstr ""
 "Cal-ITP no almacena su información. Todos los beneficios de tránsito de CST "
 "reducen las tarifas de autobuses en un 50%."
 
-#, python-format
 msgid ""
 "Cal-ITP doesn’t save any of your information. All MST transit benefits "
 "reduce fares by 50% for bus service on fixed routes."
@@ -56,7 +54,6 @@ msgstr ""
 "Cal-ITP no almacena su información. Todos los beneficios de tránsito de MST "
 "reducen las tarifas de autobuses en un 50%."
 
-#, python-format
 msgid ""
 "Cal-ITP doesn’t save any of your information. All Nevada County Connects "
 "transit benefits reduce fares by 50% for bus service on fixed routes."
@@ -64,7 +61,6 @@ msgstr ""
 "Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
 "Nevada County Connects reducen las tarifas de autobuses en un 50%."
 
-#, python-format
 msgid ""
 "Cal-ITP doesn’t save any of your information. All SacRT transit benefits "
 "reduce fares by 50% for bus service on fixed routes."
@@ -85,7 +81,6 @@ msgstr ""
 "todos los autobuses de SacRT a partir de principios de 2025 e incluirá "
 "lectores de tarjeta en el tren ligero más adelante en el año."
 
-#, python-format
 msgid ""
 "Cal-ITP doesn’t save any of your information. All SBMTD transit benefits "
 "reduce fares by 50% for bus service on fixed routes."
