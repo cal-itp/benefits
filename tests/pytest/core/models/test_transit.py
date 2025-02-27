@@ -33,16 +33,6 @@ def test_TransitAgency_str(model_TransitAgency):
 
 
 @pytest.mark.django_db
-def test_TransitAgency_template_overrides(model_TransitAgency):
-    assert model_TransitAgency.eligibility_index_template == model_TransitAgency.eligibility_index_template_override
-
-    model_TransitAgency.eligibility_index_template_override = ""
-    model_TransitAgency.save()
-
-    assert model_TransitAgency.eligibility_index_template == f"eligibility/index--{model_TransitAgency.slug}.html"
-
-
-@pytest.mark.django_db
 def test_TransitAgency_index_url(model_TransitAgency):
     result = model_TransitAgency.index_url
 
@@ -176,16 +166,3 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
     assert "transit_processor_audience" in errors
     assert "transit_processor_client_id" in errors
     assert "transit_processor_client_secret_name" in errors
-
-
-@pytest.mark.django_db
-@pytest.mark.parametrize("template_attribute", ["eligibility_index_template_override"])
-def test_TransitAgency_clean_templates(model_TransitAgency_inactive, template_attribute):
-    setattr(model_TransitAgency_inactive, template_attribute, "does/not/exist.html")
-    # agency is inactive, OK to have missing template
-    model_TransitAgency_inactive.clean()
-
-    # now mark it active and expect failure on clean()
-    model_TransitAgency_inactive.active = True
-    with pytest.raises(ValidationError, match="Template not found: does/not/exist.html"):
-        model_TransitAgency_inactive.clean()
