@@ -112,16 +112,15 @@ def test_index_get_agency_multiple_flows(mocker, model_TransitAgency, model_Enro
     mock_manager.all.return_value = [model_EnrollmentFlow, model_EnrollmentFlow]
     type(mock_agency).enrollment_flows = mocker.PropertyMock(return_value=mock_manager)
     type(mock_agency).enrollment_flows.filter.return_value = [model_EnrollmentFlow, model_EnrollmentFlow]
+    type(mock_agency).eligibility_index_context = mocker.PropertyMock(return_value=dict(form_text="copy goes here"))
 
-    mock_agency.index_url = "/agency"
-    mock_agency.eligibility_index_template = "eligibility/index.html"
     mocked_session_agency.return_value = mock_agency
 
     path = reverse(routes.ELIGIBILITY_INDEX)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == mock_agency.eligibility_index_template
+    assert response.template_name == "eligibility/index.html"
     assert "form" in response.context_data
     assert isinstance(response.context_data["form"], EnrollmentFlowSelectionForm)
 
@@ -136,16 +135,15 @@ def test_index_get_agency_single_flow(mocker, model_TransitAgency, model_Enrollm
     mock_manager.all.return_value = [model_EnrollmentFlow]
     type(mock_agency).enrollment_flows = mocker.PropertyMock(return_value=mock_manager)
     type(mock_agency).enrollment_flows.filter.return_value = [model_EnrollmentFlow, model_EnrollmentFlow]
+    type(mock_agency).eligibility_index_context = mocker.PropertyMock(return_value=dict(form_text="copy goes here"))
 
-    mock_agency.index_url = "/agency"
-    mock_agency.eligibility_index_template = "eligibility/index.html"
     mocked_session_agency.return_value = mock_agency
 
     path = reverse(routes.ELIGIBILITY_INDEX)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == mock_agency.eligibility_index_template
+    assert response.template_name == "eligibility/index.html"
     assert "form" in response.context_data
     assert isinstance(response.context_data["form"], EnrollmentFlowSelectionForm)
 
