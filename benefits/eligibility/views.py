@@ -47,9 +47,11 @@ def index(request):
             if recaptcha.has_error(form):
                 messages.error(request, "Recaptcha failed. Please try again.")
             context["form"] = form
-            response = TemplateResponse(request, agency.eligibility_index_template, context)
+            context.update(agency.eligibility_index_context)
+            response = TemplateResponse(request, "eligibility/index.html", context)
     else:
-        response = TemplateResponse(request, agency.eligibility_index_template, context)
+        context.update(agency.eligibility_index_context)
+        response = TemplateResponse(request, "eligibility/index.html", context)
 
     return response
 
