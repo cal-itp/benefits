@@ -46,18 +46,17 @@ timeline
 
           Q1<br>Next
         : Front-end enhancements and optimization
-        : Benefits admin tool (user management)
         : Deploy in-person enrollments to all agencies
         : Support for Discover and American Express cards
-        : Enhanced Veteran eligibility checks (disability status)
 
           Q2<br>Planned
-      %%: Deploy Connect Card enrollment pathway to SACOG agencies
-        : Support for multiple fare processors (Enghouse)
-        : Single eligibility check across multiple benefit options
         : Benefits admin tool (agency configuration)
+        : Support for multiple fare processors (Enghouse)
+        : Benefits admin tool (user management)
+        : Enhanced Veteran eligibility checks (disability status)
 
           H2<br>Projected
+        : Single eligibility check across multiple benefit options
         : Eligibility check for individuals with disabilities (CA DMV)
 
 %%{
