@@ -85,7 +85,7 @@ def confirm(request):
     if request.method == "GET" and flow.uses_claims_verification:
         analytics.started_eligibility(request, flow)
 
-        is_verified = verify.eligibility_from_oauth(flow, session.oauth_claims(request), agency)
+        is_verified = verify.eligibility_from_oauth(flow, session.oauth_claims(request))
 
         if is_verified:
             return verified(request)
