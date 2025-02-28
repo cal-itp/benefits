@@ -197,7 +197,7 @@ class TransitAgency(models.Model):
 
     def clean(self):
         field_errors = {}
-        template_errors = []
+        non_field_errors = []
 
         if self.active:
             message = "This field is required for active transit agencies."
@@ -219,17 +219,22 @@ class TransitAgency(models.Model):
                 )
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
+            try:
+                self.index_context
+            except KeyError:
+                non_field_errors.append(ValidationError("Agency Index copy is missing"))
+
             # since templates are calculated from the pattern or the override field
             # we can't add a field-level validation error
             # so just create directly for a missing template
             for t in [self.eligibility_index_template]:
                 if not template_path(t):
-                    template_errors.append(ValidationError(f"Template not found: {t}"))
+                    non_field_errors.append(ValidationError(f"Template not found: {t}"))
 
         if field_errors:
             raise ValidationError(field_errors)
-        if template_errors:
-            raise ValidationError(template_errors)
+        if non_field_errors:
+            raise ValidationError(non_field_errors)
 
     @staticmethod
     def by_id(id):

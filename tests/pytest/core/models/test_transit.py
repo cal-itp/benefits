@@ -179,6 +179,17 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
 
 
 @pytest.mark.django_db
+def test_TransitAgency_clean_index_context_missing(model_TransitAgency_inactive):
+    model_TransitAgency_inactive.slug = "new_slug_we_forgot_to_add_copy_for"
+    # agency is inactive, OK to have missing index context
+    model_TransitAgency_inactive.clean()
+
+    model_TransitAgency_inactive.active = True
+    with pytest.raises(ValidationError, match="Agency Index copy is missing"):
+        model_TransitAgency_inactive.clean()
+
+
+@pytest.mark.django_db
 @pytest.mark.parametrize("template_attribute", ["eligibility_index_template_override"])
 def test_TransitAgency_clean_templates(model_TransitAgency_inactive, template_attribute):
     setattr(model_TransitAgency_inactive, template_attribute, "does/not/exist.html")
