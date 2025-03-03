@@ -44,12 +44,12 @@ timeline
 %% Cal-ITP Benefits Epics (2025)
           section 2025
 
-          Q1<br>Next
+          Q1<br>Now
         : Front-end enhancements and optimization
         : Deploy in-person enrollments to all agencies
         : Support for Discover and American Express cards
 
-          Q2<br>Planned
+          Q2<br>Next
         : Benefits admin tool (agency configuration)
         : Support for multiple fare processors (Enghouse)
         : Benefits admin tool (user management)
