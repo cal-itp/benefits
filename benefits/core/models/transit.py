@@ -7,6 +7,7 @@ from django.db import models
 from django.urls import reverse
 
 from benefits.core import context as core_context
+from benefits.eligibility import context as eligibility_context
 from benefits.routes import routes
 from .common import PemData, SecretNameField
 
@@ -164,7 +165,7 @@ class TransitAgency(models.Model):
 
     @property
     def eligibility_index_context(self):
-        return core_context.eligibility_index[self.slug].dict()
+        return eligibility_context.eligibility_index[self.slug].dict()
 
     @property
     def eligibility_index_url(self):
