@@ -64,7 +64,7 @@ def start(request):
 
     flow = session.flow(request)
 
-    return TemplateResponse(request, flow.eligibility_start_template)
+    return TemplateResponse(request, "eligibility/start.html", flow.eligibility_start_context)
 
 
 @decorator_from_middleware(AgencySessionRequired)
