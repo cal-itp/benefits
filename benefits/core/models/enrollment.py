@@ -195,12 +195,8 @@ class EnrollmentFlow(models.Model):
             return self.selection_label_template_override or f"{prefix}--{self.system_name}.html"
 
     @property
-    def eligibility_start_template(self):
-        prefix = "eligibility/start"
-        if self.uses_api_verification:
-            return self.eligibility_start_template_override or f"{prefix}--{self.agency_card_name}.html"
-        else:
-            return self.eligibility_start_template_override or f"{prefix}--{self.system_name}.html"
+    def eligibility_start_context(self):
+        return core_context.eligibility_start[self.system_name]
 
     @property
     def eligibility_unverified_template(self):

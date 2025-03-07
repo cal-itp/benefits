@@ -27,4 +27,10 @@
 {% endblock inner-content %}
 
 {% block call-to-action-button %}
-{% endblock call-to-action-button %}
+  {% translate call_to_action_button.text as button_text %}
+  <a href="{% url routes.OAUTH_LOGIN %}" class="btn btn-lg btn-primary login">
+    {{ button_text }}
+    {% if call_to_action_button.fallback_text %}
+      <span class="fallback-text white-logo">{{ call_to_action_button.fallback_text }}</span>
+    </a>
+  {% endblock call-to-action-button %}
