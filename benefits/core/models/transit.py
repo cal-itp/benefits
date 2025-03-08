@@ -7,8 +7,9 @@ from django.db import models
 from django.urls import reverse
 
 from benefits.core import context as core_context
+from benefits.eligibility import context as eligibility_context
 from benefits.routes import routes
-from .common import PemData, SecretNameField, template_path
+from .common import PemData, SecretNameField
 
 logger = logging.getLogger(__name__)
 
@@ -72,11 +73,6 @@ class TransitAgency(models.Model):
         help_text="URL of a website/page with more information about the agency's discounts",
     )
     phone = models.TextField(default="", blank=True, help_text="Agency customer support phone number")
-    eligibility_index_template_override = models.TextField(
-        help_text="Override the default template used for this agency's eligibility landing page",
-        blank=True,
-        default="",
-    )
     eligibility_api_id = models.TextField(
         help_text="The identifier for this agency used in Eligibility API calls.",
         blank=True,
@@ -168,8 +164,8 @@ class TransitAgency(models.Model):
         return reverse(routes.AGENCY_INDEX, args=[self.slug])
 
     @property
-    def eligibility_index_template(self):
-        return self.eligibility_index_template_override or f"eligibility/index--{self.slug}.html"
+    def eligibility_index_context(self):
+        return eligibility_context.eligibility_index[self.slug].dict()
 
     @property
     def eligibility_index_url(self):
@@ -197,7 +193,6 @@ class TransitAgency(models.Model):
 
     def clean(self):
         field_errors = {}
-        template_errors = []
 
         if self.active:
             message = "This field is required for active transit agencies."
@@ -219,17 +214,8 @@ class TransitAgency(models.Model):
                 )
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
-            # since templates are calculated from the pattern or the override field
-            # we can't add a field-level validation error
-            # so just create directly for a missing template
-            for t in [self.eligibility_index_template]:
-                if not template_path(t):
-                    template_errors.append(ValidationError(f"Template not found: {t}"))
-
         if field_errors:
             raise ValidationError(field_errors)
-        if template_errors:
-            raise ValidationError(template_errors)
 
     @staticmethod
     def by_id(id):

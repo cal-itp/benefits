@@ -176,7 +176,6 @@ def model_TransitAgency(model_PemData, model_TransitProcessor):
         eligibility_api_id="test123",
         eligibility_api_private_key=model_PemData,
         eligibility_api_public_key=model_PemData,
-        eligibility_index_template_override="eligibility/index.html",
         logo_large="agencies/cst-lg.png",
         logo_small="agencies/cst-sm.png",
     )

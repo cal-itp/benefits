@@ -19,8 +19,14 @@
 {% endblock headline %}
 
 {% block inner-content %}
-  {% block form-text %}
-  {% endblock form-text %}
+  {% for text in form_text %}
+    {% if not forloop.last %}
+      <p class="pt-4">{% translate text %}</p>
+    {% else %}
+      <p class="pt-4 pb-4">{% translate text %}</p>
+    {% endif %}
+  {% endfor %}
+
   {% include "core/includes/form.html" with form=form %}
   <script nonce="{{ request.csp_nonce }}">
     document.querySelectorAll(".modal").forEach((modal) => {

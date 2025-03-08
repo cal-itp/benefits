@@ -52,7 +52,7 @@ class TestTransitAgencyAdmin:
         [
             (
                 "staff",
-                ["eligibility_index_template_override", "eligibility_api_id", "transit_processor"],
+                ["eligibility_api_id", "transit_processor"],
             ),
             ("super", ()),
         ],
