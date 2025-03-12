@@ -5,7 +5,7 @@ from django.forms import ValidationError
 from django.contrib.admin.forms import AdminAuthenticationForm
 from django.contrib.auth.models import Group
 from django.template.response import TemplateResponse
-from django.utils.decorators import decorator_from_middleware
+from django.utils.decorators import method_decorator, decorator_from_middleware
 
 from benefits.core.middleware import RecaptchaEnabled
 from benefits.core.models import TransitAgency
@@ -27,7 +27,7 @@ class BenefitsAdminSite(AdminSite):
     index_title = "Dashboard"
     login_form = BenefitsAdminLoginForm
 
-    @decorator_from_middleware(RecaptchaEnabled)
+    @method_decorator(decorator_from_middleware(RecaptchaEnabled))
     def login(self, request, extra_context=None):
         return super().login(request, extra_context)
 
