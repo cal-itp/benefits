@@ -1,5 +1,4 @@
 {% extends "admin/login.html" %}
-{% load i18n static %}
 
 {% block bodyclass %}
   {{ block.super }} bg-secondary-subtle
@@ -20,11 +19,7 @@
 {% endblock branding %}
 
 {% block content %}
-  {% if form.errors and not form.non_field_errors %}
-    <p class="errornote">
-      {% blocktranslate count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}
-    </p>
-  {% endif %}
+  {% if form.errors and not form.non_field_errors %}<p class="errornote">Please correct the error(s) below.</p>{% endif %}
 
   {% if form.non_field_errors %}
     {% for error in form.non_field_errors %}<p class="errornote">{{ error }}</p>{% endfor %}
@@ -34,10 +29,8 @@
 
     {% if user.is_authenticated %}
       <p class="errornote">
-        {% blocktranslate trimmed %}
-          You are authenticated as {{ username }}, but are not authorized to
-          access this page. Would you like to login to a different account?
-        {% endblocktranslate %}
+        You are authenticated as {{ username }}, but are not authorized to
+        access this page. Would you like to login to a different account?
       </p>
     {% endif %}
 
@@ -55,11 +48,11 @@
       {% url "admin_password_reset" as password_reset_url %}
       {% if password_reset_url %}
         <div class="password-reset-link">
-          <a href="{{ password_reset_url }}">{% translate "Forgotten your login credentials?" %}</a>
+          <a href="{{ password_reset_url }}">Forgotten your login credentials?</a>
         </div>
       {% endif %}
       <div class="submit-row">
-        <input type="submit" value="{% translate "Log in" %}">
+        <input type="submit" value="Log in">
       </div>
 
       {% if request.recaptcha %}
