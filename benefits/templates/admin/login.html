@@ -4,9 +4,6 @@
   {{ block.super }} bg-secondary-subtle
 {% endblock bodyclass %}
 
-{% block dark-mode-vars %}
-{% endblock dark-mode-vars %}
-
 {% block extrastyle %}
   {% comment %} Overriding instead of extending agency-base here to remove jQuery declaration, which admin/login.html includes on its own {% endcomment %}
   {% include "admin/includes/favicon.html" %}
