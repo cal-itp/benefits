@@ -120,7 +120,6 @@ class TestEnrollmentFlowAdmin:
                 [
                     "eligibility_api_url",
                     "eligibility_form_class",
-                    "eligibility_start_template_override",
                     "eligibility_unverified_template_override",
                     "selection_label_template_override",
                     "reenrollment_error_template",

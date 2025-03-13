@@ -12,7 +12,6 @@ Note that a `TransitAgency` model requires:
 - an SVG or PNG file of the transit agency's logo
 - HTML templates for various buttons, text and other user interface elements of the flow, including:
   - `selection_label_template`: _Required for enrollment flows_ - Text and optional modals for the radio button form on the Eligibility Index page
-  - `eligibility_start_template`: _Required for enrollment flows_ - Text and optional custom styles for call to action button on the Eligibility Start page
   - `enrollment_success_template`: _Required for agencies_ - Text for Enrollment Success page
   - `help_template`: _Required for agencies_ - Agency-specific help questions and answers
   - `sign_out_button_template`: _Required for claims providers_ - Sign out link button, used on any page after sign in

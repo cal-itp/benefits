@@ -80,7 +80,6 @@ def model_EnrollmentFlow(model_TransitAgency):
     flow = EnrollmentFlow.objects.create(
         system_name="senior",
         selection_label_template_override="eligibility/includes/selection-label.html",
-        eligibility_start_template_override="eligibility/start.html",
         eligibility_unverified_template_override="eligibility/unverified.html",
         label="Test flow label",
         group_id="group123",
