@@ -32,10 +32,6 @@ class BenefitsAdminSite(AdminSite):
     def login(self, request, extra_context=None):
         return super().login(request, extra_context)
 
-    def __init__(self, name="admin"):
-        super().__init__(name)
-        self.enable_nav_sidebar = False
-
     def index(self, request, extra_context=None):
         """
         Display the main admin index page if the user is a superuser or a "staff_group" user.
