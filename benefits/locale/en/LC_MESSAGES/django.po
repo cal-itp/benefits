@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-03-13 10:47-0700\n"
+"POT-Creation-Date: 2025-03-13 11:40-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -406,6 +406,9 @@ msgid ""
 "reduce fares by 50%% for bus service on fixed routes."
 msgstr ""
 
+msgid "Get started with"
+msgstr ""
+
 msgid "Agency card overview"
 msgstr ""
 
@@ -419,9 +422,6 @@ msgid "CalFresh benefit overview"
 msgstr ""
 
 msgid "You selected a CalFresh Cardholder transit benefit."
-msgstr ""
-
-msgid "Get started with"
 msgstr ""
 
 msgid "You selected a Courtesy Card transit benefit."
