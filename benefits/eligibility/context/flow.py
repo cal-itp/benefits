@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import Optional
 
 from django.utils.translation import gettext_lazy as _
@@ -12,6 +12,7 @@ class CTAButton:
     text: str
     route: str
     fallback_text: Optional[str] = None
+    extra_classes: Optional[str] = None
 
 
 @dataclass
@@ -21,6 +22,9 @@ class EligibilityStart:
     eligibility_item_template: str
     call_to_action_button: CTAButton
 
+    def dict(self):
+        return asdict(self)
+
 
 class LoginGovEligibilityStart(EligibilityStart):
     def __init__(self, page_title, headline_text):
@@ -28,7 +32,9 @@ class LoginGovEligibilityStart(EligibilityStart):
             page_title=page_title,
             headline_text=headline_text,
             eligibility_item_template="eligibility/includes/eligibility-item--identification--start--login-gov.html",
-            call_to_action_button=CTAButton(text=_("Get started with"), fallback_text="Login.gov", route=routes.OAUTH_LOGIN),
+            call_to_action_button=CTAButton(
+                text=_("Get started with"), fallback_text="Login.gov", route=routes.OAUTH_LOGIN, extra_classes="login"
+            ),
         )
 
 
