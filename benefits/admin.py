@@ -26,6 +26,7 @@ class BenefitsAdminSite(AdminSite):
     site_header = "Administrator"
     index_title = "Dashboard"
     login_form = BenefitsAdminLoginForm
+    enable_nav_sidebar = False
 
     @method_decorator(decorator_from_middleware(RecaptchaEnabled))
     def login(self, request, extra_context=None):
