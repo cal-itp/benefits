@@ -11,8 +11,6 @@ Note that a `TransitAgency` model requires:
 - an `info_url` and `phone` for users to contact customer service
 - an SVG or PNG file of the transit agency's logo
 - HTML templates for various buttons, text and other user interface elements of the flow, including:
-  - `index_template`: _Required for agencies_ - Text for agency direct entry page
-  - `eligibility_index_template`: _Required for agencies_ - Text for Eligibility Index page
   - `selection_label_template`: _Required for enrollment flows_ - Text and optional modals for the radio button form on the Eligibility Index page
   - `eligibility_start_template`: _Required for enrollment flows_ - Text and optional custom styles for call to action button on the Eligibility Start page
   - `enrollment_success_template`: _Required for agencies_ - Text for Enrollment Success page
