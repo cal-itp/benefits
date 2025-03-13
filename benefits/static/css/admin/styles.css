@@ -194,7 +194,7 @@ iframe.card-collection {
 }
 
 /* Login Page link styles */
-.login a:not(.btn):not(.card) {
+.login a:not(.btn):not(.btn-content) {
   color: var(--primary-color);
   text-decoration: underline;
   text-decoration-style: solid;
@@ -202,19 +202,18 @@ iframe.card-collection {
   border-radius: var(--focus-border-radius);
 }
 
-.login a:hover:not(.btn) {
+.login a:hover:not(.btn):not(.btn-content) {
   color: var(--hover-color);
   text-decoration: underline;
 }
 
-.login a:focus:not(.btn):not(.card):not(.footer-link):not(#skip-to-content),
-.login
-  a:focus-visible:not(.btn):not(.card):not(.footer-link):not(#skip-to-content) {
+.login a:focus:not(.btn):not(.btn-content),
+.login a:focus-visible:not(.btn):not(.btn-content) {
   outline: var(--focus-style) !important;
   outline-offset: var(--focus-outline-offset) !important;
 }
 
-.login a:visited:not(.btn) {
+.login a:visited:not(.btn):not(.btn-content) {
   color: var(--selected-color);
 }
 
