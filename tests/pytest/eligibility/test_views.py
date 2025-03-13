@@ -192,10 +192,11 @@ def test_index_calls_session_logout(client, session_logout_spy):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_flow_selection_form", "mocked_session_flow_uses_claims_verification")
-def test_start_flow_uses_claims_verification_logged_in(mocker, client):
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_flow_selection_form")
+def test_start_flow_uses_claims_verification_logged_in(mocker, client, mocked_session_flow_uses_claims_verification):
     mock_session = mocker.patch("benefits.eligibility.views.session")
     mock_session.logged_in.return_value = True
+    mock_session.flow.return_value = mocked_session_flow_uses_claims_verification(None)
 
     path = reverse(routes.ELIGIBILITY_START)
     response = client.get(path)
@@ -204,10 +205,11 @@ def test_start_flow_uses_claims_verification_logged_in(mocker, client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_flow_selection_form", "mocked_session_flow_uses_claims_verification")
-def test_start_flow_uses_claims_verification_not_logged_in(mocker, client):
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_flow_selection_form")
+def test_start_flow_uses_claims_verification_not_logged_in(mocker, client, mocked_session_flow_uses_claims_verification):
     mock_session = mocker.patch("benefits.eligibility.views.session")
     mock_session.logged_in.return_value = False
+    mock_session.flow.return_value = mocked_session_flow_uses_claims_verification(None)
 
     path = reverse(routes.ELIGIBILITY_START)
     response = client.get(path)
@@ -216,10 +218,11 @@ def test_start_flow_uses_claims_verification_not_logged_in(mocker, client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures(
-    "mocked_session_agency", "mocked_flow_selection_form", "mocked_session_flow_does_not_use_claims_verification"
-)
-def test_start_flow_does_not_use_claims_verification(client):
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_flow_selection_form")
+def test_start_flow_does_not_use_claims_verification(mocker, client, mocked_session_flow_does_not_use_claims_verification):
+    mock_session = mocker.patch("benefits.eligibility.views.session")
+    mock_session.logged_in.return_value = False
+    mock_session.flow.return_value = mocked_session_flow_does_not_use_claims_verification(None)
     path = reverse(routes.ELIGIBILITY_START)
     response = client.get(path)
 
