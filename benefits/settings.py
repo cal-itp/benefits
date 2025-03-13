@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     "adminsortable2",
+    "cdt_identity",
     "django_google_sso",
     "benefits.core",
     "benefits.enrollment",
