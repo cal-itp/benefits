@@ -1,16 +1,35 @@
 from django.conf import settings
-from django.contrib import admin
+from django.contrib.admin import AdminSite
+
+from django.forms import ValidationError
+from django.contrib.admin.forms import AdminAuthenticationForm
 from django.contrib.auth.models import Group
 from django.template.response import TemplateResponse
+from django.utils.decorators import method_decorator, decorator_from_middleware
+
+from benefits.core.middleware import RecaptchaEnabled
 from benefits.core.models import TransitAgency
-from benefits.core import session
+from benefits.core import recaptcha, session
 
 
-class BenefitsAdminSite(admin.AdminSite):
+class BenefitsAdminLoginForm(AdminAuthenticationForm):
+
+    def clean(self):
+        if not recaptcha.verify(self.data):
+            raise ValidationError("reCAPTCHA failed, please try again.")
+        return super().clean()
+
+
+class BenefitsAdminSite(AdminSite):
 
     site_title = "Cal-ITP Benefits Administrator"
     site_header = "Administrator"
     index_title = "Dashboard"
+    login_form = BenefitsAdminLoginForm
+
+    @method_decorator(decorator_from_middleware(RecaptchaEnabled))
+    def login(self, request, extra_context=None):
+        return super().login(request, extra_context)
 
     def index(self, request, extra_context=None):
         """

@@ -193,6 +193,61 @@ iframe.card-collection {
   display: none;
 }
 
+/* Login Page link styles */
+.login a:not(.btn):not(.btn-content) {
+  color: var(--primary-color);
+  text-decoration: underline;
+  text-decoration-style: solid;
+  font-weight: var(--bold-font-weight);
+  border-radius: var(--focus-border-radius);
+}
+
+.login a:visited:not(.btn):not(.btn-content) {
+  color: var(--selected-color);
+}
+
+.login a:hover:not(.btn):not(.btn-content) {
+  color: var(--hover-color);
+  text-decoration: underline;
+}
+
+.login a:focus:not(.btn):not(.btn-content),
+.login a:focus-visible:not(.btn):not(.btn-content) {
+  outline: var(--focus-style) !important;
+  outline-offset: var(--focus-outline-offset) !important;
+}
+
+:root {
+  --external-link-icon-size: var(--font-size-24px);
+  --external-link-icon-size-small: var(--font-size-18px);
+}
+
+.login a[target="_blank"]::after {
+  content: " ";
+  background-color: currentColor;
+
+  mask-image:
+    url("/static/img/external-link.svg"),
+    linear-gradient(transparent, transparent);
+  mask-position: center center;
+  -webkit-mask-image:
+    url("/static/img/external-link.svg"),
+    linear-gradient(transparent, transparent);
+  -webkit-mask-position: center center;
+
+  display: inline-block;
+  position: relative;
+  width: var(--external-link-icon-size);
+  height: var(--external-link-icon-size);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+}
+
+/* reCAPTCHA: Do not display badge */
+.grecaptcha-badge {
+  display: none;
+}
+
 /* Login Page: Google SSO Button */
 .login .login-btn-area {
   width: 100%;
