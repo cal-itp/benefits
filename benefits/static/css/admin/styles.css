@@ -202,6 +202,10 @@ iframe.card-collection {
   border-radius: var(--focus-border-radius);
 }
 
+.login a:visited:not(.btn):not(.btn-content) {
+  color: var(--selected-color);
+}
+
 .login a:hover:not(.btn):not(.btn-content) {
   color: var(--hover-color);
   text-decoration: underline;
@@ -211,10 +215,6 @@ iframe.card-collection {
 .login a:focus-visible:not(.btn):not(.btn-content) {
   outline: var(--focus-style) !important;
   outline-offset: var(--focus-outline-offset) !important;
-}
-
-.login a:visited:not(.btn):not(.btn-content) {
-  color: var(--selected-color);
 }
 
 :root {
