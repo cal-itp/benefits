@@ -5,26 +5,34 @@
   {{ block.super | add:" eligibility-start" }}
 {% endblock classes %}
 
+{% block page-title %}
+  {% translate page_title %}
+{% endblock page-title %}
+
 {% block nav-buttons %}
   {% url routes.ELIGIBILITY_INDEX as url %}
   {% include "core/includes/button--previous-page.html" with url=url %}
 {% endblock nav-buttons %}
 
 {% block headline %}
-  <h1>
-    {% block headline-text %}
-    {% endblock headline-text %}
-  </h1>
+  <h1>{{ headline_text }}</h1>
 {% endblock headline %}
 
 {% block inner-content %}
   <p class="py-4">{% translate "You will need a few items to continue:" %}</p>
   <ul class="d-flex flex-column gap-4 list-unstyled ps-0 mb-0">
-    {% block eligibility-item %}
-    {% endblock eligibility-item %}
+    {% include eligibility_item_template %}
     {% include "eligibility/includes/eligibility-item--contactless-card--start.html" %}
   </ul>
 {% endblock inner-content %}
 
 {% block call-to-action-button %}
+  {% translate call_to_action_button.text as button_text %}
+  <a href="{% url call_to_action_button.route %}"
+     class="btn btn-lg btn-primary{% if call_to_action_button.extra_classes %} {{ call_to_action_button.extra_classes }}{% endif %}">
+    {{ button_text }}
+    {% if call_to_action_button.fallback_text %}
+      <span class="fallback-text white-logo">{{ call_to_action_button.fallback_text }}</span>
+    {% endif %}
+  </a>
 {% endblock call-to-action-button %}

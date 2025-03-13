@@ -11,6 +11,7 @@ from .common import PemData, SecretNameField, template_path
 from .claims import ClaimsProvider
 from .transit import TransitAgency
 from benefits.core import context as core_context
+from benefits.eligibility import context as eligibility_context
 from benefits.in_person import context as in_person_context
 
 logger = logging.getLogger(__name__)
@@ -119,11 +120,6 @@ class EnrollmentFlow(models.Model):
         default="",
         help_text="Override the default template that defines the end-user UI for selecting this flow among other options.",
     )
-    eligibility_start_template_override = models.TextField(
-        blank=True,
-        default="",
-        help_text="Override the default template for the informational page of this flow.",
-    )
     eligibility_unverified_template_override = models.TextField(
         blank=True,
         default="",
@@ -195,12 +191,8 @@ class EnrollmentFlow(models.Model):
             return self.selection_label_template_override or f"{prefix}--{self.system_name}.html"
 
     @property
-    def eligibility_start_template(self):
-        prefix = "eligibility/start"
-        if self.uses_api_verification:
-            return self.eligibility_start_template_override or f"{prefix}--{self.agency_card_name}.html"
-        else:
-            return self.eligibility_start_template_override or f"{prefix}--{self.system_name}.html"
+    def eligibility_start_context(self):
+        return eligibility_context.eligibility_start[self.system_name].dict()
 
     @property
     def eligibility_unverified_template(self):
@@ -268,7 +260,6 @@ class EnrollmentFlow(models.Model):
         if self.transit_agency:
             templates = [
                 self.selection_label_template,
-                self.eligibility_start_template,
                 self.eligibility_unverified_template,
                 self.enrollment_index_template,
                 self.enrollment_success_template,
