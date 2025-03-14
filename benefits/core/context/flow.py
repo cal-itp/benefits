@@ -1,6 +1,7 @@
 from dataclasses import asdict, dataclass
 
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class SystemName(models.TextChoices):
@@ -24,4 +25,16 @@ class FlowHelp:
         return asdict(self)
 
 
-flows_help = {}
+flows_help = {
+    SystemName.AGENCY_CARD.value: [
+        FlowHelp(
+            id="cst-agency-card",
+            headline=_("What is an Agency Card?"),
+            text=_(
+                "California State Transit issues Agency Cards to riders who qualify for a number of reduced fare "
+                "programs. This transit benefit may need to be renewed in the future based on the expiration date of the "
+                'Agency Card. Learn more at the <a href="https://www.agency-website.com" target="_blank" rel="noopener noreferrer">www.agency-website.com</a>.'  # noqa: E501
+            ),
+        )
+    ],
+}
