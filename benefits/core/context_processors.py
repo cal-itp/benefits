@@ -15,9 +15,16 @@ def unique_values(original_list):
 
 
 def _agency_context(agency: models.TransitAgency):
+    # build up a single list of all flow help contexts
+    flows_help = []
+    for flow in agency.enrollment_flows.all():
+        # flow.help_context is a list of context objects
+        if len(flow.help_context) > 0:
+            flows_help.extend(flow.help_context)
+
     agency_context = {
         "eligibility_index_url": agency.eligibility_index_url,
-        "help_templates": unique_values([f.help_template for f in agency.enrollment_flows.all() if f.help_template]),
+        "flows_help": flows_help,
         "info_url": agency.info_url,
         "long_name": agency.long_name,
         "phone": agency.phone,
