@@ -113,4 +113,15 @@ flows_help = {
             ),
         ),
     ],
+    SystemName.REDUCED_FARE_MOBILITY_ID.value: [
+        FlowHelp(
+            id="sbmtd-agency-card",
+            headline=_("What is a Reduced Fare Mobility ID?"),
+            text=_(
+                "The Santa Barbara Metropolitan Transit District issues Reduced Fare Mobility ID cards to eligible riders. "  # noqa: E501
+                "This transit benefit may need to be renewed in the future based on the expiration date of the Reduced Fare Mobility ID. "  # noqa: E501
+                'Learn more at the <a href="https://sbmtd.gov/fares-passes/" target="_blank" rel="noopener noreferrer">SBMTD Fares & Passes</a>.'  # noqa: E501
+            ),
+        )
+    ],
 }
