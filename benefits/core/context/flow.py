@@ -69,4 +69,15 @@ flows_help = {
             ),
         ),
     ],
+    SystemName.COURTESY_CARD.value: [
+        FlowHelp(
+            id="mst-agency-card",
+            headline=_("What is a Courtesy Card?"),
+            text=_(
+                "Monterey-Salinas Transit issues Courtesy Cards to riders who qualify for a number of reduced fare programs. "  # noqa: E501
+                "This transit benefit may need to be renewed in the future based on the expiration date of the Courtesy Card. "  # noqa: E501
+                'Learn more at the <a href="https://mst.org/riders-guide/how-to-ride/courtesy-card/" target="_blank" rel="noopener noreferrer">MST Riders Guide</a>.'  # noqa: E501
+            ),
+        )
+    ],
 }
