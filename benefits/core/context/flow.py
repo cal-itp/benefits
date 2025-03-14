@@ -80,4 +80,37 @@ flows_help = {
             ),
         )
     ],
+    SystemName.MEDICARE.value: [
+        FlowHelp(
+            id="medicare-transit-benefit",
+            headline=_("How do I know if I qualify for the Medicare Cardholder option?"),
+            text=_(
+                "You qualify for this option if you have a Medicare card. To enroll you will need an account with Medicare.gov. "  # noqa: E501
+                "You will need to sign up for a Medicare.gov account if you do not currently have one. Deceased Medicare cardholders do not qualify."  # noqa: E501
+            ),
+        ),
+        FlowHelp(
+            id="medicare-transit-benefit-enrollment",
+            headline=_("Do I need my Medicare card to enroll?"),
+            text=_(
+                "No, you do not need your physical Medicare card to enroll in a transit benefit. "
+                "You will need the information on your card to create an account at Medicare.gov if you do not currently have an online account."  # noqa: E501
+            ),
+        ),
+        FlowHelp(
+            id="medicare-transit-benefit-payment",
+            headline=_("Do I need to bring my Medicare card when I ride public transportation?"),
+            text=_(
+                "No, you do not need your physical Medicare card to use your transit benefit on public transportation. "
+                "Once you have enrolled you can use your contactless debit or credit card to tap to ride with a reduced fare."  # noqa: E501
+            ),
+        ),
+        FlowHelp(
+            id="medicare-transit-benefit-recommended",
+            headline=_("What if I qualify for more than one option?"),
+            text=_(
+                "You can enroll in any option you qualify for. We recommend enrolling in the Medicare Cardholder option if you qualify for it."  # noqa: 501
+            ),
+        ),
+    ],
 }
