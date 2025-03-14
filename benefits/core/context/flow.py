@@ -37,4 +37,36 @@ flows_help = {
             ),
         )
     ],
+    SystemName.CALFRESH.value: [
+        FlowHelp(
+            id="calfresh-transit-benefit",
+            headline=_("How do I know if I’m eligible for the transit benefit for CalFresh Cardholders?"),
+            text=_(
+                "We verify your eligibility as a CalFresh Cardholder by confirming you have received funds in your "
+                "CalFresh account at any point in the last three months. This means you are eligible for a transit "
+                "benefit even if you did not receive funds in your CalFresh account this month or last month."
+            ),
+        ),
+        FlowHelp(
+            id="calfresh-transit-benefit-no-account-changes",
+            headline=_("Will this transit benefit change my CalFresh account?"),
+            text=_("No. Your monthly CalFresh allotment will not change."),
+        ),
+        FlowHelp(
+            id="calfresh-transit-benefit-enrollment",
+            headline=_("Do I need my Golden State Advantage card to enroll?"),
+            text=_(
+                "No, you do not need your physical EBT card to enroll. We use information from Login.gov and the "
+                "California Department of Social Services to enroll you in the benefit."
+            ),
+        ),
+        FlowHelp(
+            id="calfresh-transit-benefit-payment",
+            headline=_("Can I use my Golden State Advantage card to pay for transit rides?"),
+            text=_(
+                "No. You can not use your EBT or P-EBT card to pay for public transportation. "
+                "When you tap to ride, use your personal contactless debit or credit card to pay for public transportation."  # noqa: E501
+            ),
+        ),
+    ],
 }
