@@ -163,7 +163,6 @@ class SortableEnrollmentFlowAdmin(SortableAdminMixin, admin.ModelAdmin):
                     "selection_label_template_override",
                     "eligibility_start_template_override",
                     "eligibility_unverified_template_override",
-                    "help_template",
                     "enrollment_index_template_override",
                     "reenrollment_error_template",
                     "enrollment_success_template_override",
