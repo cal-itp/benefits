@@ -34,10 +34,12 @@ Benefits-->>IdG: begin eligibility verification
     activate IdG
 Transit Rider->>Medicare: account authentication
     activate Medicare
+    Note over Medicare: authenticated (Y/N)
 Medicare->>IdG: authentication confirmation
     deactivate Medicare
 IdG-->>BB API: requests required PII
     activate BB API
+    Note over BB API: deceased (Y/N)
 BB API-->>IdG: returns required PII
     deactivate BB API
 IdG-->>Benefits: eligibility response
