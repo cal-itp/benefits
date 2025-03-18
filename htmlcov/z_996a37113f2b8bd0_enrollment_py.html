@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_996a37113f2b8bd0_transit_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.4">coverage.py v7.6.4</a>,
-            created at 2025-03-17 16:40 +0000
+            created at 2025-03-18 16:54 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -245,24 +245,23 @@
     <p class="pln"><span class="n"><a id="t161" href="#t161">161</a></span><span class="t">                    <span class="str">"eligibility_api_url"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t162" href="#t162">162</a></span><span class="t">                    <span class="str">"eligibility_form_class"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t163" href="#t163">163</a></span><span class="t">                    <span class="str">"selection_label_template_override"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t164" href="#t164">164</a></span><span class="t">                    <span class="str">"eligibility_start_template_override"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t165" href="#t165">165</a></span><span class="t">                    <span class="str">"eligibility_unverified_template_override"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t166" href="#t166">166</a></span><span class="t">                    <span class="str">"help_template"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t167" href="#t167">167</a></span><span class="t">                    <span class="str">"enrollment_index_template_override"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t168" href="#t168">168</a></span><span class="t">                    <span class="str">"reenrollment_error_template"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t169" href="#t169">169</a></span><span class="t">                    <span class="str">"enrollment_success_template_override"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t170" href="#t170">170</a></span><span class="t">                <span class="op">]</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t171" href="#t171">171</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t172" href="#t172">172</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t173" href="#t173">173</a></span><span class="t">        <span class="key">return</span> <span class="nam">fields</span> <span class="key">or</span> <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">get_readonly_fields</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">obj</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t174" href="#t174">174</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t175" href="#t175">175</a></span><span class="t">    <span class="key">def</span> <span class="nam">has_add_permission</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">request</span><span class="op">:</span> <span class="nam">HttpRequest</span><span class="op">,</span> <span class="nam">obj</span><span class="op">=</span><span class="key">None</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t176" href="#t176">176</a></span><span class="t">        <span class="key">if</span> <span class="nam">settings</span><span class="op">.</span><span class="nam">RUNTIME_ENVIRONMENT</span><span class="op">(</span><span class="op">)</span> <span class="op">!=</span> <span class="nam">settings</span><span class="op">.</span><span class="nam">RUNTIME_ENVS</span><span class="op">.</span><span class="nam">PROD</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t177" href="#t177">177</a></span><span class="t">            <span class="key">return</span> <span class="key">True</span>&nbsp;</span><span class="r"></span></p>
-    <p class="par run show_par"><span class="n"><a id="t178" href="#t178">178</a></span><span class="t">        <span class="key">elif</span> <span class="nam">request</span><span class="op">.</span><span class="nam">user</span> <span class="key">and</span> <span class="nam">is_staff_member_or_superuser</span><span class="op">(</span><span class="nam">request</span><span class="op">.</span><span class="nam">user</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">178&#x202F;&#x219B;&#x202F;181</span><span class="annotate long">line 178 didn't jump to line 181 because the condition on line 178 was always true</span></span></p>
-    <p class="run"><span class="n"><a id="t179" href="#t179">179</a></span><span class="t">            <span class="key">return</span> <span class="key">True</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t180" href="#t180">180</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t181" href="#t181">181</a></span><span class="t">            <span class="key">return</span> <span class="key">False</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t164" href="#t164">164</a></span><span class="t">                    <span class="str">"eligibility_unverified_template_override"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t165" href="#t165">165</a></span><span class="t">                    <span class="str">"help_template"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t166" href="#t166">166</a></span><span class="t">                    <span class="str">"enrollment_index_template_override"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t167" href="#t167">167</a></span><span class="t">                    <span class="str">"reenrollment_error_template"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t168" href="#t168">168</a></span><span class="t">                    <span class="str">"enrollment_success_template_override"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t169" href="#t169">169</a></span><span class="t">                <span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t170" href="#t170">170</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t171" href="#t171">171</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t172" href="#t172">172</a></span><span class="t">        <span class="key">return</span> <span class="nam">fields</span> <span class="key">or</span> <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">get_readonly_fields</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">obj</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t173" href="#t173">173</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t174" href="#t174">174</a></span><span class="t">    <span class="key">def</span> <span class="nam">has_add_permission</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">request</span><span class="op">:</span> <span class="nam">HttpRequest</span><span class="op">,</span> <span class="nam">obj</span><span class="op">=</span><span class="key">None</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t175" href="#t175">175</a></span><span class="t">        <span class="key">if</span> <span class="nam">settings</span><span class="op">.</span><span class="nam">RUNTIME_ENVIRONMENT</span><span class="op">(</span><span class="op">)</span> <span class="op">!=</span> <span class="nam">settings</span><span class="op">.</span><span class="nam">RUNTIME_ENVS</span><span class="op">.</span><span class="nam">PROD</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t176" href="#t176">176</a></span><span class="t">            <span class="key">return</span> <span class="key">True</span>&nbsp;</span><span class="r"></span></p>
+    <p class="par run show_par"><span class="n"><a id="t177" href="#t177">177</a></span><span class="t">        <span class="key">elif</span> <span class="nam">request</span><span class="op">.</span><span class="nam">user</span> <span class="key">and</span> <span class="nam">is_staff_member_or_superuser</span><span class="op">(</span><span class="nam">request</span><span class="op">.</span><span class="nam">user</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">177&#x202F;&#x219B;&#x202F;180</span><span class="annotate long">line 177 didn't jump to line 180 because the condition on line 177 was always true</span></span></p>
+    <p class="run"><span class="n"><a id="t178" href="#t178">178</a></span><span class="t">            <span class="key">return</span> <span class="key">True</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t179" href="#t179">179</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t180" href="#t180">180</a></span><span class="t">            <span class="key">return</span> <span class="key">False</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -272,7 +271,7 @@
             <a class="nav" href="z_996a37113f2b8bd0_transit_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.4">coverage.py v7.6.4</a>,
-            created at 2025-03-17 16:40 +0000
+            created at 2025-03-18 16:54 +0000
         </p>
     </div>
 </footer>
