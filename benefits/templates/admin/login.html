@@ -4,12 +4,12 @@
   {{ block.super }} bg-secondary-subtle
 {% endblock bodyclass %}
 
-{% block extrastyle %}
+{% block extrahead %}
   {% comment %} Overriding instead of extending agency-base here to remove jQuery declaration, which admin/login.html includes on its own {% endcomment %}
   {% include "admin/includes/favicon.html" %}
   {% include "core/includes/bootstrap-css.html" %}
   {% include "admin/includes/style-admin.html" %}
-{% endblock extrastyle %}
+{% endblock extrahead %}
 
 {% block header %}
   {% include "admin/includes/branding-login.html" %}
