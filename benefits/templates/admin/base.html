@@ -26,7 +26,7 @@
     </div>
     {% block usertools %}
       {% if has_permission %}
-        <div id="user-tools" class="fs-6 text-white">
+        <div id="user-tools" class="fs-6 text-white text-capitalize">
           {% block welcome-msg %}
             {% translate "Welcome," %}
             <strong class="fw-bold">{% firstof user.get_short_name user.get_username %}</strong>.
@@ -44,9 +44,8 @@
             {% endif %}
             <form id="logout-form" method="post" action="{% url "admin:logout" %}">
               {% csrf_token %}
-              <button class="fs-6 border border-0 text-decoration-underline link-underline-primary link-underline-light" type="submit">
-                {% translate "Log out" %}
-              </button>
+              <button class="fs-6 border border-0 text-decoration-underline link-underline-primary link-underline-light text-capitalize"
+                      type="submit">{% translate "Log out" %}</button>
             </form>
           {% endblock userlinks %}
         </div>
