@@ -1,5 +1,5 @@
+from cdt_identity.hooks import Operation
 from django.urls import reverse
-
 import pytest
 
 from benefits.routes import routes
@@ -23,8 +23,9 @@ def test_pre_login(app_request, mocked_analytics_module):
     mocked_analytics_module.started_sign_in.assert_called_once()
 
 
-def test_system_error(app_request, mocked_analytics_module, mocked_sentry_sdk_module):
-    result = OAuthHooks.system_error(app_request, Exception("some exception"))
+@pytest.mark.parametrize("operation", Operation)
+def test_system_error(app_request, mocked_analytics_module, mocked_sentry_sdk_module, operation):
+    result = OAuthHooks.system_error(app_request, Exception("some exception"), operation)
 
     assert result.status_code == 302
     assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)

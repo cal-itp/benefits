@@ -13,8 +13,8 @@ class OAuthHooks(DefaultHooks):
         analytics.started_sign_in(request)
 
     @classmethod
-    def system_error(cls, request, exception):
-        super().system_error(request, exception)
-        analytics.error(request, message=str(exception), operation="authorize_redirect")
+    def system_error(cls, request, exception, operation):
+        super().system_error(request, exception, operation)
+        analytics.error(request, message=str(exception), operation=str(operation))
         sentry_sdk.capture_exception(exception)
         return redirect(routes.OAUTH_SYSTEM_ERROR)
