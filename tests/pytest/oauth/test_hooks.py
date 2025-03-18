@@ -1,4 +1,6 @@
+from cdt_identity.claims import ClaimsResult
 from cdt_identity.hooks import Operation
+from cdt_identity.models import ClaimsVerificationRequest
 from django.urls import reverse
 import pytest
 
@@ -51,6 +53,14 @@ def test_post_logout(app_request, mocked_analytics_module, origin):
     assert result.status_code == 302
     assert result.url == reverse(origin)
     mocked_analytics_module.finished_sign_out.assert_called_once_with(app_request)
+
+
+def test_claims_verified_eligible(app_request, mocked_analytics_module):
+    result = OAuthHooks.claims_verified_eligible(app_request, ClaimsVerificationRequest(), ClaimsResult())
+
+    assert result.status_code == 302
+    assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
+    mocked_analytics_module.finished_sign_in.assert_called_once_with(app_request)
 
 
 @pytest.mark.parametrize("operation", Operation)
