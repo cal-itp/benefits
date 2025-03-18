@@ -1,0 +1,17 @@
+.theme-toggle {
+  display: none;
+}
+
+#content-start h1 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 12px 0 20px 0;
+}
+
+#content-related h3 {
+  font-size: 0.875rem;
+}
+
+table {
+  caption-side: top;
+}

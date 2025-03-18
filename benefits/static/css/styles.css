@@ -14,6 +14,14 @@ html {
   scroll-padding-top: 101px; /* Header Height (80px) + Skip Nav Height (21px) = 101px */
 }
 
+/* Admin overrides */
+
+.theme-toggle {
+  display: none;
+}
+
+/* Overrides only */
+
 /* reCAPTCHA: Do not display badge */
 .grecaptcha-badge {
   display: none;
