@@ -120,11 +120,6 @@ class EnrollmentFlow(models.Model):
         default="",
         help_text="Override the default template that defines the end-user UI for selecting this flow among other options.",
     )
-    eligibility_unverified_template_override = models.TextField(
-        blank=True,
-        default="",
-        help_text="Override the default template that defines the page when a user fails eligibility verification for this flow.",  # noqa: E501
-    )
     supports_expiration = models.BooleanField(
         default=False, help_text="Indicates if the enrollment expires or does not expire"
     )
@@ -198,9 +193,9 @@ class EnrollmentFlow(models.Model):
     def eligibility_unverified_template(self):
         prefix = "eligibility/unverified"
         if self.uses_api_verification:
-            return self.eligibility_unverified_template_override or f"{prefix}--{self.agency_card_name}.html"
+            return f"{prefix}--agency-card.html"
         else:
-            return self.eligibility_unverified_template_override or f"{prefix}.html"
+            return f"{prefix}.html"
 
     @property
     def uses_claims_verification(self):
