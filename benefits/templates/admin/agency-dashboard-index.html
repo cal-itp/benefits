@@ -8,7 +8,7 @@
 {% block content %}
   <div class="row">
     <div class="col-lg-7">
-      <h1 class="p-0 text-start">{{ agency.long_name }}</h1>
+      <h1 class="pt-3 pb-2 text-start fs-6 fw-bold">{{ agency.long_name }}</h1>
       {% if has_permission_for_in_person %}
         <div class="bg-white border border-1 border-secondary p-3">
           <h2 class="fs-6 fw-bold pt-0 pb-2 text-start">In-person enrollment</h2>
@@ -16,7 +16,7 @@
           {% url routes.IN_PERSON_ELIGIBILITY as url_eligibility %}
           <div class="row pt-4">
             <div class="col-lg-6">
-              <a href="{{ url_eligibility }}" class="btn fs-6 btn-lg btn-primary d-block">New enrollment</a>
+              <a href="{{ url_eligibility }}" class="btn fs-6 btn-lg btn-primary d-block text-white">New enrollment</a>
             </div>
           </div>
         </div>
