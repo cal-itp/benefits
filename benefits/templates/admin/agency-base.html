@@ -1,13 +1,13 @@
 {% extends "admin/base.html" %}
 {% load i18n static %}
 
-{% block extrastyle %}
+{% block extrahead %}
   {% include "admin/includes/favicon.html" %}
   {% include "core/includes/bootstrap-css.html" %}
   {% include "admin/includes/style-admin.html" %}
   {% include "core/includes/ready-js.html" %}
   {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
-{% endblock extrastyle %}
+{% endblock extrahead %}
 
 {% block coltype %}
   w-100
