@@ -23,6 +23,14 @@ def test_pre_login(app_request, mocked_analytics_module):
     mocked_analytics_module.started_sign_in.assert_called_once()
 
 
+def test_cancel_login(app_request, mocked_analytics_module):
+    result = OAuthHooks.cancel_login(app_request)
+
+    assert result.status_code == 302
+    assert result.url == reverse(routes.ELIGIBILITY_UNVERIFIED)
+    mocked_analytics_module.canceled_sign_in.assert_called_once_with(app_request)
+
+
 @pytest.mark.parametrize("operation", Operation)
 def test_system_error(app_request, mocked_analytics_module, mocked_sentry_sdk_module, operation):
     result = OAuthHooks.system_error(app_request, Exception("some exception"), operation)
