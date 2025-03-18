@@ -88,4 +88,23 @@ class EligibilityUnverified:
         return asdict(self)
 
 
-eligibility_unverified = {}
+eligibility_unverified = {
+    SystemName.AGENCY_CARD.value: EligibilityUnverified(
+        body_text=_(
+            "The number and last name must be entered exactly as they appear on your CST Agency Card. Please check your card "
+            "and try again, or contact your transit agency for help."
+        )
+    ),
+    SystemName.COURTESY_CARD.value: EligibilityUnverified(
+        body_text=_(
+            "The number and last name must be entered exactly as they appear on your MST Courtesy Card. Please check your "
+            "card and try again, or contact your transit agency for help."
+        )
+    ),
+    SystemName.REDUCED_FARE_MOBILITY_ID.value: EligibilityUnverified(
+        body_text=_(
+            "The number and last name must be entered exactly as they appear on your SBMTD Reduced Fare Mobility ID card. "
+            "Please check your card and try again, or contact your transit agency for help."
+        )
+    ),
+}
