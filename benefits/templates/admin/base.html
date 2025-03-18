@@ -1,8 +1,56 @@
 {% extends "admin/base.html" %}
+{% load i18n static %}
 
 {% block dark-mode-vars %}
 {% endblock dark-mode-vars %}
 
 {% block extrahead %}
   {% include "admin/includes/favicon.html" %}
+  {% include "core/includes/bootstrap-css.html" %}
 {% endblock extrahead %}
+
+{% block header %}
+  <header id="header" class="bg-dark py-3">
+    <div id="branding">
+      <div class="d-flex justify-content-center">
+        <img class="me-3"
+             src="{% static "img/logo-lg.svg" %}"
+             width="141"
+             height="32"
+             alt="California Integrated Travel Project: Benefits logo (large)" />
+      </div>
+
+      <div id="site-name" class="d-flex justify-content-center align-items-center">
+        <h1 class="text-center text-white fs-5 m-0">{{ site_header }}</h1>
+      </div>
+    </div>
+    {% block usertools %}
+      {% if has_permission %}
+        <div id="user-tools" class="fs-6 text-white">
+          {% block welcome-msg %}
+            {% translate "Welcome," %}
+            <strong class="fw-bold">{% firstof user.get_short_name user.get_username %}</strong>.
+          {% endblock welcome-msg %}
+          {% block userlinks %}
+            {% if user.is_active and user.is_staff %}
+              {% url 'django-admindocs-docroot' as docsroot %}
+              {% if docsroot %}
+                <a class="fs-6 border border-0 text-decoration-underline link-underline-primary link-underline-light" href="{{ docsroot }}">{% translate "Documentation" %}</a> /
+              {% endif %}
+            {% endif %}
+            {% if user.has_usable_password %}
+              <a class="fs-6 border border-0 text-decoration-underline link-underline-primary link-underline-light ms-4"
+                 href="{% url "admin:password_change" %}">{% translate "Change password" %}</a> /
+            {% endif %}
+            <form id="logout-form" method="post" action="{% url "admin:logout" %}">
+              {% csrf_token %}
+              <button class="fs-6 border border-0 text-decoration-underline link-underline-primary link-underline-light" type="submit">
+                {% translate "Log out" %}
+              </button>
+            </form>
+          {% endblock userlinks %}
+        </div>
+      {% endif %}
+    {% endblock usertools %}
+  </header>
+{% endblock header %}
