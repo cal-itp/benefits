@@ -125,11 +125,6 @@ class EnrollmentFlow(models.Model):
         default="",
         help_text="Override the default template that defines the page when a user fails eligibility verification for this flow.",  # noqa: E501
     )
-    help_template = models.TextField(
-        blank=True,
-        default="",
-        help_text="Path to a Django template that defines the help text for this enrollment flow, used in building the dynamic help page for an agency",  # noqa: E501
-    )
     supports_expiration = models.BooleanField(
         default=False, help_text="Indicates if the enrollment expires or does not expire"
     )
@@ -253,6 +248,11 @@ class EnrollmentFlow(models.Model):
     @property
     def in_person_eligibility_context(self):
         return in_person_context.eligibility_index[self.system_name].dict()
+
+    @property
+    def help_context(self):
+        ctx = core_context.flows_help.get(self.system_name)
+        return [c.dict() for c in ctx] if ctx else []
 
     def clean(self):
         errors = []

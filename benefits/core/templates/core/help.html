@@ -104,13 +104,12 @@
             <a href="https://login.gov/help/" target="_blank" rel="noopener noreferrer">more information on identity verification</a>.
           {% endblocktranslate %}
         </p>
-
-        {% if agency and agency.help_templates %}
-          {% for help_template in agency.help_templates %}
-            {% include help_template %}
+        {% if agency and agency.flows_help %}
+          {% for flow_help in agency.flows_help %}
+            <h2 class="h2-sm pt-4 pt-lg-8" id="{{ flow_help.id }}">{{ flow_help.headline }}</h2>
+            <p class="pt-2 pt-lg-4">{{ flow_help.text|safe }}</p>
           {% endfor %}
         {% endif %}
-
         <h2 class="h2-sm pt-4 pt-lg-8" id="littlepay">{% translate "What is Littlepay?" %}</h2>
         <p class="pt-2 pt-lg-4">
           {% blocktranslate trimmed %}
