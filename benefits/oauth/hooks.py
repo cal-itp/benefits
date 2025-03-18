@@ -42,6 +42,12 @@ class OAuthHooks(DefaultHooks):
         return redirect(routes.ELIGIBILITY_CONFIRM)
 
     @classmethod
+    def claims_verified_not_eligible(cls, request, claims_request, claims_result):
+        super().claims_verified_not_eligible(request, claims_request, claims_result)
+        analytics.finished_sign_in(request, error=claims_result.errors)
+        return redirect(routes.ELIGIBILITY_CONFIRM)
+
+    @classmethod
     def system_error(cls, request, exception, operation):
         super().system_error(request, exception, operation)
         analytics.error(request, message=str(exception), operation=str(operation))

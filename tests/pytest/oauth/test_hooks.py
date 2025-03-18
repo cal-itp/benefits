@@ -63,6 +63,15 @@ def test_claims_verified_eligible(app_request, mocked_analytics_module):
     mocked_analytics_module.finished_sign_in.assert_called_once_with(app_request)
 
 
+def test_claims_verified_not_eligible(app_request, mocked_analytics_module):
+    claims_result = ClaimsResult(errors={"some_claim": "error message"})
+    result = OAuthHooks.claims_verified_not_eligible(app_request, ClaimsVerificationRequest(), claims_result)
+
+    assert result.status_code == 302
+    assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
+    mocked_analytics_module.finished_sign_in.assert_called_once_with(app_request, error=claims_result.errors)
+
+
 @pytest.mark.parametrize("operation", Operation)
 def test_system_error(app_request, mocked_analytics_module, mocked_sentry_sdk_module, operation):
     result = OAuthHooks.system_error(app_request, Exception("some exception"), operation)
