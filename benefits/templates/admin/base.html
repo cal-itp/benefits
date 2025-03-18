@@ -29,24 +29,24 @@
       {% if has_permission %}
         <div id="user-tools" class="fs-6 text-white text-capitalize">
           {% block welcome-msg %}
-            {% translate "Welcome," %}
+            Welcome,
             <strong class="fw-bold">{% firstof user.get_short_name user.get_username %}</strong>.
           {% endblock welcome-msg %}
           {% block userlinks %}
             {% if user.is_active and user.is_staff %}
               {% url 'django-admindocs-docroot' as docsroot %}
               {% if docsroot %}
-                <a class="fs-6 border border-0 text-decoration-underline link-underline-primary link-underline-light" href="{{ docsroot }}">{% translate "Documentation" %}</a> /
+                <a class="fs-6 border border-0 text-decoration-underline link-underline-primary link-underline-light" href="{{ docsroot }}">Documentation</a> /
               {% endif %}
             {% endif %}
             {% if user.has_usable_password %}
               <a class="fs-6 border border-0 text-decoration-underline link-underline-primary link-underline-light ms-4"
-                 href="{% url "admin:password_change" %}">{% translate "Change password" %}</a> /
+                 href="{% url "admin:password_change" %}">Change password</a> /
             {% endif %}
             <form id="logout-form" method="post" action="{% url "admin:logout" %}">
               {% csrf_token %}
               <button class="fs-6 border border-0 text-decoration-underline link-underline-primary link-underline-light text-capitalize"
-                      type="submit">{% translate "Log out" %}</button>
+                      type="submit">Log out</button>
             </form>
           {% endblock userlinks %}
         </div>
