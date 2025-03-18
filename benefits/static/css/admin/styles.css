@@ -5,13 +5,14 @@
 html[data-theme="light"],
 :root {
   --primary: #ffffff;
-  --secondary: var(--dark-color);
-  --link-fg: #ffffff;
-  --body-quiet-color: var(--dark-color);
+  --bs-body-font-size: 1rem;
   --button-bg: #ffffff;
+  --bs-body-color: #212121; /* Body text color */
+  --bs-dark-rgb: 33, 33, 33; /* Background color for Header */
+  --bs-heading-color: #212121; /* Header text color */
   --bs-secondary-bg-subtle: #f1f1f1; /* Background color for Admin, lighter than bs-secondary, used with bg-secondary-subtle */
   --bs-secondary-rgb:
-    197, 196, 196; /* Border color for Admin, used with border-secondary */
+    210, 210, 210; /* Border color for Admin, used with border-secondary */
   --bs-secondary: #c5c4c4;
 }
 
