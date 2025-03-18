@@ -190,6 +190,11 @@ class EnrollmentFlow(models.Model):
         return eligibility_context.eligibility_start[self.system_name].dict()
 
     @property
+    def eligibility_unverified_context(self):
+        ctx = eligibility_context.eligibility_unverified.get(self.system_name)
+        return ctx.dict() if ctx else {}
+
+    @property
     def eligibility_unverified_template(self):
         prefix = "eligibility/unverified"
         if self.uses_api_verification:
