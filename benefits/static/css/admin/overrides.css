@@ -15,3 +15,7 @@
 table {
   caption-side: top;
 }
+
+#user-tools {
+  letter-spacing: 0;
+}
