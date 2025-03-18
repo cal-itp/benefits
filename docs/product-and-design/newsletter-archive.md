@@ -4,10 +4,13 @@ We send a newsletter in the first half of each month to share product updates, a
 
 If you’re interested in receiving this update delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
 
-<!--
 ### 2025
 
-- [The January Update]()
+- [The March Update](http://5519226.hs-sites.com/cal-itp-benefits-the-march-update)
+
+<!--
+- [The April Update]()
+
 -->
 
 ### 2024
