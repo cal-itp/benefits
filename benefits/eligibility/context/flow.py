@@ -78,3 +78,14 @@ eligibility_start = {
         page_title=_("Veterans benefit overview"), headline_text=_("You selected a Veteran transit benefit.")
     ),
 }
+
+
+@dataclass
+class EligibilityUnverified:
+    body_text: str
+
+    def dict(self):
+        return asdict(self)
+
+
+eligibility_unverified = {}
