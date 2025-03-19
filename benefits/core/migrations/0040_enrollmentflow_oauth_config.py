@@ -2,6 +2,22 @@
 
 import django.db.models.deletion
 from django.db import migrations, models
+from benefits.secrets import get_secret_by_name
+
+
+def migrate_data_claimsprovider_to_idgconfig(apps, schema_editor):
+    ClaimsProvider = apps.get_model("core", "ClaimsProvider")
+    IdentityGatewayConfig = apps.get_model("cdt_identity", "IdentityGatewayConfig")
+
+    for claims_provider in ClaimsProvider.objects.all():
+        client_id = get_secret_by_name(claims_provider.client_id_secret_name)
+        identity_gateway_config = IdentityGatewayConfig.objects.create(
+            client_name=claims_provider.client_name,
+            client_id=client_id,
+            authority=claims_provider.authority,
+            scheme=claims_provider.scheme,
+        )
+        identity_gateway_config.save()
 
 
 class Migration(migrations.Migration):
@@ -33,4 +49,5 @@ class Migration(migrations.Migration):
             name="sign_out_link_template",
             field=models.TextField(blank=True, default="", help_text="Template that renders sign-out link"),
         ),
+        migrations.RunPython(migrate_data_claimsprovider_to_idgconfig),
     ]
