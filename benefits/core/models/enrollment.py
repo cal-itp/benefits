@@ -190,14 +190,6 @@ class EnrollmentFlow(models.Model):
         return ctx.dict() if ctx else {}
 
     @property
-    def eligibility_unverified_template(self):
-        prefix = "eligibility/unverified"
-        if self.uses_api_verification:
-            return f"{prefix}--agency-card.html"
-        else:
-            return f"{prefix}.html"
-
-    @property
     def uses_claims_verification(self):
         """True if this flow verifies via the claims provider and has a scope and claim. False otherwise."""
         return self.claims_provider is not None and bool(self.claims_scope) and bool(self.claims_eligibility_claim)
@@ -260,7 +252,6 @@ class EnrollmentFlow(models.Model):
         if self.transit_agency:
             templates = [
                 self.selection_label_template,
-                self.eligibility_unverified_template,
                 self.enrollment_index_template,
                 self.enrollment_success_template,
             ]

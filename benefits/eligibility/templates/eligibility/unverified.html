@@ -16,17 +16,29 @@
 {% endblock icon %}
 
 {% block headline-text %}
-  {% translate "Your eligibility could not be verified." %}
+  {% if headline_text %}
+    {{ headline_text }}
+  {% else %}
+    {% translate "Your eligibility could not be verified." %}
+  {% endif %}
 {% endblock headline-text %}
 
 {% block paragraphs %}
-  <p>
-    {% translate "That’s okay! You may still be eligible for our program." %}
-    {% blocktranslate with short_name=agency.short_name %}Please reach out to {{ short_name }} for assistance.{% endblocktranslate %}
-  </p>
+  {% if body_text %}
+    <p>{{ body_text }}</p>
+  {% else %}
+    <p>
+      {% translate "That’s okay! You may still be eligible for our program." %}
+      {% blocktranslate with short_name=agency.short_name %}Please reach out to {{ short_name }} for assistance.{% endblocktranslate %}
+    </p>
+  {% endif %}
   {% include "core/includes/agency-links.html" %}
 {% endblock paragraphs %}
 
 {% block call-to-action-button %}
-  {% include "core/includes/button--index.html" %}
+  {% if button_text %}
+    {% include "core/includes/button--origin.html" with button_text=button_text %}
+  {% else %}
+    {% include "core/includes/button--index.html" %}
+  {% endif %}
 {% endblock call-to-action-button %}
