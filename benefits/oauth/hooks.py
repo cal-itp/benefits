@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 import sentry_sdk
 
 from benefits.routes import routes
+from benefits.core import session
 from . import analytics
 
 
@@ -17,6 +18,14 @@ class OAuthHooks(DefaultHooks):
         super().cancel_login(request)
         analytics.canceled_sign_in(request)
         return redirect(routes.ELIGIBILITY_UNVERIFIED)
+
+    @classmethod
+    def pre_logout(cls, request):
+        super().pre_logout(request)
+        analytics.started_sign_out(request)
+
+        # the user is signed out of the app
+        session.logout(request)
 
     @classmethod
     def system_error(cls, request, exception, operation):

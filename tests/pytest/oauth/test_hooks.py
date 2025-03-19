@@ -5,6 +5,7 @@ import pytest
 from benefits.routes import routes
 from benefits.oauth.hooks import OAuthHooks
 import benefits.oauth.hooks
+from benefits.core import session
 
 
 @pytest.fixture
@@ -29,6 +30,16 @@ def test_cancel_login(app_request, mocked_analytics_module):
     assert result.status_code == 302
     assert result.url == reverse(routes.ELIGIBILITY_UNVERIFIED)
     mocked_analytics_module.canceled_sign_in.assert_called_once_with(app_request)
+
+
+def test_pre_logout(app_request, mocked_analytics_module):
+    session.update(app_request, oauth_authorized=True)
+    assert session.logged_in(app_request)
+
+    OAuthHooks.pre_logout(app_request)
+
+    mocked_analytics_module.started_sign_out.assert_called_once_with(app_request)
+    assert not session.logged_in(app_request)
 
 
 @pytest.mark.parametrize("operation", Operation)
