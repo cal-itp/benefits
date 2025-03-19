@@ -53,6 +53,8 @@ class EnrollmentFlow(models.Model):
     group_id = models.TextField(
         blank=True, default="", help_text="Reference to the TransitProcessor group for user enrollment"
     )
+    sign_out_button_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out button")
+    sign_out_link_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out link")
     oauth_config = models.ForeignKey(
         IdentityGatewayConfig,
         on_delete=models.PROTECT,
