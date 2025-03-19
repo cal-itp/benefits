@@ -23,4 +23,14 @@ class Migration(migrations.Migration):
                 to="cdt_identity.identitygatewayconfig",
             ),
         ),
+        migrations.AddField(
+            model_name="enrollmentflow",
+            name="sign_out_button_template",
+            field=models.TextField(blank=True, default="", help_text="Template that renders sign-out button"),
+        ),
+        migrations.AddField(
+            model_name="enrollmentflow",
+            name="sign_out_link_template",
+            field=models.TextField(blank=True, default="", help_text="Template that renders sign-out link"),
+        ),
     ]
