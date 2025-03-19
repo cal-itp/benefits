@@ -1,10 +1,16 @@
 from dataclasses import dataclass, asdict
 from typing import Optional
 
-from django.utils.translation import gettext_lazy as _
+from django.utils.text import format_lazy
+from django.utils.translation import gettext_lazy
 
 from benefits.core.context import SystemName
 from benefits.routes import routes
+
+
+def _(string, *args, **kwargs):
+    """Wraps format_lazy around gettext_lazy for simpler calling."""
+    return format_lazy(gettext_lazy(string), *args, **kwargs)
 
 
 @dataclass
