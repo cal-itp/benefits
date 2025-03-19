@@ -14,6 +14,9 @@ html[data-theme="light"],
   --bs-secondary-rgb:
     210, 210, 210; /* Border color for Admin, used with border-secondary */
   --bs-secondary: #c5c4c4;
+  --breadcrumbs-link-fg: #066b99; /* Breadcrumbs on Django Admin */
+  --breadcrumbs-bg: #ffffff;
+  --breadcrumbs-fg: #212121;
 }
 
 /* Buttons */
