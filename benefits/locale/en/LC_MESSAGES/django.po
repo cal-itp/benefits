@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-03-18 12:51-0700\n"
+"POT-Creation-Date: 2025-03-19 15:36-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -451,22 +451,20 @@ msgstr ""
 msgid "You selected a Veteran transit benefit."
 msgstr ""
 
-msgid ""
-"The number and last name must be entered exactly as they appear on your CST "
-"Agency Card. Please check your card and try again, or contact your transit "
-"agency for help."
-msgstr ""
-
-msgid ""
-"The number and last name must be entered exactly as they appear on your MST "
-"Courtesy Card. Please check your card and try again, or contact your transit "
-"agency for help."
-msgstr ""
-
+#, python-brace-format
 msgid ""
 "The number and last name must be entered exactly as they appear on your "
-"SBMTD Reduced Fare Mobility ID card. Please check your card and try again, "
-"or contact your transit agency for help."
+"{agency_card}. Please check your card and try again, or contact your transit "
+"agency for help."
+msgstr ""
+
+msgid "CST Agency Card"
+msgstr ""
+
+msgid "MST Courtesy Card"
+msgstr ""
+
+msgid "SBMTD Reduced Fare Mobility ID card"
 msgstr ""
 
 msgid "Choose this benefit"

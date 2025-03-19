@@ -94,23 +94,21 @@ class EligibilityUnverified:
         return asdict(self)
 
 
+class AgencyCardEligibilityUnverified(EligibilityUnverified):
+    def __init__(self, agency_card):
+        super().__init__(
+            body_text=_(
+                "The number and last name must be entered exactly as they appear on your {agency_card}. "
+                "Please check your card and try again, or contact your transit agency for help.",
+                agency_card=agency_card,
+            ),
+        )
+
+
 eligibility_unverified = {
-    SystemName.AGENCY_CARD.value: EligibilityUnverified(
-        body_text=_(
-            "The number and last name must be entered exactly as they appear on your CST Agency Card. Please check your card "
-            "and try again, or contact your transit agency for help."
-        )
-    ),
-    SystemName.COURTESY_CARD.value: EligibilityUnverified(
-        body_text=_(
-            "The number and last name must be entered exactly as they appear on your MST Courtesy Card. Please check your "
-            "card and try again, or contact your transit agency for help."
-        )
-    ),
-    SystemName.REDUCED_FARE_MOBILITY_ID.value: EligibilityUnverified(
-        body_text=_(
-            "The number and last name must be entered exactly as they appear on your SBMTD Reduced Fare Mobility ID card. "
-            "Please check your card and try again, or contact your transit agency for help."
-        )
+    SystemName.AGENCY_CARD.value: AgencyCardEligibilityUnverified(agency_card=_("CST Agency Card")),
+    SystemName.COURTESY_CARD.value: AgencyCardEligibilityUnverified(agency_card=_("MST Courtesy Card")),
+    SystemName.REDUCED_FARE_MOBILITY_ID.value: AgencyCardEligibilityUnverified(
+        agency_card=_("SBMTD Reduced Fare Mobility ID card")
     ),
 }
