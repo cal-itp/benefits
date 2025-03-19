@@ -20,6 +20,20 @@ def migrate_data_claimsprovider_to_idgconfig(apps, schema_editor):
         identity_gateway_config.save()
 
 
+def migrate_data_enrollmentflow(apps, schema_editor):
+    EnrollmentFlow = apps.get_model("core", "EnrollmentFlow")
+    IdentityGatewayConfig = apps.get_model("cdt_identity", "IdentityGatewayConfig")
+
+    idg_systems = ["calfresh", "medicare", "senior", "veteran"]
+
+    for flow in EnrollmentFlow.objects.all():
+        if flow.system_name in idg_systems:
+            flow.oauth_config = IdentityGatewayConfig.objects.get(client_name=flow.claims_provider.client_name)
+            flow.sign_out_button_template = flow.claims_provider.sign_out_button_template
+            flow.sign_out_link_template = flow.claims_provider.sign_out_link_template
+            flow.save()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -50,4 +64,5 @@ class Migration(migrations.Migration):
             field=models.TextField(blank=True, default="", help_text="Template that renders sign-out link"),
         ),
         migrations.RunPython(migrate_data_claimsprovider_to_idgconfig),
+        migrations.RunPython(migrate_data_enrollmentflow),
     ]
