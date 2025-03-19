@@ -2,6 +2,7 @@ import importlib
 import logging
 import uuid
 
+from cdt_identity.models import IdentityGatewayConfig
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
@@ -51,6 +52,13 @@ class EnrollmentFlow(models.Model):
     )
     group_id = models.TextField(
         blank=True, default="", help_text="Reference to the TransitProcessor group for user enrollment"
+    )
+    oauth_config = models.ForeignKey(
+        IdentityGatewayConfig,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        help_text="The IdG connection details for this flow.",
     )
     claims_provider = models.ForeignKey(
         ClaimsProvider,
