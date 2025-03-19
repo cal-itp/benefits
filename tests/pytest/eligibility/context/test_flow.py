@@ -37,7 +37,11 @@ def test_eligibility_unverified(system_name):
 
 
 def test_EligibilityUnverified_dict():
-    context_object = EligibilityUnverified(body_text="This is the body text")
+    context_object = EligibilityUnverified(
+        headline_text="This is a headline",
+        body_text="This is the body text",
+        button_text="Button",
+    )
 
     context_dict = context_object.dict()
 
