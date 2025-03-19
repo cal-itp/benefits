@@ -28,6 +28,14 @@ class OAuthHooks(DefaultHooks):
         session.logout(request)
 
     @classmethod
+    def post_logout(cls, request):
+        super().post_logout(request)
+        analytics.finished_sign_out(request)
+
+        origin = session.origin(request)
+        return redirect(origin)
+
+    @classmethod
     def system_error(cls, request, exception, operation):
         super().system_error(request, exception, operation)
         analytics.error(request, message=str(exception), operation=str(operation))
