@@ -42,7 +42,7 @@ def test_authorize_params_no_scheme():
 def test_register_provider(mocker, mocked_oauth_registry):
     mocked_flow = mocker.Mock(spec=EnrollmentFlow)
     mocked_flow.oauth_config.client_name = "client_name_1"
-    mocked_flow.claims_provider.client_id = "client_id_1"
+    mocked_flow.oauth_config.client_id = "client_id_1"
 
     mocker.patch("benefits.oauth.client._client_kwargs", return_value={"client": "kwargs"})
     mocker.patch("benefits.oauth.client._server_metadata_url", return_value="https://metadata.url")
@@ -75,7 +75,7 @@ def test_create_client_already_registered(mocker, mocked_oauth_registry):
 def test_create_client_already_not_registered_yet(mocker, mocked_oauth_registry):
     mocked_flow = mocker.Mock(spec=EnrollmentFlow)
     mocked_flow.oauth_config.client_name = "client_name_1"
-    mocked_flow.claims_provider.client_id = "client_id_1"
+    mocked_flow.oauth_config.client_id = "client_id_1"
 
     mocker.patch("benefits.oauth.client._client_kwargs", return_value={"client": "kwargs"})
     mocker.patch("benefits.oauth.client._server_metadata_url", return_value="https://metadata.url")
