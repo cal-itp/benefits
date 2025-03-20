@@ -49,6 +49,12 @@ table {
   display: none;
 }
 
+/* Header - Colors */
+
+:root {
+  --header-bg: #000000;
+}
+
 /* Header - Branding by page */
 
 #logo {
