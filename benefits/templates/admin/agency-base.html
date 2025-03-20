@@ -5,7 +5,7 @@
 {% endblock dark-mode-vars %}
 
 {% block extrastyle %}
-  {% include "admin/includes/favicon.html" %}
+  <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
   {% include "core/includes/bootstrap-css.html" %}
   {% include "admin/includes/style-admin.html" %}
   {% include "core/includes/ready-js.html" %}
