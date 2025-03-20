@@ -1,29 +1,7 @@
-{% extends "admin/agency-base.html" %}
-{% load static %}
-
-{% block title %}
-  Logged out | {{ site_title }}
-{% endblock title %}
-
-{% block extrastyle %}
-  {{ block.super }}
-  <link rel="stylesheet" href="{% static "admin/css/login.css" %}">
-{% endblock extrastyle %}
-
-{% block bodyclass %}
-  {{ block.super }} login
-{% endblock bodyclass %}
-
-{% block branding %}
-  {% include "admin/includes/branding-login.html" %}
-{% endblock branding %}
+{% extends "admin/login.html" %}
 
 {% block content %}
+  <p class="text-center mt-5">You have logged out successfully.</p>
 
-  <div id="content-main">
-    <p class="text-center mt-4">You have logged out successfully.</p>
-
-    <a class="btn btn-lg btn-outline-primary d-block my-5" href="{% url 'admin:index' %}">Log in again</a>
-  </div>
-
+  <a class="btn btn-lg btn-outline-primary d-block my-5" href="{% url 'admin:index' %}">Log in again</a>
 {% endblock content %}
