@@ -21,9 +21,6 @@
 {% block inner-content %}
   <p class="py-4">{% translate "You will need a few items to continue:" %}</p>
   <ul class="d-flex flex-column gap-4 list-unstyled ps-0 mb-0">
-    {% if eligibility_item_template %}
-      {% include eligibility_item_template %}
-    {% endif %}
     <li>
       <h2 class="h3 pb-1">
         {% if eligibility_item_headline %}
