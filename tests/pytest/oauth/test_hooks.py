@@ -5,6 +5,8 @@ import pytest
 from benefits.routes import routes
 from benefits.oauth.hooks import OAuthHooks
 import benefits.oauth.hooks
+from cdt_identity.models import ClaimsVerificationRequest
+from cdt_identity.claims import ClaimsResult
 
 
 @pytest.fixture
@@ -21,6 +23,23 @@ def test_pre_login(app_request, mocked_analytics_module):
     OAuthHooks.pre_login(app_request)
 
     mocked_analytics_module.started_sign_in.assert_called_once()
+
+
+def test_claims_verified_eligible(app_request, mocked_analytics_module):
+    result = OAuthHooks.claims_verified_eligible(app_request, ClaimsVerificationRequest(), ClaimsResult())
+
+    assert result.status_code == 302
+    assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
+    mocked_analytics_module.finished_sign_in.assert_called_once_with(app_request)
+
+
+def test_claims_verified_not_eligible(app_request, mocked_analytics_module):
+    claims_result = ClaimsResult(errors={"some_claim": "error message"})
+    result = OAuthHooks.claims_verified_not_eligible(app_request, ClaimsVerificationRequest(), claims_result)
+
+    assert result.status_code == 302
+    assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
+    mocked_analytics_module.finished_sign_in.assert_called_once_with(app_request, error=claims_result.errors)
 
 
 @pytest.mark.parametrize("operation", Operation)
