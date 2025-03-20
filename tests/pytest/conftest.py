@@ -159,6 +159,15 @@ def model_EnrollmentFlow_supports_expiration(model_EnrollmentFlow):
 
 
 @pytest.fixture
+def model_EnrollmentFlow_supports_sign_out(model_EnrollmentFlow):
+    model_EnrollmentFlow.sign_out_button_template = "core/includes/button--sign-out--senior.html"
+    model_EnrollmentFlow.sign_out_link_template = "core/includes/link--sign-out--senior.html"
+    model_EnrollmentFlow.save()
+
+    return model_EnrollmentFlow
+
+
+@pytest.fixture
 def model_TransitProcessor():
     transit_processor = TransitProcessor.objects.create(
         name="Test Transit Processor",
