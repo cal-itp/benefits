@@ -55,6 +55,10 @@ table {
   --header-bg: #000000;
 }
 
+#header {
+  padding: 0 2rem;
+}
+
 /* Header - Branding by page */
 
 #logo {
@@ -64,10 +68,26 @@ table {
 
 .dashboard {
   --logo-width: 141.33px;
-  --logo-height: 32px;
+  --logo-height: 2rem;
 }
 
 .login {
   --logo-width: 212px;
-  --logo-height: 48px;
+  --logo-height: 3rem;
+}
+
+#branding {
+  justify-content: center;
+  align-items: center;
+}
+
+.login #branding {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 1rem;
+}
+
+.dashboard #logo {
+  margin-right: 1rem;
 }

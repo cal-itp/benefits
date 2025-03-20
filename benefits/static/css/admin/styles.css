@@ -134,14 +134,6 @@ iframe.card-collection {
 }
 
 /* Login Page */
-.login #header {
-  padding: 0 !important;
-}
-
-.login #branding {
-  flex-direction: column;
-  width: 100%;
-}
 
 .login #container {
   background: var(--body-bg);
