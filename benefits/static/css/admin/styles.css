@@ -68,8 +68,6 @@ input[type="password"]:focus,
   letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
 }
 
-#user-tools,
-#logout-form button,
 .login .submit-row input[type="submit"] {
   text-transform: unset;
 }

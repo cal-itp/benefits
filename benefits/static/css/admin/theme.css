@@ -71,20 +71,19 @@ table {
 #logo {
   width: var(--logo-width);
   height: var(--logo-height);
-  margin-right: var(--logo-margin-right);
-  margin-bottom: 1rem;
+  margin: var(--logo-margin);
 }
 
 :root {
   --logo-width: 141.33px;
   --logo-height: 2rem;
-  --logo-margin-right: 1rem;
+  --logo-margin: 1rem 1rem 1rem 0;
 }
 
 .login {
   --logo-width: 212px;
   --logo-height: 3rem;
-  --logo-margin-right: 0;
+  --logo-margin: 1rem 0 1rem 0;
 }
 
 #branding {
