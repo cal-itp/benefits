@@ -30,20 +30,25 @@ table {
   caption-side: top;
 }
 
-#user-tools {
+#user-tools,
+#user-tools button {
+  color: var(--header-link-color);
+  font-size: 1rem;
   letter-spacing: 0;
 }
 
-/* Log out link on Password change page */
-#logout-form button {
+#user-tools a,
+#user-tools button {
   border: 0;
-  font-size: 1rem;
-  text-transform: capitalize;
+  text-transform: inherit;
   text-decoration: underline;
-  text-decoration-color: var(--bs-white);
+  text-decoration-color: var(--header-link-color);
 }
 
-/* Theme toggle on Password change page */
+#user-tools strong {
+  font-weight: 700;
+}
+
 .theme-toggle {
   display: none;
 }
