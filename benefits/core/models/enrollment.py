@@ -9,7 +9,6 @@ from django.utils import timezone
 from multiselectfield import MultiSelectField
 
 from .common import PemData, SecretNameField, template_path
-from .claims import ClaimsProvider
 from .transit import TransitAgency
 from benefits.core import context as core_context
 from benefits.eligibility import context as eligibility_context
@@ -61,13 +60,6 @@ class EnrollmentFlow(models.Model):
         null=True,
         blank=True,
         help_text="The IdG connection details for this flow.",
-    )
-    claims_provider = models.ForeignKey(
-        ClaimsProvider,
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        help_text="An entity that provides claims for eligibility verification for this flow.",
     )
     claims_scope = models.TextField(
         blank=True,

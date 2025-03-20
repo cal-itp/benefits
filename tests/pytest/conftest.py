@@ -119,8 +119,7 @@ def model_EnrollmentFlow_with_eligibility_api(model_EnrollmentFlow, model_PemDat
 
 
 @pytest.fixture
-def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow, model_ClaimsProvider, model_IdentityGatewayConfig):
-    model_EnrollmentFlow.claims_provider = model_ClaimsProvider
+def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow, model_IdentityGatewayConfig):
     model_EnrollmentFlow.oauth_config = model_IdentityGatewayConfig
     model_EnrollmentFlow.claims_scope = "scope"
     model_EnrollmentFlow.claims_eligibility_claim = "claim"

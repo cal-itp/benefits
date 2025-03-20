@@ -65,4 +65,21 @@ class Migration(migrations.Migration):
         ),
         migrations.RunPython(migrate_data_claimsprovider_to_idgconfig),
         migrations.RunPython(migrate_data_enrollmentflow),
+        migrations.AlterField(
+            model_name="enrollmentflow",
+            name="claims_scheme_override",
+            field=models.TextField(
+                blank=True,
+                default="",
+                help_text=(
+                    "The authentication scheme to use (Optional). If blank, "
+                    "defaults to the value in Identity gateway configs"
+                ),
+                verbose_name="Claims scheme",
+            ),
+        ),
+        migrations.RemoveField(
+            model_name="enrollmentflow",
+            name="claims_provider",
+        ),
     ]

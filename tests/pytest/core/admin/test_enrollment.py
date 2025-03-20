@@ -225,7 +225,6 @@ class TestEnrollmentFlowAdmin:
         request.POST = dict(
             system_name="senior",  # use value that will map to existing templates
             supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
-            claims_provider=model_ClaimsProvider.id,
             oauth_config=model_IdentityGatewayConfig.id,
             claims_scope="",
             claims_eligibility_claim="",
@@ -323,7 +322,6 @@ class TestEnrollmentFlowAdmin:
         # fake a valid claims configuration
         request.POST.update(
             dict(
-                claims_provider=model_ClaimsProvider.id,
                 oauth_config=model_IdentityGatewayConfig.id,
                 claims_scope="scope",
                 claims_claim="claim",

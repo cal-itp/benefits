@@ -318,7 +318,7 @@ def test_index_eligible_post_valid_form_success_claims(
         transit_agency=model_TransitAgency,
         enrollment_flow=model_EnrollmentFlow_with_scope_and_claim,
         enrollment_method=models.EnrollmentMethods.DIGITAL,
-        verified_by=model_EnrollmentFlow_with_scope_and_claim.claims_provider.client_name,
+        verified_by=model_EnrollmentFlow_with_scope_and_claim.oauth_config.client_name,
         expiration_datetime=None,
         extra_claims="claim_1, claim_2",
     )
