@@ -30,6 +30,16 @@ table {
   caption-side: top;
 }
 
+/* Header - Colors, Type */
+
+:root {
+  --header-bg: #000000;
+}
+
+#header {
+  padding: 0 2rem;
+}
+
 #user-tools,
 #user-tools button {
   color: var(--header-link-color);
@@ -51,16 +61,6 @@ table {
 
 .theme-toggle {
   display: none;
-}
-
-/* Header - Colors */
-
-:root {
-  --header-bg: #000000;
-}
-
-#header {
-  padding: 0 2rem;
 }
 
 /* Header - Branding by page */
