@@ -79,7 +79,7 @@ class EnrollmentFlow(models.Model):
     )
     claims_extra_claims = models.TextField(blank=True, default="", help_text="A space-separated list of any additional claims")
     claims_scheme_override = models.TextField(
-        help_text="The authentication scheme to use (Optional). If blank, defaults to the value in Claims providers",
+        help_text="The authentication scheme to use (Optional). If blank, defaults to the value in Identity gateway configs",
         default="",
         blank=True,
         verbose_name="Claims scheme",
