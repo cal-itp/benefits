@@ -9,6 +9,10 @@
   {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
 {% endblock extrastyle %}
 
+{% block bodyclass %}
+  {{ block.super }} dashboard
+{% endblock bodyclass %}
+
 {% block branding %}
   <div id="header-container" class="navbar navbar-expand-sm navbar-dark justify-content-between">
     <div class="container">
@@ -29,16 +33,12 @@
   </div>
 {% endblock branding %}
 
+{% block nav-breadcrumbs %}
+{% endblock nav-breadcrumbs %}
+
 {% block coltype %}
   w-100
 {% endblock coltype %}
-
-{% block bodyclass %}
-  {{ block.super }} dashboard
-{% endblock bodyclass %}
-
-{% block nav-breadcrumbs %}
-{% endblock nav-breadcrumbs %}
 
 {% block content_title %}
 {% endblock content_title %}
