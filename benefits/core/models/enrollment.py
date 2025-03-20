@@ -201,8 +201,8 @@ class EnrollmentFlow(models.Model):
 
     @property
     def uses_claims_verification(self):
-        """True if this flow verifies via the claims provider and has a scope and claim. False otherwise."""
-        return self.claims_provider is not None and bool(self.claims_scope) and bool(self.claims_eligibility_claim)
+        """True if this flow verifies via the Identity Gateway and has a scope and claim. False otherwise."""
+        return self.oauth_config is not None and bool(self.claims_scope) and bool(self.claims_eligibility_claim)
 
     @property
     def uses_api_verification(self):
@@ -211,7 +211,7 @@ class EnrollmentFlow(models.Model):
 
     @property
     def claims_scheme(self):
-        return self.claims_scheme_override or self.claims_provider.scheme
+        return self.claims_scheme_override or self.oauth_config.scheme
 
     @property
     def claims_all_claims(self):
@@ -227,7 +227,7 @@ class EnrollmentFlow(models.Model):
         Either the client name of the flow's claims provider, or the URL to the eligibility API.
         """
         if self.uses_claims_verification:
-            return self.claims_provider.client_name
+            return self.oauth_config.client_name
         else:
             return self.eligibility_api_url
 
