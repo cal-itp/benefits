@@ -1,5 +1,6 @@
 {% extends "admin/base_site.html" %}
+{% load i18n static %}
 
 {% block extrahead %}
-  {% include "admin/includes/favicon.html" %}
+  <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
 {% endblock extrahead %}
