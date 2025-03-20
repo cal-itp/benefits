@@ -75,8 +75,8 @@ def authentication(request):
         }
 
         if flow.uses_claims_verification:
-            data["sign_out_button_template"] = flow.claims_provider.sign_out_button_template
-            data["sign_out_link_template"] = flow.claims_provider.sign_out_link_template
+            data["sign_out_button_template"] = flow.sign_out_button_template
+            data["sign_out_link_template"] = flow.sign_out_link_template
 
         return {"authentication": data}
     else:
