@@ -45,12 +45,12 @@ table {
   color: var(--header-link-color);
   font-size: 1rem;
   letter-spacing: 0;
+  text-transform: unset;
 }
 
 #user-tools a,
 #user-tools button {
   border: 0;
-  text-transform: inherit;
   text-decoration: underline;
   text-decoration-color: var(--header-link-color);
 }
