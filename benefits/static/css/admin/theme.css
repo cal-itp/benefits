@@ -68,16 +68,19 @@ table {
 #logo {
   width: var(--logo-width);
   height: var(--logo-height);
+  margin-right: var(--logo-margin-right);
 }
 
-.dashboard {
+:root {
   --logo-width: 141.33px;
   --logo-height: 2rem;
+  --logo-margin-right: 1rem;
 }
 
 .login {
   --logo-width: 212px;
   --logo-height: 3rem;
+  --logo-margin-right: 0;
 }
 
 #branding {
@@ -90,10 +93,6 @@ table {
   align-items: center;
   width: 100%;
   padding-bottom: 1rem;
-}
-
-.dashboard #logo {
-  margin-right: 1rem;
 }
 
 /* Content */
