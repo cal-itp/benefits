@@ -25,8 +25,8 @@ class CTAButton:
 class EligibilityStart:
     page_title: str
     headline_text: str
-    eligibility_item_template: str
     call_to_action_button: CTAButton
+    eligibility_item_template: str = ""
 
     def dict(self):
         return asdict(self)
@@ -37,7 +37,6 @@ class LoginGovEligibilityStart(EligibilityStart):
         super().__init__(
             page_title=page_title,
             headline_text=headline_text,
-            eligibility_item_template="eligibility/includes/eligibility-item--identification--start--login-gov.html",
             call_to_action_button=CTAButton(
                 text=_("Get started with"), fallback_text="Login.gov", route=routes.OAUTH_LOGIN, extra_classes="login"
             ),
