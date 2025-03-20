@@ -11,6 +11,9 @@ html[data-theme="light"],
   --bs-secondary-rgb:
     210, 210, 210; /* Border color for Admin, used with border-secondary */
   --bs-secondary: #c5c4c4;
+  --breadcrumbs-link-fg: #066b99; /* Breadcrumbs on Django Admin */
+  --breadcrumbs-bg: #ffffff;
+  --breadcrumbs-fg: #212121;
 }
 
 /* Django dashboard overriding Bootstrap */
@@ -31,6 +34,12 @@ table {
 
 .submit-row a.deletelink {
   height: initial !important;
+}
+
+/* Breadcrumbs */
+
+div.breadcrumbs {
+  padding: 10px 2rem;
 }
 
 /* Header - Colors, Type */
@@ -101,7 +110,7 @@ table {
 /* Content */
 
 #content {
-  padding: 2rem;
+  padding: 1rem 2rem;
 }
 
 /* Login page */
