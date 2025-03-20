@@ -256,6 +256,10 @@ class EnrollmentFlow(models.Model):
         ctx = core_context.flows_help.get(self.system_name)
         return [c.dict() for c in ctx] if ctx else []
 
+    @property
+    def supports_sign_out(self):
+        return bool(self.sign_out_button_template) or bool(self.sign_out_link_template)
+
     def clean(self):
         errors = []
 
