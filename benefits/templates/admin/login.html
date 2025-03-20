@@ -1,4 +1,5 @@
 {% extends "admin/login.html" %}
+{% load i18n static %}
 
 {% block bodyclass %}
   {{ block.super }} bg-secondary-subtle
@@ -11,7 +12,7 @@
   {% comment %} Overriding instead of extending agency-base here to remove jQuery declaration, which admin/login.html includes on its own {% endcomment %}
   <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
   {% include "core/includes/bootstrap-css.html" %}
-  {% include "admin/includes/style-admin.html" %}
+  <link href="{% static "css/admin/styles.css" %}" rel="stylesheet">
 {% endblock extrastyle %}
 
 {% block branding %}
