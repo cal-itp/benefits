@@ -1,14 +1,6 @@
 {% extends "admin/base.html" %}
 {% load i18n static %}
 
-{% block extrastyle %}
-  {% include "core/includes/bootstrap-css.html" %}
-  <link href="{% static "css/admin/styles.css" %}" rel="stylesheet">
-
-  {% include "core/includes/ready-js.html" %}
-  {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
-{% endblock extrastyle %}
-
 {% block bodyclass %}
   {{ block.super }} dashboard
 {% endblock bodyclass %}
