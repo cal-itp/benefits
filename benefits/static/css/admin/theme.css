@@ -1,3 +1,19 @@
+/* CSS Variable overrides */
+
+html[data-theme="light"],
+:root {
+  --primary: #ffffff;
+  --bs-body-font-size: 1rem;
+  --button-bg: #ffffff;
+  --bs-body-color: #212121; /* Body text color */
+  --bs-dark-rgb: 33, 33, 33; /* Background color for Header */
+  --bs-heading-color: #212121; /* Header text color */
+  --bs-secondary-bg-subtle: #f1f1f1; /* Background color for Admin, lighter than bs-secondary, used with bg-secondary-subtle */
+  --bs-secondary-rgb:
+    210, 210, 210; /* Border color for Admin, used with border-secondary */
+  --bs-secondary: #c5c4c4;
+}
+
 /* Django dashboard overriding Bootstrap */
 
 #content-start h1 {
@@ -31,4 +47,21 @@ table {
 /* Theme toggle on Password change page */
 .theme-toggle {
   display: none;
+}
+
+/* Header - Branding by page */
+
+#logo {
+  width: var(--logo-width);
+  height: var(--logo-height);
+}
+
+.dashboard {
+  --logo-width: 141.33px;
+  --logo-height: 32px;
+}
+
+.login {
+  --logo-width: 212px;
+  --logo-height: 48px;
 }
