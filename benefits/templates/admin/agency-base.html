@@ -7,7 +7,7 @@
 {% block extrastyle %}
   <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
   {% include "core/includes/bootstrap-css.html" %}
-  {% include "admin/includes/style-admin.html" %}
+  <link href="{% static "css/admin/styles.css" %}" rel="stylesheet">
   {% include "core/includes/ready-js.html" %}
   {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
 {% endblock extrastyle %}
