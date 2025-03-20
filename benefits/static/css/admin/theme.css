@@ -19,7 +19,6 @@ html[data-theme="light"],
 #content-start h1 {
   font-size: 1rem;
   font-weight: 700;
-  margin: 12px 0 20px 0;
 }
 
 #content-related h3,
@@ -90,4 +89,10 @@ table {
 
 .dashboard #logo {
   margin-right: 1rem;
+}
+
+/* Content */
+
+#content {
+  padding: 2rem;
 }
