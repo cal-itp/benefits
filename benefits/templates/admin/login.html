@@ -10,7 +10,6 @@
 
 {% block extrastyle %}
   {% comment %} Overriding instead of extending agency-base here to remove jQuery declaration, which admin/login.html includes on its own {% endcomment %}
-  <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
   {% include "core/includes/bootstrap-css.html" %}
   <link href="{% static "css/admin/styles.css" %}" rel="stylesheet">
 {% endblock extrastyle %}
