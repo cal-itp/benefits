@@ -4,7 +4,6 @@ html[data-theme="light"],
 :root {
   --primary: #ffffff;
   --bs-body-font-size: 1rem;
-  --button-bg: #ffffff;
   --bs-body-color: #212121; /* Body text color */
   --bs-dark-rgb: 33, 33, 33; /* Background color for Header */
   --bs-heading-color: #212121; /* Header text color */
@@ -73,6 +72,7 @@ table {
   width: var(--logo-width);
   height: var(--logo-height);
   margin-right: var(--logo-margin-right);
+  margin-bottom: 1rem;
 }
 
 :root {
