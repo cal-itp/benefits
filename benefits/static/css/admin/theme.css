@@ -1,0 +1,34 @@
+/* Django dashboard overriding Bootstrap */
+
+#content-start h1 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 12px 0 20px 0;
+}
+
+#content-related h3,
+#changelist-filter-extra-actions h3 {
+  font-size: 0.875rem;
+}
+
+table {
+  caption-side: top;
+}
+
+#user-tools {
+  letter-spacing: 0;
+}
+
+/* Log out link on Password change page */
+#logout-form button {
+  border: 0;
+  font-size: 1rem;
+  text-transform: capitalize;
+  text-decoration: underline;
+  text-decoration-color: var(--bs-white);
+}
+
+/* Theme toggle on Password change page */
+.theme-toggle {
+  display: none;
+}
