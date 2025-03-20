@@ -30,6 +30,10 @@ table {
   caption-side: top;
 }
 
+.submit-row a.deletelink {
+  height: initial !important;
+}
+
 /* Header - Colors, Type */
 
 :root {
