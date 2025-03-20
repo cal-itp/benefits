@@ -91,7 +91,7 @@ class EnrollmentFlowForm(forms.ModelForm):
             eligibility_api_url = self.get(cleaned_data, "eligibility_api_url")
             eligibility_form_class = self.get(cleaned_data, "eligibility_form_class")
 
-            if cleaned_data.get("claims_provider"):
+            if cleaned_data.get("oauth_config"):
                 message = "Required for claims verification"
                 needed = dict(
                     claims_scope=cleaned_data.get("claims_scope"),
