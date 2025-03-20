@@ -5,26 +5,6 @@
   {{ block.super }} dashboard
 {% endblock bodyclass %}
 
-{% block branding %}
-  <div id="header-container" class="navbar navbar-expand-sm navbar-dark justify-content-between">
-    <div class="container">
-      <span class="navbar-brand p-0">
-        <img class="sm d-lg-none"
-             src="{% static "img/logo-sm.svg" %}"
-             width="90"
-             height="51.3"
-             alt="California Integrated Travel Project: Benefits logo (small)" />
-        <img class="lg d-none d-lg-block"
-             src="{% static "img/logo-lg.svg" %}"
-             width="220"
-             height="50"
-             alt="California Integrated Travel Project: Benefits logo (large)" />
-      </span>
-    </div>
-    <h1 class="p-0 m-0 text-white">{{ site_header }}</h1>
-  </div>
-{% endblock branding %}
-
 {% block nav-breadcrumbs %}
 {% endblock nav-breadcrumbs %}
 
