@@ -1,4 +1,5 @@
 from unittest.mock import create_autospec
+from cdt_identity.models import IdentityGatewayConfig
 from django.contrib.auth.models import User
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.middleware.locale import LocaleMiddleware
@@ -51,6 +52,17 @@ def model_PemData():
     data = PemData.objects.create(text_secret_name="pem-secret-data", label="Test public key")
 
     return data
+
+
+@pytest.fixture
+def model_IdentityGatewayConfig():
+    identity_gateway_config = IdentityGatewayConfig.objects.create(
+        client_name="Client",
+        client_id="319efaea-615b-4cd4-958f-e6cd2fd31646",
+        authority="https://example.com",
+    )
+
+    return identity_gateway_config
 
 
 @pytest.fixture
@@ -107,8 +119,9 @@ def model_EnrollmentFlow_with_eligibility_api(model_EnrollmentFlow, model_PemDat
 
 
 @pytest.fixture
-def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow, model_ClaimsProvider):
+def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow, model_ClaimsProvider, model_IdentityGatewayConfig):
     model_EnrollmentFlow.claims_provider = model_ClaimsProvider
+    model_EnrollmentFlow.oauth_config = model_IdentityGatewayConfig
     model_EnrollmentFlow.claims_scope = "scope"
     model_EnrollmentFlow.claims_eligibility_claim = "claim"
     model_EnrollmentFlow.save()
