@@ -101,3 +101,9 @@ table {
 #content {
   padding: 2rem;
 }
+
+/* Login page */
+
+.login .main {
+  border: 1px solid #000000;
+}
