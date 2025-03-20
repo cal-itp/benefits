@@ -208,7 +208,13 @@ class TestEnrollmentFlowAdmin:
 
     @pytest.mark.parametrize("user_type", ["staff", "super"])
     def test_EnrollmentFlowForm_clean_claims_verification(
-        self, admin_user_request, flow_admin_model, model_TransitAgency, model_ClaimsProvider, user_type
+        self,
+        admin_user_request,
+        flow_admin_model,
+        model_TransitAgency,
+        model_ClaimsProvider,
+        model_IdentityGatewayConfig,
+        user_type,
     ):
         model_TransitAgency.slug = "mst"  # use value that will map to existing templates
         model_TransitAgency.save()
@@ -220,6 +226,7 @@ class TestEnrollmentFlowAdmin:
             system_name="senior",  # use value that will map to existing templates
             supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
             claims_provider=model_ClaimsProvider.id,
+            oauth_config=model_IdentityGatewayConfig.id,
             claims_scope="",
             claims_eligibility_claim="",
         )
@@ -291,7 +298,13 @@ class TestEnrollmentFlowAdmin:
 
     @pytest.mark.parametrize("user_type", ["staff", "super"])
     def test_EnrollmentFlowForm_clean_supports_expiration(
-        self, admin_user_request, flow_admin_model, model_TransitAgency, model_ClaimsProvider, user_type
+        self,
+        admin_user_request,
+        flow_admin_model,
+        model_TransitAgency,
+        model_ClaimsProvider,
+        model_IdentityGatewayConfig,
+        user_type,
     ):
         model_TransitAgency.slug = "cst"  # use value that will map to existing templates
         model_TransitAgency.save()
@@ -308,7 +321,14 @@ class TestEnrollmentFlowAdmin:
         )
 
         # fake a valid claims configuration
-        request.POST.update(dict(claims_provider=model_ClaimsProvider.id, claims_scope="scope", claims_claim="claim"))
+        request.POST.update(
+            dict(
+                claims_provider=model_ClaimsProvider.id,
+                oauth_config=model_IdentityGatewayConfig.id,
+                claims_scope="scope",
+                claims_claim="claim",
+            )
+        )
 
         # but an invalid reenrollment error template
         request.POST.update(dict(reenrollment_error_template="does/not/exist.html"))
