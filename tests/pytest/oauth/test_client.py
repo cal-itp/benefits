@@ -41,7 +41,7 @@ def test_authorize_params_no_scheme():
 @pytest.mark.django_db
 def test_register_provider(mocker, mocked_oauth_registry):
     mocked_flow = mocker.Mock(spec=EnrollmentFlow)
-    mocked_flow.claims_provider.client_name = "client_name_1"
+    mocked_flow.oauth_config.client_name = "client_name_1"
     mocked_flow.claims_provider.client_id = "client_id_1"
 
     mocker.patch("benefits.oauth.client._client_kwargs", return_value={"client": "kwargs"})
@@ -62,7 +62,7 @@ def test_register_provider(mocker, mocked_oauth_registry):
 @pytest.mark.django_db
 def test_create_client_already_registered(mocker, mocked_oauth_registry):
     mocked_flow = mocker.Mock(spec=EnrollmentFlow)
-    mocked_flow.claims_provider.client_name = "client_name_1"
+    mocked_flow.oauth_config.client_name = "client_name_1"
     mocked_flow.claims_provider.client_id = "client_id_1"
 
     create_client(mocked_oauth_registry, mocked_flow)
@@ -74,7 +74,7 @@ def test_create_client_already_registered(mocker, mocked_oauth_registry):
 @pytest.mark.django_db
 def test_create_client_already_not_registered_yet(mocker, mocked_oauth_registry):
     mocked_flow = mocker.Mock(spec=EnrollmentFlow)
-    mocked_flow.claims_provider.client_name = "client_name_1"
+    mocked_flow.oauth_config.client_name = "client_name_1"
     mocked_flow.claims_provider.client_id = "client_id_1"
 
     mocker.patch("benefits.oauth.client._client_kwargs", return_value={"client": "kwargs"})
