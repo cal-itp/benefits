@@ -1,10 +1,16 @@
 from dataclasses import dataclass, asdict
 from typing import Optional
 
-from django.utils.translation import gettext_lazy as _
+from django.utils.text import format_lazy
+from django.utils.translation import gettext_lazy
 
 from benefits.core.context import SystemName
 from benefits.routes import routes
+
+
+def _(string, *args, **kwargs):
+    """Wraps format_lazy around gettext_lazy for simpler calling."""
+    return format_lazy(gettext_lazy(string), *args, **kwargs)
 
 
 @dataclass
@@ -76,5 +82,37 @@ eligibility_start = {
     ),
     SystemName.VETERAN.value: LoginGovEligibilityStart(
         page_title=_("Veterans benefit overview"), headline_text=_("You selected a Veteran transit benefit.")
+    ),
+}
+
+
+@dataclass
+class EligibilityUnverified:
+    headline_text: str
+    body_text: str
+    button_text: str
+
+    def dict(self):
+        return asdict(self)
+
+
+class AgencyCardEligibilityUnverified(EligibilityUnverified):
+    def __init__(self, agency_card):
+        super().__init__(
+            headline_text=_("Your card information may not have been entered correctly."),
+            body_text=_(
+                "The number and last name must be entered exactly as they appear on your {agency_card}. "
+                "Please check your card and try again, or contact your transit agency for help.",
+                agency_card=agency_card,
+            ),
+            button_text=_("Try again"),
+        )
+
+
+eligibility_unverified = {
+    SystemName.AGENCY_CARD.value: AgencyCardEligibilityUnverified(agency_card=_("CST Agency Card")),
+    SystemName.COURTESY_CARD.value: AgencyCardEligibilityUnverified(agency_card=_("MST Courtesy Card")),
+    SystemName.REDUCED_FARE_MOBILITY_ID.value: AgencyCardEligibilityUnverified(
+        agency_card=_("SBMTD Reduced Fare Mobility ID card")
     ),
 }

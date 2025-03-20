@@ -153,4 +153,4 @@ def unverified(request):
 
     analytics.returned_fail(request, flow)
 
-    return TemplateResponse(request, flow.eligibility_unverified_template)
+    return TemplateResponse(request, "eligibility/unverified.html", flow.eligibility_unverified_context)

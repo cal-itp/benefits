@@ -145,10 +145,6 @@ def test_EnrollmentFlow_template_overrides_claims(model_EnrollmentFlow_with_scop
         == model_EnrollmentFlow_with_scope_and_claim.selection_label_template_override
     )
     assert (
-        model_EnrollmentFlow_with_scope_and_claim.eligibility_unverified_template
-        == model_EnrollmentFlow_with_scope_and_claim.eligibility_unverified_template_override
-    )
-    assert (
         model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template
         == model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template_override
     )
@@ -158,7 +154,6 @@ def test_EnrollmentFlow_template_overrides_claims(model_EnrollmentFlow_with_scop
     )
 
     model_EnrollmentFlow_with_scope_and_claim.selection_label_template_override = ""
-    model_EnrollmentFlow_with_scope_and_claim.eligibility_unverified_template_override = ""
     model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template_override = ""
     model_EnrollmentFlow_with_scope_and_claim.enrollment_success_template_override = ""
     model_EnrollmentFlow_with_scope_and_claim.save()
@@ -167,7 +162,6 @@ def test_EnrollmentFlow_template_overrides_claims(model_EnrollmentFlow_with_scop
         model_EnrollmentFlow_with_scope_and_claim.selection_label_template
         == f"eligibility/includes/selection-label--{model_EnrollmentFlow_with_scope_and_claim.system_name}.html"
     )
-    assert model_EnrollmentFlow_with_scope_and_claim.eligibility_unverified_template == "eligibility/unverified.html"
     assert model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template == "enrollment/index.html"
     assert (
         model_EnrollmentFlow_with_scope_and_claim.enrollment_success_template
@@ -178,7 +172,6 @@ def test_EnrollmentFlow_template_overrides_claims(model_EnrollmentFlow_with_scop
 @pytest.mark.django_db
 def test_EnrollmentFlow_template_overrides_eligibility_api(model_EnrollmentFlow_with_eligibility_api):
     model_EnrollmentFlow_with_eligibility_api.selection_label_template_override = ""
-    model_EnrollmentFlow_with_eligibility_api.eligibility_unverified_template_override = ""
     model_EnrollmentFlow_with_eligibility_api.enrollment_index_template_override = ""
     model_EnrollmentFlow_with_eligibility_api.enrollment_success_template_override = ""
     model_EnrollmentFlow_with_eligibility_api.save()
@@ -186,10 +179,6 @@ def test_EnrollmentFlow_template_overrides_eligibility_api(model_EnrollmentFlow_
     assert (
         model_EnrollmentFlow_with_eligibility_api.selection_label_template
         == f"eligibility/includes/selection-label--{model_EnrollmentFlow_with_eligibility_api.agency_card_name}.html"
-    )
-    assert (
-        model_EnrollmentFlow_with_eligibility_api.eligibility_unverified_template
-        == f"eligibility/unverified--{model_EnrollmentFlow_with_eligibility_api.agency_card_name}.html"
     )
     assert model_EnrollmentFlow_with_eligibility_api.enrollment_index_template == "enrollment/index--agency-card.html"
     assert (
@@ -216,7 +205,6 @@ def test_EnrollmentFlow_clean_supports_expiration(model_EnrollmentFlow_supports_
     "template_attribute",
     [
         "selection_label_template_override",
-        "eligibility_unverified_template_override",
         "enrollment_index_template_override",
         "enrollment_success_template_override",
     ],
