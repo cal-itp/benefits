@@ -42,6 +42,17 @@ def test_pre_logout(app_request, mocked_analytics_module):
     assert not session.logged_in(app_request)
 
 
+@pytest.mark.parametrize("origin", [routes.ELIGIBILITY_START, routes.INDEX])
+def test_post_logout(app_request, mocked_analytics_module, origin):
+    session.update(app_request, origin=origin)
+
+    result = OAuthHooks.post_logout(app_request)
+
+    assert result.status_code == 302
+    assert result.url == reverse(origin)
+    mocked_analytics_module.finished_sign_out.assert_called_once_with(app_request)
+
+
 @pytest.mark.parametrize("operation", Operation)
 def test_system_error(app_request, mocked_analytics_module, mocked_sentry_sdk_module, operation):
     result = OAuthHooks.system_error(app_request, Exception("some exception"), operation)
