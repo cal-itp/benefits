@@ -11,18 +11,18 @@
       <h1 class="pt-0 pb-3 text-start">{{ agency.long_name }}</h1>
       {% if has_permission_for_in_person %}
         <div class="bg-white border border-1 border-secondary p-3">
-          <h2 class="pt-0 pb-2 text-start">In-person enrollment</h2>
+          <h2 class="pt-0 pb-2 text-start fs-6 fw-bold">In-person enrollment</h2>
           <p>Verify transit benefit eligibility using agency criteria and complete a rider’s open-loop card enrollment.</p>
           {% url routes.IN_PERSON_ELIGIBILITY as url_eligibility %}
           <div class="row pt-4">
             <div class="col-lg-6">
-              <a href="{{ url_eligibility }}" class="btn btn-lg btn-primary d-block">New enrollment</a>
+              <a href="{{ url_eligibility }}" class="btn btn-lg text-white btn-primary d-block">New enrollment</a>
             </div>
           </div>
         </div>
         {% if transit_processor_portal_url %}
           <div class="bg-white border border-1 border-secondary p-3 mt-4">
-            <h2 class="pt-0 pb-2 text-start">Transit Processor</h2>
+            <h2 class="pt-0 pb-2 text-start fs-6 fw-bold">Transit processor</h2>
             <p>Manage fare-calculation, view rider transactions, and process refunds.</p>
             <div class="row pt-4">
               <div class="col-lg-6">
