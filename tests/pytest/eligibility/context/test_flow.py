@@ -15,7 +15,8 @@ def test_EligibilityStart_dict():
     context_object = EligibilityStart(
         page_title="Test page title",
         headline_text="This is a headline.",
-        eligibility_item_template="blah.html",
+        eligibility_item_headline="Item headline",
+        eligibility_item_body="Item body",
         call_to_action_button=CTAButton(text="button text", route=routes.INDEX),
     )
 

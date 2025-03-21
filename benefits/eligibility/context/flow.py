@@ -25,8 +25,9 @@ class CTAButton:
 class EligibilityStart:
     page_title: str
     headline_text: str
-    eligibility_item_template: str
     call_to_action_button: CTAButton
+    eligibility_item_headline: Optional[str] = None
+    eligibility_item_body: Optional[str] = None
 
     def dict(self):
         return asdict(self)
@@ -37,7 +38,6 @@ class LoginGovEligibilityStart(EligibilityStart):
         super().__init__(
             page_title=page_title,
             headline_text=headline_text,
-            eligibility_item_template="eligibility/includes/eligibility-item--identification--start--login-gov.html",
             call_to_action_button=CTAButton(
                 text=_("Get started with"), fallback_text="Login.gov", route=routes.OAUTH_LOGIN, extra_classes="login"
             ),
@@ -45,11 +45,12 @@ class LoginGovEligibilityStart(EligibilityStart):
 
 
 class AgencyCardEligibilityStart(EligibilityStart):
-    def __init__(self, headline_text, eligibility_item_template):
+    def __init__(self, headline_text, eligibility_item_headline, eligibility_item_body):
         super().__init__(
             page_title=_("Agency card overview"),
             headline_text=headline_text,
-            eligibility_item_template=eligibility_item_template,
+            eligibility_item_headline=eligibility_item_headline,
+            eligibility_item_body=eligibility_item_body,
             call_to_action_button=CTAButton(text=_("Continue"), route=routes.ELIGIBILITY_CONFIRM),
         )
 
@@ -57,19 +58,29 @@ class AgencyCardEligibilityStart(EligibilityStart):
 eligibility_start = {
     SystemName.AGENCY_CARD.value: AgencyCardEligibilityStart(
         headline_text=_("You selected an Agency Card transit benefit."),
-        eligibility_item_template="eligibility/includes/eligibility-item--identification--start--cst-agency-card.html",
+        eligibility_item_headline=_("Your current Agency Card number"),
+        eligibility_item_body=_(
+            "You do not need to have your physical CST Agency Card, but you will need to know the number."
+        ),
     ),
     SystemName.CALFRESH.value: LoginGovEligibilityStart(
         page_title=_("CalFresh benefit overview"), headline_text=_("You selected a CalFresh Cardholder transit benefit.")
     ),
     SystemName.COURTESY_CARD.value: AgencyCardEligibilityStart(
         headline_text=_("You selected a Courtesy Card transit benefit."),
-        eligibility_item_template="eligibility/includes/eligibility-item--identification--start--mst-agency-card.html",
+        eligibility_item_headline=_("Your current Courtesy Card number"),
+        eligibility_item_body=_(
+            "You do not need to have your physical MST Courtesy Card, but you will need to know the number."
+        ),
     ),
     SystemName.MEDICARE.value: EligibilityStart(
         page_title=_("Medicare benefit overview"),
         headline_text=_("You selected a Medicare Cardholder transit benefit."),
-        eligibility_item_template="eligibility/includes/eligibility-item--identification--start--medicare.html",
+        eligibility_item_headline=_("An online account with Medicare.gov"),
+        eligibility_item_body=_(
+            "If you do not have an account you will be able to create one using your red, white, and blue Medicare card. "
+            "We use your Medicare.gov account to verify you qualify."
+        ),
         call_to_action_button=CTAButton(text=_("Continue to Medicare.gov"), route=routes.OAUTH_LOGIN),
     ),
     SystemName.OLDER_ADULT.value: LoginGovEligibilityStart(
@@ -78,7 +89,8 @@ eligibility_start = {
     ),
     SystemName.REDUCED_FARE_MOBILITY_ID.value: AgencyCardEligibilityStart(
         headline_text=_("You selected a Reduced Fare Mobility ID transit benefit."),
-        eligibility_item_template="eligibility/includes/eligibility-item--identification--start--sbmtd-agency-card.html",
+        eligibility_item_headline=_("Your current Reduced Fare Mobility ID number"),
+        eligibility_item_body=_("You do not need to have your physical card, but you will need to know the number."),
     ),
     SystemName.VETERAN.value: LoginGovEligibilityStart(
         page_title=_("Veterans benefit overview"), headline_text=_("You selected a Veteran transit benefit.")
