@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("cdt_identity", "0001_initial"),
-        ("core", "0039_remove_enrollmentflow_help_template"),
+        ("core", "0040_remove_enrollmentflow_eligibility_unverified_template_override"),
     ]
 
     operations = [
