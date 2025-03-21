@@ -51,4 +51,8 @@ enrollment_success = {
     SystemName.AGENCY_CARD.value: AgencyCardEnrollmentSuccess(
         transit_benefit=_("a CST Agency Card transit benefit"), transportation_type=_("a CST bus")
     ),
+    AgencySlug.MST.value: DefaultEnrollmentSuccess(transportation_type=_("an MST bus")),
+    AgencySlug.SACRT.value: DefaultEnrollmentSuccess(transportation_type=_("a SacRT bus")),
+    AgencySlug.SBMTD.value: DefaultEnrollmentSuccess(transportation_type=_("an SBMTD bus")),
+    AgencySlug.NEVCO.value: DefaultEnrollmentSuccess(transportation_type=_("a Nevada County Connects bus")),
 }
