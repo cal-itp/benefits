@@ -82,4 +82,7 @@ class Migration(migrations.Migration):
             model_name="enrollmentflow",
             name="claims_provider",
         ),
+        migrations.DeleteModel(
+            name="ClaimsProvider",
+        ),
     ]

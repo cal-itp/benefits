@@ -10,7 +10,7 @@ import pytest
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import ClaimsProvider, EnrollmentFlow, TransitProcessor, PemData, TransitAgency
+from benefits.core.models import EnrollmentFlow, TransitProcessor, PemData, TransitAgency
 
 
 def pytest_runtest_setup():
@@ -63,28 +63,6 @@ def model_IdentityGatewayConfig():
     )
 
     return identity_gateway_config
-
-
-@pytest.fixture
-def model_ClaimsProvider():
-    claims_provider = ClaimsProvider.objects.create(
-        sign_out_button_template="core/includes/button--sign-out--senior.html",
-        sign_out_link_template="core/includes/link--sign-out--senior.html",
-        client_name="Client",
-        client_id_secret_name="1234",
-        authority="https://example.com",
-    )
-
-    return claims_provider
-
-
-@pytest.fixture
-def model_ClaimsProvider_no_sign_out(model_ClaimsProvider):
-    model_ClaimsProvider.sign_out_button_template = ""
-    model_ClaimsProvider.sign_out_link_template = ""
-    model_ClaimsProvider.save()
-
-    return model_ClaimsProvider
 
 
 @pytest.fixture

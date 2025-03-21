@@ -212,7 +212,6 @@ class TestEnrollmentFlowAdmin:
         admin_user_request,
         flow_admin_model,
         model_TransitAgency,
-        model_ClaimsProvider,
         model_IdentityGatewayConfig,
         user_type,
     ):
@@ -301,7 +300,6 @@ class TestEnrollmentFlowAdmin:
         admin_user_request,
         flow_admin_model,
         model_TransitAgency,
-        model_ClaimsProvider,
         model_IdentityGatewayConfig,
         user_type,
     ):
