@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy
@@ -15,6 +15,9 @@ def _(string, *args, **kwargs):
 class EnrollmentSuccess:
     success_message: str
     thank_you_message: str
+
+    def dict(self):
+        return asdict(self)
 
 
 class DefaultEnrollmentSuccess(EnrollmentSuccess):
