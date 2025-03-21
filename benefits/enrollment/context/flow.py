@@ -52,7 +52,13 @@ enrollment_success = {
         transit_benefit=_("a CST Agency Card transit benefit"), transportation_type=_("a CST bus")
     ),
     AgencySlug.MST.value: DefaultEnrollmentSuccess(transportation_type=_("an MST bus")),
+    SystemName.COURTESY_CARD.value: AgencyCardEnrollmentSuccess(
+        transit_benefit=_("an MST Courtesy Card transit benefit"), transportation_type="an MST bus"
+    ),
     AgencySlug.SACRT.value: DefaultEnrollmentSuccess(transportation_type=_("a SacRT bus")),
     AgencySlug.SBMTD.value: DefaultEnrollmentSuccess(transportation_type=_("an SBMTD bus")),
+    SystemName.REDUCED_FARE_MOBILITY_ID.value: AgencyCardEnrollmentSuccess(
+        transit_benefit=_("an SBMTD Reduced Fare Mobility ID transit benefit"), transportation_type=_("an SBMTD bus")
+    ),
     AgencySlug.NEVCO.value: DefaultEnrollmentSuccess(transportation_type=_("a Nevada County Connects bus")),
 }
