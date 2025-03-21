@@ -497,8 +497,10 @@ def test_success_authentication_not_logged_in(mocker, client, model_TransitAgenc
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_success_no_authentication(client, mocked_session_flow_does_not_use_claims_verification):
+@pytest.mark.usefixtures(
+    "mocked_session_agency", "mocked_session_eligible", "mocked_session_flow_does_not_use_claims_verification"
+)
+def test_success_no_authentication(client):
     path = reverse(routes.ENROLLMENT_SUCCESS)
     response = client.get(path)
 
