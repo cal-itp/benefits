@@ -123,7 +123,6 @@ class TestEnrollmentFlowAdmin:
                     "selection_label_template_override",
                     "reenrollment_error_template",
                     "enrollment_index_template_override",
-                    "enrollment_success_template_override",
                 ],
             ),
             ("super", ()),
