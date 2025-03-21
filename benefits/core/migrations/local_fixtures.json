@@ -24,23 +24,21 @@
     }
   },
   {
-    "model": "core.claimsprovider",
+    "model": "cdt_identity.identitygatewayconfig",
     "pk": 1,
     "fields": {
-      "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
-      "sign_out_link_template": "core/includes/link--sign-out--login-gov.html",
       "client_name": "benefits-logingov",
-      "client_id_secret_name": "claims-provider-client-id",
+      "client_id": "319efaea-615b-4cd4-958f-e6cd2fd31646",
       "authority": "https://example.com",
       "scheme": "dev-cal-itp_benefits"
     }
   },
   {
-    "model": "core.claimsprovider",
+    "model": "cdt_identity.identitygatewayconfig",
     "pk": 2,
     "fields": {
       "client_name": "benefits-medicaregov",
-      "client_id_secret_name": "claims-provider-client-id",
+      "client_id": "319efaea-615b-4cd4-958f-e6cd2fd31646",
       "authority": "https://example.com",
       "scheme": "dev-cal-itp_benefits"
     }
@@ -76,11 +74,13 @@
       "label": "Older Adult",
       "group_id": "group123",
       "display_order": 2,
-      "claims_provider": 1,
+      "oauth_config": 1,
       "claims_scope": "verify:senior",
       "claims_eligibility_claim": "senior",
       "supported_enrollment_methods": ["digital", "in_person"],
-      "transit_agency": 1
+      "transit_agency": 1,
+      "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
+      "sign_out_link_template": "core/includes/link--sign-out--login-gov.html"
     }
   },
   {
@@ -91,11 +91,13 @@
       "label": "U.S. Veteran",
       "group_id": "group123",
       "display_order": 4,
-      "claims_provider": 1,
+      "oauth_config": 1,
       "claims_scope": "verify:veteran",
       "claims_eligibility_claim": "veteran",
       "supported_enrollment_methods": ["digital"],
-      "transit_agency": 1
+      "transit_agency": 1,
+      "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
+      "sign_out_link_template": "core/includes/link--sign-out--login-gov.html"
     }
   },
   {
@@ -131,11 +133,13 @@
       "enrollment_index_template_override": "enrollment/index--calfresh.html",
       "reenrollment_error_template": "enrollment/reenrollment-error--calfresh.html",
       "display_order": 2,
-      "claims_provider": 1,
+      "oauth_config": 1,
       "claims_scope": "verify:calfresh",
       "claims_eligibility_claim": "calfresh",
       "supported_enrollment_methods": ["digital"],
-      "transit_agency": 1
+      "transit_agency": 1,
+      "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
+      "sign_out_link_template": "core/includes/link--sign-out--login-gov.html"
     }
   },
   {
@@ -146,7 +150,7 @@
       "label": "Medicare Cardholder",
       "group_id": "group123",
       "display_order": 1,
-      "claims_provider": 2,
+      "oauth_config": 2,
       "claims_scope": "verify:medicare",
       "claims_eligibility_claim": "medicare",
       "supported_enrollment_methods": ["digital", "in_person"],
