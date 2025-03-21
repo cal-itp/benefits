@@ -190,4 +190,6 @@ def success(request):
         session.update(request, origin=reverse(routes.LOGGED_OUT))
 
     context = {"redirect_to": request.path}
-    return TemplateResponse(request, flow.enrollment_success_template, context)
+    context.update(flow.enrollment_success_context)
+
+    return TemplateResponse(request, "enrollment/success.html", context)

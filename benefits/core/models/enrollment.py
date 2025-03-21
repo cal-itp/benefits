@@ -12,6 +12,7 @@ from .common import PemData, SecretNameField, template_path
 from .transit import TransitAgency
 from benefits.core import context as core_context
 from benefits.eligibility import context as eligibility_context
+from benefits.enrollment import context as enrollment_context
 from benefits.in_person import context as in_person_context
 
 logger = logging.getLogger(__name__)
@@ -141,11 +142,6 @@ class EnrollmentFlow(models.Model):
     reenrollment_error_template = models.TextField(
         blank=True, default="", help_text="Template for a re-enrollment error associated with the enrollment flow"
     )
-    enrollment_success_template_override = models.TextField(
-        blank=True,
-        default="",
-        help_text="Override the default template for a successful enrollment associated with the enrollment flow",
-    )
     display_order = models.PositiveSmallIntegerField(default=0, blank=False, null=False)
 
     class Meta:
@@ -232,12 +228,11 @@ class EnrollmentFlow(models.Model):
             return self.enrollment_index_template_override or f"{prefix}.html"
 
     @property
-    def enrollment_success_template(self):
-        prefix = "enrollment/success"
+    def enrollment_success_context(self):
         if self.uses_api_verification:
-            return self.enrollment_success_template_override or f"{prefix}--{self.agency_card_name}.html"
+            return enrollment_context.enrollment_success[self.system_name].dict()
         else:
-            return self.enrollment_success_template_override or f"{prefix}--{self.transit_agency.slug}.html"
+            return enrollment_context.enrollment_success[self.transit_agency.slug].dict()
 
     @property
     def in_person_eligibility_context(self):
@@ -259,7 +254,6 @@ class EnrollmentFlow(models.Model):
             templates = [
                 self.selection_label_template,
                 self.enrollment_index_template,
-                self.enrollment_success_template,
             ]
             if self.supports_expiration:
                 templates.append(self.reenrollment_error_template)
