@@ -35,7 +35,7 @@ def test_flow_using_claims_verification_required__no_flow(app_request, mocked_vi
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_flow_does_not_use_claims_verification")
-def test_flow_using_claims_verification_required__no_claimsprovider(app_request, mocked_view, decorated_view):
+def test_flow_using_claims_verification_required__no_identitygatewayconfig(app_request, mocked_view, decorated_view):
     response = decorated_view(app_request)
 
     mocked_view.assert_not_called()
