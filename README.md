@@ -36,7 +36,7 @@
 | benefits/eligibility/apps.py                 |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/context/\_\_init\_\_.py |        3 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/context/agency.py       |       10 |        0 |        2 |        0 |    100% |           |
-| benefits/eligibility/context/flow.py         |       40 |        0 |        0 |        0 |    100% |           |
+| benefits/eligibility/context/flow.py         |       41 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/forms.py                |       65 |        2 |       16 |        2 |     95% |   41, 141 |
 | benefits/eligibility/urls.py                 |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/verify.py               |       16 |        0 |        6 |        0 |    100% |           |
@@ -75,7 +75,7 @@
 | benefits/settings.py                         |      131 |        7 |       24 |        9 |     90% |104, 125->130, 141->144, 160, 313, 325, 327, 342, 354 |
 | benefits/urls.py                             |       27 |        7 |        4 |        2 |     71% |33->44, 48-62 |
 | benefits/wsgi.py                             |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                    **TOTAL** | **2471** |  **112** |  **490** |   **56** | **94%** |           |
+|                                    **TOTAL** | **2472** |  **112** |  **490** |   **56** | **94%** |           |
 
 
 ## Setup coverage badge
