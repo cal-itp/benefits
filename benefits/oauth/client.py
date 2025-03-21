@@ -43,16 +43,16 @@ def _authorize_params(scheme):
 
 def _register_provider(oauth_registry: OAuth, flow: models.EnrollmentFlow):
     """
-    Register OAuth clients into the given registry, using configuration from ClaimsProvider and EnrollmentFlow models.
+    Register OAuth clients into the given registry, using configuration from IdentityGatewayConfig and EnrollmentFlow models.
 
     Adapted from https://stackoverflow.com/a/64174413.
     """
-    logger.debug(f"Registering OAuth client: {flow.claims_provider.client_name}")
+    logger.debug(f"Registering OAuth client: {flow.oauth_config.client_name}")
 
     client = oauth_registry.register(
-        flow.claims_provider.client_name,
-        client_id=flow.claims_provider.client_id,
-        server_metadata_url=_server_metadata_url(flow.claims_provider.authority),
+        flow.oauth_config.client_name,
+        client_id=str(flow.oauth_config.client_id),
+        server_metadata_url=_server_metadata_url(flow.oauth_config.authority),
         client_kwargs=_client_kwargs(flow.claims_scope),
         authorize_params=_authorize_params(flow.claims_scheme),
     )
@@ -64,7 +64,7 @@ def create_client(oauth_registry: OAuth, flow: models.EnrollmentFlow):
     """
     Returns an OAuth client, registering it if needed.
     """
-    client = oauth_registry.create_client(flow.claims_provider.client_name)
+    client = oauth_registry.create_client(flow.oauth_config.client_name)
 
     if client is None:
         client = _register_provider(oauth_registry, flow)

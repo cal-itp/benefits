@@ -12,7 +12,7 @@ class OAuthEvent(core.Event):
         super().__init__(request, event_type)
         flow = session.flow(request)
         if flow and flow.uses_claims_verification:
-            self.update_event_properties(claims_provider=flow.claims_provider.client_name)
+            self.update_event_properties(claims_provider=flow.oauth_config.client_name)
 
 
 class OAuthErrorEvent(OAuthEvent):

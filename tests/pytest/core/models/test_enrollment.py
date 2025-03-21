@@ -102,22 +102,22 @@ def test_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow_with_scope_and
     assert model_EnrollmentFlow_with_scope_and_claim.uses_claims_verification
     assert (
         model_EnrollmentFlow_with_scope_and_claim.eligibility_verifier
-        == model_EnrollmentFlow_with_scope_and_claim.claims_provider.client_name
+        == model_EnrollmentFlow_with_scope_and_claim.oauth_config.client_name
     )
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_with_scope_and_claim_no_sign_out(
-    model_EnrollmentFlow_with_scope_and_claim, model_ClaimsProvider_no_sign_out
-):
-    model_EnrollmentFlow_with_scope_and_claim.claims_provider = model_ClaimsProvider_no_sign_out
+def test_EnrollmentFlow_with_scope_and_claim_no_sign_out(model_EnrollmentFlow_with_scope_and_claim):
+    model_EnrollmentFlow_with_scope_and_claim.sign_out_button_template = ""
+    model_EnrollmentFlow_with_scope_and_claim.sign_out_link_template = ""
 
     assert model_EnrollmentFlow_with_scope_and_claim.uses_claims_verification
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_no_scope_and_claim_no_sign_out(model_EnrollmentFlow, model_ClaimsProvider_no_sign_out):
-    model_EnrollmentFlow.claims_provider = model_ClaimsProvider_no_sign_out
+def test_EnrollmentFlow_no_scope_and_claim_no_sign_out(model_EnrollmentFlow):
+    model_EnrollmentFlow.sign_out_button_template = ""
+    model_EnrollmentFlow.sign_out_link_template = ""
 
     assert not model_EnrollmentFlow.uses_claims_verification
 
@@ -134,7 +134,7 @@ def test_EnrollmentFlow_eligibility_api_auth_key(mock_field_secret_value, model_
 def test_EnrollmentFlow_no_claims_scheme(model_EnrollmentFlow_with_scope_and_claim):
     assert (
         model_EnrollmentFlow_with_scope_and_claim.claims_scheme
-        == model_EnrollmentFlow_with_scope_and_claim.claims_provider.scheme
+        == model_EnrollmentFlow_with_scope_and_claim.oauth_config.scheme
     )
 
 
@@ -188,9 +188,9 @@ def test_EnrollmentFlow_template_overrides_eligibility_api(model_EnrollmentFlow_
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_clean_supports_expiration(model_EnrollmentFlow_supports_expiration, model_ClaimsProvider):
+def test_EnrollmentFlow_clean_supports_expiration(model_EnrollmentFlow_supports_expiration, model_IdentityGatewayConfig):
     # fake a valid claims configuration
-    model_EnrollmentFlow_supports_expiration.claims_provider = model_ClaimsProvider
+    model_EnrollmentFlow_supports_expiration.oauth_config = model_IdentityGatewayConfig
     model_EnrollmentFlow_supports_expiration.claims_scope = "scope"
     model_EnrollmentFlow_supports_expiration.claims_eligibility_claim = "claim"
     # but an invalid reenrollment error template

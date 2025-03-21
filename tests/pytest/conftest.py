@@ -1,4 +1,5 @@
 from unittest.mock import create_autospec
+from cdt_identity.models import IdentityGatewayConfig
 from django.contrib.auth.models import User
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.middleware.locale import LocaleMiddleware
@@ -9,7 +10,7 @@ import pytest
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import ClaimsProvider, EnrollmentFlow, TransitProcessor, PemData, TransitAgency
+from benefits.core.models import EnrollmentFlow, TransitProcessor, PemData, TransitAgency
 
 
 def pytest_runtest_setup():
@@ -54,25 +55,14 @@ def model_PemData():
 
 
 @pytest.fixture
-def model_ClaimsProvider():
-    claims_provider = ClaimsProvider.objects.create(
-        sign_out_button_template="core/includes/button--sign-out--senior.html",
-        sign_out_link_template="core/includes/link--sign-out--senior.html",
+def model_IdentityGatewayConfig():
+    identity_gateway_config = IdentityGatewayConfig.objects.create(
         client_name="Client",
-        client_id_secret_name="1234",
+        client_id="319efaea-615b-4cd4-958f-e6cd2fd31646",
         authority="https://example.com",
     )
 
-    return claims_provider
-
-
-@pytest.fixture
-def model_ClaimsProvider_no_sign_out(model_ClaimsProvider):
-    model_ClaimsProvider.sign_out_button_template = ""
-    model_ClaimsProvider.sign_out_link_template = ""
-    model_ClaimsProvider.save()
-
-    return model_ClaimsProvider
+    return identity_gateway_config
 
 
 @pytest.fixture
@@ -107,8 +97,8 @@ def model_EnrollmentFlow_with_eligibility_api(model_EnrollmentFlow, model_PemDat
 
 
 @pytest.fixture
-def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow, model_ClaimsProvider):
-    model_EnrollmentFlow.claims_provider = model_ClaimsProvider
+def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow, model_IdentityGatewayConfig):
+    model_EnrollmentFlow.oauth_config = model_IdentityGatewayConfig
     model_EnrollmentFlow.claims_scope = "scope"
     model_EnrollmentFlow.claims_eligibility_claim = "claim"
     model_EnrollmentFlow.save()
@@ -140,6 +130,15 @@ def model_EnrollmentFlow_supports_expiration(model_EnrollmentFlow):
     model_EnrollmentFlow.expiration_days = 365
     model_EnrollmentFlow.expiration_reenrollment_days = 14
     model_EnrollmentFlow.reenrollment_error_template = "enrollment/reenrollment-error--calfresh.html"
+    model_EnrollmentFlow.save()
+
+    return model_EnrollmentFlow
+
+
+@pytest.fixture
+def model_EnrollmentFlow_supports_sign_out(model_EnrollmentFlow):
+    model_EnrollmentFlow.sign_out_button_template = "core/includes/button--sign-out--senior.html"
+    model_EnrollmentFlow.sign_out_link_template = "core/includes/link--sign-out--senior.html"
     model_EnrollmentFlow.save()
 
     return model_EnrollmentFlow

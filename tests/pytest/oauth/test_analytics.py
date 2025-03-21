@@ -6,12 +6,12 @@ from benefits.oauth.analytics import OAuthErrorEvent, OAuthEvent, FinishedSignIn
 @pytest.mark.django_db
 def test_OAuthEvent_flow_client_name_when_uses_claims_verification(app_request, mocked_session_flow_uses_claims_verification):
     mocked_flow = mocked_session_flow_uses_claims_verification(app_request)
-    mocked_flow.claims_provider.client_name = "ClientName"
+    mocked_flow.oauth_config.client_name = "ClientName"
 
     event = OAuthEvent(app_request, "event type")
 
     assert "claims_provider" in event.event_properties
-    assert event.event_properties["claims_provider"] == mocked_flow.claims_provider.client_name
+    assert event.event_properties["claims_provider"] == mocked_flow.oauth_config.client_name
 
 
 @pytest.mark.django_db

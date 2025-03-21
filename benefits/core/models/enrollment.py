@@ -2,13 +2,13 @@ import importlib
 import logging
 import uuid
 
+from cdt_identity.models import IdentityGatewayConfig
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 from multiselectfield import MultiSelectField
 
 from .common import PemData, SecretNameField, template_path
-from .claims import ClaimsProvider
 from .transit import TransitAgency
 from benefits.core import context as core_context
 from benefits.eligibility import context as eligibility_context
@@ -52,12 +52,14 @@ class EnrollmentFlow(models.Model):
     group_id = models.TextField(
         blank=True, default="", help_text="Reference to the TransitProcessor group for user enrollment"
     )
-    claims_provider = models.ForeignKey(
-        ClaimsProvider,
+    sign_out_button_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out button")
+    sign_out_link_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out link")
+    oauth_config = models.ForeignKey(
+        IdentityGatewayConfig,
         on_delete=models.PROTECT,
         null=True,
         blank=True,
-        help_text="An entity that provides claims for eligibility verification for this flow.",
+        help_text="The IdG connection details for this flow.",
     )
     claims_scope = models.TextField(
         blank=True,
@@ -69,7 +71,7 @@ class EnrollmentFlow(models.Model):
     )
     claims_extra_claims = models.TextField(blank=True, default="", help_text="A space-separated list of any additional claims")
     claims_scheme_override = models.TextField(
-        help_text="The authentication scheme to use (Optional). If blank, defaults to the value in Claims providers",
+        help_text="The authentication scheme to use (Optional). If blank, defaults to the value in Identity gateway configs",
         default="",
         blank=True,
         verbose_name="Claims scheme",
@@ -191,8 +193,8 @@ class EnrollmentFlow(models.Model):
 
     @property
     def uses_claims_verification(self):
-        """True if this flow verifies via the claims provider and has a scope and claim. False otherwise."""
-        return self.claims_provider is not None and bool(self.claims_scope) and bool(self.claims_eligibility_claim)
+        """True if this flow verifies via the Identity Gateway and has a scope and claim. False otherwise."""
+        return self.oauth_config is not None and bool(self.claims_scope) and bool(self.claims_eligibility_claim)
 
     @property
     def uses_api_verification(self):
@@ -201,7 +203,7 @@ class EnrollmentFlow(models.Model):
 
     @property
     def claims_scheme(self):
-        return self.claims_scheme_override or self.claims_provider.scheme
+        return self.claims_scheme_override or self.oauth_config.scheme
 
     @property
     def claims_all_claims(self):
@@ -217,7 +219,7 @@ class EnrollmentFlow(models.Model):
         Either the client name of the flow's claims provider, or the URL to the eligibility API.
         """
         if self.uses_claims_verification:
-            return self.claims_provider.client_name
+            return self.oauth_config.client_name
         else:
             return self.eligibility_api_url
 
@@ -245,6 +247,10 @@ class EnrollmentFlow(models.Model):
     def help_context(self):
         ctx = core_context.flows_help.get(self.system_name)
         return [c.dict() for c in ctx] if ctx else []
+
+    @property
+    def supports_sign_out(self):
+        return bool(self.sign_out_button_template) or bool(self.sign_out_link_template)
 
     def clean(self):
         errors = []
