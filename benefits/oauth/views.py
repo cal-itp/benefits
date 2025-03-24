@@ -34,7 +34,7 @@ def _oauth_client_or_error_redirect(request, flow: models.EnrollmentFlow):
         exception = ex
 
     if not oauth_client and not exception:
-        exception = Exception(f"oauth_client not registered: {flow.claims_provider.client_name}")
+        exception = Exception(f"oauth_client not registered: {flow.oauth_config.client_name}")
 
     if exception:
         analytics.error(request, message=str(exception), operation="init")

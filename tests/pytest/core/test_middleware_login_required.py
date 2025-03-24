@@ -26,7 +26,7 @@ def test_login_flow_uses_claims_verification(app_request, mocked_view, decorated
 
 @pytest.mark.django_db
 def test_login_flow_does_not_use_claims_verification(app_request, model_EnrollmentFlow, mocked_view, decorated_view):
-    model_EnrollmentFlow.claims_provider = None
+    model_EnrollmentFlow.oauth_config = None
     assert not model_EnrollmentFlow.uses_claims_verification
     session.update(app_request, flow=model_EnrollmentFlow)
 

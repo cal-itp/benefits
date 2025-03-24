@@ -3,7 +3,6 @@ The core application: Admin interface configuration.
 """
 
 from .common import PemDataAdmin
-from .claims import ClaimsProviderAdmin
 from .transit import TransitAgencyAdmin, TransitProcessorAdmin
 from .enrollment import EnrollmentEventAdmin, SortableEnrollmentFlowAdmin
 from .users import (
@@ -18,7 +17,6 @@ from .users import (
 
 __all__ = [
     "PemDataAdmin",
-    "ClaimsProviderAdmin",
     "TransitAgencyAdmin",
     "TransitProcessorAdmin",
     "EnrollmentEventAdmin",

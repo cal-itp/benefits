@@ -22,9 +22,9 @@ for more details about what features are available. Specifically, from Authlib w
 
 ## Django configuration
 
-OAuth settings are configured as instances of the [`ClaimsProvider` model](../development/models-migrations.md) and [`EnrollmentFlow` model](../development/models-migrations.md).
+OAuth settings are configured as instances of the [`IdentityGatewayConfig` model][cdt-identity-model] (defined in the [`cdt_identity`][cdt-identity] Django application) and [`EnrollmentFlow` model](../development/models-migrations.md).
 
-The [data migration file](./data.md) contains sample values for a `ClaimsProvider` and `EnrollmentFlow` configuration. You can set values for a real Open ID Connect provider in environment variables so that they are used instead of the sample values.
+The [data migration file](./data.md) contains sample values for a `IdentityGatewayConfig` and `EnrollmentFlow` configuration. You can set values for a real Open ID Connect provider in environment variables so that they are used instead of the sample values.
 
 ## Django usage
 
@@ -38,3 +38,5 @@ instance. If a client for the flow has not been registered yet, `_register_provi
 given `EnrollmentFlow` to register the client into this instance and returns the client object.
 
 [oauth-client]: https://github.com/cal-itp/benefits/blob/main/benefits/oauth/client.py
+[cdt-identity]: https://github.com/Office-of-Digital-Services/django-cdt-identity
+[cdt-identity-model]: https://github.com/Office-of-Digital-Services/django-cdt-identity/blob/main/cdt_identity/models.py

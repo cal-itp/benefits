@@ -318,7 +318,7 @@ def test_index_eligible_post_valid_form_success_claims(
         transit_agency=model_TransitAgency,
         enrollment_flow=model_EnrollmentFlow_with_scope_and_claim,
         enrollment_method=models.EnrollmentMethods.DIGITAL,
-        verified_by=model_EnrollmentFlow_with_scope_and_claim.claims_provider.client_name,
+        verified_by=model_EnrollmentFlow_with_scope_and_claim.oauth_config.client_name,
         expiration_datetime=None,
         extra_claims="claim_1, claim_2",
     )
@@ -467,17 +467,17 @@ def test_success_no_flow(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification", "mocked_session_eligible")
-def test_success_authentication_logged_in(mocker, client, model_TransitAgency, model_EnrollmentFlow):
+def test_success_authentication_logged_in(mocker, client, model_TransitAgency, model_EnrollmentFlow_supports_sign_out):
     mock_session = mocker.patch("benefits.enrollment.views.session")
     mock_session.logged_in.return_value = True
     mock_session.agency.return_value = model_TransitAgency
-    mock_session.flow.return_value = model_EnrollmentFlow
+    mock_session.flow.return_value = model_EnrollmentFlow_supports_sign_out
 
     path = reverse(routes.ENROLLMENT_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == model_EnrollmentFlow.enrollment_success_template
+    assert response.template_name == model_EnrollmentFlow_supports_sign_out.enrollment_success_template
     assert {"origin": reverse(routes.LOGGED_OUT)} in mock_session.update.call_args
 
 
