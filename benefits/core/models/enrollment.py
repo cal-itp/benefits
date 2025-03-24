@@ -2,7 +2,7 @@ import importlib
 import logging
 import uuid
 
-from cdt_identity.models import IdentityGatewayConfig
+from cdt_identity.models import IdentityGatewayConfig, ClaimsVerificationRequest
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
@@ -61,6 +61,13 @@ class EnrollmentFlow(models.Model):
         null=True,
         blank=True,
         help_text="The IdG connection details for this flow.",
+    )
+    claims_request = models.ForeignKey(
+        ClaimsVerificationRequest,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        help_text="The claims request details for this flow.",
     )
     claims_scope = models.TextField(
         blank=True,
