@@ -25,7 +25,7 @@
   },
   {
     "model": "cdt_identity.identitygatewayconfig",
-    "pk": 1,
+    "pk": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
     "fields": {
       "client_name": "benefits-logingov",
       "client_id": "319efaea-615b-4cd4-958f-e6cd2fd31646",
@@ -35,7 +35,7 @@
   },
   {
     "model": "cdt_identity.identitygatewayconfig",
-    "pk": 2,
+    "pk": "7687895d-c3d6-4063-a26e-518514fb01b2",
     "fields": {
       "client_name": "benefits-medicaregov",
       "client_id": "319efaea-615b-4cd4-958f-e6cd2fd31646",
@@ -74,7 +74,7 @@
       "label": "Older Adult",
       "group_id": "group123",
       "display_order": 2,
-      "oauth_config": 1,
+      "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_scope": "verify:senior",
       "claims_eligibility_claim": "senior",
       "supported_enrollment_methods": ["digital", "in_person"],
@@ -91,7 +91,7 @@
       "label": "U.S. Veteran",
       "group_id": "group123",
       "display_order": 4,
-      "oauth_config": 1,
+      "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_scope": "verify:veteran",
       "claims_eligibility_claim": "veteran",
       "supported_enrollment_methods": ["digital"],
@@ -133,7 +133,7 @@
       "enrollment_index_template_override": "enrollment/index--calfresh.html",
       "reenrollment_error_template": "enrollment/reenrollment-error--calfresh.html",
       "display_order": 2,
-      "oauth_config": 1,
+      "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_scope": "verify:calfresh",
       "claims_eligibility_claim": "calfresh",
       "supported_enrollment_methods": ["digital"],
@@ -150,7 +150,7 @@
       "label": "Medicare Cardholder",
       "group_id": "group123",
       "display_order": 1,
-      "oauth_config": 2,
+      "oauth_config": "7687895d-c3d6-4063-a26e-518514fb01b2",
       "claims_scope": "verify:medicare",
       "claims_eligibility_claim": "medicare",
       "supported_enrollment_methods": ["digital", "in_person"],
