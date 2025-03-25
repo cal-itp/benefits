@@ -4,6 +4,30 @@ import django.db.models.deletion
 from django.db import migrations, models
 
 
+def migrate_data(apps, schema_editor):
+    EnrollmentFlow = apps.get_model("core", "EnrollmentFlow")
+    ClaimsVerificationRequest = apps.get_model("cdt_identity", "ClaimsVerificationRequest")
+
+    idg_systems = ["calfresh", "medicare", "senior", "veteran"]
+
+    for idg_system in idg_systems:
+        flow = EnrollmentFlow.objects.filter(system_name=idg_system).first()
+        if flow:
+            claims_verification_request = ClaimsVerificationRequest.objects.create(
+                system_name=flow.system_name,
+                scopes=flow.claims_scope,
+                eligibility_claim=flow.claims_eligibility_claim,
+                extra_claims=flow.claims_extra_claims,
+                scheme=flow.claims_scheme_override,
+            )
+            claims_verification_request.save()
+
+    for flow in EnrollmentFlow.objects.all():
+        if flow.system_name in idg_systems:
+            flow.claims_request = ClaimsVerificationRequest.objects.get(system_name=flow.system_name)
+            flow.save()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -23,4 +47,5 @@ class Migration(migrations.Migration):
                 to="cdt_identity.claimsverificationrequest",
             ),
         ),
+        migrations.RunPython(migrate_data),
     ]
