@@ -48,4 +48,20 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.RunPython(migrate_data),
+        migrations.RemoveField(
+            model_name="enrollmentflow",
+            name="claims_scope",
+        ),
+        migrations.RemoveField(
+            model_name="enrollmentflow",
+            name="claims_eligibility_claim",
+        ),
+        migrations.RemoveField(
+            model_name="enrollmentflow",
+            name="claims_extra_claims",
+        ),
+        migrations.RemoveField(
+            model_name="enrollmentflow",
+            name="claims_scheme_override",
+        ),
     ]

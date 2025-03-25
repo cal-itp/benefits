@@ -69,21 +69,6 @@ class EnrollmentFlow(models.Model):
         blank=True,
         help_text="The claims request details for this flow.",
     )
-    claims_scope = models.TextField(
-        blank=True,
-        default="",
-        help_text="A space-separated list of identifiers used to specify what access privileges are being requested",
-    )
-    claims_eligibility_claim = models.TextField(
-        blank=True, default="", help_text="The name of the claim that is used to verify eligibility"
-    )
-    claims_extra_claims = models.TextField(blank=True, default="", help_text="A space-separated list of any additional claims")
-    claims_scheme_override = models.TextField(
-        help_text="The authentication scheme to use (Optional). If blank, defaults to the value in Identity gateway configs",
-        default="",
-        blank=True,
-        verbose_name="Claims scheme",
-    )
     eligibility_api_url = models.TextField(
         blank=True, default="", help_text="Fully qualified URL for an Eligibility API server used by this flow."
     )
@@ -197,7 +182,9 @@ class EnrollmentFlow(models.Model):
     @property
     def uses_claims_verification(self):
         """True if this flow verifies via the Identity Gateway and has a scope and claim. False otherwise."""
-        return self.oauth_config is not None and bool(self.claims_scope) and bool(self.claims_eligibility_claim)
+        return (
+            self.oauth_config is not None and bool(self.claims_request.scopes) and bool(self.claims_request.eligibility_claim)
+        )
 
     @property
     def uses_api_verification(self):
@@ -206,13 +193,13 @@ class EnrollmentFlow(models.Model):
 
     @property
     def claims_scheme(self):
-        return self.claims_scheme_override or self.oauth_config.scheme
+        return self.claims_request.scheme or self.oauth_config.scheme
 
     @property
     def claims_all_claims(self):
-        claims = [self.claims_eligibility_claim]
-        if self.claims_extra_claims is not None:
-            claims.extend(self.claims_extra_claims.split())
+        claims = [self.claims_request.eligibility_claim]
+        if self.claims_request.extra_claims is not None:
+            claims.extend(self.claims_request.extra_claims.split())
         return claims
 
     @property

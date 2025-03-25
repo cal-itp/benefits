@@ -1,5 +1,5 @@
 from unittest.mock import create_autospec
-from cdt_identity.models import IdentityGatewayConfig
+from cdt_identity.models import ClaimsVerificationRequest, IdentityGatewayConfig
 from django.contrib.auth.models import User
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.middleware.locale import LocaleMiddleware
@@ -66,6 +66,17 @@ def model_IdentityGatewayConfig():
 
 
 @pytest.fixture
+def model_ClaimsVerificationRequest():
+    claims_verification_request = ClaimsVerificationRequest.objects.create(
+        system_name="senior",
+        scopes="scope",
+        eligibility_claim="claim",
+    )
+
+    return claims_verification_request
+
+
+@pytest.fixture
 def model_EnrollmentFlow(model_TransitAgency):
     flow = EnrollmentFlow.objects.create(
         system_name="senior",
@@ -96,10 +107,11 @@ def model_EnrollmentFlow_with_eligibility_api(model_EnrollmentFlow, model_PemDat
 
 
 @pytest.fixture
-def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow, model_IdentityGatewayConfig):
+def model_EnrollmentFlow_with_scope_and_claim(
+    model_EnrollmentFlow, model_IdentityGatewayConfig, model_ClaimsVerificationRequest
+):
     model_EnrollmentFlow.oauth_config = model_IdentityGatewayConfig
-    model_EnrollmentFlow.claims_scope = "scope"
-    model_EnrollmentFlow.claims_eligibility_claim = "claim"
+    model_EnrollmentFlow.claims_request = model_ClaimsVerificationRequest
     model_EnrollmentFlow.save()
 
     return model_EnrollmentFlow
@@ -107,7 +119,7 @@ def model_EnrollmentFlow_with_scope_and_claim(model_EnrollmentFlow, model_Identi
 
 @pytest.fixture
 def model_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow_with_scope_and_claim, model_TransitAgency):
-    model_EnrollmentFlow_with_scope_and_claim.claims_scheme_override = "scheme"
+    model_EnrollmentFlow_with_scope_and_claim.claims_request.scheme = "scheme"
     model_EnrollmentFlow_with_scope_and_claim.transit_agency = model_TransitAgency
     model_EnrollmentFlow_with_scope_and_claim.save()
 

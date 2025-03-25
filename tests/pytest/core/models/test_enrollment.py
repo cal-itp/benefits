@@ -51,7 +51,7 @@ def test_EnrollmentFlow_supported_enrollment_methods(model_EnrollmentFlow_with_s
     ],
 )
 def test_EnrollmentFlow_claims_all_claims(model_EnrollmentFlow_with_scope_and_claim, extra_claims, all_claims):
-    model_EnrollmentFlow_with_scope_and_claim.claims_extra_claims = extra_claims
+    model_EnrollmentFlow_with_scope_and_claim.claims_request.extra_claims = extra_claims
     model_EnrollmentFlow_with_scope_and_claim.save()
     assert model_EnrollmentFlow_with_scope_and_claim.claims_all_claims == all_claims
 

@@ -259,7 +259,7 @@ def test_authorize_success_with_claim_true(
     oauth_claims,
 ):
     flow = mocked_session_flow_uses_claims_verification.return_value
-    flow.claims_extra_claims = extra_claims
+    flow.claims_request.extra_claims = extra_claims
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": userinfo}
 
@@ -321,7 +321,7 @@ def test_authorize_success_with_claim_error(
     userinfo,
 ):
     flow = mocked_session_flow_uses_claims_verification.return_value
-    flow.claims_extra_claims = extra_claims
+    flow.claims_request.extra_claims = extra_claims
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": userinfo}
 

@@ -53,7 +53,7 @@ def _register_provider(oauth_registry: OAuth, flow: models.EnrollmentFlow):
         flow.oauth_config.client_name,
         client_id=str(flow.oauth_config.client_id),
         server_metadata_url=_server_metadata_url(flow.oauth_config.authority),
-        client_kwargs=_client_kwargs(flow.claims_scope),
+        client_kwargs=_client_kwargs(flow.claims_request.scopes),
         authorize_params=_authorize_params(flow.claims_scheme),
     )
 

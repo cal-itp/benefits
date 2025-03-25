@@ -205,47 +205,6 @@ class TestEnrollmentFlowAdmin:
         )
         assert not form.is_valid()
 
-    @pytest.mark.parametrize("user_type", ["staff", "super"])
-    def test_EnrollmentFlowForm_clean_claims_verification(
-        self,
-        admin_user_request,
-        flow_admin_model,
-        model_TransitAgency,
-        model_IdentityGatewayConfig,
-        user_type,
-    ):
-        model_TransitAgency.slug = "mst"  # use value that will map to existing templates
-        model_TransitAgency.save()
-
-        request = admin_user_request(user_type)
-
-        # fill out the form without a transit agency
-        request.POST = dict(
-            system_name="senior",  # use value that will map to existing templates
-            supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
-            oauth_config=model_IdentityGatewayConfig.id,
-            claims_scope="",
-            claims_eligibility_claim="",
-        )
-
-        form_class = flow_admin_model.get_form(request)
-
-        form = form_class(request.POST)
-
-        # clean is OK
-        assert not form.errors
-        assert form.is_valid()
-
-        # reassign agency
-        request.POST.update(dict(transit_agency=model_TransitAgency.id))
-
-        form = form_class(request.POST)
-
-        assert not form.is_valid()
-        error_dict = form.errors
-        assert "claims_scope" in error_dict
-        assert "claims_eligibility_claim" in error_dict
-
     def test_EnrollmentFlowForm_clean_eligibility_api_verification(
         self,
         admin_user_request,
@@ -299,6 +258,7 @@ class TestEnrollmentFlowAdmin:
         flow_admin_model,
         model_TransitAgency,
         model_IdentityGatewayConfig,
+        model_ClaimsVerificationRequest,
     ):
         model_TransitAgency.slug = "cst"  # use value that will map to existing templates
         model_TransitAgency.save()
@@ -318,8 +278,7 @@ class TestEnrollmentFlowAdmin:
         request.POST.update(
             dict(
                 oauth_config=model_IdentityGatewayConfig.id,
-                claims_scope="scope",
-                claims_eligibility_claim="claim",
+                claims_request=model_ClaimsVerificationRequest.id,
             )
         )
 
@@ -366,8 +325,6 @@ class TestEnrollmentFlowAdmin:
         request.POST.update(
             dict(
                 oauth_config=model_IdentityGatewayConfig.id,
-                claims_scope="scope",
-                claims_eligibility_claim="claim",
             )
         )
 
