@@ -322,7 +322,7 @@ class TestEnrollmentFlowAdmin:
             dict(
                 oauth_config=model_IdentityGatewayConfig.id,
                 claims_scope="scope",
-                claims_claim="claim",
+                claims_eligibility_claim="claim",
             )
         )
 
@@ -350,6 +350,6 @@ class TestEnrollmentFlowAdmin:
         if user_type == "staff":
             non_field_errors = form.errors[forms.NON_FIELD_ERRORS]
             assert len(non_field_errors) == 1
-            assert "Template not found" in non_field_errors[0]
+            assert "Required when supports expiration is True" in non_field_errors[0]
         elif user_type == "super":
             assert "reenrollment_error_template" in error_dict
