@@ -8,6 +8,7 @@ import logging
 import time
 import uuid
 
+from cdt_identity.session import Session as OAuthSession
 from django.urls import reverse
 
 from benefits.routes import routes
@@ -279,6 +280,9 @@ def update(
         request.session[_ORIGIN] = origin
     if flow is not None and isinstance(flow, models.EnrollmentFlow):
         request.session[_FLOW] = flow.id
+        oauth_session = OAuthSession(request)
+        oauth_session.client_config = flow.oauth_config
+        oauth_session.claims_request = flow.claims_request
 
 
 def flow(request) -> models.EnrollmentFlow | None:
