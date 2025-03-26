@@ -73,7 +73,6 @@ def model_EnrollmentFlow(model_TransitAgency):
         label="Test flow label",
         group_id="group123",
         enrollment_index_template_override="enrollment/index.html",
-        enrollment_success_template_override="enrollment/success.html",
         transit_agency=model_TransitAgency,
     )
 

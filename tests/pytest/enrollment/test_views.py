@@ -324,7 +324,7 @@ def test_index_eligible_post_valid_form_success_claims(
     )
 
     assert response.status_code == 200
-    assert response.template_name == model_EnrollmentFlow_with_scope_and_claim.enrollment_success_template
+    assert response.template_name == "enrollment/success.html"
     mocked_analytics_module.returned_success.assert_called_once()
     assert model_EnrollmentFlow_with_scope_and_claim.group_id in mocked_analytics_module.returned_success.call_args.args
 
@@ -357,7 +357,7 @@ def test_index_eligible_post_valid_form_success_eligibility_api(
     )
 
     assert response.status_code == 200
-    assert response.template_name == model_EnrollmentFlow_with_eligibility_api.enrollment_success_template
+    assert response.template_name == "enrollment/success.html"
     mocked_analytics_module.returned_success.assert_called_once()
     assert model_EnrollmentFlow_with_eligibility_api.group_id in mocked_analytics_module.returned_success.call_args.args
 
@@ -477,7 +477,7 @@ def test_success_authentication_logged_in(mocker, client, model_TransitAgency, m
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == model_EnrollmentFlow_supports_sign_out.enrollment_success_template
+    assert response.template_name == "enrollment/success.html"
     assert {"origin": reverse(routes.LOGGED_OUT)} in mock_session.update.call_args
 
 
@@ -493,16 +493,16 @@ def test_success_authentication_not_logged_in(mocker, client, model_TransitAgenc
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == model_EnrollmentFlow.enrollment_success_template
+    assert response.template_name == "enrollment/success.html"
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_success_no_authentication(client, mocked_session_flow_does_not_use_claims_verification):
+@pytest.mark.usefixtures(
+    "mocked_session_agency", "mocked_session_eligible", "mocked_session_flow_does_not_use_claims_verification"
+)
+def test_success_no_authentication(client):
     path = reverse(routes.ENROLLMENT_SUCCESS)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert (
-        response.template_name == mocked_session_flow_does_not_use_claims_verification.return_value.enrollment_success_template
-    )
+    assert response.template_name == "enrollment/success.html"

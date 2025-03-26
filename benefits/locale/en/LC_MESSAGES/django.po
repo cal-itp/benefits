@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-03-20 16:48-0700\n"
+"POT-Creation-Date: 2025-03-20 20:11-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -713,6 +713,53 @@ msgstr ""
 msgid "Please reach out to %(short_name)s for assistance."
 msgstr ""
 
+#, python-brace-format
+msgid ""
+"You were not charged anything today. When boarding {transportation_type}, "
+"tap your contactless card and you will be charged a reduced fare. You will "
+"need to re-enroll if you choose to change the card you use to pay for "
+"transit service."
+msgstr ""
+
+msgid "Thank you for using Cal-ITP Benefits!"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Your contactless card is now enrolled in {transit_benefit}. When boarding "
+"{transportation_type}, tap this card and you will be charged a reduced fare. "
+"You will need to re-enroll if you choose to change the card you use to pay "
+"for transit service."
+msgstr ""
+
+msgid ""
+"You were not charged anything today. Thank you for using Cal-ITP Benefits!"
+msgstr ""
+
+msgid "a CST bus"
+msgstr ""
+
+msgid "a CST Agency Card transit benefit"
+msgstr ""
+
+msgid "an MST bus"
+msgstr ""
+
+msgid "an MST Courtesy Card transit benefit"
+msgstr ""
+
+msgid "a SacRT bus"
+msgstr ""
+
+msgid "an SBMTD bus"
+msgstr ""
+
+msgid "an SBMTD Reduced Fare Mobility ID transit benefit"
+msgstr ""
+
+msgid "a Nevada County Connects bus"
+msgstr ""
+
 msgid "Do not enter information from your EBT card."
 msgstr ""
 
@@ -793,62 +840,6 @@ msgid ""
 "agency for help."
 msgstr ""
 
-msgid ""
-"Your contactless card is now enrolled in a CST Agency Card transit benefit. "
-"When boarding a CST bus, tap this card and you will be charged a reduced "
-"fare. You will need to re-enroll if you choose to change the card you use to "
-"pay for transit service."
-msgstr ""
-
-msgid ""
-"You were not charged anything today. Thank you for using Cal-ITP Benefits!"
-msgstr ""
-
-msgid ""
-"You were not charged anything today. When boarding a CST bus, tap your "
-"contactless card and you will be charged a reduced fare. You will need to re-"
-"enroll if you choose to change the card you use to pay for transit service."
-msgstr ""
-
-msgid ""
-"Your contactless card is now enrolled in an MST Courtesy Card transit "
-"benefit. When boarding an MST bus, tap this card and you will be charged a "
-"reduced fare. You will need to re-enroll if you choose to change the card "
-"you use to pay for transit service."
-msgstr ""
-
-msgid ""
-"You were not charged anything today. When boarding an MST bus, tap this card "
-"and you will be charged a reduced fare. You will need to re-enroll if you "
-"choose to change the card you use to pay for transit service."
-msgstr ""
-
-msgid ""
-"You were not charged anything today. When boarding a Nevada County Connects "
-"bus, tap your contactless card and you will be charged a reduced fare. You "
-"will need to re-enroll if you choose to change the card you use to pay for "
-"transit service."
-msgstr ""
-
-msgid ""
-"You were not charged anything today. When boarding a SacRT bus, tap this "
-"card and you will be charged a reduced fare. You will need to re-enroll if "
-"you choose to change the card you use to pay for transit service."
-msgstr ""
-
-msgid ""
-"Your contactless card is now enrolled in an SBMTD Reduced Fare Mobility ID "
-"transit benefit. When boarding an SBMTD bus, tap this card and you will be "
-"charged a reduced fare. You will need to re-enroll if you choose to change "
-"the card you use to pay for transit service."
-msgstr ""
-
-msgid ""
-"You were not charged anything today. When boarding an SBMTD bus, tap this "
-"card and you will be charged a reduced fare. You will need to re-enroll if "
-"you choose to change the card you use to pay for transit service."
-msgstr ""
-
 msgid "Success"
 msgstr ""
 
@@ -857,9 +848,6 @@ msgid ""
 msgstr ""
 
 msgid "Your benefit will expire on"
-msgstr ""
-
-msgid "Thank you for using Cal-ITP Benefits!"
 msgstr ""
 
 msgid "If you are on a public or shared computer, don’t forget to sign out of "

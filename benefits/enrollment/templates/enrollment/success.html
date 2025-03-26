@@ -32,12 +32,13 @@
               <p class="pt-lg-3 mt-lg-0">
             {% endif %}
                 {% block success-message %}
+                {{ success_message }}
                 {% endblock success-message %}
               </p>
             {# djlint:on #}
             <p class="pt-4">
               {% block thank-you-message %}
-                {% translate "Thank you for using Cal-ITP Benefits!" %}
+                {{ thank_you_message }}
               {% endblock thank-you-message %}
             </p>
           </div>
