@@ -240,7 +240,6 @@ def test_authorize_success(
 @pytest.mark.parametrize(
     "extra_claims,userinfo,oauth_claims",
     [
-        (None, {"claim": 1}, ["claim"]),
         ("", {"claim": 1}, ["claim"]),
         ("extra_claim", {"claim": 1, "extra_claim": 1}, ["claim", "extra_claim"]),
         (
@@ -306,7 +305,6 @@ def test_authorize_success_with_claim_false(
 @pytest.mark.parametrize(
     "extra_claims,userinfo",
     [
-        (None, {"claim": 10}),
         ("", {"claim": 10}),
         ("extra_claim", {"claim": 10, "extra_claim": 10}),
         ("extra_claim_1 extra_claim_2", {"claim": 10, "extra_claim_1": 10, "extra_claim_2": 10}),

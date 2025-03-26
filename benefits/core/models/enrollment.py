@@ -196,13 +196,6 @@ class EnrollmentFlow(models.Model):
         return self.claims_request.scheme or self.oauth_config.scheme
 
     @property
-    def claims_all_claims(self):
-        claims = [self.claims_request.eligibility_claim]
-        if self.claims_request.extra_claims is not None:
-            claims.extend(self.claims_request.extra_claims.split())
-        return claims
-
-    @property
     def eligibility_verifier(self):
         """A str representing the entity that verifies eligibility for this flow.
 
