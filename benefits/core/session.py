@@ -8,6 +8,7 @@ import logging
 import time
 import uuid
 
+from cdt_identity.claims import ClaimsResult
 from cdt_identity.session import Session as OAuthSession
 from django.urls import reverse
 
@@ -149,7 +150,8 @@ def logged_in(request):
 
 def logout(request):
     """Reset the session claims and tokens."""
-    update(request, oauth_claims=[], oauth_authorized=False, enrollment_token=False)
+    OAuthSession(request, claims_result=ClaimsResult())
+    update(request, oauth_authorized=False, enrollment_token=False)
 
 
 def oauth_authorized(request):
@@ -159,7 +161,7 @@ def oauth_authorized(request):
 
 def oauth_claims(request):
     """Get the oauth claims from the request's session, or None"""
-    return request.session.get(_OAUTH_CLAIMS)
+    return [claim for claim, value in OAuthSession(request).claims_result.verified.items() if value] or None
 
 
 def oauth_extra_claims(request):
@@ -191,7 +193,7 @@ def reset(request):
     request.session[_ENROLLMENT_TOKEN] = None
     request.session[_ENROLLMENT_TOKEN_EXP] = None
     request.session[_OAUTH_AUTHORIZED] = False
-    request.session[_OAUTH_CLAIMS] = None
+    OAuthSession(request, reset=True)
 
     if _UID not in request.session or not request.session[_UID]:
         logger.debug("Reset session time and uid")
@@ -250,7 +252,6 @@ def update(
     enrollment_token=None,
     enrollment_token_exp=None,
     oauth_authorized=None,
-    oauth_claims=None,
     origin=None,
 ):
     """Update the request's session with non-null values."""
@@ -274,8 +275,6 @@ def update(
         request.session[_ENROLLMENT_TOKEN_EXP] = enrollment_token_exp
     if oauth_authorized is not None:
         request.session[_OAUTH_AUTHORIZED] = oauth_authorized
-    if oauth_claims is not None:
-        request.session[_OAUTH_CLAIMS] = oauth_claims
     if origin is not None:
         request.session[_ORIGIN] = origin
     if flow is not None and isinstance(flow, models.EnrollmentFlow):
