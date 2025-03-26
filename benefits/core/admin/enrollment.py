@@ -124,12 +124,10 @@ class EnrollmentFlowForm(forms.ModelForm):
                 )
                 non_field_errors.append(ValidationError(message))
 
-        if field_errors:
-            for field_name, validation_error in field_errors.items():
-                self.add_error(field_name, validation_error)
-        if non_field_errors:
-            for validation_error in non_field_errors:
-                self.add_error(None, validation_error)
+        for field_name, validation_error in field_errors.items():
+            self.add_error(field_name, validation_error)
+        for validation_error in non_field_errors:
+            self.add_error(None, validation_error)
 
 
 @admin.register(models.EnrollmentFlow)
