@@ -30,10 +30,3 @@ def eligibility_from_api(flow: models.EnrollmentFlow, form, agency: models.Trans
         return True
     else:
         return False
-
-
-def eligibility_from_oauth(flow: models.EnrollmentFlow, oauth_claims):
-    if flow.uses_claims_verification and flow.claims_request.eligibility_claim in oauth_claims:
-        return True
-    else:
-        return False
