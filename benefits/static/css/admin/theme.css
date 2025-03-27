@@ -75,6 +75,11 @@ div.breadcrumbs {
   display: none;
 }
 
+#logout-form button:active,
+#logout-form button:hover {
+  margin-bottom: 0 !important; /* Fix logout link hover bug */
+}
+
 /* Header - Branding by page */
 
 #logo {
