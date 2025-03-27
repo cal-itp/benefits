@@ -11,6 +11,7 @@
       "program": "${workspaceFolder}/manage.py",
       "args": ["runserver", "--insecure", "0.0.0.0:8000"],
       "django": true,
+      "justMyCode": false,
       "env": {
         "DJANGO_DEBUG": "true",
         "PYTHONWARNINGS": "default"
@@ -23,6 +24,7 @@
       "program": "${workspaceFolder}/manage.py",
       "args": ["runserver", "--insecure", "0.0.0.0:8000"],
       "django": true,
+      "justMyCode": false,
       "env": {
         "DJANGO_DEBUG": "false",
         "DJANGO_STATICFILES_STORAGE": "django.contrib.staticfiles.storage.StaticFilesStorage"
