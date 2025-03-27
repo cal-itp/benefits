@@ -204,14 +204,13 @@ def test_logout(app_request):
     OAuthSession(app_request).claims_result = ClaimsResult(verified={"oauth_claim": True})
     session.update(app_request, oauth_authorized=True, enrollment_token="enrollment_token")
     assert session.logged_in(app_request)
-    assert session.oauth_claims(app_request)
 
     session.logout(app_request)
 
     assert not session.logged_in(app_request)
     assert not session.enrollment_token(app_request)
     assert not session.oauth_authorized(app_request)
-    assert not session.oauth_claims(app_request)
+    assert OAuthSession(app_request).claims_result == ClaimsResult()
 
 
 @pytest.mark.django_db
@@ -277,7 +276,11 @@ def test_reset_oauth(app_request):
     session.reset(app_request)
 
     assert session.oauth_authorized(app_request) is False
-    assert session.oauth_claims(app_request) is None
+
+    oauth_session = OAuthSession(app_request)
+    assert oauth_session.client_config is None
+    assert oauth_session.claims_request is None
+    assert oauth_session.claims_result == ClaimsResult()
 
 
 @pytest.mark.django_db

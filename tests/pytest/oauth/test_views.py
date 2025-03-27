@@ -1,3 +1,5 @@
+from cdt_identity.claims import ClaimsResult
+from cdt_identity.session import Session as OAuthSession
 from django.http import HttpResponse
 from django.urls import reverse
 
@@ -240,7 +242,7 @@ def test_logout(app_request, mocker, mocked_oauth_client_or_error_redirect__clie
     assert not session.logged_in(app_request)
     assert session.enrollment_token(app_request) is False
     assert session.oauth_authorized(app_request) is False
-    assert session.oauth_claims(app_request) is None
+    assert OAuthSession(app_request).claims_result == ClaimsResult()
 
 
 @pytest.mark.django_db
