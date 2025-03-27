@@ -240,7 +240,6 @@ def test_authorize_success(
 @pytest.mark.parametrize(
     "extra_claims,userinfo,oauth_claims",
     [
-        (None, {"claim": 1}, ["claim"]),
         ("", {"claim": 1}, ["claim"]),
         ("extra_claim", {"claim": 1, "extra_claim": 1}, ["claim", "extra_claim"]),
         (
@@ -259,7 +258,7 @@ def test_authorize_success_with_claim_true(
     oauth_claims,
 ):
     flow = mocked_session_flow_uses_claims_verification.return_value
-    flow.claims_extra_claims = extra_claims
+    flow.claims_request.extra_claims = extra_claims
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": userinfo}
 
@@ -306,7 +305,6 @@ def test_authorize_success_with_claim_false(
 @pytest.mark.parametrize(
     "extra_claims,userinfo",
     [
-        (None, {"claim": 10}),
         ("", {"claim": 10}),
         ("extra_claim", {"claim": 10, "extra_claim": 10}),
         ("extra_claim_1 extra_claim_2", {"claim": 10, "extra_claim_1": 10, "extra_claim_2": 10}),
@@ -321,7 +319,7 @@ def test_authorize_success_with_claim_error(
     userinfo,
 ):
     flow = mocked_session_flow_uses_claims_verification.return_value
-    flow.claims_extra_claims = extra_claims
+    flow.claims_request.extra_claims = extra_claims
     mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
     mocked_oauth_client.authorize_access_token.return_value = {"id_token": "token", "userinfo": userinfo}
 

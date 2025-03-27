@@ -123,7 +123,7 @@ def authorize(request):
     oauth_token_authorized = True
 
     # We store the returned claim in case it can be used later in eligibility verification.
-    flow_claims = flow.claims_all_claims
+    flow_claims = flow.claims_request.claims_list
     stored_claims = []
 
     error_claim = {}

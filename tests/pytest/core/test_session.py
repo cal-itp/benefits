@@ -453,7 +453,7 @@ def test_oauth_extra_claims(app_request, model_EnrollmentFlow_with_scope_and_cla
 
     app_request.session[session._FLOW] = model_EnrollmentFlow_with_scope_and_claim.id
     app_request.session[session._OAUTH_CLAIMS] = [
-        model_EnrollmentFlow_with_scope_and_claim.claims_eligibility_claim,
+        model_EnrollmentFlow_with_scope_and_claim.claims_request.eligibility_claim,
         "extra_claim",
     ]
 

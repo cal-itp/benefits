@@ -167,7 +167,7 @@ def oauth_extra_claims(request):
     if claims:
         f = flow(request)
         if f and f.uses_claims_verification:
-            claims.remove(f.claims_eligibility_claim)
+            claims.remove(f.claims_request.eligibility_claim)
             return claims
         raise Exception("Oauth claims but no flow")
     else:
