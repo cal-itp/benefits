@@ -62,7 +62,7 @@ def context_dict(request):
         _ENROLLMENT_TOKEN_EXP: enrollment_token_expiry(request),
         _LANG: language(request),
         _OAUTH_AUTHORIZED: oauth_authorized(request),
-        _OAUTH_CLAIMS: oauth_claims(request),
+        _OAUTH_CLAIMS: _oauth_claims(request),
         _ORIGIN: origin(request),
         _START: start(request),
         _UID: uid(request),
@@ -159,14 +159,19 @@ def oauth_authorized(request):
     return request.session.get(_OAUTH_AUTHORIZED)
 
 
-def oauth_claims(request):
-    """Get the oauth claims from the request's session, or None"""
-    return [claim for claim, value in OAuthSession(request).claims_result.verified.items() if value] or None
+def _oauth_claims(request):
+    """Get the oauth claims from the request's session"""
+    claims = []
+    for claim, value in OAuthSession(request).claims_result.verified.items():
+        if value:
+            claims.append(claim)
+
+    return claims
 
 
 def oauth_extra_claims(request):
     """Get the extra oauth claims from the request's session, or None"""
-    claims = oauth_claims(request)
+    claims = _oauth_claims(request)
     if claims:
         f = flow(request)
         if f and f.uses_claims_verification:
