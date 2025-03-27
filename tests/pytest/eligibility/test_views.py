@@ -261,23 +261,6 @@ def test_confirm_get_verified(client, mocked_session_update):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures(
-    "mocked_session_agency",
-    "mocked_session_flow_uses_claims_verification",
-    "mocked_session_oauth_authorized",
-    "mocked_session_update",
-)
-def test_confirm_get_oauth_unverified(mocker, client):
-    mocker.patch("benefits.eligibility.verify.eligibility_from_oauth", return_value=[])
-
-    path = reverse(routes.ELIGIBILITY_CONFIRM)
-    response = client.get(path)
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ELIGIBILITY_UNVERIFIED)
-
-
-@pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_form_class")
 def test_confirm_post_invalid_form(client, invalid_form_data, mocked_analytics_module):
     path = reverse(routes.ELIGIBILITY_CONFIRM)

@@ -78,12 +78,16 @@ def test_claims_verified_eligible(
     mocked_eligibility_analytics_module.returned_success.assert_called_once()
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures(
+    "mocked_session_agency", "mocked_session_flow_uses_claims_verification", "mocked_session_oauth_authorized"
+)
 def test_claims_verified_not_eligible(app_request, mocked_oauth_analytics_module):
     claims_result = ClaimsResult(errors={"some_claim": "error message"})
     result = OAuthHooks.claims_verified_not_eligible(app_request, ClaimsVerificationRequest(), claims_result)
 
     assert result.status_code == 302
-    assert result.url == reverse(routes.ELIGIBILITY_CONFIRM)
+    assert result.url == reverse(routes.ELIGIBILITY_UNVERIFIED)
     mocked_oauth_analytics_module.finished_sign_in.assert_called_once_with(app_request, error=claims_result.errors)
 
 

@@ -1,6 +1,7 @@
 from cdt_identity.hooks import DefaultHooks
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator, decorator_from_middleware
+from django.urls import reverse
 import sentry_sdk
 
 from benefits.routes import routes
@@ -56,10 +57,20 @@ class OAuthHooks(DefaultHooks):
         return verified(request)
 
     @classmethod
+    @method_decorator(
+        [
+            decorator_from_middleware(AgencySessionRequired),
+            decorator_from_middleware(FlowSessionRequired),
+        ]
+    )
     def claims_verified_not_eligible(cls, request, claims_request, claims_result):
         super().claims_verified_not_eligible(request, claims_request, claims_result)
         analytics.finished_sign_in(request, error=claims_result.errors)
-        return redirect(routes.ELIGIBILITY_CONFIRM)
+
+        flow = session.flow(request)
+        eligibility_analytics.started_eligibility(request, flow)
+
+        return redirect(reverse(routes.ELIGIBILITY_UNVERIFIED))
 
     @classmethod
     def system_error(cls, request, exception, operation):

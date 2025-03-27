@@ -78,16 +78,8 @@ def confirm(request):
     if request.method == "GET" and session.eligible(request):
         return verified(request)
 
-    unverified_view = reverse(routes.ELIGIBILITY_UNVERIFIED)
-
     agency = session.agency(request)
     flow = session.flow(request)
-
-    # GET for OAuth verification
-    if request.method == "GET" and flow.uses_claims_verification:
-        analytics.started_eligibility(request, flow)
-
-        return redirect(unverified_view)
 
     form = flow.eligibility_form_instance()
 
@@ -120,7 +112,7 @@ def confirm(request):
             return TemplateResponse(request, TEMPLATE_CONFIRM, context)
         # no type was verified
         elif not is_verified:
-            return redirect(unverified_view)
+            return redirect(reverse(routes.ELIGIBILITY_UNVERIFIED))
         # type was verified
         else:
             return verified(request)
