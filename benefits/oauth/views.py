@@ -86,15 +86,6 @@ def login(request):
 
 
 @decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
-def cancel(request):
-    """View implementing cancellation of OIDC authorization."""
-
-    analytics.canceled_sign_in(request)
-
-    return redirect(routes.ELIGIBILITY_UNVERIFIED)
-
-
-@decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
 def logout(request):
     """View implementing OIDC and application sign out."""
     flow = session.flow(request)

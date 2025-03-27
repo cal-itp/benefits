@@ -12,7 +12,6 @@ from benefits.oauth.views import (
     TEMPLATE_SYSTEM_ERROR,
     _oauth_client_or_error_redirect,
     login,
-    cancel,
     logout,
     system_error,
 )
@@ -191,22 +190,24 @@ def test_authorize_no_session_flow(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification")
-def test_cancel(app_request, mocked_view_analytics_module):
+def test_cancel(client, mocked_hook_analytics_module):
     unverified_route = reverse(routes.ELIGIBILITY_UNVERIFIED)
 
-    result = cancel(app_request)
+    path = reverse(routes.OAUTH_CANCEL)
+    response = client.get(path)
 
-    mocked_view_analytics_module.canceled_sign_in.assert_called_once()
-    assert result.status_code == 302
-    assert result.url == unverified_route
+    mocked_hook_analytics_module.canceled_sign_in.assert_called_once()
+    assert response.status_code == 302
+    assert response.url == unverified_route
 
 
 @pytest.mark.django_db
-def test_cancel_no_session_flow(app_request):
-    result = cancel(app_request)
+def test_cancel_no_session_flow(client):
+    path = reverse(routes.OAUTH_CANCEL)
+    response = client.get(path)
 
-    assert result.status_code == 200
-    assert result.template_name == TEMPLATE_USER_ERROR
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
