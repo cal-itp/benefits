@@ -1,7 +1,6 @@
 from cdt_identity.hooks import DefaultHooks
 from django.shortcuts import redirect
 from django.utils.decorators import method_decorator, decorator_from_middleware
-from django.urls import reverse
 import sentry_sdk
 
 from benefits.routes import routes
@@ -70,7 +69,7 @@ class OAuthHooks(DefaultHooks):
         flow = session.flow(request)
         eligibility_analytics.started_eligibility(request, flow)
 
-        return redirect(reverse(routes.ELIGIBILITY_UNVERIFIED))
+        return redirect(routes.ELIGIBILITY_UNVERIFIED)
 
     @classmethod
     def system_error(cls, request, exception, operation):

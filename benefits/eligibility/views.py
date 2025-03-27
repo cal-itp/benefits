@@ -112,7 +112,7 @@ def confirm(request):
             return TemplateResponse(request, TEMPLATE_CONFIRM, context)
         # no type was verified
         elif not is_verified:
-            return redirect(reverse(routes.ELIGIBILITY_UNVERIFIED))
+            return redirect(routes.ELIGIBILITY_UNVERIFIED)
         # type was verified
         else:
             return verified(request)
