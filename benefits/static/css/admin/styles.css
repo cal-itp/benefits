@@ -4,10 +4,10 @@
 /* Primary Button: Use all three classes: btn btn-lg btn-primary */
 /* Outline Primary Button: Use all three classes: btn btn-lg btn-outline-primary */
 /* Set button width in parent with Bootstrap column */
-/* Height: 60px on Desktop; 72 on mobile*/
+/* Height: 48px (3rem) on Desktop; 72 on mobile*/
 
 :root {
-  --primary-button-padding: 19px 0;
+  --primary-button-padding: 1rem 0;
 }
 
 @media (min-width: 992px) {
@@ -29,12 +29,14 @@
 .login input[type="submit"],
 .btn.btn-lg.btn-outline-primary {
   border-color: var(--primary-color);
+  border-radius: 2px;
   border-width: 2px;
   font-weight: var(--medium-font-weight);
-  font-size: var(--font-size-20px);
-  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
+  font-size: var(--font-size-16px);
+  letter-spacing: calc(var(--font-size-16px) * var(--letter-spacing-2));
   width: 100%;
   padding: var(--primary-button-padding);
+  line-height: 1;
 }
 
 .btn.btn-lg.btn-primary:hover,
@@ -64,12 +66,8 @@ input[type="password"]:focus,
 
 .btn-text {
   font-weight: var(--medium-font-weight);
-  font-size: var(--font-size-20px);
-  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
-}
-
-.login .submit-row input[type="submit"] {
-  text-transform: unset;
+  font-size: var(--font-size-16px);
+  letter-spacing: calc(var(--font-size-16px) * var(--letter-spacing-2));
 }
 
 /* Eligibility Page:  In-person Enrollment */
@@ -232,17 +230,17 @@ iframe.card-collection {
   border: 1px solid var(--bs-primary);
   background-color: var(--white);
   height: 100%;
-  border-radius: 4px;
+  border-radius: 2px;
   padding: 0;
 }
 
 .login .google-login-btn .btn-content {
-  padding: 13.5px 0;
+  padding: 1rem 0;
   border-radius: 4px;
 }
 
 .login .google-btn-logo {
-  padding-right: 20px;
+  padding-right: 1rem;
   background-color: transparent;
 }
 
@@ -260,5 +258,6 @@ iframe.card-collection {
   color: var(--bs-primary);
   width: auto;
   font-weight: var(--medium-font-weight);
-  font-size: var(--font-size-20px);
+  font-size: var(--font-size-16px);
+  line-height: 1;
 }
