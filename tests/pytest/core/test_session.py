@@ -460,8 +460,9 @@ def test_flow_default(app_request):
 @pytest.mark.django_db
 def test_oauth_extra_claims(app_request, model_EnrollmentFlow_with_scope_and_claim):
 
-    app_request.session[session._FLOW] = model_EnrollmentFlow_with_scope_and_claim.id
-    OAuthSession(app_request).claims_result = ClaimsResult(
+    session.update(app_request, flow=model_EnrollmentFlow_with_scope_and_claim)
+    oauth_session = OAuthSession(app_request)
+    oauth_session.claims_result = ClaimsResult(
         verified={model_EnrollmentFlow_with_scope_and_claim.claims_request.eligibility_claim: True, "extra_claim": True}
     )
 
@@ -471,7 +472,7 @@ def test_oauth_extra_claims(app_request, model_EnrollmentFlow_with_scope_and_cla
 @pytest.mark.django_db
 def test_oauth_extra_claims_no_claims(app_request, model_EnrollmentFlow_with_scope_and_claim):
 
-    app_request.session[session._FLOW] = model_EnrollmentFlow_with_scope_and_claim.id
+    session.update(app_request, flow=model_EnrollmentFlow_with_scope_and_claim)
     OAuthSession(app_request).claims_result = ClaimsResult()
 
     assert session.oauth_extra_claims(app_request) is None
