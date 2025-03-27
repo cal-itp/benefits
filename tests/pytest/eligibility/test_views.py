@@ -262,22 +262,6 @@ def test_confirm_get_verified(client, mocked_session_update):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures(
-    "mocked_session_agency", "mocked_session_flow_uses_claims_verification", "mocked_session_oauth_authorized"
-)
-def test_confirm_get_oauth_verified(mocker, client, mocked_session_update, mocked_analytics_module):
-    mocker.patch("benefits.eligibility.verify.eligibility_from_oauth", return_value=True)
-
-    path = reverse(routes.ELIGIBILITY_CONFIRM)
-    response = client.get(path)
-
-    mocked_session_update.assert_called_once()
-    mocked_analytics_module.returned_success.assert_called_once()
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ENROLLMENT_INDEX)
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures(
     "mocked_session_agency",
     "mocked_session_flow_uses_claims_verification",
     "mocked_session_oauth_authorized",

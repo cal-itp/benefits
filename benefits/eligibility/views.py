@@ -87,12 +87,7 @@ def confirm(request):
     if request.method == "GET" and flow.uses_claims_verification:
         analytics.started_eligibility(request, flow)
 
-        is_verified = verify.eligibility_from_oauth(flow, session.oauth_claims(request))
-
-        if is_verified:
-            return verified(request)
-        else:
-            return redirect(unverified_view)
+        return redirect(unverified_view)
 
     form = flow.eligibility_form_instance()
 
