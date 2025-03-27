@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
 import time
 
+from cdt_identity.session import Session as OAuthSession
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse
 import pytest
@@ -435,12 +436,15 @@ def test_update_origin(app_request):
 
 
 @pytest.mark.django_db
-def test_update_flow(app_request):
-    flow = models.EnrollmentFlow.objects.first()
-
+def test_update_flow(app_request, model_EnrollmentFlow_with_scope_and_claim: models.EnrollmentFlow):
+    flow = model_EnrollmentFlow_with_scope_and_claim
     session.update(app_request, flow=flow)
 
     assert session.flow(app_request) == flow
+
+    oauth_session = OAuthSession(app_request)
+    assert oauth_session.client_config == flow.oauth_config
+    assert oauth_session.claims_request == flow.claims_request
 
 
 @pytest.mark.django_db
