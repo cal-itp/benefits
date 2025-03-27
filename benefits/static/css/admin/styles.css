@@ -1,20 +1,5 @@
 @import "../variables.css";
 
-/* CSS Variable overrides */
-
-html[data-theme="light"],
-:root {
-  --primary: #ffffff;
-  --secondary: var(--dark-color);
-  --link-fg: #ffffff;
-  --body-quiet-color: var(--dark-color);
-  --button-bg: #ffffff;
-  --bs-secondary-bg-subtle: #f1f1f1; /* Background color for Admin, lighter than bs-secondary, used with bg-secondary-subtle */
-  --bs-secondary-rgb:
-    197, 196, 196; /* Border color for Admin, used with border-secondary */
-  --bs-secondary: #c5c4c4;
-}
-
 /* Buttons */
 /* Primary Button: Use all three classes: btn btn-lg btn-primary */
 /* Outline Primary Button: Use all three classes: btn btn-lg btn-outline-primary */
@@ -83,8 +68,6 @@ input[type="password"]:focus,
   letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
 }
 
-#user-tools,
-#logout-form button,
 .login .submit-row input[type="submit"] {
   text-transform: unset;
 }
@@ -149,14 +132,6 @@ iframe.card-collection {
 }
 
 /* Login Page */
-.login #header {
-  padding: 0 !important;
-}
-
-.login #branding {
-  flex-direction: column;
-  width: 100%;
-}
 
 .login #container {
   background: var(--body-bg);

@@ -1,21 +1,21 @@
 {% extends "admin/login.html" %}
-
-{% block bodyclass %}
-  {{ block.super }} bg-secondary-subtle
-{% endblock bodyclass %}
-
-{% block dark-mode-vars %}
-{% endblock dark-mode-vars %}
+{% load i18n static %}
 
 {% block extrastyle %}
-  {% comment %} Overriding instead of extending agency-base here to remove jQuery declaration, which admin/login.html includes on its own {% endcomment %}
-  {% include "admin/includes/favicon.html" %}
   {% include "core/includes/bootstrap-css.html" %}
-  {% include "admin/includes/style-admin.html" %}
+  <link href="{% static "css/admin/styles.css" %}" rel="stylesheet">
+  <link href="{% static "css/admin/theme.css" %}" rel="stylesheet">
+
+  {% comment %} Overriding instead of extending agency-base here to remove jQuery declaration, which admin/login.html includes on its own {% endcomment %}
+  {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
 {% endblock extrastyle %}
 
+{% block bodyclass %}
+  {{ block.super }} login bg-secondary-subtle
+{% endblock bodyclass %}
+
 {% block branding %}
-  {% include "admin/includes/branding-login.html" %}
+  {% include "admin/includes/branding.html" %}
 {% endblock branding %}
 
 {% block content %}

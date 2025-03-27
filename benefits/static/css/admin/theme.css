@@ -1,0 +1,120 @@
+/* CSS Variable overrides */
+
+html[data-theme="light"],
+:root {
+  --primary: #ffffff;
+  --bs-body-font-size: 1rem;
+  --bs-body-color: #212121; /* Body text color */
+  --bs-dark-rgb: 33, 33, 33; /* Background color for Header */
+  --bs-heading-color: #212121; /* Header text color */
+  --bs-secondary-bg-subtle: #f1f1f1; /* Background color for Admin, lighter than bs-secondary, used with bg-secondary-subtle */
+  --bs-secondary-rgb:
+    210, 210, 210; /* Border color for Admin, used with border-secondary */
+  --bs-secondary: #c5c4c4;
+  --breadcrumbs-link-fg: #066b99; /* Breadcrumbs on Django Admin */
+  --breadcrumbs-bg: #ffffff;
+  --breadcrumbs-fg: #212121;
+}
+
+/* Django dashboard overriding Bootstrap */
+
+#content-start h1 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+#content-related h3,
+#changelist-filter-extra-actions h3 {
+  font-size: 0.875rem;
+}
+
+table {
+  caption-side: top;
+}
+
+.submit-row a.deletelink {
+  height: initial !important;
+}
+
+/* Breadcrumbs */
+
+div.breadcrumbs {
+  padding: 10px 2rem;
+}
+
+/* Header - Colors, Type */
+
+:root {
+  --header-bg: #000000;
+}
+
+#header {
+  padding: 0 2rem;
+}
+
+#user-tools,
+#user-tools button {
+  color: var(--header-link-color);
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: unset;
+}
+
+#user-tools a,
+#user-tools button {
+  border: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--header-link-color);
+}
+
+#user-tools strong {
+  font-weight: 700;
+}
+
+.theme-toggle {
+  display: none;
+}
+
+/* Header - Branding by page */
+
+#logo {
+  width: var(--logo-width);
+  height: var(--logo-height);
+  margin: var(--logo-margin);
+}
+
+:root {
+  --logo-width: 141.33px;
+  --logo-height: 2rem;
+  --logo-margin: 1rem 1rem 1rem 0;
+}
+
+.login {
+  --logo-width: 212px;
+  --logo-height: 3rem;
+  --logo-margin: 1rem 0 1rem 0;
+}
+
+#branding {
+  justify-content: center;
+  align-items: center;
+}
+
+.login #branding {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 1rem;
+}
+
+/* Content */
+
+#content {
+  padding: 1rem 2rem;
+}
+
+/* Login page */
+
+.login .main {
+  border: 1px solid #000000;
+}

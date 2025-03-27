@@ -1,0 +1,22 @@
+{% extends "admin/base.html" %}
+{% load i18n static %}
+
+{% block dark-mode-vars %}
+{% endblock dark-mode-vars %}
+
+{% block extrastyle %}
+  {% include "core/includes/bootstrap-css.html" %}
+  <link href="{% static "css/admin/styles.css" %}" rel="stylesheet">
+  <link href="{% static "css/admin/theme.css" %}" rel="stylesheet">
+
+  {% include "core/includes/ready-js.html" %}
+  {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
+{% endblock extrastyle %}
+
+{% block extrahead %}
+  <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
+{% endblock extrahead %}
+
+{% block branding %}
+  {% include "admin/includes/branding.html" %}
+{% endblock branding %}
