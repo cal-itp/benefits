@@ -126,3 +126,13 @@ div.breadcrumbs {
 .login .main {
   border: 1px solid #000000;
 }
+
+.login .google-btn-logo {
+  height: 1rem;
+  width: 1rem;
+}
+
+.login .google-btn-logo img {
+  height: 1rem;
+  width: 1rem;
+}
