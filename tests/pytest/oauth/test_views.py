@@ -229,8 +229,8 @@ def test_logout(app_request, mocker, mocked_oauth_client_or_error_redirect__clie
     mocked_redirect = mocker.patch("benefits.oauth.views.redirects.deauthorize_redirect", return_value=HttpResponse(message))
 
     oauth_token_authorized = True
-    session.update(app_request, oauth_authorized=oauth_token_authorized)
-    assert session.oauth_authorized(app_request) == oauth_token_authorized
+    session.update(app_request, logged_in=oauth_token_authorized)
+    assert session.logged_in(app_request) == oauth_token_authorized
 
     result = logout(app_request)
 
@@ -241,7 +241,7 @@ def test_logout(app_request, mocker, mocked_oauth_client_or_error_redirect__clie
 
     assert not session.logged_in(app_request)
     assert session.enrollment_token(app_request) is False
-    assert session.oauth_authorized(app_request) is False
+    assert session.logged_in(app_request) is False
     assert OAuthSession(app_request).claims_result == ClaimsResult()
 
 

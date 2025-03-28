@@ -230,8 +230,8 @@ def mocked_session_eligible(mocker):
 
 
 @pytest.fixture
-def mocked_session_oauth_authorized(mocker):
-    return mocker.patch("benefits.core.session.oauth_authorized", autospec=True, return_value=True)
+def mocked_session_logged_in(mocker):
+    return mocker.patch("benefits.core.session.logged_in", autospec=True, return_value=True)
 
 
 @pytest.fixture

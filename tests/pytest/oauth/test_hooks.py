@@ -42,7 +42,7 @@ def test_cancel_login(app_request, mocked_oauth_analytics_module):
 
 
 def test_pre_logout(app_request, mocked_oauth_analytics_module):
-    session.update(app_request, oauth_authorized=True)
+    session.update(app_request, logged_in=True)
     assert session.logged_in(app_request)
 
     OAuthHooks.pre_logout(app_request)
@@ -63,9 +63,7 @@ def test_post_logout(app_request, mocked_oauth_analytics_module, origin):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures(
-    "mocked_session_agency", "mocked_session_flow_uses_claims_verification", "mocked_session_oauth_authorized"
-)
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow_uses_claims_verification", "mocked_session_logged_in")
 def test_claims_verified_eligible(
     app_request, mocked_oauth_analytics_module, mocked_session_update, mocked_eligibility_analytics_module
 ):
@@ -74,22 +72,20 @@ def test_claims_verified_eligible(
     assert result.status_code == 302
     assert result.url == reverse(routes.ENROLLMENT_INDEX)
     mocked_oauth_analytics_module.finished_sign_in.assert_called_once_with(app_request)
-    mocked_session_update.assert_any_call(app_request, oauth_authorized=True)
+    mocked_session_update.assert_any_call(app_request, logged_in=True)
     mocked_session_update.assert_any_call(app_request, eligible=True)
     mocked_eligibility_analytics_module.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures(
-    "mocked_session_agency", "mocked_session_flow_uses_claims_verification", "mocked_session_oauth_authorized"
-)
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow_uses_claims_verification", "mocked_session_logged_in")
 def test_claims_verified_not_eligible(app_request, mocked_oauth_analytics_module, mocked_session_update):
     claims_result = ClaimsResult(errors={"some_claim": "error message"})
     result = OAuthHooks.claims_verified_not_eligible(app_request, ClaimsVerificationRequest(), claims_result)
 
     assert result.status_code == 302
     assert result.url == reverse(routes.ELIGIBILITY_UNVERIFIED)
-    mocked_session_update.assert_called_once_with(app_request, oauth_authorized=True)
+    mocked_session_update.assert_called_once_with(app_request, logged_in=True)
     mocked_oauth_analytics_module.finished_sign_in.assert_called_once_with(app_request, error=claims_result.errors)
 
 

@@ -28,7 +28,7 @@ _ENROLLMENT_TOKEN_EXP = "enrollment_token_expiry"
 _ENROLLMENT_EXP = "enrollment_expiry"
 _FLOW = "flow"
 _LANG = "lang"
-_OAUTH_AUTHORIZED = "oauth_authorized"
+_LOGGED_IN = "logged_in"
 _ORIGIN = "origin"
 _START = "start"
 _UID = "uid"
@@ -60,7 +60,7 @@ def context_dict(request):
         _ENROLLMENT_TOKEN: enrollment_token(request),
         _ENROLLMENT_TOKEN_EXP: enrollment_token_expiry(request),
         _LANG: language(request),
-        _OAUTH_AUTHORIZED: oauth_authorized(request),
+        _LOGGED_IN: logged_in(request),
         _ORIGIN: origin(request),
         _START: start(request),
         _UID: uid(request),
@@ -142,19 +142,14 @@ def language(request):
 
 
 def logged_in(request):
-    """Check if the current session has an OAuth token."""
-    return bool(oauth_authorized(request))
+    """Get the user's status of having logged in with OAuth from the request's session, or None"""
+    return bool(request.session.get(_LOGGED_IN))
 
 
 def logout(request):
     """Reset the session claims and tokens."""
     OAuthSession(request, claims_result=ClaimsResult())
-    update(request, oauth_authorized=False, enrollment_token=False)
-
-
-def oauth_authorized(request):
-    """Get the oauth authorization status from the request's session, or None"""
-    return request.session.get(_OAUTH_AUTHORIZED)
+    update(request, logged_in=False, enrollment_token=False)
 
 
 def oauth_extra_claims(request):
@@ -184,7 +179,7 @@ def reset(request):
     request.session[_ENROLLMENT_EXP] = None
     request.session[_ENROLLMENT_TOKEN] = None
     request.session[_ENROLLMENT_TOKEN_EXP] = None
-    request.session[_OAUTH_AUTHORIZED] = False
+    request.session[_LOGGED_IN] = False
     OAuthSession(request, reset=True)
 
     if _UID not in request.session or not request.session[_UID]:
@@ -243,7 +238,7 @@ def update(
     enrollment_expiry=None,
     enrollment_token=None,
     enrollment_token_exp=None,
-    oauth_authorized=None,
+    logged_in=None,
     origin=None,
 ):
     """Update the request's session with non-null values."""
@@ -265,8 +260,8 @@ def update(
     if enrollment_token is not None:
         request.session[_ENROLLMENT_TOKEN] = enrollment_token
         request.session[_ENROLLMENT_TOKEN_EXP] = enrollment_token_exp
-    if oauth_authorized is not None:
-        request.session[_OAUTH_AUTHORIZED] = oauth_authorized
+    if logged_in is not None:
+        request.session[_LOGGED_IN] = logged_in
     if origin is not None:
         request.session[_ORIGIN] = origin
     if flow is not None and isinstance(flow, models.EnrollmentFlow):

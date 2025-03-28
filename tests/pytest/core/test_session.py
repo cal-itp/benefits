@@ -187,14 +187,14 @@ def test_logged_in_default(app_request):
 
 @pytest.mark.django_db
 def test_logged_in_False(app_request):
-    session.update(app_request, oauth_authorized=False)
+    session.update(app_request, logged_in=False)
 
     assert not session.logged_in(app_request)
 
 
 @pytest.mark.django_db
 def test_logged_in_True(app_request):
-    session.update(app_request, oauth_authorized=True)
+    session.update(app_request, logged_in=True)
 
     assert session.logged_in(app_request)
 
@@ -202,20 +202,15 @@ def test_logged_in_True(app_request):
 @pytest.mark.django_db
 def test_logout(app_request):
     OAuthSession(app_request).claims_result = ClaimsResult(verified={"oauth_claim": True})
-    session.update(app_request, oauth_authorized=True, enrollment_token="enrollment_token")
+    session.update(app_request, logged_in=True, enrollment_token="enrollment_token")
     assert session.logged_in(app_request)
 
     session.logout(app_request)
 
     assert not session.logged_in(app_request)
     assert not session.enrollment_token(app_request)
-    assert not session.oauth_authorized(app_request)
+    assert not session.logged_in(app_request)
     assert OAuthSession(app_request).claims_result == ClaimsResult()
-
-
-@pytest.mark.django_db
-def test_oauth_authorized_default(app_request):
-    assert not session.oauth_authorized(app_request)
 
 
 @pytest.mark.django_db
@@ -270,12 +265,12 @@ def test_reset_enrollment(app_request):
 
 @pytest.mark.django_db
 def test_reset_oauth(app_request):
-    app_request.session[session._OAUTH_AUTHORIZED] = True
+    app_request.session[session._LOGGED_IN] = True
     OAuthSession(app_request).claims_result = ClaimsResult(verified={"claim": True})
 
     session.reset(app_request)
 
-    assert session.oauth_authorized(app_request) is False
+    assert session.logged_in(app_request) is False
 
     oauth_session = OAuthSession(app_request)
     assert oauth_session.client_config is None
@@ -427,10 +422,10 @@ def test_update_enrollment_token(app_request):
 
 
 @pytest.mark.django_db
-def test_update_oauth_authorized(app_request):
-    session.update(app_request, oauth_authorized=True)
+def test_update_logged_in(app_request):
+    session.update(app_request, logged_in=True)
 
-    assert session.oauth_authorized(app_request) is True
+    assert session.logged_in(app_request) is True
 
 
 @pytest.mark.django_db
