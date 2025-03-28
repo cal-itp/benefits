@@ -4,16 +4,10 @@
 /* Primary Button: Use all three classes: btn btn-lg btn-primary */
 /* Outline Primary Button: Use all three classes: btn btn-lg btn-outline-primary */
 /* Set button width in parent with Bootstrap column */
-/* Height: 48px (3rem) on Desktop; 72 on mobile*/
+/* Height: 48px (3rem) on Desktop and Mobile */
 
 :root {
   --primary-button-padding: 1rem 0;
-}
-
-@media (min-width: 992px) {
-  :root {
-    --primary-button-padding: 13px 0;
-  }
 }
 
 .btn.btn-lg.btn-outline-primary:not(:hover) {
