@@ -48,6 +48,7 @@ class OAuthHooks(DefaultHooks):
     )
     def claims_verified_eligible(cls, request, claims_request, claims_result):
         super().claims_verified_eligible(request, claims_request, claims_result)
+        session.update(request, oauth_authorized=True)
         analytics.finished_sign_in(request)
 
         flow = session.flow(request)
@@ -64,6 +65,7 @@ class OAuthHooks(DefaultHooks):
     )
     def claims_verified_not_eligible(cls, request, claims_request, claims_result):
         super().claims_verified_not_eligible(request, claims_request, claims_result)
+        session.update(request, oauth_authorized=True)
         analytics.finished_sign_in(request, error=claims_result.errors)
 
         flow = session.flow(request)
