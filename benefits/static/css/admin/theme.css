@@ -4,6 +4,8 @@ html[data-theme="light"],
 :root {
   --primary: #ffffff;
   --bs-body-font-size: 1rem;
+  --bs-font-sans-serif: "Noto Sans", sans-serif; /* Body sans serif */
+  --bs-body-font-family: var(--bs-font-sans-serif); /* Body font for Admin */
   --bs-body-color: #212121; /* Body text color */
   --bs-dark-rgb: 33, 33, 33; /* Background color for Header */
   --bs-heading-color: #212121; /* Header text color */
