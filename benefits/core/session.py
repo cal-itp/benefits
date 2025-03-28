@@ -28,7 +28,6 @@ _ENROLLMENT_TOKEN_EXP = "enrollment_token_expiry"
 _ENROLLMENT_EXP = "enrollment_expiry"
 _FLOW = "flow"
 _LANG = "lang"
-_OAUTH_CLAIMS = "oauth_claims"
 _OAUTH_AUTHORIZED = "oauth_authorized"
 _ORIGIN = "origin"
 _START = "start"
@@ -62,7 +61,6 @@ def context_dict(request):
         _ENROLLMENT_TOKEN_EXP: enrollment_token_expiry(request),
         _LANG: language(request),
         _OAUTH_AUTHORIZED: oauth_authorized(request),
-        _OAUTH_CLAIMS: _oauth_claims(request),
         _ORIGIN: origin(request),
         _START: start(request),
         _UID: uid(request),
@@ -159,25 +157,14 @@ def oauth_authorized(request):
     return request.session.get(_OAUTH_AUTHORIZED)
 
 
-def _oauth_claims(request):
-    """Get the oauth claims from the request's session"""
-    claims = []
-    for claim, value in OAuthSession(request).claims_result.verified.items():
-        if value:
-            claims.append(claim)
-
-    return claims
-
-
 def oauth_extra_claims(request):
     """Get the extra oauth claims from the request's session, or None"""
-    claims = _oauth_claims(request)
-    if claims:
-        f = flow(request)
-        if f and f.uses_claims_verification:
-            claims.remove(f.claims_request.eligibility_claim)
-            return claims
-        raise Exception("Oauth claims but no flow")
+    oauth_session = OAuthSession(request)
+    eligibility_claim = oauth_session.claims_request.eligibility_claim
+    requested_extra_claims = [claim for claim in oauth_session.claims_request.claims_list if claim != eligibility_claim]
+
+    if oauth_session.claims_result:
+        return [extra_claim for extra_claim in requested_extra_claims if extra_claim in oauth_session.claims_result]
     else:
         return None
 

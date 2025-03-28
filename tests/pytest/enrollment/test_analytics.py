@@ -1,5 +1,6 @@
 import pytest
 
+from cdt_identity.claims import ClaimsResult
 from benefits.enrollment.analytics import FailedAccessTokenRequestEvent, ReturnedEnrollmentEvent
 
 
@@ -19,8 +20,8 @@ def test_ReturnedEnrollmentEvent_without_error(app_request, mocker):
     mock_flow.system_name = "flow_1"
     mocker.patch("benefits.core.session.flow", return_value=mock_flow)
 
-    mock_claims = ["eligibility_claim", "extra_claim"]
-    mocker.patch("benefits.core.session._oauth_claims", return_value=mock_claims)
+    mock_verified = {"eligibility_claim": "medicare", "extra_claim": "disabled"}
+    mocker.patch("benefits.core.session.OAuthSession.claims_result", return_value=ClaimsResult(verified=mock_verified))
 
     event = ReturnedEnrollmentEvent(app_request, status="success")
     assert "error_code" not in event.event_properties
