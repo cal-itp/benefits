@@ -185,8 +185,7 @@ iframe.card-collection {
 }
 
 :root {
-  --external-link-icon-size: var(--font-size-24px);
-  --external-link-icon-size-small: var(--font-size-18px);
+  --external-link-icon-size: var(--font-size-16px);
 }
 
 .login a[target="_blank"]::after {
@@ -197,10 +196,12 @@ iframe.card-collection {
     url("/static/img/external-link.svg"),
     linear-gradient(transparent, transparent);
   mask-position: center center;
+  mask-size: contain;
   -webkit-mask-image:
     url("/static/img/external-link.svg"),
     linear-gradient(transparent, transparent);
   -webkit-mask-position: center center;
+  -webkit-mask-size: contain;
 
   display: inline-block;
   position: relative;
