@@ -39,7 +39,7 @@ def test_login_flow_does_not_use_claims_verification(app_request, model_Enrollme
 @pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification")
 def test_logged_in(app_request, mocked_view, decorated_view):
     # log in
-    session.update(app_request, oauth_authorized=True)
+    session.update(app_request, logged_in=True)
 
     decorated_view(app_request)
     mocked_view.assert_called_once()

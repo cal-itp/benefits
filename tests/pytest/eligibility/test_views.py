@@ -18,9 +18,9 @@ def mocked_analytics_module(mocked_analytics_module):
 
 
 @pytest.fixture
-def mocked_eligibility_auth_request(mocked_eligibility_request_session, mocked_session_oauth_authorized):
+def mocked_eligibility_auth_request(mocked_eligibility_request_session, mocked_session_logged_in):
     """
-    Stub fixture combines mocked_eligibility_request_session and mocked_session_oauth_authorized
+    Stub fixture combines mocked_eligibility_request_session and mocked_session_logged_in
     so that session behaves like in an authenticated request to the eligibility app
     """
     pass

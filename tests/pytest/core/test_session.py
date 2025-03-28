@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
 import time
 
+from cdt_identity.claims import ClaimsResult
 from cdt_identity.session import Session as OAuthSession
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse
@@ -186,35 +187,30 @@ def test_logged_in_default(app_request):
 
 @pytest.mark.django_db
 def test_logged_in_False(app_request):
-    session.update(app_request, oauth_authorized=False)
+    session.update(app_request, logged_in=False)
 
     assert not session.logged_in(app_request)
 
 
 @pytest.mark.django_db
 def test_logged_in_True(app_request):
-    session.update(app_request, oauth_authorized=True)
+    session.update(app_request, logged_in=True)
 
     assert session.logged_in(app_request)
 
 
 @pytest.mark.django_db
 def test_logout(app_request):
-    session.update(app_request, oauth_claims=["oauth_claim"], oauth_authorized=True, enrollment_token="enrollment_token")
+    OAuthSession(app_request).claims_result = ClaimsResult(verified={"oauth_claim": True})
+    session.update(app_request, logged_in=True, enrollment_token="enrollment_token")
     assert session.logged_in(app_request)
-    assert session.oauth_claims(app_request)
 
     session.logout(app_request)
 
     assert not session.logged_in(app_request)
     assert not session.enrollment_token(app_request)
-    assert not session.oauth_authorized(app_request)
-    assert not session.oauth_claims(app_request)
-
-
-@pytest.mark.django_db
-def test_oauth_authorized_default(app_request):
-    assert not session.oauth_authorized(app_request)
+    assert not session.logged_in(app_request)
+    assert OAuthSession(app_request).claims_result == ClaimsResult()
 
 
 @pytest.mark.django_db
@@ -269,13 +265,17 @@ def test_reset_enrollment(app_request):
 
 @pytest.mark.django_db
 def test_reset_oauth(app_request):
-    app_request.session[session._OAUTH_AUTHORIZED] = True
-    app_request.session[session._OAUTH_CLAIMS] = ["claim"]
+    app_request.session[session._LOGGED_IN] = True
+    OAuthSession(app_request).claims_result = ClaimsResult(verified={"claim": True})
 
     session.reset(app_request)
 
-    assert session.oauth_authorized(app_request) is False
-    assert session.oauth_claims(app_request) is None
+    assert session.logged_in(app_request) is False
+
+    oauth_session = OAuthSession(app_request)
+    assert oauth_session.client_config is None
+    assert oauth_session.claims_request is None
+    assert oauth_session.claims_result == ClaimsResult()
 
 
 @pytest.mark.django_db
@@ -422,10 +422,10 @@ def test_update_enrollment_token(app_request):
 
 
 @pytest.mark.django_db
-def test_update_oauth_authorized(app_request):
-    session.update(app_request, oauth_authorized=True)
+def test_update_logged_in(app_request):
+    session.update(app_request, logged_in=True)
 
-    assert session.oauth_authorized(app_request) is True
+    assert session.logged_in(app_request) is True
 
 
 @pytest.mark.django_db
@@ -454,32 +454,24 @@ def test_flow_default(app_request):
 
 @pytest.mark.django_db
 def test_oauth_extra_claims(app_request, model_EnrollmentFlow_with_scope_and_claim):
+    model_EnrollmentFlow_with_scope_and_claim.claims_request.extra_claims = "extra_claim"
+    model_EnrollmentFlow_with_scope_and_claim.claims_request.save()
 
-    app_request.session[session._FLOW] = model_EnrollmentFlow_with_scope_and_claim.id
-    app_request.session[session._OAUTH_CLAIMS] = [
-        model_EnrollmentFlow_with_scope_and_claim.claims_request.eligibility_claim,
-        "extra_claim",
-    ]
+    session.update(app_request, flow=model_EnrollmentFlow_with_scope_and_claim)
+    oauth_session = OAuthSession(app_request)
+    oauth_session.claims_result = ClaimsResult(
+        verified={model_EnrollmentFlow_with_scope_and_claim.claims_request.eligibility_claim: True, "extra_claim": True}
+    )
 
     assert session.oauth_extra_claims(app_request) == ["extra_claim"]
 
 
 @pytest.mark.django_db
 def test_oauth_extra_claims_no_claims(app_request, model_EnrollmentFlow_with_scope_and_claim):
+    model_EnrollmentFlow_with_scope_and_claim.claims_request.extra_claims = "extra_claim"
+    model_EnrollmentFlow_with_scope_and_claim.claims_request.save()
 
-    app_request.session[session._FLOW] = model_EnrollmentFlow_with_scope_and_claim.id
-    app_request.session[session._OAUTH_CLAIMS] = []
+    session.update(app_request, flow=model_EnrollmentFlow_with_scope_and_claim)
+    OAuthSession(app_request).claims_result = ClaimsResult()
 
-    assert session.oauth_extra_claims(app_request) is None
-
-
-@pytest.mark.django_db
-def test_oauth_extra_claims_claims_no_flow(app_request):
-
-    app_request.session[session._OAUTH_CLAIMS] = [
-        "eligibility_claim",
-        "extra_claim",
-    ]
-
-    with pytest.raises(Exception, match="Oauth claims but no flow"):
-        session.oauth_extra_claims(app_request)
+    assert session.oauth_extra_claims(app_request) == []

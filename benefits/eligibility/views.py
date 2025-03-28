@@ -68,7 +68,6 @@ def start(request):
 
 
 @decorator_from_middleware(AgencySessionRequired)
-@decorator_from_middleware(LoginRequired)
 @decorator_from_middleware(RecaptchaEnabled)
 @decorator_from_middleware(FlowSessionRequired)
 def confirm(request):
