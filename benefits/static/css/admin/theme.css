@@ -75,9 +75,10 @@ div.breadcrumbs {
   display: none;
 }
 
+/* Header: Fixes a bug where the Log out link moves up/down on hover */
 #logout-form button:active,
 #logout-form button:hover {
-  margin-bottom: 0 !important; /* Fix logout link hover bug */
+  margin-bottom: 0 !important; /* Apply zero margin to override the 1px margin Django applies */
 }
 
 /* Header - Branding by page */
