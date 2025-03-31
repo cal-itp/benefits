@@ -11,7 +11,6 @@ from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.oauth.views import (
     TEMPLATE_SYSTEM_ERROR,
     _oauth_client_or_error_redirect,
-    login,
     logout,
     system_error,
 )
@@ -99,72 +98,23 @@ def test_oauth_client_or_error_oauth_client(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification", "mocked_oauth_client_or_error_redirect__error")
-def test_login_oauth_client_init_error(app_request, mocked_view_analytics_module):
-    result = login(app_request)
+def test_login_oauth_client_init_error(client, mocked_hook_analytics_module, mocked_hook_sentry_sdk_module):
+    path = reverse(routes.OAUTH_LOGIN)
+    response = client.get(path)
 
-    assert result.status_code == 302
-    assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)
-    mocked_view_analytics_module.error.assert_called_once()
-
-
-@pytest.mark.django_db
-def test_login_no_session_flow(app_request):
-    result = login(app_request)
-
-    assert result.status_code == 200
-    assert result.template_name == TEMPLATE_USER_ERROR
+    assert response.status_code == 302
+    assert response.url == reverse(routes.OAUTH_SYSTEM_ERROR)
+    mocked_hook_analytics_module.error.assert_called_once()
+    mocked_hook_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification")
-def test_login(app_request, mocked_oauth_client_or_error_redirect__client, mocked_view_analytics_module):
-    assert not session.logged_in(app_request)
-    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
-    # fake a permanent redirect response from the client
-    mocked_oauth_client.authorize_redirect.return_value.status_code = 301
+def test_login_no_session_flow(client):
+    path = reverse(routes.OAUTH_LOGIN)
+    response = client.get(path)
 
-    login(app_request)
-
-    mocked_oauth_client.authorize_redirect.assert_called_with(app_request, "https://testserver/oauth/authorize")
-    mocked_view_analytics_module.started_sign_in.assert_called_once()
-    assert not session.logged_in(app_request)
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification")
-def test_login_authorize_redirect_exception(
-    app_request, mocked_oauth_client_or_error_redirect__client, mocked_view_analytics_module, mocked_sentry_sdk_module
-):
-    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
-    mocked_oauth_client.authorize_redirect.side_effect = Exception("Side effect")
-
-    result = login(app_request)
-
-    assert result.status_code == 302
-    assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)
-    mocked_view_analytics_module.error.assert_called_once()
-    mocked_sentry_sdk_module.capture_exception.assert_called_once()
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification")
-@pytest.mark.parametrize("status_code", [400, 401, 403, 404, 500, 501, 503])
-def test_login_authorize_redirect_error_response(
-    app_request,
-    mocked_oauth_client_or_error_redirect__client,
-    mocked_view_analytics_module,
-    mocked_sentry_sdk_module,
-    status_code,
-):
-    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
-    mocked_oauth_client.authorize_redirect.return_value.status_code = status_code
-
-    result = login(app_request)
-
-    assert result.status_code == 302
-    assert result.url == reverse(routes.OAUTH_SYSTEM_ERROR)
-    mocked_view_analytics_module.error.assert_called_once()
-    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db

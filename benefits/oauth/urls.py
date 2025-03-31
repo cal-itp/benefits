@@ -10,7 +10,12 @@ from .middleware import FlowUsesClaimsVerificationSessionRequired
 app_name = "oauth"
 urlpatterns = [
     # /oauth
-    path("login", views.login, name=routes.name(routes.OAUTH_LOGIN)),
+    path(
+        "login",
+        decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)(cdt_identity_views.login),
+        {"hooks": hooks.OAuthHooks},
+        name=routes.name(routes.OAUTH_LOGIN),
+    ),
     path(
         "authorize",
         decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)(cdt_identity_views.authorize),
