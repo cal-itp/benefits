@@ -12,7 +12,9 @@
       {% if has_permission_for_in_person %}
         <div class="bg-white border border-1 border-secondary p-3">
           <h2 class="pt-0 pb-2 text-start fs-6 fw-bold">In-person enrollment</h2>
-          <p>Verify transit benefit eligibility using agency criteria and complete a rider’s open-loop card enrollment.</p>
+          <p>
+            Verify a transit rider’s benefit eligibility using physical documentation and register their credit or debit card for reduced fares.
+          </p>
           {% url routes.IN_PERSON_ELIGIBILITY as url_eligibility %}
           <div class="row pt-4">
             <div class="col-lg-6">
