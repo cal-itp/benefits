@@ -1,6 +1,4 @@
-from django.utils.translation import gettext_lazy as _
-
-from benefits.core.context import AgencySlug
+from benefits.core.context import AgencySlug, formatted_gettext_lazy as _
 
 
 class EligibilityIndex:
@@ -36,17 +34,10 @@ eligibility_index = {
         )
     ),
     AgencySlug.SACRT.value: EligibilityIndex(
-        form_text=[
-            _(
-                "Cal-ITP doesn’t save any of your information. "
-                "All SacRT transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")  # noqa
-            ),
-            _(
-                "With the new Tap2Ride fare system launching in 2025, SacRT riders that are eligible for discount fares can "
-                "enroll below. The discount benefit will be available on all SacRT buses beginning in early 2025 and will "
-                "include light rail tap devices later in the year."  # noqa
-            ),
-        ]
+        form_text=_(
+            "Cal-ITP doesn’t save any of your information. "
+            "All SacRT transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
+        )
     ),
     AgencySlug.SBMTD.value: EligibilityIndex(
         form_text=_(
