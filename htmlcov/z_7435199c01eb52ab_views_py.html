@@ -55,8 +55,8 @@
             </div>
         </aside>
         <h2>
-            <span class="text">81 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">79<span class="text"> run</span></button>
+            <span class="text">76 statements &nbsp;</span>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">74<span class="text"> run</span></button>
             <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">2<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">0<span class="text"> excluded</span></button>
             <button type="button" class="par run show_par button_toggle_par" value="par" data-shortcut="p" title="Toggle lines partially run">2<span class="text"> partial</span></button>
@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_795c8c28b74e7b9e_routes_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.4">coverage.py v7.6.4</a>,
-            created at 2025-04-01 23:00 +0000
+            created at 2025-04-01 23:35 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -208,25 +208,15 @@
     <p class="run"><span class="n"><a id="t124" href="#t124">124</a></span><span class="t">    <span class="key">return</span> <span class="nam">redirects</span><span class="op">.</span><span class="nam">deauthorize_redirect</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">oauth_client</span><span class="op">,</span> <span class="nam">redirect_uri</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t125" href="#t125">125</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t126" href="#t126">126</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t127" href="#t127">127</a></span><span class="t"><span class="op">@</span><span class="nam">decorator_from_middleware</span><span class="op">(</span><span class="nam">FlowUsesClaimsVerificationSessionRequired</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t128" href="#t128">128</a></span><span class="t"><span class="key">def</span> <span class="nam">post_logout</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t129" href="#t129">129</a></span><span class="t">    <span class="str">"""View routes the user to their origin after sign out."""</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t127" href="#t127">127</a></span><span class="t"><span class="op">@</span><span class="nam">decorator_from_middleware</span><span class="op">(</span><span class="nam">AgencySessionRequired</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t128" href="#t128">128</a></span><span class="t"><span class="key">def</span> <span class="nam">system_error</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t129" href="#t129">129</a></span><span class="t">    <span class="str">"""View handler for an oauth system error."""</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t130" href="#t130">130</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t131" href="#t131">131</a></span><span class="t">    <span class="nam">analytics</span><span class="op">.</span><span class="nam">finished_sign_out</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t132" href="#t132">132</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t133" href="#t133">133</a></span><span class="t">    <span class="nam">origin</span> <span class="op">=</span> <span class="nam">session</span><span class="op">.</span><span class="nam">origin</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t134" href="#t134">134</a></span><span class="t">    <span class="key">return</span> <span class="nam">redirect</span><span class="op">(</span><span class="nam">origin</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t135" href="#t135">135</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t136" href="#t136">136</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t137" href="#t137">137</a></span><span class="t"><span class="op">@</span><span class="nam">decorator_from_middleware</span><span class="op">(</span><span class="nam">AgencySessionRequired</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t138" href="#t138">138</a></span><span class="t"><span class="key">def</span> <span class="nam">system_error</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t139" href="#t139">139</a></span><span class="t">    <span class="str">"""View handler for an oauth system error."""</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t140" href="#t140">140</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t141" href="#t141">141</a></span><span class="t">    <span class="com"># overwrite origin so that CTA takes user to agency index</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t142" href="#t142">142</a></span><span class="t">    <span class="nam">agency</span> <span class="op">=</span> <span class="nam">session</span><span class="op">.</span><span class="nam">agency</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t143" href="#t143">143</a></span><span class="t">    <span class="nam">session</span><span class="op">.</span><span class="nam">update</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">origin</span><span class="op">=</span><span class="nam">agency</span><span class="op">.</span><span class="nam">index_url</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t144" href="#t144">144</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t145" href="#t145">145</a></span><span class="t">    <span class="key">return</span> <span class="nam">TemplateResponse</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">TEMPLATE_SYSTEM_ERROR</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t131" href="#t131">131</a></span><span class="t">    <span class="com"># overwrite origin so that CTA takes user to agency index</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t132" href="#t132">132</a></span><span class="t">    <span class="nam">agency</span> <span class="op">=</span> <span class="nam">session</span><span class="op">.</span><span class="nam">agency</span><span class="op">(</span><span class="nam">request</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t133" href="#t133">133</a></span><span class="t">    <span class="nam">session</span><span class="op">.</span><span class="nam">update</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">origin</span><span class="op">=</span><span class="nam">agency</span><span class="op">.</span><span class="nam">index_url</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t134" href="#t134">134</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t135" href="#t135">135</a></span><span class="t">    <span class="key">return</span> <span class="nam">TemplateResponse</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="nam">TEMPLATE_SYSTEM_ERROR</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -236,7 +226,7 @@
             <a class="nav" href="z_795c8c28b74e7b9e_routes_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.6.4">coverage.py v7.6.4</a>,
-            created at 2025-04-01 23:00 +0000
+            created at 2025-04-01 23:35 +0000
         </p>
     </div>
 </footer>
