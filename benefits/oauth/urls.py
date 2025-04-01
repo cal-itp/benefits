@@ -19,6 +19,11 @@ urlpatterns = [
     ),
     path("cancel", views.cancel, name=routes.name(routes.OAUTH_CANCEL)),
     path("logout", views.logout, name=routes.name(routes.OAUTH_LOGOUT)),
-    path("post_logout", views.post_logout, name=routes.name(routes.OAUTH_POST_LOGOUT)),
+    path(
+        "post_logout",
+        decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)(cdt_identity_views.post_logout),
+        {"hooks": hooks.OAuthHooks},
+        name=routes.name(routes.OAUTH_POST_LOGOUT),
+    ),
     path("error", views.system_error, name=routes.name(routes.OAUTH_SYSTEM_ERROR)),
 ]
