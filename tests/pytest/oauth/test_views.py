@@ -14,7 +14,6 @@ from benefits.oauth.views import (
     login,
     cancel,
     logout,
-    post_logout,
     system_error,
 )
 import benefits.oauth.views
@@ -247,23 +246,25 @@ def test_logout(app_request, mocker, mocked_oauth_client_or_error_redirect__clie
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification")
-def test_post_logout(app_request, mocked_view_analytics_module):
+def test_post_logout(mocker, client, mocked_hook_analytics_module):
     origin = reverse(routes.INDEX)
-    session.update(app_request, origin=origin)
+    mocker.patch("benefits.oauth.hooks.session.origin", return_value=origin)
 
-    result = post_logout(app_request)
+    path = reverse(routes.OAUTH_POST_LOGOUT)
+    response = client.get(path)
 
-    assert result.status_code == 302
-    assert result.url == origin
-    mocked_view_analytics_module.finished_sign_out.assert_called_once()
+    assert response.status_code == 302
+    assert response.url == origin
+    mocked_hook_analytics_module.finished_sign_out.assert_called_once()
 
 
 @pytest.mark.django_db
-def test_post_logout_no_session_flow(app_request):
-    result = post_logout(app_request)
+def test_post_logout_no_session_flow(client):
+    path = reverse(routes.OAUTH_POST_LOGOUT)
+    response = client.get(path)
 
-    assert result.status_code == 200
-    assert result.template_name == TEMPLATE_USER_ERROR
+    assert response.status_code == 200
+    assert response.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db

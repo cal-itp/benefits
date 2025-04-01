@@ -124,16 +124,6 @@ def logout(request):
     return redirects.deauthorize_redirect(request, oauth_client, redirect_uri)
 
 
-@decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
-def post_logout(request):
-    """View routes the user to their origin after sign out."""
-
-    analytics.finished_sign_out(request)
-
-    origin = session.origin(request)
-    return redirect(origin)
-
-
 @decorator_from_middleware(AgencySessionRequired)
 def system_error(request):
     """View handler for an oauth system error."""
