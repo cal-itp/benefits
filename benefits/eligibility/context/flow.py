@@ -1,16 +1,8 @@
 from dataclasses import dataclass, asdict
 from typing import Optional
 
-from django.utils.text import format_lazy
-from django.utils.translation import gettext_lazy
-
-from benefits.core.context import SystemName
+from benefits.core.context import formatted_gettext_lazy as _, SystemName
 from benefits.routes import routes
-
-
-def _(string, *args, **kwargs):
-    """Wraps format_lazy around gettext_lazy for simpler calling."""
-    return format_lazy(gettext_lazy(string), *args, **kwargs)
 
 
 @dataclass
@@ -39,7 +31,10 @@ class LoginGovEligibilityStart(EligibilityStart):
             page_title=page_title,
             headline_text=headline_text,
             call_to_action_button=CTAButton(
-                text=_("Get started with"), fallback_text="Login.gov", route=routes.OAUTH_LOGIN, extra_classes="login"
+                text=_("Get started with"),
+                fallback_text="Login.gov",
+                route=routes.OAUTH_LOGIN,
+                extra_classes="login",
             ),
         )
 
@@ -64,7 +59,8 @@ eligibility_start = {
         ),
     ),
     SystemName.CALFRESH.value: LoginGovEligibilityStart(
-        page_title=_("CalFresh benefit overview"), headline_text=_("You selected a CalFresh Cardholder transit benefit.")
+        page_title=_("CalFresh benefit overview"),
+        headline_text=_("You selected a CalFresh Cardholder transit benefit."),
     ),
     SystemName.COURTESY_CARD.value: AgencyCardEligibilityStart(
         headline_text=_("You selected a Courtesy Card transit benefit."),
@@ -93,7 +89,8 @@ eligibility_start = {
         eligibility_item_body=_("You do not need to have your physical card, but you will need to know the number."),
     ),
     SystemName.VETERAN.value: LoginGovEligibilityStart(
-        page_title=_("Veterans benefit overview"), headline_text=_("You selected a Veteran transit benefit.")
+        page_title=_("Veterans benefit overview"),
+        headline_text=_("You selected a Veteran transit benefit."),
     ),
 }
 
