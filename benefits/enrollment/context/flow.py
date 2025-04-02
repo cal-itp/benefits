@@ -21,7 +21,16 @@ class DefaultEnrollmentIndex(EnrollmentIndex):
         super().__init__(headline=headline, next_step=next_step)
 
 
-enrollment_index = {}
+class AgencyCardEnrollmentIndex(DefaultEnrollmentIndex):
+    def __init__(self):
+        super().__init__(headline=_("We found your record! Now let’s enroll your contactless card."))
+
+
+enrollment_index = {
+    SystemName.AGENCY_CARD: AgencyCardEnrollmentIndex(),
+    SystemName.COURTESY_CARD: AgencyCardEnrollmentIndex(),
+    SystemName.REDUCED_FARE_MOBILITY_ID: AgencyCardEnrollmentIndex(),
+}
 
 
 @dataclass
