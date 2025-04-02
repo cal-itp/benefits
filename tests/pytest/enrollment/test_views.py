@@ -199,12 +199,11 @@ def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_get(client, model_EnrollmentFlow):
+def test_index_eligible_get(client):
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == model_EnrollmentFlow.enrollment_index_template
     assert "forms" in response.context_data
     assert "cta_button" in response.context_data
     assert "card_tokenize_env" in response.context_data

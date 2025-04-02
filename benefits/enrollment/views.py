@@ -136,7 +136,7 @@ def index(request):
 
         logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
 
-        return TemplateResponse(request, flow.enrollment_index_template, context)
+        return TemplateResponse(request, "enrollment/index.html", context)
 
 
 @decorator_from_middleware(EligibleSessionRequired)

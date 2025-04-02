@@ -27,16 +27,6 @@ def test_EnrollmentFlow_agency_card_name__claims(model_EnrollmentFlow_with_scope
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_enrollment_index_template(model_EnrollmentFlow_with_scope_and_claim):
-    assert model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template == "enrollment/index.html"
-
-    model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template_override = "test/enrollment.html"
-    model_EnrollmentFlow_with_scope_and_claim.save()
-
-    assert model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template == "test/enrollment.html"
-
-
-@pytest.mark.django_db
 def test_EnrollmentFlow_supported_enrollment_methods(model_EnrollmentFlow_with_scope_and_claim):
     assert model_EnrollmentFlow_with_scope_and_claim.supported_enrollment_methods == ["digital", "in_person"]
 
@@ -124,33 +114,25 @@ def test_EnrollmentFlow_template_overrides_claims(model_EnrollmentFlow_with_scop
         model_EnrollmentFlow_with_scope_and_claim.selection_label_template
         == model_EnrollmentFlow_with_scope_and_claim.selection_label_template_override
     )
-    assert (
-        model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template
-        == model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template_override
-    )
 
     model_EnrollmentFlow_with_scope_and_claim.selection_label_template_override = ""
-    model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template_override = ""
     model_EnrollmentFlow_with_scope_and_claim.save()
 
     assert (
         model_EnrollmentFlow_with_scope_and_claim.selection_label_template
         == f"eligibility/includes/selection-label--{model_EnrollmentFlow_with_scope_and_claim.system_name}.html"
     )
-    assert model_EnrollmentFlow_with_scope_and_claim.enrollment_index_template == "enrollment/index.html"
 
 
 @pytest.mark.django_db
 def test_EnrollmentFlow_template_overrides_eligibility_api(model_EnrollmentFlow_with_eligibility_api):
     model_EnrollmentFlow_with_eligibility_api.selection_label_template_override = ""
-    model_EnrollmentFlow_with_eligibility_api.enrollment_index_template_override = ""
     model_EnrollmentFlow_with_eligibility_api.save()
 
     assert (
         model_EnrollmentFlow_with_eligibility_api.selection_label_template
         == f"eligibility/includes/selection-label--{model_EnrollmentFlow_with_eligibility_api.agency_card_name}.html"
     )
-    assert model_EnrollmentFlow_with_eligibility_api.enrollment_index_template == "enrollment/index--agency-card.html"
 
 
 @pytest.mark.django_db
@@ -171,7 +153,6 @@ def test_EnrollmentFlow_clean_supports_expiration(model_EnrollmentFlow_supports_
     "template_attribute",
     [
         "selection_label_template_override",
-        "enrollment_index_template_override",
     ],
 )
 def test_EnrollmentFlow_clean_templates(model_EnrollmentFlow_with_scope_and_claim, model_TransitAgency, template_attribute):
