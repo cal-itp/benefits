@@ -4,6 +4,27 @@ from benefits.core.context import AgencySlug, SystemName, formatted_gettext_lazy
 
 
 @dataclass
+class EnrollmentIndex:
+    headline: str
+    next_step: str
+
+    def dict(self):
+        return asdict(self)
+
+
+class DefaultEnrollmentIndex(EnrollmentIndex):
+    def __init__(
+        self,
+        headline=_("Your eligibility is confirmed! You’re almost there."),
+        next_step=_("The next step is to enroll the contactless card you will use to tap to ride for a reduced fare."),
+    ):
+        super().__init__(headline=headline, next_step=next_step)
+
+
+enrollment_index = {}
+
+
+@dataclass
 class EnrollmentSuccess:
     success_message: str
     thank_you_message: str

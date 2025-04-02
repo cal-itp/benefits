@@ -132,6 +132,7 @@ def index(request):
             "form_system_error": tokenize_system_error_form.id,
             "overlay_language": overlay_language,
         }
+        context.update(flow.enrollment_index_context)
 
         logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
 

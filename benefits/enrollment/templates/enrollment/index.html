@@ -12,15 +12,12 @@
 {% endblock nav-buttons %}
 
 {% block headline %}
-  <h1 class="pb-4">{% translate "Your eligibility is confirmed! You’re almost there." %}</h1>
+  <h1 class="pb-4">{{ headline }}</h1>
 {% endblock headline %}
 
 {% block inner-content %}
   {% block paragraphs %}
-    <h2 class="h3 pb-1">
-      {% translate "The next step is to enroll the contactless card you will use to tap to ride for a reduced fare." %}
-    </h2>
-
+    <h2 class="h3 pb-1">{{ next_step }}</h2>
     <p>
       {% translate "You will be directed to our partner, " %}
       <!-- djlint:off --><a href="modal--littlepay" class="{{ classes }}" data-bs-toggle="modal" data-bs-target="#modal--littlepay">Littlepay</a>{% translate ", to enter your contactless card details." %}<!-- djlint:on -->
