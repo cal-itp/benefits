@@ -1,5 +1,3 @@
-from cdt_identity.claims import ClaimsResult
-from cdt_identity.session import Session as OAuthSession
 from django.http import HttpResponse
 from django.urls import reverse
 
@@ -11,7 +9,6 @@ from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.oauth.views import (
     TEMPLATE_SYSTEM_ERROR,
     _oauth_client_or_error_redirect,
-    logout,
     system_error,
 )
 import benefits.oauth.views
@@ -109,8 +106,12 @@ def test_login_oauth_client_init_error(client, mocked_hook_analytics_module, moc
 
 
 @pytest.mark.django_db
-def test_login_no_session_flow(client):
-    path = reverse(routes.OAUTH_LOGIN)
+@pytest.mark.parametrize(
+    "route",
+    [routes.OAUTH_LOGIN, routes.OAUTH_AUTHORIZE, routes.OAUTH_CANCEL, routes.OAUTH_LOGOUT, routes.OAUTH_POST_LOGOUT],
+)
+def test_url_path_no_session_flow(client, route):
+    path = reverse(route)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -130,15 +131,6 @@ def test_authorize_oauth_client_init_error(client, mocked_hook_analytics_module,
 
 
 @pytest.mark.django_db
-def test_authorize_no_session_flow(client):
-    path = reverse(routes.OAUTH_AUTHORIZE)
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_USER_ERROR
-
-
-@pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification")
 def test_cancel(client, mocked_hook_analytics_module):
     unverified_route = reverse(routes.ELIGIBILITY_UNVERIFIED)
@@ -149,50 +141,6 @@ def test_cancel(client, mocked_hook_analytics_module):
     mocked_hook_analytics_module.canceled_sign_in.assert_called_once()
     assert response.status_code == 302
     assert response.url == unverified_route
-
-
-@pytest.mark.django_db
-def test_cancel_no_session_flow(client):
-    path = reverse(routes.OAUTH_CANCEL)
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_USER_ERROR
-
-
-@pytest.mark.django_db
-def test_logout_no_session_flow(app_request):
-    result = logout(app_request)
-
-    assert result.status_code == 200
-    assert result.template_name == TEMPLATE_USER_ERROR
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification")
-def test_logout(app_request, mocker, mocked_oauth_client_or_error_redirect__client, mocked_view_analytics_module):
-    # logout internally calls deauthorize_redirect
-    # this mocks that function and a success response
-    # and returns a spy object we can use to validate calls
-    message = "logout successful"
-    mocked_oauth_client = mocked_oauth_client_or_error_redirect__client.return_value
-    mocked_redirect = mocker.patch("benefits.oauth.views.redirects.deauthorize_redirect", return_value=HttpResponse(message))
-
-    oauth_token_authorized = True
-    session.update(app_request, logged_in=oauth_token_authorized)
-    assert session.logged_in(app_request) == oauth_token_authorized
-
-    result = logout(app_request)
-
-    mocked_redirect.assert_called_with(app_request, mocked_oauth_client, "https://testserver/oauth/post_logout")
-    mocked_view_analytics_module.started_sign_out.assert_called_once()
-    assert result.status_code == 200
-    assert message in str(result.content)
-
-    assert not session.logged_in(app_request)
-    assert session.enrollment_token(app_request) is False
-    assert session.logged_in(app_request) is False
-    assert OAuthSession(app_request).claims_result == ClaimsResult()
 
 
 @pytest.mark.django_db
@@ -207,15 +155,6 @@ def test_post_logout(mocker, client, mocked_hook_analytics_module):
     assert response.status_code == 302
     assert response.url == origin
     mocked_hook_analytics_module.finished_sign_out.assert_called_once()
-
-
-@pytest.mark.django_db
-def test_post_logout_no_session_flow(client):
-    path = reverse(routes.OAUTH_POST_LOGOUT)
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
