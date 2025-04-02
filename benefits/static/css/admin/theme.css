@@ -60,6 +60,7 @@ div.breadcrumbs {
   font-size: 1rem;
   letter-spacing: 0;
   text-transform: unset;
+  font-weight: 400 !important;
 }
 
 #user-tools a,
@@ -118,11 +119,21 @@ div.breadcrumbs {
 /* Content */
 
 #content {
-  padding: 1rem 2rem;
+  padding: 2rem;
 }
 
 /* Login page */
 
 .login .main {
   border: 1px solid #000000;
+}
+
+.login .google-btn-logo {
+  height: 1rem;
+  width: 1rem;
+}
+
+.login .google-btn-logo img {
+  height: 1rem;
+  width: 1rem;
 }
