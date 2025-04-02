@@ -1,10 +1,13 @@
 @import "../variables.css";
 
 /* Buttons */
+/* Note: This button style has now diverged from Benefit's */
 /* Primary Button: Use all three classes: btn btn-lg btn-primary */
 /* Outline Primary Button: Use all three classes: btn btn-lg btn-outline-primary */
 /* Set button width in parent with Bootstrap column */
-/* Height: 48px (3rem) on Desktop and Mobile */
+/* Font size: 16px (1rem) */
+/* Height: 48px (3rem - composed of 16px padding top and bottom, 16px font size) */
+/* Sizing same across Desktop and Mobile */
 
 :root {
   --primary-button-padding: 1rem 0;
