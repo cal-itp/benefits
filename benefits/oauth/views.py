@@ -45,47 +45,6 @@ def _oauth_client_or_error_redirect(request, flow: models.EnrollmentFlow):
 
 
 @decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
-def login(request):
-    """View implementing OIDC authorize_redirect."""
-    flow = session.flow(request)
-
-    oauth_client_result = _oauth_client_or_error_redirect(request, flow)
-
-    if hasattr(oauth_client_result, "authorize_redirect"):
-        # this looks like an oauth_client since it has the method we need
-        oauth_client = oauth_client_result
-    else:
-        # this does not look like an oauth_client, it's an error redirect
-        return oauth_client_result
-
-    route = reverse(routes.OAUTH_AUTHORIZE)
-    redirect_uri = redirects.generate_redirect_uri(request, route)
-
-    logger.debug(f"OAuth authorize_redirect with redirect_uri: {redirect_uri}")
-
-    analytics.started_sign_in(request)
-    exception = None
-    result = None
-
-    try:
-        result = oauth_client.authorize_redirect(request, redirect_uri)
-    except Exception as ex:
-        exception = ex
-
-    if result and result.status_code >= 400:
-        exception = Exception(f"authorize_redirect error response [{result.status_code}]: {result.content.decode()}")
-    elif result is None and exception is None:
-        exception = Exception("authorize_redirect returned None")
-
-    if exception:
-        analytics.error(request, message=str(exception), operation="authorize_redirect")
-        sentry_sdk.capture_exception(exception)
-        result = redirect(routes.OAUTH_SYSTEM_ERROR)
-
-    return result
-
-
-@decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
 def logout(request):
     """View implementing OIDC and application sign out."""
     flow = session.flow(request)
