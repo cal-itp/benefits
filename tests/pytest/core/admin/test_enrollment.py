@@ -122,7 +122,6 @@ class TestEnrollmentFlowAdmin:
                     "eligibility_form_class",
                     "selection_label_template_override",
                     "reenrollment_error_template",
-                    "enrollment_index_template_override",
                 ],
             ),
             ("super", ()),

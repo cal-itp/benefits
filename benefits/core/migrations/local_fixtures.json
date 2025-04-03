@@ -164,7 +164,6 @@
       "supports_expiration": "True",
       "expiration_days": 5,
       "expiration_reenrollment_days": 3,
-      "enrollment_index_template_override": "enrollment/index--calfresh.html",
       "reenrollment_error_template": "enrollment/reenrollment-error--calfresh.html",
       "display_order": 2,
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",

@@ -1,3 +1,3 @@
-from .flow import enrollment_success
+from .flow import enrollment_index, enrollment_success, DefaultEnrollmentIndex
 
-__all__ = ["enrollment_success"]
+__all__ = ["enrollment_index", "enrollment_success", "DefaultEnrollmentIndex"]

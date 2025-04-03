@@ -126,11 +126,6 @@ class EnrollmentFlow(models.Model):
         blank=True,
         help_text="If the enrollment supports expiration, number of days preceding the expiration date during which a user can re-enroll in the eligibilty",  # noqa: E501
     )
-    enrollment_index_template_override = models.TextField(
-        blank=True,
-        default="",
-        help_text="Override the default template for the Eligibility Confirmation page (the index of the enrollment app)",
-    )
     reenrollment_error_template = models.TextField(
         blank=True, default="", help_text="Template for a re-enrollment error associated with the enrollment flow"
     )
@@ -207,12 +202,9 @@ class EnrollmentFlow(models.Model):
             return self.eligibility_api_url
 
     @property
-    def enrollment_index_template(self):
-        prefix = "enrollment/index"
-        if self.uses_api_verification:
-            return self.enrollment_index_template_override or f"{prefix}--agency-card.html"
-        else:
-            return self.enrollment_index_template_override or f"{prefix}.html"
+    def enrollment_index_context(self):
+        ctx = enrollment_context.enrollment_index.get(self.system_name, enrollment_context.DefaultEnrollmentIndex())
+        return ctx.dict()
 
     @property
     def enrollment_success_context(self):
@@ -240,7 +232,6 @@ class EnrollmentFlow(models.Model):
         if self.transit_agency:
             templates = [
                 self.selection_label_template,
-                self.enrollment_index_template,
             ]
             if self.supports_expiration:
                 templates.append(self.reenrollment_error_template)
