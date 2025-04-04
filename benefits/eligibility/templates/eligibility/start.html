@@ -6,7 +6,7 @@
 {% endblock classes %}
 
 {% block page-title %}
-  {% translate page_title %}
+  {{ page_title }}
 {% endblock page-title %}
 
 {% block nav-buttons %}
@@ -59,10 +59,9 @@
 {% endblock inner-content %}
 
 {% block call-to-action-button %}
-  {% translate call_to_action_button.text as button_text %}
   <a href="{% url call_to_action_button.route %}"
      class="btn btn-lg btn-primary{% if call_to_action_button.extra_classes %} {{ call_to_action_button.extra_classes }}{% endif %}">
-    {{ button_text }}
+    {{ call_to_action_button.text }}
     {% if call_to_action_button.fallback_text %}
       <span class="fallback-text white-logo">{{ call_to_action_button.fallback_text }}</span>
     {% endif %}
