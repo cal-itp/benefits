@@ -10,7 +10,7 @@
 | benefits/core/\_\_init\_\_.py                |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/core/admin/\_\_init\_\_.py          |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/core/admin/common.py                |       13 |        0 |        4 |        0 |    100% |           |
-| benefits/core/admin/enrollment.py            |       97 |        7 |       48 |        6 |     90% |23, 35, 39, 45, 107-108, 165 |
+| benefits/core/admin/enrollment.py            |       98 |        7 |       48 |        6 |     90% |24, 36, 40, 46, 108-109, 166 |
 | benefits/core/admin/transit.py               |       35 |        1 |       14 |        1 |     96% |        46 |
 | benefits/core/admin/users.py                 |       40 |        0 |        8 |        1 |     98% |  46->exit |
 | benefits/core/analytics.py                   |       99 |       20 |       18 |        3 |     72% |136-138, 143, 149-171, 182 |
@@ -75,7 +75,7 @@
 | benefits/settings.py                         |      131 |        7 |       24 |        9 |     90% |104, 125->130, 141->144, 160, 313, 325, 327, 342, 354 |
 | benefits/urls.py                             |       27 |        7 |        4 |        2 |     71% |33->44, 48-62 |
 | benefits/wsgi.py                             |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                    **TOTAL** | **2375** |  **111** |  **434** |   **53** | **94%** |           |
+|                                    **TOTAL** | **2376** |  **111** |  **434** |   **53** | **94%** |           |
 
 
 ## Setup coverage badge
