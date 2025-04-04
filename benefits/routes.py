@@ -1,3 +1,6 @@
+from cdt_identity.routes import Routes as OAuthRoutes
+
+
 class Routes:
     """Django routes in the form of `app:name` for the Benefits application."""
 
@@ -44,32 +47,32 @@ class Routes:
     @property
     def OAUTH_LOGIN(self):
         """Start of the identity proofing phase for claims verification."""
-        return "oauth:login"
+        return OAuthRoutes.route_login
 
     @property
     def OAUTH_CANCEL(self):
         """OAuth cancel login."""
-        return "oauth:cancel"
+        return OAuthRoutes.route_cancel
 
     @property
     def OAUTH_AUTHORIZE(self):
         """OAuth authorize access token for claims verification."""
-        return "oauth:authorize"
+        return OAuthRoutes.route_authorize
 
     @property
     def OAUTH_LOGOUT(self):
         """OAuth initiate logout."""
-        return "oauth:logout"
+        return OAuthRoutes.route_logout
 
     @property
     def OAUTH_POST_LOGOUT(self):
         """OAuth complete logout."""
-        return "oauth:post_logout"
+        return OAuthRoutes.route_post_logout
 
     @property
     def OAUTH_SYSTEM_ERROR(self):
         """OAuth error not caused by the user."""
-        return "oauth:system_error"
+        return OAuthRoutes.route("system_error")
 
     @property
     def ELIGIBILITY_INDEX(self):
