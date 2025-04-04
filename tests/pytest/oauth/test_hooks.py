@@ -1,6 +1,7 @@
 from cdt_identity.claims import ClaimsResult
 from cdt_identity.hooks import Operation
 from cdt_identity.models import ClaimsVerificationRequest
+from cdt_identity.session import Session as OAuthSession
 from django.urls import reverse
 import pytest
 
@@ -49,6 +50,9 @@ def test_pre_logout(app_request, mocked_oauth_analytics_module):
 
     mocked_oauth_analytics_module.started_sign_out.assert_called_once_with(app_request)
     assert not session.logged_in(app_request)
+    assert session.enrollment_token(app_request) is False
+    assert session.logged_in(app_request) is False
+    assert OAuthSession(app_request).claims_result == ClaimsResult()
 
 
 @pytest.mark.parametrize("origin", [routes.ELIGIBILITY_START, routes.INDEX])
