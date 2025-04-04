@@ -53,6 +53,9 @@ class TransitProcessor(models.Model):
 class TransitAgency(models.Model):
     """An agency offering transit service."""
 
+    class Meta:
+        verbose_name_plural = "transit agencies"
+
     id = models.AutoField(primary_key=True)
     active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
     slug = models.SlugField(
