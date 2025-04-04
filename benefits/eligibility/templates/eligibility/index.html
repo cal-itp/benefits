@@ -21,9 +21,9 @@
 {% block inner-content %}
   {% for text in form_text %}
     {% if not forloop.last %}
-      <p class="pt-4">{% translate text %}</p>
+      <p class="pt-4">{{ text }}</p>
     {% else %}
-      <p class="pt-4 pb-4">{% translate text %}</p>
+      <p class="pt-4 pb-4">{{ text }}</p>
     {% endif %}
   {% endfor %}
 
