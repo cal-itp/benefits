@@ -13,6 +13,7 @@ from .users import is_staff_member_or_superuser
 @admin.register(models.EnrollmentEvent)
 class EnrollmentEventAdmin(admin.ModelAdmin):
     list_display = ("enrollment_datetime", "transit_agency", "enrollment_flow", "enrollment_method", "verified_by")
+    ordering = ("-enrollment_datetime",)
 
     def has_add_permission(self, request: HttpRequest, obj=None):
         if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.PROD:
