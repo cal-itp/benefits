@@ -8,9 +8,11 @@
   <div class="p-3">
     <div class="loading">
       <p>
-        <span class="spinner-border align-middle text-primary" role="status"></span>
         <span id="loading-message" class="fw-bold p-2">Please wait...</span>
       </p>
+      <div class="progress progress-linear">
+        <div class="progress-bar bg-primary" role="progressbar" aria-label="Progress bar"></div>
+      </div>
     </div>
     <div class="invisible">
       <p>Provide the rider's contactless debit or credit card details.</p>
@@ -47,8 +49,8 @@
                   return; // exit early so the rest of this function doesn't execute
                 }
 
-                $(".loading").addClass("d-none");
-                $(".invisible").removeClass("invisible").addClass("visible");
+              //  $(".loading").addClass("d-none");
+              //  $(".invisible").removeClass("invisible").addClass("visible");
 
                 $("#{{ cta_button }}").on("click", function() {
                     amplitude.getInstance().logEvent(startedEvent, {
@@ -121,7 +123,7 @@
                 });
         })
         .fail(function(jqxhr, settings, exception) {
-          $(".loading").remove();
+          // $(".loading").remove();
           console.log(exception);
         });
 
