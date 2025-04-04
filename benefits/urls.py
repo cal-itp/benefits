@@ -27,7 +27,6 @@ urlpatterns = [
     path("enrollment/", include("benefits.enrollment.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
     path("oauth/", include("benefits.oauth.urls")),
-    path("oauth/", include("cdt_identity.urls")),
     path("in_person/", include("benefits.in_person.urls")),
 ]
 
