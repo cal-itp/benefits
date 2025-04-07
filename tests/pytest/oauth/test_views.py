@@ -1,3 +1,4 @@
+from cdt_identity.routes import Routes as OAuthRoutes
 from django.urls import reverse
 
 import pytest
@@ -14,7 +15,13 @@ from benefits.oauth.views import (
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "route",
-    [routes.OAUTH_LOGIN, routes.OAUTH_AUTHORIZE, routes.OAUTH_CANCEL, routes.OAUTH_LOGOUT, routes.OAUTH_POST_LOGOUT],
+    [
+        OAuthRoutes.route_login,
+        OAuthRoutes.route_authorize,
+        OAuthRoutes.route_cancel,
+        OAuthRoutes.route_logout,
+        OAuthRoutes.route_post_logout,
+    ],
 )
 def test_url_path_no_session_flow(client, route):
     path = reverse(route)
