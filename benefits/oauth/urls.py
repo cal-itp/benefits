@@ -18,10 +18,10 @@ kwargs = {"hooks": hooks.OAuthHooks}
 app_name = cdt_app_name
 urlpatterns = [
     # /oauth
-    path(Routes.login, decorator(cdt_identity_views.login), kwargs, name=routes.name(routes.OAUTH_LOGIN)),
-    path(Routes.authorize, decorator(cdt_identity_views.authorize), kwargs, name=routes.name(routes.OAUTH_AUTHORIZE)),
-    path(Routes.cancel, decorator(cdt_identity_views.cancel), kwargs, name=routes.name(routes.OAUTH_CANCEL)),
-    path(Routes.logout, decorator(cdt_identity_views.logout), kwargs, name=routes.name(routes.OAUTH_LOGOUT)),
-    path(Routes.post_logout, decorator(cdt_identity_views.post_logout), kwargs, name=routes.name(routes.OAUTH_POST_LOGOUT)),
+    path(Routes.login, decorator(cdt_identity_views.login), kwargs, name=Routes.login),
+    path(Routes.authorize, decorator(cdt_identity_views.authorize), kwargs, name=Routes.authorize),
+    path(Routes.cancel, decorator(cdt_identity_views.cancel), kwargs, name=Routes.cancel),
+    path(Routes.logout, decorator(cdt_identity_views.logout), kwargs, name=Routes.logout),
+    path(Routes.post_logout, decorator(cdt_identity_views.post_logout), kwargs, name=Routes.post_logout),
     path("error", views.system_error, name=routes.name(routes.OAUTH_SYSTEM_ERROR)),
 ]

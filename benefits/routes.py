@@ -50,24 +50,9 @@ class Routes:
         return OAuthRoutes.route_login
 
     @property
-    def OAUTH_CANCEL(self):
-        """OAuth cancel login."""
-        return OAuthRoutes.route_cancel
-
-    @property
-    def OAUTH_AUTHORIZE(self):
-        """OAuth authorize access token for claims verification."""
-        return OAuthRoutes.route_authorize
-
-    @property
     def OAUTH_LOGOUT(self):
         """OAuth initiate logout."""
         return OAuthRoutes.route_logout
-
-    @property
-    def OAUTH_POST_LOGOUT(self):
-        """OAuth complete logout."""
-        return OAuthRoutes.route_post_logout
 
     @property
     def OAUTH_SYSTEM_ERROR(self):
