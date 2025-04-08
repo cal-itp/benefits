@@ -10,7 +10,7 @@ from django.utils.decorators import decorator_from_middleware
 
 from benefits.routes import routes
 from benefits.core import recaptcha, session
-from benefits.core.middleware import AgencySessionRequired, LoginRequired, RecaptchaEnabled, FlowSessionRequired
+from benefits.core.middleware import AgencySessionRequired, RecaptchaEnabled, FlowSessionRequired
 from benefits.core.models import EnrollmentFlow
 from . import analytics, forms, verify
 
@@ -118,7 +118,6 @@ def confirm(request):
 
 
 @decorator_from_middleware(AgencySessionRequired)
-@decorator_from_middleware(LoginRequired)
 def verified(request):
     """View handler for the verified eligibility page."""
 
