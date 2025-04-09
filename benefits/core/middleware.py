@@ -6,7 +6,6 @@ import logging
 
 from django.conf import settings
 from django.http import HttpResponse
-from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
@@ -123,19 +122,6 @@ class ChangedLanguageEvent(MiddlewareMixin):
             else:
                 logger.warning("i18n.set_language POST without language")
         return None
-
-
-class LoginRequired(MiddlewareMixin):
-    """Middleware that checks whether a user is logged in."""
-
-    def process_view(self, request, view_func, view_args, view_kwargs):
-        # only require login if flow uses claims verification
-        flow = session.flow(request)
-        if not flow or not flow.uses_claims_verification or session.logged_in(request):
-            # pass through
-            return None
-
-        return redirect(routes.OAUTH_LOGIN)
 
 
 class RecaptchaEnabled(MiddlewareMixin):
