@@ -474,4 +474,11 @@ def test_oauth_extra_claims_no_claims(app_request, model_EnrollmentFlow_with_sco
     session.update(app_request, flow=model_EnrollmentFlow_with_scope_and_claim)
     OAuthSession(app_request).claims_result = ClaimsResult()
 
-    assert session.oauth_extra_claims(app_request) == []
+    assert session.oauth_extra_claims(app_request) is None
+
+
+@pytest.mark.django_db
+def test_oauth_extra_claims_claims_no_flow(app_request):
+    OAuthSession(app_request).claims_result = ClaimsResult(verified={"eligibility_claim": True, "extra_claim": True})
+    with pytest.raises(Exception, match="Oauth claims but no flow"):
+        session.oauth_extra_claims(app_request)
