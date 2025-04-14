@@ -22,7 +22,7 @@ dependencies = [
     "requests==2.32.3",
     "sentry-sdk==2.25.1",
     "six==1.17.0",
-    "pillow==11.2.0",
+    "pillow==11.2.1",
     "django-multiselectfield==0.1.13",
 ]
 
