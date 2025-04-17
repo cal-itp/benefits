@@ -43,13 +43,6 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "agency_slug",
-                    models.SlugField(
-                        choices=[("cst", "cst"), ("mst", "mst"), ("nevco", "nevco"), ("sacrt", "sacrt"), ("sbmtd", "sbmtd")],
-                        help_text="Indicates which agency these credentials are for.",
-                    ),
-                ),
-                (
                     "audience",
                     models.TextField(
                         blank=True,

@@ -64,9 +64,6 @@ class LittlepayCredentials(models.Model):
     environment = models.TextField(
         choices=TransitProcessor.Environment, help_text="Indicates which API environment these credentials are for."
     )
-    agency_slug = models.SlugField(
-        choices=core_context.AgencySlug, help_text="Indicates which agency these credentials are for."
-    )
     audience = models.TextField(help_text="The audience value used to access the Littlepay API.", default="", blank=True)
     client_id = models.TextField(help_text="The client_id value used to access the Littlepay API.", default="", blank=True)
     client_secret_name = SecretNameField(
@@ -82,7 +79,8 @@ class LittlepayCredentials(models.Model):
 
     def __str__(self):
         environment_label = TransitProcessor.Environment(self.environment).label if self.environment else "unknown"
-        return f"({environment_label}) {self.agency_slug}"
+        agency_slug = self.transitagency.slug if hasattr(self, "transitagency") else "(no agency)"
+        return f"({environment_label}) {agency_slug}"
 
 
 class TransitAgency(models.Model):
