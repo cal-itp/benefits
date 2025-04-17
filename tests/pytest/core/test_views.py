@@ -38,7 +38,12 @@ def test_index_multiple_agencies(model_TransitAgency, client):
     # create another Transit Agency by cloning the original to ensure there are multiple
     # https://stackoverflow.com/a/48149675/453168
     new_agency = TransitAgency.objects.get(pk=model_TransitAgency.id)
+
+    new_agency.littlepay_credentials.pk = None
+    copy = new_agency.littlepay_credentials.save()
+
     new_agency.pk = None
+    new_agency.littlepay_credentials = copy
     new_agency.save()
 
     path = reverse(routes.INDEX)

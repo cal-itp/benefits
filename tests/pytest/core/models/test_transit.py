@@ -72,7 +72,12 @@ def test_TransitAgency_all_active(model_TransitAgency):
     assert count >= 1
 
     inactive_agency = TransitAgency.by_id(model_TransitAgency.id)
+
+    inactive_agency.littlepay_credentials.pk = None
+    copy = inactive_agency.littlepay_credentials.save()
+
     inactive_agency.pk = None
+    inactive_agency.littlepay_credentials = copy
     inactive_agency.active = False
     inactive_agency.save()
 
@@ -90,7 +95,12 @@ def test_TransitAgency_for_user_in_group(model_TransitAgency):
     group = Group.objects.create(name="test_group")
 
     agency_for_user = TransitAgency.by_id(model_TransitAgency.id)
+
+    agency_for_user.littlepay_credentials.pk = None
+    copy = agency_for_user.littlepay_credentials.save()
+
     agency_for_user.pk = None
+    agency_for_user.littlepay_credentials = copy
     agency_for_user.staff_group = group
     agency_for_user.save()
 
@@ -105,7 +115,12 @@ def test_TransitAgency_for_user_not_in_group(model_TransitAgency):
     group = Group.objects.create(name="test_group")
 
     agency_for_user = TransitAgency.by_id(model_TransitAgency.id)
+
+    agency_for_user.littlepay_credentials.pk = None
+    copy = agency_for_user.littlepay_credentials.save()
+
     agency_for_user.pk = None
+    agency_for_user.littlepay_credentials = copy
     agency_for_user.staff_group = group
     agency_for_user.save()
 
@@ -144,9 +159,7 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
     model_TransitAgency_inactive.info_url = ""
     model_TransitAgency_inactive.logo_large = ""
     model_TransitAgency_inactive.logo_small = ""
-    model_TransitAgency_inactive.transit_processor_audience = ""
-    model_TransitAgency_inactive.transit_processor_client_id = ""
-    model_TransitAgency_inactive.transit_processor_client_secret_name = ""
+    model_TransitAgency_inactive.littlepay_credentials = None
     # agency is inactive, OK to have incomplete fields
     model_TransitAgency_inactive.clean()
 
@@ -163,6 +176,4 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
     assert "info_url" in errors
     assert "logo_large" in errors
     assert "logo_small" in errors
-    assert "transit_processor_audience" in errors
-    assert "transit_processor_client_id" in errors
-    assert "transit_processor_client_secret_name" in errors
+    assert "littlepay_credentials" in errors
