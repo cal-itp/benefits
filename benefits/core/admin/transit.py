@@ -5,22 +5,24 @@ from benefits.core import models
 from .users import is_staff_member_or_superuser
 
 
+@admin.register(models.LittlepayCredentials)
+class LittlepayCredentialsAdmin(admin.ModelAdmin):
+    def has_module_permission(self, request):
+        """
+        This controls whether the model shows up in the main list of models.
+        """
+        # we don't want to display LittlepayCredentials on the main list.
+        # the user should view it from the TransitAgency.
+        return False
+
+
 @admin.register(models.TransitAgency)
 class TransitAgencyAdmin(admin.ModelAdmin):
     def get_exclude(self, request, obj=None):
         fields = []
 
         if not request.user.is_superuser:
-            fields.extend(
-                [
-                    "eligibility_api_private_key",
-                    "eligibility_api_public_key",
-                    "sso_domain",
-                    "transit_processor_audience",
-                    "transit_processor_client_id",
-                    "transit_processor_client_secret_name",
-                ]
-            )
+            fields.extend(["eligibility_api_private_key", "eligibility_api_public_key", "sso_domain", "littlepay_credentials"])
 
         return fields or super().get_exclude(request, obj)
 

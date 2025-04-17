@@ -42,9 +42,9 @@ def request_card_tokenization_access(request) -> CardTokenizationAccessResponse:
     try:
         client = Client(
             base_url=agency.transit_processor.api_base_url,
-            client_id=agency.transit_processor_client_id,
-            client_secret=agency.transit_processor_client_secret,
-            audience=agency.transit_processor_audience,
+            client_id=agency.littlepay_credentials.client_id,
+            client_secret=agency.littlepay_credentials.client_secret,
+            audience=agency.littlepay_credentials.audience,
         )
         client.oauth.ensure_active_token(client.token)
         response = client.request_card_tokenization_access()
@@ -82,9 +82,9 @@ def enroll(request, card_token) -> tuple[Status, Exception]:
 
     client = Client(
         base_url=agency.transit_processor.api_base_url,
-        client_id=agency.transit_processor_client_id,
-        client_secret=agency.transit_processor_client_secret,
-        audience=agency.transit_processor_audience,
+        client_id=agency.littlepay_credentials.client_id,
+        client_secret=agency.littlepay_credentials.client_secret,
+        audience=agency.littlepay_credentials.audience,
     )
     client.oauth.ensure_active_token(client.token)
 

@@ -30,6 +30,10 @@ def agency_logo_large(instance, filename):
 class TransitProcessor(models.Model):
     """An entity that applies transit agency fare rules to rider transactions."""
 
+    class Environment(models.TextChoices):
+        QA = "qa", "QA"
+        PROD = "prod", "Production"
+
     id = models.AutoField(primary_key=True)
     name = models.TextField(help_text="Primary internal display name for this TransitProcessor instance, e.g. in the Admin.")
     api_base_url = models.TextField(help_text="The absolute base URL for the TransitProcessor's API, including https://.")
@@ -53,7 +57,13 @@ class TransitProcessor(models.Model):
 class LittlepayCredentials(models.Model):
     """API credentials to be used with a Littlepay TransitProcessor."""
 
+    class Meta:
+        verbose_name = "Littlepay credential"
+
     id = models.AutoField(primary_key=True)
+    environment = models.TextField(
+        choices=TransitProcessor.Environment, help_text="Indicates which API environment these credentials are for."
+    )
     audience = models.TextField(help_text="The audience value used to access the Littlepay API.", default="", blank=True)
     client_id = models.TextField(help_text="The client_id value used to access the Littlepay API.", default="", blank=True)
     client_secret_name = SecretNameField(
@@ -61,6 +71,11 @@ class LittlepayCredentials(models.Model):
         default="",
         blank=True,
     )
+
+    @property
+    def client_secret(self):
+        secret_field = self._meta.get_field("client_secret_name")
+        return secret_field.secret_value(self)
 
 
 class TransitAgency(models.Model):
@@ -120,16 +135,12 @@ class TransitAgency(models.Model):
         default=None,
         help_text="This agency's TransitProcessor.",
     )
-    transit_processor_audience = models.TextField(
-        help_text="This agency's audience value used to access the TransitProcessor's API.", default="", blank=True
-    )
-    transit_processor_client_id = models.TextField(
-        help_text="This agency's client_id value used to access the TransitProcessor's API.", default="", blank=True
-    )
-    transit_processor_client_secret_name = SecretNameField(
-        help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
-        default="",
+    littlepay_credentials = models.OneToOneField(
+        LittlepayCredentials,
         blank=True,
+        null=True,
+        on_delete=models.PROTECT,
+        help_text="API credentials to be used with this agency's Littlepay TransitProcessor.",
     )
     staff_group = models.OneToOneField(
         Group,
@@ -199,11 +210,6 @@ class TransitAgency(models.Model):
         return self.eligibility_api_public_key.data
 
     @property
-    def transit_processor_client_secret(self):
-        secret_field = self._meta.get_field("transit_processor_client_secret_name")
-        return secret_field.secret_value(self)
-
-    @property
     def enrollment_flows(self):
         return self.enrollmentflow_set
 
@@ -221,13 +227,7 @@ class TransitAgency(models.Model):
                 logo_small=self.logo_small,
             )
             if self.transit_processor:
-                needed.update(
-                    dict(
-                        transit_processor_audience=self.transit_processor_audience,
-                        transit_processor_client_id=self.transit_processor_client_id,
-                        transit_processor_client_secret_name=self.transit_processor_client_secret_name,
-                    )
-                )
+                needed.update(dict(littlepay_credentials=self.littlepay_credentials))
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
         if field_errors:

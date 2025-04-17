@@ -2,7 +2,26 @@
 
 import benefits.core.models.common
 import benefits.secrets
+import django.db.models.deletion
 from django.db import migrations, models
+
+
+def migrate_credentials(apps, schema_editor):
+    TransitAgency = apps.get_model("core", "TransitAgency")
+    LittlepayCredentials = apps.get_model("core", "LittlepayCredentials")
+
+    for agency in TransitAgency.objects.all():
+        audience = agency.transit_processor_audience
+        client_id = agency.transit_processor_client_id
+        client_secret_name = agency.transit_processor_client_secret_name
+
+        littlepay_credentials = LittlepayCredentials.objects.create(
+            audience=audience, client_id=client_id, client_secret_name=client_secret_name
+        )
+        littlepay_credentials.save()
+
+        agency.littlepay_credentials = littlepay_credentials
+        agency.save()
 
 
 class Migration(migrations.Migration):
@@ -16,6 +35,13 @@ class Migration(migrations.Migration):
             name="LittlepayCredentials",
             fields=[
                 ("id", models.AutoField(primary_key=True, serialize=False)),
+                (
+                    "environment",
+                    models.TextField(
+                        choices=[("qa", "QA"), ("prod", "Production")],
+                        help_text="Indicates which API environment these credentials are for.",
+                    ),
+                ),
                 (
                     "audience",
                     models.TextField(
@@ -43,5 +69,30 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
+            options={"verbose_name": "Littlepay credential"},
+        ),
+        migrations.AddField(
+            model_name="transitagency",
+            name="littlepay_credentials",
+            field=models.OneToOneField(
+                blank=True,
+                help_text="API credentials to be used with this agency's Littlepay TransitProcessor.",
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="core.LittlepayCredentials",
+            ),
+        ),
+        migrations.RunPython(migrate_credentials),
+        migrations.RemoveField(
+            model_name="transitagency",
+            name="transit_processor_audience",
+        ),
+        migrations.RemoveField(
+            model_name="transitagency",
+            name="transit_processor_client_id",
+        ),
+        migrations.RemoveField(
+            model_name="transitagency",
+            name="transit_processor_client_secret_name",
         ),
     ]
