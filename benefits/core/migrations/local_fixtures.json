@@ -80,6 +80,15 @@
     }
   },
   {
+    "model": "core.LittlepayCredentials",
+    "pk": 1,
+    "fields": {
+      "audience": "",
+      "client_id": "",
+      "client_secret_name": "cst-transit-processor-client-secret"
+    }
+  },
+  {
     "model": "core.transitagency",
     "pk": 1,
     "fields": {

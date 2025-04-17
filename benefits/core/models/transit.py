@@ -50,6 +50,19 @@ class TransitProcessor(models.Model):
         return self.name
 
 
+class LittlepayCredentials(models.Model):
+    """API credentials to be used with a Littlepay TransitProcessor."""
+
+    id = models.AutoField(primary_key=True)
+    audience = models.TextField(help_text="The audience value used to access the Littlepay API.", default="", blank=True)
+    client_id = models.TextField(help_text="The client_id value used to access the Littlepay API.", default="", blank=True)
+    client_secret_name = SecretNameField(
+        help_text="The name of the secret containing the client_secret value used to access the Littlepay API.",  # noqa: E501
+        default="",
+        blank=True,
+    )
+
+
 class TransitAgency(models.Model):
     """An agency offering transit service."""
 
