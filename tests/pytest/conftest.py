@@ -170,6 +170,8 @@ def model_TransitProcessor():
 @pytest.fixture
 def model_LittlepayCredentials():
     littlepay_credentials = LittlepayCredentials.objects.create(
+        environment=TransitProcessor.Environment.QA,
+        agency_slug="cst",
         client_id="client_id",
         client_secret_name="client_secret_name",
         audience="audience",
