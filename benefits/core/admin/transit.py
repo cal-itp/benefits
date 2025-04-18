@@ -16,9 +16,7 @@ class TransitAgencyAdmin(admin.ModelAdmin):
                     "eligibility_api_private_key",
                     "eligibility_api_public_key",
                     "sso_domain",
-                    "transit_processor_audience",
-                    "transit_processor_client_id",
-                    "transit_processor_client_secret_name",
+                    "littlepay_config",
                 ]
             )
 

@@ -55,8 +55,13 @@ class LittlepayConfig(models.Model):
         blank=True,
     )
 
+    @property
+    def client_secret(self):
+        secret_field = self._meta.get_field("client_secret_name")
+        return secret_field.secret_value(self)
+
     def __str__(self):
-        environment_label = self.Environment(self.environment).label if self.environment else "(unknown)"
+        environment_label = self.Environment(self.environment).label if self.environment else "unknown"
         agency_slug = self.agency_slug if self.agency_slug else "(no agency)"
         return f"({environment_label}) {agency_slug}"
 
@@ -141,16 +146,13 @@ class TransitAgency(models.Model):
         default=None,
         help_text="This agency's TransitProcessor.",
     )
-    transit_processor_audience = models.TextField(
-        help_text="This agency's audience value used to access the TransitProcessor's API.", default="", blank=True
-    )
-    transit_processor_client_id = models.TextField(
-        help_text="This agency's client_id value used to access the TransitProcessor's API.", default="", blank=True
-    )
-    transit_processor_client_secret_name = SecretNameField(
-        help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
-        default="",
+    littlepay_config = models.OneToOneField(
+        LittlepayConfig,
+        on_delete=models.PROTECT,
+        null=True,
         blank=True,
+        default=None,
+        help_text="The Littlepay configuration used by this agency for enrollment.",
     )
     staff_group = models.OneToOneField(
         Group,
@@ -220,11 +222,6 @@ class TransitAgency(models.Model):
         return self.eligibility_api_public_key.data
 
     @property
-    def transit_processor_client_secret(self):
-        secret_field = self._meta.get_field("transit_processor_client_secret_name")
-        return secret_field.secret_value(self)
-
-    @property
     def enrollment_flows(self):
         return self.enrollmentflow_set
 
@@ -242,13 +239,7 @@ class TransitAgency(models.Model):
                 logo_small=self.logo_small,
             )
             if self.transit_processor:
-                needed.update(
-                    dict(
-                        transit_processor_audience=self.transit_processor_audience,
-                        transit_processor_client_id=self.transit_processor_client_id,
-                        transit_processor_client_secret_name=self.transit_processor_client_secret_name,
-                    )
-                )
+                needed.update(dict(littlepay_config=self.littlepay_config))
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
         if field_errors:

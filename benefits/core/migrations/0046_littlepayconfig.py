@@ -5,6 +5,25 @@ import benefits.secrets
 from django.db import migrations, models
 
 
+def migrate_littlepay_config(apps, schema_editor):
+    TransitAgency = apps.get_model("core", "TransitAgency")
+    LittlepayConfig = apps.get_model("core", "LittlepayConfig")
+
+    for agency in TransitAgency.objects.all():
+        agency_slug = agency.slug
+        audience = agency.transit_processor_audience
+        client_id = agency.transit_processor_client_id
+        client_secret_name = agency.transit_processor_client_secret_name
+
+        littlepay_config = LittlepayConfig.objects.create(
+            agency_slug=agency_slug, audience=audience, client_id=client_id, client_secret_name=client_secret_name
+        )
+        littlepay_config.save()
+
+        agency.littlepay_config = littlepay_config
+        agency.save()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -57,5 +76,30 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
+        ),
+        migrations.AddField(
+            model_name="transitagency",
+            name="littlepay_config",
+            field=models.OneToOneField(
+                blank=True,
+                default=None,
+                help_text="The Littlepay configuration used by this agency for enrollment.",
+                null=True,
+                on_delete=models.deletion.PROTECT,
+                to="core.littlepayconfig",
+            ),
+        ),
+        migrations.RunPython(migrate_littlepay_config),
+        migrations.RemoveField(
+            model_name="transitagency",
+            name="transit_processor_audience",
+        ),
+        migrations.RemoveField(
+            model_name="transitagency",
+            name="transit_processor_client_id",
+        ),
+        migrations.RemoveField(
+            model_name="transitagency",
+            name="transit_processor_client_secret_name",
         ),
     ]
