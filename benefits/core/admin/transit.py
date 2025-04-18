@@ -5,6 +5,17 @@ from benefits.core import models
 from .users import is_staff_member_or_superuser
 
 
+@admin.register(models.LittlepayConfig)
+class LittlepayConfigAdmin(admin.ModelAdmin):
+    def has_module_permission(self, request):
+        """
+        This controls whether the model shows up in the main list of models.
+        """
+        # we don't want to display LittlepayConfig on the main list.
+        # the user should view it from the TransitAgency.
+        return False
+
+
 @admin.register(models.TransitAgency)
 class TransitAgencyAdmin(admin.ModelAdmin):
     def get_exclude(self, request, obj=None):
