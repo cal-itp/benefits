@@ -27,8 +27,14 @@ def agency_logo_large(instance, filename):
     return _agency_logo(instance, filename, "lg")
 
 
-class LittlepayConfig(models.Model):
-    """Configuration for connecting to Littlepay, an entity that applies transit agency fare rules to rider transactions."""
+class TransitProcessorConfig(models.Model):
+    """
+    Fields common to models that represent configuration for connecting to a transit processor,
+    an entity that applies transit agency fare rules to rider transactions.
+    """
+
+    class Meta:
+        abstract = True
 
     class Environment(models.TextChoices):
         QA = "qa", "QA"
@@ -39,6 +45,11 @@ class LittlepayConfig(models.Model):
         choices=Environment,
         help_text="A label to indicate which environment this configuration is for.",
     )
+
+
+class LittlepayConfig(TransitProcessorConfig):
+    """Configuration for connecting to Littlepay."""
+
     agency_slug = models.SlugField(
         choices=core_context.AgencySlug,
         help_text="A label to indicate which agency this configuration is for. Note: the field that controls which configuration an agency actually uses is on the TransitAgency model.",  # noqa
