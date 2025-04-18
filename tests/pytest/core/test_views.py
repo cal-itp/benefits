@@ -39,6 +39,8 @@ def test_index_multiple_agencies(model_TransitAgency, client):
     # https://stackoverflow.com/a/48149675/453168
     new_agency = TransitAgency.objects.get(pk=model_TransitAgency.id)
     new_agency.pk = None
+    new_agency.littlepay_config.pk = None
+    new_agency.littlepay_config = new_agency.littlepay_config.save()
     new_agency.save()
 
     path = reverse(routes.INDEX)

@@ -148,6 +148,8 @@ def test_pre_login_user_add_transit_staff_to_transit_staff_group(mocker, setting
 
     transit_agency_staff_group = Group.objects.create(name="CST Staff")
     model_TransitAgency.pk = None
+    model_TransitAgency.littlepay_config.pk = None
+    model_TransitAgency.littlepay_config = model_TransitAgency.littlepay_config.save()
     model_TransitAgency.staff_group = transit_agency_staff_group
     model_TransitAgency.sso_domain = "cst.org"
     model_TransitAgency.save()
