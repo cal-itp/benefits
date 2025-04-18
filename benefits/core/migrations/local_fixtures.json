@@ -80,6 +80,17 @@
     }
   },
   {
+    "model": "core.littlepayconfig",
+    "pk": 1,
+    "fields": {
+      "environment": "qa",
+      "agency_slug": "cst",
+      "audience": "",
+      "client_id": "",
+      "client_secret_name": "cst-transit-processor-client-secret"
+    }
+  },
+  {
     "model": "core.transitagency",
     "pk": 1,
     "fields": {
