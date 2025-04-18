@@ -1,7 +1,7 @@
 import os
 import logging
 
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.contrib.auth.models import Group, User
 from django.db import models
 from django.urls import reverse
@@ -59,6 +59,17 @@ class LittlepayConfig(models.Model):
     def client_secret(self):
         secret_field = self._meta.get_field("client_secret_name")
         return secret_field.secret_value(self)
+
+    def clean(self):
+        field_errors = {}
+
+        if hasattr(self, "transitagency") and self.transitagency.active:
+            message = "This field is required when this configuration is referenced by an active transit agency."
+            needed = dict(audience=self.audience, client_id=self.client_id, client_secret_name=self.client_secret_name)
+            field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
+
+        if field_errors:
+            raise ValidationError(field_errors)
 
     def __str__(self):
         environment_label = self.Environment(self.environment).label if self.environment else "unknown"
@@ -227,6 +238,7 @@ class TransitAgency(models.Model):
 
     def clean(self):
         field_errors = {}
+        non_field_errors = []
 
         if self.active:
             message = "This field is required for active transit agencies."
@@ -242,8 +254,21 @@ class TransitAgency(models.Model):
                 needed.update(dict(littlepay_config=self.littlepay_config))
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
+            if self.littlepay_config:
+                try:
+                    self.littlepay_config.clean()
+                except ValidationError as e:
+                    message = "Littlepay configuration is missing fields that are required when this agency is active."
+                    message += f" Missing fields: {', '.join(e.error_dict.keys())}"
+                    non_field_errors.append(ValidationError(message))
+
+        all_errors = {}
         if field_errors:
-            raise ValidationError(field_errors)
+            all_errors.update(field_errors)
+        if non_field_errors:
+            all_errors.update({NON_FIELD_ERRORS: value for value in non_field_errors})
+        if all_errors:
+            raise ValidationError(all_errors)
 
     @staticmethod
     def by_id(id):
