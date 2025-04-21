@@ -58,4 +58,16 @@ class Migration(migrations.Migration):
                 ),
             ],
         ),
+        migrations.AddField(
+            model_name="transitagency",
+            name="switchio_config",
+            field=models.ForeignKey(
+                blank=True,
+                default=None,
+                help_text="The Switchio configuration used by this agency for enrollment.",
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="core.switchioconfig",
+            ),
+        ),
     ]

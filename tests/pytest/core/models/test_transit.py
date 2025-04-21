@@ -1,5 +1,5 @@
 from django.contrib.auth.models import Group, User
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 
 import pytest
 
@@ -212,6 +212,7 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
     model_TransitAgency_inactive.logo_large = ""
     model_TransitAgency_inactive.logo_small = ""
     model_TransitAgency_inactive.littlepay_config = None
+    model_TransitAgency_inactive.switchio_config = None
     # agency is inactive, OK to have incomplete fields
     model_TransitAgency_inactive.clean()
 
@@ -228,4 +229,7 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
     assert "info_url" in errors
     assert "logo_large" in errors
     assert "logo_small" in errors
-    assert "littlepay_config" in errors
+
+    non_field_errors = errors[NON_FIELD_ERRORS]
+    assert len(non_field_errors) == 1
+    assert non_field_errors[0].message == "Must fill out configuration for either Littlepay or Switchio."

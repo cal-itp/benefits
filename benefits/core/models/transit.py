@@ -200,6 +200,14 @@ class TransitAgency(models.Model):
         default=None,
         help_text="The Littlepay configuration used by this agency for enrollment.",
     )
+    switchio_config = models.ForeignKey(
+        SwitchioConfig,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        default=None,
+        help_text="The Switchio configuration used by this agency for enrollment.",
+    )
     staff_group = models.OneToOneField(
         Group,
         on_delete=models.PROTECT,
@@ -285,9 +293,11 @@ class TransitAgency(models.Model):
                 logo_large=self.logo_large,
                 logo_small=self.logo_small,
             )
-            if self.transit_processor:
-                needed.update(dict(littlepay_config=self.littlepay_config))
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
+
+            if self.transit_processor:
+                if self.littlepay_config is None and self.switchio_config is None:
+                    non_field_errors.append(ValidationError("Must fill out configuration for either Littlepay or Switchio."))
 
             if self.littlepay_config:
                 try:
