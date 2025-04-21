@@ -141,7 +141,7 @@ class SwitchioConfig(models.Model):
 
     def __str__(self):
         environment_label = Environment(self.environment).label if self.environment else "unknown"
-        return f"({environment_label})"
+        return f"{environment_label}"
 
 
 class TransitProcessor(models.Model):

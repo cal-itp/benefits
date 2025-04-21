@@ -95,7 +95,7 @@ def test_SwitchioConfig_defaults():
 @pytest.mark.django_db
 def test_SwitchioConfig_str(model_SwitchioConfig):
     environment_label = Environment(model_SwitchioConfig.environment).label
-    assert str(model_SwitchioConfig) == f"({environment_label})"
+    assert str(model_SwitchioConfig) == f"{environment_label}"
 
 
 @pytest.mark.django_db
