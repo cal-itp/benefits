@@ -116,10 +116,17 @@ class SwitchioConfig(models.Model):
         secret_field = self._meta.get_field("api_secret_name")
         return secret_field.secret_value(self)
 
-    def clean(self):
+    def clean(self, agency=None):
         field_errors = {}
 
-        if self.pk is not None and any((agency.active for agency in self.transitagency_set.all())):
+        if agency is not None:
+            used_by_active_agency = agency.active
+        elif self.pk is not None:
+            used_by_active_agency = any((agency.active for agency in self.transitagency_set.all()))
+        else:
+            used_by_active_agency = False
+
+        if used_by_active_agency:
             message = "This field is required when this configuration is referenced by an active transit agency."
             needed = dict(
                 api_key=self.api_key,
@@ -334,7 +341,7 @@ class TransitAgency(models.Model):
 
             if self.switchio_config:
                 try:
-                    self.switchio_config.clean()
+                    self.switchio_config.clean(agency=self)
                 except ValidationError as e:
                     message = "Switchio configuration is missing fields that are required when this agency is active."
                     message += f" Missing fields: {', '.join(e.error_dict.keys())}"
