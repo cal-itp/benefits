@@ -41,7 +41,10 @@ class Migration(migrations.Migration):
                 (
                     "ca_certificate",
                     models.ForeignKey(
+                        blank=True,
+                        default=None,
                         help_text="The CA certificate chain for accessing the Switchio API.",
+                        null=True,
                         on_delete=django.db.models.deletion.PROTECT,
                         related_name="+",
                         to="core.pemdata",
@@ -50,7 +53,10 @@ class Migration(migrations.Migration):
                 (
                     "client_certificate",
                     models.ForeignKey(
+                        blank=True,
+                        default=None,
                         help_text="The client certificate for accessing the Switchio API.",
+                        null=True,
                         on_delete=django.db.models.deletion.PROTECT,
                         related_name="+",
                         to="core.pemdata",

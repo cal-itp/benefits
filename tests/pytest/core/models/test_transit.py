@@ -3,7 +3,14 @@ from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 
 import pytest
 
-from benefits.core.models import TransitAgency, Environment, LittlepayConfig, agency_logo_small, agency_logo_large
+from benefits.core.models import (
+    TransitAgency,
+    Environment,
+    LittlepayConfig,
+    SwitchioConfig,
+    agency_logo_small,
+    agency_logo_large,
+)
 
 
 @pytest.mark.django_db
@@ -70,6 +77,21 @@ def test_LittlepayConfig_clean(model_TransitAgency_inactive):
         error_message
         == "Littlepay configuration is missing fields that are required when this agency is active. Missing fields: audience, client_id, client_secret_name"  # noqa
     )
+
+
+@pytest.mark.django_db
+def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
+    switchio_config = SwitchioConfig.objects.create(
+        environment="qa",
+    )
+    switchio_config.transitagency = model_TransitAgency_inactive
+    switchio_config.save()
+
+    # test fails if clean fails
+    switchio_config.clean()
+
+    # test fails if agency's clean fails
+    model_TransitAgency_inactive.clean()
 
 
 @pytest.mark.django_db

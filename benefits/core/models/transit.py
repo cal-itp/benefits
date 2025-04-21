@@ -93,19 +93,44 @@ class SwitchioConfig(models.Model):
         blank=True,
     )
     client_certificate = models.ForeignKey(
-        PemData, related_name="+", on_delete=models.PROTECT, help_text="The client certificate for accessing the Switchio API."
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        help_text="The client certificate for accessing the Switchio API.",
+        null=True,
+        blank=True,
+        default=None,
     )
     ca_certificate = models.ForeignKey(
         PemData,
         related_name="+",
         on_delete=models.PROTECT,
         help_text="The CA certificate chain for accessing the Switchio API.",
+        null=True,
+        blank=True,
+        default=None,
     )
 
     @property
     def api_secret(self):
         secret_field = self._meta.get_field("api_secret_name")
         return secret_field.secret_value(self)
+
+    def clean(self):
+        field_errors = {}
+
+        if any((agency.active for agency in self.transitagency_set.all())):
+            message = "This field is required when this configuration is referenced by an active transit agency."
+            needed = dict(
+                api_key=self.api_key,
+                api_secret_name=self.api_secret_name,
+                client_certificate=self.client_certificate,
+                ca_certificate=self.ca_certificate,
+            )
+            field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
+
+        if field_errors:
+            raise ValidationError(field_errors)
 
     def __str__(self):
         environment_label = Environment(self.environment).label if self.environment else "unknown"
@@ -304,6 +329,14 @@ class TransitAgency(models.Model):
                     self.littlepay_config.clean()
                 except ValidationError as e:
                     message = "Littlepay configuration is missing fields that are required when this agency is active."
+                    message += f" Missing fields: {', '.join(e.error_dict.keys())}"
+                    non_field_errors.append(ValidationError(message))
+
+            if self.switchio_config:
+                try:
+                    self.switchio_config.clean()
+                except ValidationError as e:
+                    message = "Switchio configuration is missing fields that are required when this agency is active."
                     message += f" Missing fields: {', '.join(e.error_dict.keys())}"
                     non_field_errors.append(ValidationError(message))
 
