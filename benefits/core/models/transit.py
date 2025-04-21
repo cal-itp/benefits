@@ -27,12 +27,13 @@ def agency_logo_large(instance, filename):
     return _agency_logo(instance, filename, "lg")
 
 
+class Environment(models.TextChoices):
+    QA = "qa", "QA"
+    PROD = "prod", "Production"
+
+
 class LittlepayConfig(models.Model):
     """Configuration for connecting to Littlepay, an entity that applies transit agency fare rules to rider transactions."""
-
-    class Environment(models.TextChoices):
-        QA = "qa", "QA"
-        PROD = "prod", "Production"
 
     id = models.AutoField(primary_key=True)
     environment = models.TextField(
@@ -72,7 +73,7 @@ class LittlepayConfig(models.Model):
             raise ValidationError(field_errors)
 
     def __str__(self):
-        environment_label = self.Environment(self.environment).label if self.environment else "unknown"
+        environment_label = Environment(self.environment).label if self.environment else "unknown"
         agency_slug = self.agency_slug if self.agency_slug else "(no agency)"
         return f"({environment_label}) {agency_slug}"
 

@@ -10,7 +10,7 @@ import pytest
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import EnrollmentFlow, TransitProcessor, PemData, TransitAgency, LittlepayConfig
+from benefits.core.models import EnrollmentFlow, TransitProcessor, PemData, TransitAgency, Environment, LittlepayConfig
 
 
 def pytest_runtest_setup():
@@ -170,7 +170,7 @@ def model_TransitProcessor():
 @pytest.fixture
 def model_LittlepayConfig():
     littlepay_config = LittlepayConfig.objects.create(
-        environment=LittlepayConfig.Environment.QA,
+        environment=Environment.QA,
         agency_slug="cst",
         client_id="client_id",
         client_secret_name="client_secret_name",

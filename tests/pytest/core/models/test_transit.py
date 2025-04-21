@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 import pytest
 
-from benefits.core.models import TransitAgency, LittlepayConfig, agency_logo_small, agency_logo_large
+from benefits.core.models import TransitAgency, Environment, LittlepayConfig, agency_logo_small, agency_logo_large
 
 
 @pytest.mark.django_db
@@ -26,7 +26,7 @@ def test_LittlepayConfig_defaults():
 
 @pytest.mark.django_db
 def test_LittlepayConfig_str(model_LittlepayConfig):
-    environment_label = LittlepayConfig.Environment(model_LittlepayConfig.environment).label
+    environment_label = Environment(model_LittlepayConfig.environment).label
     agency_slug = model_LittlepayConfig.agency_slug
     assert str(model_LittlepayConfig) == f"({environment_label}) {agency_slug}"
 
