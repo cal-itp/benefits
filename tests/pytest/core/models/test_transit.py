@@ -80,6 +80,25 @@ def test_LittlepayConfig_clean(model_TransitAgency_inactive):
 
 
 @pytest.mark.django_db
+def test_SwitchioConfig_defaults():
+    switchio_config = SwitchioConfig.objects.create(environment="qa")
+
+    assert switchio_config.environment == "qa"
+    assert switchio_config.api_key == ""
+    assert switchio_config.api_secret_name == ""
+    assert switchio_config.client_certificate is None
+    assert switchio_config.ca_certificate is None
+    # test fails if save fails
+    switchio_config.save()
+
+
+@pytest.mark.django_db
+def test_SwitchioConfig_str(model_SwitchioConfig):
+    environment_label = Environment(model_SwitchioConfig.environment).label
+    assert str(model_SwitchioConfig) == f"({environment_label})"
+
+
+@pytest.mark.django_db
 def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
     switchio_config = SwitchioConfig.objects.create(
         environment="qa",
