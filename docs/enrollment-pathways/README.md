@@ -44,20 +44,24 @@ timeline
 %% Cal-ITP Benefits Epics (2025)
           section 2025
 
-          Q1<br>Now
+          Q1<br>Complete
         : Front-end enhancements and optimization
-        : Deploy in-person enrollments to all agencies
-        : Support for Discover and American Express cards
+        : Deploy in-person enrollments
+        : Utilize CDT Identity Gateway connection library
 
-          Q2<br>Next
-        : Benefits admin tool (agency configuration)
-        : Support for multiple fare processors (Enghouse)
-        : Benefits admin tool (user management)
+          Q2<br>Now
+        : Support for multiple transit processors (Enghouse)
         : Enhanced Veteran eligibility checks (disability status)
 
-          H2<br>Projected
+          Q3<br>Next
+        : Support for additional identity provider
+        : Benefits admin tool (user management)
+        : Benefits admin tool (agency configuration)
+
+          Q4<br>Projected
         : Single eligibility check across multiple benefit options
         : Eligibility check for individuals with disabilities (CA DMV)
+        : Support for Discover and American Express cards
 
 %%{
   init: {
