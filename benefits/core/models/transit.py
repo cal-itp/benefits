@@ -1,7 +1,7 @@
 import os
 import logging
 
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.contrib.auth.models import Group, User
 from django.db import models
 from django.urls import reverse
@@ -25,6 +25,57 @@ def agency_logo_small(instance, filename):
 
 def agency_logo_large(instance, filename):
     return _agency_logo(instance, filename, "lg")
+
+
+class Environment(models.TextChoices):
+    QA = "qa", "QA"
+    PROD = "prod", "Production"
+
+
+class LittlepayConfig(models.Model):
+    """Configuration for connecting to Littlepay, an entity that applies transit agency fare rules to rider transactions."""
+
+    id = models.AutoField(primary_key=True)
+    environment = models.TextField(
+        choices=Environment,
+        help_text="A label to indicate which environment this configuration is for.",
+    )
+    agency_slug = models.SlugField(
+        choices=core_context.AgencySlug,
+        help_text="A label to indicate which agency this configuration is for. Note: the field that controls which configuration an agency actually uses is on the TransitAgency model.",  # noqa
+    )
+    audience = models.TextField(
+        help_text="This agency's audience value used to access the TransitProcessor's API.", default="", blank=True
+    )
+    client_id = models.TextField(
+        help_text="This agency's client_id value used to access the TransitProcessor's API.", default="", blank=True
+    )
+    client_secret_name = SecretNameField(
+        help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
+        default="",
+        blank=True,
+    )
+
+    @property
+    def client_secret(self):
+        secret_field = self._meta.get_field("client_secret_name")
+        return secret_field.secret_value(self)
+
+    def clean(self):
+        field_errors = {}
+
+        if hasattr(self, "transitagency") and self.transitagency.active:
+            message = "This field is required when this configuration is referenced by an active transit agency."
+            needed = dict(audience=self.audience, client_id=self.client_id, client_secret_name=self.client_secret_name)
+            field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
+
+        if field_errors:
+            raise ValidationError(field_errors)
+
+    def __str__(self):
+        environment_label = Environment(self.environment).label if self.environment else "unknown"
+        agency_slug = self.agency_slug if self.agency_slug else "(no agency)"
+        return f"({environment_label}) {agency_slug}"
 
 
 class TransitProcessor(models.Model):
@@ -107,16 +158,13 @@ class TransitAgency(models.Model):
         default=None,
         help_text="This agency's TransitProcessor.",
     )
-    transit_processor_audience = models.TextField(
-        help_text="This agency's audience value used to access the TransitProcessor's API.", default="", blank=True
-    )
-    transit_processor_client_id = models.TextField(
-        help_text="This agency's client_id value used to access the TransitProcessor's API.", default="", blank=True
-    )
-    transit_processor_client_secret_name = SecretNameField(
-        help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
-        default="",
+    littlepay_config = models.OneToOneField(
+        LittlepayConfig,
+        on_delete=models.PROTECT,
+        null=True,
         blank=True,
+        default=None,
+        help_text="The Littlepay configuration used by this agency for enrollment.",
     )
     staff_group = models.OneToOneField(
         Group,
@@ -186,16 +234,12 @@ class TransitAgency(models.Model):
         return self.eligibility_api_public_key.data
 
     @property
-    def transit_processor_client_secret(self):
-        secret_field = self._meta.get_field("transit_processor_client_secret_name")
-        return secret_field.secret_value(self)
-
-    @property
     def enrollment_flows(self):
         return self.enrollmentflow_set
 
     def clean(self):
         field_errors = {}
+        non_field_errors = []
 
         if self.active:
             message = "This field is required for active transit agencies."
@@ -208,17 +252,24 @@ class TransitAgency(models.Model):
                 logo_small=self.logo_small,
             )
             if self.transit_processor:
-                needed.update(
-                    dict(
-                        transit_processor_audience=self.transit_processor_audience,
-                        transit_processor_client_id=self.transit_processor_client_id,
-                        transit_processor_client_secret_name=self.transit_processor_client_secret_name,
-                    )
-                )
+                needed.update(dict(littlepay_config=self.littlepay_config))
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
+            if self.littlepay_config:
+                try:
+                    self.littlepay_config.clean()
+                except ValidationError as e:
+                    message = "Littlepay configuration is missing fields that are required when this agency is active."
+                    message += f" Missing fields: {', '.join(e.error_dict.keys())}"
+                    non_field_errors.append(ValidationError(message))
+
+        all_errors = {}
         if field_errors:
-            raise ValidationError(field_errors)
+            all_errors.update(field_errors)
+        if non_field_errors:
+            all_errors.update({NON_FIELD_ERRORS: value for value in non_field_errors})
+        if all_errors:
+            raise ValidationError(all_errors)
 
     @staticmethod
     def by_id(id):

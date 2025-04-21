@@ -10,7 +10,7 @@ import pytest
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import EnrollmentFlow, TransitProcessor, PemData, TransitAgency
+from benefits.core.models import EnrollmentFlow, TransitProcessor, PemData, TransitAgency, Environment, LittlepayConfig
 
 
 def pytest_runtest_setup():
@@ -168,7 +168,20 @@ def model_TransitProcessor():
 
 
 @pytest.fixture
-def model_TransitAgency(model_PemData, model_TransitProcessor):
+def model_LittlepayConfig():
+    littlepay_config = LittlepayConfig.objects.create(
+        environment=Environment.QA,
+        agency_slug="cst",
+        client_id="client_id",
+        client_secret_name="client_secret_name",
+        audience="audience",
+    )
+
+    return littlepay_config
+
+
+@pytest.fixture
+def model_TransitAgency(model_PemData, model_TransitProcessor, model_LittlepayConfig):
     agency = TransitAgency.objects.create(
         slug="cst",
         short_name="TEST",
@@ -177,9 +190,7 @@ def model_TransitAgency(model_PemData, model_TransitProcessor):
         phone="800-555-5555",
         active=True,
         transit_processor=model_TransitProcessor,
-        transit_processor_client_id="client_id",
-        transit_processor_client_secret_name="client_secret_name",
-        transit_processor_audience="audience",
+        littlepay_config=model_LittlepayConfig,
         eligibility_api_id="test123",
         eligibility_api_private_key=model_PemData,
         eligibility_api_public_key=model_PemData,

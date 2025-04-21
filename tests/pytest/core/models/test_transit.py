@@ -3,12 +3,73 @@ from django.core.exceptions import ValidationError
 
 import pytest
 
-from benefits.core.models import TransitAgency, agency_logo_small, agency_logo_large
+from benefits.core.models import TransitAgency, Environment, LittlepayConfig, agency_logo_small, agency_logo_large
 
 
 @pytest.mark.django_db
 def test_TransitProcessor_str(model_TransitProcessor):
     assert str(model_TransitProcessor) == model_TransitProcessor.name
+
+
+@pytest.mark.django_db
+def test_LittlepayConfig_defaults():
+    littlepay_config = LittlepayConfig.objects.create(environment="qa", agency_slug="cst")
+
+    assert littlepay_config.environment == "qa"
+    assert littlepay_config.agency_slug == "cst"
+    assert littlepay_config.audience == ""
+    assert littlepay_config.client_id == ""
+    assert littlepay_config.client_secret_name == ""
+    # test fails if save fails
+    littlepay_config.save()
+
+
+@pytest.mark.django_db
+def test_LittlepayConfig_str(model_LittlepayConfig):
+    environment_label = Environment(model_LittlepayConfig.environment).label
+    agency_slug = model_LittlepayConfig.agency_slug
+    assert str(model_LittlepayConfig) == f"({environment_label}) {agency_slug}"
+
+
+@pytest.mark.django_db
+def test_LittlepayConfig_clean_inactive_agency(model_TransitAgency_inactive):
+    littlepay_config = LittlepayConfig.objects.create(environment="qa", agency_slug="cst")
+    littlepay_config.transitagency = model_TransitAgency_inactive
+    littlepay_config.save()
+
+    # test fails if clean fails
+    littlepay_config.clean()
+
+    # test fails if agency's clean fails
+    model_TransitAgency_inactive.clean()
+
+
+@pytest.mark.django_db
+def test_LittlepayConfig_clean(model_TransitAgency_inactive):
+    littlepay_config = LittlepayConfig.objects.create(environment="qa", agency_slug="cst")
+    littlepay_config.transitagency = model_TransitAgency_inactive
+    littlepay_config.save()
+
+    # agency is inactive, OK to have incomplete fields on agency's littlepay_config
+    model_TransitAgency_inactive.clean()
+
+    # now mark it active and expect failure on clean()
+    model_TransitAgency_inactive.active = True
+    with pytest.raises(ValidationError) as e:
+        model_TransitAgency_inactive.clean()
+
+    errors = e.value.error_dict
+
+    assert len(errors) == 1
+
+    # the error_dict contains 1 item with key None to value of list of ValidationErrors
+    item = list(errors.items())[0]
+    key, validation_errors = item
+    error_message = validation_errors[0].message
+    assert (
+        error_message
+        == "Littlepay configuration is missing fields that are required when this agency is active. Missing fields: audience, client_id, client_secret_name"  # noqa
+    )
 
 
 @pytest.mark.django_db
@@ -73,6 +134,8 @@ def test_TransitAgency_all_active(model_TransitAgency):
 
     inactive_agency = TransitAgency.by_id(model_TransitAgency.id)
     inactive_agency.pk = None
+    inactive_agency.littlepay_config.pk = None
+    inactive_agency.littlepay_config = inactive_agency.littlepay_config.save()
     inactive_agency.active = False
     inactive_agency.save()
 
@@ -91,6 +154,8 @@ def test_TransitAgency_for_user_in_group(model_TransitAgency):
 
     agency_for_user = TransitAgency.by_id(model_TransitAgency.id)
     agency_for_user.pk = None
+    agency_for_user.littlepay_config.pk = None
+    agency_for_user.littlepay_config = agency_for_user.littlepay_config.save()
     agency_for_user.staff_group = group
     agency_for_user.save()
 
@@ -106,6 +171,8 @@ def test_TransitAgency_for_user_not_in_group(model_TransitAgency):
 
     agency_for_user = TransitAgency.by_id(model_TransitAgency.id)
     agency_for_user.pk = None
+    agency_for_user.littlepay_config.pk = None
+    agency_for_user.littlepay_config = agency_for_user.littlepay_config.save()
     agency_for_user.staff_group = group
     agency_for_user.save()
 
@@ -144,9 +211,7 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
     model_TransitAgency_inactive.info_url = ""
     model_TransitAgency_inactive.logo_large = ""
     model_TransitAgency_inactive.logo_small = ""
-    model_TransitAgency_inactive.transit_processor_audience = ""
-    model_TransitAgency_inactive.transit_processor_client_id = ""
-    model_TransitAgency_inactive.transit_processor_client_secret_name = ""
+    model_TransitAgency_inactive.littlepay_config = None
     # agency is inactive, OK to have incomplete fields
     model_TransitAgency_inactive.clean()
 
@@ -163,6 +228,4 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
     assert "info_url" in errors
     assert "logo_large" in errors
     assert "logo_small" in errors
-    assert "transit_processor_audience" in errors
-    assert "transit_processor_client_id" in errors
-    assert "transit_processor_client_secret_name" in errors
+    assert "littlepay_config" in errors
