@@ -78,6 +78,40 @@ class LittlepayConfig(models.Model):
         return f"({environment_label}) {agency_slug}"
 
 
+class SwitchioConfig(models.Model):
+    """Configuration for connecting to Switchio, an entity that applies transit agency fare rules to rider transactions."""
+
+    id = models.AutoField(primary_key=True)
+    environment = models.TextField(
+        choices=Environment,
+        help_text="A label to indicate which environment this configuration is for.",
+    )
+    api_key = models.TextField(help_text="The API key used to access the Switchio API.", default="", blank=True)
+    api_secret_name = SecretNameField(
+        help_text="The name of the secret containing the api_secret value used to access the Switchio API.",  # noqa: E501
+        default="",
+        blank=True,
+    )
+    client_certificate = models.ForeignKey(
+        PemData, related_name="+", on_delete=models.PROTECT, help_text="The client certificate for accessing the Switchio API."
+    )
+    ca_certificate = models.ForeignKey(
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        help_text="The CA certificate chain for accessing the Switchio API.",
+    )
+
+    @property
+    def api_secret(self):
+        secret_field = self._meta.get_field("api_secret_name")
+        return secret_field.secret_value(self)
+
+    def __str__(self):
+        environment_label = Environment(self.environment).label if self.environment else "unknown"
+        return f"({environment_label})"
+
+
 class TransitProcessor(models.Model):
     """An entity that applies transit agency fare rules to rider transactions."""
 
