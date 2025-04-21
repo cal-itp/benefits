@@ -95,6 +95,38 @@ def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
 
 
 @pytest.mark.django_db
+def test_SwitchioConfig_clean(model_TransitAgency_inactive):
+    switchio_config = SwitchioConfig.objects.create(environment="qa")
+    switchio_config.save()
+
+    model_TransitAgency_inactive.switchio_config = switchio_config
+    model_TransitAgency_inactive.save()
+
+    # agency is inactive, OK to have incomplete fields on agency's switchio_config
+    model_TransitAgency_inactive.clean()
+
+    # now mark it active and expect failure on clean()
+    model_TransitAgency_inactive.active = True
+    model_TransitAgency_inactive.save()
+
+    with pytest.raises(ValidationError) as e:
+        model_TransitAgency_inactive.clean()
+
+    errors = e.value.error_dict
+
+    assert len(errors) == 1
+
+    # the error_dict contains 1 item with key None to value of list of ValidationErrors
+    item = list(errors.items())[0]
+    key, validation_errors = item
+    error_message = validation_errors[0].message
+    assert (
+        error_message
+        == "Switchio configuration is missing fields that are required when this agency is active. Missing fields: api_key, api_secret_name, client_certificate, ca_certificate"  # noqa
+    )
+
+
+@pytest.mark.django_db
 def test_TransitAgency_defaults():
     agency = TransitAgency.objects.create(slug="test")
 
