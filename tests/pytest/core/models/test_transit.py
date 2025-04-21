@@ -114,6 +114,15 @@ def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
 
 
 @pytest.mark.django_db
+def test_SwitchioConfig_clean_create_from_agency():
+    switchio_config = SwitchioConfig.objects.create(environment="qa")
+    switchio_config.pk = None  # simulate admin form behavior, where we're creating the object from the TransitAgency.
+
+    # test fails if clean() fails
+    switchio_config.clean()
+
+
+@pytest.mark.django_db
 def test_SwitchioConfig_clean(model_TransitAgency_inactive):
     switchio_config = SwitchioConfig.objects.create(environment="qa")
     switchio_config.save()

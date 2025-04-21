@@ -119,7 +119,7 @@ class SwitchioConfig(models.Model):
     def clean(self):
         field_errors = {}
 
-        if any((agency.active for agency in self.transitagency_set.all())):
+        if self.pk is not None and any((agency.active for agency in self.transitagency_set.all())):
             message = "This field is required when this configuration is referenced by an active transit agency."
             needed = dict(
                 api_key=self.api_key,
