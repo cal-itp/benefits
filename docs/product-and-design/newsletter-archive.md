@@ -8,8 +8,9 @@ If you’re interested in receiving this update delivered directly to your email
 
 - [The March Update](http://5519226.hs-sites.com/cal-itp-benefits-the-march-update)
 
+- [The April Update](http://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2025)
 <!--
-- [The April Update]()
+- [The May Update]()
 
 -->
 
