@@ -13,18 +13,19 @@ The development of this publicly-accessible client is being managed by Caltrans'
 >
 > We worked with state partners on this product launch, and next we're working to bring youth, lower-income riders, veterans, people with disabilities, and others the same instant access to free or reduced fares across all California transit providers, without having to prove eligibility to each agency.
 
-Benefits is open-source software that is designed, developed, and maintained by <a href="https://compiler.la/" target="_blank">Compiler LLC</a> on behalf of Caltrans, Cal-ITP, and our agency partners.
+Cal-ITP Benefits is open-source software that is designed, developed, and maintained by <a href="https://compiler.la/" target="_blank">Compiler LLC</a> on behalf of Caltrans, Cal-ITP, and our agency partners.
 
-## Adoption by transit agencies
+## Adoption by transit providers
 
-The following California transit agencies have launched Cal-ITP Benefits for their riders, with the following enrollment pathway options:
+The following California transit providers have adopted Cal-ITP Benefits. The benefit options available to eligible riders are denoted by a green checkmark.
 
-| Transit agency                                  | Initial agency launch | Older adults | Medicare cardholders | U.S. Veterans | Agency card | Low-income |
-| ----------------------------------------------- | --------------------- | ------------ | -------------------- | ------------- | ----------- | ---------- |
-| **Monterey-Salinas Transit**                    | 12/2021               | ✅           | ✅                   | ✅            | ✅          | ―          |
-| **Santa Barbara Metropolitan Transit District** | 10/2023               | ✅           | ✅                   | ―             | ✅          | ―          |
-| **Sacramento Regional Transit District**        | 10/2024               | ✅           | ✅                   | ✅            | ―           | ―          |
-| **Nevada County Connects**                      | 03/2025               | ✅           | ✅                   | ✅            | ―           | ―          |
+| Transit provider                                | Initial launch date | Older adults | Medicare cardholders | U.S. Veterans | Agency card | Low-income |
+| ----------------------------------------------- | ------------------- | ------------ | -------------------- | ------------- | ----------- | ---------- |
+| **Monterey-Salinas Transit**                    | 12/2021             | ✅           | ✅                   | ✅            | ✅          | ―          |
+| **Santa Barbara Metropolitan Transit District** | 10/2023             | ✅           | ✅                   | ―             | ✅          | ―          |
+| **Sacramento Regional Transit District**        | 10/2024             | ✅           | ✅                   | ✅            | ―           | ―          |
+| **Nevada County Connects**                      | 03/2025             | ✅           | ✅                   | ✅            | ―           | ―          |
+| **Ventura County Transportation Commission**    | In development      | ―            | ―                    | ―             | ―           | ―          |
 
 ## Supported enrollment pathways
 
