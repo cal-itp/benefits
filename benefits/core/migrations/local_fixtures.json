@@ -24,6 +24,30 @@
     }
   },
   {
+    "model": "core.pemdata",
+    "pk": 4,
+    "fields": {
+      "label": "Switchio client certificate",
+      "text_secret_name": "switchio-client-certificate"
+    }
+  },
+  {
+    "model": "core.pemdata",
+    "pk": 5,
+    "fields": {
+      "label": "Switchio CA certificate",
+      "text_secret_name": "switchio-ca-certificate"
+    }
+  },
+  {
+    "model": "core.pemdata",
+    "pk": 6,
+    "fields": {
+      "label": "Switchio private key",
+      "text_secret_name": "switchio-private-key"
+    }
+  },
+  {
     "model": "cdt_identity.identitygatewayconfig",
     "pk": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
     "fields": {
@@ -88,6 +112,18 @@
       "audience": "",
       "client_id": "",
       "client_secret_name": "cst-transit-processor-client-secret"
+    }
+  },
+  {
+    "model": "core.switchioconfig",
+    "pk": 1,
+    "fields": {
+      "environment": "qa",
+      "api_key": "123",
+      "api_secret_name": "cst-switchio-api-secret",
+      "client_certificate": 4,
+      "ca_certificate": 5,
+      "private_key": 6
     }
   },
   {
