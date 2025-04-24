@@ -196,6 +196,7 @@ def model_SwitchioConfig(model_PemData):
         api_secret_name="apisecret",
         client_certificate=model_PemData,
         ca_certificate=model_PemData,
+        private_key=model_PemData,
     )
 
     return switchio_config

@@ -110,6 +110,15 @@ class SwitchioConfig(models.Model):
         blank=True,
         default=None,
     )
+    private_key = models.ForeignKey(
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        help_text="The private key for accessing the Switchio API.",
+        null=True,
+        blank=True,
+        default=None,
+    )
 
     @property
     def api_secret(self):
@@ -133,6 +142,7 @@ class SwitchioConfig(models.Model):
                 api_secret_name=self.api_secret_name,
                 client_certificate=self.client_certificate,
                 ca_certificate=self.ca_certificate,
+                private_key=self.private_key,
             )
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 

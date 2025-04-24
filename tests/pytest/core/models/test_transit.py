@@ -88,6 +88,7 @@ def test_SwitchioConfig_defaults():
     assert switchio_config.api_secret_name == ""
     assert switchio_config.client_certificate is None
     assert switchio_config.ca_certificate is None
+    assert switchio_config.private_key is None
     # test fails if save fails
     switchio_config.save()
 
@@ -150,7 +151,7 @@ def test_SwitchioConfig_clean(model_TransitAgency_inactive):
     error_message = validation_errors[0].message
     assert (
         error_message
-        == "Switchio configuration is missing fields that are required when this agency is active. Missing fields: api_key, api_secret_name, client_certificate, ca_certificate"  # noqa
+        == "Switchio configuration is missing fields that are required when this agency is active. Missing fields: api_key, api_secret_name, client_certificate, ca_certificate, private_key"  # noqa
     )
 
 
