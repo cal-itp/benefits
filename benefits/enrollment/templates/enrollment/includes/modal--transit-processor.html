@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block modal-content %}
-  <h2 id="littlepay-modal" class="me-4 me-md-0">{% translate "Learn more about" %} {{ transit_processor.name }}</h2>
+  <h2 id="transit-processor-modal" class="me-4 me-md-0">{% translate "Learn more about" %} {{ transit_processor.name }}</h2>
   <div class="row">
     <p class="pt-3">
       {% blocktranslate with name=transit_processor.name trimmed %}
