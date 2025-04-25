@@ -69,6 +69,10 @@ class LittlepayConfig(models.Model):
     def transit_processor_website(self):
         return "https://littlepay.com"
 
+    @property
+    def enrollment_index_template(self):
+        return "enrollment/index--littlepay.html"
+
     def clean(self):
         field_errors = {}
 
@@ -140,6 +144,10 @@ class SwitchioConfig(models.Model):
     @property
     def transit_processor_website(self):
         return "https://switchio.com/transport/"
+
+    @property
+    def enrollment_index_template(self):
+        return "enrollment/index--switchio.html"
 
     def clean(self, agency=None):
         field_errors = {}
@@ -332,6 +340,17 @@ class TransitAgency(models.Model):
     def eligibility_api_public_key_data(self):
         """This Agency's public key as a string."""
         return self.eligibility_api_public_key.data
+
+    @property
+    def enrollment_index_template(self):
+        if self.littlepay_config:
+            template = self.littlepay_config.enrollment_index_template
+        elif self.switchio_config:
+            template = self.switchio_config.enrollment_index_template
+        else:
+            raise ValueError("Transit agency does not have a Littlepay or Switchio config")
+
+        return template
 
     @property
     def enrollment_flows(self):

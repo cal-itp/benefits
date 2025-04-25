@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-04-25 12:51-0700\n"
+"POT-Creation-Date: 2025-04-29 12:31-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1010,6 +1010,9 @@ msgstr ""
 "href=\"%(website)s\" target=\"_blank\" rel=\"noopener noreferrer\">sitio web "
 "de %(name)s</a>."
 
+msgid "Please wait..."
+msgstr "Espere por favor..."
+
 msgid "Eligibility confirmation"
 msgstr "Confirmación de elegibilidad"
 
@@ -1021,9 +1024,6 @@ msgstr "No almacenamos su información y no se le cobrará."
 
 msgid "Please use a debit or credit card by Visa or Mastercard."
 msgstr "Utilice una tarjeta de débito o crédito de Visa o Mastercard."
-
-msgid "Please wait..."
-msgstr "Espere por favor..."
 
 msgid "Enroll"
 msgstr "Inscribir"
