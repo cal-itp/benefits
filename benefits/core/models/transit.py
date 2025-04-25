@@ -78,6 +78,82 @@ class LittlepayConfig(models.Model):
         return f"({environment_label}) {agency_slug}"
 
 
+class SwitchioConfig(models.Model):
+    """Configuration for connecting to Switchio, an entity that applies transit agency fare rules to rider transactions."""
+
+    id = models.AutoField(primary_key=True)
+    environment = models.TextField(
+        choices=Environment,
+        help_text="A label to indicate which environment this configuration is for.",
+    )
+    api_key = models.TextField(help_text="The API key used to access the Switchio API.", default="", blank=True)
+    api_secret_name = SecretNameField(
+        help_text="The name of the secret containing the api_secret value used to access the Switchio API.",  # noqa: E501
+        default="",
+        blank=True,
+    )
+    client_certificate = models.ForeignKey(
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        help_text="The client certificate for accessing the Switchio API.",
+        null=True,
+        blank=True,
+        default=None,
+    )
+    ca_certificate = models.ForeignKey(
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        help_text="The CA certificate chain for accessing the Switchio API.",
+        null=True,
+        blank=True,
+        default=None,
+    )
+    private_key = models.ForeignKey(
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        help_text="The private key for accessing the Switchio API.",
+        null=True,
+        blank=True,
+        default=None,
+    )
+
+    @property
+    def api_secret(self):
+        secret_field = self._meta.get_field("api_secret_name")
+        return secret_field.secret_value(self)
+
+    def clean(self, agency=None):
+        field_errors = {}
+
+        if agency is not None:
+            used_by_active_agency = agency.active
+        elif self.pk is not None:
+            used_by_active_agency = any((agency.active for agency in self.transitagency_set.all()))
+        else:
+            used_by_active_agency = False
+
+        if used_by_active_agency:
+            message = "This field is required when this configuration is referenced by an active transit agency."
+            needed = dict(
+                api_key=self.api_key,
+                api_secret_name=self.api_secret_name,
+                client_certificate=self.client_certificate,
+                ca_certificate=self.ca_certificate,
+                private_key=self.private_key,
+            )
+            field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
+
+        if field_errors:
+            raise ValidationError(field_errors)
+
+    def __str__(self):
+        environment_label = Environment(self.environment).label if self.environment else "unknown"
+        return f"{environment_label}"
+
+
 class TransitProcessor(models.Model):
     """An entity that applies transit agency fare rules to rider transactions."""
 
@@ -166,6 +242,14 @@ class TransitAgency(models.Model):
         default=None,
         help_text="The Littlepay configuration used by this agency for enrollment.",
     )
+    switchio_config = models.ForeignKey(
+        SwitchioConfig,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        default=None,
+        help_text="The Switchio configuration used by this agency for enrollment.",
+    )
     staff_group = models.OneToOneField(
         Group,
         on_delete=models.PROTECT,
@@ -251,15 +335,25 @@ class TransitAgency(models.Model):
                 logo_large=self.logo_large,
                 logo_small=self.logo_small,
             )
-            if self.transit_processor:
-                needed.update(dict(littlepay_config=self.littlepay_config))
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
+
+            if self.transit_processor:
+                if self.littlepay_config is None and self.switchio_config is None:
+                    non_field_errors.append(ValidationError("Must fill out configuration for either Littlepay or Switchio."))
 
             if self.littlepay_config:
                 try:
                     self.littlepay_config.clean()
                 except ValidationError as e:
                     message = "Littlepay configuration is missing fields that are required when this agency is active."
+                    message += f" Missing fields: {', '.join(e.error_dict.keys())}"
+                    non_field_errors.append(ValidationError(message))
+
+            if self.switchio_config:
+                try:
+                    self.switchio_config.clean(agency=self)
+                except ValidationError as e:
+                    message = "Switchio configuration is missing fields that are required when this agency is active."
                     message += f" Missing fields: {', '.join(e.error_dict.keys())}"
                     non_field_errors.append(ValidationError(message))
 

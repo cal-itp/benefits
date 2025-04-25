@@ -1,9 +1,16 @@
 from django.contrib.auth.models import Group, User
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 
 import pytest
 
-from benefits.core.models import TransitAgency, Environment, LittlepayConfig, agency_logo_small, agency_logo_large
+from benefits.core.models import (
+    TransitAgency,
+    Environment,
+    LittlepayConfig,
+    SwitchioConfig,
+    agency_logo_small,
+    agency_logo_large,
+)
 
 
 @pytest.mark.django_db
@@ -69,6 +76,82 @@ def test_LittlepayConfig_clean(model_TransitAgency_inactive):
     assert (
         error_message
         == "Littlepay configuration is missing fields that are required when this agency is active. Missing fields: audience, client_id, client_secret_name"  # noqa
+    )
+
+
+@pytest.mark.django_db
+def test_SwitchioConfig_defaults():
+    switchio_config = SwitchioConfig.objects.create(environment="qa")
+
+    assert switchio_config.environment == "qa"
+    assert switchio_config.api_key == ""
+    assert switchio_config.api_secret_name == ""
+    assert switchio_config.client_certificate is None
+    assert switchio_config.ca_certificate is None
+    assert switchio_config.private_key is None
+    # test fails if save fails
+    switchio_config.save()
+
+
+@pytest.mark.django_db
+def test_SwitchioConfig_str(model_SwitchioConfig):
+    environment_label = Environment(model_SwitchioConfig.environment).label
+    assert str(model_SwitchioConfig) == f"{environment_label}"
+
+
+@pytest.mark.django_db
+def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
+    switchio_config = SwitchioConfig.objects.create(
+        environment="qa",
+    )
+    switchio_config.transitagency = model_TransitAgency_inactive
+    switchio_config.save()
+
+    # test fails if clean fails
+    switchio_config.clean()
+
+    # test fails if agency's clean fails
+    model_TransitAgency_inactive.clean()
+
+
+@pytest.mark.django_db
+def test_SwitchioConfig_clean_create_from_agency():
+    switchio_config = SwitchioConfig.objects.create(environment="qa")
+    switchio_config.pk = None  # simulate admin form behavior, where we're creating the object from the TransitAgency.
+
+    # test fails if clean() fails
+    switchio_config.clean()
+
+
+@pytest.mark.django_db
+def test_SwitchioConfig_clean(model_TransitAgency_inactive):
+    switchio_config = SwitchioConfig.objects.create(environment="qa")
+    switchio_config.save()
+
+    model_TransitAgency_inactive.switchio_config = switchio_config
+    model_TransitAgency_inactive.save()
+
+    # agency is inactive, OK to have incomplete fields on agency's switchio_config
+    model_TransitAgency_inactive.clean()
+
+    # now mark it active and expect failure on clean()
+    model_TransitAgency_inactive.active = True
+    model_TransitAgency_inactive.save()
+
+    with pytest.raises(ValidationError) as e:
+        model_TransitAgency_inactive.clean()
+
+    errors = e.value.error_dict
+
+    assert len(errors) == 1
+
+    # the error_dict contains 1 item with key None to value of list of ValidationErrors
+    item = list(errors.items())[0]
+    key, validation_errors = item
+    error_message = validation_errors[0].message
+    assert (
+        error_message
+        == "Switchio configuration is missing fields that are required when this agency is active. Missing fields: api_key, api_secret_name, client_certificate, ca_certificate, private_key"  # noqa
     )
 
 
@@ -212,6 +295,7 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
     model_TransitAgency_inactive.logo_large = ""
     model_TransitAgency_inactive.logo_small = ""
     model_TransitAgency_inactive.littlepay_config = None
+    model_TransitAgency_inactive.switchio_config = None
     # agency is inactive, OK to have incomplete fields
     model_TransitAgency_inactive.clean()
 
@@ -228,4 +312,7 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
     assert "info_url" in errors
     assert "logo_large" in errors
     assert "logo_small" in errors
-    assert "littlepay_config" in errors
+
+    non_field_errors = errors[NON_FIELD_ERRORS]
+    assert len(non_field_errors) == 1
+    assert non_field_errors[0].message == "Must fill out configuration for either Littlepay or Switchio."

@@ -10,7 +10,15 @@ import pytest
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import EnrollmentFlow, TransitProcessor, PemData, TransitAgency, Environment, LittlepayConfig
+from benefits.core.models import (
+    EnrollmentFlow,
+    TransitProcessor,
+    PemData,
+    TransitAgency,
+    Environment,
+    LittlepayConfig,
+    SwitchioConfig,
+)
 
 
 def pytest_runtest_setup():
@@ -178,6 +186,20 @@ def model_LittlepayConfig():
     )
 
     return littlepay_config
+
+
+@pytest.fixture
+def model_SwitchioConfig(model_PemData):
+    switchio_config = SwitchioConfig.objects.create(
+        environment=Environment.QA,
+        api_key="api_key",
+        api_secret_name="apisecret",
+        client_certificate=model_PemData,
+        ca_certificate=model_PemData,
+        private_key=model_PemData,
+    )
+
+    return switchio_config
 
 
 @pytest.fixture

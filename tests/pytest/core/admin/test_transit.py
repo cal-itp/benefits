@@ -30,6 +30,7 @@ class TestTransitAgencyAdmin:
                     "eligibility_api_public_key",
                     "sso_domain",
                     "littlepay_config",
+                    "switchio_config",
                 ],
             ),
             ("super", None),

@@ -16,6 +16,17 @@ class LittlepayConfigAdmin(admin.ModelAdmin):
         return False
 
 
+@admin.register(models.SwitchioConfig)
+class SwitchioConfigAdmin(admin.ModelAdmin):
+    def has_module_permission(self, request):
+        """
+        This controls whether the model shows up in the main list of models.
+        """
+        # we don't want to display SwitchioConfig on the main list.
+        # the user should view it from the TransitAgency.
+        return False
+
+
 @admin.register(models.TransitAgency)
 class TransitAgencyAdmin(admin.ModelAdmin):
     def get_exclude(self, request, obj=None):
@@ -28,6 +39,7 @@ class TransitAgencyAdmin(admin.ModelAdmin):
                     "eligibility_api_public_key",
                     "sso_domain",
                     "littlepay_config",
+                    "switchio_config",
                 ]
             )
 

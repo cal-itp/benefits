@@ -1,5 +1,13 @@
 from .common import template_path, SecretNameField, PemData
-from .transit import agency_logo_large, agency_logo_small, TransitProcessor, TransitAgency, Environment, LittlepayConfig
+from .transit import (
+    agency_logo_large,
+    agency_logo_small,
+    TransitProcessor,
+    TransitAgency,
+    Environment,
+    LittlepayConfig,
+    SwitchioConfig,
+)
 from .enrollment import EnrollmentMethods, EnrollmentFlow, EnrollmentEvent
 
 __all__ = [
@@ -12,6 +20,7 @@ __all__ = [
     "TransitAgency",
     "Environment",
     "LittlepayConfig",
+    "SwitchioConfig",
     "EnrollmentMethods",
     "EnrollmentFlow",
     "EnrollmentEvent",
