@@ -61,6 +61,14 @@ class LittlepayConfig(models.Model):
         secret_field = self._meta.get_field("client_secret_name")
         return secret_field.secret_value(self)
 
+    @property
+    def transit_processor_name(self):
+        return "Littlepay"
+
+    @property
+    def transit_processor_website(self):
+        return "https://littlepay.com"
+
     def clean(self):
         field_errors = {}
 
@@ -124,6 +132,14 @@ class SwitchioConfig(models.Model):
     def api_secret(self):
         secret_field = self._meta.get_field("api_secret_name")
         return secret_field.secret_value(self)
+
+    @property
+    def transit_processor_name(self):
+        return "Switchio"
+
+    @property
+    def transit_processor_website(self):
+        return "https://switchio.com/transport/"
 
     def clean(self, agency=None):
         field_errors = {}
@@ -320,6 +336,19 @@ class TransitAgency(models.Model):
     @property
     def enrollment_flows(self):
         return self.enrollmentflow_set
+
+    @property
+    def transit_processor_context(self):
+        if self.littlepay_config:
+            name = self.littlepay_config.transit_processor_name
+            website = self.littlepay_config.transit_processor_website
+        elif self.switchio_config:
+            name = self.switchio_config.transit_processor_name
+            website = self.switchio_config.transit_processor_website
+        else:
+            raise ValueError("Transit agency does not have a Littlepay or Switchio config")
+
+        return {"transit_processor": {"name": name, "website": website}}
 
     def clean(self):
         field_errors = {}
