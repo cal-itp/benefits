@@ -348,7 +348,7 @@ class TransitAgency(models.Model):
         else:
             raise ValueError("Transit agency does not have a Littlepay or Switchio config")
 
-        return {"transit_processor": {"name": name, "website": website}}
+        return {"name": name, "website": website}
 
     def clean(self):
         field_errors = {}
