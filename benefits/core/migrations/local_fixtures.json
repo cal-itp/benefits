@@ -239,9 +239,6 @@
     "fields": {
       "name": "(CST) test transit processor",
       "api_base_url": "http://server:8000",
-      "card_tokenize_url": "http://server:8000/static/tokenize.js",
-      "card_tokenize_func": "tokenize",
-      "card_tokenize_env": "test",
       "portal_url": "https://www.transit-processor-portal.com"
     }
   },

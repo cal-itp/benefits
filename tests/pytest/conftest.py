@@ -167,9 +167,6 @@ def model_TransitProcessor():
     transit_processor = TransitProcessor.objects.create(
         name="Test Transit Processor",
         api_base_url="https://example.com/enrollments",
-        card_tokenize_url="https://example.com/enrollments/card-tokenize.js",
-        card_tokenize_func="tokenize",
-        card_tokenize_env="test",
     )
 
     return transit_processor

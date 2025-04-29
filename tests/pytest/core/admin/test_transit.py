@@ -86,7 +86,7 @@ class TestTransitProcessorAdmin:
     @pytest.mark.parametrize(
         "user_type,expected",
         [
-            ("staff", ["api_base_url", "card_tokenize_url", "card_tokenize_func", "card_tokenize_env"]),
+            ("staff", ["api_base_url"]),
             ("super", ()),
         ],
     )

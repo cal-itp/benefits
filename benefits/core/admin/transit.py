@@ -74,7 +74,7 @@ class TransitProcessorAdmin(admin.ModelAdmin):
         fields = []
 
         if not request.user.is_superuser:
-            fields.extend(["api_base_url", "card_tokenize_url", "card_tokenize_func", "card_tokenize_env"])
+            fields.extend(["api_base_url"])
 
         return fields or super().get_exclude(request, obj)
 
