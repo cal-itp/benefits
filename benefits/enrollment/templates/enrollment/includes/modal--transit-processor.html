@@ -1,0 +1,24 @@
+{% extends "core/includes/modal.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block modal-content %}
+  <h2 id="transit-processor-modal" class="me-4 me-md-0">{% translate "Learn more about" %} {{ transit_processor.name }}</h2>
+  <div class="row">
+    <p class="pt-3">
+      {% blocktranslate with name=transit_processor.name trimmed %}
+        Our payment partner, {{ name }}, is a secure, end-to-end payment processing platform that allows us to connect your
+        transit benefit to the contactless card of your choice.
+      {% endblocktranslate %}
+    </p>
+    <p class="pt-4">
+      {% blocktranslate with name=transit_processor.name website=transit_processor.website trimmed %}
+        For more information on {{ name }}, please visit the
+        <a href="{{ website }}" target="_blank" rel="noopener noreferrer">{{ name }} website</a>.
+      {% endblocktranslate %}
+    </p>
+    <p class="pt-4 d-block d-sm-none">
+      <a href="#" data-bs-dismiss="modal" aria-label="Close">{% translate "Go back" %}</a>
+    </p>
+  </div>
+{% endblock modal-content %}
