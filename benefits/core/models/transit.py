@@ -62,12 +62,20 @@ class LittlepayConfig(models.Model):
         return secret_field.secret_value(self)
 
     @property
-    def transit_processor_name(self):
-        return "Littlepay"
+    def transit_processor_context(self):
+        match self.environment:
+            case Environment.QA.value:
+                url = "https://verify.qa.littlepay.com/assets/js/littlepay.min.js"
+                card_tokenize_env = "https://verify.qa.littlepay.com"
+            case Environment.PROD.value:
+                url = "https://verify.littlepay.com/assets/js/littlepay.min.js"
+                card_tokenize_env = "https://verify.littlepay.com"
+            case _:
+                raise ValueError("Unrecognized environment value")
 
-    @property
-    def transit_processor_website(self):
-        return "https://littlepay.com"
+        return dict(
+            name="Littlepay", website="https://littlepay.com", card_tokenize_url=url, card_tokenize_env=card_tokenize_env
+        )
 
     @property
     def enrollment_index_template(self):
@@ -138,12 +146,8 @@ class SwitchioConfig(models.Model):
         return secret_field.secret_value(self)
 
     @property
-    def transit_processor_name(self):
-        return "Switchio"
-
-    @property
-    def transit_processor_website(self):
-        return "https://switchio.com/transport/"
+    def transit_processor_context(self):
+        return dict(name="Switchio", website="https://switchio.com/transport/")
 
     @property
     def enrollment_index_template(self):
@@ -184,13 +188,6 @@ class TransitProcessor(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField(help_text="Primary internal display name for this TransitProcessor instance, e.g. in the Admin.")
     api_base_url = models.TextField(help_text="The absolute base URL for the TransitProcessor's API, including https://.")
-    card_tokenize_url = models.TextField(
-        help_text="The absolute URL for the client-side card tokenization library provided by the TransitProcessor."
-    )
-    card_tokenize_func = models.TextField(
-        help_text="The function from the card tokenization library to call on the client to initiate the process."
-    )
-    card_tokenize_env = models.TextField(help_text="The environment in which card tokenization is occurring.")
     portal_url = models.TextField(
         default="",
         blank=True,
@@ -359,15 +356,13 @@ class TransitAgency(models.Model):
     @property
     def transit_processor_context(self):
         if self.littlepay_config:
-            name = self.littlepay_config.transit_processor_name
-            website = self.littlepay_config.transit_processor_website
+            context = self.littlepay_config.transit_processor_context
         elif self.switchio_config:
-            name = self.switchio_config.transit_processor_name
-            website = self.switchio_config.transit_processor_website
+            context = self.switchio_config.transit_processor_context
         else:
             raise ValueError("Transit agency does not have a Littlepay or Switchio config")
 
-        return {"name": name, "website": website}
+        return context
 
     def clean(self):
         field_errors = {}

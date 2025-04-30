@@ -146,9 +146,6 @@ def enrollment(request):
             **admin_site.each_context(request),
             "forms": [tokenize_retry_form, tokenize_server_error_form, tokenize_system_error_form, tokenize_success_form],
             "cta_button": "tokenize_card",
-            "card_tokenize_env": agency.transit_processor.card_tokenize_env,
-            "card_tokenize_func": agency.transit_processor.card_tokenize_func,
-            "card_tokenize_url": agency.transit_processor.card_tokenize_url,
             "enrollment_method": models.EnrollmentMethods.IN_PERSON,
             "token_field": "card_token",
             "form_retry": tokenize_retry_form.id,
@@ -157,6 +154,7 @@ def enrollment(request):
             "form_system_error": tokenize_system_error_form.id,
             "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
         }
+        context.update({"transit_processor": agency.littlepay_config.transit_processor_context})
 
         return TemplateResponse(request, "in_person/enrollment/index.html", context)
 

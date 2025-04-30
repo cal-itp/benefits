@@ -37,7 +37,7 @@
   <script nonce="{{ request.csp_nonce }}">
         var startedEvent = "started card tokenization", closedEvent = "finished card tokenization";
 
-        $.ajax({ dataType: "script", attrs: { nonce: "{{ request.csp_nonce }}"}, url: "{{ card_tokenize_url }}" })
+        $.ajax({ dataType: "script", attrs: { nonce: "{{ request.csp_nonce }}"}, url: "{{ transit_processor.card_tokenize_url }}" })
             .done(function() {
             $.get("{% url routes.IN_PERSON_ENROLLMENT_TOKEN %}", function(data) {
                 if (data.redirect) {
@@ -52,18 +52,18 @@
 
                 $("#{{ cta_button }}").on("click", function() {
                     amplitude.getInstance().logEvent(startedEvent, {
-                        card_tokenize_url: "{{ card_tokenize_url }}",
-                        card_tokenize_func: "{{ card_tokenize_func }}",
+                        card_tokenize_url: "{{ transit_processor.card_tokenize_url }}",
+                        card_tokenize_func: "{{ transit_processor.card_tokenize_func }}",
                         enrollment_method: "{{ enrollment_method }}"
                     });
                     $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ loading_text }}");
                 });
 
                 new Promise((resolve) => {
-                    {{ card_tokenize_func }}({
+                    littlepay({
                         authorization: data.token,
                         element: '#{{ cta_button }}',
-                        envUrl: '{{ card_tokenize_env }}',
+                        envUrl: '{{ transit_processor.card_tokenize_env }}',
                         options: {
                             color: '#046b99',
                             targetiframename: 'card-collection-iframe'

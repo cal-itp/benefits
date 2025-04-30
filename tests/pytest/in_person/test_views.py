@@ -291,9 +291,6 @@ def test_enrollment_logged_in_get(admin_client):
     assert response.template_name == "in_person/enrollment/index.html"
     assert "forms" in response.context_data
     assert "cta_button" in response.context_data
-    assert "card_tokenize_env" in response.context_data
-    assert "card_tokenize_func" in response.context_data
-    assert "card_tokenize_url" in response.context_data
     assert "token_field" in response.context_data
     assert "form_retry" in response.context_data
     assert "form_success" in response.context_data

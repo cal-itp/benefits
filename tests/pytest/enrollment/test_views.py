@@ -206,9 +206,6 @@ def test_index_eligible_get(client):
     assert response.status_code == 200
     assert "forms" in response.context_data
     assert "cta_button" in response.context_data
-    assert "card_tokenize_env" in response.context_data
-    assert "card_tokenize_func" in response.context_data
-    assert "card_tokenize_url" in response.context_data
     assert "token_field" in response.context_data
     assert "form_retry" in response.context_data
     assert "form_success" in response.context_data

@@ -121,9 +121,6 @@ def index(request):
         context = {
             "forms": [tokenize_retry_form, tokenize_server_error_form, tokenize_system_error_form, tokenize_success_form],
             "cta_button": "tokenize_card",
-            "card_tokenize_env": agency.transit_processor.card_tokenize_env,
-            "card_tokenize_func": agency.transit_processor.card_tokenize_func,
-            "card_tokenize_url": agency.transit_processor.card_tokenize_url,
             "enrollment_method": models.EnrollmentMethods.DIGITAL,
             "token_field": "card_token",
             "form_retry": tokenize_retry_form.id,
@@ -133,8 +130,6 @@ def index(request):
             "overlay_language": overlay_language,
         }
         context.update(flow.enrollment_index_context)
-
-        logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
 
         return TemplateResponse(request, agency.enrollment_index_template, context)
 
