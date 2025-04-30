@@ -31,11 +31,13 @@ def token(request):
     """View handler for the enrollment auth token."""
     enrollment = LittlepayEnrollment()
 
-    if not session.enrollment_token_valid(request):
+    if not session.littlepay_enrollment_token_valid(request):
         response = enrollment.request_card_tokenization_access(request)
 
         if response.status is Status.SUCCESS:
-            session.update(request, enrollment_token=response.access_token, enrollment_token_exp=response.expires_at)
+            session.update(
+                request, littlepay_enrollment_token=response.access_token, littlepay_enrollment_token_exp=response.expires_at
+            )
         elif response.status is Status.SYSTEM_ERROR or response.status is Status.EXCEPTION:
             logger.debug("Error occurred while requesting access token", exc_info=response.exception)
             sentry_sdk.capture_exception(response.exception)
@@ -49,7 +51,7 @@ def token(request):
             data = {"redirect": redirect}
             return JsonResponse(data)
 
-    data = {"token": session.enrollment_token(request)}
+    data = {"token": session.littlepay_enrollment_token(request)}
 
     return JsonResponse(data)
 

@@ -50,7 +50,7 @@ def test_pre_logout(app_request, mocked_oauth_analytics_module):
 
     mocked_oauth_analytics_module.started_sign_out.assert_called_once_with(app_request)
     assert not session.logged_in(app_request)
-    assert session.enrollment_token(app_request) is False
+    assert session.littlepay_enrollment_token(app_request) is False
     assert session.logged_in(app_request) is False
     assert OAuthSession(app_request).claims_result == ClaimsResult()
 
