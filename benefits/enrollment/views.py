@@ -136,7 +136,7 @@ def index(request):
 
         logger.debug(f'card_tokenize_url: {context["card_tokenize_url"]}')
 
-        return TemplateResponse(request, "enrollment/index.html", context)
+        return TemplateResponse(request, agency.enrollment_index_template, context)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
