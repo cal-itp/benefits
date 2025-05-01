@@ -51,9 +51,13 @@ def token(request):
 @decorator_from_middleware(EligibleSessionRequired)
 def index(request):
     """View handler for the enrollment landing page."""
-    enrollment = LittlepayEnrollment()
-
     session.update(request, origin=reverse(routes.ENROLLMENT_INDEX))
+
+    return _index_for_littlepay(request)
+
+
+def _index_for_littlepay(request):
+    enrollment = LittlepayEnrollment()
 
     # POST back after transit processor form, process card token
     if request.method == "POST":
@@ -64,40 +68,7 @@ def index(request):
         card_token = form.cleaned_data.get("card_token")
         status, exception = enrollment.enroll(request, card_token)
 
-        match (status):
-            case Status.SUCCESS:
-                agency = session.agency(request)
-                flow = session.flow(request)
-                expiry = session.enrollment_expiry(request)
-                oauth_extra_claims = session.oauth_extra_claims(request)
-                # EnrollmentEvent expects a string value for extra_claims
-                if oauth_extra_claims:
-                    str_extra_claims = ", ".join(oauth_extra_claims)
-                else:
-                    str_extra_claims = ""
-                event = models.EnrollmentEvent.objects.create(
-                    transit_agency=agency,
-                    enrollment_flow=flow,
-                    enrollment_method=models.EnrollmentMethods.DIGITAL,
-                    verified_by=flow.eligibility_verifier,
-                    expiration_datetime=expiry,
-                    extra_claims=str_extra_claims,
-                )
-                event.save()
-                analytics.returned_success(request, flow.group_id, extra_claims=oauth_extra_claims)
-                return success(request)
-
-            case Status.SYSTEM_ERROR:
-                analytics.returned_error(request, str(exception))
-                sentry_sdk.capture_exception(exception)
-                return system_error(request)
-
-            case Status.EXCEPTION:
-                analytics.returned_error(request, str(exception))
-                raise exception
-
-            case Status.REENROLLMENT_ERROR:
-                return reenrollment_error(request)
+        _handle_enrollment_results(request, status, exception)
 
     # GET enrollment index
     else:
@@ -130,6 +101,43 @@ def index(request):
         context.update(flow.enrollment_index_context)
 
         return TemplateResponse(request, agency.enrollment_index_template, context)
+
+
+def _handle_enrollment_results(request, status, exception):
+    match (status):
+        case Status.SUCCESS:
+            agency = session.agency(request)
+            flow = session.flow(request)
+            expiry = session.enrollment_expiry(request)
+            oauth_extra_claims = session.oauth_extra_claims(request)
+            # EnrollmentEvent expects a string value for extra_claims
+            if oauth_extra_claims:
+                str_extra_claims = ", ".join(oauth_extra_claims)
+            else:
+                str_extra_claims = ""
+            event = models.EnrollmentEvent.objects.create(
+                transit_agency=agency,
+                enrollment_flow=flow,
+                enrollment_method=models.EnrollmentMethods.DIGITAL,
+                verified_by=flow.eligibility_verifier,
+                expiration_datetime=expiry,
+                extra_claims=str_extra_claims,
+            )
+            event.save()
+            analytics.returned_success(request, flow.group_id, extra_claims=oauth_extra_claims)
+            return success(request)
+
+        case Status.SYSTEM_ERROR:
+            analytics.returned_error(request, str(exception))
+            sentry_sdk.capture_exception(exception)
+            return system_error(request)
+
+        case Status.EXCEPTION:
+            analytics.returned_error(request, str(exception))
+            raise exception
+
+        case Status.REENROLLMENT_ERROR:
+            return reenrollment_error(request)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
