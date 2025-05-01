@@ -12,7 +12,7 @@ from benefits.routes import routes
 from benefits.core import models, session
 from benefits.eligibility import analytics as eligibility_analytics
 from benefits.enrollment import analytics as enrollment_analytics
-from benefits.enrollment.enrollment import Status, request_card_tokenization_access, enroll
+from benefits.enrollment.enrollment import Status, LittlepayEnrollment
 
 from benefits.in_person import forms
 
@@ -52,8 +52,10 @@ def eligibility(request):
 
 def token(request):
     """View handler for the enrollment auth token."""
+    enrollment = LittlepayEnrollment()
+
     if not session.enrollment_token_valid(request):
-        response = request_card_tokenization_access(request)
+        response = enrollment.request_card_tokenization_access(request)
 
         if response.status is Status.SUCCESS:
             session.update(request, enrollment_token=response.access_token, enrollment_token_exp=response.expires_at)
@@ -80,6 +82,8 @@ def token(request):
 def enrollment(request):
     """View handler for the in-person enrollment page."""
     # POST back after transit processor form, process card token
+    enrollment = LittlepayEnrollment()
+
     if request.method == "POST":
         form = forms.CardTokenizeSuccessForm(request.POST)
         if not form.is_valid():
@@ -88,7 +92,7 @@ def enrollment(request):
         flow = session.flow(request)
         eligibility_analytics.returned_success(request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
         card_token = form.cleaned_data.get("card_token")
-        status, exception = enroll(request, card_token)
+        status, exception = enrollment.enroll(request, card_token)
 
         match (status):
             case Status.SUCCESS:

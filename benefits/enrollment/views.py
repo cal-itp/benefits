@@ -17,7 +17,7 @@ from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequire
 
 from benefits.core import models
 from . import analytics, forms
-from .enrollment import Status, request_card_tokenization_access, enroll
+from .enrollment import Status, LittlepayEnrollment
 
 TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
@@ -29,8 +29,10 @@ logger = logging.getLogger(__name__)
 @decorator_from_middleware(EligibleSessionRequired)
 def token(request):
     """View handler for the enrollment auth token."""
+    enrollment = LittlepayEnrollment()
+
     if not session.enrollment_token_valid(request):
-        response = request_card_tokenization_access(request)
+        response = enrollment.request_card_tokenization_access(request)
 
         if response.status is Status.SUCCESS:
             session.update(request, enrollment_token=response.access_token, enrollment_token_exp=response.expires_at)
@@ -55,6 +57,8 @@ def token(request):
 @decorator_from_middleware(EligibleSessionRequired)
 def index(request):
     """View handler for the enrollment landing page."""
+    enrollment = LittlepayEnrollment()
+
     session.update(request, origin=reverse(routes.ENROLLMENT_INDEX))
 
     # POST back after transit processor form, process card token
@@ -64,7 +68,7 @@ def index(request):
             raise Exception("Invalid card token form")
 
         card_token = form.cleaned_data.get("card_token")
-        status, exception = enroll(request, card_token)
+        status, exception = enrollment.enroll(request, card_token)
 
         match (status):
             case Status.SUCCESS:

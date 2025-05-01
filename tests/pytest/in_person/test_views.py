@@ -7,7 +7,7 @@ from requests import HTTPError
 
 
 from benefits.core import models
-from benefits.enrollment.enrollment import Status, CardTokenizationAccessResponse
+from benefits.enrollment.enrollment import Status, LittlepayEnrollment
 import benefits.in_person.views
 from benefits.routes import routes
 
@@ -137,8 +137,8 @@ def test_token_refresh(mocker, admin_client):
     mock_token["expires_at"] = time.time() + 10000
 
     mocker.patch(
-        "benefits.in_person.views.request_card_tokenization_access",
-        return_value=CardTokenizationAccessResponse(
+        "benefits.in_person.views.LittlepayEnrollment.request_card_tokenization_access",
+        return_value=LittlepayEnrollment.CardTokenizationAccessResponse(
             Status.SUCCESS,
             access_token=mock_token["access_token"],
             expires_at=mock_token["expires_at"],
@@ -180,8 +180,8 @@ def test_token_system_error(mocker, admin_client, mocked_enrollment_analytics_mo
     http_error = HTTPError(response=mock_error_response)
 
     mocker.patch(
-        "benefits.in_person.views.request_card_tokenization_access",
-        return_value=CardTokenizationAccessResponse(
+        "benefits.in_person.views.LittlepayEnrollment.request_card_tokenization_access",
+        return_value=LittlepayEnrollment.CardTokenizationAccessResponse(
             Status.SYSTEM_ERROR, access_token=None, expires_at=None, exception=http_error, status_code=500
         ),
     )
@@ -210,8 +210,8 @@ def test_token_http_error_400(mocker, admin_client, mocked_enrollment_analytics_
     http_error = HTTPError(response=mock_error_response)
 
     mocker.patch(
-        "benefits.in_person.views.request_card_tokenization_access",
-        return_value=CardTokenizationAccessResponse(
+        "benefits.in_person.views.LittlepayEnrollment.request_card_tokenization_access",
+        return_value=LittlepayEnrollment.CardTokenizationAccessResponse(
             Status.EXCEPTION, access_token=None, expires_at=None, exception=http_error, status_code=400
         ),
     )
@@ -237,8 +237,8 @@ def test_token_misconfigured_client_id(mocker, admin_client, mocked_enrollment_a
     exception = UnsupportedTokenTypeError()
 
     mocker.patch(
-        "benefits.in_person.views.request_card_tokenization_access",
-        return_value=CardTokenizationAccessResponse(
+        "benefits.in_person.views.LittlepayEnrollment.request_card_tokenization_access",
+        return_value=LittlepayEnrollment.CardTokenizationAccessResponse(
             Status.EXCEPTION, access_token=None, expires_at=None, exception=exception, status_code=None
         ),
     )
@@ -263,8 +263,8 @@ def test_token_connection_error(mocker, admin_client, mocked_enrollment_analytic
     exception = ConnectionError()
 
     mocker.patch(
-        "benefits.in_person.views.request_card_tokenization_access",
-        return_value=CardTokenizationAccessResponse(
+        "benefits.in_person.views.LittlepayEnrollment.request_card_tokenization_access",
+        return_value=LittlepayEnrollment.CardTokenizationAccessResponse(
             Status.EXCEPTION, access_token=None, expires_at=None, exception=exception, status_code=None
         ),
     )
@@ -320,7 +320,7 @@ def test_enrollment_post_valid_form_success(
     model_EnrollmentFlow,
     model_User,
 ):
-    mocker.patch("benefits.in_person.views.enroll", return_value=(Status.SUCCESS, None))
+    mocker.patch("benefits.in_person.views.LittlepayEnrollment.enroll", return_value=(Status.SUCCESS, None))
     spy = mocker.spy(benefits.in_person.views.models.EnrollmentEvent.objects, "create")
 
     # force the model_User to be the logged in user
@@ -349,7 +349,7 @@ def test_enrollment_post_valid_form_success(
 def test_enrollment_post_valid_form_system_error(
     mocker, admin_client, card_tokenize_form_data, mocked_enrollment_analytics_module, mocked_sentry_sdk_module
 ):
-    mocker.patch("benefits.in_person.views.enroll", return_value=(Status.SYSTEM_ERROR, None))
+    mocker.patch("benefits.in_person.views.LittlepayEnrollment.enroll", return_value=(Status.SYSTEM_ERROR, None))
 
     path = reverse(routes.IN_PERSON_ENROLLMENT)
     response = admin_client.post(path, card_tokenize_form_data)
@@ -365,7 +365,7 @@ def test_enrollment_post_valid_form_system_error(
 def test_enrollment_post_valid_form_exception(
     mocker, admin_client, card_tokenize_form_data, mocked_enrollment_analytics_module, mocked_sentry_sdk_module
 ):
-    mocker.patch("benefits.in_person.views.enroll", return_value=(Status.EXCEPTION, None))
+    mocker.patch("benefits.in_person.views.LittlepayEnrollment.enroll", return_value=(Status.EXCEPTION, None))
 
     path = reverse(routes.IN_PERSON_ENROLLMENT)
     response = admin_client.post(path, card_tokenize_form_data)
@@ -381,7 +381,7 @@ def test_enrollment_post_valid_form_exception(
 def test_enrollment_post_valid_form_reenrollment_error(
     mocker, admin_client, card_tokenize_form_data, mocked_enrollment_analytics_module
 ):
-    mocker.patch("benefits.in_person.views.enroll", return_value=(Status.REENROLLMENT_ERROR, None))
+    mocker.patch("benefits.in_person.views.LittlepayEnrollment.enroll", return_value=(Status.REENROLLMENT_ERROR, None))
 
     path = reverse(routes.IN_PERSON_ENROLLMENT)
     response = admin_client.post(path, card_tokenize_form_data)

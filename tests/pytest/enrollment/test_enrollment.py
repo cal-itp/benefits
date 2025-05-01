@@ -6,15 +6,7 @@ from littlepay.api.funding_sources import FundingSourceResponse
 from littlepay.api.groups import GroupFundingSourceResponse
 from requests import HTTPError
 
-from benefits.enrollment.enrollment import (
-    Status,
-    request_card_tokenization_access,
-    enroll,
-    _get_group_funding_source,
-    _calculate_expiry,
-    _is_expired,
-    _is_within_reenrollment_window,
-)
+from benefits.enrollment.enrollment import Status, LittlepayEnrollment
 
 
 @pytest.fixture
@@ -64,7 +56,9 @@ def test_get_group_funding_sources_funding_source_not_enrolled_yet(mocker, mocke
     mock_client = mocker.Mock()
     mock_client.get_concession_group_linked_funding_sources.return_value = []
 
-    matching_group_funding_source = _get_group_funding_source(mock_client, "group123", mocked_funding_source.id)
+    matching_group_funding_source = LittlepayEnrollment._get_group_funding_source(
+        mock_client, "group123", mocked_funding_source.id
+    )
 
     assert matching_group_funding_source is None
 
@@ -77,7 +71,9 @@ def test_get_group_funding_sources_funding_source_already_enrolled(
     mock_client = mocker.Mock()
     mock_client.get_concession_group_linked_funding_sources.return_value = [mocked_group_funding_source_no_expiry]
 
-    matching_group_funding_source = _get_group_funding_source(mock_client, "group123", mocked_funding_source.id)
+    matching_group_funding_source = LittlepayEnrollment._get_group_funding_source(
+        mock_client, "group123", mocked_funding_source.id
+    )
 
     assert matching_group_funding_source == mocked_group_funding_source_no_expiry
 
@@ -85,7 +81,7 @@ def test_get_group_funding_sources_funding_source_already_enrolled(
 def test_calculate_expiry():
     expiration_days = 365
 
-    expiry_date = _calculate_expiry(expiration_days)
+    expiry_date = LittlepayEnrollment._calculate_expiry(expiration_days)
 
     assert expiry_date == (
         timezone.localtime(timezone=timezone.get_default_timezone()) + timedelta(days=expiration_days + 1)
@@ -101,7 +97,7 @@ def test_calculate_expiry_specific_date(mocker):
         ),
     )
 
-    expiry_date = _calculate_expiry(expiration_days)
+    expiry_date = LittlepayEnrollment._calculate_expiry(expiration_days)
 
     assert expiry_date == timezone.make_aware(
         value=timezone.datetime(2024, 3, 16, 0, 0, 0, 0), timezone=timezone.get_default_timezone()
@@ -117,7 +113,7 @@ def test_is_expired_expiry_date_is_in_the_past(mocker):
         return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 10, 30), timezone.get_default_timezone()),
     )
 
-    assert _is_expired(expiry_date)
+    assert LittlepayEnrollment._is_expired(expiry_date)
 
 
 def test_is_expired_expiry_date_is_in_the_future(mocker):
@@ -129,7 +125,7 @@ def test_is_expired_expiry_date_is_in_the_future(mocker):
         return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 11, 5), timezone.get_default_timezone()),
     )
 
-    assert not _is_expired(expiry_date)
+    assert not LittlepayEnrollment._is_expired(expiry_date)
 
 
 def test_is_expired_expiry_date_equals_now(mocker):
@@ -141,7 +137,7 @@ def test_is_expired_expiry_date_equals_now(mocker):
         return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 13, 37), timezone.get_default_timezone()),
     )
 
-    assert _is_expired(expiry_date)
+    assert LittlepayEnrollment._is_expired(expiry_date)
 
 
 def test_is_within_enrollment_window_True(mocker):
@@ -154,7 +150,9 @@ def test_is_within_enrollment_window_True(mocker):
         return_value=timezone.make_aware(timezone.datetime(2023, 2, 15, 15, 30), timezone=timezone.get_default_timezone()),
     )
 
-    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
+    is_within_reenrollment_window = LittlepayEnrollment._is_within_reenrollment_window(
+        expiry_date, enrollment_reenrollment_date
+    )
 
     assert is_within_reenrollment_window
 
@@ -169,7 +167,9 @@ def test_is_within_enrollment_window_before_window(mocker):
         return_value=timezone.make_aware(timezone.datetime(2023, 1, 15, 15, 30), timezone=timezone.get_default_timezone()),
     )
 
-    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
+    is_within_reenrollment_window = LittlepayEnrollment._is_within_reenrollment_window(
+        expiry_date, enrollment_reenrollment_date
+    )
 
     assert not is_within_reenrollment_window
 
@@ -184,7 +184,9 @@ def test_is_within_enrollment_window_after_window(mocker):
         return_value=timezone.make_aware(timezone.datetime(2023, 3, 15, 15, 30), timezone=timezone.get_default_timezone()),
     )
 
-    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
+    is_within_reenrollment_window = LittlepayEnrollment._is_within_reenrollment_window(
+        expiry_date, enrollment_reenrollment_date
+    )
 
     assert not is_within_reenrollment_window
 
@@ -199,7 +201,9 @@ def test_is_within_enrollment_window_equal_reenrollment_date(mocker):
         return_value=enrollment_reenrollment_date,
     )
 
-    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
+    is_within_reenrollment_window = LittlepayEnrollment._is_within_reenrollment_window(
+        expiry_date, enrollment_reenrollment_date
+    )
 
     assert is_within_reenrollment_window
 
@@ -214,7 +218,9 @@ def test_is_within_enrollment_window_equal_expiry_date(mocker):
         return_value=expiry_date,
     )
 
-    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
+    is_within_reenrollment_window = LittlepayEnrollment._is_within_reenrollment_window(
+        expiry_date, enrollment_reenrollment_date
+    )
 
     assert not is_within_reenrollment_window
 
@@ -237,7 +243,7 @@ def test_enroll_system_error(
     http_error = HTTPError(response=mock_error_response)
     mock_client.link_concession_group_funding_source.side_effect = http_error
 
-    status, exception = enroll(app_request, card_token)
+    status, exception = LittlepayEnrollment.enroll(app_request, card_token)
 
     assert status is Status.SYSTEM_ERROR
     assert exception == http_error
@@ -261,7 +267,7 @@ def test_enroll_exception_http_error_400(
     )
     mock_client.link_concession_group_funding_source.side_effect = http_error
 
-    status, exception = enroll(app_request, card_token)
+    status, exception = LittlepayEnrollment.enroll(app_request, card_token)
 
     assert status is Status.EXCEPTION
     assert isinstance(exception, Exception)
@@ -280,7 +286,7 @@ def test_enroll_exception_non_http_error(
 
     mock_client.link_concession_group_funding_source.side_effect = Exception("some other exception")
 
-    status, exception = enroll(app_request, card_token)
+    status, exception = LittlepayEnrollment.enroll(app_request, card_token)
 
     assert status is Status.EXCEPTION
     assert isinstance(exception, Exception)
@@ -301,10 +307,11 @@ def test_enroll_success_flow_does_not_support_expiration_customer_already_enroll
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
     mocker.patch(
-        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_no_expiry
+        "benefits.enrollment.enrollment.LittlepayEnrollment._get_group_funding_source",
+        return_value=mocked_group_funding_source_no_expiry,
     )
 
-    status, exception = enroll(app_request, card_token)
+    status, exception = LittlepayEnrollment.enroll(app_request, card_token)
 
     mock_client.link_concession_group_funding_source.assert_not_called()
 
@@ -325,7 +332,7 @@ def test_enroll_success_flow_does_not_support_expiration_no_expiry(
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
-    status, exception = enroll(app_request, card_token)
+    status, exception = LittlepayEnrollment.enroll(app_request, card_token)
 
     mock_client.link_concession_group_funding_source.assert_called_once_with(
         funding_source_id=mocked_funding_source.id, group_id=model_EnrollmentFlow_does_not_support_expiration.group_id
@@ -348,7 +355,7 @@ def test_enroll_success_flow_supports_expiration(
     mock_client = mock_client_cls.return_value
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
-    status, exception = enroll(app_request, card_token)
+    status, exception = LittlepayEnrollment.enroll(app_request, card_token)
 
     mock_client.link_concession_group_funding_source.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
@@ -375,10 +382,11 @@ def test_enroll_success_flow_supports_expiration_no_expiry(
     mock_client.get_funding_source_by_token.return_value = mocked_funding_source
 
     mocker.patch(
-        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_no_expiry
+        "benefits.enrollment.enrollment.LittlepayEnrollment._get_group_funding_source",
+        return_value=mocked_group_funding_source_no_expiry,
     )
 
-    status, exception = enroll(app_request, card_token)
+    status, exception = LittlepayEnrollment.enroll(app_request, card_token)
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
@@ -405,12 +413,13 @@ def test_enroll_success_flow_supports_expiration_is_expired(
 
     # mock that a funding source already exists, doesn't matter what expiry_date is
     mocker.patch(
-        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry
+        "benefits.enrollment.enrollment.LittlepayEnrollment._get_group_funding_source",
+        return_value=mocked_group_funding_source_with_expiry,
     )
 
-    mocker.patch("benefits.enrollment.enrollment._is_expired", return_value=True)
+    mocker.patch("benefits.enrollment.enrollment.LittlepayEnrollment._is_expired", return_value=True)
 
-    status, exception = enroll(app_request, card_token)
+    status, exception = LittlepayEnrollment.enroll(app_request, card_token)
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
@@ -438,12 +447,13 @@ def test_enroll_success_flow_supports_expiration_is_within_reenrollment_window(
 
     # mock that a funding source already exists, doesn't matter what expiry_date is
     mocker.patch(
-        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry
+        "benefits.enrollment.enrollment.LittlepayEnrollment._get_group_funding_source",
+        return_value=mocked_group_funding_source_with_expiry,
     )
 
-    mocker.patch("benefits.enrollment.enrollment._is_within_reenrollment_window", return_value=True)
+    mocker.patch("benefits.enrollment.enrollment.LittlepayEnrollment._is_within_reenrollment_window", return_value=True)
 
-    status, exception = enroll(app_request, card_token)
+    status, exception = LittlepayEnrollment.enroll(app_request, card_token)
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
@@ -469,13 +479,14 @@ def test_enroll_reenrollment_error(
 
     # mock that a funding source already exists, doesn't matter what expiry_date is
     mocker.patch(
-        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry
+        "benefits.enrollment.enrollment.LittlepayEnrollment._get_group_funding_source",
+        return_value=mocked_group_funding_source_with_expiry,
     )
 
-    mocker.patch("benefits.enrollment.enrollment._is_expired", return_value=False)
-    mocker.patch("benefits.enrollment.enrollment._is_within_reenrollment_window", return_value=False)
+    mocker.patch("benefits.enrollment.enrollment.LittlepayEnrollment._is_expired", return_value=False)
+    mocker.patch("benefits.enrollment.enrollment.LittlepayEnrollment._is_within_reenrollment_window", return_value=False)
 
-    status, exception = enroll(app_request, card_token)
+    status, exception = LittlepayEnrollment.enroll(app_request, card_token)
 
     mock_client.link_concession_group_funding_source.assert_not_called()
     assert status is Status.REENROLLMENT_ERROR
@@ -497,10 +508,11 @@ def test_enroll_does_not_support_expiration_has_expiration_date(
 
     # mock that a funding source already exists, doesn't matter what expiry_date is
     mocker.patch(
-        "benefits.enrollment.enrollment._get_group_funding_source", return_value=mocked_group_funding_source_with_expiry
+        "benefits.enrollment.enrollment.LittlepayEnrollment._get_group_funding_source",
+        return_value=mocked_group_funding_source_with_expiry,
     )
 
-    status, exception = enroll(app_request, card_token)
+    status, exception = LittlepayEnrollment.enroll(app_request, card_token)
 
     assert status is Status.EXCEPTION
     assert isinstance(exception, NotImplementedError)
@@ -524,7 +536,7 @@ def test_request_card_tokenization_access(mocker, app_request):
     mock_client = mock_client_cls.return_value
     mock_client.request_card_tokenization_access.return_value = mock_response
 
-    response = request_card_tokenization_access(app_request)
+    response = LittlepayEnrollment.request_card_tokenization_access(app_request)
 
     assert response.status is Status.SUCCESS
     assert response.access_token == "123"
@@ -547,7 +559,7 @@ def test_request_card_tokenization_access_system_error(mocker, app_request):
 
     mock_client.request_card_tokenization_access.side_effect = http_error
 
-    response = request_card_tokenization_access(app_request)
+    response = LittlepayEnrollment.request_card_tokenization_access(app_request)
 
     assert response.status is Status.SYSTEM_ERROR
     assert response.access_token is None
@@ -569,7 +581,7 @@ def test_request_card_tokenization_access_http_400_error(mocker, app_request):
 
     mock_client.request_card_tokenization_access.side_effect = http_error
 
-    response = request_card_tokenization_access(app_request)
+    response = LittlepayEnrollment.request_card_tokenization_access(app_request)
 
     assert response.status is Status.EXCEPTION
     assert response.access_token is None
@@ -587,7 +599,7 @@ def test_request_card_tokenization_access_exception(mocker, app_request):
     exception = Exception("some exception")
     mock_client.request_card_tokenization_access.side_effect = exception
 
-    response = request_card_tokenization_access(app_request)
+    response = LittlepayEnrollment.request_card_tokenization_access(app_request)
 
     assert response.status is Status.EXCEPTION
     assert response.access_token is None
