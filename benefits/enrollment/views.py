@@ -31,27 +31,19 @@ def token(request):
     """View handler for the enrollment auth token."""
     enrollment = LittlepayEnrollment()
 
-    if not session.littlepay_enrollment_token_valid(request):
-        response = enrollment.request_card_tokenization_access(request)
+    response, data = enrollment.initiate_tokenization(request)
 
-        if response.status is Status.SUCCESS:
-            session.update(
-                request, littlepay_enrollment_token=response.access_token, littlepay_enrollment_token_exp=response.expires_at
-            )
-        elif response.status is Status.SYSTEM_ERROR or response.status is Status.EXCEPTION:
-            logger.debug("Error occurred while requesting access token", exc_info=response.exception)
-            sentry_sdk.capture_exception(response.exception)
-            analytics.failed_access_token_request(request, response.status_code)
+    if response.status is Status.SYSTEM_ERROR or response.status is Status.EXCEPTION:
+        logger.debug("Error occurred while initiating tokenization", exc_info=response.exception)
+        sentry_sdk.capture_exception(response.exception)
+        analytics.failed_access_token_request(request, response.status_code)
 
-            if response.status is Status.SYSTEM_ERROR:
-                redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
-            else:
-                redirect = reverse(routes.SERVER_ERROR)
+        if response.status is Status.SYSTEM_ERROR:
+            redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+        else:
+            redirect = reverse(routes.SERVER_ERROR)
 
-            data = {"redirect": redirect}
-            return JsonResponse(data)
-
-    data = {"token": session.littlepay_enrollment_token(request)}
+        data = {"redirect": redirect}
 
     return JsonResponse(data)
 

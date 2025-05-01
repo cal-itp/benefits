@@ -24,6 +24,13 @@ class Status(Enum):
     REENROLLMENT_ERROR = 4
 
 
+@dataclass
+class TokenizationIntiationResponse:
+    status: Status
+    exception: Exception = None
+    status_code: int = None
+
+
 class LittlepayEnrollment:
     @dataclass
     class CardTokenizationAccessResponse:
@@ -32,6 +39,41 @@ class LittlepayEnrollment:
         expires_at: str
         exception: Exception = None
         status_code: int = None
+
+    @staticmethod
+    def initiate_tokenization(request) -> tuple[TokenizationIntiationResponse, dict]:
+        """
+        Initiates tokenization.
+
+        Checks the session to see if tokenization has already been initiated,
+        and updates the session if tokenization was initiated successfully.
+
+        The caller should handle the non-SUCCESS cases.
+        """
+        if not session.littlepay_enrollment_token_valid(request):
+            card_tokenization_access_response = LittlepayEnrollment.request_card_tokenization_access(request)
+
+            if card_tokenization_access_response.status is Status.SUCCESS:
+                session.update(
+                    request,
+                    littlepay_enrollment_token=card_tokenization_access_response.access_token,
+                    littlepay_enrollment_token_exp=card_tokenization_access_response.expires_at,
+                )
+                data = {"token": session.littlepay_enrollment_token(request)}
+            else:
+                data = {}
+
+            tokenization_initiation_response = TokenizationIntiationResponse(
+                status=card_tokenization_access_response.status,
+                exception=card_tokenization_access_response.exception,
+                status_code=card_tokenization_access_response.status_code,
+            )
+
+        else:
+            tokenization_initiation_response = TokenizationIntiationResponse(status=Status.SUCCESS)
+            data = {"token": session.littlepay_enrollment_token(request)}
+
+        return tokenization_initiation_response, data
 
     @staticmethod
     def request_card_tokenization_access(request) -> CardTokenizationAccessResponse:
