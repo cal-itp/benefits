@@ -21,3 +21,21 @@ class AgencySessionRequiredMixin:
         else:
             logger.warning("Session not configured with an active agency")
             return user_error(request)
+
+
+class FlowSessionRequiredMixin:
+    """Mixin intended for use with a class-based view as the first in the MRO.
+
+    Gets the current `EnrollmentFlow` out of session and sets an attribute on `self`.
+
+    If the session is not configured with a flow, return a user error.
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        flow = session.flow(request)
+        if flow:
+            self.flow = flow
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            logger.warning("Session not configured with enrollment flow")
+            return user_error(request)
