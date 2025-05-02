@@ -7,7 +7,8 @@ from requests import HTTPError
 
 
 from benefits.core import models
-from benefits.enrollment.enrollment import Status, LittlepayEnrollment
+from benefits.enrollment.enrollment import Status
+from benefits.enrollment.littlepay import LittlepayEnrollment
 import benefits.in_person.views
 from benefits.routes import routes
 

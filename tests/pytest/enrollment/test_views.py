@@ -8,7 +8,8 @@ from requests import HTTPError
 from benefits.core import models
 from benefits.routes import routes
 import benefits.enrollment.views
-from benefits.enrollment.enrollment import Status, LittlepayEnrollment
+from benefits.enrollment.enrollment import Status
+from benefits.enrollment.littlepay import LittlepayEnrollment
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.enrollment.views import TEMPLATE_SYSTEM_ERROR, TEMPLATE_RETRY
 

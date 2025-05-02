@@ -17,7 +17,9 @@ from benefits.core.middleware import AgencySessionRequired, EligibleSessionRequi
 
 from benefits.core import models
 from . import analytics, forms
-from .enrollment import Status, LittlepayEnrollment, SwitchioEnrollment
+from .enrollment import Status
+from .littlepay import LittlepayEnrollment
+from .switchio import SwitchioEnrollment
 
 TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
