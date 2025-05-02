@@ -59,17 +59,23 @@ def token(request):
     return JsonResponse(data)
 
 
+@decorator_from_middleware(AgencySessionRequired)
 @decorator_from_middleware(EligibleSessionRequired)
 def index(request):
     """View handler for the enrollment landing page."""
     session.update(request, origin=reverse(routes.ENROLLMENT_INDEX))
 
-    return _index_for_littlepay(request)
+    agency = session.agency(request)
+    enrollment = _get_enrollment_class(agency)()
+
+    # this is what we have to do until we introduce separate Django apps that have littlepay and switchio views
+    if isinstance(enrollment, LittlepayEnrollment):
+        return _index_for_littlepay(request, enrollment)
+    else:  # is instance of SwitchioEnrollment
+        return _index_for_switchio(request, enrollment)
 
 
-def _index_for_littlepay(request):
-    enrollment = LittlepayEnrollment()
-
+def _index_for_littlepay(request, enrollment):
     # POST back after transit processor form, process card token
     if request.method == "POST":
         form = forms.CardTokenizeSuccessForm(request.POST)
@@ -112,6 +118,19 @@ def _index_for_littlepay(request):
         context.update(flow.enrollment_index_context)
 
         return TemplateResponse(request, agency.enrollment_index_template, context)
+
+
+def _index_for_switchio(request, enrollment):
+    agency = session.agency(request)
+    flow = session.flow(request)
+
+    context = {
+        "cta_button": "tokenize_card",
+        "enrollment_method": models.EnrollmentMethods.DIGITAL,
+    }
+    context.update(flow.enrollment_index_context)
+
+    return TemplateResponse(request, agency.enrollment_index_template, context)
 
 
 def _handle_enrollment_results(request, status, exception):
