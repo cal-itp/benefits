@@ -13,11 +13,11 @@ import sentry_sdk
 
 from benefits.routes import routes
 from benefits.core import session
-from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
+from benefits.core.middleware import AgencySessionRequired, EligibleSessionRequired, FlowSessionRequired, pageview_decorator
 
 from benefits.core import models
 from . import analytics, forms
-from .enrollment import Status, LittlepayEnrollment
+from .enrollment import Status, LittlepayEnrollment, SwitchioEnrollment
 
 TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
@@ -26,10 +26,21 @@ TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
 logger = logging.getLogger(__name__)
 
 
+def _get_enrollment_class(agency: models.TransitAgency):
+    if agency.littlepay_config:
+        return LittlepayEnrollment
+    elif agency.switchio_config:
+        return SwitchioEnrollment
+    else:
+        raise ValueError("Transit agency does not have a Littlepay or Switchio config")
+
+
+@decorator_from_middleware(AgencySessionRequired)
 @decorator_from_middleware(EligibleSessionRequired)
 def token(request):
     """View handler for the enrollment auth token."""
-    enrollment = LittlepayEnrollment()
+    agency = session.agency(request)
+    enrollment = _get_enrollment_class(agency)()
 
     response, data = enrollment.initiate_tokenization(request)
 
@@ -68,7 +79,7 @@ def _index_for_littlepay(request):
         card_token = form.cleaned_data.get("card_token")
         status, exception = enrollment.enroll(request, card_token)
 
-        _handle_enrollment_results(request, status, exception)
+        return _handle_enrollment_results(request, status, exception)
 
     # GET enrollment index
     else:

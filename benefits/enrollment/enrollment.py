@@ -237,3 +237,13 @@ class LittlepayEnrollment:
         expiry_datetime = expiry_date.replace(hour=0, minute=0, second=0, microsecond=0)
 
         return expiry_datetime
+
+
+class SwitchioEnrollment:
+    @staticmethod
+    def initiate_tokenization(request):
+        pass
+
+    @staticmethod
+    def enroll(request):
+        pass
