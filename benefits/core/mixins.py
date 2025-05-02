@@ -1,6 +1,8 @@
 import logging
 
-from . import session
+from django.conf import settings
+
+from . import recaptcha, session
 from .middleware import user_error
 
 logger = logging.getLogger(__name__)
@@ -39,3 +41,18 @@ class FlowSessionRequiredMixin:
         else:
             logger.warning("Session not configured with enrollment flow")
             return user_error(request)
+
+
+class RecaptchaEnabledMixin:
+    """Mixin intended for use with a class-based view as the first in the MRO.
+
+    Configures the request with required reCAPTCHA settings."""
+
+    def dispatch(self, request, *args, **kwargs):
+        if settings.RECAPTCHA_ENABLED:
+            request.recaptcha = {
+                "data_field": recaptcha.DATA_FIELD,
+                "script_api": settings.RECAPTCHA_API_KEY_URL,
+                "site_key": settings.RECAPTCHA_SITE_KEY,
+            }
+        return super().dispatch(request, *args, **kwargs)
