@@ -6,11 +6,11 @@ import pytest
 from benefits.core.models import (
     TransitAgency,
     Environment,
-    LittlepayConfig,
     SwitchioConfig,
     agency_logo_small,
     agency_logo_large,
 )
+from benefits.enrollment_littlepay.models import LittlepayConfig
 
 
 @pytest.mark.django_db
