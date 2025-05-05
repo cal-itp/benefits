@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class EnrollmentLittlepayConfig(AppConfig):
-    default_auto_field = "django.db.models.BigAutoField"
-    name = "enrollment_littlepay"
+    name = "benefits.enrollment_littlepay"
+    label = "enrollment_littlepay"
