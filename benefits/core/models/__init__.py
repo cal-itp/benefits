@@ -5,7 +5,6 @@ from .transit import (
     TransitProcessor,
     TransitAgency,
     Environment,
-    LittlepayConfig,
     SwitchioConfig,
 )
 from .enrollment import EnrollmentMethods, EnrollmentFlow, EnrollmentEvent
@@ -19,7 +18,6 @@ __all__ = [
     "TransitProcessor",
     "TransitAgency",
     "Environment",
-    "LittlepayConfig",
     "SwitchioConfig",
     "EnrollmentMethods",
     "EnrollmentFlow",

@@ -13,6 +13,11 @@ from benefits.secrets import NAME_VALIDATOR, get_secret_by_name
 logger = logging.getLogger(__name__)
 
 
+class Environment(models.TextChoices):
+    QA = "qa", "QA"
+    PROD = "prod", "Production"
+
+
 def template_path(template_name: str) -> Path:
     """Get a `pathlib.Path` for the named template, or None if it can't be found.
 

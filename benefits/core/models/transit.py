@@ -9,7 +9,7 @@ from django.urls import reverse
 from benefits.core import context as core_context
 from benefits.eligibility import context as eligibility_context
 from benefits.routes import routes
-from .common import PemData, SecretNameField
+from .common import PemData, SecretNameField, Environment
 
 logger = logging.getLogger(__name__)
 
@@ -25,77 +25,6 @@ def agency_logo_small(instance, filename):
 
 def agency_logo_large(instance, filename):
     return _agency_logo(instance, filename, "lg")
-
-
-class Environment(models.TextChoices):
-    QA = "qa", "QA"
-    PROD = "prod", "Production"
-
-
-class LittlepayConfig(models.Model):
-    """Configuration for connecting to Littlepay, an entity that applies transit agency fare rules to rider transactions."""
-
-    id = models.AutoField(primary_key=True)
-    environment = models.TextField(
-        choices=Environment,
-        help_text="A label to indicate which environment this configuration is for.",
-    )
-    agency_slug = models.SlugField(
-        choices=core_context.AgencySlug,
-        help_text="A label to indicate which agency this configuration is for. Note: the field that controls which configuration an agency actually uses is on the TransitAgency model.",  # noqa
-    )
-    audience = models.TextField(
-        help_text="This agency's audience value used to access the TransitProcessor's API.", default="", blank=True
-    )
-    client_id = models.TextField(
-        help_text="This agency's client_id value used to access the TransitProcessor's API.", default="", blank=True
-    )
-    client_secret_name = SecretNameField(
-        help_text="The name of the secret containing this agency's client_secret value used to access the TransitProcessor's API.",  # noqa: E501
-        default="",
-        blank=True,
-    )
-
-    @property
-    def client_secret(self):
-        secret_field = self._meta.get_field("client_secret_name")
-        return secret_field.secret_value(self)
-
-    @property
-    def transit_processor_context(self):
-        match self.environment:
-            case Environment.QA.value:
-                url = "https://verify.qa.littlepay.com/assets/js/littlepay.min.js"
-                card_tokenize_env = "https://verify.qa.littlepay.com"
-            case Environment.PROD.value:
-                url = "https://verify.littlepay.com/assets/js/littlepay.min.js"
-                card_tokenize_env = "https://verify.littlepay.com"
-            case _:
-                raise ValueError("Unrecognized environment value")
-
-        return dict(
-            name="Littlepay", website="https://littlepay.com", card_tokenize_url=url, card_tokenize_env=card_tokenize_env
-        )
-
-    @property
-    def enrollment_index_template(self):
-        return "enrollment/index--littlepay.html"
-
-    def clean(self):
-        field_errors = {}
-
-        if hasattr(self, "transitagency") and self.transitagency.active:
-            message = "This field is required when this configuration is referenced by an active transit agency."
-            needed = dict(audience=self.audience, client_id=self.client_id, client_secret_name=self.client_secret_name)
-            field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
-
-        if field_errors:
-            raise ValidationError(field_errors)
-
-    def __str__(self):
-        environment_label = Environment(self.environment).label if self.environment else "unknown"
-        agency_slug = self.agency_slug if self.agency_slug else "(no agency)"
-        return f"({environment_label}) {agency_slug}"
 
 
 class SwitchioConfig(models.Model):
@@ -256,7 +185,7 @@ class TransitAgency(models.Model):
         help_text="This agency's TransitProcessor.",
     )
     littlepay_config = models.OneToOneField(
-        LittlepayConfig,
+        "enrollment_littlepay.LittlepayConfig",
         on_delete=models.PROTECT,
         null=True,
         blank=True,

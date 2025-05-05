@@ -104,7 +104,7 @@
     }
   },
   {
-    "model": "core.littlepayconfig",
+    "model": "enrollment_littlepay.littlepayconfig",
     "pk": 1,
     "fields": {
       "environment": "qa",
