@@ -58,15 +58,19 @@ def index(request):
     return response
 
 
-@decorator_from_middleware(AgencySessionRequired)
-@decorator_from_middleware(FlowSessionRequired)
-def start(request):
-    """View handler for the eligibility verification getting started screen."""
-    session.update(request, eligible=False, origin=reverse(routes.ELIGIBILITY_START))
+class StartView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateView):
+    """CBV for the eligibility verification getting started screen."""
 
-    flow = session.flow(request)
+    template_name = "eligibility/start.html"
 
-    return TemplateResponse(request, "eligibility/start.html", flow.eligibility_start_context)
+    def get(self, request, *args, **kwargs):
+        session.update(request, eligible=False, origin=reverse(routes.ELIGIBILITY_START))
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(self.flow.eligibility_start_context)
+        return context
 
 
 @decorator_from_middleware(AgencySessionRequired)
