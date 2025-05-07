@@ -1,4 +1,4 @@
-# Configuration data
+# Loading sample data
 
 !!! example "Sample data fixtures"
 
