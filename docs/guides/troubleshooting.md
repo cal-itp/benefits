@@ -40,8 +40,6 @@ You can troubleshoot Sentry itself by [turning on debug mode](../../configuratio
 
 ## Specific issues
 
-This section serves as the [runbook](https://www.pagerduty.com/resources/learn/what-is-a-runbook/) for Benefits.
-
 ### Terraform lock
 
 [General info](https://developer.hashicorp.com/terraform/language/state/locking)
