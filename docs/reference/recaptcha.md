@@ -1,4 +1,4 @@
-# Configuring reCAPTCHA
+# reCAPTCHA
 
 !!! tldr "reCAPTCHA docs"
 

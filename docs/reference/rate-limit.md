@@ -1,4 +1,4 @@
-# Configuring Rate Limiting
+# Rate limiting
 
 The benefits application has a simple, single-configuration Rate Limit that acts
 per-IP to limit the number of consecutive requests in a given time period, via

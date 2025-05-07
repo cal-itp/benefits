@@ -1,4 +1,4 @@
-# Configuring the Content Security Policy
+# Content Security Policy
 
 !!! tldr "MDN docs"
 
