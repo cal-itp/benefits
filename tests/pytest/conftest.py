@@ -16,9 +16,9 @@ from benefits.core.models import (
     PemData,
     TransitAgency,
     Environment,
-    LittlepayConfig,
     SwitchioConfig,
 )
+from benefits.enrollment_littlepay.models import LittlepayConfig
 
 
 def pytest_runtest_setup():
