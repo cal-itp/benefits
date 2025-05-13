@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "benefits.core",
     "benefits.enrollment",
     "benefits.enrollment_littlepay",
+    "benefits.enrollment_switchio",
     "benefits.eligibility",
     "benefits.oauth",
     "benefits.in_person",
