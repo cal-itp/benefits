@@ -7,30 +7,40 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
+from django.views import View
 
 from benefits.routes import routes
 from benefits.core import recaptcha, session
 from benefits.core.middleware import AgencySessionRequired, RecaptchaEnabled, FlowSessionRequired
+from benefits.core.mixins import AgencySessionRequiredMixin, RecaptchaEnabledMixin
 from benefits.core.models import EnrollmentFlow
 from . import analytics, forms, verify
 
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
 
 
-@decorator_from_middleware(AgencySessionRequired)
-@decorator_from_middleware(RecaptchaEnabled)
-def index(request):
+class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, View):
     """View handler for the enrollment flow selection form."""
-    agency = session.agency(request)
-    session.update(request, eligible=False, origin=agency.index_url)
 
-    # clear any prior OAuth token as the user is choosing their desired flow
-    # this may or may not require OAuth, with a different set of scope/claims than what is already stored
-    session.logout(request)
+    template_name = "eligibility/index.html"
 
-    context = {"form": forms.EnrollmentFlowSelectionForm(agency=agency)}
+    def get(self, request, *args, **kwargs):
+        agency = session.agency(request)
+        session.update(request, eligible=False, origin=agency.index_url)
 
-    if request.method == "POST":
+        # clear any prior OAuth token as the user is choosing their desired flow
+        # this may or may not require OAuth, with a different set of scope/claims than what is already stored
+        session.logout(request)
+
+        context = {"form": forms.EnrollmentFlowSelectionForm(agency=agency)}
+        context.update(agency.eligibility_index_context)
+        return TemplateResponse(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        agency = session.agency(request)
+        session.update(request, eligible=False, origin=agency.index_url)
+        session.logout(request)
+
         form = forms.EnrollmentFlowSelectionForm(data=request.POST, agency=agency)
 
         if form.is_valid():
@@ -41,19 +51,14 @@ def index(request):
             analytics.selected_flow(request, flow)
 
             eligibility_start = reverse(routes.ELIGIBILITY_START)
-            response = redirect(eligibility_start)
+            return redirect(eligibility_start)
         else:
+            context = {"form": form}
             # form was not valid, allow for correction/resubmission
             if recaptcha.has_error(form):
                 messages.error(request, "Recaptcha failed. Please try again.")
-            context["form"] = form
             context.update(agency.eligibility_index_context)
-            response = TemplateResponse(request, "eligibility/index.html", context)
-    else:
-        context.update(agency.eligibility_index_context)
-        response = TemplateResponse(request, "eligibility/index.html", context)
-
-    return response
+            return TemplateResponse(request, self.template_name, context)
 
 
 @decorator_from_middleware(AgencySessionRequired)
