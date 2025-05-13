@@ -12,7 +12,8 @@ from benefits.routes import routes
 from benefits.core import models, session
 from benefits.eligibility import analytics as eligibility_analytics
 from benefits.enrollment import analytics as enrollment_analytics
-from benefits.enrollment.enrollment import Status, request_card_tokenization_access, enroll
+from benefits.enrollment.enrollment import Status
+from benefits.enrollment_littlepay.enrollment import request_card_tokenization_access, enroll
 
 from benefits.in_person import forms
 

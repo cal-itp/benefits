@@ -16,8 +16,9 @@ from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
 
 from benefits.core import models
+from benefits.enrollment_littlepay.enrollment import request_card_tokenization_access, enroll
 from . import analytics, forms
-from .enrollment import Status, request_card_tokenization_access, enroll
+from .enrollment import Status
 
 TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
