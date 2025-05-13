@@ -22,3 +22,8 @@ jobs:
           values: 1,In review
           project_url: https://github.com/orgs/cal-itp/projects/${{ secrets.GH_PROJECT }}
           github_token: ${{ secrets.GH_PROJECTS_TOKEN }}
+
+      - uses: actions/add-to-project@main
+        with:
+          project-url: ${{ secrets.USB_PROJECT_URL }}
+          github-token: ${{ secrets.USB_PROJECT_TOKEN }}
