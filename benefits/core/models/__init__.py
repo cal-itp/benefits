@@ -4,7 +4,6 @@ from .transit import (
     agency_logo_small,
     TransitProcessor,
     TransitAgency,
-    SwitchioConfig,
 )
 from .enrollment import EnrollmentMethods, EnrollmentFlow, EnrollmentEvent
 
@@ -17,7 +16,6 @@ __all__ = [
     "TransitProcessor",
     "TransitAgency",
     "Environment",
-    "SwitchioConfig",
     "EnrollmentMethods",
     "EnrollmentFlow",
     "EnrollmentEvent",

@@ -115,7 +115,7 @@
     }
   },
   {
-    "model": "core.switchioconfig",
+    "model": "enrollment_switchio.switchioconfig",
     "pk": 1,
     "fields": {
       "environment": "qa",
