@@ -1,4 +1,5 @@
 playwright==1.51.0 # needs to match version on Docker image
+pyotp
 pytest
 pytest-playwright
 pytest-reporter-html1
