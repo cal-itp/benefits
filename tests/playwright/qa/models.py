@@ -63,12 +63,12 @@ class EligibilityConfirm:
 
     def submit_form(self, sub, name):
         page = self.page
-        page.get_by_placeholder("12345").click()
+        page.locator("#sub").click()
 
-        page.get_by_placeholder("12345").fill(sub)
+        page.locator("#sub").fill(sub)
         page.keyboard.press("Tab")
 
-        page.get_by_placeholder("Hernandez-Demarcos").fill(name)
+        page.locator("#name").fill(name)
 
         page.get_by_role("button", name="Find my record").click()
 
