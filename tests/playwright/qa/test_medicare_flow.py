@@ -1,7 +1,7 @@
 import os
 from playwright.sync_api import BrowserContext, expect
 
-from models import Index
+from .models import Index
 
 
 def test_medicare_cardholder_flow(context: BrowserContext, base_url):

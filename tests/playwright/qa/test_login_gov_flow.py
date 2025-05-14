@@ -3,7 +3,7 @@ import os
 from playwright.sync_api import BrowserContext, expect
 import pyotp
 
-from models import Index
+from .models import Index
 
 
 def test_older_adult_flow(context: BrowserContext, base_url):

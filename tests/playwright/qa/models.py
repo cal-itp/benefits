@@ -6,6 +6,8 @@ https://playwright.dev/python/docs/pom
 
 from playwright.sync_api import Page
 
+from .conftest import PaymentCard
+
 
 class Index:
     def __init__(self, page: Page):
@@ -122,7 +124,7 @@ class EnrollmentIndex:
     def __init__(self, page: Page):
         self.page = page
 
-    def enroll(self, cardholder_name, card_number, expiration, security_code):
+    def enroll(self, payment_card: PaymentCard):
         page = self.page
 
         with page.expect_popup() as popup_info:
@@ -133,17 +135,17 @@ class EnrollmentIndex:
 
         popup.get_by_text("Cardholder name").click()
 
-        popup.get_by_label("Cardholder name").fill(cardholder_name)
+        popup.get_by_label("Cardholder name").fill(payment_card.cardholder_name)
         popup.keyboard.press("Tab")
 
-        popup.get_by_label("Card number").fill(card_number)
+        popup.get_by_label("Card number").fill(payment_card.card_number)
         popup.keyboard.press("Tab")
 
-        popup.get_by_label("mm/yy").fill(expiration)
+        popup.get_by_label("mm/yy").fill(payment_card.expiration)
         popup.keyboard.press("Tab")
 
         popup.get_by_text("Security code", exact=True).click()
-        popup.get_by_label("Security code").fill(security_code)
+        popup.get_by_label("Security code").fill(payment_card.security_code)
 
         # trigger form validation - not sure why their form behaves this way
         popup.keyboard.press("Shift+Tab")
