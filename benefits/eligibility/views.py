@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.views import View
+from django.views.generic import FormView
 
 from benefits.routes import routes
 from benefits.core import recaptcha, session
@@ -19,46 +19,52 @@ from . import analytics, forms, verify
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
 
 
-class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, View):
+class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
     """View handler for the enrollment flow selection form."""
 
     template_name = "eligibility/index.html"
+    form_class = forms.EnrollmentFlowSelectionForm
+
+    def get_form_kwargs(self):
+        """Return the keyword arguments for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        kwargs["agency"] = self.agency
+        return kwargs
 
     def get(self, request, *args, **kwargs):
-        agency = session.agency(request)
-        session.update(request, eligible=False, origin=agency.index_url)
-
+        """Handle GET requests: initialize session and clear any prior OAuth tokens."""
+        session.update(request, eligible=False, origin=self.agency.index_url)
         # clear any prior OAuth token as the user is choosing their desired flow
         # this may or may not require OAuth, with a different set of scope/claims than what is already stored
         session.logout(request)
-
-        context = {"form": forms.EnrollmentFlowSelectionForm(agency=agency)}
-        context.update(agency.eligibility_index_context)
-        return TemplateResponse(request, self.template_name, context)
+        return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        agency = session.agency(request)
-        session.update(request, eligible=False, origin=agency.index_url)
+        """Handle POST requests: initialize session before form processing."""
+        session.update(request, eligible=False, origin=self.agency.index_url)
         session.logout(request)
+        return super().post(request, *args, **kwargs)
 
-        form = forms.EnrollmentFlowSelectionForm(data=request.POST, agency=agency)
+    def form_valid(self, form):
+        """If the form is valid, set enrollment flow and redirect."""
+        flow_id = form.cleaned_data.get("flow")
+        flow = EnrollmentFlow.objects.get(id=flow_id)
+        session.update(self.request, flow=flow)
 
-        if form.is_valid():
-            flow_id = form.cleaned_data.get("flow")
-            flow = EnrollmentFlow.objects.get(id=flow_id)
-            session.update(request, flow=flow)
+        analytics.selected_flow(self.request, flow)
+        return redirect(reverse(routes.ELIGIBILITY_START))
 
-            analytics.selected_flow(request, flow)
+    def form_invalid(self, form):
+        """If the form is invalid, display error messages."""
+        if recaptcha.has_error(form):
+            messages.error(self.request, "Recaptcha failed. Please try again.")
+        return super().form_invalid(form)
 
-            eligibility_start = reverse(routes.ELIGIBILITY_START)
-            return redirect(eligibility_start)
-        else:
-            context = {"form": form}
-            # form was not valid, allow for correction/resubmission
-            if recaptcha.has_error(form):
-                messages.error(request, "Recaptcha failed. Please try again.")
-            context.update(agency.eligibility_index_context)
-            return TemplateResponse(request, self.template_name, context)
+    def get_context_data(self, **kwargs):
+        """Add agency-specific context data."""
+        context = super().get_context_data(**kwargs)
+        context.update(self.agency.eligibility_index_context)
+        return context
 
 
 @decorator_from_middleware(AgencySessionRequired)
