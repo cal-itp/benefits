@@ -38,7 +38,7 @@ class EligibilityStart:
 
     def click_continue(self):
         page = self.page
-        page.get_by_role("button", name="Continue").click()
+        page.get_by_role("link", name="Continue").click()
 
         return EligibilityConfirm(page)
 
