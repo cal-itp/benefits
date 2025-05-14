@@ -1,10 +1,9 @@
-from playwright.sync_api import Browser, expect
+from playwright.sync_api import BrowserContext, expect
 
 from models import Index
 
 
-def test_agency_card_flow(browser: Browser, base_url):
-    context = browser.new_context(user_agent="cal-itp/benefits-smoke-test")
+def test_agency_card_flow(context: BrowserContext, base_url):
     page = context.new_page()
 
     page.goto(base_url)
