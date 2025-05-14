@@ -25,25 +25,27 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
     template_name = "eligibility/index.html"
     form_class = forms.EnrollmentFlowSelectionForm
 
+    def setup(self, request, *args, **kwargs):
+        """Initialize view attributes."""
+        super().setup(request, *args, **kwargs)
+        self.agency = session.agency(request)
+
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
         kwargs = super().get_form_kwargs()
         kwargs["agency"] = self.agency
         return kwargs
 
-    def get(self, request, *args, **kwargs):
-        """Handle GET requests: initialize session and clear any prior OAuth tokens."""
+    def dispatch(self, request, *args, **kwargs):
+        """Initialize session state before handling the request."""
+        if not self.agency:
+            return TemplateResponse(request, "200-user-error.html")
+
         session.update(request, eligible=False, origin=self.agency.index_url)
         # clear any prior OAuth token as the user is choosing their desired flow
         # this may or may not require OAuth, with a different set of scope/claims than what is already stored
         session.logout(request)
-        return super().get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        """Handle POST requests: initialize session before form processing."""
-        session.update(request, eligible=False, origin=self.agency.index_url)
-        session.logout(request)
-        return super().post(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
         """If the form is valid, set enrollment flow and redirect."""
@@ -63,7 +65,8 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
     def get_context_data(self, **kwargs):
         """Add agency-specific context data."""
         context = super().get_context_data(**kwargs)
-        context.update(self.agency.eligibility_index_context)
+        if self.agency:
+            context.update(self.agency.eligibility_index_context)
         return context
 
 
