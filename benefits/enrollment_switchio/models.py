@@ -57,7 +57,7 @@ class SwitchioConfig(models.Model):
 
     @property
     def enrollment_index_template(self):
-        return "enrollment/index--switchio.html"
+        return "enrollment_switchio/index.html"
 
     def clean(self, agency=None):
         field_errors = {}
