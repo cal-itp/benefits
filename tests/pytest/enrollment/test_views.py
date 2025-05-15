@@ -10,6 +10,7 @@ from benefits.routes import routes
 import benefits.enrollment.views
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_littlepay.enrollment import CardTokenizationAccessResponse
+from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.enrollment.views import TEMPLATE_SYSTEM_ERROR, TEMPLATE_RETRY
 
@@ -47,7 +48,7 @@ def test_token_ineligible(client):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_refresh(mocker, client):
-    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
 
     mock_token = {}
     mock_token["access_token"] = "access_token"
@@ -74,8 +75,8 @@ def test_token_refresh(mocker, client):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_valid(mocker, client):
-    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=True)
-    mocker.patch("benefits.core.session.enrollment_token", return_value="enrollment_token")
+    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=True)
+    LittlepaySession.access_token = mocker.PropertyMock(return_value="enrollment_token")
 
     path = reverse(routes.ENROLLMENT_TOKEN)
     response = client.get(path)
@@ -89,7 +90,7 @@ def test_token_valid(mocker, client):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_system_error(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
-    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
 
     mock_error = {"message": "Mock error message"}
     mock_error_response = mocker.Mock(status_code=500, **mock_error)
@@ -119,7 +120,7 @@ def test_token_system_error(mocker, client, mocked_analytics_module, mocked_sent
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
-    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
 
     mock_error = {"message": "Mock error message"}
     mock_error_response = mocker.Mock(status_code=400, **mock_error)
@@ -149,7 +150,7 @@ def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_se
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
-    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
 
     exception = UnsupportedTokenTypeError()
 
@@ -175,7 +176,7 @@ def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_sentry_sdk_module):
-    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
 
     exception = ConnectionError()
 

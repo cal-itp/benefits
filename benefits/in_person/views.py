@@ -14,6 +14,7 @@ from benefits.eligibility import analytics as eligibility_analytics
 from benefits.enrollment import analytics as enrollment_analytics
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_littlepay.enrollment import request_card_tokenization_access, enroll
+from benefits.enrollment_littlepay.session import Session as LittlepaySession
 
 from benefits.in_person import forms
 
@@ -53,11 +54,14 @@ def eligibility(request):
 
 def token(request):
     """View handler for the enrollment auth token."""
-    if not session.enrollment_token_valid(request):
+    session = LittlepaySession(request)
+
+    if not session.access_token_valid():
         response = request_card_tokenization_access(request)
 
         if response.status is Status.SUCCESS:
-            session.update(request, enrollment_token=response.access_token, enrollment_token_exp=response.expires_at)
+            session.access_token = response.access_token
+            session.access_token_expiry = response.expires_at
         elif response.status is Status.SYSTEM_ERROR or response.status is Status.EXCEPTION:
             logger.debug("Error occurred while requesting access token", exc_info=response.exception)
             sentry_sdk.capture_exception(response.exception)
@@ -73,7 +77,7 @@ def token(request):
             data = {"redirect": redirect}
             return JsonResponse(data)
 
-    data = {"token": session.enrollment_token(request)}
+    data = {"token": session.access_token}
 
     return JsonResponse(data)
 

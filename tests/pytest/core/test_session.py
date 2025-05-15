@@ -7,6 +7,7 @@ from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse
 import pytest
 
+from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.routes import routes
 from benefits.core import models, session
 
@@ -131,45 +132,6 @@ def test_enrollment_reenrollment(app_request, model_EnrollmentFlow_supports_expi
 
 
 @pytest.mark.django_db
-def test_enrollment_token_default(app_request):
-    assert session.enrollment_token(app_request) is None
-    assert session.enrollment_token_expiry(app_request) is None
-
-
-@pytest.mark.django_db
-def test_enrollment_token_valid_expired(app_request):
-    # valid token expired in the far past
-    token = "token"
-    exp = time.time() - 10000
-
-    session.update(app_request, enrollment_token=token, enrollment_token_exp=exp)
-
-    assert not session.enrollment_token_valid(app_request)
-
-
-@pytest.mark.django_db
-def test_enrollment_token_valid_invalid(app_request):
-    # invalid token expiring in the far future
-    token = None
-    exp = time.time() + 10000
-
-    session.update(app_request, enrollment_token=token, enrollment_token_exp=exp)
-
-    assert not session.enrollment_token_valid(app_request)
-
-
-@pytest.mark.django_db
-def test_enrollment_token_valid_valid(app_request):
-    # valid token expiring in the far future
-    token = "token"
-    exp = time.time() + 10000
-
-    session.update(app_request, enrollment_token=token, enrollment_token_exp=exp)
-
-    assert session.enrollment_token_valid(app_request)
-
-
-@pytest.mark.django_db
 def test_language_default(app_request):
     assert session.language(app_request) == "en"
 
@@ -201,15 +163,16 @@ def test_logged_in_True(app_request):
 
 @pytest.mark.django_db
 def test_logout(app_request):
+    LittlepaySession(app_request, access_token="enrollment_token", access_token_expiry="3600")
     OAuthSession(app_request).claims_result = ClaimsResult(verified={"oauth_claim": True})
-    session.update(app_request, logged_in=True, enrollment_token="enrollment_token")
+    session.update(app_request, logged_in=True)
     assert session.logged_in(app_request)
 
     session.logout(app_request)
 
     assert not session.logged_in(app_request)
-    assert not session.enrollment_token(app_request)
-    assert not session.logged_in(app_request)
+    assert LittlepaySession(app_request).access_token is None
+    assert LittlepaySession(app_request).access_token_expiry is None
     assert OAuthSession(app_request).claims_result == ClaimsResult()
 
 
@@ -251,16 +214,18 @@ def test_reset_eligibility(app_request):
 @pytest.mark.django_db
 def test_reset_enrollment(app_request):
     app_request.session[session._ENROLLMENT_EXP] = "1234567890"
-    app_request.session[session._ENROLLMENT_TOKEN] = "enrollmenttoken123"
-    app_request.session[session._ENROLLMENT_TOKEN_EXP] = "1234567890"
+
+    littlepay_session = LittlepaySession(app_request)
+    app_request.session[littlepay_session._keys_access_token] = "enrollmenttoken123"
+    app_request.session[littlepay_session._keys_access_token_expiry] = "1234567890"
 
     session.reset(app_request)
 
     assert session.enrollment_expiry(app_request) is None
     assert session.enrollment_reenrollment(app_request) is None
-    assert session.enrollment_token(app_request) is None
-    assert session.enrollment_token_expiry(app_request) is None
-    assert not session.enrollment_token_valid(app_request)
+    assert littlepay_session.access_token is None
+    assert littlepay_session.access_token_expiry is None
+    assert not littlepay_session.access_token_valid()
 
 
 @pytest.mark.django_db
@@ -415,10 +380,10 @@ def test_update_enrollment_token(app_request):
     token = "token"
     exp = 1234567890
 
-    session.update(app_request, enrollment_token=token, enrollment_token_exp=exp)
+    littlepay_session = LittlepaySession(app_request, access_token=token, access_token_expiry=exp)
 
-    assert session.enrollment_token(app_request) == token
-    assert session.enrollment_token_expiry(app_request) == exp
+    assert littlepay_session.access_token == token
+    assert littlepay_session.access_token_expiry == exp
 
 
 @pytest.mark.django_db

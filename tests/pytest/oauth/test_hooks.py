@@ -7,6 +7,7 @@ import pytest
 
 import benefits.eligibility
 import benefits.eligibility.views
+from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.routes import routes
 from benefits.oauth.hooks import OAuthHooks
 import benefits.oauth.hooks
@@ -50,7 +51,7 @@ def test_pre_logout(app_request, mocked_oauth_analytics_module):
 
     mocked_oauth_analytics_module.started_sign_out.assert_called_once_with(app_request)
     assert not session.logged_in(app_request)
-    assert session.enrollment_token(app_request) is False
+    assert LittlepaySession(app_request).access_token is None
     assert session.logged_in(app_request) is False
     assert OAuthSession(app_request).claims_result == ClaimsResult()
 
