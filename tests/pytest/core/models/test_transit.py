@@ -198,7 +198,7 @@ def test_TransitAgency_enrollment_index_template_Switchio(model_TransitAgency, m
     model_TransitAgency.switchio_config = model_SwitchioConfig
     model_TransitAgency.save()
 
-    assert model_TransitAgency.enrollment_index_template == "enrollment/index--switchio.html"
+    assert model_TransitAgency.enrollment_index_template == "enrollment_switchio/index--switchio.html"
 
 
 @pytest.mark.django_db
