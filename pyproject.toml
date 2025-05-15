@@ -15,7 +15,7 @@ dependencies = [
     "Django==5.1.7",
     "django-cdt-identity @ git+https://github.com/Office-of-Digital-Services/django-cdt-identity.git@2025.04.1",
     "django-csp==3.8",
-    "django-admin-sortable2==2.2.6",
+    "django-admin-sortable2==2.2.8",
     "django-google-sso==8.0.0",
     "eligibility-api==2025.4.1",
     "calitp-littlepay==2025.4.1",
