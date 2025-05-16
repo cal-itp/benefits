@@ -4,12 +4,12 @@ import pytest
 from authlib.integrations.base_client.errors import UnsupportedTokenTypeError
 from django.urls import reverse
 from requests import HTTPError
+from unittest.mock import patch, PropertyMock
 
 
 from benefits.core import models
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_littlepay.enrollment import CardTokenizationAccessResponse
-from benefits.enrollment_littlepay.session import Session as LittlepaySession
 import benefits.in_person.views
 from benefits.routes import routes
 
@@ -158,9 +158,9 @@ def test_token_refresh(mocker, admin_client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
+@patch("benefits.enrollment_littlepay.session.Session.access_token", new=PropertyMock(return_value="enrollment_token"))
 def test_token_valid(mocker, admin_client):
     mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=True)
-    LittlepaySession.access_token = mocker.PropertyMock(return_value="enrollment_token")
 
     path = reverse(routes.IN_PERSON_ENROLLMENT_TOKEN)
     response = admin_client.get(path)
