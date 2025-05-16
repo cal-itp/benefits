@@ -4,10 +4,12 @@ import pytest
 from authlib.integrations.base_client.errors import UnsupportedTokenTypeError
 from django.urls import reverse
 from requests import HTTPError
+from unittest.mock import patch, PropertyMock
 
 
 from benefits.core import models
-from benefits.enrollment.enrollment import Status, CardTokenizationAccessResponse
+from benefits.enrollment.enrollment import Status
+from benefits.enrollment_littlepay.enrollment import CardTokenizationAccessResponse
 import benefits.in_person.views
 from benefits.routes import routes
 
@@ -130,7 +132,7 @@ def test_eligibility_post_flow_selected_and_unverified(admin_client):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_refresh(mocker, admin_client):
-    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
 
     mock_token = {}
     mock_token["access_token"] = "access_token"
@@ -156,9 +158,9 @@ def test_token_refresh(mocker, admin_client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
+@patch("benefits.enrollment_littlepay.session.Session.access_token", new=PropertyMock(return_value="enrollment_token"))
 def test_token_valid(mocker, admin_client):
-    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=True)
-    mocker.patch("benefits.core.session.enrollment_token", return_value="enrollment_token")
+    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=True)
 
     path = reverse(routes.IN_PERSON_ENROLLMENT_TOKEN)
     response = admin_client.get(path)
@@ -172,7 +174,7 @@ def test_token_valid(mocker, admin_client):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_system_error(mocker, admin_client, mocked_enrollment_analytics_module, mocked_sentry_sdk_module):
-    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
 
     mock_error = {"message": "Mock error message"}
     mock_error_response = mocker.Mock(status_code=500, **mock_error)
@@ -202,7 +204,7 @@ def test_token_system_error(mocker, admin_client, mocked_enrollment_analytics_mo
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_http_error_400(mocker, admin_client, mocked_enrollment_analytics_module, mocked_sentry_sdk_module):
-    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
 
     mock_error = {"message": "Mock error message"}
     mock_error_response = mocker.Mock(status_code=400, **mock_error)
@@ -232,7 +234,7 @@ def test_token_http_error_400(mocker, admin_client, mocked_enrollment_analytics_
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_misconfigured_client_id(mocker, admin_client, mocked_enrollment_analytics_module, mocked_sentry_sdk_module):
-    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
 
     exception = UnsupportedTokenTypeError()
 
@@ -258,7 +260,7 @@ def test_token_misconfigured_client_id(mocker, admin_client, mocked_enrollment_a
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
 def test_token_connection_error(mocker, admin_client, mocked_enrollment_analytics_module, mocked_sentry_sdk_module):
-    mocker.patch("benefits.core.session.enrollment_token_valid", return_value=False)
+    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
 
     exception = ConnectionError()
 
