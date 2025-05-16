@@ -189,7 +189,7 @@ def test_TransitAgency_enrollment_index_template_Littlepay(model_TransitAgency, 
     model_TransitAgency.switchio_config = None
     model_TransitAgency.save()
 
-    assert model_TransitAgency.enrollment_index_template == "enrollment/index--littlepay.html"
+    assert model_TransitAgency.enrollment_index_template == "enrollment_littlepay/index.html"
 
 
 @pytest.mark.django_db
