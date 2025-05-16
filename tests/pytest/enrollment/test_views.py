@@ -256,7 +256,7 @@ def test_index_eligible_post_valid_form_system_error(
     mock_error_response.json.return_value = mock_error
 
     mocker.patch(
-        "benefits.enrollment.views.enroll",
+        "benefits.enrollment_littlepay.views.enroll",
         return_value=(
             Status.SYSTEM_ERROR,
             HTTPError(
@@ -279,7 +279,7 @@ def test_index_eligible_post_valid_form_system_error(
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_exception(mocker, client, card_tokenize_form_data, mocked_analytics_module):
     mocker.patch(
-        "benefits.enrollment.views.enroll",
+        "benefits.enrollment_littlepay.views.enroll",
         return_value=(
             Status.EXCEPTION,
             Exception("some exception"),
@@ -306,7 +306,7 @@ def test_index_eligible_post_valid_form_success_claims(
     mocked_session_oauth_extra_claims,
 ):
     mocked_session_oauth_extra_claims.return_value = ["claim_1", "claim_2"]
-    mocker.patch("benefits.enrollment.views.enroll", return_value=(Status.SUCCESS, None))
+    mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
     spy = mocker.spy(benefits.enrollment.views.models.EnrollmentEvent.objects, "create")
 
     path = reverse(routes.ENROLLMENT_INDEX)
@@ -339,7 +339,7 @@ def test_index_eligible_post_valid_form_success_eligibility_api(
     mocked_session_oauth_extra_claims,
 ):
     mocked_session_oauth_extra_claims.return_value = ["claim_1", "claim_2"]
-    mocker.patch("benefits.enrollment.views.enroll", return_value=(Status.SUCCESS, None))
+    mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
     spy = mocker.spy(benefits.enrollment.views.models.EnrollmentEvent.objects, "create")
 
     path = reverse(routes.ENROLLMENT_INDEX)
@@ -369,7 +369,7 @@ def test_index_eligible_post_valid_form_reenrollment_error(
     mocked_analytics_module,
     model_EnrollmentFlow_supports_expiration,
 ):
-    mocker.patch("benefits.enrollment.views.enroll", return_value=(Status.REENROLLMENT_ERROR, None))
+    mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.REENROLLMENT_ERROR, None))
 
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
