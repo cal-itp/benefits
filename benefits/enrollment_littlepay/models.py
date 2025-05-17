@@ -52,7 +52,7 @@ class LittlepayConfig(models.Model):
 
     @property
     def enrollment_index_template(self):
-        return "enrollment/index--littlepay.html"
+        return "enrollment_littlepay/index.html"
 
     def clean(self):
         field_errors = {}
