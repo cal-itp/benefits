@@ -1,20 +1,17 @@
 from django.template.response import TemplateResponse
 from django.utils.decorators import decorator_from_middleware
-import sentry_sdk
 
 from benefits.routes import routes
 from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired
 
 from benefits.core import models
-from benefits.enrollment import analytics, forms
-from benefits.enrollment.enrollment import Status
-from benefits.enrollment.views import success, system_error, reenrollment_error
+from benefits.enrollment import forms
 from benefits.enrollment_littlepay.enrollment import enroll
 
 
 @decorator_from_middleware(EligibleSessionRequired)
-def index(request):
+def index(request, enrollment_result_handler):
     # POST back after transit processor form, process card token
     if request.method == "POST":
         form = forms.CardTokenizeSuccessForm(request.POST)
@@ -24,40 +21,7 @@ def index(request):
         card_token = form.cleaned_data.get("card_token")
         status, exception = enroll(request, card_token)
 
-        match (status):
-            case Status.SUCCESS:
-                agency = session.agency(request)
-                flow = session.flow(request)
-                expiry = session.enrollment_expiry(request)
-                oauth_extra_claims = session.oauth_extra_claims(request)
-                # EnrollmentEvent expects a string value for extra_claims
-                if oauth_extra_claims:
-                    str_extra_claims = ", ".join(oauth_extra_claims)
-                else:
-                    str_extra_claims = ""
-                event = models.EnrollmentEvent.objects.create(
-                    transit_agency=agency,
-                    enrollment_flow=flow,
-                    enrollment_method=models.EnrollmentMethods.DIGITAL,
-                    verified_by=flow.eligibility_verifier,
-                    expiration_datetime=expiry,
-                    extra_claims=str_extra_claims,
-                )
-                event.save()
-                analytics.returned_success(request, flow.group_id, extra_claims=oauth_extra_claims)
-                return success(request)
-
-            case Status.SYSTEM_ERROR:
-                analytics.returned_error(request, str(exception))
-                sentry_sdk.capture_exception(exception)
-                return system_error(request)
-
-            case Status.EXCEPTION:
-                analytics.returned_error(request, str(exception))
-                raise exception
-
-            case Status.REENROLLMENT_ERROR:
-                return reenrollment_error(request)
+        return enrollment_result_handler(request, status, exception)
 
     # GET enrollment index
     else:
