@@ -12,7 +12,7 @@ from django.utils.decorators import decorator_from_middleware
 import sentry_sdk
 
 from benefits.routes import routes
-from benefits.core import session
+from benefits.core import models, session
 from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
 
 from benefits.enrollment_littlepay.enrollment import request_card_tokenization_access
@@ -62,7 +62,44 @@ def index(request):
     """View handler for the enrollment landing page."""
     session.update(request, origin=reverse(routes.ENROLLMENT_INDEX))
 
-    return littlepay_index(request)
+    return littlepay_index(request, _enrollment_result_handler)
+
+
+def _enrollment_result_handler(request, status: Status, exception: Exception):
+    match (status):
+        case Status.SUCCESS:
+            agency = session.agency(request)
+            flow = session.flow(request)
+            expiry = session.enrollment_expiry(request)
+            oauth_extra_claims = session.oauth_extra_claims(request)
+            # EnrollmentEvent expects a string value for extra_claims
+            if oauth_extra_claims:
+                str_extra_claims = ", ".join(oauth_extra_claims)
+            else:
+                str_extra_claims = ""
+            event = models.EnrollmentEvent.objects.create(
+                transit_agency=agency,
+                enrollment_flow=flow,
+                enrollment_method=models.EnrollmentMethods.DIGITAL,
+                verified_by=flow.eligibility_verifier,
+                expiration_datetime=expiry,
+                extra_claims=str_extra_claims,
+            )
+            event.save()
+            analytics.returned_success(request, flow.group_id, extra_claims=oauth_extra_claims)
+            return success(request)
+
+        case Status.SYSTEM_ERROR:
+            analytics.returned_error(request, str(exception))
+            sentry_sdk.capture_exception(exception)
+            return system_error(request)
+
+        case Status.EXCEPTION:
+            analytics.returned_error(request, str(exception))
+            raise exception
+
+        case Status.REENROLLMENT_ERROR:
+            return reenrollment_error(request)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
