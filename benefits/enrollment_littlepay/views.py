@@ -1,12 +1,51 @@
+import logging
+
+from django.http import JsonResponse
+from django.urls import reverse
+from django.utils.decorators import decorator_from_middleware
 from django.views.generic import FormView
+import sentry_sdk
 
+from benefits.core.middleware import EligibleSessionRequired
 from benefits.routes import routes
-from benefits.core import session
-
-from benefits.core import models
+from benefits.core import models, session
 from benefits.core.mixins import EligibleSessionRequiredMixin
-from benefits.enrollment import forms
-from benefits.enrollment_littlepay.enrollment import enroll
+
+from benefits.enrollment import analytics, forms
+from benefits.enrollment.enrollment import Status
+from benefits.enrollment_littlepay.enrollment import enroll, request_card_tokenization_access
+from benefits.enrollment_littlepay.session import Session as LittlepaySession
+
+logger = logging.getLogger(__name__)
+
+
+@decorator_from_middleware(EligibleSessionRequired)
+def token(request):
+    """View handler for the enrollment auth token."""
+    session = LittlepaySession(request)
+
+    if not session.access_token_valid():
+        response = request_card_tokenization_access(request)
+
+        if response.status is Status.SUCCESS:
+            session.access_token = response.access_token
+            session.access_token_expiry = response.expires_at
+        elif response.status is Status.SYSTEM_ERROR or response.status is Status.EXCEPTION:
+            logger.debug("Error occurred while requesting access token", exc_info=response.exception)
+            sentry_sdk.capture_exception(response.exception)
+            analytics.failed_access_token_request(request, response.status_code)
+
+            if response.status is Status.SYSTEM_ERROR:
+                redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+            else:
+                redirect = reverse(routes.SERVER_ERROR)
+
+            data = {"redirect": redirect}
+            return JsonResponse(data)
+
+    data = {"token": session.access_token}
+
+    return JsonResponse(data)
 
 
 class IndexView(EligibleSessionRequiredMixin, FormView):
