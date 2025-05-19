@@ -13,7 +13,7 @@ from benefits.enrollment.enrollment import Status
 class CardTokenizationAccessResponse:
     status: Status
     access_token: str
-    expires_at: str
+    expires_at: int
     exception: Exception = None
     status_code: int = None
 

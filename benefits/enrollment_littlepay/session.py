@@ -35,12 +35,12 @@ class Session:
         self.session[self._keys_access_token] = value
 
     @property
-    def access_token_expiry(self) -> str:
+    def access_token_expiry(self) -> int:
         """Get the card tokenization access token's expiry time from the request's session, or None."""
         return self.session.get(self._keys_access_token_expiry)
 
     @access_token_expiry.setter
-    def access_token_expiry(self, value: str) -> None:
+    def access_token_expiry(self, value: int) -> None:
         self.session[self._keys_access_token_expiry] = value
 
     def access_token_valid(self):
