@@ -1,30 +1,19 @@
 from django.template.response import TemplateResponse
-from django.utils.decorators import decorator_from_middleware
+from django.views.generic import FormView
 
 from benefits.routes import routes
 from benefits.core import session
-from benefits.core.middleware import EligibleSessionRequired
 
 from benefits.core import models
 from benefits.enrollment import forms
 from benefits.enrollment_littlepay.enrollment import enroll
 
 
-@decorator_from_middleware(EligibleSessionRequired)
-def index(request, enrollment_result_handler):
-    # POST back after transit processor form, process card token
-    if request.method == "POST":
-        form = forms.CardTokenizeSuccessForm(request.POST)
-        if not form.is_valid():
-            raise Exception("Invalid card token form")
+class IndexView(FormView):
+    template_name = "enrollment_littlepay/index.html"
+    enrollment_result_handler = None
 
-        card_token = form.cleaned_data.get("card_token")
-        status, exception = enroll(request, card_token)
-
-        return enrollment_result_handler(request, status, exception)
-
-    # GET enrollment index
-    else:
+    def get(self, request, *args, **kwargs):
         agency = session.agency(request)
         flow = session.flow(request)
 
@@ -71,4 +60,15 @@ def index(request, enrollment_result_handler):
         enrollment_index_context_dict["transit_processor"] = transit_processor_context
         context.update(enrollment_index_context_dict)
 
-        return TemplateResponse(request, "enrollment_littlepay/index.html", context)
+        return TemplateResponse(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        # POST back after transit processor form, process card token
+        form = forms.CardTokenizeSuccessForm(request.POST)
+        if not form.is_valid():
+            raise Exception("Invalid card token form")
+
+        card_token = form.cleaned_data.get("card_token")
+        status, exception = enroll(request, card_token)
+
+        return self.enrollment_result_handler(request, status, exception)

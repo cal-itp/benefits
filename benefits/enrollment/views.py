@@ -17,7 +17,7 @@ from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequire
 
 from benefits.enrollment_littlepay.enrollment import request_card_tokenization_access
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
-from benefits.enrollment_littlepay.views import index as littlepay_index
+from benefits.enrollment_littlepay.views import IndexView as LittlepayIndexView
 from . import analytics
 from .enrollment import Status
 
@@ -62,7 +62,7 @@ def index(request):
     """View handler for the enrollment landing page."""
     session.update(request, origin=reverse(routes.ENROLLMENT_INDEX))
 
-    return littlepay_index(request, _enrollment_result_handler)
+    return LittlepayIndexView.as_view(enrollment_result_handler=_enrollment_result_handler)(request)
 
 
 def _enrollment_result_handler(request, status: Status, exception: Exception):
