@@ -4,7 +4,12 @@ import pytest
 
 from benefits.core import recaptcha
 from benefits.core.middleware import TEMPLATE_USER_ERROR
-from benefits.core.mixins import AgencySessionRequiredMixin, FlowSessionRequiredMixin, RecaptchaEnabledMixin
+from benefits.core.mixins import (
+    AgencySessionRequiredMixin,
+    EligibleSessionRequiredMixin,
+    FlowSessionRequiredMixin,
+    RecaptchaEnabledMixin,
+)
 
 
 class TestAgencySessionRequiredMixin:
@@ -35,6 +40,35 @@ class TestAgencySessionRequiredMixin:
         view.dispatch(app_request)
 
         assert view.agency == {"agency": "123"}
+
+
+class TestEligibleSessionRequiredMixin:
+    class SampleView(EligibleSessionRequiredMixin, View):
+        def get(self, request, *args, **kwargs):
+            return "Success"
+
+    @pytest.fixture
+    def view(self, app_request):
+        v = self.SampleView()
+        v.setup(app_request)
+        return v
+
+    def test_dispatch_without_eligibility(self, view, app_request, mocker):
+        mock_session = mocker.patch("benefits.core.mixins.session")
+        mock_session.eligible.return_value = False
+
+        response = view.dispatch(app_request)
+
+        assert response.status_code == 200
+        assert response.template_name == TEMPLATE_USER_ERROR
+
+    def test_dispatch_with_eligibility(self, view, app_request, mocker):
+        mock_session = mocker.patch("benefits.core.mixins.session")
+        mock_session.eligible.return_value = True
+
+        response = view.dispatch(app_request)
+
+        assert response == "Success"
 
 
 class TestFlowSessionRequiredMixin:

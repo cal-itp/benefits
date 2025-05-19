@@ -25,6 +25,20 @@ class AgencySessionRequiredMixin:
             return user_error(request)
 
 
+class EligibleSessionRequiredMixin:
+    """Mixin intended for use with a class-based view as the first in the MRO.
+
+    If the session is not marked as eligible (e.g. the user has verified their eligibility), return a user error.
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        if session.eligible(request):
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            logger.warning("Session does not have verified eligibility")
+            return user_error(request)
+
+
 class FlowSessionRequiredMixin:
     """Mixin intended for use with a class-based view as the first in the MRO.
 
