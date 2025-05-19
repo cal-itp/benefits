@@ -11,6 +11,7 @@ from benefits.enrollment_littlepay.enrollment import enroll
 
 class IndexView(FormView):
     template_name = "enrollment_littlepay/index.html"
+    form_class = forms.CardTokenizeSuccessForm
     enrollment_result_handler = None
 
     def get(self, request, *args, **kwargs):
@@ -62,13 +63,11 @@ class IndexView(FormView):
 
         return TemplateResponse(request, self.template_name, context)
 
-    def post(self, request, *args, **kwargs):
-        # POST back after transit processor form, process card token
-        form = forms.CardTokenizeSuccessForm(request.POST)
-        if not form.is_valid():
-            raise Exception("Invalid card token form")
-
+    def form_valid(self, form):
         card_token = form.cleaned_data.get("card_token")
-        status, exception = enroll(request, card_token)
+        status, exception = enroll(self.request, card_token)
 
-        return self.enrollment_result_handler(request, status, exception)
+        return self.enrollment_result_handler(self.request, status, exception)
+
+    def form_invalid(self, form):
+        raise Exception("Invalid card token form")
