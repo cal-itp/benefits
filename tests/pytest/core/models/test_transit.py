@@ -184,24 +184,6 @@ def test_TransitAgency_index_url(model_TransitAgency):
 
 
 @pytest.mark.django_db
-def test_TransitAgency_enrollment_index_template_Littlepay(model_TransitAgency, model_LittlepayConfig):
-    model_TransitAgency.littlepay_config = model_LittlepayConfig
-    model_TransitAgency.switchio_config = None
-    model_TransitAgency.save()
-
-    assert model_TransitAgency.enrollment_index_template == "enrollment_littlepay/index.html"
-
-
-@pytest.mark.django_db
-def test_TransitAgency_enrollment_index_template_Switchio(model_TransitAgency, model_SwitchioConfig):
-    model_TransitAgency.littlepay_config = None
-    model_TransitAgency.switchio_config = model_SwitchioConfig
-    model_TransitAgency.save()
-
-    assert model_TransitAgency.enrollment_index_template == "enrollment/index--switchio.html"
-
-
-@pytest.mark.django_db
 def test_TransitAgency_by_id_matching(model_TransitAgency):
     result = TransitAgency.by_id(model_TransitAgency.id)
 

@@ -184,17 +184,6 @@ class TransitAgency(models.Model):
         return self.eligibility_api_public_key.data
 
     @property
-    def enrollment_index_template(self):
-        if self.littlepay_config:
-            template = self.littlepay_config.enrollment_index_template
-        elif self.switchio_config:
-            template = self.switchio_config.enrollment_index_template
-        else:
-            raise ValueError("Transit agency does not have a Littlepay or Switchio config")
-
-        return template
-
-    @property
     def enrollment_flows(self):
         return self.enrollmentflow_set
 

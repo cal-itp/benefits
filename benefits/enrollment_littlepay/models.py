@@ -50,10 +50,6 @@ class LittlepayConfig(models.Model):
             name="Littlepay", website="https://littlepay.com", card_tokenize_url=url, card_tokenize_env=card_tokenize_env
         )
 
-    @property
-    def enrollment_index_template(self):
-        return "enrollment_littlepay/index.html"
-
     def clean(self):
         field_errors = {}
 

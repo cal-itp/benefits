@@ -25,7 +25,6 @@ def index(request, enrollment_result_handler):
 
     # GET enrollment index
     else:
-        agency = session.agency(request)
         flow = session.flow(request)
 
         tokenize_retry_form = forms.CardTokenizeFailForm(routes.ENROLLMENT_RETRY, "form-card-tokenize-fail-retry")
@@ -53,4 +52,4 @@ def index(request, enrollment_result_handler):
         }
         context.update(flow.enrollment_index_context)
 
-        return TemplateResponse(request, agency.enrollment_index_template, context)
+        return TemplateResponse(request, "enrollment_littlepay/index.html", context)
