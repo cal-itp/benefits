@@ -36,7 +36,7 @@ def mocked_enrollment_result_handler():
 
 @pytest.mark.django_db
 def test_token_ineligible(client):
-    path = reverse(routes.ENROLLMENT_TOKEN)
+    path = reverse(routes.ENROLLMENT_LITTLEPAY_TOKEN)
 
     response = client.get(path)
 
@@ -62,7 +62,7 @@ def test_token_refresh(mocker, client):
         ),
     )
 
-    path = reverse(routes.ENROLLMENT_TOKEN)
+    path = reverse(routes.ENROLLMENT_LITTLEPAY_TOKEN)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -77,7 +77,7 @@ def test_token_valid(mocker, client):
     mocker.patch.object(Session, "access_token", "enrollment_token")
     mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=True)
 
-    path = reverse(routes.ENROLLMENT_TOKEN)
+    path = reverse(routes.ENROLLMENT_LITTLEPAY_TOKEN)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -103,7 +103,7 @@ def test_token_system_error(mocker, client, mocked_analytics_module, mocked_sent
         ),
     )
 
-    path = reverse(routes.ENROLLMENT_TOKEN)
+    path = reverse(routes.ENROLLMENT_LITTLEPAY_TOKEN)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -133,7 +133,7 @@ def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_se
         ),
     )
 
-    path = reverse(routes.ENROLLMENT_TOKEN)
+    path = reverse(routes.ENROLLMENT_LITTLEPAY_TOKEN)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -160,7 +160,7 @@ def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, 
         ),
     )
 
-    path = reverse(routes.ENROLLMENT_TOKEN)
+    path = reverse(routes.ENROLLMENT_LITTLEPAY_TOKEN)
     response = client.get(path)
 
     assert response.status_code == 200
@@ -186,7 +186,7 @@ def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_
         ),
     )
 
-    path = reverse(routes.ENROLLMENT_TOKEN)
+    path = reverse(routes.ENROLLMENT_LITTLEPAY_TOKEN)
     response = client.get(path)
 
     assert response.status_code == 200

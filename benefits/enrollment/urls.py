@@ -6,14 +6,12 @@ from django.urls import path
 
 from benefits.routes import routes
 from . import views
-from benefits.enrollment_littlepay.views import TokenView
 
 
 app_name = "enrollment"
 urlpatterns = [
     # /enrollment
     path("", views.index, name=routes.name(routes.ENROLLMENT_INDEX)),
-    path("token", TokenView.as_view(), name=routes.name(routes.ENROLLMENT_TOKEN)),
     path("error/reenrollment", views.reenrollment_error, name=routes.name(routes.ENROLLMENT_REENROLLMENT_ERROR)),
     path("retry", views.retry, name=routes.name(routes.ENROLLMENT_RETRY)),
     path("success", views.success, name=routes.name(routes.ENROLLMENT_SUCCESS)),
