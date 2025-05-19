@@ -20,7 +20,7 @@
 | benefits/core/context/flow.py                              |       19 |        0 |        0 |        0 |    100% |           |
 | benefits/core/context\_processors.py                       |       48 |        2 |       14 |        2 |     94% |35->43, 88, 113 |
 | benefits/core/middleware.py                                |       84 |        3 |       20 |        2 |     95% |57-58, 77->82, 132 |
-| benefits/core/mixins.py                                    |       25 |        0 |        6 |        0 |    100% |           |
+| benefits/core/mixins.py                                    |       31 |        0 |        8 |        0 |    100% |           |
 | benefits/core/models/\_\_init\_\_.py                       |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/core/models/common.py                             |       51 |        2 |       14 |        0 |     97% |     91-92 |
 | benefits/core/models/enrollment.py                         |      151 |        1 |       26 |        2 |     98% |153, 249->260 |
@@ -90,7 +90,7 @@
 | benefits/settings.py                                       |      131 |        7 |       24 |        9 |     90% |106, 127->132, 143->146, 162, 315, 327, 329, 344, 356 |
 | benefits/urls.py                                           |       27 |        7 |        4 |        2 |     71% |33->44, 48-62 |
 | benefits/wsgi.py                                           |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                                  **TOTAL** | **2502** |  **123** |  **468** |   **55** | **93%** |           |
+|                                                  **TOTAL** | **2508** |  **123** |  **470** |   **55** | **93%** |           |
 
 
 ## Setup coverage badge
