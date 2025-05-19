@@ -6,6 +6,7 @@ from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired
 
 from benefits.core import models
+from benefits.enrollment import context as enrollment_context
 from benefits.enrollment import forms
 from benefits.enrollment_littlepay.enrollment import enroll
 
@@ -25,6 +26,7 @@ def index(request, enrollment_result_handler):
 
     # GET enrollment index
     else:
+        agency = session.agency(request)
         flow = session.flow(request)
 
         tokenize_retry_form = forms.CardTokenizeFailForm(routes.ENROLLMENT_RETRY, "form-card-tokenize-fail-retry")
@@ -50,6 +52,28 @@ def index(request, enrollment_result_handler):
             "form_system_error": tokenize_system_error_form.id,
             "overlay_language": overlay_language,
         }
-        context.update(flow.enrollment_index_context)
+
+        enrollment_index_context = enrollment_context.enrollment_index.get(
+            flow.system_name, enrollment_context.DefaultEnrollmentIndex()
+        )
+        enrollment_index_context_dict = enrollment_index_context.dict()
+
+        match agency.littlepay_config.environment:
+            case models.Environment.QA.value:
+                url = "https://verify.qa.littlepay.com/assets/js/littlepay.min.js"
+                card_tokenize_env = "https://verify.qa.littlepay.com"
+            case models.Environment.PROD.value:
+                url = "https://verify.littlepay.com/assets/js/littlepay.min.js"
+                card_tokenize_env = "https://verify.littlepay.com"
+            case _:
+                raise ValueError("Unrecognized environment value")
+
+        transit_processor_context = dict(
+            name="Littlepay", website="https://littlepay.com", card_tokenize_url=url, card_tokenize_env=card_tokenize_env
+        )
+
+        enrollment_index_context_dict["transit_processor"] = transit_processor_context
+
+        context.update(enrollment_index_context_dict)
 
         return TemplateResponse(request, "enrollment_littlepay/index.html", context)

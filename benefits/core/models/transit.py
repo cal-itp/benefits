@@ -189,9 +189,7 @@ class TransitAgency(models.Model):
 
     @property
     def transit_processor_context(self):
-        if self.littlepay_config:
-            context = self.littlepay_config.transit_processor_context
-        elif self.switchio_config:
+        if self.switchio_config:
             context = self.switchio_config.transit_processor_context
         else:
             raise ValueError("Transit agency does not have a Littlepay or Switchio config")

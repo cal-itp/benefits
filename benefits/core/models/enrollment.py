@@ -202,14 +202,6 @@ class EnrollmentFlow(models.Model):
             return self.eligibility_api_url
 
     @property
-    def enrollment_index_context(self):
-        ctx = enrollment_context.enrollment_index.get(self.system_name, enrollment_context.DefaultEnrollmentIndex())
-        ctx_dict = ctx.dict()
-        ctx_dict["transit_processor"] = self.transit_agency.transit_processor_context
-
-        return ctx_dict
-
-    @property
     def enrollment_success_context(self):
         if self.uses_api_verification:
             return enrollment_context.enrollment_success[self.system_name].dict()
