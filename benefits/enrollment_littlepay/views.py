@@ -1,4 +1,3 @@
-from django.template.response import TemplateResponse
 from django.views.generic import FormView
 
 from benefits.routes import routes
@@ -14,7 +13,8 @@ class IndexView(FormView):
     form_class = forms.CardTokenizeSuccessForm
     enrollment_result_handler = None
 
-    def get(self, request, *args, **kwargs):
+    def get_context_data(self, **kwargs):
+        request = self.request
         agency = session.agency(request)
         flow = session.flow(request)
 
@@ -61,7 +61,7 @@ class IndexView(FormView):
         enrollment_index_context_dict["transit_processor"] = transit_processor_context
         context.update(enrollment_index_context_dict)
 
-        return TemplateResponse(request, self.template_name, context)
+        return context
 
     def form_valid(self, form):
         card_token = form.cleaned_data.get("card_token")
