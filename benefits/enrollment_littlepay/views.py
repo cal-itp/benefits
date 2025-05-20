@@ -6,7 +6,6 @@ from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired
 
 from benefits.core import models
-from benefits.enrollment import context as enrollment_context
 from benefits.enrollment import forms
 from benefits.enrollment_littlepay.enrollment import enroll
 
@@ -53,10 +52,7 @@ def index(request, enrollment_result_handler):
             "overlay_language": overlay_language,
         }
 
-        enrollment_index_context = enrollment_context.enrollment_index.get(
-            flow.system_name, enrollment_context.DefaultEnrollmentIndex()
-        )
-        enrollment_index_context_dict = enrollment_index_context.dict()
+        enrollment_index_context_dict = flow.enrollment_index_context
 
         match agency.littlepay_config.environment:
             case models.Environment.QA.value:
@@ -73,7 +69,6 @@ def index(request, enrollment_result_handler):
         )
 
         enrollment_index_context_dict["transit_processor"] = transit_processor_context
-
         context.update(enrollment_index_context_dict)
 
         return TemplateResponse(request, "enrollment_littlepay/index.html", context)

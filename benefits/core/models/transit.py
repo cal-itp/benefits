@@ -187,15 +187,6 @@ class TransitAgency(models.Model):
     def enrollment_flows(self):
         return self.enrollmentflow_set
 
-    @property
-    def transit_processor_context(self):
-        if self.switchio_config:
-            context = self.switchio_config.transit_processor_context
-        else:
-            raise ValueError("Transit agency does not have a Littlepay or Switchio config")
-
-        return context
-
     def clean(self):
         field_errors = {}
         non_field_errors = []
