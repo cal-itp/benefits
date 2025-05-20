@@ -1,9 +1,0 @@
-nav:
-  - README.md
-  - infrastructure.md
-  - secrets.md
-  - release.md
-  - hotfix.md
-  - rollback.md
-  - troubleshooting.md
-  - workflows.md
