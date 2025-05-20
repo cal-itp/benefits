@@ -58,3 +58,8 @@ class TestIndexView:
         view.form_valid(form)
 
         handler_spy.assert_called_once_with(view.request, Status.SUCCESS, None)
+
+    def test_form_invalid(self, view):
+        with pytest.raises(Exception, match="Invalid card token form"):
+            form = view.form_class()
+            view.form_invalid(form)
