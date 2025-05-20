@@ -1,13 +1,22 @@
 import pytest
 
+from benefits.enrollment.enrollment import Status
 from benefits.enrollment_littlepay.views import IndexView
+
+
+@pytest.fixture
+def mocked_enrollment_result_handler():
+    def handler(request, status, exception):
+        return "success"
+
+    return handler
 
 
 class TestIndexView:
     @pytest.fixture
-    def view(self, app_request):
+    def view(self, app_request, mocked_enrollment_result_handler):
         """Fixture to create an instance of IndexView."""
-        v = IndexView()
+        v = IndexView(enrollment_result_handler=mocked_enrollment_result_handler)
         v.setup(app_request)
 
         return v
@@ -38,3 +47,14 @@ class TestIndexView:
         assert "website" in transit_processor_context
         assert "card_tokenize_url" in transit_processor_context
         assert "card_tokenize_env" in transit_processor_context
+
+    def test_form_valid(self, mocker, view):
+        mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
+
+        form = view.form_class(data=dict(card_token="abc123"))
+        handler_spy = mocker.spy(view, "enrollment_result_handler")
+
+        assert form.is_valid()
+        view.form_valid(form)
+
+        handler_spy.assert_called_once_with(view.request, Status.SUCCESS, None)
