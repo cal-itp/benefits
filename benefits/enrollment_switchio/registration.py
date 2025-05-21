@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
+from enum import Enum
 import hashlib
 import hmac
 import json
@@ -10,6 +11,13 @@ import requests
 class RegistrationRequestResponse:
     regId: str
     gtwUrl: str
+
+
+class EShopResponseMode(Enum):
+    FRAGMENT = "fragment"
+    QUERY = "query"
+    FORM_POST = "form_post"
+    POST_MESSAGE = "post_message"
 
 
 def _signature_input_string(timestamp, method, request_path, body):
@@ -27,16 +35,21 @@ def _stp_signature(api_secret, timestamp, method, request_path, body):
     return stp_signature
 
 
-def request_registration(api_url, api_key, api_secret, private_key, client_certificate_file, ca_certificate, timeout=5):
+def request_registration(
+    api_url,
+    api_key,
+    api_secret,
+    private_key,
+    client_certificate_file,
+    ca_certificate,
+    eshopResponseMode: EShopResponseMode,
+    timeout=5,
+):
     registration_path = "/api/v1/registration"
-    # eshopResponseMode = "fragment"
-    # eshopResponseMode = "query"
-    eshopResponseMode = "form_post"
-    # eshopResponseMode = "post_message" # don't use
     request_body = {
         "eshopRedirectUrl": "http://localhost:11369/enrollment",
         "mode": "register",
-        "eshopResponseMode": eshopResponseMode,
+        "eshopResponseMode": eshopResponseMode.value,
     }
     cert = (client_certificate_file, private_key)
     timestamp = str(int(datetime.now().timestamp()))
