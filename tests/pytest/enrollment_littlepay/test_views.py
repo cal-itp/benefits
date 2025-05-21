@@ -63,3 +63,11 @@ class TestIndexView:
         with pytest.raises(Exception, match="Invalid card token form"):
             form = view.form_class()
             view.form_invalid(form)
+
+    @pytest.mark.django_db
+    @pytest.mark.usefixtures("mocked_session_eligible", "mocked_session_agency", "mocked_session_flow")
+    def test_index_view(self, mocked_enrollment_result_handler, app_request):
+        response = IndexView.as_view(enrollment_result_handler=mocked_enrollment_result_handler)(app_request)
+
+        assert response.status_code == 200
+        assert response.template_name == ["enrollment_littlepay/index.html"]

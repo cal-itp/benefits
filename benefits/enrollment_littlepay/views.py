@@ -4,11 +4,12 @@ from benefits.routes import routes
 from benefits.core import session
 
 from benefits.core import models
+from benefits.core.mixins import EligibleSessionRequiredMixin
 from benefits.enrollment import forms
 from benefits.enrollment_littlepay.enrollment import enroll
 
 
-class IndexView(FormView):
+class IndexView(EligibleSessionRequiredMixin, FormView):
     template_name = "enrollment_littlepay/index.html"
     form_class = forms.CardTokenizeSuccessForm
     enrollment_result_handler = None
