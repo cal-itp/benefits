@@ -159,7 +159,21 @@ def enrollment(request):
             "form_system_error": tokenize_system_error_form.id,
             "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
         }
-        context.update({"transit_processor": agency.littlepay_config.transit_processor_context})
+
+        match agency.littlepay_config.environment:
+            case models.Environment.QA.value:
+                url = "https://verify.qa.littlepay.com/assets/js/littlepay.min.js"
+                card_tokenize_env = "https://verify.qa.littlepay.com"
+            case models.Environment.PROD.value:
+                url = "https://verify.littlepay.com/assets/js/littlepay.min.js"
+                card_tokenize_env = "https://verify.littlepay.com"
+            case _:
+                raise ValueError("Unrecognized environment value")
+
+        transit_processor_context = dict(
+            name="Littlepay", website="https://littlepay.com", card_tokenize_url=url, card_tokenize_env=card_tokenize_env
+        )
+        context.update({"transit_processor": transit_processor_context})
 
         return TemplateResponse(request, "in_person/enrollment/index.html", context)
 

@@ -34,26 +34,6 @@ class LittlepayConfig(models.Model):
         secret_field = self._meta.get_field("client_secret_name")
         return secret_field.secret_value(self)
 
-    @property
-    def transit_processor_context(self):
-        match self.environment:
-            case Environment.QA.value:
-                url = "https://verify.qa.littlepay.com/assets/js/littlepay.min.js"
-                card_tokenize_env = "https://verify.qa.littlepay.com"
-            case Environment.PROD.value:
-                url = "https://verify.littlepay.com/assets/js/littlepay.min.js"
-                card_tokenize_env = "https://verify.littlepay.com"
-            case _:
-                raise ValueError("Unrecognized environment value")
-
-        return dict(
-            name="Littlepay", website="https://littlepay.com", card_tokenize_url=url, card_tokenize_env=card_tokenize_env
-        )
-
-    @property
-    def enrollment_index_template(self):
-        return "enrollment/index--littlepay.html"
-
     def clean(self):
         field_errors = {}
 
