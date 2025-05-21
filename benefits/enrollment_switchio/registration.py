@@ -1,8 +1,15 @@
+from dataclasses import dataclass
 from datetime import datetime
 import hashlib
 import hmac
 import json
 import requests
+
+
+@dataclass
+class RegistrationRequestResponse:
+    regId: str
+    gtwUrl: str
 
 
 def _signature_input_string(timestamp, method, request_path, body):
@@ -20,7 +27,7 @@ def _stp_signature(api_secret, timestamp, method, request_path, body):
     return stp_signature
 
 
-def request_registration(api_url, api_key, api_secret, private_key, client_certificate_file, ca_certificate, timeout):
+def request_registration(api_url, api_key, api_secret, private_key, client_certificate_file, ca_certificate, timeout=5):
     registration_path = "/api/v1/registration"
     # eshopResponseMode = "fragment"
     # eshopResponseMode = "query"
@@ -56,7 +63,4 @@ def request_registration(api_url, api_key, api_secret, private_key, client_certi
 
     response.raise_for_status()
 
-    print(response.status_code)
-    print(response.json())
-    print(response.json()["gtwUrl"])
-    print("<- `" + eshopResponseMode + "`")
+    return RegistrationRequestResponse(**response.json())
