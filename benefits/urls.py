@@ -28,6 +28,7 @@ urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")),
     path("oauth/", include("benefits.oauth.urls")),
     path("in_person/", include("benefits.in_person.urls")),
+    path("littlepay/", include("benefits.enrollment_littlepay.urls")),
 ]
 
 if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.LOCAL:

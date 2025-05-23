@@ -85,9 +85,9 @@ class Routes:
         return "enrollment:index"
 
     @property
-    def ENROLLMENT_TOKEN(self):
-        """Acquire a TransitProcessor API token for enrollment."""
-        return "enrollment:token"
+    def ENROLLMENT_LITTLEPAY_TOKEN(self):
+        """Acquire a Littlepay card tokenization access token for enrollment."""
+        return "littlepay:token"
 
     @property
     def ENROLLMENT_SUCCESS(self):
