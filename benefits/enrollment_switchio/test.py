@@ -22,3 +22,6 @@ if __name__ == "__main__":
     response = client.request_registration(eshopResponseMode=registration.EShopResponseMode.FORM_POST)
 
     print(response)
+
+    registration_status = client.get_registration_status(registration_id=response.regId)
+    print(registration_status)

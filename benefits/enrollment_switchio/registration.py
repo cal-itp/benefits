@@ -20,6 +20,18 @@ class EShopResponseMode(Enum):
     POST_MESSAGE = "post_message"
 
 
+@dataclass
+class RegistrationStatusResponse:
+    regState: str
+    created: datetime
+    mode: str
+    tokens: list[dict]
+    eshopResponseMode: str
+    identifier_type: str = None
+    mask_cin: str = None
+    card_exp: str = None
+
+
 class Client:
 
     def __init__(
@@ -38,10 +50,13 @@ class Client:
         self.client_certificate_file = client_certificate_file
         self.ca_certificate = ca_certificate
 
-    def _signature_input_string(self, timestamp, method, request_path, body):
+    def _signature_input_string(self, timestamp, method, request_path, body=None):
+        if body is None:
+            body = ""
+
         return f"{timestamp}{method}{request_path}{body}"
 
-    def _stp_signature(self, api_secret, timestamp, method, request_path, body):
+    def _stp_signature(self, api_secret, timestamp, method, request_path, body=None):
         input_string = self._signature_input_string(timestamp, method, request_path, body)
 
         # must encode inputs for hashing, according to https://stackoverflow.com/a/66958131
@@ -51,7 +66,7 @@ class Client:
 
         return stp_signature
 
-    def _get_headers(self, method, request_path, request_body: dict):
+    def _get_headers(self, method, request_path, request_body: dict = None):
         timestamp = str(int(datetime.now().timestamp()))
 
         return {
@@ -63,7 +78,7 @@ class Client:
                 timestamp=timestamp,
                 method=method,
                 request_path=request_path,
-                body=json.dumps(request_body),
+                body=json.dumps(request_body) if request_body else None,
             ),
         }
 
@@ -92,3 +107,19 @@ class Client:
         response.raise_for_status()
 
         return RegistrationRequestResponse(**response.json())
+
+    def get_registration_status(self, registration_id, timeout=5):
+        request_path = f"/api/v1/registration/{registration_id}"
+        cert = (self.client_certificate_file, self.private_key)
+
+        response = requests.get(
+            self.api_url.strip("/") + request_path,
+            headers=self._get_headers(method="GET", request_path=request_path),
+            cert=cert,
+            verify=self.ca_certificate,
+            timeout=timeout,
+        )
+
+        response.raise_for_status()
+
+        return RegistrationStatusResponse(**response.json())
