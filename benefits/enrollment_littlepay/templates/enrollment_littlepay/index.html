@@ -15,7 +15,7 @@
 
       $.ajax({ dataType: "script", attrs: { nonce: "{{ request.csp_nonce }}"}, url: "{{ transit_processor.card_tokenize_url }}" })
           .done(function() {
-          $.get("{% url routes.ENROLLMENT_TOKEN %}", function(data) {
+          $.get("{% url routes.ENROLLMENT_LITTLEPAY_TOKEN %}", function(data) {
               if (data.redirect) {
                 // https://stackoverflow.com/a/42469170
                 // use 'assign' because 'replace' was giving strange Back button behavior
