@@ -258,3 +258,14 @@ class TestIndexView:
 
         assert response.status_code == 200
         assert response.template_name == ["enrollment_littlepay/index.html"]
+
+    @pytest.mark.django_db
+    @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
+    def test_index_view_not_eligible(self, mocker, mocked_enrollment_result_handler, app_request):
+        mocker.patch("benefits.core.session.eligible", return_value=False)
+
+        index_view = IndexView.as_view(enrollment_result_handler=mocked_enrollment_result_handler)
+        response = index_view(app_request)
+
+        assert response.status_code == 200
+        assert response.template_name == TEMPLATE_USER_ERROR
