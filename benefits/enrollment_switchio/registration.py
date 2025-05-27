@@ -35,45 +35,58 @@ def _stp_signature(api_secret, timestamp, method, request_path, body):
     return stp_signature
 
 
-def request_registration(
-    api_url,
-    api_key,
-    api_secret,
-    private_key,
-    client_certificate_file,
-    ca_certificate,
-    eshopResponseMode: EShopResponseMode,
-    timeout=5,
-):
-    registration_path = "/api/v1/registration"
-    request_body = {
-        "eshopRedirectUrl": "http://localhost:11369/enrollment",
-        "mode": "register",
-        "eshopResponseMode": eshopResponseMode.value,
-    }
-    cert = (client_certificate_file, private_key)
-    timestamp = str(int(datetime.now().timestamp()))
+class Client:
 
-    response = requests.post(
-        api_url.strip("/") + registration_path,
-        json=request_body,
-        headers={
-            "Content-Type": "application/json",
-            "STP-APIKEY": api_key,
-            "STP-TIMESTAMP": timestamp,
-            "STP-SIGNATURE": _stp_signature(
-                api_secret=api_secret,
-                timestamp=timestamp,
-                method="POST",
-                request_path=registration_path,
-                body=json.dumps(request_body),
-            ),
-        },
-        cert=cert,
-        verify=ca_certificate,
-        timeout=timeout,
-    )
+    def __init__(
+        self,
+        api_url,
+        api_key,
+        api_secret,
+        private_key,
+        client_certificate_file,
+        ca_certificate,
+    ):
+        self.api_url = api_url
+        self.api_key = api_key
+        self.api_secret = api_secret
+        self.private_key = private_key
+        self.client_certificate_file = client_certificate_file
+        self.ca_certificate = ca_certificate
 
-    response.raise_for_status()
+    def request_registration(
+        self,
+        eshopResponseMode: EShopResponseMode,
+        timeout=5,
+    ):
+        registration_path = "/api/v1/registration"
+        request_body = {
+            "eshopRedirectUrl": "http://localhost:11369/enrollment",
+            "mode": "register",
+            "eshopResponseMode": eshopResponseMode.value,
+        }
+        cert = (self.client_certificate_file, self.private_key)
+        timestamp = str(int(datetime.now().timestamp()))
 
-    return RegistrationRequestResponse(**response.json())
+        response = requests.post(
+            self.api_url.strip("/") + registration_path,
+            json=request_body,
+            headers={
+                "Content-Type": "application/json",
+                "STP-APIKEY": self.api_key,
+                "STP-TIMESTAMP": timestamp,
+                "STP-SIGNATURE": _stp_signature(
+                    api_secret=self.api_secret,
+                    timestamp=timestamp,
+                    method="POST",
+                    request_path=registration_path,
+                    body=json.dumps(request_body),
+                ),
+            },
+            cert=cert,
+            verify=self.ca_certificate,
+            timeout=timeout,
+        )
+
+        response.raise_for_status()
+
+        return RegistrationRequestResponse(**response.json())

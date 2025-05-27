@@ -17,6 +17,8 @@ def _get_env_values():
 
 if __name__ == "__main__":
     values = _get_env_values()
-    response = registration.request_registration(**values, eshopResponseMode=registration.EShopResponseMode.FORM_POST)
+    client = registration.Client(**values)
+
+    response = client.request_registration(eshopResponseMode=registration.EShopResponseMode.FORM_POST)
 
     print(response)
