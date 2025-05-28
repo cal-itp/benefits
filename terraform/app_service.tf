@@ -61,14 +61,14 @@ resource "azurerm_linux_web_app" "main" {
     "DJANGO_STORAGE_DIR"   = "${local.secret_prefix}django-storage-dir)",
     "DJANGO_DEBUG"         = local.is_prod ? null : "${local.secret_prefix}django-debug)",
     "DJANGO_LOG_LEVEL"     = "${local.secret_prefix}django-log-level)",
-
     "DJANGO_RECAPTCHA_SECRET_KEY" = "${local.secret_prefix}django-recaptcha-secret-key)",
     "DJANGO_RECAPTCHA_SITE_KEY"   = "${local.secret_prefix}django-recaptcha-site-key)",
-
     "DJANGO_SECRET_KEY"      = "${local.secret_prefix}django-secret-key)",
     "DJANGO_TRUSTED_ORIGINS" = "${local.secret_prefix}django-trusted-origins)",
 
     "HEALTHCHECK_USER_AGENTS" = local.is_dev ? null : "${local.secret_prefix}healthcheck-user-agents)",
+
+    "LITTLEPAY_ADDITIONAL_CARDTYPES" = "${local.secret_prefix}littlepay-additional-cardtypes)",
 
     # Google SSO for Admin
 
