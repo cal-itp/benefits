@@ -8,12 +8,12 @@ import requests
 
 
 @dataclass
-class RegistrationRequestResponse:
+class Registration:
     regId: str
     gtwUrl: str
 
 
-class EShopResponseMode(Enum):
+class EshopResponseMode(Enum):
     FRAGMENT = "fragment"
     QUERY = "query"
     FORM_POST = "form_post"
@@ -21,7 +21,7 @@ class EShopResponseMode(Enum):
 
 
 @dataclass
-class RegistrationStatusResponse:
+class RegistrationStatus:
     regState: str
     created: datetime
     mode: str
@@ -84,9 +84,9 @@ class Client:
 
     def request_registration(
         self,
-        eshopResponseMode: EShopResponseMode,
+        eshopResponseMode: EshopResponseMode,
         timeout=5,
-    ):
+    ) -> Registration:
         registration_path = "/api/v1/registration"
         request_body = {
             "eshopRedirectUrl": "http://localhost:11369/enrollment",
@@ -106,9 +106,9 @@ class Client:
 
         response.raise_for_status()
 
-        return RegistrationRequestResponse(**response.json())
+        return Registration(**response.json())
 
-    def get_registration_status(self, registration_id, timeout=5):
+    def get_registration_status(self, registration_id, timeout=5) -> RegistrationStatus:
         request_path = f"/api/v1/registration/{registration_id}"
         cert = (self.client_certificate_file, self.private_key)
 
@@ -122,4 +122,4 @@ class Client:
 
         response.raise_for_status()
 
-        return RegistrationStatusResponse(**response.json())
+        return RegistrationStatus(**response.json())
