@@ -38,13 +38,18 @@
                   $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ loading_text }}");
               });
 
+              // parse the JSON string back into a JS array
+              // the escapejs filter handles e.g. quote conversion
+              let cardTypes = JSON.parse('{{ card_types|escapejs }}');
+
               littlepay({
                   authorization: data.token,
                   element: '#{{ cta_button }}',
                   envUrl: '{{ transit_processor.card_tokenize_env }}',
                   options: {
                       color: '#046b99',
-                      language: '{{ overlay_language }}'
+                      language: '{{ overlay_language }}',
+                      cardTypes: cardTypes
                   },
                   onTokenize: function (response) {
                       /* This function executes when the

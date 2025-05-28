@@ -379,3 +379,6 @@ except Exception:
     REQUESTS_READ_TIMEOUT = 20
 
 REQUESTS_TIMEOUT = (REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT)
+
+# Temporary flag for Littlepay card types
+LITTLEPAY_ADDITIONAL_CARDTYPES = os.environ.get("LITTLEPAY_ADDITIONAL_CARDTYPES", "False").lower() == "true"

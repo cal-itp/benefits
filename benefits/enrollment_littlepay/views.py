@@ -1,5 +1,7 @@
+import json
 import logging
 
+from django.conf import settings
 from django.http import JsonResponse
 from django.urls import reverse
 from django.views.generic import FormView, View
@@ -68,6 +70,10 @@ class IndexView(EligibleSessionRequiredMixin, FormView):
         # mapping from Django's I18N LANGUAGE_CODE to Littlepay's overlay language code
         overlay_language = {"en": "en", "es": "es-419"}.get(request.LANGUAGE_CODE, "en")
 
+        card_types = ["visa", "mastercard"]
+        if settings.LITTLEPAY_ADDITIONAL_CARDTYPES:
+            card_types.extend(["discover", "amex"])
+
         context = {
             "forms": [tokenize_retry_form, tokenize_server_error_form, tokenize_system_error_form, tokenize_success_form],
             "cta_button": "tokenize_card",
@@ -78,6 +84,8 @@ class IndexView(EligibleSessionRequiredMixin, FormView):
             "form_success": tokenize_success_form.id,
             "form_system_error": tokenize_system_error_form.id,
             "overlay_language": overlay_language,
+            # convert the python list to a JSON string for use in JavaScript
+            "card_types": json.dumps(card_types),
         }
 
         enrollment_index_context_dict = flow.enrollment_index_context

@@ -209,7 +209,10 @@ class TestIndexView:
 
     @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-    def test_get_context_data(self, view):
+    @pytest.mark.parametrize("additional_cardtypes", [True, False])
+    def test_get_context_data(self, view, settings, additional_cardtypes):
+        settings.LITTLEPAY_ADDITIONAL_CARDTYPES = additional_cardtypes
+
         context = view.get_context_data()
 
         assert "forms" in context
@@ -233,6 +236,13 @@ class TestIndexView:
         assert "website" in transit_processor_context
         assert "card_tokenize_url" in transit_processor_context
         assert "card_tokenize_env" in transit_processor_context
+
+        card_types = context["card_types"]
+        assert "visa" in card_types
+        assert "mastercard" in card_types
+        if additional_cardtypes:
+            assert "discover" in card_types
+            assert "amex" in card_types
 
     def test_form_valid(self, mocker, view):
         mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
