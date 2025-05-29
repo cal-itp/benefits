@@ -1,0 +1,47 @@
+from django.urls import reverse
+import pytest
+from requests import HTTPError
+
+from benefits.routes import routes
+import benefits.enrollment.enrollment
+from benefits.enrollment.enrollment import Status, handle_enrollment_results
+
+
+@pytest.fixture
+def mocked_analytics_module(mocked_analytics_module):
+    return mocked_analytics_module(benefits.enrollment.enrollment)
+
+
+@pytest.fixture
+def mocked_sentry_sdk_module(mocker):
+    return mocker.patch.object(benefits.enrollment.enrollment, "sentry_sdk")
+
+
+def test_handle_enrollment_results_success():
+    pass
+
+
+@pytest.mark.parametrize("status_code", [500, 501, 502, 503, 504])
+def test_handle_enrollment_results_system_error(
+    mocker, app_request, status_code, mocked_analytics_module, mocked_sentry_sdk_module
+):
+    mock_error = {"message": "Mock error message"}
+    mock_error_response = mocker.Mock(status_code=status_code, **mock_error)
+    mock_error_response.json.return_value = mock_error
+
+    mock_exception = HTTPError(response=mock_error_response)
+
+    response = handle_enrollment_results(app_request, Status.SYSTEM_ERROR, mock_exception)
+
+    assert response.status_code == 302
+    assert response.url == reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+    mocked_analytics_module.returned_error.assert_called_once()
+    mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+
+def test_handle_enrollment_results_exception():
+    pass
+
+
+def test_handle_enrollment_results_reenrollment_error():
+    pass

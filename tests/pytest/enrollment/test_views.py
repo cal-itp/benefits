@@ -1,6 +1,5 @@
 import pytest
 from django.urls import reverse
-from requests import HTTPError
 
 from benefits.core import models
 from benefits.routes import routes
@@ -44,46 +43,6 @@ def test_index_eligible_get(client):
 
     assert response.status_code == 302
     assert response.url == reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
-
-
-@pytest.mark.django_db
-@pytest.mark.parametrize("status_code", [500, 501, 502, 503, 504])
-@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_post_valid_form_system_error(
-    mocker,
-    client,
-    mocked_session_agency,
-    model_EnrollmentFlow_does_not_support_expiration,
-    card_tokenize_form_data,
-    status_code,
-    mocked_enrollment_analytics_module,
-    mocked_sentry_sdk_module,
-):
-    mock_session = mocker.patch("benefits.enrollment.views.session")
-    mock_session.agency.return_value = mocked_session_agency.return_value
-    mock_session.flow.return_value = model_EnrollmentFlow_does_not_support_expiration
-
-    mock_error = {"message": "Mock error message"}
-    mock_error_response = mocker.Mock(status_code=status_code, **mock_error)
-    mock_error_response.json.return_value = mock_error
-
-    mocker.patch(
-        "benefits.enrollment_littlepay.views.enroll",
-        return_value=(
-            Status.SYSTEM_ERROR,
-            HTTPError(
-                response=mock_error_response,
-            ),
-        ),
-    )
-
-    path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
-    response = client.post(path, card_tokenize_form_data)
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ENROLLMENT_SYSTEM_ERROR)
-    mocked_enrollment_analytics_module.returned_error.assert_called_once()
-    mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
 @pytest.mark.django_db
