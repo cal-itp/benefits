@@ -7,7 +7,7 @@ from benefits.routes import routes
 import benefits.enrollment.views
 from benefits.enrollment.enrollment import Status
 from benefits.core.middleware import TEMPLATE_USER_ERROR
-from benefits.enrollment.views import TEMPLATE_SYSTEM_ERROR, TEMPLATE_RETRY
+from benefits.enrollment.views import TEMPLATE_RETRY, system_error
 
 
 @pytest.fixture
@@ -99,11 +99,25 @@ def test_index_eligible_post_valid_form_system_error(
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_SYSTEM_ERROR
-    assert {"origin": mocked_session_agency.return_value.index_url} in mock_session.update.call_args
+    assert response.status_code == 302
+    assert response.url == reverse(routes.ENROLLMENT_SYSTEM_ERROR)
     mocked_analytics_module.returned_error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_eligible")
+def test_system_error(
+    mocker,
+    app_request,
+    mocked_session_agency,
+):
+    mock_session = mocker.patch("benefits.enrollment.views.session")
+    mock_session.agency.return_value = mocked_session_agency.return_value
+
+    system_error(app_request)
+
+    assert {"origin": mocked_session_agency.return_value.index_url} in mock_session.update.call_args
 
 
 @pytest.mark.django_db
@@ -152,8 +166,8 @@ def test_index_eligible_post_valid_form_success_claims(
         extra_claims="claim_1, claim_2",
     )
 
-    assert response.status_code == 200
-    assert response.template_name == "enrollment/success.html"
+    assert response.status_code == 302
+    assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
     mocked_analytics_module.returned_success.assert_called_once()
     assert model_EnrollmentFlow_with_scope_and_claim.group_id in mocked_analytics_module.returned_success.call_args.args
 
@@ -185,8 +199,8 @@ def test_index_eligible_post_valid_form_success_eligibility_api(
         extra_claims="claim_1, claim_2",
     )
 
-    assert response.status_code == 200
-    assert response.template_name == "enrollment/success.html"
+    assert response.status_code == 302
+    assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
     mocked_analytics_module.returned_success.assert_called_once()
     assert model_EnrollmentFlow_with_eligibility_api.group_id in mocked_analytics_module.returned_success.call_args.args
 
@@ -198,15 +212,14 @@ def test_index_eligible_post_valid_form_reenrollment_error(
     client,
     card_tokenize_form_data,
     mocked_analytics_module,
-    model_EnrollmentFlow_supports_expiration,
 ):
     mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.REENROLLMENT_ERROR, None))
 
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
-    assert response.status_code == 200
-    assert response.template_name == model_EnrollmentFlow_supports_expiration.reenrollment_error_template
+    assert response.status_code == 302
+    assert response.url == reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
     mocked_analytics_module.returned_error.assert_called_once()
 
 

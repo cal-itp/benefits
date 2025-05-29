@@ -5,6 +5,7 @@ The enrollment application: view definitions for the benefits enrollment flow.
 import logging
 
 
+from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
@@ -55,19 +56,20 @@ def _enrollment_result_handler(request, status: Status, exception: Exception):
             )
             event.save()
             analytics.returned_success(request, flow.group_id, extra_claims=oauth_extra_claims)
-            return success(request)
+            return redirect(routes.ENROLLMENT_SUCCESS)
 
         case Status.SYSTEM_ERROR:
             analytics.returned_error(request, str(exception))
             sentry_sdk.capture_exception(exception)
-            return system_error(request)
+            return redirect(routes.ENROLLMENT_SYSTEM_ERROR)
 
         case Status.EXCEPTION:
             analytics.returned_error(request, str(exception))
             raise exception
 
         case Status.REENROLLMENT_ERROR:
-            return reenrollment_error(request)
+            analytics.returned_error(request, "Re-enrollment error.")
+            return redirect(routes.ENROLLMENT_REENROLLMENT_ERROR)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
@@ -82,8 +84,6 @@ def reenrollment_error(request):
         # overwrite origin for a logged in user
         # if they click the logout button, they are taken to the new route
         session.update(request, origin=reverse(routes.LOGGED_OUT))
-
-    analytics.returned_error(request, "Re-enrollment error.")
 
     return TemplateResponse(request, flow.reenrollment_error_template)
 
