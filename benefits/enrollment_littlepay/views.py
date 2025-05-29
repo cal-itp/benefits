@@ -63,7 +63,7 @@ class IndexView(EligibleSessionRequiredMixin, FormView):
             routes.ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
         )
         tokenize_success_form = forms.CardTokenizeSuccessForm(
-            action_url=routes.ENROLLMENT_INDEX, auto_id=True, label_suffix=""
+            action_url=routes.ENROLLMENT_LITTLEPAY_INDEX, auto_id=True, label_suffix=""
         )
 
         # mapping from Django's I18N LANGUAGE_CODE to Littlepay's overlay language code

@@ -4,7 +4,7 @@ The enrollment application: view definitions for the benefits enrollment flow.
 
 import logging
 
-
+from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
@@ -13,7 +13,6 @@ from benefits.routes import routes
 from benefits.core import session
 from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
 
-from benefits.enrollment_littlepay.views import IndexView as LittlepayIndexView
 from . import analytics
 
 TEMPLATE_RETRY = "enrollment/retry.html"
@@ -28,7 +27,7 @@ def index(request):
     """View handler for the enrollment landing page."""
     session.update(request, origin=reverse(routes.ENROLLMENT_INDEX))
 
-    return LittlepayIndexView.as_view()(request)
+    return redirect(routes.ENROLLMENT_LITTLEPAY_INDEX)
 
 
 @decorator_from_middleware(EligibleSessionRequired)

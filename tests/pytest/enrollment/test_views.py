@@ -42,20 +42,15 @@ def test_index_eligible_get(client):
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.get(path)
 
-    assert response.status_code == 200
-    assert "forms" in response.context_data
-    assert "cta_button" in response.context_data
-    assert "token_field" in response.context_data
-    assert "form_retry" in response.context_data
-    assert "form_success" in response.context_data
-    assert "overlay_language" in response.context_data
+    assert response.status_code == 302
+    assert response.url == reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 @pytest.mark.parametrize("LANGUAGE_CODE, overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")])
 def test_index_eligible_get_changed_language(client, LANGUAGE_CODE, overlay_language):
-    path = reverse(routes.ENROLLMENT_INDEX)
+    path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
     client.post(reverse("set_language"), data={"language": LANGUAGE_CODE})
     response = client.get(path)
 
@@ -65,7 +60,7 @@ def test_index_eligible_get_changed_language(client, LANGUAGE_CODE, overlay_lang
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_invalid_form(client, invalid_form_data):
-    path = reverse(routes.ENROLLMENT_INDEX)
+    path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
 
     with pytest.raises(Exception, match=r"form"):
         client.post(path, invalid_form_data)
@@ -102,7 +97,7 @@ def test_index_eligible_post_valid_form_system_error(
         ),
     )
 
-    path = reverse(routes.ENROLLMENT_INDEX)
+    path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     assert response.status_code == 302
@@ -137,7 +132,7 @@ def test_index_eligible_post_valid_form_exception(mocker, client, card_tokenize_
         ),
     )
 
-    path = reverse(routes.ENROLLMENT_INDEX)
+    path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
 
     with pytest.raises(Exception, match=r"some exception"):
         client.post(path, card_tokenize_form_data)
@@ -160,7 +155,7 @@ def test_index_eligible_post_valid_form_success_claims(
     mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
     spy = mocker.spy(benefits.enrollment.enrollment.models.EnrollmentEvent.objects, "create")
 
-    path = reverse(routes.ENROLLMENT_INDEX)
+    path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     spy.assert_called_once_with(
@@ -196,7 +191,7 @@ def test_index_eligible_post_valid_form_success_eligibility_api(
     mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
     spy = mocker.spy(benefits.enrollment.enrollment.models.EnrollmentEvent.objects, "create")
 
-    path = reverse(routes.ENROLLMENT_INDEX)
+    path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     spy.assert_called_once_with(
@@ -227,7 +222,7 @@ def test_index_eligible_post_valid_form_reenrollment_error(
 ):
     mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.REENROLLMENT_ERROR, None))
 
-    path = reverse(routes.ENROLLMENT_INDEX)
+    path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
     response = client.post(path, card_tokenize_form_data)
 
     assert response.status_code == 302
