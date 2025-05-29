@@ -50,13 +50,13 @@ class Client:
         self.client_certificate = client_certificate
         self.ca_certificate = ca_certificate
 
-    def _signature_input_string(self, timestamp, method, request_path, body=None):
+    def _signature_input_string(self, timestamp: str, method: str, request_path: str, body: str = None):
         if body is None:
             body = ""
 
         return f"{timestamp}{method}{request_path}{body}"
 
-    def _stp_signature(self, api_secret, timestamp, method, request_path, body=None):
+    def _stp_signature(self, api_secret: str, timestamp: str, method: str, request_path, body: str = None):
         input_string = self._signature_input_string(timestamp, method, request_path, body)
 
         # must encode inputs for hashing, according to https://stackoverflow.com/a/66958131
