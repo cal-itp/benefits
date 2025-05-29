@@ -103,5 +103,9 @@ def test_handle_enrollment_results_exception(app_request, mocked_analytics_modul
         mocked_analytics_module.returned_error.assert_called_once()
 
 
-def test_handle_enrollment_results_reenrollment_error():
-    pass
+def test_handle_enrollment_results_reenrollment_error(app_request, mocked_analytics_module):
+    response = handle_enrollment_results(app_request, Status.REENROLLMENT_ERROR, None)
+
+    assert response.status_code == 302
+    assert response.url == reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
+    mocked_analytics_module.returned_error.assert_called_once()

@@ -4,7 +4,6 @@ from django.urls import reverse
 from benefits.routes import routes
 import benefits.enrollment.views
 import benefits.enrollment.enrollment
-from benefits.enrollment.enrollment import Status
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.enrollment.views import TEMPLATE_RETRY, system_error
 
@@ -57,24 +56,6 @@ def test_system_error(
     system_error(app_request)
 
     assert {"origin": mocked_session_agency.return_value.index_url} in mock_session.update.call_args
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_post_valid_form_reenrollment_error(
-    mocker,
-    client,
-    card_tokenize_form_data,
-    mocked_enrollment_analytics_module,
-):
-    mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.REENROLLMENT_ERROR, None))
-
-    path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
-    response = client.post(path, card_tokenize_form_data)
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
-    mocked_enrollment_analytics_module.returned_error.assert_called_once()
 
 
 @pytest.mark.django_db
