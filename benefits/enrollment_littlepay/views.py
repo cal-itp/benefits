@@ -12,7 +12,7 @@ from benefits.core import models, session
 from benefits.core.mixins import EligibleSessionRequiredMixin
 
 from benefits.enrollment import analytics, forms
-from benefits.enrollment.enrollment import Status
+from benefits.enrollment.enrollment import Status, handle_enrollment_results
 from benefits.enrollment_littlepay.enrollment import enroll, request_card_tokenization_access
 from benefits.enrollment_littlepay.session import Session
 
@@ -51,7 +51,6 @@ class TokenView(EligibleSessionRequiredMixin, View):
 class IndexView(EligibleSessionRequiredMixin, FormView):
     template_name = "enrollment_littlepay/index.html"
     form_class = forms.CardTokenizeSuccessForm
-    enrollment_result_handler = None
 
     def get_context_data(self, **kwargs):
         request = self.request
@@ -113,7 +112,7 @@ class IndexView(EligibleSessionRequiredMixin, FormView):
         card_token = form.cleaned_data.get("card_token")
         status, exception = enroll(self.request, card_token)
 
-        return self.enrollment_result_handler(self.request, status, exception)
+        return handle_enrollment_results(self.request, status, exception)
 
     def form_invalid(self, form):
         raise Exception("Invalid card token form")

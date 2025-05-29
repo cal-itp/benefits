@@ -15,7 +15,6 @@ from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequire
 
 from benefits.enrollment_littlepay.views import IndexView as LittlepayIndexView
 from . import analytics
-from .enrollment import handle_enrollment_results
 
 TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
@@ -29,7 +28,7 @@ def index(request):
     """View handler for the enrollment landing page."""
     session.update(request, origin=reverse(routes.ENROLLMENT_INDEX))
 
-    return LittlepayIndexView.as_view(enrollment_result_handler=handle_enrollment_results)(request)
+    return LittlepayIndexView.as_view()(request)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
