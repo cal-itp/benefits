@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-05-16 17:20-0700\n"
+"POT-Creation-Date: 2025-05-29 11:52-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -200,6 +200,11 @@ msgstr ""
 
 msgctxt "image alt text"
 msgid "Four curved lines on contactless-enabled cards"
+msgstr ""
+
+msgid ""
+"Your card must include a Visa, Mastercard, Discover, or American Express "
+"logo."
 msgstr ""
 
 msgid "Your card must include a Visa or Mastercard logo."
@@ -690,6 +695,11 @@ msgid "Your contactless card details"
 msgstr ""
 
 msgid ""
+"Your contactless card must be a debit or credit card by Visa, Mastercard, "
+"Discover, or American Express."
+msgstr ""
+
+msgid ""
 "Your contactless card must be a debit or credit card by Visa or Mastercard."
 msgstr ""
 
@@ -780,6 +790,13 @@ msgstr ""
 msgid ""
 "You can’t pay for transit using the CalFresh funds on your Golden State "
 "Advantage card. Please provide details from your contactless debit or credit "
+"card issued by Visa, Mastercard, Discover, or American Express and use that "
+"card to pay for transit."
+msgstr ""
+
+msgid ""
+"You can’t pay for transit using the CalFresh funds on your Golden State "
+"Advantage card. Please provide details from your contactless debit or credit "
 "card issued by Visa or Mastercard and use that card to pay for transit."
 msgstr ""
 
@@ -803,6 +820,11 @@ msgid "You will be directed to our partner, "
 msgstr ""
 
 msgid "We don’t store your information, and you won’t be charged."
+msgstr ""
+
+msgid ""
+"Please use a debit or credit card by Visa, Mastercard, Discover, or American "
+"Express."
 msgstr ""
 
 msgid "Please use a debit or credit card by Visa or Mastercard."
