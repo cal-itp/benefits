@@ -19,13 +19,8 @@ def invalid_form_data():
 
 
 @pytest.fixture
-def mocked_views_analytics_module(mocked_analytics_module):
+def mocked_analytics_module(mocked_analytics_module):
     return mocked_analytics_module(benefits.enrollment.views)
-
-
-@pytest.fixture
-def mocked_enrollment_analytics_module(mocked_analytics_module):
-    return mocked_analytics_module(benefits.enrollment.enrollment)
 
 
 @pytest.fixture
@@ -112,24 +107,24 @@ def test_retry_ineligible(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_retry_get(client, mocked_views_analytics_module):
+def test_retry_get(client, mocked_analytics_module):
     path = reverse(routes.ENROLLMENT_RETRY)
     response = client.get(path)
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_RETRY
-    mocked_views_analytics_module.returned_retry.assert_called_once()
+    mocked_analytics_module.returned_retry.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_retry_valid_form(client, mocked_views_analytics_module):
+def test_retry_valid_form(client, mocked_analytics_module):
     path = reverse(routes.ENROLLMENT_RETRY)
     response = client.post(path)
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_RETRY
-    mocked_views_analytics_module.returned_retry.assert_called_once()
+    mocked_analytics_module.returned_retry.assert_called_once()
 
 
 @pytest.mark.django_db
