@@ -83,13 +83,15 @@ class Client:
 
     def request_registration(
         self,
+        eshopRedirectUrl: str,
+        mode: str,
         eshopResponseMode: EshopResponseMode,
         timeout=5,
     ) -> Registration:
         registration_path = "/api/v1/registration"
         request_body = {
-            "eshopRedirectUrl": "http://localhost:11369/enrollment",
-            "mode": "register",
+            "eshopRedirectUrl": eshopRedirectUrl,
+            "mode": mode,
             "eshopResponseMode": eshopResponseMode.value,
         }
         cert = (self.client_certificate_file, self.private_key)
