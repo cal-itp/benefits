@@ -1,8 +1,10 @@
 from datetime import datetime
 import hashlib
 import hmac
+import json
 import pytest
 
+import benefits.enrollment_switchio.api
 from benefits.enrollment_switchio.api import Client
 
 
@@ -42,3 +44,34 @@ def test_client_stp_signature(client, method, body):
     expected = hmac.new(byte_key, message, hashlib.sha256).hexdigest()
 
     assert stp_signature == expected
+
+
+@pytest.mark.parametrize("method", ["GET", "POST"])
+@pytest.mark.parametrize("body", [{"exampleProperty": "blah"}, None])
+def test_get_headers(mocker, client, method, body):
+    timestamp = 1516867520
+
+    # mock datetime.now()
+    datetime_mock = mocker.MagicMock()
+    datetime_mock.now.return_value = datetime.fromtimestamp(timestamp)
+    mocker.patch.object(benefits.enrollment_switchio.api, "datetime", datetime_mock)
+
+    request_path = "/api/example"
+
+    headers = client._get_headers(method=method, request_path=request_path, request_body=body)
+
+    # calculate the expected value
+    timestamp = str(timestamp)
+    expected = {
+        "Content-Type": "application/json",
+        "STP-APIKEY": client.api_key,
+        "STP-TIMESTAMP": timestamp,
+        "STP-SIGNATURE": client._stp_signature(
+            timestamp=timestamp,
+            method=method,
+            request_path=request_path,
+            body=json.dumps(body) if body else None,
+        ),
+    }
+
+    assert headers == expected
