@@ -39,8 +39,11 @@ def test_handle_enrollment_results_system_error(
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
-def test_handle_enrollment_results_exception():
-    pass
+def test_handle_enrollment_results_exception(app_request, mocked_analytics_module):
+    with pytest.raises(Exception, match=r"some exception"):
+        handle_enrollment_results(app_request, Status.EXCEPTION, Exception("some exception"))
+
+        mocked_analytics_module.returned_error.assert_called_once()
 
 
 def test_handle_enrollment_results_reenrollment_error():

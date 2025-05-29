@@ -62,25 +62,6 @@ def test_system_error(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_post_valid_form_exception(mocker, client, card_tokenize_form_data, mocked_enrollment_analytics_module):
-    mocker.patch(
-        "benefits.enrollment_littlepay.views.enroll",
-        return_value=(
-            Status.EXCEPTION,
-            Exception("some exception"),
-        ),
-    )
-
-    path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
-
-    with pytest.raises(Exception, match=r"some exception"):
-        client.post(path, card_tokenize_form_data)
-
-        mocked_enrollment_analytics_module.returned_error.assert_called_once()
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_success_claims(
     mocker,
     client,
