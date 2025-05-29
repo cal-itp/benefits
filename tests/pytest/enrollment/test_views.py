@@ -1,7 +1,6 @@
 import pytest
 from django.urls import reverse
 
-from benefits.core import models
 from benefits.routes import routes
 import benefits.enrollment.views
 import benefits.enrollment.enrollment
@@ -58,78 +57,6 @@ def test_system_error(
     system_error(app_request)
 
     assert {"origin": mocked_session_agency.return_value.index_url} in mock_session.update.call_args
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_post_valid_form_success_claims(
-    mocker,
-    client,
-    card_tokenize_form_data,
-    mocked_enrollment_analytics_module,
-    model_TransitAgency,
-    model_EnrollmentFlow_with_scope_and_claim,
-    mocked_session_oauth_extra_claims,
-):
-    mocked_session_oauth_extra_claims.return_value = ["claim_1", "claim_2"]
-    mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
-    spy = mocker.spy(benefits.enrollment.enrollment.models.EnrollmentEvent.objects, "create")
-
-    path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
-    response = client.post(path, card_tokenize_form_data)
-
-    spy.assert_called_once_with(
-        transit_agency=model_TransitAgency,
-        enrollment_flow=model_EnrollmentFlow_with_scope_and_claim,
-        enrollment_method=models.EnrollmentMethods.DIGITAL,
-        verified_by=model_EnrollmentFlow_with_scope_and_claim.oauth_config.client_name,
-        expiration_datetime=None,
-        extra_claims="claim_1, claim_2",
-    )
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
-    mocked_enrollment_analytics_module.returned_success.assert_called_once()
-    assert (
-        model_EnrollmentFlow_with_scope_and_claim.group_id
-        in mocked_enrollment_analytics_module.returned_success.call_args.args
-    )
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_post_valid_form_success_eligibility_api(
-    mocker,
-    client,
-    card_tokenize_form_data,
-    mocked_enrollment_analytics_module,
-    model_TransitAgency,
-    model_EnrollmentFlow_with_eligibility_api,
-    mocked_session_oauth_extra_claims,
-):
-    mocked_session_oauth_extra_claims.return_value = ["claim_1", "claim_2"]
-    mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
-    spy = mocker.spy(benefits.enrollment.enrollment.models.EnrollmentEvent.objects, "create")
-
-    path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
-    response = client.post(path, card_tokenize_form_data)
-
-    spy.assert_called_once_with(
-        transit_agency=model_TransitAgency,
-        enrollment_flow=model_EnrollmentFlow_with_eligibility_api,
-        enrollment_method=models.EnrollmentMethods.DIGITAL,
-        verified_by=model_EnrollmentFlow_with_eligibility_api.eligibility_api_url,
-        expiration_datetime=None,
-        extra_claims="claim_1, claim_2",
-    )
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
-    mocked_enrollment_analytics_module.returned_success.assert_called_once()
-    assert (
-        model_EnrollmentFlow_with_eligibility_api.group_id
-        in mocked_enrollment_analytics_module.returned_success.call_args.args
-    )
 
 
 @pytest.mark.django_db
