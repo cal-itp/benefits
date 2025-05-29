@@ -5,6 +5,7 @@ from requests import HTTPError
 from benefits.core import models
 from benefits.routes import routes
 import benefits.enrollment.views
+import benefits.enrollment.enrollment
 from benefits.enrollment.enrollment import Status
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.enrollment.views import TEMPLATE_RETRY, system_error
@@ -21,13 +22,18 @@ def invalid_form_data():
 
 
 @pytest.fixture
-def mocked_analytics_module(mocked_analytics_module):
+def mocked_views_analytics_module(mocked_analytics_module):
     return mocked_analytics_module(benefits.enrollment.views)
 
 
 @pytest.fixture
+def mocked_enrollment_analytics_module(mocked_analytics_module):
+    return mocked_analytics_module(benefits.enrollment.enrollment)
+
+
+@pytest.fixture
 def mocked_sentry_sdk_module(mocker):
-    return mocker.patch.object(benefits.enrollment.views, "sentry_sdk")
+    return mocker.patch.object(benefits.enrollment.enrollment, "sentry_sdk")
 
 
 @pytest.mark.django_db
@@ -75,7 +81,7 @@ def test_index_eligible_post_valid_form_system_error(
     model_EnrollmentFlow_does_not_support_expiration,
     card_tokenize_form_data,
     status_code,
-    mocked_analytics_module,
+    mocked_enrollment_analytics_module,
     mocked_sentry_sdk_module,
 ):
     mock_session = mocker.patch("benefits.enrollment.views.session")
@@ -101,7 +107,7 @@ def test_index_eligible_post_valid_form_system_error(
 
     assert response.status_code == 302
     assert response.url == reverse(routes.ENROLLMENT_SYSTEM_ERROR)
-    mocked_analytics_module.returned_error.assert_called_once()
+    mocked_enrollment_analytics_module.returned_error.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
@@ -122,7 +128,7 @@ def test_system_error(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_post_valid_form_exception(mocker, client, card_tokenize_form_data, mocked_analytics_module):
+def test_index_eligible_post_valid_form_exception(mocker, client, card_tokenize_form_data, mocked_enrollment_analytics_module):
     mocker.patch(
         "benefits.enrollment_littlepay.views.enroll",
         return_value=(
@@ -136,7 +142,7 @@ def test_index_eligible_post_valid_form_exception(mocker, client, card_tokenize_
     with pytest.raises(Exception, match=r"some exception"):
         client.post(path, card_tokenize_form_data)
 
-        mocked_analytics_module.returned_error.assert_called_once()
+        mocked_enrollment_analytics_module.returned_error.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -145,14 +151,14 @@ def test_index_eligible_post_valid_form_success_claims(
     mocker,
     client,
     card_tokenize_form_data,
-    mocked_analytics_module,
+    mocked_enrollment_analytics_module,
     model_TransitAgency,
     model_EnrollmentFlow_with_scope_and_claim,
     mocked_session_oauth_extra_claims,
 ):
     mocked_session_oauth_extra_claims.return_value = ["claim_1", "claim_2"]
     mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
-    spy = mocker.spy(benefits.enrollment.views.models.EnrollmentEvent.objects, "create")
+    spy = mocker.spy(benefits.enrollment.enrollment.models.EnrollmentEvent.objects, "create")
 
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
@@ -168,8 +174,11 @@ def test_index_eligible_post_valid_form_success_claims(
 
     assert response.status_code == 302
     assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
-    mocked_analytics_module.returned_success.assert_called_once()
-    assert model_EnrollmentFlow_with_scope_and_claim.group_id in mocked_analytics_module.returned_success.call_args.args
+    mocked_enrollment_analytics_module.returned_success.assert_called_once()
+    assert (
+        model_EnrollmentFlow_with_scope_and_claim.group_id
+        in mocked_enrollment_analytics_module.returned_success.call_args.args
+    )
 
 
 @pytest.mark.django_db
@@ -178,14 +187,14 @@ def test_index_eligible_post_valid_form_success_eligibility_api(
     mocker,
     client,
     card_tokenize_form_data,
-    mocked_analytics_module,
+    mocked_enrollment_analytics_module,
     model_TransitAgency,
     model_EnrollmentFlow_with_eligibility_api,
     mocked_session_oauth_extra_claims,
 ):
     mocked_session_oauth_extra_claims.return_value = ["claim_1", "claim_2"]
     mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
-    spy = mocker.spy(benefits.enrollment.views.models.EnrollmentEvent.objects, "create")
+    spy = mocker.spy(benefits.enrollment.enrollment.models.EnrollmentEvent.objects, "create")
 
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.post(path, card_tokenize_form_data)
@@ -201,8 +210,11 @@ def test_index_eligible_post_valid_form_success_eligibility_api(
 
     assert response.status_code == 302
     assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
-    mocked_analytics_module.returned_success.assert_called_once()
-    assert model_EnrollmentFlow_with_eligibility_api.group_id in mocked_analytics_module.returned_success.call_args.args
+    mocked_enrollment_analytics_module.returned_success.assert_called_once()
+    assert (
+        model_EnrollmentFlow_with_eligibility_api.group_id
+        in mocked_enrollment_analytics_module.returned_success.call_args.args
+    )
 
 
 @pytest.mark.django_db
@@ -211,7 +223,7 @@ def test_index_eligible_post_valid_form_reenrollment_error(
     mocker,
     client,
     card_tokenize_form_data,
-    mocked_analytics_module,
+    mocked_enrollment_analytics_module,
 ):
     mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.REENROLLMENT_ERROR, None))
 
@@ -220,7 +232,7 @@ def test_index_eligible_post_valid_form_reenrollment_error(
 
     assert response.status_code == 302
     assert response.url == reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
-    mocked_analytics_module.returned_error.assert_called_once()
+    mocked_enrollment_analytics_module.returned_error.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -277,24 +289,24 @@ def test_retry_ineligible(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_retry_get(client, mocked_analytics_module):
+def test_retry_get(client, mocked_views_analytics_module):
     path = reverse(routes.ENROLLMENT_RETRY)
     response = client.get(path)
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_RETRY
-    mocked_analytics_module.returned_retry.assert_called_once()
+    mocked_views_analytics_module.returned_retry.assert_called_once()
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_retry_valid_form(client, mocked_analytics_module):
+def test_retry_valid_form(client, mocked_views_analytics_module):
     path = reverse(routes.ENROLLMENT_RETRY)
     response = client.post(path)
 
     assert response.status_code == 200
     assert response.template_name == TEMPLATE_RETRY
-    mocked_analytics_module.returned_retry.assert_called_once()
+    mocked_views_analytics_module.returned_retry.assert_called_once()
 
 
 @pytest.mark.django_db
