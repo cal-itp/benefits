@@ -56,11 +56,11 @@ class Client:
 
         return f"{timestamp}{method}{request_path}{body}"
 
-    def _stp_signature(self, api_secret: str, timestamp: str, method: str, request_path, body: str = None):
+    def _stp_signature(self, timestamp: str, method: str, request_path, body: str = None):
         input_string = self._signature_input_string(timestamp, method, request_path, body)
 
         # must encode inputs for hashing, according to https://stackoverflow.com/a/66958131
-        byte_key = api_secret.encode("utf-8")
+        byte_key = self.api_secret.encode("utf-8")
         message = input_string.encode("utf-8")
         stp_signature = hmac.new(byte_key, message, hashlib.sha256).hexdigest()
 
@@ -74,7 +74,6 @@ class Client:
             "STP-APIKEY": self.api_key,
             "STP-TIMESTAMP": timestamp,
             "STP-SIGNATURE": self._stp_signature(
-                api_secret=self.api_secret,
                 timestamp=timestamp,
                 method=method,
                 request_path=request_path,
