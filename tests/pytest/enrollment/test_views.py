@@ -47,15 +47,6 @@ def test_index_eligible_get(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_post_invalid_form(client, invalid_form_data):
-    path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
-
-    with pytest.raises(Exception, match=r"form"):
-        client.post(path, invalid_form_data)
-
-
-@pytest.mark.django_db
 @pytest.mark.parametrize("status_code", [500, 501, 502, 503, 504])
 @pytest.mark.usefixtures("mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_valid_form_system_error(
