@@ -5,7 +5,7 @@ import json
 import pytest
 
 import benefits.enrollment_switchio.api
-from benefits.enrollment_switchio.api import Client, EshopResponseMode, Registration
+from benefits.enrollment_switchio.api import Client, EshopResponseMode, Registration, RegistrationStatus
 
 
 @pytest.fixture
@@ -88,3 +88,20 @@ def test_client_request_registration(mocker, client):
     )
 
     assert registration == Registration(**mock_json)
+
+
+def test_client_get_registration_status(mocker, client):
+    mock_response = mocker.Mock()
+    mock_json = dict(
+        regState="created",
+        created="2025-05-28T18:26:03.353",
+        mode="register",
+        tokens=[],
+        eshopResponseMode="form_post",
+    )
+    mock_response.json.return_value = mock_json
+    mocker.patch("benefits.enrollment_switchio.api.requests.get", return_value=mock_response)
+
+    registration_status = client.get_registration_status(registration_id="1234")
+
+    assert registration_status == RegistrationStatus(**mock_json)
