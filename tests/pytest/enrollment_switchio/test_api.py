@@ -5,7 +5,7 @@ import json
 import pytest
 
 import benefits.enrollment_switchio.api
-from benefits.enrollment_switchio.api import Client
+from benefits.enrollment_switchio.api import Client, EshopResponseMode, Registration
 
 
 @pytest.fixture
@@ -75,3 +75,16 @@ def test_get_headers(mocker, client, method, body):
     }
 
     assert headers == expected
+
+
+def test_client_request_registration(mocker, client):
+    mock_response = mocker.Mock()
+    mock_json = dict(regId="1234", gtwUrl="https://example.com/cst/?regId=1234")
+    mock_response.json.return_value = mock_json
+    mocker.patch("benefits.enrollment_switchio.api.requests.post", return_value=mock_response)
+
+    registration = client.request_registration(
+        eshopRedirectUrl="https://localhost/enrollment", mode="register", eshopResponseMode=EshopResponseMode.FORM_POST
+    )
+
+    assert registration == Registration(**mock_json)
