@@ -48,17 +48,6 @@ def test_index_eligible_get(client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-@pytest.mark.parametrize("LANGUAGE_CODE, overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")])
-def test_index_eligible_get_changed_language(client, LANGUAGE_CODE, overlay_language):
-    path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
-    client.post(reverse("set_language"), data={"language": LANGUAGE_CODE})
-    response = client.get(path)
-
-    assert response.context_data["overlay_language"] == overlay_language
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_index_eligible_post_invalid_form(client, invalid_form_data):
     path = reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
 

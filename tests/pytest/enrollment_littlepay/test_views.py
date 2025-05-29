@@ -236,6 +236,14 @@ class TestIndexView:
             assert "discover" in card_types
             assert "amex" in card_types
 
+    @pytest.mark.parametrize(
+        "LANGUAGE_CODE, expected_overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")]
+    )
+    def test_get_overlay_language(self, view, LANGUAGE_CODE, expected_overlay_language):
+        overlay_language = view._get_overlay_language(LANGUAGE_CODE)
+
+        assert overlay_language == expected_overlay_language
+
     def test_form_valid(self, mocker, view):
         mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
 

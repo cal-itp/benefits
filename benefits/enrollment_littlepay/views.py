@@ -66,9 +66,6 @@ class IndexView(EligibleSessionRequiredMixin, FormView):
             action_url=routes.ENROLLMENT_LITTLEPAY_INDEX, auto_id=True, label_suffix=""
         )
 
-        # mapping from Django's I18N LANGUAGE_CODE to Littlepay's overlay language code
-        overlay_language = {"en": "en", "es": "es-419"}.get(request.LANGUAGE_CODE, "en")
-
         card_types = ["visa", "mastercard"]
         if settings.LITTLEPAY_ADDITIONAL_CARDTYPES:
             card_types.extend(["discover", "amex"])
@@ -82,7 +79,7 @@ class IndexView(EligibleSessionRequiredMixin, FormView):
             "form_server_error": tokenize_server_error_form.id,
             "form_success": tokenize_success_form.id,
             "form_system_error": tokenize_system_error_form.id,
-            "overlay_language": overlay_language,
+            "overlay_language": self._get_overlay_language(request.LANGUAGE_CODE),
             # convert the python list to a JSON string for use in JavaScript
             "card_types": json.dumps(card_types),
         }
@@ -107,6 +104,12 @@ class IndexView(EligibleSessionRequiredMixin, FormView):
         context.update(enrollment_index_context_dict)
 
         return context
+
+    def _get_overlay_language(self, django_language_code):
+        """Given a Django language code, return the corresponding language code to use with Littlepay's overlay."""
+        # mapping from Django's I18N LANGUAGE_CODE to Littlepay's overlay language code
+        overlay_language = {"en": "en", "es": "es-419"}.get(django_language_code, "en")
+        return overlay_language
 
     def form_valid(self, form):
         card_token = form.cleaned_data.get("card_token")
