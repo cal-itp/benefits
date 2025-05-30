@@ -51,14 +51,6 @@ class SwitchioConfig(models.Model):
         secret_field = self._meta.get_field("api_secret_name")
         return secret_field.secret_value(self)
 
-    @property
-    def transit_processor_context(self):
-        return dict(name="Switchio", website="https://switchio.com/transport/")
-
-    @property
-    def enrollment_index_template(self):
-        return "enrollment/index--switchio.html"
-
     def clean(self, agency=None):
         field_errors = {}
 
