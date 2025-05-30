@@ -13,7 +13,10 @@ USER $USER
 
 COPY . .
 # install devcontainer requirements
-RUN pip install -e .[dev,test]
+# this RUN command uses pipcache; this layer is rebuilt if 'COPY . .' changes,
+# but pip will use its cache for downloads
+RUN --mount=type=cache,id=pipcache,target=${HOME}/.cache/pip pip install -e .[dev,test]
 
 # docs requirements are in a separate file for the GitHub Action
-RUN pip install -r docs/requirements.txt
+# this RUN command uses pipcache, pip will use its cache for downloads
+RUN --mount=type=cache,id=pipcache,target=${HOME}/.cache/pip pip install -r docs/requirements.txt
