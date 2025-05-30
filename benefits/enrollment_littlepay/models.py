@@ -30,6 +30,15 @@ class LittlepayConfig(models.Model):
     )
 
     @property
+    def api_base_url(self):
+        if self.environment == Environment.QA.value:
+            return ""
+        elif self.environment == Environment.PROD.value:
+            return ""
+        else:
+            raise ValueError(f"Unexpected value for environment: {self.environment}")
+
+    @property
     def client_secret(self):
         secret_field = self._meta.get_field("client_secret_name")
         return secret_field.secret_value(self)
