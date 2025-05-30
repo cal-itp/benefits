@@ -166,7 +166,6 @@ def model_EnrollmentFlow_supports_sign_out(model_EnrollmentFlow):
 def model_TransitProcessor():
     transit_processor = TransitProcessor.objects.create(
         name="Test Transit Processor",
-        api_base_url="https://example.com/enrollments",
     )
 
     return transit_processor
