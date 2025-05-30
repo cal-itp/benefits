@@ -64,8 +64,8 @@
 | benefits/enrollment\_switchio/apps.py                      |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/migrations/0001\_initial.py  |        8 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/migrations/\_\_init\_\_.py   |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_switchio/models.py                    |       37 |        4 |        8 |        0 |     91% |51-52, 56, 60 |
-| benefits/enrollment\_switchio/views.py                     |        0 |        0 |        0 |        0 |    100% |           |
+| benefits/enrollment\_switchio/models.py                    |       31 |        2 |        8 |        0 |     95% |     51-52 |
+| benefits/enrollment\_switchio/views.py                     |       15 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/\_\_init\_\_.py                        |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/apps.py                                |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/context/\_\_init\_\_.py                |        2 |        0 |        0 |        0 |    100% |           |
@@ -91,7 +91,7 @@
 | benefits/settings.py                                       |      132 |        7 |       24 |        9 |     90% |106, 127->132, 143->146, 162, 315, 327, 329, 344, 356 |
 | benefits/urls.py                                           |       27 |        7 |        4 |        2 |     71% |34->45, 49-63 |
 | benefits/wsgi.py                                           |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                                  **TOTAL** | **2526** |  **125** |  **464** |   **54** | **93%** |           |
+|                                                  **TOTAL** | **2535** |  **123** |  **464** |   **54** | **93%** |           |
 
 
 ## Setup coverage badge
