@@ -1,6 +1,4 @@
 from datetime import datetime
-import hashlib
-import hmac
 import json
 import pytest
 
@@ -15,7 +13,7 @@ def client():
 
 @pytest.mark.parametrize("method", ["GET", "POST"])
 @pytest.mark.parametrize("body", ['{"exampleProperty": "blah"}', None, ""])
-def test_client_signature_input_string_with_body(client, method, body):
+def test_client_signature_input_string(client, method, body):
     timestamp = str(int(datetime.now().timestamp()))
     request_path = "/api/example"
 
@@ -29,19 +27,16 @@ def test_client_signature_input_string_with_body(client, method, body):
     assert input_string == expected
 
 
-@pytest.mark.parametrize("method", ["GET", "POST"])
-@pytest.mark.parametrize("body", ['{"exampleProperty": "blah"}', None, ""])
-def test_client_stp_signature(client, method, body):
-    timestamp = str(int(datetime.now().timestamp()))
+def test_client_stp_signature(client):
+    timestamp = "1748637999"
+    method = "GET"
     request_path = "/api/example"
+    body = '{"exampleProperty": "blah"}'
 
     stp_signature = client._stp_signature(timestamp=timestamp, method=method, request_path=request_path, body=body)
 
-    # calculate the expected value
-    byte_key = client.api_secret.encode("utf-8")
-    input_string = client._signature_input_string(timestamp=timestamp, method=method, request_path=request_path, body=body)
-    message = input_string.encode("utf-8")
-    expected = hmac.new(byte_key, message, hashlib.sha256).hexdigest()
+    # the expected STP-SIGNATURE value based on those inputs
+    expected = "7da3dd8dad6af77d4f0d5b96ff250399f2ffe1dac2fdfbdbfae0c22a86366426"
 
     assert stp_signature == expected
 
