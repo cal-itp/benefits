@@ -120,7 +120,7 @@ def test_index_get_agency_multiple_flows(mocker, model_TransitAgency, model_Enro
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == "eligibility/index.html"
+    assert "eligibility/index.html" in response.template_name
     assert "form" in response.context_data
     assert isinstance(response.context_data["form"], EnrollmentFlowSelectionForm)
 
@@ -143,7 +143,7 @@ def test_index_get_agency_single_flow(mocker, model_TransitAgency, model_Enrollm
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == "eligibility/index.html"
+    assert "eligibility/index.html" in response.template_name
     assert "form" in response.context_data
     assert isinstance(response.context_data["form"], EnrollmentFlowSelectionForm)
 
