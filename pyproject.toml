@@ -3,7 +3,7 @@ name = "benefits"
 dynamic = ["version"]
 description = "Cal-ITP Benefits is an application that enables automated eligibility verification and enrollment for transit benefits onto customers’ existing contactless bank (credit/debit) cards."
 readme = "README.md"
-license = { file = "LICENSE" }
+license-files = ["LICENSE"]
 classifiers = ["Programming Language :: Python :: 3 :: Only"]
 requires-python = ">=3.9"
 maintainers = [
