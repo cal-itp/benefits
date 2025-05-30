@@ -12,7 +12,7 @@ from benefits.core import models, session
 from benefits.core.mixins import EligibleSessionRequiredMixin
 
 from benefits.enrollment import analytics, forms
-from benefits.enrollment.enrollment import Status
+from benefits.enrollment.enrollment import Status, handle_enrollment_results
 from benefits.enrollment_littlepay.enrollment import enroll, request_card_tokenization_access
 from benefits.enrollment_littlepay.session import Session
 
@@ -51,7 +51,6 @@ class TokenView(EligibleSessionRequiredMixin, View):
 class IndexView(EligibleSessionRequiredMixin, FormView):
     template_name = "enrollment_littlepay/index.html"
     form_class = forms.CardTokenizeSuccessForm
-    enrollment_result_handler = None
 
     def get_context_data(self, **kwargs):
         request = self.request
@@ -64,11 +63,8 @@ class IndexView(EligibleSessionRequiredMixin, FormView):
             routes.ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
         )
         tokenize_success_form = forms.CardTokenizeSuccessForm(
-            action_url=routes.ENROLLMENT_INDEX, auto_id=True, label_suffix=""
+            action_url=routes.ENROLLMENT_LITTLEPAY_INDEX, auto_id=True, label_suffix=""
         )
-
-        # mapping from Django's I18N LANGUAGE_CODE to Littlepay's overlay language code
-        overlay_language = {"en": "en", "es": "es-419"}.get(request.LANGUAGE_CODE, "en")
 
         card_types = ["visa", "mastercard"]
         if settings.LITTLEPAY_ADDITIONAL_CARDTYPES:
@@ -83,7 +79,7 @@ class IndexView(EligibleSessionRequiredMixin, FormView):
             "form_server_error": tokenize_server_error_form.id,
             "form_success": tokenize_success_form.id,
             "form_system_error": tokenize_system_error_form.id,
-            "overlay_language": overlay_language,
+            "overlay_language": self._get_overlay_language(request.LANGUAGE_CODE),
             # convert the python list to a JSON string for use in JavaScript
             "card_types": json.dumps(card_types),
         }
@@ -109,11 +105,17 @@ class IndexView(EligibleSessionRequiredMixin, FormView):
 
         return context
 
+    def _get_overlay_language(self, django_language_code):
+        """Given a Django language code, return the corresponding language code to use with Littlepay's overlay."""
+        # mapping from Django's I18N LANGUAGE_CODE to Littlepay's overlay language code
+        overlay_language = {"en": "en", "es": "es-419"}.get(django_language_code, "en")
+        return overlay_language
+
     def form_valid(self, form):
         card_token = form.cleaned_data.get("card_token")
         status, exception = enroll(self.request, card_token)
 
-        return self.enrollment_result_handler(self.request, status, exception)
+        return handle_enrollment_results(self.request, status, exception)
 
     def form_invalid(self, form):
         raise Exception("Invalid card token form")

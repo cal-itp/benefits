@@ -26,14 +26,6 @@ def mocked_sentry_sdk_module(mocker):
     return mocker.patch.object(benefits.enrollment_littlepay.views, "sentry_sdk")
 
 
-@pytest.fixture
-def mocked_enrollment_result_handler():
-    def handler(request, status, exception):
-        return "success"
-
-    return handler
-
-
 @pytest.mark.django_db
 def test_token_ineligible(client):
     path = reverse(routes.ENROLLMENT_LITTLEPAY_TOKEN)
@@ -200,9 +192,9 @@ def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_
 
 class TestIndexView:
     @pytest.fixture
-    def view(self, app_request, mocked_enrollment_result_handler):
+    def view(self, app_request):
         """Fixture to create an instance of IndexView."""
-        v = IndexView(enrollment_result_handler=mocked_enrollment_result_handler)
+        v = IndexView()
         v.setup(app_request)
 
         return v
@@ -244,16 +236,24 @@ class TestIndexView:
             assert "discover" in card_types
             assert "amex" in card_types
 
+    @pytest.mark.parametrize(
+        "LANGUAGE_CODE, expected_overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")]
+    )
+    def test_get_overlay_language(self, view, LANGUAGE_CODE, expected_overlay_language):
+        overlay_language = view._get_overlay_language(LANGUAGE_CODE)
+
+        assert overlay_language == expected_overlay_language
+
     def test_form_valid(self, mocker, view):
         mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
 
         form = view.form_class(data=dict(card_token="abc123"))
-        handler_spy = mocker.spy(view, "enrollment_result_handler")
+        mock_handler = mocker.patch("benefits.enrollment_littlepay.views.handle_enrollment_results", return_value=True)
 
         assert form.is_valid()
         view.form_valid(form)
 
-        handler_spy.assert_called_once_with(view.request, Status.SUCCESS, None)
+        mock_handler.assert_called_once_with(view.request, Status.SUCCESS, None)
 
     def test_form_invalid(self, view):
         with pytest.raises(Exception, match="Invalid card token form"):
@@ -262,8 +262,8 @@ class TestIndexView:
 
     @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_session_eligible", "mocked_session_agency", "mocked_session_flow")
-    def test_index_view(self, mocked_enrollment_result_handler, app_request):
-        index_view = IndexView.as_view(enrollment_result_handler=mocked_enrollment_result_handler)
+    def test_index_view(self, app_request):
+        index_view = IndexView.as_view()
         response = index_view(app_request)
 
         assert response.status_code == 200
@@ -271,10 +271,10 @@ class TestIndexView:
 
     @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-    def test_index_view_not_eligible(self, mocker, mocked_enrollment_result_handler, app_request):
+    def test_index_view_not_eligible(self, mocker, app_request):
         mocker.patch("benefits.core.session.eligible", return_value=False)
 
-        index_view = IndexView.as_view(enrollment_result_handler=mocked_enrollment_result_handler)
+        index_view = IndexView.as_view()
         response = index_view(app_request)
 
         assert response.status_code == 200

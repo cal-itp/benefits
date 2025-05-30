@@ -85,6 +85,11 @@ class Routes:
         return "enrollment:index"
 
     @property
+    def ENROLLMENT_LITTLEPAY_INDEX(self):
+        """Start of the enrollment phase, using Littlepay."""
+        return "littlepay:index"
+
+    @property
     def ENROLLMENT_LITTLEPAY_TOKEN(self):
         """Acquire a Littlepay card tokenization access token for enrollment."""
         return "littlepay:token"
