@@ -3,7 +3,7 @@ import pytest
 
 from benefits.routes import routes as app_routes
 from benefits.core import session
-from benefits.core.context_processors import unique_values, enrollment, routes
+from benefits.core.context_processors import unique_values, enrollment, feature_flags, routes
 
 
 def test_unique_values():
@@ -20,6 +20,16 @@ def test_enrollment_default(app_request):
 
     assert "enrollment" in context
     assert context["enrollment"] == {"expires": None, "reenrollment": None, "supports_expiration": False}
+
+
+@pytest.mark.parametrize("expected_flag", [True, False])
+def test_feature_flags(app_request, settings, expected_flag):
+    settings.LITTLEPAY_ADDITIONAL_CARDTYPES = expected_flag
+
+    context = feature_flags(app_request)
+    littlepay_flag = context["feature_flags"]["LITTLEPAY_ADDITIONAL_CARDTYPES"]
+
+    assert littlepay_flag == expected_flag
 
 
 @pytest.mark.django_db

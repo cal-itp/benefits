@@ -103,6 +103,11 @@ def enrollment(request):
     return {"enrollment": data}
 
 
+def feature_flags(request):
+    """Context processor adds feature flags to request context."""
+    return {"feature_flags": {"LITTLEPAY_ADDITIONAL_CARDTYPES": settings.LITTLEPAY_ADDITIONAL_CARDTYPES}}
+
+
 def origin(request):
     """Context processor adds session.origin to request context."""
     origin = session.origin(request)
