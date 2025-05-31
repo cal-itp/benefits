@@ -32,7 +32,6 @@ class TransitProcessor(models.Model):
 
     id = models.AutoField(primary_key=True)
     name = models.TextField(help_text="Primary internal display name for this TransitProcessor instance, e.g. in the Admin.")
-    api_base_url = models.TextField(help_text="The absolute base URL for the TransitProcessor's API, including https://.")
     portal_url = models.TextField(
         default="",
         blank=True,
