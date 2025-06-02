@@ -3,6 +3,7 @@ from django.db import models
 
 from benefits.core import context as core_context
 from benefits.core.models import SecretNameField, Environment
+from benefits.secrets import get_secret_by_name
 
 
 class LittlepayConfig(models.Model):
@@ -32,9 +33,9 @@ class LittlepayConfig(models.Model):
     @property
     def api_base_url(self):
         if self.environment == Environment.QA.value:
-            return ""
+            return get_secret_by_name("littlepay-qa-api-base-url")
         elif self.environment == Environment.PROD.value:
-            return ""
+            return get_secret_by_name("littlepay-prod-api-base-url")
         else:
             raise ValueError(f"Unexpected value for environment: {self.environment}")
 
