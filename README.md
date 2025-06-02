@@ -18,7 +18,7 @@
 | benefits/core/context/\_\_init\_\_.py                      |        7 |        0 |        0 |        0 |    100% |           |
 | benefits/core/context/agency.py                            |       15 |        0 |        0 |        0 |    100% |           |
 | benefits/core/context/flow.py                              |       19 |        0 |        0 |        0 |    100% |           |
-| benefits/core/context\_processors.py                       |       48 |        2 |       14 |        2 |     94% |35->43, 88, 113 |
+| benefits/core/context\_processors.py                       |       50 |        2 |       14 |        2 |     94% |35->43, 88, 118 |
 | benefits/core/middleware.py                                |       84 |        3 |       20 |        2 |     95% |57-58, 77->82, 132 |
 | benefits/core/mixins.py                                    |       31 |        0 |        8 |        0 |    100% |           |
 | benefits/core/models/\_\_init\_\_.py                       |        4 |        0 |        0 |        0 |    100% |           |
@@ -89,10 +89,10 @@
 | benefits/routes.py                                         |      101 |        0 |        0 |        0 |    100% |           |
 | benefits/secrets.py                                        |       48 |        8 |       10 |        1 |     81% |     90-99 |
 | benefits/sentry.py                                         |       57 |       12 |       10 |        1 |     81% |19, 24-25, 30, 34-35, 63-64, 87-108 |
-| benefits/settings.py                                       |      132 |        7 |       24 |        9 |     90% |106, 127->132, 143->146, 162, 315, 327, 329, 344, 356 |
+| benefits/settings.py                                       |      132 |        7 |       24 |        9 |     90% |106, 127->132, 143->146, 163, 316, 328, 330, 345, 357 |
 | benefits/urls.py                                           |       27 |        7 |        4 |        2 |     71% |34->45, 49-63 |
 | benefits/wsgi.py                                           |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                                  **TOTAL** | **2602** |  **124** |  **466** |   **54** | **93%** |           |
+|                                                  **TOTAL** | **2604** |  **124** |  **466** |   **54** | **93%** |           |
 
 
 ## Setup coverage badge
