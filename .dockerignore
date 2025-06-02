@@ -1,9 +1,16 @@
 **/__pycache__/
 node_modules/
+.github/
+.pytest_cache/
 static/
+terraform/
+tests/
 .coverage
 *.db
 *.egg-info
+.flake8
+.pre-commit-config.yaml
+compose.yml
 *.log
 *.mo
 .DS_Store
