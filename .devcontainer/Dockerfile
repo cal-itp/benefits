@@ -1,13 +1,16 @@
 FROM benefits_client:latest
 
-# install Azure CLI
-# https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=apt
 USER root
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
-# install webp CLI
-# https://developers.google.com/speed/webp/download
-RUN apt install webp -y
+# install apt packages using the archives and lists cache
+RUN --mount=type=cache,id=apt-archives,sharing=locked,target=/var/cache/apt/archives \
+    --mount=type=cache,id=apt-lists,sharing=locked,target=/var/lib/apt/lists \
+    # install Azure CLI
+    # https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=apt
+    curl -sL https://aka.ms/InstallAzureCLIDeb | bash && \
+    # install webp CLI
+    # https://developers.google.com/speed/webp/download
+    apt install webp -y
 
 USER $USER
 
