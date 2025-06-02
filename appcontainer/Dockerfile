@@ -107,7 +107,7 @@ COPY --from=build_wheel /build/dist /build/dist
 # this Docker layer will be rebuilt, but pip will use its cache for downloads
 RUN --mount=type=cache,id=pipcache,target=${PIP_CACHE_DIR},uid=${USER_UID},gid=${USER_GID} \
     python -m pip install --user --upgrade pip && \
-    pip install $(find /build/dist -name benefits*.whl)
+    pip install --user $(find /build/dist -name benefits*.whl)
 
 # configure container executable
 ENTRYPOINT ["/bin/bash"]

@@ -11,12 +11,20 @@ RUN apt install webp -y
 
 USER $USER
 
-COPY . .
-# install devcontainer requirements
-# this RUN command uses pipcache; this layer is rebuilt if 'COPY . .' changes,
-# but pip will use its cache for downloads
-RUN --mount=type=cache,id=pipcache,target=${HOME}/.cache/pip pip install -e .[dev,test]
+# copy only minimal files needed for dev dependency installs
+COPY .git .git
+COPY pyproject.toml pyproject.toml
+
+# this RUN command uses pipcache
+# setting uid,gid here is critical, as otherwise the Buildkit cache is mounted as root
+# even though we are running in the context of non-root $USER
+RUN --mount=type=cache,id=pipcache,target=${PIP_CACHE_DIR},uid=${USER_UID},gid=${USER_GID} \
+     pip install -e .[dev,test]
 
 # docs requirements are in a separate file for the GitHub Action
-# this RUN command uses pipcache, pip will use its cache for downloads
-RUN --mount=type=cache,id=pipcache,target=${HOME}/.cache/pip pip install -r docs/requirements.txt
+COPY docs/requirements.txt docs/requirements.txt
+# this RUN command uses pipcache
+# setting uid,gid here is critical, as otherwise the Buildkit cache is mounted as root
+# even though we are running in the context of non-root $USER
+RUN --mount=type=cache,id=pipcache,target=${PIP_CACHE_DIR},uid=${USER_UID},gid=${USER_GID} \
+    pip install -r docs/requirements.txt
