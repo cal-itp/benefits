@@ -81,18 +81,22 @@ ENV PYTHONUNBUFFERED=${PYTHONUNBUFFERED} \
     # https://pip.pypa.io/en/stable/cli/pip/#cmdoption-cache-dir
     PIP_CACHE_DIR="/home/${USER}/.cache/pip"
 
+USER $USER
+
+# copy mostly-static runtime files
+COPY LICENSE LICENSE
+COPY manage.py manage.py
 # overwrite default nginx.conf
 COPY appcontainer/nginx.conf /etc/nginx/nginx.conf
 COPY appcontainer/proxy.conf /calitp/run/proxy.conf
+
 # copy runtime files
-COPY manage.py manage.py
 COPY bin bin
 COPY benefits benefits
 
-USER root
-COPY LICENSE LICENSE
 #ensure $USER can compile messages in the locale directories
-RUN chmod -R 777 benefits/locale
+USER root
+RUN chown -R $USER:$USER benefits
 USER $USER
 
 # copy the wheel built in the previous stage
