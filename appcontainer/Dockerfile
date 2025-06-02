@@ -86,7 +86,7 @@ COPY appcontainer/proxy.conf /calitp/run/proxy.conf
 # copy runtime files
 COPY manage.py manage.py
 COPY bin bin
-COPY benefits benefits
+COPY benefits/locale benefits/locale
 
 USER root
 COPY LICENSE LICENSE
