@@ -79,3 +79,27 @@ def test_SwitchioConfig_clean(model_TransitAgency_inactive):
         error_message
         == "Switchio configuration is missing fields that are required when this agency is active. Missing fields: api_key, api_secret_name, client_certificate, ca_certificate, private_key"  # noqa
     )
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize(
+    "environment, secret_name", [("qa", "switchio-qa-api-base-url"), ("prod", "switchio-prod-api-base-url")]
+)
+def test_SwitchioConfig_api_base_url(mocker, environment, secret_name):
+    switchio_config = SwitchioConfig.objects.create(environment=environment)
+    mocked_get_secret_by_name = mocker.patch(
+        "benefits.enrollment_switchio.models.get_secret_by_name", return_value="secret url"
+    )
+
+    switchio_config.api_base_url
+
+    mocked_get_secret_by_name.assert_called_once_with(secret_name)
+
+
+@pytest.mark.django_db
+def test_SwitchioConfig_api_base_url_unexpected_environment():
+    environment = "unexpected-thiswillneverexist"
+    switchio_config = SwitchioConfig.objects.create(environment=environment)
+
+    with pytest.raises(ValueError, match=f"Unexpected value for environment: {environment}"):
+        switchio_config.api_base_url
