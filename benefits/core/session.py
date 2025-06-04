@@ -13,6 +13,7 @@ from cdt_identity.session import Session as OAuthSession
 from django.urls import reverse
 
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
+from benefits.enrollment_switchio.session import Session as SwitchioSession
 from benefits.routes import routes
 from . import models
 
@@ -50,6 +51,7 @@ def active_agency(request):
 def context_dict(request):
     """The request's session context as a dict."""
     littlepay_session = LittlepaySession(request)
+    switchio_session = SwitchioSession(request)
     return {
         _AGENCY: agency(request).slug if active_agency(request) else None,
         _DEBUG: debug(request),
@@ -59,6 +61,7 @@ def context_dict(request):
         _ENROLLMENT_EXP: enrollment_expiry(request),
         littlepay_session._keys_access_token: littlepay_session.access_token,
         littlepay_session._keys_access_token_expiry: littlepay_session.access_token_expiry,
+        switchio_session._keys_registration_id: switchio_session.registration_id,
         _LANG: language(request),
         _LOGGED_IN: logged_in(request),
         _ORIGIN: origin(request),
@@ -128,6 +131,7 @@ def logged_in(request):
 def logout(request):
     """Reset the session claims and tokens."""
     LittlepaySession(request, reset=True)
+    SwitchioSession(request, reset=True)
     OAuthSession(request, claims_result=ClaimsResult())
     update(request, logged_in=False)
 
@@ -161,6 +165,7 @@ def reset(request):
     request.session[_ENROLLMENT_EXP] = None
     request.session[_LOGGED_IN] = False
     LittlepaySession(request, reset=True)
+    SwitchioSession(request, reset=True)
     OAuthSession(request, reset=True)
 
     if _UID not in request.session or not request.session[_UID]:
