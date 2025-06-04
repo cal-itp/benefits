@@ -2,6 +2,7 @@ import json
 import pytest
 
 from benefits.enrollment_switchio.api import Registration
+import benefits.enrollment_switchio.views
 from benefits.enrollment_switchio.views import GatewayUrlView, IndexView
 
 
@@ -57,9 +58,11 @@ class TestGatewayUrlView:
             "benefits.enrollment_switchio.views.Client.request_registration",
             return_value=Registration(regId="1234", gtwUrl=gateway_url),
         )
+        session_spy = mocker.spy(benefits.enrollment_switchio.views, "Session")
 
         # need to call `dispatch` here so that variables that the mixins assign (e.g. self.agency) are available to the view
         response = view.dispatch(app_request)
 
         assert response.status_code == 200
         assert json.loads(response.content) == {"gateway_url": gateway_url}
+        session_spy.assert_called_once_with(request=app_request, registration_id="1234")
