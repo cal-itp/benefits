@@ -204,6 +204,17 @@ Comma-separated list of hosts which are trusted origins for unsafe requests (e.g
 
 Comma-separated list of User-Agent strings which, when present as an HTTP header, should only receive healthcheck responses. Used by our `HealthcheckUserAgents` middleware.
 
+## Littlepay
+
+### `LITTLEPAY_ADDITIONAL_CARDTYPES`
+
+A temporary feature flag setting, allowing for certain copy to be shown or hidden depending on the status of the American Express and Discover card feature.
+
+Boolean:
+
+- `True`: The American Express and Discover card feature is on, and copy about those cardtypes are displayed throughout the app
+- `False`: The feature is off, and copy about cardtypes on the app show only Visa and Mastercard
+
 ## `requests` configuration
 
 !!! tldr "`requests` docs"
