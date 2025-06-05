@@ -55,7 +55,7 @@ class TestGatewayUrlView:
         model_TransitAgency.switchio_config = model_SwitchioConfig
         gateway_url = "https://example.com/cst/?regId=1234"
         mocker.patch(
-            "benefits.enrollment_switchio.views.Client.request_registration",
+            "benefits.enrollment_switchio.views.request_registration",
             return_value=Registration(regId="1234", gtwUrl=gateway_url),
         )
         session_spy = mocker.spy(benefits.enrollment_switchio.views, "Session")
