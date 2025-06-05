@@ -1,7 +1,9 @@
 import json
 import pytest
 
+from benefits.enrollment.enrollment import Status
 from benefits.enrollment_switchio.api import Registration
+from benefits.enrollment_switchio.enrollment import RegistrationResponse
 import benefits.enrollment_switchio.views
 from benefits.enrollment_switchio.views import GatewayUrlView, IndexView
 
@@ -56,7 +58,9 @@ class TestGatewayUrlView:
         gateway_url = "https://example.com/cst/?regId=1234"
         mocker.patch(
             "benefits.enrollment_switchio.views.request_registration",
-            return_value=Registration(regId="1234", gtwUrl=gateway_url),
+            return_value=RegistrationResponse(
+                status=Status.SUCCESS, registration=Registration(regId="1234", gtwUrl=gateway_url)
+            ),
         )
         session_spy = mocker.spy(benefits.enrollment_switchio.views, "Session")
 

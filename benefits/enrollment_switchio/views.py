@@ -1,10 +1,18 @@
+import logging
 from django.http import HttpRequest, JsonResponse
+from django.urls import reverse
 from django.views.generic import TemplateView, View
+import sentry_sdk
 
+from benefits.routes import routes
 from benefits.core import models, session
 from benefits.core.mixins import EligibleSessionRequiredMixin, AgencySessionRequiredMixin
+from benefits.enrollment import analytics
+from benefits.enrollment.enrollment import Status
 from benefits.enrollment_switchio.enrollment import request_registration
 from benefits.enrollment_switchio.session import Session
+
+logger = logging.getLogger(__name__)
 
 
 class IndexView(EligibleSessionRequiredMixin, TemplateView):
@@ -32,9 +40,26 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
     """View for the tokenization gateway registration"""
 
     def get(self, request: HttpRequest, *args, **kwargs):
-        registration = request_registration(request)
+        response = request_registration(request)
 
-        Session(request=request, registration_id=registration.regId)
+        if response.status is Status.SUCCESS:
+            registration = response.registration
 
-        data = {"gateway_url": registration.gtwUrl}
-        return JsonResponse(data)
+            Session(request=request, registration_id=registration.regId)
+
+            data = {"gateway_url": registration.gtwUrl}
+            return JsonResponse(data)
+        elif response.status is Status.SYSTEM_ERROR or response.status is Status.EXCEPTION:
+            logger.debug("Error occurred while requesting access token", exc_info=response.exception)
+            sentry_sdk.capture_exception(response.exception)
+            analytics.failed_access_token_request(request, response.status_code)
+
+            if response.status is Status.SYSTEM_ERROR:
+                redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+            else:
+                redirect = reverse(routes.SERVER_ERROR)
+
+            data = {"redirect": redirect}
+            return JsonResponse(data)
+        else:
+            raise ValueError(f"Unexpected Status: {response.status}")
