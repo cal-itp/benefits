@@ -52,7 +52,7 @@ class TransitProcessorAdmin(admin.ModelAdmin):
         fields = []
 
         if not request.user.is_superuser:
-            fields.extend(["api_base_url"])
+            fields.extend([])
 
         return fields or super().get_exclude(request, obj)
 

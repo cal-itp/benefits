@@ -238,7 +238,6 @@
     "pk": 1,
     "fields": {
       "name": "(CST) test transit processor",
-      "api_base_url": "http://server:8000",
       "portal_url": "https://www.transit-processor-portal.com"
     }
   },

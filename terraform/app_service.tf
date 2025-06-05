@@ -68,7 +68,13 @@ resource "azurerm_linux_web_app" "main" {
 
     "HEALTHCHECK_USER_AGENTS" = local.is_dev ? null : "${local.secret_prefix}healthcheck-user-agents)",
 
+    # Transit payment processor settings
     "LITTLEPAY_ADDITIONAL_CARDTYPES" = "${local.secret_prefix}littlepay-additional-cardtypes)",
+    "LITTLEPAY_QA_API_BASE_URL" = "${local.secret_prefix}littlepay-qa-api-base-url"
+    "LITTLEPAY_PROD_API_BASE_URL" = "${local.secret_prefix}littlepay-prod-api-base-url"
+
+    "SWITCHIO_QA_API_BASE_URL" = "${local.secret_prefix}switchio-qa-api-base-url"
+    "SWITCHIO_PROD_API_BASE_URL" = "${local.secret_prefix}switchio-prod-api-base-url"
 
     # Google SSO for Admin
 
