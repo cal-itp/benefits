@@ -49,7 +49,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
 
             data = {"gateway_url": registration.gtwUrl}
             return JsonResponse(data)
-        elif response.status is Status.SYSTEM_ERROR or response.status is Status.EXCEPTION:
+        else:
             logger.debug("Error occurred while requesting access token", exc_info=response.exception)
             sentry_sdk.capture_exception(response.exception)
             analytics.failed_access_token_request(request, response.status_code)
@@ -61,5 +61,3 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
 
             data = {"redirect": redirect}
             return JsonResponse(data)
-        else:
-            raise ValueError(f"Unexpected Status: {response.status}")
