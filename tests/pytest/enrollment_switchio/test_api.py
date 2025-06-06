@@ -76,7 +76,7 @@ def test_client_request_registration(mocker, client):
     mock_response = mocker.Mock()
     mock_json = dict(regId="1234", gtwUrl="https://example.com/cst/?regId=1234")
     mock_response.json.return_value = mock_json
-    mocker.patch("benefits.enrollment_switchio.api.requests.post", return_value=mock_response)
+    mocker.patch("benefits.enrollment_switchio.api.Client._cert_request", return_value=mock_response)
 
     registration = client.request_registration(
         eshopRedirectUrl="https://localhost/enrollment", mode="register", eshopResponseMode=EshopResponseMode.FORM_POST
@@ -98,7 +98,7 @@ def test_client_get_registration_status(mocker, client):
         cardExp="1119",
     )
     mock_response.json.return_value = mock_json
-    mocker.patch("benefits.enrollment_switchio.api.requests.get", return_value=mock_response)
+    mocker.patch("benefits.enrollment_switchio.api.Client._cert_request", return_value=mock_response)
 
     registration_status = client.get_registration_status(registration_id="1234")
 
