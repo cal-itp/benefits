@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 
 import pytest
 
+from benefits.routes import routes
 from benefits.core.models import (
     TransitAgency,
     agency_logo_small,
@@ -176,3 +177,21 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
     non_field_errors = errors[NON_FIELD_ERRORS]
     assert len(non_field_errors) == 1
     assert non_field_errors[0].message == "Must fill out configuration for either Littlepay or Switchio."
+
+
+@pytest.mark.django_db
+def test_TransitAgency_enrollment_index_route_littlepay(model_TransitAgency, model_LittlepayConfig):
+    model_TransitAgency.littlepay_config = model_LittlepayConfig
+    model_TransitAgency.switchio_config = None
+    model_TransitAgency.save()
+
+    assert model_TransitAgency.enrollment_index_route == routes.ENROLLMENT_LITTLEPAY_INDEX
+
+
+@pytest.mark.django_db
+def test_TransitAgency_enrollment_index_route_switchio(model_TransitAgency, model_SwitchioConfig):
+    model_TransitAgency.littlepay_config = None
+    model_TransitAgency.switchio_config = model_SwitchioConfig
+    model_TransitAgency.save()
+
+    assert model_TransitAgency.enrollment_index_route == routes.ENROLLMENT_SWITCHIO_INDEX

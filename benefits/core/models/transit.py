@@ -183,6 +183,16 @@ class TransitAgency(models.Model):
         return self.eligibility_api_public_key.data
 
     @property
+    def enrollment_index_route(self):
+        """This Agency's enrollment index route, based on its configured transit processor."""
+        if self.littlepay_config:
+            return routes.ENROLLMENT_LITTLEPAY_INDEX
+        elif self.switchio_config:
+            return routes.ENROLLMENT_SWITCHIO_INDEX
+        else:
+            raise ValueError("TransitAgency must have either a transit processor config in order to show enrollment index.")
+
+    @property
     def enrollment_flows(self):
         return self.enrollmentflow_set
 
