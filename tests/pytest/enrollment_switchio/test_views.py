@@ -7,6 +7,7 @@ from benefits.routes import routes
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_switchio.api import Registration
 from benefits.enrollment_switchio.enrollment import RegistrationResponse
+from benefits.enrollment_switchio.session import Session
 import benefits.enrollment_switchio.views
 from benefits.enrollment_switchio.views import GatewayUrlView, IndexView
 
@@ -76,13 +77,13 @@ class TestGatewayUrlView:
                 status=Status.SUCCESS, registration=Registration(regId="1234", gtwUrl=gateway_url)
             ),
         )
-        session_spy = mocker.spy(benefits.enrollment_switchio.views, "Session")
 
         response = view.get(app_request)
 
         assert response.status_code == 200
         assert json.loads(response.content) == {"gateway_url": gateway_url}
-        session_spy.assert_called_once_with(request=app_request, registration_id="1234")
+        session = Session(app_request)
+        assert session.registration_id == "1234"
 
     @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_api_base_url")

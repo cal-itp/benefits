@@ -40,12 +40,13 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
     """View for the tokenization gateway registration"""
 
     def get(self, request: HttpRequest, *args, **kwargs):
+        session = Session(request)
+
         response = request_registration(request, self.agency.switchio_config)
 
         if response.status is Status.SUCCESS:
             registration = response.registration
-
-            Session(request=request, registration_id=registration.regId)
+            session.registration_id = registration.regId
 
             data = {"gateway_url": registration.gtwUrl}
             return JsonResponse(data)
