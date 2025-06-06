@@ -9,7 +9,7 @@ from benefits.core import models, session
 from benefits.core.mixins import EligibleSessionRequiredMixin, AgencySessionRequiredMixin
 from benefits.enrollment import analytics
 from benefits.enrollment.enrollment import Status
-from benefits.enrollment_switchio.enrollment import request_registration
+from benefits.enrollment_switchio.enrollment import request_registration, get_registration_status
 from benefits.enrollment_switchio.session import Session
 
 logger = logging.getLogger(__name__)
@@ -40,12 +40,39 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
     """View for the tokenization gateway registration"""
 
     def get(self, request: HttpRequest, *args, **kwargs):
+        session = Session(request)
+
+        if session.registration_id is None or session.gateway_url is None:
+            return self._request_registration(request, session)
+        else:
+            response = get_registration_status(request=request, registration_id=session.registration_id)
+
+            if response.status is Status.SUCCESS:
+                # if the registration session is no longer valid, request a new registration session.
+                if response.registration_status.regState in ["expired", "deleted"]:
+                    return self._request_registration(request, session)
+                else:
+                    data = {"gateway_url": session.gateway_url}
+                    return JsonResponse(data)
+            else:
+                logger.debug(f"Error occurred while attempting to get registration status for {session.registration_id}")
+                sentry_sdk.capture_exception(response.exception)
+
+                if response.status is Status.SYSTEM_ERROR:
+                    redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+                else:
+                    redirect = reverse(routes.SERVER_ERROR)
+
+                data = {"redirect": redirect}
+                return JsonResponse(data)
+
+    def _request_registration(self, request: HttpRequest, session: Session) -> JsonResponse:
         response = request_registration(request)
 
         if response.status is Status.SUCCESS:
             registration = response.registration
-
-            Session(request=request, registration_id=registration.regId)
+            session.registration_id = registration.regId
+            session.gateway_url = registration.gtwUrl
 
             data = {"gateway_url": registration.gtwUrl}
             return JsonResponse(data)
