@@ -11,7 +11,7 @@ from django.utils.decorators import decorator_from_middleware
 
 from benefits.routes import routes
 from benefits.core import session
-from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
+from benefits.core.middleware import AgencySessionRequired, EligibleSessionRequired, FlowSessionRequired, pageview_decorator
 
 from . import analytics
 
@@ -22,12 +22,14 @@ TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
 logger = logging.getLogger(__name__)
 
 
+@decorator_from_middleware(AgencySessionRequired)
 @decorator_from_middleware(EligibleSessionRequired)
 def index(request):
     """View handler for the enrollment landing page."""
     session.update(request, origin=reverse(routes.ENROLLMENT_INDEX))
 
-    return redirect(routes.ENROLLMENT_LITTLEPAY_INDEX)
+    agency = session.agency(request)
+    return redirect(agency.enrollment_index_route)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
