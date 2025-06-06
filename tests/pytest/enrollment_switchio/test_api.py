@@ -93,6 +93,9 @@ def test_client_get_registration_status(mocker, client):
         mode="register",
         tokens=[],
         eshopResponseMode="form_post",
+        identType="BPK",
+        maskCln="412501****1234",
+        cardExp="1119",
     )
     mock_response.json.return_value = mock_json
     mocker.patch("benefits.enrollment_switchio.api.requests.get", return_value=mock_response)
