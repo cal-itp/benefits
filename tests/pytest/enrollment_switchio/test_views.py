@@ -70,3 +70,4 @@ class TestGatewayUrlView:
 
         session = Session(app_request)
         assert session.registration_id == "1234"
+        assert session.gateway_url == gateway_url

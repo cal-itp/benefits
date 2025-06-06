@@ -47,6 +47,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
         if response.status is Status.SUCCESS:
             registration = response.registration
             session.registration_id = registration.regId
+            session.gateway_url = registration.gtwUrl
 
             data = {"gateway_url": registration.gtwUrl}
             return JsonResponse(data)
