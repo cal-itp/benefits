@@ -84,6 +84,7 @@ class TestGatewayUrlView:
         assert json.loads(response.content) == {"gateway_url": gateway_url}
         session = Session(app_request)
         assert session.registration_id == "1234"
+        assert session.gateway_url == gateway_url
 
     @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_api_base_url")
