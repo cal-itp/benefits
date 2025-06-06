@@ -71,3 +71,19 @@ class TestGatewayUrlView:
         session = Session(app_request)
         assert session.registration_id == "1234"
         assert session.gateway_url == gateway_url
+
+    @pytest.mark.django_db
+    @pytest.mark.usefixtures("mocked_api_base_url", "mocked_session_agency")
+    def test_get_gateway_url_still_valid(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
+        model_TransitAgency.switchio_config = model_SwitchioConfig
+        gateway_url = "https://example.com/cst/?regId=1234"
+        Session(app_request, registration_id="1234", gateway_url=gateway_url)
+
+        response = view.get(app_request)
+
+        assert response.status_code == 200
+        assert json.loads(response.content) == {"gateway_url": gateway_url}
+
+        session = Session(app_request)
+        assert session.registration_id == "1234"
+        assert session.gateway_url == gateway_url

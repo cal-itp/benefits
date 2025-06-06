@@ -42,24 +42,28 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
     def get(self, request: HttpRequest, *args, **kwargs):
         session = Session(request)
 
-        response = request_registration(request)
+        if session.registration_id is None or session.gateway_url is None:
+            response = request_registration(request)
 
-        if response.status is Status.SUCCESS:
-            registration = response.registration
-            session.registration_id = registration.regId
-            session.gateway_url = registration.gtwUrl
+            if response.status is Status.SUCCESS:
+                registration = response.registration
+                session.registration_id = registration.regId
+                session.gateway_url = registration.gtwUrl
 
-            data = {"gateway_url": registration.gtwUrl}
-            return JsonResponse(data)
-        else:
-            logger.debug("Error occurred while requesting access token", exc_info=response.exception)
-            sentry_sdk.capture_exception(response.exception)
-            analytics.failed_access_token_request(request, response.status_code)
-
-            if response.status is Status.SYSTEM_ERROR:
-                redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+                data = {"gateway_url": registration.gtwUrl}
+                return JsonResponse(data)
             else:
-                redirect = reverse(routes.SERVER_ERROR)
+                logger.debug("Error occurred while requesting access token", exc_info=response.exception)
+                sentry_sdk.capture_exception(response.exception)
+                analytics.failed_access_token_request(request, response.status_code)
 
-            data = {"redirect": redirect}
+                if response.status is Status.SYSTEM_ERROR:
+                    redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+                else:
+                    redirect = reverse(routes.SERVER_ERROR)
+
+                data = {"redirect": redirect}
+                return JsonResponse(data)
+        else:
+            data = {"gateway_url": session.gateway_url}
             return JsonResponse(data)
