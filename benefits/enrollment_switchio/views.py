@@ -42,24 +42,30 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
     def get(self, request: HttpRequest, *args, **kwargs):
         session = Session(request)
 
-        response = request_registration(request, self.agency.switchio_config)
+        if session.registration_id is None or session.gateway_url is None:
+            response = request_registration(request, self.agency.switchio_config)
 
-        if response.status is Status.SUCCESS:
-            registration = response.registration
-            session.registration_id = registration.regId
-            session.gateway_url = registration.gtwUrl
+            if response.status is Status.SUCCESS:
+                registration = response.registration
+                session.registration_id = registration.regId
+                session.gateway_url = registration.gtwUrl
 
-            data = {"gateway_url": registration.gtwUrl}
-            return JsonResponse(data)
-        else:
-            logger.debug("Error occurred while requesting a tokenization gateway registration", exc_info=response.exception)
-            sentry_sdk.capture_exception(response.exception)
-            analytics.failed_pretokenization_request(request, response.status_code)
-
-            if response.status is Status.SYSTEM_ERROR:
-                redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+                data = {"gateway_url": registration.gtwUrl}
+                return JsonResponse(data)
             else:
-                redirect = reverse(routes.SERVER_ERROR)
+                logger.debug(
+                    "Error occurred while requesting a tokenization gateway registration", exc_info=response.exception
+                )
+                sentry_sdk.capture_exception(response.exception)
+                analytics.failed_pretokenization_request(request, response.status_code)
 
-            data = {"redirect": redirect}
+                if response.status is Status.SYSTEM_ERROR:
+                    redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+                else:
+                    redirect = reverse(routes.SERVER_ERROR)
+
+                data = {"redirect": redirect}
+                return JsonResponse(data)
+        else:
+            data = {"gateway_url": session.gateway_url}
             return JsonResponse(data)

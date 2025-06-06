@@ -159,3 +159,19 @@ class TestGatewayUrlView:
         mocked_analytics_module.failed_pretokenization_request.assert_called_once()
         assert 400 in mocked_analytics_module.failed_pretokenization_request.call_args.args
         mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+    @pytest.mark.django_db
+    @pytest.mark.usefixtures("mocked_api_base_url")
+    def test_get_gateway_url_still_valid(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
+        model_TransitAgency.switchio_config = model_SwitchioConfig
+        gateway_url = "https://example.com/cst/?regId=1234"
+        Session(app_request, registration_id="1234", gateway_url=gateway_url)
+
+        response = view.get(app_request)
+
+        assert response.status_code == 200
+        assert json.loads(response.content) == {"gateway_url": gateway_url}
+
+        session = Session(app_request)
+        assert session.registration_id == "1234"
+        assert session.gateway_url == gateway_url
