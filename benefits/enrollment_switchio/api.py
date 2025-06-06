@@ -27,9 +27,9 @@ class RegistrationStatus:
     mode: str
     tokens: list[dict]
     eshopResponseMode: str
-    identifier_type: str = None
-    mask_cin: str = None
-    card_exp: str = None
+    identType: str = None
+    maskCln: str = None
+    cardExp: str = None
 
 
 class Client:
