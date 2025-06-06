@@ -9,7 +9,7 @@ from benefits.core import models, session
 from benefits.core.mixins import EligibleSessionRequiredMixin, AgencySessionRequiredMixin
 from benefits.enrollment import analytics
 from benefits.enrollment.enrollment import Status
-from benefits.enrollment_switchio.enrollment import request_registration
+from benefits.enrollment_switchio.enrollment import request_registration, get_registration_status
 from benefits.enrollment_switchio.session import Session
 
 logger = logging.getLogger(__name__)
@@ -43,19 +43,20 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
         session = Session(request)
 
         if session.registration_id is None or session.gateway_url is None:
-            response = request_registration(request)
+            return self._request_registration(request, session)
+        else:
+            response = get_registration_status(request=request, registration_id=session.registration_id)
 
             if response.status is Status.SUCCESS:
-                registration = response.registration
-                session.registration_id = registration.regId
-                session.gateway_url = registration.gtwUrl
-
-                data = {"gateway_url": registration.gtwUrl}
-                return JsonResponse(data)
+                # if the registration session is no longer valid, request a new registration session.
+                if response.registration_status.regState in ["expired", "deleted"]:
+                    return self._request_registration(request, session)
+                else:
+                    data = {"gateway_url": session.gateway_url}
+                    return JsonResponse(data)
             else:
-                logger.debug("Error occurred while requesting access token", exc_info=response.exception)
+                logger.debug(f"Error occurred while attempting to get registration status for {session.registration_id}")
                 sentry_sdk.capture_exception(response.exception)
-                analytics.failed_access_token_request(request, response.status_code)
 
                 if response.status is Status.SYSTEM_ERROR:
                     redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
@@ -64,6 +65,26 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
 
                 data = {"redirect": redirect}
                 return JsonResponse(data)
+
+    def _request_registration(self, request: HttpRequest, session: Session) -> JsonResponse:
+        response = request_registration(request)
+
+        if response.status is Status.SUCCESS:
+            registration = response.registration
+            session.registration_id = registration.regId
+            session.gateway_url = registration.gtwUrl
+
+            data = {"gateway_url": registration.gtwUrl}
+            return JsonResponse(data)
         else:
-            data = {"gateway_url": session.gateway_url}
+            logger.debug("Error occurred while requesting access token", exc_info=response.exception)
+            sentry_sdk.capture_exception(response.exception)
+            analytics.failed_access_token_request(request, response.status_code)
+
+            if response.status is Status.SYSTEM_ERROR:
+                redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+            else:
+                redirect = reverse(routes.SERVER_ERROR)
+
+            data = {"redirect": redirect}
             return JsonResponse(data)

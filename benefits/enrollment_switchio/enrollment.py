@@ -7,7 +7,7 @@ from requests import HTTPError
 from benefits.enrollment.enrollment import Status
 from benefits.routes import routes
 from benefits.core import session
-from benefits.enrollment_switchio.api import Client, EshopResponseMode, Registration
+from benefits.enrollment_switchio.api import Client, EshopResponseMode, Registration, RegistrationStatus
 
 
 @dataclass
@@ -16,6 +16,13 @@ class RegistrationResponse:
     registration: Registration
     exception: Exception = None
     status_code: int = None
+
+
+@dataclass
+class RegistrationStatusResponse:
+    status: Status
+    registration_status: RegistrationStatus
+    exception: Exception = None
 
 
 def request_registration(request) -> RegistrationResponse:
@@ -70,3 +77,37 @@ def _generate_redirect_uri(request: HttpRequest, redirect_path: str):
         redirect_uri = redirect_uri.replace("http://", "https://")
 
     return redirect_uri
+
+
+def get_registration_status(request, registration_id) -> RegistrationStatusResponse:
+    agency = session.agency(request)
+    switchio_config = agency.switchio_config
+
+    try:
+        client = Client(
+            api_url=switchio_config.api_base_url,
+            api_key=switchio_config.api_key,
+            api_secret=switchio_config.api_secret,
+            private_key=switchio_config.private_key,
+            client_certificate=switchio_config.client_certificate,
+            ca_certificate=switchio_config.ca_certificate,
+        )
+
+        registration_status = client.get_registration_status(
+            registration_id=registration_id,
+            timeout=settings.REQUESTS_TIMEOUT,
+        )
+
+        return RegistrationStatusResponse(status=Status.SUCCESS, registration_status=registration_status, exception=None)
+    except Exception as e:
+        exception = e
+
+        if isinstance(e, HTTPError):
+            if exception.response.status_code >= 500:
+                status = Status.SYSTEM_ERROR
+            else:
+                status = Status.EXCEPTION
+        else:
+            status = Status.EXCEPTION
+
+        return RegistrationStatusResponse(status=status, registration_status=None, exception=exception)
