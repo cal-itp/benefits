@@ -61,6 +61,21 @@ class SwitchioConfig(models.Model):
         secret_field = self._meta.get_field("api_secret_name")
         return secret_field.secret_value(self)
 
+    @property
+    def client_certificate_data(self):
+        """This SwitchioConfig's client certificate as a string."""
+        return self.client_certificate.data
+
+    @property
+    def ca_certificate_data(self):
+        """This SwitchioConfig's CA certificate as a string."""
+        return self.ca_certificate.data
+
+    @property
+    def private_key_data(self):
+        """This SwitchioConfig's private key as a string."""
+        return self.private_key.data
+
     def clean(self, agency=None):
         field_errors = {}
 

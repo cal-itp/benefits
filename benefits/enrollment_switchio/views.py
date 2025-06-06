@@ -41,9 +41,9 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
             api_url=switchio_config.api_base_url,
             api_key=switchio_config.api_key,
             api_secret=switchio_config.api_secret,
-            private_key=switchio_config.private_key,
-            client_certificate=switchio_config.client_certificate,
-            ca_certificate=switchio_config.ca_certificate,
+            private_key=switchio_config.private_key_data,
+            client_certificate=switchio_config.client_certificate_data,
+            ca_certificate=switchio_config.ca_certificate_data,
         )
 
         route = reverse(routes.ENROLLMENT_SWITCHIO_INDEX)
