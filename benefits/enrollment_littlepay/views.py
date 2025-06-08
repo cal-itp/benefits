@@ -1,7 +1,5 @@
-import json
 import logging
 
-from django.conf import settings
 from django.http import JsonResponse
 from django.urls import reverse
 from django.views.generic import FormView, View
@@ -13,7 +11,7 @@ from benefits.core.mixins import EligibleSessionRequiredMixin
 
 from benefits.enrollment import analytics, forms
 from benefits.enrollment.enrollment import Status, handle_enrollment_results
-from benefits.enrollment_littlepay.enrollment import enroll, request_card_tokenization_access
+from benefits.enrollment_littlepay.enrollment import enroll, get_card_types_for_js, request_card_tokenization_access
 from benefits.enrollment_littlepay.session import Session
 
 logger = logging.getLogger(__name__)
@@ -66,10 +64,6 @@ class IndexView(EligibleSessionRequiredMixin, FormView):
             action_url=routes.ENROLLMENT_LITTLEPAY_INDEX, auto_id=True, label_suffix=""
         )
 
-        card_types = ["visa", "mastercard"]
-        if settings.LITTLEPAY_ADDITIONAL_CARDTYPES:
-            card_types.extend(["discover", "amex"])
-
         context = {
             "forms": [tokenize_retry_form, tokenize_server_error_form, tokenize_system_error_form, tokenize_success_form],
             "cta_button": "tokenize_card",
@@ -80,8 +74,7 @@ class IndexView(EligibleSessionRequiredMixin, FormView):
             "form_success": tokenize_success_form.id,
             "form_system_error": tokenize_system_error_form.id,
             "overlay_language": self._get_overlay_language(request.LANGUAGE_CODE),
-            # convert the python list to a JSON string for use in JavaScript
-            "card_types": json.dumps(card_types),
+            "card_types": get_card_types_for_js(),
         }
 
         enrollment_index_context_dict = flow.enrollment_index_context
