@@ -59,6 +59,10 @@
                     $(this).addClass("disabled").attr("aria-disabled", "true").text("{{ loading_text }}");
                 });
 
+                // parse the JSON string back into a JS array
+                // the escapejs filter handles e.g. quote conversion
+                let cardTypes = JSON.parse('{{ card_types|escapejs }}');
+
                 new Promise((resolve) => {
                     littlepay({
                         authorization: data.token,
@@ -66,7 +70,8 @@
                         envUrl: '{{ transit_processor.card_tokenize_env }}',
                         options: {
                             color: '#046b99',
-                            targetiframename: 'card-collection-iframe'
+                            targetiframename: 'card-collection-iframe',
+                            cardTypes: cardTypes
                         },
                         onTokenize: function (response) {
                             /* This function executes when the
