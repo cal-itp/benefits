@@ -296,6 +296,7 @@ def test_enrollment_logged_in_get(admin_client):
     assert "token_field" in response.context_data
     assert "form_retry" in response.context_data
     assert "form_success" in response.context_data
+    assert "card_types" in response.context_data
 
     # not supporting internationalization in in_person app yet
     assert "overlay_language" not in response.context_data
