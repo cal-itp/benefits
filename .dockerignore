@@ -4,7 +4,6 @@ node_modules/
 .pytest_cache/
 static/
 terraform/
-tests/
 .coverage
 *.db
 *.egg-info
