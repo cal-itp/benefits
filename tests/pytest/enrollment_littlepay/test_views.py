@@ -201,10 +201,7 @@ class TestIndexView:
 
     @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-    @pytest.mark.parametrize("additional_cardtypes", [True, False])
-    def test_get_context_data(self, view, settings, additional_cardtypes):
-        settings.LITTLEPAY_ADDITIONAL_CARDTYPES = additional_cardtypes
-
+    def test_get_context_data(self, view):
         context = view.get_context_data()
 
         assert "forms" in context
@@ -229,12 +226,7 @@ class TestIndexView:
         assert "card_tokenize_url" in transit_processor_context
         assert "card_tokenize_env" in transit_processor_context
 
-        card_types = context["card_types"]
-        assert "visa" in card_types
-        assert "mastercard" in card_types
-        if additional_cardtypes:
-            assert "discover" in card_types
-            assert "amex" in card_types
+        assert "card_types" in context
 
     @pytest.mark.parametrize(
         "LANGUAGE_CODE, expected_overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")]

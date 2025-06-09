@@ -13,7 +13,7 @@ from benefits.core import models, session
 from benefits.eligibility import analytics as eligibility_analytics
 from benefits.enrollment import analytics as enrollment_analytics
 from benefits.enrollment.enrollment import Status
-from benefits.enrollment_littlepay.enrollment import request_card_tokenization_access, enroll
+from benefits.enrollment_littlepay.enrollment import get_card_types_for_js, request_card_tokenization_access, enroll
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
 
 from benefits.in_person import forms
@@ -158,6 +158,7 @@ def enrollment(request):
             "form_success": tokenize_success_form.id,
             "form_system_error": tokenize_system_error_form.id,
             "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
+            "card_types": get_card_types_for_js(),
         }
 
         match agency.littlepay_config.environment:

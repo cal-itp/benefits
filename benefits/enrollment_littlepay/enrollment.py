@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from datetime import timedelta
+import json
 
+from django.conf import settings
 from django.utils import timezone
 from littlepay.api.client import Client
 from requests.exceptions import HTTPError
@@ -16,6 +18,15 @@ class CardTokenizationAccessResponse:
     expires_at: int
     exception: Exception = None
     status_code: int = None
+
+
+def get_card_types_for_js() -> str:
+    """Get a list of card types to use for enrollment, converted to a JSON string for use in JavaScript."""
+    card_types = ["visa", "mastercard"]
+    if settings.LITTLEPAY_ADDITIONAL_CARDTYPES:
+        card_types.extend(["discover", "amex"])
+
+    return json.dumps(card_types)
 
 
 def request_card_tokenization_access(request) -> CardTokenizationAccessResponse:
