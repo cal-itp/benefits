@@ -25,11 +25,6 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
     template_name = "eligibility/index.html"
     form_class = forms.EnrollmentFlowSelectionForm
 
-    def setup(self, request, *args, **kwargs):
-        """Initialize view attributes."""
-        super().setup(request, *args, **kwargs)
-        self.agency = session.agency(request)
-
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
         kwargs = super().get_form_kwargs()
