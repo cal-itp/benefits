@@ -60,8 +60,7 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
     def get_context_data(self, **kwargs):
         """Add agency-specific context data."""
         context = super().get_context_data(**kwargs)
-        if self.agency:
-            context.update(self.agency.eligibility_index_context)
+        context.update(self.agency.eligibility_index_context)
         return context
 
 
