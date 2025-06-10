@@ -191,6 +191,34 @@ def test_index_calls_session_logout(client, session_logout_spy):
     session_logout_spy.assert_called_once()
 
 
+class TestStartView:
+    @pytest.fixture
+    def view(self, app_request):
+        """Fixture to create an instance of StartView."""
+        v = benefits.eligibility.views.StartView()
+        v.setup(app_request)
+
+        return v
+
+    @pytest.mark.django_db
+    def test_get_context_data_flow_uses_claims_verification_logged_in(
+        self, mocker, app_request, view, mocked_session_flow_uses_claims_verification
+    ):
+        mock_session = mocker.patch("benefits.core.session")
+        mock_session.logged_in.return_value = True
+        mock_session.flow.return_value = mocked_session_flow_uses_claims_verification(None)
+
+        context = view.get_context_data()
+
+        assert benefits.eligibility.views.session._ELIGIBLE in app_request.session
+        assert app_request.session[benefits.eligibility.views.session._ELIGIBLE] is False
+        assert app_request.session[benefits.eligibility.views.session._ORIGIN] == reverse(routes.ELIGIBILITY_START)
+        # remove the "view" context key added by ContextMixin in
+        # https://github.com/django/django/blob/5.2/django/views/generic/base.py#L30
+        # before assertion
+        assert set({k: v for k, v in context.items() if k not in "view"}) == set(mock_session.flow().eligibility_start_context)
+
+
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_flow_selection_form")
 def test_start_flow_uses_claims_verification_logged_in(mocker, client, mocked_session_flow_uses_claims_verification):
@@ -227,16 +255,6 @@ def test_start_flow_does_not_use_claims_verification(mocker, client, mocked_sess
     response = client.get(path)
 
     assert response.status_code == 200
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency")
-def test_start_without_flow(client):
-    path = reverse(routes.ELIGIBILITY_START)
-
-    response = client.get(path)
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db

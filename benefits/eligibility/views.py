@@ -7,9 +7,11 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
+from django.views.generic.base import TemplateView
 
 from benefits.routes import routes
 from benefits.core import recaptcha, session
+from benefits.core.mixins import AgencySessionRequiredMixin, FlowSessionRequiredMixin
 from benefits.core.middleware import AgencySessionRequired, RecaptchaEnabled, FlowSessionRequired
 from benefits.core.models import EnrollmentFlow
 from . import analytics, forms, verify
@@ -56,15 +58,18 @@ def index(request):
     return response
 
 
-@decorator_from_middleware(AgencySessionRequired)
-@decorator_from_middleware(FlowSessionRequired)
-def start(request):
-    """View handler for the eligibility verification getting started screen."""
-    session.update(request, eligible=False, origin=reverse(routes.ELIGIBILITY_START))
+class StartView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateView):
+    """CBV for the eligibility verification getting started screen."""
 
-    flow = session.flow(request)
+    template_name = "eligibility/start.html"
 
-    return TemplateResponse(request, "eligibility/start.html", flow.eligibility_start_context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        session.update(self.request, eligible=False, origin=reverse(routes.ELIGIBILITY_START))
+        flow = session.flow(self.request)
+        context.update(flow.eligibility_start_context)
+
+        return context
 
 
 @decorator_from_middleware(AgencySessionRequired)
