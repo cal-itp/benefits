@@ -8,6 +8,7 @@ from django.urls import reverse
 import pytest
 
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
+from benefits.enrollment_switchio.session import Session as SwitchioSession
 from benefits.routes import routes
 from benefits.core import models, session
 
@@ -164,6 +165,7 @@ def test_logged_in_True(app_request):
 @pytest.mark.django_db
 def test_logout(app_request):
     LittlepaySession(app_request, access_token="enrollment_token", access_token_expiry="3600")
+    SwitchioSession(app_request, registration_id="1234")
     OAuthSession(app_request).claims_result = ClaimsResult(verified={"oauth_claim": True})
     session.update(app_request, logged_in=True)
     assert session.logged_in(app_request)
@@ -173,6 +175,7 @@ def test_logout(app_request):
     assert not session.logged_in(app_request)
     assert LittlepaySession(app_request).access_token is None
     assert LittlepaySession(app_request).access_token_expiry is None
+    assert SwitchioSession(app_request).registration_id is None
     assert OAuthSession(app_request).claims_result == ClaimsResult()
 
 
@@ -219,6 +222,9 @@ def test_reset_enrollment(app_request):
     app_request.session[littlepay_session._keys_access_token] = "enrollmenttoken123"
     app_request.session[littlepay_session._keys_access_token_expiry] = "1234567890"
 
+    switchio_session = SwitchioSession(app_request)
+    app_request.session[switchio_session._keys_registration_id] = "1234"
+
     session.reset(app_request)
 
     assert session.enrollment_expiry(app_request) is None
@@ -226,6 +232,7 @@ def test_reset_enrollment(app_request):
     assert littlepay_session.access_token is None
     assert littlepay_session.access_token_expiry is None
     assert not littlepay_session.access_token_valid()
+    assert switchio_session.registration_id is None
 
 
 @pytest.mark.django_db

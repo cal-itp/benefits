@@ -1,1 +1,12 @@
 {% extends "enrollment/index-base.html" %}
+{% load i18n %}
+
+{% block enrollment-form %}
+  <script nonce="{{ request.csp_nonce }}">
+
+      window.fetch("{% url routes.ENROLLMENT_SWITCHIO_GATEWAY_URL %}")
+        .then(response => response.json().then(data => console.log(data)));
+
+  </script>
+
+{% endblock enrollment-form %}

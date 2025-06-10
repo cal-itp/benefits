@@ -1,7 +1,16 @@
 import json
 import pytest
 
+from benefits.enrollment_switchio.api import Registration
+import benefits.enrollment_switchio.views
 from benefits.enrollment_switchio.views import GatewayUrlView, IndexView
+
+
+@pytest.fixture
+def mocked_api_base_url(mocker):
+    return mocker.patch(
+        "benefits.enrollment_switchio.models.get_secret_by_name", return_value="https://example.com/backend-api"
+    )
 
 
 class TestIndexView:
@@ -41,9 +50,19 @@ class TestGatewayUrlView:
         return v
 
     @pytest.mark.django_db
-    def test_get_gateway_url(self, view, app_request):
+    @pytest.mark.usefixtures("mocked_api_base_url", "mocked_session_agency", "mocked_session_eligible")
+    def test_get_gateway_url(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
+        model_TransitAgency.switchio_config = model_SwitchioConfig
+        gateway_url = "https://example.com/cst/?regId=1234"
+        mocker.patch(
+            "benefits.enrollment_switchio.views.Client.request_registration",
+            return_value=Registration(regId="1234", gtwUrl=gateway_url),
+        )
+        session_spy = mocker.spy(benefits.enrollment_switchio.views, "Session")
 
-        response = view.get(app_request)
+        # need to call `dispatch` here so that variables that the mixins assign (e.g. self.agency) are available to the view
+        response = view.dispatch(app_request)
 
         assert response.status_code == 200
-        assert json.loads(response.content) == {"gateway_url": "https://server/gateway/uuid"}
+        assert json.loads(response.content) == {"gateway_url": gateway_url}
+        session_spy.assert_called_once_with(request=app_request, registration_id="1234")
