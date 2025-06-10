@@ -40,7 +40,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
     """View for the tokenization gateway registration"""
 
     def get(self, request: HttpRequest, *args, **kwargs):
-        response = request_registration(request)
+        response = request_registration(request, self.agency.switchio_config)
 
         if response.status is Status.SUCCESS:
             registration = response.registration

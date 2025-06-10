@@ -6,7 +6,6 @@ from requests import HTTPError
 
 from benefits.enrollment.enrollment import Status
 from benefits.routes import routes
-from benefits.core import session
 from benefits.enrollment_switchio.api import Client, EshopResponseMode, Registration, RegistrationMode
 
 
@@ -18,10 +17,7 @@ class RegistrationResponse:
     status_code: int = None
 
 
-def request_registration(request) -> RegistrationResponse:
-    agency = session.agency(request)
-    switchio_config = agency.switchio_config
-
+def request_registration(request, switchio_config) -> RegistrationResponse:
     try:
         client = Client(
             api_url=switchio_config.api_base_url,

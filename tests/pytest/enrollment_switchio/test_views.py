@@ -47,15 +47,16 @@ class TestIndexView:
 
 class TestGatewayUrlView:
     @pytest.fixture
-    def view(self, app_request):
+    def view(self, app_request, mocked_session_agency):
         """Fixture to create an instance of GatewayUrlView."""
         v = GatewayUrlView()
         v.setup(app_request)
+        v.agency = mocked_session_agency(app_request)
 
         return v
 
     @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_api_base_url", "mocked_session_agency", "mocked_session_eligible")
+    @pytest.mark.usefixtures("mocked_api_base_url")
     def test_get_gateway_url(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
         model_TransitAgency.switchio_config = model_SwitchioConfig
         gateway_url = "https://example.com/cst/?regId=1234"
@@ -67,8 +68,7 @@ class TestGatewayUrlView:
         )
         session_spy = mocker.spy(benefits.enrollment_switchio.views, "Session")
 
-        # need to call `dispatch` here so that variables that the mixins assign (e.g. self.agency) are available to the view
-        response = view.dispatch(app_request)
+        response = view.get(app_request)
 
         assert response.status_code == 200
         assert json.loads(response.content) == {"gateway_url": gateway_url}
