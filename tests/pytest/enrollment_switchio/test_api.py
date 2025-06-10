@@ -3,7 +3,7 @@ import json
 import pytest
 
 import benefits.enrollment_switchio.api
-from benefits.enrollment_switchio.api import Client, EshopResponseMode, Registration, RegistrationStatus
+from benefits.enrollment_switchio.api import Client, EshopResponseMode, Registration, RegistrationMode, RegistrationStatus
 
 
 @pytest.fixture
@@ -79,7 +79,9 @@ def test_client_request_registration(mocker, client):
     mocker.patch("benefits.enrollment_switchio.api.Client._cert_request", return_value=mock_response)
 
     registration = client.request_registration(
-        eshopRedirectUrl="https://localhost/enrollment", mode="register", eshopResponseMode=EshopResponseMode.FORM_POST
+        eshopRedirectUrl="https://localhost/enrollment",
+        mode=RegistrationMode.REGISTER,
+        eshopResponseMode=EshopResponseMode.FORM_POST,
     )
 
     assert registration == Registration(**mock_json)

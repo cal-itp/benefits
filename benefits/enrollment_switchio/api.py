@@ -14,6 +14,11 @@ class Registration:
     gtwUrl: str
 
 
+class RegistrationMode(Enum):
+    REGISTER = "register"
+    IDENTIFY = "identify"
+
+
 class EshopResponseMode(Enum):
     FRAGMENT = "fragment"
     QUERY = "query"
@@ -85,14 +90,14 @@ class Client:
     def request_registration(
         self,
         eshopRedirectUrl: str,
-        mode: str,
+        mode: RegistrationMode,
         eshopResponseMode: EshopResponseMode,
         timeout=5,
     ) -> Registration:
         registration_path = "/api/v1/registration"
         request_body = {
             "eshopRedirectUrl": eshopRedirectUrl,
-            "mode": mode,
+            "mode": mode.value,
             "eshopResponseMode": eshopResponseMode.value,
         }
 

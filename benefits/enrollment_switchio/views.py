@@ -5,7 +5,7 @@ from django.views.generic import TemplateView, View
 
 from benefits.core import models, session
 from benefits.core.mixins import EligibleSessionRequiredMixin, AgencySessionRequiredMixin
-from benefits.enrollment_switchio.api import Client, EshopResponseMode
+from benefits.enrollment_switchio.api import Client, EshopResponseMode, RegistrationMode
 from benefits.enrollment_switchio.session import Session
 from benefits.routes import routes
 
@@ -51,7 +51,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
 
         registration = client.request_registration(
             eshopRedirectUrl=redirect_url,
-            mode="register",
+            mode=RegistrationMode.REGISTER,
             eshopResponseMode=EshopResponseMode.FORM_POST,
             timeout=settings.REQUESTS_TIMEOUT,
         )
