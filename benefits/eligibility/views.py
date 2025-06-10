@@ -33,14 +33,16 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
 
     def dispatch(self, request, *args, **kwargs):
         """Initialize session state before handling the request."""
-        if not self.agency:
-            return TemplateResponse(request, "200-user-error.html")
+
+        # Run super.dispatch() here to
+        # Ensure all mixins run before dispatch logic
+        # so that self.agency is available from AgencySessionRequiredMixin
+        response = super().dispatch(request, *args, **kwargs)
 
         session.update(request, eligible=False, origin=self.agency.index_url)
-        # clear any prior OAuth token as the user is choosing their desired flow
-        # this may or may not require OAuth, with a different set of scope/claims than what is already stored
         session.logout(request)
-        return super().dispatch(request, *args, **kwargs)
+
+        return response
 
     def form_valid(self, form):
         """If the form is valid, set enrollment flow and redirect."""
