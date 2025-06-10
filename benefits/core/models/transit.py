@@ -190,7 +190,9 @@ class TransitAgency(models.Model):
         elif self.switchio_config:
             return routes.ENROLLMENT_SWITCHIO_INDEX
         else:
-            raise ValueError("TransitAgency must have either a transit processor config in order to show enrollment index.")
+            raise ValueError(
+                "TransitAgency must have either a LittlepayConfig or SwitchioConfig in order to show enrollment index."
+            )
 
     @property
     def enrollment_flows(self):

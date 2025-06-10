@@ -195,3 +195,16 @@ def test_TransitAgency_enrollment_index_route_switchio(model_TransitAgency, mode
     model_TransitAgency.save()
 
     assert model_TransitAgency.enrollment_index_route == routes.ENROLLMENT_SWITCHIO_INDEX
+
+
+@pytest.mark.django_db
+def test_TransitAgency_enrollment_index_route_no_config(model_TransitAgency):
+    model_TransitAgency.littlepay_config = None
+    model_TransitAgency.switchio_config = None
+    model_TransitAgency.save()
+
+    with pytest.raises(
+        ValueError,
+        match="TransitAgency must have either a LittlepayConfig or SwitchioConfig in order to show enrollment index.",
+    ):
+        model_TransitAgency.enrollment_index_route
