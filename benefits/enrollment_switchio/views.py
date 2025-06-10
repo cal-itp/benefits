@@ -34,8 +34,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
     """View for the tokenization gateway registration"""
 
     def get(self, request: HttpRequest, *args, **kwargs):
-        agency = session.agency(request)
-        switchio_config = agency.switchio_config
+        switchio_config = self.agency.switchio_config
 
         client = Client(
             api_url=switchio_config.api_base_url,
