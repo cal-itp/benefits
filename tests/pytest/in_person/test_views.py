@@ -196,8 +196,8 @@ def test_token_system_error(mocker, admin_client, mocked_enrollment_analytics_mo
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
-    mocked_enrollment_analytics_module.failed_access_token_request.assert_called_once()
-    assert 500 in mocked_enrollment_analytics_module.failed_access_token_request.call_args.args
+    mocked_enrollment_analytics_module.failed_pretokenization_request.assert_called_once()
+    assert 500 in mocked_enrollment_analytics_module.failed_pretokenization_request.call_args.args
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
@@ -226,8 +226,8 @@ def test_token_http_error_400(mocker, admin_client, mocked_enrollment_analytics_
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.IN_PERSON_SERVER_ERROR)
-    mocked_enrollment_analytics_module.failed_access_token_request.assert_called_once()
-    assert 400 in mocked_enrollment_analytics_module.failed_access_token_request.call_args.args
+    mocked_enrollment_analytics_module.failed_pretokenization_request.assert_called_once()
+    assert 400 in mocked_enrollment_analytics_module.failed_pretokenization_request.call_args.args
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
@@ -253,7 +253,7 @@ def test_token_misconfigured_client_id(mocker, admin_client, mocked_enrollment_a
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.IN_PERSON_SERVER_ERROR)
-    mocked_enrollment_analytics_module.failed_access_token_request.assert_called_once()
+    mocked_enrollment_analytics_module.failed_pretokenization_request.assert_called_once()
     mocked_sentry_sdk_module.capture_exception_assert_called_once()
 
 
@@ -279,7 +279,7 @@ def test_token_connection_error(mocker, admin_client, mocked_enrollment_analytic
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.IN_PERSON_SERVER_ERROR)
-    mocked_enrollment_analytics_module.failed_access_token_request.assert_called_once()
+    mocked_enrollment_analytics_module.failed_pretokenization_request.assert_called_once()
     mocked_sentry_sdk_module.capture_exception_assert_called_once()
 
 

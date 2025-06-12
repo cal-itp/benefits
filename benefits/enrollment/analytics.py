@@ -24,11 +24,11 @@ class ReturnedEnrollmentEvent(core.Event):
             self.update_event_properties(enrollment_group=enrollment_group)
 
 
-class FailedAccessTokenRequestEvent(core.Event):
-    """Analytics event representing a failure to acquire an access token for card tokenization."""
+class FailedPretokenizationRequestEvent(core.Event):
+    """Analytics event representing a failure to do the pre-tokenization step for card tokenization."""
 
     def __init__(self, request, status_code=None, enrollment_method=models.EnrollmentMethods.DIGITAL):
-        super().__init__(request, "failed access token request", enrollment_method)
+        super().__init__(request, "failed pre-tokenization request", enrollment_method)
         if status_code is not None:
             self.update_event_properties(status_code=status_code)
 
@@ -56,6 +56,6 @@ def returned_success(request, enrollment_group, enrollment_method: str = models.
     )
 
 
-def failed_access_token_request(request, status_code=None, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
-    """Send the "failed access token request" analytics event with the response status code."""
-    core.send_event(FailedAccessTokenRequestEvent(request, status_code=status_code, enrollment_method=enrollment_method))
+def failed_pretokenization_request(request, status_code=None, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
+    """Send the "failed pre-tokenization request" analytics event with the response status code."""
+    core.send_event(FailedPretokenizationRequestEvent(request, status_code=status_code, enrollment_method=enrollment_method))

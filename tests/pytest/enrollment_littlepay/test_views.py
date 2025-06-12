@@ -103,8 +103,8 @@ def test_token_system_error(mocker, client, mocked_analytics_module, mocked_sent
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.ENROLLMENT_SYSTEM_ERROR)
-    mocked_analytics_module.failed_access_token_request.assert_called_once()
-    assert 500 in mocked_analytics_module.failed_access_token_request.call_args.args
+    mocked_analytics_module.failed_pretokenization_request.assert_called_once()
+    assert 500 in mocked_analytics_module.failed_pretokenization_request.call_args.args
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
@@ -133,8 +133,8 @@ def test_token_http_error_400(mocker, client, mocked_analytics_module, mocked_se
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.SERVER_ERROR)
-    mocked_analytics_module.failed_access_token_request.assert_called_once()
-    assert 400 in mocked_analytics_module.failed_access_token_request.call_args.args
+    mocked_analytics_module.failed_pretokenization_request.assert_called_once()
+    assert 400 in mocked_analytics_module.failed_pretokenization_request.call_args.args
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
@@ -160,7 +160,7 @@ def test_token_misconfigured_client_id(mocker, client, mocked_analytics_module, 
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.SERVER_ERROR)
-    mocked_analytics_module.failed_access_token_request.assert_called_once()
+    mocked_analytics_module.failed_pretokenization_request.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
@@ -186,7 +186,7 @@ def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_
     assert "token" not in data
     assert "redirect" in data
     assert data["redirect"] == reverse(routes.SERVER_ERROR)
-    mocked_analytics_module.failed_access_token_request.assert_called_once()
+    mocked_analytics_module.failed_pretokenization_request.assert_called_once()
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 

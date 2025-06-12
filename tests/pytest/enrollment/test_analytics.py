@@ -1,12 +1,12 @@
 import pytest
 
 from cdt_identity.claims import ClaimsResult
-from benefits.enrollment.analytics import FailedAccessTokenRequestEvent, ReturnedEnrollmentEvent
+from benefits.enrollment.analytics import FailedPretokenizationRequestEvent, ReturnedEnrollmentEvent
 
 
 @pytest.mark.django_db
 def test_FailedAccessTokenRequestEvent_sets_status_code(app_request):
-    event = FailedAccessTokenRequestEvent(app_request, 500)
+    event = FailedPretokenizationRequestEvent(app_request, 500)
 
     assert event.event_properties["status_code"] == 500
 

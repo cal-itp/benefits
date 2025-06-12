@@ -52,7 +52,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
         else:
             logger.debug("Error occurred while requesting access token", exc_info=response.exception)
             sentry_sdk.capture_exception(response.exception)
-            analytics.failed_access_token_request(request, response.status_code)
+            analytics.failed_pretokenization_request(request, response.status_code)
 
             if response.status is Status.SYSTEM_ERROR:
                 redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)

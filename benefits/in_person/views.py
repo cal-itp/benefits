@@ -65,7 +65,7 @@ def token(request):
         elif response.status is Status.SYSTEM_ERROR or response.status is Status.EXCEPTION:
             logger.debug("Error occurred while requesting access token", exc_info=response.exception)
             sentry_sdk.capture_exception(response.exception)
-            enrollment_analytics.failed_access_token_request(
+            enrollment_analytics.failed_pretokenization_request(
                 request, response.status_code, enrollment_method=models.EnrollmentMethods.IN_PERSON
             )
 
