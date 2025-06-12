@@ -23,7 +23,7 @@ dependencies = [
     "sentry-sdk==2.29.1",
     "six==1.17.0",
     "pillow==11.2.1",
-    "django-multiselectfield==0.1.13",
+    "django-multiselectfield==1.0.1",
 ]
 
 [project.optional-dependencies]
