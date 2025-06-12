@@ -12,6 +12,16 @@ from benefits.enrollment_switchio.views import GatewayUrlView, IndexView
 
 
 @pytest.fixture
+def mocked_analytics_module(mocked_analytics_module):
+    return mocked_analytics_module(benefits.enrollment_switchio.views)
+
+
+@pytest.fixture
+def mocked_sentry_sdk_module(mocker):
+    return mocker.patch.object(benefits.enrollment_switchio.views, "sentry_sdk")
+
+
+@pytest.fixture
 def mocked_api_base_url(mocker):
     return mocker.patch(
         "benefits.enrollment_switchio.models.get_secret_by_name", return_value="https://example.com/backend-api"
@@ -76,12 +86,29 @@ class TestGatewayUrlView:
 
     @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_api_base_url")
-    def test_get_gateway_url_system_error(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
+    def test_get_gateway_url_system_error(
+        self,
+        view,
+        app_request,
+        mocker,
+        model_TransitAgency,
+        model_SwitchioConfig,
+        mocked_analytics_module,
+        mocked_sentry_sdk_module,
+    ):
+        mock_error = {"message": "Mock error message"}
+        mock_error_response = mocker.Mock(status_code=500, **mock_error)
+        mock_error_response.json.return_value = mock_error
+        http_error = HTTPError(response=mock_error_response)
+
         model_TransitAgency.switchio_config = model_SwitchioConfig
         mocker.patch(
             "benefits.enrollment_switchio.views.request_registration",
             return_value=RegistrationResponse(
-                status=Status.SYSTEM_ERROR, exception=HTTPError("mock 500 error"), registration=None
+                status=Status.SYSTEM_ERROR,
+                exception=http_error,
+                status_code=http_error.response.status_code,
+                registration=None,
             ),
         )
 
@@ -90,14 +117,35 @@ class TestGatewayUrlView:
         assert response.status_code == 200
         assert json.loads(response.content) == {"redirect": reverse(routes.ENROLLMENT_SYSTEM_ERROR)}
 
+        mocked_analytics_module.failed_pretokenization_request.assert_called_once()
+        assert 500 in mocked_analytics_module.failed_pretokenization_request.call_args.args
+        mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
     @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_api_base_url")
-    def test_get_gateway_url_http_error_400(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
+    def test_get_gateway_url_http_error_400(
+        self,
+        view,
+        app_request,
+        mocker,
+        model_TransitAgency,
+        model_SwitchioConfig,
+        mocked_analytics_module,
+        mocked_sentry_sdk_module,
+    ):
+        mock_error = {"message": "Mock error message"}
+        mock_error_response = mocker.Mock(status_code=400, **mock_error)
+        mock_error_response.json.return_value = mock_error
+        http_error = HTTPError(response=mock_error_response)
+
         model_TransitAgency.switchio_config = model_SwitchioConfig
         mocker.patch(
             "benefits.enrollment_switchio.views.request_registration",
             return_value=RegistrationResponse(
-                status=Status.EXCEPTION, exception=HTTPError("mock 400 error"), registration=None
+                status=Status.EXCEPTION,
+                exception=http_error,
+                status_code=http_error.response.status_code,
+                registration=None,
             ),
         )
 
@@ -105,3 +153,7 @@ class TestGatewayUrlView:
 
         assert response.status_code == 200
         assert json.loads(response.content) == {"redirect": reverse(routes.SERVER_ERROR)}
+
+        mocked_analytics_module.failed_pretokenization_request.assert_called_once()
+        assert 400 in mocked_analytics_module.failed_pretokenization_request.call_args.args
+        mocked_sentry_sdk_module.capture_exception.assert_called_once()
