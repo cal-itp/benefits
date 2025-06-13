@@ -1,13 +1,18 @@
-from django.conf import settings
+import logging
 from django.http import HttpRequest, JsonResponse
 from django.urls import reverse
 from django.views.generic import TemplateView, View
+import sentry_sdk
 
+from benefits.routes import routes
 from benefits.core import models, session
 from benefits.core.mixins import EligibleSessionRequiredMixin, AgencySessionRequiredMixin
-from benefits.enrollment_switchio.api import Client, EshopResponseMode, RegistrationMode
+from benefits.enrollment import analytics
+from benefits.enrollment.enrollment import Status
+from benefits.enrollment_switchio.enrollment import request_registration
 from benefits.enrollment_switchio.session import Session
-from benefits.routes import routes
+
+logger = logging.getLogger(__name__)
 
 
 class IndexView(EligibleSessionRequiredMixin, TemplateView):
@@ -35,39 +40,24 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
     """View for the tokenization gateway registration"""
 
     def get(self, request: HttpRequest, *args, **kwargs):
-        switchio_config = self.agency.switchio_config
+        response = request_registration(request, self.agency.switchio_config)
 
-        client = Client(
-            api_url=switchio_config.api_base_url,
-            api_key=switchio_config.api_key,
-            api_secret=switchio_config.api_secret,
-            private_key=switchio_config.private_key_data,
-            client_certificate=switchio_config.client_certificate_data,
-            ca_certificate=switchio_config.ca_certificate_data,
-        )
+        if response.status is Status.SUCCESS:
+            registration = response.registration
 
-        route = reverse(routes.ENROLLMENT_SWITCHIO_INDEX)
-        redirect_url = _generate_redirect_uri(request, route)
+            Session(request=request, registration_id=registration.regId)
 
-        registration = client.request_registration(
-            eshopRedirectUrl=redirect_url,
-            mode=RegistrationMode.REGISTER,
-            eshopResponseMode=EshopResponseMode.FORM_POST,
-            timeout=settings.REQUESTS_TIMEOUT,
-        )
-        Session(request=request, registration_id=registration.regId)
+            data = {"gateway_url": registration.gtwUrl}
+            return JsonResponse(data)
+        else:
+            logger.debug("Error occurred while requesting a tokenization gateway registration", exc_info=response.exception)
+            sentry_sdk.capture_exception(response.exception)
+            analytics.failed_pretokenization_request(request, response.status_code)
 
-        data = {"gateway_url": registration.gtwUrl}
-        return JsonResponse(data)
+            if response.status is Status.SYSTEM_ERROR:
+                redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+            else:
+                redirect = reverse(routes.SERVER_ERROR)
 
-
-# copied from https://github.com/Office-of-Digital-Services/django-cdt-identity/blob/main/cdt_identity/views.py#L42-L50
-def _generate_redirect_uri(request: HttpRequest, redirect_path: str):
-    redirect_uri = str(request.build_absolute_uri(redirect_path)).lower()
-
-    # this is a temporary hack to ensure redirect URIs are HTTPS when the app is deployed
-    # see https://github.com/cal-itp/benefits/issues/442 for more context
-    if not redirect_uri.startswith("http://localhost"):
-        redirect_uri = redirect_uri.replace("http://", "https://")
-
-    return redirect_uri
+            data = {"redirect": redirect}
+            return JsonResponse(data)
