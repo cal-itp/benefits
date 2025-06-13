@@ -41,7 +41,7 @@
 | benefits/eligibility/verify.py                             |       12 |        0 |        4 |        0 |    100% |           |
 | benefits/eligibility/views.py                              |       82 |        1 |       20 |        2 |     97% |48, 93->exit |
 | benefits/enrollment/\_\_init\_\_.py                        |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment/analytics.py                           |       21 |        5 |        6 |        3 |     70% |21->23, 24, 32->exit, 38, 43, 48, 61 |
+| benefits/enrollment/analytics.py                           |       21 |        4 |        6 |        2 |     78% |21->23, 24, 38, 43, 48 |
 | benefits/enrollment/apps.py                                |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/context/\_\_init\_\_.py                |        2 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/context/flow.py                        |       34 |        0 |        0 |        0 |    100% |           |
@@ -63,13 +63,13 @@
 | benefits/enrollment\_switchio/admin.py                     |        6 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/api.py                       |       71 |        8 |        2 |        0 |     89% |   144-157 |
 | benefits/enrollment\_switchio/apps.py                      |        4 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_switchio/enrollment.py                |       36 |        0 |        6 |        1 |     98% |    65->68 |
+| benefits/enrollment\_switchio/enrollment.py                |       58 |        0 |       10 |        1 |     99% |    74->77 |
 | benefits/enrollment\_switchio/migrations/0001\_initial.py  |        8 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/migrations/\_\_init\_\_.py   |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/models.py                    |       48 |        0 |       12 |        0 |    100% |           |
-| benefits/enrollment\_switchio/session.py                   |       18 |        0 |        4 |        0 |    100% |           |
+| benefits/enrollment\_switchio/session.py                   |       28 |        0 |        6 |        0 |    100% |           |
 | benefits/enrollment\_switchio/urls.py                      |        5 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_switchio/views.py                     |       36 |        0 |        4 |        0 |    100% |           |
+| benefits/enrollment\_switchio/views.py                     |       58 |        0 |       12 |        0 |    100% |           |
 | benefits/in\_person/\_\_init\_\_.py                        |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/apps.py                                |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/context/\_\_init\_\_.py                |        2 |        0 |        0 |        0 |    100% |           |
@@ -95,7 +95,7 @@
 | benefits/settings.py                                       |      132 |        7 |       24 |        9 |     90% |106, 127->132, 143->146, 163, 316, 328, 330, 345, 357 |
 | benefits/urls.py                                           |       27 |        7 |        4 |        2 |     71% |35->46, 50-64 |
 | benefits/wsgi.py                                           |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                                  **TOTAL** | **2740** |  **131** |  **492** |   **55** | **94%** |           |
+|                                                  **TOTAL** | **2794** |  **130** |  **506** |   **54** | **94%** |           |
 
 
 ## Setup coverage badge
