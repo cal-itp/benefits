@@ -54,8 +54,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
                 if response.registration_status.regState in ["expired", "deleted"]:
                     return self._request_registration(request, switchio_config, session)
                 else:
-                    data = {"gateway_url": session.gateway_url}
-                    return JsonResponse(data)
+                    return self._gateway_url_response(session)
             else:
                 logger.debug(f"Error occurred while attempting to get registration status for {session.registration_id}")
                 sentry_sdk.capture_exception(response.exception)
@@ -77,8 +76,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
             session.registration_id = registration.regId
             session.gateway_url = registration.gtwUrl
 
-            data = {"gateway_url": registration.gtwUrl}
-            return JsonResponse(data)
+            return self._gateway_url_response(session)
         else:
             logger.debug("Error occurred while requesting a tokenization gateway registration", exc_info=response.exception)
             sentry_sdk.capture_exception(response.exception)
@@ -91,3 +89,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
 
             data = {"redirect": redirect}
             return JsonResponse(data)
+
+    def _gateway_url_response(self, session: Session):
+        data = {"gateway_url": session.gateway_url}
+        return JsonResponse(data)
