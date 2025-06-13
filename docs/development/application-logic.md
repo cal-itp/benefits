@@ -237,9 +237,11 @@ transit processor (Littlepay).
 
 **_Cal-ITP Benefits never processes, transmits, nor stores the user's payment card details._**
 
+### Littlepay
+
 !!! example "Entrypoint"
 
-    [`benefits/enrollment/views.py`][enrollment-views]
+    [`benefits/enrollment_littlepay/views.py`][enrollment-littlepay-views]
 
 !!! example "Supporting packages"
 
@@ -287,6 +289,51 @@ benefits-->>analytics: returned enrollment
     deactivate benefits
 ```
 
+### Switchio
+
+!!! example "Entrypoint"
+
+    [`benefits/enrollment_switchio/views.py`][enrollment-switchio-views]
+
+```mermaid
+sequenceDiagram
+autonumber
+%% Enrollment phase
+    actor user as User
+    participant benefits as Benefits app
+    participant switchio as Switchio
+    participant analytics as Analytics
+
+user->>benefits: starts enrollment phase
+    activate user
+benefits-->>user: display enrollment index
+user->>switchio: GET tokenization lib (AJAX)
+switchio-->>user: tokenization lib .js
+user->>benefits: GET registration ID and gateway URL (AJAX)
+    deactivate user
+    activate benefits
+benefits->>switchio: GET registration ID and gateway URL
+switchio-->>benefits: registration ID and gateway URL
+benefits-->>user: gateway URL
+    deactivate benefits
+    activate user
+user->>user: click to initiate payment card collection
+user-->>analytics: started card tokenization
+user-->>user: redirect to Switchio page
+user->>switchio: provides debit or credit card details
+    deactivate user
+    activate switchio
+switchio-->>benefits: GET eshopRedirectUri (/switchio)
+    deactivate switchio
+    activate benefits
+benefits-->>analytics: finished card tokenization
+benefits->>switchio: GET registration status
+switchio-->>benefits: registration status (response also contains card token)
+benefits->>switchio: assign discount group to token
+benefits-->>analytics: returned enrollment
+    deactivate benefits
+```
+
 [core-context-processors]: https://github.com/cal-itp/benefits/blob/main/benefits/core/context_processors.py
 [core-middleware]: https://github.com/cal-itp/benefits/blob/main/benefits/core/middleware.py
 [core-models]: https://github.com/cal-itp/benefits/blob/main/benefits/core/models.py
@@ -294,7 +341,8 @@ benefits-->>analytics: returned enrollment
 [core-views]: https://github.com/cal-itp/benefits/blob/main/benefits/core/views.py
 [eligibility-verify]: https://github.com/cal-itp/benefits/blob/main/benefits/eligibility/verify.py
 [eligibility-views]: https://github.com/cal-itp/benefits/blob/main/benefits/eligibility/views.py
-[enrollment-views]: https://github.com/cal-itp/benefits/blob/main/benefits/enrollment/views.py
+[enrollment-littlepay-views]: https://github.com/cal-itp/benefits/blob/main/benefits/enrollment_littlepay/views.py
+[enrollment-switchio-views]: https://github.com/cal-itp/benefits/blob/main/benefits/enrollment_switchio/views.py
 [littlepay]: https://github.com/cal-itp/littlepay
 [oauth-client]: https://github.com/cal-itp/benefits/blob/main/benefits/oauth/client.py
 [oauth-redirects]: https://github.com/cal-itp/benefits/blob/main/benefits/oauth/redirects.py
