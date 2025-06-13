@@ -50,7 +50,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
             data = {"gateway_url": registration.gtwUrl}
             return JsonResponse(data)
         else:
-            logger.debug("Error occurred while requesting access token", exc_info=response.exception)
+            logger.debug("Error occurred while requesting a tokenization gateway registration", exc_info=response.exception)
             sentry_sdk.capture_exception(response.exception)
             analytics.failed_pretokenization_request(request, response.status_code)
 
