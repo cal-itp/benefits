@@ -119,7 +119,7 @@ CSRF_TRUSTED_ORIGINS = _filter_empty(os.environ.get("DJANGO_TRUSTED_ORIGINS", "h
 #
 # `Lax` allows the cookie to travel with the user and be sent back to us by the
 # OAuth server, as long as the request is "safe" i.e. GET
-SESSION_COOKIE_SAMESITE = "Lax"
+SESSION_COOKIE_SAMESITE = "None"
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_NAME = "_benefitssessionid"
