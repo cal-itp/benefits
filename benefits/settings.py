@@ -119,7 +119,12 @@ CSRF_TRUSTED_ORIGINS = _filter_empty(os.environ.get("DJANGO_TRUSTED_ORIGINS", "h
 #
 # `Lax` allows the cookie to travel with the user and be sent back to us by the
 # OAuth server, as long as the request is "safe" i.e. GET
-SESSION_COOKIE_SAMESITE = "Lax"
+#
+# However, even with `Lax`, the session cookie is still lost when the user is
+# redirected back to our app from Switchio, so to make it work, we use `None` which
+# requires `Secure` to be set as well.
+SESSION_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_SECURE = True
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_NAME = "_benefitssessionid"
@@ -127,7 +132,6 @@ SESSION_COOKIE_NAME = "_benefitssessionid"
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
     CSRF_FAILURE_VIEW = "benefits.core.views.csrf_failure"
-    SESSION_COOKIE_SECURE = True
 
 SECURE_BROWSER_XSS_FILTER = True
 
