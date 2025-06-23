@@ -51,7 +51,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
 
             if response.status is Status.SUCCESS:
                 # if the registration session is no longer valid, request a new registration session.
-                if response.registration_status.regState in ["expired", "deleted"]:
+                if response.registration_status.regState in ["expired", "deleted", "tokenization_finished"]:
                     return self._request_registration(request, switchio_config, session)
                 else:
                     return self._gateway_url_response(session)
