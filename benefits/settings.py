@@ -322,7 +322,7 @@ CSP_FONT_SRC.extend(env_font_src)
 
 CSP_FRAME_ANCESTORS = ["'none'"]
 
-CSP_FRAME_SRC = ["*.littlepay.com"]
+CSP_FRAME_SRC = ["*.littlepay.com", "*.switchio.com"]
 env_frame_src = _filter_empty(os.environ.get("DJANGO_CSP_FRAME_SRC", "").split(","))
 if RECAPTCHA_ENABLED:
     env_frame_src.append("https://www.google.com")
