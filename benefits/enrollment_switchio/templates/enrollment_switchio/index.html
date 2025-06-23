@@ -2,11 +2,20 @@
 {% load i18n %}
 
 {% block enrollment-form %}
-  <script nonce="{{ request.csp_nonce }}">
 
-      window.fetch("{% url routes.ENROLLMENT_SWITCHIO_GATEWAY_URL %}")
-        .then(response => response.json().then(data => console.log(data)));
+  <script type="module" nonce="{{ request.csp_nonce }}">
+    import { StRpClient } from 'https://cdn.jsdelivr.net/npm/@switchio/st-rp-sdk@1.0.2/index.min.js';
 
+    function tokenizeWithRedirect(gtwUrl) {
+      StRpClient.tokenizeWithRedirect({
+        tokenizationParams: { uri: gtwUrl },
+        state: 'tokenize',
+      });
+    };
+
+    fetch("{% url routes.ENROLLMENT_SWITCHIO_GATEWAY_URL %}")
+        .then(response => response.json()
+        .then(data => tokenizeWithRedirect(data.gateway_url)));
   </script>
 
 {% endblock enrollment-form %}
