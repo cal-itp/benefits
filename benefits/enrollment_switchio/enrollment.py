@@ -43,7 +43,7 @@ def request_registration(request, switchio_config) -> RegistrationResponse:
         registration = client.request_registration(
             eshopRedirectUrl=redirect_url,
             mode=RegistrationMode.REGISTER,
-            eshopResponseMode=EshopResponseMode.FORM_POST,
+            eshopResponseMode=EshopResponseMode.QUERY,
             timeout=settings.REQUESTS_TIMEOUT,
         )
 
