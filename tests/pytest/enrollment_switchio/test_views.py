@@ -32,10 +32,11 @@ def mocked_api_base_url(mocker):
 
 class TestIndexView:
     @pytest.fixture
-    def view(self, app_request):
+    def view(self, app_request, mocked_session_agency):
         """Fixture to create an instance of IndexView."""
         v = IndexView()
         v.setup(app_request)
+        v.agency = mocked_session_agency(app_request)
 
         return v
 
@@ -55,6 +56,56 @@ class TestIndexView:
         transit_processor_context = context["transit_processor"]
         assert "name" in transit_processor_context
         assert "website" in transit_processor_context
+
+    @pytest.mark.django_db
+    @pytest.mark.usefixtures("mocked_session_flow")
+    def test_get(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
+        model_TransitAgency.switchio_config = model_SwitchioConfig
+        mocked_get_registration_status = mocker.patch(
+            "benefits.enrollment_switchio.views.get_registration_status", return_value=None
+        )
+
+        response = view.get(app_request)
+
+        assert response.status_code == 200
+        assert response.template_name == ["enrollment_switchio/index.html"]
+        mocked_get_registration_status.assert_not_called()
+
+    @pytest.mark.django_db
+    @pytest.mark.usefixtures("mocked_session_flow")
+    def test_get_with_session_registration_id(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
+        model_TransitAgency.switchio_config = model_SwitchioConfig
+        gateway_url = "https://example.com/cst/?regId=1234"
+        mocked_get_registration_status = mocker.patch(
+            "benefits.enrollment_switchio.views.get_registration_status",
+            return_value=RegistrationStatusResponse(
+                status=Status.SUCCESS,
+                registration_status=RegistrationStatus(
+                    regState="tokenization_finished",
+                    created=datetime.now(),
+                    mode="register",
+                    eshopResponseMode="query",
+                    tokens=[
+                        {
+                            "token": "12341EFSADDAFA63395F2123213215",
+                            "par": None,
+                            "tokenVersion": 117,
+                            "tokenState": "active",
+                            "validFrom": "2025-01-11T10:46:00.000",
+                            "validTo": "2050-01-11T10:46:00.000",
+                            "testOnly": False,
+                        }
+                    ],
+                ),
+            ),
+        )
+        Session(app_request, registration_id="1234", gateway_url=gateway_url)
+
+        response = view.get(app_request)
+
+        assert response.status_code == 302
+        assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
+        mocked_get_registration_status.assert_called_once()
 
 
 class TestGatewayUrlView:
