@@ -43,8 +43,16 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, Templa
 
         if session.registration_id:
             response = get_registration_status(switchio_config=switchio_config, registration_id=session.registration_id)
-            if response.registration_status.regState == "tokenization_finished":
-                return redirect(routes.ENROLLMENT_SUCCESS)
+            if response.status is Status.SUCCESS:
+                if response.registration_status.regState == "tokenization_finished":
+                    return redirect(routes.ENROLLMENT_SUCCESS)
+            else:
+                sentry_sdk.capture_exception(response.exception)
+
+                if response.status is Status.SYSTEM_ERROR:
+                    return redirect(routes.ENROLLMENT_SYSTEM_ERROR)
+                elif response.status is Status.EXCEPTION:
+                    return redirect(routes.SERVER_ERROR)
 
         return super().get(request=request, *args, **kwargs)
 
