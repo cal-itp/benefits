@@ -3,6 +3,8 @@
 
 {% block enrollment-form %}
 
+  {% translate "Please wait..." as loading_text %}
+
   <script type="module" nonce="{{ request.csp_nonce }}">
     import { StRpClient } from 'https://cdn.jsdelivr.net/npm/@switchio/st-rp-sdk@1.0.2/index.min.js';
 
@@ -15,7 +17,33 @@
 
     fetch("{% url routes.ENROLLMENT_SWITCHIO_GATEWAY_URL %}")
         .then(response => response.json()
-        .then(data => tokenizeInIframeModal(data.gateway_url)));
+        .then(data => {
+          if (data.redirect) {
+            // https://stackoverflow.com/a/42469170
+            // use 'assign' because 'replace' was giving strange Back button behavior
+            window.location.assign(data.redirect);
+            return; // exit early so the rest of this function doesn't execute
+          }
+
+          document.querySelector(".loading").remove();
+
+          // remove invisible and add back visible, so we aren't left with
+          // a div with an empty class attribute
+          // (this is purely for clarity when reviewing the HTML, no UX impact)
+          let invisibleElement = document.querySelector(".invisible");
+          invisibleElement.classList.remove("invisible");
+          invisibleElement.classList.add("visible");
+
+          let ctaButton = document.getElementById("{{ cta_button }}");
+          ctaButton.addEventListener("click", event => {
+            ctaButton.classList.add("disabled");
+            ctaButton.setAttribute("aria-disabled", "true");
+            ctaButton.textContent = "{{ loading_text }}";
+
+            // open the tokenization gateway
+            tokenizeInIframeModal(data.gateway_url)
+          });
+        }));
   </script>
 
 {% endblock enrollment-form %}
