@@ -10,16 +10,10 @@
       StRpClient.tokenizeInIframe({
         tokenizationParams: { uri: gtwUrl },
         festparams: { mode: 'modal' },
-      }).then((x) => {
-        if (x.type === 'success') {
-          console.log('Successfully tokenized.', x);
-          return;
-        }
-        console.log('Tokenization failed.', x);
       });
     }
 
-    window.fetch("{% url routes.ENROLLMENT_SWITCHIO_GATEWAY_URL %}")
+    fetch("{% url routes.ENROLLMENT_SWITCHIO_GATEWAY_URL %}")
         .then(response => response.json()
         .then(data => tokenizeInIframeModal(data.gateway_url)));
   </script>
