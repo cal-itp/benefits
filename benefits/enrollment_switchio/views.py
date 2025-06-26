@@ -1,5 +1,6 @@
 import logging
 from django.http import HttpRequest, JsonResponse
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import TemplateView, View
 import sentry_sdk
@@ -16,7 +17,7 @@ from benefits.enrollment_switchio.session import Session
 logger = logging.getLogger(__name__)
 
 
-class IndexView(EligibleSessionRequiredMixin, TemplateView):
+class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, TemplateView):
     """View for the enrollment landing page."""
 
     template_name = "enrollment_switchio/index.html"
@@ -35,6 +36,25 @@ class IndexView(EligibleSessionRequiredMixin, TemplateView):
             }
         )
         return context
+
+    def get(self, request: HttpRequest, *args, **kwargs):
+        session = Session(request)
+        switchio_config = self.agency.switchio_config
+
+        if session.registration_id:
+            response = get_registration_status(switchio_config=switchio_config, registration_id=session.registration_id)
+            if response.status is Status.SUCCESS:
+                if response.registration_status.regState == "tokenization_finished":
+                    return redirect(routes.ENROLLMENT_SUCCESS)
+            else:
+                sentry_sdk.capture_exception(response.exception)
+
+                if response.status is Status.SYSTEM_ERROR:
+                    return redirect(routes.ENROLLMENT_SYSTEM_ERROR)
+                elif response.status is Status.EXCEPTION:
+                    return redirect(routes.SERVER_ERROR)
+
+        return super().get(request=request, *args, **kwargs)
 
 
 class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, View):
