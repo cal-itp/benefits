@@ -69,7 +69,7 @@
 | benefits/enrollment\_switchio/models.py                    |       48 |        0 |       12 |        0 |    100% |           |
 | benefits/enrollment\_switchio/session.py                   |       28 |        0 |        6 |        0 |    100% |           |
 | benefits/enrollment\_switchio/urls.py                      |        5 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_switchio/views.py                     |       58 |        0 |       12 |        0 |    100% |           |
+| benefits/enrollment\_switchio/views.py                     |       73 |        0 |       22 |        2 |     98% |47->57, 54->57 |
 | benefits/in\_person/\_\_init\_\_.py                        |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/apps.py                                |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/context/\_\_init\_\_.py                |        2 |        0 |        0 |        0 |    100% |           |
@@ -95,7 +95,7 @@
 | benefits/settings.py                                       |      132 |        7 |       24 |        9 |     90% |106, 127->132, 143->146, 163, 316, 328, 330, 345, 357 |
 | benefits/urls.py                                           |       27 |        7 |        4 |        2 |     71% |35->46, 50-64 |
 | benefits/wsgi.py                                           |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                                  **TOTAL** | **2794** |  **130** |  **506** |   **54** | **94%** |           |
+|                                                  **TOTAL** | **2809** |  **130** |  **516** |   **56** | **94%** |           |
 
 
 ## Setup coverage badge
