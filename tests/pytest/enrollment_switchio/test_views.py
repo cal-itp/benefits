@@ -52,10 +52,18 @@ class TestIndexView:
         assert "next_step" in context
         assert "partner_post_link" in context
         assert "alert_include" in context
+        assert "locale" in context
         assert "transit_processor" in context.keys()
         transit_processor_context = context["transit_processor"]
         assert "name" in transit_processor_context
         assert "website" in transit_processor_context
+
+    @pytest.mark.django_db
+    @pytest.mark.parametrize("LANGUAGE_CODE, expected_locale", [("en", "en"), ("es", "es"), ("unsupported", "en")])
+    def test_get_locale(self, view, LANGUAGE_CODE, expected_locale):
+        locale = view._get_locale(LANGUAGE_CODE)
+
+        assert locale == expected_locale
 
     @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_session_flow")
