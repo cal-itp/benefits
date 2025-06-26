@@ -16,6 +16,8 @@
       });
     };
 
+    const startedEvent = "started card tokenization";
+
     fetch("{% url routes.ENROLLMENT_SWITCHIO_GATEWAY_URL %}")
         .then(response => response.json()
         .then(data => {
@@ -37,6 +39,10 @@
 
           let ctaButton = document.getElementById("{{ cta_button }}");
           ctaButton.addEventListener("click", event => {
+            amplitude.getInstance().logEvent(startedEvent, {
+              enrollment_method: "{{ enrollment_method }}"
+            });
+
             ctaButton.classList.add("disabled");
             ctaButton.setAttribute("aria-disabled", "true");
             ctaButton.textContent = "{{ loading_text }}";
