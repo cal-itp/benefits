@@ -53,6 +53,8 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, Templa
             response = get_registration_status(switchio_config=switchio_config, registration_id=session.registration_id)
             if response.status is Status.SUCCESS:
                 if response.registration_status.regState == "tokenization_finished":
+                    # this is where we will enroll the card token that's inside response.registration_status.tokens
+
                     return redirect(routes.ENROLLMENT_SUCCESS)
             else:
                 sentry_sdk.capture_exception(response.exception)
