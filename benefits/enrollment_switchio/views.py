@@ -25,6 +25,7 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, Templa
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        request = self.request
         flow = session.flow(self.request)
 
         context.update(
@@ -33,9 +34,16 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, Templa
                 "cta_button": "tokenize_card",
                 "enrollment_method": models.EnrollmentMethods.DIGITAL,
                 "transit_processor": {"name": "Switchio", "website": "https://switchio.com/transport/"},
+                "locale": self._get_locale(request.LANGUAGE_CODE),
             }
         )
         return context
+
+    def _get_locale(self, django_language_code):
+        """Given a Django language code, return the corresponding locale to use with Switchio's tokenization gateway."""
+        # mapping from Django's I18N LANGUAGE_CODE to Switchio's locales
+        locale = {"en": "en", "es": "es"}.get(django_language_code, "en")
+        return locale
 
     def get(self, request: HttpRequest, *args, **kwargs):
         session = Session(request)
