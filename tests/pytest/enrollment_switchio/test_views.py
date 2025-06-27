@@ -111,8 +111,8 @@ class TestIndexView:
 
         response = view.get(app_request)
 
-        assert response.status_code == 302
-        assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
+        assert response.status_code == 200
+        assert response.template_name == ["enrollment_switchio/index.html"]
         mocked_get_registration_status.assert_called_once()
 
     @pytest.mark.django_db
