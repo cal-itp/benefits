@@ -20,7 +20,7 @@ dependencies = [
     "eligibility-api==2025.4.1",
     "calitp-littlepay==2025.4.1",
     "requests==2.32.3",
-    "sentry-sdk==2.29.1",
+    "sentry-sdk==2.32.0",
     "six==1.17.0",
     "pillow==11.2.1",
     "django-multiselectfield==0.1.13",
