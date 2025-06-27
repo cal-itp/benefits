@@ -55,7 +55,9 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, Templa
                 if response.registration_status.regState == "tokenization_finished":
                     # this is where we will enroll the card token that's inside response.registration_status.tokens
 
-                    return redirect(routes.ENROLLMENT_SUCCESS)
+                    # render index template which will send "finished card tokenization" analytics event and then redirect
+                    # to success page
+                    return super().get(request=request, *args, **kwargs)
             else:
                 sentry_sdk.capture_exception(response.exception)
 

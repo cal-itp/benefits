@@ -17,14 +17,33 @@
     };
 
     const startedEvent = "started card tokenization";
+    const closedEvent = "finished card tokenization";
+
+    function redirect(url) {
+      // https://stackoverflow.com/a/42469170
+      // use 'assign' because 'replace' was giving strange Back button behavior
+      window.location.assign(url);
+    }
+
+    let returned_from_tokenization = window.location.href.search('state=tokenize') > -1;
+
+    if (returned_from_tokenization) {
+      StRpClient.handleTokenizeWithRedirectCallback().then((response) => {
+        if (response.type === 'success') {
+          amplitude.getInstance().logEvent(closedEvent, {status: "success", enrollment_method: "{{ enrollment_method }}"});
+          redirect("{% url routes.ENROLLMENT_SUCCESS %}");
+        } else {
+          amplitude.getInstance().logEvent(closedEvent, {status: "error", error: response.error, enrollment_method: "{{ enrollment_method }}"});
+          redirect("{% url routes.ENROLLMENT_SYSTEM_ERROR %}");
+        }
+      });
+    }
 
     fetch("{% url routes.ENROLLMENT_SWITCHIO_GATEWAY_URL %}")
         .then(response => response.json()
         .then(data => {
           if (data.redirect) {
-            // https://stackoverflow.com/a/42469170
-            // use 'assign' because 'replace' was giving strange Back button behavior
-            window.location.assign(data.redirect);
+            redirect(data.redirect);
             return; // exit early so the rest of this function doesn't execute
           }
 
