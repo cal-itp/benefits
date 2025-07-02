@@ -111,8 +111,8 @@ class TestIndexView:
 
         response = view.get(app_request)
 
-        assert response.status_code == 302
-        assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
+        assert response.status_code == 200
+        assert response.template_name == ["enrollment_switchio/index.html"]
         mocked_get_registration_status.assert_called_once()
 
     @pytest.mark.django_db
@@ -176,6 +176,16 @@ class TestIndexView:
         assert response.url == reverse(routes.SERVER_ERROR)
         mocked_get_registration_status.assert_called_once()
         mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+    @pytest.mark.django_db
+    def test_form_valid(self, view):
+        form = view.form_class(data=dict(card_token="abc123"))
+
+        assert form.is_valid()
+        response = view.form_valid(form)
+
+        assert response.status_code == 302
+        assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
 
 
 class TestGatewayUrlView:

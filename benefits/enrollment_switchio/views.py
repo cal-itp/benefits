@@ -2,14 +2,14 @@ import logging
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic import TemplateView, View
+from django.views.generic import FormView, View
 import sentry_sdk
 
 from benefits.enrollment_switchio.models import SwitchioConfig
 from benefits.routes import routes
 from benefits.core import models, session
 from benefits.core.mixins import EligibleSessionRequiredMixin, AgencySessionRequiredMixin
-from benefits.enrollment import analytics
+from benefits.enrollment import analytics, forms
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_switchio.enrollment import request_registration, get_registration_status
 from benefits.enrollment_switchio.session import Session
@@ -17,10 +17,11 @@ from benefits.enrollment_switchio.session import Session
 logger = logging.getLogger(__name__)
 
 
-class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, TemplateView):
+class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FormView):
     """View for the enrollment landing page."""
 
     template_name = "enrollment_switchio/index.html"
+    form_class = forms.CardTokenizeSuccessForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -28,9 +29,18 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, Templa
         request = self.request
         flow = session.flow(self.request)
 
+        tokenize_system_error_form = forms.CardTokenizeFailForm(
+            routes.ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
+        )
+        tokenize_success_form = forms.CardTokenizeSuccessForm(
+            action_url=routes.ENROLLMENT_SWITCHIO_INDEX, auto_id=True, label_suffix=""
+        )
         context.update(
             {
                 **flow.enrollment_index_context,
+                "forms": [tokenize_system_error_form, tokenize_success_form],
+                "form_success": tokenize_success_form.id,
+                "form_system_error": tokenize_system_error_form.id,
                 "cta_button": "tokenize_card",
                 "enrollment_method": models.EnrollmentMethods.DIGITAL,
                 "transit_processor": {"name": "Switchio", "website": "https://switchio.com/transport/"},
@@ -53,7 +63,13 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, Templa
             response = get_registration_status(switchio_config=switchio_config, registration_id=session.registration_id)
             if response.status is Status.SUCCESS:
                 if response.registration_status.regState == "tokenization_finished":
-                    return redirect(routes.ENROLLMENT_SUCCESS)
+                    # give card token to index template so it can send
+                    # "finished card tokenization" event and POST either the
+                    # CardTokenizeSuccessForm or CardTokenizeFailForm.
+                    context_data = self.get_context_data(**kwargs)
+
+                    context_data["card_token"] = response.registration_status.tokens[0]["token"]
+                    return self.render_to_response(context=context_data)
             else:
                 sentry_sdk.capture_exception(response.exception)
 
@@ -63,6 +79,15 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, Templa
                     return redirect(routes.SERVER_ERROR)
 
         return super().get(request=request, *args, **kwargs)
+
+    def form_valid(self, form):
+        card_token = form.cleaned_data.get("card_token")  # noqa
+
+        # (this is where we will enroll the card token)
+        # status, exception = enroll(self.request, card_token)
+
+        # return handle_enrollment_results(self.request, status, exception)
+        return redirect(routes.ENROLLMENT_SUCCESS)
 
 
 class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, View):

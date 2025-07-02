@@ -17,6 +17,28 @@
     };
 
     const startedEvent = "started card tokenization";
+    const closedEvent = "finished card tokenization";
+
+    let returned_from_tokenization = window.location.href.search('state=tokenize') > -1;
+
+    if (returned_from_tokenization) {
+      StRpClient.handleTokenizeWithRedirectCallback().then((response) => {
+        if (response.type === 'success') {
+          amplitude.getInstance().logEvent(closedEvent, {status: "success", enrollment_method: "{{ enrollment_method }}"});
+
+          let form = document.querySelector("form#{{ form_success }}");
+          form.querySelector("#card_token").value = "{{ card_token }}";
+          form.submit();
+        } else if (response.error != "canceled") {
+          amplitude.getInstance().logEvent(closedEvent, {status: "error", error: response.error, enrollment_method: "{{ enrollment_method }}"});
+
+          let form = document.querySelector("form#{{ form_system_error }}");
+          form.submit();
+        } else {
+          amplitude.getInstance().logEvent(closedEvent, {status: "cancel", enrollment_method: "{{ enrollment_method }}"});
+        }
+      });
+    }
 
     fetch("{% url routes.ENROLLMENT_SWITCHIO_GATEWAY_URL %}")
         .then(response => response.json()
@@ -53,4 +75,7 @@
         }));
   </script>
 
+  {% for f in forms %}
+    {% include "core/includes/form.html" with form=f %}
+  {% endfor %}
 {% endblock enrollment-form %}
