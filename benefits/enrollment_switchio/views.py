@@ -11,7 +11,11 @@ from benefits.core import models, session
 from benefits.core.mixins import EligibleSessionRequiredMixin, AgencySessionRequiredMixin
 from benefits.enrollment import analytics, forms
 from benefits.enrollment.enrollment import Status
-from benefits.enrollment_switchio.enrollment import request_registration, get_registration_status
+from benefits.enrollment_switchio.enrollment import (
+    request_registration,
+    get_registration_status,
+    get_latest_active_token_value,
+)
 from benefits.enrollment_switchio.session import Session
 
 logger = logging.getLogger(__name__)
@@ -68,7 +72,7 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FormVi
                     # CardTokenizeSuccessForm or CardTokenizeFailForm.
                     context_data = self.get_context_data(**kwargs)
 
-                    context_data["card_token"] = response.registration_status.tokens[0]["token"]
+                    context_data["card_token"] = get_latest_active_token_value(response.registration_status.tokens)
                     return self.render_to_response(context=context_data)
             else:
                 sentry_sdk.capture_exception(response.exception)
