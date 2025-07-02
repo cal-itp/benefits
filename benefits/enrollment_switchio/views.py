@@ -66,7 +66,8 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FormVi
         if session.registration_id:
             response = get_registration_status(switchio_config=switchio_config, registration_id=session.registration_id)
             if response.status is Status.SUCCESS:
-                if response.registration_status.regState == "tokenization_finished":
+                reg_state = response.registration_status.regState
+                if reg_state == "tokenization_finished":
                     # give card token to index template so it can send
                     # "finished card tokenization" event and POST either the
                     # CardTokenizeSuccessForm or CardTokenizeFailForm.
@@ -74,6 +75,8 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FormVi
 
                     context_data["card_token"] = get_latest_active_token_value(response.registration_status.tokens)
                     return self.render_to_response(context=context_data)
+                elif reg_state == "verification_failed":
+                    return redirect(routes.ENROLLMENT_RETRY)
             else:
                 sentry_sdk.capture_exception(response.exception)
 
