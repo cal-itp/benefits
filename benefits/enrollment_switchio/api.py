@@ -167,6 +167,15 @@ class TokenizationClient(Client):
         return RegistrationStatus(**response.json())
 
 
+@dataclass
+class Group:
+    id: int
+    operatorId: int
+    name: str
+    code: str
+    value: int
+
+
 class EnrollmentClient(Client):
 
     def __init__(self, api_url, authorization_header_value, private_key, client_certificate, ca_certificate):
@@ -176,3 +185,37 @@ class EnrollmentClient(Client):
 
     def _get_headers(self):
         return {"Authorization": self.authorization_header_value}
+
+    def healthcheck(self, timeout=5):
+        request_path = "/api/external/discount/echo"
+
+        response = self._cert_request(
+            lambda verify, cert: requests.get(
+                self.api_url.strip("/") + request_path,
+                headers=self._get_headers(),
+                cert=cert,
+                verify=verify,
+                timeout=timeout,
+            )
+        )
+
+        response.raise_for_status()
+
+        return response.text
+
+    def get_groups(self, pto_id, timeout=5):
+        request_path = f"/api/external/discount/{pto_id}/groups"
+
+        response = self._cert_request(
+            lambda verify, cert: requests.get(
+                self.api_url.strip("/") + request_path,
+                headers=self._get_headers(),
+                cert=cert,
+                verify=verify,
+                timeout=timeout,
+            )
+        )
+
+        response.raise_for_status()
+
+        return [Group(**discount_group) for discount_group in response.json()]
