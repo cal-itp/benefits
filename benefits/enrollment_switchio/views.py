@@ -77,6 +77,9 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FormVi
                     return self.render_to_response(context=context_data)
                 elif reg_state == "verification_failed":
                     return redirect(routes.ENROLLMENT_RETRY)
+                elif reg_state == "tokenization_failed":
+                    sentry_sdk.capture_exception(Exception("Tokenization failed"))
+                    return redirect(routes.ENROLLMENT_SYSTEM_ERROR)
             else:
                 sentry_sdk.capture_exception(response.exception)
 

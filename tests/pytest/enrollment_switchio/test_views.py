@@ -147,6 +147,34 @@ class TestIndexView:
 
     @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_session_flow")
+    def test_get_with_session_registration_id_tokenization_failed(
+        self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig
+    ):
+        model_TransitAgency.switchio_config = model_SwitchioConfig
+        gateway_url = "https://example.com/cst/?regId=1234"
+        mocked_get_registration_status = mocker.patch(
+            "benefits.enrollment_switchio.views.get_registration_status",
+            return_value=RegistrationStatusResponse(
+                status=Status.SUCCESS,
+                registration_status=RegistrationStatus(
+                    regState="tokenization_failed",
+                    created=datetime.now(),
+                    mode="register",
+                    eshopResponseMode="query",
+                    tokens=[],
+                ),
+            ),
+        )
+        Session(app_request, registration_id="1234", gateway_url=gateway_url)
+
+        response = view.get(app_request)
+
+        assert response.status_code == 302
+        assert response.url == reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+        mocked_get_registration_status.assert_called_once()
+
+    @pytest.mark.django_db
+    @pytest.mark.usefixtures("mocked_session_flow")
     def test_get_with_session_registration_id_system_error(
         self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig, mocked_sentry_sdk_module
     ):
