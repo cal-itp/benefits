@@ -121,6 +121,7 @@
       "environment": "qa",
       "tokenization_api_key": "123",
       "tokenization_api_secret_name": "cst-switchio-api-secret",
+      "enrollment_api_authorization_header": "Basic 1234",
       "client_certificate": 4,
       "ca_certificate": 5,
       "private_key": 6

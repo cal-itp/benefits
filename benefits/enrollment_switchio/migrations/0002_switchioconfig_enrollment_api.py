@@ -38,4 +38,13 @@ class Migration(migrations.Migration):
                 validators=[benefits.secrets.SecretNameValidator()],
             ),
         ),
+        migrations.AddField(
+            model_name="switchioconfig",
+            name="enrollment_api_authorization_header",
+            field=models.TextField(
+                blank=True,
+                default="",
+                help_text="The value to use for the 'Authorization' header when accessing the Switchio API for enrollment.",
+            ),
+        ),
     ]
