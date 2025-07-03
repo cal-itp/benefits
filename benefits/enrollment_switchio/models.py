@@ -59,6 +59,15 @@ class SwitchioConfig(models.Model):
             raise ValueError(f"Unexpected value for environment: {self.environment}")
 
     @property
+    def enrollment_api_base_url(self):
+        if self.environment == Environment.QA.value:
+            return get_secret_by_name("switchio-qa-enrollment-api-base-url")
+        elif self.environment == Environment.PROD.value:
+            return get_secret_by_name("switchio-prod-enrollment-api-base-url")
+        else:
+            raise ValueError(f"Unexpected value for environment: {self.environment}")
+
+    @property
     def tokenization_api_secret(self):
         secret_field = self._meta.get_field("tokenization_api_secret_name")
         return secret_field.secret_value(self)
