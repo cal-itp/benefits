@@ -17,6 +17,19 @@ def tokenization_client():
     return TokenizationClient("https://example.com", "api key", "api secret", None, None, None)
 
 
+@pytest.mark.django_db
+def test_tokenization_client_cert_request(mocker, tokenization_client):
+    temp_file = mocker.patch("benefits.enrollment_switchio.api.NamedTemporaryFile")
+    request_func = mocker.Mock()
+
+    tokenization_client._cert_request(request_func)
+
+    temp_file.assert_called()
+    request_func.assert_called_once()
+    assert "verify" in request_func.call_args.kwargs
+    assert "cert" in request_func.call_args.kwargs
+
+
 @pytest.mark.parametrize("method", ["GET", "POST"])
 @pytest.mark.parametrize("body", ['{"exampleProperty": "blah"}', None, ""])
 def test_tokenization_client_signature_input_string(tokenization_client, method, body):

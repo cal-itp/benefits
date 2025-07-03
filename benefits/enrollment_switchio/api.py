@@ -38,7 +38,42 @@ class RegistrationStatus:
     cardExp: str = None
 
 
-class TokenizationClient:
+class Client:
+    def __init__(
+        self,
+        private_key,
+        client_certificate,
+        ca_certificate,
+    ):
+        self.private_key = private_key
+        self.client_certificate = client_certificate
+        self.ca_certificate = ca_certificate
+
+    # see https://github.com/cal-itp/benefits/issues/2848 for more context about this
+    def _cert_request(self, request_func):
+        """
+        Creates named (on-disk) temp files for client cert auth.
+        * request_func: curried callable from `requests` library (e.g. `requests.get`).
+        """
+        # requests library reads temp files from file path
+        # The "with" context destroys temp files when response comes back
+        with NamedTemporaryFile("w+") as cert, NamedTemporaryFile("w+") as key, NamedTemporaryFile("w+") as ca:
+            # write client cert data to temp files
+            # resetting so they can be read again by requests
+            cert.write(self.client_certificate)
+            cert.seek(0)
+
+            key.write(self.private_key)
+            key.seek(0)
+
+            ca.write(self.ca_certificate)
+            ca.seek(0)
+
+            # request using temp file paths
+            return request_func(verify=ca.name, cert=(cert.name, key.name))
+
+
+class TokenizationClient(Client):
 
     def __init__(
         self,
@@ -49,12 +84,10 @@ class TokenizationClient:
         client_certificate,
         ca_certificate,
     ):
+        super().__init__(private_key, client_certificate, ca_certificate)
         self.api_url = api_url
         self.api_key = api_key
         self.api_secret = api_secret
-        self.private_key = private_key
-        self.client_certificate = client_certificate
-        self.ca_certificate = ca_certificate
 
     def _signature_input_string(self, timestamp: str, method: str, request_path: str, body: str = None):
         if body is None:
@@ -132,26 +165,3 @@ class TokenizationClient:
         response.raise_for_status()
 
         return RegistrationStatus(**response.json())
-
-    # see https://github.com/cal-itp/benefits/issues/2848 for more context about this
-    def _cert_request(self, request_func):
-        """
-        Creates named (on-disk) temp files for client cert auth.
-        * request_func: curried callable from `requests` library (e.g. `requests.get`).
-        """
-        # requests library reads temp files from file path
-        # The "with" context destroys temp files when response comes back
-        with NamedTemporaryFile("w+") as cert, NamedTemporaryFile("w+") as key, NamedTemporaryFile("w+") as ca:
-            # write client cert data to temp files
-            # resetting so they can be read again by requests
-            cert.write(self.client_certificate)
-            cert.seek(0)
-
-            key.write(self.private_key)
-            key.seek(0)
-
-            ca.write(self.ca_certificate)
-            ca.seek(0)
-
-            # request using temp file paths
-            return request_func(verify=ca.name, cert=(cert.name, key.name))
