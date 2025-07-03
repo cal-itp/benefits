@@ -4,6 +4,8 @@ import pytest
 
 import benefits.enrollment_switchio.api
 from benefits.enrollment_switchio.api import (
+    EnrollmentClient,
+    Group,
     TokenizationClient,
     EshopResponseMode,
     Registration,
@@ -17,12 +19,30 @@ def tokenization_client():
     return TokenizationClient("https://example.com", "api key", "api secret", None, None, None)
 
 
+@pytest.fixture
+def enrollment_client():
+    return EnrollmentClient("https://example.com", "Basic abc123", None, None, None)
+
+
 @pytest.mark.django_db
 def test_tokenization_client_cert_request(mocker, tokenization_client):
     temp_file = mocker.patch("benefits.enrollment_switchio.api.NamedTemporaryFile")
     request_func = mocker.Mock()
 
     tokenization_client._cert_request(request_func)
+
+    temp_file.assert_called()
+    request_func.assert_called_once()
+    assert "verify" in request_func.call_args.kwargs
+    assert "cert" in request_func.call_args.kwargs
+
+
+@pytest.mark.django_db
+def test_enrollment_client_cert_request(mocker, enrollment_client):
+    temp_file = mocker.patch("benefits.enrollment_switchio.api.NamedTemporaryFile")
+    request_func = mocker.Mock()
+
+    enrollment_client._cert_request(request_func)
 
     temp_file.assert_called()
     request_func.assert_called_once()
@@ -128,3 +148,30 @@ def test_tokenization_client_get_registration_status(mocker, tokenization_client
     registration_status = tokenization_client.get_registration_status(registration_id="1234")
 
     assert registration_status == RegistrationStatus(**mock_json)
+
+
+def test_enrollment_client_healthcheck(mocker, enrollment_client):
+    mock_response = mocker.Mock()
+    mock_response.text.return_value = "Egibility is alive!"
+    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+
+    response = enrollment_client.healthcheck()
+
+    assert response == mock_response.text
+
+
+def test_enrollment_client_get_groups(mocker, enrollment_client):
+    mock_response = mocker.Mock()
+    mock_json = dict(
+        id=1,
+        operatorId=123,
+        name="Veteran Discount",
+        code="veteran-discount",
+        value=10,
+    )
+    mock_response.json.return_value = [mock_json]
+    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+
+    groups = enrollment_client.get_groups(pto_id="123")
+
+    assert groups == [Group(**mock_json)]
