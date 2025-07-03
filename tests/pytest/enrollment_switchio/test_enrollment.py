@@ -2,7 +2,11 @@ import pytest
 from requests import HTTPError
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_switchio.api import EshopResponseMode, Registration, RegistrationMode, RegistrationStatus
-from benefits.enrollment_switchio.enrollment import get_registration_status, request_registration
+from benefits.enrollment_switchio.enrollment import (
+    get_registration_status,
+    request_registration,
+    get_latest_active_token_value,
+)
 
 
 @pytest.fixture
@@ -152,3 +156,74 @@ def test_get_registration_status_non_http_error(mocker, model_SwitchioConfig):
     assert response.status == Status.EXCEPTION
     assert isinstance(response.exception, Exception)
     assert response.registration_status is None
+
+
+@pytest.mark.parametrize(
+    "tokens,expected_token_value",
+    [
+        (
+            [
+                {
+                    "token": "abcd",
+                    "par": None,
+                    "tokenVersion": 100,
+                    "tokenState": "active",
+                    "validFrom": "2025-01-11T10:46:00.000",
+                    "validTo": "2050-01-11T10:46:00.000",
+                    "testOnly": False,
+                },
+            ],
+            "abcd",
+        ),
+        (
+            [
+                {
+                    "token": "abcd",
+                    "par": None,
+                    "tokenVersion": 100,
+                    "tokenState": "active",
+                    "validFrom": "2025-01-11T10:46:00.000",
+                    "validTo": "2050-01-11T10:46:00.000",
+                    "testOnly": False,
+                },
+                {
+                    "token": "1357",
+                    "par": None,
+                    "tokenVersion": 100,
+                    "tokenState": "active",
+                    "validFrom": "2025-01-12T10:46:00.000",
+                    "validTo": "2050-01-12T10:46:00.000",
+                    "testOnly": False,
+                },
+            ],
+            "1357",
+        ),
+        (
+            [
+                {
+                    "token": "abcd",
+                    "par": None,
+                    "tokenVersion": 100,
+                    "tokenState": "active",
+                    "validFrom": "2025-01-11T10:46:00.000",
+                    "validTo": "2050-01-11T10:46:00.000",
+                    "testOnly": False,
+                },
+                {
+                    "token": "1357",
+                    "par": None,
+                    "tokenVersion": 100,
+                    "tokenState": "invalid",
+                    "validFrom": "2025-01-12T10:46:00.000",
+                    "validTo": "2050-01-12T10:46:00.000",
+                    "testOnly": False,
+                },
+            ],
+            "abcd",
+        ),
+    ],
+)
+def test_get_latest_active_token_value(mocker, tokens, expected_token_value):
+    token_value = get_latest_active_token_value(tokens)
+
+    assert token_value == expected_token_value

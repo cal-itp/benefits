@@ -81,7 +81,9 @@ class TestIndexView:
 
     @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_session_flow")
-    def test_get_with_session_registration_id(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
+    def test_get_with_session_registration_id_tokenization_finished(
+        self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig
+    ):
         model_TransitAgency.switchio_config = model_SwitchioConfig
         gateway_url = "https://example.com/cst/?regId=1234"
         mocked_get_registration_status = mocker.patch(
@@ -111,8 +113,64 @@ class TestIndexView:
 
         response = view.get(app_request)
 
+        assert response.status_code == 200
+        assert response.template_name == ["enrollment_switchio/index.html"]
+        mocked_get_registration_status.assert_called_once()
+
+    @pytest.mark.django_db
+    @pytest.mark.usefixtures("mocked_session_flow")
+    def test_get_with_session_registration_id_verification_failed(
+        self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig
+    ):
+        model_TransitAgency.switchio_config = model_SwitchioConfig
+        gateway_url = "https://example.com/cst/?regId=1234"
+        mocked_get_registration_status = mocker.patch(
+            "benefits.enrollment_switchio.views.get_registration_status",
+            return_value=RegistrationStatusResponse(
+                status=Status.SUCCESS,
+                registration_status=RegistrationStatus(
+                    regState="verification_failed",
+                    created=datetime.now(),
+                    mode="register",
+                    eshopResponseMode="query",
+                    tokens=[],
+                ),
+            ),
+        )
+        Session(app_request, registration_id="1234", gateway_url=gateway_url)
+
+        response = view.get(app_request)
+
         assert response.status_code == 302
-        assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
+        assert response.url == reverse(routes.ENROLLMENT_RETRY)
+        mocked_get_registration_status.assert_called_once()
+
+    @pytest.mark.django_db
+    @pytest.mark.usefixtures("mocked_session_flow")
+    def test_get_with_session_registration_id_tokenization_failed(
+        self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig
+    ):
+        model_TransitAgency.switchio_config = model_SwitchioConfig
+        gateway_url = "https://example.com/cst/?regId=1234"
+        mocked_get_registration_status = mocker.patch(
+            "benefits.enrollment_switchio.views.get_registration_status",
+            return_value=RegistrationStatusResponse(
+                status=Status.SUCCESS,
+                registration_status=RegistrationStatus(
+                    regState="tokenization_failed",
+                    created=datetime.now(),
+                    mode="register",
+                    eshopResponseMode="query",
+                    tokens=[],
+                ),
+            ),
+        )
+        Session(app_request, registration_id="1234", gateway_url=gateway_url)
+
+        response = view.get(app_request)
+
+        assert response.status_code == 302
+        assert response.url == reverse(routes.ENROLLMENT_SYSTEM_ERROR)
         mocked_get_registration_status.assert_called_once()
 
     @pytest.mark.django_db
@@ -176,6 +234,16 @@ class TestIndexView:
         assert response.url == reverse(routes.SERVER_ERROR)
         mocked_get_registration_status.assert_called_once()
         mocked_sentry_sdk_module.capture_exception.assert_called_once()
+
+    @pytest.mark.django_db
+    def test_form_valid(self, view):
+        form = view.form_class(data=dict(card_token="abc123"))
+
+        assert form.is_valid()
+        response = view.form_valid(form)
+
+        assert response.status_code == 302
+        assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
 
 
 class TestGatewayUrlView:

@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 from django.conf import settings
 from django.http import HttpRequest
 from django.urls import reverse
@@ -24,6 +25,17 @@ class RegistrationStatusResponse:
     registration_status: RegistrationStatus
     exception: Exception = None
     status_code: int = None
+
+
+@dataclass
+class Token:
+    token: str
+    tokenVersion: int
+    tokenState: str
+    validFrom: datetime
+    validTo: datetime
+    testOnly: bool
+    par: str = None
 
 
 def request_registration(request, switchio_config) -> RegistrationResponse:
@@ -111,3 +123,15 @@ def get_registration_status(switchio_config: SwitchioConfig, registration_id: st
         return RegistrationStatusResponse(
             status=status, registration_status=None, exception=exception, status_code=status_code
         )
+
+
+def get_latest_active_token_value(tokens):
+    latest_active_token = None
+
+    for token_dict in tokens:
+        token = Token(**token_dict)
+        if token.tokenState == "active":
+            if latest_active_token is None or token.validFrom > latest_active_token.validFrom:
+                latest_active_token = token
+
+    return latest_active_token.token if latest_active_token else ""
