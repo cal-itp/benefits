@@ -44,12 +44,12 @@ class Token:
     par: str = None
 
 
-def request_registration(request, switchio_config) -> RegistrationResponse:
+def request_registration(request, switchio_config: SwitchioConfig) -> RegistrationResponse:
     try:
         client = TokenizationClient(
-            api_url=switchio_config.api_base_url,
-            api_key=switchio_config.api_key,
-            api_secret=switchio_config.api_secret,
+            api_url=switchio_config.tokenization_api_base_url,
+            api_key=switchio_config.tokenization_api_key,
+            api_secret=switchio_config.tokenization_api_secret,
             private_key=switchio_config.private_key_data,
             client_certificate=switchio_config.client_certificate_data,
             ca_certificate=switchio_config.ca_certificate_data,
@@ -98,9 +98,9 @@ def _generate_redirect_uri(request: HttpRequest, redirect_path: str):
 def get_registration_status(switchio_config: SwitchioConfig, registration_id: str) -> RegistrationStatusResponse:
     try:
         client = TokenizationClient(
-            api_url=switchio_config.api_base_url,
-            api_key=switchio_config.api_key,
-            api_secret=switchio_config.api_secret,
+            api_url=switchio_config.tokenization_api_base_url,
+            api_key=switchio_config.tokenization_api_key,
+            api_secret=switchio_config.tokenization_api_secret,
             private_key=switchio_config.private_key_data,
             client_certificate=switchio_config.client_certificate_data,
             ca_certificate=switchio_config.ca_certificate_data,
