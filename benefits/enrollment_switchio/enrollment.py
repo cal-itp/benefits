@@ -8,7 +8,13 @@ from requests import HTTPError
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_switchio.models import SwitchioConfig
 from benefits.routes import routes
-from benefits.enrollment_switchio.api import Client, EshopResponseMode, Registration, RegistrationMode, RegistrationStatus
+from benefits.enrollment_switchio.api import (
+    TokenizationClient,
+    EshopResponseMode,
+    Registration,
+    RegistrationMode,
+    RegistrationStatus,
+)
 
 
 @dataclass
@@ -40,7 +46,7 @@ class Token:
 
 def request_registration(request, switchio_config) -> RegistrationResponse:
     try:
-        client = Client(
+        client = TokenizationClient(
             api_url=switchio_config.api_base_url,
             api_key=switchio_config.api_key,
             api_secret=switchio_config.api_secret,
@@ -91,7 +97,7 @@ def _generate_redirect_uri(request: HttpRequest, redirect_path: str):
 
 def get_registration_status(switchio_config: SwitchioConfig, registration_id: str) -> RegistrationStatusResponse:
     try:
-        client = Client(
+        client = TokenizationClient(
             api_url=switchio_config.api_base_url,
             api_key=switchio_config.api_key,
             api_secret=switchio_config.api_secret,
