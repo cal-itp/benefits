@@ -3,21 +3,29 @@ import json
 import pytest
 
 import benefits.enrollment_switchio.api
-from benefits.enrollment_switchio.api import Client, EshopResponseMode, Registration, RegistrationMode, RegistrationStatus
+from benefits.enrollment_switchio.api import (
+    TokenizationClient,
+    EshopResponseMode,
+    Registration,
+    RegistrationMode,
+    RegistrationStatus,
+)
 
 
 @pytest.fixture
-def client():
-    return Client("https://example.com", "api key", "api secret", None, None, None)
+def tokenization_client():
+    return TokenizationClient("https://example.com", "api key", "api secret", None, None, None)
 
 
 @pytest.mark.parametrize("method", ["GET", "POST"])
 @pytest.mark.parametrize("body", ['{"exampleProperty": "blah"}', None, ""])
-def test_client_signature_input_string(client, method, body):
+def test_tokenization_client_signature_input_string(tokenization_client, method, body):
     timestamp = str(int(datetime.now().timestamp()))
     request_path = "/api/example"
 
-    input_string = client._signature_input_string(timestamp=timestamp, method=method, request_path=request_path, body=body)
+    input_string = tokenization_client._signature_input_string(
+        timestamp=timestamp, method=method, request_path=request_path, body=body
+    )
 
     if body is None:
         expected = f"{timestamp}{method}{request_path}"
@@ -27,13 +35,15 @@ def test_client_signature_input_string(client, method, body):
     assert input_string == expected
 
 
-def test_client_stp_signature(client):
+def test_tokenization_client_stp_signature(tokenization_client):
     timestamp = "1748637999"
     method = "GET"
     request_path = "/api/example"
     body = '{"exampleProperty": "blah"}'
 
-    stp_signature = client._stp_signature(timestamp=timestamp, method=method, request_path=request_path, body=body)
+    stp_signature = tokenization_client._stp_signature(
+        timestamp=timestamp, method=method, request_path=request_path, body=body
+    )
 
     # the expected STP-SIGNATURE value based on those inputs
     expected = "7da3dd8dad6af77d4f0d5b96ff250399f2ffe1dac2fdfbdbfae0c22a86366426"
@@ -43,7 +53,7 @@ def test_client_stp_signature(client):
 
 @pytest.mark.parametrize("method", ["GET", "POST"])
 @pytest.mark.parametrize("body", [{"exampleProperty": "blah"}, None])
-def test_get_headers(mocker, client, method, body):
+def test_tokenization_client_get_headers(mocker, tokenization_client, method, body):
     timestamp = 1516867520
 
     # mock datetime.now()
@@ -53,15 +63,15 @@ def test_get_headers(mocker, client, method, body):
 
     request_path = "/api/example"
 
-    headers = client._get_headers(method=method, request_path=request_path, request_body=body)
+    headers = tokenization_client._get_headers(method=method, request_path=request_path, request_body=body)
 
     # calculate the expected value
     timestamp = str(timestamp)
     expected = {
         "Content-Type": "application/json",
-        "STP-APIKEY": client.api_key,
+        "STP-APIKEY": tokenization_client.api_key,
         "STP-TIMESTAMP": timestamp,
-        "STP-SIGNATURE": client._stp_signature(
+        "STP-SIGNATURE": tokenization_client._stp_signature(
             timestamp=timestamp,
             method=method,
             request_path=request_path,
@@ -72,13 +82,13 @@ def test_get_headers(mocker, client, method, body):
     assert headers == expected
 
 
-def test_client_request_registration(mocker, client):
+def test_tokenization_client_request_registration(mocker, tokenization_client):
     mock_response = mocker.Mock()
     mock_json = dict(regId="1234", gtwUrl="https://example.com/cst/?regId=1234")
     mock_response.json.return_value = mock_json
-    mocker.patch("benefits.enrollment_switchio.api.Client._cert_request", return_value=mock_response)
+    mocker.patch("benefits.enrollment_switchio.api.TokenizationClient._cert_request", return_value=mock_response)
 
-    registration = client.request_registration(
+    registration = tokenization_client.request_registration(
         eshopRedirectUrl="https://localhost/enrollment",
         mode=RegistrationMode.REGISTER,
         eshopResponseMode=EshopResponseMode.FORM_POST,
@@ -87,7 +97,7 @@ def test_client_request_registration(mocker, client):
     assert registration == Registration(**mock_json)
 
 
-def test_client_get_registration_status(mocker, client):
+def test_tokenization_client_get_registration_status(mocker, tokenization_client):
     mock_response = mocker.Mock()
     mock_json = dict(
         regState="created",
@@ -100,8 +110,8 @@ def test_client_get_registration_status(mocker, client):
         cardExp="1119",
     )
     mock_response.json.return_value = mock_json
-    mocker.patch("benefits.enrollment_switchio.api.Client._cert_request", return_value=mock_response)
+    mocker.patch("benefits.enrollment_switchio.api.TokenizationClient._cert_request", return_value=mock_response)
 
-    registration_status = client.get_registration_status(registration_id="1234")
+    registration_status = tokenization_client.get_registration_status(registration_id="1234")
 
     assert registration_status == RegistrationStatus(**mock_json)

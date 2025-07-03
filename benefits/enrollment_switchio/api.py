@@ -38,7 +38,7 @@ class RegistrationStatus:
     cardExp: str = None
 
 
-class Client:
+class TokenizationClient:
 
     def __init__(
         self,
