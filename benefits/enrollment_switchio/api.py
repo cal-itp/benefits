@@ -165,3 +165,14 @@ class TokenizationClient(Client):
         response.raise_for_status()
 
         return RegistrationStatus(**response.json())
+
+
+class EnrollmentClient(Client):
+
+    def __init__(self, api_url, authorization_header_value, private_key, client_certificate, ca_certificate):
+        super().__init__(private_key, client_certificate, ca_certificate)
+        self.api_url = api_url
+        self.authorization_header_value = authorization_header_value
+
+    def _get_headers(self):
+        return {"Authorization": self.authorization_header_value}
