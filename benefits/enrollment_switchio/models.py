@@ -21,6 +21,11 @@ class SwitchioConfig(models.Model):
         default="",
         blank=True,
     )
+    enrollment_api_authorization_header = models.TextField(
+        help_text="The value to use for the 'Authorization' header when accessing the Switchio API for enrollment.",
+        default="",
+        blank=True,
+    )
     client_certificate = models.ForeignKey(
         PemData,
         related_name="+",
@@ -102,6 +107,7 @@ class SwitchioConfig(models.Model):
             needed = dict(
                 tokenization_api_key=self.tokenization_api_key,
                 tokenization_api_secret_name=self.tokenization_api_secret_name,
+                enrollment_api_authorization_header=self.enrollment_api_authorization_header,
                 client_certificate=self.client_certificate,
                 ca_certificate=self.ca_certificate,
                 private_key=self.private_key,
