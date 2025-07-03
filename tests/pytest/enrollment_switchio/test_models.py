@@ -98,9 +98,34 @@ def test_SwitchioConfig_tokenization_api_base_url(mocker, environment, secret_na
 
 
 @pytest.mark.django_db
-def test_SwitchioConfig_api_base_url_unexpected_environment():
+@pytest.mark.parametrize(
+    "environment, secret_name",
+    [("qa", "switchio-qa-enrollment-api-base-url"), ("prod", "switchio-prod-enrollment-api-base-url")],
+)
+def test_SwitchioConfig_enrollment_api_base_url(mocker, environment, secret_name):
+    switchio_config = SwitchioConfig.objects.create(environment=environment)
+    mocked_get_secret_by_name = mocker.patch(
+        "benefits.enrollment_switchio.models.get_secret_by_name", return_value="secret url"
+    )
+
+    switchio_config.enrollment_api_base_url
+
+    mocked_get_secret_by_name.assert_called_once_with(secret_name)
+
+
+@pytest.mark.django_db
+def test_SwitchioConfig_tokenization_api_base_url_unexpected_environment():
     environment = "unexpected-thiswillneverexist"
     switchio_config = SwitchioConfig.objects.create(environment=environment)
 
     with pytest.raises(ValueError, match=f"Unexpected value for environment: {environment}"):
         switchio_config.tokenization_api_base_url
+
+
+@pytest.mark.django_db
+def test_SwitchioConfig_enrollment_api_base_url_unexpected_environment():
+    environment = "unexpected-thiswillneverexist"
+    switchio_config = SwitchioConfig.objects.create(environment=environment)
+
+    with pytest.raises(ValueError, match=f"Unexpected value for environment: {environment}"):
+        switchio_config.enrollment_api_base_url
