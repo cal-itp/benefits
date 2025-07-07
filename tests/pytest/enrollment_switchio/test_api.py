@@ -175,3 +175,37 @@ def test_enrollment_client_get_groups(mocker, enrollment_client):
     groups = enrollment_client.get_groups(pto_id="123")
 
     assert groups == [Group(**mock_json)]
+
+
+def test_enrollment_client_get_groups_for_token(mocker, enrollment_client):
+    mock_response = mocker.Mock()
+    mock_json = dict(group="veteran-discount", expiresAt=None)
+    mock_response.json.return_value = [mock_json]
+    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+
+    groups = enrollment_client.get_groups_for_token(pto_id="123", token="abcde12345")
+
+    assert groups == [mock_json]
+
+
+def test_enrollment_client_add_group_to_token(mocker, enrollment_client):
+    mock_response = mocker.Mock()
+    mock_response.text.return_value = "Groups added or updated successfully"
+    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+
+    response = enrollment_client.add_group_to_token("123", "veteran-discount", "abcde12345")
+
+    assert response == mock_response.text
+
+
+def test_enrollment_client_remove_group_from_token(mocker, enrollment_client):
+    group_code = "veteran-discount"
+    token = "abcde12345"
+
+    mock_response = mocker.Mock()
+    mock_response.text.return_value = f"Discount {group_code} removed successfully for token {token}"
+    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+
+    response = enrollment_client.remove_group_from_token("123", group_code, token)
+
+    assert response == mock_response.text

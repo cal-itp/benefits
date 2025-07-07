@@ -219,3 +219,60 @@ class EnrollmentClient(Client):
         response.raise_for_status()
 
         return [Group(**discount_group) for discount_group in response.json()]
+
+    def get_groups_for_token(self, pto_id, token, timeout=5):
+        request_path = f"/api/external/discount/{pto_id}/token/{token}"
+
+        response = self._cert_request(
+            lambda verify, cert: requests.get(
+                self.api_url.strip("/") + request_path,
+                headers=self._get_headers(),
+                cert=cert,
+                verify=verify,
+                timeout=timeout,
+            )
+        )
+
+        response.raise_for_status()
+
+        return response.json()
+
+    def add_group_to_token(self, pto_id, group_id, token, timeout=5):
+        request_path = f"/api/external/discount/{pto_id}/token/{token}/add"
+
+        request_body = {"group": group_id}
+
+        response = self._cert_request(
+            lambda verify, cert: requests.post(
+                self.api_url.strip("/") + request_path,
+                json=request_body,
+                headers=self._get_headers(),
+                cert=cert,
+                verify=verify,
+                timeout=timeout,
+            )
+        )
+
+        response.raise_for_status()
+
+        return response.text
+
+    def remove_group_from_token(self, pto_id, group_id, token, timeout=5):
+        request_path = f"/api/external/discount/{pto_id}/token/{token}/remove"
+
+        request_body = {"group": group_id}
+
+        response = self._cert_request(
+            lambda verify, cert: requests.post(
+                self.api_url.strip("/") + request_path,
+                json=request_body,
+                headers=self._get_headers(),
+                cert=cert,
+                verify=verify,
+                timeout=timeout,
+            )
+        )
+
+        response.raise_for_status()
+
+        return response.text
