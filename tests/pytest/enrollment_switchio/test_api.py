@@ -149,6 +149,12 @@ def test_tokenization_client_get_registration_status(mocker, tokenization_client
     assert registration_status == RegistrationStatus(**mock_json)
 
 
+def test_enrollment_client_get_headers(enrollment_client):
+    headers = enrollment_client._get_headers()
+
+    assert headers == {"Authorization": "Basic abc123"}
+
+
 def test_enrollment_client_healthcheck(mocker, enrollment_client):
     mock_response = mocker.Mock()
     mock_response.text.return_value = "Egibility is alive!"
