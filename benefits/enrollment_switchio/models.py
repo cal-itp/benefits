@@ -92,17 +92,10 @@ class SwitchioConfig(models.Model):
         """This SwitchioConfig's private key as a string."""
         return self.private_key.data
 
-    def clean(self, agency=None):
+    def clean(self):
         field_errors = {}
 
-        if agency is not None:
-            used_by_active_agency = agency.active
-        elif self.pk is not None:
-            used_by_active_agency = any((agency.active for agency in self.transitagency_set.all()))
-        else:
-            used_by_active_agency = False
-
-        if used_by_active_agency:
+        if hasattr(self, "transitagency") and self.transitagency.active:
             message = "This field is required when this configuration is referenced by an active transit agency."
             needed = dict(
                 tokenization_api_key=self.tokenization_api_key,
