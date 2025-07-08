@@ -98,7 +98,7 @@ jobs:
           branch: main
           event: push
           name: coverage-report
-          path: docs/tests/coverage
+          path: docs/reference/coverage
 
       - name: Deploy docs
         uses: mhausenblas/mkdocs-deploy-gh-pages@master
