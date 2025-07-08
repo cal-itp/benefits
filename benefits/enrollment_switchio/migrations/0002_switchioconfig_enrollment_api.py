@@ -47,4 +47,14 @@ class Migration(migrations.Migration):
                 help_text="The value to use for the 'Authorization' header when accessing the Switchio API for enrollment.",
             ),
         ),
+        migrations.AddField(
+            model_name="switchioconfig",
+            name="agency_slug",
+            field=models.SlugField(
+                choices=[("cst", "cst"), ("mst", "mst"), ("nevco", "nevco"), ("sacrt", "sacrt"), ("sbmtd", "sbmtd")],
+                default="cst",
+                help_text="A label to indicate which agency this configuration is for. Note: the field that controls which configuration an agency actually uses is on the TransitAgency model.",  # noqa
+            ),
+            preserve_default=False,
+        ),
     ]

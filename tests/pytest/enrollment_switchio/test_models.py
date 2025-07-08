@@ -10,6 +10,7 @@ def test_SwitchioConfig_defaults():
     switchio_config = SwitchioConfig.objects.create(environment="qa")
 
     assert switchio_config.environment == "qa"
+    assert switchio_config.agency_slug == ""
     assert switchio_config.tokenization_api_key == ""
     assert switchio_config.tokenization_api_secret_name == ""
     assert switchio_config.enrollment_api_authorization_header == ""
@@ -23,7 +24,8 @@ def test_SwitchioConfig_defaults():
 @pytest.mark.django_db
 def test_SwitchioConfig_str(model_SwitchioConfig):
     environment_label = Environment(model_SwitchioConfig.environment).label
-    assert str(model_SwitchioConfig) == f"{environment_label}"
+    agency_slug = model_SwitchioConfig.agency_slug
+    assert str(model_SwitchioConfig) == f"({environment_label}) {agency_slug}"
 
 
 @pytest.mark.django_db

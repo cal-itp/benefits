@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from benefits.core import context as core_context
 from benefits.core.models import PemData, SecretNameField, Environment
 from benefits.secrets import get_secret_by_name
 
@@ -12,6 +13,10 @@ class SwitchioConfig(models.Model):
     environment = models.TextField(
         choices=Environment,
         help_text="A label to indicate which environment this configuration is for.",
+    )
+    agency_slug = models.SlugField(
+        choices=core_context.AgencySlug,
+        help_text="A label to indicate which agency this configuration is for. Note: the field that controls which configuration an agency actually uses is on the TransitAgency model.",  # noqa
     )
     tokenization_api_key = models.TextField(
         help_text="The API key used to access the Switchio API for tokenization.", default="", blank=True
@@ -112,4 +117,5 @@ class SwitchioConfig(models.Model):
 
     def __str__(self):
         environment_label = Environment(self.environment).label if self.environment else "unknown"
-        return f"{environment_label}"
+        agency_slug = self.agency_slug if self.agency_slug else "(no agency)"
+        return f"({environment_label}) {agency_slug}"
