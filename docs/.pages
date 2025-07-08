@@ -1,7 +1,5 @@
 nav:
-  - Home:
-      - README.md
-      - enrollment-pathways
+  - Overview: index.md
   - getting-started
   - product-and-design
   - development
