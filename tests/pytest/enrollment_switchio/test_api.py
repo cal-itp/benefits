@@ -101,7 +101,6 @@ def test_tokenization_client_get_headers(mocker, tokenization_client, method, bo
     # calculate the expected value
     timestamp = str(timestamp)
     expected = {
-        "Content-Type": "application/json",
         "STP-APIKEY": tokenization_client.api_key,
         "STP-TIMESTAMP": timestamp,
         "STP-SIGNATURE": tokenization_client._stp_signature(

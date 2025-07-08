@@ -109,7 +109,6 @@ class TokenizationClient(Client):
         timestamp = str(int(datetime.now().timestamp()))
 
         return {
-            "Content-Type": "application/json",
             "STP-APIKEY": self.api_key,
             "STP-TIMESTAMP": timestamp,
             "STP-SIGNATURE": self._stp_signature(
