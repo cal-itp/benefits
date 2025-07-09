@@ -4,6 +4,7 @@ import pytest
 
 import benefits.enrollment_switchio.api
 from benefits.enrollment_switchio.api import (
+    Client,
     EnrollmentClient,
     Group,
     TokenizationClient,
@@ -25,24 +26,12 @@ def enrollment_client():
 
 
 @pytest.mark.django_db
-def test_tokenization_client_cert_request(mocker, tokenization_client):
+def test_client_cert_request(mocker):
     temp_file = mocker.patch("benefits.enrollment_switchio.api.NamedTemporaryFile")
     request_func = mocker.Mock()
 
-    tokenization_client._cert_request(request_func)
-
-    temp_file.assert_called()
-    request_func.assert_called_once()
-    assert "verify" in request_func.call_args.kwargs
-    assert "cert" in request_func.call_args.kwargs
-
-
-@pytest.mark.django_db
-def test_enrollment_client_cert_request(mocker, enrollment_client):
-    temp_file = mocker.patch("benefits.enrollment_switchio.api.NamedTemporaryFile")
-    request_func = mocker.Mock()
-
-    enrollment_client._cert_request(request_func)
+    client = Client(None, None, None)
+    client._cert_request(request_func)
 
     temp_file.assert_called()
     request_func.assert_called_once()
