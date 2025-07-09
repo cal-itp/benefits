@@ -175,6 +175,12 @@ class Group:
     value: int
 
 
+@dataclass
+class GroupExpiry:
+    group: str
+    expiresAt: datetime
+
+
 class EnrollmentClient(Client):
 
     def __init__(self, api_url, authorization_header_value, private_key, client_certificate, ca_certificate):
@@ -234,7 +240,7 @@ class EnrollmentClient(Client):
 
         response.raise_for_status()
 
-        return response.json()
+        return [GroupExpiry(**group_expiry) for group_expiry in response.json()]
 
     def add_group_to_token(self, pto_id, group_id, token, timeout=5):
         request_path = f"/api/external/discount/{pto_id}/token/{token}/add"

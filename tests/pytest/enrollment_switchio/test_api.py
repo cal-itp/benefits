@@ -7,6 +7,7 @@ from benefits.enrollment_switchio.api import (
     Client,
     EnrollmentClient,
     Group,
+    GroupExpiry,
     TokenizationClient,
     EshopResponseMode,
     Registration,
@@ -196,7 +197,7 @@ def test_enrollment_client_get_groups_for_token(mocker, enrollment_client):
 
     groups = enrollment_client.get_groups_for_token(pto_id="123", token="abcde12345")
 
-    assert groups == [mock_json]
+    assert groups == [GroupExpiry(**mock_json)]
 
 
 def test_enrollment_client_add_group_to_token(mocker, enrollment_client):
