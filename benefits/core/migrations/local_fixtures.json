@@ -122,6 +122,7 @@
       "tokenization_api_key": "123",
       "tokenization_api_secret_name": "cst-switchio-api-secret",
       "enrollment_api_authorization_header": "Basic 1234",
+      "pto_id": 123,
       "client_certificate": 4,
       "ca_certificate": 5,
       "private_key": 6

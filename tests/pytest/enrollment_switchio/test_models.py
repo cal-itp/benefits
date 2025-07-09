@@ -13,6 +13,7 @@ def test_SwitchioConfig_defaults():
     assert switchio_config.tokenization_api_key == ""
     assert switchio_config.tokenization_api_secret_name == ""
     assert switchio_config.enrollment_api_authorization_header == ""
+    assert switchio_config.pto_id == 0
     assert switchio_config.client_certificate is None
     assert switchio_config.ca_certificate is None
     assert switchio_config.private_key is None
@@ -78,7 +79,7 @@ def test_SwitchioConfig_clean(model_TransitAgency_inactive):
     error_message = validation_errors[0].message
     assert (
         error_message
-        == "Switchio configuration is missing fields that are required when this agency is active. Missing fields: tokenization_api_key, tokenization_api_secret_name, enrollment_api_authorization_header, client_certificate, ca_certificate, private_key"  # noqa
+        == "Switchio configuration is missing fields that are required when this agency is active. Missing fields: tokenization_api_key, tokenization_api_secret_name, enrollment_api_authorization_header, pto_id, client_certificate, ca_certificate, private_key"  # noqa
     )
 
 

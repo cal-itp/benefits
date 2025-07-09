@@ -47,4 +47,13 @@ class Migration(migrations.Migration):
                 help_text="The value to use for the 'Authorization' header when accessing the Switchio API for enrollment.",
             ),
         ),
+        migrations.AddField(
+            model_name="switchioconfig",
+            name="pto_id",
+            field=models.PositiveIntegerField(
+                blank=True,
+                default=0,
+                help_text="The Public Transport Operator ID to use with the Switchio API for enrollment.",
+            ),
+        ),
     ]
