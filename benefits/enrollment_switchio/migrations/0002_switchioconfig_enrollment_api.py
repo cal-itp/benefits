@@ -57,4 +57,13 @@ class Migration(migrations.Migration):
             ),
             preserve_default=False,
         ),
+        migrations.AddField(
+            model_name="switchioconfig",
+            name="pto_id",
+            field=models.PositiveIntegerField(
+                blank=True,
+                default=0,
+                help_text="The Public Transport Operator ID to use with the Switchio API for enrollment.",
+            ),
+        ),
     ]
