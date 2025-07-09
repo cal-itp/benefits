@@ -3,21 +3,69 @@ import json
 import pytest
 
 import benefits.enrollment_switchio.api
-from benefits.enrollment_switchio.api import Client, EshopResponseMode, Registration, RegistrationMode, RegistrationStatus
+from benefits.enrollment_switchio.api import (
+    Client,
+    EnrollmentClient,
+    Group,
+    GroupExpiry,
+    TokenizationClient,
+    EshopResponseMode,
+    Registration,
+    RegistrationMode,
+    RegistrationStatus,
+)
 
 
 @pytest.fixture
-def client():
-    return Client("https://example.com", "api key", "api secret", None, None, None)
+def tokenization_client():
+    return TokenizationClient(
+        api_url="https://example.com",
+        api_key="api key",
+        api_secret="api secret",
+        private_key="private key contents",
+        client_certificate="client cert contents",
+        ca_certificate="ca cert contents",
+    )
+
+
+@pytest.fixture
+def enrollment_client():
+    return EnrollmentClient(
+        api_url="https://example.com",
+        authorization_header_value="Basic abc123",
+        private_key="private key contents",
+        client_certificate="client cert contents",
+        ca_certificate="ca cert contents",
+    )
+
+
+@pytest.mark.django_db
+def test_client_cert_request(mocker):
+    temp_file = mocker.patch("benefits.enrollment_switchio.api.NamedTemporaryFile")
+    request_func = mocker.Mock()
+
+    client = Client(
+        private_key="private key contents",
+        client_certificate="client cert contents",
+        ca_certificate="ca cert contents",
+    )
+    client._cert_request(request_func)
+
+    temp_file.assert_called()
+    request_func.assert_called_once()
+    assert "verify" in request_func.call_args.kwargs
+    assert "cert" in request_func.call_args.kwargs
 
 
 @pytest.mark.parametrize("method", ["GET", "POST"])
 @pytest.mark.parametrize("body", ['{"exampleProperty": "blah"}', None, ""])
-def test_client_signature_input_string(client, method, body):
+def test_tokenization_client_signature_input_string(tokenization_client, method, body):
     timestamp = str(int(datetime.now().timestamp()))
     request_path = "/api/example"
 
-    input_string = client._signature_input_string(timestamp=timestamp, method=method, request_path=request_path, body=body)
+    input_string = tokenization_client._signature_input_string(
+        timestamp=timestamp, method=method, request_path=request_path, body=body
+    )
 
     if body is None:
         expected = f"{timestamp}{method}{request_path}"
@@ -27,13 +75,15 @@ def test_client_signature_input_string(client, method, body):
     assert input_string == expected
 
 
-def test_client_stp_signature(client):
+def test_tokenization_client_stp_signature(tokenization_client):
     timestamp = "1748637999"
     method = "GET"
     request_path = "/api/example"
     body = '{"exampleProperty": "blah"}'
 
-    stp_signature = client._stp_signature(timestamp=timestamp, method=method, request_path=request_path, body=body)
+    stp_signature = tokenization_client._stp_signature(
+        timestamp=timestamp, method=method, request_path=request_path, body=body
+    )
 
     # the expected STP-SIGNATURE value based on those inputs
     expected = "7da3dd8dad6af77d4f0d5b96ff250399f2ffe1dac2fdfbdbfae0c22a86366426"
@@ -43,7 +93,7 @@ def test_client_stp_signature(client):
 
 @pytest.mark.parametrize("method", ["GET", "POST"])
 @pytest.mark.parametrize("body", [{"exampleProperty": "blah"}, None])
-def test_get_headers(mocker, client, method, body):
+def test_tokenization_client_get_headers(mocker, tokenization_client, method, body):
     timestamp = 1516867520
 
     # mock datetime.now()
@@ -53,15 +103,14 @@ def test_get_headers(mocker, client, method, body):
 
     request_path = "/api/example"
 
-    headers = client._get_headers(method=method, request_path=request_path, request_body=body)
+    headers = tokenization_client._get_headers(method=method, request_path=request_path, request_body=body)
 
     # calculate the expected value
     timestamp = str(timestamp)
     expected = {
-        "Content-Type": "application/json",
-        "STP-APIKEY": client.api_key,
+        "STP-APIKEY": tokenization_client.api_key,
         "STP-TIMESTAMP": timestamp,
-        "STP-SIGNATURE": client._stp_signature(
+        "STP-SIGNATURE": tokenization_client._stp_signature(
             timestamp=timestamp,
             method=method,
             request_path=request_path,
@@ -72,13 +121,13 @@ def test_get_headers(mocker, client, method, body):
     assert headers == expected
 
 
-def test_client_request_registration(mocker, client):
+def test_tokenization_client_request_registration(mocker, tokenization_client):
     mock_response = mocker.Mock()
     mock_json = dict(regId="1234", gtwUrl="https://example.com/cst/?regId=1234")
     mock_response.json.return_value = mock_json
-    mocker.patch("benefits.enrollment_switchio.api.Client._cert_request", return_value=mock_response)
+    mocker.patch("benefits.enrollment_switchio.api.TokenizationClient._cert_request", return_value=mock_response)
 
-    registration = client.request_registration(
+    registration = tokenization_client.request_registration(
         eshopRedirectUrl="https://localhost/enrollment",
         mode=RegistrationMode.REGISTER,
         eshopResponseMode=EshopResponseMode.FORM_POST,
@@ -87,7 +136,7 @@ def test_client_request_registration(mocker, client):
     assert registration == Registration(**mock_json)
 
 
-def test_client_get_registration_status(mocker, client):
+def test_tokenization_client_get_registration_status(mocker, tokenization_client):
     mock_response = mocker.Mock()
     mock_json = dict(
         regState="created",
@@ -100,8 +149,75 @@ def test_client_get_registration_status(mocker, client):
         cardExp="1119",
     )
     mock_response.json.return_value = mock_json
-    mocker.patch("benefits.enrollment_switchio.api.Client._cert_request", return_value=mock_response)
+    mocker.patch("benefits.enrollment_switchio.api.TokenizationClient._cert_request", return_value=mock_response)
 
-    registration_status = client.get_registration_status(registration_id="1234")
+    registration_status = tokenization_client.get_registration_status(registration_id="1234")
 
     assert registration_status == RegistrationStatus(**mock_json)
+
+
+def test_enrollment_client_get_headers(enrollment_client):
+    headers = enrollment_client._get_headers()
+
+    assert headers == {"Authorization": "Basic abc123"}
+
+
+def test_enrollment_client_healthcheck(mocker, enrollment_client):
+    mock_response = mocker.Mock()
+    mock_response.text.return_value = "Egibility is alive!"
+    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+
+    response = enrollment_client.healthcheck()
+
+    assert response == mock_response.text
+
+
+def test_enrollment_client_get_groups(mocker, enrollment_client):
+    mock_response = mocker.Mock()
+    mock_json = dict(
+        id=1,
+        operatorId=123,
+        name="Veteran Discount",
+        code="veteran-discount",
+        value=10,
+    )
+    mock_response.json.return_value = [mock_json]
+    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+
+    groups = enrollment_client.get_groups(pto_id="123")
+
+    assert groups == [Group(**mock_json)]
+
+
+def test_enrollment_client_get_groups_for_token(mocker, enrollment_client):
+    mock_response = mocker.Mock()
+    mock_json = dict(group="veteran-discount", expiresAt=None)
+    mock_response.json.return_value = [mock_json]
+    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+
+    groups = enrollment_client.get_groups_for_token(pto_id="123", token="abcde12345")
+
+    assert groups == [GroupExpiry(**mock_json)]
+
+
+def test_enrollment_client_add_group_to_token(mocker, enrollment_client):
+    mock_response = mocker.Mock()
+    mock_response.text.return_value = "Groups added or updated successfully"
+    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+
+    response = enrollment_client.add_group_to_token("123", "veteran-discount", "abcde12345")
+
+    assert response == mock_response.text
+
+
+def test_enrollment_client_remove_group_from_token(mocker, enrollment_client):
+    group_code = "veteran-discount"
+    token = "abcde12345"
+
+    mock_response = mocker.Mock()
+    mock_response.text.return_value = f"Discount {group_code} removed successfully for token {token}"
+    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+
+    response = enrollment_client.remove_group_from_token("123", group_code, token)
+
+    assert response == mock_response.text

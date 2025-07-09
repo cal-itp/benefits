@@ -39,6 +39,41 @@ class RegistrationStatus:
 
 
 class Client:
+    def __init__(
+        self,
+        private_key,
+        client_certificate,
+        ca_certificate,
+    ):
+        self.private_key = private_key
+        self.client_certificate = client_certificate
+        self.ca_certificate = ca_certificate
+
+    # see https://github.com/cal-itp/benefits/issues/2848 for more context about this
+    def _cert_request(self, request_func):
+        """
+        Creates named (on-disk) temp files for client cert auth.
+        * request_func: curried callable from `requests` library (e.g. `requests.get`).
+        """
+        # requests library reads temp files from file path
+        # The "with" context destroys temp files when response comes back
+        with NamedTemporaryFile("w+") as cert, NamedTemporaryFile("w+") as key, NamedTemporaryFile("w+") as ca:
+            # write client cert data to temp files
+            # resetting so they can be read again by requests
+            cert.write(self.client_certificate)
+            cert.seek(0)
+
+            key.write(self.private_key)
+            key.seek(0)
+
+            ca.write(self.ca_certificate)
+            ca.seek(0)
+
+            # request using temp file paths
+            return request_func(verify=ca.name, cert=(cert.name, key.name))
+
+
+class TokenizationClient(Client):
 
     def __init__(
         self,
@@ -49,12 +84,10 @@ class Client:
         client_certificate,
         ca_certificate,
     ):
-        self.api_url = api_url
+        super().__init__(private_key, client_certificate, ca_certificate)
+        self.api_url = api_url.strip("/")
         self.api_key = api_key
         self.api_secret = api_secret
-        self.private_key = private_key
-        self.client_certificate = client_certificate
-        self.ca_certificate = ca_certificate
 
     def _signature_input_string(self, timestamp: str, method: str, request_path: str, body: str = None):
         if body is None:
@@ -76,7 +109,6 @@ class Client:
         timestamp = str(int(datetime.now().timestamp()))
 
         return {
-            "Content-Type": "application/json",
             "STP-APIKEY": self.api_key,
             "STP-TIMESTAMP": timestamp,
             "STP-SIGNATURE": self._stp_signature(
@@ -103,7 +135,7 @@ class Client:
 
         response = self._cert_request(
             lambda verify, cert: requests.post(
-                self.api_url.strip("/") + registration_path,
+                self.api_url + registration_path,
                 json=request_body,
                 headers=self._get_headers(method="POST", request_path=registration_path, request_body=request_body),
                 cert=cert,
@@ -121,7 +153,7 @@ class Client:
 
         response = self._cert_request(
             lambda verify, cert: requests.get(
-                self.api_url.strip("/") + request_path,
+                self.api_url + request_path,
                 headers=self._get_headers(method="GET", request_path=request_path),
                 cert=cert,
                 verify=verify,
@@ -133,25 +165,119 @@ class Client:
 
         return RegistrationStatus(**response.json())
 
-    # see https://github.com/cal-itp/benefits/issues/2848 for more context about this
-    def _cert_request(self, request_func):
-        """
-        Creates named (on-disk) temp files for client cert auth.
-        * request_func: curried callable from `requests` library (e.g. `requests.get`).
-        """
-        # requests library reads temp files from file path
-        # The "with" context destroys temp files when response comes back
-        with NamedTemporaryFile("w+") as cert, NamedTemporaryFile("w+") as key, NamedTemporaryFile("w+") as ca:
-            # write client cert data to temp files
-            # resetting so they can be read again by requests
-            cert.write(self.client_certificate)
-            cert.seek(0)
 
-            key.write(self.private_key)
-            key.seek(0)
+@dataclass
+class Group:
+    id: int
+    operatorId: int
+    name: str
+    code: str
+    value: int
 
-            ca.write(self.ca_certificate)
-            ca.seek(0)
 
-            # request using temp file paths
-            return request_func(verify=ca.name, cert=(cert.name, key.name))
+@dataclass
+class GroupExpiry:
+    group: str
+    expiresAt: datetime
+
+
+class EnrollmentClient(Client):
+
+    def __init__(self, api_url, authorization_header_value, private_key, client_certificate, ca_certificate):
+        super().__init__(private_key, client_certificate, ca_certificate)
+        self.api_url = api_url.strip("/")
+        self.authorization_header_value = authorization_header_value
+
+    def _get_headers(self):
+        return {"Authorization": self.authorization_header_value}
+
+    def healthcheck(self, timeout=5):
+        request_path = "/api/external/discount/echo"
+
+        response = self._cert_request(
+            lambda verify, cert: requests.get(
+                self.api_url.strip("/") + request_path,
+                headers=self._get_headers(),
+                cert=cert,
+                verify=verify,
+                timeout=timeout,
+            )
+        )
+
+        response.raise_for_status()
+
+        return response.text
+
+    def get_groups(self, pto_id, timeout=5):
+        request_path = f"/api/external/discount/{pto_id}/groups"
+
+        response = self._cert_request(
+            lambda verify, cert: requests.get(
+                self.api_url + request_path,
+                headers=self._get_headers(),
+                cert=cert,
+                verify=verify,
+                timeout=timeout,
+            )
+        )
+
+        response.raise_for_status()
+
+        return [Group(**discount_group) for discount_group in response.json()]
+
+    def get_groups_for_token(self, pto_id, token, timeout=5):
+        request_path = f"/api/external/discount/{pto_id}/token/{token}"
+
+        response = self._cert_request(
+            lambda verify, cert: requests.get(
+                self.api_url + request_path,
+                headers=self._get_headers(),
+                cert=cert,
+                verify=verify,
+                timeout=timeout,
+            )
+        )
+
+        response.raise_for_status()
+
+        return [GroupExpiry(**group_expiry) for group_expiry in response.json()]
+
+    def add_group_to_token(self, pto_id, group_id, token, timeout=5):
+        request_path = f"/api/external/discount/{pto_id}/token/{token}/add"
+
+        request_body = {"group": group_id}
+
+        response = self._cert_request(
+            lambda verify, cert: requests.post(
+                self.api_url + request_path,
+                json=request_body,
+                headers=self._get_headers(),
+                cert=cert,
+                verify=verify,
+                timeout=timeout,
+            )
+        )
+
+        response.raise_for_status()
+
+        return response.text
+
+    def remove_group_from_token(self, pto_id, group_id, token, timeout=5):
+        request_path = f"/api/external/discount/{pto_id}/token/{token}/remove"
+
+        request_body = {"group": group_id}
+
+        response = self._cert_request(
+            lambda verify, cert: requests.post(
+                self.api_url + request_path,
+                json=request_body,
+                headers=self._get_headers(),
+                cert=cert,
+                verify=verify,
+                timeout=timeout,
+            )
+        )
+
+        response.raise_for_status()
+
+        return response.text

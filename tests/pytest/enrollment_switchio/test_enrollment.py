@@ -35,7 +35,9 @@ def mocked_api_base_url(mocker):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_api_base_url")
 def test_request_registration_success(mocker, app_request, model_SwitchioConfig, mocked_registration):
-    mocker.patch("benefits.enrollment_switchio.enrollment.Client.request_registration", return_value=mocked_registration)
+    mocker.patch(
+        "benefits.enrollment_switchio.enrollment.TokenizationClient.request_registration", return_value=mocked_registration
+    )
 
     registration_response = request_registration(app_request, model_SwitchioConfig)
 
@@ -52,7 +54,7 @@ def test_request_registration_system_error(mocker, status_code, app_request, mod
     mock_error_response.json.return_value = mock_error
     http_error = HTTPError(response=mock_error_response)
 
-    mocker.patch("benefits.enrollment_switchio.enrollment.Client.request_registration", side_effect=http_error)
+    mocker.patch("benefits.enrollment_switchio.enrollment.TokenizationClient.request_registration", side_effect=http_error)
 
     registration_response = request_registration(app_request, model_SwitchioConfig)
 
@@ -69,7 +71,7 @@ def test_request_registration_http_error_400(mocker, app_request, model_Switchio
     mock_error_response.json.return_value = mock_error
     http_error = HTTPError(response=mock_error_response)
 
-    mocker.patch("benefits.enrollment_switchio.enrollment.Client.request_registration", side_effect=http_error)
+    mocker.patch("benefits.enrollment_switchio.enrollment.TokenizationClient.request_registration", side_effect=http_error)
 
     registration_response = request_registration(app_request, model_SwitchioConfig)
 
@@ -84,7 +86,8 @@ def test_request_registration_http_error_400(mocker, app_request, model_Switchio
 def test_request_registration_non_http_error(mocker, app_request, model_SwitchioConfig):
 
     mocker.patch(
-        "benefits.enrollment_switchio.enrollment.Client.request_registration", side_effect=Exception("some other exception")
+        "benefits.enrollment_switchio.enrollment.TokenizationClient.request_registration",
+        side_effect=Exception("some other exception"),
     )
 
     registration_response = request_registration(app_request, model_SwitchioConfig)
@@ -98,7 +101,8 @@ def test_request_registration_non_http_error(mocker, app_request, model_Switchio
 @pytest.mark.usefixtures("mocked_api_base_url")
 def test_get_registration_status_success(mocker, model_SwitchioConfig, mocked_registration_status):
     mocker.patch(
-        "benefits.enrollment_switchio.enrollment.Client.get_registration_status", return_value=mocked_registration_status
+        "benefits.enrollment_switchio.enrollment.TokenizationClient.get_registration_status",
+        return_value=mocked_registration_status,
     )
 
     response = get_registration_status(model_SwitchioConfig, registration_id="1234")
@@ -116,7 +120,7 @@ def test_get_registration_status_system_error(mocker, status_code, model_Switchi
     mock_error_response.json.return_value = mock_error
     http_error = HTTPError(response=mock_error_response)
 
-    mocker.patch("benefits.enrollment_switchio.enrollment.Client.get_registration_status", side_effect=http_error)
+    mocker.patch("benefits.enrollment_switchio.enrollment.TokenizationClient.get_registration_status", side_effect=http_error)
 
     response = get_registration_status(switchio_config=model_SwitchioConfig, registration_id="4321")
 
@@ -133,7 +137,7 @@ def test_get_registration_status_http_error_400(mocker, app_request, model_Switc
     mock_error_response.json.return_value = mock_error
     http_error = HTTPError(response=mock_error_response)
 
-    mocker.patch("benefits.enrollment_switchio.enrollment.Client.get_registration_status", side_effect=http_error)
+    mocker.patch("benefits.enrollment_switchio.enrollment.TokenizationClient.get_registration_status", side_effect=http_error)
 
     response = get_registration_status(switchio_config=model_SwitchioConfig, registration_id="4321")
 
@@ -148,7 +152,8 @@ def test_get_registration_status_http_error_400(mocker, app_request, model_Switc
 def test_get_registration_status_non_http_error(mocker, model_SwitchioConfig):
 
     mocker.patch(
-        "benefits.enrollment_switchio.enrollment.Client.get_registration_status", side_effect=Exception("some other exception")
+        "benefits.enrollment_switchio.enrollment.TokenizationClient.get_registration_status",
+        side_effect=Exception("some other exception"),
     )
 
     response = get_registration_status(switchio_config=model_SwitchioConfig, registration_id="1234")
