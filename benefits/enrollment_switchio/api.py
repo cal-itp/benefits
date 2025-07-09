@@ -85,7 +85,7 @@ class TokenizationClient(Client):
         ca_certificate,
     ):
         super().__init__(private_key, client_certificate, ca_certificate)
-        self.api_url = api_url
+        self.api_url = api_url.strip("/")
         self.api_key = api_key
         self.api_secret = api_secret
 
@@ -135,7 +135,7 @@ class TokenizationClient(Client):
 
         response = self._cert_request(
             lambda verify, cert: requests.post(
-                self.api_url.strip("/") + registration_path,
+                self.api_url + registration_path,
                 json=request_body,
                 headers=self._get_headers(method="POST", request_path=registration_path, request_body=request_body),
                 cert=cert,
@@ -153,7 +153,7 @@ class TokenizationClient(Client):
 
         response = self._cert_request(
             lambda verify, cert: requests.get(
-                self.api_url.strip("/") + request_path,
+                self.api_url + request_path,
                 headers=self._get_headers(method="GET", request_path=request_path),
                 cert=cert,
                 verify=verify,
@@ -179,7 +179,7 @@ class EnrollmentClient(Client):
 
     def __init__(self, api_url, authorization_header_value, private_key, client_certificate, ca_certificate):
         super().__init__(private_key, client_certificate, ca_certificate)
-        self.api_url = api_url
+        self.api_url = api_url.strip("/")
         self.authorization_header_value = authorization_header_value
 
     def _get_headers(self):
@@ -207,7 +207,7 @@ class EnrollmentClient(Client):
 
         response = self._cert_request(
             lambda verify, cert: requests.get(
-                self.api_url.strip("/") + request_path,
+                self.api_url + request_path,
                 headers=self._get_headers(),
                 cert=cert,
                 verify=verify,
@@ -224,7 +224,7 @@ class EnrollmentClient(Client):
 
         response = self._cert_request(
             lambda verify, cert: requests.get(
-                self.api_url.strip("/") + request_path,
+                self.api_url + request_path,
                 headers=self._get_headers(),
                 cert=cert,
                 verify=verify,
@@ -243,7 +243,7 @@ class EnrollmentClient(Client):
 
         response = self._cert_request(
             lambda verify, cert: requests.post(
-                self.api_url.strip("/") + request_path,
+                self.api_url + request_path,
                 json=request_body,
                 headers=self._get_headers(),
                 cert=cert,
@@ -263,7 +263,7 @@ class EnrollmentClient(Client):
 
         response = self._cert_request(
             lambda verify, cert: requests.post(
-                self.api_url.strip("/") + request_path,
+                self.api_url + request_path,
                 json=request_body,
                 headers=self._get_headers(),
                 cert=cert,
