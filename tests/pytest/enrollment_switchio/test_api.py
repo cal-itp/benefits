@@ -17,12 +17,25 @@ from benefits.enrollment_switchio.api import (
 
 @pytest.fixture
 def tokenization_client():
-    return TokenizationClient("https://example.com", "api key", "api secret", None, None, None)
+    return TokenizationClient(
+        api_url="https://example.com",
+        api_key="api key",
+        api_secret="api secret",
+        private_key="private key contents",
+        client_certificate="client cert contents",
+        ca_certificate="ca cert contents",
+    )
 
 
 @pytest.fixture
 def enrollment_client():
-    return EnrollmentClient("https://example.com", "Basic abc123", None, None, None)
+    return EnrollmentClient(
+        api_url="https://example.com",
+        authorization_header_value="Basic abc123",
+        private_key="private key contents",
+        client_certificate="client cert contents",
+        ca_certificate="ca cert contents",
+    )
 
 
 @pytest.mark.django_db
@@ -30,7 +43,11 @@ def test_client_cert_request(mocker):
     temp_file = mocker.patch("benefits.enrollment_switchio.api.NamedTemporaryFile")
     request_func = mocker.Mock()
 
-    client = Client(None, None, None)
+    client = Client(
+        private_key="private key contents",
+        client_certificate="client cert contents",
+        ca_certificate="ca cert contents",
+    )
     client._cert_request(request_func)
 
     temp_file.assert_called()
