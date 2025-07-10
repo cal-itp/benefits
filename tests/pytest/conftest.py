@@ -188,8 +188,8 @@ def model_LittlepayConfig():
 def model_SwitchioConfig(model_PemData):
     switchio_config = SwitchioConfig.objects.create(
         environment=Environment.QA,
-        api_key="api_key",
-        api_secret_name="apisecret",
+        tokenization_api_key="api_key",
+        tokenization_api_secret_name="apisecret",
         client_certificate=model_PemData,
         ca_certificate=model_PemData,
         private_key=model_PemData,
