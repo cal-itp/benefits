@@ -217,7 +217,7 @@ class SBMTDMobilityPass(EligibilityVerificationForm):
             ),
             sub_label=_("Reduced Fare Mobility ID card number"),
             sub_help_text=_("This is a 4- or 5-digit number on the back of your card."),
-            sub_placeholder="1234",
+            sub_placeholder="12345",
             name_max_length=255,
             sub_input_mode="numeric",
             sub_max_length=5,
