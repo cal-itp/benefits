@@ -50,9 +50,6 @@ class EnrollmentFlow(models.Model):
         default=[EnrollmentMethods.DIGITAL, EnrollmentMethods.IN_PERSON],
         help_text="If the flow is supported by digital enrollment, in-person enrollment, or both",
     )
-    group_id = models.TextField(
-        blank=True, default="", help_text="Reference to the TransitProcessor group for user enrollment"
-    )
     sign_out_button_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out button")
     sign_out_link_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out link")
     oauth_config = models.ForeignKey(
@@ -136,6 +133,10 @@ class EnrollmentFlow(models.Model):
 
     def __str__(self):
         return self.label
+
+    @property
+    def group_id(self):
+        return str(self.enrollment_group.littlepaygroup.group_id)
 
     @property
     def agency_card_name(self):
