@@ -221,7 +221,7 @@ class SBMTDMobilityPass(EligibilityVerificationForm):
             name_max_length=255,
             sub_input_mode="numeric",
             sub_max_length=5,
-            sub_pattern=r"\d{5}",
+            sub_pattern=r"\d{4,5}",
             sub_custom_validity=_("Please enter a 4- or 5-digit number."),
             name_custom_validity=_("Please enter your last name."),
             *args,
