@@ -275,6 +275,15 @@ class EnrollmentFlow(models.Model):
         return EnrollmentFlow.objects.get(id=id)
 
 
+class EnrollmentGroup(models.Model):
+    id = models.AutoField(primary_key=True)
+    enrollment_flow = models.OneToOneField(
+        EnrollmentFlow,
+        on_delete=models.PROTECT,
+        help_text="The enrollment flow that this group is for.",
+    )
+
+
 class EnrollmentEvent(models.Model):
     """A record of a successful enrollment."""
 
