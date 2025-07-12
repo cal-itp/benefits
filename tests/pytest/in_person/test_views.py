@@ -312,7 +312,7 @@ def test_enrollment_post_invalid_form(admin_client, invalid_form_data):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow", "model_LittlepayGroup")
 def test_enrollment_post_valid_form_success(
     mocker,
     admin_client,
