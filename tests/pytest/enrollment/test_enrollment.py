@@ -19,7 +19,7 @@ def mocked_sentry_sdk_module(mocker):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible", "model_LittlepayGroup")
 def test_handle_enrollment_results_success_claims(
     mocker,
     app_request,
@@ -49,7 +49,7 @@ def test_handle_enrollment_results_success_claims(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible", "model_LittlepayGroup")
 def test_handle_enrollment_results_success_eligibility_api(
     mocker,
     app_request,

@@ -10,7 +10,7 @@ from benefits.core.models import EnrollmentFlow, EnrollmentEvent, EnrollmentMeth
 
 @pytest.mark.django_db
 def test_EnrollmentFlow_str(model_EnrollmentFlow):
-    assert str(model_EnrollmentFlow) == model_EnrollmentFlow.label
+    assert str(model_EnrollmentFlow) == f"{model_EnrollmentFlow.label} ({model_EnrollmentFlow.transit_agency.slug})"
 
 
 @pytest.mark.django_db
