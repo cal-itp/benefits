@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from benefits.core.models import PemData, SecretNameField, Environment
+from benefits.core.models import PemData, SecretNameField, Environment, EnrollmentGroup
 from benefits.secrets import get_secret_by_name
 
 
@@ -126,3 +126,7 @@ class SwitchioConfig(models.Model):
     def __str__(self):
         environment_label = Environment(self.environment).label if self.environment else "unknown"
         return f"{environment_label}"
+
+
+class SwitchioGroup(EnrollmentGroup):
+    group_id = models.TextField(default=None, blank=True, help_text="The ID of the Switchio group for user enrollment.")
