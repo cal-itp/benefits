@@ -5,7 +5,7 @@ from .transit import (
     TransitProcessor,
     TransitAgency,
 )
-from .enrollment import EnrollmentMethods, EnrollmentFlow, EnrollmentEvent
+from .enrollment import EnrollmentMethods, EnrollmentFlow, EnrollmentGroup, EnrollmentEvent
 
 __all__ = [
     "template_path",
@@ -18,5 +18,6 @@ __all__ = [
     "Environment",
     "EnrollmentMethods",
     "EnrollmentFlow",
+    "EnrollmentGroup",
     "EnrollmentEvent",
 ]

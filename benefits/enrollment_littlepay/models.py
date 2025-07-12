@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 from benefits.core import context as core_context
-from benefits.core.models import SecretNameField, Environment
+from benefits.core.models import SecretNameField, Environment, EnrollmentGroup
 from benefits.secrets import get_secret_by_name
 
 
@@ -59,3 +59,7 @@ class LittlepayConfig(models.Model):
         environment_label = Environment(self.environment).label if self.environment else "unknown"
         agency_slug = self.agency_slug if self.agency_slug else "(no agency)"
         return f"({environment_label}) {agency_slug}"
+
+
+class LittlepayGroup(EnrollmentGroup):
+    group_id = models.UUIDField(default=None, blank=True, help_text="The ID of the Littlepay group for user enrollment.")

@@ -17,7 +17,7 @@ from benefits.core.models import (
     TransitAgency,
     Environment,
 )
-from benefits.enrollment_littlepay.models import LittlepayConfig
+from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup
 from benefits.enrollment_switchio.models import SwitchioConfig
 
 
@@ -90,11 +90,18 @@ def model_EnrollmentFlow(model_TransitAgency):
         system_name="senior",
         selection_label_template_override="eligibility/includes/selection-label.html",
         label="Test flow label",
-        group_id="group123",
         transit_agency=model_TransitAgency,
     )
 
     return flow
+
+
+@pytest.fixture
+def model_LittlepayGroup(model_EnrollmentFlow):
+    return LittlepayGroup.objects.create(
+        group_id="d0fe23fd-61d6-455f-8e19-808058603171",
+        enrollment_flow=model_EnrollmentFlow,
+    )
 
 
 @pytest.fixture
