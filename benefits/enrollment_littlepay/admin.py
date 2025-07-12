@@ -2,6 +2,8 @@ from django.contrib import admin
 
 from benefits.enrollment_littlepay import models
 
+admin.site.register(models.LittlepayGroup)
+
 
 @admin.register(models.LittlepayConfig)
 class LittlepayConfigAdmin(admin.ModelAdmin):

@@ -132,11 +132,11 @@ class EnrollmentFlow(models.Model):
         ordering = ["display_order"]
 
     def __str__(self):
-        return self.label
+        return f"{self.label} ({self.transit_agency.slug})"
 
     @property
     def group_id(self):
-        return str(self.enrollment_group.littlepaygroup.group_id)
+        return str(self.enrollmentgroup.littlepaygroup.group_id)
 
     @property
     def agency_card_name(self):
@@ -283,6 +283,9 @@ class EnrollmentGroup(models.Model):
         on_delete=models.PROTECT,
         help_text="The enrollment flow that this group is for.",
     )
+
+    def __str__(self):
+        return str(self.enrollment_flow)
 
 
 class EnrollmentEvent(models.Model):
