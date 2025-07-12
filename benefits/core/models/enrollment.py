@@ -136,7 +136,12 @@ class EnrollmentFlow(models.Model):
 
     @property
     def group_id(self):
-        return str(self.enrollmentgroup.littlepaygroup.group_id)
+        enrollment_group = self.enrollmentgroup
+
+        if hasattr(enrollment_group, "littlepaygroup"):
+            return str(enrollment_group.littlepaygroup.group_id)
+        elif hasattr(enrollment_group, "switchiogroup"):
+            return enrollment_group.switchiogroup.group_id
 
     @property
     def agency_card_name(self):
