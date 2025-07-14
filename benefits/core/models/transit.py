@@ -251,7 +251,7 @@ class TransitAgency(models.Model):
 
             if self.switchio_config:
                 try:
-                    self.switchio_config.clean(agency=self)
+                    self.switchio_config.clean()
                 except ValidationError as e:
                     message = "Switchio configuration is missing fields that are required when this agency is active."
                     message += f" Missing fields: {', '.join(e.error_dict.keys())}"

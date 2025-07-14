@@ -20,7 +20,7 @@ def test_LittlepayConfig_defaults():
 @pytest.mark.django_db
 def test_LittlepayConfig_clean_inactive_agency(model_TransitAgency_inactive):
     littlepay_config = LittlepayConfig.objects.create(environment="qa", agency_slug="cst")
-    littlepay_config.transitagency = model_TransitAgency_inactive
+    littlepay_config.transit_agency = model_TransitAgency_inactive
     littlepay_config.save()
 
     # test fails if clean fails
