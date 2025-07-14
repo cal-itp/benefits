@@ -200,7 +200,7 @@ class TestIndexView:
         return v
 
     @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
+    @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_LittlepayConfig")
     def test_get_context_data(self, view):
         context = view.get_context_data()
 
@@ -253,7 +253,9 @@ class TestIndexView:
             view.form_invalid(form)
 
     @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_session_eligible", "mocked_session_agency", "mocked_session_flow")
+    @pytest.mark.usefixtures(
+        "mocked_session_eligible", "mocked_session_agency", "mocked_session_flow", "model_LittlepayConfig"
+    )
     def test_index_view(self, app_request):
         index_view = IndexView.as_view()
         response = index_view(app_request)

@@ -1,7 +1,6 @@
 from django.forms import ValidationError
 import pytest
 
-from benefits.core.models import Environment
 from benefits.enrollment_switchio.models import SwitchioConfig
 
 
@@ -19,12 +18,6 @@ def test_SwitchioConfig_defaults():
     assert switchio_config.private_key is None
     # test fails if save fails
     switchio_config.save()
-
-
-@pytest.mark.django_db
-def test_SwitchioConfig_str(model_SwitchioConfig):
-    environment_label = Environment(model_SwitchioConfig.environment).label
-    assert str(model_SwitchioConfig) == f"{environment_label}"
 
 
 @pytest.mark.django_db

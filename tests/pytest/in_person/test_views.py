@@ -284,7 +284,7 @@ def test_token_connection_error(mocker, admin_client, mocked_enrollment_analytic
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_LittlepayConfig")
 def test_enrollment_logged_in_get(admin_client):
     path = reverse(routes.IN_PERSON_ENROLLMENT)
 

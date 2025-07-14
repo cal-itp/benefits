@@ -37,7 +37,7 @@ class LittlepayConfig(TransitProcessorConfig):
     def clean(self):
         field_errors = {}
 
-        if hasattr(self, "transitagency") and self.transitagency.active:
+        if self.transit_agency and self.transit_agency.active:
             message = "This field is required when this configuration is referenced by an active transit agency."
             needed = dict(audience=self.audience, client_id=self.client_id, client_secret_name=self.client_secret_name)
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})

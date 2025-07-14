@@ -68,7 +68,7 @@ class TestIndexView:
     @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_session_flow")
     def test_get(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
-        model_TransitAgency.switchio_config = model_SwitchioConfig
+        model_SwitchioConfig.transit_agency = model_TransitAgency
         mocked_get_registration_status = mocker.patch(
             "benefits.enrollment_switchio.views.get_registration_status", return_value=None
         )
@@ -84,7 +84,7 @@ class TestIndexView:
     def test_get_with_session_registration_id_tokenization_finished(
         self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig
     ):
-        model_TransitAgency.switchio_config = model_SwitchioConfig
+        model_SwitchioConfig.transit_agency = model_TransitAgency
         gateway_url = "https://example.com/cst/?regId=1234"
         mocked_get_registration_status = mocker.patch(
             "benefits.enrollment_switchio.views.get_registration_status",
@@ -122,7 +122,7 @@ class TestIndexView:
     def test_get_with_session_registration_id_verification_failed(
         self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig
     ):
-        model_TransitAgency.switchio_config = model_SwitchioConfig
+        model_SwitchioConfig.transit_agency = model_TransitAgency
         gateway_url = "https://example.com/cst/?regId=1234"
         mocked_get_registration_status = mocker.patch(
             "benefits.enrollment_switchio.views.get_registration_status",
@@ -150,7 +150,7 @@ class TestIndexView:
     def test_get_with_session_registration_id_tokenization_failed(
         self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig
     ):
-        model_TransitAgency.switchio_config = model_SwitchioConfig
+        model_SwitchioConfig.transit_agency = model_TransitAgency
         gateway_url = "https://example.com/cst/?regId=1234"
         mocked_get_registration_status = mocker.patch(
             "benefits.enrollment_switchio.views.get_registration_status",
@@ -178,7 +178,7 @@ class TestIndexView:
     def test_get_with_session_registration_id_system_error(
         self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig, mocked_sentry_sdk_module
     ):
-        model_TransitAgency.switchio_config = model_SwitchioConfig
+        model_SwitchioConfig.transit_agency = model_TransitAgency
         gateway_url = "https://example.com/cst/?regId=1234"
 
         mock_error = {"message": "Mock error message"}
@@ -209,7 +209,7 @@ class TestIndexView:
     def test_get_with_session_registration_id_server_error(
         self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig, mocked_sentry_sdk_module
     ):
-        model_TransitAgency.switchio_config = model_SwitchioConfig
+        model_SwitchioConfig.transit_agency = model_TransitAgency
         gateway_url = "https://example.com/cst/?regId=1234"
 
         mock_error = {"message": "Mock error message"}
@@ -259,7 +259,7 @@ class TestGatewayUrlView:
     @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_api_base_url")
     def test_get_gateway_url(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
-        model_TransitAgency.switchio_config = model_SwitchioConfig
+        model_SwitchioConfig.transit_agency = model_TransitAgency
         gateway_url = "https://example.com/cst/?regId=1234"
         mocker.patch(
             "benefits.enrollment_switchio.views.request_registration",
@@ -293,7 +293,7 @@ class TestGatewayUrlView:
         mock_error_response.json.return_value = mock_error
         http_error = HTTPError(response=mock_error_response)
 
-        model_TransitAgency.switchio_config = model_SwitchioConfig
+        model_SwitchioConfig.transit_agency = model_TransitAgency
         mocker.patch(
             "benefits.enrollment_switchio.views.request_registration",
             return_value=RegistrationResponse(
@@ -330,7 +330,7 @@ class TestGatewayUrlView:
         mock_error_response.json.return_value = mock_error
         http_error = HTTPError(response=mock_error_response)
 
-        model_TransitAgency.switchio_config = model_SwitchioConfig
+        model_SwitchioConfig.transit_agency = model_TransitAgency
         mocker.patch(
             "benefits.enrollment_switchio.views.request_registration",
             return_value=RegistrationResponse(
@@ -353,7 +353,7 @@ class TestGatewayUrlView:
     @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_api_base_url")
     def test_get_gateway_url_still_valid(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
-        model_TransitAgency.switchio_config = model_SwitchioConfig
+        model_SwitchioConfig.transit_agency = model_TransitAgency
         gateway_url = "https://example.com/cst/?regId=3456"
         mocked_request_registration = mocker.patch(
             "benefits.enrollment_switchio.views.request_registration",
@@ -391,7 +391,7 @@ class TestGatewayUrlView:
     @pytest.mark.usefixtures("mocked_api_base_url")
     @pytest.mark.parametrize("regState", ["expired", "deleted"])
     def test_get_gateway_url_not_valid(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig, regState):
-        model_TransitAgency.switchio_config = model_SwitchioConfig
+        model_SwitchioConfig.transit_agency = model_TransitAgency
         gateway_url = "https://example.com/cst/?regId=7890"
         mocked_request_registration = mocker.patch(
             "benefits.enrollment_switchio.views.request_registration",
@@ -430,7 +430,7 @@ class TestGatewayUrlView:
     def test_get_gateway_url_error_while_checking_for_validity(
         self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig, status
     ):
-        model_TransitAgency.switchio_config = model_SwitchioConfig
+        model_SwitchioConfig.transit_agency = model_TransitAgency
         gateway_url = "https://example.com/cst/?regId=7890"
         mocked_request_registration = mocker.patch(
             "benefits.enrollment_switchio.views.request_registration",

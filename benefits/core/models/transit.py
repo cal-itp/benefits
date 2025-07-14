@@ -192,6 +192,20 @@ class TransitAgency(models.Model):
         return self.eligibility_api_public_key.data
 
     @property
+    def littlepay_config(self):
+        if hasattr(self, "transitprocessorconfig") and hasattr(self.transitprocessorconfig, "littlepayconfig"):
+            return self.transitprocessorconfig.littlepayconfig
+        else:
+            return None
+
+    @property
+    def switchio_config(self):
+        if hasattr(self, "transitprocessorconfig") and hasattr(self.transitprocessorconfig, "switchioconfig"):
+            return self.transitprocessorconfig.switchioconfig
+        else:
+            return None
+
+    @property
     def enrollment_index_route(self):
         """This Agency's enrollment index route, based on its configured transit processor."""
         if self.littlepay_config:

@@ -5,7 +5,9 @@ import pytest
 
 from benefits.routes import routes
 from benefits.core.models import (
+    Environment,
     TransitAgency,
+    TransitProcessorConfig,
     agency_logo_small,
     agency_logo_large,
 )
@@ -14,6 +16,14 @@ from benefits.core.models import (
 @pytest.mark.django_db
 def test_TransitProcessor_str(model_TransitProcessor):
     assert str(model_TransitProcessor) == model_TransitProcessor.name
+
+
+@pytest.mark.django_db
+def test_TransitProcessorConfig_str():
+    transit_processor_config = TransitProcessorConfig.objects.create(environment="qa", agency_slug="cst")
+    environment_label = Environment(transit_processor_config.environment).label
+    agency_slug = transit_processor_config.agency_slug
+    assert str(transit_processor_config) == f"({environment_label}) {agency_slug}"
 
 
 @pytest.mark.django_db
@@ -78,8 +88,6 @@ def test_TransitAgency_all_active(model_TransitAgency):
 
     inactive_agency = TransitAgency.by_id(model_TransitAgency.id)
     inactive_agency.pk = None
-    inactive_agency.littlepay_config.pk = None
-    inactive_agency.littlepay_config = inactive_agency.littlepay_config.save()
     inactive_agency.active = False
     inactive_agency.save()
 
@@ -98,8 +106,6 @@ def test_TransitAgency_for_user_in_group(model_TransitAgency):
 
     agency_for_user = TransitAgency.by_id(model_TransitAgency.id)
     agency_for_user.pk = None
-    agency_for_user.littlepay_config.pk = None
-    agency_for_user.littlepay_config = agency_for_user.littlepay_config.save()
     agency_for_user.staff_group = group
     agency_for_user.save()
 
@@ -115,8 +121,6 @@ def test_TransitAgency_for_user_not_in_group(model_TransitAgency):
 
     agency_for_user = TransitAgency.by_id(model_TransitAgency.id)
     agency_for_user.pk = None
-    agency_for_user.littlepay_config.pk = None
-    agency_for_user.littlepay_config = agency_for_user.littlepay_config.save()
     agency_for_user.staff_group = group
     agency_for_user.save()
 
@@ -155,8 +159,6 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
     model_TransitAgency_inactive.info_url = ""
     model_TransitAgency_inactive.logo_large = ""
     model_TransitAgency_inactive.logo_small = ""
-    model_TransitAgency_inactive.littlepay_config = None
-    model_TransitAgency_inactive.switchio_config = None
     # agency is inactive, OK to have incomplete fields
     model_TransitAgency_inactive.clean()
 
@@ -181,8 +183,7 @@ def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcesso
 
 @pytest.mark.django_db
 def test_TransitAgency_enrollment_index_route_littlepay(model_TransitAgency, model_LittlepayConfig):
-    model_TransitAgency.littlepay_config = model_LittlepayConfig
-    model_TransitAgency.switchio_config = None
+    model_LittlepayConfig.transit_agency = model_TransitAgency
     model_TransitAgency.save()
 
     assert model_TransitAgency.enrollment_index_route == routes.ENROLLMENT_LITTLEPAY_INDEX
@@ -190,8 +191,7 @@ def test_TransitAgency_enrollment_index_route_littlepay(model_TransitAgency, mod
 
 @pytest.mark.django_db
 def test_TransitAgency_enrollment_index_route_switchio(model_TransitAgency, model_SwitchioConfig):
-    model_TransitAgency.littlepay_config = None
-    model_TransitAgency.switchio_config = model_SwitchioConfig
+    model_SwitchioConfig.transit_agency = model_TransitAgency
     model_TransitAgency.save()
 
     assert model_TransitAgency.enrollment_index_route == routes.ENROLLMENT_SWITCHIO_INDEX
@@ -199,10 +199,6 @@ def test_TransitAgency_enrollment_index_route_switchio(model_TransitAgency, mode
 
 @pytest.mark.django_db
 def test_TransitAgency_enrollment_index_route_no_config(model_TransitAgency):
-    model_TransitAgency.littlepay_config = None
-    model_TransitAgency.switchio_config = None
-    model_TransitAgency.save()
-
     with pytest.raises(
         ValueError,
         match="TransitAgency must have either a LittlepayConfig or SwitchioConfig in order to show enrollment index.",
