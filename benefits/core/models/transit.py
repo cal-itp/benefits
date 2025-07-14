@@ -124,14 +124,6 @@ class TransitAgency(models.Model):
         default=None,
         help_text="This agency's TransitProcessor.",
     )
-    littlepay_config = models.OneToOneField(
-        "enrollment_littlepay.OldLittlepayConfig",
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        default=None,
-        help_text="The Littlepay configuration used by this agency for enrollment.",
-    )
     switchio_config = models.ForeignKey(
         "enrollment_switchio.SwitchioConfig",
         on_delete=models.PROTECT,

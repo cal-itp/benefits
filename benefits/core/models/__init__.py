@@ -3,6 +3,7 @@ from .transit import (
     agency_logo_large,
     agency_logo_small,
     TransitProcessor,
+    TransitProcessorConfig,
     TransitAgency,
 )
 from .enrollment import EnrollmentMethods, EnrollmentFlow, EnrollmentGroup, EnrollmentEvent
@@ -14,6 +15,7 @@ __all__ = [
     "agency_logo_large",
     "agency_logo_small",
     "TransitProcessor",
+    "TransitProcessorConfig",
     "TransitAgency",
     "Environment",
     "EnrollmentMethods",

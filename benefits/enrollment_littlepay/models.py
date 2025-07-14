@@ -1,23 +1,13 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from benefits.core import context as core_context
-from benefits.core.models import SecretNameField, Environment, EnrollmentGroup
+from benefits.core.models import SecretNameField, Environment, EnrollmentGroup, TransitProcessorConfig
 from benefits.secrets import get_secret_by_name
 
 
-class OldLittlepayConfig(models.Model):
+class LittlepayConfig(TransitProcessorConfig):
     """Configuration for connecting to Littlepay, an entity that applies transit agency fare rules to rider transactions."""
 
-    id = models.AutoField(primary_key=True)
-    environment = models.TextField(
-        choices=Environment,
-        help_text="A label to indicate which environment this configuration is for.",
-    )
-    agency_slug = models.SlugField(
-        choices=core_context.AgencySlug,
-        help_text="A label to indicate which agency this configuration is for. Note: the field that controls which configuration an agency actually uses is on the TransitAgency model.",  # noqa
-    )
     audience = models.TextField(
         help_text="This agency's audience value used to access the TransitProcessor's API.", default="", blank=True
     )
@@ -54,11 +44,6 @@ class OldLittlepayConfig(models.Model):
 
         if field_errors:
             raise ValidationError(field_errors)
-
-    def __str__(self):
-        environment_label = Environment(self.environment).label if self.environment else "unknown"
-        agency_slug = self.agency_slug if self.agency_slug else "(no agency)"
-        return f"({environment_label}) {agency_slug}"
 
 
 class LittlepayGroup(EnrollmentGroup):
