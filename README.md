@@ -23,7 +23,7 @@
 | benefits/core/mixins.py                                                           |       31 |        0 |        8 |        0 |    100% |           |
 | benefits/core/models/\_\_init\_\_.py                                              |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/core/models/common.py                                                    |       51 |        2 |       14 |        0 |     97% |     91-92 |
-| benefits/core/models/enrollment.py                                                |      149 |        1 |       26 |        2 |     98% |153, 246->257 |
+| benefits/core/models/enrollment.py                                                |      165 |        5 |       34 |        3 |     95% |145-148, 165, 258->269, 304 |
 | benefits/core/models/transit.py                                                   |      124 |        0 |       24 |        1 |     99% |  217->221 |
 | benefits/core/recaptcha.py                                                        |       13 |        5 |        4 |        1 |     53% |     26-32 |
 | benefits/core/session.py                                                          |      131 |        3 |       32 |        0 |     98% |     53-55 |
@@ -50,24 +50,26 @@
 | benefits/enrollment/urls.py                                                       |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/views.py                                                      |       47 |        1 |        6 |        1 |     96% |        46 |
 | benefits/enrollment\_littlepay/\_\_init\_\_.py                                    |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_littlepay/admin.py                                           |        6 |        0 |        0 |        0 |    100% |           |
+| benefits/enrollment\_littlepay/admin.py                                           |        7 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/apps.py                                            |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/enrollment.py                                      |       98 |        0 |       26 |        1 |     99% |  166->165 |
 | benefits/enrollment\_littlepay/migrations/0001\_initial.py                        |        7 |        0 |        0 |        0 |    100% |           |
+| benefits/enrollment\_littlepay/migrations/0002\_littlepaygroup.py                 |       18 |        8 |        4 |        1 |     50% |     13-21 |
 | benefits/enrollment\_littlepay/migrations/\_\_init\_\_.py                         |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_littlepay/models.py                                          |       35 |        0 |        8 |        0 |    100% |           |
+| benefits/enrollment\_littlepay/models.py                                          |       37 |        0 |        8 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/session.py                                         |       35 |        0 |        8 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/urls.py                                            |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/views.py                                           |       67 |        5 |       12 |        2 |     89% |32->45, 86-90 |
 | benefits/enrollment\_switchio/\_\_init\_\_.py                                     |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_switchio/admin.py                                            |        6 |        0 |        0 |        0 |    100% |           |
+| benefits/enrollment\_switchio/admin.py                                            |        7 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/api.py                                              |      119 |        0 |        2 |        0 |    100% |           |
 | benefits/enrollment\_switchio/apps.py                                             |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/enrollment.py                                       |       76 |        0 |       16 |        2 |     98% |92->95, 140->137 |
 | benefits/enrollment\_switchio/migrations/0001\_initial.py                         |        8 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/migrations/0002\_switchioconfig\_enrollment\_api.py |        6 |        0 |        0 |        0 |    100% |           |
+| benefits/enrollment\_switchio/migrations/0003\_switchiogroup.py                   |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/migrations/\_\_init\_\_.py                          |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_switchio/models.py                                           |       57 |        0 |       16 |        0 |    100% |           |
+| benefits/enrollment\_switchio/models.py                                           |       59 |        0 |       16 |        0 |    100% |           |
 | benefits/enrollment\_switchio/session.py                                          |       28 |        0 |        6 |        0 |    100% |           |
 | benefits/enrollment\_switchio/urls.py                                             |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/views.py                                            |       91 |        0 |       26 |        2 |     98% |80->91, 88->91 |
@@ -96,7 +98,7 @@
 | benefits/settings.py                                                              |      132 |        7 |       24 |        9 |     90% |106, 127->132, 143->146, 163, 316, 328, 330, 345, 357 |
 | benefits/urls.py                                                                  |       27 |        7 |        4 |        2 |     71% |35->46, 50-64 |
 | benefits/wsgi.py                                                                  |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                                                         **TOTAL** | **2908** |  **122** |  **530** |   **57** | **94%** |           |
+|                                                                         **TOTAL** | **2953** |  **134** |  **542** |   **59** | **94%** |           |
 
 
 ## Setup coverage badge
