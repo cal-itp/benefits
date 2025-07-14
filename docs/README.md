@@ -28,6 +28,7 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 | **Ventura County Transportation Commission**    | 08/2025 (target)    | ✅           | ✅                   | ―             | ―           | ―          |
 | **Roseville Transit**                           | 09/2025 (target)    | ✅           | ✅                   | ―             | ―           | ―          |
 | **El Dorado Transit**                           | 09/2025 (target)    | ✅           | ✅                   | ―             | ―           | ―          |
+| **City of Redding**                             | Planned             | ―            | ―                    | ―             | ―           | ―          |
 
 ## Supported enrollment pathways
 
