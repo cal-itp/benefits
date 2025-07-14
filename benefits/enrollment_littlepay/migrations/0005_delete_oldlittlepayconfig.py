@@ -14,4 +14,8 @@ class Migration(migrations.Migration):
         migrations.DeleteModel(
             name="OldLittlepayConfig",
         ),
+        migrations.RenameModel(
+            old_name="NewLittlepayConfig",
+            new_name="LittlepayConfig",
+        ),
     ]

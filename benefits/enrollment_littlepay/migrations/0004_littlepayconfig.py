@@ -8,7 +8,7 @@ from django.db import migrations, models
 
 def migrate_littlepay_config(apps, schema_editor):
     OldLittlepayConfig = apps.get_model("enrollment_littlepay", "OldLittlepayConfig")
-    LittlepayConfig = apps.get_model("enrollment_littlepay", "LittlepayConfig")
+    LittlepayConfig = apps.get_model("enrollment_littlepay", "NewLittlepayConfig")
 
     for old_config in OldLittlepayConfig.objects.all():
         new_config = LittlepayConfig.objects.create(
@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="LittlepayConfig",
+            name="NewLittlepayConfig",
             fields=[
                 (
                     "transitprocessorconfig_ptr",
