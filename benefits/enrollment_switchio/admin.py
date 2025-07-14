@@ -6,7 +6,7 @@ from benefits.enrollment_switchio import models
 admin.site.register(models.SwitchioGroup)
 
 
-@admin.register(models.SwitchioConfig)
+@admin.register(models.OldSwitchioConfig)
 class SwitchioConfigAdmin(admin.ModelAdmin):
     def has_module_permission(self, request):
         """

@@ -125,7 +125,7 @@ class TransitAgency(models.Model):
         help_text="This agency's TransitProcessor.",
     )
     switchio_config = models.ForeignKey(
-        "enrollment_switchio.SwitchioConfig",
+        "enrollment_switchio.OldSwitchioConfig",
         on_delete=models.PROTECT,
         null=True,
         blank=True,

@@ -18,7 +18,7 @@ from benefits.core.models import (
     Environment,
 )
 from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup
-from benefits.enrollment_switchio.models import SwitchioConfig
+from benefits.enrollment_switchio.models import OldSwitchioConfig
 
 
 def pytest_runtest_setup():
@@ -193,7 +193,7 @@ def model_LittlepayConfig():
 
 @pytest.fixture
 def model_SwitchioConfig(model_PemData):
-    switchio_config = SwitchioConfig.objects.create(
+    switchio_config = OldSwitchioConfig.objects.create(
         environment=Environment.QA,
         tokenization_api_key="api_key",
         tokenization_api_secret_name="apisecret",

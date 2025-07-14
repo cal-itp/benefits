@@ -5,7 +5,7 @@ from benefits.core.models import PemData, SecretNameField, Environment, Enrollme
 from benefits.secrets import get_secret_by_name
 
 
-class SwitchioConfig(models.Model):
+class OldSwitchioConfig(models.Model):
     """Configuration for connecting to Switchio, an entity that applies transit agency fare rules to rider transactions."""
 
     id = models.AutoField(primary_key=True)
