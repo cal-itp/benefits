@@ -9,7 +9,7 @@ from django.urls import reverse
 from benefits.core import context as core_context
 from benefits.eligibility import context as eligibility_context
 from benefits.routes import routes
-from .common import PemData
+from .common import Environment, PemData
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +40,31 @@ class TransitProcessor(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class TransitProcessorConfig(models.Model):
+    id = models.AutoField(primary_key=True)
+    environment = models.TextField(
+        choices=Environment,
+        help_text="A label to indicate which environment this configuration is for.",
+    )
+    agency_slug = models.SlugField(
+        choices=core_context.AgencySlug,
+        help_text="A label to indicate which agency this configuration is for.",
+    )
+    transit_agency = models.OneToOneField(
+        "TransitAgency",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        default=None,
+        help_text="The transit agency that uses this configuration.",
+    )
+
+    def __str__(self):
+        environment_label = Environment(self.environment).label if self.environment else "unknown"
+        agency_slug = self.agency_slug if self.agency_slug else "(no agency)"
+        return f"({environment_label}) {agency_slug}"
 
 
 class TransitAgency(models.Model):
