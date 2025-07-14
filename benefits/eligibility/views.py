@@ -7,10 +7,12 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
+from django.views.generic import TemplateView
 
 from benefits.routes import routes
 from benefits.core import recaptcha, session
 from benefits.core.middleware import AgencySessionRequired, RecaptchaEnabled, FlowSessionRequired
+from benefits.core.mixins import AgencySessionRequiredMixin, FlowSessionRequiredMixin
 from benefits.core.models import EnrollmentFlow
 from . import analytics, forms, verify
 
@@ -129,13 +131,16 @@ def verified(request):
     return redirect(routes.ENROLLMENT_INDEX)
 
 
-@decorator_from_middleware(AgencySessionRequired)
-@decorator_from_middleware(FlowSessionRequired)
-def unverified(request):
-    """View handler for the unverified eligibility page."""
+class UnverifiedView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateView):
+    """CBV for the unverified eligibility page."""
 
-    flow = session.flow(request)
+    template_name = "eligibility/unverified.html"
 
-    analytics.returned_fail(request, flow)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(self.flow.eligibility_unverified_context)
+        return context
 
-    return TemplateResponse(request, "eligibility/unverified.html", flow.eligibility_unverified_context)
+    def get(self, request, *args, **kwargs):
+        analytics.returned_fail(request, self.flow)
+        return super().get(request, *args, **kwargs)
