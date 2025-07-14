@@ -247,7 +247,11 @@ def test_is_within_enrollment_window_equal_expiry_date(mocker):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures(
-    "mocked_api_base_url", "mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow_does_not_support_expiration"
+    "mocked_api_base_url",
+    "mocked_session_agency",
+    "mocked_session_flow",
+    "model_EnrollmentFlow_does_not_support_expiration",
+    "model_LittlepayGroup",
 )
 @pytest.mark.parametrize("status_code", [500, 501, 502, 503, 504])
 def test_enroll_system_error(
@@ -273,7 +277,11 @@ def test_enroll_system_error(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures(
-    "mocked_api_base_url", "mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow_does_not_support_expiration"
+    "mocked_api_base_url",
+    "mocked_session_agency",
+    "mocked_session_flow",
+    "model_EnrollmentFlow_does_not_support_expiration",
+    "model_LittlepayGroup",
 )
 def test_enroll_exception_http_error_400(
     mocker,
@@ -300,7 +308,11 @@ def test_enroll_exception_http_error_400(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures(
-    "mocked_api_base_url", "mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow_does_not_support_expiration"
+    "mocked_api_base_url",
+    "mocked_session_agency",
+    "mocked_session_flow",
+    "model_EnrollmentFlow_does_not_support_expiration",
+    "model_LittlepayGroup",
 )
 def test_enroll_exception_non_http_error(
     mocker,
@@ -321,7 +333,11 @@ def test_enroll_exception_non_http_error(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures(
-    "mocked_api_base_url", "mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow_does_not_support_expiration"
+    "mocked_api_base_url",
+    "mocked_session_agency",
+    "mocked_session_flow",
+    "model_EnrollmentFlow_does_not_support_expiration",
+    "model_LittlepayGroup",
 )
 def test_enroll_success_flow_does_not_support_expiration_customer_already_enrolled_no_expiry(
     mocker,
@@ -348,7 +364,12 @@ def test_enroll_success_flow_does_not_support_expiration_customer_already_enroll
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_api_base_url", "mocked_session_agency", "mocked_session_flow")
+@pytest.mark.usefixtures(
+    "mocked_api_base_url",
+    "mocked_session_agency",
+    "mocked_session_flow",
+    "model_LittlepayGroup",
+)
 def test_enroll_success_flow_does_not_support_expiration_no_expiry(
     mocker,
     app_request,
@@ -370,7 +391,12 @@ def test_enroll_success_flow_does_not_support_expiration_no_expiry(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_api_base_url", "mocked_session_agency", "mocked_session_flow")
+@pytest.mark.usefixtures(
+    "mocked_api_base_url",
+    "mocked_session_agency",
+    "mocked_session_flow",
+    "model_LittlepayGroup",
+)
 def test_enroll_success_flow_supports_expiration(
     mocker,
     app_request,
@@ -395,7 +421,12 @@ def test_enroll_success_flow_supports_expiration(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_api_base_url", "mocked_session_agency", "mocked_session_flow")
+@pytest.mark.usefixtures(
+    "mocked_api_base_url",
+    "mocked_session_agency",
+    "mocked_session_flow",
+    "model_LittlepayGroup",
+)
 def test_enroll_success_flow_supports_expiration_no_expiry(
     mocker,
     app_request,
@@ -426,7 +457,12 @@ def test_enroll_success_flow_supports_expiration_no_expiry(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_api_base_url", "mocked_session_agency", "mocked_session_flow")
+@pytest.mark.usefixtures(
+    "mocked_api_base_url",
+    "mocked_session_agency",
+    "mocked_session_flow",
+    "model_LittlepayGroup",
+)
 def test_enroll_success_flow_supports_expiration_is_expired(
     mocker,
     app_request,
@@ -459,7 +495,12 @@ def test_enroll_success_flow_supports_expiration_is_expired(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_api_base_url", "mocked_session_agency", "mocked_session_flow")
+@pytest.mark.usefixtures(
+    "mocked_api_base_url",
+    "mocked_session_agency",
+    "mocked_session_flow",
+    "model_LittlepayGroup",
+)
 def test_enroll_success_flow_supports_expiration_is_within_reenrollment_window(
     mocker,
     app_request,
@@ -494,7 +535,11 @@ def test_enroll_success_flow_supports_expiration_is_within_reenrollment_window(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures(
-    "mocked_api_base_url", "mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow_supports_expiration"
+    "mocked_api_base_url",
+    "mocked_session_agency",
+    "mocked_session_flow",
+    "model_EnrollmentFlow_supports_expiration",
+    "model_LittlepayGroup",
 )
 def test_enroll_reenrollment_error(
     mocker,
@@ -525,7 +570,11 @@ def test_enroll_reenrollment_error(
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures(
-    "mocked_api_base_url", "mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow_does_not_support_expiration"
+    "mocked_api_base_url",
+    "mocked_session_agency",
+    "mocked_session_flow",
+    "model_EnrollmentFlow_does_not_support_expiration",
+    "model_LittlepayGroup",
 )
 def test_enroll_does_not_support_expiration_has_expiration_date(
     mocker,

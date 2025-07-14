@@ -150,12 +150,61 @@
     }
   },
   {
+    "model": "core.enrollmentgroup",
+    "pk": 1,
+    "fields": { "enrollment_flow": 5 }
+  },
+  {
+    "model": "core.enrollmentgroup",
+    "pk": 2,
+    "fields": { "enrollment_flow": 4 }
+  },
+  {
+    "model": "core.enrollmentgroup",
+    "pk": 3,
+    "fields": { "enrollment_flow": 2 }
+  },
+  {
+    "model": "core.enrollmentgroup",
+    "pk": 4,
+    "fields": { "enrollment_flow": 3 }
+  },
+  {
+    "model": "core.enrollmentgroup",
+    "pk": 5,
+    "fields": { "enrollment_flow": 1 }
+  },
+  {
+    "model": "enrollment_littlepay.littlepaygroup",
+    "pk": 1,
+    "fields": { "group_id": "d106dab3-bb24-42eb-8bbe-38dab3bfa4dc" }
+  },
+  {
+    "model": "enrollment_littlepay.littlepaygroup",
+    "pk": 2,
+    "fields": { "group_id": "c0df1bf1-e5c5-4c25-a25d-86039c83ce52" }
+  },
+  {
+    "model": "enrollment_littlepay.littlepaygroup",
+    "pk": 3,
+    "fields": { "group_id": "4e37871d-3852-4171-a3a4-9d41f2b2276e" }
+  },
+  {
+    "model": "enrollment_littlepay.littlepaygroup",
+    "pk": 4,
+    "fields": { "group_id": "db631fbb-7949-485a-8068-066dd826acac" }
+  },
+  {
+    "model": "enrollment_littlepay.littlepaygroup",
+    "pk": 5,
+    "fields": { "group_id": "30027174-bc59-40bb-935c-3bd9b1c26a63" }
+  },
+  {
     "model": "core.enrollmentflow",
     "pk": 1,
     "fields": {
       "system_name": "senior",
       "label": "Older Adult",
-      "group_id": "group123",
       "display_order": 2,
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_request": "a0b45237-b056-4d25-aebe-d4f2a5fe6bbc",
@@ -171,7 +220,6 @@
     "fields": {
       "system_name": "veteran",
       "label": "U.S. Veteran",
-      "group_id": "group123",
       "display_order": 4,
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_request": "8fa9e649-4de6-4bd6-8eec-f5f47802ceab",
@@ -187,7 +235,6 @@
     "fields": {
       "system_name": "agency_card",
       "label": "Agency Cardholder",
-      "group_id": "group123",
       "display_order": 4,
       "eligibility_api_url": "http://server:8000/verify",
       "eligibility_api_auth_header": "X-Server-API-Key",
@@ -207,7 +254,6 @@
     "fields": {
       "system_name": "calfresh",
       "label": "CalFresh Cardholder",
-      "group_id": "group123",
       "supports_expiration": "True",
       "expiration_days": 5,
       "expiration_reenrollment_days": 3,
@@ -227,7 +273,6 @@
     "fields": {
       "system_name": "medicare",
       "label": "Medicare Cardholder",
-      "group_id": "group123",
       "display_order": 1,
       "oauth_config": "7687895d-c3d6-4063-a26e-518514fb01b2",
       "claims_request": "d27e630b-980c-40ae-9104-a36633bcf7ac",
