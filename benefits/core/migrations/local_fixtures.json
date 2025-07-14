@@ -104,11 +104,23 @@
     }
   },
   {
-    "model": "enrollment_littlepay.littlepayconfig",
+    "model": "core.transitprocessorconfig",
     "pk": 1,
+    "fields": { "environment": "qa", "agency_slug": "cst", "transit_agency": 1 }
+  },
+  {
+    "model": "core.transitprocessorconfig",
+    "pk": 2,
     "fields": {
       "environment": "qa",
       "agency_slug": "cst",
+      "transit_agency": null
+    }
+  },
+  {
+    "model": "enrollment_littlepay.littlepayconfig",
+    "pk": 1,
+    "fields": {
       "audience": "",
       "client_id": "",
       "client_secret_name": "cst-transit-processor-client-secret"
@@ -116,9 +128,8 @@
   },
   {
     "model": "enrollment_switchio.switchioconfig",
-    "pk": 1,
+    "pk": 2,
     "fields": {
-      "environment": "qa",
       "tokenization_api_key": "123",
       "tokenization_api_secret_name": "cst-switchio-api-secret",
       "enrollment_api_authorization_header": "Basic 1234",
@@ -142,7 +153,6 @@
       "eligibility_api_private_key": 2,
       "eligibility_api_public_key": 3,
       "transit_processor": 1,
-      "littlepay_config": 1,
       "staff_group": 2,
       "customer_service_group": 2,
       "logo_large": "agencies/cst-lg.png",
