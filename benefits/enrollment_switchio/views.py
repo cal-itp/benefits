@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views.generic import FormView, View
 import sentry_sdk
 
-from benefits.enrollment_switchio.models import OldSwitchioConfig
+from benefits.enrollment_switchio.models import SwitchioConfig
 from benefits.routes import routes
 from benefits.core import models, session
 from benefits.core.mixins import EligibleSessionRequiredMixin, AgencySessionRequiredMixin
@@ -131,9 +131,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
                 data = {"redirect": redirect}
                 return JsonResponse(data)
 
-    def _request_registration(
-        self, request: HttpRequest, switchio_config: OldSwitchioConfig, session: Session
-    ) -> JsonResponse:
+    def _request_registration(self, request: HttpRequest, switchio_config: SwitchioConfig, session: Session) -> JsonResponse:
         response = request_registration(request, switchio_config)
 
         if response.status is Status.SUCCESS:

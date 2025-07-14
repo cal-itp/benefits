@@ -2,12 +2,12 @@ from django.forms import ValidationError
 import pytest
 
 from benefits.core.models import Environment
-from benefits.enrollment_switchio.models import OldSwitchioConfig
+from benefits.enrollment_switchio.models import SwitchioConfig
 
 
 @pytest.mark.django_db
 def test_SwitchioConfig_defaults():
-    switchio_config = OldSwitchioConfig.objects.create(environment="qa")
+    switchio_config = SwitchioConfig.objects.create(environment="qa")
 
     assert switchio_config.environment == "qa"
     assert switchio_config.tokenization_api_key == ""
@@ -29,7 +29,7 @@ def test_SwitchioConfig_str(model_SwitchioConfig):
 
 @pytest.mark.django_db
 def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
-    switchio_config = OldSwitchioConfig.objects.create(
+    switchio_config = SwitchioConfig.objects.create(
         environment="qa",
     )
     switchio_config.transitagency = model_TransitAgency_inactive
@@ -44,7 +44,7 @@ def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
 
 @pytest.mark.django_db
 def test_SwitchioConfig_clean_create_from_agency():
-    switchio_config = OldSwitchioConfig.objects.create(environment="qa")
+    switchio_config = SwitchioConfig.objects.create(environment="qa")
     switchio_config.pk = None  # simulate admin form behavior, where we're creating the object from the TransitAgency.
 
     # test fails if clean() fails
@@ -53,7 +53,7 @@ def test_SwitchioConfig_clean_create_from_agency():
 
 @pytest.mark.django_db
 def test_SwitchioConfig_clean(model_TransitAgency_inactive):
-    switchio_config = OldSwitchioConfig.objects.create(environment="qa")
+    switchio_config = SwitchioConfig.objects.create(environment="qa")
     switchio_config.save()
 
     model_TransitAgency_inactive.switchio_config = switchio_config
@@ -89,7 +89,7 @@ def test_SwitchioConfig_clean(model_TransitAgency_inactive):
     [("qa", "switchio-qa-tokenization-api-base-url"), ("prod", "switchio-prod-tokenization-api-base-url")],
 )
 def test_SwitchioConfig_tokenization_api_base_url(mocker, environment, secret_name):
-    switchio_config = OldSwitchioConfig.objects.create(environment=environment)
+    switchio_config = SwitchioConfig.objects.create(environment=environment)
     mocked_get_secret_by_name = mocker.patch(
         "benefits.enrollment_switchio.models.get_secret_by_name", return_value="secret url"
     )
@@ -105,7 +105,7 @@ def test_SwitchioConfig_tokenization_api_base_url(mocker, environment, secret_na
     [("qa", "switchio-qa-enrollment-api-base-url"), ("prod", "switchio-prod-enrollment-api-base-url")],
 )
 def test_SwitchioConfig_enrollment_api_base_url(mocker, environment, secret_name):
-    switchio_config = OldSwitchioConfig.objects.create(environment=environment)
+    switchio_config = SwitchioConfig.objects.create(environment=environment)
     mocked_get_secret_by_name = mocker.patch(
         "benefits.enrollment_switchio.models.get_secret_by_name", return_value="secret url"
     )
@@ -118,7 +118,7 @@ def test_SwitchioConfig_enrollment_api_base_url(mocker, environment, secret_name
 @pytest.mark.django_db
 def test_SwitchioConfig_tokenization_api_base_url_unexpected_environment():
     environment = "unexpected-thiswillneverexist"
-    switchio_config = OldSwitchioConfig.objects.create(environment=environment)
+    switchio_config = SwitchioConfig.objects.create(environment=environment)
 
     with pytest.raises(ValueError, match=f"Unexpected value for environment: {environment}"):
         switchio_config.tokenization_api_base_url
@@ -127,7 +127,7 @@ def test_SwitchioConfig_tokenization_api_base_url_unexpected_environment():
 @pytest.mark.django_db
 def test_SwitchioConfig_enrollment_api_base_url_unexpected_environment():
     environment = "unexpected-thiswillneverexist"
-    switchio_config = OldSwitchioConfig.objects.create(environment=environment)
+    switchio_config = SwitchioConfig.objects.create(environment=environment)
 
     with pytest.raises(ValueError, match=f"Unexpected value for environment: {environment}"):
         switchio_config.enrollment_api_base_url

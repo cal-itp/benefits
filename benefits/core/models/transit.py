@@ -124,14 +124,6 @@ class TransitAgency(models.Model):
         default=None,
         help_text="This agency's TransitProcessor.",
     )
-    switchio_config = models.ForeignKey(
-        "enrollment_switchio.OldSwitchioConfig",
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        default=None,
-        help_text="The Switchio configuration used by this agency for enrollment.",
-    )
     staff_group = models.OneToOneField(
         Group,
         on_delete=models.PROTECT,

@@ -6,7 +6,7 @@ from django.urls import reverse
 from requests import HTTPError
 
 from benefits.enrollment.enrollment import Status
-from benefits.enrollment_switchio.models import OldSwitchioConfig
+from benefits.enrollment_switchio.models import SwitchioConfig
 from benefits.routes import routes
 from benefits.enrollment_switchio.api import (
     TokenizationClient,
@@ -44,7 +44,7 @@ class Token:
     par: str = None
 
 
-def request_registration(request, switchio_config: OldSwitchioConfig) -> RegistrationResponse:
+def request_registration(request, switchio_config: SwitchioConfig) -> RegistrationResponse:
     try:
         client = TokenizationClient(
             api_url=switchio_config.tokenization_api_base_url,
@@ -95,7 +95,7 @@ def _generate_redirect_uri(request: HttpRequest, redirect_path: str):
     return redirect_uri
 
 
-def get_registration_status(switchio_config: OldSwitchioConfig, registration_id: str) -> RegistrationStatusResponse:
+def get_registration_status(switchio_config: SwitchioConfig, registration_id: str) -> RegistrationStatusResponse:
     try:
         client = TokenizationClient(
             api_url=switchio_config.tokenization_api_base_url,
