@@ -136,12 +136,18 @@ class EnrollmentFlow(models.Model):
 
     @property
     def group_id(self):
-        enrollment_group = self.enrollmentgroup
+        if hasattr(self, "enrollmentgroup"):
+            enrollment_group = self.enrollmentgroup
 
-        if hasattr(enrollment_group, "littlepaygroup"):
-            return str(enrollment_group.littlepaygroup.group_id)
-        elif hasattr(enrollment_group, "switchiogroup"):
-            return enrollment_group.switchiogroup.group_id
+            # these are the class names for models in enrollment_littlepay and enrollment_switchio
+            if hasattr(enrollment_group, "littlepaygroup"):
+                return str(enrollment_group.littlepaygroup.group_id)
+            elif hasattr(enrollment_group, "switchiogroup"):
+                return enrollment_group.switchiogroup.group_id
+            else:
+                return None
+        else:
+            return None
 
     @property
     def agency_card_name(self):
@@ -259,6 +265,11 @@ class EnrollmentFlow(models.Model):
                     errors.append(
                         ValidationError(f"{self.system_name} not configured for In-person. Please uncheck to continue.")
                     )
+
+            if self.transit_agency.active and self.group_id is None:
+                errors.append(
+                    ValidationError(f"{self.system_name} needs either a LittlepayGroup or SwitchioGroup linked to it.")
+                )
 
         if errors:
             raise ValidationError(errors)

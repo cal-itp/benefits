@@ -180,6 +180,17 @@ def test_EnrollmentFlow_clean_in_person_eligibility_context_not_found(model_Enro
 
 
 @pytest.mark.django_db
+def test_EnrollmentFlow_clean_group_id(model_EnrollmentFlow):
+    assert not hasattr(model_EnrollmentFlow, "enrollmentgroup")
+
+    with pytest.raises(
+        ValidationError,
+        match=f"{model_EnrollmentFlow.system_name} needs either a LittlepayGroup or SwitchioGroup linked to it.",
+    ):
+        model_EnrollmentFlow.clean()
+
+
+@pytest.mark.django_db
 def test_EnrollmentEvent_create(model_TransitAgency, model_EnrollmentFlow):
     ts = timezone.now()
     event = EnrollmentEvent.objects.create(
