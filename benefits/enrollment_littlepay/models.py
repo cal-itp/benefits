@@ -6,7 +6,7 @@ from benefits.core.models import SecretNameField, Environment, EnrollmentGroup
 from benefits.secrets import get_secret_by_name
 
 
-class LittlepayConfig(models.Model):
+class OldLittlepayConfig(models.Model):
     """Configuration for connecting to Littlepay, an entity that applies transit agency fare rules to rider transactions."""
 
     id = models.AutoField(primary_key=True)

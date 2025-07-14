@@ -100,7 +100,7 @@ class TransitAgency(models.Model):
         help_text="This agency's TransitProcessor.",
     )
     littlepay_config = models.OneToOneField(
-        "enrollment_littlepay.LittlepayConfig",
+        "enrollment_littlepay.OldLittlepayConfig",
         on_delete=models.PROTECT,
         null=True,
         blank=True,

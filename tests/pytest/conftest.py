@@ -17,7 +17,7 @@ from benefits.core.models import (
     TransitAgency,
     Environment,
 )
-from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup
+from benefits.enrollment_littlepay.models import OldLittlepayConfig, LittlepayGroup
 from benefits.enrollment_switchio.models import SwitchioConfig
 
 
@@ -180,7 +180,7 @@ def model_TransitProcessor():
 
 @pytest.fixture
 def model_LittlepayConfig():
-    littlepay_config = LittlepayConfig.objects.create(
+    littlepay_config = OldLittlepayConfig.objects.create(
         environment=Environment.QA,
         agency_slug="cst",
         client_id="client_id",

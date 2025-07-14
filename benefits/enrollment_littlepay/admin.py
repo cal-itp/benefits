@@ -5,7 +5,7 @@ from benefits.enrollment_littlepay import models
 admin.site.register(models.LittlepayGroup)
 
 
-@admin.register(models.LittlepayConfig)
+@admin.register(models.OldLittlepayConfig)
 class LittlepayConfigAdmin(admin.ModelAdmin):
     def has_module_permission(self, request):
         """

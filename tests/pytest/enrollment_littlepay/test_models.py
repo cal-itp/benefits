@@ -2,12 +2,12 @@ from django.forms import ValidationError
 import pytest
 
 from benefits.core.models import Environment
-from benefits.enrollment_littlepay.models import LittlepayConfig
+from benefits.enrollment_littlepay.models import OldLittlepayConfig
 
 
 @pytest.mark.django_db
 def test_LittlepayConfig_defaults():
-    littlepay_config = LittlepayConfig.objects.create(environment="qa", agency_slug="cst")
+    littlepay_config = OldLittlepayConfig.objects.create(environment="qa", agency_slug="cst")
 
     assert littlepay_config.environment == "qa"
     assert littlepay_config.agency_slug == "cst"
@@ -27,7 +27,7 @@ def test_LittlepayConfig_str(model_LittlepayConfig):
 
 @pytest.mark.django_db
 def test_LittlepayConfig_clean_inactive_agency(model_TransitAgency_inactive):
-    littlepay_config = LittlepayConfig.objects.create(environment="qa", agency_slug="cst")
+    littlepay_config = OldLittlepayConfig.objects.create(environment="qa", agency_slug="cst")
     littlepay_config.transitagency = model_TransitAgency_inactive
     littlepay_config.save()
 
@@ -40,7 +40,7 @@ def test_LittlepayConfig_clean_inactive_agency(model_TransitAgency_inactive):
 
 @pytest.mark.django_db
 def test_LittlepayConfig_clean(model_TransitAgency_inactive):
-    littlepay_config = LittlepayConfig.objects.create(environment="qa", agency_slug="cst")
+    littlepay_config = OldLittlepayConfig.objects.create(environment="qa", agency_slug="cst")
     littlepay_config.transitagency = model_TransitAgency_inactive
     littlepay_config.save()
 
@@ -71,7 +71,7 @@ def test_LittlepayConfig_clean(model_TransitAgency_inactive):
     "environment, secret_name", [("qa", "littlepay-qa-api-base-url"), ("prod", "littlepay-prod-api-base-url")]
 )
 def test_LittlepayConfig_api_base_url(mocker, environment, secret_name):
-    littlepay_config = LittlepayConfig.objects.create(environment=environment)
+    littlepay_config = OldLittlepayConfig.objects.create(environment=environment)
     mocked_get_secret_by_name = mocker.patch(
         "benefits.enrollment_littlepay.models.get_secret_by_name", return_value="secret url"
     )
@@ -84,7 +84,7 @@ def test_LittlepayConfig_api_base_url(mocker, environment, secret_name):
 @pytest.mark.django_db
 def test_LittlepayConfig_api_base_url_unexpected_environment():
     environment = "unexpected-thiswillneverexist"
-    littlepay_config = LittlepayConfig.objects.create(environment=environment)
+    littlepay_config = OldLittlepayConfig.objects.create(environment=environment)
 
     with pytest.raises(ValueError, match=f"Unexpected value for environment: {environment}"):
         littlepay_config.api_base_url
