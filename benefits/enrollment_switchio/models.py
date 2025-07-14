@@ -13,10 +13,22 @@ class SwitchioConfig(models.Model):
         choices=Environment,
         help_text="A label to indicate which environment this configuration is for.",
     )
-    api_key = models.TextField(help_text="The API key used to access the Switchio API.", default="", blank=True)
-    api_secret_name = SecretNameField(
-        help_text="The name of the secret containing the api_secret value used to access the Switchio API.",  # noqa: E501
+    tokenization_api_key = models.TextField(
+        help_text="The API key used to access the Switchio API for tokenization.", default="", blank=True
+    )
+    tokenization_api_secret_name = SecretNameField(
+        help_text="The name of the secret containing the api_secret value used to access the Switchio API for tokenization.",  # noqa: E501
         default="",
+        blank=True,
+    )
+    enrollment_api_authorization_header = models.TextField(
+        help_text="The value to use for the 'Authorization' header when accessing the Switchio API for enrollment.",
+        default="",
+        blank=True,
+    )
+    pto_id = models.PositiveIntegerField(
+        help_text="The Public Transport Operator ID to use with the Switchio API for enrollment.",
+        default=0,
         blank=True,
     )
     client_certificate = models.ForeignKey(
@@ -48,17 +60,26 @@ class SwitchioConfig(models.Model):
     )
 
     @property
-    def api_base_url(self):
+    def tokenization_api_base_url(self):
         if self.environment == Environment.QA.value:
-            return get_secret_by_name("switchio-qa-api-base-url")
+            return get_secret_by_name("switchio-qa-tokenization-api-base-url")
         elif self.environment == Environment.PROD.value:
-            return get_secret_by_name("switchio-prod-api-base-url")
+            return get_secret_by_name("switchio-prod-tokenization-api-base-url")
         else:
             raise ValueError(f"Unexpected value for environment: {self.environment}")
 
     @property
-    def api_secret(self):
-        secret_field = self._meta.get_field("api_secret_name")
+    def enrollment_api_base_url(self):
+        if self.environment == Environment.QA.value:
+            return get_secret_by_name("switchio-qa-enrollment-api-base-url")
+        elif self.environment == Environment.PROD.value:
+            return get_secret_by_name("switchio-prod-enrollment-api-base-url")
+        else:
+            raise ValueError(f"Unexpected value for environment: {self.environment}")
+
+    @property
+    def tokenization_api_secret(self):
+        secret_field = self._meta.get_field("tokenization_api_secret_name")
         return secret_field.secret_value(self)
 
     @property
@@ -89,8 +110,10 @@ class SwitchioConfig(models.Model):
         if used_by_active_agency:
             message = "This field is required when this configuration is referenced by an active transit agency."
             needed = dict(
-                api_key=self.api_key,
-                api_secret_name=self.api_secret_name,
+                tokenization_api_key=self.tokenization_api_key,
+                tokenization_api_secret_name=self.tokenization_api_secret_name,
+                enrollment_api_authorization_header=self.enrollment_api_authorization_header,
+                pto_id=self.pto_id,
                 client_certificate=self.client_certificate,
                 ca_certificate=self.ca_certificate,
                 private_key=self.private_key,
