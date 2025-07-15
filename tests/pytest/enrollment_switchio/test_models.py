@@ -22,7 +22,7 @@ def test_SwitchioConfig_defaults():
 
 @pytest.mark.django_db
 def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
-    switchio_config = SwitchioConfig.objects.create(environment="qa", agency_slug="cst")
+    switchio_config = SwitchioConfig.objects.create(environment="qa")
     switchio_config.transit_agency = model_TransitAgency_inactive
     switchio_config.save()
 
@@ -35,7 +35,7 @@ def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
 
 @pytest.mark.django_db
 def test_SwitchioConfig_clean(model_TransitAgency_inactive):
-    switchio_config = SwitchioConfig.objects.create(environment="qa", agency_slug="cst")
+    switchio_config = SwitchioConfig.objects.create(environment="qa")
     switchio_config.transit_agency = model_TransitAgency_inactive
     switchio_config.save()
 

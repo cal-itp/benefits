@@ -6,10 +6,9 @@ from benefits.enrollment_littlepay.models import LittlepayConfig
 
 @pytest.mark.django_db
 def test_LittlepayConfig_defaults():
-    littlepay_config = LittlepayConfig.objects.create(environment="qa", agency_slug="cst")
+    littlepay_config = LittlepayConfig.objects.create(environment="qa")
 
     assert littlepay_config.environment == "qa"
-    assert littlepay_config.agency_slug == "cst"
     assert littlepay_config.audience == ""
     assert littlepay_config.client_id == ""
     assert littlepay_config.client_secret_name == ""
@@ -19,7 +18,7 @@ def test_LittlepayConfig_defaults():
 
 @pytest.mark.django_db
 def test_LittlepayConfig_clean_inactive_agency(model_TransitAgency_inactive):
-    littlepay_config = LittlepayConfig.objects.create(environment="qa", agency_slug="cst")
+    littlepay_config = LittlepayConfig.objects.create(environment="qa")
     littlepay_config.transit_agency = model_TransitAgency_inactive
     littlepay_config.save()
 
@@ -32,7 +31,7 @@ def test_LittlepayConfig_clean_inactive_agency(model_TransitAgency_inactive):
 
 @pytest.mark.django_db
 def test_LittlepayConfig_clean(model_TransitAgency_inactive):
-    littlepay_config = LittlepayConfig.objects.create(environment="qa", agency_slug="cst")
+    littlepay_config = LittlepayConfig.objects.create(environment="qa")
     littlepay_config.transit_agency = model_TransitAgency_inactive
     littlepay_config.save()
 

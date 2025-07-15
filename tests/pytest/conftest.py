@@ -183,7 +183,6 @@ def model_LittlepayConfig(model_TransitAgency):
     littlepay_config = LittlepayConfig.objects.create(
         transit_agency=model_TransitAgency,
         environment=Environment.QA,
-        agency_slug="cst",
         client_id="client_id",
         client_secret_name="client_secret_name",
         audience="audience",
@@ -197,7 +196,6 @@ def model_SwitchioConfig(model_PemData, model_TransitAgency):
     switchio_config = SwitchioConfig.objects.create(
         transit_agency=model_TransitAgency,
         environment=Environment.QA,
-        agency_slug="cst",
         tokenization_api_key="api_key",
         tokenization_api_secret_name="apisecret",
         client_certificate=model_PemData,

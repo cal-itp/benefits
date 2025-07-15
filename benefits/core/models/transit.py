@@ -48,10 +48,6 @@ class TransitProcessorConfig(models.Model):
         choices=Environment,
         help_text="A label to indicate which environment this configuration is for.",
     )
-    agency_slug = models.SlugField(
-        choices=core_context.AgencySlug,
-        help_text="A label to indicate which agency this configuration is for.",
-    )
     transit_agency = models.OneToOneField(
         "TransitAgency",
         on_delete=models.PROTECT,
@@ -63,7 +59,7 @@ class TransitProcessorConfig(models.Model):
 
     def __str__(self):
         environment_label = Environment(self.environment).label if self.environment else "unknown"
-        agency_slug = self.agency_slug if self.agency_slug else "(no agency)"
+        agency_slug = self.transit_agency.slug if self.transit_agency else "(no agency)"
         return f"({environment_label}) {agency_slug}"
 
 

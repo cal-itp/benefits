@@ -19,10 +19,10 @@ def test_TransitProcessor_str(model_TransitProcessor):
 
 
 @pytest.mark.django_db
-def test_TransitProcessorConfig_str():
-    transit_processor_config = TransitProcessorConfig.objects.create(environment="qa", agency_slug="cst")
+def test_TransitProcessorConfig_str(model_TransitAgency):
+    transit_processor_config = TransitProcessorConfig.objects.create(environment="qa", transit_agency=model_TransitAgency)
     environment_label = Environment(transit_processor_config.environment).label
-    agency_slug = transit_processor_config.agency_slug
+    agency_slug = transit_processor_config.transit_agency.slug
     assert str(transit_processor_config) == f"({environment_label}) {agency_slug}"
 
 

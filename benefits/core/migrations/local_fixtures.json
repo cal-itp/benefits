@@ -106,14 +106,13 @@
   {
     "model": "core.transitprocessorconfig",
     "pk": 1,
-    "fields": { "environment": "qa", "agency_slug": "cst", "transit_agency": 1 }
+    "fields": { "environment": "qa", "transit_agency": 1 }
   },
   {
     "model": "core.transitprocessorconfig",
     "pk": 2,
     "fields": {
       "environment": "qa",
-      "agency_slug": "cst",
       "transit_agency": null
     }
   },
