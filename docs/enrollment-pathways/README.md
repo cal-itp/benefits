@@ -49,11 +49,11 @@ timeline
         : Deploy in-person enrollments
         : Utilize CDT Identity Gateway connection library
 
-          Q2<br>Now
+          Q2<br>Complete
         : Support for multiple transit processors (Enghouse)
         : Enhanced Veteran eligibility checks (disability status)
 
-          Q3<br>Next
+          Q3<br>Now
         : Support for additional identity provider
         : Benefits admin tool (user management)
         : Benefits admin tool (agency configuration)
