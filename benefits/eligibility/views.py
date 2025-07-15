@@ -75,9 +75,11 @@ def start(request):
 def confirm(request):
     """View handler for the eligibility verification form."""
 
+    verified_view = VerifiedView()
+
     # GET from an already verified user, no need to verify again
     if request.method == "GET" and session.eligible(request):
-        return verified(request)
+        return verified_view.setup_and_dispatch(request)
 
     agency = session.agency(request)
     flow = session.flow(request)
@@ -116,7 +118,7 @@ def confirm(request):
             return redirect(routes.ELIGIBILITY_UNVERIFIED)
         # type was verified
         else:
-            return verified(request)
+            return verified_view.setup_and_dispatch(request)
 
 
 class VerifiedView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, RedirectView):
