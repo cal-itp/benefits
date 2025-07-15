@@ -3,13 +3,8 @@ from django.urls import reverse
 
 import pytest
 
-from benefits.routes import routes
-from benefits.core import session
 from benefits.core.middleware import TEMPLATE_USER_ERROR
-from benefits.oauth.views import (
-    TEMPLATE_SYSTEM_ERROR,
-    system_error,
-)
+from benefits.oauth.views import SystemErrorView
 
 
 @pytest.mark.django_db
@@ -32,21 +27,22 @@ def test_url_path_no_session_flow(client, route):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency")
-def test_system_error(app_request, model_TransitAgency):
-    origin = reverse(routes.ELIGIBILITY_START)
-    session.update(app_request, origin=origin)
+class TestSystemErrorView:
+    @pytest.fixture
+    def view(self, app_request):
+        v = SystemErrorView()
+        v.setup(app_request)
+        return v
 
-    result = system_error(app_request)
+    def test_view(self, view):
+        assert view.template_name == "oauth/system_error.html"
 
-    assert result.status_code == 200
-    assert result.template_name == TEMPLATE_SYSTEM_ERROR
-    assert session.origin(app_request) == model_TransitAgency.index_url
+    @pytest.mark.usefixtures("mocked_session_agency")
+    def test_get(self, mocker, view, app_request, model_TransitAgency, mocked_session_update):
+        # spy on the call to get() but call dispatch() like a real request
+        spy = mocker.spy(view, "get")
+        response = view.dispatch(app_request)
 
-
-@pytest.mark.django_db
-def test_system_error_no_agency(app_request):
-    result = system_error(app_request)
-
-    assert result.status_code == 200
-    assert result.template_name == TEMPLATE_USER_ERROR
+        spy.assert_called_once()
+        assert response.status_code == 200
+        mocked_session_update.assert_called_once_with(app_request, origin=model_TransitAgency.index_url)
