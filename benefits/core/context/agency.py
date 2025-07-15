@@ -11,6 +11,7 @@ class AgencySlug(models.TextChoices):
     NEVCO = "nevco", "nevco"
     SACRT = "sacrt", "sacrt"
     SBMTD = "sbmtd", "sbmtd"
+    VENTURA = "ventura", "ventura"
 
 
 @dataclass
