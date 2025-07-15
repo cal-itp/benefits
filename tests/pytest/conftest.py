@@ -45,6 +45,25 @@ def app_request(rf):
 
 
 @pytest.fixture
+def app_request_post(rf):
+    """
+    Fixture creates and initializes a new Django POST request object similar to a real application request.
+    """
+    # create a request for the path, initialize
+    app_request = rf.post("/some/arbitrary/path")
+
+    # https://stackoverflow.com/a/55530933/358804
+    middleware = [SessionMiddleware(lambda x: x), LocaleMiddleware(lambda x: x)]
+    for m in middleware:
+        m.process_request(app_request)
+
+    app_request.session.save()
+    session.reset(app_request)
+
+    return app_request
+
+
+@pytest.fixture
 def model_User():
     return User.objects.create(is_active=True, is_staff=True, first_name="Test", last_name="User")
 

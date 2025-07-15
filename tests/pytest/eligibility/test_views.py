@@ -326,6 +326,38 @@ def test_confirm_post_valid_form_eligibility_verified(
 
 
 @pytest.mark.django_db
+class TestVerifiedView:
+    @pytest.fixture
+    def view(self, app_request, mocked_eligibility_request_session):
+        v = views.VerifiedView()
+        v.setup(app_request)
+        return v
+
+    def test_get_redirect_url(self, view):
+        assert view.get_redirect_url() == reverse(routes.ENROLLMENT_INDEX)
+
+    def test_post(self, mocker, view, app_request_post, mocked_session_update, mocked_analytics_module):
+        # spy on the call to post() but call dispatch() like a real request
+        spy = mocker.spy(view, "post")
+        response = view.dispatch(app_request_post)
+
+        spy.assert_called_once()
+        assert response.status_code == 302
+        mocked_session_update.assert_called_once_with(app_request_post, eligible=True)
+        mocked_analytics_module.returned_success.assert_called_once()
+
+    def test_setup_and_dispatch(self, mocker, view, app_request_post):
+        spy_setup = mocker.spy(view, "setup")
+        spy_dispatch = mocker.spy(view, "dispatch")
+
+        response = view.setup_and_dispatch(app_request_post)
+
+        spy_setup.assert_called_once_with(app_request_post)
+        spy_dispatch.assert_called_once_with(app_request_post)
+        assert response.status_code == 302
+
+
+@pytest.mark.django_db
 class TestUnverifiedView:
     @pytest.fixture
     def view(self, app_request, mocked_eligibility_request_session):
