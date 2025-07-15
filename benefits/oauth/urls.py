@@ -23,5 +23,5 @@ urlpatterns = [
     path(Routes.cancel, decorator(cdt_identity_views.cancel), kwargs, name=Routes.cancel),
     path(Routes.logout, decorator(cdt_identity_views.logout), kwargs, name=Routes.logout),
     path(Routes.post_logout, decorator(cdt_identity_views.post_logout), kwargs, name=Routes.post_logout),
-    path("error", views.system_error, name=routes.name(routes.OAUTH_SYSTEM_ERROR)),
+    path("error", views.SystemErrorView.as_view(), name=routes.name(routes.OAUTH_SYSTEM_ERROR)),
 ]

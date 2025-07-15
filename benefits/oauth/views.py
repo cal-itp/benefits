@@ -1,22 +1,15 @@
-import logging
-from django.template.response import TemplateResponse
-from django.utils.decorators import decorator_from_middleware
+from django.views.generic import TemplateView
 
 from benefits.core import session
-from benefits.core.middleware import AgencySessionRequired
+from benefits.core.mixins import AgencySessionRequiredMixin
 
 
-logger = logging.getLogger(__name__)
+class SystemErrorView(AgencySessionRequiredMixin, TemplateView):
+    """CBV for an oauth system error."""
 
-TEMPLATE_SYSTEM_ERROR = "oauth/system_error.html"
+    template_name = "oauth/system_error.html"
 
-
-@decorator_from_middleware(AgencySessionRequired)
-def system_error(request):
-    """View handler for an oauth system error."""
-
-    # overwrite origin so that CTA takes user to agency index
-    agency = session.agency(request)
-    session.update(request, origin=agency.index_url)
-
-    return TemplateResponse(request, TEMPLATE_SYSTEM_ERROR)
+    def get(self, request, *args, **kwargs):
+        # overwrite origin so that CTA takes user to agency index
+        session.update(request, origin=self.agency.index_url)
+        return super().get(request, *args, **kwargs)
