@@ -7,14 +7,12 @@ from benefits.routes import routes
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 import benefits.core.session
 from benefits.eligibility.forms import EnrollmentFlowSelectionForm, EligibilityVerificationForm
-from benefits.eligibility.views import TEMPLATE_CONFIRM
-
-import benefits.eligibility.views
+import benefits.eligibility.views as views
 
 
 @pytest.fixture
 def mocked_analytics_module(mocked_analytics_module):
-    return mocked_analytics_module(benefits.eligibility.views)
+    return mocked_analytics_module(views)
 
 
 @pytest.fixture
@@ -246,7 +244,7 @@ def test_confirm_get_unverified(mocker, client):
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_CONFIRM
+    assert response.template_name == views.TEMPLATE_CONFIRM
 
 
 @pytest.mark.django_db
@@ -268,20 +266,20 @@ def test_confirm_post_invalid_form(client, invalid_form_data, mocked_analytics_m
 
     mocked_analytics_module.started_eligibility.assert_called_once()
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_CONFIRM
+    assert response.template_name == views.TEMPLATE_CONFIRM
 
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_analytics_module", "mocked_eligibility_auth_request", "model_EnrollmentFlow_with_form_class")
 def test_confirm_post_recaptcha_fail(mocker, client, invalid_form_data):
     mocker.patch("benefits.eligibility.views.recaptcha.has_error", return_value=True)
-    messages = mocker.spy(benefits.eligibility.views, "messages")
+    messages = mocker.spy(views, "messages")
 
     path = reverse(routes.ELIGIBILITY_CONFIRM)
     response = client.post(path, invalid_form_data)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_CONFIRM
+    assert response.template_name == views.TEMPLATE_CONFIRM
     messages.error.assert_called_once()
 
 
@@ -295,7 +293,7 @@ def test_confirm_post_valid_form_eligibility_error(mocker, client, form_data, mo
 
     mocked_analytics_module.returned_error.assert_called_once()
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_CONFIRM
+    assert response.template_name == views.TEMPLATE_CONFIRM
 
 
 @pytest.mark.django_db
@@ -328,12 +326,33 @@ def test_confirm_post_valid_form_eligibility_verified(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_request_session")
-def test_unverified(client, mocked_analytics_module):
-    path = reverse(routes.ELIGIBILITY_UNVERIFIED)
+class TestUnverifiedView:
+    @pytest.fixture
+    def view(self, app_request, mocked_eligibility_request_session):
+        v = views.UnverifiedView()
+        v.setup(app_request)
+        return v
 
-    response = client.get(path)
+    def test_view(self, view):
+        assert view.template_name == "eligibility/unverified.html"
 
-    mocked_analytics_module.returned_fail.assert_called_once()
-    assert response.status_code == 200
-    assert response.template_name == "eligibility/unverified.html"
+    def test_get_context_data__dispatched(self, view, app_request, model_EnrollmentFlow):
+        view.dispatch(app_request)
+
+        ctx = view.get_context_data()
+
+        for key, value in model_EnrollmentFlow.eligibility_unverified_context.items():
+            assert ctx[key] == value
+
+    def test_get_context_data__not_dispatched(self, view, model_EnrollmentFlow):
+        with pytest.raises(AttributeError, match="object has no attribute 'flow'"):
+            view.get_context_data()
+
+    def test_get(self, mocker, view, app_request, mocked_analytics_module):
+        # spy on the call to get() but call dispatch() like a real request
+        spy = mocker.spy(view, "get")
+        response = view.dispatch(app_request)
+
+        spy.assert_called_once()
+        assert response.status_code == 200
+        mocked_analytics_module.returned_fail.assert_called_once()
