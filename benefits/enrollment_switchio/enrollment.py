@@ -5,10 +5,12 @@ from django.http import HttpRequest
 from django.urls import reverse
 from requests import HTTPError
 
+from benefits.core.models.enrollment import EnrollmentFlow
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_switchio.models import SwitchioConfig
 from benefits.routes import routes
 from benefits.enrollment_switchio.api import (
+    EnrollmentClient,
     TokenizationClient,
     EshopResponseMode,
     Registration,
@@ -141,3 +143,68 @@ def get_latest_active_token_value(tokens):
                 latest_active_token = token
 
     return latest_active_token.token if latest_active_token else ""
+
+
+def enroll(switchio_config: SwitchioConfig, flow: EnrollmentFlow, token: str) -> tuple[Status, Exception]:
+    client = EnrollmentClient(
+        api_url=switchio_config.enrollment_api_base_url,
+        authorization_header_value=switchio_config.enrollment_api_authorization_header,
+        private_key=switchio_config.private_key_data,
+        client_certificate=switchio_config.client_certificate_data,
+        ca_certificate=switchio_config.ca_certificate_data,
+    )
+
+    pto_id = switchio_config.pto_id
+    group_id = flow.group_id
+
+    exception = None
+    try:
+        group = _get_group_for_token(client, pto_id, group_id, token)
+        already_enrolled = group is not None
+
+        if not flow.supports_expiration:
+            if not already_enrolled:
+                # enroll user with no expiration date, return success
+                client.add_group_to_token(
+                    pto_id=pto_id,
+                    group_id=group_id,
+                    token=token,
+                    timeout=settings.REQUESTS_TIMEOUT,
+                )
+                status = Status.SUCCESS
+            else:  # already enrolled
+                if group.expiresAt is None:
+                    # no action, return success
+                    status = Status.SUCCESS
+                else:
+                    # remove expiration date, return success
+                    # (when you don't include an expiration date, Switchio will set the expiration date to null.)
+                    client.add_group_to_token(
+                        pto_id=pto_id,
+                        group_id=group_id,
+                        token=token,
+                        timeout=settings.REQUESTS_TIMEOUT,
+                    )
+                    status = Status.SUCCESS
+    except HTTPError as e:
+        if e.response.status_code >= 500:
+            status = Status.SYSTEM_ERROR
+            exception = e
+        else:
+            status = Status.EXCEPTION
+            exception = Exception(f"{e}: {e.response.json()}")
+    except Exception as e:
+        status = Status.EXCEPTION
+        exception = e
+
+    return status, exception
+
+
+def _get_group_for_token(client: EnrollmentClient, pto_id, group_id, token):
+    already_enrolled_groups = client.get_groups_for_token(pto_id=pto_id, token=token)
+
+    for group in already_enrolled_groups:
+        if group.group == group_id:
+            return group
+
+    return None
