@@ -29,7 +29,7 @@ def mocked_sentry_sdk_module(mocker):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible", "model_LittlepayConfig")
 def test_index_eligible_get_littlepay(client):
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.get(path)
@@ -39,13 +39,8 @@ def test_index_eligible_get_littlepay(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_eligible")
-def test_index_eligible_get_switchio(client, mocked_session_agency, model_SwitchioConfig):
-    mock_agency = mocked_session_agency(None)
-    mock_agency.littlepay_config = None
-    mock_agency.switchio_config = model_SwitchioConfig
-    mock_agency.save()
-
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible", "model_SwitchioConfig")
+def test_index_eligible_get_switchio(client):
     path = reverse(routes.ENROLLMENT_INDEX)
     response = client.get(path)
 

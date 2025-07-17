@@ -179,10 +179,10 @@ def model_TransitProcessor():
 
 
 @pytest.fixture
-def model_LittlepayConfig():
+def model_LittlepayConfig(model_TransitAgency):
     littlepay_config = LittlepayConfig.objects.create(
+        transit_agency=model_TransitAgency,
         environment=Environment.QA,
-        agency_slug="cst",
         client_id="client_id",
         client_secret_name="client_secret_name",
         audience="audience",
@@ -192,8 +192,9 @@ def model_LittlepayConfig():
 
 
 @pytest.fixture
-def model_SwitchioConfig(model_PemData):
+def model_SwitchioConfig(model_PemData, model_TransitAgency):
     switchio_config = SwitchioConfig.objects.create(
+        transit_agency=model_TransitAgency,
         environment=Environment.QA,
         tokenization_api_key="api_key",
         tokenization_api_secret_name="apisecret",
@@ -206,7 +207,7 @@ def model_SwitchioConfig(model_PemData):
 
 
 @pytest.fixture
-def model_TransitAgency(model_PemData, model_TransitProcessor, model_LittlepayConfig):
+def model_TransitAgency(model_PemData, model_TransitProcessor):
     agency = TransitAgency.objects.create(
         slug="cst",
         short_name="TEST",
@@ -215,7 +216,6 @@ def model_TransitAgency(model_PemData, model_TransitProcessor, model_LittlepayCo
         phone="800-555-5555",
         active=True,
         transit_processor=model_TransitProcessor,
-        littlepay_config=model_LittlepayConfig,
         eligibility_api_id="test123",
         eligibility_api_private_key=model_PemData,
         eligibility_api_public_key=model_PemData,
