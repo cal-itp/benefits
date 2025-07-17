@@ -11,6 +11,7 @@ class AgencySlug(models.TextChoices):
     NEVCO = "nevco", "nevco"
     SACRT = "sacrt", "sacrt"
     SBMTD = "sbmtd", "sbmtd"
+    VENTURA = "ventura", "ventura"
 
 
 @dataclass
@@ -29,4 +30,7 @@ agency_index = {
     ),
     AgencySlug.SACRT.value: AgencyIndex(headline=_("Get a reduced fare on SacRT buses when you tap to ride")),
     AgencySlug.SBMTD.value: AgencyIndex(headline=_("Get a reduced fare on Santa Barbara MTD buses when you tap to ride")),
+    AgencySlug.VENTURA.value: AgencyIndex(
+        headline=_("Get a reduced fare on Ventura County Connects buses when you tap to ride")
+    ),
 }
