@@ -6,7 +6,7 @@ import sentry_sdk
 from benefits.routes import routes
 from benefits.core import session
 from benefits.core.middleware import AgencySessionRequired, FlowSessionRequired
-from benefits.eligibility.views import verified, analytics as eligibility_analytics
+from benefits.eligibility.views import VerifiedView, analytics as eligibility_analytics
 from . import analytics
 
 
@@ -53,7 +53,7 @@ class OAuthHooks(DefaultHooks):
         flow = session.flow(request)
         eligibility_analytics.started_eligibility(request, flow)
 
-        return verified(request)
+        return VerifiedView().setup_and_dispatch(request)
 
     @classmethod
     @method_decorator(

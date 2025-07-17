@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.urls import reverse
 
 import pytest
@@ -33,6 +34,11 @@ def session_logout_spy(mocker):
 def mocked_flow_selection_form(mocker):
     mock_form = mocker.Mock(spec=EnrollmentFlowSelectionForm)
     mocker.patch("benefits.eligibility.views.forms.EnrollmentFlowSelectionForm", return_value=mock_form)
+
+
+@pytest.fixture
+def mocked_VerifiedView(mocker):
+    return mocker.patch.object(views, "VerifiedView")
 
 
 @pytest.fixture
@@ -251,13 +257,16 @@ def test_confirm_get_unverified(mocker, client):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible", "mocked_session_flow")
-def test_confirm_get_verified(client, mocked_session_update):
+def test_confirm_get_verified(client, mocked_session_update, mocked_VerifiedView):
+    mocked_view = mocked_VerifiedView.return_value
+    mocked_view.setup_and_dispatch.return_value = HttpResponse(status=200)
+
     path = reverse(routes.ELIGIBILITY_CONFIRM)
     response = client.get(path)
 
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ENROLLMENT_INDEX)
-    mocked_session_update.assert_called_once()
+    mocked_VerifiedView.assert_called_once()
+    mocked_view.setup_and_dispatch.assert_called_once()
+    assert response == mocked_view.setup_and_dispatch.return_value
 
 
 @pytest.mark.django_db
@@ -313,18 +322,52 @@ def test_confirm_post_valid_form_eligibility_unverified(mocker, client, form_dat
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_form_class")
 def test_confirm_post_valid_form_eligibility_verified(
-    mocker, client, form_data, mocked_session_eligible, mocked_session_update, mocked_analytics_module
+    mocker, client, form_data, mocked_session_eligible, mocked_session_update, mocked_VerifiedView, mocked_analytics_module
 ):
+    mocked_view = mocked_VerifiedView.return_value
+    mocked_view.setup_and_dispatch.return_value = HttpResponse(status=200)
+
     eligible = mocked_session_eligible.return_value
     mocker.patch("benefits.eligibility.verify.eligibility_from_api", return_value=eligible)
 
     path = reverse(routes.ELIGIBILITY_CONFIRM)
     response = client.post(path, form_data)
 
-    mocked_session_update.assert_called_once()
-    mocked_analytics_module.returned_success.assert_called_once()
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ENROLLMENT_INDEX)
+    mocked_VerifiedView.assert_called_once()
+    mocked_view.setup_and_dispatch.assert_called_once()
+    assert response == mocked_view.setup_and_dispatch.return_value
+
+
+@pytest.mark.django_db
+class TestVerifiedView:
+    @pytest.fixture
+    def view(self, app_request, mocked_eligibility_request_session):
+        v = views.VerifiedView()
+        v.setup(app_request)
+        return v
+
+    def test_get_redirect_url(self, view):
+        assert view.get_redirect_url() == reverse(routes.ENROLLMENT_INDEX)
+
+    def test_post(self, mocker, view, app_request_post, mocked_session_update, mocked_analytics_module):
+        # spy on the call to post() but call dispatch() like a real request
+        spy = mocker.spy(view, "post")
+        response = view.dispatch(app_request_post)
+
+        spy.assert_called_once()
+        assert response.status_code == 302
+        mocked_session_update.assert_called_once_with(app_request_post, eligible=True)
+        mocked_analytics_module.returned_success.assert_called_once()
+
+    def test_setup_and_dispatch(self, mocker, view, app_request_post):
+        spy_setup = mocker.spy(view, "setup")
+        spy_dispatch = mocker.spy(view, "dispatch")
+
+        response = view.setup_and_dispatch(app_request_post)
+
+        spy_setup.assert_called_once_with(app_request_post)
+        spy_dispatch.assert_called_once_with(app_request_post)
+        assert response.status_code == 302
 
 
 @pytest.mark.django_db

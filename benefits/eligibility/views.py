@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView, TemplateView
 
 from benefits.routes import routes
 from benefits.core import recaptcha, session
@@ -75,9 +75,11 @@ def start(request):
 def confirm(request):
     """View handler for the eligibility verification form."""
 
+    verified_view = VerifiedView()
+
     # GET from an already verified user, no need to verify again
     if request.method == "GET" and session.eligible(request):
-        return verified(request)
+        return verified_view.setup_and_dispatch(request)
 
     agency = session.agency(request)
     flow = session.flow(request)
@@ -116,19 +118,33 @@ def confirm(request):
             return redirect(routes.ELIGIBILITY_UNVERIFIED)
         # type was verified
         else:
-            return verified(request)
+            return verified_view.setup_and_dispatch(request)
 
 
-@decorator_from_middleware(AgencySessionRequired)
-def verified(request):
-    """View handler for the verified eligibility page."""
+class VerifiedView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, RedirectView):
+    """CBV for verified eligibility.
 
-    flow = session.flow(request)
-    analytics.returned_success(request, flow)
+    Note we do not register a URL for this view, as it should only be used
+    after the user's eligibility is verified and not generally accessible.
 
-    session.update(request, eligible=True)
+    GET requests simply forward along as part of the RedirectView logic.
 
-    return redirect(routes.ENROLLMENT_INDEX)
+    POST requests represent a new verification success, triggering additional logic.
+
+    `setup_and_dispatch(request)` is a helper for external callers.
+    """
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse(routes.ENROLLMENT_INDEX)
+
+    def post(self, request, *args, **kwargs):
+        session.update(request, eligible=True)
+        analytics.returned_success(request, self.flow)
+        return super().post(request, *args, **kwargs)
+
+    def setup_and_dispatch(self, request, *args, **kwargs):
+        self.setup(request)
+        return self.dispatch(request, *args, **kwargs)
 
 
 class UnverifiedView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateView):
