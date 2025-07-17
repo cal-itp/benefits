@@ -165,12 +165,7 @@ def enroll(switchio_config: SwitchioConfig, flow: EnrollmentFlow, token: str) ->
         if not flow.supports_expiration:
             if not already_enrolled:
                 # enroll user with no expiration date, return success
-                client.add_group_to_token(
-                    pto_id=pto_id,
-                    group_id=group_id,
-                    token=token,
-                    timeout=settings.REQUESTS_TIMEOUT,
-                )
+                client.add_group_to_token(pto_id=pto_id, group_id=group_id, token=token, timeout=settings.REQUESTS_TIMEOUT)
                 status = Status.SUCCESS
             else:  # already enrolled
                 if group.expiresAt is None:
@@ -178,12 +173,7 @@ def enroll(switchio_config: SwitchioConfig, flow: EnrollmentFlow, token: str) ->
                     status = Status.SUCCESS
                 else:
                     # remove expiration date, return success
-                    client.add_group_to_token(
-                        pto_id=pto_id,
-                        group_id=group_id,
-                        token=token,
-                        timeout=settings.REQUESTS_TIMEOUT,
-                    )
+                    client.add_group_to_token(pto_id=pto_id, group_id=group_id, token=token, timeout=settings.REQUESTS_TIMEOUT)
                     status = Status.SUCCESS
     except HTTPError as e:
         if e.response.status_code >= 500:
