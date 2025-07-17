@@ -43,10 +43,10 @@ def test_SBMTDMobilityPass():
     assert form.is_valid()
 
     sub_attrs = form.fields["sub"].widget.attrs
-    assert sub_attrs["pattern"] == r"\d{4}"
-    assert sub_attrs["maxlength"] == 4
+    assert sub_attrs["pattern"] == r"\d{4,5}"
+    assert sub_attrs["maxlength"] == 5
     assert sub_attrs["inputmode"] == "numeric"
-    assert sub_attrs["data-custom-validity"] == "Please enter a 4-digit number."
+    assert sub_attrs["data-custom-validity"] == "Please enter a 4- or 5-digit number."
 
     name_attrs = form.fields["name"].widget.attrs
     assert name_attrs["maxlength"] == 255
