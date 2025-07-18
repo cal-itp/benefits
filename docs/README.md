@@ -58,13 +58,13 @@ Running the application locally is possible with [Docker and Docker Compose][doc
 The user interface and content is available in both English and Spanish. Additional language support is possible via Django's
 [i18n and l10n features][i18n].
 
-The application communicates with external services like [Littlepay][littlepay] via API calls and others like the [Identity Gateway](https://dev.auth.cdt.ca.gov) via redirects, both over the public internet. See [all the system interconnections][interconnections].
+The application communicates with external vendor services like [Littlepay][littlepay] and [Switchio](https://switchio.com/transport/) via API calls and others like the [Identity Gateway](https://dev.auth.cdt.ca.gov) via redirects, both over the public internet. See [all the system interconnections][interconnections].
 
 ### Infrastructure
 
 The Benefits application is deployed to Microsoft Azure. Traffic is encrypted between the user and the application, as well as between the application and external systems.
 
-The network is managed by the [California Department of Technology (CDT)](https://cdt.ca.gov/), who provide a firewall and [distributed denial-of-service (DDoS)](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) protection.
+The network is managed by the [California Department of Technology (CDT)](https://digitalidstrategy.cdt.ca.gov/primary-elements.html), who provide a firewall and [distributed denial-of-service (DDoS)](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) protection.
 
 You can find more technical details on [our infrastructure page](deployment/infrastructure/).
 
@@ -77,8 +77,9 @@ The Benefits application doesn't collect or store any user data directly, and we
 
 Sensitive user information exists in the following places:
 
-- To enroll in a senior discount, users need to [provide personal information to Login.gov](https://benefits.calitp.org/help#login-gov-verify).
-- Users need to [provide their credit or debit card information to our transit processor (Littlepay)](https://benefits.calitp.org/help#littlepay) to enroll in a discount.
+- To enroll for reduced fares as an older adult, U.S. Veteran, or Calfresh cardholder, riders need to [provide personal information to Login.gov](https://benefits.calitp.org/help#login-gov-verify).
+- To enroll for reduced fares as a Medicare cardholder, riders need to [provide personal information to Medicare.gov](https://www.medicare.gov/basics/get-started-with-medicare).
+- Eligible riders need to provide their contactless credit or debit card information to one of our transit processors, [Littlepay](https://benefits.calitp.org/help#littlepay) or [Switchio](https://benefits.calitp.org/help#littlepay), to register their card for reduced fares.
 
 None of that information is accessible to the Benefits system/team.
 
@@ -86,6 +87,7 @@ Learn more about the security/privacy practices of some of our third-party integ
 
 - [Amplitude](https://amplitude.com/amplitude-security-and-privacy)
 - [Littlepay](https://littlepay.com/privacy-policy/)
+- [Switchio](https://switchio.com/privacy-policy/)
 - [Login.gov](https://www.login.gov/policy/)
 
 Benefits collects analytics on usage, without any identifying information. You can find more details on [our analytics page](product-and-design/analytics/).
@@ -105,4 +107,5 @@ All code changes are reviewed by at least one other member of the engineering te
 [interconnections]: deployment/infrastructure/#system-interconnections
 [hosting]: deployment/
 [littlepay]: https://littlepay.com/
+[switchio]: https://switchio.com/
 [i18n]: https://docs.djangoproject.com/en/5.0/topics/i18n/
