@@ -32,11 +32,12 @@ def mocked_api_base_url(mocker):
 
 class TestIndexView:
     @pytest.fixture
-    def view(self, app_request, mocked_session_agency):
+    def view(self, app_request, mocked_session_agency, mocked_session_flow):
         """Fixture to create an instance of IndexView."""
         v = IndexView()
         v.setup(app_request)
         v.agency = mocked_session_agency(app_request)
+        v.flow = mocked_session_flow(app_request)
 
         return v
 
@@ -236,14 +237,16 @@ class TestIndexView:
         mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
     @pytest.mark.django_db
-    def test_form_valid(self, view):
+    def test_form_valid(self, mocker, view):
+        mocker.patch("benefits.enrollment_switchio.views.enroll", return_value=(Status.SUCCESS, None))
+
         form = view.form_class(data=dict(card_token="abc123"))
+        mock_handler = mocker.patch("benefits.enrollment_switchio.views.handle_enrollment_results", return_value=True)
 
         assert form.is_valid()
-        response = view.form_valid(form)
+        view.form_valid(form)
 
-        assert response.status_code == 302
-        assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
+        mock_handler.assert_called_once_with(view.request, Status.SUCCESS, None)
 
 
 class TestGatewayUrlView:

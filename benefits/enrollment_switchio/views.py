@@ -7,11 +7,12 @@ import sentry_sdk
 
 from benefits.enrollment_switchio.models import SwitchioConfig
 from benefits.routes import routes
-from benefits.core import models, session
-from benefits.core.mixins import EligibleSessionRequiredMixin, AgencySessionRequiredMixin
+from benefits.core import models
+from benefits.core.mixins import EligibleSessionRequiredMixin, AgencySessionRequiredMixin, FlowSessionRequiredMixin
 from benefits.enrollment import analytics, forms
-from benefits.enrollment.enrollment import Status
+from benefits.enrollment.enrollment import Status, handle_enrollment_results
 from benefits.enrollment_switchio.enrollment import (
+    enroll,
     request_registration,
     get_registration_status,
     get_latest_active_token_value,
@@ -21,7 +22,7 @@ from benefits.enrollment_switchio.session import Session
 logger = logging.getLogger(__name__)
 
 
-class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FormView):
+class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSessionRequiredMixin, FormView):
     """View for the enrollment landing page."""
 
     template_name = "enrollment_switchio/index.html"
@@ -31,7 +32,7 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FormVi
         context = super().get_context_data(**kwargs)
 
         request = self.request
-        flow = session.flow(self.request)
+        flow = self.flow
 
         tokenize_system_error_form = forms.CardTokenizeFailForm(
             routes.ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
@@ -91,13 +92,12 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FormVi
         return super().get(request=request, *args, **kwargs)
 
     def form_valid(self, form):
-        card_token = form.cleaned_data.get("card_token")  # noqa
+        switchio_config = self.agency.switchio_config
+        flow = self.flow
+        card_token = form.cleaned_data.get("card_token")
 
-        # (this is where we will enroll the card token)
-        # status, exception = enroll(self.request, card_token)
-
-        # return handle_enrollment_results(self.request, status, exception)
-        return redirect(routes.ENROLLMENT_SUCCESS)
+        status, exception = enroll(switchio_config=switchio_config, flow=flow, token=card_token)
+        return handle_enrollment_results(self.request, status, exception)
 
 
 class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, View):
