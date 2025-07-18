@@ -66,7 +66,7 @@ The application communicates with external vendor services like [Littlepay][litt
 
 The Benefits application is deployed to Microsoft Azure. Traffic is encrypted between the user and the application, as well as between the application and external systems.
 
-The network is managed by the [California Department of Technology (CDT)](https://cdt.ca.gov/), who provide a firewall and [distributed denial-of-service (DDoS)](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) protection.
+The network is managed by the [California Department of Technology (CDT)](https://digitalidstrategy.cdt.ca.gov/primary-elements.html), who provide a firewall and [distributed denial-of-service (DDoS)](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) protection.
 
 You can find more technical details on [our infrastructure page](deployment/infrastructure/).
 
