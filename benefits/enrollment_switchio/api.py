@@ -37,6 +37,9 @@ class RegistrationStatus:
     maskCln: str = None
     cardExp: str = None
 
+    def __post_init__(self):
+        self.created = datetime.fromisoformat(self.created)
+
 
 class Client:
     def __init__(
@@ -178,7 +181,11 @@ class Group:
 @dataclass
 class GroupExpiry:
     group: str
-    expiresAt: datetime
+    expiresAt: datetime | None = None
+
+    def __post_init__(self):
+        if self.expiresAt:
+            self.expiresAt = datetime.fromisoformat(self.expiresAt)
 
 
 class EnrollmentClient(Client):

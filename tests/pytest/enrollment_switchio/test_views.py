@@ -92,7 +92,7 @@ class TestIndexView:
                 status=Status.SUCCESS,
                 registration_status=RegistrationStatus(
                     regState="tokenization_finished",
-                    created=datetime.now(),
+                    created=datetime.now().isoformat(),
                     mode="register",
                     eshopResponseMode="query",
                     tokens=[
@@ -130,7 +130,7 @@ class TestIndexView:
                 status=Status.SUCCESS,
                 registration_status=RegistrationStatus(
                     regState="verification_failed",
-                    created=datetime.now(),
+                    created=datetime.now().isoformat(),
                     mode="register",
                     eshopResponseMode="query",
                     tokens=[],
@@ -158,7 +158,7 @@ class TestIndexView:
                 status=Status.SUCCESS,
                 registration_status=RegistrationStatus(
                     regState="tokenization_failed",
-                    created=datetime.now(),
+                    created=datetime.now().isoformat(),
                     mode="register",
                     eshopResponseMode="query",
                     tokens=[],
@@ -367,7 +367,7 @@ class TestGatewayUrlView:
                 status=Status.SUCCESS,
                 registration_status=RegistrationStatus(
                     regState="created",
-                    created=datetime.now(),
+                    created=datetime.now().isoformat(),
                     mode="register",
                     eshopResponseMode="query",
                     tokens=[],
@@ -405,7 +405,7 @@ class TestGatewayUrlView:
                 status=Status.SUCCESS,
                 registration_status=RegistrationStatus(
                     regState=regState,
-                    created=datetime.now(),
+                    created=datetime.now().isoformat(),
                     mode="register",
                     eshopResponseMode="query",
                     tokens=[],

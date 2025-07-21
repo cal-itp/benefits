@@ -154,6 +154,7 @@ def test_tokenization_client_get_registration_status(mocker, tokenization_client
     registration_status = tokenization_client.get_registration_status(registration_id="1234")
 
     assert registration_status == RegistrationStatus(**mock_json)
+    assert isinstance(registration_status.created, datetime)
 
 
 def test_enrollment_client_get_headers(enrollment_client):
@@ -189,15 +190,19 @@ def test_enrollment_client_get_groups(mocker, enrollment_client):
     assert groups == [Group(**mock_json)]
 
 
-def test_enrollment_client_get_groups_for_token(mocker, enrollment_client):
+@pytest.mark.parametrize("expires_at", [None, "2025-01-01T00:00:00Z"])
+def test_enrollment_client_get_groups_for_token(mocker, enrollment_client, expires_at):
     mock_response = mocker.Mock()
-    mock_json = dict(group="veteran-discount", expiresAt=None)
+    mock_json = dict(group="veteran-discount", expiresAt=expires_at)
     mock_response.json.return_value = [mock_json]
     mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
 
     groups = enrollment_client.get_groups_for_token(pto_id="123", token="abcde12345")
 
     assert groups == [GroupExpiry(**mock_json)]
+
+    if expires_at:
+        assert isinstance(groups[0].expiresAt, datetime)
 
 
 def test_enrollment_client_add_group_to_token(mocker, enrollment_client):
