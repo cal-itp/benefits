@@ -1,5 +1,5 @@
 # https://playwright.dev/docs/docker
-FROM mcr.microsoft.com/playwright/python:v1.53.0-jammy
+FROM mcr.microsoft.com/playwright/python:v1.54.0-jammy
 
 WORKDIR /playwright
 
