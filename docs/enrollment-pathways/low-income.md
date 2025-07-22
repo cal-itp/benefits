@@ -2,17 +2,17 @@
 
 ## Overview
 
-This use case describes a feature in the Cal-ITP Benefits app that allows Californians to verify their active participation in the CalFresh Program—as a proxy for low-income status—to receive reduced fares for transit when paying by contactless debit or credit card at participating transit operators in California.
+This use case describes a feature in the Cal-ITP Benefits app that allows Californians to verify their active participation in the CalFresh Program—as a proxy for low-income status—to receive reduced fares for transit when paying by contactless debit or credit card at participating transit providers in California.
 
 **Actor:** A person who uses public transit in California. For benefit eligibility, a “low-income rider” is a person who has received [CalFresh benefits](https://www.cdss.ca.gov/food-nutrition/calfresh) in any of the previous three months.
 
 **Goal:** To verify a transit rider’s financial need so they receive reduced fares when paying by contactless debit or credit card.
 
-**Precondition:** The California transit operator offers fixed route service, has installed and tested validator hardware necessary to collect fares using contactless payment on bus or rail lines, and the operator has a policy in place to offer a transit discount to low-income riders.
+**Precondition:** The California transit provider offers fixed route service, has installed and tested validator hardware necessary to collect fares using contactless payment on bus or rail lines, and the operator has a policy in place to offer a transit discount to low-income riders.
 
 ## Demonstration
 
-This video demonstrates how a person receiving CalFresh benefits uses the Cal-ITP Benefits web application to confirm their eligibility for a transit benefit and then register their contactless debit or credit card with Littlepay. Once registered, they will automatically receive reduce fares each time they tap-to-pay for transit.
+This video demonstrates how a person receiving CalFresh benefits uses the Cal-ITP Benefits web application to confirm their eligibility for a transit benefit and then register their contactless debit or credit card with either Littlepay or Switchio, the transit processor that manages fare calculation for the transit provider. Once registered, they will automatically receive reduce fares each time they tap-to-pay for transit.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/LrNyy8k2DPA?si=30hPKkR1valKZFzA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -27,7 +27,7 @@ autonumber
     participant IdG as Identity Gateway
     participant Login.gov
     participant CDSS
-    participant Littlepay
+    participant Transit processor
 Transit Rider->>Benefits: visits benefits.calitp.org
     activate Benefits
 Benefits-->>IdG: eligibility verification
@@ -46,17 +46,17 @@ CDSS-->>IdG: return Calfresh enrollment status
 IdG-->>Benefits: eligibility response
     deactivate IdG
     deactivate Login.gov
-Benefits-->>Littlepay: payment enrollment start
-    activate Littlepay
-Transit Rider->>Littlepay: provides debit or credit card details
-Littlepay-->>Benefits: payment method enrollment confirmation
-    deactivate Littlepay
+Benefits-->>Transit processor: payment enrollment start
+    activate Transit processor
+Transit Rider->>Transit processor: provides debit or credit card details
+Transit processor-->>Benefits: payment method enrollment confirmation
+    deactivate Transit processor
     deactivate Benefits
 ```
 
 1. The transit rider visits the web application at `benefits.calitp.org` in a browser on their desktop computer.
 
-1. The transit rider chooses the transit operator that serves their area.
+1. The transit rider chooses the transit provider that serves their area.
 
 1. The transit rider chooses to verify their eligibility as a participant in the [CalFresh Program](https://www.cdss.ca.gov/food-nutrition/calfresh).
 
@@ -68,7 +68,7 @@ Littlepay-->>Benefits: payment method enrollment confirmation
 
 1. The IdG then passes the response from CDSS as low-income status = TRUE to the Cal-ITP Benefits app to indicate the person is eligible for a benefit.
 
-1. The transit rider provides the debit or credit card details they use to pay for transit to Littlepay, the transit processor that facilitates transit fare collection.
+1. The transit rider provides the debit or credit card details they use to pay for transit to the transit processor that facilitates fare collection for the transit provider.
 
 1. The app registers the low-income benefit with the transit rider’s debit or credit card.
 
@@ -86,7 +86,7 @@ Littlepay-->>Benefits: payment method enrollment confirmation
 
 - Suppose the transit rider attempts to re-enroll for a transit benefit as a CalFresh Program participant three months after their enrollment period started. The app will inform them they must wait re-enroll within 14 days of the benefit expiration.
 
-- Suppose the transit rider doesn’t re-enroll for a transit benefit after one year, but continues paying for transit using the card they registered. The transit operator will charge the rider full fare.
+- Suppose the transit rider doesn’t re-enroll for a transit benefit after one year, but continues paying for transit using the card they registered. The transit provider will charge the rider full fare.
 
 - If the transit rider uses more than one debit or credit card to pay for transit, they repeat the basic flow for each card.
 
@@ -118,4 +118,4 @@ The transit rider receives a fare reduction each time they use the debit or cred
 
 A CalFresh Program participant uses public transit regularly. They don’t have a car and depend on buses to get to appointments and do errands that take too long to use their bicycle. Even though this person already qualifies for benefits from the California Department of Social Services, they had to navigate another extensive, in-person eligibility process with different requirements to qualify for reduced fares from their local transit agency. They now receive a 50% fare reduction but have to pay for transit rides using the closed loop card provided by the operator to receive the reduced fare. It’s frustrating and inconvenient to reload this closed loop card in $10 payments every week, especially because they sometimes they could use the money tied up on the card to make ends meet. In summary, this person pays for daily expenses using three forms of payment: their Electronic Benefits Transfer (EBT) card for eligible items, their agency card for transportation, and their bank card (or cash) for everything else.
 
-The transit operator serving their region of California implements contactless payments on fixed bus routes throughout the service area. This rider uses `benefits.calitp.org` on their mobile device to confirm their participation in the CalFresh Program offered by CDSS and registers their debit card for reduced fares. They tap to pay when boarding buses in their area and are automatically charged the reduced fare. While they still need to manage funds on their EBT card _and_ their bank card, they no longer need to use their transit operator card to pay for transit. Best of all, they have complete access to all funds in their weekly budget. If other expenses are higher one week, they can allocate additional funds to those areas and ride transit less.
+The transit provider serving their region of California implements contactless payments on fixed bus routes throughout the service area. This rider uses `benefits.calitp.org` on their mobile device to confirm their participation in the CalFresh Program offered by CDSS and registers their debit card for reduced fares. They tap to pay when boarding buses in their area and are automatically charged the reduced fare. While they still need to manage funds on their EBT card _and_ their bank card, they no longer need to use their transit provider card to pay for transit. Best of all, they have complete access to all funds in their weekly budget. If other expenses are higher one week, they can allocate additional funds to those areas and ride transit less.
