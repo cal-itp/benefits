@@ -201,7 +201,7 @@ def enroll(switchio_config: SwitchioConfig, flow: EnrollmentFlow, token: str) ->
 
 
 def _get_group_for_token(client: EnrollmentClient, pto_id, group_id, token):
-    already_enrolled_groups = client.get_groups_for_token(pto_id=pto_id, token=token)
+    already_enrolled_groups = client.get_groups_for_token(pto_id=pto_id, token=token, timeout=settings.REQUESTS_TIMEOUT)
 
     for group in already_enrolled_groups:
         if group.group == group_id:
