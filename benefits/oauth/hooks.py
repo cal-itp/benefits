@@ -53,6 +53,10 @@ class OAuthHooks(DefaultHooks):
         flow = session.flow(request)
         eligibility_analytics.started_eligibility(request, flow)
 
+        # changing the method to POST since this now represents a verification success
+        # and we want to run the associated logic e.g. sending analytics events
+        # GET requests to the VerifiedView simply redirect to enrollment index
+        request.method = "POST"
         return VerifiedView().setup_and_dispatch(request)
 
     @classmethod
