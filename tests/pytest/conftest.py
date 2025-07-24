@@ -18,7 +18,7 @@ from benefits.core.models import (
     Environment,
 )
 from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup
-from benefits.enrollment_switchio.models import SwitchioConfig
+from benefits.enrollment_switchio.models import SwitchioConfig, SwitchioGroup
 
 
 def pytest_runtest_setup():
@@ -119,6 +119,14 @@ def model_EnrollmentFlow(model_TransitAgency):
 def model_LittlepayGroup(model_EnrollmentFlow):
     return LittlepayGroup.objects.create(
         group_id="d0fe23fd-61d6-455f-8e19-808058603171",
+        enrollment_flow=model_EnrollmentFlow,
+    )
+
+
+@pytest.fixture
+def model_SwitchioGroup(model_EnrollmentFlow):
+    return SwitchioGroup.objects.create(
+        group_id="senior-discount",
         enrollment_flow=model_EnrollmentFlow,
     )
 
