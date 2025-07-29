@@ -6,6 +6,8 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFou
 from django.shortcuts import redirect
 from django.template import loader
 from django.template.response import TemplateResponse
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
 
 from benefits.routes import routes
 from . import models, session
@@ -71,12 +73,6 @@ def agency_card(request, agency: models.TransitAgency):
 
 
 @pageview_decorator
-def help(request):
-    """View handler for the help page."""
-    return TemplateResponse(request, TEMPLATE_HELP)
-
-
-@pageview_decorator
 @index_or_agencyindex_origin_decorator
 def bad_request(request, exception, template_name=TEMPLATE_BAD_REQUEST):
     """View handler for HTTP 400 Bad Request responses."""
@@ -117,3 +113,10 @@ def server_error(request, template_name=TEMPLATE_SERVER_ERROR):
 def logged_out(request):
     """View handler for the final log out confirmation message."""
     return TemplateResponse(request, TEMPLATE_LOGGED_OUT)
+
+
+@method_decorator(pageview_decorator, name="dispatch")
+class HelpView(TemplateView):
+    """Class-based view for Help page"""
+
+    template_name = TEMPLATE_HELP
