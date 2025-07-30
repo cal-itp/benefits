@@ -8,7 +8,6 @@ from django.urls import path, register_converter
 
 from benefits.routes import routes
 from . import models, views
-from .views import HelpView
 
 logger = logging.getLogger(__name__)
 
@@ -47,7 +46,7 @@ app_name = "core"
 
 urlpatterns = [
     path("", views.index, name=routes.name(routes.INDEX)),
-    path("help", HelpView.as_view(), name=routes.name(routes.HELP)),
+    path("help", views.HelpView.as_view(), name=routes.name(routes.HELP)),
     path("<agency:agency>", views.agency_index, name=routes.name(routes.AGENCY_INDEX)),
     path("<agency:agency>/agency-card", views.agency_card, name=routes.name(routes.AGENCY_CARD)),
     path("<agency:agency>/eligibility", views.agency_eligibility_index, name=routes.name(routes.AGENCY_ELIGIBILITY_INDEX)),
