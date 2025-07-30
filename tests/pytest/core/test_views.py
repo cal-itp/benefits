@@ -3,15 +3,9 @@ from django.urls import reverse
 import pytest
 
 from benefits.routes import routes
-from benefits.core.middleware import TEMPLATE_USER_ERROR
+
 from benefits.core.models import EnrollmentFlow, TransitAgency
-from benefits.core.views import (
-    TEMPLATE_INDEX,
-    bad_request,
-    csrf_failure,
-    page_not_found,
-    server_error,
-)
+import benefits.core.views as views
 import benefits.core.session
 
 
@@ -57,7 +51,7 @@ def test_index_single_agency(mocker, model_TransitAgency, client, session_reset_
 
     session_reset_spy.assert_called_once()
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
+    assert response.template_name == views.TEMPLATE_INDEX
 
 
 @pytest.mark.django_db
@@ -152,7 +146,7 @@ def test_agency_card_without_eligibility_api_flow(
     response = client.get(url)
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_USER_ERROR
+    assert response.template_name == views.TEMPLATE_USER_ERROR
 
     mocked_session_reset.assert_called()
     mocked_session_update.assert_called_once()
@@ -172,14 +166,15 @@ def test_agency_eligibility_index(client, model_TransitAgency, mocked_session_up
     assert mocked_session_update.mock_calls[0].kwargs["origin"] == model_TransitAgency.index_url
 
 
-@pytest.mark.django_db
-def test_help(client):
-    path = reverse(routes.HELP)
+class TestHelpView:
+    @pytest.fixture
+    def view(self, app_request):
+        v = views.HelpView()
+        v.setup(app_request)
+        return v
 
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert "card" in str(response.content)
+    def test_view(self, view):
+        assert view.template_name == "core/help.html"
 
 
 @pytest.mark.django_db
@@ -193,7 +188,7 @@ def test_help_with_session_agency(client):
 
 @pytest.mark.django_db
 def test_bad_request_active_agency(app_request, mocked_active_agency, mocked_session_update):
-    response = bad_request(app_request, Exception())
+    response = views.bad_request(app_request, Exception())
 
     assert response.status_code == 400
     assert "origin" in mocked_session_update.call_args.kwargs
@@ -202,7 +197,7 @@ def test_bad_request_active_agency(app_request, mocked_active_agency, mocked_ses
 
 @pytest.mark.django_db
 def test_bad_request_no_active_agency(app_request, mocked_session_update):
-    response = bad_request(app_request, Exception())
+    response = views.bad_request(app_request, Exception())
 
     assert response.status_code == 400
     assert "origin" in mocked_session_update.call_args.kwargs
@@ -211,7 +206,7 @@ def test_bad_request_no_active_agency(app_request, mocked_session_update):
 
 @pytest.mark.django_db
 def test_csrf_failure_active_agency(app_request, mocked_active_agency, mocked_session_update):
-    response = csrf_failure(app_request, "reason")
+    response = views.csrf_failure(app_request, "reason")
 
     assert response.status_code == 404
     assert "origin" in mocked_session_update.call_args.kwargs
@@ -220,7 +215,7 @@ def test_csrf_failure_active_agency(app_request, mocked_active_agency, mocked_se
 
 @pytest.mark.django_db
 def test_csrf_failure_no_active_agency(app_request, mocked_session_update):
-    response = csrf_failure(app_request, "reason")
+    response = views.csrf_failure(app_request, "reason")
 
     assert response.status_code == 404
     assert "origin" in mocked_session_update.call_args.kwargs
@@ -249,14 +244,14 @@ def test_not_found_no_active_agency(mocker, client, mocked_session_update):
 
 @pytest.mark.django_db
 def test_page_not_found(app_request):
-    response = page_not_found(app_request, Exception())
+    response = views.page_not_found(app_request, Exception())
 
     assert response.status_code == 404
 
 
 @pytest.mark.django_db
 def test_server_error(app_request):
-    response = server_error(app_request)
+    response = views.server_error(app_request)
 
     assert response.status_code == 500
 
