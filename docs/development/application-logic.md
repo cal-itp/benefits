@@ -245,6 +245,9 @@ transit processor (Littlepay).
 
     [`cal-itp/littlepay`][littlepay]
 
+
+### Littlepay
+
 ```mermaid
 sequenceDiagram
 autonumber
@@ -286,6 +289,43 @@ benefits->>littlepay: enroll funding source in group
 benefits-->>analytics: returned enrollment
     deactivate benefits
 ```
+
+### Switchio
+
+```mermaid
+sequenceDiagram
+autonumber
+%% Enrollment phase
+    actor user as User
+    participant benefits as Benefits app
+    participant switchio as Switchio
+    participant analytics as Analytics
+
+user->>benefits: starts enrollment phase
+    activate user
+benefits-->>user: display enrollment index
+user->>switchio: GET tokenization lib (AJAX)
+switchio-->>user: tokenization lib .js
+user->>benefits: GET registration ID and gateway URL (AJAX)
+    deactivate user
+    activate benefits
+benefits->>switchio: GET registration ID and gateway URL
+switchio-->>benefits: registration ID and gateway URL
+benefits-->>user: gateway URL
+    deactivate benefits
+    activate user
+user->>user: click to initiate payment card collection
+user-->>user: display Switchio overlay
+user-->>analytics: started card tokenization
+user->>switchio: provides debit or credit card details
+user-->>analytics: finished card tokenization
+    deactivate user
+    activate benefits
+benefits->>switchio: GET registration status
+switchio-->>benefits: registration status (response also contains card token)
+    deactivate benefits
+```
+
 
 [core-context-processors]: https://github.com/cal-itp/benefits/blob/main/benefits/core/context_processors.py
 [core-middleware]: https://github.com/cal-itp/benefits/blob/main/benefits/core/middleware.py
