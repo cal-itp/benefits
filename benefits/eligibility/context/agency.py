@@ -48,9 +48,8 @@ eligibility_index = {
     AgencySlug.VENTURA.value: EligibilityIndex(
         form_text=_(
             "Cal-ITP doesn’t save any of your information. "
-            "All Ventura County Connects transit benefits reduce fares by 50%% for bus service on fixed routes.".replace(
-                "%%", "%"
-            )
+            "All Ventura County Transportation Commission transit benefits "
+            "reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
         )
     ),
 }
