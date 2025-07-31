@@ -17,7 +17,7 @@ class TransitAgencyPathConverter:
     """Path converter to parse valid TransitAgency objects from URL paths."""
 
     # used to test the url fragment, determines if this PathConverter is used
-    regex = "[a-zA-Z]{3,5}"
+    regex = "[a-zA-Z]{3,}"
 
     def to_python(self, value):
         """Determine if the matched fragment corresponds to an active Agency."""
@@ -48,10 +48,10 @@ app_name = "core"
 urlpatterns = [
     path("", views.index, name=routes.name(routes.INDEX)),
     path("help", views.help, name=routes.name(routes.HELP)),
+    path("logged_out", views.logged_out, name=routes.name(routes.LOGGED_OUT)),
+    path("error", views.server_error, name=routes.name(routes.SERVER_ERROR)),
     path("<agency:agency>", views.agency_index, name=routes.name(routes.AGENCY_INDEX)),
     path("<agency:agency>/agency-card", views.agency_card, name=routes.name(routes.AGENCY_CARD)),
     path("<agency:agency>/eligibility", views.agency_eligibility_index, name=routes.name(routes.AGENCY_ELIGIBILITY_INDEX)),
     path("<agency:agency>/publickey", views.agency_public_key, name=routes.name(routes.AGENCY_PUBLIC_KEY)),
-    path("logged_out", views.logged_out, name=routes.name(routes.LOGGED_OUT)),
-    path("error", views.server_error, name=routes.name(routes.SERVER_ERROR)),
 ]
