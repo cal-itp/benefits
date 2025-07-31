@@ -14,8 +14,10 @@ If you’re interested in receiving this update delivered directly to your email
 
 - [The June Update](http://5519226.hs-sites.com/cal-itp-benefits-the-june-update-2025)
 
+- [The July Update](http://5519226.hs-sites.com/cal-itp-benefits-the-july-update-2025)
+
 <!--
-- [The July Update]()
+- [The August Update]()
   -->
 
 ### 2024
