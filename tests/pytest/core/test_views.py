@@ -2,11 +2,11 @@ from django.urls import reverse
 
 import pytest
 
+from benefits.core import views
 from benefits.routes import routes
 from benefits.core.middleware import TEMPLATE_USER_ERROR
-from benefits.core.models import EnrollmentFlow, TransitAgency
+from benefits.core.models import EnrollmentFlow
 from benefits.core.views import (
-    TEMPLATE_INDEX,
     bad_request,
     csrf_failure,
     page_not_found,
@@ -34,30 +34,21 @@ def mocked_active_agency(mocker):
 
 
 @pytest.mark.django_db
-def test_index_multiple_agencies(model_TransitAgency, client):
-    # create another Transit Agency by cloning the original to ensure there are multiple
-    # https://stackoverflow.com/a/48149675/453168
-    new_agency = TransitAgency.objects.get(pk=model_TransitAgency.id)
-    new_agency.pk = None
-    new_agency.save()
+class TestIndexView:
+    @pytest.fixture
+    def view(self, app_request):
+        v = views.IndexView()
+        v.setup(app_request)
+        return v
 
-    path = reverse(routes.INDEX)
-    response = client.get(path)
+    def test_view(self, view):
+        assert view.template_name == "core/index.html"
 
-    assert response.status_code == 200
-    assert "transit" in str(response.content)
+    def test_get(self, view, app_request, mocked_session_reset):
+        response = view.get(app_request)
 
-
-@pytest.mark.django_db
-def test_index_single_agency(mocker, model_TransitAgency, client, session_reset_spy):
-    mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=[model_TransitAgency])
-
-    path = reverse(routes.INDEX)
-    response = client.get(path)
-
-    session_reset_spy.assert_called_once()
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
+        assert response.status_code == 200
+        mocked_session_reset.assert_called_once()
 
 
 @pytest.mark.django_db

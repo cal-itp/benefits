@@ -46,7 +46,7 @@ register_converter(TransitAgencyPathConverter, "agency")
 app_name = "core"
 
 urlpatterns = [
-    path("", views.index, name=routes.name(routes.INDEX)),
+    path("", views.IndexView.as_view(), name=routes.name(routes.INDEX)),
     path("help", views.help, name=routes.name(routes.HELP)),
     path("logged_out", views.logged_out, name=routes.name(routes.LOGGED_OUT)),
     path("error", views.server_error, name=routes.name(routes.SERVER_ERROR)),
