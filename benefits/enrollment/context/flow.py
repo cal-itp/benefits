@@ -103,7 +103,5 @@ enrollment_success = {
     SystemName.REDUCED_FARE_MOBILITY_ID.value: AgencyCardEnrollmentSuccess(
         transit_benefit=_("an SBMTD Reduced Fare Mobility ID transit benefit"), transportation_type=_("an SBMTD bus")
     ),
-    AgencySlug.VENTURA.value: DefaultEnrollmentSuccess(
-        transportation_type=_("a Ventura County Transportation Commission bus")
-    ),
+    AgencySlug.VCTC.value: DefaultEnrollmentSuccess(transportation_type=_("a Ventura County Transportation Commission bus")),
 }

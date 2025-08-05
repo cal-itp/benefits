@@ -45,7 +45,7 @@ eligibility_index = {
             "All SBMTD transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
         )
     ),
-    AgencySlug.VENTURA.value: EligibilityIndex(
+    AgencySlug.VCTC.value: EligibilityIndex(
         form_text=_(
             "Cal-ITP doesn’t save any of your information. "
             "All Ventura County Transportation Commission transit benefits "
