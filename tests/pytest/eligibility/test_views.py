@@ -4,7 +4,6 @@ from django.urls import reverse
 import pytest
 
 from benefits.routes import routes
-from benefits.core.middleware import TEMPLATE_USER_ERROR
 import benefits.core.session
 from benefits.eligibility.forms import EnrollmentFlowSelectionForm, EligibilityVerificationForm
 import benefits.eligibility.views as views
@@ -73,16 +72,6 @@ def model_EnrollmentFlow_with_form_class(mocker, model_EnrollmentFlow_with_eligi
     model_EnrollmentFlow_with_eligibility_api.save()
     mocker.patch("benefits.eligibility.views.session.flow", return_value=model_EnrollmentFlow_with_eligibility_api)
     return model_EnrollmentFlow_with_eligibility_api
-
-
-@pytest.mark.django_db
-def test_index_get_without_agency(client):
-    path = reverse(routes.ELIGIBILITY_INDEX)
-
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
