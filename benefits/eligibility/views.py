@@ -7,55 +7,58 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.views.generic import RedirectView, TemplateView
+from django.views.generic import RedirectView, TemplateView, FormView
 
 from benefits.routes import routes
 from benefits.core import recaptcha, session
 from benefits.core.middleware import AgencySessionRequired, RecaptchaEnabled, FlowSessionRequired
-from benefits.core.mixins import AgencySessionRequiredMixin, FlowSessionRequiredMixin
+from benefits.core.mixins import AgencySessionRequiredMixin, FlowSessionRequiredMixin, RecaptchaEnabledMixin
 from benefits.core.models import EnrollmentFlow
 from . import analytics, forms, verify
 
 TEMPLATE_CONFIRM = "eligibility/confirm.html"
 
 
-@decorator_from_middleware(AgencySessionRequired)
-@decorator_from_middleware(RecaptchaEnabled)
-def index(request):
+class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
     """View handler for the enrollment flow selection form."""
-    agency = session.agency(request)
-    session.update(request, eligible=False, origin=agency.index_url)
 
-    # clear any prior OAuth token as the user is choosing their desired flow
-    # this may or may not require OAuth, with a different set of scope/claims than what is already stored
-    session.logout(request)
+    template_name = "eligibility/index.html"
+    form_class = forms.EnrollmentFlowSelectionForm
 
-    context = {"form": forms.EnrollmentFlowSelectionForm(agency=agency)}
+    def get_form_kwargs(self):
+        """Return the keyword arguments for instantiating the form."""
+        kwargs = super().get_form_kwargs()
+        kwargs["agency"] = self.agency
+        return kwargs
 
-    if request.method == "POST":
-        form = forms.EnrollmentFlowSelectionForm(data=request.POST, agency=agency)
+    def get_context_data(self, **kwargs):
+        """Add agency-specific context data."""
+        context = super().get_context_data(**kwargs)
+        context.update(self.agency.eligibility_index_context)
+        return context
 
-        if form.is_valid():
-            flow_id = form.cleaned_data.get("flow")
-            flow = EnrollmentFlow.objects.get(id=flow_id)
-            session.update(request, flow=flow)
+    def get(self, request, *args, **kwargs):
+        """Initialize session state before handling the request."""
 
-            analytics.selected_flow(request, flow)
+        session.update(request, eligible=False, origin=self.agency.index_url)
+        session.logout(request)
 
-            eligibility_start = reverse(routes.ELIGIBILITY_START)
-            response = redirect(eligibility_start)
-        else:
-            # form was not valid, allow for correction/resubmission
-            if recaptcha.has_error(form):
-                messages.error(request, "Recaptcha failed. Please try again.")
-            context["form"] = form
-            context.update(agency.eligibility_index_context)
-            response = TemplateResponse(request, "eligibility/index.html", context)
-    else:
-        context.update(agency.eligibility_index_context)
-        response = TemplateResponse(request, "eligibility/index.html", context)
+        return super().get(request, *args, **kwargs)
 
-    return response
+    def form_valid(self, form):
+        """If the form is valid, set enrollment flow and redirect."""
+        flow_id = form.cleaned_data.get("flow")
+        flow = EnrollmentFlow.objects.get(id=flow_id)
+        session.update(self.request, flow=flow)
+
+        analytics.selected_flow(self.request, flow)
+        return redirect(routes.ELIGIBILITY_START)
+
+    def form_invalid(self, form):
+        """If the form is invalid, display error messages."""
+        if recaptcha.has_error(form):
+            messages.error(self.request, "Recaptcha failed. Please try again.")
+        return super().form_invalid(form)
 
 
 class StartView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateView):
