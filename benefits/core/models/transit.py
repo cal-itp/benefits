@@ -7,7 +7,6 @@ from django.db import models
 from django.urls import reverse
 
 from benefits.core import context as core_context
-from benefits.eligibility import context as eligibility_context
 from benefits.routes import routes
 from .common import Environment, PemData
 
@@ -167,10 +166,6 @@ class TransitAgency(models.Model):
     def index_url(self):
         """Public-facing URL to the TransitAgency's landing page."""
         return reverse(routes.AGENCY_INDEX, args=[self.slug])
-
-    @property
-    def eligibility_index_context(self):
-        return eligibility_context.eligibility_index[self.slug].dict()
 
     @property
     def eligibility_index_url(self):
