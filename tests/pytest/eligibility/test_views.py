@@ -198,51 +198,32 @@ def test_index_calls_session_logout(client, session_logout_spy):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_flow_selection_form")
-def test_start_flow_uses_claims_verification_logged_in(mocker, client, mocked_session_flow_uses_claims_verification):
-    mock_session = mocker.patch("benefits.eligibility.views.session")
-    mock_session.logged_in.return_value = True
-    mock_session.flow.return_value = mocked_session_flow_uses_claims_verification(None)
+class TestStartView:
+    @pytest.fixture
+    def view(self, app_request, mocked_eligibility_request_session):
+        """Fixture to create an instance of StartView."""
+        v = views.StartView()
+        v.setup(app_request)
+        return v
 
-    path = reverse(routes.ELIGIBILITY_START)
-    response = client.get(path)
+    def test_template_name(self, view):
+        assert view.template_name == "eligibility/start.html"
 
-    assert response.status_code == 200
+    def test_get_context_data(self, view, app_request, model_EnrollmentFlow):
+        view.dispatch(app_request)
+        context = view.get_context_data()
 
+        for key, value in model_EnrollmentFlow.eligibility_start_context.items():
+            assert context[key] == value
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_flow_selection_form")
-def test_start_flow_uses_claims_verification_not_logged_in(mocker, client, mocked_session_flow_uses_claims_verification):
-    mock_session = mocker.patch("benefits.eligibility.views.session")
-    mock_session.logged_in.return_value = False
-    mock_session.flow.return_value = mocked_session_flow_uses_claims_verification(None)
+    def test_get(self, mocker, view, app_request, mocked_session_update):
+        # spy on the call to get() but call dispatch() like a real request
+        spy = mocker.spy(view, "get")
+        response = view.dispatch(app_request)
 
-    path = reverse(routes.ELIGIBILITY_START)
-    response = client.get(path)
-
-    assert response.status_code == 200
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_flow_selection_form")
-def test_start_flow_does_not_use_claims_verification(mocker, client, mocked_session_flow_does_not_use_claims_verification):
-    mock_session = mocker.patch("benefits.eligibility.views.session")
-    mock_session.logged_in.return_value = False
-    mock_session.flow.return_value = mocked_session_flow_does_not_use_claims_verification(None)
-    path = reverse(routes.ELIGIBILITY_START)
-    response = client.get(path)
-
-    assert response.status_code == 200
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency")
-def test_start_without_flow(client):
-    path = reverse(routes.ELIGIBILITY_START)
-
-    response = client.get(path)
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_USER_ERROR
+        spy.assert_called_once()
+        assert response.status_code == 200
+        mocked_session_update.assert_called_once()
 
 
 @pytest.mark.django_db
