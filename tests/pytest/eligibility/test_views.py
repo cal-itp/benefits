@@ -3,7 +3,6 @@ from django.urls import reverse
 
 import pytest
 
-from benefits.core import models
 from benefits.routes import routes
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 import benefits.core.session
@@ -74,36 +73,6 @@ def model_EnrollmentFlow_with_form_class(mocker, model_EnrollmentFlow_with_eligi
     model_EnrollmentFlow_with_eligibility_api.save()
     mocker.patch("benefits.eligibility.views.session.flow", return_value=model_EnrollmentFlow_with_eligibility_api)
     return model_EnrollmentFlow_with_eligibility_api
-
-
-@pytest.mark.django_db
-def test_index_filtering_flows(mocker, model_TransitAgency, client):
-    digital = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency,
-        supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL],
-        label="Digital",
-        selection_label_template_override="eligibility/includes/selection-label.html",
-    )
-    in_person = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency,
-        supported_enrollment_methods=[models.EnrollmentMethods.IN_PERSON],
-        label="In-Person",
-        selection_label_template_override="eligibility/includes/selection-label.html",
-    )
-    both = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency,
-        supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
-        label="Both",
-        selection_label_template_override="eligibility/includes/selection-label.html",
-    )
-    mocker.patch("benefits.core.session.agency", autospec=True, return_value=model_TransitAgency)
-
-    path = reverse(routes.ELIGIBILITY_INDEX)
-    response = client.get(path)
-    filtered_flow_ids = [choice[0] for choice in response.context_data["form"].fields["flow"].choices]
-
-    assert digital.id, both.id in filtered_flow_ids
-    assert in_person.id not in filtered_flow_ids
 
 
 @pytest.mark.django_db

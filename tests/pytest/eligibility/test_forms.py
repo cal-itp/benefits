@@ -1,4 +1,36 @@
-from benefits.eligibility.forms import CSTAgencyCard, MSTCourtesyCard, SBMTDMobilityPass
+import pytest
+
+from benefits.core import models
+from benefits.eligibility.forms import CSTAgencyCard, MSTCourtesyCard, SBMTDMobilityPass, EnrollmentFlowSelectionForm
+
+
+@pytest.mark.django_db
+def test_EnrollmentFlowSelectionForm_filtering_flows(model_TransitAgency):
+    digital = models.EnrollmentFlow.objects.create(
+        transit_agency=model_TransitAgency,
+        supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL],
+        label="Digital",
+        selection_label_template_override="eligibility/includes/selection-label.html",
+    )
+    in_person = models.EnrollmentFlow.objects.create(
+        transit_agency=model_TransitAgency,
+        supported_enrollment_methods=[models.EnrollmentMethods.IN_PERSON],
+        label="In-Person",
+        selection_label_template_override="eligibility/includes/selection-label.html",
+    )
+    both = models.EnrollmentFlow.objects.create(
+        transit_agency=model_TransitAgency,
+        supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
+        label="Both",
+        selection_label_template_override="eligibility/includes/selection-label.html",
+    )
+
+    form = EnrollmentFlowSelectionForm(agency=model_TransitAgency)
+
+    filtered_flow_ids = [choice[0] for choice in form.fields["flow"].choices]
+
+    assert digital.id, both.id in filtered_flow_ids
+    assert in_person.id not in filtered_flow_ids
 
 
 def test_CSTAgencyCard():
