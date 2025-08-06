@@ -75,36 +75,35 @@ def model_EnrollmentFlow_with_form_class(mocker, model_EnrollmentFlow_with_eligi
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency")
-def test_index_post_invalid_form(client):
-    path = reverse(routes.ELIGIBILITY_INDEX)
+class TestIndexView:
+    @pytest.fixture
+    def view(self, app_request, mocked_session_agency):
+        v = views.IndexView()
+        v.setup(app_request)
+        v.agency = mocked_session_agency(app_request)
+        return v
 
-    response = client.post(path, {"invalid": "data"})
+    def test_get_form_kwargs(self, view):
+        kwargs = view.get_form_kwargs()
+        assert kwargs["agency"] == view.agency
 
-    assert response.status_code == 200
+    def test_get_context_data(self, view):
+        context_data = view.get_context_data()
+        assert "form_text" in context_data
 
+    def test_get(self, view, app_request, session_logout_spy):
+        view.get(app_request)
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency")
-def test_index_post_valid_form(client, model_EnrollmentFlow, mocked_session_update, mocked_analytics_module):
-    path = reverse(routes.ELIGIBILITY_INDEX)
+        session_logout_spy.assert_called_once()
 
-    response = client.post(path, {"flow": model_EnrollmentFlow.id})
+    def test_form_valid(self, view, model_EnrollmentFlow, mocked_session_update, mocked_analytics_module):
+        form = view.form_class(data=dict(flow=model_EnrollmentFlow.id), agency=view.agency)
 
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ELIGIBILITY_START)
-    assert mocked_session_update.call_args.kwargs["flow"] == model_EnrollmentFlow
-    mocked_analytics_module.selected_flow.assert_called_once()
+        assert form.is_valid()
+        view.form_valid(form)
 
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request")
-def test_index_calls_session_logout(client, session_logout_spy):
-    path = reverse(routes.ELIGIBILITY_INDEX)
-
-    client.get(path)
-
-    session_logout_spy.assert_called_once()
+        assert mocked_session_update.call_args.kwargs["flow"] == model_EnrollmentFlow
+        mocked_analytics_module.selected_flow.assert_called_once()
 
 
 @pytest.mark.django_db
