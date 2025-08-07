@@ -23,15 +23,15 @@ ENV PYTHONUNBUFFERED=${PYTHONUNBUFFERED} \
     PYTHONDONTWRITEBYTECODE=${PYTHONDONTWRITEBYTECODE} \
     HOME=/home/${USER} \
     USER=${USER} \
-    PATH="/home/${USER}/.local/bin:$PATH" \
+    PATH="/${USER}/.local/bin:$PATH" \
     # update env for local pip installs
     # see https://docs.python.org/3/using/cmdline.html#envvar-PYTHONUSERBASE
     # since all `pip install` commands are in the context of $USER
     # $PYTHONUSERBASE is the location used by default
-    PYTHONUSERBASE="/home/${USER}/.local" \
+    PYTHONUSERBASE="/${USER}/.local" \
     # where to store the pip cache (use the default)
     # https://pip.pypa.io/en/stable/cli/pip/#cmdoption-cache-dir
-    PIP_CACHE_DIR="/home/${USER}/.cache/pip"
+    PIP_CACHE_DIR="/${USER}/.cache/pip"
 
 WORKDIR /build
 
@@ -71,15 +71,15 @@ ENV PYTHONUNBUFFERED=${PYTHONUNBUFFERED} \
     USER=${USER} \
     USER_UID=${USER_UID} \
     USER_GID=${USER_GID} \
-    PATH="/home/${USER}/.local/bin:$PATH" \
+    PATH="/${USER}/.local/bin:$PATH" \
     # update env for local pip installs
     # see https://docs.python.org/3/using/cmdline.html#envvar-PYTHONUSERBASE
     # since all `pip install` commands are in the context of $USER
     # $PYTHONUSERBASE is the location used by default
-    PYTHONUSERBASE="/home/${USER}/.local" \
+    PYTHONUSERBASE="/${USER}/.local" \
     # where to store the pip cache (use the default)
     # https://pip.pypa.io/en/stable/cli/pip/#cmdoption-cache-dir
-    PIP_CACHE_DIR="/home/${USER}/.cache/pip"
+    PIP_CACHE_DIR="/${USER}/.cache/pip"
 
 USER $USER
 
