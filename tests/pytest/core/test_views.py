@@ -166,6 +166,7 @@ def test_agency_eligibility_index(client, model_TransitAgency, mocked_session_up
     assert mocked_session_update.mock_calls[0].kwargs["origin"] == model_TransitAgency.index_url
 
 
+@pytest.mark.django_db
 class TestHelpView:
     @pytest.fixture
     def view(self, app_request):
@@ -175,6 +176,13 @@ class TestHelpView:
 
     def test_view(self, view):
         assert view.template_name == "core/help.html"
+
+    def test_get(self, mocker, view, app_request):
+        spy = mocker.spy(view, "get")
+        response = view.dispatch(app_request)
+
+        spy.assert_called_once()
+        assert response.status_code == 200
 
 
 @pytest.mark.django_db
