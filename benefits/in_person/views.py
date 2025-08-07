@@ -8,6 +8,7 @@ from django.urls import reverse
 import sentry_sdk
 
 
+from benefits.core.models.transit import TransitAgency
 from benefits.routes import routes
 from benefits.core import models, session
 from benefits.eligibility import analytics as eligibility_analytics
@@ -25,6 +26,10 @@ def eligibility(request):
     """View handler for the in-person eligibility flow selection form."""
 
     agency = session.agency(request)
+    if not agency:
+        agency = TransitAgency.for_user(request.user)
+        session.update(request, agency=agency)
+
     context = {
         **admin_site.each_context(request),
         "form": forms.InPersonEligibilityForm(agency=agency),
