@@ -4,14 +4,15 @@ The enrollment application: view definitions for the benefits enrollment flow.
 
 import logging
 
-from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
+from django.views.generic import RedirectView
 
 from benefits.routes import routes
 from benefits.core import session
-from benefits.core.middleware import AgencySessionRequired, EligibleSessionRequired, FlowSessionRequired, pageview_decorator
+from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin
+from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
 
 from . import analytics
 
@@ -22,14 +23,15 @@ TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
 logger = logging.getLogger(__name__)
 
 
-@decorator_from_middleware(AgencySessionRequired)
-@decorator_from_middleware(EligibleSessionRequired)
-def index(request):
-    """View handler for the enrollment landing page."""
-    session.update(request, origin=reverse(routes.ENROLLMENT_INDEX))
+class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, RedirectView):
+    """CBV for the enrollment landing page."""
 
-    agency = session.agency(request)
-    return redirect(agency.enrollment_index_route)
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse(self.agency.enrollment_index_route)
+
+    def get(self, request, *args, **kwargs):
+        session.update(request, origin=reverse(routes.ENROLLMENT_INDEX))
+        return super().get(request, *args, **kwargs)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
