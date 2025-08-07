@@ -3,7 +3,7 @@ from django.urls import reverse
 import pytest
 
 from benefits.routes import routes
-
+from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.core.models import EnrollmentFlow, TransitAgency
 import benefits.core.views as views
 import benefits.core.session
@@ -146,7 +146,7 @@ def test_agency_card_without_eligibility_api_flow(
     response = client.get(url)
 
     assert response.status_code == 200
-    assert response.template_name == views.TEMPLATE_USER_ERROR
+    assert response.template_name == TEMPLATE_USER_ERROR
 
     mocked_session_reset.assert_called()
     mocked_session_update.assert_called_once()
