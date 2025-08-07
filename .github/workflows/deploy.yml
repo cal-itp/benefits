@@ -73,13 +73,22 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Cache Parameters
+        id: cache_params
+        run: |
+          CACHE_SCOPE="cal-itp"
+          MAIN_BRANCH_REF="refs/heads/main"
+
+          echo "cache_from_args=type=gha,scope=${CACHE_SCOPE},ref=${MAIN_BRANCH_REF}" >> $GITHUB_OUTPUT
+          echo "cache_to_args=type=gha,scope=${CACHE_SCOPE},mode=max,ref=${MAIN_BRANCH_REF}" >> $GITHUB_OUTPUT
+
       - name: Build, tag, and push image to GitHub Container Registry
         uses: docker/build-push-action@v6
         with:
           builder: ${{ steps.buildx.outputs.name }}
           build-args: GIT-SHA=${{ github.sha }}
-          cache-from: type=gha,scope=cal-itp
-          cache-to: type=gha,scope=cal-itp,mode=max
+          cache-from: ${{ steps.cache_params.outputs.cache_from_args }}
+          cache-to: ${{ steps.cache_params.outputs.cache_to_args }}
           context: .
           file: appcontainer/Dockerfile
           push: true
