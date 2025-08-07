@@ -22,7 +22,7 @@ COPY pyproject.toml pyproject.toml
 # setting uid,gid here is critical, as otherwise the Buildkit cache is mounted as root
 # even though we are running in the context of non-root $USER
 RUN --mount=type=cache,id=pipcache,target=${PIP_CACHE_DIR},uid=${USER_UID},gid=${USER_GID} \
-     pip install -e .[dev,test]
+     pip install --user -e .[dev,test]
 
 # docs requirements are in a separate file for the GitHub Action
 COPY docs/requirements.txt docs/requirements.txt
@@ -30,4 +30,4 @@ COPY docs/requirements.txt docs/requirements.txt
 # setting uid,gid here is critical, as otherwise the Buildkit cache is mounted as root
 # even though we are running in the context of non-root $USER
 RUN --mount=type=cache,id=pipcache,target=${PIP_CACHE_DIR},uid=${USER_UID},gid=${USER_GID} \
-    pip install -r docs/requirements.txt
+    pip install --user -r docs/requirements.txt
