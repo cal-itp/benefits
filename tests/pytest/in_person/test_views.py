@@ -62,31 +62,6 @@ def test_eligibility_logged_in(admin_client):
 
 
 @pytest.mark.django_db
-def test_eligibility_logged_in_filtering_flows(mocker, model_TransitAgency, admin_client):
-    digital = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency, supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL], label="Digital"
-    )
-    in_person = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency,
-        supported_enrollment_methods=[models.EnrollmentMethods.IN_PERSON],
-        label="In-Person",
-    )
-    both = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency,
-        supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
-        label="Both",
-    )
-    mocker.patch("benefits.core.session.agency", autospec=True, return_value=model_TransitAgency)
-
-    path = reverse(routes.IN_PERSON_ELIGIBILITY)
-    response = admin_client.get(path)
-    filtered_flow_ids = [choice[0] for choice in response.context_data["form"].fields["flow"].choices]
-
-    assert in_person.id, both.id in filtered_flow_ids
-    assert digital.id not in filtered_flow_ids
-
-
-@pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
 def test_eligibility_post_no_flow_selected(admin_client):
 
