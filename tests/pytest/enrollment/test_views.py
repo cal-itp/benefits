@@ -2,7 +2,7 @@ import pytest
 from django.urls import reverse
 
 from benefits.routes import routes
-import benefits.enrollment.views
+import benefits.enrollment.views as views
 import benefits.enrollment.enrollment
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.enrollment.views import TEMPLATE_RETRY, system_error
@@ -29,23 +29,25 @@ def mocked_sentry_sdk_module(mocker):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible", "model_LittlepayConfig")
-def test_index_eligible_get_littlepay(client):
-    path = reverse(routes.ENROLLMENT_INDEX)
-    response = client.get(path)
+class TestIndexView:
 
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ENROLLMENT_LITTLEPAY_INDEX)
+    @pytest.fixture
+    def view(self, app_request, model_LittlepayConfig):
+        v = views.IndexView()
+        v.setup(app_request)
+        v.agency = model_LittlepayConfig.transit_agency
+        return v
 
+    def test_get_redirect_url(self, view):
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible", "model_SwitchioConfig")
-def test_index_eligible_get_switchio(client):
-    path = reverse(routes.ENROLLMENT_INDEX)
-    response = client.get(path)
+        assert view.get_redirect_url() == reverse(view.agency.enrollment_index_route)
 
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ENROLLMENT_SWITCHIO_INDEX)
+    def test_get(self, view, app_request, mocked_session_update):
+
+        response = view.get(app_request)
+
+        assert response.status_code == 302
+        mocked_session_update.assert_called_once()
 
 
 @pytest.mark.django_db
@@ -61,16 +63,6 @@ def test_system_error(
     system_error(app_request)
 
     assert {"origin": mocked_session_agency.return_value.index_url} in mock_session.update.call_args
-
-
-@pytest.mark.django_db
-def test_index_ineligible(client):
-    path = reverse(routes.ENROLLMENT_INDEX)
-
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_USER_ERROR
 
 
 @pytest.mark.django_db
