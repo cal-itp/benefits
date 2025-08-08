@@ -31,7 +31,7 @@ def test_handle_enrollment_results_success_claims(
     mocked_session_oauth_extra_claims.return_value = ["claim_1", "claim_2"]
     spy = mocker.spy(benefits.enrollment.enrollment.models.EnrollmentEvent.objects, "create")
 
-    response = handle_enrollment_results(app_request, Status.SUCCESS, None)
+    response = handle_enrollment_results(app_request, Status.SUCCESS)
 
     spy.assert_called_once_with(
         transit_agency=model_TransitAgency,
@@ -45,7 +45,9 @@ def test_handle_enrollment_results_success_claims(
     assert response.status_code == 302
     assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
     mocked_analytics_module.returned_success.assert_called_once()
-    assert model_EnrollmentFlow_with_scope_and_claim.group_id in mocked_analytics_module.returned_success.call_args.args
+    analytics_kwargs = mocked_analytics_module.returned_success.call_args.kwargs
+    assert analytics_kwargs["enrollment_group"] == model_EnrollmentFlow_with_scope_and_claim.group_id
+    assert analytics_kwargs["enrollment_method"] == models.EnrollmentMethods.DIGITAL
 
 
 @pytest.mark.django_db
@@ -61,7 +63,7 @@ def test_handle_enrollment_results_success_eligibility_api(
     mocked_session_oauth_extra_claims.return_value = ["claim_1", "claim_2"]
     spy = mocker.spy(benefits.enrollment.enrollment.models.EnrollmentEvent.objects, "create")
 
-    response = handle_enrollment_results(app_request, Status.SUCCESS, None)
+    response = handle_enrollment_results(app_request, Status.SUCCESS)
 
     spy.assert_called_once_with(
         transit_agency=model_TransitAgency,
@@ -75,7 +77,9 @@ def test_handle_enrollment_results_success_eligibility_api(
     assert response.status_code == 302
     assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
     mocked_analytics_module.returned_success.assert_called_once()
-    assert model_EnrollmentFlow_with_eligibility_api.group_id in mocked_analytics_module.returned_success.call_args.args
+    analytics_kwargs = mocked_analytics_module.returned_success.call_args.kwargs
+    assert analytics_kwargs["enrollment_group"] == model_EnrollmentFlow_with_eligibility_api.group_id
+    assert analytics_kwargs["enrollment_method"] == models.EnrollmentMethods.DIGITAL
 
 
 @pytest.mark.parametrize("status_code", [500, 501, 502, 503, 504])
@@ -104,7 +108,7 @@ def test_handle_enrollment_results_exception(app_request, mocked_analytics_modul
 
 
 def test_handle_enrollment_results_reenrollment_error(app_request, mocked_analytics_module):
-    response = handle_enrollment_results(app_request, Status.REENROLLMENT_ERROR, None)
+    response = handle_enrollment_results(app_request, Status.REENROLLMENT_ERROR)
 
     assert response.status_code == 302
     assert response.url == reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)

@@ -23,7 +23,15 @@ class Status(Enum):
     REENROLLMENT_ERROR = 4
 
 
-def handle_enrollment_results(request, status: Status, exception: Exception):
+def handle_enrollment_results(
+    request,
+    status: Status,
+    exception: Exception = None,
+    enrollment_method: str = models.EnrollmentMethods.DIGITAL,
+    route_reenrollment_error=routes.ENROLLMENT_REENROLLMENT_ERROR,
+    route_success=routes.ENROLLMENT_SUCCESS,
+    route_system_error=routes.ENROLLMENT_SYSTEM_ERROR,
+):
     match (status):
         case Status.SUCCESS:
             agency = session.agency(request)
@@ -38,24 +46,26 @@ def handle_enrollment_results(request, status: Status, exception: Exception):
             event = models.EnrollmentEvent.objects.create(
                 transit_agency=agency,
                 enrollment_flow=flow,
-                enrollment_method=models.EnrollmentMethods.DIGITAL,
+                enrollment_method=enrollment_method,
                 verified_by=flow.eligibility_verifier,
                 expiration_datetime=expiry,
                 extra_claims=str_extra_claims,
             )
             event.save()
-            analytics.returned_success(request, flow.group_id, extra_claims=oauth_extra_claims)
-            return redirect(routes.ENROLLMENT_SUCCESS)
+            analytics.returned_success(
+                request, enrollment_group=flow.group_id, enrollment_method=enrollment_method, extra_claims=oauth_extra_claims
+            )
+            return redirect(route_success)
 
         case Status.SYSTEM_ERROR:
-            analytics.returned_error(request, str(exception))
+            analytics.returned_error(request, str(exception), enrollment_method=enrollment_method)
             sentry_sdk.capture_exception(exception)
-            return redirect(routes.ENROLLMENT_SYSTEM_ERROR)
+            return redirect(route_system_error)
 
         case Status.EXCEPTION:
-            analytics.returned_error(request, str(exception))
+            analytics.returned_error(request, str(exception), enrollment_method=enrollment_method)
             raise exception
 
         case Status.REENROLLMENT_ERROR:
-            analytics.returned_error(request, "Re-enrollment error.")
-            return redirect(routes.ENROLLMENT_REENROLLMENT_ERROR)
+            analytics.returned_error(request, "Re-enrollment error.", enrollment_method=enrollment_method)
+            return redirect(route_reenrollment_error)
