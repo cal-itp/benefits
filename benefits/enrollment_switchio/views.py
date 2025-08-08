@@ -103,6 +103,10 @@ class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
 class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, View):
     """View for the tokenization gateway registration"""
 
+    enrollment_method = models.EnrollmentMethods.DIGITAL
+    route_system_error = routes.ENROLLMENT_SYSTEM_ERROR
+    route_server_error = routes.SERVER_ERROR
+
     def get(self, request: HttpRequest, *args, **kwargs):
         session = Session(request)
         switchio_config = self.agency.switchio_config
@@ -121,12 +125,12 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
             else:
                 logger.debug(f"Error occurred while attempting to get registration status for {session.registration_id}")
                 sentry_sdk.capture_exception(response.exception)
-                analytics.failed_pretokenization_request(request, response.status_code)
+                analytics.failed_pretokenization_request(request, response.status_code, self.enrollment_method)
 
                 if response.status is Status.SYSTEM_ERROR:
-                    redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+                    redirect = reverse(self.route_system_error)
                 else:
-                    redirect = reverse(routes.SERVER_ERROR)
+                    redirect = reverse(self.route_server_error)
 
                 data = {"redirect": redirect}
                 return JsonResponse(data)
@@ -143,12 +147,12 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
         else:
             logger.debug("Error occurred while requesting a tokenization gateway registration", exc_info=response.exception)
             sentry_sdk.capture_exception(response.exception)
-            analytics.failed_pretokenization_request(request, response.status_code)
+            analytics.failed_pretokenization_request(request, response.status_code, self.enrollment_method)
 
             if response.status is Status.SYSTEM_ERROR:
-                redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+                redirect = reverse(self.route_system_error)
             else:
-                redirect = reverse(routes.SERVER_ERROR)
+                redirect = reverse(self.route_server_error)
 
             data = {"redirect": redirect}
             return JsonResponse(data)
