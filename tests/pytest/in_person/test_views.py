@@ -58,7 +58,7 @@ def test_eligibility_logged_in(admin_client):
 
     response = admin_client.get(path)
     assert response.status_code == 200
-    assert response.template_name == "in_person/eligibility.html"
+    assert response.template_name == ["in_person/eligibility.html"]
 
 
 @pytest.mark.django_db
@@ -96,7 +96,7 @@ def test_eligibility_post_no_flow_selected(admin_client):
 
     # should return user back to the in-person eligibility index
     assert response.status_code == 200
-    assert response.template_name == "in_person/eligibility.html"
+    assert response.template_name == ["in_person/eligibility.html"]
 
 
 @pytest.mark.django_db
@@ -126,7 +126,7 @@ def test_eligibility_post_flow_selected_and_unverified(admin_client):
 
     # should return user back to the in-person eligibility index
     assert response.status_code == 200
-    assert response.template_name == "in_person/eligibility.html"
+    assert response.template_name == ["in_person/eligibility.html"]
 
 
 @pytest.mark.django_db
