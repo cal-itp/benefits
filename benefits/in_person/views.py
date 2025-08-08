@@ -18,6 +18,7 @@ from benefits.enrollment import analytics as enrollment_analytics
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_littlepay.enrollment import get_card_types_for_js, request_card_tokenization_access, enroll
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
+from benefits.enrollment_switchio.views import GatewayUrlView
 
 from benefits.in_person import forms
 
@@ -267,3 +268,9 @@ def success(request):
     }
 
     return TemplateResponse(request, "in_person/enrollment/success.html", context)
+
+
+class SwitchioGatewayUrlView(GatewayUrlView):
+    enrollment_method = models.EnrollmentMethods.IN_PERSON
+    route_server_error = routes.IN_PERSON_SERVER_ERROR
+    route_system_error = routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR

@@ -10,7 +10,7 @@ from unittest.mock import patch, PropertyMock
 from benefits.core import models
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_littlepay.enrollment import CardTokenizationAccessResponse
-import benefits.in_person.views
+import benefits.in_person.views as views
 from benefits.routes import routes
 
 
@@ -26,27 +26,27 @@ def invalid_form_data():
 
 @pytest.fixture
 def mocked_eligibility_analytics_module(mocker):
-    return mocker.patch.object(benefits.in_person.views, "eligibility_analytics")
+    return mocker.patch.object(views, "eligibility_analytics")
 
 
 @pytest.fixture
 def mocked_enrollment_analytics_module(mocker):
-    return mocker.patch.object(benefits.in_person.views, "enrollment_analytics")
+    return mocker.patch.object(views, "enrollment_analytics")
 
 
 @pytest.fixture
 def mocked_sentry_sdk_module(mocker):
-    return mocker.patch.object(benefits.in_person.views, "sentry_sdk")
+    return mocker.patch.object(views, "sentry_sdk")
 
 
 @pytest.fixture
 def mocked_session_module(mocker):
-    return mocker.patch.object(benefits.in_person.views, "session")
+    return mocker.patch.object(views, "session")
 
 
 @pytest.fixture
 def mocked_transit_agency_class(mocker):
-    return mocker.patch.object(benefits.in_person.views, "TransitAgency")
+    return mocker.patch.object(views, "TransitAgency")
 
 
 @pytest.fixture
@@ -73,7 +73,7 @@ class TestEligibilityView:
         # manually attach a logged-in user to the request
         app_request.user = model_User
 
-        v = benefits.in_person.views.EligibilityView()
+        v = views.EligibilityView()
         v.setup(app_request)
         v.agency = mocked_session_agency(app_request)
         return v
@@ -280,7 +280,7 @@ def test_token_connection_error(mocker, admin_client, mocked_enrollment_analytic
 class TestEnrollmentView:
     @pytest.fixture
     def view(self, app_request, mocked_session_agency_littlepay):
-        v = benefits.in_person.views.EnrollmentView()
+        v = views.EnrollmentView()
         v.setup(app_request)
         v.agency = mocked_session_agency_littlepay(app_request)
         return v
@@ -330,7 +330,7 @@ def test_enrollment_post_valid_form_success(
     model_User,
 ):
     mocker.patch("benefits.in_person.views.enroll", return_value=(Status.SUCCESS, None))
-    spy = mocker.spy(benefits.in_person.views.models.EnrollmentEvent.objects, "create")
+    spy = mocker.spy(views.models.EnrollmentEvent.objects, "create")
 
     # force the model_User to be the logged in user
     # e.g. the TransitAgency staff person assisting this in-person enrollment
@@ -465,3 +465,18 @@ def test_success(admin_client):
 
     assert response.status_code == 200
     assert response.template_name == "in_person/enrollment/success.html"
+
+
+@pytest.mark.django_db
+class TestSwitchioGatewayUrlView:
+    @pytest.fixture
+    def view(self, app_request, model_SwitchioConfig):
+        v = views.SwitchioGatewayUrlView()
+        v.setup(app_request)
+        v.agency = model_SwitchioConfig.transit_agency
+        return v
+
+    def test_view(self, view: views.SwitchioGatewayUrlView):
+        assert view.enrollment_method == models.EnrollmentMethods.IN_PERSON
+        assert view.route_system_error == routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
+        assert view.route_server_error == routes.IN_PERSON_SERVER_ERROR
