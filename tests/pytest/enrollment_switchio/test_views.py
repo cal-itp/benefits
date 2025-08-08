@@ -4,6 +4,7 @@ from django.urls import reverse
 import pytest
 from requests import HTTPError
 
+from benefits.core import models
 from benefits.routes import routes
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_switchio.api import Registration, RegistrationStatus
@@ -249,6 +250,8 @@ class TestIndexView:
         mock_handler.assert_called_once_with(view.request, Status.SUCCESS, None)
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_api_base_url")
 class TestGatewayUrlView:
     @pytest.fixture
     def view(self, app_request, mocked_session_agency):
@@ -259,9 +262,12 @@ class TestGatewayUrlView:
 
         return v
 
-    @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_api_base_url")
-    def test_get_gateway_url(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
+    def test_view(self, view: GatewayUrlView):
+        assert view.enrollment_method == models.EnrollmentMethods.DIGITAL
+        assert view.route_system_error == routes.ENROLLMENT_SYSTEM_ERROR
+        assert view.route_server_error == routes.SERVER_ERROR
+
+    def test_get_gateway_url(self, view: GatewayUrlView, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
         model_SwitchioConfig.transit_agency = model_TransitAgency
         gateway_url = "https://example.com/cst/?regId=1234"
         mocker.patch(
@@ -279,11 +285,9 @@ class TestGatewayUrlView:
         assert session.registration_id == "1234"
         assert session.gateway_url == gateway_url
 
-    @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_api_base_url")
     def test_get_gateway_url_system_error(
         self,
-        view,
+        view: GatewayUrlView,
         app_request,
         mocker,
         model_TransitAgency,
@@ -310,17 +314,15 @@ class TestGatewayUrlView:
         response = view.get(app_request)
 
         assert response.status_code == 200
-        assert json.loads(response.content) == {"redirect": reverse(routes.ENROLLMENT_SYSTEM_ERROR)}
+        assert json.loads(response.content) == {"redirect": reverse(view.route_system_error)}
 
         mocked_analytics_module.failed_pretokenization_request.assert_called_once()
         assert 500 in mocked_analytics_module.failed_pretokenization_request.call_args.args
         mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
-    @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_api_base_url")
     def test_get_gateway_url_http_error_400(
         self,
-        view,
+        view: GatewayUrlView,
         app_request,
         mocker,
         model_TransitAgency,
@@ -347,15 +349,15 @@ class TestGatewayUrlView:
         response = view.get(app_request)
 
         assert response.status_code == 200
-        assert json.loads(response.content) == {"redirect": reverse(routes.SERVER_ERROR)}
+        assert json.loads(response.content) == {"redirect": reverse(view.route_server_error)}
 
         mocked_analytics_module.failed_pretokenization_request.assert_called_once()
         assert 400 in mocked_analytics_module.failed_pretokenization_request.call_args.args
         mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
-    @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_api_base_url")
-    def test_get_gateway_url_still_valid(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
+    def test_get_gateway_url_still_valid(
+        self, view: GatewayUrlView, app_request, mocker, model_TransitAgency, model_SwitchioConfig
+    ):
         model_SwitchioConfig.transit_agency = model_TransitAgency
         gateway_url = "https://example.com/cst/?regId=3456"
         mocked_request_registration = mocker.patch(
@@ -390,10 +392,10 @@ class TestGatewayUrlView:
         assert session.registration_id == "3456"
         assert session.gateway_url == gateway_url
 
-    @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_api_base_url")
     @pytest.mark.parametrize("regState", ["expired", "deleted"])
-    def test_get_gateway_url_not_valid(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig, regState):
+    def test_get_gateway_url_not_valid(
+        self, view: GatewayUrlView, app_request, mocker, model_TransitAgency, model_SwitchioConfig, regState
+    ):
         model_SwitchioConfig.transit_agency = model_TransitAgency
         gateway_url = "https://example.com/cst/?regId=7890"
         mocked_request_registration = mocker.patch(
@@ -428,10 +430,9 @@ class TestGatewayUrlView:
         assert session.registration_id == "7890"
         assert session.gateway_url == gateway_url
 
-    @pytest.mark.django_db
     @pytest.mark.parametrize("status", [Status.SYSTEM_ERROR, Status.EXCEPTION])
     def test_get_gateway_url_error_while_checking_for_validity(
-        self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig, status
+        self, view: GatewayUrlView, app_request, mocker, model_TransitAgency, model_SwitchioConfig, status
     ):
         model_SwitchioConfig.transit_agency = model_TransitAgency
         gateway_url = "https://example.com/cst/?regId=7890"
