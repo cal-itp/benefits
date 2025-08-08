@@ -3,9 +3,7 @@ from django.urls import reverse
 
 import pytest
 
-from benefits.core import models
 from benefits.routes import routes
-from benefits.core.middleware import TEMPLATE_USER_ERROR
 import benefits.core.session
 from benefits.eligibility.forms import EnrollmentFlowSelectionForm, EligibilityVerificationForm
 import benefits.eligibility.views as views
@@ -77,124 +75,35 @@ def model_EnrollmentFlow_with_form_class(mocker, model_EnrollmentFlow_with_eligi
 
 
 @pytest.mark.django_db
-def test_index_filtering_flows(mocker, model_TransitAgency, client):
-    digital = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency,
-        supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL],
-        label="Digital",
-        selection_label_template_override="eligibility/includes/selection-label.html",
-    )
-    in_person = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency,
-        supported_enrollment_methods=[models.EnrollmentMethods.IN_PERSON],
-        label="In-Person",
-        selection_label_template_override="eligibility/includes/selection-label.html",
-    )
-    both = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency,
-        supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
-        label="Both",
-        selection_label_template_override="eligibility/includes/selection-label.html",
-    )
-    mocker.patch("benefits.core.session.agency", autospec=True, return_value=model_TransitAgency)
+class TestIndexView:
+    @pytest.fixture
+    def view(self, app_request, mocked_session_agency):
+        v = views.IndexView()
+        v.setup(app_request)
+        v.agency = mocked_session_agency(app_request)
+        return v
 
-    path = reverse(routes.ELIGIBILITY_INDEX)
-    response = client.get(path)
-    filtered_flow_ids = [choice[0] for choice in response.context_data["form"].fields["flow"].choices]
+    def test_get_form_kwargs(self, view):
+        kwargs = view.get_form_kwargs()
+        assert kwargs["agency"] == view.agency
 
-    assert digital.id, both.id in filtered_flow_ids
-    assert in_person.id not in filtered_flow_ids
+    def test_get_context_data(self, view):
+        context_data = view.get_context_data()
+        assert "form_text" in context_data
 
+    def test_get(self, view, app_request, session_logout_spy):
+        view.get(app_request)
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("model_LittlepayConfig")
-def test_index_get_agency_multiple_flows(mocker, model_TransitAgency, model_EnrollmentFlow, mocked_session_agency, client):
-    # override the mocked session agency with a mock agency that has multiple flows
-    mock_agency = mocker.Mock(spec=model_TransitAgency)
+        session_logout_spy.assert_called_once()
 
-    # mock the enrollment_flows property on the class - https://stackoverflow.com/a/55642462
-    mock_manager = mocker.Mock()
-    mock_manager.all.return_value = [model_EnrollmentFlow, model_EnrollmentFlow]
-    type(mock_agency).enrollment_flows = mocker.PropertyMock(return_value=mock_manager)
-    type(mock_agency).enrollment_flows.filter.return_value = [model_EnrollmentFlow, model_EnrollmentFlow]
-    type(mock_agency).eligibility_index_context = mocker.PropertyMock(return_value=dict(form_text="copy goes here"))
+    def test_form_valid(self, view, model_EnrollmentFlow, mocked_session_update, mocked_analytics_module):
+        form = view.form_class(data=dict(flow=model_EnrollmentFlow.id), agency=view.agency)
 
-    mocked_session_agency.return_value = mock_agency
+        assert form.is_valid()
+        view.form_valid(form)
 
-    path = reverse(routes.ELIGIBILITY_INDEX)
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == "eligibility/index.html"
-    assert "form" in response.context_data
-    assert isinstance(response.context_data["form"], EnrollmentFlowSelectionForm)
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("model_LittlepayConfig")
-def test_index_get_agency_single_flow(mocker, model_TransitAgency, model_EnrollmentFlow, mocked_session_agency, client):
-    # override the mocked session agency with a mock agency that has a single flow
-    mock_agency = mocker.Mock(spec=model_TransitAgency)
-
-    # mock the enrollment_flows property on the class - https://stackoverflow.com/a/55642462
-    mock_manager = mocker.Mock()
-    mock_manager.all.return_value = [model_EnrollmentFlow]
-    type(mock_agency).enrollment_flows = mocker.PropertyMock(return_value=mock_manager)
-    type(mock_agency).enrollment_flows.filter.return_value = [model_EnrollmentFlow, model_EnrollmentFlow]
-    type(mock_agency).eligibility_index_context = mocker.PropertyMock(return_value=dict(form_text="copy goes here"))
-
-    mocked_session_agency.return_value = mock_agency
-
-    path = reverse(routes.ELIGIBILITY_INDEX)
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == "eligibility/index.html"
-    assert "form" in response.context_data
-    assert isinstance(response.context_data["form"], EnrollmentFlowSelectionForm)
-
-
-@pytest.mark.django_db
-def test_index_get_without_agency(client):
-    path = reverse(routes.ELIGIBILITY_INDEX)
-
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_USER_ERROR
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency")
-def test_index_post_invalid_form(client):
-    path = reverse(routes.ELIGIBILITY_INDEX)
-
-    response = client.post(path, {"invalid": "data"})
-
-    assert response.status_code == 200
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency")
-def test_index_post_valid_form(client, model_EnrollmentFlow, mocked_session_update, mocked_analytics_module):
-    path = reverse(routes.ELIGIBILITY_INDEX)
-
-    response = client.post(path, {"flow": model_EnrollmentFlow.id})
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ELIGIBILITY_START)
-    assert mocked_session_update.call_args.kwargs["flow"] == model_EnrollmentFlow
-    mocked_analytics_module.selected_flow.assert_called_once()
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request")
-def test_index_calls_session_logout(client, session_logout_spy):
-    path = reverse(routes.ELIGIBILITY_INDEX)
-
-    client.get(path)
-
-    session_logout_spy.assert_called_once()
+        assert mocked_session_update.call_args.kwargs["flow"] == model_EnrollmentFlow
+        mocked_analytics_module.selected_flow.assert_called_once()
 
 
 @pytest.mark.django_db
