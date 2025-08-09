@@ -31,6 +31,8 @@ def mocked_api_base_url(mocker):
     )
 
 
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_flow")
 class TestIndexView:
     @pytest.fixture
     def view(self, app_request, mocked_session_agency, mocked_session_flow):
@@ -42,8 +44,6 @@ class TestIndexView:
 
         return v
 
-    @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_session_flow")
     def test_get_context_data(self, view):
 
         context = view.get_context_data()
@@ -60,15 +60,12 @@ class TestIndexView:
         assert "name" in transit_processor_context
         assert "website" in transit_processor_context
 
-    @pytest.mark.django_db
     @pytest.mark.parametrize("LANGUAGE_CODE, expected_locale", [("en", "en"), ("es", "es"), ("unsupported", "en")])
     def test_get_locale(self, view, LANGUAGE_CODE, expected_locale):
         locale = view._get_locale(LANGUAGE_CODE)
 
         assert locale == expected_locale
 
-    @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_session_flow")
     def test_get(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
         model_SwitchioConfig.transit_agency = model_TransitAgency
         mocked_get_registration_status = mocker.patch(
@@ -81,8 +78,6 @@ class TestIndexView:
         assert response.template_name == ["enrollment_switchio/index.html"]
         mocked_get_registration_status.assert_not_called()
 
-    @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_session_flow")
     def test_get_with_session_registration_id_tokenization_finished(
         self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig
     ):
@@ -119,8 +114,6 @@ class TestIndexView:
         assert response.template_name == ["enrollment_switchio/index.html"]
         mocked_get_registration_status.assert_called_once()
 
-    @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_session_flow")
     def test_get_with_session_registration_id_verification_failed(
         self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig
     ):
@@ -147,8 +140,6 @@ class TestIndexView:
         assert response.url == reverse(routes.ENROLLMENT_RETRY)
         mocked_get_registration_status.assert_called_once()
 
-    @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_session_flow")
     def test_get_with_session_registration_id_tokenization_failed(
         self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig
     ):
@@ -175,8 +166,6 @@ class TestIndexView:
         assert response.url == reverse(routes.ENROLLMENT_SYSTEM_ERROR)
         mocked_get_registration_status.assert_called_once()
 
-    @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_session_flow")
     def test_get_with_session_registration_id_system_error(
         self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig, mocked_sentry_sdk_module
     ):
@@ -206,8 +195,6 @@ class TestIndexView:
         mocked_get_registration_status.assert_called_once()
         mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
-    @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_session_flow")
     def test_get_with_session_registration_id_server_error(
         self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig, mocked_sentry_sdk_module
     ):
@@ -237,7 +224,6 @@ class TestIndexView:
         mocked_get_registration_status.assert_called_once()
         mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
-    @pytest.mark.django_db
     def test_form_valid(self, mocker, view):
         mocker.patch("benefits.enrollment_switchio.views.enroll", return_value=(Status.SUCCESS, None))
 
@@ -247,7 +233,12 @@ class TestIndexView:
         assert form.is_valid()
         view.form_valid(form)
 
-        mock_handler.assert_called_once_with(view.request, Status.SUCCESS, None)
+        mock_handler.assert_called_once()
+        handler_kwargs = mock_handler.call_args.kwargs
+        assert handler_kwargs["enrollment_method"] == models.EnrollmentMethods.DIGITAL
+        assert handler_kwargs["route_reenrollment_error"] == routes.ENROLLMENT_REENROLLMENT_ERROR
+        assert handler_kwargs["route_success"] == routes.ENROLLMENT_SUCCESS
+        assert handler_kwargs["route_system_error"] == routes.ENROLLMENT_SYSTEM_ERROR
 
 
 @pytest.mark.django_db
