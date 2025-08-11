@@ -155,6 +155,11 @@ class Routes:
         return "in_person:enrollment_littlepay_token"
 
     @property
+    def IN_PERSON_ENROLLMENT_SWITCHIO_GATEWAY_URL(self):
+        """Switchio Gateway for in-person (e.g. agency assisted) enrollment"""
+        return "in_person:enrollment_switchio_gateway"
+
+    @property
     def IN_PERSON_SERVER_ERROR(self):
         """Generic error handler for the in_person app."""
         return "in_person:error"
