@@ -150,6 +150,11 @@ class Routes:
         return "in_person:enrollment_switchio_index"
 
     @property
+    def IN_PERSON_ENROLLMENT_SWITCHIO_GATEWAY_URL(self):
+        """Switchio Gateway for in-person (e.g. agency assisted) enrollment"""
+        return "in_person:enrollment_switchio_gateway"
+
+    @property
     def IN_PERSON_ENROLLMENT_TOKEN(self):
         """Acquire a TransitProcessor API token for in-person enrollment."""
         return "in_person:token"
