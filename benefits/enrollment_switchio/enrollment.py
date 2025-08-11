@@ -46,7 +46,9 @@ class Token:
     par: str = None
 
 
-def request_registration(request, switchio_config: SwitchioConfig) -> RegistrationResponse:
+def request_registration(
+    request, switchio_config: SwitchioConfig, redirect_route: str = routes.ENROLLMENT_SWITCHIO_INDEX
+) -> RegistrationResponse:
     try:
         client = TokenizationClient(
             api_url=switchio_config.tokenization_api_base_url,
@@ -57,7 +59,7 @@ def request_registration(request, switchio_config: SwitchioConfig) -> Registrati
             ca_certificate=switchio_config.ca_certificate_data,
         )
 
-        route = reverse(routes.ENROLLMENT_SWITCHIO_INDEX)
+        route = reverse(redirect_route)
         redirect_url = _generate_redirect_uri(request, route)
 
         registration = client.request_registration(

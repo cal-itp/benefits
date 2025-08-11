@@ -104,6 +104,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
     """View for the tokenization gateway registration"""
 
     enrollment_method = models.EnrollmentMethods.DIGITAL
+    route_redirect = routes.ENROLLMENT_SWITCHIO_INDEX
     route_system_error = routes.ENROLLMENT_SYSTEM_ERROR
     route_server_error = routes.SERVER_ERROR
 
@@ -136,7 +137,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
                 return JsonResponse(data)
 
     def _request_registration(self, request: HttpRequest, switchio_config: SwitchioConfig, session: Session) -> JsonResponse:
-        response = request_registration(request, switchio_config)
+        response = request_registration(request, switchio_config, self.route_redirect)
 
         if response.status is Status.SUCCESS:
             registration = response.registration
