@@ -38,6 +38,9 @@ class TestIndexView:
         v.agency = model_LittlepayConfig.transit_agency
         return v
 
+    def test_get_target_route_name(self, view):
+        assert view.get_target_route_name() == view.agency.enrollment_index_route
+
     def test_get_redirect_url(self, view):
 
         assert view.get_redirect_url() == reverse(view.agency.enrollment_index_route)
