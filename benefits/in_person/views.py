@@ -59,13 +59,14 @@ class EligibilityView(FormView):
         return kwargs
 
     def form_valid(self, form):
-        """If the form is valid, set enrollment flow and redirect."""
+        """If the form is valid, set enrollment flow, eligible session, and redirect."""
 
         flow_id = form.cleaned_data.get("flow")
         flow = models.EnrollmentFlow.objects.get(id=flow_id)
-        session.update(self.request, flow=flow)
+        session.update(self.request, flow=flow, eligible=True)
         eligibility_analytics.selected_flow(self.request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
         eligibility_analytics.started_eligibility(self.request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
+        eligibility_analytics.returned_success(self.request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
         return redirect(routes.IN_PERSON_ENROLLMENT)
 
 
@@ -108,7 +109,6 @@ def enrollment(request):
             raise Exception("Invalid card token form")
 
         flow = session.flow(request)
-        eligibility_analytics.returned_success(request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
         card_token = form.cleaned_data.get("card_token")
         status, exception = enroll(request, card_token)
 

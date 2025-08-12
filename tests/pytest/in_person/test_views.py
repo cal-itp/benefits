@@ -101,11 +101,14 @@ class TestEligibilityView:
         response = view.form_valid(mock_form)
 
         mock_enrollment_flow_model.assert_called_once_with(id=model_EnrollmentFlow.id)
-        mocked_session_module.update.assert_called_once_with(view.request, flow=model_EnrollmentFlow)
+        mocked_session_module.update.assert_called_once_with(view.request, flow=model_EnrollmentFlow, eligible=True)
         mocked_eligibility_analytics_module.selected_flow.assert_called_once_with(
             view.request, model_EnrollmentFlow, enrollment_method=models.EnrollmentMethods.IN_PERSON
         )
         mocked_eligibility_analytics_module.started_eligibility.assert_called_once_with(
+            view.request, model_EnrollmentFlow, enrollment_method=models.EnrollmentMethods.IN_PERSON
+        )
+        mocked_eligibility_analytics_module.returned_success.assert_called_once_with(
             view.request, model_EnrollmentFlow, enrollment_method=models.EnrollmentMethods.IN_PERSON
         )
         assert response.status_code == 302
@@ -326,7 +329,6 @@ def test_enrollment_post_valid_form_success(
 
     assert response.status_code == 302
     assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_SUCCESS)
-    mocked_eligibility_analytics_module.returned_success.assert_called_once()
     mocked_enrollment_analytics_module.returned_success.assert_called_once()
 
 
