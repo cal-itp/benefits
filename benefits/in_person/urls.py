@@ -7,7 +7,9 @@ from . import views
 
 app_name = "in_person"
 urlpatterns = [
-    path("eligibility/", admin.site.admin_view(views.eligibility), name=routes.name(routes.IN_PERSON_ELIGIBILITY)),
+    path(
+        "eligibility/", admin.site.admin_view(views.EligibilityView.as_view()), name=routes.name(routes.IN_PERSON_ELIGIBILITY)
+    ),
     path("token/", admin.site.admin_view(views.token), name=routes.name(routes.IN_PERSON_ENROLLMENT_TOKEN)),
     path("enrollment/", admin.site.admin_view(views.enrollment), name=routes.name(routes.IN_PERSON_ENROLLMENT)),
     path(

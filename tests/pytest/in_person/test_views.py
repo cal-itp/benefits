@@ -39,6 +39,16 @@ def mocked_sentry_sdk_module(mocker):
     return mocker.patch.object(benefits.in_person.views, "sentry_sdk")
 
 
+@pytest.fixture
+def mocked_session_module(mocker):
+    return mocker.patch.object(benefits.in_person.views, "session")
+
+
+@pytest.fixture
+def mocked_transit_agency_class(mocker):
+    return mocker.patch.object(benefits.in_person.views, "TransitAgency")
+
+
 @pytest.mark.django_db
 @pytest.mark.parametrize("viewname", [routes.IN_PERSON_ELIGIBILITY, routes.IN_PERSON_ENROLLMENT])
 def test_view_not_logged_in(client, viewname):
@@ -49,84 +59,60 @@ def test_view_not_logged_in(client, viewname):
     assert response.url == "/admin/login/?next=" + path
 
 
-# admin_client is a fixture from pytest
-# https://pytest-django.readthedocs.io/en/latest/helpers.html#admin-client-django-test-client-logged-in-as-admin
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency")
-def test_eligibility_logged_in(admin_client):
-    path = reverse(routes.IN_PERSON_ELIGIBILITY)
+class TestEligibilityView:
+    @pytest.fixture
+    def view(self, model_User, app_request, mocked_session_agency):
+        # manually attach a logged-in user to the request
+        app_request.user = model_User
 
-    response = admin_client.get(path)
-    assert response.status_code == 200
-    assert response.template_name == "in_person/eligibility.html"
+        v = benefits.in_person.views.EligibilityView()
+        v.setup(app_request)
+        v.agency = mocked_session_agency(app_request)
+        return v
 
+    def test_get_form_kwargs(self, view):
+        kwargs = view.get_form_kwargs()
+        assert kwargs["agency"] == view.agency
 
-@pytest.mark.django_db
-def test_eligibility_logged_in_filtering_flows(mocker, model_TransitAgency, admin_client):
-    digital = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency, supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL], label="Digital"
-    )
-    in_person = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency,
-        supported_enrollment_methods=[models.EnrollmentMethods.IN_PERSON],
-        label="In-Person",
-    )
-    both = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency,
-        supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
-        label="Both",
-    )
-    mocker.patch("benefits.core.session.agency", autospec=True, return_value=model_TransitAgency)
+    def test_get_context_data(self, view):
+        context_data = view.get_context_data()
+        assert "title" in context_data
 
-    path = reverse(routes.IN_PERSON_ELIGIBILITY)
-    response = admin_client.get(path)
-    filtered_flow_ids = [choice[0] for choice in response.context_data["form"].fields["flow"].choices]
+    def test_dispatch_no_agency_in_session(
+        self, view, mocked_session_module, mocked_transit_agency_class, model_TransitAgency
+    ):
+        view.agency = None
+        mocked_session_module.agency.return_value = None
+        mocked_transit_agency_class.for_user.return_value = model_TransitAgency
 
-    assert in_person.id, both.id in filtered_flow_ids
-    assert digital.id not in filtered_flow_ids
+        view.dispatch(view.request)
 
+        mocked_session_module.update.assert_called_once()
+        assert view.agency == model_TransitAgency
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_eligibility_post_no_flow_selected(admin_client):
+    def test_form_valid(self, view, mocker, model_EnrollmentFlow, mocked_session_module, mocked_eligibility_analytics_module):
+        mock_enrollment_flow_model = mocker.patch.object(models.EnrollmentFlow.objects, "get")
+        mock_enrollment_flow_model.return_value = model_EnrollmentFlow
 
-    path = reverse(routes.IN_PERSON_ELIGIBILITY)
-    form_data = {}
-    response = admin_client.post(path, form_data)
+        mock_form = mocker.Mock()
+        mock_form.cleaned_data = {"flow": model_EnrollmentFlow.id}
 
-    # should return user back to the in-person eligibility index
-    assert response.status_code == 200
-    assert response.template_name == "in_person/eligibility.html"
+        response = view.form_valid(mock_form)
 
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_eligibility_post_flow_selected_and_verified(
-    admin_client, model_EnrollmentFlow, mocked_session_update, mocked_eligibility_analytics_module
-):
-
-    path = reverse(routes.IN_PERSON_ELIGIBILITY)
-    form_data = {"flow": 1, "verified_1": True}
-    response = admin_client.post(path, form_data)
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.IN_PERSON_ENROLLMENT)
-    assert mocked_session_update.call_args.kwargs["flow"] == model_EnrollmentFlow
-    mocked_eligibility_analytics_module.selected_flow.assert_called_once()
-    mocked_eligibility_analytics_module.started_eligibility.assert_called_once()
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_eligibility_post_flow_selected_and_unverified(admin_client):
-
-    path = reverse(routes.IN_PERSON_ELIGIBILITY)
-    form_data = {"flow": 1, "verified_1": False}
-    response = admin_client.post(path, form_data)
-
-    # should return user back to the in-person eligibility index
-    assert response.status_code == 200
-    assert response.template_name == "in_person/eligibility.html"
+        mock_enrollment_flow_model.assert_called_once_with(id=model_EnrollmentFlow.id)
+        mocked_session_module.update.assert_called_once_with(view.request, flow=model_EnrollmentFlow, eligible=True)
+        mocked_eligibility_analytics_module.selected_flow.assert_called_once_with(
+            view.request, model_EnrollmentFlow, enrollment_method=models.EnrollmentMethods.IN_PERSON
+        )
+        mocked_eligibility_analytics_module.started_eligibility.assert_called_once_with(
+            view.request, model_EnrollmentFlow, enrollment_method=models.EnrollmentMethods.IN_PERSON
+        )
+        mocked_eligibility_analytics_module.returned_success.assert_called_once_with(
+            view.request, model_EnrollmentFlow, enrollment_method=models.EnrollmentMethods.IN_PERSON
+        )
+        assert response.status_code == 302
+        assert response.url == reverse(routes.IN_PERSON_ENROLLMENT)
 
 
 @pytest.mark.django_db
@@ -343,7 +329,6 @@ def test_enrollment_post_valid_form_success(
 
     assert response.status_code == 302
     assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_SUCCESS)
-    mocked_eligibility_analytics_module.returned_success.assert_called_once()
     mocked_enrollment_analytics_module.returned_success.assert_called_once()
 
 

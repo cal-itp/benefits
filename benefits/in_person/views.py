@@ -5,9 +5,11 @@ from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.views.generic import FormView
 import sentry_sdk
 
 
+from benefits.core.models.transit import TransitAgency
 from benefits.routes import routes
 from benefits.core import models, session
 from benefits.eligibility import analytics as eligibility_analytics
@@ -21,35 +23,51 @@ from benefits.in_person import forms
 logger = logging.getLogger(__name__)
 
 
-def eligibility(request):
-    """View handler for the in-person eligibility flow selection form."""
+class EligibilityView(FormView):
+    """CBV for the in-person eligibility flow selection form."""
 
-    agency = session.agency(request)
-    context = {
-        **admin_site.each_context(request),
-        "form": forms.InPersonEligibilityForm(agency=agency),
-        "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
-    }
+    template_name = "in_person/eligibility.html"
+    form_class = forms.InPersonEligibilityForm
 
-    if request.method == "POST":
-        form = forms.InPersonEligibilityForm(data=request.POST, agency=agency)
+    def dispatch(self, request, *args, **kwargs):
+        """Initialize session state before handling the request."""
 
-        if form.is_valid():
-            flow_id = form.cleaned_data.get("flow")
-            flow = models.EnrollmentFlow.objects.get(id=flow_id)
-            session.update(request, flow=flow)
-            eligibility_analytics.selected_flow(request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
-            eligibility_analytics.started_eligibility(request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
+        agency = session.agency(request)
+        if not agency:
+            agency = TransitAgency.for_user(request.user)
+            session.update(request, agency=agency)
+        self.agency = agency
+        return super().dispatch(request, *args, **kwargs)
 
-            in_person_enrollment = reverse(routes.IN_PERSON_ENROLLMENT)
-            response = redirect(in_person_enrollment)
-        else:
-            context["form"] = form
-            response = TemplateResponse(request, "in_person/eligibility.html", context)
-    else:
-        response = TemplateResponse(request, "in_person/eligibility.html", context)
+    def get_context_data(self, **kwargs):
+        """Add in-person specific context data."""
 
-    return response
+        context = super().get_context_data(**kwargs)
+        context.update(
+            {
+                **admin_site.each_context(self.request),
+                "title": f"{self.agency.long_name} | In-person enrollment | {admin_site.site_title}",
+            }
+        )
+        return context
+
+    def get_form_kwargs(self):
+        """Return the keyword arguments for instantiating the form."""
+
+        kwargs = super().get_form_kwargs()
+        kwargs["agency"] = self.agency
+        return kwargs
+
+    def form_valid(self, form):
+        """If the form is valid, set enrollment flow, eligible session, and redirect."""
+
+        flow_id = form.cleaned_data.get("flow")
+        flow = models.EnrollmentFlow.objects.get(id=flow_id)
+        session.update(self.request, flow=flow, eligible=True)
+        eligibility_analytics.selected_flow(self.request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
+        eligibility_analytics.started_eligibility(self.request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
+        eligibility_analytics.returned_success(self.request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
+        return redirect(routes.IN_PERSON_ENROLLMENT)
 
 
 def token(request):
@@ -91,7 +109,6 @@ def enrollment(request):
             raise Exception("Invalid card token form")
 
         flow = session.flow(request)
-        eligibility_analytics.returned_success(request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
         card_token = form.cleaned_data.get("card_token")
         status, exception = enroll(request, card_token)
 
