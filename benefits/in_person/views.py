@@ -105,8 +105,9 @@ class EnrollmentView(IndexView):
 
     route_origin = routes.IN_PERSON_ENROLLMENT
 
-    def get_target_route_name(self):
-        return self.agency.in_person_enrollment_index_route
+    def get_redirect_url(self, *args, **kwargs):
+        route_name = self.agency.in_person_enrollment_index_route
+        return reverse(route_name)
 
 
 def enrollment(request):

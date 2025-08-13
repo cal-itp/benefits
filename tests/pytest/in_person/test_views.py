@@ -285,8 +285,8 @@ class TestEnrollmentView:
         v.agency = mocked_session_agency_littlepay(app_request)
         return v
 
-    def test_get_target_route_name_for_littlepay(self, view):
-        assert view.get_target_route_name() == routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX
+    def test_get_redirect_url_for_littlepay(self, view):
+        assert view.get_redirect_url() == reverse(view.agency.in_person_enrollment_index_route)
 
 
 @pytest.mark.django_db

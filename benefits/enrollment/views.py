@@ -28,11 +28,8 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, Redire
 
     route_origin = routes.ENROLLMENT_INDEX
 
-    def get_target_route_name(self):
-        return self.agency.enrollment_index_route
-
     def get_redirect_url(self, *args, **kwargs):
-        route_name = self.get_target_route_name()
+        route_name = self.agency.enrollment_index_route
         return reverse(route_name)
 
     def get(self, request, *args, **kwargs):
