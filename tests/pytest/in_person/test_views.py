@@ -4,6 +4,7 @@ from django.urls import reverse
 
 from benefits.core import models
 from benefits.enrollment.enrollment import Status
+from benefits.in_person import forms
 import benefits.in_person.views as views
 from benefits.routes import routes
 
@@ -320,3 +321,24 @@ class TestSwitchioGatewayUrlView:
         assert view.enrollment_method == models.EnrollmentMethods.IN_PERSON
         assert view.route_system_error == routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
         assert view.route_server_error == routes.IN_PERSON_SERVER_ERROR
+
+
+@pytest.mark.django_db
+class TestSwitchioEnrollmentIndexView:
+    @pytest.fixture
+    def view(self, app_request, model_SwitchioConfig):
+        v = views.SwitchioEnrollmentIndexView()
+        v.setup(app_request)
+        v.agency = model_SwitchioConfig.transit_agency
+        return v
+
+    def test_view(self, view: views.SwitchioGatewayUrlView):
+        assert view.enrollment_method == models.EnrollmentMethods.IN_PERSON
+        assert view.form_class == forms.CardTokenizeSuccessForm
+        assert view.route_enrollment_success == routes.IN_PERSON_ENROLLMENT_SUCCESS
+        assert view.route_reenrollment_error == routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR
+        assert view.route_retry == routes.IN_PERSON_ENROLLMENT_RETRY
+        assert view.route_server_error == routes.IN_PERSON_SERVER_ERROR
+        assert view.route_system_error == routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
+        assert view.route_tokenize_success == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+        assert view.template_name == ""
