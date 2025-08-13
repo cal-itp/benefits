@@ -283,4 +283,4 @@ class SwitchioEnrollmentIndexView(SwitchioIndexView):
     route_server_error = routes.IN_PERSON_SERVER_ERROR
     route_system_error = routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
     route_tokenize_success = routes.IN_PERSON_ENROLLMENT_SWITCHIO
-    template_name = ""
+    template_name = "in_person/enrollment/index_switchio.html"
