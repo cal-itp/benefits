@@ -20,6 +20,10 @@ logger = logging.getLogger(__name__)
 class TokenView(EligibleSessionRequiredMixin, View):
     """View handler for the card tokenization access token."""
 
+    enrollment_method = models.EnrollmentMethods.DIGITAL
+    route_system_error = routes.ENROLLMENT_SYSTEM_ERROR
+    route_server_error = routes.SERVER_ERROR
+
     def get(self, request, *args, **kwargs):
         session = Session(request)
 
@@ -32,12 +36,12 @@ class TokenView(EligibleSessionRequiredMixin, View):
             elif response.status is Status.SYSTEM_ERROR or response.status is Status.EXCEPTION:
                 logger.debug("Error occurred while requesting access token", exc_info=response.exception)
                 sentry_sdk.capture_exception(response.exception)
-                analytics.failed_pretokenization_request(request, response.status_code)
+                analytics.failed_pretokenization_request(request, response.status_code, self.enrollment_method)
 
                 if response.status is Status.SYSTEM_ERROR:
-                    redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+                    redirect = reverse(self.route_system_error)
                 else:
-                    redirect = reverse(routes.SERVER_ERROR)
+                    redirect = reverse(self.route_server_error)
 
                 data = {"redirect": redirect}
                 return JsonResponse(data)
