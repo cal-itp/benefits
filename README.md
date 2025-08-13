@@ -24,7 +24,7 @@
 | benefits/core/models/\_\_init\_\_.py                                                           |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/core/models/common.py                                                                 |       51 |        2 |       14 |        0 |     97% |     91-92 |
 | benefits/core/models/enrollment.py                                                             |      165 |        3 |       34 |        3 |     97% |148, 165, 258->269, 304 |
-| benefits/core/models/transit.py                                                                |      136 |        0 |       28 |        1 |     99% |  231->235 |
+| benefits/core/models/transit.py                                                                |      143 |        0 |       32 |        1 |     99% |  246->250 |
 | benefits/core/recaptcha.py                                                                     |       13 |        5 |        4 |        1 |     53% |     26-32 |
 | benefits/core/session.py                                                                       |      131 |        3 |       32 |        0 |     98% |     53-55 |
 | benefits/core/urls.py                                                                          |       25 |        0 |        2 |        0 |    100% |           |
@@ -47,7 +47,7 @@
 | benefits/enrollment/enrollment.py                                                              |       35 |        1 |       10 |        2 |     93% |37, 59->exit |
 | benefits/enrollment/forms.py                                                                   |       14 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/urls.py                                                                    |        5 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment/views.py                                                                   |       48 |        1 |        6 |        1 |     96% |        48 |
+| benefits/enrollment/views.py                                                                   |       50 |        1 |        6 |        1 |     96% |        51 |
 | benefits/enrollment\_littlepay/\_\_init\_\_.py                                                 |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/admin.py                                                        |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/apps.py                                                         |        4 |        0 |        0 |        0 |    100% |           |
@@ -83,7 +83,7 @@
 | benefits/in\_person/context/eligibility.py                                                     |        8 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/forms.py                                                                   |       42 |        9 |        6 |        0 |     73% |     59-70 |
 | benefits/in\_person/urls.py                                                                    |        6 |        0 |        0 |        0 |    100% |           |
-| benefits/in\_person/views.py                                                                   |      132 |        5 |       28 |        4 |     93% |36->39, 83->98, 147->exit, 185-189 |
+| benefits/in\_person/views.py                                                                   |      138 |        5 |       28 |        4 |     93% |37->40, 84->99, 157->exit, 195-199 |
 | benefits/locale/\_\_init\_\_.py                                                                |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/\_\_init\_\_.py                                                             |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/formats.py                                                                  |        1 |        0 |        0 |        0 |    100% |           |
@@ -96,13 +96,13 @@
 | benefits/oauth/middleware.py                                                                   |       23 |        0 |        6 |        0 |    100% |           |
 | benefits/oauth/urls.py                                                                         |       12 |        0 |        0 |        0 |    100% |           |
 | benefits/oauth/views.py                                                                        |        8 |        0 |        0 |        0 |    100% |           |
-| benefits/routes.py                                                                             |      107 |        0 |        0 |        0 |    100% |           |
+| benefits/routes.py                                                                             |      113 |        0 |        0 |        0 |    100% |           |
 | benefits/secrets.py                                                                            |       48 |        8 |       10 |        1 |     81% |     90-99 |
 | benefits/sentry.py                                                                             |       57 |       12 |       10 |        1 |     81% |19, 24-25, 30, 34-35, 63-64, 87-108 |
 | benefits/settings.py                                                                           |      132 |        7 |       24 |        9 |     90% |106, 127->132, 143->146, 163, 316, 328, 330, 345, 357 |
 | benefits/urls.py                                                                               |       27 |        7 |        4 |        2 |     71% |35->46, 50-64 |
 | benefits/wsgi.py                                                                               |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                                                                      **TOTAL** | **3037** |  **152** |  **552** |   **62** | **93%** |           |
+|                                                                                      **TOTAL** | **3058** |  **152** |  **556** |   **62** | **93%** |           |
 
 
 ## Setup coverage badge
