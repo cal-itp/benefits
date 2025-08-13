@@ -1,26 +1,24 @@
 import logging
 
+import sentry_sdk
 from django.contrib.admin import site as admin_site
 from django.http import JsonResponse
-from django.template.response import TemplateResponse
 from django.shortcuts import redirect
+from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views.generic import FormView
-import sentry_sdk
-
 
 from benefits.core.models.transit import TransitAgency
-from benefits.enrollment.views import IndexView
-from benefits.routes import routes
 from benefits.core import models, session
 from benefits.eligibility import analytics as eligibility_analytics
 from benefits.enrollment import analytics as enrollment_analytics
 from benefits.enrollment.enrollment import Status
-from benefits.enrollment_littlepay.enrollment import get_card_types_for_js, request_card_tokenization_access, enroll
+from benefits.enrollment.views import IndexView
+from benefits.enrollment_littlepay.enrollment import enroll, get_card_types_for_js, request_card_tokenization_access
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
-from benefits.enrollment_switchio.views import GatewayUrlView
-
+from benefits.enrollment_switchio.views import GatewayUrlView, IndexView as SwitchioIndexView
 from benefits.in_person import forms
+from benefits.routes import routes
 
 logger = logging.getLogger(__name__)
 
@@ -274,3 +272,15 @@ class SwitchioGatewayUrlView(GatewayUrlView):
     enrollment_method = models.EnrollmentMethods.IN_PERSON
     route_server_error = routes.IN_PERSON_SERVER_ERROR
     route_system_error = routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
+
+
+class SwitchioEnrollmentIndexView(SwitchioIndexView):
+    enrollment_method = models.EnrollmentMethods.IN_PERSON
+    form_class = forms.CardTokenizeSuccessForm
+    route_enrollment_success = routes.IN_PERSON_ENROLLMENT_SUCCESS
+    route_reenrollment_error = routes.ENROLLMENT_REENROLLMENT_ERROR
+    route_retry = routes.ENROLLMENT_RETRY
+    route_server_error = routes.IN_PERSON_SERVER_ERROR
+    route_system_error = routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
+    route_tokenize_success = routes.IN_PERSON_ENROLLMENT_SWITCHIO
+    template_name = ""
