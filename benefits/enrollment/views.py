@@ -26,11 +26,14 @@ logger = logging.getLogger(__name__)
 class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, RedirectView):
     """CBV for the enrollment landing page."""
 
+    route_origin = routes.ENROLLMENT_INDEX
+
     def get_redirect_url(self, *args, **kwargs):
-        return reverse(self.agency.enrollment_index_route)
+        route_name = self.agency.enrollment_index_route
+        return reverse(route_name)
 
     def get(self, request, *args, **kwargs):
-        session.update(request, origin=reverse(routes.ENROLLMENT_INDEX))
+        session.update(request, origin=reverse(self.route_origin))
         return super().get(request, *args, **kwargs)
 
 

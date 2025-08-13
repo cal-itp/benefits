@@ -10,6 +10,7 @@ import sentry_sdk
 
 
 from benefits.core.models.transit import TransitAgency
+from benefits.enrollment.views import IndexView
 from benefits.routes import routes
 from benefits.core import models, session
 from benefits.eligibility import analytics as eligibility_analytics
@@ -98,6 +99,15 @@ def token(request):
     data = {"token": session.access_token}
 
     return JsonResponse(data)
+
+
+class EnrollmentView(IndexView):
+
+    route_origin = routes.IN_PERSON_ENROLLMENT
+
+    def get_redirect_url(self, *args, **kwargs):
+        route_name = self.agency.in_person_enrollment_index_route
+        return reverse(route_name)
 
 
 def enrollment(request):

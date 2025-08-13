@@ -11,7 +11,17 @@ urlpatterns = [
         "eligibility/", admin.site.admin_view(views.EligibilityView.as_view()), name=routes.name(routes.IN_PERSON_ELIGIBILITY)
     ),
     path("token/", admin.site.admin_view(views.token), name=routes.name(routes.IN_PERSON_ENROLLMENT_TOKEN)),
-    path("enrollment/", admin.site.admin_view(views.enrollment), name=routes.name(routes.IN_PERSON_ENROLLMENT)),
+    path("enrollment/", admin.site.admin_view(views.EnrollmentView.as_view()), name=routes.name(routes.IN_PERSON_ENROLLMENT)),
+    path(
+        "enrollment/littlepay",
+        admin.site.admin_view(views.enrollment),
+        name=routes.name(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX),
+    ),
+    path(
+        "enrollment/switchio",
+        admin.site.admin_view(views.enrollment),
+        name=routes.name(routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX),
+    ),
     path(
         "enrollment/error/reenrollment",
         admin.site.admin_view(views.reenrollment_error),

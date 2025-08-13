@@ -204,3 +204,31 @@ def test_TransitAgency_enrollment_index_route_no_config(model_TransitAgency):
         match="TransitAgency must have either a LittlepayConfig or SwitchioConfig in order to show enrollment index.",
     ):
         model_TransitAgency.enrollment_index_route
+
+
+@pytest.mark.django_db
+def test_TransitAgency_in_person_enrollment_index_route_littlepay(model_TransitAgency, model_LittlepayConfig):
+    model_LittlepayConfig.transit_agency = model_TransitAgency
+    model_TransitAgency.save()
+
+    assert model_TransitAgency.in_person_enrollment_index_route == routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX
+
+
+@pytest.mark.django_db
+def test_TransitAgency_in_person_enrollment_index_route_switchio(model_TransitAgency, model_SwitchioConfig):
+    model_SwitchioConfig.transit_agency = model_TransitAgency
+    model_TransitAgency.save()
+
+    assert model_TransitAgency.in_person_enrollment_index_route == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+
+
+@pytest.mark.django_db
+def test_TransitAgency_in_person_enrollment_index_route_no_config(model_TransitAgency):
+    with pytest.raises(
+        ValueError,
+        match=(
+            "TransitAgency must have either a LittlepayConfig or SwitchioConfig "
+            "in order to show in-person enrollment index."
+        ),
+    ):
+        model_TransitAgency.in_person_enrollment_index_route

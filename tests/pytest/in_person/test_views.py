@@ -49,6 +49,13 @@ def mocked_transit_agency_class(mocker):
     return mocker.patch.object(benefits.in_person.views, "TransitAgency")
 
 
+@pytest.fixture
+def mocked_session_agency_littlepay(mocker, model_TransitAgency, model_LittlepayConfig):
+    model_LittlepayConfig.transit_agency = model_TransitAgency
+    model_TransitAgency.save()
+    return mocker.patch("benefits.core.session.agency", autospec=True, return_value=model_TransitAgency)
+
+
 @pytest.mark.django_db
 @pytest.mark.parametrize("viewname", [routes.IN_PERSON_ELIGIBILITY, routes.IN_PERSON_ENROLLMENT])
 def test_view_not_logged_in(client, viewname):
@@ -270,9 +277,22 @@ def test_token_connection_error(mocker, admin_client, mocked_enrollment_analytic
 
 
 @pytest.mark.django_db
+class TestEnrollmentView:
+    @pytest.fixture
+    def view(self, app_request, mocked_session_agency_littlepay):
+        v = benefits.in_person.views.EnrollmentView()
+        v.setup(app_request)
+        v.agency = mocked_session_agency_littlepay(app_request)
+        return v
+
+    def test_get_redirect_url_for_littlepay(self, view):
+        assert view.get_redirect_url() == reverse(view.agency.in_person_enrollment_index_route)
+
+
+@pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_LittlepayConfig")
 def test_enrollment_logged_in_get(admin_client):
-    path = reverse(routes.IN_PERSON_ENROLLMENT)
+    path = reverse(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX)
 
     response = admin_client.get(path)
     assert response.status_code == 200
@@ -291,7 +311,7 @@ def test_enrollment_logged_in_get(admin_client):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
 def test_enrollment_post_invalid_form(admin_client, invalid_form_data):
-    path = reverse(routes.IN_PERSON_ENROLLMENT)
+    path = reverse(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX)
 
     with pytest.raises(Exception, match=r"form"):
         admin_client.post(path, invalid_form_data)
@@ -316,7 +336,7 @@ def test_enrollment_post_valid_form_success(
     # e.g. the TransitAgency staff person assisting this in-person enrollment
     admin_client.force_login(model_User)
 
-    path = reverse(routes.IN_PERSON_ENROLLMENT)
+    path = reverse(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX)
     response = admin_client.post(path, card_tokenize_form_data)
 
     spy.assert_called_once_with(
@@ -339,7 +359,7 @@ def test_enrollment_post_valid_form_system_error(
 ):
     mocker.patch("benefits.in_person.views.enroll", return_value=(Status.SYSTEM_ERROR, None))
 
-    path = reverse(routes.IN_PERSON_ENROLLMENT)
+    path = reverse(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX)
     response = admin_client.post(path, card_tokenize_form_data)
 
     assert response.status_code == 302
@@ -355,7 +375,7 @@ def test_enrollment_post_valid_form_exception(
 ):
     mocker.patch("benefits.in_person.views.enroll", return_value=(Status.EXCEPTION, None))
 
-    path = reverse(routes.IN_PERSON_ENROLLMENT)
+    path = reverse(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX)
     response = admin_client.post(path, card_tokenize_form_data)
 
     assert response.status_code == 302
@@ -371,7 +391,7 @@ def test_enrollment_post_valid_form_reenrollment_error(
 ):
     mocker.patch("benefits.in_person.views.enroll", return_value=(Status.REENROLLMENT_ERROR, None))
 
-    path = reverse(routes.IN_PERSON_ENROLLMENT)
+    path = reverse(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX)
     response = admin_client.post(path, card_tokenize_form_data)
 
     assert response.status_code == 302

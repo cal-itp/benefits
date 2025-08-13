@@ -197,6 +197,21 @@ class TransitAgency(models.Model):
             return None
 
     @property
+    def in_person_enrollment_index_route(self):
+        """This Agency's in-person enrollment index route, based on its configured transit processor."""
+        if self.littlepay_config:
+            return routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX
+        elif self.switchio_config:
+            return routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+        else:
+            raise ValueError(
+                (
+                    "TransitAgency must have either a LittlepayConfig or SwitchioConfig "
+                    "in order to show in-person enrollment index."
+                )
+            )
+
+    @property
     def enrollment_index_route(self):
         """This Agency's enrollment index route, based on its configured transit processor."""
         if self.littlepay_config:
