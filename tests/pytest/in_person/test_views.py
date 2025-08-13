@@ -341,4 +341,4 @@ class TestSwitchioEnrollmentIndexView:
         assert view.route_server_error == routes.IN_PERSON_SERVER_ERROR
         assert view.route_system_error == routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
         assert view.route_tokenize_success == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
-        assert view.template_name == ""
+        assert view.template_name == "in_person/enrollment/index_switchio.html"
