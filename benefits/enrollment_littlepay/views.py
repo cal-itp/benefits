@@ -51,27 +51,38 @@ class TokenView(EligibleSessionRequiredMixin, View):
 
 
 class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSessionRequiredMixin, FormView):
-    template_name = "enrollment_littlepay/index.html"
+    """View for the enrollment landing page."""
+
+    enrollment_method = models.EnrollmentMethods.DIGITAL
     form_class = forms.CardTokenizeSuccessForm
+    route_enrollment_success = routes.ENROLLMENT_SUCCESS
+    route_enrollment_retry = routes.ENROLLMENT_RETRY
+    route_reenrollment_error = routes.ENROLLMENT_REENROLLMENT_ERROR
+    route_server_error = routes.SERVER_ERROR
+    route_system_error = routes.ENROLLMENT_SYSTEM_ERROR
+    route_tokenize_success = routes.ENROLLMENT_LITTLEPAY_INDEX
+    template_name = "enrollment_littlepay/index.html"
 
     def get_context_data(self, **kwargs):
         request = self.request
         agency = self.agency
         flow = self.flow
 
-        tokenize_retry_form = forms.CardTokenizeFailForm(routes.ENROLLMENT_RETRY, "form-card-tokenize-fail-retry")
-        tokenize_server_error_form = forms.CardTokenizeFailForm(routes.SERVER_ERROR, "form-card-tokenize-fail-server-error")
+        tokenize_retry_form = forms.CardTokenizeFailForm(self.route_enrollment_retry, "form-card-tokenize-fail-retry")
+        tokenize_server_error_form = forms.CardTokenizeFailForm(
+            self.route_server_error, "form-card-tokenize-fail-server-error"
+        )
         tokenize_system_error_form = forms.CardTokenizeFailForm(
-            routes.ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
+            self.route_system_error, "form-card-tokenize-fail-system-error"
         )
         tokenize_success_form = forms.CardTokenizeSuccessForm(
-            action_url=routes.ENROLLMENT_LITTLEPAY_INDEX, auto_id=True, label_suffix=""
+            action_url=self.route_tokenize_success, auto_id=True, label_suffix=""
         )
 
         context = {
             "forms": [tokenize_retry_form, tokenize_server_error_form, tokenize_system_error_form, tokenize_success_form],
             "cta_button": "tokenize_card",
-            "enrollment_method": models.EnrollmentMethods.DIGITAL,
+            "enrollment_method": self.enrollment_method,
             "token_field": "card_token",
             "form_retry": tokenize_retry_form.id,
             "form_server_error": tokenize_server_error_form.id,
@@ -108,11 +119,23 @@ class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
         overlay_language = {"en": "en", "es": "es-419"}.get(django_language_code, "en")
         return overlay_language
 
+    def _get_verified_by(self):
+        return self.flow.eligibility_verifier
+
     def form_valid(self, form):
         card_token = form.cleaned_data.get("card_token")
         status, exception = enroll(self.request, card_token)
 
-        return handle_enrollment_results(self.request, status, exception)
+        return handle_enrollment_results(
+            request=self.request,
+            status=status,
+            verified_by=self._get_verified_by(),
+            exception=exception,
+            enrollment_method=self.enrollment_method,
+            route_reenrollment_error=self.route_reenrollment_error,
+            route_success=self.route_enrollment_success,
+            route_system_error=self.route_system_error,
+        )
 
     def form_invalid(self, form):
         raise Exception("Invalid card token form")
