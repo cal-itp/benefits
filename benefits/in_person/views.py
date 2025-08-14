@@ -15,9 +15,10 @@ from benefits.enrollment.enrollment import Status
 from benefits.enrollment.views import IndexView
 from benefits.enrollment_littlepay.enrollment import get_card_types_for_js, enroll
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
-from benefits.enrollment_littlepay.views import TokenView
+from benefits.enrollment_littlepay.views import TokenView, IndexView as LittlepayIndexView
 from benefits.enrollment_switchio.session import Session as SwitchioSession
 from benefits.enrollment_switchio.views import GatewayUrlView, IndexView as SwitchioIndexView
+
 from benefits.in_person import forms
 from benefits.routes import routes
 
@@ -89,6 +90,33 @@ class EnrollmentView(IndexView):
     def get_redirect_url(self, *args, **kwargs):
         route_name = self.agency.in_person_enrollment_index_route
         return reverse(route_name)
+
+
+class LittlepayEnrollmentView(LittlepayIndexView):
+    """View handler for the in-person enrollment page."""
+
+    enrollment_method = models.EnrollmentMethods.IN_PERSON
+    route_enrollment_success = routes.IN_PERSON_ENROLLMENT_SUCCESS
+    route_enrollment_retry = routes.IN_PERSON_ENROLLMENT_RETRY
+    route_reenrollment_error = routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR
+    route_server_error = routes.IN_PERSON_SERVER_ERROR
+    route_system_error = routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
+    route_tokenize_success = routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX
+    template_name = "in_person/enrollment/index_littlepay.html"
+
+    def _get_verified_by(self):
+        return f"{self.request.user.first_name} {self.request.user.last_name}"
+
+    def get_context_data(self, **kwargs):
+        """Add in-person specific context data."""
+
+        context = super().get_context_data(**kwargs)
+        context.update(
+            {
+                "title": f"{self.agency.long_name} | In-person enrollment | {admin_site.site_title}",
+            }
+        )
+        return context
 
 
 def enrollment(request):
@@ -184,7 +212,7 @@ def enrollment(request):
         )
         context.update({"transit_processor": transit_processor_context})
 
-        return TemplateResponse(request, "in_person/enrollment/index.html", context)
+        return TemplateResponse(request, "in_person/enrollment/index_littlepay.html", context)
 
 
 def reenrollment_error(request):

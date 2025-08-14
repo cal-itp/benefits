@@ -140,6 +140,27 @@ class TestEnrollmentView:
 
 
 @pytest.mark.django_db
+class TestLittlepayEnrollmentView:
+    @pytest.fixture
+    def view(self, app_request, model_LittlepayConfig, model_EnrollmentFlow):
+        v = views.LittlepayEnrollmentView()
+        v.setup(app_request)
+        v.agency = model_LittlepayConfig.transit_agency
+        v.flow = model_EnrollmentFlow
+        return v
+
+    def test_get_verified_by(self, mocker, app_request, view):
+        app_request.user = mocker.Mock(first_name="First", last_name="Last")
+
+        assert view._get_verified_by() == "First Last"
+
+    def test_get_context_data(self, view, app_request):
+        context = view.get_context_data()
+
+        assert "title" in context
+
+
+@pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_LittlepayConfig")
 def test_enrollment_logged_in_get(admin_client):
     path = reverse(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX)

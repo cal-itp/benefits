@@ -23,7 +23,7 @@ urlpatterns = [
     ),
     path(
         "enrollment/littlepay",
-        admin.site.admin_view(views.enrollment),
+        admin.site.admin_view(views.LittlepayEnrollmentView.as_view()),
         name=routes.name(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX),
     ),
     path(
