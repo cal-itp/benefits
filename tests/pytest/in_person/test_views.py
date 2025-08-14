@@ -342,3 +342,8 @@ class TestSwitchioEnrollmentIndexView:
         assert view.route_system_error == routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
         assert view.route_tokenize_success == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
         assert view.template_name == "in_person/enrollment/index_switchio.html"
+
+    def test_get_verified_by(self, mocker, app_request, view):
+        app_request.user = mocker.Mock(first_name="First", last_name="Last")
+
+        assert view._get_verified_by() == "First Last"
