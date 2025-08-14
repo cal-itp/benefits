@@ -10,7 +10,11 @@ urlpatterns = [
     path(
         "eligibility/", admin.site.admin_view(views.EligibilityView.as_view()), name=routes.name(routes.IN_PERSON_ELIGIBILITY)
     ),
-    path("token/", admin.site.admin_view(views.token), name=routes.name(routes.IN_PERSON_ENROLLMENT_TOKEN)),
+    path(
+        "enrollment/littlepay/token/",
+        admin.site.admin_view(views.LittlepayTokenView.as_view()),
+        name=routes.name(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_TOKEN),
+    ),
     path("enrollment/", admin.site.admin_view(views.EnrollmentView.as_view()), name=routes.name(routes.IN_PERSON_ENROLLMENT)),
     path(
         "enrollment/littlepay",

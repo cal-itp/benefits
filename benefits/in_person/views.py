@@ -1,7 +1,6 @@
 import logging
 
 from django.contrib.admin import site as admin_site
-from django.http import JsonResponse
 from django.template.response import TemplateResponse
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -16,8 +15,8 @@ from benefits.core import models, session
 from benefits.eligibility import analytics as eligibility_analytics
 from benefits.enrollment import analytics as enrollment_analytics
 from benefits.enrollment.enrollment import Status
-from benefits.enrollment_littlepay.enrollment import get_card_types_for_js, request_card_tokenization_access, enroll
-from benefits.enrollment_littlepay.session import Session as LittlepaySession
+from benefits.enrollment_littlepay.enrollment import get_card_types_for_js, enroll
+from benefits.enrollment_littlepay.views import TokenView
 
 from benefits.in_person import forms
 
@@ -71,34 +70,12 @@ class EligibilityView(FormView):
         return redirect(routes.IN_PERSON_ENROLLMENT)
 
 
-def token(request):
+class LittlepayTokenView(TokenView):
     """View handler for the enrollment auth token."""
-    session = LittlepaySession(request)
 
-    if not session.access_token_valid():
-        response = request_card_tokenization_access(request)
-
-        if response.status is Status.SUCCESS:
-            session.access_token = response.access_token
-            session.access_token_expiry = response.expires_at
-        elif response.status is Status.SYSTEM_ERROR or response.status is Status.EXCEPTION:
-            logger.debug("Error occurred while requesting access token", exc_info=response.exception)
-            sentry_sdk.capture_exception(response.exception)
-            enrollment_analytics.failed_pretokenization_request(
-                request, response.status_code, enrollment_method=models.EnrollmentMethods.IN_PERSON
-            )
-
-            if response.status is Status.SYSTEM_ERROR:
-                redirect = reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
-            else:
-                redirect = reverse(routes.IN_PERSON_SERVER_ERROR)
-
-            data = {"redirect": redirect}
-            return JsonResponse(data)
-
-    data = {"token": session.access_token}
-
-    return JsonResponse(data)
+    enrollment_method = models.EnrollmentMethods.IN_PERSON
+    route_system_error = routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
+    route_server_error = routes.IN_PERSON_SERVER_ERROR
 
 
 class EnrollmentView(IndexView):
