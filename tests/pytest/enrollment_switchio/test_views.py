@@ -66,6 +66,9 @@ class TestIndexView:
 
         assert locale == expected_locale
 
+    def test_get_verified_by(self, view):
+        assert view._get_verified_by() == view.flow.eligibility_verifier
+
     def test_get(self, view, app_request, mocker, model_TransitAgency, model_SwitchioConfig):
         model_SwitchioConfig.transit_agency = model_TransitAgency
         mocked_get_registration_status = mocker.patch(
@@ -235,7 +238,7 @@ class TestIndexView:
 
         mock_handler.assert_called_once()
         handler_kwargs = mock_handler.call_args.kwargs
-        assert handler_kwargs["verified_by"] == view.flow.eligibility_verifier
+        assert handler_kwargs["verified_by"] == view._get_verified_by()
         assert handler_kwargs["enrollment_method"] == models.EnrollmentMethods.DIGITAL
         assert handler_kwargs["route_reenrollment_error"] == routes.ENROLLMENT_REENROLLMENT_ERROR
         assert handler_kwargs["route_success"] == routes.ENROLLMENT_SUCCESS

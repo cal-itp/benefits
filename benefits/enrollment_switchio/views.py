@@ -67,6 +67,9 @@ class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
         locale = {"en": "en", "es": "es"}.get(django_language_code, "en")
         return locale
 
+    def _get_verified_by(self):
+        return self.flow.eligibility_verifier
+
     def get(self, request: HttpRequest, *args, **kwargs):
         session = Session(request)
         switchio_config = self.agency.switchio_config
@@ -107,7 +110,7 @@ class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
         return handle_enrollment_results(
             request=self.request,
             status=status,
-            verified_by=flow.eligibility_verifier,
+            verified_by=self._get_verified_by(),
             exception=exception,
             enrollment_method=self.enrollment_method,
             route_reenrollment_error=self.route_reenrollment_error,
