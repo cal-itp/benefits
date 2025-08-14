@@ -13,7 +13,7 @@ urlpatterns = [
     path(
         "enrollment/littlepay/token/",
         admin.site.admin_view(views.LittlepayTokenView.as_view()),
-        name=routes.name(routes.IN_PERSON_ENROLLMENT_TOKEN),
+        name=routes.name(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_TOKEN),
     ),
     path("enrollment/", admin.site.admin_view(views.EnrollmentView.as_view()), name=routes.name(routes.IN_PERSON_ENROLLMENT)),
     path(

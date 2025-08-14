@@ -150,9 +150,9 @@ class Routes:
         return "in_person:enrollment_switchio_index"
 
     @property
-    def IN_PERSON_ENROLLMENT_TOKEN(self):
-        """Acquire a TransitProcessor API token for in-person enrollment."""
-        return "in_person:token"
+    def IN_PERSON_ENROLLMENT_LITTLEPAY_TOKEN(self):
+        """Acquire a Littlepay access token for in-person enrollment."""
+        return "in_person:enrollment_littlepay_token"
 
     @property
     def IN_PERSON_SERVER_ERROR(self):
