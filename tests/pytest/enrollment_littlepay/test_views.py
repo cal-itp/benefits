@@ -5,6 +5,7 @@ from authlib.integrations.base_client.errors import UnsupportedTokenTypeError
 from django.urls import reverse
 from requests import HTTPError
 
+from benefits.core import models
 from benefits.routes import routes
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.enrollment.enrollment import Status
@@ -192,15 +193,16 @@ def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_
 
 class TestIndexView:
     @pytest.fixture
-    def view(self, app_request):
+    def view(self, app_request, model_LittlepayConfig, model_EnrollmentFlow):
         """Fixture to create an instance of IndexView."""
         v = IndexView()
         v.setup(app_request)
+        v.agency = model_LittlepayConfig.transit_agency
+        v.flow = model_EnrollmentFlow
 
         return v
 
     @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_LittlepayConfig")
     def test_get_context_data(self, view):
         context = view.get_context_data()
 
@@ -228,6 +230,7 @@ class TestIndexView:
 
         assert "card_types" in context
 
+    @pytest.mark.django_db
     @pytest.mark.parametrize(
         "LANGUAGE_CODE, expected_overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")]
     )
@@ -236,6 +239,7 @@ class TestIndexView:
 
         assert overlay_language == expected_overlay_language
 
+    @pytest.mark.django_db
     def test_form_valid(self, mocker, view):
         mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
 
@@ -245,8 +249,15 @@ class TestIndexView:
         assert form.is_valid()
         view.form_valid(form)
 
-        mock_handler.assert_called_once_with(view.request, Status.SUCCESS, None)
+        mock_handler.assert_called_once()
+        handler_kwargs = mock_handler.call_args.kwargs
+        assert handler_kwargs["verified_by"] == view._get_verified_by()
+        assert handler_kwargs["enrollment_method"] == models.EnrollmentMethods.DIGITAL
+        assert handler_kwargs["route_reenrollment_error"] == routes.ENROLLMENT_REENROLLMENT_ERROR
+        assert handler_kwargs["route_success"] == routes.ENROLLMENT_SUCCESS
+        assert handler_kwargs["route_system_error"] == routes.ENROLLMENT_SYSTEM_ERROR
 
+    @pytest.mark.django_db
     def test_form_invalid(self, view):
         with pytest.raises(Exception, match="Invalid card token form"):
             form = view.form_class()
