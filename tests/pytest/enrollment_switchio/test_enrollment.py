@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.urls import reverse
 import pytest
 from requests import HTTPError
 from benefits.enrollment.enrollment import Status
@@ -8,7 +9,9 @@ from benefits.enrollment_switchio.enrollment import (
     get_registration_status,
     request_registration,
     get_latest_active_token_value,
+    _generate_redirect_uri,
 )
+from benefits.routes import routes
 
 
 @pytest.fixture
@@ -51,13 +54,42 @@ def mocked_group_expiry_with_expiry():
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_api_base_url")
-def test_request_registration_success(mocker, app_request, model_SwitchioConfig, mocked_registration):
-    mocker.patch(
-        "benefits.enrollment_switchio.enrollment.TokenizationClient.request_registration", return_value=mocked_registration
-    )
+def test_request_registration_success__default_redirect(
+    mocker, app_request, model_SwitchioConfig, mocked_registration, settings
+):
+    tokenization_client = mocker.patch("benefits.enrollment_switchio.enrollment.TokenizationClient").return_value
+    tokenization_client.request_registration.return_value = mocked_registration
+    expected_redirect = _generate_redirect_uri(app_request, reverse(routes.ENROLLMENT_SWITCHIO_INDEX))
 
     registration_response = request_registration(app_request, model_SwitchioConfig)
 
+    tokenization_client.request_registration.assert_called_once_with(
+        eshopRedirectUrl=expected_redirect,
+        mode=RegistrationMode.REGISTER,
+        eshopResponseMode=EshopResponseMode.QUERY,
+        timeout=settings.REQUESTS_TIMEOUT,
+    )
+    assert registration_response.status == Status.SUCCESS
+    assert registration_response.registration == mocked_registration
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_api_base_url")
+def test_request_registration_success__custom_redirect(
+    mocker, app_request, model_SwitchioConfig, mocked_registration, settings
+):
+    tokenization_client = mocker.patch("benefits.enrollment_switchio.enrollment.TokenizationClient").return_value
+    tokenization_client.request_registration.return_value = mocked_registration
+    expected_redirect = _generate_redirect_uri(app_request, reverse(routes.INDEX))
+
+    registration_response = request_registration(app_request, model_SwitchioConfig, routes.INDEX)
+
+    tokenization_client.request_registration.assert_called_once_with(
+        eshopRedirectUrl=expected_redirect,
+        mode=RegistrationMode.REGISTER,
+        eshopResponseMode=EshopResponseMode.QUERY,
+        timeout=settings.REQUESTS_TIMEOUT,
+    )
     assert registration_response.status == Status.SUCCESS
     assert registration_response.registration == mocked_registration
 

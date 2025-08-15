@@ -1,24 +1,25 @@
 import logging
 
+import sentry_sdk
 from django.contrib.admin import site as admin_site
-from django.template.response import TemplateResponse
 from django.shortcuts import redirect
+from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views.generic import FormView
-import sentry_sdk
-
 
 from benefits.core.models.transit import TransitAgency
-from benefits.enrollment.views import IndexView
-from benefits.routes import routes
 from benefits.core import models, session
 from benefits.eligibility import analytics as eligibility_analytics
 from benefits.enrollment import analytics as enrollment_analytics
 from benefits.enrollment.enrollment import Status
+from benefits.enrollment.views import IndexView
 from benefits.enrollment_littlepay.enrollment import get_card_types_for_js, enroll
+from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.enrollment_littlepay.views import TokenView
-
+from benefits.enrollment_switchio.session import Session as SwitchioSession
+from benefits.enrollment_switchio.views import GatewayUrlView, IndexView as SwitchioIndexView
 from benefits.in_person import forms
+from benefits.routes import routes
 
 logger = logging.getLogger(__name__)
 
@@ -31,6 +32,9 @@ class EligibilityView(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         """Initialize session state before handling the request."""
+
+        LittlepaySession(request, reset=True)
+        SwitchioSession(request, reset=True)
 
         agency = session.agency(request)
         if not agency:
@@ -244,3 +248,25 @@ def success(request):
     }
 
     return TemplateResponse(request, "in_person/enrollment/success.html", context)
+
+
+class SwitchioGatewayUrlView(GatewayUrlView):
+    enrollment_method = models.EnrollmentMethods.IN_PERSON
+    route_redirect = routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+    route_server_error = routes.IN_PERSON_SERVER_ERROR
+    route_system_error = routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
+
+
+class SwitchioEnrollmentIndexView(SwitchioIndexView):
+    enrollment_method = models.EnrollmentMethods.IN_PERSON
+    form_class = forms.CardTokenizeSuccessForm
+    route_enrollment_success = routes.IN_PERSON_ENROLLMENT_SUCCESS
+    route_reenrollment_error = routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR
+    route_retry = routes.IN_PERSON_ENROLLMENT_RETRY
+    route_server_error = routes.IN_PERSON_SERVER_ERROR
+    route_system_error = routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
+    route_tokenize_success = routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+    template_name = "in_person/enrollment/index_switchio.html"
+
+    def _get_verified_by(self):
+        return f"{self.request.user.first_name} {self.request.user.last_name}"

@@ -4,7 +4,8 @@ from django.urls import reverse
 
 from benefits.core import models
 from benefits.enrollment.enrollment import Status
-import benefits.in_person.views
+from benefits.in_person import forms
+import benefits.in_person.views as views
 from benefits.routes import routes
 
 
@@ -20,27 +21,27 @@ def invalid_form_data():
 
 @pytest.fixture
 def mocked_eligibility_analytics_module(mocker):
-    return mocker.patch.object(benefits.in_person.views, "eligibility_analytics")
+    return mocker.patch.object(views, "eligibility_analytics")
 
 
 @pytest.fixture
 def mocked_enrollment_analytics_module(mocker):
-    return mocker.patch.object(benefits.in_person.views, "enrollment_analytics")
+    return mocker.patch.object(views, "enrollment_analytics")
 
 
 @pytest.fixture
 def mocked_sentry_sdk_module(mocker):
-    return mocker.patch.object(benefits.in_person.views, "sentry_sdk")
+    return mocker.patch.object(views, "sentry_sdk")
 
 
 @pytest.fixture
 def mocked_session_module(mocker):
-    return mocker.patch.object(benefits.in_person.views, "session")
+    return mocker.patch.object(views, "session")
 
 
 @pytest.fixture
 def mocked_transit_agency_class(mocker):
-    return mocker.patch.object(benefits.in_person.views, "TransitAgency")
+    return mocker.patch.object(views, "TransitAgency")
 
 
 @pytest.fixture
@@ -67,7 +68,7 @@ class TestEligibilityView:
         # manually attach a logged-in user to the request
         app_request.user = model_User
 
-        v = benefits.in_person.views.EligibilityView()
+        v = views.EligibilityView()
         v.setup(app_request)
         v.agency = mocked_session_agency(app_request)
         return v
@@ -79,6 +80,15 @@ class TestEligibilityView:
     def test_get_context_data(self, view):
         context_data = view.get_context_data()
         assert "title" in context_data
+
+    def test_dispatch(self, view, mocker):
+        littlepay_session = mocker.patch.object(views, "LittlepaySession")
+        switchio_session = mocker.patch.object(views, "SwitchioSession")
+
+        view.dispatch(view.request)
+
+        littlepay_session.assert_called_once_with(view.request, reset=True)
+        switchio_session.assert_called_once_with(view.request, reset=True)
 
     def test_dispatch_no_agency_in_session(
         self, view, mocked_session_module, mocked_transit_agency_class, model_TransitAgency
@@ -120,7 +130,7 @@ class TestEligibilityView:
 class TestEnrollmentView:
     @pytest.fixture
     def view(self, app_request, mocked_session_agency_littlepay):
-        v = benefits.in_person.views.EnrollmentView()
+        v = views.EnrollmentView()
         v.setup(app_request)
         v.agency = mocked_session_agency_littlepay(app_request)
         return v
@@ -170,7 +180,7 @@ def test_enrollment_post_valid_form_success(
     model_User,
 ):
     mocker.patch("benefits.in_person.views.enroll", return_value=(Status.SUCCESS, None))
-    spy = mocker.spy(benefits.in_person.views.models.EnrollmentEvent.objects, "create")
+    spy = mocker.spy(views.models.EnrollmentEvent.objects, "create")
 
     # force the model_User to be the logged in user
     # e.g. the TransitAgency staff person assisting this in-person enrollment
@@ -305,3 +315,45 @@ def test_success(admin_client):
 
     assert response.status_code == 200
     assert response.template_name == "in_person/enrollment/success.html"
+
+
+@pytest.mark.django_db
+class TestSwitchioGatewayUrlView:
+    @pytest.fixture
+    def view(self, app_request, model_SwitchioConfig):
+        v = views.SwitchioGatewayUrlView()
+        v.setup(app_request)
+        v.agency = model_SwitchioConfig.transit_agency
+        return v
+
+    def test_view(self, view: views.SwitchioGatewayUrlView):
+        assert view.enrollment_method == models.EnrollmentMethods.IN_PERSON
+        assert view.route_redirect == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+        assert view.route_system_error == routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
+        assert view.route_server_error == routes.IN_PERSON_SERVER_ERROR
+
+
+@pytest.mark.django_db
+class TestSwitchioEnrollmentIndexView:
+    @pytest.fixture
+    def view(self, app_request, model_SwitchioConfig):
+        v = views.SwitchioEnrollmentIndexView()
+        v.setup(app_request)
+        v.agency = model_SwitchioConfig.transit_agency
+        return v
+
+    def test_view(self, view: views.SwitchioGatewayUrlView):
+        assert view.enrollment_method == models.EnrollmentMethods.IN_PERSON
+        assert view.form_class == forms.CardTokenizeSuccessForm
+        assert view.route_enrollment_success == routes.IN_PERSON_ENROLLMENT_SUCCESS
+        assert view.route_reenrollment_error == routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR
+        assert view.route_retry == routes.IN_PERSON_ENROLLMENT_RETRY
+        assert view.route_server_error == routes.IN_PERSON_SERVER_ERROR
+        assert view.route_system_error == routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
+        assert view.route_tokenize_success == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+        assert view.template_name == "in_person/enrollment/index_switchio.html"
+
+    def test_get_verified_by(self, mocker, app_request, view):
+        app_request.user = mocker.Mock(first_name="First", last_name="Last")
+
+        assert view._get_verified_by() == "First Last"
