@@ -6,8 +6,8 @@ from django.views.generic import FormView, View
 import sentry_sdk
 
 from benefits.routes import routes
-from benefits.core import models, session
-from benefits.core.mixins import EligibleSessionRequiredMixin
+from benefits.core import models
+from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FlowSessionRequiredMixin
 
 from benefits.enrollment import analytics, forms
 from benefits.enrollment.enrollment import Status, handle_enrollment_results
@@ -50,14 +50,14 @@ class TokenView(EligibleSessionRequiredMixin, View):
         return JsonResponse(data)
 
 
-class IndexView(EligibleSessionRequiredMixin, FormView):
+class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSessionRequiredMixin, FormView):
     template_name = "enrollment_littlepay/index.html"
     form_class = forms.CardTokenizeSuccessForm
 
     def get_context_data(self, **kwargs):
         request = self.request
-        agency = session.agency(request)
-        flow = session.flow(request)
+        agency = self.agency
+        flow = self.flow
 
         tokenize_retry_form = forms.CardTokenizeFailForm(routes.ENROLLMENT_RETRY, "form-card-tokenize-fail-retry")
         tokenize_server_error_form = forms.CardTokenizeFailForm(routes.SERVER_ERROR, "form-card-tokenize-fail-server-error")
