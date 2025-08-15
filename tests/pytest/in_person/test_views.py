@@ -81,6 +81,15 @@ class TestEligibilityView:
         context_data = view.get_context_data()
         assert "title" in context_data
 
+    def test_dispatch(self, view, mocker):
+        littlepay_session = mocker.patch.object(views, "LittlepaySession")
+        switchio_session = mocker.patch.object(views, "SwitchioSession")
+
+        view.dispatch(view.request)
+
+        littlepay_session.assert_called_once_with(view.request, reset=True)
+        switchio_session.assert_called_once_with(view.request, reset=True)
+
     def test_dispatch_no_agency_in_session(
         self, view, mocked_session_module, mocked_transit_agency_class, model_TransitAgency
     ):

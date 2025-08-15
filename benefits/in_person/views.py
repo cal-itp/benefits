@@ -14,7 +14,9 @@ from benefits.enrollment import analytics as enrollment_analytics
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment.views import IndexView
 from benefits.enrollment_littlepay.enrollment import get_card_types_for_js, enroll
+from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.enrollment_littlepay.views import TokenView
+from benefits.enrollment_switchio.session import Session as SwitchioSession
 from benefits.enrollment_switchio.views import GatewayUrlView, IndexView as SwitchioIndexView
 from benefits.in_person import forms
 from benefits.routes import routes
@@ -30,6 +32,9 @@ class EligibilityView(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         """Initialize session state before handling the request."""
+
+        LittlepaySession(request, reset=True)
+        SwitchioSession(request, reset=True)
 
         agency = session.agency(request)
         if not agency:
