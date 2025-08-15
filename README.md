@@ -44,7 +44,7 @@
 | benefits/enrollment/apps.py                                                                    |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/context/\_\_init\_\_.py                                                    |        2 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/context/flow.py                                                            |       34 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment/enrollment.py                                                              |       35 |        1 |       10 |        2 |     93% |37, 59->exit |
+| benefits/enrollment/enrollment.py                                                              |       35 |        1 |       10 |        2 |     93% |46, 70->exit |
 | benefits/enrollment/forms.py                                                                   |       14 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/urls.py                                                                    |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/views.py                                                                   |       50 |        1 |        6 |        1 |     96% |        51 |
@@ -66,7 +66,7 @@
 | benefits/enrollment\_switchio/admin.py                                                         |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/api.py                                                           |      119 |        0 |        2 |        0 |    100% |           |
 | benefits/enrollment\_switchio/apps.py                                                          |        4 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_switchio/enrollment.py                                                    |      109 |        0 |       28 |        4 |     97% |94->97, 142->139, 165->200, 207->206 |
+| benefits/enrollment\_switchio/enrollment.py                                                    |      109 |        0 |       28 |        4 |     97% |96->99, 144->141, 167->202, 209->208 |
 | benefits/enrollment\_switchio/migrations/0001\_initial.py                                      |        8 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/migrations/0002\_switchioconfig\_enrollment\_api.py              |        6 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_switchio/migrations/0003\_switchiogroup.py                                |        5 |        0 |        0 |        0 |    100% |           |
@@ -76,14 +76,14 @@
 | benefits/enrollment\_switchio/models.py                                                        |       49 |        0 |       12 |        0 |    100% |           |
 | benefits/enrollment\_switchio/session.py                                                       |       28 |        0 |        6 |        0 |    100% |           |
 | benefits/enrollment\_switchio/urls.py                                                          |        5 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment\_switchio/views.py                                                         |       94 |        0 |       26 |        2 |     98% |81->92, 89->92 |
+| benefits/enrollment\_switchio/views.py                                                         |      107 |        0 |       26 |        2 |     98% |91->102, 99->102 |
 | benefits/in\_person/\_\_init\_\_.py                                                            |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/apps.py                                                                    |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/context/\_\_init\_\_.py                                                    |        2 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/context/eligibility.py                                                     |        8 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/forms.py                                                                   |       42 |        9 |        6 |        0 |     73% |     59-70 |
 | benefits/in\_person/urls.py                                                                    |        6 |        0 |        0 |        0 |    100% |           |
-| benefits/in\_person/views.py                                                                   |      123 |        5 |       20 |        3 |     93% |36->39, 134->exit, 172-176 |
+| benefits/in\_person/views.py                                                                   |      145 |        5 |       20 |        2 |     95% |138->exit, 176-180 |
 | benefits/locale/\_\_init\_\_.py                                                                |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/\_\_init\_\_.py                                                             |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/formats.py                                                                  |        1 |        0 |        0 |        0 |    100% |           |
@@ -96,13 +96,13 @@
 | benefits/oauth/middleware.py                                                                   |       23 |        0 |        6 |        0 |    100% |           |
 | benefits/oauth/urls.py                                                                         |       12 |        0 |        0 |        0 |    100% |           |
 | benefits/oauth/views.py                                                                        |        8 |        0 |        0 |        0 |    100% |           |
-| benefits/routes.py                                                                             |      113 |        0 |        0 |        0 |    100% |           |
+| benefits/routes.py                                                                             |      116 |        0 |        0 |        0 |    100% |           |
 | benefits/secrets.py                                                                            |       48 |        8 |       10 |        1 |     81% |     90-99 |
 | benefits/sentry.py                                                                             |       57 |       12 |       10 |        1 |     81% |19, 24-25, 30, 34-35, 63-64, 87-108 |
 | benefits/settings.py                                                                           |      132 |        7 |       24 |        9 |     90% |106, 127->132, 143->146, 163, 316, 328, 330, 345, 357 |
 | benefits/urls.py                                                                               |       27 |        7 |        4 |        2 |     71% |35->46, 50-64 |
 | benefits/wsgi.py                                                                               |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                                                                      **TOTAL** | **3046** |  **152** |  **548** |   **61** | **93%** |           |
+|                                                                                      **TOTAL** | **3084** |  **152** |  **548** |   **60** | **93%** |           |
 
 
 ## Setup coverage badge
