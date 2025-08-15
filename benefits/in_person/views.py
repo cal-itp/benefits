@@ -247,6 +247,7 @@ def success(request):
 
 class SwitchioGatewayUrlView(GatewayUrlView):
     enrollment_method = models.EnrollmentMethods.IN_PERSON
+    route_redirect = routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
     route_server_error = routes.IN_PERSON_SERVER_ERROR
     route_system_error = routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
 

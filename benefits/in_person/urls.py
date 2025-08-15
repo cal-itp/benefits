@@ -10,33 +10,33 @@ urlpatterns = [
     path(
         "eligibility/", admin.site.admin_view(views.EligibilityView.as_view()), name=routes.name(routes.IN_PERSON_ELIGIBILITY)
     ),
-    path(
-        "enrollment/littlepay/token/",
-        admin.site.admin_view(views.LittlepayTokenView.as_view()),
-        name=routes.name(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_TOKEN),
-    ),
     path("enrollment/", admin.site.admin_view(views.EnrollmentView.as_view()), name=routes.name(routes.IN_PERSON_ENROLLMENT)),
     path(
-        "enrollment/littlepay",
-        admin.site.admin_view(views.enrollment),
-        name=routes.name(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX),
-    ),
-    path(
-        "enrollment/switchio",
-        admin.site.admin_view(views.enrollment),
-        name=routes.name(routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX),
+        "enrollment/error",
+        admin.site.admin_view(views.system_error),
+        name=routes.name(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR),
     ),
     path(
         "enrollment/error/reenrollment",
         admin.site.admin_view(views.reenrollment_error),
         name=routes.name(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR),
     ),
+    path(
+        "enrollment/littlepay",
+        admin.site.admin_view(views.enrollment),
+        name=routes.name(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX),
+    ),
+    path(
+        "enrollment/littlepay/token/",
+        admin.site.admin_view(views.LittlepayTokenView.as_view()),
+        name=routes.name(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_TOKEN),
+    ),
     path("enrollment/retry", admin.site.admin_view(views.retry), name=routes.name(routes.IN_PERSON_ENROLLMENT_RETRY)),
     path("enrollment/success", admin.site.admin_view(views.success), name=routes.name(routes.IN_PERSON_ENROLLMENT_SUCCESS)),
     path(
-        "enrollment/error",
-        admin.site.admin_view(views.system_error),
-        name=routes.name(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR),
+        "enrollment/switchio",
+        admin.site.admin_view(views.SwitchioEnrollmentIndexView.as_view()),
+        name=routes.name(routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX),
     ),
     path(
         "enrollment/switchio/gateway_url",

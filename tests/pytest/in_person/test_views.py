@@ -319,6 +319,7 @@ class TestSwitchioGatewayUrlView:
 
     def test_view(self, view: views.SwitchioGatewayUrlView):
         assert view.enrollment_method == models.EnrollmentMethods.IN_PERSON
+        assert view.route_redirect == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
         assert view.route_system_error == routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
         assert view.route_server_error == routes.IN_PERSON_SERVER_ERROR
 
