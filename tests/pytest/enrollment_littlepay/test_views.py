@@ -192,15 +192,16 @@ def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_
 
 class TestIndexView:
     @pytest.fixture
-    def view(self, app_request):
+    def view(self, app_request, model_LittlepayConfig, model_EnrollmentFlow):
         """Fixture to create an instance of IndexView."""
         v = IndexView()
         v.setup(app_request)
+        v.agency = model_LittlepayConfig.transit_agency
+        v.flow = model_EnrollmentFlow
 
         return v
 
     @pytest.mark.django_db
-    @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_LittlepayConfig")
     def test_get_context_data(self, view):
         context = view.get_context_data()
 
@@ -228,6 +229,7 @@ class TestIndexView:
 
         assert "card_types" in context
 
+    @pytest.mark.django_db
     @pytest.mark.parametrize(
         "LANGUAGE_CODE, expected_overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")]
     )
@@ -236,6 +238,7 @@ class TestIndexView:
 
         assert overlay_language == expected_overlay_language
 
+    @pytest.mark.django_db
     def test_form_valid(self, mocker, view):
         mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
 
