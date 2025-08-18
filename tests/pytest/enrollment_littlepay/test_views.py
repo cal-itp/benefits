@@ -191,6 +191,7 @@ def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_
     mocked_sentry_sdk_module.capture_exception.assert_called_once()
 
 
+@pytest.mark.django_db
 class TestIndexView:
     @pytest.fixture
     def view(self, app_request, model_LittlepayConfig, model_EnrollmentFlow):
@@ -202,7 +203,6 @@ class TestIndexView:
 
         return v
 
-    @pytest.mark.django_db
     def test_get_context_data(self, view):
         context = view.get_context_data()
 
@@ -230,7 +230,6 @@ class TestIndexView:
 
         assert "card_types" in context
 
-    @pytest.mark.django_db
     @pytest.mark.parametrize(
         "LANGUAGE_CODE, expected_overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")]
     )
@@ -239,7 +238,6 @@ class TestIndexView:
 
         assert overlay_language == expected_overlay_language
 
-    @pytest.mark.django_db
     def test_form_valid(self, mocker, view):
         mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
 
@@ -257,13 +255,11 @@ class TestIndexView:
         assert handler_kwargs["route_success"] == routes.ENROLLMENT_SUCCESS
         assert handler_kwargs["route_system_error"] == routes.ENROLLMENT_SYSTEM_ERROR
 
-    @pytest.mark.django_db
     def test_form_invalid(self, view):
         with pytest.raises(Exception, match="Invalid card token form"):
             form = view.form_class()
             view.form_invalid(form)
 
-    @pytest.mark.django_db
     @pytest.mark.usefixtures(
         "mocked_session_eligible", "mocked_session_agency", "mocked_session_flow", "model_LittlepayConfig"
     )
@@ -274,7 +270,6 @@ class TestIndexView:
         assert response.status_code == 200
         assert response.template_name == ["enrollment_littlepay/index.html"]
 
-    @pytest.mark.django_db
     @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
     def test_index_view_not_eligible(self, mocker, app_request):
         mocker.patch("benefits.core.session.eligible", return_value=False)
