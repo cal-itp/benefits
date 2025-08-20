@@ -264,12 +264,24 @@ class TestSwitchioEnrollmentIndexView:
         assert view.route_tokenize_success == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
         assert view.template_name == "in_person/enrollment/index_switchio.html"
 
-    def test_get_verified_by(self, mocker, app_request, view):
+    def test_get_verified_by(self, mocker, app_request, view: views.SwitchioEnrollmentIndexView):
         app_request.user = mocker.Mock(first_name="First", last_name="Last")
 
         assert view._get_verified_by() == "First Last"
 
-    def test_get_context_data(self, view):
+    def test_get_context_data(self, view: views.SwitchioEnrollmentIndexView):
         context = view.get_context_data()
 
         assert "title" in context
+
+    def test_get_context_data__pre_tokenize(self, view: views.SwitchioEnrollmentIndexView):
+        context = view.get_context_data()
+
+        assert context["loading_message"] == "Connecting with payment processor..."
+
+    def test_get_context_data__post_tokenize(self, view: views.SwitchioEnrollmentIndexView, app_request):
+        app_request.GET = {"state": "tokenize"}
+
+        context = view.get_context_data()
+
+        assert context["loading_message"] == "Registering this contactless card for reduced fares..."

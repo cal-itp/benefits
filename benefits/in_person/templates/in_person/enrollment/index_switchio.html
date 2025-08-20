@@ -9,21 +9,8 @@
     <div class="loading">
       <p>
         <span class="spinner-border align-middle text-primary" role="status"></span>
-        <span id="loading-message" class="fw-bold p-2">Please wait...</span>
+        <span id="loading-message" class="fw-bold p-2">{{ loading_message }}</span>
       </p>
-    </div>
-    <div class="row d-flex justify-content-start p-3">
-      <div class="col-12">
-        <div class="invisible">
-          <button id="{{ cta_button }}" href="#{{ cta_button }}" class="btn btn-lg btn-primary" role="button">Enroll</button>
-        </div>
-      </div>
-    </div>
-    <div class="row d-flex justify-content-start p-3 pt-8">
-      <div class="col-12">
-        {% url routes.ADMIN_INDEX as url_cancel %}
-        <a href="{{ url_cancel }}" class="btn btn-lg btn-outline-primary d-block">Cancel</a>
-      </div>
     </div>
   </div>
 

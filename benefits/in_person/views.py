@@ -203,8 +203,15 @@ class SwitchioEnrollmentIndexView(SwitchioIndexView):
     def get_context_data(self, **kwargs):
         """Add in-person specific context data."""
         context = super().get_context_data(**kwargs)
+
+        if self.request.GET.get("state") == "tokenize":
+            message = "Registering this contactless card for reduced fares..."
+        else:
+            message = "Connecting with payment processor..."
+
         context.update(
             {
+                "loading_message": message,
                 "title": f"{self.agency.long_name} | In-person enrollment | {admin_site.site_title}",
             }
         )
