@@ -246,13 +246,14 @@ class TestSwitchioGatewayUrlView:
 @pytest.mark.django_db
 class TestSwitchioEnrollmentIndexView:
     @pytest.fixture
-    def view(self, app_request, model_SwitchioConfig):
+    def view(self, app_request, model_SwitchioConfig, model_EnrollmentFlow):
         v = views.SwitchioEnrollmentIndexView()
         v.setup(app_request)
         v.agency = model_SwitchioConfig.transit_agency
+        v.flow = model_EnrollmentFlow
         return v
 
-    def test_view(self, view: views.SwitchioGatewayUrlView):
+    def test_view(self, view: views.SwitchioEnrollmentIndexView):
         assert view.enrollment_method == models.EnrollmentMethods.IN_PERSON
         assert view.form_class == forms.CardTokenizeSuccessForm
         assert view.route_enrollment_success == routes.IN_PERSON_ENROLLMENT_SUCCESS
@@ -267,3 +268,8 @@ class TestSwitchioEnrollmentIndexView:
         app_request.user = mocker.Mock(first_name="First", last_name="Last")
 
         assert view._get_verified_by() == "First Last"
+
+    def test_get_context_data(self, view):
+        context = view.get_context_data()
+
+        assert "title" in context

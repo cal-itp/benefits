@@ -199,3 +199,13 @@ class SwitchioEnrollmentIndexView(SwitchioIndexView):
 
     def _get_verified_by(self):
         return f"{self.request.user.first_name} {self.request.user.last_name}"
+
+    def get_context_data(self, **kwargs):
+        """Add in-person specific context data."""
+        context = super().get_context_data(**kwargs)
+        context.update(
+            {
+                "title": f"{self.agency.long_name} | In-person enrollment | {admin_site.site_title}",
+            }
+        )
+        return context
