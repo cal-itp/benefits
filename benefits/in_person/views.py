@@ -216,3 +216,11 @@ class SwitchioEnrollmentIndexView(SwitchioIndexView):
             }
         )
         return context
+
+    def get(self, request, *args, **kwargs):
+        if request.GET.get("error") == "canceled":
+            # the user clicked the "Back" button on the Switchio tokenization gateway
+            # send them back to the Admin index, similar to the Littlepay cancel button
+            return redirect(routes.ADMIN_INDEX)
+
+        return super().get(request, *args, **kwargs)

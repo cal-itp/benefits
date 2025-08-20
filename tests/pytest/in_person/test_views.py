@@ -285,3 +285,11 @@ class TestSwitchioEnrollmentIndexView:
         context = view.get_context_data()
 
         assert context["loading_message"] == "Registering this contactless card for reduced fares..."
+
+    def test_get__cancel_tokenize(self, view: views.SwitchioEnrollmentIndexView, app_request):
+        app_request.GET = {"error": "canceled"}
+
+        response = view.get(app_request)
+
+        assert response.status_code == 302
+        assert response.url == reverse(routes.ADMIN_INDEX)
