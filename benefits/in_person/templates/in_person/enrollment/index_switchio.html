@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  {% include "enrollment_switchio/script.html" with gateway_url_route=routes.IN_PERSON_ENROLLMENT_SWITCHIO_GATEWAY_URL %}
+  {% include "in_person/enrollment/switchio_script.html" with gateway_url_route=routes.IN_PERSON_ENROLLMENT_SWITCHIO_GATEWAY_URL %}
 
   {% for f in forms %}
     {% include "core/includes/form.html" with form=f %}
