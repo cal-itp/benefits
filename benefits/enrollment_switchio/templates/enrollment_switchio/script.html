@@ -47,6 +47,7 @@
         return; // exit early so the rest of this function doesn't execute
       }
 
+      {% block gateway-url-handler %}
       document.querySelector(".loading").remove();
 
       // remove invisible and add back visible, so we aren't left with
@@ -69,5 +70,6 @@
         // open the tokenization gateway
         tokenizeWithRedirect(data.gateway_url)
       });
+      {% endblock gateway-url-handler %}
     }));
 </script>
