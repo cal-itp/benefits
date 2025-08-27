@@ -10,7 +10,7 @@ from benefits.core.models import EnrollmentFlow, EnrollmentEvent, EnrollmentMeth
 
 @pytest.mark.django_db
 def test_EnrollmentFlow_str(model_EnrollmentFlow):
-    assert str(model_EnrollmentFlow) == model_EnrollmentFlow.label
+    assert str(model_EnrollmentFlow) == f"{model_EnrollmentFlow.label} ({model_EnrollmentFlow.transit_agency.slug})"
 
 
 @pytest.mark.django_db
@@ -175,6 +175,17 @@ def test_EnrollmentFlow_clean_in_person_eligibility_context_not_found(model_Enro
 
     with pytest.raises(
         ValidationError, match=f"{model_EnrollmentFlow.system_name} not configured for In-person. Please uncheck to continue."
+    ):
+        model_EnrollmentFlow.clean()
+
+
+@pytest.mark.django_db
+def test_EnrollmentFlow_clean_group_id(model_EnrollmentFlow):
+    assert not hasattr(model_EnrollmentFlow, "enrollmentgroup")
+
+    with pytest.raises(
+        ValidationError,
+        match=f"{model_EnrollmentFlow.system_name} needs either a LittlepayGroup or SwitchioGroup linked to it.",
     ):
         model_EnrollmentFlow.clean()
 

@@ -57,27 +57,21 @@ resource "azurerm_linux_web_app" "main" {
     "REQUESTS_READ_TIMEOUT"    = "${local.secret_prefix}requests-read-timeout)",
 
     # Django settings
-    "DJANGO_ALLOWED_HOSTS" = "${local.secret_prefix}django-allowed-hosts)",
-    "DJANGO_STORAGE_DIR"   = "${local.secret_prefix}django-storage-dir)",
-    "DJANGO_DEBUG"         = local.is_prod ? null : "${local.secret_prefix}django-debug)",
-    "DJANGO_LOG_LEVEL"     = "${local.secret_prefix}django-log-level)",
+    "DJANGO_ALLOWED_HOSTS"        = "${local.secret_prefix}django-allowed-hosts)",
+    "DJANGO_STORAGE_DIR"          = "${local.secret_prefix}django-storage-dir)",
+    "DJANGO_DEBUG"                = local.is_prod ? null : "${local.secret_prefix}django-debug)",
+    "DJANGO_LOG_LEVEL"            = "${local.secret_prefix}django-log-level)",
     "DJANGO_RECAPTCHA_SECRET_KEY" = "${local.secret_prefix}django-recaptcha-secret-key)",
     "DJANGO_RECAPTCHA_SITE_KEY"   = "${local.secret_prefix}django-recaptcha-site-key)",
-    "DJANGO_SECRET_KEY"      = "${local.secret_prefix}django-secret-key)",
-    "DJANGO_TRUSTED_ORIGINS" = "${local.secret_prefix}django-trusted-origins)",
+    "DJANGO_SECRET_KEY"           = "${local.secret_prefix}django-secret-key)",
+    "DJANGO_TRUSTED_ORIGINS"      = "${local.secret_prefix}django-trusted-origins)",
 
     "HEALTHCHECK_USER_AGENTS" = local.is_dev ? null : "${local.secret_prefix}healthcheck-user-agents)",
 
     # Transit payment processor settings
     "LITTLEPAY_ADDITIONAL_CARDTYPES" = "${local.secret_prefix}littlepay-additional-cardtypes)",
-    "LITTLEPAY_QA_API_BASE_URL" = "${local.secret_prefix}littlepay-qa-api-base-url"
-    "LITTLEPAY_PROD_API_BASE_URL" = "${local.secret_prefix}littlepay-prod-api-base-url"
-
-    "SWITCHIO_QA_API_BASE_URL" = "${local.secret_prefix}switchio-qa-api-base-url"
-    "SWITCHIO_PROD_API_BASE_URL" = "${local.secret_prefix}switchio-prod-api-base-url"
 
     # Google SSO for Admin
-
     "GOOGLE_SSO_CLIENT_ID"         = "${local.secret_prefix}google-sso-client-id)",
     "GOOGLE_SSO_PROJECT_ID"        = "${local.secret_prefix}google-sso-project-id)",
     "GOOGLE_SSO_CLIENT_SECRET"     = "${local.secret_prefix}google-sso-client-secret)",

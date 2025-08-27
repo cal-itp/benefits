@@ -6,12 +6,13 @@ from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFou
 from django.shortcuts import redirect
 from django.template import loader
 from django.template.response import TemplateResponse
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
 
 from benefits.routes import routes
 from . import models, session
 from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator, user_error
 
-TEMPLATE_INDEX = "core/index.html"
 TEMPLATE_AGENCY = "core/index--agency-base.html"
 TEMPLATE_HELP = "core/help.html"
 TEMPLATE_LOGGED_OUT = "core/logged-out.html"
@@ -21,12 +22,15 @@ TEMPLATE_NOT_FOUND = "404.html"
 TEMPLATE_SERVER_ERROR = "500.html"
 
 
-@pageview_decorator
-def index(request):
+class IndexView(TemplateView):
     """View handler for the main entry page."""
-    session.reset(request)
 
-    return TemplateResponse(request, TEMPLATE_INDEX)
+    template_name = "core/index.html"
+
+    @method_decorator(pageview_decorator)
+    def get(self, request, *args, **kwargs):
+        session.reset(request)
+        return super().get(request, *args, **kwargs)
 
 
 @pageview_decorator

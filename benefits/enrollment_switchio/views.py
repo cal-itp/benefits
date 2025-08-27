@@ -7,11 +7,12 @@ import sentry_sdk
 
 from benefits.enrollment_switchio.models import SwitchioConfig
 from benefits.routes import routes
-from benefits.core import models, session
-from benefits.core.mixins import EligibleSessionRequiredMixin, AgencySessionRequiredMixin
+from benefits.core import models
+from benefits.core.mixins import EligibleSessionRequiredMixin, AgencySessionRequiredMixin, FlowSessionRequiredMixin
 from benefits.enrollment import analytics, forms
-from benefits.enrollment.enrollment import Status
+from benefits.enrollment.enrollment import Status, handle_enrollment_results
 from benefits.enrollment_switchio.enrollment import (
+    enroll,
     request_registration,
     get_registration_status,
     get_latest_active_token_value,
@@ -21,23 +22,30 @@ from benefits.enrollment_switchio.session import Session
 logger = logging.getLogger(__name__)
 
 
-class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FormView):
+class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSessionRequiredMixin, FormView):
     """View for the enrollment landing page."""
 
-    template_name = "enrollment_switchio/index.html"
+    enrollment_method = models.EnrollmentMethods.DIGITAL
     form_class = forms.CardTokenizeSuccessForm
+    route_enrollment_success = routes.ENROLLMENT_SUCCESS
+    route_reenrollment_error = routes.ENROLLMENT_REENROLLMENT_ERROR
+    route_retry = routes.ENROLLMENT_RETRY
+    route_system_error = routes.ENROLLMENT_SYSTEM_ERROR
+    route_server_error = routes.SERVER_ERROR
+    route_tokenize_success = routes.ENROLLMENT_SWITCHIO_INDEX
+    template_name = "enrollment_switchio/index.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         request = self.request
-        flow = session.flow(self.request)
+        flow = self.flow
 
         tokenize_system_error_form = forms.CardTokenizeFailForm(
-            routes.ENROLLMENT_SYSTEM_ERROR, "form-card-tokenize-fail-system-error"
+            self.route_system_error, "form-card-tokenize-fail-system-error"
         )
         tokenize_success_form = forms.CardTokenizeSuccessForm(
-            action_url=routes.ENROLLMENT_SWITCHIO_INDEX, auto_id=True, label_suffix=""
+            action_url=self.route_tokenize_success, auto_id=True, label_suffix=""
         )
         context.update(
             {
@@ -46,7 +54,7 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FormVi
                 "form_success": tokenize_success_form.id,
                 "form_system_error": tokenize_system_error_form.id,
                 "cta_button": "tokenize_card",
-                "enrollment_method": models.EnrollmentMethods.DIGITAL,
+                "enrollment_method": self.enrollment_method,
                 "transit_processor": {"name": "Switchio", "website": "https://switchio.com/transport/"},
                 "locale": self._get_locale(request.LANGUAGE_CODE),
             }
@@ -58,6 +66,9 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FormVi
         # mapping from Django's I18N LANGUAGE_CODE to Switchio's locales
         locale = {"en": "en", "es": "es"}.get(django_language_code, "en")
         return locale
+
+    def _get_verified_by(self):
+        return self.flow.eligibility_verifier
 
     def get(self, request: HttpRequest, *args, **kwargs):
         session = Session(request)
@@ -76,32 +87,45 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FormVi
                     context_data["card_token"] = get_latest_active_token_value(response.registration_status.tokens)
                     return self.render_to_response(context=context_data)
                 elif reg_state == "verification_failed":
-                    return redirect(routes.ENROLLMENT_RETRY)
+                    return redirect(self.route_retry)
                 elif reg_state == "tokenization_failed":
                     sentry_sdk.capture_exception(Exception("Tokenization failed"))
-                    return redirect(routes.ENROLLMENT_SYSTEM_ERROR)
+                    return redirect(self.route_system_error)
             else:
                 sentry_sdk.capture_exception(response.exception)
 
                 if response.status is Status.SYSTEM_ERROR:
-                    return redirect(routes.ENROLLMENT_SYSTEM_ERROR)
+                    return redirect(self.route_system_error)
                 elif response.status is Status.EXCEPTION:
-                    return redirect(routes.SERVER_ERROR)
+                    return redirect(self.route_server_error)
 
         return super().get(request=request, *args, **kwargs)
 
     def form_valid(self, form):
-        card_token = form.cleaned_data.get("card_token")  # noqa
+        switchio_config = self.agency.switchio_config
+        flow = self.flow
+        card_token = form.cleaned_data.get("card_token")
 
-        # (this is where we will enroll the card token)
-        # status, exception = enroll(self.request, card_token)
-
-        # return handle_enrollment_results(self.request, status, exception)
-        return redirect(routes.ENROLLMENT_SUCCESS)
+        status, exception = enroll(switchio_config=switchio_config, flow=flow, token=card_token)
+        return handle_enrollment_results(
+            request=self.request,
+            status=status,
+            verified_by=self._get_verified_by(),
+            exception=exception,
+            enrollment_method=self.enrollment_method,
+            route_reenrollment_error=self.route_reenrollment_error,
+            route_success=self.route_enrollment_success,
+            route_system_error=self.route_system_error,
+        )
 
 
 class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, View):
     """View for the tokenization gateway registration"""
+
+    enrollment_method = models.EnrollmentMethods.DIGITAL
+    route_redirect = routes.ENROLLMENT_SWITCHIO_INDEX
+    route_system_error = routes.ENROLLMENT_SYSTEM_ERROR
+    route_server_error = routes.SERVER_ERROR
 
     def get(self, request: HttpRequest, *args, **kwargs):
         session = Session(request)
@@ -121,18 +145,18 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
             else:
                 logger.debug(f"Error occurred while attempting to get registration status for {session.registration_id}")
                 sentry_sdk.capture_exception(response.exception)
-                analytics.failed_pretokenization_request(request, response.status_code)
+                analytics.failed_pretokenization_request(request, response.status_code, self.enrollment_method)
 
                 if response.status is Status.SYSTEM_ERROR:
-                    redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+                    redirect = reverse(self.route_system_error)
                 else:
-                    redirect = reverse(routes.SERVER_ERROR)
+                    redirect = reverse(self.route_server_error)
 
                 data = {"redirect": redirect}
                 return JsonResponse(data)
 
     def _request_registration(self, request: HttpRequest, switchio_config: SwitchioConfig, session: Session) -> JsonResponse:
-        response = request_registration(request, switchio_config)
+        response = request_registration(request, switchio_config, self.route_redirect)
 
         if response.status is Status.SUCCESS:
             registration = response.registration
@@ -143,12 +167,12 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
         else:
             logger.debug("Error occurred while requesting a tokenization gateway registration", exc_info=response.exception)
             sentry_sdk.capture_exception(response.exception)
-            analytics.failed_pretokenization_request(request, response.status_code)
+            analytics.failed_pretokenization_request(request, response.status_code, self.enrollment_method)
 
             if response.status is Status.SYSTEM_ERROR:
-                redirect = reverse(routes.ENROLLMENT_SYSTEM_ERROR)
+                redirect = reverse(self.route_system_error)
             else:
-                redirect = reverse(routes.SERVER_ERROR)
+                redirect = reverse(self.route_server_error)
 
             data = {"redirect": redirect}
             return JsonResponse(data)

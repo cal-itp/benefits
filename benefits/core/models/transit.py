@@ -7,9 +7,8 @@ from django.db import models
 from django.urls import reverse
 
 from benefits.core import context as core_context
-from benefits.eligibility import context as eligibility_context
 from benefits.routes import routes
-from .common import PemData
+from .common import Environment, PemData
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +39,27 @@ class TransitProcessor(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class TransitProcessorConfig(models.Model):
+    id = models.AutoField(primary_key=True)
+    environment = models.TextField(
+        choices=Environment,
+        help_text="A label to indicate which environment this configuration is for.",
+    )
+    transit_agency = models.OneToOneField(
+        "TransitAgency",
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        default=None,
+        help_text="The transit agency that uses this configuration.",
+    )
+
+    def __str__(self):
+        environment_label = Environment(self.environment).label if self.environment else "unknown"
+        agency_slug = self.transit_agency.slug if self.transit_agency else "(no agency)"
+        return f"({environment_label}) {agency_slug}"
 
 
 class TransitAgency(models.Model):
@@ -99,22 +119,6 @@ class TransitAgency(models.Model):
         default=None,
         help_text="This agency's TransitProcessor.",
     )
-    littlepay_config = models.OneToOneField(
-        "enrollment_littlepay.LittlepayConfig",
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        default=None,
-        help_text="The Littlepay configuration used by this agency for enrollment.",
-    )
-    switchio_config = models.ForeignKey(
-        "enrollment_switchio.SwitchioConfig",
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        default=None,
-        help_text="The Switchio configuration used by this agency for enrollment.",
-    )
     staff_group = models.OneToOneField(
         Group,
         on_delete=models.PROTECT,
@@ -164,10 +168,6 @@ class TransitAgency(models.Model):
         return reverse(routes.AGENCY_INDEX, args=[self.slug])
 
     @property
-    def eligibility_index_context(self):
-        return eligibility_context.eligibility_index[self.slug].dict()
-
-    @property
     def eligibility_index_url(self):
         """Public facing URL to the TransitAgency's eligibility page."""
         return reverse(routes.AGENCY_ELIGIBILITY_INDEX, args=[self.slug])
@@ -181,6 +181,35 @@ class TransitAgency(models.Model):
     def eligibility_api_public_key_data(self):
         """This Agency's public key as a string."""
         return self.eligibility_api_public_key.data
+
+    @property
+    def littlepay_config(self):
+        if hasattr(self, "transitprocessorconfig") and hasattr(self.transitprocessorconfig, "littlepayconfig"):
+            return self.transitprocessorconfig.littlepayconfig
+        else:
+            return None
+
+    @property
+    def switchio_config(self):
+        if hasattr(self, "transitprocessorconfig") and hasattr(self.transitprocessorconfig, "switchioconfig"):
+            return self.transitprocessorconfig.switchioconfig
+        else:
+            return None
+
+    @property
+    def in_person_enrollment_index_route(self):
+        """This Agency's in-person enrollment index route, based on its configured transit processor."""
+        if self.littlepay_config:
+            return routes.IN_PERSON_ENROLLMENT_LITTLEPAY_INDEX
+        elif self.switchio_config:
+            return routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+        else:
+            raise ValueError(
+                (
+                    "TransitAgency must have either a LittlepayConfig or SwitchioConfig "
+                    "in order to show in-person enrollment index."
+                )
+            )
 
     @property
     def enrollment_index_route(self):
@@ -228,7 +257,7 @@ class TransitAgency(models.Model):
 
             if self.switchio_config:
                 try:
-                    self.switchio_config.clean(agency=self)
+                    self.switchio_config.clean()
                 except ValidationError as e:
                     message = "Switchio configuration is missing fields that are required when this agency is active."
                     message += f" Missing fields: {', '.join(e.error_dict.keys())}"

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-05-29 11:52-0700\n"
+"POT-Creation-Date: 2025-08-06 15:07-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -39,6 +39,13 @@ msgid "Get a reduced fare on Santa Barbara MTD buses when you tap to ride"
 msgstr ""
 "Obtenga una tarifa reducida en los autobuses del Santa Barbara MTD cuando "
 "toque para viajar"
+
+msgid ""
+"Get a reduced fare on Ventura County Transportation Commission buses when "
+"you tap to ride"
+msgstr ""
+"Obtenga una tarifa reducida en los autobuses del Ventura County "
+"Transportation Commission cuando toque para viajar"
 
 msgid "What is an Agency Card?"
 msgstr "¿Qué es una tarjeta de agencia?"
@@ -413,6 +420,54 @@ msgstr ""
 "littlepay.com' target=\"_blank\" rel=\"noopener noreferrer\">sitio web de "
 "Littlepay</a>."
 
+msgid "What is Switchio?"
+msgstr "¿Qué es Switchio?"
+
+msgid ""
+"Our payment partner, Switchio, is a secure, end-to-end payment processing "
+"platform that allows us to connect your transit benefit to the contactless "
+"card of your choice."
+msgstr ""
+"Switchio, nuestro socio de pagos, es una plataforma de procesamiento de "
+"pagos segura e integral que nos permite conectar su beneficio de tránsito a "
+"la tarjeta sin contacto de su elección."
+
+msgid ""
+"For more information on Switchio, please visit the <a href=\"https://"
+"switchio.com/transport/\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">Switchio website</a>."
+msgstr ""
+"Para obtener más información sobre Switchio, visite el <a href='https://"
+"switchio.com/transport' target=\"_blank\" rel=\"noopener noreferrer\">sitio "
+"web de Switchio</a>."
+
+msgid "Learn about our payment partners"
+msgstr "Más información sobre nuestros socios de pagos"
+
+msgid ""
+"Our payment partners, Littlepay and Switchio, are secure, end-to-end payment "
+"processing platforms that allow us to connect your transit benefit to the "
+"contactless card of your choice."
+msgstr ""
+"Nuestros socios de pagos, Littlepay y Switchio, son plataformas de "
+"procesamiento de pagos seguras e integrales que nos permiten conectar su "
+"beneficio de tránsito a la tarjeta sin contacto de su elección. Para obtener "
+"más información sobre Littlepay, visite el sitio web de Littlepay. Para "
+"obtener más información sobre Switchio, visite el sitio web de Switchio."
+
+msgid ""
+"For more information on Littlepay, please visit the <a href=\"https://"
+"littlepay.com\" target=\"_blank\" rel=\"noopener noreferrer\">Littlepay "
+"website</a>. For more information on Switchio, please visit the <a "
+"href=\"https://switchio.com/transport/\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">Switchio website</a>."
+msgstr ""
+"Para obtener más información sobre Littlepay, visite el <a href='https://"
+"littlepay.com' target=\"_blank\" rel=\"noopener noreferrer\">sitio web de "
+"Littlepay</a>. Para obtener más información sobre Switchio, visite el <a "
+"href='https://switchio.com/transport' target=\"_blank\" rel=\"noopener "
+"noreferrer\">sitio web de Switchio</a>."
+
 msgid "Questions?"
 msgstr "¿Tiene preguntas?"
 
@@ -508,47 +563,6 @@ msgstr "Ha cerrado sesión correctamente. ¡Gracias por usar Cal-ITP Benefits!"
 
 msgid "Which transit benefit would you like to enroll in?"
 msgstr "¿A qué beneficio de tránsito le gustaría inscribirse?"
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All CST transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de CST "
-"reducen las tarifas de autobuses en un 50%%."
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All MST transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de MST "
-"reducen las tarifas de autobuses en un 50%%."
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All Nevada County Connects "
-"transit benefits reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
-"Nevada County Connects reducen las tarifas de autobuses en un 50%%."
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All SacRT transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
-"SacRT reducen las tarifas en un 50%% para el servicio de autobús en rutas "
-"fijas."
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All SBMTD transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
-"SBMTD le ofrecen a los pasajeros tarifas de autobús reducidas."
 
 msgid "Get started with"
 msgstr "Comience con"
@@ -733,11 +747,11 @@ msgstr ""
 msgid "Reduced Fare Mobility ID card number"
 msgstr "Número de SBMTD Reduced Fare Mobility ID"
 
-msgid "This is a 4-digit number on the back of your card."
-msgstr "Este es un número de 4 dígitos en el reverso de su tarjeta."
+msgid "This is a 4- or 5-digit number on the back of your card."
+msgstr "Este es un número de 4 o 5 dígitos en el reverso de su tarjeta."
 
-msgid "Please enter a 4-digit number."
-msgstr "Ingrese un número de 4 dígitos."
+msgid "Please enter a 4- or 5-digit number."
+msgstr "Ingrese un número de 4 o 5 dígitos."
 
 msgid "Learn more about the transit benefit for CalFresh Cardholders"
 msgstr ""
@@ -910,6 +924,57 @@ msgstr "¡Está bien! Usted aún puede ser elegible para nuestro programa."
 msgid "Please reach out to %(short_name)s for assistance."
 msgstr "Comuníquese con %(short_name)s para obtener ayuda."
 
+#, python-format
+msgid ""
+"Cal-ITP doesn’t save any of your information. All CST transit benefits "
+"reduce fares by 50%% for bus service on fixed routes."
+msgstr ""
+"Cal-ITP no almacena su información. Todos los beneficios de tránsito de CST "
+"reducen las tarifas de autobuses en un 50%%."
+
+#, python-format
+msgid ""
+"Cal-ITP doesn’t save any of your information. All MST transit benefits "
+"reduce fares by 50%% for bus service on fixed routes."
+msgstr ""
+"Cal-ITP no almacena su información. Todos los beneficios de tránsito de MST "
+"reducen las tarifas de autobuses en un 50%%."
+
+#, python-format
+msgid ""
+"Cal-ITP doesn’t save any of your information. All Nevada County Connects "
+"transit benefits reduce fares by 50%% for bus service on fixed routes."
+msgstr ""
+"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
+"Nevada County Connects reducen las tarifas de autobuses en un 50%%."
+
+#, python-format
+msgid ""
+"Cal-ITP doesn’t save any of your information. All SacRT transit benefits "
+"reduce fares by 50%% for bus service on fixed routes."
+msgstr ""
+"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
+"SacRT reducen las tarifas en un 50%% para el servicio de autobús en rutas "
+"fijas."
+
+#, python-format
+msgid ""
+"Cal-ITP doesn’t save any of your information. All SBMTD transit benefits "
+"reduce fares by 50%% for bus service on fixed routes."
+msgstr ""
+"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
+"SBMTD le ofrecen a los pasajeros tarifas de autobús reducidas."
+
+#, python-format
+msgid ""
+"Cal-ITP doesn’t save any of your information. All Ventura County "
+"Transportation Commission transit benefits reduce fares by 50%% for bus "
+"service on fixed routes."
+msgstr ""
+"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
+"Ventura County Transportation Commission reducen las tarifas de autobuses en "
+"un 50%%."
+
 msgid "Your eligibility is confirmed! You’re almost there."
 msgstr "¡Su elegibilidad está confirmada! Ya falta poco."
 
@@ -977,6 +1042,9 @@ msgstr "un autobús de MST"
 msgid "an MST Courtesy Card transit benefit"
 msgstr "el beneficio de tránsito de la tarjeta de cortesía de MST"
 
+msgid "a Nevada County Connects bus"
+msgstr "un autobús de Nevada County Connects"
+
 msgid "a SacRT bus"
 msgstr "un autobús de SacRT"
 
@@ -986,8 +1054,8 @@ msgstr "un autobús de SBMTD"
 msgid "an SBMTD Reduced Fare Mobility ID transit benefit"
 msgstr "el beneficio de tránsito de Reduced Fare Mobility ID de SBMTD"
 
-msgid "a Nevada County Connects bus"
-msgstr "un autobús de Nevada County Connects"
+msgid "a Ventura County Transportation Commission bus"
+msgstr "un autobús de Ventura County Transportation Commission"
 
 msgid "Do not enter information from your EBT card."
 msgstr "No ingrese información de su tarjeta EBT."

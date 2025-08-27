@@ -1,16 +1,14 @@
 from django.forms import ValidationError
 import pytest
 
-from benefits.core.models import Environment
 from benefits.enrollment_littlepay.models import LittlepayConfig
 
 
 @pytest.mark.django_db
 def test_LittlepayConfig_defaults():
-    littlepay_config = LittlepayConfig.objects.create(environment="qa", agency_slug="cst")
+    littlepay_config = LittlepayConfig.objects.create(environment="qa")
 
     assert littlepay_config.environment == "qa"
-    assert littlepay_config.agency_slug == "cst"
     assert littlepay_config.audience == ""
     assert littlepay_config.client_id == ""
     assert littlepay_config.client_secret_name == ""
@@ -19,16 +17,9 @@ def test_LittlepayConfig_defaults():
 
 
 @pytest.mark.django_db
-def test_LittlepayConfig_str(model_LittlepayConfig):
-    environment_label = Environment(model_LittlepayConfig.environment).label
-    agency_slug = model_LittlepayConfig.agency_slug
-    assert str(model_LittlepayConfig) == f"({environment_label}) {agency_slug}"
-
-
-@pytest.mark.django_db
 def test_LittlepayConfig_clean_inactive_agency(model_TransitAgency_inactive):
-    littlepay_config = LittlepayConfig.objects.create(environment="qa", agency_slug="cst")
-    littlepay_config.transitagency = model_TransitAgency_inactive
+    littlepay_config = LittlepayConfig.objects.create(environment="qa")
+    littlepay_config.transit_agency = model_TransitAgency_inactive
     littlepay_config.save()
 
     # test fails if clean fails
@@ -40,8 +31,8 @@ def test_LittlepayConfig_clean_inactive_agency(model_TransitAgency_inactive):
 
 @pytest.mark.django_db
 def test_LittlepayConfig_clean(model_TransitAgency_inactive):
-    littlepay_config = LittlepayConfig.objects.create(environment="qa", agency_slug="cst")
-    littlepay_config.transitagency = model_TransitAgency_inactive
+    littlepay_config = LittlepayConfig.objects.create(environment="qa")
+    littlepay_config.transit_agency = model_TransitAgency_inactive
     littlepay_config.save()
 
     # agency is inactive, OK to have incomplete fields on agency's littlepay_config

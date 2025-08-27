@@ -34,8 +34,6 @@ def test_admin_override_agency_user_customer_service(model_AgencyUser, model_Tra
 
     # set up TransitAgency with staff_group and customer_service_group
     model_TransitAgency.pk = None
-    model_TransitAgency.littlepay_config.pk = None
-    model_TransitAgency.littlepay_config = model_TransitAgency.littlepay_config.save()
     model_TransitAgency.staff_group = Group.objects.get(name="CST")
     customer_service_group = Group.objects.create(name="CST Customer Service")
     model_TransitAgency.customer_service_group = customer_service_group
@@ -58,8 +56,6 @@ def test_admin_override_agency_user_not_customer_service(model_AgencyUser, model
 
     # set up TransitAgency with only a staff_group
     model_TransitAgency.pk = None
-    model_TransitAgency.littlepay_config.pk = None
-    model_TransitAgency.littlepay_config = model_TransitAgency.littlepay_config.save()
     model_TransitAgency.staff_group = Group.objects.get(name="CST")
     model_TransitAgency.save()
 

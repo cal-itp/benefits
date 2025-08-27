@@ -26,10 +26,12 @@ def _agency_context(agency: models.TransitAgency):
         "eligibility_index_url": agency.eligibility_index_url,
         "flows_help": flows_help,
         "info_url": agency.info_url,
+        "littlepay_config": agency.littlepay_config,
         "long_name": agency.long_name,
         "phone": agency.phone,
         "short_name": agency.short_name,
         "slug": agency.slug,
+        "switchio_config": agency.switchio_config,
     }
 
     if agency.logo_large and agency.logo_small:

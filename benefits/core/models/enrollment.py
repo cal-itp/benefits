@@ -50,9 +50,6 @@ class EnrollmentFlow(models.Model):
         default=[EnrollmentMethods.DIGITAL, EnrollmentMethods.IN_PERSON],
         help_text="If the flow is supported by digital enrollment, in-person enrollment, or both",
     )
-    group_id = models.TextField(
-        blank=True, default="", help_text="Reference to the TransitProcessor group for user enrollment"
-    )
     sign_out_button_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out button")
     sign_out_link_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out link")
     oauth_config = models.ForeignKey(
@@ -135,7 +132,22 @@ class EnrollmentFlow(models.Model):
         ordering = ["display_order"]
 
     def __str__(self):
-        return self.label
+        return f"{self.label} ({self.transit_agency.slug})"
+
+    @property
+    def group_id(self):
+        if hasattr(self, "enrollmentgroup"):
+            enrollment_group = self.enrollmentgroup
+
+            # these are the class names for models in enrollment_littlepay and enrollment_switchio
+            if hasattr(enrollment_group, "littlepaygroup"):
+                return str(enrollment_group.littlepaygroup.group_id)
+            elif hasattr(enrollment_group, "switchiogroup"):
+                return enrollment_group.switchiogroup.group_id
+            else:
+                return None
+        else:
+            return None
 
     @property
     def agency_card_name(self):
@@ -254,6 +266,11 @@ class EnrollmentFlow(models.Model):
                         ValidationError(f"{self.system_name} not configured for In-person. Please uncheck to continue.")
                     )
 
+            if self.transit_agency.active and self.group_id is None:
+                errors.append(
+                    ValidationError(f"{self.system_name} needs either a LittlepayGroup or SwitchioGroup linked to it.")
+                )
+
         if errors:
             raise ValidationError(errors)
 
@@ -273,6 +290,18 @@ class EnrollmentFlow(models.Model):
         """Get an EnrollmentFlow instance by its ID."""
         logger.debug(f"Get {EnrollmentFlow.__name__} by id: {id}")
         return EnrollmentFlow.objects.get(id=id)
+
+
+class EnrollmentGroup(models.Model):
+    id = models.AutoField(primary_key=True)
+    enrollment_flow = models.OneToOneField(
+        EnrollmentFlow,
+        on_delete=models.PROTECT,
+        help_text="The enrollment flow that this group is for.",
+    )
+
+    def __str__(self):
+        return str(self.enrollment_flow)
 
 
 class EnrollmentEvent(models.Model):

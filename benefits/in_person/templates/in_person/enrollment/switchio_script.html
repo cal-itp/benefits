@@ -1,0 +1,8 @@
+{% extends "enrollment_switchio/script.html" %}
+
+{% block gateway-url-handler %}
+  amplitude.getInstance().logEvent(startedEvent, { enrollment_method: "{{ enrollment_method }}" });
+
+  // open the tokenization gateway
+  tokenizeWithRedirect(data.gateway_url)
+{% endblock gateway-url-handler %}

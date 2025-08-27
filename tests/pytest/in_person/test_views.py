@@ -1,16 +1,10 @@
-import time
-
 import pytest
-from authlib.integrations.base_client.errors import UnsupportedTokenTypeError
 from django.urls import reverse
-from requests import HTTPError
-from unittest.mock import patch, PropertyMock
 
 
 from benefits.core import models
-from benefits.enrollment.enrollment import Status
-from benefits.enrollment_littlepay.enrollment import CardTokenizationAccessResponse
-import benefits.in_person.views
+from benefits.in_person import forms
+import benefits.in_person.views as views
 from benefits.routes import routes
 
 
@@ -26,17 +20,34 @@ def invalid_form_data():
 
 @pytest.fixture
 def mocked_eligibility_analytics_module(mocker):
-    return mocker.patch.object(benefits.in_person.views, "eligibility_analytics")
+    return mocker.patch.object(views, "eligibility_analytics")
 
 
 @pytest.fixture
 def mocked_enrollment_analytics_module(mocker):
-    return mocker.patch.object(benefits.in_person.views, "enrollment_analytics")
+    return mocker.patch.object(views, "enrollment_analytics")
 
 
 @pytest.fixture
 def mocked_sentry_sdk_module(mocker):
-    return mocker.patch.object(benefits.in_person.views, "sentry_sdk")
+    return mocker.patch.object(views, "sentry_sdk")
+
+
+@pytest.fixture
+def mocked_session_module(mocker):
+    return mocker.patch.object(views, "session")
+
+
+@pytest.fixture
+def mocked_transit_agency_class(mocker):
+    return mocker.patch.object(views, "TransitAgency")
+
+
+@pytest.fixture
+def mocked_session_agency_littlepay(mocker, model_TransitAgency, model_LittlepayConfig):
+    model_LittlepayConfig.transit_agency = model_TransitAgency
+    model_TransitAgency.save()
+    return mocker.patch("benefits.core.session.agency", autospec=True, return_value=model_TransitAgency)
 
 
 @pytest.mark.django_db
@@ -49,349 +60,103 @@ def test_view_not_logged_in(client, viewname):
     assert response.url == "/admin/login/?next=" + path
 
 
-# admin_client is a fixture from pytest
-# https://pytest-django.readthedocs.io/en/latest/helpers.html#admin-client-django-test-client-logged-in-as-admin
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency")
-def test_eligibility_logged_in(admin_client):
-    path = reverse(routes.IN_PERSON_ELIGIBILITY)
+class TestEligibilityView:
+    @pytest.fixture
+    def view(self, model_User, app_request, mocked_session_agency):
+        # manually attach a logged-in user to the request
+        app_request.user = model_User
 
-    response = admin_client.get(path)
-    assert response.status_code == 200
-    assert response.template_name == "in_person/eligibility.html"
+        v = views.EligibilityView()
+        v.setup(app_request)
+        v.agency = mocked_session_agency(app_request)
+        return v
 
+    def test_get_form_kwargs(self, view):
+        kwargs = view.get_form_kwargs()
+        assert kwargs["agency"] == view.agency
 
-@pytest.mark.django_db
-def test_eligibility_logged_in_filtering_flows(mocker, model_TransitAgency, admin_client):
-    digital = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency, supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL], label="Digital"
-    )
-    in_person = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency,
-        supported_enrollment_methods=[models.EnrollmentMethods.IN_PERSON],
-        label="In-Person",
-    )
-    both = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency,
-        supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
-        label="Both",
-    )
-    mocker.patch("benefits.core.session.agency", autospec=True, return_value=model_TransitAgency)
+    def test_get_context_data(self, view):
+        context_data = view.get_context_data()
+        assert "title" in context_data
 
-    path = reverse(routes.IN_PERSON_ELIGIBILITY)
-    response = admin_client.get(path)
-    filtered_flow_ids = [choice[0] for choice in response.context_data["form"].fields["flow"].choices]
+    def test_dispatch(self, view, mocker):
+        littlepay_session = mocker.patch.object(views, "LittlepaySession")
+        switchio_session = mocker.patch.object(views, "SwitchioSession")
 
-    assert in_person.id, both.id in filtered_flow_ids
-    assert digital.id not in filtered_flow_ids
+        view.dispatch(view.request)
 
+        littlepay_session.assert_called_once_with(view.request, reset=True)
+        switchio_session.assert_called_once_with(view.request, reset=True)
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_eligibility_post_no_flow_selected(admin_client):
+    def test_dispatch_no_agency_in_session(
+        self, view, mocked_session_module, mocked_transit_agency_class, model_TransitAgency
+    ):
+        view.agency = None
+        mocked_session_module.agency.return_value = None
+        mocked_transit_agency_class.for_user.return_value = model_TransitAgency
 
-    path = reverse(routes.IN_PERSON_ELIGIBILITY)
-    form_data = {}
-    response = admin_client.post(path, form_data)
+        view.dispatch(view.request)
 
-    # should return user back to the in-person eligibility index
-    assert response.status_code == 200
-    assert response.template_name == "in_person/eligibility.html"
+        mocked_session_module.update.assert_called_once()
+        assert view.agency == model_TransitAgency
 
+    def test_form_valid(self, view, mocker, model_EnrollmentFlow, mocked_session_module, mocked_eligibility_analytics_module):
+        mock_enrollment_flow_model = mocker.patch.object(models.EnrollmentFlow.objects, "get")
+        mock_enrollment_flow_model.return_value = model_EnrollmentFlow
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_eligibility_post_flow_selected_and_verified(
-    admin_client, model_EnrollmentFlow, mocked_session_update, mocked_eligibility_analytics_module
-):
+        mock_form = mocker.Mock()
+        mock_form.cleaned_data = {"flow": model_EnrollmentFlow.id}
 
-    path = reverse(routes.IN_PERSON_ELIGIBILITY)
-    form_data = {"flow": 1, "verified_1": True}
-    response = admin_client.post(path, form_data)
+        response = view.form_valid(mock_form)
 
-    assert response.status_code == 302
-    assert response.url == reverse(routes.IN_PERSON_ENROLLMENT)
-    assert mocked_session_update.call_args.kwargs["flow"] == model_EnrollmentFlow
-    mocked_eligibility_analytics_module.selected_flow.assert_called_once()
-    mocked_eligibility_analytics_module.started_eligibility.assert_called_once()
+        mock_enrollment_flow_model.assert_called_once_with(id=model_EnrollmentFlow.id)
+        mocked_session_module.update.assert_called_once_with(view.request, flow=model_EnrollmentFlow, eligible=True)
+        mocked_eligibility_analytics_module.selected_flow.assert_called_once_with(
+            view.request, model_EnrollmentFlow, enrollment_method=models.EnrollmentMethods.IN_PERSON
+        )
+        mocked_eligibility_analytics_module.started_eligibility.assert_called_once_with(
+            view.request, model_EnrollmentFlow, enrollment_method=models.EnrollmentMethods.IN_PERSON
+        )
+        mocked_eligibility_analytics_module.returned_success.assert_called_once_with(
+            view.request, model_EnrollmentFlow, enrollment_method=models.EnrollmentMethods.IN_PERSON
+        )
+        assert response.status_code == 302
+        assert response.url == reverse(routes.IN_PERSON_ENROLLMENT)
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_eligibility_post_flow_selected_and_unverified(admin_client):
+class TestEnrollmentView:
+    @pytest.fixture
+    def view(self, app_request, mocked_session_agency_littlepay):
+        v = views.EnrollmentView()
+        v.setup(app_request)
+        v.agency = mocked_session_agency_littlepay(app_request)
+        return v
 
-    path = reverse(routes.IN_PERSON_ELIGIBILITY)
-    form_data = {"flow": 1, "verified_1": False}
-    response = admin_client.post(path, form_data)
-
-    # should return user back to the in-person eligibility index
-    assert response.status_code == 200
-    assert response.template_name == "in_person/eligibility.html"
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_refresh(mocker, admin_client):
-    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
-
-    mock_token = {}
-    mock_token["access_token"] = "access_token"
-    mock_token["expires_at"] = time.time() + 10000
-
-    mocker.patch(
-        "benefits.in_person.views.request_card_tokenization_access",
-        return_value=CardTokenizationAccessResponse(
-            Status.SUCCESS,
-            access_token=mock_token["access_token"],
-            expires_at=mock_token["expires_at"],
-        ),
-    )
-
-    path = reverse(routes.IN_PERSON_ENROLLMENT_TOKEN)
-    response = admin_client.get(path)
-
-    assert response.status_code == 200
-    data = response.json()
-    assert "token" in data
-    assert data["token"] == mock_token["access_token"]
+    def test_get_redirect_url_for_littlepay(self, view):
+        assert view.get_redirect_url() == reverse(view.agency.in_person_enrollment_index_route)
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-@patch("benefits.enrollment_littlepay.session.Session.access_token", new=PropertyMock(return_value="enrollment_token"))
-def test_token_valid(mocker, admin_client):
-    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=True)
+class TestLittlepayEnrollmentView:
+    @pytest.fixture
+    def view(self, app_request, model_LittlepayConfig, model_EnrollmentFlow):
+        v = views.LittlepayEnrollmentView()
+        v.setup(app_request)
+        v.agency = model_LittlepayConfig.transit_agency
+        v.flow = model_EnrollmentFlow
+        return v
 
-    path = reverse(routes.IN_PERSON_ENROLLMENT_TOKEN)
-    response = admin_client.get(path)
+    def test_get_verified_by(self, mocker, app_request, view):
+        app_request.user = mocker.Mock(first_name="First", last_name="Last")
 
-    assert response.status_code == 200
-    data = response.json()
-    assert "token" in data
-    assert data["token"] == "enrollment_token"
+        assert view._get_verified_by() == "First Last"
 
+    def test_get_context_data(self, view, app_request):
+        context = view.get_context_data()
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_system_error(mocker, admin_client, mocked_enrollment_analytics_module, mocked_sentry_sdk_module):
-    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
-
-    mock_error = {"message": "Mock error message"}
-    mock_error_response = mocker.Mock(status_code=500, **mock_error)
-    mock_error_response.json.return_value = mock_error
-    http_error = HTTPError(response=mock_error_response)
-
-    mocker.patch(
-        "benefits.in_person.views.request_card_tokenization_access",
-        return_value=CardTokenizationAccessResponse(
-            Status.SYSTEM_ERROR, access_token=None, expires_at=None, exception=http_error, status_code=500
-        ),
-    )
-
-    path = reverse(routes.IN_PERSON_ENROLLMENT_TOKEN)
-    response = admin_client.get(path)
-
-    assert response.status_code == 200
-    data = response.json()
-    assert "token" not in data
-    assert "redirect" in data
-    assert data["redirect"] == reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
-    mocked_enrollment_analytics_module.failed_pretokenization_request.assert_called_once()
-    assert 500 in mocked_enrollment_analytics_module.failed_pretokenization_request.call_args.args
-    mocked_sentry_sdk_module.capture_exception.assert_called_once()
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_http_error_400(mocker, admin_client, mocked_enrollment_analytics_module, mocked_sentry_sdk_module):
-    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
-
-    mock_error = {"message": "Mock error message"}
-    mock_error_response = mocker.Mock(status_code=400, **mock_error)
-    mock_error_response.json.return_value = mock_error
-    http_error = HTTPError(response=mock_error_response)
-
-    mocker.patch(
-        "benefits.in_person.views.request_card_tokenization_access",
-        return_value=CardTokenizationAccessResponse(
-            Status.EXCEPTION, access_token=None, expires_at=None, exception=http_error, status_code=400
-        ),
-    )
-
-    path = reverse(routes.IN_PERSON_ENROLLMENT_TOKEN)
-    response = admin_client.get(path)
-
-    assert response.status_code == 200
-    data = response.json()
-    assert "token" not in data
-    assert "redirect" in data
-    assert data["redirect"] == reverse(routes.IN_PERSON_SERVER_ERROR)
-    mocked_enrollment_analytics_module.failed_pretokenization_request.assert_called_once()
-    assert 400 in mocked_enrollment_analytics_module.failed_pretokenization_request.call_args.args
-    mocked_sentry_sdk_module.capture_exception.assert_called_once()
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_misconfigured_client_id(mocker, admin_client, mocked_enrollment_analytics_module, mocked_sentry_sdk_module):
-    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
-
-    exception = UnsupportedTokenTypeError()
-
-    mocker.patch(
-        "benefits.in_person.views.request_card_tokenization_access",
-        return_value=CardTokenizationAccessResponse(
-            Status.EXCEPTION, access_token=None, expires_at=None, exception=exception, status_code=None
-        ),
-    )
-
-    path = reverse(routes.IN_PERSON_ENROLLMENT_TOKEN)
-    response = admin_client.get(path)
-
-    assert response.status_code == 200
-    data = response.json()
-    assert "token" not in data
-    assert "redirect" in data
-    assert data["redirect"] == reverse(routes.IN_PERSON_SERVER_ERROR)
-    mocked_enrollment_analytics_module.failed_pretokenization_request.assert_called_once()
-    mocked_sentry_sdk_module.capture_exception_assert_called_once()
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
-def test_token_connection_error(mocker, admin_client, mocked_enrollment_analytics_module, mocked_sentry_sdk_module):
-    mocker.patch("benefits.enrollment_littlepay.session.Session.access_token_valid", return_value=False)
-
-    exception = ConnectionError()
-
-    mocker.patch(
-        "benefits.in_person.views.request_card_tokenization_access",
-        return_value=CardTokenizationAccessResponse(
-            Status.EXCEPTION, access_token=None, expires_at=None, exception=exception, status_code=None
-        ),
-    )
-
-    path = reverse(routes.IN_PERSON_ENROLLMENT_TOKEN)
-    response = admin_client.get(path)
-
-    assert response.status_code == 200
-    data = response.json()
-    assert "token" not in data
-    assert "redirect" in data
-    assert data["redirect"] == reverse(routes.IN_PERSON_SERVER_ERROR)
-    mocked_enrollment_analytics_module.failed_pretokenization_request.assert_called_once()
-    mocked_sentry_sdk_module.capture_exception_assert_called_once()
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_enrollment_logged_in_get(admin_client):
-    path = reverse(routes.IN_PERSON_ENROLLMENT)
-
-    response = admin_client.get(path)
-    assert response.status_code == 200
-    assert response.template_name == "in_person/enrollment/index.html"
-    assert "forms" in response.context_data
-    assert "cta_button" in response.context_data
-    assert "token_field" in response.context_data
-    assert "form_retry" in response.context_data
-    assert "form_success" in response.context_data
-    assert "card_types" in response.context_data
-
-    # not supporting internationalization in in_person app yet
-    assert "overlay_language" not in response.context_data
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_enrollment_post_invalid_form(admin_client, invalid_form_data):
-    path = reverse(routes.IN_PERSON_ENROLLMENT)
-
-    with pytest.raises(Exception, match=r"form"):
-        admin_client.post(path, invalid_form_data)
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
-def test_enrollment_post_valid_form_success(
-    mocker,
-    admin_client,
-    card_tokenize_form_data,
-    mocked_eligibility_analytics_module,
-    mocked_enrollment_analytics_module,
-    model_TransitAgency,
-    model_EnrollmentFlow,
-    model_User,
-):
-    mocker.patch("benefits.in_person.views.enroll", return_value=(Status.SUCCESS, None))
-    spy = mocker.spy(benefits.in_person.views.models.EnrollmentEvent.objects, "create")
-
-    # force the model_User to be the logged in user
-    # e.g. the TransitAgency staff person assisting this in-person enrollment
-    admin_client.force_login(model_User)
-
-    path = reverse(routes.IN_PERSON_ENROLLMENT)
-    response = admin_client.post(path, card_tokenize_form_data)
-
-    spy.assert_called_once_with(
-        transit_agency=model_TransitAgency,
-        enrollment_flow=model_EnrollmentFlow,
-        enrollment_method=models.EnrollmentMethods.IN_PERSON,
-        verified_by=f"{model_User.first_name} {model_User.last_name}",
-        expiration_datetime=None,
-    )
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_SUCCESS)
-    mocked_eligibility_analytics_module.returned_success.assert_called_once()
-    mocked_enrollment_analytics_module.returned_success.assert_called_once()
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
-def test_enrollment_post_valid_form_system_error(
-    mocker, admin_client, card_tokenize_form_data, mocked_enrollment_analytics_module, mocked_sentry_sdk_module
-):
-    mocker.patch("benefits.in_person.views.enroll", return_value=(Status.SYSTEM_ERROR, None))
-
-    path = reverse(routes.IN_PERSON_ENROLLMENT)
-    response = admin_client.post(path, card_tokenize_form_data)
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
-    mocked_enrollment_analytics_module.returned_error.assert_called_once()
-    mocked_sentry_sdk_module.capture_exception.assert_called_once()
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
-def test_enrollment_post_valid_form_exception(
-    mocker, admin_client, card_tokenize_form_data, mocked_enrollment_analytics_module, mocked_sentry_sdk_module
-):
-    mocker.patch("benefits.in_person.views.enroll", return_value=(Status.EXCEPTION, None))
-
-    path = reverse(routes.IN_PERSON_ENROLLMENT)
-    response = admin_client.post(path, card_tokenize_form_data)
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.IN_PERSON_SERVER_ERROR)
-    mocked_enrollment_analytics_module.returned_error.assert_called_once()
-    mocked_sentry_sdk_module.capture_exception.assert_called_once()
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow")
-def test_enrollment_post_valid_form_reenrollment_error(
-    mocker, admin_client, card_tokenize_form_data, mocked_enrollment_analytics_module
-):
-    mocker.patch("benefits.in_person.views.enroll", return_value=(Status.REENROLLMENT_ERROR, None))
-
-    path = reverse(routes.IN_PERSON_ENROLLMENT)
-    response = admin_client.post(path, card_tokenize_form_data)
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR)
-    mocked_enrollment_analytics_module.returned_error.assert_called_once()
+        assert "title" in context
 
 
 @pytest.mark.django_db
@@ -460,3 +225,71 @@ def test_success(admin_client):
 
     assert response.status_code == 200
     assert response.template_name == "in_person/enrollment/success.html"
+
+
+@pytest.mark.django_db
+class TestSwitchioGatewayUrlView:
+    @pytest.fixture
+    def view(self, app_request, model_SwitchioConfig):
+        v = views.SwitchioGatewayUrlView()
+        v.setup(app_request)
+        v.agency = model_SwitchioConfig.transit_agency
+        return v
+
+    def test_view(self, view: views.SwitchioGatewayUrlView):
+        assert view.enrollment_method == models.EnrollmentMethods.IN_PERSON
+        assert view.route_redirect == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+        assert view.route_system_error == routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
+        assert view.route_server_error == routes.IN_PERSON_SERVER_ERROR
+
+
+@pytest.mark.django_db
+class TestSwitchioEnrollmentIndexView:
+    @pytest.fixture
+    def view(self, app_request, model_SwitchioConfig, model_EnrollmentFlow):
+        v = views.SwitchioEnrollmentIndexView()
+        v.setup(app_request)
+        v.agency = model_SwitchioConfig.transit_agency
+        v.flow = model_EnrollmentFlow
+        return v
+
+    def test_view(self, view: views.SwitchioEnrollmentIndexView):
+        assert view.enrollment_method == models.EnrollmentMethods.IN_PERSON
+        assert view.form_class == forms.CardTokenizeSuccessForm
+        assert view.route_enrollment_success == routes.IN_PERSON_ENROLLMENT_SUCCESS
+        assert view.route_reenrollment_error == routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR
+        assert view.route_retry == routes.IN_PERSON_ENROLLMENT_RETRY
+        assert view.route_server_error == routes.IN_PERSON_SERVER_ERROR
+        assert view.route_system_error == routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
+        assert view.route_tokenize_success == routes.IN_PERSON_ENROLLMENT_SWITCHIO_INDEX
+        assert view.template_name == "in_person/enrollment/index_switchio.html"
+
+    def test_get_verified_by(self, mocker, app_request, view: views.SwitchioEnrollmentIndexView):
+        app_request.user = mocker.Mock(first_name="First", last_name="Last")
+
+        assert view._get_verified_by() == "First Last"
+
+    def test_get_context_data(self, view: views.SwitchioEnrollmentIndexView):
+        context = view.get_context_data()
+
+        assert "title" in context
+
+    def test_get_context_data__pre_tokenize(self, view: views.SwitchioEnrollmentIndexView):
+        context = view.get_context_data()
+
+        assert context["loading_message"] == "Connecting with payment processor..."
+
+    def test_get_context_data__post_tokenize(self, view: views.SwitchioEnrollmentIndexView, app_request):
+        app_request.GET = {"state": "tokenize"}
+
+        context = view.get_context_data()
+
+        assert context["loading_message"] == "Registering this contactless card for reduced fares..."
+
+    def test_get__cancel_tokenize(self, view: views.SwitchioEnrollmentIndexView, app_request):
+        app_request.GET = {"error": "canceled"}
+
+        response = view.get(app_request)
+
+        assert response.status_code == 302
+        assert response.url == reverse(routes.ADMIN_INDEX)

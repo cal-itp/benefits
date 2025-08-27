@@ -260,6 +260,7 @@ class TestEnrollmentFlowAdmin:
         model_ClaimsVerificationRequest,
     ):
         model_TransitAgency.slug = "cst"  # use value that will map to existing templates
+        model_TransitAgency.active = False
         model_TransitAgency.save()
 
         request = admin_user_request(user_type="super")

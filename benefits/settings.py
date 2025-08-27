@@ -211,7 +211,10 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "en"
 
 LANGUAGE_COOKIE_HTTPONLY = True
-LANGUAGE_COOKIE_SAMESITE = "Strict"
+# `Lax` allows the cookie to travel with the user and be sent back to Benefits
+# during redirection e.g. through IdG/Login.gov or a Transit Processor portal
+# ensuring the app is displayed in the same language
+LANGUAGE_COOKIE_SAMESITE = "Lax"
 LANGUAGE_COOKIE_SECURE = True
 
 LANGUAGES = [("en", "English"), ("es", "Español")]

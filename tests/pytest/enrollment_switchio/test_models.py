@@ -1,7 +1,6 @@
 from django.forms import ValidationError
 import pytest
 
-from benefits.core.models import Environment
 from benefits.enrollment_switchio.models import SwitchioConfig
 
 
@@ -22,17 +21,9 @@ def test_SwitchioConfig_defaults():
 
 
 @pytest.mark.django_db
-def test_SwitchioConfig_str(model_SwitchioConfig):
-    environment_label = Environment(model_SwitchioConfig.environment).label
-    assert str(model_SwitchioConfig) == f"{environment_label}"
-
-
-@pytest.mark.django_db
 def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
-    switchio_config = SwitchioConfig.objects.create(
-        environment="qa",
-    )
-    switchio_config.transitagency = model_TransitAgency_inactive
+    switchio_config = SwitchioConfig.objects.create(environment="qa")
+    switchio_config.transit_agency = model_TransitAgency_inactive
     switchio_config.save()
 
     # test fails if clean fails
@@ -43,21 +34,10 @@ def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
 
 
 @pytest.mark.django_db
-def test_SwitchioConfig_clean_create_from_agency():
-    switchio_config = SwitchioConfig.objects.create(environment="qa")
-    switchio_config.pk = None  # simulate admin form behavior, where we're creating the object from the TransitAgency.
-
-    # test fails if clean() fails
-    switchio_config.clean()
-
-
-@pytest.mark.django_db
 def test_SwitchioConfig_clean(model_TransitAgency_inactive):
     switchio_config = SwitchioConfig.objects.create(environment="qa")
+    switchio_config.transit_agency = model_TransitAgency_inactive
     switchio_config.save()
-
-    model_TransitAgency_inactive.switchio_config = switchio_config
-    model_TransitAgency_inactive.save()
 
     # agency is inactive, OK to have incomplete fields on agency's switchio_config
     model_TransitAgency_inactive.clean()

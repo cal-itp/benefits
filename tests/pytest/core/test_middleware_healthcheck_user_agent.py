@@ -5,7 +5,6 @@ import pytest
 
 from benefits.routes import routes
 from benefits.core import middleware
-from benefits.core.views import TEMPLATE_INDEX
 
 
 @pytest.mark.django_db
@@ -27,4 +26,4 @@ def test_non_healthcheck_user_agent(mocker, client):
     response = client.get(reverse(routes.INDEX))
 
     assert response.status_code == 200
-    assert response.template_name == TEMPLATE_INDEX
+    assert response.template_name == ["core/index.html"]
