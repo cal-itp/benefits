@@ -1,4 +1,4 @@
-{% extends "error-base.html" %}
+{% extends "in_person/error-base.html" %}
 
 {% block error-message %}
   <h3 class="fw-bold h4">We're working to fix a problem.</h3>
@@ -11,6 +11,6 @@
 {% block cta-buttons %}
   <div class="col-12">
     {% url routes.ADMIN_INDEX as url_return_to_dashboard %}
-    <a href="{{ url_return_to_dashboard }}" class="btn btn-lg btn-primary d-block">Return to dashboard</a>
+    <a href="{{ url_return_to_dashboard }}" class="btn btn-lg btn-primary text-white d-block">Return to dashboard</a>
   </div>
 {% endblock cta-buttons %}
