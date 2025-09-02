@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.views.generic import RedirectView, TemplateView, FormView
+from django.views.generic import TemplateView, FormView
 
 from benefits.routes import routes
 from benefits.core import recaptcha, session
@@ -137,11 +137,9 @@ class StartView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateVi
 def confirm(request):
     """View handler for the eligibility verification form."""
 
-    verified_view = VerifiedView()
-
     # GET from an already verified user, no need to verify again
     if request.method == "GET" and session.eligible(request):
-        return verified_view.setup_and_dispatch(request)
+        return redirect(routes.ENROLLMENT_INDEX)
 
     agency = session.agency(request)
     flow = session.flow(request)
@@ -180,33 +178,10 @@ def confirm(request):
             return redirect(routes.ELIGIBILITY_UNVERIFIED)
         # type was verified
         else:
-            return verified_view.setup_and_dispatch(request)
+            session.update(request, eligible=True)
+            analytics.returned_success(request, flow)
 
-
-class VerifiedView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, RedirectView):
-    """CBV for verified eligibility.
-
-    Note we do not register a URL for this view, as it should only be used
-    after the user's eligibility is verified and not generally accessible.
-
-    GET requests simply forward along as part of the RedirectView logic.
-
-    POST requests represent a new verification success, triggering additional logic.
-
-    `setup_and_dispatch(request)` is a helper for external callers.
-    """
-
-    def get_redirect_url(self, *args, **kwargs):
-        return reverse(routes.ENROLLMENT_INDEX)
-
-    def post(self, request, *args, **kwargs):
-        session.update(request, eligible=True)
-        analytics.returned_success(request, self.flow)
-        return super().post(request, *args, **kwargs)
-
-    def setup_and_dispatch(self, request, *args, **kwargs):
-        self.setup(request)
-        return self.dispatch(request, *args, **kwargs)
+            return redirect(routes.ENROLLMENT_INDEX)
 
 
 class UnverifiedView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateView):
