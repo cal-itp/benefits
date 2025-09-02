@@ -131,12 +131,12 @@ class TestStartView:
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_confirm_get_unverified(mocker, client):
+def test_confirm_get_unverified(mocker, client, model_EnrollmentFlow_with_eligibility_api):
     path = reverse(routes.ELIGIBILITY_CONFIRM)
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == views.TEMPLATE_CONFIRM
+    assert response.template_name == ["eligibility/confirm.html"]
 
 
 @pytest.mark.django_db
@@ -158,7 +158,7 @@ def test_confirm_post_invalid_form(client, invalid_form_data, mocked_analytics_m
 
     mocked_analytics_module.started_eligibility.assert_called_once()
     assert response.status_code == 200
-    assert response.template_name == views.TEMPLATE_CONFIRM
+    assert response.template_name == ["eligibility/confirm.html"]
 
 
 @pytest.mark.django_db
@@ -171,7 +171,7 @@ def test_confirm_post_recaptcha_fail(mocker, client, invalid_form_data):
     response = client.post(path, invalid_form_data)
 
     assert response.status_code == 200
-    assert response.template_name == views.TEMPLATE_CONFIRM
+    assert response.template_name == ["eligibility/confirm.html"]
     messages.error.assert_called_once()
 
 
@@ -185,7 +185,7 @@ def test_confirm_post_valid_form_eligibility_error(mocker, client, form_data, mo
 
     mocked_analytics_module.returned_error.assert_called_once()
     assert response.status_code == 200
-    assert response.template_name == views.TEMPLATE_CONFIRM
+    assert response.template_name == ["eligibility/confirm.html"]
 
 
 @pytest.mark.django_db
