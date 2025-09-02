@@ -60,14 +60,6 @@ class SampleVerificationForm(EligibilityVerificationForm):
         )
 
 
-@pytest.fixture
-def model_EnrollmentFlow_with_form_class(mocker, model_EnrollmentFlow_with_eligibility_api):
-    model_EnrollmentFlow_with_eligibility_api.eligibility_form_class = f"{__name__}.SampleVerificationForm"
-    model_EnrollmentFlow_with_eligibility_api.save()
-    mocker.patch("benefits.eligibility.views.session.flow", return_value=model_EnrollmentFlow_with_eligibility_api)
-    return model_EnrollmentFlow_with_eligibility_api
-
-
 @pytest.mark.django_db
 class TestIndexView:
     @pytest.fixture
@@ -130,8 +122,8 @@ class TestStartView:
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_confirm_get_unverified(mocker, client, model_EnrollmentFlow_with_eligibility_api):
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow_with_eligibility_api")
+def test_confirm_get_unverified(mocker, client):
     path = reverse(routes.ELIGIBILITY_CONFIRM)
     response = client.get(path)
 
@@ -151,7 +143,7 @@ def test_confirm_get_verified(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_form_class")
+@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_eligibility_api")
 def test_confirm_post_invalid_form(client, invalid_form_data, mocked_analytics_module):
     path = reverse(routes.ELIGIBILITY_CONFIRM)
     response = client.post(path, invalid_form_data)
@@ -162,7 +154,9 @@ def test_confirm_post_invalid_form(client, invalid_form_data, mocked_analytics_m
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_analytics_module", "mocked_eligibility_auth_request", "model_EnrollmentFlow_with_form_class")
+@pytest.mark.usefixtures(
+    "mocked_analytics_module", "mocked_eligibility_auth_request", "model_EnrollmentFlow_with_eligibility_api"
+)
 def test_confirm_post_recaptcha_fail(mocker, client, invalid_form_data):
     mocker.patch("benefits.eligibility.views.recaptcha.has_error", return_value=True)
     messages = mocker.spy(views, "messages")
@@ -176,7 +170,7 @@ def test_confirm_post_recaptcha_fail(mocker, client, invalid_form_data):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_form_class")
+@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_eligibility_api")
 def test_confirm_post_valid_form_eligibility_error(mocker, client, form_data, mocked_analytics_module):
     mocker.patch("benefits.eligibility.verify.eligibility_from_api", return_value=None)
 
@@ -189,7 +183,7 @@ def test_confirm_post_valid_form_eligibility_error(mocker, client, form_data, mo
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_form_class")
+@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_eligibility_api")
 def test_confirm_post_valid_form_eligibility_unverified(mocker, client, form_data):
     mocker.patch("benefits.eligibility.verify.eligibility_from_api", return_value=[])
 
@@ -201,9 +195,14 @@ def test_confirm_post_valid_form_eligibility_unverified(mocker, client, form_dat
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_form_class")
+@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_eligibility_api")
 def test_confirm_post_valid_form_eligibility_verified(
-    mocker, client, form_data, mocked_session_eligible, mocked_session_update, mocked_analytics_module
+    mocker,
+    client,
+    form_data,
+    mocked_session_eligible,
+    mocked_session_update,
+    mocked_analytics_module,
 ):
     eligible = mocked_session_eligible.return_value
     mocker.patch("benefits.eligibility.verify.eligibility_from_api", return_value=eligible)

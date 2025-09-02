@@ -31,28 +31,6 @@ def test_EnrollmentFlow_supported_enrollment_methods(model_EnrollmentFlow_with_s
     assert model_EnrollmentFlow_with_scope_and_claim.supported_enrollment_methods == ["digital", "in_person"]
 
 
-class SampleFormClass:
-    """A class for testing EligibilityVerificationForm references."""
-
-    def __init__(self, *args, **kwargs):
-        self.args = args
-        self.kwargs = kwargs
-
-
-@pytest.mark.django_db
-def test_EnrollmentFlow_eligibility_form_instance(model_EnrollmentFlow_with_eligibility_api):
-    model_EnrollmentFlow_with_eligibility_api.eligibility_form_class = f"{__name__}.SampleFormClass"
-    model_EnrollmentFlow_with_eligibility_api.save()
-
-    args = (1, "2")
-    kwargs = {"one": 1, "two": "2"}
-    form_instance = model_EnrollmentFlow_with_eligibility_api.eligibility_form_instance(*args, **kwargs)
-
-    assert isinstance(form_instance, SampleFormClass)
-    assert form_instance.args == args
-    assert form_instance.kwargs == kwargs
-
-
 @pytest.mark.django_db
 def test_EnrollmentFlow_by_id_matching(model_EnrollmentFlow):
     flow = EnrollmentFlow.by_id(model_EnrollmentFlow.id)
