@@ -2,12 +2,12 @@
 The eligibility application: view definitions for the eligibility verification flow.
 """
 
-import importlib
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import TemplateView, FormView
 
+from benefits.core.context.flow import SystemName
 from benefits.routes import routes
 from benefits.core import recaptcha, session
 from benefits.core.context.agency import AgencySlug
@@ -133,11 +133,21 @@ class ConfirmView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Recaptch
     template_name = "eligibility/confirm.html"
 
     def get_form_class(self):
-        # inspired by https://stackoverflow.com/a/30941292
-        module_name, class_name = self.flow.eligibility_form_class.rsplit(".", 1)
-        FormClass = getattr(importlib.import_module(module_name), class_name)
+        agency_slug = self.agency.slug
+        flow_system_name = self.flow.system_name
 
-        return FormClass
+        if agency_slug == AgencySlug.CST and flow_system_name == SystemName.AGENCY_CARD:
+            form_class = forms.CSTAgencyCard
+        elif agency_slug == AgencySlug.MST and flow_system_name == SystemName.COURTESY_CARD:
+            form_class = forms.MSTCourtesyCard
+        elif agency_slug == AgencySlug.SBMTD and flow_system_name == SystemName.REDUCED_FARE_MOBILITY_ID:
+            form_class = forms.SBMTDMobilityPass
+        else:
+            raise ValueError(
+                f"This agency/flow combination does not support Eligibility API verification: {agency_slug}, {flow_system_name}"  # noqa
+            )
+
+        return form_class
 
     def get(self, request, *args, **kwargs):
         if session.eligible(request):
