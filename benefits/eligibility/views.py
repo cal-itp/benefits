@@ -163,14 +163,14 @@ class ConfirmView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Recaptch
         # make Eligibility Verification request to get the verified confirmation
         is_verified = verify.eligibility_from_api(flow, form, agency)
 
-        # form was not valid, allow for correction/resubmission
+        # Eligibility API returned errors (so eligibility is unknown), allow for correction/resubmission
         if is_verified is None:
             analytics.returned_error(request, flow, form.errors)
             return self.form_invalid(form)
-        # no type was verified
+        # Eligibility API returned that no type was verified
         elif not is_verified:
             return redirect(routes.ELIGIBILITY_UNVERIFIED)
-        # type was verified
+        # Eligibility API returned that type was verified
         else:
             session.update(request, eligible=True)
             analytics.returned_success(request, flow)
