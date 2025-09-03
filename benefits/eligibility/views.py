@@ -158,12 +158,7 @@ class ConfirmView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Recaptch
 
     def post(self, request, *args, **kwargs):
         analytics.started_eligibility(request, self.flow)
-
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+        return super().post(request, *args, **kwargs)
 
     def form_valid(self, form):
         agency = self.agency

@@ -152,32 +152,23 @@ class TestConfirmView:
         assert response.status_code == 302
         assert response.url == reverse(routes.ENROLLMENT_INDEX)
 
+    def test_post_form_invalid(self, view, app_request, invalid_form_data, mocked_analytics_module):
+        app_request.POST = invalid_form_data
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_eligibility_api")
-def test_confirm_post_invalid_form(client, invalid_form_data, mocked_analytics_module):
-    path = reverse(routes.ELIGIBILITY_CONFIRM)
-    response = client.post(path, invalid_form_data)
+        response = view.post(app_request)
 
-    mocked_analytics_module.started_eligibility.assert_called_once()
-    assert response.status_code == 200
-    assert response.template_name == ["eligibility/confirm.html"]
+        mocked_analytics_module.started_eligibility.assert_called_once()
+        assert response.status_code == 200
+        assert response.template_name == ["eligibility/confirm.html"]
 
+    def test_post_recaptcha_fail(self, mocker, view, app_request):
+        mocker.patch("benefits.eligibility.views.recaptcha.has_error", return_value=True)
+        messages = mocker.spy(views, "messages")
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures(
-    "mocked_analytics_module", "mocked_eligibility_auth_request", "model_EnrollmentFlow_with_eligibility_api"
-)
-def test_confirm_post_recaptcha_fail(mocker, client, invalid_form_data):
-    mocker.patch("benefits.eligibility.views.recaptcha.has_error", return_value=True)
-    messages = mocker.spy(views, "messages")
-
-    path = reverse(routes.ELIGIBILITY_CONFIRM)
-    response = client.post(path, invalid_form_data)
-
-    assert response.status_code == 200
-    assert response.template_name == ["eligibility/confirm.html"]
-    messages.error.assert_called_once()
+        response = view.post(app_request)
+        assert response.status_code == 200
+        assert response.template_name == ["eligibility/confirm.html"]
+        messages.error.assert_called_once()
 
 
 @pytest.mark.django_db
