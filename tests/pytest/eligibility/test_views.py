@@ -122,24 +122,35 @@ class TestStartView:
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "model_EnrollmentFlow_with_eligibility_api")
-def test_confirm_get_unverified(mocker, client):
-    path = reverse(routes.ELIGIBILITY_CONFIRM)
-    response = client.get(path)
+class TestConfirmView:
+    @pytest.fixture
+    def view(
+        self,
+        app_request,
+        mocked_session_agency,
+        mocked_session_flow,
+        model_EnrollmentFlow_with_eligibility_api,
+    ):
+        """Fixture to create an instance of ConfirmView."""
+        v = views.ConfirmView()
+        v.setup(app_request)
+        v.agency = mocked_session_agency(app_request)
+        v.flow = mocked_session_flow(app_request)
+        return v
 
-    assert response.status_code == 200
-    assert response.template_name == ["eligibility/confirm.html"]
+    def test_get(self, view, app_request):
+        response = view.get(app_request)
 
+        assert benefits.core.session.origin(app_request) == reverse(routes.ELIGIBILITY_CONFIRM)
+        assert response.status_code == 200
+        assert response.template_name == ["eligibility/confirm.html"]
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible", "mocked_session_flow")
-def test_confirm_get_verified(client):
+    @pytest.mark.usefixtures("mocked_session_eligible")
+    def test_get_already_eligible(self, view, app_request):
+        response = view.get(app_request)
 
-    path = reverse(routes.ELIGIBILITY_CONFIRM)
-    response = client.get(path)
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ENROLLMENT_INDEX)
+        assert response.status_code == 302
+        assert response.url == reverse(routes.ENROLLMENT_INDEX)
 
 
 @pytest.mark.django_db
