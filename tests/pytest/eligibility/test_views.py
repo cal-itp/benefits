@@ -35,7 +35,7 @@ def mocked_flow_selection_form(mocker):
 
 @pytest.fixture
 def form_data():
-    return {"sub": "A1234567", "name": "Person"}
+    return {"sub": "12345", "name": "Person"}
 
 
 @pytest.fixture
@@ -170,52 +170,41 @@ class TestConfirmView:
         assert response.template_name == ["eligibility/confirm.html"]
         messages.error.assert_called_once()
 
+    def test_form_valid_eligibility_error(self, mocker, view, form_data, mocked_analytics_module):
+        mocker.patch("benefits.eligibility.verify.eligibility_from_api", return_value=None)
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_eligibility_api")
-def test_confirm_post_valid_form_eligibility_error(mocker, client, form_data, mocked_analytics_module):
-    mocker.patch("benefits.eligibility.verify.eligibility_from_api", return_value=None)
+        form_class = view.get_form_class()
+        form = form_class(data=form_data)
 
-    path = reverse(routes.ELIGIBILITY_CONFIRM)
-    response = client.post(path, form_data)
+        response = view.form_valid(form)
 
-    mocked_analytics_module.returned_error.assert_called_once()
-    assert response.status_code == 200
-    assert response.template_name == ["eligibility/confirm.html"]
+        mocked_analytics_module.returned_error.assert_called_once()
+        assert response.status_code == 200
+        assert response.template_name == ["eligibility/confirm.html"]
 
+    def test_form_valid_unverified(self, mocker, view, form_data):
+        mocker.patch("benefits.eligibility.verify.eligibility_from_api", return_value=False)
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_eligibility_api")
-def test_confirm_post_valid_form_eligibility_unverified(mocker, client, form_data):
-    mocker.patch("benefits.eligibility.verify.eligibility_from_api", return_value=[])
+        form_class = view.get_form_class()
+        form = form_class(data=form_data)
 
-    path = reverse(routes.ELIGIBILITY_CONFIRM)
-    response = client.post(path, form_data)
+        response = view.form_valid(form)
 
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ELIGIBILITY_UNVERIFIED)
+        assert response.status_code == 302
+        assert response.url == reverse(routes.ELIGIBILITY_UNVERIFIED)
 
+    def test_form_valid_verified(self, mocker, view, form_data, mocked_session_update, mocked_analytics_module):
+        mocker.patch("benefits.eligibility.verify.eligibility_from_api", return_value=True)
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_eligibility_auth_request", "model_EnrollmentFlow_with_eligibility_api")
-def test_confirm_post_valid_form_eligibility_verified(
-    mocker,
-    client,
-    form_data,
-    mocked_session_eligible,
-    mocked_session_update,
-    mocked_analytics_module,
-):
-    eligible = mocked_session_eligible.return_value
-    mocker.patch("benefits.eligibility.verify.eligibility_from_api", return_value=eligible)
+        form_class = view.get_form_class()
+        form = form_class(data=form_data)
 
-    path = reverse(routes.ELIGIBILITY_CONFIRM)
-    response = client.post(path, form_data)
+        response = view.form_valid(form)
 
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ENROLLMENT_INDEX)
-    mocked_session_update.assert_called_once()
-    mocked_analytics_module.returned_success.assert_called_once()
+        assert response.status_code == 302
+        assert response.url == reverse(routes.ENROLLMENT_INDEX)
+        mocked_session_update.assert_called_once()
+        mocked_analytics_module.returned_success.assert_called_once()
 
 
 @pytest.mark.django_db
