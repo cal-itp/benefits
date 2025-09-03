@@ -152,20 +152,29 @@ class TestConfirmView:
         assert response.status_code == 302
         assert response.url == reverse(routes.ENROLLMENT_INDEX)
 
-    def test_post_form_invalid(self, view, app_request, invalid_form_data, mocked_analytics_module):
-        app_request.POST = invalid_form_data
-
-        response = view.post(app_request)
+    def test_post(self, view, app_request, mocked_analytics_module):
+        view.post(app_request)
 
         mocked_analytics_module.started_eligibility.assert_called_once()
+
+    def test_form_invalid(self, view, invalid_form_data):
+        form_class = view.get_form_class()
+        form = form_class(data=invalid_form_data)
+
+        response = view.form_invalid(form)
+
         assert response.status_code == 200
         assert response.template_name == ["eligibility/confirm.html"]
 
-    def test_post_recaptcha_fail(self, mocker, view, app_request):
+    def test_form_invalid_recaptcha_fail(self, mocker, view, invalid_form_data):
         mocker.patch("benefits.eligibility.views.recaptcha.has_error", return_value=True)
         messages = mocker.spy(views, "messages")
 
-        response = view.post(app_request)
+        form_class = view.get_form_class()
+        form = form_class(data=invalid_form_data)
+
+        response = view.form_invalid(form)
+
         assert response.status_code == 200
         assert response.template_name == ["eligibility/confirm.html"]
         messages.error.assert_called_once()
