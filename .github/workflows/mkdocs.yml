@@ -38,7 +38,7 @@ jobs:
           ref: "refs/pull/${{ github.event.number }}/merge"
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version-file: .github/workflows/.python-version
           cache: pip
