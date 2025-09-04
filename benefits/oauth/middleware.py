@@ -27,7 +27,7 @@ class FlowUsesClaimsVerificationSessionRequired(FlowSessionRequired):
         if flow.uses_claims_verification:
             # all good, the chosen flow is configured correctly
             return None
-        elif not (flow.eligibility_api_url or flow.eligibility_form_class):
+        elif not (flow.eligibility_api_url):
             # the chosen flow doesn't have Eligibility API config OR claims provider config
             # this is likely a misconfiguration on the backend, not a user error
             message = f"Flow with no API or claims config: {flow.system_name} (id={flow.id})"

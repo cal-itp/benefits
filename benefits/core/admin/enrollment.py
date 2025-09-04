@@ -90,9 +90,8 @@ class EnrollmentFlowForm(forms.ModelForm):
         if transit_agency:
             # these fields might not be on the form, so use helper method to correctly get the value
             eligibility_api_url = self.get(cleaned_data, "eligibility_api_url")
-            eligibility_form_class = self.get(cleaned_data, "eligibility_form_class")
 
-            if eligibility_api_url and eligibility_form_class:
+            if eligibility_api_url:
                 message = "Required for Eligibility API verification."
                 needed = dict(
                     eligibility_api_auth_header=self.get(cleaned_data, "eligibility_api_auth_header"),
@@ -149,7 +148,6 @@ class SortableEnrollmentFlowAdmin(SortableAdminMixin, admin.ModelAdmin):
             fields.extend(
                 [
                     "eligibility_api_url",
-                    "eligibility_form_class",
                     "selection_label_template_override",
                     "reenrollment_error_template",
                 ]

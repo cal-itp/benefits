@@ -4,21 +4,17 @@ The eligibility application: view definitions for the eligibility verification f
 
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.utils.decorators import decorator_from_middleware
-from django.views.generic import RedirectView, TemplateView, FormView
+from django.views.generic import TemplateView, FormView
 
+from benefits.core.context.flow import SystemName
 from benefits.routes import routes
 from benefits.core import recaptcha, session
 from benefits.core.context.agency import AgencySlug
 from benefits.core.context import formatted_gettext_lazy as _
-from benefits.core.middleware import AgencySessionRequired, RecaptchaEnabled, FlowSessionRequired
 from benefits.core.mixins import AgencySessionRequiredMixin, FlowSessionRequiredMixin, RecaptchaEnabledMixin
 from benefits.core.models import EnrollmentFlow
 from . import analytics, forms, verify
-
-TEMPLATE_CONFIRM = "eligibility/confirm.html"
 
 
 class EligibilityIndex:
@@ -131,82 +127,67 @@ class StartView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateVi
         return context
 
 
-@decorator_from_middleware(AgencySessionRequired)
-@decorator_from_middleware(RecaptchaEnabled)
-@decorator_from_middleware(FlowSessionRequired)
-def confirm(request):
-    """View handler for the eligibility verification form."""
+class ConfirmView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, RecaptchaEnabledMixin, FormView):
+    """View handler for Eligiblity Confirm form, used only by flows that support Eligibility API verification."""
 
-    verified_view = VerifiedView()
+    template_name = "eligibility/confirm.html"
 
-    # GET from an already verified user, no need to verify again
-    if request.method == "GET" and session.eligible(request):
-        return verified_view.setup_and_dispatch(request)
+    def get_form_class(self):
+        agency_slug = self.agency.slug
+        flow_system_name = self.flow.system_name
 
-    agency = session.agency(request)
-    flow = session.flow(request)
-
-    form = flow.eligibility_form_instance()
-
-    # GET/POST for Eligibility API verification
-    context = {"form": form}
-
-    # GET from an unverified user, present the form
-    if request.method == "GET":
-        session.update(request, origin=reverse(routes.ELIGIBILITY_CONFIRM))
-        return TemplateResponse(request, TEMPLATE_CONFIRM, context)
-    # POST form submission, process form data, make Eligibility Verification API call
-    elif request.method == "POST":
-        analytics.started_eligibility(request, flow)
-
-        form = flow.eligibility_form_instance(data=request.POST)
-        # form was not valid, allow for correction/resubmission
-        if not form.is_valid():
-            if recaptcha.has_error(form):
-                messages.error(request, "Recaptcha failed. Please try again.")
-            context["form"] = form
-            return TemplateResponse(request, TEMPLATE_CONFIRM, context)
-
-        # form is valid, make Eligibility Verification request to get the verified confirmation
-        is_verified = verify.eligibility_from_api(flow, form, agency)
-
-        # form was not valid, allow for correction/resubmission
-        if is_verified is None:
-            analytics.returned_error(request, flow, form.errors)
-            context["form"] = form
-            return TemplateResponse(request, TEMPLATE_CONFIRM, context)
-        # no type was verified
-        elif not is_verified:
-            return redirect(routes.ELIGIBILITY_UNVERIFIED)
-        # type was verified
+        if agency_slug == AgencySlug.CST and flow_system_name == SystemName.AGENCY_CARD:
+            form_class = forms.CSTAgencyCard
+        elif agency_slug == AgencySlug.MST and flow_system_name == SystemName.COURTESY_CARD:
+            form_class = forms.MSTCourtesyCard
+        elif agency_slug == AgencySlug.SBMTD and flow_system_name == SystemName.REDUCED_FARE_MOBILITY_ID:
+            form_class = forms.SBMTDMobilityPass
         else:
-            return verified_view.setup_and_dispatch(request)
+            raise ValueError(
+                f"This agency/flow combination does not support Eligibility API verification: {agency_slug}, {flow_system_name}"  # noqa
+            )
 
+        return form_class
 
-class VerifiedView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, RedirectView):
-    """CBV for verified eligibility.
-
-    Note we do not register a URL for this view, as it should only be used
-    after the user's eligibility is verified and not generally accessible.
-
-    GET requests simply forward along as part of the RedirectView logic.
-
-    POST requests represent a new verification success, triggering additional logic.
-
-    `setup_and_dispatch(request)` is a helper for external callers.
-    """
-
-    def get_redirect_url(self, *args, **kwargs):
-        return reverse(routes.ENROLLMENT_INDEX)
+    def get(self, request, *args, **kwargs):
+        if not session.eligible(request):
+            session.update(request, origin=reverse(routes.ELIGIBILITY_CONFIRM))
+            return super().get(request, *args, **kwargs)
+        else:
+            # an already verified user, no need to verify again
+            return redirect(routes.ENROLLMENT_INDEX)
 
     def post(self, request, *args, **kwargs):
-        session.update(request, eligible=True)
-        analytics.returned_success(request, self.flow)
+        analytics.started_eligibility(request, self.flow)
         return super().post(request, *args, **kwargs)
 
-    def setup_and_dispatch(self, request, *args, **kwargs):
-        self.setup(request)
-        return self.dispatch(request, *args, **kwargs)
+    def form_valid(self, form):
+        agency = self.agency
+        flow = self.flow
+        request = self.request
+
+        # make Eligibility Verification request to get the verified confirmation
+        is_verified = verify.eligibility_from_api(flow, form, agency)
+
+        # Eligibility API returned errors (so eligibility is unknown), allow for correction/resubmission
+        if is_verified is None:
+            analytics.returned_error(request, flow, form.errors)
+            return self.form_invalid(form)
+        # Eligibility API returned that no type was verified
+        elif not is_verified:
+            return redirect(routes.ELIGIBILITY_UNVERIFIED)
+        # Eligibility API returned that type was verified
+        else:
+            session.update(request, eligible=True)
+            analytics.returned_success(request, flow)
+
+            return redirect(routes.ENROLLMENT_INDEX)
+
+    def form_invalid(self, form):
+        if recaptcha.has_error(form):
+            messages.error(self.request, "Recaptcha failed. Please try again.")
+
+        return self.get(self.request)
 
 
 class UnverifiedView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateView):

@@ -69,19 +69,13 @@ def test_post_logout(app_request, mocked_oauth_analytics_module, origin):
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow_uses_claims_verification", "mocked_session_logged_in")
-def test_claims_verified_eligible(mocker, app_request, mocked_oauth_analytics_module, mocked_session_update):
+def test_claims_verified_eligible(app_request, mocked_oauth_analytics_module, mocked_session_update):
     assert app_request.method == "GET"
 
-    mock_cls = mocker.patch.object(benefits.oauth.hooks, "VerifiedView")
-    mock_view = mock_cls.return_value
+    response = OAuthHooks.claims_verified_eligible(app_request, ClaimsVerificationRequest(), ClaimsResult())
 
-    result = OAuthHooks.claims_verified_eligible(app_request, ClaimsVerificationRequest(), ClaimsResult())
-
-    mock_cls.assert_called_once()
-    # the method should have been changed to POST
-    assert app_request.method == "POST"
-    mock_view.setup_and_dispatch.assert_called_once_with(app_request)
-    assert result == mock_view.setup_and_dispatch.return_value
+    assert response.status_code == 302
+    assert response.url == reverse(routes.ENROLLMENT_INDEX)
 
     mocked_oauth_analytics_module.finished_sign_in.assert_called_once_with(app_request)
     mocked_session_update.assert_any_call(app_request, logged_in=True)

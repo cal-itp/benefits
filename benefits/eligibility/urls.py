@@ -13,6 +13,6 @@ urlpatterns = [
     # /eligibility
     path("", views.IndexView.as_view(), name=routes.name(routes.ELIGIBILITY_INDEX)),
     path("start", views.StartView.as_view(), name=routes.name(routes.ELIGIBILITY_START)),
-    path("confirm", views.confirm, name=routes.name(routes.ELIGIBILITY_CONFIRM)),
+    path("confirm", views.ConfirmView.as_view(), name=routes.name(routes.ELIGIBILITY_CONFIRM)),
     path("unverified", views.UnverifiedView.as_view(), name=routes.name(routes.ELIGIBILITY_UNVERIFIED)),
 ]

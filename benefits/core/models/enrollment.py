@@ -1,4 +1,3 @@
-import importlib
 import logging
 import uuid
 
@@ -102,11 +101,6 @@ class EnrollmentFlow(models.Model):
         default="",
         help_text="The JWS-compatible signing algorithm to use in Eligibility API requests for this flow.",
     )
-    eligibility_form_class = models.TextField(
-        blank=True,
-        default="",
-        help_text="The fully qualified Python path of a form class used by this flow, e.g. benefits.eligibility.forms.FormClass",  # noqa: E501
-    )
     selection_label_template_override = models.TextField(
         blank=True,
         default="",
@@ -196,7 +190,7 @@ class EnrollmentFlow(models.Model):
     @property
     def uses_api_verification(self):
         """True if this flow verifies via the Eligibility API. False otherwise."""
-        return bool(self.eligibility_api_url) and bool(self.eligibility_form_class)
+        return bool(self.eligibility_api_url)
 
     @property
     def claims_scheme(self):
@@ -273,17 +267,6 @@ class EnrollmentFlow(models.Model):
 
         if errors:
             raise ValidationError(errors)
-
-    def eligibility_form_instance(self, *args, **kwargs):
-        """Return an instance of this flow's EligibilityForm, or None."""
-        if not self.uses_api_verification:
-            return None
-
-        # inspired by https://stackoverflow.com/a/30941292
-        module_name, class_name = self.eligibility_form_class.rsplit(".", 1)
-        FormClass = getattr(importlib.import_module(module_name), class_name)
-
-        return FormClass(*args, **kwargs)
 
     @staticmethod
     def by_id(id):

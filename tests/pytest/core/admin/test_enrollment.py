@@ -119,7 +119,6 @@ class TestEnrollmentFlowAdmin:
                 "staff",
                 [
                     "eligibility_api_url",
-                    "eligibility_form_class",
                     "selection_label_template_override",
                     "reenrollment_error_template",
                 ],
@@ -220,7 +219,6 @@ class TestEnrollmentFlowAdmin:
             system_name="senior",  # use value that will map to existing templates
             supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
             eligibility_api_url="http://server:8000/verify",
-            eligibility_form_class="benefits.eligibility.forms.CSTAgencyCard",
             eligibility_api_auth_header="",
             eligibility_api_auth_key_secret_name="",
             eligibility_api_jwe_cek_enc="",

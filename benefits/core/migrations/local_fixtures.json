@@ -252,7 +252,6 @@
       "eligibility_api_jwe_cek_enc": "A256CBC-HS512",
       "eligibility_api_jwe_encryption_alg": "RSA-OAEP",
       "eligibility_api_jws_signing_alg": "RS256",
-      "eligibility_form_class": "benefits.eligibility.forms.CSTAgencyCard",
       "supported_enrollment_methods": ["digital"],
       "transit_agency": 1
     }
