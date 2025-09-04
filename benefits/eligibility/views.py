@@ -150,11 +150,12 @@ class ConfirmView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Recaptch
         return form_class
 
     def get(self, request, *args, **kwargs):
-        if session.eligible(request):
-            return redirect(routes.ENROLLMENT_INDEX)
-        else:
+        if not session.eligible(request):
             session.update(request, origin=reverse(routes.ELIGIBILITY_CONFIRM))
             return super().get(request, *args, **kwargs)
+        else:
+            # an already verified user, no need to verify again
+            return redirect(routes.ENROLLMENT_INDEX)
 
     def post(self, request, *args, **kwargs):
         analytics.started_eligibility(request, self.flow)
