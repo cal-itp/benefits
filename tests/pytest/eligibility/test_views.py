@@ -2,6 +2,9 @@ from django.urls import reverse
 
 import pytest
 
+from benefits.core.context.agency import AgencySlug
+from benefits.core.context.flow import SystemName
+from benefits.eligibility import forms
 from benefits.routes import routes
 import benefits.core.session
 from benefits.eligibility.forms import EnrollmentFlowSelectionForm, EligibilityVerificationForm
@@ -137,6 +140,33 @@ class TestConfirmView:
         v.agency = mocked_session_agency(app_request)
         v.flow = mocked_session_flow(app_request)
         return v
+
+    @pytest.mark.parametrize(
+        "agency_slug, flow_system_name,expected_form_class",
+        [
+            (AgencySlug.CST, SystemName.AGENCY_CARD, forms.CSTAgencyCard),
+            (AgencySlug.MST, SystemName.COURTESY_CARD, forms.MSTCourtesyCard),
+            (AgencySlug.SBMTD, SystemName.REDUCED_FARE_MOBILITY_ID, forms.SBMTDMobilityPass),
+        ],
+    )
+    def test_get_form_class_valid(self, view, agency_slug, flow_system_name, expected_form_class):
+        view.agency.slug = agency_slug
+        view.flow.system_name = flow_system_name
+
+        form_class = view.get_form_class()
+
+        assert form_class == expected_form_class
+
+    def test_get_form_class_invalid(self, view):
+        view.agency.slug = "cst"
+        view.flow.system_name = "senior"
+        expected_error_msg = (
+            f"This agency/flow combination does not support Eligibility API verification: "
+            f"{view.agency.slug}, {view.flow.system_name}"
+        )
+
+        with pytest.raises(ValueError, match=expected_error_msg):
+            view.get_form_class()
 
     def test_get(self, view, app_request):
         response = view.get(app_request)
