@@ -51,6 +51,12 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
                     "All CST transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
                 )
             ),
+            AgencySlug.EDCTA.value: EligibilityIndex(
+                form_text=_(
+                    "Cal-ITP doesn’t save any of your information. "
+                    "All EDCTA transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
+                ),
+            ),
             AgencySlug.MST.value: EligibilityIndex(
                 form_text=_(
                     "Cal-ITP doesn’t save any of your information. "
