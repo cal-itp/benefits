@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-09-09 11:33-0700\n"
+"POT-Creation-Date: 2025-09-09 12:21-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -813,7 +813,7 @@ msgstr ""
 msgid "a CST Agency Card transit benefit"
 msgstr ""
 
-msgid "EDCTA local fixed route services"
+msgid "an EDCTA bus"
 msgstr ""
 
 msgid "an MST bus"
