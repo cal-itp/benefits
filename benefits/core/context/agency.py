@@ -8,6 +8,7 @@ class AgencySlug(models.TextChoices):
     # raw value, display value
     CST = "cst", "cst"
     MST = "mst", "mst"
+    EDCTA = "edcta", "edcta"
     NEVCO = "nevco", "nevco"
     SACRT = "sacrt", "sacrt"
     SBMTD = "sbmtd", "sbmtd"
