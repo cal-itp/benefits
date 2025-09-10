@@ -55,6 +55,11 @@ class TransitProcessorConfig(models.Model):
         default=None,
         help_text="The transit agency that uses this configuration.",
     )
+    portal_url = models.TextField(
+        default="",
+        blank=True,
+        help_text="The absolute base URL for the TransitProcessor's control portal, including https://.",
+    )
 
     def __str__(self):
         environment_label = Environment(self.environment).label if self.environment else "unknown"
