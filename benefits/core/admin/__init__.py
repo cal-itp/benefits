@@ -3,7 +3,7 @@ The core application: Admin interface configuration.
 """
 
 from .common import PemDataAdmin
-from .transit import TransitAgencyAdmin, TransitProcessorAdmin
+from .transit import TransitAgencyAdmin
 from .enrollment import EnrollmentEventAdmin, SortableEnrollmentFlowAdmin
 from .users import (
     GOOGLE_USER_INFO_URL,
@@ -18,7 +18,6 @@ from .users import (
 __all__ = [
     "PemDataAdmin",
     "TransitAgencyAdmin",
-    "TransitProcessorAdmin",
     "EnrollmentEventAdmin",
     "SortableEnrollmentFlowAdmin",
     "GOOGLE_USER_INFO_URL",

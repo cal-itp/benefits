@@ -155,7 +155,6 @@
       "eligibility_api_id": "cst",
       "eligibility_api_private_key": 2,
       "eligibility_api_public_key": 3,
-      "transit_processor": 1,
       "staff_group": 2,
       "customer_service_group": 2,
       "logo_large": "agencies/cst-lg.png",
@@ -290,14 +289,6 @@
       "claims_request": "d27e630b-980c-40ae-9104-a36633bcf7ac",
       "supported_enrollment_methods": ["digital", "in_person"],
       "transit_agency": 1
-    }
-  },
-  {
-    "model": "core.transitprocessor",
-    "pk": 1,
-    "fields": {
-      "name": "(CST) test transit processor",
-      "portal_url": "https://www.transit-processor-portal.com"
     }
   },
   {

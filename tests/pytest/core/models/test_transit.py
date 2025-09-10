@@ -14,11 +14,6 @@ from benefits.core.models import (
 
 
 @pytest.mark.django_db
-def test_TransitProcessor_str(model_TransitProcessor):
-    assert str(model_TransitProcessor) == model_TransitProcessor.name
-
-
-@pytest.mark.django_db
 def test_TransitProcessorConfig_str(model_TransitAgency):
     transit_processor_config = TransitProcessorConfig.objects.create(environment="qa", transit_agency=model_TransitAgency)
     environment_label = Environment(transit_processor_config.environment).label
@@ -150,9 +145,7 @@ def test_agency_logo_large(model_TransitAgency):
 
 
 @pytest.mark.django_db
-def test_TransitAgency_clean(model_TransitAgency_inactive, model_TransitProcessor):
-    model_TransitAgency_inactive.transit_processor = model_TransitProcessor
-
+def test_TransitAgency_clean(model_TransitAgency_inactive):
     model_TransitAgency_inactive.short_name = ""
     model_TransitAgency_inactive.long_name = ""
     model_TransitAgency_inactive.phone = ""
