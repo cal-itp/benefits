@@ -43,7 +43,7 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, Redire
 class ReenrollmentErrorView(FlowSessionRequiredMixin, EligibleSessionRequiredMixin, TemplateView):
     """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
 
-    template_name = "enrollment/reenrollment-error-base.html"
+    template_name = "enrollment/reenrollment-error.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
