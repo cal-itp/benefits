@@ -4,11 +4,14 @@ The enrollment application: view definitions for the benefits enrollment flow.
 
 import logging
 
+from django.template.defaultfilters import date
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 from django.views.generic import RedirectView, TemplateView
 
+from benefits.core.context.flow import SystemName
+from benefits.core.context import formatted_gettext_lazy as _
 from benefits.routes import routes
 from benefits.core import session
 from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FlowSessionRequiredMixin
@@ -40,13 +43,26 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, Redire
 class ReenrollmentErrorView(FlowSessionRequiredMixin, EligibleSessionRequiredMixin, TemplateView):
     """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
 
-    def get_template_names(self):
-        flow = self.flow
+    template_name = "enrollment/reenrollment-error-base.html"
 
-        if not flow.reenrollment_error_template:
-            raise Exception(f"Re-enrollment error with null template on: {flow}")
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        request = self.request
+
+        flow = self.flow
+        expiry = session.enrollment_expiry(request)
+        reenrollment = session.enrollment_reenrollment(request)
+
+        if flow.system_name == SystemName.CALFRESH:
+            context["paragraphs"] = [
+                f"{_("Your CalFresh Cardholder transit benefit does not expire until")} {date(expiry)}. "
+                + f"{_("You can re-enroll for this benefit beginning on")} {date(reenrollment)}. {_("Please try again then.")}"
+            ]
         else:
-            return [self.flow.reenrollment_error_template]
+            raise Exception(f"Re-enrollment error not supported for flow {flow.system_name}")
+
+        return context
 
     def get(self, request, *args, **kwargs):
         flow = self.flow
