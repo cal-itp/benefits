@@ -94,7 +94,7 @@ def test_reenrollment_error(client, model_EnrollmentFlow_supports_expiration, mo
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == model_EnrollmentFlow_supports_expiration.reenrollment_error_template
+    assert response.template_name == [model_EnrollmentFlow_supports_expiration.reenrollment_error_template]
 
 
 @pytest.mark.django_db

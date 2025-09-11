@@ -7,11 +7,11 @@ import logging
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
 
 from benefits.routes import routes
 from benefits.core import session
-from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin
+from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FlowSessionRequiredMixin
 from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
 
 from . import analytics
@@ -37,20 +37,26 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, Redire
         return super().get(request, *args, **kwargs)
 
 
-@decorator_from_middleware(EligibleSessionRequired)
-def reenrollment_error(request):
+class ReenrollmentErrorView(FlowSessionRequiredMixin, EligibleSessionRequiredMixin, TemplateView):
     """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
-    flow = session.flow(request)
 
-    if not flow.reenrollment_error_template:
-        raise Exception(f"Re-enrollment error with null template on: {flow}")
+    def get_template_names(self):
+        flow = self.flow
 
-    if session.logged_in(request) and flow.supports_sign_out:
-        # overwrite origin for a logged in user
-        # if they click the logout button, they are taken to the new route
-        session.update(request, origin=reverse(routes.LOGGED_OUT))
+        if not flow.reenrollment_error_template:
+            raise Exception(f"Re-enrollment error with null template on: {flow}")
+        else:
+            return [self.flow.reenrollment_error_template]
 
-    return TemplateResponse(request, flow.reenrollment_error_template)
+    def get(self, request, *args, **kwargs):
+        flow = self.flow
+
+        if session.logged_in(request) and flow.supports_sign_out:
+            # overwrite origin for a logged in user
+            # if they click the logout button, they are taken to the new route
+            session.update(request, origin=reverse(routes.LOGGED_OUT))
+
+        return super().get(request, *args, **kwargs)
 
 
 @decorator_from_middleware(EligibleSessionRequired)

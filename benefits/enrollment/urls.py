@@ -12,7 +12,7 @@ app_name = "enrollment"
 urlpatterns = [
     # /enrollment
     path("", views.IndexView.as_view(), name=routes.name(routes.ENROLLMENT_INDEX)),
-    path("error/reenrollment", views.reenrollment_error, name=routes.name(routes.ENROLLMENT_REENROLLMENT_ERROR)),
+    path("error/reenrollment", views.ReenrollmentErrorView.as_view(), name=routes.name(routes.ENROLLMENT_REENROLLMENT_ERROR)),
     path("retry", views.retry, name=routes.name(routes.ENROLLMENT_RETRY)),
     path("success", views.success, name=routes.name(routes.ENROLLMENT_SUCCESS)),
     path("error", views.system_error, name=routes.name(routes.ENROLLMENT_SYSTEM_ERROR)),
