@@ -55,9 +55,12 @@ class ReenrollmentErrorView(FlowSessionRequiredMixin, EligibleSessionRequiredMix
         reenrollment = session.enrollment_reenrollment(request)
 
         if flow.system_name == SystemName.CALFRESH:
+            does_not_expire_until = _("Your CalFresh Cardholder transit benefit does not expire until")
+            reenroll_on = _("You can re-enroll for this benefit beginning on")
+            try_again = _("Please try again then.")
+
             context["paragraphs"] = [
-                f"{_("Your CalFresh Cardholder transit benefit does not expire until")} {date(expiry)}. "
-                + f"{_("You can re-enroll for this benefit beginning on")} {date(reenrollment)}. {_("Please try again then.")}"
+                f"{does_not_expire_until} {date(expiry)}. {reenroll_on} {date(reenrollment)}. {try_again}"
             ]
         else:
             raise Exception(f"Re-enrollment error not supported for flow {flow.system_name}")
