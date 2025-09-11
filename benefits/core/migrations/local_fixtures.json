@@ -268,7 +268,6 @@
       "supports_expiration": "True",
       "expiration_days": 5,
       "expiration_reenrollment_days": 3,
-      "reenrollment_error_template": "enrollment/reenrollment-error--calfresh.html",
       "display_order": 2,
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_request": "c6332e8c-7081-48e9-ae3c-07360879a8ae",

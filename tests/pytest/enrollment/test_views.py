@@ -1,6 +1,7 @@
 import pytest
 from django.urls import reverse
 
+from benefits.core.context.flow import SystemName
 from benefits.routes import routes
 import benefits.enrollment.views as views
 import benefits.enrollment.enrollment
@@ -76,25 +77,17 @@ def test_reenrollment_error_ineligible(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_reenrollment_error_eligibility_no_error_template(client):
-    path = reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
-
-    with pytest.raises(Exception, match="Re-enrollment error with null template"):
-        client.get(path)
-
-
-@pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
 def test_reenrollment_error(client, model_EnrollmentFlow_supports_expiration, mocked_session_eligible):
     mocked_session_eligible.return_value = model_EnrollmentFlow_supports_expiration
+    model_EnrollmentFlow_supports_expiration.system_name = SystemName.CALFRESH
 
     path = reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
 
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == [model_EnrollmentFlow_supports_expiration.reenrollment_error_template]
+    assert response.template_name == ["enrollment/reenrollment-error.html"]
 
 
 @pytest.mark.django_db

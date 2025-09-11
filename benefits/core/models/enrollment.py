@@ -117,9 +117,6 @@ class EnrollmentFlow(models.Model):
         blank=True,
         help_text="If the enrollment supports expiration, number of days preceding the expiration date during which a user can re-enroll in the eligibilty",  # noqa: E501
     )
-    reenrollment_error_template = models.TextField(
-        blank=True, default="", help_text="Template for a re-enrollment error associated with the enrollment flow"
-    )
     display_order = models.PositiveSmallIntegerField(default=0, blank=False, null=False)
 
     class Meta:
@@ -240,8 +237,6 @@ class EnrollmentFlow(models.Model):
             templates = [
                 self.selection_label_template,
             ]
-            if self.supports_expiration:
-                templates.append(self.reenrollment_error_template)
 
             # since templates are calculated from the pattern or the override field
             # we can't add a field-level validation error

@@ -2,7 +2,6 @@ import pytest
 
 from django.contrib import admin
 from django.conf import settings
-from django.forms import forms
 
 from benefits.core import models
 from benefits.core.admin.enrollment import EnrollmentEventAdmin, SortableEnrollmentFlowAdmin
@@ -120,7 +119,6 @@ class TestEnrollmentFlowAdmin:
                 [
                     "eligibility_api_url",
                     "selection_label_template_override",
-                    "reenrollment_error_template",
                 ],
             ),
             ("super", ()),
@@ -280,27 +278,17 @@ class TestEnrollmentFlowAdmin:
             )
         )
 
-        # but an invalid reenrollment error template
-        request.POST.update(dict(reenrollment_error_template="does/not/exist.html"))
-
         form_class = flow_admin_model.get_form(request)
         form = form_class(request.POST)
 
-        # assert there is a template error
-        assert not form.is_valid()
-        non_field_errors = form.errors[forms.NON_FIELD_ERRORS]
-        assert len(non_field_errors) == 1
-        assert "Template not found" in non_field_errors[0]
-
         # assert that field errors are added if supports_expiration is True but expiration fields are not set
-        request.POST.update(dict(expiration_days=0, expiration_reenrollment_days=0, reenrollment_error_template=""))
+        request.POST.update(dict(expiration_days=0, expiration_reenrollment_days=0))
         form = form_class(request.POST)
 
         assert not form.is_valid()
         error_dict = form.errors
         assert "expiration_days" in error_dict
         assert "expiration_reenrollment_days" in error_dict
-        assert "reenrollment_error_template" in error_dict
 
     def test_EnrollmentFlowForm_clean_supports_expiration_staff_user(
         self, admin_user_request, flow_admin_model, model_TransitAgency, model_IdentityGatewayConfig
