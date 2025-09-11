@@ -12,7 +12,6 @@ from pytest_socket import disable_socket
 from benefits.core import session
 from benefits.core.models import (
     EnrollmentFlow,
-    TransitProcessor,
     PemData,
     TransitAgency,
     Environment,
@@ -196,15 +195,6 @@ def model_EnrollmentFlow_supports_sign_out(model_EnrollmentFlow):
 
 
 @pytest.fixture
-def model_TransitProcessor():
-    transit_processor = TransitProcessor.objects.create(
-        name="Test Transit Processor",
-    )
-
-    return transit_processor
-
-
-@pytest.fixture
 def model_LittlepayConfig(model_TransitAgency):
     littlepay_config = LittlepayConfig.objects.create(
         transit_agency=model_TransitAgency,
@@ -233,7 +223,7 @@ def model_SwitchioConfig(model_PemData, model_TransitAgency):
 
 
 @pytest.fixture
-def model_TransitAgency(model_PemData, model_TransitProcessor):
+def model_TransitAgency(model_PemData):
     agency = TransitAgency.objects.create(
         slug="cst",
         short_name="TEST",
@@ -241,7 +231,6 @@ def model_TransitAgency(model_PemData, model_TransitProcessor):
         info_url="https://example.com/test-agency",
         phone="800-555-5555",
         active=True,
-        transit_processor=model_TransitProcessor,
         eligibility_api_id="test123",
         eligibility_api_private_key=model_PemData,
         eligibility_api_public_key=model_PemData,

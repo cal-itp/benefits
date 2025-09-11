@@ -26,21 +26,6 @@ def agency_logo_large(instance, filename):
     return _agency_logo(instance, filename, "lg")
 
 
-class TransitProcessor(models.Model):
-    """An entity that applies transit agency fare rules to rider transactions."""
-
-    id = models.AutoField(primary_key=True)
-    name = models.TextField(help_text="Primary internal display name for this TransitProcessor instance, e.g. in the Admin.")
-    portal_url = models.TextField(
-        default="",
-        blank=True,
-        help_text="The absolute base URL for the TransitProcessor's control portal, including https://.",
-    )
-
-    def __str__(self):
-        return self.name
-
-
 class TransitProcessorConfig(models.Model):
     id = models.AutoField(primary_key=True)
     environment = models.TextField(
@@ -54,6 +39,11 @@ class TransitProcessorConfig(models.Model):
         blank=True,
         default=None,
         help_text="The transit agency that uses this configuration.",
+    )
+    portal_url = models.TextField(
+        default="",
+        blank=True,
+        help_text="The absolute base URL for the TransitProcessor's control portal, including https://.",
     )
 
     def __str__(self):
@@ -110,14 +100,6 @@ class TransitAgency(models.Model):
         null=True,
         blank=True,
         default=None,
-    )
-    transit_processor = models.ForeignKey(
-        TransitProcessor,
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        default=None,
-        help_text="This agency's TransitProcessor.",
     )
     staff_group = models.OneToOneField(
         Group,
@@ -243,25 +225,24 @@ class TransitAgency(models.Model):
             )
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
-            if self.transit_processor:
-                if self.littlepay_config is None and self.switchio_config is None:
-                    non_field_errors.append(ValidationError("Must fill out configuration for either Littlepay or Switchio."))
+            if self.littlepay_config is None and self.switchio_config is None:
+                non_field_errors.append(ValidationError("Must fill out configuration for either Littlepay or Switchio."))
+            else:
+                if self.littlepay_config:
+                    try:
+                        self.littlepay_config.clean()
+                    except ValidationError as e:
+                        message = "Littlepay configuration is missing fields that are required when this agency is active."
+                        message += f" Missing fields: {', '.join(e.error_dict.keys())}"
+                        non_field_errors.append(ValidationError(message))
 
-            if self.littlepay_config:
-                try:
-                    self.littlepay_config.clean()
-                except ValidationError as e:
-                    message = "Littlepay configuration is missing fields that are required when this agency is active."
-                    message += f" Missing fields: {', '.join(e.error_dict.keys())}"
-                    non_field_errors.append(ValidationError(message))
-
-            if self.switchio_config:
-                try:
-                    self.switchio_config.clean()
-                except ValidationError as e:
-                    message = "Switchio configuration is missing fields that are required when this agency is active."
-                    message += f" Missing fields: {', '.join(e.error_dict.keys())}"
-                    non_field_errors.append(ValidationError(message))
+                if self.switchio_config:
+                    try:
+                        self.switchio_config.clean()
+                    except ValidationError as e:
+                        message = "Switchio configuration is missing fields that are required when this agency is active."
+                        message += f" Missing fields: {', '.join(e.error_dict.keys())}"
+                        non_field_errors.append(ValidationError(message))
 
         all_errors = {}
         if field_errors:
