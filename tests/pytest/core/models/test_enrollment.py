@@ -14,6 +14,12 @@ def test_EnrollmentFlow_str(model_EnrollmentFlow):
 
 
 @pytest.mark.django_db
+def test_EnrollmentFlow_str_no_agency(model_EnrollmentFlow):
+    model_EnrollmentFlow.transit_agency = None
+    assert str(model_EnrollmentFlow) == f"{model_EnrollmentFlow.label} (no agency)"
+
+
+@pytest.mark.django_db
 def test_EnrollmentFlow_agency_card_name(model_EnrollmentFlow_with_eligibility_api):
     assert (
         model_EnrollmentFlow_with_eligibility_api.agency_card_name

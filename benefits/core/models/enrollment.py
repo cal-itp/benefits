@@ -126,7 +126,8 @@ class EnrollmentFlow(models.Model):
         ordering = ["display_order"]
 
     def __str__(self):
-        return f"{self.label} ({self.transit_agency.slug})"
+        agency_slug = self.transit_agency.slug if self.transit_agency else "no agency"
+        return f"{self.label} ({agency_slug})"
 
     @property
     def group_id(self):
