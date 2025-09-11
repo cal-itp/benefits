@@ -67,27 +67,39 @@ def test_system_error(
 
 
 @pytest.mark.django_db
-def test_reenrollment_error_ineligible(client):
-    path = reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
+class TestReenrollmentErrorView:
 
-    response = client.get(path)
+    @pytest.fixture
+    def view(self, app_request):
+        v = views.ReenrollmentErrorView()
+        v.setup(app_request)
+        return v
 
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_USER_ERROR
+    def test_get_context_data(self, view, model_EnrollmentFlow_supports_expiration):
+        view.flow = model_EnrollmentFlow_supports_expiration
+        view.flow.system_name = SystemName.CALFRESH
 
+        context = view.get_context_data()
+        assert "paragraphs" in context
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_reenrollment_error(client, model_EnrollmentFlow_supports_expiration, mocked_session_eligible):
-    mocked_session_eligible.return_value = model_EnrollmentFlow_supports_expiration
-    model_EnrollmentFlow_supports_expiration.system_name = SystemName.CALFRESH
+    @pytest.mark.usefixtures("mocked_session_logged_in")
+    def test_get(self, view, app_request, model_EnrollmentFlow_supports_expiration):
+        view.flow = model_EnrollmentFlow_supports_expiration
+        view.flow.system_name = SystemName.CALFRESH
 
-    path = reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
+        response = view.get(app_request)
+        assert response.status_code == 200
+        assert response.template_name == ["enrollment/reenrollment-error.html"]
 
-    response = client.get(path)
+    @pytest.mark.usefixtures("mocked_session_logged_in")
+    def test_get_flow_supports_signout(self, view, app_request, mocked_session_update, model_EnrollmentFlow_supports_sign_out):
+        view.flow = model_EnrollmentFlow_supports_sign_out
+        view.flow.system_name = SystemName.CALFRESH
 
-    assert response.status_code == 200
-    assert response.template_name == ["enrollment/reenrollment-error.html"]
+        response = view.get(app_request)
+        assert response.status_code == 200
+        assert response.template_name == ["enrollment/reenrollment-error.html"]
+        mocked_session_update.assert_called_once()
 
 
 @pytest.mark.django_db
