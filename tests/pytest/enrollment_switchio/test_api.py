@@ -1,5 +1,7 @@
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import json
+
+from django.utils import timezone as tz
 import pytest
 
 import benefits.enrollment_switchio.api
@@ -154,6 +156,21 @@ def test_tokenization_client_get_registration_status(mocker, tokenization_client
     registration_status = tokenization_client.get_registration_status(registration_id="1234")
 
     assert registration_status == RegistrationStatus(**mock_json)
+
+
+@pytest.mark.parametrize(
+    "expiry_datetime",
+    [
+        datetime(2025, 9, 12, 19, 15, 0, tzinfo=timezone.utc),
+        datetime(2025, 9, 12, 19, 15, 0, tzinfo=None),
+        datetime(2025, 9, 12, 12, 15, 0, tzinfo=tz.get_fixed_timezone(timedelta(hours=-7))),
+    ],
+)
+def test_enrollment_client_format_expiry(enrollment_client, expiry_datetime):
+    expected_format = "2025-09-12T19:15:00Z"
+    formatted = enrollment_client._format_expiry(expiry_datetime)
+
+    assert formatted == expected_format
 
 
 def test_enrollment_client_get_headers(enrollment_client):

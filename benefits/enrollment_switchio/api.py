@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 import hashlib
 import hmac
@@ -187,6 +187,25 @@ class EnrollmentClient(Client):
         super().__init__(private_key, client_certificate, ca_certificate)
         self.api_url = api_url.strip("/")
         self.authorization_header_value = authorization_header_value
+
+    def _format_expiry(self, expiry: datetime) -> str:
+        """Formats an expiry datetime into a string suitable for using in an API request body."""
+        if not isinstance(expiry, datetime):
+            raise TypeError("expiry must be a Python datetime instance")
+        # determine if expiry is an "aware" or "naive" datetime instance
+        # https://docs.python.org/3/library/datetime.html#determining-if-an-object-is-aware-or-naive
+        if expiry.tzinfo is not None and expiry.tzinfo.utcoffset(expiry) is not None:
+            # expiry is an "aware" datetime instance, meaning it has associated time zone information
+            # ensure this datetime instance is expressed in UTC
+            expiry = expiry.astimezone(timezone.utc)
+        else:
+            # expiry is a "naive" datetime instance, meaning it has no associated time zone information
+            # assume this datetime instance was provided in UTC
+            expiry = expiry.replace(tzinfo=timezone.utc)
+        # now expiry is an "aware" datetime instance in UTC format
+        # datetime.isoformat() adds the UTC offset like +00:00
+        # so keep everything but the last 6 characters and add the Z offset character
+        return f"{expiry.isoformat(timespec='seconds')[:-6]}Z"
 
     def _get_headers(self):
         return {"Authorization": self.authorization_header_value}
