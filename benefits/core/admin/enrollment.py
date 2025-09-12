@@ -70,20 +70,12 @@ class EnrollmentFlowForm(forms.ModelForm):
         if supports_expiration:
             expiration_days = cleaned_data.get("expiration_days")
             expiration_reenrollment_days = cleaned_data.get("expiration_reenrollment_days")
-            reenrollment_error_template = self.get(cleaned_data, "reenrollment_error_template")
 
             message = "When support_expiration is True, this value must be greater than 0."
             if expiration_days is None or expiration_days <= 0:
                 field_errors.update(expiration_days=ValidationError(message))
             if expiration_reenrollment_days is None or expiration_reenrollment_days <= 0:
                 field_errors.update(expiration_reenrollment_days=ValidationError(message))
-            if not reenrollment_error_template:
-                message = "Required when supports expiration is True"
-                field_name = "reenrollment_error_template"
-                if self.has_field(field_name):
-                    field_errors.update(reenrollment_error_template=ValidationError(f"{message}."))
-                else:
-                    non_field_errors.append(ValidationError(f"{message}: {field_name}"))
 
         transit_agency = cleaned_data.get("transit_agency")
 
@@ -149,7 +141,6 @@ class SortableEnrollmentFlowAdmin(SortableAdminMixin, admin.ModelAdmin):
                 [
                     "eligibility_api_url",
                     "selection_label_template_override",
-                    "reenrollment_error_template",
                 ]
             )
 

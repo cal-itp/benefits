@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-09-09 12:21-0700\n"
+"POT-Creation-Date: 2025-09-11 13:24-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1139,17 +1139,6 @@ msgstr "Espere por favor..."
 msgid "Enroll"
 msgstr "Inscribir"
 
-msgid "Your CalFresh Cardholder transit benefit does not expire until"
-msgstr ""
-"Su beneficio de tránsito para titulares de la tarjeta CalFresh no expira "
-"hasta el"
-
-msgid "You can re-enroll for this benefit beginning on"
-msgstr "Puede volver a inscribirse a este beneficio a partir del"
-
-msgid "Please try again then."
-msgstr "Por favor, inténtelo de nuevo hasta entonces."
-
 msgid "Enrollment error"
 msgstr "Error de inscripción"
 
@@ -1203,6 +1192,17 @@ msgstr ""
 
 msgid "Sign out of"
 msgstr "Cierre sesión de"
+
+msgid "Your CalFresh Cardholder transit benefit does not expire until"
+msgstr ""
+"Su beneficio de tránsito para titulares de la tarjeta CalFresh no expira "
+"hasta el"
+
+msgid "You can re-enroll for this benefit beginning on"
+msgstr "Puede volver a inscribirse a este beneficio a partir del"
+
+msgid "Please try again then."
+msgstr "Por favor, inténtelo de nuevo hasta entonces."
 
 msgid "Service is down"
 msgstr "El servicio está inactivo"

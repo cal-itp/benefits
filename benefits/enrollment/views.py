@@ -4,14 +4,17 @@ The enrollment application: view definitions for the benefits enrollment flow.
 
 import logging
 
+from django.template.defaultfilters import date
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
 
+from benefits.core.context.flow import SystemName
+from benefits.core.context import formatted_gettext_lazy as _
 from benefits.routes import routes
 from benefits.core import session
-from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin
+from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FlowSessionRequiredMixin
 from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
 
 from . import analytics
@@ -37,20 +40,40 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, Redire
         return super().get(request, *args, **kwargs)
 
 
-@decorator_from_middleware(EligibleSessionRequired)
-def reenrollment_error(request):
+class ReenrollmentErrorView(FlowSessionRequiredMixin, EligibleSessionRequiredMixin, TemplateView):
     """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
-    flow = session.flow(request)
 
-    if not flow.reenrollment_error_template:
-        raise Exception(f"Re-enrollment error with null template on: {flow}")
+    template_name = "enrollment/reenrollment-error.html"
 
-    if session.logged_in(request) and flow.supports_sign_out:
-        # overwrite origin for a logged in user
-        # if they click the logout button, they are taken to the new route
-        session.update(request, origin=reverse(routes.LOGGED_OUT))
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-    return TemplateResponse(request, flow.reenrollment_error_template)
+        request = self.request
+
+        flow = self.flow
+        expiry = session.enrollment_expiry(request)
+        reenrollment = session.enrollment_reenrollment(request)
+
+        if flow.system_name == SystemName.CALFRESH:
+            does_not_expire_until = _("Your CalFresh Cardholder transit benefit does not expire until")
+            reenroll_on = _("You can re-enroll for this benefit beginning on")
+            try_again = _("Please try again then.")
+
+            context["paragraphs"] = [
+                f"{does_not_expire_until} {date(expiry)}. {reenroll_on} {date(reenrollment)}. {try_again}"
+            ]
+
+        return context
+
+    def get(self, request, *args, **kwargs):
+        flow = self.flow
+
+        if session.logged_in(request) and flow.supports_sign_out:
+            # overwrite origin for a logged in user
+            # if they click the logout button, they are taken to the new route
+            session.update(request, origin=reverse(routes.LOGGED_OUT))
+
+        return super().get(request, *args, **kwargs)
 
 
 @decorator_from_middleware(EligibleSessionRequired)

@@ -179,7 +179,6 @@ def model_EnrollmentFlow_supports_expiration(model_EnrollmentFlow):
     model_EnrollmentFlow.supports_expiration = True
     model_EnrollmentFlow.expiration_days = 365
     model_EnrollmentFlow.expiration_reenrollment_days = 14
-    model_EnrollmentFlow.reenrollment_error_template = "enrollment/reenrollment-error--calfresh.html"
     model_EnrollmentFlow.save()
 
     return model_EnrollmentFlow

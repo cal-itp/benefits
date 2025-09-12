@@ -20,6 +20,7 @@
 {% endblock headline-text %}
 
 {% block paragraphs %}
+  {% for paragraph in paragraphs %}<p>{{ paragraph }}</p>{% endfor %}
 {% endblock paragraphs %}
 
 {% block call-to-action-button %}

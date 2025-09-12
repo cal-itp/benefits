@@ -120,19 +120,6 @@ def test_EnrollmentFlow_template_overrides_eligibility_api(model_EnrollmentFlow_
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_clean_supports_expiration(model_EnrollmentFlow_supports_expiration, model_IdentityGatewayConfig):
-    # fake a valid claims configuration
-    model_EnrollmentFlow_supports_expiration.oauth_config = model_IdentityGatewayConfig
-    model_EnrollmentFlow_supports_expiration.claims_scope = "scope"
-    model_EnrollmentFlow_supports_expiration.claims_eligibility_claim = "claim"
-    # but an invalid reenrollment error template
-    model_EnrollmentFlow_supports_expiration.reenrollment_error_template = "does/not/exist.html"
-
-    with pytest.raises(ValidationError, match="Template not found: does/not/exist.html"):
-        model_EnrollmentFlow_supports_expiration.clean()
-
-
-@pytest.mark.django_db
 @pytest.mark.parametrize(
     "template_attribute",
     [

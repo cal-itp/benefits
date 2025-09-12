@@ -1,6 +1,7 @@
 import pytest
 from django.urls import reverse
 
+from benefits.core.context.flow import SystemName
 from benefits.routes import routes
 import benefits.enrollment.views as views
 import benefits.enrollment.enrollment
@@ -66,35 +67,40 @@ def test_system_error(
 
 
 @pytest.mark.django_db
-def test_reenrollment_error_ineligible(client):
-    path = reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
+class TestReenrollmentErrorView:
 
-    response = client.get(path)
+    @pytest.fixture
+    def view(self, app_request, model_EnrollmentFlow_supports_expiration):
+        v = views.ReenrollmentErrorView()
+        v.setup(app_request)
+        v.flow = model_EnrollmentFlow_supports_expiration
+        v.flow.system_name = SystemName.CALFRESH
+        return v
 
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_USER_ERROR
+    def test_get_context_data(self, view):
+        context = view.get_context_data()
+        assert "paragraphs" in context
 
+        paragraph = context["paragraphs"][0]
+        assert "CalFresh" in paragraph
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible")
-def test_reenrollment_error_eligibility_no_error_template(client):
-    path = reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
+    @pytest.mark.usefixtures("mocked_session_logged_in")
+    def test_get(self, view, app_request):
+        response = view.get(app_request)
+        assert response.status_code == 200
+        assert response.template_name == ["enrollment/reenrollment-error.html"]
 
-    with pytest.raises(Exception, match="Re-enrollment error with null template"):
-        client.get(path)
+    @pytest.mark.usefixtures("mocked_session_logged_in")
+    def test_get_flow_supports_signout(self, view, app_request, mocked_session_update):
+        # make `supports_sign_out` evaluate to `True`
+        view.flow.sign_out_button_template = "core/includes/button--sign-out--senior.html"
+        view.flow.sign_out_link_template = "core/includes/link--sign-out--senior.html"
+        view.flow.save()
 
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow")
-def test_reenrollment_error(client, model_EnrollmentFlow_supports_expiration, mocked_session_eligible):
-    mocked_session_eligible.return_value = model_EnrollmentFlow_supports_expiration
-
-    path = reverse(routes.ENROLLMENT_REENROLLMENT_ERROR)
-
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == model_EnrollmentFlow_supports_expiration.reenrollment_error_template
+        response = view.get(app_request)
+        assert response.status_code == 200
+        assert response.template_name == ["enrollment/reenrollment-error.html"]
+        mocked_session_update.assert_called_once()
 
 
 @pytest.mark.django_db
