@@ -261,10 +261,12 @@ class EnrollmentClient(Client):
 
         return [GroupExpiry(**group_expiry) for group_expiry in response.json()]
 
-    def add_group_to_token(self, pto_id, group_id, token, timeout=5):
+    def add_group_to_token(self, pto_id, group_id, token, expiry: datetime = None, timeout=5):
         request_path = f"/api/external/discount/{pto_id}/token/{token}/add"
 
         request_body = {"group": group_id}
+        if expiry:
+            request_body["expiresAt"] = self._format_expiry(expiry)
 
         response = self._cert_request(
             lambda verify, cert: requests.post(

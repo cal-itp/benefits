@@ -217,14 +217,38 @@ def test_enrollment_client_get_groups_for_token(mocker, enrollment_client):
     assert groups == [GroupExpiry(**mock_json)]
 
 
-def test_enrollment_client_add_group_to_token(mocker, enrollment_client):
-    mock_response = mocker.Mock()
-    mock_response.text.return_value = "Groups added or updated successfully"
-    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+@pytest.mark.parametrize(
+    "expiry, expected_expires_at",
+    [
+        (None, None),
+        (datetime(2025, 9, 12, 19, 15, 0, tzinfo=timezone.utc), "2025-09-12T19:15:00Z"),
+    ],
+)
+def test_enrollment_client_add_group_to_token(mocker, enrollment_client, expiry, expected_expires_at):
+    mock_post = mocker.patch("benefits.enrollment_switchio.api.requests.post")
 
-    response = enrollment_client.add_group_to_token("123", "veteran-discount", "abcde12345")
+    def cert_request_spy(request_func):
+        # the original `_cert_request` adds `verify` and `cert` kwargs.
+        # pass dummy values here to satisfy the lambda's signature.
+        return request_func(verify="dummy_ca_path", cert=("dummy_cert_path", "dummy_key_path"))
 
-    assert response == mock_response.text
+    mocker.patch.object(enrollment_client, "_cert_request", side_effect=cert_request_spy)
+
+    pto_id = "123"
+    group_id = "test-group"
+    token = "test-token"
+
+    enrollment_client.add_group_to_token(pto_id, group_id, token, expiry=expiry)
+
+    expected_body = {"group": group_id}
+    if expected_expires_at:
+        expected_body["expiresAt"] = expected_expires_at
+
+    # Assert that `requests.post` was called with the correct URL and body.
+    expected_url = f"{enrollment_client.api_url}/api/external/discount/{pto_id}/token/{token}/add"
+    mock_post.assert_called_once()
+    assert mock_post.call_args.args == (expected_url,)
+    assert mock_post.call_args.kwargs["json"] == expected_body
 
 
 def test_enrollment_client_remove_group_from_token(mocker, enrollment_client):
