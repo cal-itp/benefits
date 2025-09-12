@@ -147,7 +147,7 @@ def get_latest_active_token_value(tokens):
     return latest_active_token.token if latest_active_token else ""
 
 
-def enroll(switchio_config: SwitchioConfig, flow: EnrollmentFlow, token: str) -> tuple[Status, Exception]:
+def enroll(request, switchio_config: SwitchioConfig, flow: EnrollmentFlow, token: str) -> tuple[Status, Exception]:
     client = EnrollmentClient(
         api_url=switchio_config.enrollment_api_base_url,
         authorization_header_value=switchio_config.enrollment_api_authorization_header,
