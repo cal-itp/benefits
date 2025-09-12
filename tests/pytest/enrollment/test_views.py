@@ -70,15 +70,14 @@ def test_system_error(
 class TestReenrollmentErrorView:
 
     @pytest.fixture
-    def view(self, app_request):
+    def view(self, app_request, model_EnrollmentFlow_supports_expiration):
         v = views.ReenrollmentErrorView()
         v.setup(app_request)
+        v.flow = model_EnrollmentFlow_supports_expiration
+        v.flow.system_name = SystemName.CALFRESH
         return v
 
-    def test_get_context_data(self, view, model_EnrollmentFlow_supports_expiration):
-        view.flow = model_EnrollmentFlow_supports_expiration
-        view.flow.system_name = SystemName.CALFRESH
-
+    def test_get_context_data(self, view):
         context = view.get_context_data()
         assert "paragraphs" in context
 
@@ -86,18 +85,17 @@ class TestReenrollmentErrorView:
         assert "CalFresh" in paragraph
 
     @pytest.mark.usefixtures("mocked_session_logged_in")
-    def test_get(self, view, app_request, model_EnrollmentFlow_supports_expiration):
-        view.flow = model_EnrollmentFlow_supports_expiration
-        view.flow.system_name = SystemName.CALFRESH
-
+    def test_get(self, view, app_request):
         response = view.get(app_request)
         assert response.status_code == 200
         assert response.template_name == ["enrollment/reenrollment-error.html"]
 
     @pytest.mark.usefixtures("mocked_session_logged_in")
-    def test_get_flow_supports_signout(self, view, app_request, mocked_session_update, model_EnrollmentFlow_supports_sign_out):
-        view.flow = model_EnrollmentFlow_supports_sign_out
-        view.flow.system_name = SystemName.CALFRESH
+    def test_get_flow_supports_signout(self, view, app_request, mocked_session_update):
+        # make `supports_sign_out` evaluate to `True`
+        view.flow.sign_out_button_template = "core/includes/button--sign-out--senior.html"
+        view.flow.sign_out_link_template = "core/includes/link--sign-out--senior.html"
+        view.flow.save()
 
         response = view.get(app_request)
         assert response.status_code == 200
