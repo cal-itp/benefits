@@ -82,6 +82,9 @@ class TestReenrollmentErrorView:
         context = view.get_context_data()
         assert "paragraphs" in context
 
+        paragraph = context["paragraphs"][0]
+        assert "CalFresh" in paragraph
+
     @pytest.mark.usefixtures("mocked_session_logged_in")
     def test_get(self, view, app_request, model_EnrollmentFlow_supports_expiration):
         view.flow = model_EnrollmentFlow_supports_expiration
