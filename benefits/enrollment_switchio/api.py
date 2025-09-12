@@ -178,7 +178,21 @@ class Group:
 @dataclass
 class GroupExpiry:
     group: str
-    expiresAt: datetime
+    expiresAt: datetime | None = None
+
+    def __post_init__(self):
+        """Parses any date parameters into aware Python datetime objects.
+
+        For @dataclasses with a generated __init__ function, this function is called automatically.
+
+        https://docs.python.org/3.12/library/datetime.html#datetime.datetime.fromisoformat
+        """
+        if self.expiresAt:
+            # per the spec, we expect expiresAt to be in ISO format UTC
+            # make the resulting datetime "aware" by replacing tzinfo explicitly
+            self.expiresAt = datetime.fromisoformat(self.expiresAt).replace(tzinfo=timezone.utc)
+        else:
+            self.expiresAt = None
 
 
 class EnrollmentClient(Client):

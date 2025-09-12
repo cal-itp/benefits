@@ -158,6 +158,18 @@ def test_tokenization_client_get_registration_status(mocker, tokenization_client
     assert registration_status == RegistrationStatus(**mock_json)
 
 
+class TestGroupExpiry:
+    def test_expiresAt(self):
+        group = GroupExpiry(group="group", expiresAt="2025-09-12T00:00:00Z")
+
+        assert group.expiresAt == datetime(2025, 9, 12, 0, 0, 0, tzinfo=timezone.utc)
+
+    def test_no_expiresAt(self):
+        group = GroupExpiry(group="group", expiresAt=None)
+
+        assert group.expiresAt is None
+
+
 @pytest.mark.parametrize(
     "expiry_datetime",
     [
