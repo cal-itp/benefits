@@ -62,8 +62,6 @@ class ReenrollmentErrorView(FlowSessionRequiredMixin, EligibleSessionRequiredMix
             context["paragraphs"] = [
                 f"{does_not_expire_until} {date(expiry)}. {reenroll_on} {date(reenrollment)}. {try_again}"
             ]
-        else:
-            raise Exception(f"Re-enrollment error not supported for flow {flow.system_name}")
 
         return context
 
