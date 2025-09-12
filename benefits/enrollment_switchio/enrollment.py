@@ -5,8 +5,9 @@ from django.http import HttpRequest
 from django.urls import reverse
 from requests import HTTPError
 
+from benefits.core import session
 from benefits.core.models.enrollment import EnrollmentFlow
-from benefits.enrollment.enrollment import Status
+from benefits.enrollment.enrollment import Status, _calculate_expiry, _is_expired, _is_within_reenrollment_window
 from benefits.enrollment_switchio.models import SwitchioConfig
 from benefits.routes import routes
 from benefits.enrollment_switchio.api import (
@@ -164,7 +165,36 @@ def enroll(request, switchio_config: SwitchioConfig, flow: EnrollmentFlow, token
         group = _get_group_for_token(client, pto_id, group_id, token)
         already_enrolled = group is not None
 
-        if not flow.supports_expiration:
+        if flow.supports_expiration:
+            # set expiry on session
+            if already_enrolled and group.expiresAt is not None:
+                session.update(request, enrollment_expiry=group.expiresAt)
+            else:
+                session.update(request, enrollment_expiry=_calculate_expiry(flow.expiration_days))
+
+            if not already_enrolled:
+                # enroll user with an expiration date, return success
+                client.add_group_to_token(pto_id, group_id, token, expiry=session.enrollment_expiry(request))
+                status = Status.SUCCESS
+            else:  # already_enrolled
+                if group.expiresAt is None:
+                    # update expiration of existing enrollment, return success
+                    client.add_group_to_token(pto_id, group_id, token, expiry=session.enrollment_expiry(request))
+                    status = Status.SUCCESS
+                else:
+                    is_expired = _is_expired(group.expiresAt)
+                    is_within_reenrollment_window = _is_within_reenrollment_window(
+                        group.expiresAt, session.enrollment_reenrollment(request)
+                    )
+
+                    if is_expired or is_within_reenrollment_window:
+                        # update expiration of existing enrollment, return success
+                        client.add_group_to_token(pto_id, group_id, token, expiry=session.enrollment_expiry(request))
+                        status = Status.SUCCESS
+                    else:
+                        # re-enrollment error, return enrollment error with expiration and reenrollment_date
+                        status = Status.REENROLLMENT_ERROR
+        else:  # flow does not support expiration
             if not already_enrolled:
                 # enroll user with no expiration date, return success
                 client.add_group_to_token(
