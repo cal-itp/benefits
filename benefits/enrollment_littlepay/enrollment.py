@@ -1,12 +1,10 @@
 from dataclasses import dataclass
-from datetime import timedelta
 
-from django.utils import timezone
 from littlepay.api.client import Client
 from requests.exceptions import HTTPError
 
 from benefits.core import session
-from benefits.enrollment.enrollment import Status
+from benefits.enrollment.enrollment import Status, _calculate_expiry, _is_expired, _is_within_reenrollment_window
 
 
 @dataclass
@@ -157,23 +155,3 @@ def _get_group_funding_source(client: Client, group_id, funding_source_id):
             break
 
     return matching_group_funding_source
-
-
-def _is_expired(expiry_date):
-    """Returns whether the passed in datetime is expired or not."""
-    return expiry_date <= timezone.now()
-
-
-def _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date):
-    """Returns if we are currently within the reenrollment window."""
-    return enrollment_reenrollment_date <= timezone.now() < expiry_date
-
-
-def _calculate_expiry(expiration_days):
-    """Returns the expiry datetime, which should be midnight in our configured timezone of the (N + 1)th day from now,
-    where N is expiration_days."""
-    default_time_zone = timezone.get_default_timezone()
-    expiry_date = timezone.localtime(timezone=default_time_zone) + timedelta(days=expiration_days + 1)
-    expiry_datetime = expiry_date.replace(hour=0, minute=0, second=0, microsecond=0)
-
-    return expiry_datetime

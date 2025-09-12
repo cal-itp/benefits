@@ -1,6 +1,8 @@
+from datetime import datetime, timedelta
 from enum import Enum
 
 from django.shortcuts import redirect
+from django.utils import timezone
 import sentry_sdk
 
 from benefits.routes import routes
@@ -21,6 +23,26 @@ class Status(Enum):
 
     # REENROLLMENT_ERROR means that the user tried to re-enroll but is not within the reenrollment window
     REENROLLMENT_ERROR = 4
+
+
+def _is_expired(expiry_date: datetime):
+    """Returns whether the passed in datetime is expired or not."""
+    return expiry_date <= timezone.now()
+
+
+def _is_within_reenrollment_window(expiry_date: datetime, enrollment_reenrollment_date: datetime):
+    """Returns if we are currently within the reenrollment window."""
+    return enrollment_reenrollment_date <= timezone.now() < expiry_date
+
+
+def _calculate_expiry(expiration_days: int):
+    """Returns the expiry datetime, which should be midnight in our configured timezone of the (N + 1)th day from now,
+    where N is expiration_days."""
+    default_time_zone = timezone.get_default_timezone()
+    expiry_date = timezone.localtime(timezone=default_time_zone) + timedelta(days=expiration_days + 1)
+    expiry_datetime = expiry_date.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    return expiry_datetime
 
 
 def handle_enrollment_results(
