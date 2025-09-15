@@ -28,13 +28,8 @@
       {% if alert_include %}
         {% include alert_include %}
       {% else %}
-        <p>
-          {% if feature_flags.LITTLEPAY_ADDITIONAL_CARDTYPES %}
-            {% translate "Please use a debit or credit card by Visa, Mastercard, Discover, or American Express." %}
-          {% else %}
-            {% translate "Please use a debit or credit card by Visa or Mastercard." %}
-          </p>
-        {% endif %}
+        <p>{% translate "Please use a debit or credit card by:" %}</p>
+        {% include "core/includes/list--card-schemes.html" %}
       {% endif %}
     </div>
     {% include "enrollment/includes/modal--transit-processor.html" with id="modal--transit-processor" size="modal-md" header="p-md-2 p-3" body="pb-md-3 mb-md-3 mx-md-3 py-0 pt-0 absolute-top" transit_processor=transit_processor %}
