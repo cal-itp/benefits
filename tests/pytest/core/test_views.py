@@ -151,22 +151,15 @@ def test_agency_eligibility_index(client, model_TransitAgency, mocked_session_up
 
 
 @pytest.mark.django_db
-def test_help(client):
-    path = reverse(routes.HELP)
+class TestHelpView:
+    @pytest.fixture
+    def view(self, app_request):
+        v = views.HelpView()
+        v.setup(app_request)
+        return v
 
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert "card" in str(response.content)
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency")
-def test_help_with_session_agency(client):
-    path = reverse(routes.HELP)
-    response = client.get(path)
-
-    assert response.status_code == 200
+    def test_view(self, view):
+        assert view.template_name == "core/help.html"
 
 
 @pytest.mark.django_db

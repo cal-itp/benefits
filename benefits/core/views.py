@@ -14,7 +14,6 @@ from . import models, session
 from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator, user_error
 
 TEMPLATE_AGENCY = "core/index--agency-base.html"
-TEMPLATE_HELP = "core/help.html"
 TEMPLATE_LOGGED_OUT = "core/logged-out.html"
 
 TEMPLATE_BAD_REQUEST = "400.html"
@@ -72,10 +71,14 @@ def agency_card(request, agency: models.TransitAgency):
         return user_error(request)
 
 
-@pageview_decorator
-def help(request):
+class HelpView(TemplateView):
     """View handler for the help page."""
-    return TemplateResponse(request, TEMPLATE_HELP)
+
+    template_name = "core/help.html"
+
+    @method_decorator(pageview_decorator)
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
 
 @pageview_decorator
