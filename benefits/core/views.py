@@ -80,6 +80,15 @@ class HelpView(TemplateView):
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        if not session.active_agency(self.request):
+            choices = models.CardSchemes.CHOICES
+            context["all_card_schemes"] = [choices[card_scheme] for card_scheme in choices.keys()]
+
+        return context
+
 
 @pageview_decorator
 @index_or_agencyindex_origin_decorator
