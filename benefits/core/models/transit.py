@@ -5,12 +5,29 @@ from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
 from django.contrib.auth.models import Group, User
 from django.db import models
 from django.urls import reverse
+from multiselectfield import MultiSelectField
 
 from benefits.core import context as core_context
 from benefits.routes import routes
 from .common import Environment, PemData
 
 logger = logging.getLogger(__name__)
+
+
+class CardSchemes:
+    VISA = "visa"
+    MASTERCARD = "mastercard"
+    DISCOVER = "discover"
+    AMEX = "amex"
+
+    CHOICES = dict(
+        [
+            (VISA, "Visa"),
+            (MASTERCARD, "Mastercard"),
+            (DISCOVER, "Discover"),
+            (AMEX, "American Express"),
+        ]
+    )
 
 
 def _agency_logo(instance, filename, size):
@@ -78,6 +95,13 @@ class TransitAgency(models.Model):
         help_text="URL of a website/page with more information about the agency's discounts",
     )
     phone = models.TextField(default="", blank=True, help_text="Agency customer support phone number")
+    supported_card_schemes = MultiSelectField(
+        choices=CardSchemes.CHOICES,
+        min_choices=1,
+        max_choices=len(CardSchemes.CHOICES),
+        default=[CardSchemes.VISA, CardSchemes.MASTERCARD],
+        help_text="The contactless card schemes this agency supports.",
+    )
     eligibility_api_id = models.TextField(
         help_text="The identifier for this agency used in Eligibility API calls.",
         blank=True,
