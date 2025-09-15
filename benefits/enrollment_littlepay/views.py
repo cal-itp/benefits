@@ -1,3 +1,4 @@
+import json
 import logging
 
 from django.http import JsonResponse
@@ -11,7 +12,7 @@ from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequ
 
 from benefits.enrollment import analytics, forms
 from benefits.enrollment.enrollment import Status, handle_enrollment_results
-from benefits.enrollment_littlepay.enrollment import enroll, get_card_types_for_js, request_card_tokenization_access
+from benefits.enrollment_littlepay.enrollment import enroll, request_card_tokenization_access
 from benefits.enrollment_littlepay.session import Session
 
 logger = logging.getLogger(__name__)
@@ -89,7 +90,7 @@ class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
             "form_success": tokenize_success_form.id,
             "form_system_error": tokenize_system_error_form.id,
             "overlay_language": self._get_overlay_language(request.LANGUAGE_CODE),
-            "card_types": get_card_types_for_js(),
+            "card_schemes": json.dumps(agency.supported_card_schemes),
         }
 
         enrollment_index_context_dict = flow.enrollment_index_context

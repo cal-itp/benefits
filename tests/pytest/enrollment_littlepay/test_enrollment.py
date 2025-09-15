@@ -1,5 +1,4 @@
 from datetime import timedelta
-import json
 
 import pytest
 from django.utils import timezone
@@ -9,7 +8,6 @@ from requests import HTTPError
 
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_littlepay.enrollment import (
-    get_card_types_for_js,
     request_card_tokenization_access,
     enroll,
     _get_group_funding_source,
@@ -65,23 +63,6 @@ def mocked_group_funding_source_with_expiry(mocked_funding_source):
 @pytest.fixture
 def card_token():
     return "card_token_1234"
-
-
-@pytest.mark.parametrize("additional_cardtypes", [True, False])
-def test_get_card_types_for_js(settings, additional_cardtypes):
-    settings.LITTLEPAY_ADDITIONAL_CARDTYPES = additional_cardtypes
-
-    card_types = get_card_types_for_js()
-    assert isinstance(card_types, str)
-
-    parsed_card_types = json.loads(card_types)
-    assert isinstance(parsed_card_types, list)
-
-    assert "visa" in card_types
-    assert "mastercard" in card_types
-    if additional_cardtypes:
-        assert "discover" in card_types
-        assert "amex" in card_types
 
 
 @pytest.mark.django_db
