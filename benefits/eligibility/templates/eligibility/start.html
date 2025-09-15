@@ -48,12 +48,9 @@
     </li>
     <li>
       <h2 class="h3 pb-1">{% translate "Your contactless card details" %}</h2>
+      <p>{% translate "Your contactless card must be a debit or credit card by:" %}</p>
+      {% include "core/includes/list--card-schemes.html" with classes="ms-lg-5 ms-0" %}
       <p>
-        {% if feature_flags.LITTLEPAY_ADDITIONAL_CARDTYPES %}
-          {% translate "Your contactless card must be a debit or credit card by Visa, Mastercard, Discover, or American Express." %}
-        {% else %}
-          {% translate "Your contactless card must be a debit or credit card by Visa or Mastercard." %}
-        {% endif %}
         {% translate "Learn more about contactless cards" as text %}
         {% include "core/includes/modal-trigger.html" with modal="modal--contactless" text=text period=True %}
       </p>
