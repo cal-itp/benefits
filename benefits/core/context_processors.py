@@ -9,11 +9,6 @@ from benefits.routes import routes as app_routes
 from . import models, session
 
 
-def unique_values(original_list):
-    # dict.fromkeys gets the unique values and preserves order
-    return list(dict.fromkeys(original_list))
-
-
 def _agency_context(agency: models.TransitAgency):
     # build up a single list of all flow help contexts
     flows_help = []
@@ -31,6 +26,9 @@ def _agency_context(agency: models.TransitAgency):
         "phone": agency.phone,
         "short_name": agency.short_name,
         "slug": agency.slug,
+        "supported_card_schemes": [
+            models.CardSchemes.CHOICES.get(card_scheme) for card_scheme in agency.supported_card_schemes
+        ],
         "switchio_config": agency.switchio_config,
     }
 
