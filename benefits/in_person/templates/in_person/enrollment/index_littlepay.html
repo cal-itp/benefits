@@ -61,7 +61,7 @@
 
                 // parse the JSON string back into a JS array
                 // the escapejs filter handles e.g. quote conversion
-                let cardTypes = JSON.parse('{{ card_types|escapejs }}');
+                let card_schemes = JSON.parse('{{ card_schemes|escapejs }}');
 
                 new Promise((resolve) => {
                     littlepay({
@@ -71,7 +71,7 @@
                         options: {
                             color: '#046b99',
                             targetiframename: 'card-collection-iframe',
-                            cardTypes: cardTypes
+                            cardTypes: card_schemes
                         },
                         onTokenize: function (response) {
                             /* This function executes when the
