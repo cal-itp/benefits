@@ -105,7 +105,7 @@ def enrollment(request):
 
 def feature_flags(request):
     """Context processor adds feature flags to request context."""
-    return {"feature_flags": {"LITTLEPAY_ADDITIONAL_CARDTYPES": settings.LITTLEPAY_ADDITIONAL_CARDTYPES}}
+    return {"feature_flags": {}}
 
 
 def origin(request):
