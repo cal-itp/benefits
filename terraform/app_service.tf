@@ -68,9 +68,6 @@ resource "azurerm_linux_web_app" "main" {
 
     "HEALTHCHECK_USER_AGENTS" = local.is_dev ? null : "${local.secret_prefix}healthcheck-user-agents)",
 
-    # Transit payment processor settings
-    "LITTLEPAY_ADDITIONAL_CARDTYPES" = "${local.secret_prefix}littlepay-additional-cardtypes)",
-
     # Google SSO for Admin
     "GOOGLE_SSO_CLIENT_ID"         = "${local.secret_prefix}google-sso-client-id)",
     "GOOGLE_SSO_PROJECT_ID"        = "${local.secret_prefix}google-sso-project-id)",
