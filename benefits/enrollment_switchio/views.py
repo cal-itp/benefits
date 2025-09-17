@@ -106,7 +106,7 @@ class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
         flow = self.flow
         card_token = form.cleaned_data.get("card_token")
 
-        status, exception = enroll(switchio_config=switchio_config, flow=flow, token=card_token)
+        status, exception = enroll(request=self.request, switchio_config=switchio_config, flow=flow, token=card_token)
         return handle_enrollment_results(
             request=self.request,
             status=status,

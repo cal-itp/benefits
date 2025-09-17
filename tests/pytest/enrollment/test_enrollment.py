@@ -1,11 +1,20 @@
+from datetime import timedelta
 from django.urls import reverse
+from django.utils import timezone
+
 import pytest
 from requests import HTTPError
 
 from benefits.core import models
 from benefits.routes import routes
 import benefits.enrollment.enrollment
-from benefits.enrollment.enrollment import Status, handle_enrollment_results
+from benefits.enrollment.enrollment import (
+    Status,
+    _calculate_expiry,
+    _is_expired,
+    _is_within_reenrollment_window,
+    handle_enrollment_results,
+)
 
 
 @pytest.fixture
@@ -16,6 +25,143 @@ def mocked_analytics_module(mocked_analytics_module):
 @pytest.fixture
 def mocked_sentry_sdk_module(mocker):
     return mocker.patch.object(benefits.enrollment.enrollment, "sentry_sdk")
+
+
+def test_calculate_expiry():
+    expiration_days = 365
+
+    expiry_date = _calculate_expiry(expiration_days)
+
+    assert expiry_date == (
+        timezone.localtime(timezone=timezone.get_default_timezone()) + timedelta(days=expiration_days + 1)
+    ).replace(hour=0, minute=0, second=0, microsecond=0)
+
+
+def test_calculate_expiry_specific_date(mocker):
+    expiration_days = 14
+    mocker.patch(
+        "benefits.enrollment.enrollment.timezone.now",
+        return_value=timezone.make_aware(
+            value=timezone.datetime(2024, 3, 1, 13, 37, 11, 5), timezone=timezone.get_fixed_timezone(offset=0)
+        ),
+    )
+
+    expiry_date = _calculate_expiry(expiration_days)
+
+    assert expiry_date == timezone.make_aware(
+        value=timezone.datetime(2024, 3, 16, 0, 0, 0, 0), timezone=timezone.get_default_timezone()
+    )
+
+
+def test_is_expired_expiry_date_is_in_the_past(mocker):
+    expiry_date = timezone.make_aware(timezone.datetime(2023, 12, 31), timezone.get_default_timezone())
+
+    # mock datetime of "now" to be specific date for testing
+    mocker.patch(
+        "benefits.enrollment.enrollment.timezone.now",
+        return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 10, 30), timezone.get_default_timezone()),
+    )
+
+    assert _is_expired(expiry_date)
+
+
+def test_is_expired_expiry_date_is_in_the_future(mocker):
+    expiry_date = timezone.make_aware(timezone.datetime(2024, 1, 1, 17, 34), timezone.get_default_timezone())
+
+    # mock datetime of "now" to be specific date for testing
+    mocker.patch(
+        "benefits.enrollment.enrollment.timezone.now",
+        return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 11, 5), timezone.get_default_timezone()),
+    )
+
+    assert not _is_expired(expiry_date)
+
+
+def test_is_expired_expiry_date_equals_now(mocker):
+    expiry_date = timezone.make_aware(timezone.datetime(2024, 1, 1, 13, 37), timezone.get_default_timezone())
+
+    # mock datetime of "now" to be specific date for testing
+    mocker.patch(
+        "benefits.enrollment.enrollment.timezone.now",
+        return_value=timezone.make_aware(timezone.datetime(2024, 1, 1, 13, 37), timezone.get_default_timezone()),
+    )
+
+    assert _is_expired(expiry_date)
+
+
+def test_is_within_enrollment_window_True(mocker):
+    enrollment_reenrollment_date = timezone.make_aware(timezone.datetime(2023, 2, 1), timezone=timezone.get_default_timezone())
+    expiry_date = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
+
+    # mock datetime of "now" to be specific date for testing
+    mocker.patch(
+        "benefits.enrollment.enrollment.timezone.now",
+        return_value=timezone.make_aware(timezone.datetime(2023, 2, 15, 15, 30), timezone=timezone.get_default_timezone()),
+    )
+
+    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
+
+    assert is_within_reenrollment_window
+
+
+def test_is_within_enrollment_window_before_window(mocker):
+    enrollment_reenrollment_date = timezone.make_aware(timezone.datetime(2023, 2, 1), timezone=timezone.get_default_timezone())
+    expiry_date = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
+
+    # mock datetime of "now" to be specific date for testing
+    mocker.patch(
+        "benefits.enrollment.enrollment.timezone.now",
+        return_value=timezone.make_aware(timezone.datetime(2023, 1, 15, 15, 30), timezone=timezone.get_default_timezone()),
+    )
+
+    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
+
+    assert not is_within_reenrollment_window
+
+
+def test_is_within_enrollment_window_after_window(mocker):
+    enrollment_reenrollment_date = timezone.make_aware(timezone.datetime(2023, 2, 1), timezone=timezone.get_default_timezone())
+    expiry_date = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
+
+    # mock datetime of "now" to be specific date for testing
+    mocker.patch(
+        "benefits.enrollment.enrollment.timezone.now",
+        return_value=timezone.make_aware(timezone.datetime(2023, 3, 15, 15, 30), timezone=timezone.get_default_timezone()),
+    )
+
+    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
+
+    assert not is_within_reenrollment_window
+
+
+def test_is_within_enrollment_window_equal_reenrollment_date(mocker):
+    enrollment_reenrollment_date = timezone.make_aware(timezone.datetime(2023, 2, 1), timezone=timezone.get_default_timezone())
+    expiry_date = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
+
+    # mock datetime of "now" to be specific date for testing
+    mocker.patch(
+        "benefits.enrollment.enrollment.timezone.now",
+        return_value=enrollment_reenrollment_date,
+    )
+
+    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
+
+    assert is_within_reenrollment_window
+
+
+def test_is_within_enrollment_window_equal_expiry_date(mocker):
+    enrollment_reenrollment_date = timezone.make_aware(timezone.datetime(2023, 2, 1), timezone=timezone.get_default_timezone())
+    expiry_date = timezone.make_aware(timezone.datetime(2023, 3, 1), timezone=timezone.get_default_timezone())
+
+    # mock datetime of "now" to be specific date for testing
+    mocker.patch(
+        "benefits.enrollment.enrollment.timezone.now",
+        return_value=expiry_date,
+    )
+
+    is_within_reenrollment_window = _is_within_reenrollment_window(expiry_date, enrollment_reenrollment_date)
+
+    assert not is_within_reenrollment_window
 
 
 @pytest.mark.django_db

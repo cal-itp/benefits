@@ -289,6 +289,7 @@ def test_get_latest_active_token_value(mocker, tokens, expected_token_value):
 def test_enroll_system_error(
     mocker,
     status_code,
+    app_request,
     model_SwitchioConfig,
     model_EnrollmentFlow_does_not_support_expiration,
     card_token,
@@ -303,6 +304,7 @@ def test_enroll_system_error(
     mock_client.add_group_to_token.side_effect = http_error
 
     status, exception = enroll(
+        request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_does_not_support_expiration,
         token=card_token,
@@ -316,6 +318,7 @@ def test_enroll_system_error(
 @pytest.mark.usefixtures("mocked_api_base_url", "model_SwitchioGroup")
 def test_enroll_exception_http_error_400(
     mocker,
+    app_request,
     model_EnrollmentFlow_does_not_support_expiration,
     model_SwitchioConfig,
     card_token,
@@ -332,6 +335,7 @@ def test_enroll_exception_http_error_400(
     mock_client.add_group_to_token.side_effect = http_error
 
     status, exception = enroll(
+        request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_does_not_support_expiration,
         token=card_token,
@@ -349,6 +353,7 @@ def test_enroll_exception_http_error_400(
 )
 def test_enroll_exception_non_http_error(
     mocker,
+    app_request,
     model_EnrollmentFlow_does_not_support_expiration,
     model_SwitchioConfig,
     card_token,
@@ -359,6 +364,7 @@ def test_enroll_exception_non_http_error(
     mock_client.add_group_to_token.side_effect = Exception("some other exception")
 
     status, exception = enroll(
+        request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_does_not_support_expiration,
         token=card_token,
@@ -372,13 +378,19 @@ def test_enroll_exception_non_http_error(
 @pytest.mark.django_db
 @pytest.mark.usefixtures("mocked_api_base_url", "model_SwitchioGroup")
 def test_enroll_success_flow_does_not_support_expiration_customer_already_enrolled_no_expiry(
-    mocker, model_EnrollmentFlow_does_not_support_expiration, model_SwitchioConfig, card_token, mocked_group_expiry_no_expiry
+    mocker,
+    app_request,
+    model_EnrollmentFlow_does_not_support_expiration,
+    model_SwitchioConfig,
+    card_token,
+    mocked_group_expiry_no_expiry,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment_switchio.enrollment.EnrollmentClient")
     mock_client = mock_client_cls.return_value
     mock_client.get_groups_for_token.return_value = [mocked_group_expiry_no_expiry]
 
     status, exception = enroll(
+        request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_does_not_support_expiration,
         token=card_token,
@@ -394,6 +406,7 @@ def test_enroll_success_flow_does_not_support_expiration_customer_already_enroll
 @pytest.mark.usefixtures("mocked_api_base_url", "model_SwitchioGroup")
 def test_enroll_success_flow_does_not_support_expiration_no_expiry(
     mocker,
+    app_request,
     model_EnrollmentFlow_does_not_support_expiration,
     model_SwitchioConfig,
     card_token,
@@ -402,6 +415,7 @@ def test_enroll_success_flow_does_not_support_expiration_no_expiry(
     mock_client = mock_client_cls.return_value
 
     status, exception = enroll(
+        request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_does_not_support_expiration,
         token=card_token,
@@ -421,6 +435,7 @@ def test_enroll_success_flow_does_not_support_expiration_no_expiry(
 @pytest.mark.usefixtures("mocked_api_base_url", "model_SwitchioGroup")
 def test_enroll_does_not_support_expiration_has_expiration_date(
     mocker,
+    app_request,
     model_EnrollmentFlow_does_not_support_expiration,
     model_SwitchioConfig,
     card_token,
@@ -436,6 +451,7 @@ def test_enroll_does_not_support_expiration_has_expiration_date(
     )
 
     status, exception = enroll(
+        request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_does_not_support_expiration,
         token=card_token,
@@ -448,3 +464,142 @@ def test_enroll_does_not_support_expiration_has_expiration_date(
         token=card_token,
         timeout=settings.REQUESTS_TIMEOUT,
     )
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_api_base_url", "model_SwitchioGroup")
+def test_enroll_success_flow_supports_expiration(
+    mocker,
+    app_request,
+    mocked_session_enrollment_expiry,
+    model_EnrollmentFlow_supports_expiration,
+    model_SwitchioConfig,
+    card_token,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment_switchio.enrollment.EnrollmentClient")
+    mock_client = mock_client_cls.return_value
+
+    status, exception = enroll(
+        request=app_request,
+        switchio_config=model_SwitchioConfig,
+        flow=model_EnrollmentFlow_supports_expiration,
+        token=card_token,
+    )
+
+    mock_client.add_group_to_token.assert_called_once_with(
+        model_SwitchioConfig.pto_id,
+        model_EnrollmentFlow_supports_expiration.group_id,
+        card_token,
+        expiry=mocked_session_enrollment_expiry.return_value,
+    )
+    assert status is Status.SUCCESS
+    assert exception is None
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_api_base_url", "model_SwitchioGroup")
+def test_enroll_success_flow_supports_expiration_no_expiry(
+    mocker,
+    app_request,
+    mocked_session_enrollment_expiry,
+    model_EnrollmentFlow_supports_expiration,
+    model_SwitchioConfig,
+    card_token,
+    mocked_group_expiry_no_expiry,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment_switchio.enrollment.EnrollmentClient")
+    mock_client = mock_client_cls.return_value
+    mock_client.get_groups_for_token.return_value = [mocked_group_expiry_no_expiry]
+
+    status, exception = enroll(
+        request=app_request,
+        switchio_config=model_SwitchioConfig,
+        flow=model_EnrollmentFlow_supports_expiration,
+        token=card_token,
+    )
+
+    mock_client.add_group_to_token.assert_called_once_with(
+        model_SwitchioConfig.pto_id,
+        model_EnrollmentFlow_supports_expiration.group_id,
+        card_token,
+        expiry=mocked_session_enrollment_expiry.return_value,
+    )
+
+    assert status is Status.SUCCESS
+    assert exception is None
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_api_base_url", "model_SwitchioGroup")
+@pytest.mark.parametrize("is_expired,in_window", [(True, True), (True, False), (False, True)])
+def test_enroll_success_supports_expiration_with_expiry(
+    mocker,
+    app_request,
+    mocked_session_enrollment_expiry,
+    model_EnrollmentFlow_supports_expiration,
+    model_SwitchioConfig,
+    card_token,
+    mocked_group_expiry_with_expiry,
+    is_expired,
+    in_window,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment_switchio.enrollment.EnrollmentClient")
+    mock_client = mock_client_cls.return_value
+
+    # mock that a funding source already exists, doesn't matter what expiry_date is
+    mocker.patch(
+        "benefits.enrollment_switchio.enrollment._get_group_for_token",
+        return_value=mocked_group_expiry_with_expiry,
+    )
+
+    mocker.patch("benefits.enrollment_switchio.enrollment._is_expired", return_value=is_expired)
+    mocker.patch("benefits.enrollment_switchio.enrollment._is_within_reenrollment_window", return_value=in_window)
+
+    status, exception = enroll(
+        request=app_request,
+        switchio_config=model_SwitchioConfig,
+        flow=model_EnrollmentFlow_supports_expiration,
+        token=card_token,
+    )
+
+    assert status is Status.SUCCESS
+    mock_client.add_group_to_token.assert_called_once_with(
+        model_SwitchioConfig.pto_id,
+        model_EnrollmentFlow_supports_expiration.group_id,
+        card_token,
+        expiry=mocked_session_enrollment_expiry.return_value,
+    )
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_api_base_url", "model_SwitchioGroup")
+def test_enroll_supports_expiration_not_expired_not_in_window(
+    mocker,
+    app_request,
+    mocked_session_enrollment_expiry,
+    model_EnrollmentFlow_supports_expiration,
+    model_SwitchioConfig,
+    card_token,
+    mocked_group_expiry_with_expiry,
+):
+    mock_client_cls = mocker.patch("benefits.enrollment_switchio.enrollment.EnrollmentClient")
+    mock_client = mock_client_cls.return_value
+
+    # mock that a funding source already exists, doesn't matter what expiry_date is
+    mocker.patch(
+        "benefits.enrollment_switchio.enrollment._get_group_for_token",
+        return_value=mocked_group_expiry_with_expiry,
+    )
+
+    mocker.patch("benefits.enrollment_switchio.enrollment._is_expired", return_value=False)
+    mocker.patch("benefits.enrollment_switchio.enrollment._is_within_reenrollment_window", return_value=False)
+
+    status, exception = enroll(
+        request=app_request,
+        switchio_config=model_SwitchioConfig,
+        flow=model_EnrollmentFlow_supports_expiration,
+        token=card_token,
+    )
+
+    assert status is Status.REENROLLMENT_ERROR
+    mock_client.add_group_to_token.assert_not_called()

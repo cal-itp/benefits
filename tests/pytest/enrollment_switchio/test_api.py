@@ -1,5 +1,7 @@
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import json
+
+from django.utils import timezone as tz
 import pytest
 
 import benefits.enrollment_switchio.api
@@ -156,6 +158,33 @@ def test_tokenization_client_get_registration_status(mocker, tokenization_client
     assert registration_status == RegistrationStatus(**mock_json)
 
 
+class TestGroupExpiry:
+    def test_expiresAt(self):
+        group = GroupExpiry(group="group", expiresAt="2025-09-12T00:00:00Z")
+
+        assert group.expiresAt == datetime(2025, 9, 12, 0, 0, 0, tzinfo=timezone.utc)
+
+    def test_no_expiresAt(self):
+        group = GroupExpiry(group="group", expiresAt=None)
+
+        assert group.expiresAt is None
+
+
+@pytest.mark.parametrize(
+    "expiry_datetime",
+    [
+        datetime(2025, 9, 12, 19, 15, 0, tzinfo=timezone.utc),
+        datetime(2025, 9, 12, 19, 15, 0, tzinfo=None),
+        datetime(2025, 9, 12, 12, 15, 0, tzinfo=tz.get_fixed_timezone(timedelta(hours=-7))),
+    ],
+)
+def test_enrollment_client_format_expiry(enrollment_client, expiry_datetime):
+    expected_format = "2025-09-12T19:15:00Z"
+    formatted = enrollment_client._format_expiry(expiry_datetime)
+
+    assert formatted == expected_format
+
+
 def test_enrollment_client_get_headers(enrollment_client):
     headers = enrollment_client._get_headers()
 
@@ -200,14 +229,38 @@ def test_enrollment_client_get_groups_for_token(mocker, enrollment_client):
     assert groups == [GroupExpiry(**mock_json)]
 
 
-def test_enrollment_client_add_group_to_token(mocker, enrollment_client):
-    mock_response = mocker.Mock()
-    mock_response.text.return_value = "Groups added or updated successfully"
-    mocker.patch("benefits.enrollment_switchio.api.EnrollmentClient._cert_request", return_value=mock_response)
+@pytest.mark.parametrize(
+    "expiry, expected_expires_at",
+    [
+        (None, None),
+        (datetime(2025, 9, 12, 19, 15, 0, tzinfo=timezone.utc), "2025-09-12T19:15:00Z"),
+    ],
+)
+def test_enrollment_client_add_group_to_token(mocker, enrollment_client, expiry, expected_expires_at):
+    mock_post = mocker.patch("benefits.enrollment_switchio.api.requests.post")
 
-    response = enrollment_client.add_group_to_token("123", "veteran-discount", "abcde12345")
+    def cert_request_spy(request_func):
+        # the original `_cert_request` adds `verify` and `cert` kwargs.
+        # pass dummy values here to satisfy the lambda's signature.
+        return request_func(verify="dummy_ca_path", cert=("dummy_cert_path", "dummy_key_path"))
 
-    assert response == mock_response.text
+    mocker.patch.object(enrollment_client, "_cert_request", side_effect=cert_request_spy)
+
+    pto_id = "123"
+    group_id = "test-group"
+    token = "test-token"
+
+    enrollment_client.add_group_to_token(pto_id, group_id, token, expiry=expiry)
+
+    expected_body = {"group": group_id}
+    if expected_expires_at:
+        expected_body["expiresAt"] = expected_expires_at
+
+    # Assert that `requests.post` was called with the correct URL and body.
+    expected_url = f"{enrollment_client.api_url}/api/external/discount/{pto_id}/token/{token}/add"
+    mock_post.assert_called_once()
+    assert mock_post.call_args.args == (expected_url,)
+    assert mock_post.call_args.kwargs["json"] == expected_body
 
 
 def test_enrollment_client_remove_group_from_token(mocker, enrollment_client):
