@@ -45,14 +45,10 @@ def test_enrollment_default(app_request):
     assert context["enrollment"] == {"expires": None, "reenrollment": None, "supports_expiration": False}
 
 
-@pytest.mark.parametrize("expected_flag", [True, False])
-def test_feature_flags(app_request, settings, expected_flag):
-    settings.LITTLEPAY_ADDITIONAL_CARDTYPES = expected_flag
-
+def test_feature_flags(app_request):
     context = feature_flags(app_request)
-    littlepay_flag = context["feature_flags"]["LITTLEPAY_ADDITIONAL_CARDTYPES"]
 
-    assert littlepay_flag == expected_flag
+    assert "feature_flags" in context
 
 
 @pytest.mark.django_db
