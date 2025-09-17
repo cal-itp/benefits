@@ -5,12 +5,19 @@ import pytest
 
 from benefits.routes import routes
 from benefits.core.models import (
+    CardSchemes,
     Environment,
     TransitAgency,
     TransitProcessorConfig,
     agency_logo_small,
     agency_logo_large,
 )
+
+
+class TestCardSchemes:
+    def test_choice_order(self):
+        expected_order = [CardSchemes.VISA, CardSchemes.MASTERCARD, CardSchemes.DISCOVER, CardSchemes.AMEX]
+        assert list(CardSchemes.CHOICES.keys()) == expected_order
 
 
 @pytest.mark.django_db
@@ -30,6 +37,7 @@ def test_TransitAgency_defaults():
     assert agency.short_name == ""
     assert agency.long_name == ""
     assert agency.phone == ""
+    assert agency.supported_card_schemes == [CardSchemes.VISA, CardSchemes.MASTERCARD]
     assert agency.info_url == ""
     assert agency.logo_large == ""
     assert agency.logo_small == ""

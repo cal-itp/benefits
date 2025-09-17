@@ -1,17 +1,40 @@
 from datetime import datetime, timedelta, timezone
 import pytest
 
-from benefits.routes import routes as app_routes
 from benefits.core import session
-from benefits.core.context_processors import unique_values, enrollment, feature_flags, routes
+from benefits.core.context_processors import agency, enrollment, feature_flags, routes
+from benefits.core.models import CardSchemes
+from benefits.routes import routes as app_routes
 
 
-def test_unique_values():
-    original_list = ["a", "b", "c", "a", "a", "zzz", "b", "c", "d", "b"]
+@pytest.mark.django_db
+def test_agency_no_session_agency(app_request):
+    context = agency(app_request)
 
-    new_list = unique_values(original_list)
+    assert context == {}
 
-    assert new_list == ["a", "b", "c", "zzz", "d"]
+
+@pytest.mark.django_db
+def test_agency_session_agency(app_request, mocked_session_agency):
+    mocked_session_agency.return_value.supported_card_schemes = [CardSchemes.VISA, CardSchemes.AMEX]
+    expected_card_schemes = [CardSchemes.CHOICES.get(CardSchemes.VISA), CardSchemes.CHOICES.get(CardSchemes.AMEX)]
+
+    context = agency(app_request)
+
+    mocked_session_agency.assert_called_once()
+    assert "agency" in context
+
+    agency_context = context["agency"]
+    assert "eligibility_index_url" in agency_context
+    assert "flows_help" in agency_context
+    assert "info_url" in agency_context
+    assert "littlepay_config" in agency_context
+    assert "long_name" in agency_context
+    assert "phone" in agency_context
+    assert "short_name" in agency_context
+    assert "slug" in agency_context
+    assert agency_context["supported_card_schemes"] == expected_card_schemes
+    assert "switchio_config" in agency_context
 
 
 @pytest.mark.django_db

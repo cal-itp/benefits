@@ -19,13 +19,12 @@
            src="{% static 'img/icon/contactless.svg' %}"
            alt="{% translate "Four curved lines on contactless-enabled cards" context "image alt text" %}" />
     </p>
-    <p class="pt-4">
-      {% if feature_flags.LITTLEPAY_ADDITIONAL_CARDTYPES %}
-        {% translate "Your card must include a Visa, Mastercard, Discover, or American Express logo." %}
-      {% else %}
-        {% translate "Your card must include a Visa or Mastercard logo." %}
-      {% endif %}
-    </p>
+    <p class="pt-4">{% translate "Your card must include a logo of:" %}</p>
+    <!--
+    Extra div wrapper here because the .row class above makes all direct children full-width
+    stretching the list start outside of the margin of the paragraph above
+    -->
+    <div>{% include "core/includes/list--card-schemes.html" %}</div>
     <p class="pt-4">
       {% blocktranslate trimmed %}
         Don’t have access to a contactless card? You can request a contactless card from your bank, or one of the companies

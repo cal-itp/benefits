@@ -1,3 +1,4 @@
+import json
 import time
 
 import pytest
@@ -6,6 +7,7 @@ from django.urls import reverse
 from requests import HTTPError
 
 from benefits.core import models
+from benefits.core.models.transit import CardSchemes
 from benefits.routes import routes
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.enrollment.enrollment import Status
@@ -199,6 +201,7 @@ class TestIndexView:
         v = IndexView()
         v.setup(app_request)
         v.agency = model_LittlepayConfig.transit_agency
+        v.agency.supported_card_schemes = [CardSchemes.DISCOVER, CardSchemes.AMEX]
         v.flow = model_EnrollmentFlow
 
         return v
@@ -228,7 +231,9 @@ class TestIndexView:
         assert "card_tokenize_url" in transit_processor_context
         assert "card_tokenize_env" in transit_processor_context
 
-        assert "card_types" in context
+        assert "card_schemes" in context
+        parsed_card_types = json.loads(context["card_schemes"])
+        assert parsed_card_types == [CardSchemes.DISCOVER, CardSchemes.AMEX]
 
     @pytest.mark.parametrize(
         "LANGUAGE_CODE, expected_overlay_language", [("en", "en"), ("es", "es-419"), ("unsupported", "en")]
