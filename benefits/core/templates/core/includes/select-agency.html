@@ -1,4 +1,10 @@
-<!-- TODO: add translations, wrap in a form, add validation to make selecting an agency mandatory, etc. etc. -->
+<!-- TODO:
+   add translations
+   wrap in a form
+   add validation to make selecting an agency mandatory
+   yank old call to action code
+   etc. etc.
+-->
 <div class="d-grid gap-2 mt-lg-5">
   <label for="select-agency">Enroll today</label>
   <select name="agencies" id="select-agency" class="form-select" aria-label="Choose your transit provider">
@@ -12,7 +18,6 @@
 
 {% csrf_token %}
 <script nonce="{{ request.csp_nonce }}">
-  // bind the above handler to button click
   document.querySelector("#derp").addEventListener("click", function (evt) {
     const url = document.querySelector("#select-agency").value
     if (url !== '') window.location = url
