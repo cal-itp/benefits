@@ -382,7 +382,7 @@ msgstr ""
 msgid "Get Started"
 msgstr ""
 
-msgid "Cal-ITP Benefits connects your transit benefit to your contactless card"
+msgid "Cal-ITP connects your transit benefit to your contactless card"
 msgstr ""
 
 msgid "A person holds a contactless debit card next to a card reader on a bus."

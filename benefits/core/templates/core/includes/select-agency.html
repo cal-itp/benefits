@@ -1,0 +1,20 @@
+<!-- TODO: add translations, wrap in a form, add validation to make selecting an agency mandatory, etc. etc. -->
+<div class="d-grid gap-2 mt-lg-5">
+  <label for="select-agency">Enroll today</label>
+  <select name="agencies" id="select-agency" class="form-select" aria-label="Choose your transit provider">
+    <option value="">Choose your transit provider</option>
+    {% for agency in active_agencies %}
+      <option value="{{ agency.eligibility_index_url }}">{{ agency.long_name }}</option>
+    {% endfor %}
+  </select>
+  <button id="derp" type="submit" class="btn btn-lg btn-primary">Next</button>
+</div>
+
+{% csrf_token %}
+<script nonce="{{ request.csp_nonce }}">
+  // bind the above handler to button click
+  document.querySelector("#derp").addEventListener("click", function (evt) {
+    const url = document.querySelector("#select-agency").value
+    if (url !== '') window.location = url
+  });
+</script>
