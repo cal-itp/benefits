@@ -9,8 +9,17 @@
   <label for="select-agency">Enroll today</label>
   <select name="agencies" id="select-agency" class="form-select" aria-label="Choose your transit provider">
     <option value="">Choose your transit provider</option>
-    {% for agency in active_agencies %}
-      <option value="{{ agency.eligibility_index_url }}">{{ agency.long_name }}</option>
+    {% for currAgency in active_agencies %}
+      {% comment %}
+        this if/else seems unnecessarily verbose
+      {% endcomment %}
+      {% if agency.slug == currAgency.slug %}
+        <option selected data-slug="{{ currAgency.slug }}" value="{{ currAgency.eligibility_index_url }}">
+          {{ currAgency.long_name }}
+        </option>
+      {% else %}
+        <option data-slug="{{ currAgency.slug }}" value="{{ currAgency.eligibility_index_url }}">{{ currAgency.long_name }}</option>
+      {% endif %}
     {% endfor %}
   </select>
   <button id="derp" type="submit" class="btn btn-lg btn-primary">Next</button>
@@ -18,8 +27,17 @@
 
 {% csrf_token %}
 <script nonce="{{ request.csp_nonce }}">
-  document.querySelector("#derp").addEventListener("click", function (evt) {
-    const url = document.querySelector("#select-agency").value
+  const select = document.querySelector("#select-agency")
+  const btn = document.querySelector("#derp")
+
+  select.addEventListener("change", function () {
+    const slug = select.options[select.selectedIndex].dataset.slug ?? ''
+    // this is brittle. superior to decorate agency.index_url?
+    window.location = `/${slug}`
+  });
+
+  btn.addEventListener("click", function (evt) {
+    const url = select.value
     if (url !== '') window.location = url
   });
 </script>
