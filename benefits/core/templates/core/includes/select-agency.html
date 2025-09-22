@@ -6,6 +6,11 @@
    etc. etc.
 -->
 <div class="d-grid gap-2 mt-lg-5">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Send message">
+  </form>
   <label for="select-agency">Enroll today</label>
   <select name="agencies" id="select-agency" class="form-select" aria-label="Choose your transit provider">
     <option value="">Choose your transit provider</option>

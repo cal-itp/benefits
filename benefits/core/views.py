@@ -8,7 +8,9 @@ from django.template import loader
 from django.template.response import TemplateResponse
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
+from django.views.generic.edit import FormView
 
+from benefits.core.forms import ContactForm
 from benefits.routes import routes
 from . import models, session
 from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator, user_error
@@ -20,10 +22,12 @@ TEMPLATE_NOT_FOUND = "404.html"
 TEMPLATE_SERVER_ERROR = "500.html"
 
 
-class IndexView(TemplateView):
+class IndexView(FormView):
     """View handler for the main entry page."""
 
     template_name = "core/index.html"
+    form_class = ContactForm
+    success_url = "/thanks/"
 
     @method_decorator(pageview_decorator)
     def get(self, request, *args, **kwargs):
