@@ -1,10 +1,24 @@
 from django import forms
 
+# from . import models
 
-class ContactForm(forms.Form):
-    name = forms.CharField()
-    message = forms.CharField(widget=forms.Textarea)
+DUMMY_CHOICES = [
+    ("", "Choose your transit provider now"),
+    ("cst", "CA state transit agency"),
+]
 
-    def send_email(self):
-        # send email using the self.cleaned_data dictionary
-        pass
+
+def get_active_agency_names():
+    # TODO: pull slugs and long names from active_agencies
+    return DUMMY_CHOICES
+
+
+class ChooseAgencyForm(forms.Form):
+    enroll = forms.ChoiceField(
+        choices=get_active_agency_names,
+        required=True,
+        widget=forms.Select,
+    )
+
+    def get_slug(self):
+        return self.cleaned_data["enroll"]
