@@ -1,15 +1,17 @@
 <div class="d-grid gap-2 mt-lg-5">
   <form method="post">
     {% csrf_token %}
-    {% comment %}
-      TODO:
-        add translations
-        yank old call to action code
-        how to append slug to url onchange for select?
-        how to add CSS classes to the <select />?
-        ??
-    {% endcomment %}
     {{ form.as_p }}
     <input class="btn btn-lg btn-primary" type="submit" value="Next">
   </form>
 </div>
+
+{% csrf_token %}
+<script nonce="{{ request.csp_nonce }}">
+  // this feels brittle
+  const select = document.querySelector("#id_enroll")
+  select.addEventListener("change", function () {
+    const slug = select.options[select.selectedIndex].value ?? ''
+    window.location = `/${slug}`
+  });
+</script>
