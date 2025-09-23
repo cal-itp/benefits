@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 
 from benefits.core import models
+
 from .users import is_staff_member_or_superuser
 
 
@@ -16,8 +17,6 @@ class TransitAgencyAdmin(admin.ModelAdmin):
                     "eligibility_api_private_key",
                     "eligibility_api_public_key",
                     "sso_domain",
-                    "littlepay_config",
-                    "switchio_config",
                 ]
             )
 
@@ -30,7 +29,6 @@ class TransitAgencyAdmin(admin.ModelAdmin):
             fields.extend(
                 [
                     "eligibility_api_id",
-                    "transit_processor",
                 ]
             )
 
