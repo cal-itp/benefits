@@ -11,7 +11,7 @@
 | benefits/core/admin/\_\_init\_\_.py                                                            |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/core/admin/common.py                                                                  |       13 |        0 |        4 |        0 |    100% |           |
 | benefits/core/admin/enrollment.py                                                              |       90 |        7 |       44 |        8 |     87% |24, 36, 40, 46, 75->77, 77->80, 99-100, 155 |
-| benefits/core/admin/transit.py                                                                 |       22 |        1 |        8 |        1 |     93% |        45 |
+| benefits/core/admin/transit.py                                                                 |       22 |        1 |        8 |        1 |     93% |        43 |
 | benefits/core/admin/users.py                                                                   |       40 |        0 |        8 |        1 |     98% |  46->exit |
 | benefits/core/analytics.py                                                                     |       99 |       20 |       18 |        3 |     72% |136-138, 143, 149-171, 182 |
 | benefits/core/apps.py                                                                          |        5 |        0 |        0 |        0 |    100% |           |
