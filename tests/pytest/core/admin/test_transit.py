@@ -1,10 +1,9 @@
 import pytest
-
 from django.conf import settings
 from django.contrib import admin
 
-from benefits.core.admin.transit import TransitAgencyAdmin
 from benefits.core import models
+from benefits.core.admin.transit import TransitAgencyAdmin
 
 
 @pytest.fixture
@@ -24,14 +23,16 @@ class TestTransitAgencyAdmin:
                     "eligibility_api_private_key",
                     "eligibility_api_public_key",
                     "sso_domain",
-                    "littlepay_config",
-                    "switchio_config",
                 ],
             ),
-            ("super", None),
+            ("super", ()),
         ],
     )
     def test_get_exclude(self, admin_user_request, agency_admin_model, user_type, expected):
+        if expected:
+            model_fields = [f.name for f in agency_admin_model.model._meta.get_fields()]
+            assert all(field in model_fields for field in expected)
+
         request = admin_user_request(user_type)
 
         excluded = agency_admin_model.get_exclude(request)
@@ -46,12 +47,16 @@ class TestTransitAgencyAdmin:
         [
             (
                 "staff",
-                ["eligibility_api_id", "transit_processor"],
+                ["eligibility_api_id"],
             ),
             ("super", ()),
         ],
     )
     def test_get_readonly_fields(self, admin_user_request, agency_admin_model, user_type, expected):
+        if expected:
+            model_fields = [f.name for f in agency_admin_model.model._meta.get_fields()]
+            assert all(field in model_fields for field in expected)
+
         request = admin_user_request(user_type)
 
         readonly = agency_admin_model.get_readonly_fields(request)

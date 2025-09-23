@@ -102,6 +102,10 @@ class TestEnrollmentFlowAdmin:
         ],
     )
     def test_get_exclude(self, admin_user_request, flow_admin_model, user_type, expected):
+        if expected:
+            model_fields = [f.name for f in flow_admin_model.model._meta.get_fields()]
+            assert all(field in model_fields for field in expected)
+
         request = admin_user_request(user_type)
 
         excluded = flow_admin_model.get_exclude(request)
@@ -125,6 +129,10 @@ class TestEnrollmentFlowAdmin:
         ],
     )
     def test_get_readonly_fields(self, admin_user_request, flow_admin_model, user_type, expected):
+        if expected:
+            model_fields = [f.name for f in flow_admin_model.model._meta.get_fields()]
+            assert all(field in model_fields for field in expected)
+
         request = admin_user_request(user_type)
 
         readonly = flow_admin_model.get_readonly_fields(request)
