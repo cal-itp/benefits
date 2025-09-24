@@ -1,12 +1,21 @@
+# DONE:
+# rough cut at a logo strip (using *current* logos)
+# rough cut at inverting headings to implement eyebrow text
+# add <select/> to homepage to list active agencies in a dropdown
+# wire up submit of form to appropriate agencies eligibility landing page
+# wire up interstitial navigation onchange of <select/> to the agency specific landing page
+
+# TODO:
+# hydrate the <select/> from active_agencies instead of hard-coding slugs and long names here
+# figure out how to size logos in the new logo strip dynamically
+# verify that the current <select/> change handler isnt an anti-pattern
+# add translations
+# yank old 'call to action' code
+# ??
+
 from django import forms
 
 # from . import models
-
-# TODO:
-# add translations
-# yank old 'call to action' code
-# pull slugs and long names from active_agencies
-# ??
 
 PLACEHOLDER = "Choose your transit provider"
 DUMMY_CHOICES = [

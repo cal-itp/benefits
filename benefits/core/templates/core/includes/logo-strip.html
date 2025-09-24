@@ -1,8 +1,10 @@
 <div class="box container mt-lg-5">
+  <!-- no need to fret over the singular case, we're over that hump in every real deployed env -->
   <p class="p fs-6 fw-normal mb-lg-3">Ride across {{ active_agencies|length }} agencies (and growing!)</p>
   <div class="row">
     {% for agency in active_agencies %}
       <div class="col">
+        <!-- TODO: how to declare the height and width of each logo dynamically? -->
         <img src="{{ agency.logo_small_url }}" width="52" height="36" alt="{{ agency.short_name }} logo">
       </div>
     {% endfor %}
