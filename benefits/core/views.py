@@ -2,14 +2,8 @@
 The core application: view definition for the root of the webapp.
 """
 
-from django.http import (
-    HttpResponse,
-    HttpResponseBadRequest,
-    HttpResponseNotFound,
-    HttpResponseRedirect,
-    HttpResponseServerError,
-)
-from django.shortcuts import redirect, render
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
+from django.shortcuts import redirect
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.utils.decorators import method_decorator
@@ -34,6 +28,12 @@ class IndexView(FormView):
     template_name = "core/index.html"
     form_class = ChooseAgencyForm
 
+    def form_valid(self, form):
+        self.success_url = form.get_eligibility_url()
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        return super().form_valid(form)
+
     @method_decorator(pageview_decorator)
     def get(self, request, *args, **kwargs):
         session.reset(request)
@@ -46,15 +46,7 @@ def agency_index(request, agency: models.TransitAgency):
     session.reset(request)
     session.update(request, agency=agency, origin=agency.index_url)
 
-    if request.method == "POST":
-        form = ChooseAgencyForm(request.POST)
-        if form.is_valid():
-            # <process form cleaned data>
-            return HttpResponseRedirect(agency.eligibility_index_url)
-
-    return render(
-        request, "core/index--agency.html", {**agency.index_context, "form": ChooseAgencyForm(initial={"enroll": agency.slug})}
-    )
+    return TemplateResponse(request, "core/index--agency.html", agency.index_context)
 
 
 @pageview_decorator

@@ -7,7 +7,7 @@
       <!-- temporary loop to simulate more agencies -->
       {% for letter in 'Jumboization'|make_list %}
         <div class="col">
-          <!-- TODO: how to declare the height and width of each logo dynamically? -->
+          <!-- TODO: ensure neither square nor rectangle logos are distorted -->
           <img src="{{ agency.logo_small_url }}" width="52" height="36" alt="{{ agency.short_name }} logo">
         </div>
       {% endfor %}

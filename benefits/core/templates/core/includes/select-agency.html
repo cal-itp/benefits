@@ -8,10 +8,9 @@
 
 {% csrf_token %}
 <script nonce="{{ request.csp_nonce }}">
-  // this is brittle. i have a hunch it would be better handled in python
-  const select = document.querySelector("#id_enroll")
+  // this query feels brittle
+  const select = document.querySelector("#id_select_transit_agency")
   select.addEventListener("change", function () {
-    const slug = select.options[select.selectedIndex].value ?? ''
-    window.location = `/${slug}`
+    // TODO: customize headline?
   });
 </script>
