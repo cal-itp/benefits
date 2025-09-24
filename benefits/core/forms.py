@@ -1,3 +1,9 @@
+# epic:
+# https://github.com/orgs/compilerla/projects/6/views/8?pane=issue&itemId=126425767&issue=cal-itp%7Cbenefits%7C3123
+
+# figma designs:
+# https://www.figma.com/design/SeSd3LaLd6WkbEYhmtKpO3/Benefits--Full-Application-?node-id=20426-7597
+
 # DONE:
 # rough cut at a logo strip (using *current* logos)
 # rough cut at inverting headings to implement eyebrow text
@@ -9,8 +15,10 @@
 # hydrate the <select/> from active_agencies instead of hard-coding slugs and long names here
 # figure out how to size logos in the new logo strip dynamically
 # verify that the current <select/> change handler isnt an anti-pattern
+# ensure heading text doesnt shift vertically when an agency is selected from the dropdown
 # add translations
 # yank old 'call to action' code
+# how to sequence updating the logos in production? would we just do that all at once immediately before deploying?
 # ??
 
 from django import forms
