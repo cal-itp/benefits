@@ -8,9 +8,12 @@
 
 {% csrf_token %}
 <script nonce="{{ request.csp_nonce }}">
-  // this query feels brittle
+  // this is brittle
   const select = document.querySelector("#id_select_transit_agency")
   select.addEventListener("change", function () {
-    // TODO: customize headline?
+    const idx = select.selectedIndex
+    const span = document.querySelector('.discrete-span')
+    // if the django_language cookie was accessible to JS we could re-translate...
+    span.innerText = idx === 0 ? 'public transit' : select[idx].innerText
   });
 </script>

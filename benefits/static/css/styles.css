@@ -847,3 +847,8 @@ a.card:focus-visible {
 .landing footer {
   margin-top: 0;
 }
+
+.discrete-span {
+  font-size: inherit;
+  font-weight: inherit;
+}
