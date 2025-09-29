@@ -2,13 +2,11 @@
 The core application: view definition for the root of the webapp.
 """
 
-from django import forms
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
 from django.shortcuts import redirect
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.utils.decorators import method_decorator
-from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 from django.views.generic.edit import FormView
 
@@ -23,38 +21,12 @@ TEMPLATE_BAD_REQUEST = "400.html"
 TEMPLATE_NOT_FOUND = "404.html"
 TEMPLATE_SERVER_ERROR = "500.html"
 
-AGENCY_SELECT_PLACEHOLDER = "Choose your transit provider"
-
-
-# would it be preferred to pull this info out of context instead?
-def get_active_agency_names(placeholder="dummy"):
-    agency_names = [(None, placeholder)]
-    for a in models.TransitAgency.all_active():
-        agency_names.append((a.slug, a.long_name))
-
-    return agency_names
-
 
 class IndexView(FormView):
     """View handler for the main entry page."""
 
     template_name = "core/index.html"
     form_class = ChooseAgencyForm
-
-    def get_form(self):
-        form = super().get_form()
-
-        localized_placeholder = _(AGENCY_SELECT_PLACEHOLDER)
-        # set localized form fields
-        form.fields["select_transit_agency"] = forms.ChoiceField(
-            choices=get_active_agency_names(localized_placeholder),
-            label=_("Enroll today"),
-            label_suffix="",
-            required=True,
-            widget=forms.Select(attrs={"class": "form-select", "aria-label": localized_placeholder}),
-        )
-
-        return form
 
     def form_valid(self, form):
         self.success_url = form.get_eligibility_url()

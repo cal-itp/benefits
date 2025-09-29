@@ -25,6 +25,7 @@
     <link href="{% static "css/styles.css" %}" rel="stylesheet">
     <link href="{% static "img/favicon.ico" %}" rel="icon" type="image/x-icon" />
 
+    <script src="{% url 'javascript-catalog' %}"></script>
     {% include "core/includes/ready-js.html" %}
     {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
   </head>

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-09-25 13:54-0700\n"
+"POT-Creation-Date: 2025-09-29 14:40-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -138,6 +138,15 @@ msgid ""
 "the future based on the expiration date of the Reduced Fare Mobility ID. "
 "Learn more at the <a href=\"https://sbmtd.gov/fares-passes/\" "
 "target=\"_blank\" rel=\"noopener noreferrer\">SBMTD Fares & Passes</a>."
+msgstr ""
+
+msgid "Choose your transit provider"
+msgstr ""
+
+msgid "Enroll today"
+msgstr ""
+
+msgid "Please choose a transit provider."
 msgstr ""
 
 msgid ""
@@ -380,13 +389,16 @@ msgid ""
 "apply."
 msgstr ""
 
+msgid "public transit"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
 msgid "Get started"
 msgstr ""
 
 msgid "Get Started"
-msgstr ""
-
-msgid "Choose your transit provider"
 msgstr ""
 
 msgid "Cal-ITP connects your transit benefit to your contactless card"
@@ -414,9 +426,6 @@ msgid "You have successfully logged out. Thank you for using Cal-ITP Benefits!"
 msgstr ""
 
 msgid "Which transit benefit would you like to enroll in?"
-msgstr ""
-
-msgid "Enroll today"
 msgstr ""
 
 msgid "Get started with"
