@@ -6,17 +6,17 @@ If you’re interested in receiving this update delivered directly to your email
 
 ### 2025
 
-- [The March Update](http://5519226.hs-sites.com/cal-itp-benefits-the-march-update)
+- [The March Update](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update)
 
-- [The April Update](http://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2025)
+- [The April Update](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2025)
 
-- [The May Update](http://5519226.hs-sites.com/cal-itp-benefits-the-may-update-2025)
+- [The May Update](https://5519226.hs-sites.com/cal-itp-benefits-the-may-update-2025)
 
-- [The June Update](http://5519226.hs-sites.com/cal-itp-benefits-the-june-update-2025)
+- [The June Update](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update-2025)
 
-- [The July Update](http://5519226.hs-sites.com/cal-itp-benefits-the-july-update-2025)
+- [The July Update](https://5519226.hs-sites.com/cal-itp-benefits-the-july-update-2025)
 
-- [The September Update](http://5519226.hs-sites.com/cal-itp-benefits-the-sept-update-2025)
+- [The September Update](https://5519226.hs-sites.com/cal-itp-benefits-the-sept-update-2025)
 
 <!--
 - [The October Update]()
@@ -24,20 +24,20 @@ If you’re interested in receiving this update delivered directly to your email
 
 ### 2024
 
-- [The April Update](http://calitp-5519226.hs-sites.com/cal-itp-benefits-the-april-update)
+- [The April Update](https://calitp-5519226.hs-sites.com/cal-itp-benefits-the-april-update)
 
-- [The May Update](http://5519226.hs-sites.com/cal-itp-benefits-the-may-update)
+- [The May Update](https://5519226.hs-sites.com/cal-itp-benefits-the-may-update)
 
-- [The June Update](http://5519226.hs-sites.com/cal-itp-benefits-the-june-update)
+- [The June Update](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update)
 
-- [The July Update](http://5519226.hs-sites.com/cal-itp-benefits-the-july-update)
+- [The July Update](https://5519226.hs-sites.com/cal-itp-benefits-the-july-update)
 
-- [The August Update](http://5519226.hs-sites.com/cal-itp-benefits-the-august-update)
+- [The August Update](https://5519226.hs-sites.com/cal-itp-benefits-the-august-update)
 
-- [The September Update](http://5519226.hs-sites.com/cal-itp-benefits-the-september-update)
+- [The September Update](https://5519226.hs-sites.com/cal-itp-benefits-the-september-update)
 
-- [The October Update](http://5519226.hs-sites.com/cal-itp-benefits-the-october-update)
+- [The October Update](https://5519226.hs-sites.com/cal-itp-benefits-the-october-update)
 
-- [The November Update](http://5519226.hs-sites.com/cal-itp-benefits-the-november-update)
+- [The November Update](https://5519226.hs-sites.com/cal-itp-benefits-the-november-update)
 
 - [The December Update](https://5519226.hs-sites.com/cal-itp-benefits-the-december-update)
