@@ -54,7 +54,7 @@ Otherwise attach your terminal to the container's terminal, showing the startup 
 docker compose up client
 ```
 
-After initialization, the client is running running on `http://localhost:8000` by default.
+After initialization, the client is running on `http://localhost:8000` by default.
 
 The backend administrative interface can be accessed at the `/admin` route using the superuser account you setup as part of initialization.
 

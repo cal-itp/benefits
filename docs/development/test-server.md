@@ -8,7 +8,7 @@ A basic eligibility verification server is available for testing. The server cod
 docker compose up [-d] server
 ```
 
-The optional `-d` flag will start in _detatched_ mode and allow you to continue using the terminal session. Otherwise your
+The optional `-d` flag will start in _detached_ mode and allow you to continue using the terminal session. Otherwise your
 terminal will be attached to the container's terminal, showing the startup and runtime output.
 
 The API server is running on `http://localhost` at a port dynamically assigned by Docker. See
