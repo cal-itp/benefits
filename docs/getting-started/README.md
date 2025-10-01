@@ -107,9 +107,9 @@ The following updates must be made to run a full end-to-end test using the sampl
 
 Compiler developers, instead of setting these manually, you can:
 
-1. Grab "Benefits fixtures with secrets for local development" note from our shared notes in LastPass
-1. Put it in a new JSON file named something like `secret_fixtures.json`
-1. Change the value of `DJANGO_DB_FIXTURES` in your `.env` file to point to your new `secret_fixtures.json`
+1. Grab the "Benefits fixtures with secrets for local development" note from our shared notes in LastPass
+1. Put it in a new JSON file named something like `dev_fixtures.json`
+1. Change the value of `DJANGO_DB_FIXTURES` in your `.env` file to point to your new `dev_fixtures.json`
 1. Rebuild the devcontainer
 
 ### Login.gov test account
@@ -119,6 +119,25 @@ For details on creating an identity-proofed account for testing in the Login.gov
 ---
 
 You should now be ready to perform a complete end-to-end test in your local environment! When arriving at the Littlepay form, use any of the acceptable forms of [test data for Visa or MasterCard accounts](test-cards).
+
+## Managing test data going forward
+
+If you're going to be using the local environment you just set up for ongoing development, be aware that by default the **database will be dropped and fixtures will be reloaded every time the devcontainer is started** (not only on rebuilding). This helps ensure consistent test data across PR reviews.
+
+Compiler developers, be sure to follow the instructions in the [Django Admin updates](#django-admin-updates) section above to set up the fixtures with our development secrets in them.
+
+If you have a need to maintain some test data that you've added via the Django Admin across multiple development sessions:
+
+1. Set `DJANGO_DB_RESET=false` in your `.env` file
+1. Create a new set of temporary fixtures:
+   ```bash
+   python manage.py dumpdata --indent 2 --output benefits/core/migrations/temp_fixtures.json
+   ```
+   - It's important that the filename end in `fixtures.json` so that it's ignored by Git.
+1. Set `DJANGO_DB_FIXTURES` to the path of the new file you just created in `.env`
+1. Rebuild the devcontainer
+
+Or, if you made a temporary change to one of the objects created by the fixtures that you don't want to lose, you can prevent the fixtures from being reloaded by setting `DJANGO_DB_FIXTURES` to `false` (or any string that doesn't resolve to a real fixtures file ending in `fixtures.json`).
 
 [docker]: https://www.docker.com/products/docker-desktop
 [devcontainers]: https://code.visualstudio.com/docs/devcontainers/containers

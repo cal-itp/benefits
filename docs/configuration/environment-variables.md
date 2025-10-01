@@ -104,6 +104,7 @@ Boolean:
 
 - `True` (default): deletes the existing database file and runs fresh Django migrations.
 - `False`: Django uses the existing database file.
+  (Note: Fixtures will still be loaded, updating any values on those objects if they have changed.)
 
 ### `DJANGO_DEBUG`
 
