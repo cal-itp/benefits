@@ -11,8 +11,11 @@
       <!-- TODO: remove to stop simulating more agencies -->
       {% for letter in 'Jumboization'|make_list %}
         <div class="col">
-          <!-- TODO: account for square *and* rectangle logos -->
-          <img src="{{ agency.logo_small_url }}" width="52" height="36" alt="{{ agency.short_name }} logo">
+          <!-- TODO: account for *new* standard dimensions? -->
+          <img src="{{ agency.logo_small_url }}"
+               width="52"
+               height="36"
+               alt="{% blocktranslate with agency=agency.short_name %}{{ agency }} logo{% endblocktranslate %}">
         </div>
       {% endfor %}
     {% endfor %}
