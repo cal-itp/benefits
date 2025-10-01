@@ -3,7 +3,7 @@
   <form id="{{ form.id }}" method="{{ form.method }}">
     {% csrf_token %}
     {{ form.as_p }}
-    <button class="btn btn-lg btn-primary" type="submit">{% translate "Next" %}</button>
+    <button class="btn btn-primary mt-2" type="submit">{% translate "Next" %}</button>
   </form>
 </div>
 
@@ -29,7 +29,7 @@
       select.setCustomValidity("");
 
       const idx = select.selectedIndex
-      const span = document.querySelector('.discrete-span')
+      const span = document.querySelector('.public-transit-span')
       // if we decide to actually take this tack, i'll figure out why our own translations arent loaded
       const hmmm = gettext("public transit") // gettext("January")
       span.innerText = idx === 0 ? hmmm : select[idx].innerText
