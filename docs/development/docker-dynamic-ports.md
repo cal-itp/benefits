@@ -8,7 +8,7 @@ Docker dynamically assigns host machine ports that map into container applicatio
 
     The Devcontainer can bind to a single container's port(s) and present those to your localhost machine via VS Code.
     Other services started along with the Devcontainer are not visible in VS Code. See
-    [Outside the Devconatiner](#outside-the-devcontainer) for how to find information on those.
+    [Outside the Devcontainer](#outside-the-devcontainer) for how to find information on those.
 
 Once started with <kbd>F5</kbd>, the `benefits` Django application runs on port `8000` inside the Devcontainer. To find the localhost
 address, look on the **PORTS** tab in VS Code's _Terminal_ window. The `Local Address` corresponding to the record where
