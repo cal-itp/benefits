@@ -10,11 +10,6 @@ if [ $# -ne 1 ]; then
   exit 1
 fi
 
-printf "Intializing Terraform...\n\n"
-# automatically inject the subscription ID
-PROD_ID=$(az account list --query "[?name == 'CDT/ODI Production'] | [0].id" --output tsv)
-terraform init -backend-config="subscription_id=$PROD_ID"
-
 printf "\n\nSelecting the Terraform workspace...\n"
 if [ "$ENV" = "prod" ]; then
   terraform workspace select default
@@ -23,6 +18,12 @@ else
   terraform workspace select "$ENV"
   SUBSCRIPTION="CDT/ODI Development"
 fi
+
+printf "Intializing Terraform...\n\n"
+# automatically inject the subscription ID
+PROD_ID=$(az account list --query "[?name == '$SUBSCRIPTION'] | [0].id" --output tsv)
+terraform init -backend-config="subscription_id=$PROD_ID"
+
 
 echo "Setting the subscription for the Azure CLI..."
 az account set --subscription="$SUBSCRIPTION"
