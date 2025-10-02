@@ -292,7 +292,15 @@ class TransitAgency(models.Model):
     def all_active():
         """Get all TransitAgency instances marked active."""
         logger.debug(f"Get all active {TransitAgency.__name__}")
-        return TransitAgency.objects.filter()  # TODO: add back (active=True) :)
+        return TransitAgency.objects.filter(active=True)
+
+    # TODO: figure out how to alphabetize add back .filter(active=True) :)
+    @staticmethod
+    def all_active_alphabetized():
+        """Get and sort all TransitAgency instances."""
+        logger.debug(f"Get all {TransitAgency.__name__}")
+
+        return TransitAgency.objects.filter().sort()
 
     @staticmethod
     def for_user(user: User):
