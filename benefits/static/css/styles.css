@@ -537,6 +537,12 @@ footer .footer-links li a.footer-link:visited {
   }
 }
 
+.small-text {
+  font-size: var(--font-size-14px);
+  line-height: var(--form-field-text-line-height);
+  letter-spacing: calc(var(--font-size-14px) * var(--letter-spacing-5));
+}
+
 /* Forms: Text Inputs */
 /* Form Field Container: Must use .form-field-container parent to use these styles */
 
@@ -564,12 +570,6 @@ footer .footer-links li a.footer-link:visited {
   outline: 3px solid var(--focus-color) !important;
   outline-offset: 2px !important;
   box-shadow: none !important;
-}
-
-.form-text {
-  font-size: var(--font-size-14px);
-  line-height: var(--form-field-text-line-height);
-  letter-spacing: calc(var(--font-size-14px) * var(--letter-spacing-5));
 }
 
 .form-field-container.eligibility-verification-form {

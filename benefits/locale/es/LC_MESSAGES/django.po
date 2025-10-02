@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-09-15 16:06-0700\n"
+"POT-Creation-Date: 2025-10-02 16:12-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -482,6 +482,11 @@ msgstr "Página Anterior"
 
 msgid "Sign out of Login.gov"
 msgstr "Cierre sesión de Login.gov"
+
+# TODO: needs a real translation
+#, python-format
+msgid "Ride across %(count)s active agencies (and growing!)"
+msgstr ""
 
 msgid "Please choose your transit provider:"
 msgstr "Elija su proveedor de transporte:"

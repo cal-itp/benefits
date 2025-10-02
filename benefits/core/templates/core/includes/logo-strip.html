@@ -1,0 +1,17 @@
+{% load i18n %}
+
+<div class="box container mt-lg-5">
+  <p class="small-text mb-lg-3">
+    {% blocktranslate trimmed with count=active_agencies|length %}
+      Ride across {{ count }} active agencies (and growing!)
+    {% endblocktranslate %}
+  </p>
+  <div class="row">
+    {% for agency in active_agencies %}
+      <div class="col">
+        <!-- TODO: account for new (more rectangular) logos? -->
+        <img src="{{ agency.logo_small_url }}" width="52" height="36" alt="{{ agency.short_name }} logo">
+      </div>
+    {% endfor %}
+  </div>
+</div>
