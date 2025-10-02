@@ -141,15 +141,11 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
 
     template_name = "enrollment/success.html"
 
-    def get(self, request, *args, **kwargs):
-        session.update(request, origin=reverse(routes.ENROLLMENT_SUCCESS))
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
+        request = self.request
         flow = self.flow
-
-        if session.logged_in(request) and flow.supports_sign_out:
-            # overwrite origin for a logged in user
-            # if they click the logout button, they are taken to the new route
-            session.update(request, origin=reverse(routes.LOGGED_OUT))
 
         context = {"redirect_to": request.path}
         copy = {
@@ -181,5 +177,17 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
             copy_context = copy[flow.transit_agency.slug].dict()
 
         context.update(copy_context)
+
+        return context
+
+    def get(self, request, *args, **kwargs):
+        session.update(request, origin=reverse(routes.ENROLLMENT_SUCCESS))
+
+        flow = self.flow
+
+        if session.logged_in(request) and flow.supports_sign_out:
+            # overwrite origin for a logged in user
+            # if they click the logout button, they are taken to the new route
+            session.update(request, origin=reverse(routes.LOGGED_OUT))
 
         return super().get(request, *args, **kwargs)
