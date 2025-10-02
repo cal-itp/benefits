@@ -28,7 +28,7 @@
     "pk": 4,
     "fields": {
       "label": "Switchio client certificate",
-      "text_secret_name": "switchio-client-certificate"
+      "text_secret_name": "switchio-client-cert"
     }
   },
   {
@@ -36,7 +36,7 @@
     "pk": 5,
     "fields": {
       "label": "Switchio CA certificate",
-      "text_secret_name": "switchio-ca-certificate"
+      "text_secret_name": "switchio-ca-cert"
     }
   },
   {
@@ -64,7 +64,7 @@
       "client_name": "benefits-medicaregov",
       "client_id": "319efaea-615b-4cd4-958f-e6cd2fd31646",
       "authority": "https://example.com",
-      "scheme": "dev-cal-itp_benefits"
+      "scheme": "bluebutton"
     }
   },
   {
@@ -72,8 +72,8 @@
     "pk": "a0b45237-b056-4d25-aebe-d4f2a5fe6bbc",
     "fields": {
       "system_name": "senior",
-      "scopes": "verify:senior",
-      "eligibility_claim": "senior"
+      "scopes": "age:65plus",
+      "eligibility_claim": "age65p"
     }
   },
   {
@@ -81,8 +81,8 @@
     "pk": "8fa9e649-4de6-4bd6-8eec-f5f47802ceab",
     "fields": {
       "system_name": "veteran",
-      "scopes": "verify:veteran",
-      "eligibility_claim": "veteran"
+      "scopes": "veteran:confirm",
+      "eligibility_claim": "va38"
     }
   },
   {
@@ -90,7 +90,7 @@
     "pk": "c6332e8c-7081-48e9-ae3c-07360879a8ae",
     "fields": {
       "system_name": "calfresh",
-      "scopes": "verify:calfresh",
+      "scopes": "income:calfresh",
       "eligibility_claim": "calfresh"
     }
   },
@@ -99,7 +99,7 @@
     "pk": "d27e630b-980c-40ae-9104-a36633bcf7ac",
     "fields": {
       "system_name": "medicare",
-      "scopes": "verify:medicare",
+      "scopes": "medicare:enrolled",
       "eligibility_claim": "medicare"
     }
   },
@@ -134,7 +134,7 @@
     "pk": 2,
     "fields": {
       "tokenization_api_key": "123",
-      "tokenization_api_secret_name": "cst-switchio-api-secret",
+      "tokenization_api_secret_name": "switchio-qa-api-secret",
       "enrollment_api_authorization_header": "Basic 1234",
       "pto_id": 123,
       "client_certificate": 4,
@@ -232,7 +232,7 @@
     "fields": {
       "system_name": "veteran",
       "label": "U.S. Veteran",
-      "display_order": 4,
+      "display_order": 3,
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_request": "8fa9e649-4de6-4bd6-8eec-f5f47802ceab",
       "supported_enrollment_methods": ["digital"],

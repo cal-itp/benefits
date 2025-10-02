@@ -21,7 +21,7 @@ In either case, the endpoint `/verify` serves as the Eligibility Verification AP
 
 ## In the Devcontainer
 
-When running the [Devcontainer](#vs-code-with-devcontainers), the server is automatically started.
+When running the [Devcontainer](../#vs-code-with-dev-containers), the server is automatically started.
 
 See [Docker dynamic ports](./docker-dynamic-ports.md) for more information on accessing the server on localhost.
 

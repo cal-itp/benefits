@@ -10,7 +10,11 @@ RUN --mount=type=cache,id=apt-archives,sharing=locked,target=/var/cache/apt/arch
     curl -sL https://aka.ms/InstallAzureCLIDeb | bash && \
     # install webp CLI
     # https://developers.google.com/speed/webp/download
-    apt install webp -y
+    apt install locales webp -y
+
+# VSCode will use en_US for git operations, so make it available in the container
+# https://github.com/microsoft/vscode/pull/210506
+RUN locale-gen en_US.UTF-8
 
 USER $USER
 
