@@ -2,12 +2,14 @@ from django.views import View
 
 import pytest
 
+import benefits.core.mixins
 from benefits.core import recaptcha
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.core.mixins import (
     AgencySessionRequiredMixin,
     EligibleSessionRequiredMixin,
     FlowSessionRequiredMixin,
+    PageViewMixin,
     RecaptchaEnabledMixin,
 )
 
@@ -98,6 +100,27 @@ class TestFlowSessionRequiredMixin:
         view.dispatch(app_request)
 
         assert view.flow == {"flow": "123"}
+
+
+@pytest.mark.django_db
+class TestPageViewMixin:
+    class SampleView(PageViewMixin, View):
+        pass
+
+    @pytest.fixture
+    def view(self, app_request):
+        v = self.SampleView()
+        v.setup(app_request)
+        return v
+
+    @pytest.fixture
+    def mocked_analytics_module(self, mocked_analytics_module):
+        return mocked_analytics_module(benefits.core.mixins)
+
+    def test_dispatch(self, view, app_request, mocked_analytics_module):
+        view.dispatch(app_request)
+
+        mocked_analytics_module.send_event.assert_called_once()
 
 
 class TestRecaptchaEnabledMixin:
