@@ -157,7 +157,7 @@ def test_success_authentication_logged_in(mocker, client, model_TransitAgency, m
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == "enrollment/success.html"
+    assert response.template_name == ["enrollment/success.html"]
     assert {"origin": reverse(routes.LOGGED_OUT)} in mock_session.update.call_args
 
 
@@ -173,7 +173,7 @@ def test_success_authentication_not_logged_in(mocker, client, model_TransitAgenc
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == "enrollment/success.html"
+    assert response.template_name == ["enrollment/success.html"]
 
 
 @pytest.mark.django_db
@@ -185,4 +185,4 @@ def test_success_no_authentication(client):
     response = client.get(path)
 
     assert response.status_code == 200
-    assert response.template_name == "enrollment/success.html"
+    assert response.template_name == ["enrollment/success.html"]

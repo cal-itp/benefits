@@ -14,9 +14,13 @@ from benefits.core.context.flow import SystemName
 from benefits.core.context import formatted_gettext_lazy as _
 from benefits.routes import routes
 from benefits.core import session
-from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FlowSessionRequiredMixin
-from benefits.core.middleware import EligibleSessionRequired, FlowSessionRequired, pageview_decorator
-
+from benefits.core.mixins import (
+    AgencySessionRequiredMixin,
+    EligibleSessionRequiredMixin,
+    FlowSessionRequiredMixin,
+    PageViewMixin,
+)
+from benefits.core.middleware import EligibleSessionRequired
 from . import analytics
 
 TEMPLATE_RETRY = "enrollment/retry.html"
@@ -94,21 +98,22 @@ def system_error(request):
     return TemplateResponse(request, TEMPLATE_SYSTEM_ERROR)
 
 
-@pageview_decorator
-@decorator_from_middleware(EligibleSessionRequired)
-@decorator_from_middleware(FlowSessionRequired)
-def success(request):
+class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequiredMixin, TemplateView):
     """View handler for the final success page."""
-    session.update(request, origin=reverse(routes.ENROLLMENT_SUCCESS))
 
-    flow = session.flow(request)
+    template_name = "enrollment/success.html"
 
-    if session.logged_in(request) and flow.supports_sign_out:
-        # overwrite origin for a logged in user
-        # if they click the logout button, they are taken to the new route
-        session.update(request, origin=reverse(routes.LOGGED_OUT))
+    def get(self, request, *args, **kwargs):
+        session.update(request, origin=reverse(routes.ENROLLMENT_SUCCESS))
 
-    context = {"redirect_to": request.path}
-    context.update(flow.enrollment_success_context)
+        flow = self.flow
 
-    return TemplateResponse(request, "enrollment/success.html", context)
+        if session.logged_in(request) and flow.supports_sign_out:
+            # overwrite origin for a logged in user
+            # if they click the logout button, they are taken to the new route
+            session.update(request, origin=reverse(routes.LOGGED_OUT))
+
+        context = {"redirect_to": request.path}
+        context.update(flow.enrollment_success_context)
+
+        return super().get(request, *args, **kwargs)
