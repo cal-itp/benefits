@@ -99,7 +99,6 @@ def system_error(request):
 @decorator_from_middleware(FlowSessionRequired)
 def success(request):
     """View handler for the final success page."""
-    request.path = "/enrollment/success"
     session.update(request, origin=reverse(routes.ENROLLMENT_SUCCESS))
 
     flow = session.flow(request)
