@@ -37,5 +37,9 @@
         "tamasfe.even-better-toml"
       ]
     }
+  },
+  "remoteEnv": {
+    // Attempt to fix Pylance crashes that seem to be caused by running out of memory.
+    "NODE_OPTIONS": "--max-old-space-size=8192"
   }
 }
