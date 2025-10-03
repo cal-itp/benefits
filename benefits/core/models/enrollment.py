@@ -211,13 +211,6 @@ class EnrollmentFlow(models.Model):
         return ctx.dict()
 
     @property
-    def enrollment_success_context(self):
-        if self.uses_api_verification:
-            return enrollment_context.enrollment_success[self.system_name].dict()
-        else:
-            return enrollment_context.enrollment_success[self.transit_agency.slug].dict()
-
-    @property
     def in_person_eligibility_context(self):
         return in_person_context.eligibility_index[self.system_name].dict()
 

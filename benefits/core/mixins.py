@@ -2,6 +2,8 @@ import logging
 
 from django.conf import settings
 
+from benefits.core import analytics
+
 from . import recaptcha, session
 from .middleware import user_error
 
@@ -55,6 +57,21 @@ class FlowSessionRequiredMixin:
         else:
             logger.warning("Session not configured with enrollment flow")
             return user_error(request)
+
+
+class PageViewMixin:
+    """
+    Mixin sends an analytics event for page views.
+    """
+
+    def dispatch(self, request, *args, **kwargs):
+        event = analytics.ViewedPageEvent(request)
+        try:
+            analytics.send_event(event)
+        except Exception:
+            logger.warning(f"Failed to send event: {event}")
+        finally:
+            return super().dispatch(request, *args, **kwargs)
 
 
 class RecaptchaEnabledMixin:
