@@ -3,15 +3,17 @@
 <div class="box container mt-lg-5">
   <p class="small-text mb-lg-3">
     {% blocktranslate trimmed with count=active_agencies|length %}
-      Ride across {{ count }} active agencies (and growing!)
+      Ride across {{ count }} agencies (and growing!)
     {% endblocktranslate %}
   </p>
   <div class="row">
-    {% for agency in active_agencies %}
-      <div class="col">
-        <!-- TODO: account for new (more rectangular) logos? -->
-        <img src="{{ agency.logo_small_url }}" width="52" height="36" alt="{{ agency.short_name }} logo">
-      </div>
+    {% for agency in active_agencies|dictsort:"long_name" %}
+      {% for letter in 'Jumbo'|make_list %}
+        <div class="col">
+          <!-- TODO: account for new (more rectangular) logos? -->
+          <img class="mb-5 mx-3" src="{{ agency.logo_small_url }}" width="52" height="36" alt="{{ agency.short_name }} logo">
+        </div>
+      {% endfor %}
     {% endfor %}
   </div>
 </div>
