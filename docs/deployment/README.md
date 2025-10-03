@@ -13,7 +13,7 @@ and `prod`.
 The [Deploy](deploy-workflow) workflow is responsible for building that branch's image and pushing to [GitHub Container
 Registry (GHCR)][ghcr]. It also deploys to the Azure Web App, telling Azure to restart the app and pull the latest image.
 
-You can view what Git commit is deployed for a given environment by visitng the URL path `/static/sha.txt`.
+You can view what Git commit is deployed for a given environment by visiting the URL path `/static/sha.txt`.
 
 ## Configuration
 
