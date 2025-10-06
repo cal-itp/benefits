@@ -38,6 +38,13 @@ Some configuration data is not available with the samples in the repository:
 - Transit processor configuration for the enrollment phase
 - Amplitude configuration for capturing analytics events
 
+Compiler developers, instead of setting these manually, you can load some of them with a private fixtures file that we maintain:
+
+1. Grab the "Benefits fixtures with secrets for local development" note from our shared notes in LastPass
+1. Put it in a new JSON file named something like `dev_fixtures.json`
+1. Change the value of `DJANGO_DB_FIXTURES` in your `.env` file to point to your new `dev_fixtures.json`
+1. Rebuild the devcontainer
+
 ## Rebuilding the configuration database locally
 
 A local Django database will be initialized upon first startup of the devcontainer.

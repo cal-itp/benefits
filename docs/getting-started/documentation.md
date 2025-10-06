@@ -56,7 +56,7 @@ The website is automatically rebuilt as changes are made to `docs/` files.
 
 ### In the Devcontainer
 
-When running the [Devcontainer](../development/README.md#vs-code-with-devcontainers), the docs site is automatically started.
+When running the [Devcontainer](../development/#vs-code-with-dev-containers), the docs site is automatically started.
 
 See [Docker dynamic ports](../development/docker-dynamic-ports.md) for more information on accessing the site on localhost.
 

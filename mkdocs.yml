@@ -6,6 +6,7 @@ site_url: https://docs.calitp.org/benefits
 theme:
   name: material
   features:
+    - content.code.copy
     - navigation.expand
     - navigation.tabs
     - toc.integrate
