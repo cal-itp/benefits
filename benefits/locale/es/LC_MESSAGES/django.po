@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-10-06 11:51-0700\n"
+"POT-Creation-Date: 2025-10-09 16:15-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -557,9 +557,14 @@ msgstr ""
 msgid "Choose transit agency"
 msgstr "Elija la agencia de tránsito"
 
-msgid "Get your reduced fare on public transit when you tap to ride"
+msgid "Get your reduced fare on"
 msgstr ""
-"Obtenga una tarifa reducida en el transporte público cuando toque para viajar"
+
+msgid "public transit"
+msgstr "[placeholder translation]"
+
+msgid "when you tap to ride"
+msgstr ""
 
 msgid "Logged out"
 msgstr "Cierre sesión"
