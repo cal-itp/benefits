@@ -6,14 +6,14 @@
 {% endblock title %}
 
 {% block headline %}
-  {% translate "Get your reduced fare on public transit when you tap to ride" %}
+  {% translate "Get your reduced fare on" %}
+  <span class="public-transit-span">{% translate "public transit" %}</span>
+  {% translate "when you tap to ride" %}
 {% endblock headline %}
 
-{% block call-to-action %}
-  {% translate "Choose your Provider" as text %}
-  {% include "core/includes/modal-trigger.html" with modal="modal--agency-selector" classes="btn btn-lg btn-primary" text=text period=False %}
-  {% include "core/includes/modal--agency-selector.html" with id="modal--agency-selector" size="modal-lg" body="pt-0 pb-4 pb-lg-5 mb-lg-1 px-lg-5 mx-lg-1" %}
-{% endblock call-to-action %}
+{% block select-agency-form %}
+  {% include "core/includes/select-agency-form.html" %}
+{% endblock select-agency-form %}
 
 {% block logo-strip %}
   {% include "core/includes/logo-strip.html" %}

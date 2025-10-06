@@ -12,6 +12,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import include, path, re_path
+from django.views.i18n import JavaScriptCatalog
 from django.views.static import serve
 
 logger = logging.getLogger(__name__)
@@ -22,6 +23,7 @@ handler404 = "benefits.core.views.page_not_found"
 handler500 = "benefits.core.views.server_error"
 
 urlpatterns = [
+    path("jsi18n", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     path("", include("benefits.core.urls")),
     path("eligibility/", include("benefits.eligibility.urls")),
     path("enrollment/", include("benefits.enrollment.urls")),
