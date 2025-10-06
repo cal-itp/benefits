@@ -1,18 +1,83 @@
-import logging
-import os
-import re
 import sys
+import os
 
-from azure.core.exceptions import ClientAuthenticationError
-from azure.identity import DefaultAzureCredential
-from azure.keyvault.secrets import SecretClient
-from django.conf import settings
-from django.core.validators import RegexValidator
+# When this script is run directly, its directory ('/calitp/app/benefits') is
+# added to the start of sys.path. This causes Python to import the local
+# `benefits/locale` package instead of the standard library `locale` module,
+# which breaks `argparse` and other modules.
+#
+# The fix is to temporarily remove the script's directory from the path,
+# import the standard library `locale` to get it into Python's module cache,
+# and then restore the path so that other local imports work correctly.
+script_dir = os.path.dirname(os.path.abspath(__file__))
+if script_dir in sys.path:
+    # Temporarily remove the script's directory from the path
+    sys.path.remove(script_dir)
+    # Import and cache the standard library `locale`
+    import locale  # noqa: F401
+
+    # Restore the original path
+    sys.path.insert(0, script_dir)
+else:
+    # If the script's directory wasn't on the path, no conflict exists.
+    import locale  # noqa: F401
+
+import argparse  # noqa: E402
+import logging  # noqa: E402
+import re  # noqa: E402
+
+from azure.core.exceptions import ClientAuthenticationError  # noqa: E402
+from azure.identity import DefaultAzureCredential  # noqa: E402
+from azure.keyvault.secrets import SecretClient  # noqa: E402
+from django.conf import settings  # noqa: E402
+from django.core.validators import RegexValidator  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
 
 KEY_VAULT_URL = "https://kv-cdt-pub-calitp-{env}-001.vault.azure.net/"
+
+
+def _get_value_by_name(name, client_cls, get_value_func, client=None):
+    """Read a value (secret, cert) from the store, currently Azure KeyVault.
+
+    When `settings.RUNTIME_ENVIRONMENT() == "local"`, reads from the environment instead.
+    """
+    runtime_env = settings.RUNTIME_ENVIRONMENT()
+
+    if runtime_env == "local":
+        logger.debug("Runtime environment is local, reading from environment instead of Azure KeyVault.")
+        # environment variable names cannot contain the hyphen character
+        # assume the variable name is the same but with underscores instead
+        env_var_name = name.replace("-", "_")
+        value = os.environ.get(env_var_name)
+        # we have to replace literal newlines here with the actual newline character
+        # to support local environment variables values that span multiple lines (e.g. PEM keys/certs)
+        # because the VS Code Python extension doesn't support multiline environment variables
+        # https://code.visualstudio.com/docs/python/environments#_environment-variables
+        return value.replace("\\n", "\n")
+
+    elif client is None:
+        # construct the KeyVault URL from the runtime environment
+        # see https://docs.calitp.org/benefits/deployment/infrastructure/#environments
+        # and https://github.com/cal-itp/benefits/blob/main/terraform/key_vault.tf
+        vault_url = KEY_VAULT_URL.format(env=runtime_env[0])
+        logger.debug(f"Configuring Azure KeyVault client: {client_cls.__name__} for vault: {vault_url}")
+
+        credential = DefaultAzureCredential()
+        client = client_cls(vault_url=vault_url, credential=credential)
+
+    value = None
+
+    if client is not None:
+        try:
+            value = get_value_func(client, name)
+        except ClientAuthenticationError:
+            logger.error("Could not authenticate to Azure KeyVault")
+    else:
+        logger.error(f"Azure KeyVault client was not configured: {client_cls.__name__}")
+
+    return value
 
 
 class SecretNameValidator(RegexValidator):
@@ -41,59 +106,35 @@ class SecretNameValidator(RegexValidator):
 NAME_VALIDATOR = SecretNameValidator()
 
 
-def get_secret_by_name(secret_name, client=None):
+def get_secret_by_name(secret_name, client: SecretClient = None):
     """Read a value from the secret store, currently Azure KeyVault.
 
     When `settings.RUNTIME_ENVIRONMENT() == "local"`, reads from the environment instead.
     """
     NAME_VALIDATOR(secret_name)
 
-    runtime_env = settings.RUNTIME_ENVIRONMENT()
-
-    if runtime_env == "local":
-        logger.debug("Runtime environment is local, reading from environment instead of Azure KeyVault.")
-        # environment variable names cannot contain the hyphen character
-        # assume the variable name is the same but with underscores instead
-        env_secret_name = secret_name.replace("-", "_")
-        secret_value = os.environ.get(env_secret_name)
-        # we have to replace literal newlines here with the actual newline character
-        # to support local environment variables values that span multiple lines (e.g. PEM keys/certs)
-        # because the VS Code Python extension doesn't support multiline environment variables
-        # https://code.visualstudio.com/docs/python/environments#_environment-variables
-        return secret_value.replace("\\n", "\n")
-
-    elif client is None:
-        # construct the KeyVault URL from the runtime environment
-        # see https://docs.calitp.org/benefits/deployment/infrastructure/#environments
-        # and https://github.com/cal-itp/benefits/blob/main/terraform/key_vault.tf
-        vault_url = KEY_VAULT_URL.format(env=runtime_env[0])
-        logger.debug(f"Configuring Azure KeyVault secrets client for: {vault_url}")
-
-        credential = DefaultAzureCredential()
-        client = SecretClient(vault_url=vault_url, credential=credential)
-
-    secret_value = None
-
-    if client is not None:
+    def _get_value(_client: SecretClient, _name: str):
         try:
-            secret = client.get_secret(secret_name)
-            secret_value = secret.value
+            secret = _client.get_secret(_name)
+            return secret.value
         except ClientAuthenticationError:
             logger.error("Could not authenticate to Azure KeyVault")
-    else:
-        logger.error("Azure KeyVault SecretClient was not configured")
+        return None
 
-    return secret_value
+    return _get_value_by_name(secret_name, SecretClient, _get_value, client)
 
 
 if __name__ == "__main__":
-    args = sys.argv[1:]
-    if len(args) < 1:
-        print("Provide the name of the secret to read")
-        exit(1)
+    parser = argparse.ArgumentParser(prog="secrets")
+    parser.add_argument("-s", "--secret", help="The name of a secret to read")
 
-    secret_name = args[0]
-    secret_value = get_secret_by_name(secret_name)
+    args = parser.parse_args()
 
-    print(f"[{settings.RUNTIME_ENVIRONMENT()}] {secret_name}: {secret_value}")
+    if args.secret:
+        secret_value = get_secret_by_name(args.secret)
+        print(f"[{settings.RUNTIME_ENVIRONMENT()} secret] {args.secret}: {secret_value}")
+
+    if not (args.secret):
+        parser.print_help()
+
     exit(0)

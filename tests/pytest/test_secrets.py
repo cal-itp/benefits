@@ -98,7 +98,7 @@ def test_get_secret_by_name__None_client__returns_secret_value(
 
     # this test does not pass in a known client, instead checking that a client is constructed as expected
     mock_credential = mock_DefaultAzureCredential.return_value
-    client_cls = mocker.patch("benefits.secrets.SecretClient")
+    client_cls = mocker.patch("benefits.secrets.SecretClient", __name__="SecretClient")
     client = client_cls.return_value
     client.get_secret.return_value = mocker.Mock(value=secret_value)
 
@@ -114,7 +114,7 @@ def test_get_secret_by_name__None_client__returns_None(mocker, runtime_env, sett
     settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
 
     # this test forces construction of a new client to None
-    client_cls = mocker.patch("benefits.secrets.SecretClient", return_value=None)
+    client_cls = mocker.patch("benefits.secrets.SecretClient", return_value=None, __name__="SecretClient")
 
     actual_value = get_secret_by_name(secret_name)
 
@@ -127,7 +127,7 @@ def test_get_secret_by_name__unauthenticated_client__returns_None(mocker, runtim
     settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
 
     # this test forces client.get_secret to throw an exception
-    client_cls = mocker.patch("benefits.secrets.SecretClient")
+    client_cls = mocker.patch("benefits.secrets.SecretClient", __name__="SecretClient")
     client = client_cls.return_value
     client.get_secret.side_effect = ClientAuthenticationError
 
