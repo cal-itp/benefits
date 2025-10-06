@@ -10,6 +10,7 @@ maintainers = [
   { name = "Compiler LLC", email = "dev@compiler.la" }
 ]
 dependencies = [
+    "azure-keyvault-certificates==4.10.0",
     "azure-keyvault-secrets==4.10.0",
     "azure-identity==1.25.0",
     "calitp-littlepay==2025.4.1",
