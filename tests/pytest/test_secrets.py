@@ -2,7 +2,7 @@ import pytest
 from azure.core.exceptions import ClientAuthenticationError
 from django.core.exceptions import ValidationError
 
-from benefits.secrets import KEY_VAULT_URL, NAME_VALIDATOR, SecretNameValidator, get_secret_by_name
+from benefits.secrets import KEY_VAULT_URL, NAME_VALIDATOR, SecretNameValidator, get_cert_by_name, get_secret_by_name
 
 
 @pytest.fixture(autouse=True)
@@ -14,6 +14,16 @@ def mock_DefaultAzureCredential(mocker):
 
 
 @pytest.fixture
+def cert_name():
+    return "the-cert-name"
+
+
+@pytest.fixture
+def cert_value():
+    return bytes("the cert value", encoding="utf8")
+
+
+@pytest.fixture
 def secret_name():
     return "the-secret-name"
 
@@ -21,6 +31,87 @@ def secret_name():
 @pytest.fixture
 def secret_value():
     return "the secret value"
+
+
+@pytest.mark.parametrize("runtime_env", ["dev", "test", "prod"])
+def test_get_cert_by_name__with_client__returns_cert_value(mocker, runtime_env, settings, cert_name, cert_value):
+    settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
+
+    client = mocker.patch("benefits.secrets.CertificateClient")
+    client.get_certificate.return_value = mocker.Mock(cer=cert_value)
+
+    actual_value = get_cert_by_name(cert_name, client)
+
+    client.get_certificate.assert_called_once_with(cert_name)
+    assert actual_value == cert_value
+
+
+@pytest.mark.parametrize("runtime_env", ["dev", "test", "prod"])
+def test_get_cert_by_name__None_client__returns_cert_value(
+    mocker, runtime_env, settings, mock_DefaultAzureCredential, cert_name, cert_value
+):
+    settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
+    expected_keyvault_url = KEY_VAULT_URL.format(env=runtime_env[0])
+
+    # this test does not pass in a known client, instead checking that a client is constructed as expected
+    mock_credential = mock_DefaultAzureCredential.return_value
+    client_cls = mocker.patch("benefits.secrets.CertificateClient", __name__="CertificateClient")
+    client = client_cls.return_value
+    client.get_certificate.return_value = mocker.Mock(cer=cert_value)
+
+    actual_value = get_cert_by_name(cert_name)
+
+    client_cls.assert_called_once_with(vault_url=expected_keyvault_url, credential=mock_credential)
+    client.get_certificate.assert_called_once_with(cert_name)
+    assert actual_value == cert_value
+
+
+@pytest.mark.parametrize("runtime_env", ["dev", "test", "prod"])
+def test_get_cert_by_name__None_client__returns_None(mocker, runtime_env, settings, cert_name):
+    settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
+
+    # this test forces construction of a new client to None
+    client_cls = mocker.patch("benefits.secrets.CertificateClient", return_value=None, __name__="CertificateClient")
+
+    actual_value = get_cert_by_name(cert_name)
+
+    client_cls.assert_called_once()
+    assert actual_value is None
+
+
+@pytest.mark.parametrize("runtime_env", ["dev", "test", "prod"])
+def test_get_cert_by_name__unauthenticated_client__returns_None(mocker, runtime_env, settings, cert_name):
+    settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
+
+    # this test forces client.get_certificate to throw an exception
+    client_cls = mocker.patch("benefits.secrets.CertificateClient", __name__="CertificateClient")
+    client = client_cls.return_value
+    client.get_certificate.side_effect = ClientAuthenticationError
+
+    actual_value = get_cert_by_name(cert_name)
+
+    client_cls.assert_called_once()
+    client.get_certificate.assert_called_once_with(cert_name)
+    assert actual_value is None
+
+
+def test_get_cert_by_name__local__returns_environment_variable(mocker, settings, cert_name):
+    settings.RUNTIME_ENVIRONMENT = lambda: "local"
+
+    cert_value_literal_newlines = "the\\ncert\\nvalue"
+    expected_cert_value = cert_value_literal_newlines.replace("\\n", "\n")
+
+    env_spy = mocker.patch("benefits.secrets.os.environ.get", return_value=cert_value_literal_newlines)
+    env_cert_name = cert_name.replace("-", "_")
+    client_cls = mocker.patch("benefits.secrets.CertificateClient", __name__="CertificateClient")
+    client = client_cls.return_value
+
+    actual_value = get_cert_by_name(cert_name)
+
+    client_cls.assert_not_called()
+    client.get_certificate.assert_not_called()
+    env_spy.assert_called_once_with(env_cert_name)
+    assert actual_value == expected_cert_value
 
 
 @pytest.mark.parametrize(

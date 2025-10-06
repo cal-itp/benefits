@@ -28,6 +28,7 @@ import re  # noqa: E402
 
 from azure.core.exceptions import ClientAuthenticationError  # noqa: E402
 from azure.identity import DefaultAzureCredential  # noqa: E402
+from azure.keyvault.certificates import CertificateClient  # noqa: E402
 from azure.keyvault.secrets import SecretClient  # noqa: E402
 from django.conf import settings  # noqa: E402
 from django.core.validators import RegexValidator  # noqa: E402
@@ -80,6 +81,23 @@ def _get_value_by_name(name, client_cls, get_value_func, client=None):
     return value
 
 
+def get_cert_by_name(cert_name, client: CertificateClient = None):
+    """Read a certificate from the store, currently Azure KeyVault.
+
+    When `settings.RUNTIME_ENVIRONMENT() == "local"`, reads from the environment instead.
+    """
+
+    def _get_value(_client: CertificateClient, _name: str):
+        try:
+            cert = _client.get_certificate(_name)
+            return cert.cer
+        except ClientAuthenticationError:
+            logger.error("Could not authenticate to Azure KeyVault")
+        return None
+
+    return _get_value_by_name(cert_name, CertificateClient, _get_value, client)
+
+
 class SecretNameValidator(RegexValidator):
     """RegexValidator that validates a secret name.
 
@@ -127,14 +145,19 @@ def get_secret_by_name(secret_name, client: SecretClient = None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="secrets")
     parser.add_argument("-s", "--secret", help="The name of a secret to read")
+    parser.add_argument("-c", "--cert", help="The name of a certificate to read")
 
     args = parser.parse_args()
 
     if args.secret:
         secret_value = get_secret_by_name(args.secret)
         print(f"[{settings.RUNTIME_ENVIRONMENT()} secret] {args.secret}: {secret_value}")
+    if args.cert:
+        cert_value = get_cert_by_name(args.cert)
+        print(f"[{settings.RUNTIME_ENVIRONMENT()} cert] {args.cert}:")
+        print(cert_value)
 
-    if not (args.secret):
+    if not (args.secret or args.cert):
         parser.print_help()
 
     exit(0)
