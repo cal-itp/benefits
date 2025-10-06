@@ -93,7 +93,7 @@ enrollment_success = {
     SystemName.AGENCY_CARD.value: AgencyCardEnrollmentSuccess(
         transit_benefit=_("a CST Agency Card transit benefit"), transportation_type=_("a CST bus")
     ),
-    AgencySlug.EDCTA: DefaultEnrollmentSuccess(transportation_type=_("an EDCTA bus")),
+    AgencySlug.EDCTA.value: DefaultEnrollmentSuccess(transportation_type=_("an EDCTA bus")),
     AgencySlug.MST.value: DefaultEnrollmentSuccess(transportation_type=_("an MST bus")),
     SystemName.COURTESY_CARD.value: AgencyCardEnrollmentSuccess(
         transit_benefit=_("an MST Courtesy Card transit benefit"), transportation_type="an MST bus"

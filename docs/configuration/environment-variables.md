@@ -67,8 +67,8 @@ A list of strings representing the host/domain names that this Django site can s
 
     You may change this setting when deploying the app to a non-localhost domain
 
-The directory where Django creates its Sqlite database file. _Must exist and be
-writable by the Django process._
+The directory where Django creates its SQLite database file and where it creates the `uploads` folder for file uploads.
+_Must exist and be writable by the Django process._
 
 By default, the base project directory (i.e. the root of the repository).
 
@@ -104,6 +104,7 @@ Boolean:
 
 - `True` (default): deletes the existing database file and runs fresh Django migrations.
 - `False`: Django uses the existing database file.
+  (Note: Fixtures will still be loaded, updating any values on those objects if they have changed.)
 
 ### `DJANGO_DEBUG`
 
@@ -142,9 +143,10 @@ From inside the container, the app is always listening on port `8000`.
 
 !!! tldr "Django docs"
 
-    [Settings: `LOGGING_CONFIG`](https://docs.djangoproject.com/en/5.0/ref/settings/#logging-config)
+    [Settings: `LOGGING`](https://docs.djangoproject.com/en/5.0/ref/settings/#logging)
 
 The log level used in the application's logging configuration.
+Defaults to `DEBUG` when Django is running in debug mode and `WARNING` otherwise.
 
 By default the application sends logs to `stdout`.
 
