@@ -48,7 +48,7 @@ docker compose build --no-cache client
 
 From this point forward, the recommended local development setup is to run the app with the [VS Code Dev Containers extension](devcontainers).
 
-See [Devlopment](../development/) for more details on setting up a dev container and developing with it.
+See [Development](../development/) for more details on setting up a dev container and developing with it.
 
 Alternatively, read on to run the app traditionally with Docker Compose.
 
