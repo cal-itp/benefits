@@ -10,8 +10,7 @@ html[data-theme="light"],
   --bs-dark-rgb: 33, 33, 33; /* Background color for Header */
   --bs-heading-color: #212121; /* Header text color */
   --bs-secondary-bg-subtle: #f1f1f1; /* Background color for Admin, lighter than bs-secondary, used with bg-secondary-subtle */
-  --bs-secondary-rgb:
-    210, 210, 210; /* Border color for Admin, used with border-secondary */
+  --bs-secondary-rgb: 210, 210, 210; /* Border color for Admin, used with border-secondary */
   --bs-secondary: #c5c4c4;
   --breadcrumbs-link-fg: #066b99; /* Breadcrumbs on Django Admin */
   --breadcrumbs-bg: #ffffff;
