@@ -24,15 +24,15 @@ class AgencyIndex:
 
 
 agency_index = {
-    AgencySlug.CST.value: AgencyIndex(headline=_("Get a reduced fare on CST public transportation when you tap to ride")),
-    AgencySlug.EDCTA.value: AgencyIndex(headline="Get a reduced fare on EDCTA public transportation when you tap to ride"),
-    AgencySlug.MST.value: AgencyIndex(headline=_("Get a reduced fare on MST public transportation when you tap to ride")),
+    AgencySlug.CST.value: AgencyIndex(headline=_("Get your reduced fare on CST public transit when you tap to ride")),
+    AgencySlug.EDCTA.value: AgencyIndex(headline="Get your reduced fare on EDCTA public transit when you tap to ride"),
+    AgencySlug.MST.value: AgencyIndex(headline=_("Get your reduced fare on MST public transit when you tap to ride")),
     AgencySlug.NEVCO.value: AgencyIndex(
-        headline=_("Get a reduced fare on Nevada County Connects public transportation when you tap to ride")
+        headline=_("Get your reduced fare on Nevada County Connects public transit when you tap to ride")
     ),
-    AgencySlug.SACRT.value: AgencyIndex(headline=_("Get a reduced fare on SacRT buses when you tap to ride")),
-    AgencySlug.SBMTD.value: AgencyIndex(headline=_("Get a reduced fare on Santa Barbara MTD buses when you tap to ride")),
+    AgencySlug.SACRT.value: AgencyIndex(headline=_("Get your reduced fare on SacRT buses when you tap to ride")),
+    AgencySlug.SBMTD.value: AgencyIndex(headline=_("Get your reduced fare on Santa Barbara MTD buses when you tap to ride")),
     AgencySlug.VCTC.value: AgencyIndex(
-        headline=_("Get a reduced fare on Ventura County Transportation Commission buses when you tap to ride")
+        headline=_("Get your reduced fare on Ventura County Transportation Commission buses when you tap to ride")
     ),
 }

@@ -566,6 +566,7 @@ footer .footer-links li a.footer-link:visited {
   box-shadow: none !important;
 }
 
+.eyebrow-text,
 .form-text {
   font-size: var(--font-size-14px);
   line-height: var(--form-field-text-line-height);
