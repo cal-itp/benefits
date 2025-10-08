@@ -81,6 +81,9 @@ class EligibilityApiConfig(models.Model):
         help_text="Public key corresponding to the agency's private key, used by Eligibility Verification servers to encrypt responses.",  # noqa: E501
     )
 
+    def __str__(self):
+        return self.api_id
+
 
 class TransitAgency(models.Model):
     """An agency offering transit service."""
