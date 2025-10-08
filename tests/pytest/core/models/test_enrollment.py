@@ -23,6 +23,9 @@ class TestEligibilityApiVerificationRequest:
     def test_api_public_key_data(self, model_PemData):
         assert self.model.api_public_key_data == model_PemData.data
 
+    def test_str(self):
+        assert str(self.model) == self.model.label
+
 
 @pytest.mark.django_db
 def test_EnrollmentFlow_str(model_EnrollmentFlow):
