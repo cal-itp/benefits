@@ -5,7 +5,7 @@ from django.contrib import admin
 from adminsortable2.admin import SortableAdminMixin
 
 from benefits.core import models
-from .mixins import ProdReadOnlyPermissionMixin, StaffPermissionMixin
+from .mixins import ProdReadOnlyPermissionMixin, StaffPermissionMixin, SuperuserPermissionMixin
 
 
 @admin.register(models.EnrollmentEvent)
@@ -15,20 +15,8 @@ class EnrollmentEventAdmin(ProdReadOnlyPermissionMixin, admin.ModelAdmin):
 
 
 @admin.register(models.EligibilityApiVerificationRequest)
-class EligibilityApiVerificationRequestAdmin(admin.ModelAdmin):
+class EligibilityApiVerificationRequestAdmin(SuperuserPermissionMixin, admin.ModelAdmin):
     list_display = ("label", "api_url")
-
-    def has_view_permission(self, request: HttpRequest, obj=None):
-        if request.user and request.user.is_superuser:
-            return True
-        else:
-            return False
-
-    def has_add_permission(self, request: HttpRequest, obj=None):
-        if request.user and request.user.is_superuser:
-            return True
-        else:
-            return False
 
 
 class EnrollmentFlowForm(forms.ModelForm):

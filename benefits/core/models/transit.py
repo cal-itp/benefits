@@ -61,6 +61,27 @@ class TransitProcessorConfig(models.Model):
         return f"({environment_label}) {agency_slug}"
 
 
+class EligibilityApiConfig(models.Model):
+    """Per-agency configuration for Eligibility Server integrations via the Eligibility API."""
+
+    id = models.AutoField(primary_key=True)
+    api_id = models.SlugField(
+        help_text="The identifier for this agency used in Eligibility API calls.",
+    )
+    api_private_key = models.ForeignKey(
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        help_text="Private key used to sign Eligibility API tokens created on behalf of this Agency.",
+    )
+    api_public_key = models.ForeignKey(
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        help_text="Public key corresponding to the agency's private key, used by Eligibility Verification servers to encrypt responses.",  # noqa: E501
+    )
+
+
 class TransitAgency(models.Model):
     """An agency offering transit service."""
 
@@ -94,28 +115,13 @@ class TransitAgency(models.Model):
         default=[CardSchemes.VISA, CardSchemes.MASTERCARD],
         help_text="The contactless card schemes this agency supports.",
     )
-    eligibility_api_id = models.TextField(
-        help_text="The identifier for this agency used in Eligibility API calls.",
-        blank=True,
-        default="",
-    )
-    eligibility_api_private_key = models.ForeignKey(
-        PemData,
-        related_name="+",
+    eligibility_api_config = models.ForeignKey(
+        EligibilityApiConfig,
         on_delete=models.PROTECT,
-        help_text="Private key used to sign Eligibility API tokens created on behalf of this Agency.",
         null=True,
         blank=True,
         default=None,
-    )
-    eligibility_api_public_key = models.ForeignKey(
-        PemData,
-        related_name="+",
-        on_delete=models.PROTECT,
-        help_text="Public key corresponding to the agency's private key, used by Eligibility Verification servers to encrypt responses.",  # noqa: E501
-        null=True,
-        blank=True,
-        default=None,
+        help_text="The Eligibility API configuration for this transit agency.",
     )
     staff_group = models.OneToOneField(
         Group,

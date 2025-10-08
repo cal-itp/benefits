@@ -6,7 +6,26 @@ import django.db.models.deletion
 from django.db import migrations, models
 
 
-def migrate_data(apps, schema_editor):
+def migrate_agency_data(apps, schema_editor):
+    TransitAgency = apps.get_model("core", "TransitAgency")
+    EligibilityApiConfig = apps.get_model("core", "EligibilityApiConfig")
+
+    agencies = ["cst", "mst", "sbmtd"]
+
+    for agency in TransitAgency.objects.all():
+        if agency.slug in agencies:
+            config = EligibilityApiConfig.objects.create(
+                api_id=agency.eligibility_api_id,
+                api_private_key=agency.eligibility_api_private_key,
+                api_public_key=agency.eligibility_api_public_key,
+            )
+            config.save()
+
+            agency.eligibility_api_config = config
+            agency.save()
+
+
+def migrate_flow_data(apps, schema_editor):
     EnrollmentFlow = apps.get_model("core", "EnrollmentFlow")
     EligibilityApiVerificationRequest = apps.get_model("core", "EligibilityApiVerificationRequest")
 
@@ -104,7 +123,7 @@ class Migration(migrations.Migration):
                 to="core.eligibilityapiverificationrequest",
             ),
         ),
-        migrations.RunPython(migrate_data),
+        migrations.RunPython(migrate_flow_data),
         migrations.RemoveField(
             model_name="enrollmentflow",
             name="eligibility_api_auth_header",
@@ -132,5 +151,55 @@ class Migration(migrations.Migration):
         migrations.RemoveField(
             model_name="enrollmentflow",
             name="eligibility_api_url",
+        ),
+        migrations.CreateModel(
+            name="EligibilityApiConfig",
+            fields=[
+                ("id", models.AutoField(primary_key=True, serialize=False)),
+                ("api_id", models.SlugField(help_text="The identifier for this agency used in Eligibility API calls.")),
+                (
+                    "api_private_key",
+                    models.ForeignKey(
+                        help_text="Private key used to sign Eligibility API tokens created on behalf of this Agency.",
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="+",
+                        to="core.pemdata",
+                    ),
+                ),
+                (
+                    "api_public_key",
+                    models.ForeignKey(
+                        help_text="Public key corresponding to the agency's private key, used by Eligibility Verification servers to encrypt responses.",  # noqa: E501
+                        on_delete=django.db.models.deletion.PROTECT,
+                        related_name="+",
+                        to="core.pemdata",
+                    ),
+                ),
+            ],
+        ),
+        migrations.AddField(
+            model_name="transitagency",
+            name="eligibility_api_config",
+            field=models.ForeignKey(
+                blank=True,
+                default=None,
+                help_text="The Eligibility API configuration for this transit agency.",
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="core.eligibilityapiconfig",
+            ),
+        ),
+        migrations.RunPython(migrate_agency_data),
+        migrations.RemoveField(
+            model_name="transitagency",
+            name="eligibility_api_id",
+        ),
+        migrations.RemoveField(
+            model_name="transitagency",
+            name="eligibility_api_private_key",
+        ),
+        migrations.RemoveField(
+            model_name="transitagency",
+            name="eligibility_api_public_key",
         ),
     ]
