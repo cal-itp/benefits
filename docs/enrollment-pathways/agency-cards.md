@@ -64,7 +64,7 @@ autonumber
     participant elig_server as Eligibility server
     participant ac_data as Hashed listed of eligible riders
     participant Agency card data source
-    participant Littlepay
+    participant Transit processor
 
     Agency card data source-->>ac_data: exports nightly
        activate ac_data
@@ -75,10 +75,10 @@ autonumber
         activate elig_server
     elig_server-->>Benefits: returns eligibility status (y/n)
         deactivate elig_server
-    Benefits-->>Littlepay: payment enrollment start
-        activate Littlepay
-    Transit rider->>Littlepay: provides debit or credit card details
-    Littlepay-->>Benefits: card registration confirmation
-        deactivate Littlepay
+    Benefits-->>Transit processor: payment enrollment start
+        activate Transit processor
+    Transit rider->>Transit processor: provides debit or credit card details
+    Transit processor-->>Benefits: card registration confirmation
+        deactivate Transit processor
         deactivate Benefits
 ```
