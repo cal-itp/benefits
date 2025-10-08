@@ -17,6 +17,7 @@ from benefits.core.models import (
     TransitAgency,
     Environment,
 )
+from benefits.core.models.transit import EligibilityApiConfig
 from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup
 from benefits.enrollment_switchio.models import SwitchioConfig, SwitchioGroup
 
@@ -233,7 +234,14 @@ def model_SwitchioConfig(model_PemData, model_TransitAgency):
 
 
 @pytest.fixture
-def model_TransitAgency(model_PemData):
+def model_EligibilityApiConfig(model_PemData):
+    config = EligibilityApiConfig.objects.create(api_id="test123", api_private_key=model_PemData, api_public_key=model_PemData)
+
+    return config
+
+
+@pytest.fixture
+def model_TransitAgency(model_EligibilityApiConfig):
     agency = TransitAgency.objects.create(
         slug="cst",
         short_name="TEST",
@@ -241,9 +249,7 @@ def model_TransitAgency(model_PemData):
         info_url="https://example.com/test-agency",
         phone="800-555-5555",
         active=True,
-        eligibility_api_id="test123",
-        eligibility_api_private_key=model_PemData,
-        eligibility_api_public_key=model_PemData,
+        eligibility_api_config=model_EligibilityApiConfig,
         logo="agencies/cst.png",
     )
 
