@@ -3,6 +3,7 @@ from .transit import (
     agency_logo,
     CardSchemes,
     TransitProcessorConfig,
+    EligibilityApiConfig,
     TransitAgency,
 )
 from .enrollment import EnrollmentMethods, EligibilityApiVerificationRequest, EnrollmentFlow, EnrollmentGroup, EnrollmentEvent
@@ -19,6 +20,7 @@ __all__ = [
     "EnrollmentEvent",
     "PemData",
     "SecretNameField",
+    "EligibilityApiConfig",
     "TransitAgency",
     "TransitProcessorConfig",
 ]
