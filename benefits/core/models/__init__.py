@@ -5,7 +5,7 @@ from .transit import (
     TransitProcessorConfig,
     TransitAgency,
 )
-from .enrollment import EnrollmentMethods, EnrollmentFlow, EnrollmentGroup, EnrollmentEvent
+from .enrollment import EnrollmentMethods, EligibilityApiVerificationRequest, EnrollmentFlow, EnrollmentGroup, EnrollmentEvent
 
 __all__ = [
     "agency_logo",
@@ -13,6 +13,7 @@ __all__ = [
     "CardSchemes",
     "Environment",
     "EnrollmentMethods",
+    "EligibilityApiVerificationRequest",
     "EnrollmentFlow",
     "EnrollmentGroup",
     "EnrollmentEvent",
