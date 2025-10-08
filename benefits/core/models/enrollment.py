@@ -62,6 +62,9 @@ class EligibilityApiVerificationRequest(models.Model):
         max_length=50,
     )
 
+    def __str__(self):
+        return self.label
+
     @property
     def api_auth_key(self):
         """The Eligibility API auth key as a string."""
