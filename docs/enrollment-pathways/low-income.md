@@ -12,7 +12,7 @@ This use case describes a feature in the Cal-ITP Benefits app that allows Califo
 
 ## Demonstration
 
-This video demonstrates how a person receiving CalFresh benefits uses the Cal-ITP Benefits web application to confirm their eligibility for a transit benefit and then register their contactless debit or credit card with the transit processor that manages fare calculation for the transit provider. Once registered, they will automatically receive reduce fares each time they tap-to-pay for transit.
+Here's a video showing what the flow looks like for a person receiving CalFresh benefits to confirm their eligibility for a transit benefit through Login.gov and then register their contactless debit or credit card with Littlepay, one of the supported transit processors:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/LrNyy8k2DPA?si=30hPKkR1valKZFzA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -48,7 +48,6 @@ IdG-->>Benefits: eligibility response
     deactivate Login.gov
 Benefits-->>Transit processor: payment enrollment start
     activate Transit processor
-    Note right of Transit processor: Littlepay or<br> Switchio
 Transit Rider->>Transit processor: provides debit or credit card details
 Transit processor-->>Benefits: payment method enrollment confirmation
     deactivate Transit processor
