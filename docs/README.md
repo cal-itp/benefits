@@ -60,7 +60,7 @@ Running the application locally is possible with [Docker and Docker Compose][doc
 The user interface and content is available in both English and Spanish. Additional language support is possible via Django's
 [i18n and l10n features][i18n].
 
-The application communicates with external vendor services like [Littlepay][littlepay] and [Switchio](https://switchio.com/transport/) via API calls and others like the [Identity Gateway](https://dev.auth.cdt.ca.gov) via redirects, both over the public internet. See [all the system interconnections][interconnections].
+The application communicates with external [transit processors vendors](#transit-processors) via API calls and others like the [Identity Gateway](https://dev.auth.cdt.ca.gov) via redirects, both over the public internet. See [all the system interconnections][interconnections].
 
 ### Infrastructure
 
@@ -81,7 +81,7 @@ Sensitive user information exists in the following places:
 
 - To enroll for reduced fares as an older adult, U.S. Veteran, or Calfresh cardholder, riders need to [provide personal information to Login.gov](https://benefits.calitp.org/help#login-gov-verify).
 - To enroll for reduced fares as a Medicare cardholder, riders need to [provide personal information to Medicare.gov](https://www.medicare.gov/basics/get-started-with-medicare).
-- Eligible riders need to provide their contactless credit or debit card information to one of our transit processors, [Littlepay](https://benefits.calitp.org/help#littlepay) or [Switchio](https://benefits.calitp.org/help#littlepay), to register their card for reduced fares.
+- Eligible riders need to provide their contactless credit or debit card information to one of our [transit processors](#transit-processors), to register their card for reduced fares.
 
 None of that information is accessible to the Benefits system/team.
 
@@ -93,6 +93,14 @@ Learn more about the security/privacy practices of some of our third-party integ
 - [Login.gov](https://www.login.gov/policy/)
 
 Benefits collects analytics on usage, without any identifying information. You can find more details on [our analytics page](product-and-design/analytics/).
+
+### Transit processors
+
+The Benefits application integrates with transit processors to securely register credit or debit cards. This application currently supports the following transit processors: 
+
+- [Littlepay](https://littlepay.com/)
+- [Switchio](https://switchio.com/transport/)
+
 
 ### Practices
 

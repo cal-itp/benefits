@@ -12,7 +12,7 @@ This use case describes a feature in the [Cal-ITP Benefits app](https://benefits
 
 ## Demonstration
 
-Here's a video showing what the flow looks like, having veterans confirm eligibility via Login.gov and enroll via Littlepay:
+Here's a video showing what the flow looks like for a veteran to confirm their eligibility for a transit benefit through Login.gov and then register their contactless debit or credit card with Littlepay, one of the supported transit processors:
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/BJOpJ9fZe98?si=IuvJqqkSESRWM_md&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
@@ -26,7 +26,7 @@ sequenceDiagram
     participant IdG as Identity Gateway
     participant Login.gov
     participant VA.gov
-    participant Littlepay
+    participant Transit processor
 Transit Rider->>Benefits: visits benefits.calitp.org
     activate Benefits
 Benefits-->>IdG: eligibility verification
@@ -45,11 +45,11 @@ VA.gov-->>IdG: return veteran status
 IdG-->>Benefits: eligibility response
     deactivate IdG
     deactivate Login.gov
-Benefits-->>Littlepay: payment enrollment start
-    activate Littlepay
-Transit Rider->>Littlepay: provides debit or credit card details
-Littlepay-->>Benefits: payment method enrollment confirmation
-    deactivate Littlepay
+Benefits-->>Transit processor: payment enrollment start
+    activate Transit processor
+Transit Rider->>Transit processor: provides debit or credit card details
+Transit processor-->>Benefits: payment method enrollment confirmation
+    deactivate Transit processor
     deactivate Benefits
 ```
 
