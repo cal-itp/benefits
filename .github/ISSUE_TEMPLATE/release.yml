@@ -92,12 +92,12 @@ body:
         - label: Ensure `test` secrets are up to date
         - label: Make a local backup of the `test` database if the current release has any database migrations
         - label: Create an annotated release candidate tag on `main` (`git tag -a YYYY.0M.R-rcR`)
-        - label: Push the annotated release candidate tag (`git push origin YYYY.0M.R-rcR`)
+        - label: Push the annotated release candidate tag (`git push origin YYYY.0M.R-rcR`) – this triggers the actual test deployment, which must complete before proceeding to the next step
         - label: QA the app in test
         - label: Ensure `prod` secrets are up to date
         - label: Make a local backup of the `prod` database if the current release has any database migrations
         - label: Create an annotated release tag on `main` (`git tag -a YYYY.0M.R`)
-        - label: Push the annotated release tag (`git push origin YYYY.0M.R`)
+        - label: Push the annotated release tag (`git push origin YYYY.0M.R`) – this triggers the actual prod deployment, which must complete before proceeding to the next step
         - label: Smoke Test the app in prod
         - label: Confirm acceptance of Smoke Tests by adding a comment to this issue
         - label: Edit release notes to link back to this Release process issue
@@ -112,7 +112,7 @@ body:
         - label: Commit the fixes to the hotfix branch
         - label: Ensure `prod` secrets are up to date
         - label: Create an annotated tag on the hotfix branch (`git tag -a YYYY.0M.R`)
-        - label: Push the annotated tag (`git push origin YYYY.0M.R`)
+        - label: Push the annotated tag (`git push origin YYYY.0M.R`) – this triggers the actual prod deployment, which must complete before proceeding to the next step
         - label: Smoke Test the fix in prod
         - label: Confirm acceptance of Smoke Tests by adding a comment to this issue
         - label: Edit release notes to link back to this Release process issue
@@ -127,7 +127,7 @@ body:
       options:
         - label: Create an annotated release tag for the rollback on the commit associated with the last known good release tag on `main` (`git tag -a YYYY.0M.R <commit-hash>`)
         - label: Ensure `prod` secrets are up to date
-        - label: Push the annotated tag (`git push origin YYYY.0M.R`)
+        - label: Push the annotated tag (`git push origin YYYY.0M.R`) – this triggers the actual prod deployment, which must complete before proceeding to the next step
         - label: Smoke Test the rollback in prod
         - label: Confirm acceptance of Smoke Tests by adding a comment to this issue
         - label: Edit release notes to link back to this Release process issue
