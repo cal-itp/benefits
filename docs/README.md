@@ -60,7 +60,7 @@ Running the application locally is possible with [Docker and Docker Compose][doc
 The user interface and content is available in both English and Spanish. Additional language support is possible via Django's
 [i18n and l10n features][i18n].
 
-The application communicates with external [transit processors vendors](#transit-processors) via API calls and others like the [Identity Gateway](https://dev.auth.cdt.ca.gov) via redirects, both over the public internet. See [all the system interconnections][interconnections].
+The application communicates with external [transit processor vendors](#transit-processors) via API calls and others like the [Identity Gateway](https://digitalidstrategy.cdt.ca.gov/primary-elements.html) via redirects, both over the public internet. See [all the system interconnections][interconnections].
 
 ### Infrastructure
 
