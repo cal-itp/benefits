@@ -1,0 +1,16 @@
+{% load i18n %}
+
+<div class="d-flex flex-column align-items-center align-items-lg-start row-gap-3 pb-4">
+  <p class="small-text">
+    {% blocktranslate trimmed with count=active_agencies|length %}
+      Ride across {{ count }} agencies (and growing!)
+    {% endblocktranslate %}
+  </p>
+  <div class="logo-strip d-flex flex-wrap justify-content-center gap-4">
+    {% for agency in active_agencies %}
+      {# djlint:off H006 #}
+      <img height="32" src="{{ agency.logo_small_url }}" alt="{{ agency.short_name }} logo">
+      {# djlint:on #}
+    {% endfor %}
+  </div>
+</div>

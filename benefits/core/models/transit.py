@@ -292,7 +292,7 @@ class TransitAgency(models.Model):
     def all_active():
         """Get all TransitAgency instances marked active."""
         logger.debug(f"Get all active {TransitAgency.__name__}")
-        return TransitAgency.objects.filter(active=True)
+        return TransitAgency.objects.filter(active=True).order_by("long_name")
 
     @staticmethod
     def for_user(user: User):
