@@ -98,8 +98,8 @@ Benefits collects analytics on usage, without any identifying information. You c
 
 The Benefits application integrates with transit processors to securely register credit or debit cards. This application currently supports the following transit processors:
 
-- [Littlepay](https://littlepay.com/)
-- [Switchio](https://switchio.com/transport/)
+- [Littlepay][littlepay]
+- [Switchio][switchio]
 
 
 ### Practices
