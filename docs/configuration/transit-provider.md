@@ -11,7 +11,7 @@ These steps currently assume the transit provider is using Littlepay as their tr
 
 ## Pre-configuration prep work
 
-These items can all be done in parallel.
+_These items can all be done in parallel._
 
 ### Add transit provider to adoption table
 
@@ -46,18 +46,22 @@ Certain parts of the codebase must be updated to support a new provider:
 
 ## Configuration for development and testing
 
+_These items can all be done in parallel._
+
+### Initial Littlepay configuration
+
 For development and testing, only a Littlepay customer group is needed since there is no need to interact with any discount product. (We don't have a way to tap a card against the QA system to trigger a discount and therefore have no reason to associate the group with any product.)
 
 This work can begin once the provider has a contract in place with Littlepay.
 
-### Steps
+- Cal-ITP uses the transit provider's Littlepay merchant ID to create a customer group in the Littlepay QA environment for each type of eligibility (e.g. senior).
+  - _Typically performed by provider's Account Manager_
+  - For each group that's created, a group ID will be returned and should be set as the `group_id` on a new `LittlepayGroup` in the Benefits database. (See [Configuration data](../data/) for more on loading the database.)
+- Cal-ITP requests and receives API access to Littlepay QA for the new provider.
+  - _Typically requested by a developer via email to Littlepay_
 
-1. Cal-ITP uses the transit provider's Littlepay merchant ID to create a customer group in the Littlepay QA environment for each type of eligibility (e.g. senior).
-   - _Typically performed by provider's Account Manager_
-   - For each group that's created, a group ID will be returned and should be set as the `group_id` on a new `LittlepayGroup` in the Benefits database. (See [Configuration data](../data/) for more on loading the database.)
-1. Cal-ITP requests and receives API access to Littlepay QA for the new provider.
-   - _Typically requested by a developer via email to Littlepay_
-   - Can happen in parallel with the above group creation step
+### Basic provider data configuration
+
 1. Cal-ITP creates a new `TransitAgency` in the local or dev environment.
    - Once the code changes above are in place, add a new transit agency with the following:
      - Slug: Choose the one added in code
@@ -80,8 +84,6 @@ This work can begin once the provider has a contract in place with Littlepay.
 **Production validation** is the process of doing a end-to-end test of enrolling a real person's card through the Benefits app and using it to ride with a discounted fare. The word "production" here refers to **Littlepay's production environment** (which must be used to take a ride in real life), but the Benefits application's test environment is used for the enrollment process to avoid disruption of the Benefits production environment.
 
 For production validation, both a customer group and discount product are needed. The customer group used here is a temporary one for testing only.
-
-### Steps
 
 1. Transit provider staff creates the discount product in production Littlepay (if it does not already exist).
 1. Transit provider staff takes a screenshot of the discount product in the Merchant Portal, making sure the browser URL is visible, and sends that to Cal-ITP.
@@ -147,8 +149,6 @@ At this point, Cal-ITP and transit provider staff can coordinate to do on-the-gr
 
 Once production validation is done, the transit provider can be added to the production Benefits database.
 
-### Steps
-
 1. Cal-ITP creates a customer group **for production use** in production Littlepay.
 1. Cal-ITP associates the group with the discount product [created previously during production validation](#configuration-for-production-validation).
    - Once this is complete, verify that the setup is correct by using the [littlepay CLI](https://github.com/cal-itp/littlepay).
@@ -178,6 +178,8 @@ Once production validation is done, the transit provider can be added to the pro
    - [Create the client secret in the Azure Key Vault](../deployment/secrets/) for the prod environment, then paste its name in the Client Secret Name field
      - Be sure to refresh the secrets for this to take effect! _**ADD MORE DETAILED INSTRUCTIONS**_
 1. Cal-ITP returns to the `TransitAgency` instance and checks the **Active** box.
+
+At this point, real customers can begin enrolling their cards and receiving their discounted fares with this transit provider!
 
 
 ## Verify real user enrollments are starting to happen
@@ -219,6 +221,8 @@ You can also go directly to the existing [Cal-ITP Benefits enrollments by transi
 ## Cleanup
 
 Once the provider is live in production, there are some cleanup steps to take.
+
+_These items can all be done in parallel, and can also be done in parallel with the analytics verification described above._
 
 ### Remove test group in production Littlepay
 
