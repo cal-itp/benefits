@@ -16,7 +16,7 @@ This video shows the rider experience enrolling for transit benefits using the a
 
 To support an agency card deployment in Cal-ITP Benefits, the transit provider produces a list of eligible riders in CSV format. That file is loaded into an instance of the [Eligibility Server](https://docs.calitp.org/eligibility-server/) running in the transit provider's cloud.
 
-Cal-ITP uses the [`hashfields` tool](https://docs.calitp.org/hashfields) to mask user data before it leaves the transit provider's on-premise systems to protect rider personal information.
+Cal-ITP uses the [`hashfields` tool](https://docs.calitp.org/hashfields) to mask user data before it leaves the transit provider's on-premises systems to protect rider personal information.
 
 ### System architecture
 
