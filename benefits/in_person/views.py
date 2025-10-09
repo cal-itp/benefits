@@ -16,13 +16,13 @@ from benefits.enrollment_littlepay.views import TokenView, IndexView as Littlepa
 from benefits.enrollment_switchio.session import Session as SwitchioSession
 from benefits.enrollment_switchio.views import GatewayUrlView, IndexView as SwitchioIndexView
 
-from benefits.in_person import forms
+from benefits.in_person import forms, mixins
 from benefits.routes import routes
 
 logger = logging.getLogger(__name__)
 
 
-class EligibilityView(FormView):
+class EligibilityView(mixins.CommonContextMixin, FormView):
     """CBV for the in-person eligibility flow selection form."""
 
     template_name = "in_person/eligibility.html"
@@ -40,18 +40,6 @@ class EligibilityView(FormView):
             session.update(request, agency=agency)
         self.agency = agency
         return super().dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        """Add in-person specific context data."""
-
-        context = super().get_context_data(**kwargs)
-        context.update(
-            {
-                **admin_site.each_context(self.request),
-                "title": f"{self.agency.long_name} | In-person enrollment | {admin_site.site_title}",
-            }
-        )
-        return context
 
     def get_form_kwargs(self):
         """Return the keyword arguments for instantiating the form."""
@@ -89,7 +77,7 @@ class EnrollmentView(IndexView):
         return reverse(route_name)
 
 
-class LittlepayEnrollmentView(LittlepayIndexView):
+class LittlepayEnrollmentView(mixins.CommonContextMixin, LittlepayIndexView):
     """View handler for the in-person enrollment page."""
 
     enrollment_method = models.EnrollmentMethods.IN_PERSON
@@ -103,17 +91,6 @@ class LittlepayEnrollmentView(LittlepayIndexView):
 
     def _get_verified_by(self):
         return f"{self.request.user.first_name} {self.request.user.last_name}"
-
-    def get_context_data(self, **kwargs):
-        """Add in-person specific context data."""
-
-        context = super().get_context_data(**kwargs)
-        context.update(
-            {
-                "title": f"{self.agency.long_name} | In-person enrollment | {admin_site.site_title}",
-            }
-        )
-        return context
 
 
 def reenrollment_error(request):
@@ -186,7 +163,7 @@ class SwitchioGatewayUrlView(GatewayUrlView):
     route_system_error = routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR
 
 
-class SwitchioEnrollmentIndexView(SwitchioIndexView):
+class SwitchioEnrollmentIndexView(mixins.CommonContextMixin, SwitchioIndexView):
     enrollment_method = models.EnrollmentMethods.IN_PERSON
     form_class = forms.CardTokenizeSuccessForm
     route_enrollment_success = routes.IN_PERSON_ENROLLMENT_SUCCESS
@@ -209,12 +186,7 @@ class SwitchioEnrollmentIndexView(SwitchioIndexView):
         else:
             message = "Connecting with payment processor..."
 
-        context.update(
-            {
-                "loading_message": message,
-                "title": f"{self.agency.long_name} | In-person enrollment | {admin_site.site_title}",
-            }
-        )
+        context.update({"loading_message": message})
         return context
 
     def get(self, request, *args, **kwargs):
