@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_8c0b35f1ea7ee6af_recaptcha_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.10.7">coverage.py v7.10.7</a>,
-            created at 2025-10-08 21:36 +0000
+            created at 2025-10-09 22:54 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -376,7 +376,7 @@
     <p class="run"><span class="n"><a id="t292" href="#t292">292</a></span><span class="t">    <span class="key">def</span> <span class="nam">all_active</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t293" href="#t293">293</a></span><span class="t">        <span class="str">"""Get all TransitAgency instances marked active."""</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t294" href="#t294">294</a></span><span class="t">        <span class="nam">logger</span><span class="op">.</span><span class="nam">debug</span><span class="op">(</span><span class="fst">f"</span><span class="fst">Get all active </span><span class="op">{</span><span class="nam">TransitAgency</span><span class="op">.</span><span class="nam">__name__</span><span class="op">}</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t295" href="#t295">295</a></span><span class="t">        <span class="key">return</span> <span class="nam">TransitAgency</span><span class="op">.</span><span class="nam">objects</span><span class="op">.</span><span class="nam">filter</span><span class="op">(</span><span class="nam">active</span><span class="op">=</span><span class="key">True</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t295" href="#t295">295</a></span><span class="t">        <span class="key">return</span> <span class="nam">TransitAgency</span><span class="op">.</span><span class="nam">objects</span><span class="op">.</span><span class="nam">filter</span><span class="op">(</span><span class="nam">active</span><span class="op">=</span><span class="key">True</span><span class="op">)</span><span class="op">.</span><span class="nam">order_by</span><span class="op">(</span><span class="str">"long_name"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t296" href="#t296">296</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t297" href="#t297">297</a></span><span class="t">    <span class="op">@</span><span class="nam">staticmethod</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t298" href="#t298">298</a></span><span class="t">    <span class="key">def</span> <span class="nam">for_user</span><span class="op">(</span><span class="nam">user</span><span class="op">:</span> <span class="nam">User</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -395,7 +395,7 @@
             <a class="nav" href="z_8c0b35f1ea7ee6af_recaptcha_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.10.7">coverage.py v7.10.7</a>,
-            created at 2025-10-08 21:36 +0000
+            created at 2025-10-09 22:54 +0000
         </p>
     </div>
 </footer>
