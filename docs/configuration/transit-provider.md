@@ -1,21 +1,21 @@
-# Configuring a new transit agency
+# Onboarding a new transit provider
 
-Before starting any configuration, the Cal-ITP team and transit agency staff should have a kickoff meeting to confirm that information provided is complete, implementation plan is feasible, and any approvals needed have been obtained.
+Before starting any configuration, the Cal-ITP team and transit provider staff should have a kickoff meeting to confirm that information provided is complete, implementation plan is feasible, and any approvals needed have been obtained.
 
-Then, the following steps are done by the Cal-ITP team to configure a new transit agency in the Benefits application.
+Then, the following steps are done by the Cal-ITP team to configure a new transit provider in the Benefits application.
 
 Note that a `TransitAgency` model requires:
 
-- a list of `EnrollmentFlows`s available to the agency's users
+- a list of `EnrollmentFlows`s available to the provider's users
 - a `TransitProcessor` for enrolling the user's contactless card for discounts
 - an `info_url` and `phone` for users to contact customer service
-- an SVG or PNG file of the transit agency's logo
+- an SVG or PNG file of the transit provider's logo
 - HTML templates for various buttons, text and other user interface elements of the flow, including:
   - `selection_label_template`: _Required for enrollment flows_ - Text and optional modals for the radio button form on the Eligibility Index page
   - `sign_out_button_template`: _Required for claims providers_ - Sign out link button, used on any page after sign in
   - `sign_out_link_template`: _Required for claims providers_ - Sign out link text, used on any page after sign in
 
-Also note that these steps assume the transit agency is using Littlepay as their transit processor. Support for integration with [other transit processors](https://www.camobilitymarketplace.org/contracts/) may be added in the future.
+Also note that these steps assume the transit provider is using Littlepay as their transit processor. Support for integration with [other transit processors](https://www.camobilitymarketplace.org/contracts/) may be added in the future.
 
 ## Configuration for development and testing
 
@@ -23,7 +23,7 @@ For development and testing, only a Littlepay customer group is needed since the
 
 ### Steps
 
-1. Cal-ITP uses the transit agency's Littlepay merchant ID to create a customer group in the Littlepay QA environment for each type of eligibility (e.g. senior).
+1. Cal-ITP uses the transit provider's Littlepay merchant ID to create a customer group in the Littlepay QA environment for each type of eligibility (e.g. senior).
 1. For each group that's created, a group ID will be returned and should be set as the `group_id` on a new `EnrollmentFlow` in the Benefits database. (See [Configuration data](../data/) for more on loading the database.)
 1. Cal-ITP creates a new `EnrollmentFlow` in the database for each supported eligibility type. This will require configuration for either [API](https://docs.calitp.org/eligibility-api/specification/)-based verification or verification through an [OAuth Open ID Connect claims provider](../oauth/) (e.g. sandbox Login.gov) -- either way, this resource should be meant for testing.
 1. Cal-ITP creates a new `TransitAgency` in the database and associates it with the new `EnrollmentFlow`s as well as the existing Littlepay `TransitProcessor`.
@@ -34,8 +34,8 @@ For production validation, both a customer group and discount product are needed
 
 ### Steps
 
-1. Transit agency staff creates the discount product in production Littlepay (if it does not already exist).
-1. Transit agency staff takes a screenshot of the discount product in the Merchant Portal, making sure the browser URL is visible, and sends that to Cal-ITP.
+1. Transit provider staff creates the discount product in production Littlepay (if it does not already exist).
+1. Transit provider staff takes a screenshot of the discount product in the Merchant Portal, making sure the browser URL is visible, and sends that to Cal-ITP.
 1. Cal-ITP creates a customer group **for testing purposes** in production Littlepay.
 1. Cal-ITP associates the group with the product.
 1. Cal-ITP creates a new `EnrollmentFlow` **for testing purposes** in the Benefits database and sets the `group_id` to the ID of the newly-created group.
@@ -43,18 +43,18 @@ For production validation, both a customer group and discount product are needed
 1. Cal-ITP creates a new `TransitProcessor` **for testing purposes** with configuration for production Littlepay.
 1. Cal-ITP updates the existing `TransitAgency` (created [previously](#configuration-for-development-and-testing)) with associations to the eligibility types, enrollment flows, and transit processor that were just created for testing.
 
-At this point, Cal-ITP and transit agency staff can coordinate to do on-the-ground testing where a live card is tapped on a live payment validator.
+At this point, Cal-ITP and transit provider staff can coordinate to do on-the-ground testing where a live card is tapped on a live payment validator.
 
 ### Production validation testing
 
-1. Transit agency staff (or Cal-ITP staff) does live test in the field.
-1. Transit agency staff uses the Merchant Portal to verify the taps and discounts were successful.
+1. Transit provider staff (or Cal-ITP staff) does live test in the field.
+1. Transit provider staff uses the Merchant Portal to verify the taps and discounts were successful.
 1. Cal-ITP uses logs from Azure to verify the user was associated to the customer group.
 1. Cal-ITP verifies that Amplitude analytic events are being sent.
 
 ## Configuration for production
 
-Once production validation is done, the transit agency can be added to the production Benefits database.
+Once production validation is done, the transit provider can be added to the production Benefits database.
 
 ### Steps
 
