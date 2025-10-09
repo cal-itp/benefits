@@ -533,6 +533,12 @@ footer .footer-links li a.footer-link:visited {
   }
 }
 
+.small-text {
+  font-size: var(--font-size-14px);
+  line-height: var(--form-field-text-line-height);
+  letter-spacing: calc(var(--font-size-14px) * var(--letter-spacing-5));
+}
+
 /* Forms: Text Inputs */
 /* Form Field Container: Must use .form-field-container parent to use these styles */
 
@@ -560,13 +566,6 @@ footer .footer-links li a.footer-link:visited {
   outline: 3px solid var(--focus-color) !important;
   outline-offset: 2px !important;
   box-shadow: none !important;
-}
-
-.eyebrow-text,
-.form-text {
-  font-size: var(--font-size-14px);
-  line-height: var(--form-field-text-line-height);
-  letter-spacing: calc(var(--font-size-14px) * var(--letter-spacing-5));
 }
 
 .form-field-container.eligibility-verification-form {
@@ -807,21 +806,17 @@ a.card:focus-visible {
   --landing-background: url("/static/img/benefits-bg-mobile.webp") no-repeat
     var(--primary-color);
   --landing-background-fallback-color: #1a1b16; /* same color the left side of the background image */
-  --landing-box-background: var(--bs-white);
-  --landing-box-border: 12px solid var(--primary-color);
-  --landing-text-color: var(--text-primary-color);
+  --landing-box-border: none;
+  --landing-text-color: var(--bs-white);
   --landing-page-x-margin: auto;
 }
 
 @media (min-width: 992px) {
   :root {
     --landing-main-height: calc(
-      100vh - 130px
-    ); /* 130px = Header Height (80px) + (Footer Link (50px) */
+      100vh - 210px
+    ); /* 210px = Header Height (80px) + Footer Link (50px) + Logo strip (80px) */
     --landing-background: url("/static/img/benefits-bg-desktop.webp") no-repeat;
-    --landing-box-background: transparent;
-    --landing-box-border: none;
-    --landing-text-color: var(--bs-white);
     --landing-page-x-margin: 0;
   }
 }
@@ -830,6 +825,14 @@ a.card:focus-visible {
   background: var(--landing-background);
   background-size: cover;
   background-color: var(--landing-background-fallback-color);
+  box-shadow: inset 0 0 0 1000px rgba(36, 47, 66, 0.6);
+  color: var(--landing-text-color);
+}
+
+@media (min-width: 992px) {
+  .landing main#main-content {
+    box-shadow: none;
+  }
 }
 
 .landing main#main-content .container .row:first-child {
@@ -837,10 +840,8 @@ a.card:focus-visible {
 }
 
 .landing .box {
-  background: var(--landing-box-background);
   border-top: var(--landing-box-border);
   border-radius: calc(8rem / 16);
-  color: var(--landing-text-color);
   margin-bottom: calc(32rem / 16);
 }
 
@@ -853,4 +854,11 @@ a.card:focus-visible {
 
 .landing footer {
   margin-top: 0;
+}
+
+/* column-gap-lg-5 doesnt provide enough breathing room */
+@media (min-width: 992px) {
+  .logo-strip {
+    column-gap: 80px !important;
+  }
 }
