@@ -8,7 +8,7 @@ The agency card enrollment option differs from other options in the application 
 
 ## Demonstration
 
- This video shows the rider experience enrolling for tranist benefits using the agency card enrollment pathway.
+This video shows the rider experience enrolling for transit benefits using the agency card enrollment pathway.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/_iOb19cLg30?si=G-4-CiNd88_vp0dj&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
