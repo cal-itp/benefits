@@ -90,38 +90,6 @@ class TestEnrollmentFlowAdmin:
             (
                 "staff",
                 [
-                    "eligibility_api_auth_header",
-                    "eligibility_api_auth_key_secret_name",
-                    "eligibility_api_public_key",
-                    "eligibility_api_jwe_cek_enc",
-                    "eligibility_api_jwe_encryption_alg",
-                    "eligibility_api_jws_signing_alg",
-                ],
-            ),
-            ("super", None),
-        ],
-    )
-    def test_get_exclude(self, admin_user_request, flow_admin_model, user_type, expected):
-        if expected:
-            model_fields = [f.name for f in flow_admin_model.model._meta.get_fields()]
-            assert all(field in model_fields for field in expected)
-
-        request = admin_user_request(user_type)
-
-        excluded = flow_admin_model.get_exclude(request)
-
-        if expected:
-            assert set(excluded) == set(expected)
-        else:
-            assert excluded is None
-
-    @pytest.mark.parametrize(
-        "user_type,expected",
-        [
-            (
-                "staff",
-                [
-                    "eligibility_api_url",
                     "selection_label_template_override",
                 ],
             ),
@@ -209,11 +177,8 @@ class TestEnrollmentFlowAdmin:
         )
         assert not form.is_valid()
 
-    def test_EnrollmentFlowForm_clean_eligibility_api_verification(
-        self,
-        admin_user_request,
-        flow_admin_model,
-        model_TransitAgency,
+    def test_EnrollmentFlowForm_clean_no_request_config(
+        self, admin_user_request, flow_admin_model, model_TransitAgency, model_EligibilityApiVerificationRequest
     ):
         model_TransitAgency.slug = "cst"  # use value that will map to existing templates
         model_TransitAgency.save()
@@ -221,39 +186,31 @@ class TestEnrollmentFlowAdmin:
         request = admin_user_request("super")
 
         # fill out the form without a transit agency
-        request.POST = dict(
+        post_data = dict(
             system_name="senior",  # use value that will map to existing templates
             supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
-            eligibility_api_url="http://server:8000/verify",
-            eligibility_api_auth_header="",
-            eligibility_api_auth_key_secret_name="",
-            eligibility_api_jwe_cek_enc="",
-            eligibility_api_jwe_encryption_alg="",
-            eligibility_api_jws_signing_alg="",
-            eligibility_api_public_key=None,
         )
+        request.POST = post_data
 
         form_class = flow_admin_model.get_form(request)
-
         form = form_class(request.POST)
 
         # clean is OK
         assert not form.errors
         assert form.is_valid()
 
-        # reassign agency
-        request.POST.update(dict(transit_agency=model_TransitAgency.id))
+        # assign agency
+        post_data.update(dict(transit_agency=model_TransitAgency.id))
+        request.POST = post_data
 
         form = form_class(request.POST)
 
         assert not form.is_valid()
         error_dict = form.errors
-        assert "eligibility_api_auth_header" in error_dict
-        assert "eligibility_api_auth_key_secret_name" in error_dict
-        assert "eligibility_api_jwe_cek_enc" in error_dict
-        assert "eligibility_api_jwe_encryption_alg" in error_dict
-        assert "eligibility_api_jws_signing_alg" in error_dict
-        assert "eligibility_api_public_key" in error_dict
+        assert (
+            "Must configure either claims verification or Eligibility API verification before adding to a transit agency."
+            in error_dict["__all__"]
+        )
 
     def test_EnrollmentFlowForm_clean_supports_expiration_superuser(
         self,
