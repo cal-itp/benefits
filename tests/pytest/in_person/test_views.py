@@ -141,7 +141,8 @@ class TestEnrollmentView:
 @pytest.mark.django_db
 class TestLittlepayEnrollmentView:
     @pytest.fixture
-    def view(self, app_request, model_LittlepayConfig, model_EnrollmentFlow):
+    def view(self, app_request, model_LittlepayConfig, model_EnrollmentFlow, model_User):
+        app_request.user = model_User
         v = views.LittlepayEnrollmentView()
         v.setup(app_request)
         v.agency = model_LittlepayConfig.transit_agency
@@ -153,7 +154,7 @@ class TestLittlepayEnrollmentView:
 
         assert view._get_verified_by() == "First Last"
 
-    def test_get_context_data(self, view, app_request):
+    def test_get_context_data(self, view):
         context = view.get_context_data()
 
         assert "title" in context
@@ -246,7 +247,8 @@ class TestSwitchioGatewayUrlView:
 @pytest.mark.django_db
 class TestSwitchioEnrollmentIndexView:
     @pytest.fixture
-    def view(self, app_request, model_SwitchioConfig, model_EnrollmentFlow):
+    def view(self, app_request, model_SwitchioConfig, model_EnrollmentFlow, model_User):
+        app_request.user = model_User
         v = views.SwitchioEnrollmentIndexView()
         v.setup(app_request)
         v.agency = model_SwitchioConfig.transit_agency
