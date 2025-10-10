@@ -351,18 +351,22 @@ footer .footer-links li a.footer-link:visited {
   --bs-btn-hover-bg: #ffffff;
 }
 
-.btn.btn-lg.btn-primary {
+.btn.btn-primary {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
   border-width: 2px;
   font-weight: var(--medium-font-weight);
-  font-size: var(--font-size-20px);
+  font-size: var(--font-size-16px);
   letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
   width: 100%;
+}
+
+.btn.btn-lg.btn-primary {
+  font-size: var(--font-size-20px);
   padding: var(--primary-button-padding);
 }
 
-.btn.btn-lg.btn-primary:hover {
+.btn.btn-primary:hover {
   background-color: var(--hover-color);
   border-color: var(--hover-color);
 }
@@ -861,4 +865,9 @@ a.card:focus-visible {
   .logo-strip {
     column-gap: 80px !important;
   }
+}
+
+.public-transit-span {
+  font-size: inherit;
+  font-weight: inherit;
 }

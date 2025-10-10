@@ -1,0 +1,30 @@
+{% load i18n %}
+
+<div class="d-grid gap-2 mt-lg-5">
+  <form id="{{ form.id }}" method="{{ form.method }}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary mt-2" type="submit">{% translate "Next" %}</button>
+
+    {% include "core/includes/form-handlers.html" %}
+    <script nonce="{{ request.csp_nonce }}">
+      ready(function() {
+        const select = document.querySelector("#{{ form.id }} select");
+
+        // this listener is a (kinda corny) way of customizing the headline text
+        // after a user has selected a transit agency, but before they submit the form
+        select.addEventListener("change", function () {
+          // this dismisses the stale error message when an agency is selected for the first time
+          // after clicking Next prematurely. i'm surprised its needed
+          select.setCustomValidity("");
+
+          const idx = select.selectedIndex
+          const span = document.querySelector('.public-transit-span')
+          // if we opt to take this tack, i'll figure out how to load our own translations
+          // console.log(gettext("January"))
+          span.innerText = idx === 0 ? gettext("public transit") : select[idx].innerText
+        });
+      })
+    </script>
+  </form>
+</div>
