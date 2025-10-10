@@ -86,7 +86,7 @@ The following updates must be made to run a full end-to-end test using the sampl
 
 ### `.env` updates
 
-- Change `cst_transit_processor_client_secret` from the default (`secret`) to the appropriate value
+- Change `cst_littlepay_client_secret` from the default (`secret`) to the appropriate value
 - Set `DJANGO_LOCAL_PORT` to the right value for the dev IdG to let you connect via localhost
 - Set `littlepay_qa_api_base_url`
 
