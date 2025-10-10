@@ -12,7 +12,7 @@ This use case describes a feature in the [Cal-ITP Benefits app](https://benefits
 
 ## Demonstration
 
-This video demonstrates how a Medicare enrollee uses the Cal-ITP Benefits web application to confirm their eligibility for a transit benefit using Medicare.gov and then registers their contactless debit or credit card with Littlepay.
+Here's a video showing what the flow looks like for a Medicare enrollee to confirm their eligibility for a transit benefit through Medicare.gov and then register their contactless debit or credit card with Littlepay, one of the supported transit processors:
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/YZylD7oAbso?si=1aUb26LYDgkm_SCo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -27,7 +27,7 @@ autonumber
     participant IdG as Identity Gateway
     participant Medicare as Medicare.gov
     participant BB API as Blue Button API
-    participant Littlepay
+    participant Transit processor
 Transit Rider->>Benefits: visits benefits.calitp.org
     activate Benefits
 Benefits-->>IdG: begin eligibility verification
@@ -44,11 +44,11 @@ BB API-->>IdG: returns required PII
     deactivate BB API
 IdG-->>Benefits: eligibility response
     deactivate IdG
-Benefits-->>Littlepay: card enrollment start
-    activate Littlepay
-Transit Rider->>Littlepay: provides debit or credit card details
-Littlepay-->>Benefits: card enrollment confirmation
-    deactivate Littlepay
+Benefits-->>Transit processor: card enrollment start
+    activate Transit processor
+Transit Rider->>Transit processor: provides debit or credit card details
+Transit processor-->>Benefits: card enrollment confirmation
+    deactivate Transit processor
     deactivate Benefits
 ```
 
@@ -66,7 +66,7 @@ Littlepay-->>Benefits: card enrollment confirmation
 
 1. The IdG then passes an eligibility response as Medicare enrollment status = TRUE to the Cal-ITP Benefits app to indicate the person is eligible for a benefit.
 
-1. The transit rider provides the debit or credit card details they use to pay for transit to Littlepay, the payment processor that facilitates transit fare collection.
+1. The transit rider provides the debit or credit card details they use to pay for transit to the [transit processor](/#transit-processors) that facilitates fare collection for the transit provider.
 
 1. The app registers the transit benefit with the transit rider’s debit or credit card.
 
