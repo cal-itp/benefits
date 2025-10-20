@@ -102,7 +102,7 @@ body:
       options:
         - label: Declare an Incident in the relevant Slack channel, such as [`#benefits-general`](https://cal-itp.slack.com/archives/C013W8RUAMU).
         - label: Determine the impact.
-        - label: If the Incident is lasting more than 60 minutes or their customers' data has been breached, notify the impacted transit agencies.
+        - label: If the Incident lasts more than 60 minutes or their customers' data has been breached, notify the impacted transit agencies.
         - label: If it's believed to be an ongoing attack (such as DDoS), notify DevSecOps.
         - label: Check the [troubleshooting documentation](https://docs.calitp.org/benefits/deployment/troubleshooting/) for relevant information.
         - label: Draft an Incident Report, see [past examples](https://drive.google.com/drive/folders/1MVixX2jFioaSiM3xtGB15rKyU99fScqH) and [the template](https://docs.google.com/document/d/1oA7RyanJQ_9tu302Zk6d7CtGck6t8Inw-gqB7ER-EAQ/edit).
