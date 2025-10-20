@@ -1,5 +1,5 @@
 name: Declare an Incident
-description: Use this form to declare and Incident and track the steps towards resolution, even if it's just a suspicion.
+description: Use this form to declare an Incident and track the steps towards resolution, even if it's just a suspicion.
 title: Incident
 labels:
   - incident
