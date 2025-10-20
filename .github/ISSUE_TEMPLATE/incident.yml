@@ -1,0 +1,113 @@
+name: Declare an Incident
+description: Use this form to declare and Incident and track the steps towards resolution, even if it's just a suspicion.
+title: Incident
+labels:
+  - incident
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Declare an Incident
+
+        Use the form below to declare an Incident for the Benefits app.
+
+        _**Do not put sensitive information in this issue or Slack.** Use a file on Google Drive with access restricted._
+
+        The [Benefits Incident Management Plan](https://docs.google.com/document/d/1qtev8qItPiTB4Tp9FQ87XsLtWZ4HlNXqoe9vF2VuGcY/edit) has relevant details about the overall process, severity level definitions, etc.
+
+        After creating the issue with this template, edit the description to add additional context, screenshots, etc.
+
+        See [past Benefits Incidents](https://github.com/cal-itp/benefits/issues?q=is%3Aissue%20label%3Aincident) for examples of the types of details and information to include.
+
+        Close this issue when the Incident is resolved.
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        ## Incident severity
+
+        Reference this section in the [Benefits Incident Management Plan](https://docs.google.com/document/d/1qtev8qItPiTB4Tp9FQ87XsLtWZ4HlNXqoe9vF2VuGcY/edit?tab=t.0#heading=h.i5blb1qnnx67).
+
+        * `Critical`: These Incidents have an actively negative impact on end-users and/or production systems.
+        * `Urgent`: These Incidents have a major impact on most end-users and/or production systems.
+        * `Important`: These Incidents moderately impact some end-users and/or production systems.
+        * `Monitor`: These Incidents have a minor impact on a small set of end-users and/or production systems.
+
+        While the Incident is being triaged, this assessment may change. For now, put in the best estimate.
+  - type: dropdown
+    id: severity
+    attributes:
+      label: What is the severity level of this Incident?
+      options:
+        - Critical
+        - Urgent
+        - Important
+        - Monitor
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: "Initial description of the Incident. DO NOT put sensitive information in this GitHub issue."
+    validations:
+      required: true
+  - type: checkboxes
+    id: impacted-platforms
+    attributes:
+      label: Impacted Platforms/OS
+      options:
+        - label: MacOS
+        - label: iOS
+        - label: Android
+        - label: Windows
+        - label: Other?
+    validations:
+      required: true
+  - type: checkboxes
+    id: impacted-browsers
+    attributes:
+      label: Impacted Browsers
+      options:
+        - label: Chrome (latest)
+        - label: Chrome (prior)
+        - label: Safari (latest)
+        - label: Safari (prior)
+        - label: Firefox (latest)
+        - label: Firefox (prior)
+        - label: Edge (latest)
+        - label: Edge (prior)
+        - label: Other?
+    validations:
+      required: true
+  - type: input
+    id: slack
+    attributes:
+      label: Slack thread
+      description: Link to the Slack thread used to discuss and triage this Incident
+      placeholder: "https://slack.com/archives/ABC/XZY"
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: |
+        ## Incident response
+
+        Use the following checklist as the Incident is triaged and worked on. Add additional relevant items as-needed.
+  - type: checkboxes
+    id: response
+    attributes:
+      label: Incident response checklist
+      options:
+        - label: Declare an Incident in the relevant Slack channel, such as [`#benefits-general`](https://cal-itp.slack.com/archives/C013W8RUAMU).
+        - label: Determine the impact.
+        - label: If the Incident is lasting more than 60 minutes or their customers' data has been breached, notify the impacted transit agencies.
+        - label: If it's believed to be an ongoing attack (such as DDoS), notify DevSecOps.
+        - label: Check the [troubleshooting documentation](https://docs.calitp.org/benefits/deployment/troubleshooting/) for relevant information.
+        - label: Draft an Incident Report, see [past examples](https://drive.google.com/drive/folders/1MVixX2jFioaSiM3xtGB15rKyU99fScqH) and [the template](https://docs.google.com/document/d/1oA7RyanJQ_9tu302Zk6d7CtGck6t8Inw-gqB7ER-EAQ/edit).
+        - label: Complete the Incident Report write-up with all relevant details, timeline, etc.
+        - label: "Create issue(s) for follow-up tasks, such as: additional monitoring, documentation updates, or more graceful failure handling"
+        - label: Schedule a retrospective/post-mortem
+    validations:
+      required: false
