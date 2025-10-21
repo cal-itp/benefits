@@ -42,6 +42,8 @@ The following custom user attributes are collected when the user performs specif
 
 | User property          | Description                          | Example value(s)                                                                                                  |
 | ---------------------- | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `card_category`        | Type of card successfully enrolled   | `debit` or `credit`                                                                                               |
+| `card_scheme`          | Brand of card successfully enrolled  | `visa`, `mastercard`, etc.                                                                                        |
 | `enrollment_flows`     | Enrollment flows chosen by user      | `[veteran]`                                                                                                       |
 | `eligibility_verifier` | How eligibility for flow is verified | `cdt-logingov`                                                                                                    |
 | `referrer`             | URL that the event came from         | `https://benefits.calitp.org/help/`                                                                               |
