@@ -3,6 +3,7 @@ import time
 
 import pytest
 from authlib.integrations.base_client.errors import UnsupportedTokenTypeError
+from littlepay.api.funding_sources import FundingSourceResponse
 from django.urls import reverse
 from requests import HTTPError
 
@@ -22,6 +23,22 @@ from benefits.enrollment_littlepay.views import IndexView
 @pytest.fixture
 def mocked_analytics_module(mocked_analytics_module):
     return mocked_analytics_module(benefits.enrollment_littlepay.views)
+
+
+@pytest.fixture
+def mocked_funding_source():
+    return FundingSourceResponse(
+        id="0",
+        card_first_digits="0000",
+        card_last_digits="0000",
+        card_expiry_month="12",
+        card_expiry_year="2024",
+        card_scheme="visa",
+        form_factor="physical",
+        participant_id="cst",
+        is_fpan=False,
+        related_funding_sources=[],
+    )
 
 
 @pytest.fixture
@@ -243,8 +260,8 @@ class TestIndexView:
 
         assert overlay_language == expected_overlay_language
 
-    def test_form_valid(self, mocker, view):
-        mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None))
+    def test_form_valid(self, mocker, view, mocked_funding_source):
+        mocker.patch("benefits.enrollment_littlepay.views.enroll", return_value=(Status.SUCCESS, None, mocked_funding_source))
 
         form = view.form_class(data=dict(card_token="abc123"))
         mock_handler = mocker.patch("benefits.enrollment_littlepay.views.handle_enrollment_results", return_value=True)
