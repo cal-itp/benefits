@@ -54,6 +54,8 @@ def handle_enrollment_results(
     route_reenrollment_error=routes.ENROLLMENT_REENROLLMENT_ERROR,
     route_success=routes.ENROLLMENT_SUCCESS,
     route_system_error=routes.ENROLLMENT_SYSTEM_ERROR,
+    card_category: str = None,
+    card_scheme: str = None,
 ):
     match (status):
         case Status.SUCCESS:
@@ -76,7 +78,12 @@ def handle_enrollment_results(
             )
             event.save()
             analytics.returned_success(
-                request, enrollment_group=flow.group_id, enrollment_method=enrollment_method, extra_claims=oauth_extra_claims
+                request,
+                enrollment_group=flow.group_id,
+                enrollment_method=enrollment_method,
+                extra_claims=oauth_extra_claims,
+                card_scheme=card_scheme,
+                card_category=card_category,
             )
             return redirect(route_success)
 
