@@ -42,6 +42,8 @@ The following custom user attributes are collected when the user performs specif
 
 | User property          | Description                          | Example value(s)                                                                                                  |
 | ---------------------- | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `card_category`        | Type of card successfully enrolled   | `debit` or `credit`                                                                                               |
+| `card_scheme`          | Brand of card successfully enrolled  | `visa`, `mastercard`, etc.                                                                                        |
 | `enrollment_flows`     | Enrollment flows chosen by user      | `[veteran]`                                                                                                       |
 | `eligibility_verifier` | How eligibility for flow is verified | `cdt-logingov`                                                                                                    |
 | `referrer`             | URL that the event came from         | `https://benefits.calitp.org/help/`                                                                               |
@@ -61,7 +63,7 @@ These events track when a user clicks on a link on the application.
 - clicked link
 - viewed page
 
-Read more on each of these events on the [Amplitude event documentation for Benefits, filtered by Core](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=id%3D1702329985270%26group%3Dcategories%26type%3DString%26operator%3Dis%26values%255B0%255D%3Dcore%26dateValue%255Btype%255D%3DSINCE).
+Read more on each of these events on the [Amplitude event documentation for Benefits, filtered by Core](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=type%3DString%26operator%3Dis%26values%255B0%255D%3Dcore).
 
 ### Authentication events
 
@@ -73,7 +75,7 @@ These events track the progress of a user going through the authentication proce
 - started sign in
 - started sign out
 
-Read more on each of these events on the [Amplitude event documentation for Benefits, filtered by Authentication](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=id%3D1702329910563%26group%3Dcategories%26type%3DString%26operator%3Dis%26values%255B0%255D%3Doauth%26dateValue%255Btype%255D%3DSINCE).
+Read more on each of these events on the [Amplitude event documentation for Benefits, filtered by Authentication](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=type%3DString%26operator%3Dis%26values%255B0%255D%3Doauth).
 
 ### Eligibility events
 
@@ -83,7 +85,7 @@ These events track the progress of a user choosing an enrollment flow and comple
 - started eligibility
 - returned eligibility
 
-Read more on each of these events on the [Amplitude event documentation for Benefits, filtered by Eligibility](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=id%3D1702329975970%26group%3Dcategories%26type%3DString%26operator%3Dis%26values%255B0%255D%3Deligibility%26dateValue%255Btype%255D%3DSINCE).
+Read more on each of these events on the [Amplitude event documentation for Benefits, filtered by Eligibility](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=type%3DString%26operator%3Dis%26values%255B0%255D%3Deligibility).
 
 ### Enrollment events
 
@@ -93,7 +95,7 @@ These events track the progress of a user who has successfully verified their el
 - returned enrollment
 - started card tokenization
 
-Read more on each of these events on the [Amplitude event documentation for Benefits, filtered by Enrollment](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=id%3D1702329910563%26group%3Dcategories%26type%3DString%26operator%3Dis%26values%255B0%255D%3Denrollment%26dateValue%255Btype%255D%3DSINCE).
+Read more on each of these events on the [Amplitude event documentation for Benefits, filtered by Enrollment](https://data.amplitude.com/public-doc/hdhfmlby2e?categories=type%3DString%26operator%3Dis%26values%255B0%255D%3Denrollment).
 
 ## Key metrics
 
