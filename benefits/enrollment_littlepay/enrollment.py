@@ -143,7 +143,7 @@ def enroll(request, card_token) -> tuple[Status, Exception]:
         status = Status.EXCEPTION
         exception = e
 
-    return status, exception
+    return status, exception, funding_source
 
 
 def _get_group_funding_source(client: Client, group_id, funding_source_id):
