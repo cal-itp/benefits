@@ -276,6 +276,8 @@ class TestIndexView:
         assert handler_kwargs["route_reenrollment_error"] == routes.ENROLLMENT_REENROLLMENT_ERROR
         assert handler_kwargs["route_success"] == routes.ENROLLMENT_SUCCESS
         assert handler_kwargs["route_system_error"] == routes.ENROLLMENT_SYSTEM_ERROR
+        assert handler_kwargs["card_scheme"] == "visa"
+        assert handler_kwargs.get("card_category") is None
 
     def test_form_invalid(self, view):
         with pytest.raises(Exception, match="Invalid card token form"):
