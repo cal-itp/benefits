@@ -21,13 +21,17 @@ class ReturnedEnrollmentEvent(core.Event):
     ):
         super().__init__(request, "returned enrollment", enrollment_method)
         if str(status).lower() in ("error", "retry", "success"):
-            self.update_event_properties(status=status, error=error, extra_claims=extra_claims)
-        if enrollment_group is not None:
-            self.update_event_properties(enrollment_group=enrollment_group)
-        if card_category is not None:
-            self.update_event_properties(card_category=card_category)
-        if card_scheme is not None:
-            self.update_event_properties(card_scheme=card_scheme)
+            self.update_event_properties(status=status)
+            if error is not None:
+                self.update_event_properties(error=error)
+            if extra_claims is not None:
+                self.update_event_properties(extra_claims=extra_claims)
+            if enrollment_group is not None:
+                self.update_event_properties(enrollment_group=enrollment_group)
+            if card_category is not None:
+                self.update_event_properties(card_category=card_category)
+            if card_scheme is not None:
+                self.update_event_properties(card_scheme=card_scheme)
 
 
 class FailedPretokenizationRequestEvent(core.Event):
@@ -51,7 +55,7 @@ def returned_retry(request, enrollment_method: str = models.EnrollmentMethods.DI
 
 def returned_success(
     request,
-    enrollment_group,
+    enrollment_group=None,
     enrollment_method: str = models.EnrollmentMethods.DIGITAL,
     extra_claims=None,
     card_scheme=None,
