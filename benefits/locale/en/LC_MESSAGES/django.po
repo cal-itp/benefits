@@ -27,6 +27,9 @@ msgid ""
 "to ride"
 msgstr ""
 
+msgid "Get your reduced fare on RABA public transit when you tap to ride"
+msgstr ""
+
 msgid "Get your reduced fare on SacRT buses when you tap to ride"
 msgstr ""
 
@@ -751,6 +754,12 @@ msgstr ""
 
 #, python-format
 msgid ""
+"Cal-ITP doesn’t save any of your information. All RABA transit benefits "
+"reduce fares by 50%% for bus service on fixed routes."
+msgstr ""
+
+#, python-format
+msgid ""
 "Cal-ITP doesn’t save any of your information. All SacRT transit benefits "
 "reduce fares by 50%% for bus service on fixed routes."
 msgstr ""
@@ -924,6 +933,9 @@ msgid "an MST Courtesy Card transit benefit"
 msgstr ""
 
 msgid "a Nevada County Connects bus"
+msgstr ""
+
+msgid "a RABA bus"
 msgstr ""
 
 msgid "a SacRT bus"
