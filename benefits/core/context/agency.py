@@ -25,7 +25,7 @@ class AgencyIndex:
 
 agency_index = {
     AgencySlug.CST.value: AgencyIndex(headline=_("Get your reduced fare on CST public transit when you tap to ride")),
-    AgencySlug.EDCTA.value: AgencyIndex(headline="Get your reduced fare on EDCTA public transit when you tap to ride"),
+    AgencySlug.EDCTA.value: AgencyIndex(headline=_("Get your reduced fare on EDCTA public transit when you tap to ride")),
     AgencySlug.MST.value: AgencyIndex(headline=_("Get your reduced fare on MST public transit when you tap to ride")),
     AgencySlug.NEVCO.value: AgencyIndex(
         headline=_("Get your reduced fare on Nevada County Connects public transit when you tap to ride")
