@@ -14,9 +14,6 @@ def test_FailedAccessTokenRequestEvent_sets_status_code(app_request):
 
 @pytest.mark.django_db
 def test_ReturnedEnrollmentEvent_without_error(app_request, mocker):
-
-    key1 = "enrollment_flows"
-    key2 = "extra_claims"
     mock_flow = mocker.Mock()
     mock_flow.system_name = "flow_1"
     mocker.patch("benefits.core.session.flow", return_value=mock_flow)
@@ -24,10 +21,9 @@ def test_ReturnedEnrollmentEvent_without_error(app_request, mocker):
     mock_verified = {"eligibility_claim": "medicare", "extra_claim": "disabled"}
     mocker.patch("benefits.core.session.OAuthSession.claims_result", return_value=ClaimsResult(verified=mock_verified))
 
-    event = ReturnedEnrollmentEvent(app_request, status="success")
+    event = ReturnedEnrollmentEvent(app_request, status="success", enrollment_group="TEST GROUP")
     assert "error_code" not in event.event_properties
-    assert key1 in event.event_properties
-    assert key2 in event.event_properties
+    assert "enrollment_flows" in event.event_properties
 
 
 @pytest.mark.django_db
@@ -36,7 +32,11 @@ def test_returned_success_sends_event_with_optional_data(app_request, mocker, mo
     keys = ["enrollment_group", "extra_claims", "card_scheme", "card_category"]
     spy_send_event = mocker.spy(benefits.core.analytics, "send_event")
     returned_success(
-        app_request, model_EnrollmentFlow_with_scope_and_claim.group_id, card_scheme="visa", card_category="debit"
+        app_request,
+        enrollment_group=model_EnrollmentFlow_with_scope_and_claim.group_id,
+        extra_claims="claim",
+        card_scheme="scheme",
+        card_category="catgegory",
     )
 
     # event should have been sent

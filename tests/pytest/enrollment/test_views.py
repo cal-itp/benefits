@@ -114,7 +114,7 @@ def test_retry_ineligible(client):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible", "mocked_session_flow")
 def test_retry_get(client, mocked_analytics_module):
     path = reverse(routes.ENROLLMENT_RETRY)
     response = client.get(path)
@@ -125,7 +125,7 @@ def test_retry_get(client, mocked_analytics_module):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible")
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible", "mocked_session_flow")
 def test_retry_valid_form(client, mocked_analytics_module):
     path = reverse(routes.ENROLLMENT_RETRY)
     response = client.post(path)
