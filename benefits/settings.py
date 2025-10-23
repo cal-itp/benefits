@@ -6,6 +6,8 @@ import os
 
 from django.conf import settings
 
+from csp.constants import NONCE, NONE, SELF, UNSAFE_INLINE
+
 from benefits import sentry
 
 
@@ -56,6 +58,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.staticfiles",
+    "csp",
     "adminsortable2",
     "cdt_identity",
     "django_google_sso",
@@ -304,70 +307,66 @@ RECAPTCHA_VERIFY_URL = os.environ.get("DJANGO_RECAPTCHA_VERIFY_URL", "https://ww
 RECAPTCHA_ENABLED = all((RECAPTCHA_API_URL, RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET_KEY, RECAPTCHA_VERIFY_URL))
 
 # Content Security Policy
-# Configuration docs at https://django-csp.readthedocs.io/en/latest/configuration.html
+# Configuration docs at https://django-csp.readthedocs.io/en/latest/configuration.html+
 
-# In particular, note that the inner single-quotes are required!
-# https://django-csp.readthedocs.io/en/latest/configuration.html#policy-settings
+CONTENT_SECURITY_POLICY = {
+    "DIRECTIVES": {
+        "base-uri": [NONE],
+        "connect-src": [SELF, "https://api.amplitude.com/"],
+        "default-src": [SELF],
+        "font-src": [SELF, "https://fonts.gstatic.com/"],
+        "frame-ancestors": [NONE],
+        "frame-src": ["*.littlepay.com"],
+        "img-src": [SELF, "data:", "*.googleusercontent.com"],
+        "object-src": [NONE],
+        "script-src": [
+            SELF,
+            "https://cdn.amplitude.com/libs/",
+            "https://cdn.jsdelivr.net/",
+            "*.littlepay.com",
+            "https://code.jquery.com/jquery-3.6.0.min.js",
+            NONCE,  # https://django-csp.readthedocs.io/en/latest/nonce.html
+        ],
+        "style-src": [
+            SELF,
+            UNSAFE_INLINE,
+            "https://fonts.googleapis.com/css",
+            "https://fonts.googleapis.com/css2",
+            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
+        ],
+    }
+}
 
-CSP_BASE_URI = ["'none'"]
-
-CSP_DEFAULT_SRC = ["'self'"]
-
-CSP_CONNECT_SRC = ["'self'", "https://api.amplitude.com/"]
+# connect-src additions
 env_connect_src = _filter_empty(os.environ.get("DJANGO_CSP_CONNECT_SRC", "").split(","))
 if RECAPTCHA_ENABLED:
     env_connect_src.append("https://www.google.com/recaptcha/")
-CSP_CONNECT_SRC.extend(env_connect_src)
+CONTENT_SECURITY_POLICY["DIRECTIVES"]["connect-src"].extend(env_connect_src)
 
-CSP_FONT_SRC = ["'self'", "https://fonts.gstatic.com/"]
+# font-src additions
 env_font_src = _filter_empty(os.environ.get("DJANGO_CSP_FONT_SRC", "").split(","))
-CSP_FONT_SRC.extend(env_font_src)
+CONTENT_SECURITY_POLICY["DIRECTIVES"]["font-src"].extend(env_font_src)
 
-CSP_FRAME_ANCESTORS = ["'none'"]
-
-CSP_FRAME_SRC = ["*.littlepay.com"]
+# frame-src additions
 env_frame_src = _filter_empty(os.environ.get("DJANGO_CSP_FRAME_SRC", "").split(","))
 if RECAPTCHA_ENABLED:
     env_frame_src.append("https://www.google.com")
-if len(env_frame_src) > 0:
-    CSP_FRAME_SRC.extend(env_frame_src)
+CONTENT_SECURITY_POLICY["DIRECTIVES"]["frame-src"].extend(env_frame_src)
 
-CSP_IMG_SRC = [
-    "'self'",
-    "data:",
-    "*.googleusercontent.com",
-]
-
-# Configuring strict Content Security Policy
-# https://django-csp.readthedocs.io/en/latest/nonce.html
-CSP_INCLUDE_NONCE_IN = ["script-src"]
-
-CSP_OBJECT_SRC = ["'none'"]
-
-if sentry.SENTRY_CSP_REPORT_URI:
-    CSP_REPORT_URI = [sentry.SENTRY_CSP_REPORT_URI]
-
-CSP_SCRIPT_SRC = [
-    "'self'",
-    "https://cdn.amplitude.com/libs/",
-    "https://cdn.jsdelivr.net/",
-    "*.littlepay.com",
-    "https://code.jquery.com/jquery-3.6.0.min.js",
-]
+# script-src additions
 env_script_src = _filter_empty(os.environ.get("DJANGO_CSP_SCRIPT_SRC", "").split(","))
-CSP_SCRIPT_SRC.extend(env_script_src)
 if RECAPTCHA_ENABLED:
-    CSP_SCRIPT_SRC.extend(["https://www.google.com/recaptcha/", "https://www.gstatic.com/recaptcha/releases/"])
+    env_script_src.extend(["https://www.google.com/recaptcha/", "https://www.gstatic.com/recaptcha/releases/"])
+CONTENT_SECURITY_POLICY["DIRECTIVES"]["script-src"].extend(env_script_src)
 
-CSP_STYLE_SRC = [
-    "'self'",
-    "'unsafe-inline'",
-    "https://fonts.googleapis.com/css",
-    "https://fonts.googleapis.com/css2",
-    "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
-]
+# style-src additions
 env_style_src = _filter_empty(os.environ.get("DJANGO_CSP_STYLE_SRC", "").split(","))
-CSP_STYLE_SRC.extend(env_style_src)
+CONTENT_SECURITY_POLICY["DIRECTIVES"]["style-src"].extend(env_style_src)
+
+# adjust report-uri when using Sentry
+if sentry.SENTRY_CSP_REPORT_URI:
+    CONTENT_SECURITY_POLICY["DIRECTIVES"]["report-uri"] = sentry.SENTRY_CSP_REPORT_URI
+
 
 # Configuration for requests
 # https://requests.readthedocs.io/en/latest/user/advanced/#timeouts
