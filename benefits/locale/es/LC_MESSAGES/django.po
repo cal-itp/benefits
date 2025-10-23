@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-10-22 15:52-0700\n"
+"POT-Creation-Date: 2025-10-23 11:46-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -998,68 +998,6 @@ msgstr ""
 "El siguiente paso es conectar su tarjeta sin contacto a su beneficio de "
 "tránsito"
 
-#, python-brace-format
-msgid ""
-"You were not charged anything today. When boarding {transportation_type}, "
-"tap your contactless card and you will be charged a reduced fare. You will "
-"need to re-enroll if you choose to change the card you use to pay for "
-"transit service."
-msgstr ""
-"No se le cobró nada hoy. Al abordar {transportation_type}, toque el lector "
-"con esta tarjeta y se le cobrará una tarifa reducida. Deberá volver a "
-"inscribirse si elige cambiar la tarjeta que usa para pagar el servicio de "
-"tránsito."
-
-msgid "Thank you for using Cal-ITP Benefits!"
-msgstr "¡Gracias por usar Cal-ITP Benefits!"
-
-#, python-brace-format
-msgid ""
-"Your contactless card is now enrolled in {transit_benefit}. When boarding "
-"{transportation_type}, tap this card and you will be charged a reduced fare. "
-"You will need to re-enroll if you choose to change the card you use to pay "
-"for transit service."
-msgstr ""
-"Su tarjeta sin contacto ahora está inscrita en {transit_benefit}. Cuando "
-"suba a {transportation_type}, toque el lector con esta tarjeta y se le "
-"cobrará una tarifa reducida. Deberá volver a inscribirse si elige cambiar la "
-"tarjeta que usa para pagar el servicio de tránsito."
-
-msgid ""
-"You were not charged anything today. Thank you for using Cal-ITP Benefits!"
-msgstr ""
-"No se le cobrará nada hoy. ¡Gracias por utilizar los beneficios de Cal-ITP!"
-
-msgid "a CST bus"
-msgstr "un autobús de CST"
-
-msgid "a CST Agency Card transit benefit"
-msgstr "un beneficio de tránsito de Tarjeta de agencia de CST"
-
-msgid "an EDCTA bus"
-msgstr "un autobús de EDCTA"
-
-msgid "an MST bus"
-msgstr "un autobús de MST"
-
-msgid "an MST Courtesy Card transit benefit"
-msgstr "el beneficio de tránsito de la tarjeta de cortesía de MST"
-
-msgid "a Nevada County Connects bus"
-msgstr "un autobús de Nevada County Connects"
-
-msgid "a SacRT bus"
-msgstr "un autobús de SacRT"
-
-msgid "an SBMTD bus"
-msgstr "un autobús de SBMTD"
-
-msgid "an SBMTD Reduced Fare Mobility ID transit benefit"
-msgstr "el beneficio de tránsito de Reduced Fare Mobility ID de SBMTD"
-
-msgid "a Ventura County Transportation Commission bus"
-msgstr "un autobús de Ventura County Transportation Commission"
-
 msgid "Do not enter information from your EBT card."
 msgstr "No ingrese información de su tarjeta EBT."
 
@@ -1179,6 +1117,68 @@ msgstr "Puede volver a inscribirse a este beneficio a partir del"
 
 msgid "Please try again then."
 msgstr "Por favor, inténtelo de nuevo hasta entonces."
+
+#, python-brace-format
+msgid ""
+"You were not charged anything today. When boarding {transportation_type}, "
+"tap your contactless card and you will be charged a reduced fare. You will "
+"need to re-enroll if you choose to change the card you use to pay for "
+"transit service."
+msgstr ""
+"No se le cobró nada hoy. Al abordar {transportation_type}, toque el lector "
+"con esta tarjeta y se le cobrará una tarifa reducida. Deberá volver a "
+"inscribirse si elige cambiar la tarjeta que usa para pagar el servicio de "
+"tránsito."
+
+msgid "Thank you for using Cal-ITP Benefits!"
+msgstr "¡Gracias por usar Cal-ITP Benefits!"
+
+#, python-brace-format
+msgid ""
+"Your contactless card is now enrolled in {transit_benefit}. When boarding "
+"{transportation_type}, tap this card and you will be charged a reduced fare. "
+"You will need to re-enroll if you choose to change the card you use to pay "
+"for transit service."
+msgstr ""
+"Su tarjeta sin contacto ahora está inscrita en {transit_benefit}. Cuando "
+"suba a {transportation_type}, toque el lector con esta tarjeta y se le "
+"cobrará una tarifa reducida. Deberá volver a inscribirse si elige cambiar la "
+"tarjeta que usa para pagar el servicio de tránsito."
+
+msgid ""
+"You were not charged anything today. Thank you for using Cal-ITP Benefits!"
+msgstr ""
+"No se le cobrará nada hoy. ¡Gracias por utilizar los beneficios de Cal-ITP!"
+
+msgid "a CST bus"
+msgstr "un autobús de CST"
+
+msgid "a CST Agency Card transit benefit"
+msgstr "un beneficio de tránsito de Tarjeta de agencia de CST"
+
+msgid "an EDCTA bus"
+msgstr "un autobús de EDCTA"
+
+msgid "an MST bus"
+msgstr "un autobús de MST"
+
+msgid "an MST Courtesy Card transit benefit"
+msgstr "el beneficio de tránsito de la tarjeta de cortesía de MST"
+
+msgid "a Nevada County Connects bus"
+msgstr "un autobús de Nevada County Connects"
+
+msgid "a SacRT bus"
+msgstr "un autobús de SacRT"
+
+msgid "an SBMTD bus"
+msgstr "un autobús de SBMTD"
+
+msgid "an SBMTD Reduced Fare Mobility ID transit benefit"
+msgstr "el beneficio de tránsito de Reduced Fare Mobility ID de SBMTD"
+
+msgid "a Ventura County Transportation Commission bus"
+msgstr "un autobús de Ventura County Transportation Commission"
 
 msgid "Service is down"
 msgstr "El servicio está inactivo"

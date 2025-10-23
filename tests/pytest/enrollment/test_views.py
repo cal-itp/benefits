@@ -136,53 +136,37 @@ def test_retry_valid_form(client, mocked_analytics_module):
 
 
 @pytest.mark.django_db
-def test_success_no_flow(client):
-    path = reverse(routes.ENROLLMENT_SUCCESS)
+class TestSuccessView:
 
-    response = client.get(path)
+    @pytest.fixture
+    def view(self, app_request, model_EnrollmentFlow_supports_sign_out):
+        v = views.SuccessView()
+        v.setup(app_request)
+        v.flow = model_EnrollmentFlow_supports_sign_out
+        return v
 
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_USER_ERROR
+    def test_get_context_data(self, view):
+        context = view.get_context_data()
+        assert "redirect_to" in context
+        assert "success_message" in context
+        assert "thank_you_message" in context
 
+    def test_get_logged_in(self, view, app_request, mocker):
+        mock_session = mocker.patch("benefits.enrollment.views.session")
+        mock_session.logged_in.return_value = True
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification", "mocked_session_eligible")
-def test_success_authentication_logged_in(mocker, client, model_TransitAgency, model_EnrollmentFlow_supports_sign_out):
-    mock_session = mocker.patch("benefits.enrollment.views.session")
-    mock_session.logged_in.return_value = True
-    mock_session.agency.return_value = model_TransitAgency
-    mock_session.flow.return_value = model_EnrollmentFlow_supports_sign_out
+        response = view.get(app_request)
 
-    path = reverse(routes.ENROLLMENT_SUCCESS)
-    response = client.get(path)
+        assert response.status_code == 200
+        assert response.template_name == ["enrollment/success.html"]
+        assert {"origin": reverse(routes.LOGGED_OUT)} in mock_session.update.call_args
 
-    assert response.status_code == 200
-    assert response.template_name == "enrollment/success.html"
-    assert {"origin": reverse(routes.LOGGED_OUT)} in mock_session.update.call_args
+    def test_get_not_logged_in(self, view, app_request, mocker):
+        mock_session = mocker.patch("benefits.enrollment.views.session")
+        mock_session.logged_in.return_value = False
 
+        response = view.get(app_request)
 
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow_uses_claims_verification", "mocked_session_eligible")
-def test_success_authentication_not_logged_in(mocker, client, model_TransitAgency, model_EnrollmentFlow):
-    mock_session = mocker.patch("benefits.enrollment.views.session")
-    mock_session.logged_in.return_value = False
-    mock_session.agency.return_value = model_TransitAgency
-    mock_session.flow.return_value = model_EnrollmentFlow
-
-    path = reverse(routes.ENROLLMENT_SUCCESS)
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == "enrollment/success.html"
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures(
-    "mocked_session_agency", "mocked_session_eligible", "mocked_session_flow_does_not_use_claims_verification"
-)
-def test_success_no_authentication(client):
-    path = reverse(routes.ENROLLMENT_SUCCESS)
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == "enrollment/success.html"
+        assert response.status_code == 200
+        assert response.template_name == ["enrollment/success.html"]
+        assert {"origin": reverse(routes.ENROLLMENT_SUCCESS)} in mock_session.update.call_args

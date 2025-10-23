@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-10-22 15:52-0700\n"
+"POT-Creation-Date: 2025-10-23 11:46-0700\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -780,59 +780,6 @@ msgid ""
 "The next step is to connect your contactless card to your transit benefit"
 msgstr ""
 
-#, python-brace-format
-msgid ""
-"You were not charged anything today. When boarding {transportation_type}, "
-"tap your contactless card and you will be charged a reduced fare. You will "
-"need to re-enroll if you choose to change the card you use to pay for "
-"transit service."
-msgstr ""
-
-msgid "Thank you for using Cal-ITP Benefits!"
-msgstr ""
-
-#, python-brace-format
-msgid ""
-"Your contactless card is now enrolled in {transit_benefit}. When boarding "
-"{transportation_type}, tap this card and you will be charged a reduced fare. "
-"You will need to re-enroll if you choose to change the card you use to pay "
-"for transit service."
-msgstr ""
-
-msgid ""
-"You were not charged anything today. Thank you for using Cal-ITP Benefits!"
-msgstr ""
-
-msgid "a CST bus"
-msgstr ""
-
-msgid "a CST Agency Card transit benefit"
-msgstr ""
-
-msgid "an EDCTA bus"
-msgstr ""
-
-msgid "an MST bus"
-msgstr ""
-
-msgid "an MST Courtesy Card transit benefit"
-msgstr ""
-
-msgid "a Nevada County Connects bus"
-msgstr ""
-
-msgid "a SacRT bus"
-msgstr ""
-
-msgid "an SBMTD bus"
-msgstr ""
-
-msgid "an SBMTD Reduced Fare Mobility ID transit benefit"
-msgstr ""
-
-msgid "a Ventura County Transportation Commission bus"
-msgstr ""
-
 msgid "Do not enter information from your EBT card."
 msgstr ""
 
@@ -930,6 +877,59 @@ msgid "You can re-enroll for this benefit beginning on"
 msgstr ""
 
 msgid "Please try again then."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"You were not charged anything today. When boarding {transportation_type}, "
+"tap your contactless card and you will be charged a reduced fare. You will "
+"need to re-enroll if you choose to change the card you use to pay for "
+"transit service."
+msgstr ""
+
+msgid "Thank you for using Cal-ITP Benefits!"
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Your contactless card is now enrolled in {transit_benefit}. When boarding "
+"{transportation_type}, tap this card and you will be charged a reduced fare. "
+"You will need to re-enroll if you choose to change the card you use to pay "
+"for transit service."
+msgstr ""
+
+msgid ""
+"You were not charged anything today. Thank you for using Cal-ITP Benefits!"
+msgstr ""
+
+msgid "a CST bus"
+msgstr ""
+
+msgid "a CST Agency Card transit benefit"
+msgstr ""
+
+msgid "an EDCTA bus"
+msgstr ""
+
+msgid "an MST bus"
+msgstr ""
+
+msgid "an MST Courtesy Card transit benefit"
+msgstr ""
+
+msgid "a Nevada County Connects bus"
+msgstr ""
+
+msgid "a SacRT bus"
+msgstr ""
+
+msgid "an SBMTD bus"
+msgstr ""
+
+msgid "an SBMTD Reduced Fare Mobility ID transit benefit"
+msgstr ""
+
+msgid "a Ventura County Transportation Commission bus"
 msgstr ""
 
 msgid "Service is down"
