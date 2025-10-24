@@ -57,10 +57,10 @@ def handle_enrollment_results(
     card_category: str = None,
     card_scheme: str = None,
 ):
+    flow = session.flow(request)
     match (status):
         case Status.SUCCESS:
             agency = session.agency(request)
-            flow = session.flow(request)
             expiry = session.enrollment_expiry(request)
             oauth_extra_claims = session.oauth_extra_claims(request)
             # EnrollmentEvent expects a string value for extra_claims
@@ -88,14 +88,29 @@ def handle_enrollment_results(
             return redirect(route_success)
 
         case Status.SYSTEM_ERROR:
-            analytics.returned_error(request, str(exception), enrollment_method=enrollment_method)
+            analytics.returned_error(
+                request,
+                str(exception),
+                enrollment_group=flow.group_id,
+                enrollment_method=enrollment_method,
+            )
             sentry_sdk.capture_exception(exception)
             return redirect(route_system_error)
 
         case Status.EXCEPTION:
-            analytics.returned_error(request, str(exception), enrollment_method=enrollment_method)
+            analytics.returned_error(
+                request,
+                str(exception),
+                enrollment_group=flow.group_id,
+                enrollment_method=enrollment_method,
+            )
             raise exception
 
         case Status.REENROLLMENT_ERROR:
-            analytics.returned_error(request, "Re-enrollment error.", enrollment_method=enrollment_method)
+            analytics.returned_error(
+                request,
+                "Re-enrollment error.",
+                enrollment_group=flow.group_id,
+                enrollment_method=enrollment_method,
+            )
             return redirect(route_reenrollment_error)

@@ -21,7 +21,7 @@ def test_ReturnedEnrollmentEvent_without_error(app_request, mocker):
     mock_verified = {"eligibility_claim": "medicare", "extra_claim": "disabled"}
     mocker.patch("benefits.core.session.OAuthSession.claims_result", return_value=ClaimsResult(verified=mock_verified))
 
-    event = ReturnedEnrollmentEvent(app_request, status="success")
+    event = ReturnedEnrollmentEvent(app_request, status="success", enrollment_group="TEST GROUP")
     assert "error_code" not in event.event_properties
     assert "enrollment_flows" in event.event_properties
 
