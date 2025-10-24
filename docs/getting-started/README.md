@@ -28,7 +28,7 @@ DJANGO_LOCAL_PORT=9000
 
     You will need to change `DJANGO_LOCAL_PORT` to a specific value in order to test locally with the CDT Identity Gateway's dev environment. Compiler developers, this value can be found in our shared notes in LastPass.
 
-See [Configuration](../configuration) for more details on supported environment variables and their settings.
+See [Configuration](../configuration/) for more details on supported environment variables and their settings.
 
 ## Run the build script
 
@@ -46,7 +46,7 @@ docker compose build --no-cache client
 
 ## Start the client in a VS Code dev container
 
-From this point forward, the recommended local development setup is to run the app with the [VS Code Dev Containers extension](devcontainers).
+From this point forward, the recommended local development setup is to run the app with the [VS Code Dev Containers extension][devcontainers].
 
 See [Development](../development/) for more details on setting up a dev container and developing with it.
 
@@ -54,7 +54,7 @@ Alternatively, read on to run the app traditionally with Docker Compose.
 
 ## Start the client traditionally
 
-The optional `-d` flag will start in _detatched_ mode and allow you to continue using the terminal session.
+The optional `-d` flag will start in _detached_ mode and allow you to continue using the terminal session.
 
 ```bash
 docker compose up -d client
@@ -78,7 +78,7 @@ docker compose down
 
 ## Minimum configuration needed for your first manual end-to-end test
 
-The following updates must be made to run a full end-to-end test using the sample agenct (CST), the Older Americans flow via Login.gov and the CDT Identity Gateway(IdG) dev environment, and the Littlepay QA environment.
+The following updates must be made to run a full end-to-end test using the sample agency (CST), the Older Americans flow via Login.gov and the CDT Identity Gateway(IdG) dev environment, and the Littlepay QA environment.
 
 !!! note
 
@@ -92,7 +92,7 @@ The following updates must be made to run a full end-to-end test using the sampl
 
 !!! warning
 
-    Be sure to rebuild your devcontainer beefore proceeding.
+    Be sure to rebuild your devcontainer before proceeding.
 
 ### Django Admin updates
 
@@ -118,7 +118,7 @@ For details on creating an identity-proofed account for testing in the Login.gov
 
 ---
 
-You should now be ready to perform a complete end-to-end test in your local environment! When arriving at the Littlepay form, use any of the acceptable forms of [test data for Visa or MasterCard accounts](test-cards).
+You should now be ready to perform a complete end-to-end test in your local environment! When arriving at the Littlepay form, use any of the acceptable forms of [test data for Visa or MasterCard accounts][test-cards].
 
 ## Managing test data going forward
 
@@ -141,7 +141,4 @@ Or, if you made a temporary change to one of the objects created by the fixtures
 
 [docker]: https://www.docker.com/products/docker-desktop
 [devcontainers]: https://code.visualstudio.com/docs/devcontainers/containers
-[data-migration]: https://github.com/cal-itp/benefits/tree/main/benefits/core/migrations
-[logingov-internal]: https://docs.google.com/document/d/1bFynuiLy9POXYEYnLVEQJpAm1TVqlappN9lU9ev3Bvg/edit?tab=t.0#heading=h.bvwe1dyv15c5
-[logingov-external]: https://developers.login.gov/testing/#testing-identity-proofing
 [test-cards]: https://docs.stripe.com/testing?testing-method=card-numbers#cards
