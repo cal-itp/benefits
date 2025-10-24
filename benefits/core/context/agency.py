@@ -10,6 +10,7 @@ class AgencySlug(models.TextChoices):
     MST = "mst", "mst"
     EDCTA = "edcta", "edcta"
     NEVCO = "nevco", "nevco"
+    RABA = "raba", "raba"
     SACRT = "sacrt", "sacrt"
     SBMTD = "sbmtd", "sbmtd"
     VCTC = "vctc", "vctc"
@@ -30,6 +31,7 @@ agency_index = {
     AgencySlug.NEVCO.value: AgencyIndex(
         headline=_("Get your reduced fare on Nevada County Connects public transit when you tap to ride")
     ),
+    AgencySlug.RABA.value: AgencyIndex(headline=_("Get your reduced fare on RABA public transit when you tap to ride")),
     AgencySlug.SACRT.value: AgencyIndex(headline=_("Get your reduced fare on SacRT buses when you tap to ride")),
     AgencySlug.SBMTD.value: AgencyIndex(headline=_("Get your reduced fare on Santa Barbara MTD buses when you tap to ride")),
     AgencySlug.VCTC.value: AgencyIndex(

@@ -70,6 +70,12 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
                     "by 50%% for bus service on fixed routes.".replace("%%", "%")
                 )
             ),
+            AgencySlug.RABA.value: EligibilityIndex(
+                form_text=_(
+                    "Cal-ITP doesn’t save any of your information. "
+                    "All RABA transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
+                )
+            ),
             AgencySlug.SACRT.value: EligibilityIndex(
                 form_text=_(
                     "Cal-ITP doesn’t save any of your information. "
