@@ -44,7 +44,6 @@ def test_flow_using_claims_verification_required__no_identitygatewayconfig(app_r
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("api_url", [None, ""])
 def test_flow_using_claims_verification_required__misconfigured_flow(
     app_request,
     mocked_view,
@@ -52,10 +51,9 @@ def test_flow_using_claims_verification_required__misconfigured_flow(
     mocked_session_flow_does_not_use_claims_verification,
     mocked_analytics_module,
     mocked_sentry_sdk_module,
-    api_url,
 ):
     # fake a misconfigured flow
-    mocked_session_flow_does_not_use_claims_verification.return_value.eligibility_api_url = api_url
+    mocked_session_flow_does_not_use_claims_verification.return_value.api_request = None
 
     response = decorated_view(app_request)
 
