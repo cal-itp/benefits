@@ -14,11 +14,22 @@ def test_ChooseAgencyForm():
     assert select.widget.attrs["aria-label"]
     assert select.widget.attrs["class"] == "form-select"
 
-    # to test actually *making* a selection, and validating the form
-    # i'm guessing i'd need to figure out how to load a fixture explicitly
     assert len(select.choices) == len(models.TransitAgency.all_active()) + 1
-
     assert len(form.errors) == 0
-    assert form.has_changed() is False
-    assert form.is_valid() is False
+    assert not form.has_changed()
+    assert not form.is_valid()
     assert form.use_custom_validity
+
+
+@pytest.mark.django_db
+def test_ChooseAgencyForm_hydrated(model_TransitAgency):
+    form = ChooseAgencyForm({"select_transit_agency": model_TransitAgency.slug})
+    assert form.has_changed()
+    assert form.is_valid()
+
+
+@pytest.mark.django_db
+def test_ChooseAgencyForm_invalid():
+    form = ChooseAgencyForm({"select_transit_agency": "invalid"})
+    with pytest.raises(Exception, match=r"object has no attribute 'cleaned_data'"):
+        form.clean()
