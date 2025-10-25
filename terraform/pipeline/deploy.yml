@@ -4,6 +4,7 @@ parameters:
   - name: workspace
     type: string
 
+# dummy
 steps:
   # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformInstaller#readme
   - task: TerraformInstaller@0
