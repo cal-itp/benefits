@@ -203,6 +203,15 @@ class TransitAgency(models.Model):
             return None
 
     @property
+    def transit_processor(self):
+        if self.littlepay_config:
+            return "littlepay"
+        elif self.switchio_config:
+            return "switchio"
+        else:
+            return None
+
+    @property
     def in_person_enrollment_index_route(self):
         """This Agency's in-person enrollment index route, based on its configured transit processor."""
         if self.littlepay_config:

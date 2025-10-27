@@ -13,6 +13,7 @@ class ReturnedEnrollmentEvent(core.Event):
         request,
         status,
         enrollment_group,
+        transit_processor,
         error=None,
         enrollment_method=models.EnrollmentMethods.DIGITAL,
         extra_claims=None,
@@ -23,6 +24,7 @@ class ReturnedEnrollmentEvent(core.Event):
         if str(status).lower() in ("error", "retry", "success"):
             self.update_event_properties(status=status)
             self.update_event_properties(enrollment_group=enrollment_group)
+            self.update_event_properties(transit_processor=transit_processor)
             if error is not None:
                 self.update_event_properties(error=error)
             if extra_claims is not None:
@@ -36,32 +38,46 @@ class ReturnedEnrollmentEvent(core.Event):
 class FailedPretokenizationRequestEvent(core.Event):
     """Analytics event representing a failure to do the pre-tokenization step for card tokenization."""
 
-    def __init__(self, request, status_code=None, enrollment_method=models.EnrollmentMethods.DIGITAL):
+    def __init__(self, request, transit_processor, status_code=None, enrollment_method=models.EnrollmentMethods.DIGITAL):
         super().__init__(request, "failed pre-tokenization request", enrollment_method)
+        self.update_event_properties(transit_processor=transit_processor)
         if status_code is not None:
             self.update_event_properties(status_code=status_code)
 
 
-def returned_error(request, error, enrollment_group, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
+def returned_error(
+    request,
+    error,
+    enrollment_group,
+    transit_processor,
+    enrollment_method: str = models.EnrollmentMethods.DIGITAL,
+):
     """Send the "returned enrollment" analytics event with an error status and message."""
     core.send_event(
         ReturnedEnrollmentEvent(
             request,
             status="error",
             enrollment_group=enrollment_group,
+            transit_processor=transit_processor,
             error=error,
             enrollment_method=enrollment_method,
         )
     )
 
 
-def returned_retry(request, enrollment_group, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
+def returned_retry(
+    request,
+    enrollment_group,
+    transit_processor,
+    enrollment_method: str = models.EnrollmentMethods.DIGITAL,
+):
     """Send the "returned enrollment" analytics event with a retry status."""
     core.send_event(
         ReturnedEnrollmentEvent(
             request,
             status="retry",
             enrollment_group=enrollment_group,
+            transit_processor=transit_processor,
             enrollment_method=enrollment_method,
         )
     )
@@ -70,6 +86,7 @@ def returned_retry(request, enrollment_group, enrollment_method: str = models.En
 def returned_success(
     request,
     enrollment_group,
+    transit_processor,
     enrollment_method: str = models.EnrollmentMethods.DIGITAL,
     extra_claims=None,
     card_scheme=None,
@@ -81,6 +98,7 @@ def returned_success(
             request,
             status="success",
             enrollment_group=enrollment_group,
+            transit_processor=transit_processor,
             enrollment_method=enrollment_method,
             extra_claims=extra_claims,
             card_scheme=card_scheme,
@@ -89,6 +107,12 @@ def returned_success(
     )
 
 
-def failed_pretokenization_request(request, status_code=None, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
+def failed_pretokenization_request(
+    request, transit_processor, status_code=None, enrollment_method: str = models.EnrollmentMethods.DIGITAL
+):
     """Send the "failed pre-tokenization request" analytics event with the response status code."""
-    core.send_event(FailedPretokenizationRequestEvent(request, status_code=status_code, enrollment_method=enrollment_method))
+    core.send_event(
+        FailedPretokenizationRequestEvent(
+            request, transit_processor=transit_processor, status_code=status_code, enrollment_method=enrollment_method
+        )
+    )

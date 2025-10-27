@@ -86,7 +86,8 @@ class ReenrollmentErrorView(FlowSessionRequiredMixin, EligibleSessionRequiredMix
 def retry(request):
     """View handler for a recoverable failure condition."""
     flow = session.flow(request)
-    analytics.returned_retry(request, enrollment_group=flow.group_id)
+    agency = session.agency(request)
+    analytics.returned_retry(request, enrollment_group=flow.group_id, transit_processor=agency.transit_processor)
     return TemplateResponse(request, TEMPLATE_RETRY)
 
 
