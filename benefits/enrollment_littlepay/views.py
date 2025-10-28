@@ -125,7 +125,7 @@ class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
 
     def form_valid(self, form):
         card_token = form.cleaned_data.get("card_token")
-        status, exception = enroll(self.request, card_token)
+        status, exception, funding_source = enroll(self.request, card_token)
 
         return handle_enrollment_results(
             request=self.request,
@@ -136,6 +136,8 @@ class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
             route_reenrollment_error=self.route_reenrollment_error,
             route_success=self.route_enrollment_success,
             route_system_error=self.route_system_error,
+            card_category=funding_source.card_category,
+            card_scheme=funding_source.card_scheme,
         )
 
     def form_invalid(self, form):

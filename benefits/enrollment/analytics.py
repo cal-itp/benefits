@@ -12,16 +12,25 @@ class ReturnedEnrollmentEvent(core.Event):
         self,
         request,
         status,
+        enrollment_group,
         error=None,
-        enrollment_group=None,
         enrollment_method=models.EnrollmentMethods.DIGITAL,
         extra_claims=None,
+        card_category=None,
+        card_scheme=None,
     ):
         super().__init__(request, "returned enrollment", enrollment_method)
         if str(status).lower() in ("error", "retry", "success"):
-            self.update_event_properties(status=status, error=error, extra_claims=extra_claims)
-        if enrollment_group is not None:
+            self.update_event_properties(status=status)
             self.update_event_properties(enrollment_group=enrollment_group)
+            if error is not None:
+                self.update_event_properties(error=error)
+            if extra_claims is not None:
+                self.update_event_properties(extra_claims=extra_claims)
+            if card_category is not None:
+                self.update_event_properties(card_category=card_category)
+            if card_scheme is not None:
+                self.update_event_properties(card_scheme=card_scheme)
 
 
 class FailedPretokenizationRequestEvent(core.Event):
@@ -33,17 +42,39 @@ class FailedPretokenizationRequestEvent(core.Event):
             self.update_event_properties(status_code=status_code)
 
 
-def returned_error(request, error, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
+def returned_error(request, error, enrollment_group, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
     """Send the "returned enrollment" analytics event with an error status and message."""
-    core.send_event(ReturnedEnrollmentEvent(request, status="error", error=error, enrollment_method=enrollment_method))
+    core.send_event(
+        ReturnedEnrollmentEvent(
+            request,
+            status="error",
+            enrollment_group=enrollment_group,
+            error=error,
+            enrollment_method=enrollment_method,
+        )
+    )
 
 
-def returned_retry(request, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
+def returned_retry(request, enrollment_group, enrollment_method: str = models.EnrollmentMethods.DIGITAL):
     """Send the "returned enrollment" analytics event with a retry status."""
-    core.send_event(ReturnedEnrollmentEvent(request, status="retry", enrollment_method=enrollment_method))
+    core.send_event(
+        ReturnedEnrollmentEvent(
+            request,
+            status="retry",
+            enrollment_group=enrollment_group,
+            enrollment_method=enrollment_method,
+        )
+    )
 
 
-def returned_success(request, enrollment_group, enrollment_method: str = models.EnrollmentMethods.DIGITAL, extra_claims=None):
+def returned_success(
+    request,
+    enrollment_group,
+    enrollment_method: str = models.EnrollmentMethods.DIGITAL,
+    extra_claims=None,
+    card_scheme=None,
+    card_category=None,
+):
     """Send the "returned enrollment" analytics event with a success status."""
     core.send_event(
         ReturnedEnrollmentEvent(
@@ -52,6 +83,8 @@ def returned_success(request, enrollment_group, enrollment_method: str = models.
             enrollment_group=enrollment_group,
             enrollment_method=enrollment_method,
             extra_claims=extra_claims,
+            card_scheme=card_scheme,
+            card_category=card_category,
         )
     )
 
