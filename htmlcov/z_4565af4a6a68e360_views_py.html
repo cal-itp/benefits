@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_e599dcf151c8fcbe_admin_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.11.0">coverage.py v7.11.0</a>,
-            created at 2025-10-28 17:24 +0000
+            created at 2025-10-28 18:33 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -209,7 +209,7 @@
     <p class="pln"><span class="n"><a id="t125" href="#t125">125</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t126" href="#t126">126</a></span><span class="t">    <span class="key">def</span> <span class="nam">form_valid</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">form</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t127" href="#t127">127</a></span><span class="t">        <span class="nam">card_token</span> <span class="op">=</span> <span class="nam">form</span><span class="op">.</span><span class="nam">cleaned_data</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">"card_token"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t128" href="#t128">128</a></span><span class="t">        <span class="nam">status</span><span class="op">,</span> <span class="nam">exception</span> <span class="op">=</span> <span class="nam">enroll</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">request</span><span class="op">,</span> <span class="nam">card_token</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t128" href="#t128">128</a></span><span class="t">        <span class="nam">status</span><span class="op">,</span> <span class="nam">exception</span><span class="op">,</span> <span class="nam">funding_source</span> <span class="op">=</span> <span class="nam">enroll</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">request</span><span class="op">,</span> <span class="nam">card_token</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t129" href="#t129">129</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t130" href="#t130">130</a></span><span class="t">        <span class="key">return</span> <span class="nam">handle_enrollment_results</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t131" href="#t131">131</a></span><span class="t">            <span class="nam">request</span><span class="op">=</span><span class="nam">self</span><span class="op">.</span><span class="nam">request</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -220,10 +220,12 @@
     <p class="run run2"><span class="n"><a id="t136" href="#t136">136</a></span><span class="t">            <span class="nam">route_reenrollment_error</span><span class="op">=</span><span class="nam">self</span><span class="op">.</span><span class="nam">route_reenrollment_error</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t137" href="#t137">137</a></span><span class="t">            <span class="nam">route_success</span><span class="op">=</span><span class="nam">self</span><span class="op">.</span><span class="nam">route_enrollment_success</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t138" href="#t138">138</a></span><span class="t">            <span class="nam">route_system_error</span><span class="op">=</span><span class="nam">self</span><span class="op">.</span><span class="nam">route_system_error</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t139" href="#t139">139</a></span><span class="t">        <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t140" href="#t140">140</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t141" href="#t141">141</a></span><span class="t">    <span class="key">def</span> <span class="nam">form_invalid</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">form</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t142" href="#t142">142</a></span><span class="t">        <span class="key">raise</span> <span class="nam">Exception</span><span class="op">(</span><span class="str">"Invalid card token form"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t139" href="#t139">139</a></span><span class="t">            <span class="nam">card_category</span><span class="op">=</span><span class="nam">funding_source</span><span class="op">.</span><span class="nam">card_category</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t140" href="#t140">140</a></span><span class="t">            <span class="nam">card_scheme</span><span class="op">=</span><span class="nam">funding_source</span><span class="op">.</span><span class="nam">card_scheme</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t141" href="#t141">141</a></span><span class="t">        <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t142" href="#t142">142</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t143" href="#t143">143</a></span><span class="t">    <span class="key">def</span> <span class="nam">form_invalid</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">form</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t144" href="#t144">144</a></span><span class="t">        <span class="key">raise</span> <span class="nam">Exception</span><span class="op">(</span><span class="str">"Invalid card token form"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -233,7 +235,7 @@
             <a class="nav" href="z_e599dcf151c8fcbe_admin_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.11.0">coverage.py v7.11.0</a>,
-            created at 2025-10-28 17:24 +0000
+            created at 2025-10-28 18:33 +0000
         </p>
     </div>
 </footer>
