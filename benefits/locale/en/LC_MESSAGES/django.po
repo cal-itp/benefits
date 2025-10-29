@@ -143,6 +143,15 @@ msgid ""
 "target=\"_blank\" rel=\"noopener noreferrer\">SBMTD Fares & Passes</a>."
 msgstr ""
 
+msgid "Choose your transit provider"
+msgstr ""
+
+msgid "Enroll today"
+msgstr ""
+
+msgid "Please choose a transit provider."
+msgstr ""
+
 msgid ""
 "The Benefits tool is provided by California Integrated Travel Project (Cal-"
 "ITP), which is a new program from the California Department of "
@@ -345,6 +354,9 @@ msgstr ""
 msgid "Previous Page"
 msgstr ""
 
+msgid "Next"
+msgstr ""
+
 msgid "Sign out of Login.gov"
 msgstr ""
 
@@ -399,9 +411,6 @@ msgid "Choose transit agency"
 msgstr ""
 
 msgid "Get your reduced fare on public transit when you tap to ride"
-msgstr ""
-
-msgid "Choose your Provider"
 msgstr ""
 
 msgid "Logged out"

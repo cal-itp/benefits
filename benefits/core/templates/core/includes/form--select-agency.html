@@ -1,0 +1,8 @@
+{% load i18n %}
+
+<form class="{{ form.classes }}" id="{{ form.id }}" method="{{ form.method | default:"post" | upper }}">
+  {{ form }}
+  <button class="btn btn-lg btn-primary mt-2" type="submit">{% translate "Next" %}</button>
+  {% csrf_token %}
+  {% include "core/includes/form-handlers.html" %}
+</form>

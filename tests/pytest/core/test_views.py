@@ -37,6 +37,13 @@ class TestIndexView:
         assert response.status_code == 200
         mocked_session_reset.assert_called_once()
 
+    def test_form_valid(self, view, model_TransitAgency):
+        form = view.form_class(data=dict(select_transit_agency=model_TransitAgency.slug))
+
+        assert form.is_valid()
+        view.form_valid(form)
+        assert view.success_url == model_TransitAgency.eligibility_index_url
+
 
 @pytest.mark.django_db
 def test_agency_index_single_flow(mocker, model_TransitAgency, client, session_reset_spy, mocked_session_update):

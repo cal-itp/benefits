@@ -535,6 +535,7 @@ footer .footer-links li a.footer-link:visited {
 
 .small-text {
   font-size: var(--font-size-14px);
+  font-weight: unset;
   line-height: var(--form-field-text-line-height);
   letter-spacing: calc(var(--font-size-14px) * var(--letter-spacing-5));
 }
@@ -572,6 +573,30 @@ footer .footer-links li a.footer-link:visited {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+
+/* Forms: Select Inputs */
+/* Styles specific to the agency chooser on the landing page */
+
+/* override a few bootstrap defaults */
+#form-agency-selection .form-select {
+  border-color: var(--primary-color);
+  border-radius: var(--border-radius);
+  border-width: var(--border-width);
+  line-height: var(--form-field-text-line-height);
+  padding: calc(var(--grid-spacer) * 1.5);
+}
+
+#form-agency-selection label {
+  font-size: var(--font-size-20px);
+  line-height: var(--bs-body-line-height);
+  letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
+}
+
+@media (min-width: 992px) {
+  #form-agency-selection {
+    max-width: 424px;
+  }
 }
 
 /* Forms: Radio Buttons */
@@ -846,10 +871,9 @@ a.card:focus-visible {
 }
 
 .landing .box .btn.btn-lg.btn-primary {
-  width: 250px; /* Button is 250 x 72 */
-  display: block;
-  margin: 0 var(--landing-page-x-margin);
-  padding: 19px 0; /* Button is 250 x 72 */
+  font-size: var(--font-size-18px);
+  font-weight: unset;
+  padding: var(--grid-spacer) 0;
 }
 
 .landing footer {
