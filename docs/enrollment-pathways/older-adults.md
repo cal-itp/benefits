@@ -6,7 +6,7 @@ Currently, the app uses [Login.gov's Identity Assurance Level 2 (IAL2)](https://
 
 ## Demonstration
 
-Here's a video showing what the flow looks like, having older adults confirm eligibility via Login.gov and enroll via Littlepay:
+Here's a video showing what the flow looks like for an older adult to confirm their eligibility for a transit benefit through Login.gov and then register their contactless debit or credit card with Littlepay, one of the supported transit processors:
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/vAJ_3lTeWJU?si=FCQX51zX_aaL556_&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
@@ -18,7 +18,7 @@ sequenceDiagram
     participant Benefits as Benefits app
     participant IdG as Identity Gateway
     participant Login.gov
-    participant Littlepay
+    participant Transit processor
 
     Rider->>Benefits: visits site
     Benefits-->>IdG: identity proofing
@@ -26,7 +26,7 @@ sequenceDiagram
     Rider->>Login.gov: enters SSN and ID
     Login.gov-->>IdG: eligibility verification
     IdG-->>Benefits: eligibility verification
-    Benefits-->>Littlepay: enrollment start
-    Rider->>Littlepay: enters payment card details
-    Littlepay-->>Benefits: enrollment complete
+    Benefits-->>Transit processor: enrollment start
+    Rider->>Transit processor: enters payment card details
+    Transit processor-->>Benefits: enrollment complete
 ```
