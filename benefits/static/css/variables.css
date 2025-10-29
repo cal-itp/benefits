@@ -46,4 +46,5 @@
   --focus-border-radius: calc(2rem / 16);
   --focus-outline-offset: calc(2rem / 16);
   --focus-border-radius: calc(2rem / 16);
+  --grid-spacer: calc(1rem / 2); /* 8px */
 }
