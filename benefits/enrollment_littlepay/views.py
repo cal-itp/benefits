@@ -37,7 +37,7 @@ class TokenView(EligibleSessionRequiredMixin, View):
             elif response.status is Status.SYSTEM_ERROR or response.status is Status.EXCEPTION:
                 logger.debug("Error occurred while requesting access token", exc_info=response.exception)
                 sentry_sdk.capture_exception(response.exception)
-                analytics.failed_pretokenization_request(request, response.status_code, self.enrollment_method)
+                analytics.failed_pretokenization_request(request, "littlepay", response.status_code, self.enrollment_method)
 
                 if response.status is Status.SYSTEM_ERROR:
                     redirect = reverse(self.route_system_error)

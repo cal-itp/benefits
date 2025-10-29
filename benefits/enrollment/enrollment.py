@@ -58,6 +58,7 @@ def handle_enrollment_results(
     card_scheme: str = None,
 ):
     flow = session.flow(request)
+    agency = session.agency(request)
     match (status):
         case Status.SUCCESS:
             agency = session.agency(request)
@@ -80,6 +81,7 @@ def handle_enrollment_results(
             analytics.returned_success(
                 request,
                 enrollment_group=flow.group_id,
+                transit_processor=agency.transit_processor,
                 enrollment_method=enrollment_method,
                 extra_claims=oauth_extra_claims,
                 card_scheme=card_scheme,
@@ -92,6 +94,7 @@ def handle_enrollment_results(
                 request,
                 str(exception),
                 enrollment_group=flow.group_id,
+                transit_processor=agency.transit_processor,
                 enrollment_method=enrollment_method,
             )
             sentry_sdk.capture_exception(exception)
@@ -102,6 +105,7 @@ def handle_enrollment_results(
                 request,
                 str(exception),
                 enrollment_group=flow.group_id,
+                transit_processor=agency.transit_processor,
                 enrollment_method=enrollment_method,
             )
             raise exception
@@ -111,6 +115,7 @@ def handle_enrollment_results(
                 request,
                 "Re-enrollment error.",
                 enrollment_group=flow.group_id,
+                transit_processor=agency.transit_processor,
                 enrollment_method=enrollment_method,
             )
             return redirect(route_reenrollment_error)

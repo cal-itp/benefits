@@ -183,6 +183,27 @@ def test_TransitAgency_clean(model_TransitAgency_inactive):
 
 
 @pytest.mark.django_db
+def test_TransitAgency_transit_processor_littlepay(model_TransitAgency, model_LittlepayConfig):
+    model_LittlepayConfig.transit_agency = model_TransitAgency
+    model_TransitAgency.save()
+
+    assert model_TransitAgency.transit_processor == "littlepay"
+
+
+@pytest.mark.django_db
+def test_TransitAgency_transit_processor_switchio(model_TransitAgency, model_SwitchioConfig):
+    model_SwitchioConfig.transit_agency = model_TransitAgency
+    model_TransitAgency.save()
+
+    assert model_TransitAgency.transit_processor == "switchio"
+
+
+@pytest.mark.django_db
+def test_TransitAgency_transit_processor_no_config(model_TransitAgency):
+    assert model_TransitAgency.transit_processor is None
+
+
+@pytest.mark.django_db
 def test_TransitAgency_enrollment_index_route_littlepay(model_TransitAgency, model_LittlepayConfig):
     model_LittlepayConfig.transit_agency = model_TransitAgency
     model_TransitAgency.save()

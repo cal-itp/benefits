@@ -145,7 +145,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
             else:
                 logger.debug(f"Error occurred while attempting to get registration status for {session.registration_id}")
                 sentry_sdk.capture_exception(response.exception)
-                analytics.failed_pretokenization_request(request, response.status_code, self.enrollment_method)
+                analytics.failed_pretokenization_request(request, "switchio", response.status_code, self.enrollment_method)
 
                 if response.status is Status.SYSTEM_ERROR:
                     redirect = reverse(self.route_system_error)
@@ -167,7 +167,7 @@ class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, V
         else:
             logger.debug("Error occurred while requesting a tokenization gateway registration", exc_info=response.exception)
             sentry_sdk.capture_exception(response.exception)
-            analytics.failed_pretokenization_request(request, response.status_code, self.enrollment_method)
+            analytics.failed_pretokenization_request(request, "switchio", response.status_code, self.enrollment_method)
 
             if response.status is Status.SYSTEM_ERROR:
                 redirect = reverse(self.route_system_error)
