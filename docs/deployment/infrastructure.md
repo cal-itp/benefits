@@ -90,14 +90,14 @@ flowchart LR
     rider --> benefits
     rider -->|Credentials and identity proofing| Login.gov
     rider --> recaptcha
-    rider -->|Payment card info| Littlepay
+    rider -->|Payment card info| Transit processor
     rider -->|Events| Amplitude
     rider -->|Session| cookies
 
     benefits --> idg
     benefits <--> recaptcha
     benefits -->|Events| Amplitude
-    benefits -->|Group enrollment| Littlepay
+    benefits -->|Group enrollment| Transit processor
     benefits --> elig_server
 
     subgraph "Agency Cards (e.g. MST Courtesy Cards)"
