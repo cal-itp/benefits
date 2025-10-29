@@ -75,7 +75,7 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    benefits[Benefits application]
+    benefits[Cal-ITP Benefits]
     style benefits stroke-width:5px
     recaptcha[Google reCAPTCHA]
     rider((User's browser))
@@ -83,29 +83,33 @@ flowchart LR
     elig_server[Eligibility Server]
     ac_data[(Agency Card data)]
     cookies[(Cookies)]
+    sentry[Sentry]
+    login[Login.gov]
+    fare_calc[Transit processor]
+    amplitude[Amplitude]
 
     benefits -->|Errors| sentry
     elig_server -->|Errors| sentry
 
     rider --> benefits
-    rider -->|Credentials and identity proofing| Login.gov
+    rider -->|Credentials and identity proofing| login
     rider --> recaptcha
-    rider -->|Payment card info| Transit processor
-    rider -->|Events| Amplitude
+    rider -->|Payment card info| fare_calc
+    rider -->|Events| amplitude
     rider -->|Session| cookies
 
     benefits --> idg
     benefits <--> recaptcha
-    benefits -->|Events| Amplitude
-    benefits -->|Group enrollment| Transit processor
+    benefits -->|Events| amplitude
+    benefits -->|Group enrollment| fare_calc
     benefits --> elig_server
 
-    subgraph "Agency Cards (e.g. MST Courtesy Cards)"
+    subgraph "Agency Cards"
     elig_server --> ac_data
     end
 
-    idg --> Login.gov
-    Login.gov -->|User attributes| idg
+    idg --> login
+    login -->|User attributes| idg
     idg -->|User attributes| benefits
 ```
 
