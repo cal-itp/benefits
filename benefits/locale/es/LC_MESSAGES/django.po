@@ -506,13 +506,6 @@ msgstr ""
 "Viaje a través de %(count)s agencias de transporte (¡y el número sigue "
 "creciendo!)"
 
-msgid "Please choose your transit provider:"
-msgstr "Elija su proveedor de transporte:"
-
-#, python-format
-msgid "%(agency)s logo"
-msgstr "Logotipo de %(agency)s"
-
 msgid "Cookies are disabled"
 msgstr "Cookies están inactivos"
 

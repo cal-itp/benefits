@@ -364,13 +364,6 @@ msgstr ""
 msgid "Ride across %(count)s agencies (and growing!)"
 msgstr ""
 
-msgid "Please choose your transit provider:"
-msgstr ""
-
-#, python-format
-msgid "%(agency)s logo"
-msgstr ""
-
 msgid "Cookies are disabled"
 msgstr ""
 

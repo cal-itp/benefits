@@ -632,65 +632,6 @@ footer .footer-links li a.footer-link:visited {
   outline-offset: 1px !important;
 }
 
-/* Cards */
-
-:root {
-  --card-padding: calc(12rem / 16);
-  --card-border-width: calc(13rem / 16);
-  --card-width: 100%;
-  --card-height: 100%;
-  --card-gap: 1rem;
-}
-
-@media (min-width: 992px) {
-  :root {
-    --card-padding: 1rem;
-    --card-border-width: calc(15rem / 16);
-    --card-width: calc(200rem / 16);
-    --card-height: calc(178rem / 16);
-    --card-gap: calc(44rem / 16);
-  }
-}
-
-a.card,
-a.card:hover,
-a.card:focus,
-a.card:focus-visible {
-  text-decoration: none;
-}
-
-.card {
-  border: 0;
-  border-top: solid var(--card-border-width) var(--primary-color);
-  border-radius: calc(8rem / 16);
-  transition: 0.3s;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  padding: var(--card-padding);
-  width: var(--card-width);
-  height: var(--card-height);
-}
-
-.card:hover {
-  border-top: solid var(--card-border-width) var(--hover-color);
-}
-
-.card:focus,
-.card:focus-visible {
-  outline: 3px solid var(--focus-color) !important; /* override CA State Web Template */
-  outline-offset: 0 !important;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
-}
-
-.card-row {
-  gap: var(--card-gap);
-  width: 75%;
-  margin: 0 auto;
-}
-
-.card .card-body {
-  padding: 0 !important; /* override CA State Web Template */
-}
-
 /* Modal Dialogs */
 
 :root {
