@@ -25,7 +25,7 @@
 | benefits/core/models/\_\_init\_\_.py                                                           |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/core/models/common.py                                                                 |       51 |        2 |       14 |        0 |     97% |     91-92 |
 | benefits/core/models/enrollment.py                                                             |      150 |        3 |       28 |        3 |     97% |140, 157, 241->252, 276 |
-| benefits/core/models/transit.py                                                                |      151 |        0 |       34 |        0 |    100% |           |
+| benefits/core/models/transit.py                                                                |      146 |        0 |       34 |        0 |    100% |           |
 | benefits/core/recaptcha.py                                                                     |       13 |        5 |        4 |        1 |     53% |     26-32 |
 | benefits/core/session.py                                                                       |      131 |        3 |       32 |        0 |     98% |     53-55 |
 | benefits/core/urls.py                                                                          |       25 |        0 |        2 |        0 |    100% |           |
@@ -104,7 +104,7 @@
 | benefits/settings.py                                                                           |      121 |        6 |       22 |        8 |     90% |109, 130->135, 146->149, 166, 343, 353, 359, 368 |
 | benefits/urls.py                                                                               |       27 |        7 |        4 |        2 |     71% |35->46, 50-64 |
 | benefits/wsgi.py                                                                               |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                                                                      **TOTAL** | **3087** |  **162** |  **550** |   **68** | **93%** |           |
+|                                                                                      **TOTAL** | **3082** |  **162** |  **550** |   **68** | **93%** |           |
 
 
 ## Setup coverage badge
