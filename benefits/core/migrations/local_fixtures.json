@@ -157,8 +157,7 @@
       "eligibility_api_public_key": 3,
       "staff_group": 2,
       "customer_service_group": 2,
-      "logo_large": "agencies/cst-lg.png",
-      "logo_small": "agencies/cst-sm.png"
+      "logo": "agencies/cst.png"
     }
   },
   {

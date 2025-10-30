@@ -9,8 +9,7 @@ from benefits.core.models import (
     Environment,
     TransitAgency,
     TransitProcessorConfig,
-    agency_logo_small,
-    agency_logo_large,
+    agency_logo,
 )
 
 
@@ -39,8 +38,7 @@ def test_TransitAgency_defaults():
     assert agency.phone == ""
     assert agency.supported_card_schemes == [CardSchemes.VISA, CardSchemes.MASTERCARD]
     assert agency.info_url == ""
-    assert agency.logo_large == ""
-    assert agency.logo_small == ""
+    assert agency.logo == ""
     # test fails if save fails
     agency.save()
 
@@ -143,13 +141,8 @@ def test_TransitAgency_for_user_in_group_not_linked_to_any_agency():
 
 
 @pytest.mark.django_db
-def test_agency_logo_small(model_TransitAgency):
-    assert agency_logo_small(model_TransitAgency, "local_filename.png") == "agencies/cst-sm.png"
-
-
-@pytest.mark.django_db
-def test_agency_logo_large(model_TransitAgency):
-    assert agency_logo_large(model_TransitAgency, "local_filename.png") == "agencies/cst-lg.png"
+def test_agency_logo(model_TransitAgency):
+    assert agency_logo(model_TransitAgency, "local_filename.png") == "agencies/cst.png"
 
 
 @pytest.mark.django_db
@@ -158,8 +151,7 @@ def test_TransitAgency_clean(model_TransitAgency_inactive):
     model_TransitAgency_inactive.long_name = ""
     model_TransitAgency_inactive.phone = ""
     model_TransitAgency_inactive.info_url = ""
-    model_TransitAgency_inactive.logo_large = ""
-    model_TransitAgency_inactive.logo_small = ""
+    model_TransitAgency_inactive.logo = ""
     # agency is inactive, OK to have incomplete fields
     model_TransitAgency_inactive.clean()
 
@@ -174,8 +166,7 @@ def test_TransitAgency_clean(model_TransitAgency_inactive):
     assert "long_name" in errors
     assert "phone" in errors
     assert "info_url" in errors
-    assert "logo_large" in errors
-    assert "logo_small" in errors
+    assert "logo" in errors
 
     non_field_errors = errors[NON_FIELD_ERRORS]
     assert len(non_field_errors) == 1

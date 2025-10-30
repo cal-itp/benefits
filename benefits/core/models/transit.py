@@ -30,17 +30,9 @@ class CardSchemes:
     )
 
 
-def _agency_logo(instance, filename, size):
+def agency_logo(instance, filename):
     base, ext = os.path.splitext(filename)
-    return f"agencies/{instance.slug}-{size}" + ext
-
-
-def agency_logo_small(instance, filename):
-    return _agency_logo(instance, filename, "sm")
-
-
-def agency_logo_large(instance, filename):
-    return _agency_logo(instance, filename, "lg")
+    return f"agencies/{instance.slug}" + ext
 
 
 class TransitProcessorConfig(models.Model):
@@ -148,17 +140,11 @@ class TransitAgency(models.Model):
         help_text="The group of users who are allowed to do in-person eligibility verification and enrollment.",
         related_name="+",
     )
-    logo_large = models.ImageField(
+    logo = models.ImageField(
         default="",
         blank=True,
-        upload_to=agency_logo_large,
-        help_text="The large version of the transit agency's logo.",
-    )
-    logo_small = models.ImageField(
-        default="",
-        blank=True,
-        upload_to=agency_logo_small,
-        help_text="The small version of the transit agency's logo.",
+        upload_to=agency_logo,
+        help_text="The transit agency's logo.",
     )
 
     def __str__(self):
@@ -253,8 +239,7 @@ class TransitAgency(models.Model):
                 long_name=self.long_name,
                 phone=self.phone,
                 info_url=self.info_url,
-                logo_large=self.logo_large,
-                logo_small=self.logo_small,
+                logo=self.logo,
             )
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 

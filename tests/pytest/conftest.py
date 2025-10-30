@@ -233,8 +233,7 @@ def model_TransitAgency(model_PemData):
         eligibility_api_id="test123",
         eligibility_api_private_key=model_PemData,
         eligibility_api_public_key=model_PemData,
-        logo_large="agencies/cst-lg.png",
-        logo_small="agencies/cst-sm.png",
+        logo="agencies/cst.png",
     )
 
     return agency
