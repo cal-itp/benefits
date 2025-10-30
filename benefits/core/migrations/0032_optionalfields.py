@@ -146,7 +146,7 @@ class Migration(migrations.Migration):
                 blank=True,
                 default="",
                 help_text="The large version of the transit agency's logo.",
-                upload_to=benefits.core.models.agency_logo_large,
+                upload_to="logo_large",
             ),
         ),
         migrations.AlterField(
@@ -156,7 +156,7 @@ class Migration(migrations.Migration):
                 blank=True,
                 default="",
                 help_text="The small version of the transit agency's logo.",
-                upload_to=benefits.core.models.agency_logo_small,
+                upload_to="logo_small",
             ),
         ),
         migrations.AlterField(

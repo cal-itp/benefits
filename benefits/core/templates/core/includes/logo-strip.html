@@ -10,7 +10,7 @@
     {% for agency in active_agencies %}
       {# djlint:off H006 #}
       <img height="32"
-           src="{{ agency.logo_small_url }}"
+           src="{{ agency.logo_url }}"
            alt="{% blocktranslate with agency=agency.short_name %}{{ agency }} logo{% endblocktranslate %}">
       {# djlint:on #}
     {% endfor %}

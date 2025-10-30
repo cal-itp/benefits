@@ -32,8 +32,8 @@ def _agency_context(agency: models.TransitAgency):
         "switchio_config": agency.switchio_config,
     }
 
-    if agency.logo_small:
-        agency_context.update({"logo_small_url": agency.logo_small.url})
+    if agency.logo:
+        agency_context.update({"logo_url": agency.logo.url})
 
     return agency_context
 
