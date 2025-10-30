@@ -18,7 +18,7 @@
 | benefits/core/context/\_\_init\_\_.py                                                          |        7 |        0 |        0 |        0 |    100% |           |
 | benefits/core/context/agency.py                                                                |       16 |        0 |        0 |        0 |    100% |           |
 | benefits/core/context/flow.py                                                                  |       16 |        1 |        0 |        0 |     94% |        25 |
-| benefits/core/context\_processors.py                                                           |       48 |        5 |       14 |        4 |     85% |18, 35->43, 78-79, 88, 118 |
+| benefits/core/context\_processors.py                                                           |       48 |        5 |       14 |        4 |     85% |18, 35->38, 73-74, 83, 113 |
 | benefits/core/forms.py                                                                         |       24 |        0 |        4 |        0 |    100% |           |
 | benefits/core/middleware.py                                                                    |       84 |        7 |       20 |        3 |     90% |37-38, 57-58, 77->82, 104-105, 132 |
 | benefits/core/mixins.py                                                                        |       40 |        2 |        8 |        0 |     96% |     71-72 |
