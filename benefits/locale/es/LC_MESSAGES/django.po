@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-10-28 11:28-0700\n"
+"POT-Creation-Date: 2025-10-29 14:58-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -505,9 +505,6 @@ msgid "Ride across %(count)s agencies (and growing!)"
 msgstr ""
 "Viaje a través de %(count)s agencias de transporte (¡y el número sigue "
 "creciendo!)"
-
-msgid "Please choose your transit provider:"
-msgstr "Elija su proveedor de transporte:"
 
 #, python-format
 msgid "%(agency)s logo"

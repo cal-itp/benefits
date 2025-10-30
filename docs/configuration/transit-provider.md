@@ -8,7 +8,6 @@ Then, the following steps are done by the Cal-ITP team to configure a new transi
 
 These steps currently assume the transit provider is using Littlepay as their transit processor. Support for integration with Switchio has been added but still needs to be documented, and integration with [other transit processors](https://www.camobilitymarketplace.org/contracts/) may be added in the future.
 
-
 ## Pre-configuration prep work
 
 _These items can all be done in parallel._
@@ -23,12 +22,10 @@ Open a Pull Request adding the new transit provider to the table in the README, 
 
 _Typically performed by a designer._
 
-The application currently requires transit provider logos in the following sizes:
+The application currently requires one transit provider logo for display on the landing page. The logo should be white with a clear background in the dimensions below:
 
-- 296×144
-- 104×72
-
-These are currently displayed on white cards, so the logos themselves can be any color and the background can be white or transparent.
+- height: 64px
+- width: any
 
 ### Update hardcoded parts of the application
 
@@ -42,7 +39,6 @@ Certain parts of the codebase must be updated to support a new transit provider:
 - [Message files](../../development/i18n/)
 
 [Here is an example PR that makes these updates for a new transit provider.](https://github.com/cal-itp/benefits/pull/3246)
-
 
 ## Configuration for development and testing
 
@@ -64,7 +60,6 @@ This work can begin once the transit provider has a contract in place with Littl
 
 --8<-- "inc/add-transitagency.md"
 --8<-- "inc/add-enrollmentflow.md"
-
 
 ## Configuration for production validation
 
@@ -94,8 +89,10 @@ For production validation, both a customer group and discount product are needed
      ProductResponse(id='d7d948c2-20bf-4b10-a181-d1f2c89456b6', code='Senior 65+', status='ACTIVE', type='CAPPING', description='Senior 65+', participant_id='eldorado-transit')
    ```
 1. Cal-ITP ensures the code changes made [during development and testing configuration](#configuration-for-development-and-testing) are deployed to the test environment.
+
 --8<-- "inc/add-transitagency.md"
 --8<-- "inc/add-enrollmentflow.md"
+
 1. Cal-ITP creates a new `EnrollmentGroup` in the Benefits test environment:
    - Choose one of the new `EnrollmentFlow`s.
    - Set the group value to the corresponding **testing** group ID (from production Littlepay) for production validation.
@@ -121,7 +118,6 @@ At this point, Cal-ITP and transit provider staff can coordinate to do on-the-gr
 1. Cal-ITP uses logs from Azure to verify the user was associated to the customer group.
 1. Cal-ITP verifies that Amplitude analytic events are being sent.
 
-
 ## Configuration for production
 
 Once production validation is done, the transit provider can be added to the production Benefits database.
@@ -130,8 +126,10 @@ Once production validation is done, the transit provider can be added to the pro
 1. Cal-ITP associates the group with the discount product [created previously during production validation](#configuration-for-production-validation).
    - Once this is complete, verify that the setup is correct by using the [littlepay CLI](https://github.com/cal-itp/littlepay).
 1. Cal-ITP ensures the code changes made [during development and testing configuration](#configuration-for-development-and-testing) are deployed to the prod environment.
+
 --8<-- "inc/add-transitagency.md"
 --8<-- "inc/add-enrollmentflow.md"
+
 1. Cal-ITP creates a new `EnrollmentGroup` in the Benefits prod environment:
    - Choose one of the new `EnrollmentFlow`s.
    - Set the group value to the corresponding **production** group ID.
@@ -147,7 +145,6 @@ Once production validation is done, the transit provider can be added to the pro
 1. Cal-ITP returns to the `TransitAgency` instance and checks the **Active** box.
 
 At this point, real customers can begin enrolling their cards and receiving their discounted fares with this transit provider!
-
 
 ## Verify real user enrollments are starting to happen
 
@@ -183,7 +180,6 @@ Use this query to confirm:
 - **Summarize:** Count by Event Properties Transit Agency
 
 You can also go directly to the existing [Cal-ITP Benefits enrollments by transit provider 2025](https://dashboards.calitp.org/question/3762-cal-itp-benefits-enrollments-by-transit-provider-2025) chart.
-
 
 ## Cleanup
 
