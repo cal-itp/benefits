@@ -35,6 +35,11 @@ msgstr ""
 "Obtenga una tarifa reducida en transporte público Nevada County Connects "
 "cuando toque para viajar"
 
+msgid "Get your reduced fare on RABA public transit when you tap to ride"
+msgstr ""
+"Obtenga una tarifa reducida en transporte público RABA cuando toque para "
+"viajar"
+
 msgid "Get your reduced fare on SacRT buses when you tap to ride"
 msgstr ""
 "Obtenga una tarifa reducida en los autobuses del SacRT cuando toque para "
@@ -957,6 +962,14 @@ msgstr ""
 
 #, python-format
 msgid ""
+"Cal-ITP doesn’t save any of your information. All RABA transit benefits "
+"reduce fares by 50%% for bus service on fixed routes."
+msgstr ""
+"Cal-ITP no almacena su información. Todos los beneficios de tránsito de RABA "
+"reducen las tarifas de autobuses en un 50%%."
+
+#, python-format
+msgid ""
 "Cal-ITP doesn’t save any of your information. All SacRT transit benefits "
 "reduce fares by 50%% for bus service on fixed routes."
 msgstr ""
@@ -1174,6 +1187,9 @@ msgstr "el beneficio de tránsito de la tarjeta de cortesía de MST"
 
 msgid "a Nevada County Connects bus"
 msgstr "un autobús de Nevada County Connects"
+
+msgid "a RABA bus"
+msgstr "un autobús de RABA"
 
 msgid "a SacRT bus"
 msgstr "un autobús de SacRT"

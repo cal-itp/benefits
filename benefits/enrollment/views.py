@@ -163,6 +163,7 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
                 transit_benefit=_("an MST Courtesy Card transit benefit"), transportation_type="an MST bus"
             ),
             AgencySlug.NEVCO.value: DefaultEnrollmentSuccess(transportation_type=_("a Nevada County Connects bus")),
+            AgencySlug.RABA.value: DefaultEnrollmentSuccess(transportation_type=_("a RABA bus")),
             AgencySlug.SACRT.value: DefaultEnrollmentSuccess(transportation_type=_("a SacRT bus")),
             AgencySlug.SBMTD.value: DefaultEnrollmentSuccess(transportation_type=_("an SBMTD bus")),
             SystemName.REDUCED_FARE_MOBILITY_ID.value: AgencyCardEnrollmentSuccess(
