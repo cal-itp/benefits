@@ -5,4 +5,13 @@
   <button class="btn btn-lg btn-primary mt-2" type="submit">{% translate "Next" %}</button>
   {% csrf_token %}
   {% include "core/includes/form-handlers.html" %}
+  <script nonce="{{ request.csp_nonce }}">
+    // clear stale errors immediately to ensure that they do not obscure the submit button
+    ready(function () {
+      const select = document.querySelector("#{{ form.id }} select");
+      select.addEventListener("change", function () {
+        select.setCustomValidity("");
+      });
+    });
+  </script>
 </form>
