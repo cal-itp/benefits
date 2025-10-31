@@ -1,0 +1,14 @@
+name: Auto-assign author to pull request
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  auto-assign:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto-assign author to PR
+        uses: hkusu/review-assign-action@v1
+        with:
+          assignees: ${{ github.actor }} # assign pull request author
