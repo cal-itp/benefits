@@ -587,6 +587,12 @@ footer .footer-links li a.footer-link:visited {
   padding: calc(var(--grid-spacer) * 1.5);
 }
 
+#form-agency-selection .form-select:focus,
+#form-agency-selection .form-select:focus-visible {
+  outline: var(--focus-style);
+  outline-offset: var(--focus-outline-offset);
+}
+
 #form-agency-selection label {
   font-size: var(--font-size-20px);
   line-height: var(--bs-body-line-height);
