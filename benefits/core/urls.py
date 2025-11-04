@@ -5,6 +5,7 @@ The core application: URLConf for the root of the webapp.
 import logging
 
 from django.urls import path, register_converter
+from django.views.i18n import JavaScriptCatalog
 
 from benefits.routes import routes
 from . import models, views
@@ -46,6 +47,7 @@ register_converter(TransitAgencyPathConverter, "agency")
 app_name = "core"
 
 urlpatterns = [
+    path("jsi18n", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     path("", views.IndexView.as_view(), name=routes.name(routes.INDEX)),
     path("help", views.HelpView.as_view(), name=routes.name(routes.HELP)),
     path("logged_out", views.logged_out, name=routes.name(routes.LOGGED_OUT)),

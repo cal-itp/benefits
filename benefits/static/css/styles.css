@@ -827,3 +827,8 @@ footer .footer-links li a.footer-link:visited {
     column-gap: 80px !important;
   }
 }
+
+.selected-agency-span {
+  font-size: inherit;
+  font-weight: inherit;
+}

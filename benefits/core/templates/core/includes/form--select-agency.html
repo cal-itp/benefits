@@ -11,6 +11,16 @@
       const select = document.querySelector("#{{ form.id }} select");
       select.addEventListener("change", function () {
         select.setCustomValidity("");
+
+        // inject the agency short name into the headline as a contextual clue
+        const agency = select[select.selectedIndex].dataset.shortName ?? ''
+        // if we decide to take this tack, i'll need to figure out how to load more than the built-in translations
+        // and pass through agency as an argument
+        const headline = gettext(
+          `Get your reduced fare on {{ agency }} public transit when you tap to ride`, agency
+        )
+        console.log(gettext('January'), headline)
+        document.querySelector('.selected-agency-span').innerText = headline
       });
     });
   </script>

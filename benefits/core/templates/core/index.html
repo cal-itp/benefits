@@ -6,7 +6,11 @@
 {% endblock title %}
 
 {% block headline %}
-  {% translate "Get your reduced fare on public transit when you tap to ride" %}
+  <span class="selected-agency-span">
+    {% blocktranslate trimmed with agency="" %}
+      Get your reduced fare on {{ agency }} public transit when you tap to ride
+    {% endblocktranslate %}
+  </span>
 {% endblock headline %}
 
 {% block call-to-action %}

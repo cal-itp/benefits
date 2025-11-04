@@ -12,6 +12,15 @@ def get_active_agency_choices(placeholder="placeholder"):
     return agency_names
 
 
+class AgencySelectWidget(forms.Select):
+    def create_option(self, name, value, *args, **kwargs):
+        option = super().create_option(name, value, *args, **kwargs)
+
+        if value:
+            option["attrs"]["data-short-name"] = models.TransitAgency.by_slug(value).short_name
+        return option
+
+
 class ChooseAgencyForm(forms.Form):
     """Form to select the agency to request transit benefits for."""
 
@@ -30,7 +39,7 @@ class ChooseAgencyForm(forms.Form):
             label=_("Enroll today"),
             label_suffix="",
             required=True,
-            widget=forms.Select(
+            widget=AgencySelectWidget(
                 attrs={
                     "class": "form-select",
                     "aria-label": placeholder,
