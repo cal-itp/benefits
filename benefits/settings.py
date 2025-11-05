@@ -313,7 +313,7 @@ RECAPTCHA_ENABLED = all((RECAPTCHA_API_URL, RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET
 CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
         "base-uri": [NONE],
-        "connect-src": [SELF, "https://api.amplitude.com/"],
+        "connect-src": [SELF, "https://api.amplitude.com/", "https://cdn.jsdelivr.net/"],
         "default-src": [SELF],
         "font-src": [SELF, "https://fonts.gstatic.com/"],
         "frame-ancestors": [NONE],
