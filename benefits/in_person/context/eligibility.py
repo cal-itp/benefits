@@ -20,7 +20,7 @@ eligibility_index = {
         "Medicare card."
     ),
     SystemName.COURTESY_CARD.value: EligibilityIndex(
-        policy_details="I confirmed this rider’s identity using a government-issued ID and verified they possess an MST "
+        policy_details="I confirmed this rider’s identity using a government-issued ID and verified they possess a "
         "Courtesy Card."
     ),
 }
