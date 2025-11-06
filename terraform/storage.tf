@@ -66,7 +66,7 @@ resource "azurerm_backup_policy_file_share" "policy" {
 
 resource "azurerm_storage_share" "data" {
   name                 = "benefits-data"
-  storage_account_id = azurerm_storage_account.main.name
+  storage_account_id   = azurerm_storage_account.main.id
   quota                = 5
   enabled_protocol     = "SMB"
   acl {
