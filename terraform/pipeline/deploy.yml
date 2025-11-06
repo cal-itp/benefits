@@ -5,11 +5,11 @@ parameters:
     type: string
 
 steps:
-  # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformInstaller#readme
-  - task: TerraformInstaller@0
+  # https://github.com/microsoft/azure-pipelines-terraform/blob/main/Tasks/TerraformInstaller/TerraformInstallerV1/README.md
+  - task: TerraformInstaller@1
     displayName: Install Terraform
     inputs:
-      terraformVersion: 1.8.5
+      terraformVersion: 1.13.4
   # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformTask/TerraformTaskV3#readme
   - task: TerraformTaskV3@3
     displayName: Terraform init

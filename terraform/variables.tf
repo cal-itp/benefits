@@ -1,6 +1,14 @@
 # needs to be uppercase "because Azure DevOps will always transform pipeline variables to uppercase environment variables"
 # https://gaunacode.com/terraform-input-variables-using-azure-devops
 
+variable "ARM_DEV_SUBSCRIPTION_ID" {
+  description = "Development Subscription ID"
+  type        = string
+}
+variable "ARM_SUBSCRIPTION_ID" {
+  description = "Production Subscription ID"
+  type        = string
+}
 variable "DEVSECOPS_OBJECT_ID" {
   description = "Object ID for the DevSecOps principal, which includes the Production service connection"
   type        = string
