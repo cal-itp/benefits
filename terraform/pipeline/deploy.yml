@@ -9,9 +9,9 @@ steps:
   - task: TerraformInstaller@1
     displayName: Install Terraform
     inputs:
-      terraformVersion: 1.13.4
+      terraformVersion: 1.14.5
   # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformTask/TerraformTaskV3#readme
-  - task: TerraformTaskV3@3
+  - task: TerraformTaskV4@4
     displayName: Terraform init
     inputs:
       provider: azurerm
@@ -26,7 +26,7 @@ steps:
       backendAzureRmStorageAccountName: sacdtcalitpp001
       backendAzureRmContainerName: tfstate
       backendAzureRmKey: terraform.tfstate
-  - task: TerraformTaskV3@3
+  - task: TerraformTaskV4@4
     displayName: Select environment
     inputs:
       provider: azurerm
@@ -42,7 +42,7 @@ steps:
       REASON: $(Build.Reason)
       INDIVIDUAL_SOURCE: $(Build.SourceBranchName)
       SOURCE_BRANCH: $(Build.SourceBranch)
-  - task: TerraformTaskV3@3
+  - task: TerraformTaskV4@4
     displayName: Terraform plan
     inputs:
       provider: azurerm
@@ -60,7 +60,7 @@ steps:
         ne(variables['tag_type'], 'test'),
         ne(variables['tag_type'], 'prod')
       )
-  - task: TerraformTaskV3@3
+  - task: TerraformTaskV4@4
     displayName: Terraform apply
     inputs:
       provider: azurerm
