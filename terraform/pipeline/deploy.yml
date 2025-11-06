@@ -11,7 +11,7 @@ steps:
     inputs:
       terraformVersion: 1.13.4
   # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformTask/TerraformTaskV3#readme
-  - task: TerraformTaskV3@3
+  - task: TerraformTask@5
     displayName: Terraform init
     inputs:
       provider: azurerm
@@ -20,13 +20,13 @@ steps:
       # https://developer.hashicorp.com/terraform/tutorials/automation/automate-terraform#automated-terraform-cli-workflow
       commandOptions: -input=false
       # service connection
-      backendServiceArm: Production
+      backendServiceArm: Fed-Production
       # needs to match main.tf
       backendAzureRmResourceGroupName: RG-CDT-PUB-VIP-CALITP-P-001
       backendAzureRmStorageAccountName: sacdtcalitpp001
       backendAzureRmContainerName: tfstate
       backendAzureRmKey: terraform.tfstate
-  - task: TerraformTaskV3@3
+  - task: TerraformTask@5
     displayName: Select environment
     inputs:
       provider: azurerm
@@ -42,7 +42,7 @@ steps:
       REASON: $(Build.Reason)
       INDIVIDUAL_SOURCE: $(Build.SourceBranchName)
       SOURCE_BRANCH: $(Build.SourceBranch)
-  - task: TerraformTaskV3@3
+  - task: TerraformTask@5
     displayName: Terraform plan
     inputs:
       provider: azurerm
@@ -60,7 +60,7 @@ steps:
         ne(variables['tag_type'], 'test'),
         ne(variables['tag_type'], 'prod')
       )
-  - task: TerraformTaskV3@3
+  - task: TerraformTask@5
     displayName: Terraform apply
     inputs:
       provider: azurerm
