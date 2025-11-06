@@ -42,7 +42,7 @@ steps:
       REASON: $(Build.Reason)
       INDIVIDUAL_SOURCE: $(Build.SourceBranchName)
       SOURCE_BRANCH: $(Build.SourceBranch)
-  - task: TerraformTaskV3@3
+  - task: TerraformTask@5
     displayName: Terraform plan
     inputs:
       provider: azurerm
