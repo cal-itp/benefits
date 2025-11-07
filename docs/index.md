@@ -105,15 +105,13 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 
 The Cal-ITP Benefits app supports the following enrollment pathways that use the corresponding eligibility verification methods:
 
-| Enrollment pathway                                                             | Eligibility verification                                                              | Status | Launch                                                                |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- | ------ | --------------------------------------------------------------------- |
-| [**Older adults**](/benefits/enrollment-pathways/older-adults)                 | [Login.gov ID Proofed](https://developers.login.gov/attributes/)                      | Live   | [08/2022](https://github.com/cal-itp/benefits/releases/tag/2022.08.1) |
-| [**Agency cards**](/benefits/enrollment-pathways/agency-cards)                 | [Eligibility API](https://docs.calitp.org/eligibility-api/specification/)             | Live   | [11/2022](https://github.com/cal-itp/benefits/releases/tag/2022.11.1) |
-| [**Veterans**](/benefits/enrollment-pathways/veterans)                         | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live   | [09/2023](https://github.com/cal-itp/benefits/releases/tag/2023.09.1) |
-| [**Low-income**](/benefits/enrollment-pathways/low-income)                     | CalFresh Confirm API                                                                  | Live   | [07/2024](https://github.com/cal-itp/benefits/releases/tag/2024.07.1) |
-| [**Medicare cardholders**](/benefits/enrollment-pathways/medicare-cardholders) | [Blue Button API](https://bluebutton.cms.gov/developers/#overview)                    | Live   | [09/2024](https://github.com/cal-itp/benefits/releases/tag/2024.09.3) |
-
-Read more about each [enrollment pathway](/benefits/enrollment-pathways/).
+| Enrollment pathway                   | Eligibility verification                                                              | Status | Launch               |
+| ------------------------------------ | ------------------------------------------------------------------------------------- | ------ | -------------------- |
+| [**Older adults**][older-adults]     | [Login.gov ID Proofed](https://developers.login.gov/attributes/)                      | Live   | [08/2022][2022.08.1] |
+| [**Agency cards**][agency-cards]     | [Eligibility API](https://docs.calitp.org/eligibility-api/specification/)             | Live   | [11/2022][2022.11.1] |
+| [**Veterans**][veterans]             | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live   | [09/2023][2023.09.1] |
+| [**Low-income**][low-income]         | CalFresh Confirm API                                                                  | Live   | [07/2024][2024.07.1] |
+| [**Medicare cardholders**][medicare] | [Blue Button API](https://bluebutton.cms.gov/developers/#overview)                    | Live   | [09/2024][2024.09.3] |
 
 ## Technical and security details
 
@@ -137,7 +135,7 @@ The Benefits application is deployed to Microsoft Azure. Traffic is encrypted be
 
 The network is managed by the [California Department of Technology (CDT)](https://cdt.ca.gov/), who provide a firewall and [distributed denial-of-service (DDoS)](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/) protection.
 
-You can find more technical details on [our infrastructure page](deployment/infrastructure/).
+You can find more technical details on [our infrastructure page](explanation/infrastructure.md).
 
 ### Data storage
 
@@ -161,7 +159,7 @@ Learn more about the security/privacy practices of some of our third-party integ
 - [Switchio](https://switchio.com/privacy-policy/)
 - [Login.gov](https://www.login.gov/policy/)
 
-Benefits collects analytics on usage, without any identifying information. You can find more details on [our analytics page](product-and-design/analytics/).
+Benefits collects analytics on usage, without any identifying information. You can find more details on [our analytics page](reference/analytics.md).
 
 ### Transit processors
 
@@ -178,13 +176,23 @@ Upon doing new major integrations, features, or architectural changes, the Benef
 
 All code changes are reviewed by at least one other member of the engineering team, which is enforced through [branch protections](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/about-protected-branches).
 
+[2022.08.1]: https://github.com/cal-itp/benefits/releases/tag/2022.08.1
+[2022.11.1]: https://github.com/cal-itp/benefits/releases/tag/2022.11.1
+[2023.09.1]: https://github.com/cal-itp/benefits/releases/tag/2023.09.1
+[2024.07.1]: https://github.com/cal-itp/benefits/releases/tag/2024.07.1
+[2024.09.3]: https://github.com/cal-itp/benefits/releases/tag/2024.09.3
+[older-adults]: explanation/enrollment-pathways/older-adults.md
+[agency-cards]: explanation/enrollment-pathways/agency-cards.md
+[veterans]: explanation/enrollment-pathways/veterans.md
+[low-income]: explanation/enrollment-pathways/low-income.md
+[medicare]: explanation/enrollment-pathways/medicare-cardholders.md
 [benefits-repo]: https://github.com/cal-itp/benefits
 [board]: https://github.com/orgs/compilerla/projects/6/views/8
 [calitp]: https://calitp.org
 [django]: https://docs.djangoproject.com/en/
 [docker]: https://www.docker.com/products/docker-desktop
-[interconnections]: deployment/infrastructure/#system-interconnections
-[hosting]: deployment/
+[interconnections]: explanation/infrastructure.md#system-interconnections
+[hosting]: explanation/deployment.md
 [littlepay]: https://littlepay.com/
 [switchio]: https://switchio.com/transport/
 [i18n]: https://docs.djangoproject.com/en/5.0/topics/i18n/
