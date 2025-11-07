@@ -23,10 +23,10 @@ plugins:
   - awesome-pages
   - redirects:
       redirect_maps:
-        "deployment/azure.md": "deployment/infrastructure.md"
-        "getting-started/development.md": "development/README.md"
-        "getting-started/docker-dynamic-ports.md": "development/docker-dynamic-ports.md"
-        "use-cases/courtesy-cards.md": "enrollment-pathways/agency-cards.md"
+        "deployment/azure.md": "explanation/infrastructure.md"
+        "getting-started/development.md": "explanation/development/README.md"
+        "getting-started/docker-dynamic-ports.md": "explanation/development/docker-dynamic-ports.md"
+        "use-cases/courtesy-cards.md": "explanation/enrollment-pathways/agency-cards.md"
 
 extra_css:
   - styles/theme.css
@@ -43,7 +43,8 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.inlinehilite
   - pymdownx.snippets:
-      base_path: !relative  # Relative to the current Markdown file
+      base_path: !relative # Relative to the current Markdown file
+
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tabbed
