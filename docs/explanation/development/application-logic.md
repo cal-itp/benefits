@@ -1,9 +1,5 @@
 # Application logic
 
-!!! info "See also"
-
-    More specific user flow diagrams: [Enrollment pathways](../enrollment-pathways/README.md)
-
 This page describes how Cal-ITP Benefits defines user flows through the following high-level _phases_:
 
 1. [Initial setup](#initial-setup)
@@ -38,7 +34,7 @@ generally follows from these phases:
   verification
 - [`benefits/enrollment/`](https://github.com/cal-itp/benefits/tree/main/benefits/enrollment) implements enrollment
 
-Each of these directories contains a standalone Django app registered in the [settings](../configuration/README.md#django-settings).
+Each of these directories contains a standalone Django app registered in the [settings](../configuration.md#django-settings).
 
 All of the common logic and [database models and migrations](./models-migrations.md) are defined in `benefits.core`, and this
 app is imported by the other apps.

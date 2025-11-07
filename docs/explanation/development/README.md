@@ -7,7 +7,7 @@
 !!! warning
 
     You must build the base Docker image `benefits_client:latest` before running the devcontainer.
-    See [Local Setup](../getting-started/README.md)
+    See [Local Setup](../../guides/getting-started.md)
 
 ## Install the Dev Containers extension
 
@@ -47,7 +47,7 @@ In VS Code, press <kbd>Ctrl</kbd>/<kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>D</kb
 
 ![Screenshot of the VSCode Run and Debug pane, showing selection of the launch configuration](img/vscode-debugger-launch-config.png)
 
-The [environment](../configuration/environment-variables.md) can also be overridden for the debug session by editing the configuration in `.vscode/launch.json`, where any of the supported environment variables may be specified in the `env` block. For example, to test the app with reCAPTCHA environment variables:
+The [environment](../../reference/environment-variables.md) can also be overridden for the debug session by editing the configuration in `.vscode/launch.json`, where any of the supported environment variables may be specified in the `env` block. For example, to test the app with reCAPTCHA environment variables:
 
 ```jsonc
 {

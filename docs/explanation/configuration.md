@@ -13,7 +13,7 @@ startup.
 
 The model objects defined in the data migration file are also loaded into and seed Django's database at application startup time.
 
-See the [Setting secrets](../deployment/secrets) section for how to set secret values for a deployment.
+See the [Setting secrets](../tutorials/secrets.md) section for how to set secret values for a deployment.
 
 ## Django settings
 
@@ -80,6 +80,6 @@ else:
 [django-model]: https://docs.djangoproject.com/en/5.0/topics/db/models/
 [django-settings]: https://docs.djangoproject.com/en/5.0/topics/settings/
 [django-using-settings]: https://docs.djangoproject.com/en/5.0/topics/settings/#using-settings-in-python-code
-[env-vars]: environment-variables.md
-[data]: data.md
-[getting-started]: ../getting-started/README.md
+[env-vars]: ../reference/environment-variables.md
+[data]: ../tutorials/load-sample-data.md
+[getting-started]: ../guides/getting-started.md

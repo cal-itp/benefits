@@ -66,7 +66,7 @@ Transit processor-->>Benefits: card enrollment confirmation
 
 1. The IdG then passes an eligibility response as Medicare enrollment status = TRUE to the Cal-ITP Benefits app to indicate the person is eligible for a benefit.
 
-1. The transit rider provides the debit or credit card details they use to pay for transit to the [transit processor](/#transit-processors) that facilitates fare collection for the transit provider.
+1. The transit rider provides the debit or credit card details they use to pay for transit to the [transit processor](../../index.md#transit-processors) that facilitates fare collection for the transit provider.
 
 1. The app registers the transit benefit with the transit rider’s debit or credit card.
 

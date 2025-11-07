@@ -10,7 +10,7 @@ The Django application gets built into a [Docker image][dockerfile] with [NGINX]
 The application is deployed to an [Azure Web App Container][az-webapp] using three separate environments for `dev`, `test`,
 and `prod`.
 
-The [Deploy](deploy-workflow) workflow is responsible for building that branch's image and pushing to [GitHub Container
+The [Deploy][deploy-workflow] workflow is responsible for building that branch's image and pushing to [GitHub Container
 Registry (GHCR)][ghcr]. It also deploys to the Azure Web App, telling Azure to restart the app and pull the latest image.
 
 You can view what Git commit is deployed for a given environment by visiting the URL path `/static/sha.txt`.
@@ -48,9 +48,8 @@ Push the new image:tag to the Azure App Service instance.
 
 ## Configuration
 
-Sensitive [configuration settings](../configuration/README.md) are maintained as Application Configuration variables in Azure,
-referencing [Azure Key Vault secrets](https://azure.microsoft.com/en-us/products/key-vault/). Other non-sensitive configuration
-is maintained directly in the configuration database via the [Django Admin](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/).
+Sensitive [configuration settings](configuration.md) are maintained as Application Configuration variables in Azure,
+referencing [Azure Key Vault secrets](https://azure.microsoft.com/en-us/products/key-vault/). Other non-sensitive configuration is maintained directly in the configuration database via the [Django Admin](https://docs.djangoproject.com/en/5.2/ref/contrib/admin/).
 
 ## Docker images
 

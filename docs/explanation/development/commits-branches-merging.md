@@ -37,9 +37,9 @@ base.
 
 In addition to `main`, the repository has three other long-lived branches:
 
-- `test` and `prod` are read-only (no longer actively used) and correspond to the Test and Production [deploy environments](../deployment/README.md), respectively. The last release using these branches was [2024.07.1](https://github.com/cal-itp/benefits/releases/tag/2024.07.1).
+- `test` and `prod` are read-only (no longer actively used) and correspond to the Test and Production [deploy environments](../deployment.md), respectively. The last release using these branches was [2024.07.1](https://github.com/cal-itp/benefits/releases/tag/2024.07.1).
 - `gh-pages` hosts the compiled documentation, and is always forced-pushed by the
-  [docs build process](../getting-started/documentation.md#deploying).
+  [docs build process](../../guides/documentation.md#deploying).
 
 ### Protection rules
 
