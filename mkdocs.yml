@@ -62,6 +62,12 @@ plugins:
         "getting-started/documentation.md": "guides/documentation.md"
         "getting-started/docker-dynamic-ports.md": "explanation/development/docker-dynamic-ports.md"
         "getting-started/README.md": "guides/getting-started.md"
+
+        "product-and-design/analytics.md": "reference/analytics.md"
+        "product-and-design/copy-delivery.md": "guides/copy-delivery.md"
+        "product-and-design/copy-style.md": "reference/copy-style.md"
+        "product-and-design/newsletter-archive.md": "reference/newsletter-archive.md"
+        "product-and-design/use-cases/enrollment-use-cases.md": "index.md#supported-enrollment-pathways"
         "use-cases/courtesy-cards.md": "explanation/enrollment-pathways/agency-cards.md"
 
 extra_css:
