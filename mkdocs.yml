@@ -42,6 +42,15 @@ plugins:
         "deployment/troubleshooting.md": "guides/troubleshooting.md"
         "deployment/workflows.md": "explanation/deployment.md"
 
+        "development/application-logic.md": "explanation/development/application-logic.md"
+        "development/commits-branches-merging.md": "explanation/development/commits-branches-merging.md"
+        "development/docker-dynamic-ports.md": "explanation/development/docker-dynamic-ports.md"
+        "development/i18n.md": "explanation/development/i18n.md"
+        "development/linting-pre-commit.md": "explanation/development/linting-pre-commit.md"
+        "development/models-migrations.md": "explanation/development/models-migrations.md"
+        "development/README.md": "explanation/development/README.md"
+        "development/test-server.md": "explanation/development/test-server.md"
+
         "getting-started/development.md": "explanation/development/README.md"
         "getting-started/docker-dynamic-ports.md": "explanation/development/docker-dynamic-ports.md"
         "use-cases/courtesy-cards.md": "explanation/enrollment-pathways/agency-cards.md"
