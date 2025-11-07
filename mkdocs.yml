@@ -59,7 +59,9 @@ plugins:
         "enrollment-pathways/veterans.md": "explanation/enrollment-pathways/veterans.md"
 
         "getting-started/development.md": "explanation/development/README.md"
+        "getting-started/documentation.md": "guides/documentation.md"
         "getting-started/docker-dynamic-ports.md": "explanation/development/docker-dynamic-ports.md"
+        "getting-started/README.md": "guides/getting-started.md"
         "use-cases/courtesy-cards.md": "explanation/enrollment-pathways/agency-cards.md"
 
 extra_css:
