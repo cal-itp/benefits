@@ -33,6 +33,15 @@ plugins:
         "configuration/transit-provider.md": "guides/onboard-transit-provider.md"
 
         "deployment/azure.md": "explanation/infrastructure.md"
+        "deployment/infrastructure.md": "explanation/infrastructure.md"
+        "deployment/hotfix.md": "guides/hotfix.md"
+        "deployment/README.md": "explanation/deployment.md"
+        "deployment/release.md": "guides/release.md"
+        "deployment/rollback.md": "guides/rollback.md"
+        "deployment/secrets.md": "tutorials/secrets.md"
+        "deployment/troubleshooting.md": "guides/troubleshooting.md"
+        "deployment/workflows.md": "explanation/deployment.md"
+
         "getting-started/development.md": "explanation/development/README.md"
         "getting-started/docker-dynamic-ports.md": "explanation/development/docker-dynamic-ports.md"
         "use-cases/courtesy-cards.md": "explanation/enrollment-pathways/agency-cards.md"
