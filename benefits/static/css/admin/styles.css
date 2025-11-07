@@ -128,11 +128,6 @@ iframe.card-collection {
 
 /* Login Page */
 
-#content-main {
-  /* Overriding Django Admin base styles */
-  float: none;
-}
-
 .login #container {
   background: var(--body-bg);
   border: 1px solid var(--hairline-color);
