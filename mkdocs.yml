@@ -2,6 +2,8 @@ site_name: "cal-itp/benefits: documentation"
 repo_url: https://github.com/cal-itp/benefits
 edit_uri: edit/dev/docs
 site_url: https://docs.calitp.org/benefits
+exclude_docs: |
+  **/inc/*.md
 
 theme:
   name: material
