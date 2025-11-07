@@ -33,10 +33,10 @@ _Typically performed by an engineer._
 
 Certain parts of the codebase must be updated to support a new transit provider:
 
-- [`benefits/core/context/agency.py`](https://github.com/cal-itp/benefits/blob/main/benefits/core/context/agency.py) (requires a [migration](../../development/models-migrations/))
+- [`benefits/core/context/agency.py`](https://github.com/cal-itp/benefits/blob/main/benefits/core/context/agency.py) (requires a [migration](../explanation/development/models-migrations.md))
 - [`benefits/eligibility/views.py`](https://github.com/cal-itp/benefits/blob/main/benefits/eligibility/views.py)
 - [`benefits/enrollment/context/flow.py`](https://github.com/cal-itp/benefits/blob/main/benefits/enrollment/context/flow.py)
-- [Message files](../../development/i18n/)
+- [Message files](../explanation/development/i18n.md)
 
 [Here is an example PR that makes these updates for a new transit provider.](https://github.com/cal-itp/benefits/pull/3246)
 
@@ -52,7 +52,7 @@ This work can begin once the transit provider has a contract in place with Littl
 
 - Cal-ITP uses the transit provider's Littlepay merchant ID to create a customer group in the Littlepay QA environment for each type of eligibility (e.g. senior).
   - _Typically performed by transit provider's Account Manager_
-  - For each group that's created, a group ID will be returned and should be set as the `group_id` on a new `LittlepayGroup` in the Benefits database. (See [Configuration data](../data/) for more on loading the database.)
+  - For each group that's created, a group ID will be returned and should be set as the `group_id` on a new `LittlepayGroup` in the Benefits database. (See [Configuration data](../tutorials/load-sample-data.md) for more on loading the database.)
 - Cal-ITP requests and receives Littlepay Back Office API access (for both PROD and QA) for the new transit provider.
   - _Typically requested by a developer via email to Littlepay_
 
@@ -102,7 +102,7 @@ For production validation, both a customer group and discount product are needed
      - This will be set back to QA after final production configuration is complete.
    - Choose the new `TransitAgency`.
    - Retrieve Audience and Client ID values for the **production** config from shared LastPass note.
-   - [Create the client secret in the Azure Key Vault](../../deployment/secrets/) for the test environment, then paste its name in the Client Secret Name field.
+   - [Create the client secret in the Azure Key Vault](../tutorials/secrets.md) for the test environment, then paste its name in the Client Secret Name field.
      - Be sure to refresh the secrets for this to take effect!
        1. In the Azure portal, go to the App Service.
        1. Inside the App Service, navigate to Settings -> Environment variables.
@@ -137,7 +137,7 @@ Once production validation is done, the transit provider can be added to the pro
    - Set Environment to **Production**.
    - Choose the new `TransitAgency`.
    - Retrieve Audience and Client ID values for the **production** config from shared LastPass note.
-   - [Create the client secret in the Azure Key Vault](../../deployment/secrets/) for the prod environment, then paste its name in the Client Secret Name field.
+   - [Create the client secret in the Azure Key Vault](../tutorials/secrets.md) for the prod environment, then paste its name in the Client Secret Name field.
      - Be sure to refresh the secrets for this to take effect!
        1. In the Azure portal, go to the App Service.
        1. Inside the App Service, navigate to Settings -> Environment variables.
@@ -199,7 +199,7 @@ The transit provider's configuration in the test environment should be updated t
   - Environment
   - Audience
   - Client ID
-  - Client secret [(update value in Azure Key Vault)](../../deployment/secrets/)
+  - Client secret [(update value in Azure Key Vault)](../tutorials/secrets.md)
 - Littlepay groups:
   - Set group IDs back to the groups [created previously during development and testing configuration](#configuration-for-development-and-testing)
   - Once this is complete, verify that the setup is correct by using the [littlepay CLI](https://github.com/cal-itp/littlepay).

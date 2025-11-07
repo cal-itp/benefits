@@ -4,7 +4,7 @@
 
 ### Monitoring
 
-We have [ping tests](https://docs.microsoft.com/en-us/azure/azure-monitor/app/monitor-web-app-availability) set up to notify about availability of each [environment](../infrastructure/#environments). Alerts go to [#benefits-notify](https://cal-itp.slack.com/archives/C022HHSEE3F).
+We have [ping tests](https://docs.microsoft.com/en-us/azure/azure-monitor/app/monitor-web-app-availability) set up to notify about availability of each [environment](../explanation/infrastructure.md#environments). Alerts go to [#benefits-notify](https://cal-itp.slack.com/archives/C022HHSEE3F).
 
 ### Logs
 
@@ -20,7 +20,7 @@ For some pre-defined queries, click `Queries`, then `Group by: Query type`, and 
 
 #### Live tail
 
-After [setting up the Azure CLI](#making-changes), you can use the following command to [stream live logs](https://docs.microsoft.com/en-us/azure/app-service/troubleshoot-diagnostic-logs#in-local-terminal):
+After [setting up the Azure CLI](../explanation/infrastructure.md#making-changes), you can use the following command to [stream live logs](https://docs.microsoft.com/en-us/azure/app-service/troubleshoot-diagnostic-logs#in-local-terminal):
 
 ```sh
 az webapp log tail --resource-group RG-CDT-PUB-VIP-CALITP-P-001 --name AS-CDT-PUB-VIP-CALITP-P-001 2>&1 | grep -v /healthcheck
@@ -36,7 +36,7 @@ Cal-ITP's Sentry instance collects both [errors ("Issues")](https://sentry.calit
 
 [Alerts are sent to #benefits-notify in Slack.](https://sentry.calitp.org/organizations/sentry/alerts/rules/benefits/9/details/) [Others can be configured.](https://sentry.calitp.org/organizations/sentry/alerts/rules/)
 
-You can troubleshoot Sentry itself by [turning on debug mode](../../configuration/environment-variables/#django_debug) and visiting `/error/`.
+You can troubleshoot Sentry itself by [turning on debug mode](../reference/environment-variables.md#django_debug) and visiting `/error/`.
 
 ## Specific issues
 
@@ -53,12 +53,12 @@ If Terraform commands fail (locally or in the Pipeline) due to an `Error acquiri
 
 ### App fails to start
 
-If the container fails to start, you should see a [downtime alert](#monitoring). Assuming this app version was working in another [environment](../infrastructure/#environments), the issue is likely due to misconfiguration. Some things you can do:
+If the container fails to start, you should see a [downtime alert](#monitoring). Assuming this app version was working in another [environment](../explanation/infrastructure.md#environments), the issue is likely due to misconfiguration. Some things you can do:
 
 - Check the [logs](#logs)
-- Ensure the [environment variables](../../configuration/environment-variables/) and [configuration data](../../configuration/data/) are set properly.
-- [Turn on debugging](../../configuration/environment-variables/#django_debug)
-- Force-push/revert the [environment](../infrastructure/#environments) branch back to the old version to roll back
+- Ensure the [environment variables](../reference/environment-variables.md) and [configuration data](../tutorials/load-sample-data.md) are set properly.
+- [Turn on debugging](../reference/environment-variables.md#django_debug)
+- Force-push/revert the [environment](../explanation/infrastructure.md#environments) branch back to the old version to roll back
 
 ### Littlepay API issue
 
@@ -71,7 +71,7 @@ A common problem that causes Littlepay API failures is that the certificate expi
 
 1. Reach out to <support@littlepay.com>
 1. Receive a new certificate
-1. Put that certificate into the [configuration data](../../configuration/data/) and/or the [GitHub Actions secrets](https://github.com/cal-itp/benefits/settings/secrets/actions)
+1. Put that certificate into the [configuration data](../tutorials/load-sample-data.md) and/or the [GitHub Actions secrets](https://github.com/cal-itp/benefits/settings/secrets/actions)
 
 ### Eligibility Server
 

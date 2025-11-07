@@ -107,7 +107,7 @@ Developers can retrieve all Spanish copy and Spanish variant copy (e.g. Spanish-
 
 ### Engineering
 
-- Move copy from Figma, properly synced with Ditto, into code in `django.po` message files. Developer-specific instructions in the [Django message files technical documentation](../development/i18n.md).
+- Move copy from Figma, properly synced with Ditto, into code in `django.po` message files. Developer-specific instructions in the [Django message files technical documentation](../explanation/development/i18n.md).
 - Ensure the messages accurately reflect Figma/Ditto.
 
 ## Timeline

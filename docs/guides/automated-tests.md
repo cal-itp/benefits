@@ -4,7 +4,7 @@
 
 The tests done at a request/unit level are run via [pytest-django](https://pytest-django.readthedocs.io/en/latest/index.html).
 
-To run locally, start the [Devcontainer](../development/README.md) and run:
+To run locally, start the [Devcontainer](../explanation/development/README.md) and run:
 
 ```bash
 tests/pytest/run.sh
@@ -22,7 +22,7 @@ The report files include a local `.gitignore` file, so the entire directory is h
 
 ### Latest coverage report
 
-We also make the latest (from `main`) coverage report available online here: [Coverage report](../coverage)
+We also make the latest (from `main`) coverage report available online here: [Coverage report](../reference/coverage)
 
 ## Playwright
 

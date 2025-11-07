@@ -7,7 +7,7 @@ A release is made by pushing an annotated tag. The name of the tag must use
 the version number format mentioned below. This kicks off a deployment to the
 production environment and creates a GitHub release. The version number for the
 app and the release will be the tag’s name. More details on the deployment steps
-can be found under [Workflows](./workflows.md).
+can be found under [Deployment](../explanation/deployment.md#deployment-process).
 
 The list of releases can be found on the [repository Releases page](https://github.com/cal-itp/benefits/tags)
 on GitHub.

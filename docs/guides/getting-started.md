@@ -28,7 +28,7 @@ DJANGO_LOCAL_PORT=9000
 
     You will need to change `DJANGO_LOCAL_PORT` to a specific value in order to test locally with the CDT Identity Gateway's dev environment. Compiler developers, this value can be found in our shared notes in LastPass.
 
-See [Configuration](../configuration/) for more details on supported environment variables and their settings.
+See [Environment variables](../reference/environment-variables.md) for more details on supported environment variables and their settings.
 
 ## Run the build script
 
@@ -48,7 +48,7 @@ docker compose build --no-cache client
 
 From this point forward, the recommended local development setup is to run the app with the [VS Code Dev Containers extension][devcontainers].
 
-See [Development](../development/) for more details on setting up a dev container and developing with it.
+See [Development](../explanation/development/README.md) for more details on setting up a dev container and developing with it.
 
 Alternatively, read on to run the app traditionally with Docker Compose.
 
@@ -114,7 +114,7 @@ Compiler developers, instead of setting these manually, you can:
 
 ### Login.gov test account
 
-For details on creating an identity-proofed account for testing in the Login.gov sandbox, see [Manual Tests](../tests/manual-tests/#getting-started-using-test-credentials).
+For details on creating an identity-proofed account for testing in the Login.gov sandbox, see [Manual Tests](manual-tests.md#getting-started-using-test-credentials).
 
 ---
 
