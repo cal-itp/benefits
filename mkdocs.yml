@@ -51,6 +51,13 @@ plugins:
         "development/README.md": "explanation/development/README.md"
         "development/test-server.md": "explanation/development/test-server.md"
 
+        "enrollment-pathways/agency-cards.md": "explanation/enrollment-pathways/agency-cards.md"
+        "enrollment-pathways/low-income.md": "explanation/enrollment-pathways/low-income.md"
+        "enrollment-pathways/medicare-cardholders.md": "explanation/enrollment-pathways/medicare-cardholders.md"
+        "enrollment-pathways/older-adults.md": "explanation/enrollment-pathways/older-adults.md"
+        "enrollment-pathways/README.md": "index.md#supported-enrollment-pathways"
+        "enrollment-pathways/veterans.md": "explanation/enrollment-pathways/veterans.md"
+
         "getting-started/development.md": "explanation/development/README.md"
         "getting-started/docker-dynamic-ports.md": "explanation/development/docker-dynamic-ports.md"
         "use-cases/courtesy-cards.md": "explanation/enrollment-pathways/agency-cards.md"
