@@ -68,6 +68,10 @@ plugins:
         "product-and-design/copy-style.md": "reference/copy-style.md"
         "product-and-design/newsletter-archive.md": "reference/newsletter-archive.md"
         "product-and-design/use-cases/enrollment-use-cases.md": "index.md#supported-enrollment-pathways"
+
+        "tests/automated-tests.md": "guides/automated-tests.md"
+        "tests/manual-tests.md": "guides/manual-tests.md"
+
         "use-cases/courtesy-cards.md": "explanation/enrollment-pathways/agency-cards.md"
 
 extra_css:
