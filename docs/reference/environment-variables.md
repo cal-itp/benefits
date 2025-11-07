@@ -228,7 +228,7 @@ The number of seconds the client will wait for the server to send a response. De
 
     [Data Source Name (DSN)](https://docs.sentry.io/product/sentry-basics/dsn-explainer/)
 
-Enables [sending events to Sentry](../../deployment/troubleshooting/#error-monitoring).
+Enables [sending events to Sentry](../guides/troubleshooting.md#sentry).
 
 ### `SENTRY_ENVIRONMENT`
 
@@ -236,7 +236,7 @@ Enables [sending events to Sentry](../../deployment/troubleshooting/#error-monit
 
     [`environment` config value](https://docs.sentry.io/platforms/python/configuration/options/#environment)
 
-Segments errors by which deployment they occur in. This defaults to `dev`, and can be set to match one of the [environment names](../../deployment/infrastructure/#environments).
+Segments errors by which deployment they occur in. This defaults to `dev`, and can be set to match one of the [environment names](../explanation/infrastructure.md#environments).
 
 `local` may also be used for local testing of the Sentry integration.
 
@@ -261,4 +261,4 @@ Control the volume of transactions sent to Sentry. Value must be a float in the 
 The default is `0.0` (i.e. no transactions are tracked).
 
 [app-service-config]: https://docs.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal
-[getting-started_create-env]: ../getting-started/README.md#create-an-environment-file
+[getting-started_create-env]: ../guides/getting-started.md#create-an-environment-file
