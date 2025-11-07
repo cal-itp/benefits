@@ -6,7 +6,7 @@ To set a secret, you can use the [Azure portal](https://learn.microsoft.com/en-u
 
 There are helper scripts under `terraform/secrets` which build up the Azure CLI command, given some inputs. The usage is as follows:
 
-First, make sure you are set up for [local development](../infrastructure/#local-development) and that you are in the `terraform/secrets` directory.
+First, make sure you are set up for [local development](../explanation/infrastructure.md#making-changes) and that you are in the `terraform/secrets` directory.
 
 ```bash
 cd terraform/secrets

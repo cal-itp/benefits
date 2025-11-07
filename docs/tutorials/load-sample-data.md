@@ -17,8 +17,7 @@ Migrations are run as the application starts up. See the [`bin/init.sh`][init] s
 The sample values provided in the repository are sufficient to run the app locally and interact with e.g. the sample Transit
 Agencies. [Django fixtures][django-fixtures] are used to load the database with sample data when running locally.
 
-During the [deployment](../deployment/README.md) process, some environment-specific values are set in environment variables and
-read dynamically at runtime. Most configuration values are managed directly in the [Django Admin interface](./admin-interface.md) at the `/admin` endpoint.
+During the [deployment](../explanation/deployment.md) process, some environment-specific values are set in environment variables and read dynamically at runtime. Most configuration values are managed directly in the [Django Admin interface](../reference/admin-interface.md) at the `/admin` endpoint.
 
 ## Sample data
 
@@ -33,7 +32,7 @@ The sample data included in the repository is enough to bootstrap the applicatio
 
 Some configuration data is not available with the samples in the repository:
 
-- OAuth configuration to enable authentication (read more about [OAuth configuration](oauth.md))
+- OAuth configuration to enable authentication
 - reCAPTCHA configuration for user-submitted forms
 - Transit processor configuration for the enrollment phase
 - Amplitude configuration for capturing analytics events
@@ -56,12 +55,12 @@ inside the devcontainer:
 bin/reset_db.sh
 ```
 
-See the [Django Environment Variables](environment-variables.md#django) section for details about how to configure the local
+See the [Django Environment Variables](../reference/environment-variables.md#django) section for details about how to configure the local
 database rebuild.
 
 [core-models]: https://github.com/cal-itp/benefits/blob/main/benefits/core/models.py
-[django-fixtures]: https://docs.djangoproject.com/en/5.0/topics/db/fixtures/
-[django-load-initial-data]: https://docs.djangoproject.com/en/5.0/howto/initial-data/
+[django-fixtures]: https://docs.djangoproject.com/en/5.2/topics/db/fixtures/
+[django-load-initial-data]: https://docs.djangoproject.com/en/5.2/howto/initial-data/
 [eligibility-server]: https://docs.calitp.org/eligibility-server
 [init]: https://github.com/cal-itp/benefits/blob/main/bin/init.sh
 [reset-db]: https://github.com/cal-itp/benefits/blob/main/bin/reset_db.sh
