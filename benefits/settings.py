@@ -6,7 +6,7 @@ import os
 
 from django.conf import settings
 
-from csp.constants import NONCE, NONE, SELF, UNSAFE_INLINE
+from csp.constants import NONCE, NONE, SELF
 
 from benefits import sentry
 
@@ -312,7 +312,7 @@ RECAPTCHA_ENABLED = all((RECAPTCHA_API_URL, RECAPTCHA_SITE_KEY, RECAPTCHA_SECRET
 CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
         "base-uri": [NONE],
-        "connect-src": [SELF, "https://api.amplitude.com/"],
+        "connect-src": [SELF, "https://api.amplitude.com/", "https://cdn.jsdelivr.net/"],
         "default-src": [SELF],
         "font-src": [SELF, "https://fonts.gstatic.com/"],
         "frame-ancestors": [NONE],
@@ -324,12 +324,10 @@ CONTENT_SECURITY_POLICY = {
             "https://cdn.amplitude.com/libs/",
             "https://cdn.jsdelivr.net/",
             "*.littlepay.com",
-            "https://code.jquery.com/jquery-3.6.0.min.js",
             NONCE,  # https://django-csp.readthedocs.io/en/latest/nonce.html
         ],
         "style-src": [
             SELF,
-            UNSAFE_INLINE,
             "https://fonts.googleapis.com/css",
             "https://fonts.googleapis.com/css2",
             "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
