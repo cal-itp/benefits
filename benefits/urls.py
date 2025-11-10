@@ -10,6 +10,7 @@ import re
 
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.http import HttpResponse
 from django.urls import include, path, re_path
 from django.views.static import serve
@@ -64,5 +65,28 @@ if settings.DEBUG:
     urlpatterns.append(path("testsecret/", test_secret))
 
 logger.debug("Register admin urls")
+password_reset_patterns = [
+    path(
+        "admin/password_reset/",
+        auth_views.PasswordResetView.as_view(extra_context={"site_header": admin.site.site_header}),
+        name="admin_password_reset",
+    ),
+    path(
+        "admin/password_reset/done/",
+        auth_views.PasswordResetDoneView.as_view(extra_context={"site_header": admin.site.site_header}),
+        name="password_reset_done",
+    ),
+    path(
+        "admin/password_reset/<uidb64>/<token>/",
+        auth_views.PasswordResetConfirmView.as_view(extra_context={"site_header": admin.site.site_header}),
+        name="password_reset_confirm",
+    ),
+    path(
+        "admin/password_reset/complete/",
+        auth_views.PasswordResetCompleteView.as_view(extra_context={"site_header": admin.site.site_header}),
+        name="password_reset_complete",
+    ),
+]
+urlpatterns.extend(password_reset_patterns)
 urlpatterns.append(path("admin/", admin.site.urls))
 urlpatterns.append(path("google_sso/", include("django_google_sso.urls", namespace="django_google_sso")))
