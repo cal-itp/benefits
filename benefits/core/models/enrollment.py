@@ -28,6 +28,55 @@ SUPPORTED_METHODS = (
 )
 
 
+class EligibilityApiVerificationRequest(models.Model):
+    """Represents configuration for eligibility verification via Eligibility API calls."""
+
+    id = models.AutoField(primary_key=True)
+    label = models.SlugField(
+        help_text="A human readable label, used as the display text in Admin.",
+    )
+    api_url = models.URLField(help_text="Fully qualified URL for an Eligibility API server.")
+    api_auth_header = models.CharField(
+        help_text="The auth header to send in Eligibility API requests.",
+        max_length=50,
+    )
+    api_auth_key_secret_name = SecretNameField(
+        help_text="The name of a secret containing the value of the auth header to send in Eligibility API requests.",
+    )
+    api_public_key = models.ForeignKey(
+        PemData,
+        related_name="+",
+        on_delete=models.PROTECT,
+        help_text="The public key used to encrypt Eligibility API requests and to verify signed Eligibility API responses.",
+    )
+    api_jwe_cek_enc = models.CharField(
+        help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode to use in Eligibility API requests.",
+        max_length=50,
+    )
+    api_jwe_encryption_alg = models.CharField(
+        help_text="The JWE-compatible encryption algorithm to use in Eligibility API requests.",
+        max_length=50,
+    )
+    api_jws_signing_alg = models.CharField(
+        help_text="The JWS-compatible signing algorithm to use in Eligibility API requests.",
+        max_length=50,
+    )
+
+    def __str__(self):
+        return self.label
+
+    @property
+    def api_auth_key(self):
+        """The Eligibility API auth key as a string."""
+        secret_field = self._meta.get_field("api_auth_key_secret_name")
+        return secret_field.secret_value(self)
+
+    @property
+    def api_public_key_data(self):
+        """The Eligibility API public key as a string."""
+        return self.api_public_key.data
+
+
 class EnrollmentFlow(models.Model):
     """Represents a user journey through the Benefits app for a single eligibility type."""
 
@@ -65,41 +114,12 @@ class EnrollmentFlow(models.Model):
         blank=True,
         help_text="The claims request details for this flow.",
     )
-    eligibility_api_url = models.TextField(
-        blank=True, default="", help_text="Fully qualified URL for an Eligibility API server used by this flow."
-    )
-    eligibility_api_auth_header = models.TextField(
-        blank=True,
-        default="",
-        help_text="The auth header to send in Eligibility API requests for this flow.",
-    )
-    eligibility_api_auth_key_secret_name = SecretNameField(
-        blank=True,
-        default="",
-        help_text="The name of a secret containing the value of the auth header to send in Eligibility API requests for this flow.",  # noqa: 501
-    )
-    eligibility_api_public_key = models.ForeignKey(
-        PemData,
-        related_name="+",
+    api_request = models.ForeignKey(
+        EligibilityApiVerificationRequest,
         on_delete=models.PROTECT,
         null=True,
         blank=True,
-        help_text="The public key used to encrypt Eligibility API requests and to verify signed Eligibility API responses for this flow.",  # noqa: E501
-    )
-    eligibility_api_jwe_cek_enc = models.TextField(
-        blank=True,
-        default="",
-        help_text="The JWE-compatible Content Encryption Key (CEK) key-length and mode to use in Eligibility API requests for this flow.",  # noqa: E501
-    )
-    eligibility_api_jwe_encryption_alg = models.TextField(
-        blank=True,
-        default="",
-        help_text="The JWE-compatible encryption algorithm to use in Eligibility API requests for this flow.",
-    )
-    eligibility_api_jws_signing_alg = models.TextField(
-        blank=True,
-        default="",
-        help_text="The JWS-compatible signing algorithm to use in Eligibility API requests for this flow.",
+        help_text="The Eligibility API request details for this flow.",
     )
     selection_label_template_override = models.TextField(
         blank=True,
@@ -150,16 +170,18 @@ class EnrollmentFlow(models.Model):
 
     @property
     def eligibility_api_auth_key(self):
-        if self.eligibility_api_auth_key_secret_name is not None:
-            secret_field = self._meta.get_field("eligibility_api_auth_key_secret_name")
-            return secret_field.secret_value(self)
+        if self.uses_api_verification:
+            return self.api_request.api_auth_key
         else:
             return None
 
     @property
     def eligibility_api_public_key_data(self):
         """This flow's Eligibility API public key as a string."""
-        return self.eligibility_api_public_key.data
+        if self.uses_api_verification:
+            return self.api_request.api_public_key_data
+        else:
+            return None
 
     @property
     def selection_label_template(self):
@@ -188,11 +210,14 @@ class EnrollmentFlow(models.Model):
     @property
     def uses_api_verification(self):
         """True if this flow verifies via the Eligibility API. False otherwise."""
-        return bool(self.eligibility_api_url)
+        return self.api_request is not None
 
     @property
     def claims_scheme(self):
-        return self.claims_request.scheme or self.oauth_config.scheme
+        if self.uses_claims_verification:
+            return self.claims_request.scheme or self.oauth_config.scheme
+        else:
+            return None
 
     @property
     def eligibility_verifier(self):
@@ -202,8 +227,10 @@ class EnrollmentFlow(models.Model):
         """
         if self.uses_claims_verification:
             return self.oauth_config.client_name
+        elif self.uses_api_verification:
+            return self.api_request.api_url
         else:
-            return self.eligibility_api_url
+            return "undefined"
 
     @property
     def enrollment_index_context(self):
