@@ -138,7 +138,8 @@ iframe.card-collection {
   height: auto;
 }
 
-.login #login-form {
+.login #login-form,
+.login #reset-form {
   display: grid;
   gap: 1em;
 }
@@ -149,7 +150,8 @@ iframe.card-collection {
 }
 
 .login .form-row #id_username,
-.login .form-row #id_password {
+.login .form-row #id_password,
+.login .form-row #id_email {
   padding: 8px;
   width: 100%;
   box-sizing: border-box;
