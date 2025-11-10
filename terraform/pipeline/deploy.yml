@@ -11,7 +11,7 @@ steps:
     inputs:
       terraformVersion: 1.13.4
   # https://github.com/microsoft/azure-pipelines-terraform/tree/main/Tasks/TerraformTask/TerraformTaskV3#readme
-  - task: TerraformTaskV3@3
+  - task: TerraformTask@5
     displayName: Terraform init
     inputs:
       provider: azurerm
