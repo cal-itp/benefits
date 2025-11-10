@@ -1,4 +1,0 @@
-nav:
-  - Automated tests: automated-tests.md
-  - Manual tests: manual-tests.md
-  - Coverage report: ./tests/coverage

@@ -1,10 +1,6 @@
 nav:
-  - Home:
-      - README.md
-      - enrollment-pathways
-  - getting-started
-  - product-and-design
-  - development
-  - tests
-  - configuration
-  - deployment
+  - Overview: index.md
+  - explanation
+  - guides
+  - reference
+  - tutorials

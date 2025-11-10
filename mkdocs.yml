@@ -2,6 +2,8 @@ site_name: "cal-itp/benefits: documentation"
 repo_url: https://github.com/cal-itp/benefits
 edit_uri: edit/dev/docs
 site_url: https://docs.calitp.org/benefits
+exclude_docs: |
+  **/inc/*.md
 
 theme:
   name: material
@@ -23,10 +25,56 @@ plugins:
   - awesome-pages
   - redirects:
       redirect_maps:
-        "deployment/azure.md": "deployment/infrastructure.md"
-        "getting-started/development.md": "development/README.md"
-        "getting-started/docker-dynamic-ports.md": "development/docker-dynamic-ports.md"
-        "use-cases/courtesy-cards.md": "enrollment-pathways/agency-cards.md"
+        "configuration/admin-interface.md": "reference/admin-interface.md"
+        "configuration/data.md": "tutorials/load-sample-data.md"
+        "configuration/content-security-policy.md": "reference/content-security-policy.md"
+        "configuration/environment-variables.md": "reference/environment-variables.md"
+        "configuration/rate-limit.md": "reference/rate-limit.md"
+        "configuration/README.md": "explanation/configuration.md"
+        "configuration/recaptcha.md": "reference/recaptcha.md"
+        "configuration/transit-provider.md": "guides/onboard-transit-provider.md"
+
+        "deployment/azure.md": "explanation/infrastructure.md"
+        "deployment/infrastructure.md": "explanation/infrastructure.md"
+        "deployment/hotfix.md": "guides/hotfix.md"
+        "deployment/README.md": "explanation/deployment.md"
+        "deployment/release.md": "guides/release.md"
+        "deployment/rollback.md": "guides/rollback.md"
+        "deployment/secrets.md": "tutorials/secrets.md"
+        "deployment/troubleshooting.md": "guides/troubleshooting.md"
+        "deployment/workflows.md": "explanation/deployment.md"
+
+        "development/application-logic.md": "explanation/development/application-logic.md"
+        "development/commits-branches-merging.md": "explanation/development/commits-branches-merging.md"
+        "development/docker-dynamic-ports.md": "explanation/development/docker-dynamic-ports.md"
+        "development/i18n.md": "explanation/development/i18n.md"
+        "development/linting-pre-commit.md": "explanation/development/linting-pre-commit.md"
+        "development/models-migrations.md": "explanation/development/models-migrations.md"
+        "development/README.md": "explanation/development/README.md"
+        "development/test-server.md": "explanation/development/test-server.md"
+
+        "enrollment-pathways/agency-cards.md": "explanation/enrollment-pathways/agency-cards.md"
+        "enrollment-pathways/low-income.md": "explanation/enrollment-pathways/low-income.md"
+        "enrollment-pathways/medicare-cardholders.md": "explanation/enrollment-pathways/medicare-cardholders.md"
+        "enrollment-pathways/older-adults.md": "explanation/enrollment-pathways/older-adults.md"
+        "enrollment-pathways/README.md": "index.md#supported-enrollment-pathways"
+        "enrollment-pathways/veterans.md": "explanation/enrollment-pathways/veterans.md"
+
+        "getting-started/development.md": "explanation/development/README.md"
+        "getting-started/documentation.md": "guides/documentation.md"
+        "getting-started/docker-dynamic-ports.md": "explanation/development/docker-dynamic-ports.md"
+        "getting-started/README.md": "guides/getting-started.md"
+
+        "product-and-design/analytics.md": "reference/analytics.md"
+        "product-and-design/copy-delivery.md": "guides/copy-delivery.md"
+        "product-and-design/copy-style.md": "reference/copy-style.md"
+        "product-and-design/newsletter-archive.md": "reference/newsletter-archive.md"
+        "product-and-design/use-cases/enrollment-use-cases.md": "index.md#supported-enrollment-pathways"
+
+        "tests/automated-tests.md": "guides/automated-tests.md"
+        "tests/manual-tests.md": "guides/manual-tests.md"
+
+        "use-cases/courtesy-cards.md": "explanation/enrollment-pathways/agency-cards.md"
 
 extra_css:
   - styles/theme.css
@@ -43,7 +91,9 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.inlinehilite
   - pymdownx.snippets:
-      base_path: !relative  # Relative to the current Markdown file
+      base_path: !relative # Relative to the current Markdown file
+
+
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.tabbed
