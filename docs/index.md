@@ -1,5 +1,20 @@
 # Project overview
 
+This website provides technical documentation for the [`benefits`][benefits-repo] application from the
+[California Integrated Travel Project (Cal-ITP)][calitp].
+
+![Cal-ITP Benefits - Landing - Laptop+Mobile](https://github.com/cal-itp/benefits/assets/6279581/3f5c558b-ad45-49cd-bb51-b230c625837b)
+
+[Cal-ITP Benefits](https://benefits.calitp.org) is a web application that enables digital eligibility verification and enrollment for transit benefits onto transit riders’ existing contactless debit and credit cards.
+
+The development of this publicly-accessible client is being managed by Caltrans' California Integrated Travel Project (Cal-ITP), in partnership with the California Department of Technology (CDT). From the [Cal-ITP site](https://www.calitp.org/):
+
+> Our Cal-ITP Benefits web application streamlines the process for transit riders to instantly qualify for and receive discounts, starting with Monterey-Salinas Transit (MST), which offers a half-price Senior Fare. Now older adults (65+) who are able to electronically verify their identity are able to access MST's reduced fares without the hassle of paperwork.
+>
+> We worked with state partners on this product launch, and next we're working to bring youth, lower-income riders, veterans, people with disabilities, and others the same instant access to free or reduced fares across all California transit providers, without having to prove eligibility to each agency.
+
+Cal-ITP Benefits is open-source software that is designed, developed, and maintained by <a href="https://compiler.la/" target="_blank">Compiler LLC</a> on behalf of Caltrans, Cal-ITP, and our agency partners.
+
 ## Current work
 
 We do sprint planning and track day-to-day work on our [Project Board][board].
@@ -68,21 +83,6 @@ timeline
   }
 }%%
 ```
-
-This website provides technical documentation for the [`benefits`][benefits-repo] application from the
-[California Integrated Travel Project (Cal-ITP)][calitp].
-
-![Cal-ITP Benefits - Landing - Laptop+Mobile](https://github.com/cal-itp/benefits/assets/6279581/3f5c558b-ad45-49cd-bb51-b230c625837b)
-
-[Cal-ITP Benefits](https://benefits.calitp.org) is a web application that enables digital eligibility verification and enrollment for transit benefits onto transit riders’ existing contactless debit and credit cards.
-
-The development of this publicly-accessible client is being managed by Caltrans' California Integrated Travel Project (Cal-ITP), in partnership with the California Department of Technology (CDT). From the [Cal-ITP site](https://www.calitp.org/):
-
-> Our Cal-ITP Benefits web application streamlines the process for transit riders to instantly qualify for and receive discounts, starting with Monterey-Salinas Transit (MST), which offers a half-price Senior Fare. Now older adults (65+) who are able to electronically verify their identity are able to access MST's reduced fares without the hassle of paperwork.
->
-> We worked with state partners on this product launch, and next we're working to bring youth, lower-income riders, veterans, people with disabilities, and others the same instant access to free or reduced fares across all California transit providers, without having to prove eligibility to each agency.
-
-Cal-ITP Benefits is open-source software that is designed, developed, and maintained by <a href="https://compiler.la/" target="_blank">Compiler LLC</a> on behalf of Caltrans, Cal-ITP, and our agency partners.
 
 ## Adoption by transit providers
 
