@@ -15,6 +15,8 @@ from django.http import HttpResponse
 from django.urls import include, path, re_path
 from django.views.static import serve
 
+from .core.admin.views import BenefitsPasswordResetView
+
 logger = logging.getLogger(__name__)
 
 handler400 = "benefits.core.views.bad_request"
@@ -68,7 +70,7 @@ logger.debug("Register admin urls")
 password_reset_patterns = [
     path(
         "admin/password_reset/",
-        auth_views.PasswordResetView.as_view(extra_context={"site_header": admin.site.site_header}),
+        BenefitsPasswordResetView.as_view(extra_context={"site_header": admin.site.site_header}),
         name="admin_password_reset",
     ),
     path(

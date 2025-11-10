@@ -56,50 +56,7 @@
       </div>
 
       {% if request.recaptcha %}
-        <script nonce="{{ request.csp_nonce }}" src="{{ request.recaptcha.script_api }}"></script>
-
-        {% comment %}
-        Adapted from https://stackoverflow.com/a/63290578/453168
-        {% endcomment %}
-
-        {% comment %}
-        hidden input field will later send g-recaptcha token back to server
-        {% endcomment %}
-        <input type="hidden" name="{{ request.recaptcha.data_field }}" value="">
-
-        <div class="pt-8">{% include "core/includes/recaptcha-text.html" %}</div>
-
-        <script nonce="{{ request.csp_nonce }}">
-        function recaptchaSubmit(event) {
-          // checks the validity of the form. Return if invalid; HTML5 validation errors should display
-          if (!event.currentTarget.form.checkValidity()) {
-            return;
-          }
-          // form is client-side valid; taking over the remainder of processing
-          event.preventDefault();
-
-          // assign to a variable since `event.currentTarget` will be null inside the `grecaptcha.execute` Promise.
-          // https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget
-          let currentTarget = event.currentTarget;
-
-          grecaptcha.ready(function() {
-            grecaptcha.execute("{{ request.recaptcha.site_key }}", { action: "submit" }).then(function(token) {
-                // add the token to hidden form element
-                currentTarget.form.elements["{{ request.recaptcha.data_field }}"].value = token;
-                // trigger the custom "submitting" event
-                // since calling .submit() does not trigger the "submit" event
-                // hence the normal handler won't apply
-                const customEvent = new CustomEvent("submitting");
-                currentTarget.form.dispatchEvent(customEvent);
-                // submit the form to server
-                currentTarget.form.submit(currentTarget);
-            });
-          });
-        };
-
-        // bind the above handler to submit click
-        document.querySelector("#login-form input[type=submit]").addEventListener("click", recaptchaSubmit);
-        </script>
+        {% include "core/includes/recaptcha.html" %}
       {% endif %}
     </form>
   </div>
