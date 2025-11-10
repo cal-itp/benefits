@@ -157,8 +157,9 @@ iframe.card-collection {
   box-sizing: border-box;
 }
 
-.login .password-reset-link {
-  text-align: center;
+.login .form-row .password-reset-link a:link {
+  color: var(--primary-color);
+  font-weight: var(--bs-body-font-weight);
 }
 
 .login .clear {
