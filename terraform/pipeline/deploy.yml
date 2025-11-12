@@ -20,7 +20,7 @@ steps:
       # https://developer.hashicorp.com/terraform/tutorials/automation/automate-terraform#automated-terraform-cli-workflow
       commandOptions: -input=false
       # service connection
-      backendServiceArm: Production
+      backendServiceArm: "Fed-Production"
       # needs to match main.tf
       backendAzureRmResourceGroupName: RG-CDT-PUB-VIP-CALITP-P-001
       backendAzureRmStorageAccountName: sacdtcalitpp001
