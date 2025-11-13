@@ -382,3 +382,18 @@ except Exception:
     REQUESTS_READ_TIMEOUT = 20
 
 REQUESTS_TIMEOUT = (REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT)
+
+# Email
+# https://docs.djangoproject.com/en/5.1/ref/settings/#email-backend
+# https://github.com/retech-us/django-azure-communication-email
+AZURE_COMMUNICATION_CONNECTION_STRING = os.environ.get("AZURE_COMMUNICATION_CONNECTION_STRING")
+
+if AZURE_COMMUNICATION_CONNECTION_STRING:
+    EMAIL_BACKEND = "django_azure_communication_email.EmailBackend"
+    EMAIL_USE_TLS = True
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+    EMAIL_FILE_PATH = os.path.join(STORAGE_DIR, ".sent_emails")
+
+# https://docs.djangoproject.com/en/5.2/ref/settings/#default-from-email
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "noreply@example.calitp.org")
