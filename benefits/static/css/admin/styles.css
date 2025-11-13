@@ -157,7 +157,8 @@ iframe.card-collection {
   box-sizing: border-box;
 }
 
-.login .form-row .password-reset-link a:link {
+.login #content .password-reset-link a:link,
+.login #content .password-reset-link a:visited {
   color: var(--primary-color);
   font-weight: var(--bs-body-font-weight);
 }

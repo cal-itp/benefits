@@ -15,7 +15,7 @@ from django.http import HttpResponse
 from django.urls import include, path, re_path
 from django.views.static import serve
 
-from .core.admin.views import BenefitsPasswordResetView
+from .core.admin.views import BenefitsPasswordResetView, BenefitsPasswordResetDoneView
 
 logger = logging.getLogger(__name__)
 
@@ -75,7 +75,7 @@ password_reset_patterns = [
     ),
     path(
         "admin/password_reset/done/",
-        auth_views.PasswordResetDoneView.as_view(extra_context={"site_header": admin.site.site_header}),
+        BenefitsPasswordResetDoneView.as_view(extra_context={"site_header": admin.site.site_header}),
         name="password_reset_done",
     ),
     path(
