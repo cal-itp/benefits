@@ -15,7 +15,11 @@ TARGET = os.environ["TARGET"]
 IS_TAG = os.environ["IS_TAG"].lower() == "true"
 
 # workspace to service connection mapping
-SERVICE_CONNECTIONS = {"dev": "Development", "test": "Development", "default": "Production"}
+SERVICE_CONNECTIONS = {
+    "dev": "Fed-Development-Subscription",
+    "test": "Fed-Development-Subscription",
+    "default": "Fed-Production",
+}
 
 if REASON == "PullRequest" and TARGET == "main":
     # it's a pull request against main, this is for the dev environment
