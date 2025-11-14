@@ -1,16 +1,10 @@
 import pytest
 
 from django.contrib import admin
-from django.conf import settings
 
 from benefits.core import models
 from benefits.core.admin.enrollment import EnrollmentEventAdmin, SortableEnrollmentFlowAdmin
-from benefits.core.admin.mixins import ProdReadOnlyPermissionMixin
-
-
-@pytest.fixture
-def flow_admin_model():
-    return SortableEnrollmentFlowAdmin(models.EnrollmentFlow, admin.site)
+from benefits.core.admin.mixins import ProdReadOnlyPermissionMixin, StaffPermissionMixin
 
 
 @pytest.mark.django_db
@@ -25,6 +19,13 @@ class TestEnrollmentEventAdmin:
 
 @pytest.mark.django_db
 class TestEnrollmentFlowAdmin:
+
+    @pytest.fixture(autouse=True)
+    def init(self):
+        self.model_admin = SortableEnrollmentFlowAdmin(models.EnrollmentFlow, admin.site)
+
+    def test_permissions_mixin(self):
+        assert isinstance(self.model_admin, StaffPermissionMixin)
 
     @pytest.mark.parametrize(
         "user_type,expected",
@@ -43,14 +44,14 @@ class TestEnrollmentFlowAdmin:
             ("super", None),
         ],
     )
-    def test_get_exclude(self, admin_user_request, flow_admin_model, user_type, expected):
+    def test_get_exclude(self, admin_user_request, user_type, expected):
         if expected:
-            model_fields = [f.name for f in flow_admin_model.model._meta.get_fields()]
+            model_fields = [f.name for f in self.model_admin.model._meta.get_fields()]
             assert all(field in model_fields for field in expected)
 
         request = admin_user_request(user_type)
 
-        excluded = flow_admin_model.get_exclude(request)
+        excluded = self.model_admin.get_exclude(request)
 
         if expected:
             assert set(excluded) == set(expected)
@@ -70,46 +71,22 @@ class TestEnrollmentFlowAdmin:
             ("super", ()),
         ],
     )
-    def test_get_readonly_fields(self, admin_user_request, flow_admin_model, user_type, expected):
+    def test_get_readonly_fields(self, admin_user_request, user_type, expected):
         if expected:
-            model_fields = [f.name for f in flow_admin_model.model._meta.get_fields()]
+            model_fields = [f.name for f in self.model_admin.model._meta.get_fields()]
             assert all(field in model_fields for field in expected)
 
         request = admin_user_request(user_type)
 
-        readonly = flow_admin_model.get_readonly_fields(request)
+        readonly = self.model_admin.get_readonly_fields(request)
 
         assert set(readonly) == set(expected)
 
-    @pytest.mark.parametrize(
-        "runtime_env,user_type,expected",
-        [
-            (settings.RUNTIME_ENVS.PROD, "staff", True),
-            (settings.RUNTIME_ENVS.PROD, "super", True),
-            (settings.RUNTIME_ENVS.DEV, "staff", True),
-            (settings.RUNTIME_ENVS.DEV, "super", True),
-        ],
-    )
-    def test_has_add_permission(
-        self,
-        admin_user_request,
-        flow_admin_model,
-        settings,
-        runtime_env,
-        user_type,
-        expected,
-    ):
-        settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
-
-        request = admin_user_request(user_type)
-
-        assert flow_admin_model.has_add_permission(request) == expected
-
-    def test_EnrollmentFlowForm_staff_member_no_transit_agency(self, admin_user_request, flow_admin_model):
+    def test_EnrollmentFlowForm_staff_member_no_transit_agency(self, admin_user_request):
         request = admin_user_request()
 
         # get the Form class that's used in the admin add view as the user would see it
-        form_class = flow_admin_model.get_form(request)
+        form_class = self.model_admin.get_form(request)
 
         request.POST = dict(
             system_name="senior",
@@ -121,9 +98,7 @@ class TestEnrollmentFlowAdmin:
         assert form.is_valid()
 
     @pytest.mark.parametrize("active", [True, False])
-    def test_EnrollmentFlowForm_staff_member_with_transit_agency(
-        self, admin_user_request, flow_admin_model, model_TransitAgency, active
-    ):
+    def test_EnrollmentFlowForm_staff_member_with_transit_agency(self, admin_user_request, model_TransitAgency, active):
         model_TransitAgency.active = active
         model_TransitAgency.slug = "mst"  # use value that will map to existing templates
         model_TransitAgency.save()
@@ -131,7 +106,7 @@ class TestEnrollmentFlowAdmin:
         request = admin_user_request()
 
         # get the Form class that's used in the admin add view as the user would see it
-        form_class = flow_admin_model.get_form(request)
+        form_class = self.model_admin.get_form(request)
 
         request.POST = dict(
             system_name="senior",  # use value that will map to existing templates
@@ -151,12 +126,7 @@ class TestEnrollmentFlowAdmin:
         )
         assert not form.is_valid()
 
-    def test_EnrollmentFlowForm_clean_eligibility_api_verification(
-        self,
-        admin_user_request,
-        flow_admin_model,
-        model_TransitAgency,
-    ):
+    def test_EnrollmentFlowForm_clean_eligibility_api_verification(self, admin_user_request, model_TransitAgency):
         model_TransitAgency.slug = "cst"  # use value that will map to existing templates
         model_TransitAgency.save()
 
@@ -175,7 +145,7 @@ class TestEnrollmentFlowAdmin:
             eligibility_api_public_key=None,
         )
 
-        form_class = flow_admin_model.get_form(request)
+        form_class = self.model_admin.get_form(request)
 
         form = form_class(request.POST)
 
@@ -200,7 +170,6 @@ class TestEnrollmentFlowAdmin:
     def test_EnrollmentFlowForm_clean_supports_expiration_superuser(
         self,
         admin_user_request,
-        flow_admin_model,
         model_TransitAgency,
         model_IdentityGatewayConfig,
         model_ClaimsVerificationRequest,
@@ -228,7 +197,7 @@ class TestEnrollmentFlowAdmin:
             )
         )
 
-        form_class = flow_admin_model.get_form(request)
+        form_class = self.model_admin.get_form(request)
         form = form_class(request.POST)
 
         # assert that field errors are added if supports_expiration is True but expiration fields are not set
@@ -241,14 +210,14 @@ class TestEnrollmentFlowAdmin:
         assert "expiration_reenrollment_days" in error_dict
 
     def test_EnrollmentFlowForm_clean_supports_expiration_staff_user(
-        self, admin_user_request, flow_admin_model, model_TransitAgency, model_IdentityGatewayConfig
+        self, admin_user_request, model_TransitAgency, model_IdentityGatewayConfig
     ):
         model_TransitAgency.slug = "cst"  # use value that will map to existing templates
         model_TransitAgency.save()
 
         request = admin_user_request(user_type="staff")
 
-        form_class = flow_admin_model.get_form(request)
+        form_class = self.model_admin.get_form(request)
 
         request.POST = dict(
             system_name="senior",  # use value that will map to existing templates

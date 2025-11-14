@@ -1,14 +1,11 @@
 from django import forms
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.contrib import admin
-from django.http import HttpRequest
 
 from adminsortable2.admin import SortableAdminMixin
 
 from benefits.core import models
-from .mixins import ProdReadOnlyPermissionMixin
-from .users import is_staff_member_or_superuser
+from .mixins import ProdReadOnlyPermissionMixin, StaffPermissionMixin
 
 
 @admin.register(models.EnrollmentEvent)
@@ -83,7 +80,7 @@ class EnrollmentFlowForm(forms.ModelForm):
 
 
 @admin.register(models.EnrollmentFlow)
-class SortableEnrollmentFlowAdmin(SortableAdminMixin, admin.ModelAdmin):
+class SortableEnrollmentFlowAdmin(StaffPermissionMixin, SortableAdminMixin, admin.ModelAdmin):
     list_display = ("label", "transit_agency", "supported_enrollment_methods")
     form = EnrollmentFlowForm
 
@@ -116,11 +113,3 @@ class SortableEnrollmentFlowAdmin(SortableAdminMixin, admin.ModelAdmin):
             )
 
         return fields or super().get_readonly_fields(request, obj)
-
-    def has_add_permission(self, request: HttpRequest, obj=None):
-        if settings.RUNTIME_ENVIRONMENT() != settings.RUNTIME_ENVS.PROD:
-            return True
-        elif request.user and is_staff_member_or_superuser(request.user):
-            return True
-        else:
-            return False
