@@ -15,6 +15,7 @@ dependencies = [
     "calitp-littlepay==2025.4.1",
     "Django==5.2.7",
     "django-admin-sortable2==2.2.8",
+    "django-azure-communication-email==1.4.0",
     "django-cdt-identity @ git+https://github.com/Office-of-Digital-Services/django-cdt-identity.git@c635773a75e7f184a9382748afcef6d5a705b2d6",
     "django-csp==4.0",
     "django-google-sso==8.0.0",
