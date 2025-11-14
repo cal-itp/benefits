@@ -8,6 +8,8 @@ from .transit import TransitAgencyAdmin
 from .enrollment import EnrollmentEventAdmin, SortableEnrollmentFlowAdmin
 from .users import (
     GOOGLE_USER_INFO_URL,
+    GroupAdmin,
+    UserAdmin,
     add_staff_user_to_group,
     add_transit_agency_staff_user_to_group,
     add_google_sso_userinfo,
@@ -25,6 +27,8 @@ __all__ = [
     "EnrollmentEventAdmin",
     "SortableEnrollmentFlowAdmin",
     "GOOGLE_USER_INFO_URL",
+    "GroupAdmin",
+    "UserAdmin",
     "add_staff_user_to_group",
     "add_transit_agency_staff_user_to_group",
     "add_google_sso_userinfo",

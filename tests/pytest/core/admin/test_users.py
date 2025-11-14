@@ -1,8 +1,36 @@
 import pytest
+
+from django.contrib import admin
 from django.contrib.auth.models import User, Group
 
 import benefits.core.admin
-from benefits.core.admin.users import GOOGLE_USER_INFO_URL, is_staff_member, is_staff_member_or_superuser, pre_login_user
+from benefits.core.admin.users import (
+    GOOGLE_USER_INFO_URL,
+    GroupAdmin,
+    UserAdmin,
+    is_staff_member,
+    is_staff_member_or_superuser,
+    pre_login_user,
+)
+
+
+@pytest.mark.django_db
+def test_GroupAdmin_exclude():
+    model_admin = GroupAdmin(Group, admin.site)
+
+    assert "permissions" in model_admin.exclude
+
+
+@pytest.mark.django_db
+def test_UserAdmin_get_fieldsets(admin_user_request):
+    model_admin = UserAdmin(User, admin.site)
+    request = admin_user_request()
+
+    fieldsets = model_admin.get_fieldsets(request)
+
+    for name, options in fieldsets:
+        if name == "Permissions":
+            assert "user_permissions" not in options["fields"]
 
 
 @pytest.mark.django_db
