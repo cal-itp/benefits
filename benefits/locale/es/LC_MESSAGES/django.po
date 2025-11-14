@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-10-29 14:58-0700\n"
+"POT-Creation-Date: 2025-11-14 10:56-0800\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,6 +49,11 @@ msgid "Get your reduced fare on Santa Barbara MTD buses when you tap to ride"
 msgstr ""
 "Obtenga una tarifa reducida en los autobuses del Santa Barbara MTD cuando "
 "toque para viajar"
+
+msgid "Get your reduced fare on SLORTA buses when you tap to ride"
+msgstr ""
+"Obtenga una tarifa reducida en los autobuses del SLORTA cuando toque para "
+"viajar"
 
 msgid ""
 "Get your reduced fare on Ventura County Transportation Commission buses when "
@@ -987,6 +992,15 @@ msgstr ""
 
 #, python-format
 msgid ""
+"Cal-ITP doesn’t save any of your information. All SLORTA transit benefits "
+"reduce fares by 50%% for bus service on fixed routes."
+msgstr ""
+"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
+"SLORTA reducen las tarifas en un 50%% para el servicio de autobús en rutas "
+"fijas."
+
+#, python-format
+msgid ""
 "Cal-ITP doesn’t save any of your information. All Ventura County "
 "Transportation Commission transit benefits reduce fares by 50%% for bus "
 "service on fixed routes."
@@ -1191,14 +1205,17 @@ msgstr "un autobús de Nevada County Connects"
 msgid "a RABA bus"
 msgstr "un autobús de RABA"
 
-msgid "a SacRT bus"
-msgstr "un autobús de SacRT"
+msgid "an SBMTD Reduced Fare Mobility ID transit benefit"
+msgstr "el beneficio de tránsito de Reduced Fare Mobility ID de SBMTD"
 
 msgid "an SBMTD bus"
 msgstr "un autobús de SBMTD"
 
-msgid "an SBMTD Reduced Fare Mobility ID transit benefit"
-msgstr "el beneficio de tránsito de Reduced Fare Mobility ID de SBMTD"
+msgid "a SacRT bus"
+msgstr "un autobús de SacRT"
+
+msgid "a SLORTA bus"
+msgstr "un autobús de SLORTA"
 
 msgid "a Ventura County Transportation Commission bus"
 msgstr "un autobús de Ventura County Transportation Commission"
