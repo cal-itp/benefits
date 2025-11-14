@@ -4,26 +4,40 @@ from django.contrib import admin
 from django.contrib.auth.models import User, Group
 
 import benefits.core.admin
+from benefits.core.admin.mixins import StaffPermissionMixin
 from benefits.core.admin.users import GOOGLE_USER_INFO_URL, GroupAdmin, UserAdmin, pre_login_user
 
 
 @pytest.mark.django_db
-def test_GroupAdmin_exclude():
-    model_admin = GroupAdmin(Group, admin.site)
+class TestGroupAdmin:
+    @pytest.fixture(autouse=True)
+    def init(self):
+        self.model_admin = GroupAdmin(Group, admin.site)
 
-    assert "permissions" in model_admin.exclude
+    def test_permission_mixin(self):
+        assert isinstance(self.model_admin, StaffPermissionMixin)
+
+    def test_exclude(self):
+        assert "permissions" in self.model_admin.exclude
 
 
 @pytest.mark.django_db
-def test_UserAdmin_get_fieldsets(admin_user_request):
-    model_admin = UserAdmin(User, admin.site)
-    request = admin_user_request()
+class TestUserAdmin:
+    @pytest.fixture(autouse=True)
+    def init(self):
+        self.model_admin = UserAdmin(User, admin.site)
 
-    fieldsets = model_admin.get_fieldsets(request)
+    def test_permission_mixin(self):
+        assert isinstance(self.model_admin, StaffPermissionMixin)
 
-    for name, options in fieldsets:
-        if name == "Permissions":
-            assert "user_permissions" not in options["fields"]
+    def test_get_fieldsets(self, admin_user_request):
+        request = admin_user_request()
+
+        fieldsets = self.model_admin.get_fieldsets(request)
+
+        for name, options in fieldsets:
+            if name == "Permissions":
+                assert "user_permissions" not in options["fields"]
 
 
 @pytest.mark.django_db
