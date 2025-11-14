@@ -1,13 +1,11 @@
-from django.conf import settings
 from django.contrib import admin
 
 from benefits.core import models
-
-from .users import is_staff_member_or_superuser
+from .mixins import StaffPermissionMixin
 
 
 @admin.register(models.TransitAgency)
-class TransitAgencyAdmin(admin.ModelAdmin):
+class TransitAgencyAdmin(StaffPermissionMixin, admin.ModelAdmin):
     def get_exclude(self, request, obj=None):
         fields = []
 
@@ -33,11 +31,3 @@ class TransitAgencyAdmin(admin.ModelAdmin):
             )
 
         return fields or super().get_readonly_fields(request, obj)
-
-    def has_add_permission(self, request):
-        if settings.RUNTIME_ENVIRONMENT() != settings.RUNTIME_ENVS.PROD:
-            return True
-        elif request.user and is_staff_member_or_superuser(request.user):
-            return True
-        else:
-            return False
