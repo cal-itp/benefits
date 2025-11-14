@@ -2,7 +2,7 @@ from django.conf import settings
 
 import pytest
 
-from benefits.core.admin.mixins import ProdReadOnlyPermissionMixin
+from benefits.core.admin.mixins import ProdReadOnlyPermissionMixin, StaffPermissionMixin
 
 
 @pytest.mark.django_db
@@ -15,6 +15,10 @@ class TestPermissionsMixins:
             (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.PROD, "super", False),
             (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.TEST, "staff", True),
             (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.TEST, "super", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.PROD, "staff", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.PROD, "super", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.TEST, "staff", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.TEST, "super", True),
         ],
     )
     def test_has_add_permission(self, admin_user_request, settings, MixinClass, runtime_env, user_type, expected):
@@ -31,6 +35,10 @@ class TestPermissionsMixins:
             (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.PROD, "super", False),
             (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.TEST, "staff", True),
             (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.TEST, "super", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.PROD, "staff", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.PROD, "super", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.TEST, "staff", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.TEST, "super", True),
         ],
     )
     def test_has_change_permission(self, admin_user_request, settings, MixinClass, runtime_env, user_type, expected):
@@ -47,6 +55,10 @@ class TestPermissionsMixins:
             (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.PROD, "super", False),
             (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.TEST, "staff", True),
             (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.TEST, "super", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.PROD, "staff", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.PROD, "super", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.TEST, "staff", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.TEST, "super", True),
         ],
     )
     def test_has_delete_permission(self, admin_user_request, settings, MixinClass, runtime_env, user_type, expected):
@@ -63,6 +75,10 @@ class TestPermissionsMixins:
             (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.PROD, "super", True),
             (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.TEST, "staff", True),
             (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.TEST, "super", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.PROD, "staff", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.PROD, "super", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.TEST, "staff", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.TEST, "super", True),
         ],
     )
     def test_has_view_permission(self, admin_user_request, settings, MixinClass, runtime_env, user_type, expected):
