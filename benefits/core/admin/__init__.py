@@ -3,6 +3,7 @@ The core application: Admin interface configuration.
 """
 
 from .common import PemDataAdmin
+from .mixins import ProdReadOnlyPermissionMixin
 from .transit import TransitAgencyAdmin
 from .enrollment import EnrollmentEventAdmin, SortableEnrollmentFlowAdmin
 from .users import (
@@ -17,6 +18,7 @@ from .users import (
 
 __all__ = [
     "PemDataAdmin",
+    "ProdReadOnlyPermissionMixin",
     "TransitAgencyAdmin",
     "EnrollmentEventAdmin",
     "SortableEnrollmentFlowAdmin",
