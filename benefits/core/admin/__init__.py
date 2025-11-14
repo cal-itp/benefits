@@ -3,7 +3,13 @@ The core application: Admin interface configuration.
 """
 
 from .common import PemDataAdmin
-from .mixins import ProdReadOnlyPermissionMixin, StaffPermissionMixin, SuperuserPermissionMixin
+from .mixins import (
+    ProdReadOnlyPermissionMixin,
+    StaffPermissionMixin,
+    SuperuserPermissionMixin,
+    is_staff_member,
+    is_staff_member_or_superuser,
+)
 from .transit import TransitAgencyAdmin
 from .enrollment import EnrollmentEventAdmin, SortableEnrollmentFlowAdmin
 from .users import (
@@ -13,8 +19,6 @@ from .users import (
     add_staff_user_to_group,
     add_transit_agency_staff_user_to_group,
     add_google_sso_userinfo,
-    is_staff_member,
-    is_staff_member_or_superuser,
     pre_login_user,
 )
 
@@ -23,6 +27,8 @@ __all__ = [
     "ProdReadOnlyPermissionMixin",
     "StaffPermissionMixin",
     "SuperuserPermissionMixin",
+    "is_staff_member",
+    "is_staff_member_or_superuser",
     "TransitAgencyAdmin",
     "EnrollmentEventAdmin",
     "SortableEnrollmentFlowAdmin",
@@ -32,7 +38,5 @@ __all__ = [
     "add_staff_user_to_group",
     "add_transit_agency_staff_user_to_group",
     "add_google_sso_userinfo",
-    "is_staff_member",
-    "is_staff_member_or_superuser",
     "pre_login_user",
 ]
