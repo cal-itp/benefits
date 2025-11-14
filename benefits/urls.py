@@ -86,3 +86,4 @@ password_reset_patterns = [
 urlpatterns.extend(password_reset_patterns)
 urlpatterns.append(path("admin/", admin.site.urls))
 urlpatterns.append(path("google_sso/", include("django_google_sso.urls", namespace="django_google_sso")))
+urlpatterns.append(path("microsoft_sso/", include("django_microsoft_sso.urls", namespace="django_microsoft_sso")))
