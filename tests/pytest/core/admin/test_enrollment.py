@@ -5,11 +5,7 @@ from django.conf import settings
 
 from benefits.core import models
 from benefits.core.admin.enrollment import EnrollmentEventAdmin, SortableEnrollmentFlowAdmin
-
-
-@pytest.fixture
-def event_admin_model():
-    return EnrollmentEventAdmin(models.EnrollmentEvent, admin.site)
+from benefits.core.admin.mixins import ProdReadOnlyPermissionMixin
 
 
 @pytest.fixture
@@ -19,66 +15,12 @@ def flow_admin_model():
 
 @pytest.mark.django_db
 class TestEnrollmentEventAdmin:
+    @pytest.fixture(autouse=True)
+    def init(self):
+        self.model_admin = EnrollmentEventAdmin(models.EnrollmentEvent, admin.site)
 
-    @pytest.mark.parametrize(
-        "runtime_env,user_type,expected",
-        [
-            (settings.RUNTIME_ENVS.PROD, "staff", False),
-            (settings.RUNTIME_ENVS.PROD, "super", False),
-            (settings.RUNTIME_ENVS.DEV, "staff", True),
-            (settings.RUNTIME_ENVS.DEV, "super", True),
-        ],
-    )
-    def test_has_add_permission(
-        self,
-        admin_user_request,
-        event_admin_model,
-        settings,
-        runtime_env,
-        user_type,
-        expected,
-    ):
-        settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
-
-        request = admin_user_request(user_type)
-
-        assert event_admin_model.has_add_permission(request) == expected
-
-    @pytest.mark.parametrize(
-        "runtime_env,user_type,expected",
-        [
-            (settings.RUNTIME_ENVS.PROD, "staff", False),
-            (settings.RUNTIME_ENVS.PROD, "super", False),
-            (settings.RUNTIME_ENVS.TEST, "staff", False),
-            (settings.RUNTIME_ENVS.TEST, "super", True),
-        ],
-    )
-    def test_has_change_permission(
-        self,
-        admin_user_request,
-        event_admin_model,
-        settings,
-        runtime_env,
-        user_type,
-        expected,
-    ):
-        settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
-
-        request = admin_user_request(user_type)
-
-        assert event_admin_model.has_change_permission(request) == expected
-
-    @pytest.mark.parametrize(
-        "user_type,expected",
-        [
-            ("staff", True),
-            ("super", True),
-        ],
-    )
-    def test_has_view_permission(self, admin_user_request, event_admin_model, user_type, expected):
-        request = admin_user_request(user_type)
-
-        assert event_admin_model.has_view_permission(request) == expected
+    def test_permissions_mixin(self):
+        assert isinstance(self.model_admin, ProdReadOnlyPermissionMixin)
 
 
 @pytest.mark.django_db
