@@ -90,6 +90,7 @@ GOOGLE_SSO_SCOPES = [
 MICROSOFT_SSO_ALLOWABLE_DOMAINS = _filter_empty(os.environ.get("MICROSOFT_SSO_ALLOWABLE_DOMAINS", "compiler.la").split(","))
 MICROSOFT_SSO_APPLICATION_ID = os.environ.get("MICROSOFT_SSO_APPLICATION_ID", "")
 MICROSOFT_SSO_CLIENT_SECRET = os.environ.get("MICROSOFT_SSO_CLIENT_SECRET", "")
+MICROSOFT_SSO_LOGO_URL = "/static/img/icon/microsoft_sso_logo.png"
 MICROSOFT_SSO_TEXT = "Log in with Microsoft"
 SSO_SHOW_FORM_ON_ADMIN_PAGE = os.environ.get("SSO_SHOW_FORM_ON_ADMIN_PAGE", "False").lower() == "true"
 STAFF_GROUP_NAME = "Cal-ITP"
