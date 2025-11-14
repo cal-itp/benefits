@@ -4,40 +4,14 @@ from django.contrib import admin
 
 from benefits.core import models
 from benefits.core.admin.common import PemDataAdmin
-
-
-@pytest.fixture
-def admin_model():
-    return PemDataAdmin(models.PemData, admin.site)
+from benefits.core.admin.mixins import SuperuserPermissionMixin
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type,expected",
-    [("staff", False), ("super", True)],
-)
-def test_has_view_permission(
-    admin_user_request,
-    admin_model,
-    user_type,
-    expected,
-):
-    request = admin_user_request(user_type)
+class TestPemDataAdmin:
+    @pytest.fixture(autouse=True)
+    def init(self):
+        self.model_admin = PemDataAdmin(models.PemData, admin.site)
 
-    assert admin_model.has_view_permission(request) == expected
-
-
-@pytest.mark.django_db
-@pytest.mark.parametrize(
-    "user_type,expected",
-    [("staff", False), ("super", True)],
-)
-def test_has_add_permission(
-    admin_user_request,
-    admin_model,
-    user_type,
-    expected,
-):
-    request = admin_user_request(user_type)
-
-    assert admin_model.has_add_permission(request) == expected
+    def test_permissions_mixin(self):
+        assert isinstance(self.model_admin, SuperuserPermissionMixin)
