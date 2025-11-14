@@ -56,3 +56,27 @@ class StaffPermissionMixin:
 
     def has_view_permission(self, request, obj=None):
         return self._user_can_manage(request)
+
+
+class SuperuserPermissionMixin:
+    """
+    Grants `add/change/delete/view` permissions to superusers only.
+    """
+
+    def _user_can_manage(self, request):
+        """
+        Central logic to check if a user has full management permissions for this model.
+        """
+        return request.user and request.user.is_superuser
+
+    def has_add_permission(self, request):
+        return self._user_can_manage(request)
+
+    def has_change_permission(self, request, obj=None):
+        return self._user_can_manage(request)
+
+    def has_delete_permission(self, request, obj=None):
+        return self._user_can_manage(request)
+
+    def has_view_permission(self, request, obj=None):
+        return self._user_can_manage(request)
