@@ -3,7 +3,6 @@ locals {
   data_location                              = "United States"
   custom_domain_name                         = "benefits.calitp.org"
   azure_communication_connection_string_name = "azure-communication-connection-string"
-  azure_communication_from_email_name        = "azure-communication-from-email"
   # Determine the correct sender domain based on the environment.
   # If is_prod is true, use the custom domain; otherwise, use the Azure-managed domain.
   sender_domain = local.is_prod ? azurerm_email_communication_service_domain.custom[0].mail_from_sender_domain : azurerm_email_communication_service_domain.azure_managed[0].mail_from_sender_domain
@@ -15,18 +14,6 @@ resource "azurerm_key_vault_secret" "azure_communication_connection_string" {
   value        = azurerm_communication_service.main.primary_connection_string
   key_vault_id = azurerm_key_vault.main.id
   content_type = "password"
-}
-
-resource "azurerm_key_vault_secret" "azure_communication_from_email" {
-  name         = local.azure_communication_from_email_name
-  value        = local.sender_email
-  key_vault_id = azurerm_key_vault.main.id
-
-  # This resource depends on the creation of one of the two possible domains.
-  depends_on = [
-    azurerm_email_communication_service_domain.azure_managed[0],
-    azurerm_email_communication_service_domain.custom[0]
-  ]
 }
 
 resource "azurerm_communication_service" "main" {

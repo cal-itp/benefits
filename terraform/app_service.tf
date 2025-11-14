@@ -61,7 +61,7 @@ resource "azurerm_linux_web_app" "main" {
 
     # Django Azure Email Backend
     "AZURE_COMMUNICATION_CONNECTION_STRING" = "${local.secret_prefix}${local.azure_communication_connection_string_name})",
-    "DEFAULT_FROM_EMAIL"                    = "${local.secret_prefix}${local.azure_communication_from_email_name})",
+    "DEFAULT_FROM_EMAIL"                    = local.sender_email,
 
     # Django settings
     "DJANGO_ALLOWED_HOSTS"        = "${local.secret_prefix}django-allowed-hosts)",
