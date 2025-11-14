@@ -8,6 +8,7 @@ from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin, UserAdmin as
 import requests
 
 from benefits.core import models
+from benefits.core.admin.mixins import StaffPermissionMixin
 
 
 logger = logging.getLogger(__name__)
@@ -31,14 +32,14 @@ admin.site.unregister(User)
 
 
 @admin.register(Group)
-class GroupAdmin(BaseGroupAdmin):
+class GroupAdmin(StaffPermissionMixin, BaseGroupAdmin):
     # This will remove the "Permissions" multi-select box
     # from the Group change page.
     exclude = ("permissions",)
 
 
 @admin.register(User)
-class UserAdmin(BaseUserAdmin):
+class UserAdmin(StaffPermissionMixin, BaseUserAdmin):
     def get_fieldsets(self, request, obj=None):
         # get the default fieldsets
         # ensures we get any new fields from future Django versions
