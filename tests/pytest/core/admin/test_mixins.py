@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import AnonymousUser, Group
 
 import pytest
 
@@ -10,6 +10,13 @@ from benefits.core.admin.mixins import (
     is_staff_member,
     is_staff_member_or_superuser,
 )
+
+
+@pytest.fixture
+def anonymous_request(rf):
+    request = rf.get("/")
+    request.user = AnonymousUser()
+    return request
 
 
 @pytest.mark.django_db
@@ -61,6 +68,13 @@ def test_is_staff_member_or_superuser_superuser(model_AdminUser):
     model_AdminUser.save()
 
     assert is_staff_member_or_superuser(model_AdminUser)
+
+
+@pytest.mark.django_db
+def test_is_staff_member_or_superuser_anonymous_user():
+    user = AnonymousUser()
+
+    assert not is_staff_member_or_superuser(user)
 
 
 @pytest.mark.django_db
@@ -185,3 +199,21 @@ class TestPermissionsMixins:
         mixin = MixinClass()
 
         assert mixin.has_view_permission(request) == expected
+
+    def test_all_mixin_permissions_anonymous_user(self, anonymous_request):
+        """
+        Ensures all permission checks in all mixins return False
+        for an AnonymousUser and do not crash.
+        """
+        mixins = [
+            ProdReadOnlyPermissionMixin(),
+            StaffPermissionMixin(),
+            SuperuserPermissionMixin(),
+        ]
+
+        for mixin in mixins:
+            assert not mixin.has_add_permission(anonymous_request)
+            assert not mixin.has_change_permission(anonymous_request)
+            assert not mixin.has_delete_permission(anonymous_request)
+            assert not mixin.has_view_permission(anonymous_request)
+            assert not mixin.has_module_permission(anonymous_request)
