@@ -1,17 +1,66 @@
 import logging
 
 from django.conf import settings
-from django.contrib.auth.models import Group
+from django.contrib import admin
+from django.contrib.auth.models import Group, User
+from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin, UserAdmin as BaseUserAdmin
 
 import requests
 
 from benefits.core import models
+from benefits.core.admin.mixins import StaffPermissionMixin
 
 
 logger = logging.getLogger(__name__)
 
 
 GOOGLE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v3/userinfo"
+
+
+# We unregister and re-register both User and Group admins to hide
+# the database-level "permissions" fields, making our ModelAdmin
+# mixins the single source of truth.
+#
+# For GroupAdmin, we can just use `exclude` because its default form
+# is simple and doesn't use `fieldsets`.
+#
+# For UserAdmin, we must override `get_fieldsets()` because:
+# 1. The default UserAdmin uses `fieldsets`.
+# 2. `fieldsets` takes precedence over `exclude`.
+admin.site.unregister(Group)
+admin.site.unregister(User)
+
+
+@admin.register(Group)
+class GroupAdmin(StaffPermissionMixin, BaseGroupAdmin):
+    # This will remove the "Permissions" multi-select box
+    # from the Group change page.
+    exclude = ("permissions",)
+
+
+@admin.register(User)
+class UserAdmin(StaffPermissionMixin, BaseUserAdmin):
+    def get_fieldsets(self, request, obj=None):
+        # get the default fieldsets
+        # ensures we get any new fields from future Django versions
+        fieldsets = super().get_fieldsets(request, obj)
+        # Build a set of fields to remove from the "Permissions" section
+        fields_to_remove = set()
+        fields_to_remove.add("user_permissions")
+        if not request.user.is_superuser:
+            fields_to_remove.add("is_superuser")
+        # create a new list of fieldsets to return
+        new_fieldsets = []
+        for name, options in fieldsets:
+            # find the 'Permissions' fieldset
+            if name == "Permissions":
+                # copy the fields, but filter out 'user_permissions'
+                new_fields = tuple(f for f in options.get("fields", ()) if f not in fields_to_remove)
+                options["fields"] = new_fields
+            # append the (potentially modified) options for this fieldset
+            new_fieldsets.append((name, options))
+
+        return new_fieldsets
 
 
 def add_google_sso_userinfo(user, request):
@@ -47,22 +96,6 @@ def add_transit_agency_staff_user_to_group(user, request):
         agency = models.TransitAgency.objects.filter(sso_domain=user_sso_domain).first()
         if agency is not None and agency.staff_group:
             agency.staff_group.user_set.add(user)
-
-
-def is_staff_member(user):
-    """Determine if a user is a member of the staff group of Benefits
-
-    The staff group of Benefits is also called the 'Cal-ITP' group (defined in settings.STAFF_GROUP_NAME)
-    and it is not to be confused with Django's concept of 'staff' which simply means users that can log in to the admin.
-    """
-
-    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
-    return staff_group.user_set.contains(user)
-
-
-def is_staff_member_or_superuser(user):
-    """Determine if a user is a member of the staff group of Benefits or if it is a superuser."""
-    return user.is_superuser or is_staff_member(user)
 
 
 def pre_login_user(user, request):

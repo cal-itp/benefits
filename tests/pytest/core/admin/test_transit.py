@@ -1,18 +1,20 @@
 import pytest
-from django.conf import settings
 from django.contrib import admin
 
 from benefits.core import models
 from benefits.core.admin.transit import TransitAgencyAdmin
-
-
-@pytest.fixture
-def agency_admin_model():
-    return TransitAgencyAdmin(models.TransitAgency, admin.site)
+from benefits.core.admin.mixins import StaffPermissionMixin
 
 
 @pytest.mark.django_db
 class TestTransitAgencyAdmin:
+
+    @pytest.fixture(autouse=True)
+    def init(self):
+        self.model_admin = TransitAgencyAdmin(models.TransitAgency, admin.site)
+
+    def test_permissions_mixin(self):
+        assert isinstance(self.model_admin, StaffPermissionMixin)
 
     @pytest.mark.parametrize(
         "user_type,expected",
@@ -28,14 +30,14 @@ class TestTransitAgencyAdmin:
             ("super", ()),
         ],
     )
-    def test_get_exclude(self, admin_user_request, agency_admin_model, user_type, expected):
+    def test_get_exclude(self, admin_user_request, user_type, expected):
         if expected:
-            model_fields = [f.name for f in agency_admin_model.model._meta.get_fields()]
+            model_fields = [f.name for f in self.model_admin.model._meta.get_fields()]
             assert all(field in model_fields for field in expected)
 
         request = admin_user_request(user_type)
 
-        excluded = agency_admin_model.get_exclude(request)
+        excluded = self.model_admin.get_exclude(request)
 
         if expected:
             assert set(excluded) == set(expected)
@@ -52,29 +54,13 @@ class TestTransitAgencyAdmin:
             ("super", ()),
         ],
     )
-    def test_get_readonly_fields(self, admin_user_request, agency_admin_model, user_type, expected):
+    def test_get_readonly_fields(self, admin_user_request, user_type, expected):
         if expected:
-            model_fields = [f.name for f in agency_admin_model.model._meta.get_fields()]
+            model_fields = [f.name for f in self.model_admin.model._meta.get_fields()]
             assert all(field in model_fields for field in expected)
 
         request = admin_user_request(user_type)
 
-        readonly = agency_admin_model.get_readonly_fields(request)
+        readonly = self.model_admin.get_readonly_fields(request)
 
         assert set(readonly) == set(expected)
-
-    @pytest.mark.parametrize(
-        "runtime_env,user_type,expected",
-        [
-            (settings.RUNTIME_ENVS.PROD, "staff", True),
-            (settings.RUNTIME_ENVS.PROD, "super", True),
-            (settings.RUNTIME_ENVS.DEV, "staff", True),
-            (settings.RUNTIME_ENVS.DEV, "super", True),
-        ],
-    )
-    def test_has_add_permission(self, admin_user_request, agency_admin_model, settings, runtime_env, user_type, expected):
-        settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
-
-        request = admin_user_request(user_type)
-
-        assert agency_admin_model.has_add_permission(request) == expected

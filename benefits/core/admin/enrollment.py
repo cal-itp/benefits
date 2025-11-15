@@ -1,49 +1,17 @@
 from django import forms
-from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.contrib import admin
-from django.http import HttpRequest
 
 from adminsortable2.admin import SortableAdminMixin
 
 from benefits.core import models
-from .users import is_staff_member_or_superuser
+from .mixins import ProdReadOnlyPermissionMixin, StaffPermissionMixin
 
 
 @admin.register(models.EnrollmentEvent)
-class EnrollmentEventAdmin(admin.ModelAdmin):
+class EnrollmentEventAdmin(ProdReadOnlyPermissionMixin, admin.ModelAdmin):
     list_display = ("enrollment_datetime", "transit_agency", "enrollment_flow", "enrollment_method", "verified_by")
     ordering = ("-enrollment_datetime",)
-
-    def has_add_permission(self, request: HttpRequest, obj=None):
-        if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.PROD:
-            return False
-        elif request.user and is_staff_member_or_superuser(request.user):
-            return True
-        else:
-            return False
-
-    def has_change_permission(self, request: HttpRequest, obj=None):
-        if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.PROD:
-            return False
-        elif request.user and request.user.is_superuser:
-            return True
-        else:
-            return False
-
-    def has_delete_permission(self, request: HttpRequest, obj=None):
-        if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.PROD:
-            return False
-        elif request.user and is_staff_member_or_superuser(request.user):
-            return True
-        else:
-            return False
-
-    def has_view_permission(self, request: HttpRequest, obj=None):
-        if request.user and is_staff_member_or_superuser(request.user):
-            return True
-        else:
-            return False
 
 
 class EnrollmentFlowForm(forms.ModelForm):
@@ -112,7 +80,7 @@ class EnrollmentFlowForm(forms.ModelForm):
 
 
 @admin.register(models.EnrollmentFlow)
-class SortableEnrollmentFlowAdmin(SortableAdminMixin, admin.ModelAdmin):
+class SortableEnrollmentFlowAdmin(StaffPermissionMixin, SortableAdminMixin, admin.ModelAdmin):
     list_display = ("label", "transit_agency", "supported_enrollment_methods")
     form = EnrollmentFlowForm
 
@@ -145,11 +113,3 @@ class SortableEnrollmentFlowAdmin(SortableAdminMixin, admin.ModelAdmin):
             )
 
         return fields or super().get_readonly_fields(request, obj)
-
-    def has_add_permission(self, request: HttpRequest, obj=None):
-        if settings.RUNTIME_ENVIRONMENT() != settings.RUNTIME_ENVS.PROD:
-            return True
-        elif request.user and is_staff_member_or_superuser(request.user):
-            return True
-        else:
-            return False
