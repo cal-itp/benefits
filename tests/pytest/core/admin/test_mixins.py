@@ -155,6 +155,30 @@ class TestPermissionsMixins:
             (SuperuserPermissionMixin, settings.RUNTIME_ENVS.TEST, "super", True),
         ],
     )
+    def test_has_module_permission(self, admin_user_request, settings, MixinClass, runtime_env, user_type, expected):
+        settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
+        request = admin_user_request(user_type)
+        mixin = MixinClass()
+
+        assert mixin.has_module_permission(request) == expected
+
+    @pytest.mark.parametrize(
+        "MixinClass,runtime_env,user_type,expected",
+        [
+            (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.PROD, "staff", True),
+            (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.PROD, "super", True),
+            (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.TEST, "staff", True),
+            (ProdReadOnlyPermissionMixin, settings.RUNTIME_ENVS.TEST, "super", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.PROD, "staff", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.PROD, "super", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.TEST, "staff", True),
+            (StaffPermissionMixin, settings.RUNTIME_ENVS.TEST, "super", True),
+            (SuperuserPermissionMixin, settings.RUNTIME_ENVS.PROD, "staff", False),
+            (SuperuserPermissionMixin, settings.RUNTIME_ENVS.PROD, "super", True),
+            (SuperuserPermissionMixin, settings.RUNTIME_ENVS.TEST, "staff", False),
+            (SuperuserPermissionMixin, settings.RUNTIME_ENVS.TEST, "super", True),
+        ],
+    )
     def test_has_view_permission(self, admin_user_request, settings, MixinClass, runtime_env, user_type, expected):
         settings.RUNTIME_ENVIRONMENT = lambda: runtime_env
         request = admin_user_request(user_type)
