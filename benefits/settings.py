@@ -382,3 +382,7 @@ except Exception:
     REQUESTS_READ_TIMEOUT = 20
 
 REQUESTS_TIMEOUT = (REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT)
+
+
+# Email
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
