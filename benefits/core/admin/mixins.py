@@ -44,6 +44,10 @@ class ProdReadOnlyPermissionMixin:
     def has_delete_permission(self, request, obj=None):
         return self._user_can_manage(request)
 
+    def has_module_permission(self, request, obj=None):
+        # View is always allowed for staff, even in Prod
+        return request.user and is_staff_member_or_superuser(request.user)
+
     def has_view_permission(self, request, obj=None):
         # View is always allowed for staff, even in Prod
         return request.user and is_staff_member_or_superuser(request.user)
@@ -69,6 +73,9 @@ class StaffPermissionMixin:
     def has_delete_permission(self, request, obj=None):
         return self._user_can_manage(request)
 
+    def has_module_permission(self, request):
+        return self._user_can_manage(request)
+
     def has_view_permission(self, request, obj=None):
         return self._user_can_manage(request)
 
@@ -91,6 +98,9 @@ class SuperuserPermissionMixin:
         return self._user_can_manage(request)
 
     def has_delete_permission(self, request, obj=None):
+        return self._user_can_manage(request)
+
+    def has_module_permission(self, request, obj=None):
         return self._user_can_manage(request)
 
     def has_view_permission(self, request, obj=None):
