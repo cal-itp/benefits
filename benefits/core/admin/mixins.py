@@ -15,6 +15,9 @@ def is_staff_member(user):
 
 def is_staff_member_or_superuser(user):
     """Determine if a user is a member of the staff group of Benefits or if it is a superuser."""
+    # an AnonymousUser can't be a staff member or superuser
+    if not user.is_authenticated:
+        return False
     return user.is_superuser or is_staff_member(user)
 
 
