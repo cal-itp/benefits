@@ -44,13 +44,18 @@ class UserAdmin(StaffPermissionMixin, BaseUserAdmin):
         # get the default fieldsets
         # ensures we get any new fields from future Django versions
         fieldsets = super().get_fieldsets(request, obj)
+        # Build a set of fields to remove from the "Permissions" section
+        fields_to_remove = set()
+        fields_to_remove.add("user_permissions")
+        if not request.user.is_superuser:
+            fields_to_remove.add("is_superuser")
         # create a new list of fieldsets to return
         new_fieldsets = []
         for name, options in fieldsets:
             # find the 'Permissions' fieldset
             if name == "Permissions":
                 # copy the fields, but filter out 'user_permissions'
-                new_fields = tuple(f for f in options.get("fields", ()) if f != "user_permissions")
+                new_fields = tuple(f for f in options.get("fields", ()) if f not in fields_to_remove)
                 options["fields"] = new_fields
             # append the (potentially modified) options for this fieldset
             new_fieldsets.append((name, options))

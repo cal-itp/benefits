@@ -30,14 +30,43 @@ class TestUserAdmin:
     def test_permission_mixin(self):
         assert isinstance(self.model_admin, StaffPermissionMixin)
 
-    def test_get_fieldsets(self, admin_user_request):
-        request = admin_user_request()
+    # test_get_fieldsets are not parameterized by pytest because of some state
+    # leakage in how admin_user_request works across parameterized tests
+    # instead just write 2 distinct tests to ensure a clean setup each time
 
-        fieldsets = self.model_admin.get_fieldsets(request)
+    def test_get_fieldsets__superuser(self, admin_user_request):
+        request = admin_user_request("super")
 
+        # call get_fieldsets simulating the "Change" page by passing the current user
+        # otherwise the default simulates the "Add" page which doesn't have the Permissions fieldset
+        fieldsets = self.model_admin.get_fieldsets(request, obj=request.user)
+
+        permissions_fields = None
         for name, options in fieldsets:
             if name == "Permissions":
-                assert "user_permissions" not in options["fields"]
+                permissions_fields = options["fields"]
+                break
+
+        assert permissions_fields is not None
+        assert "user_permissions" not in permissions_fields
+        assert "is_superuser" in permissions_fields
+
+    def test_get_fieldsets__staffuser(self, admin_user_request):
+        request = admin_user_request("staff")
+
+        # call get_fieldsets simulating the "Change" page by passing the current user
+        # otherwise the default simulates the "Add" page which doesn't have the Permissions fieldset
+        fieldsets = self.model_admin.get_fieldsets(request, obj=request.user)
+
+        permissions_fields = None
+        for name, options in fieldsets:
+            if name == "Permissions":
+                permissions_fields = options["fields"]
+                break
+
+        assert permissions_fields is not None
+        assert "user_permissions" not in permissions_fields
+        assert "is_superuser" not in permissions_fields
 
 
 @pytest.mark.django_db
