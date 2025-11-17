@@ -92,6 +92,10 @@ MICROSOFT_SSO_APPLICATION_ID = os.environ.get("MICROSOFT_SSO_APPLICATION_ID", ""
 MICROSOFT_SSO_CLIENT_SECRET = os.environ.get("MICROSOFT_SSO_CLIENT_SECRET", "")
 MICROSOFT_SSO_LOGO_URL = "/static/img/icon/microsoft_sso_logo.png"
 MICROSOFT_SSO_TEXT = "Log in with Microsoft"
+MICROSOFT_SSO_STAFF_LIST = _filter_empty(os.environ.get("MICROSOFT_SSO_STAFF_LIST", "").split(","))
+MICROSOFT_SSO_SUPERUSER_LIST = _filter_empty(os.environ.get("MICROSOFT_SSO_SUPERUSER_LIST", "").split(","))
+MICROSOFT_SSO_PRE_LOGIN_CALLBACK = "benefits.core.admin.pre_login_user"
+
 SSO_SHOW_FORM_ON_ADMIN_PAGE = os.environ.get("SSO_SHOW_FORM_ON_ADMIN_PAGE", "False").lower() == "true"
 STAFF_GROUP_NAME = "Cal-ITP"
 
