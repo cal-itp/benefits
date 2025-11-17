@@ -59,6 +59,10 @@ resource "azurerm_linux_web_app" "main" {
     "REQUESTS_CONNECT_TIMEOUT" = "${local.secret_prefix}requests-connect-timeout)",
     "REQUESTS_READ_TIMEOUT"    = "${local.secret_prefix}requests-read-timeout)",
 
+    # Django Azure Email Backend
+    "AZURE_COMMUNICATION_CONNECTION_STRING" = "${local.secret_prefix}${local.azure_communication_connection_string_name})",
+    "DEFAULT_FROM_EMAIL"                    = local.sender_email,
+
     # Django settings
     "DJANGO_ALLOWED_HOSTS"        = "${local.secret_prefix}django-allowed-hosts)",
     "DJANGO_STORAGE_DIR"          = "${local.secret_prefix}django-storage-dir)",
