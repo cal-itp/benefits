@@ -16,3 +16,6 @@ __pycache__/
 .DS_Store
 .sent_emails/
 .venv
+
+# including this just to be explicit. Pytest itself already ensures its cache directory is ignored by Git.
+.pytest_cache/
