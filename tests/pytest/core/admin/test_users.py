@@ -1,8 +1,72 @@
 import pytest
+
+from django.contrib import admin
 from django.contrib.auth.models import User, Group
 
 import benefits.core.admin
-from benefits.core.admin.users import GOOGLE_USER_INFO_URL, is_staff_member, is_staff_member_or_superuser, pre_login_user
+from benefits.core.admin.mixins import StaffPermissionMixin
+from benefits.core.admin.users import GOOGLE_USER_INFO_URL, GroupAdmin, UserAdmin, pre_login_user
+
+
+@pytest.mark.django_db
+class TestGroupAdmin:
+    @pytest.fixture(autouse=True)
+    def init(self):
+        self.model_admin = GroupAdmin(Group, admin.site)
+
+    def test_permission_mixin(self):
+        assert isinstance(self.model_admin, StaffPermissionMixin)
+
+    def test_exclude(self):
+        assert "permissions" in self.model_admin.exclude
+
+
+@pytest.mark.django_db
+class TestUserAdmin:
+    @pytest.fixture(autouse=True)
+    def init(self):
+        self.model_admin = UserAdmin(User, admin.site)
+
+    def test_permission_mixin(self):
+        assert isinstance(self.model_admin, StaffPermissionMixin)
+
+    # test_get_fieldsets are not parameterized by pytest because of some state
+    # leakage in how admin_user_request works across parameterized tests
+    # instead just write 2 distinct tests to ensure a clean setup each time
+
+    def test_get_fieldsets__superuser(self, admin_user_request):
+        request = admin_user_request("super")
+
+        # call get_fieldsets simulating the "Change" page by passing the current user
+        # otherwise the default simulates the "Add" page which doesn't have the Permissions fieldset
+        fieldsets = self.model_admin.get_fieldsets(request, obj=request.user)
+
+        permissions_fields = None
+        for name, options in fieldsets:
+            if name == "Permissions":
+                permissions_fields = options["fields"]
+                break
+
+        assert permissions_fields is not None
+        assert "user_permissions" not in permissions_fields
+        assert "is_superuser" in permissions_fields
+
+    def test_get_fieldsets__staffuser(self, admin_user_request):
+        request = admin_user_request("staff")
+
+        # call get_fieldsets simulating the "Change" page by passing the current user
+        # otherwise the default simulates the "Add" page which doesn't have the Permissions fieldset
+        fieldsets = self.model_admin.get_fieldsets(request, obj=request.user)
+
+        permissions_fields = None
+        for name, options in fieldsets:
+            if name == "Permissions":
+                permissions_fields = options["fields"]
+                break
+
+        assert permissions_fields is not None
+        assert "user_permissions" not in permissions_fields
+        assert "is_superuser" not in permissions_fields
 
 
 @pytest.mark.django_db
@@ -14,57 +78,6 @@ def test_admin_registered(client):
     assert ("/admin/login/?next=/admin/", 302) in response.redirect_chain
     assert response.request["PATH_INFO"] == "/admin/login/"
     assert "google_sso/login.html" in response.template_name
-
-
-@pytest.mark.django_db
-def test_is_staff_member_regular_user(model_AdminUser, settings):
-    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
-    assert not staff_group.user_set.contains(model_AdminUser)
-    assert not is_staff_member(model_AdminUser)
-
-
-@pytest.mark.django_db
-def test_is_staff_member_staff_user(model_AdminUser, settings):
-    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
-    staff_group.user_set.add(model_AdminUser)
-    assert staff_group.user_set.contains(model_AdminUser)
-    assert is_staff_member(model_AdminUser)
-
-
-@pytest.mark.django_db
-def test_is_staff_member_superuser(model_AdminUser, settings):
-    model_AdminUser.is_superuser = True
-    model_AdminUser.save()
-    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
-    assert not staff_group.user_set.contains(model_AdminUser)
-    assert not is_staff_member(model_AdminUser)
-
-
-@pytest.mark.django_db
-def test_is_staff_member_or_superuser_regular_user(model_AdminUser, settings):
-    assert not model_AdminUser.is_superuser
-
-    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
-
-    assert not staff_group.user_set.contains(model_AdminUser)
-    assert not is_staff_member_or_superuser(model_AdminUser)
-
-
-@pytest.mark.django_db
-def test_is_staff_member_or_superuser_staff_member(model_AdminUser, settings):
-    staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
-    staff_group.user_set.add(model_AdminUser)
-
-    assert not model_AdminUser.is_superuser
-    assert is_staff_member_or_superuser(model_AdminUser)
-
-
-@pytest.mark.django_db
-def test_is_staff_member_or_superuser_superuser(model_AdminUser):
-    model_AdminUser.is_superuser = True
-    model_AdminUser.save()
-
-    assert is_staff_member_or_superuser(model_AdminUser)
 
 
 @pytest.mark.django_db
