@@ -384,7 +384,7 @@ except Exception:
 REQUESTS_TIMEOUT = (REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT)
 
 # Email
-# https://docs.djangoproject.com/en/5.1/ref/settings/#email-backend
+# https://docs.djangoproject.com/en/5.2/ref/settings/#email-backend
 # https://github.com/retech-us/django-azure-communication-email
 AZURE_COMMUNICATION_CONNECTION_STRING = os.environ.get("AZURE_COMMUNICATION_CONNECTION_STRING")
 
