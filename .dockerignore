@@ -1,5 +1,6 @@
 **/__pycache__/
 node_modules/
+.pytest_cache/
 static/
 .coverage
 *.db
