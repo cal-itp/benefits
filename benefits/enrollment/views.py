@@ -151,26 +151,25 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
 
         context = {"redirect_to": request.path}
         copy = {
-            AgencySlug.CST.value: DefaultEnrollmentSuccess(
-                transportation_type=_("a CST bus"),
+            AgencySlug.CST.value: DefaultEnrollmentSuccess(transportation_type=_("a CST bus")),
+            AgencySlug.EDCTA.value: DefaultEnrollmentSuccess(transportation_type=_("an EDCTA bus")),
+            AgencySlug.MST.value: DefaultEnrollmentSuccess(transportation_type=_("an MST bus")),
+            AgencySlug.NEVCO.value: DefaultEnrollmentSuccess(transportation_type=_("a Nevada County Connects bus")),
+            AgencySlug.RABA.value: DefaultEnrollmentSuccess(transportation_type=_("a RABA bus")),
+            AgencySlug.SACRT.value: DefaultEnrollmentSuccess(transportation_type=_("a SacRT bus")),
+            AgencySlug.SLORTA.value: DefaultEnrollmentSuccess(transportation_type=_("a RTA bus")),
+            AgencySlug.SBMTD.value: DefaultEnrollmentSuccess(transportation_type=_("an SBMTD bus")),
+            AgencySlug.VCTC.value: DefaultEnrollmentSuccess(
+                transportation_type=_("a Ventura County Transportation Commission bus")
             ),
             SystemName.AGENCY_CARD.value: AgencyCardEnrollmentSuccess(
                 transit_benefit=_("a CST Agency Card transit benefit"), transportation_type=_("a CST bus")
             ),
-            AgencySlug.EDCTA.value: DefaultEnrollmentSuccess(transportation_type=_("an EDCTA bus")),
-            AgencySlug.MST.value: DefaultEnrollmentSuccess(transportation_type=_("an MST bus")),
             SystemName.COURTESY_CARD.value: AgencyCardEnrollmentSuccess(
                 transit_benefit=_("an MST Courtesy Card transit benefit"), transportation_type="an MST bus"
             ),
-            AgencySlug.NEVCO.value: DefaultEnrollmentSuccess(transportation_type=_("a Nevada County Connects bus")),
-            AgencySlug.RABA.value: DefaultEnrollmentSuccess(transportation_type=_("a RABA bus")),
-            AgencySlug.SACRT.value: DefaultEnrollmentSuccess(transportation_type=_("a SacRT bus")),
-            AgencySlug.SBMTD.value: DefaultEnrollmentSuccess(transportation_type=_("an SBMTD bus")),
             SystemName.REDUCED_FARE_MOBILITY_ID.value: AgencyCardEnrollmentSuccess(
                 transit_benefit=_("an SBMTD Reduced Fare Mobility ID transit benefit"), transportation_type=_("an SBMTD bus")
-            ),
-            AgencySlug.VCTC.value: DefaultEnrollmentSuccess(
-                transportation_type=_("a Ventura County Transportation Commission bus")
             ),
         }
 

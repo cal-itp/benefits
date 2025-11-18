@@ -13,6 +13,7 @@ class AgencySlug(models.TextChoices):
     RABA = "raba", "raba"
     SACRT = "sacrt", "sacrt"
     SBMTD = "sbmtd", "sbmtd"
+    SLORTA = "slorta", "slorta"
     VCTC = "vctc", "vctc"
 
 
@@ -34,6 +35,9 @@ agency_index = {
     AgencySlug.RABA.value: AgencyIndex(headline=_("Get your reduced fare on RABA public transit when you tap to ride")),
     AgencySlug.SACRT.value: AgencyIndex(headline=_("Get your reduced fare on SacRT buses when you tap to ride")),
     AgencySlug.SBMTD.value: AgencyIndex(headline=_("Get your reduced fare on Santa Barbara MTD buses when you tap to ride")),
+    AgencySlug.SLORTA.value: AgencyIndex(
+        headline=_("Get your reduced fare on San Luis Obispo RTA buses when you tap to ride")
+    ),
     AgencySlug.VCTC.value: AgencyIndex(
         headline=_("Get your reduced fare on Ventura County Transportation Commission buses when you tap to ride")
     ),

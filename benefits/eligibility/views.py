@@ -88,6 +88,12 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
                     "All SBMTD transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
                 )
             ),
+            AgencySlug.SLORTA.value: EligibilityIndex(
+                form_text=_(
+                    "Cal-ITP doesn’t save any of your information. "
+                    "All RTA transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
+                )
+            ),
             AgencySlug.VCTC.value: EligibilityIndex(
                 form_text=_(
                     "Cal-ITP doesn’t save any of your information. "
