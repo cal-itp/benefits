@@ -10,12 +10,11 @@ import re
 
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
 from django.http import HttpResponse
 from django.urls import include, path, re_path
 from django.views.static import serve
 
-from .core.admin.views import BenefitsPasswordResetView, BenefitsPasswordResetDoneView
+from .core.admin.views import BenefitsPasswordResetView, BenefitsPasswordResetDoneView, BenefitsPasswordResetConfirmView
 
 logger = logging.getLogger(__name__)
 
@@ -80,13 +79,8 @@ password_reset_patterns = [
     ),
     path(
         "admin/password_reset/<uidb64>/<token>/",
-        auth_views.PasswordResetConfirmView.as_view(extra_context={"site_header": admin.site.site_header}),
+        BenefitsPasswordResetConfirmView.as_view(extra_context={"site_header": admin.site.site_header}),
         name="password_reset_confirm",
-    ),
-    path(
-        "admin/password_reset/complete/",
-        auth_views.PasswordResetCompleteView.as_view(extra_context={"site_header": admin.site.site_header}),
-        name="password_reset_complete",
     ),
 ]
 urlpatterns.extend(password_reset_patterns)
