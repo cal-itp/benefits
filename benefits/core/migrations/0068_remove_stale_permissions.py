@@ -31,7 +31,7 @@ def remove_stale_permissions(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("core", "0066_consolidate_transitagency_logo_columns"),
+        ("core", "0067_alter_transitagency_slug"),
         ("enrollment_littlepay", "0005_delete_oldlittlepayconfig"),
         ("enrollment_switchio", "0005_switchioconfig_delete_oldswitchioconfig"),
         # Also depend on auth and contenttypes
