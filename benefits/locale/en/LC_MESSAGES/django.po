@@ -36,6 +36,9 @@ msgstr ""
 msgid "Get your reduced fare on Santa Barbara MTD buses when you tap to ride"
 msgstr ""
 
+msgid "Get your reduced fare on San Luis Obispo RTA buses when you tap to ride"
+msgstr ""
+
 msgid ""
 "Get your reduced fare on Ventura County Transportation Commission buses when "
 "you tap to ride"
@@ -772,6 +775,12 @@ msgstr ""
 
 #, python-format
 msgid ""
+"Cal-ITP doesn’t save any of your information. All RTA transit benefits "
+"reduce fares by 50%% for bus service on fixed routes."
+msgstr ""
+
+#, python-format
+msgid ""
 "Cal-ITP doesn’t save any of your information. All Ventura County "
 "Transportation Commission transit benefits reduce fares by 50%% for bus "
 "service on fixed routes."
@@ -944,7 +953,7 @@ msgstr ""
 msgid "an SBMTD bus"
 msgstr ""
 
-msgid "an SBMTD Reduced Fare Mobility ID transit benefit"
+msgid "a RTA bus"
 msgstr ""
 
 msgid "a Ventura County Transportation Commission bus"
