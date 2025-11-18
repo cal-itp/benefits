@@ -5,7 +5,7 @@ from django.db import migrations
 
 def remove_stale_permissions(apps, schema_editor):
     """
-    Finds all permissions related to the 'core' app and removes them
+    Finds all permissions now defined explicitly in code and removes them
     from all users and groups.
     """
     Permission = apps.get_model("auth", "Permission")
@@ -13,9 +13,9 @@ def remove_stale_permissions(apps, schema_editor):
     Group = apps.get_model("auth", "Group")
     ContentType = apps.get_model("contenttypes", "ContentType")
 
-    APP_LABELS = ["core"]
+    APP_LABELS = ["core", "enrollment_littlepay"]
 
-    # find all permissions for the core app
+    # find all permissions for the apps listed above
     content_types = ContentType.objects.filter(app_label__in=APP_LABELS)
     permissions_to_clear = Permission.objects.filter(content_type__in=content_types)
 
@@ -32,6 +32,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("core", "0066_consolidate_transitagency_logo_columns"),
+        ("enrollment_littlepay", "0005_delete_oldlittlepayconfig"),
         # Also depend on auth and contenttypes
         ("auth", "__latest__"),
         ("contenttypes", "__latest__"),
