@@ -11,8 +11,10 @@
 | benefits/core/admin/\_\_init\_\_.py                                                            |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/core/admin/common.py                                                                  |       13 |        0 |        4 |        0 |    100% |           |
 | benefits/core/admin/enrollment.py                                                              |       90 |        7 |       44 |        8 |     87% |24, 36, 40, 46, 75->77, 77->80, 99-100, 155 |
+| benefits/core/admin/forms.py                                                                   |        8 |        0 |        2 |        0 |    100% |           |
 | benefits/core/admin/transit.py                                                                 |       22 |        1 |        8 |        1 |     93% |        43 |
 | benefits/core/admin/users.py                                                                   |       40 |        0 |        8 |        1 |     98% |  46->exit |
+| benefits/core/admin/views.py                                                                   |       14 |        0 |        0 |        0 |    100% |           |
 | benefits/core/analytics.py                                                                     |       99 |       20 |       18 |        3 |     72% |136-138, 143, 149-171, 182 |
 | benefits/core/apps.py                                                                          |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/core/context/\_\_init\_\_.py                                                          |        7 |        0 |        0 |        0 |    100% |           |
@@ -102,9 +104,9 @@
 | benefits/secrets.py                                                                            |       48 |        8 |       10 |        1 |     81% |     90-99 |
 | benefits/sentry.py                                                                             |       57 |       12 |       10 |        1 |     81% |19, 24-25, 30, 34-35, 63-64, 87-108 |
 | benefits/settings.py                                                                           |      128 |        8 |       24 |        9 |     89% |109, 130->135, 146->149, 166, 343, 353, 359, 368, 392-393 |
-| benefits/urls.py                                                                               |       27 |        7 |        4 |        2 |     71% |35->46, 50-64 |
+| benefits/urls.py                                                                               |       31 |        7 |        4 |        2 |     74% |38->49, 53-67 |
 | benefits/wsgi.py                                                                               |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                                                                      **TOTAL** | **3089** |  **164** |  **552** |   **69** | **93%** |           |
+|                                                                                      **TOTAL** | **3115** |  **164** |  **554** |   **69** | **93%** |           |
 
 
 ## Setup coverage badge
