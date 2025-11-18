@@ -13,7 +13,7 @@ def remove_stale_permissions(apps, schema_editor):
     Group = apps.get_model("auth", "Group")
     ContentType = apps.get_model("contenttypes", "ContentType")
 
-    APP_LABELS = ["core", "enrollment_littlepay"]
+    APP_LABELS = ["core", "enrollment_littlepay", "enrollment_switchio"]
 
     # find all permissions for the apps listed above
     content_types = ContentType.objects.filter(app_label__in=APP_LABELS)
@@ -33,6 +33,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ("core", "0066_consolidate_transitagency_logo_columns"),
         ("enrollment_littlepay", "0005_delete_oldlittlepayconfig"),
+        ("enrollment_switchio", "0005_switchioconfig_delete_oldswitchioconfig"),
         # Also depend on auth and contenttypes
         ("auth", "__latest__"),
         ("contenttypes", "__latest__"),
