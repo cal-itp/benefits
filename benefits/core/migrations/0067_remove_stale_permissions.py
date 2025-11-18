@@ -13,7 +13,7 @@ def remove_stale_permissions(apps, schema_editor):
     Group = apps.get_model("auth", "Group")
     ContentType = apps.get_model("contenttypes", "ContentType")
 
-    APP_LABELS = ["core", "enrollment_littlepay", "enrollment_switchio"]
+    APP_LABELS = ["auth", "core", "enrollment_littlepay", "enrollment_switchio"]
 
     # find all permissions for the apps listed above
     content_types = ContentType.objects.filter(app_label__in=APP_LABELS)
