@@ -191,7 +191,7 @@ DATABASES = {
     }
 }
 
-# Password validation
+# Password handling
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -207,6 +207,7 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+PASSWORD_RESET_TIMEOUT = 86400  # 24 hours, in seconds
 
 
 # Internationalization

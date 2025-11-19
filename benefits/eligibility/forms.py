@@ -8,12 +8,13 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 
 from benefits.routes import routes
-from benefits.core import models, recaptcha, widgets
+from benefits.core import models, widgets
+from benefits.core.mixins import ValidateRecaptchaMixin
 
 logger = logging.getLogger(__name__)
 
 
-class EnrollmentFlowSelectionForm(forms.Form):
+class EnrollmentFlowSelectionForm(ValidateRecaptchaMixin, forms.Form):
     """Form to capture enrollment flow selection."""
 
     action_url = routes.ELIGIBILITY_INDEX
@@ -36,12 +37,8 @@ class EnrollmentFlowSelectionForm(forms.Form):
         flow_field.widget.attrs.update({"data-custom-validity": _("Please choose a transit benefit.")})
         self.use_custom_validity = True
 
-    def clean(self):
-        if not recaptcha.verify(self.data):
-            raise forms.ValidationError("reCAPTCHA failed")
 
-
-class EligibilityVerificationForm(forms.Form):
+class EligibilityVerificationForm(ValidateRecaptchaMixin, forms.Form):
     """Form to collect eligibility verification details."""
 
     action_url = routes.ELIGIBILITY_CONFIRM
@@ -135,10 +132,6 @@ class EligibilityVerificationForm(forms.Form):
             self.use_custom_validity = True
 
         self.fields["name"] = forms.CharField(label=name_label, widget=name_widget, help_text=name_help_text)
-
-    def clean(self):
-        if not recaptcha.verify(self.data):
-            raise forms.ValidationError("reCAPTCHA failed")
 
 
 class CSTAgencyCard(EligibilityVerificationForm):

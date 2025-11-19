@@ -22,7 +22,7 @@ The report files include a local `.gitignore` file, so the entire directory is h
 
 ### Latest coverage report
 
-We also make the latest (from `main`) coverage report available online here: [Coverage report](../reference/coverage)
+We also make the latest (from `main`) coverage report available online here: [Coverage report](../../reference/coverage/)
 
 ## Playwright
 

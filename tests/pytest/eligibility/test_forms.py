@@ -1,7 +1,35 @@
 import pytest
 
 from benefits.core import models
-from benefits.eligibility.forms import CSTAgencyCard, MSTCourtesyCard, SBMTDMobilityPass, EnrollmentFlowSelectionForm
+from benefits.core.mixins import ValidateRecaptchaMixin
+from benefits.eligibility.forms import (
+    CSTAgencyCard,
+    MSTCourtesyCard,
+    SBMTDMobilityPass,
+    EnrollmentFlowSelectionForm,
+    EligibilityVerificationForm,
+)
+
+
+@pytest.mark.django_db
+class TestEnrollmentFlowSelectionForm:
+    @pytest.fixture(autouse=True)
+    def init(self, model_TransitAgency):
+        self.form = EnrollmentFlowSelectionForm(model_TransitAgency)
+
+    def test_recaptcha_mixin(self):
+        assert isinstance(self.form, ValidateRecaptchaMixin)
+
+
+class TestEligibilityVerificationForm:
+    @pytest.fixture(autouse=True)
+    def init(self):
+        # Using CSTAgencyCard here since it inits with the required properties
+        self.form = CSTAgencyCard()
+
+    def test_recaptcha_mixin(self):
+        assert isinstance(self.form, EligibilityVerificationForm)
+        assert isinstance(self.form, ValidateRecaptchaMixin)
 
 
 @pytest.mark.django_db
