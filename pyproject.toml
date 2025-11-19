@@ -23,7 +23,7 @@ dependencies = [
     "eligibility-api==2025.4.1",
     "pillow==11.3.0",
     "requests==2.32.5",
-    "sentry-sdk==2.43.0",
+    "sentry-sdk==2.45.0",
     "six==1.17.0",
 ]
 
