@@ -1,20 +1,11 @@
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from django.forms import ValidationError
 
-from benefits.core import recaptcha
-
-
-class BenefitsPasswordResetForm(PasswordResetForm):
-
-    def clean(self):
-        if not recaptcha.verify(self.data):
-            raise ValidationError("reCAPTCHA failed, please try again.")
-        return super().clean()
+from benefits.core.mixins import ValidateRecaptchaMixin
 
 
-class BenefitsSetPasswordForm(SetPasswordForm):
+class BenefitsPasswordResetForm(ValidateRecaptchaMixin, PasswordResetForm):
+    pass
 
-    def clean(self):
-        if not recaptcha.verify(self.data):
-            raise ValidationError("reCAPTCHA failed, please try again.")
-        return super().clean()
+
+class BenefitsSetPasswordForm(ValidateRecaptchaMixin, SetPasswordForm):
+    pass

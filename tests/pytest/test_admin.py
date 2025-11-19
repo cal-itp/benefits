@@ -2,7 +2,18 @@ import pytest
 from django.conf import settings
 from django.contrib.auth.models import Group
 from django.urls import reverse
+from benefits.admin import BenefitsAdminLoginForm
+from benefits.core.mixins import ValidateRecaptchaMixin
 from benefits.routes import routes
+
+
+class TestBenefitsAdminLoginForm:
+    @pytest.fixture(autouse=True)
+    def init(self):
+        self.form = BenefitsAdminLoginForm()
+
+    def test_recaptcha_mixin(self):
+        assert isinstance(self.form, ValidateRecaptchaMixin)
 
 
 @pytest.fixture

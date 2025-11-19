@@ -1,6 +1,7 @@
 import logging
 
 from django.conf import settings
+from django.forms import ValidationError
 
 from benefits.core import analytics
 
@@ -87,3 +88,15 @@ class RecaptchaEnabledMixin:
                 "site_key": settings.RECAPTCHA_SITE_KEY,
             }
         return super().dispatch(request, *args, **kwargs)
+
+
+class ValidateRecaptchaMixin:
+    """Mixin intended for use with forms where we need to verify reCAPTCHA.
+
+    Raises a ValidationError if it fails; otherwise continues the standard form verification.
+    """
+
+    def clean(self):
+        if not recaptcha.verify(self.data):
+            raise ValidationError("reCAPTCHA failed, please try again.")
+        return super().clean()

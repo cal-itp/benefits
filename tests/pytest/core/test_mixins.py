@@ -1,3 +1,4 @@
+from django.forms import Form, ValidationError
 from django.views import View
 
 import pytest
@@ -11,6 +12,7 @@ from benefits.core.mixins import (
     FlowSessionRequiredMixin,
     PageViewMixin,
     RecaptchaEnabledMixin,
+    ValidateRecaptchaMixin,
 )
 
 
@@ -150,3 +152,15 @@ class TestRecaptchaEnabledMixin:
         view.dispatch(app_request)
 
         assert not hasattr(app_request, "recaptcha")
+
+
+class TestValidateRecaptchaMixin:
+    class SampleForm(ValidateRecaptchaMixin, Form):
+        pass
+
+    def test_clean_raises_exception_when_recaptcha_fails(self, mocker):
+        mocker.patch("benefits.core.recaptcha.verify", return_value=False)
+        form = self.SampleForm()
+
+        with pytest.raises(ValidationError):
+            form.clean()
