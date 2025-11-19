@@ -5,17 +5,17 @@
 | Name                                                                                           |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
 |----------------------------------------------------------------------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
 | benefits/\_\_init\_\_.py                                                                       |        6 |        2 |        0 |        0 |     67% |       5-7 |
-| benefits/admin.py                                                                              |       40 |        4 |        8 |        2 |     83% |18-20, 61->77, 65 |
+| benefits/admin.py                                                                              |       37 |        1 |        6 |        2 |     93% |57->73, 61 |
 | benefits/apps.py                                                                               |        3 |        0 |        0 |        0 |    100% |           |
 | benefits/core/\_\_init\_\_.py                                                                  |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/core/admin/\_\_init\_\_.py                                                            |        6 |        0 |        0 |        0 |    100% |           |
 | benefits/core/admin/common.py                                                                  |        6 |        0 |        0 |        0 |    100% |           |
 | benefits/core/admin/enrollment.py                                                              |       60 |        2 |       26 |        3 |     92% |43->45, 45->48, 67-68 |
-| benefits/core/admin/forms.py                                                                   |        8 |        0 |        2 |        0 |    100% |           |
+| benefits/core/admin/forms.py                                                                   |        6 |        0 |        0 |        0 |    100% |           |
 | benefits/core/admin/mixins.py                                                                  |       50 |        0 |        4 |        0 |    100% |           |
 | benefits/core/admin/transit.py                                                                 |       15 |        0 |        4 |        0 |    100% |           |
 | benefits/core/admin/users.py                                                                   |       58 |        0 |       14 |        1 |     99% |  95->exit |
-| benefits/core/admin/views.py                                                                   |       14 |        0 |        0 |        0 |    100% |           |
+| benefits/core/admin/views.py                                                                   |       21 |        0 |        0 |        0 |    100% |           |
 | benefits/core/analytics.py                                                                     |       99 |       20 |       18 |        3 |     72% |136-138, 143, 149-171, 182 |
 | benefits/core/apps.py                                                                          |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/core/context/\_\_init\_\_.py                                                          |        7 |        0 |        0 |        0 |    100% |           |
@@ -24,7 +24,7 @@
 | benefits/core/context\_processors.py                                                           |       48 |        5 |       14 |        4 |     85% |18, 35->38, 73-74, 83, 113 |
 | benefits/core/forms.py                                                                         |       24 |        0 |        4 |        0 |    100% |           |
 | benefits/core/middleware.py                                                                    |       84 |        7 |       20 |        3 |     90% |37-38, 57-58, 77->82, 104-105, 132 |
-| benefits/core/mixins.py                                                                        |       40 |        2 |        8 |        0 |     96% |     71-72 |
+| benefits/core/mixins.py                                                                        |       46 |        2 |       10 |        0 |     96% |     72-73 |
 | benefits/core/models/\_\_init\_\_.py                                                           |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/core/models/common.py                                                                 |       51 |        2 |       14 |        0 |     97% |     91-92 |
 | benefits/core/models/enrollment.py                                                             |      150 |        3 |       28 |        3 |     97% |140, 157, 241->252, 276 |
@@ -39,7 +39,7 @@
 | benefits/eligibility/apps.py                                                                   |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/context/\_\_init\_\_.py                                                   |        2 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/context/flow.py                                                           |       29 |        0 |        0 |        0 |    100% |           |
-| benefits/eligibility/forms.py                                                                  |       65 |        2 |       16 |        8 |     88% |41, 114->116, 116->118, 118->120, 120->124, 131->133, 133->137, 141 |
+| benefits/eligibility/forms.py                                                                  |       60 |        0 |       12 |        6 |     92% |111->113, 113->115, 115->117, 117->121, 128->130, 130->134 |
 | benefits/eligibility/urls.py                                                                   |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/verify.py                                                                 |       12 |        0 |        4 |        0 |    100% |           |
 | benefits/eligibility/views.py                                                                  |      101 |        3 |       18 |        1 |     95% |22->25, 128-130 |
@@ -104,10 +104,10 @@
 | benefits/routes.py                                                                             |      116 |        0 |        0 |        0 |    100% |           |
 | benefits/secrets.py                                                                            |       48 |        8 |       10 |        1 |     81% |     90-99 |
 | benefits/sentry.py                                                                             |       57 |       12 |       10 |        1 |     81% |19, 24-25, 30, 34-35, 63-64, 87-108 |
-| benefits/settings.py                                                                           |      128 |        8 |       24 |        9 |     89% |109, 130->135, 146->149, 166, 343, 353, 359, 368, 392-393 |
-| benefits/urls.py                                                                               |       31 |        7 |        4 |        2 |     74% |38->49, 53-67 |
+| benefits/settings.py                                                                           |      129 |        8 |       24 |        9 |     89% |109, 130->135, 146->149, 166, 344, 354, 360, 369, 393-394 |
+| benefits/urls.py                                                                               |       30 |        7 |        4 |        2 |     74% |37->48, 52-66 |
 | benefits/wsgi.py                                                                               |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                                                                      **TOTAL** | **3151** |  **158** |  **538** |   **63** | **93%** |           |
+|                                                                                      **TOTAL** | **3154** |  **153** |  **532** |   **61** | **93%** |           |
 
 
 ## Setup coverage badge
