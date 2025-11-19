@@ -4,9 +4,14 @@ Adapted from https://stackoverflow.com/a/63290578/453168
 {% endcomment %}
 
 {% comment %}
+Create a pseudorandom identifier from the current microseconds to ensure we attach the event to the right button.
+{% endcomment %}
+{% now "u" as unique_id %}
+
+{% comment %}
 hidden input field will later send g-recaptcha token back to server
 {% endcomment %}
-<input type="hidden" name="{{ request.recaptcha.data_field }}" value="">
+<input type="hidden" name="{{ request.recaptcha.data_field }}" data-recaptcha-id="{{ unique_id }}" value="">
 
 <div class="pt-8">{% include "core/includes/recaptcha-text.html" %}</div>
 
@@ -38,6 +43,8 @@ function recaptchaSubmit(event) {
   });
 };
 
-// bind the above handler to button click
-document.querySelector("[type=submit]").addEventListener("click", recaptchaSubmit);
+// bind the above handler to clicking the submit element of the form this is included within
+const hiddenInput = document.querySelector('[data-recaptcha-id="{{ unique_id }}"]');
+const parentForm = hiddenInput.form;
+parentForm.querySelector('[type="submit"]').addEventListener("click", recaptchaSubmit);
 </script>
