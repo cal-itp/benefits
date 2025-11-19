@@ -5,8 +5,7 @@ from benefits.core.context.flow import SystemName
 from benefits.routes import routes
 import benefits.enrollment.views as views
 import benefits.enrollment.enrollment
-from benefits.core.middleware import TEMPLATE_USER_ERROR
-from benefits.enrollment.views import TEMPLATE_RETRY, system_error
+from benefits.enrollment.views import system_error
 
 
 @pytest.fixture
@@ -40,11 +39,9 @@ class TestIndexView:
         return v
 
     def test_get_redirect_url(self, view):
-
         assert view.get_redirect_url() == reverse(view.agency.enrollment_index_route)
 
     def test_get(self, view, app_request, mocked_session_update):
-
         response = view.get(app_request)
 
         assert response.status_code == 302
@@ -104,35 +101,23 @@ class TestReenrollmentErrorView:
 
 
 @pytest.mark.django_db
-def test_retry_ineligible(client):
-    path = reverse(routes.ENROLLMENT_RETRY)
+class TestRetryView:
+    @pytest.fixture
+    def view(self, app_request, model_LittlepayConfig, model_LittlepayGroup):
+        v = views.RetryView()
+        v.setup(app_request)
+        v.agency = model_LittlepayConfig.transit_agency
+        v.flow = model_LittlepayGroup.enrollment_flow
+        return v
 
-    response = client.post(path)
+    def test_get(self, app_request, view, mocked_analytics_module, model_LittlepayGroup):
+        response = view.get(app_request)
 
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_USER_ERROR
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible", "mocked_session_flow")
-def test_retry_get(client, mocked_analytics_module):
-    path = reverse(routes.ENROLLMENT_RETRY)
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_RETRY
-    mocked_analytics_module.returned_retry.assert_called_once()
-
-
-@pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_eligible", "mocked_session_flow")
-def test_retry_valid_form(client, mocked_analytics_module):
-    path = reverse(routes.ENROLLMENT_RETRY)
-    response = client.post(path)
-
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_RETRY
-    mocked_analytics_module.returned_retry.assert_called_once()
+        assert response.status_code == 200
+        assert response.template_name == ["enrollment/retry.html"]
+        mocked_analytics_module.returned_retry.assert_called_once_with(
+            app_request, enrollment_group=model_LittlepayGroup.group_id, transit_processor="littlepay"
+        )
 
 
 @pytest.mark.django_db
