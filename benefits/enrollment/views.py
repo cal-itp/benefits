@@ -25,7 +25,6 @@ from benefits.core.mixins import (
 from benefits.core.middleware import EligibleSessionRequired
 from . import analytics
 
-TEMPLATE_RETRY = "enrollment/retry.html"
 TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
 
 
@@ -82,13 +81,16 @@ class ReenrollmentErrorView(FlowSessionRequiredMixin, EligibleSessionRequiredMix
         return super().get(request, *args, **kwargs)
 
 
-@decorator_from_middleware(EligibleSessionRequired)
-def retry(request):
+class RetryView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSessionRequiredMixin, TemplateView):
     """View handler for a recoverable failure condition."""
-    flow = session.flow(request)
-    agency = session.agency(request)
-    analytics.returned_retry(request, enrollment_group=flow.group_id, transit_processor=agency.transit_processor)
-    return TemplateResponse(request, TEMPLATE_RETRY)
+
+    template_name = "enrollment/retry.html"
+
+    def get(self, request, *args, **kwargs):
+        enrollment_group = self.flow.group_id
+        transit_processor = self.agency.transit_processor
+        analytics.returned_retry(request, enrollment_group=enrollment_group, transit_processor=transit_processor)
+        return super().get(request, *args, **kwargs)
 
 
 @decorator_from_middleware(EligibleSessionRequired)
