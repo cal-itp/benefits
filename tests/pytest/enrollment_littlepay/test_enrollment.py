@@ -155,6 +155,40 @@ def test_enroll_exception_http_error_400(
     "model_LittlepayGroup",
     "model_LittlepayConfig",
 )
+def test_enroll_exception_http_error_409(
+    mocker,
+    app_request,
+    card_token,
+):
+    """Test for when the Littlepay API seemingly returns incorrect response when checking for an existing enrollment.
+
+    See: https://github.com/cal-itp/benefits/issues/3292
+    """
+    mock_client_cls = mocker.patch("benefits.enrollment_littlepay.enrollment.Client")
+    mock_client = mock_client_cls.return_value
+
+    mock_error = {"detail": "Funding source <uuid> for participant cst already in group <uuid>"}
+    mock_error_response = mocker.Mock(status_code=409, **mock_error)
+    mock_error_response.text = str(mock_error)
+    http_error = HTTPError(
+        response=mock_error_response,
+    )
+    mock_client.link_concession_group_funding_source.side_effect = http_error
+
+    status, exception, funding_source = enroll(app_request, card_token)
+
+    assert status is Status.SUCCESS
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures(
+    "mocked_api_base_url",
+    "mocked_session_agency",
+    "mocked_session_flow",
+    "model_EnrollmentFlow_does_not_support_expiration",
+    "model_LittlepayGroup",
+    "model_LittlepayConfig",
+)
 def test_enroll_exception_non_http_error(
     mocker,
     app_request,
