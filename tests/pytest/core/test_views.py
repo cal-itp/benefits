@@ -6,6 +6,7 @@ from benefits.core import views
 from benefits.routes import routes
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.core.models import EnrollmentFlow
+from benefits.core.urls import TransitAgencyPathConverter
 from benefits.core.views import (
     bad_request,
     csrf_failure,
@@ -46,37 +47,29 @@ class TestIndexView:
 
 
 @pytest.mark.django_db
-def test_agency_index_single_flow(mocker, model_TransitAgency, client, session_reset_spy, mocked_session_update):
-    mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=[model_TransitAgency])
+class TestAgencyIndexView:
+    @pytest.fixture
+    def view(self, app_request, model_TransitAgency):
+        v = views.AgencyIndexView()
+        converter = TransitAgencyPathConverter()
+        v.setup(app_request, agency=converter.to_python(model_TransitAgency.slug))
+        return v
 
-    response = client.get(model_TransitAgency.index_url)
+    def test_view(self, view):
+        assert view.template_name == "core/index--agency.html"
 
-    session_reset_spy.assert_called_once()
-    mocked_session_update.assert_called_once()
+    def test_get(self, view, app_request, mocked_session_reset, mocked_session_update):
+        response = view.get(app_request)
 
-    assert response.status_code == 200
-    assert response.template_name == "core/index--agency.html"
+        assert response.status_code == 200
+        mocked_session_reset.assert_called_once()
+        mocked_session_update.assert_called_once()
 
+    def test_get_context_data(self, view, model_TransitAgency):
+        context = view.get_context_data()
 
-@pytest.mark.django_db
-def test_agency_index_multiple_flow(
-    mocker, model_TransitAgency, model_EnrollmentFlow, client, session_reset_spy, mocked_session_update
-):
-    # add another to the list of flows by cloning the original
-    # https://stackoverflow.com/a/48149675/453168
-    new_flow = EnrollmentFlow.objects.get(pk=model_EnrollmentFlow.id)
-    new_flow.pk = None
-    new_flow.save()
-
-    model_TransitAgency.enrollment_flows.add(new_flow)
-    mocker.patch("benefits.core.models.TransitAgency.all_active", return_value=[model_TransitAgency])
-
-    response = client.get(model_TransitAgency.index_url)
-
-    session_reset_spy.assert_called_once()
-    mocked_session_update.assert_called_once()
-    assert response.status_code == 200
-    assert response.template_name == "core/index--agency.html"
+        for key, value in model_TransitAgency.index_context.items():
+            assert context[key] == value
 
 
 @pytest.mark.django_db
