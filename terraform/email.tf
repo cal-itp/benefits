@@ -1,5 +1,6 @@
 locals {
-  communication_service_name                 = "ACS-CDT-PUB-VIP-CALITP-${local.env_letter}-001"
+  communication_service_name                 = "ACS-CALITP-${local.env_letter}-001"
+  email_communication_service_name           = "ACS-EMAIL-CALITP-${local.env_letter}-001"
   data_location                              = "United States"
   custom_domain_name                         = "benefits.calitp.org"
   azure_communication_connection_string_name = "azure-communication-connection-string"
@@ -27,7 +28,7 @@ resource "azurerm_communication_service" "main" {
 }
 
 resource "azurerm_email_communication_service" "main" {
-  name                = local.communication_service_name
+  name                = local.email_communication_service_name
   resource_group_name = data.azurerm_resource_group.main.name
   data_location       = local.data_location
 
