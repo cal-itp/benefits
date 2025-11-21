@@ -1,3 +1,5 @@
+import re
+
 from dataclasses import dataclass
 
 from littlepay.api.client import Client
@@ -136,6 +138,10 @@ def enroll(request, card_token) -> tuple[Status, Exception]:
         if e.response.status_code >= 500:
             status = Status.SYSTEM_ERROR
             exception = e
+        elif e.response.status_code == 409 and re.search(r"Funding source .+ already in group", e.response.text):
+            # Handle situations where we errantly tried to link an already-enrolled funding source.
+            # See: https://github.com/cal-itp/benefits/issues/3292
+            status = Status.SUCCESS
         else:
             status = Status.EXCEPTION
             exception = Exception(f"{e}: {e.response.json()}")
