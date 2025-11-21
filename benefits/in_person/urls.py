@@ -18,7 +18,7 @@ urlpatterns = [
     ),
     path(
         "enrollment/error/reenrollment",
-        admin.site.admin_view(views.reenrollment_error),
+        admin.site.admin_view(views.ReenrollmentErrorView.as_view()),
         name=routes.name(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR),
     ),
     path(

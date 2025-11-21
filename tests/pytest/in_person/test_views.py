@@ -161,14 +161,21 @@ class TestLittlepayEnrollmentView:
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_agency")
-def test_reenrollment_error(admin_client):
-    path = reverse(routes.IN_PERSON_ENROLLMENT_REENROLLMENT_ERROR)
+class TestReenrollmentErrorView:
+    @pytest.fixture
+    def view(self, app_request, model_LittlepayConfig, model_EnrollmentFlow, model_User):
+        app_request.user = model_User
+        v = views.ReenrollmentErrorView()
+        v.setup(app_request)
+        v.agency = model_LittlepayConfig.transit_agency
+        v.flow = model_EnrollmentFlow
+        return v
 
-    response = admin_client.get(path)
+    def test_get_context_data(self, view):
+        context = view.get_context_data()
 
-    assert response.status_code == 200
-    assert response.template_name == "in_person/enrollment/reenrollment_error.html"
+        assert "title" in context
+        assert context["flow_label"] == view.flow.label
 
 
 @pytest.mark.django_db
