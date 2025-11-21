@@ -41,13 +41,23 @@ class IndexView(FormView):
         return super().get(request, *args, **kwargs)
 
 
-@pageview_decorator
-def agency_index(request, agency: models.TransitAgency):
+class AgencyIndexView(TemplateView):
     """View handler for an agency entry page."""
-    session.reset(request)
-    session.update(request, agency=agency, origin=agency.index_url)
 
-    return TemplateResponse(request, "core/index--agency.html", agency.index_context)
+    template_name = "core/index--agency.html"
+
+    @method_decorator(pageview_decorator)
+    def get(self, request, *args, **kwargs):
+        agency = self.kwargs.get("agency")
+        session.reset(request)
+        session.update(request, agency=agency, origin=agency.index_url)
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        agency = self.kwargs.get("agency")
+        context |= agency.index_context
+        return context
 
 
 @pageview_decorator
