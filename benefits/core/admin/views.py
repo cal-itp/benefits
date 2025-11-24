@@ -1,3 +1,5 @@
+from urllib.parse import quote
+
 from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -12,7 +14,11 @@ class BenefitsPasswordResetView(RecaptchaEnabledMixin, PasswordResetView):
     form_class = BenefitsPasswordResetForm
 
     def form_valid(self, form):
-        self.success_url = f"{reverse_lazy("password_reset_done")}?email={form.cleaned_data["email"]}"
+        email = form.cleaned_data["email"]
+        # encode special characters in email address so it's safe for use in a URL
+        url_encoded_email = quote(email)
+
+        self.success_url = f"{reverse_lazy("password_reset_done")}?email={url_encoded_email}"
         return super().form_valid(form)
 
 

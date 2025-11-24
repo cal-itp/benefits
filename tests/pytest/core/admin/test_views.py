@@ -19,12 +19,12 @@ class TestBenefitsPasswordResetView:
         return v
 
     def test_form_valid(self, view):
-        email = "mail@example.com"
+        email = "mail+alias@example.com"
         form = view.form_class(data={"email": email})
         assert form.is_valid()
 
         view.form_valid(form)
-        assert view.success_url == f"{reverse("password_reset_done")}?email={email}"
+        assert view.success_url == f"{reverse("password_reset_done")}?email=mail%2Balias%40example.com"
 
 
 @pytest.mark.django_db
