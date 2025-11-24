@@ -93,15 +93,18 @@ class RetryView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
         # action_url, that are already specified in the enrollment_littlepay/views.IndexView
         #
         # Switchio doesn't use this view at all
+
+        # call super().dispatch() first to ensure all mixins are processed (i.e. so we have a self.flow and self.agency)
+        response = super().dispatch(request, *args, **kwargs)
         if request.method == "POST":
             enrollment_group = self.flow.group_id
             transit_processor = self.agency.transit_processor
             analytics.returned_retry(request, enrollment_group=enrollment_group, transit_processor=transit_processor)
-            # TemplateView doesn't implement POST, just return the template
+            # TemplateView doesn't implement POST, just return the template via GET
             return super().get(request, *args, **kwargs)
         # for other request methods, we don't want/need to serve the retry template since users should only arrive via the form
         # POST, returning super().dispatch() results in a 200 User Error response
-        return super().dispatch(request, *args, **kwargs)
+        return response
 
 
 @decorator_from_middleware(EligibleSessionRequired)
