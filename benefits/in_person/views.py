@@ -8,9 +8,10 @@ from django.views.generic import FormView
 
 from benefits.core.models.transit import TransitAgency
 from benefits.core import models, session
+from benefits.core.mixins import AgencySessionRequiredMixin
 from benefits.eligibility import analytics as eligibility_analytics
 from benefits.enrollment import analytics as enrollment_analytics
-from benefits.enrollment.views import IndexView
+from benefits.enrollment.views import IndexView, ReenrollmentErrorView as DigitalReenrollmentErrorView
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.enrollment_littlepay.views import TokenView, IndexView as LittlepayIndexView
 from benefits.enrollment_switchio.session import Session as SwitchioSession
@@ -93,19 +94,16 @@ class LittlepayEnrollmentView(mixins.CommonContextMixin, LittlepayIndexView):
         return f"{self.request.user.first_name} {self.request.user.last_name}"
 
 
-def reenrollment_error(request):
+class ReenrollmentErrorView(mixins.CommonContextMixin, AgencySessionRequiredMixin, DigitalReenrollmentErrorView):
     """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
 
-    agency = session.agency(request)
-    context = {
-        **admin_site.each_context(request),
-        "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
-    }
+    template_name = "in_person/enrollment/reenrollment_error.html"
 
-    flow = session.flow(request)
-    context["flow_label"] = flow.label
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-    return TemplateResponse(request, "in_person/enrollment/reenrollment_error.html", context)
+        context["flow_label"] = self.flow.label
+        return context
 
 
 def retry(request):
