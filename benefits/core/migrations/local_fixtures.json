@@ -143,6 +143,15 @@
     }
   },
   {
+    "model": "core.eligibilityapiconfig",
+    "pk": 1,
+    "fields": {
+      "api_id": "cst",
+      "api_private_key": 2,
+      "api_public_key": 3
+    }
+  },
+  {
     "model": "core.transitagency",
     "pk": 1,
     "fields": {
@@ -152,9 +161,7 @@
       "long_name": "California State Transit (local)",
       "info_url": "https://www.agency-website.com",
       "phone": "1-800-555-5555",
-      "eligibility_api_id": "cst",
-      "eligibility_api_private_key": 2,
-      "eligibility_api_public_key": 3,
+      "eligibility_api_config": 1,
       "staff_group": 2,
       "customer_service_group": 2,
       "logo": "agencies/cst.png"
@@ -211,6 +218,20 @@
     "fields": { "group_id": "30027174-bc59-40bb-935c-3bd9b1c26a63" }
   },
   {
+    "model": "core.eligibilityapiverificationrequest",
+    "pk": 1,
+    "fields": {
+      "label": "agency_card",
+      "api_url": "http://server:8000/verify",
+      "api_auth_header": "X-Server-API-Key",
+      "api_auth_key_secret_name": "agency-card-flow-api-auth-key",
+      "api_public_key": 1,
+      "api_jwe_cek_enc": "A256CBC-HS512",
+      "api_jwe_encryption_alg": "RSA-OAEP",
+      "api_jws_signing_alg": "RS256"
+    }
+  },
+  {
     "model": "core.enrollmentflow",
     "pk": 1,
     "fields": {
@@ -246,14 +267,8 @@
     "fields": {
       "system_name": "agency_card",
       "label": "Agency Cardholder",
+      "api_request": 1,
       "display_order": 4,
-      "eligibility_api_url": "http://server:8000/verify",
-      "eligibility_api_auth_header": "X-Server-API-Key",
-      "eligibility_api_auth_key_secret_name": "agency-card-flow-api-auth-key",
-      "eligibility_api_public_key": 1,
-      "eligibility_api_jwe_cek_enc": "A256CBC-HS512",
-      "eligibility_api_jwe_encryption_alg": "RSA-OAEP",
-      "eligibility_api_jws_signing_alg": "RS256",
       "supported_enrollment_methods": ["digital"],
       "transit_agency": 1
     }

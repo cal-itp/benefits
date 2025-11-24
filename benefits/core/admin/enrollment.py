@@ -5,13 +5,18 @@ from django.contrib import admin
 from adminsortable2.admin import SortableAdminMixin
 
 from benefits.core import models
-from .mixins import ProdReadOnlyPermissionMixin, StaffPermissionMixin
+from .mixins import ProdReadOnlyPermissionMixin, StaffPermissionMixin, SuperuserPermissionMixin
 
 
 @admin.register(models.EnrollmentEvent)
 class EnrollmentEventAdmin(ProdReadOnlyPermissionMixin, admin.ModelAdmin):
     list_display = ("enrollment_datetime", "transit_agency", "enrollment_flow", "enrollment_method", "verified_by")
     ordering = ("-enrollment_datetime",)
+
+
+@admin.register(models.EligibilityApiVerificationRequest)
+class EligibilityApiVerificationRequestAdmin(SuperuserPermissionMixin, admin.ModelAdmin):
+    list_display = ("label", "api_url")
 
 
 class EnrollmentFlowForm(forms.ModelForm):
@@ -49,24 +54,10 @@ class EnrollmentFlowForm(forms.ModelForm):
 
         if transit_agency:
             # these fields might not be on the form, so use helper method to correctly get the value
-            eligibility_api_url = self.get(cleaned_data, "eligibility_api_url")
+            eligibility_api_request = self.get(cleaned_data, "api_request")
+            claims_request = self.get(cleaned_data, "claims_request")
 
-            if eligibility_api_url:
-                message = "Required for Eligibility API verification."
-                needed = dict(
-                    eligibility_api_auth_header=self.get(cleaned_data, "eligibility_api_auth_header"),
-                    eligibility_api_auth_key_secret_name=self.get(cleaned_data, "eligibility_api_auth_key_secret_name"),
-                    eligibility_api_jwe_cek_enc=self.get(cleaned_data, "eligibility_api_jwe_cek_enc"),
-                    eligibility_api_jwe_encryption_alg=self.get(cleaned_data, "eligibility_api_jwe_encryption_alg"),
-                    eligibility_api_jws_signing_alg=self.get(cleaned_data, "eligibility_api_jws_signing_alg"),
-                    eligibility_api_public_key=self.get(cleaned_data, "eligibility_api_public_key"),
-                )
-                for k, v in needed.items():
-                    if self.has_field(k) and not v:
-                        field_errors.update({k: ValidationError(f"{message}.")})
-                    elif not v:
-                        non_field_errors.append(ValidationError(f"{message}: {k}"))
-            elif not cleaned_data.get("claims_request"):
+            if not (claims_request or eligibility_api_request):
                 message = (
                     "Must configure either claims verification or Eligibility API verification before"
                     + " adding to a transit agency."
@@ -84,30 +75,12 @@ class SortableEnrollmentFlowAdmin(StaffPermissionMixin, SortableAdminMixin, admi
     list_display = ("label", "transit_agency", "supported_enrollment_methods")
     form = EnrollmentFlowForm
 
-    def get_exclude(self, request, obj=None):
-        fields = []
-
-        if not request.user.is_superuser:
-            fields.extend(
-                [
-                    "eligibility_api_auth_header",
-                    "eligibility_api_auth_key_secret_name",
-                    "eligibility_api_public_key",
-                    "eligibility_api_jwe_cek_enc",
-                    "eligibility_api_jwe_encryption_alg",
-                    "eligibility_api_jws_signing_alg",
-                ]
-            )
-
-        return fields or super().get_exclude(request, obj)
-
     def get_readonly_fields(self, request, obj=None):
         fields = []
 
         if not request.user.is_superuser:
             fields.extend(
                 [
-                    "eligibility_api_url",
                     "selection_label_template_override",
                 ]
             )

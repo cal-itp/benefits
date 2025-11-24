@@ -5,7 +5,26 @@ from django.utils import timezone
 
 import pytest
 
-from benefits.core.models import EnrollmentFlow, EnrollmentEvent, EnrollmentMethods
+from benefits.core.models import EligibilityApiVerificationRequest, EnrollmentFlow, EnrollmentEvent, EnrollmentMethods
+
+
+@pytest.mark.django_db
+class TestEligibilityApiVerificationRequest:
+    @pytest.fixture(autouse=True)
+    def init(self, model_EligibilityApiVerificationRequest: EligibilityApiVerificationRequest):
+        self.model = model_EligibilityApiVerificationRequest
+
+    def test_api_auth_key(self, mock_field_secret_value):
+        mock_field = mock_field_secret_value(self.model, "api_auth_key_secret_name")
+
+        assert self.model.api_auth_key == mock_field.secret_value.return_value
+        mock_field.secret_value.assert_called_once_with(self.model)
+
+    def test_api_public_key_data(self, model_PemData):
+        assert self.model.api_public_key_data == model_PemData.data
+
+    def test_str(self):
+        assert str(self.model) == self.model.label
 
 
 @pytest.mark.django_db
@@ -77,11 +96,19 @@ def test_EnrollmentFlow_no_scope_and_claim_no_sign_out(model_EnrollmentFlow):
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_eligibility_api_auth_key(mock_field_secret_value, model_EnrollmentFlow_with_eligibility_api):
-    mock_field = mock_field_secret_value(model_EnrollmentFlow_with_eligibility_api, "eligibility_api_auth_key_secret_name")
+def test_EnrollmentFlow_eligibility_api_auth_key(model_EnrollmentFlow_with_eligibility_api):
+    assert (
+        model_EnrollmentFlow_with_eligibility_api.eligibility_api_auth_key
+        == model_EnrollmentFlow_with_eligibility_api.api_request.api_auth_key
+    )
 
-    assert model_EnrollmentFlow_with_eligibility_api.eligibility_api_auth_key == mock_field.secret_value.return_value
-    mock_field.secret_value.assert_called_once_with(model_EnrollmentFlow_with_eligibility_api)
+
+@pytest.mark.django_db
+def test_EnrollmentFlow_eligibility_api_public_key_data(model_EnrollmentFlow_with_eligibility_api):
+    assert (
+        model_EnrollmentFlow_with_eligibility_api.eligibility_api_public_key_data
+        == model_EnrollmentFlow_with_eligibility_api.api_request.api_public_key_data
+    )
 
 
 @pytest.mark.django_db

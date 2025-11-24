@@ -11,11 +11,13 @@ from pytest_socket import disable_socket
 
 from benefits.core import session
 from benefits.core.models import (
+    EligibilityApiVerificationRequest,
     EnrollmentFlow,
     PemData,
     TransitAgency,
     Environment,
 )
+from benefits.core.models.transit import EligibilityApiConfig
 from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup
 from benefits.enrollment_switchio.models import SwitchioConfig, SwitchioGroup
 
@@ -103,6 +105,22 @@ def model_ClaimsVerificationRequest():
 
 
 @pytest.fixture
+def model_EligibilityApiVerificationRequest(model_PemData):
+    api_request = EligibilityApiVerificationRequest.objects.create(
+        label="agency_card",
+        api_auth_header="X-API-AUTH",
+        api_auth_key_secret_name="secret-key",
+        api_jwe_cek_enc="cek-enc",
+        api_jwe_encryption_alg="alg",
+        api_jws_signing_alg="alg",
+        api_public_key=model_PemData,
+        api_url="https://example.com/verify",
+    )
+
+    return api_request
+
+
+@pytest.fixture
 def model_EnrollmentFlow(model_TransitAgency):
     flow = EnrollmentFlow.objects.create(
         system_name="senior",
@@ -131,15 +149,9 @@ def model_SwitchioGroup(model_EnrollmentFlow):
 
 
 @pytest.fixture
-def model_EnrollmentFlow_with_eligibility_api(model_EnrollmentFlow, model_PemData):
+def model_EnrollmentFlow_with_eligibility_api(model_EnrollmentFlow, model_EligibilityApiVerificationRequest):
     model_EnrollmentFlow.system_name = "agency_card"
-    model_EnrollmentFlow.eligibility_api_auth_header = "X-API-AUTH"
-    model_EnrollmentFlow.eligibility_api_auth_key_secret_name = "secret-key"
-    model_EnrollmentFlow.eligibility_api_jwe_cek_enc = "cek-enc"
-    model_EnrollmentFlow.eligibility_api_jwe_encryption_alg = "alg"
-    model_EnrollmentFlow.eligibility_api_jws_signing_alg = "alg"
-    model_EnrollmentFlow.eligibility_api_public_key = model_PemData
-    model_EnrollmentFlow.eligibility_api_url = "https://example.com/verify"
+    model_EnrollmentFlow.api_request = model_EligibilityApiVerificationRequest
     model_EnrollmentFlow.save()
 
     return model_EnrollmentFlow
@@ -222,7 +234,14 @@ def model_SwitchioConfig(model_PemData, model_TransitAgency):
 
 
 @pytest.fixture
-def model_TransitAgency(model_PemData):
+def model_EligibilityApiConfig(model_PemData):
+    config = EligibilityApiConfig.objects.create(api_id="test123", api_private_key=model_PemData, api_public_key=model_PemData)
+
+    return config
+
+
+@pytest.fixture
+def model_TransitAgency(model_EligibilityApiConfig):
     agency = TransitAgency.objects.create(
         slug="cst",
         short_name="TEST",
@@ -230,9 +249,7 @@ def model_TransitAgency(model_PemData):
         info_url="https://example.com/test-agency",
         phone="800-555-5555",
         active=True,
-        eligibility_api_id="test123",
-        eligibility_api_private_key=model_PemData,
-        eligibility_api_public_key=model_PemData,
+        eligibility_api_config=model_EligibilityApiConfig,
         logo="agencies/cst.png",
     )
 
