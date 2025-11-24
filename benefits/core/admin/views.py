@@ -10,6 +10,8 @@ class BenefitsPasswordResetView(RecaptchaEnabledMixin, PasswordResetView):
     """Subclass of stock PasswordResetView to enable reCAPTCHA and pass email to done view"""
 
     form_class = BenefitsPasswordResetForm
+    email_template_name = "registration/password_reset_email.txt"
+    html_email_template_name = "registration/password_reset_email.html"
 
     def form_valid(self, form):
         self.success_url = f"{reverse_lazy("password_reset_done")}?email={form.cleaned_data["email"]}"
