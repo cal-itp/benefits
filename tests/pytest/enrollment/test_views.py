@@ -110,13 +110,21 @@ class TestRetryView:
         v.flow = model_LittlepayGroup.enrollment_flow
         return v
 
-    def test_get(self, app_request, view, mocked_analytics_module, model_LittlepayGroup):
-        response = view.get(app_request)
+    def test_dispatch__get(self, app_request, view, mocked_analytics_module, model_LittlepayGroup):
+        response = view.dispatch(app_request)
+
+        assert response.status_code == 200
+        assert response.template_name == "200-user-error.html"
+        mocked_analytics_module.returned_retry.assert_not_called()
+
+    def test_dispatch__post(self, app_request_post, view, mocked_analytics_module, model_LittlepayGroup):
+        view.setup(app_request_post)
+        response = view.dispatch(app_request_post)
 
         assert response.status_code == 200
         assert response.template_name == ["enrollment/retry.html"]
         mocked_analytics_module.returned_retry.assert_called_once_with(
-            app_request, enrollment_group=model_LittlepayGroup.group_id, transit_processor="littlepay"
+            app_request_post, enrollment_group=model_LittlepayGroup.group_id, transit_processor="littlepay"
         )
 
 
