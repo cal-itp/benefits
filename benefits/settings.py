@@ -323,7 +323,9 @@ CONTENT_SECURITY_POLICY = {
         "script-src": [
             SELF,
             "https://cdn.amplitude.com/libs/",
-            "https://cdn.jsdelivr.net/",
+            "https://cdn.jsdelivr.net/npm/@switchio",
+            "https://cdn.jsdelivr.net/npm/bootstrap",
+            "https://cdn.jsdelivr.net/npm/jquery",
             "*.littlepay.com",
             NONCE,  # https://django-csp.readthedocs.io/en/latest/nonce.html
         ],
