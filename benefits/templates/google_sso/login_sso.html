@@ -1,5 +1,5 @@
 {% comment %}
-    This file overrides the django-google-sso pacakge's login_sso.html template
+    This file overrides the django-google-sso package's login_sso.html template
     for simplification of markup and styling.
 {% endcomment %}
 
@@ -30,7 +30,6 @@
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         document.querySelectorAll('.sso-login-btn').forEach((el) => {
-            console.log(el);
             el.href = el.href + '?next=' + urlParams.get('next');
         });
     });
