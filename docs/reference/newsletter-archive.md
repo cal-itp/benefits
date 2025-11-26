@@ -20,8 +20,10 @@ If you’re interested in receiving this update delivered directly to your email
 
 - [The October Update](https://5519226.hs-sites.com/cal-itp-benefits-the-october-update-2025)
 
+- [The November Update](https://5519226.hs-sites.com/cal-itp-benefits-the-november-update-2025)
+
 <!--
-- [The November Update]()
+- [The December Update]()
   -->
 
 ### 2024
