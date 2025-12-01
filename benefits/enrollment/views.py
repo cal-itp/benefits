@@ -15,7 +15,7 @@ from benefits.core.context.agency import AgencySlug
 from benefits.core.context.flow import SystemName
 from benefits.core.context import formatted_gettext_lazy as _
 from benefits.routes import routes
-from benefits.core import session
+from benefits.core import models, session
 from benefits.core.mixins import (
     AgencySessionRequiredMixin,
     EligibleSessionRequiredMixin,
@@ -85,6 +85,7 @@ class RetryView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
     """View handler for a recoverable failure condition."""
 
     template_name = "enrollment/retry.html"
+    enrollment_method = models.EnrollmentMethods.DIGITAL
 
     def dispatch(self, request, *args, **kwargs):
         # for Littlepay, the Javascript in enrollment_littlepay/index.html sends a form POST to this view
@@ -99,7 +100,12 @@ class RetryView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
         if request.method == "POST":
             enrollment_group = self.flow.group_id
             transit_processor = self.agency.transit_processor
-            analytics.returned_retry(request, enrollment_group=enrollment_group, transit_processor=transit_processor)
+            analytics.returned_retry(
+                request,
+                enrollment_group=enrollment_group,
+                transit_processor=transit_processor,
+                enrollment_method=self.enrollment_method,
+            )
             # TemplateView doesn't implement POST, just return the template via GET
             return super().get(request, *args, **kwargs)
         # for other request methods, we don't want/need to serve the retry template since users should only arrive via the form
