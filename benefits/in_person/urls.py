@@ -31,7 +31,11 @@ urlpatterns = [
         admin.site.admin_view(views.LittlepayTokenView.as_view()),
         name=routes.name(routes.IN_PERSON_ENROLLMENT_LITTLEPAY_TOKEN),
     ),
-    path("enrollment/retry", admin.site.admin_view(views.retry), name=routes.name(routes.IN_PERSON_ENROLLMENT_RETRY)),
+    path(
+        "enrollment/retry",
+        admin.site.admin_view(views.RetryView.as_view()),
+        name=routes.name(routes.IN_PERSON_ENROLLMENT_RETRY),
+    ),
     path("enrollment/success", admin.site.admin_view(views.success), name=routes.name(routes.IN_PERSON_ENROLLMENT_SUCCESS)),
     path(
         "enrollment/switchio",

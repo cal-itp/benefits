@@ -10,8 +10,11 @@ from benefits.core.models.transit import TransitAgency
 from benefits.core import models, session
 from benefits.core.mixins import AgencySessionRequiredMixin
 from benefits.eligibility import analytics as eligibility_analytics
-from benefits.enrollment import analytics as enrollment_analytics
-from benefits.enrollment.views import IndexView, ReenrollmentErrorView as DigitalReenrollmentErrorView
+from benefits.enrollment.views import (
+    IndexView,
+    ReenrollmentErrorView as DigitalReenrollmentErrorView,
+    RetryView as DigitalRetryView,
+)
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.enrollment_littlepay.views import TokenView, IndexView as LittlepayIndexView
 from benefits.enrollment_switchio.session import Session as SwitchioSession
@@ -106,19 +109,11 @@ class ReenrollmentErrorView(mixins.CommonContextMixin, AgencySessionRequiredMixi
         return context
 
 
-def retry(request):
+class RetryView(mixins.CommonContextMixin, DigitalRetryView):
     """View handler for card verification failure."""
-    # enforce POST-only route for sending analytics
-    if request.method == "POST":
-        enrollment_analytics.returned_retry(request, enrollment_method=models.EnrollmentMethods.IN_PERSON)
 
-    agency = session.agency(request)
-    context = {
-        **admin_site.each_context(request),
-        "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
-    }
-
-    return TemplateResponse(request, "in_person/enrollment/retry.html", context)
+    template_name = "in_person/enrollment/retry.html"
+    enrollment_method = models.EnrollmentMethods.IN_PERSON
 
 
 def system_error(request):
