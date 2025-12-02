@@ -1,6 +1,7 @@
 import pytest
 from django.urls import reverse
 
+from benefits.core import models
 from benefits.core.context.flow import SystemName
 from benefits.routes import routes
 import benefits.enrollment.views as views
@@ -110,7 +111,7 @@ class TestRetryView:
         v.flow = model_LittlepayGroup.enrollment_flow
         return v
 
-    def test_dispatch__get(self, app_request, view, mocked_analytics_module, model_LittlepayGroup):
+    def test_dispatch__get(self, app_request, view, mocked_analytics_module):
         response = view.dispatch(app_request)
 
         assert response.status_code == 200
@@ -124,7 +125,10 @@ class TestRetryView:
         assert response.status_code == 200
         assert response.template_name == ["enrollment/retry.html"]
         mocked_analytics_module.returned_retry.assert_called_once_with(
-            app_request_post, enrollment_group=model_LittlepayGroup.group_id, transit_processor="littlepay"
+            app_request_post,
+            enrollment_group=model_LittlepayGroup.group_id,
+            transit_processor="littlepay",
+            enrollment_method=models.EnrollmentMethods.DIGITAL,
         )
 
 
