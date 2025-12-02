@@ -99,7 +99,9 @@ def add_transit_agency_staff_user_to_group(user, request):
 
 
 def pre_login_user(user, request):
+    # this needs to be updated to work for Microsoft too
+
     logger.debug(f"Running pre-login callback for user: {user.username}")
     add_google_sso_userinfo(user, request)
     add_staff_user_to_group(user, request)
-    add_transit_agency_staff_user_to_group(user, request)
+    # add_transit_agency_staff_user_to_group(user, request)
