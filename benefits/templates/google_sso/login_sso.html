@@ -1,0 +1,36 @@
+{% comment %}
+    This file overrides the django-google-sso package's login_sso.html template
+    for simplification of markup and styling.
+{% endcomment %}
+
+{% load sso_tags %}
+{% load show_form %}
+{% include "core/includes/ready-js.html" %}
+
+{% comment %}
+    You can pass a custom list of SSO providers to this
+    template using the `sso_providers` context variable.
+    If not provided, the template will use the default
+    `define_sso_providers` defined in the sso tags.
+{% endcomment %}
+{% with sso_providers|default:None as sso_providers %}
+  {% if sso_providers is None %}
+    {% define_sso_providers as sso_providers %}
+  {% endif %}
+  {% for provider in sso_providers %}
+    <a class="sso-login-btn sso-login-btn__{{ provider.name }}" href="{{ provider.login_url }}">
+      <img class="sso-login-btn-logo" src="{{ provider.logo_url }}" width="16" height="16" alt="{{ provider.name }} sign-in">
+      <div class="sso-login-btn-label">{{ provider.text }}</div>
+    </a>
+  {% endfor %}
+{% endwith %}
+
+<script nonce="{{ request.csp_nonce }}">
+    ready(function() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        document.querySelectorAll('.sso-login-btn').forEach((el) => {
+            el.href = el.href + '?next=' + urlParams.get('next');
+        });
+    });
+</script>

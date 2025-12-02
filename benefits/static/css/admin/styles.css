@@ -53,7 +53,7 @@
 .btn-ouline-dark:focus-visible,
 input[type="text"]:focus,
 input[type="password"]:focus,
-.google-login-btn a:focus,
+a.sso-login-btn:focus,
 .login input[type="submit"]:focus {
   outline: 3px solid var(--focus-color) !important;
   outline-offset: 2px !important;
@@ -164,7 +164,7 @@ iframe.card-collection {
 }
 
 /* Login Page link styles */
-.login a:not(.btn):not(.btn-content) {
+.login a:not(.btn):not(.sso-login-btn) {
   color: var(--primary-color);
   text-decoration: underline;
   text-decoration-style: solid;
@@ -172,17 +172,17 @@ iframe.card-collection {
   border-radius: var(--focus-border-radius);
 }
 
-.login a:visited:not(.btn):not(.btn-content) {
+.login a:visited:not(.btn):not(.sso-login-btn) {
   color: var(--selected-color);
 }
 
-.login a:hover:not(.btn):not(.btn-content) {
+.login a:hover:not(.btn):not(.sso-login-btn) {
   color: var(--hover-color);
   text-decoration: underline;
 }
 
-.login a:focus:not(.btn):not(.btn-content),
-.login a:focus-visible:not(.btn):not(.btn-content) {
+.login a:focus:not(.btn):not(.sso-login-btn),
+.login a:focus-visible:not(.btn):not(.sso-login-btn) {
   outline: var(--focus-style) !important;
   outline-offset: var(--focus-outline-offset) !important;
 }
@@ -217,45 +217,30 @@ iframe.card-collection {
   display: none;
 }
 
-/* Login Page: Google SSO Button */
-.login .login-btn-area {
-  width: 100%;
-}
+/* Login form SSO button */
 
-.login .google-login-btn {
+a.sso-login-btn {
+  display: flex;
+  margin-top: 1rem;
+  justify-content: center;
+  padding: 1rem;
   border: 1px solid var(--bs-primary);
-  background-color: var(--white);
-  height: 100%;
   border-radius: 2px;
-  padding: 0;
-}
-
-.login .google-login-btn .btn-content {
-  padding: 1rem 0;
-  border-radius: 4px;
-}
-
-.login .google-btn-logo {
-  padding-right: 1rem;
-  background-color: transparent;
-}
-
-.login .google-login-btn:hover {
-  color: var(--white);
-  background-color: var(--bs-primary);
-}
-
-.login .google-login-btn:hover .google-btn-label,
-.login .google-login-btn:hover a {
-  color: var(--bs-white);
-}
-
-.login .google-btn-label {
+  background-color: var(--bs-white);
   color: var(--bs-primary);
-  width: auto;
   font-weight: var(--medium-font-weight);
   font-size: var(--font-size-16px);
   line-height: 1;
+}
+
+a.sso-login-btn:hover {
+  color: var(--bs-white);
+  background-color: var(--bs-primary);
+  transition: all 0.15s; /* Matching standard Django Admin button style seen on main log in button */
+}
+
+.sso-login-btn-logo {
+  margin-right: 0.5rem;
 }
 
 /* Login Page: Django messages style overrides */

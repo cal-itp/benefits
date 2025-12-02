@@ -6,7 +6,6 @@
   <link href="{% static "css/admin/styles.css" %}" rel="stylesheet">
   <link href="{% static "css/admin/theme.css" %}" rel="stylesheet">
 
-  {% comment %} Overriding instead of extending agency-base here to remove jQuery declaration, which admin/login.html includes on its own {% endcomment %}
   {% include "core/includes/analytics.html" with api_key=analytics.api_key uid=analytics.uid did=analytics.did %}
 {% endblock extrastyle %}
 
