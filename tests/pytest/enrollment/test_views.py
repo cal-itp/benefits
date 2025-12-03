@@ -65,6 +65,9 @@ class TestSystemErrorView:
         v.flow = model_LittlepayGroup.enrollment_flow
         return v
 
+    def test_get_origin_url(self, view):
+        assert view.get_origin_url() == view.agency.index_url
+
     def test_get(self, app_request, view, mocked_session_agency, mock_system_error_view_session):
         response = view.get(app_request)
 
