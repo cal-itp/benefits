@@ -14,6 +14,7 @@ from benefits.enrollment.views import (
     IndexView,
     ReenrollmentErrorView as DigitalReenrollmentErrorView,
     RetryView as DigitalRetryView,
+    SystemErrorView as DigitalSystemErrorView,
 )
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.enrollment_littlepay.views import TokenView, IndexView as LittlepayIndexView
@@ -116,15 +117,13 @@ class RetryView(mixins.CommonContextMixin, DigitalRetryView):
     enrollment_method = models.EnrollmentMethods.IN_PERSON
 
 
-def system_error(request):
+class SystemErrorView(mixins.CommonContextMixin, DigitalSystemErrorView):
     """View handler for an enrollment system error."""
-    agency = session.agency(request)
-    context = {
-        **admin_site.each_context(request),
-        "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
-    }
 
-    return TemplateResponse(request, "in_person/enrollment/system_error.html", context)
+    template_name = "in_person/enrollment/system_error.html"
+
+    def get_origin_url(self):
+        return reverse(routes.ADMIN_INDEX)
 
 
 def server_error(request):
