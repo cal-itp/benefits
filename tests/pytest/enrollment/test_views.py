@@ -6,7 +6,6 @@ from benefits.core.context.flow import SystemName
 from benefits.routes import routes
 import benefits.enrollment.views as views
 import benefits.enrollment.enrollment
-from benefits.enrollment.views import TEMPLATE_SYSTEM_ERROR
 
 
 @pytest.fixture
@@ -70,14 +69,14 @@ class TestSystemErrorView:
         response = view.get(app_request)
 
         assert response.status_code == 200
-        assert TEMPLATE_SYSTEM_ERROR in response.template_name
+        assert response.template_name == ["enrollment/system_error.html"]
         assert {"origin": mocked_session_agency.return_value.index_url} in mock_system_error_view_session.update.call_args
 
     def test_post(self, app_request_post, view, mocked_session_agency, mock_system_error_view_session):
         response = view.post(app_request_post)
 
         assert response.status_code == 200
-        assert TEMPLATE_SYSTEM_ERROR in response.template_name
+        assert response.template_name == ["enrollment/system_error.html"]
         assert {"origin": mocked_session_agency.return_value.index_url} in mock_system_error_view_session.update.call_args
 
 

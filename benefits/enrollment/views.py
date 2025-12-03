@@ -22,8 +22,6 @@ from benefits.core.mixins import (
 )
 from . import analytics
 
-TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
-
 
 logger = logging.getLogger(__name__)
 
@@ -113,7 +111,7 @@ class RetryView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
 class SystemErrorView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSessionRequiredMixin, TemplateView):
     """View handler for an enrollment system error."""
 
-    template_name = TEMPLATE_SYSTEM_ERROR
+    template_name = "enrollment/system_error.html"
 
     def get(self, request, *args, **kwargs):
         # overwrite origin so that CTA takes user to agency index
