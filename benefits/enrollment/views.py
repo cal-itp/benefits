@@ -120,6 +120,10 @@ class SystemErrorView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Elig
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
+        # the Javascript in enrollment_littlepay/index.html and enrollment_switchio/index.html sends a form POST to this view
+        # rather than implementing this view as a FormView, which requires instantiating the
+        # enrollment.forms.CardTokenizeFailForm, we implement post() to simply return the template via get()
+        # we thus avoid interfering with the view's lifecycle and dispatch() method
         return self.get(request, *args, **kwargs)
 
 
