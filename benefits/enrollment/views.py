@@ -6,9 +6,7 @@ from dataclasses import asdict, dataclass
 import logging
 
 from django.template.defaultfilters import date
-from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.utils.decorators import decorator_from_middleware
 from django.views.generic import RedirectView, TemplateView
 
 from benefits.core.context.agency import AgencySlug
@@ -22,10 +20,7 @@ from benefits.core.mixins import (
     FlowSessionRequiredMixin,
     PageViewMixin,
 )
-from benefits.core.middleware import EligibleSessionRequired
 from . import analytics
-
-TEMPLATE_SYSTEM_ERROR = "enrollment/system_error.html"
 
 
 logger = logging.getLogger(__name__)
@@ -113,15 +108,23 @@ class RetryView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
         return response
 
 
-@decorator_from_middleware(EligibleSessionRequired)
-def system_error(request):
+class SystemErrorView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSessionRequiredMixin, TemplateView):
     """View handler for an enrollment system error."""
 
-    # overwrite origin so that CTA takes user to agency index
-    agency = session.agency(request)
-    session.update(request, origin=agency.index_url)
+    template_name = "enrollment/system_error.html"
 
-    return TemplateResponse(request, TEMPLATE_SYSTEM_ERROR)
+    def get(self, request, *args, **kwargs):
+        # overwrite origin so that CTA takes user to agency index
+        agency = self.agency
+        session.update(request, origin=agency.index_url)
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        # the Javascript in enrollment_littlepay/index.html and enrollment_switchio/index.html sends a form POST to this view
+        # rather than implementing this view as a FormView, which requires instantiating the
+        # enrollment.forms.CardTokenizeFailForm, we implement post() to simply return the template via get()
+        # we thus avoid interfering with the view's lifecycle and dispatch() method
+        return self.get(request, *args, **kwargs)
 
 
 @dataclass

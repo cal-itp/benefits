@@ -15,5 +15,5 @@ urlpatterns = [
     path("error/reenrollment", views.ReenrollmentErrorView.as_view(), name=routes.name(routes.ENROLLMENT_REENROLLMENT_ERROR)),
     path("retry", views.RetryView.as_view(), name=routes.name(routes.ENROLLMENT_RETRY)),
     path("success", views.SuccessView.as_view(), name=routes.name(routes.ENROLLMENT_SUCCESS)),
-    path("error", views.system_error, name=routes.name(routes.ENROLLMENT_SYSTEM_ERROR)),
+    path("error", views.SystemErrorView.as_view(), name=routes.name(routes.ENROLLMENT_SYSTEM_ERROR)),
 ]

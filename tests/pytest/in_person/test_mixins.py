@@ -5,7 +5,7 @@ import pytest
 from benefits.in_person import mixins
 
 
-class TestView(mixins.CommonContextMixin, View):
+class SampleView(mixins.CommonContextMixin, View):
     pass
 
 
@@ -14,7 +14,7 @@ class TestCommonContextMixin:
     @pytest.fixture(autouse=True)
     def init(self, app_request, model_TransitAgency, model_User):
         app_request.user = model_User
-        self.view = TestView()
+        self.view = SampleView()
         self.view.setup(app_request)
         self.view.agency = model_TransitAgency
 

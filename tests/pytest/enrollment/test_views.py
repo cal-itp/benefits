@@ -6,7 +6,6 @@ from benefits.core.context.flow import SystemName
 from benefits.routes import routes
 import benefits.enrollment.views as views
 import benefits.enrollment.enrollment
-from benefits.enrollment.views import system_error
 
 
 @pytest.fixture
@@ -27,6 +26,13 @@ def mocked_analytics_module(mocked_analytics_module):
 @pytest.fixture
 def mocked_sentry_sdk_module(mocker):
     return mocker.patch.object(benefits.enrollment.enrollment, "sentry_sdk")
+
+
+@pytest.fixture
+def mock_system_error_view_session(mocker, mocked_session_agency):
+    mock_session = mocker.patch("benefits.enrollment.views.session")
+    mock_session.agency.return_value = mocked_session_agency.return_value
+    return mock_session
 
 
 @pytest.mark.django_db
@@ -50,18 +56,28 @@ class TestIndexView:
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_eligible")
-def test_system_error(
-    mocker,
-    app_request,
-    mocked_session_agency,
-):
-    mock_session = mocker.patch("benefits.enrollment.views.session")
-    mock_session.agency.return_value = mocked_session_agency.return_value
+class TestSystemErrorView:
+    @pytest.fixture
+    def view(self, app_request, model_LittlepayConfig, model_LittlepayGroup):
+        v = views.SystemErrorView()
+        v.setup(app_request)
+        v.agency = model_LittlepayConfig.transit_agency
+        v.flow = model_LittlepayGroup.enrollment_flow
+        return v
 
-    system_error(app_request)
+    def test_get(self, app_request, view, mocked_session_agency, mock_system_error_view_session):
+        response = view.get(app_request)
 
-    assert {"origin": mocked_session_agency.return_value.index_url} in mock_session.update.call_args
+        assert response.status_code == 200
+        assert response.template_name == ["enrollment/system_error.html"]
+        assert {"origin": mocked_session_agency.return_value.index_url} in mock_system_error_view_session.update.call_args
+
+    def test_post(self, app_request_post, view, mocked_session_agency, mock_system_error_view_session):
+        response = view.post(app_request_post)
+
+        assert response.status_code == 200
+        assert response.template_name == ["enrollment/system_error.html"]
+        assert {"origin": mocked_session_agency.return_value.index_url} in mock_system_error_view_session.update.call_args
 
 
 @pytest.mark.django_db
