@@ -252,7 +252,7 @@
     "fields": {
       "system_name": "veteran",
       "label": "U.S. Veteran",
-      "display_order": 3,
+      "display_order": 4,
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_request": "8fa9e649-4de6-4bd6-8eec-f5f47802ceab",
       "supported_enrollment_methods": ["digital"],
@@ -268,7 +268,7 @@
       "system_name": "agency_card",
       "label": "Agency Cardholder",
       "api_request": 1,
-      "display_order": 4,
+      "display_order": 5,
       "supported_enrollment_methods": ["digital"],
       "transit_agency": 1
     }
@@ -282,7 +282,7 @@
       "supports_expiration": "True",
       "expiration_days": 5,
       "expiration_reenrollment_days": 3,
-      "display_order": 2,
+      "display_order": 3,
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_request": "c6332e8c-7081-48e9-ae3c-07360879a8ae",
       "supported_enrollment_methods": ["digital"],
