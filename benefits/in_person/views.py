@@ -6,20 +6,20 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views.generic import FormView
 
-from benefits.core.models.transit import TransitAgency
 from benefits.core import models, session
 from benefits.core.mixins import AgencySessionRequiredMixin
+from benefits.core.models.transit import TransitAgency
 from benefits.eligibility import analytics as eligibility_analytics
-from benefits.enrollment.views import (
-    IndexView,
-    ReenrollmentErrorView as DigitalReenrollmentErrorView,
-    RetryView as DigitalRetryView,
-)
+from benefits.enrollment.views import IndexView
+from benefits.enrollment.views import \
+    ReenrollmentErrorView as DigitalReenrollmentErrorView
+from benefits.enrollment.views import RetryView as DigitalRetryView
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
-from benefits.enrollment_littlepay.views import TokenView, IndexView as LittlepayIndexView
+from benefits.enrollment_littlepay.views import IndexView as LittlepayIndexView
+from benefits.enrollment_littlepay.views import TokenView
 from benefits.enrollment_switchio.session import Session as SwitchioSession
-from benefits.enrollment_switchio.views import GatewayUrlView, IndexView as SwitchioIndexView
-
+from benefits.enrollment_switchio.views import GatewayUrlView
+from benefits.enrollment_switchio.views import IndexView as SwitchioIndexView
 from benefits.in_person import forms, mixins
 from benefits.routes import routes
 

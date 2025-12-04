@@ -1,10 +1,9 @@
 import pytest
 from django.urls import reverse
 
-
+import benefits.in_person.views as views
 from benefits.core import models
 from benefits.in_person import forms
-import benefits.in_person.views as views
 from benefits.routes import routes
 
 

@@ -2,6 +2,7 @@
 
 import django.db.models.deletion
 from django.db import migrations, models
+
 from benefits.secrets import get_secret_by_name
 
 

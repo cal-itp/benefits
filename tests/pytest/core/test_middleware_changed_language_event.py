@@ -1,13 +1,14 @@
+import pytest
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.middleware.locale import LocaleMiddleware
 from django.utils.decorators import decorator_from_middleware
 from django.views import i18n
 
 import benefits.core.analytics
-from benefits.core.analytics import ChangedLanguageEvent as Analytics_ChangedLanguageEvent
-from benefits.core.middleware import ChangedLanguageEvent as Middleware_ChangedLanguageEvent
-
-import pytest
+from benefits.core.analytics import \
+    ChangedLanguageEvent as Analytics_ChangedLanguageEvent
+from benefits.core.middleware import \
+    ChangedLanguageEvent as Middleware_ChangedLanguageEvent
 
 
 @pytest.fixture

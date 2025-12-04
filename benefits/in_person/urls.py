@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.urls import path
 
 from benefits.routes import routes
-from . import views
 
+from . import views
 
 app_name = "in_person"
 urlpatterns = [

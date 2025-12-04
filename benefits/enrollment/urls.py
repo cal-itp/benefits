@@ -5,8 +5,8 @@ The enrollment application: URLConf for the benefits enrollment flow.
 from django.urls import path
 
 from benefits.routes import routes
-from . import views
 
+from . import views
 
 app_name = "enrollment"
 urlpatterns = [

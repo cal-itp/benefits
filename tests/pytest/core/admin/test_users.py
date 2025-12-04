@@ -1,11 +1,11 @@
 import pytest
-
 from django.contrib import admin
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group, User
 
 import benefits.core.admin
 from benefits.core.admin.mixins import StaffPermissionMixin
-from benefits.core.admin.users import GOOGLE_USER_INFO_URL, GroupAdmin, UserAdmin, pre_login_user
+from benefits.core.admin.users import (GOOGLE_USER_INFO_URL, GroupAdmin,
+                                       UserAdmin, pre_login_user)
 
 
 @pytest.mark.django_db

@@ -2,7 +2,8 @@
 The core application: view definition for the root of the webapp.
 """
 
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
+from django.http import (HttpResponse, HttpResponseBadRequest,
+                         HttpResponseNotFound, HttpResponseServerError)
 from django.shortcuts import redirect
 from django.template import loader
 from django.template.response import TemplateResponse
@@ -12,8 +13,10 @@ from django.views.generic.edit import FormView
 
 from benefits.core.forms import ChooseAgencyForm
 from benefits.routes import routes
+
 from . import models, session
-from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator, user_error
+from .middleware import (index_or_agencyindex_origin_decorator,
+                         pageview_decorator, user_error)
 
 TEMPLATE_AGENCY = "core/index--agency-base.html"
 TEMPLATE_LOGGED_OUT = "core/logged-out.html"

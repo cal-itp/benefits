@@ -1,11 +1,12 @@
-from django import forms
-from django.core.exceptions import ValidationError
-from django.contrib import admin
-
 from adminsortable2.admin import SortableAdminMixin
+from django import forms
+from django.contrib import admin
+from django.core.exceptions import ValidationError
 
 from benefits.core import models
-from .mixins import ProdReadOnlyPermissionMixin, StaffPermissionMixin, SuperuserPermissionMixin
+
+from .mixins import (ProdReadOnlyPermissionMixin, StaffPermissionMixin,
+                     SuperuserPermissionMixin)
 
 
 @admin.register(models.EnrollmentEvent)

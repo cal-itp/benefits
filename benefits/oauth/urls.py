@@ -1,14 +1,13 @@
 from cdt_identity import views as cdt_identity_views
 from cdt_identity.routes import Routes
 from cdt_identity.urls import app_name as cdt_app_name
-
-from django.utils.decorators import decorator_from_middleware
 from django.urls import path
+from django.utils.decorators import decorator_from_middleware
 
 from benefits.routes import routes
-from . import views, hooks
-from .middleware import FlowUsesClaimsVerificationSessionRequired
 
+from . import hooks, views
+from .middleware import FlowUsesClaimsVerificationSessionRequired
 
 decorator = decorator_from_middleware(FlowUsesClaimsVerificationSessionRequired)
 kwargs = {"hooks": hooks.OAuthHooks}

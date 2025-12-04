@@ -1,15 +1,14 @@
 from django.conf import settings
 from django.contrib.admin import AdminSite
-
 from django.contrib.admin.forms import AdminAuthenticationForm
 from django.contrib.auth.models import Group
 from django.template.response import TemplateResponse
-from django.utils.decorators import method_decorator, decorator_from_middleware
+from django.utils.decorators import decorator_from_middleware, method_decorator
 
-from benefits.core.middleware import RecaptchaEnabled
-from benefits.core.models import TransitAgency
 from benefits.core import session
+from benefits.core.middleware import RecaptchaEnabled
 from benefits.core.mixins import ValidateRecaptchaMixin
+from benefits.core.models import TransitAgency
 
 
 class BenefitsAdminLoginForm(ValidateRecaptchaMixin, AdminAuthenticationForm):

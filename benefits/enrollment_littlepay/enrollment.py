@@ -1,12 +1,13 @@
 import re
-
 from dataclasses import dataclass
 
 from littlepay.api.client import Client
 from requests.exceptions import HTTPError
 
 from benefits.core import session
-from benefits.enrollment.enrollment import Status, _calculate_expiry, _is_expired, _is_within_reenrollment_window
+from benefits.enrollment.enrollment import (Status, _calculate_expiry,
+                                            _is_expired,
+                                            _is_within_reenrollment_window)
 
 
 @dataclass

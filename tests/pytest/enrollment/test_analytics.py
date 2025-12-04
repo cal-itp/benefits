@@ -1,8 +1,10 @@
 import pytest
-
 from cdt_identity.claims import ClaimsResult
+
 import benefits.core.analytics
-from benefits.enrollment.analytics import FailedPretokenizationRequestEvent, ReturnedEnrollmentEvent, returned_success
+from benefits.enrollment.analytics import (FailedPretokenizationRequestEvent,
+                                           ReturnedEnrollmentEvent,
+                                           returned_success)
 
 
 @pytest.mark.django_db

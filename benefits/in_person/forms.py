@@ -5,9 +5,11 @@ transit agency employee manually verifies a rider's eligibility.
 """
 
 from django import forms
-from benefits.routes import routes
+
 from benefits.core import models
-from benefits.enrollment.forms import CardTokenizeFailForm, CardTokenizeSuccessForm  # noqa
+from benefits.enrollment.forms import (CardTokenizeFailForm,  # noqa
+                                       CardTokenizeSuccessForm)
+from benefits.routes import routes
 
 
 class InPersonEligibilityForm(forms.Form):

@@ -2,7 +2,8 @@
 The enrollment application: analytics implementation.
 """
 
-from benefits.core import analytics as core, models
+from benefits.core import analytics as core
+from benefits.core import models
 
 
 class ReturnedEnrollmentEvent(core.Event):

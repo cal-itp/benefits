@@ -1,14 +1,13 @@
 import logging
 
-from django.shortcuts import redirect
 import sentry_sdk
+from django.shortcuts import redirect
 
-from benefits.routes import routes
 from benefits.core import session
 from benefits.core.middleware import FlowSessionRequired, user_error
+from benefits.routes import routes
 
 from . import analytics
-
 
 logger = logging.getLogger(__name__)
 

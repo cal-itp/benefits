@@ -1,17 +1,17 @@
+import pytest
 from cdt_identity.claims import ClaimsResult
 from cdt_identity.hooks import Operation
 from cdt_identity.models import ClaimsVerificationRequest
 from cdt_identity.session import Session as OAuthSession
 from django.urls import reverse
-import pytest
 
 import benefits.eligibility
 import benefits.eligibility.views
-from benefits.enrollment_littlepay.session import Session as LittlepaySession
-from benefits.routes import routes
-from benefits.oauth.hooks import OAuthHooks
 import benefits.oauth.hooks
 from benefits.core import session
+from benefits.enrollment_littlepay.session import Session as LittlepaySession
+from benefits.oauth.hooks import OAuthHooks
+from benefits.routes import routes
 
 
 @pytest.fixture

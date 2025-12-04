@@ -1,11 +1,10 @@
 from pathlib import Path
 
+import pytest
 from django.conf import settings
 
-import pytest
-
-from benefits.core.models import template_path, SecretNameField
 import benefits.secrets
+from benefits.core.models import SecretNameField, template_path
 
 
 @pytest.fixture

@@ -1,15 +1,12 @@
+import pytest
 from django.conf import settings
 from django.contrib.auth.models import AnonymousUser, Group
 
-import pytest
-
-from benefits.core.admin.mixins import (
-    ProdReadOnlyPermissionMixin,
-    StaffPermissionMixin,
-    SuperuserPermissionMixin,
-    is_staff_member,
-    is_staff_member_or_superuser,
-)
+from benefits.core.admin.mixins import (ProdReadOnlyPermissionMixin,
+                                        StaffPermissionMixin,
+                                        SuperuserPermissionMixin,
+                                        is_staff_member,
+                                        is_staff_member_or_superuser)
 
 
 @pytest.fixture
