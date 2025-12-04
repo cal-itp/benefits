@@ -194,14 +194,26 @@ class TestSystemErrorView:
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_agency")
-def test_server_error(admin_client):
-    path = reverse(routes.IN_PERSON_SERVER_ERROR)
+class TestServerErrorView:
+    @pytest.fixture
+    def view(self, app_request, model_LittlepayConfig, model_User):
+        app_request.user = model_User
+        v = views.ServerErrorView()
+        v.setup(app_request)
+        v.agency = model_LittlepayConfig.transit_agency
+        return v
 
-    response = admin_client.get(path)
+    def test_get(self, app_request, view):
+        response = view.get(app_request)
 
-    assert response.status_code == 200
-    assert response.template_name == "in_person/enrollment/server_error.html"
+        assert response.status_code == 200
+        assert response.template_name == ["in_person/enrollment/server_error.html"]
+
+    def test_post(self, app_request_post, view):
+        response = view.post(app_request_post)
+
+        assert response.status_code == 200
+        assert response.template_name == ["in_person/enrollment/server_error.html"]
 
 
 @pytest.mark.django_db
