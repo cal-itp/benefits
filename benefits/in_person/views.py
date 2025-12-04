@@ -4,7 +4,7 @@ from django.contrib.admin import site as admin_site
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.views.generic import FormView
+from django.views.generic import FormView, TemplateView
 
 from benefits.core.models.transit import TransitAgency
 from benefits.core import models, session
@@ -126,15 +126,20 @@ class SystemErrorView(mixins.CommonContextMixin, DigitalSystemErrorView):
         return reverse(routes.ADMIN_INDEX)
 
 
-def server_error(request):
+class ServerErrorView(mixins.CommonContextMixin, AgencySessionRequiredMixin, TemplateView):
     """View handler for errors caused by a misconfiguration or bad request."""
-    agency = session.agency(request)
-    context = {
-        **admin_site.each_context(request),
-        "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
-    }
 
-    return TemplateResponse(request, "in_person/enrollment/server_error.html", context)
+    template_name = "in_person/enrollment/server_error.html"
+
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        # the Javascript in in_person/index_littlepay.html sends a form POST to this view
+        # rather than implementing this view as a FormView, which requires instantiating the
+        # enrollment.forms.CardTokenizeFailForm, we implement post() to simply return the template via get()
+        # we thus avoid interfering with the view's lifecycle and dispatch() method
+        return super().get(request, *args, **kwargs)
 
 
 def success(request):
