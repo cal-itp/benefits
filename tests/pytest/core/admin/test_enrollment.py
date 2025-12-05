@@ -1,10 +1,11 @@
 import pytest
-
 from django.contrib import admin
 
 from benefits.core import models
-from benefits.core.admin.enrollment import EnrollmentEventAdmin, SortableEnrollmentFlowAdmin
-from benefits.core.admin.mixins import ProdReadOnlyPermissionMixin, StaffPermissionMixin
+from benefits.core.admin.enrollment import (EnrollmentEventAdmin,
+                                            SortableEnrollmentFlowAdmin)
+from benefits.core.admin.mixins import (ProdReadOnlyPermissionMixin,
+                                        StaffPermissionMixin)
 
 
 @pytest.mark.django_db

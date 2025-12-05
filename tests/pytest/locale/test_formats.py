@@ -1,7 +1,6 @@
 from datetime import datetime
 
 import pytest
-
 from django.utils.formats import date_format
 
 from benefits.locale.en.formats import DATE_FORMAT as DATE_FORMAT_EN

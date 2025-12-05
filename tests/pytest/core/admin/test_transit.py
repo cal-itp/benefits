@@ -2,8 +2,10 @@ import pytest
 from django.contrib import admin
 
 from benefits.core import models
-from benefits.core.admin.mixins import StaffPermissionMixin, SuperuserPermissionMixin
-from benefits.core.admin.transit import EligibilityApiConfigAdmin, TransitAgencyAdmin
+from benefits.core.admin.mixins import (StaffPermissionMixin,
+                                        SuperuserPermissionMixin)
+from benefits.core.admin.transit import (EligibilityApiConfigAdmin,
+                                         TransitAgencyAdmin)
 
 
 @pytest.mark.django_db

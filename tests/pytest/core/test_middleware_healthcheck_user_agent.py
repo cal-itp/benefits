@@ -1,10 +1,9 @@
+import pytest
 from django.test import Client
 from django.urls import reverse
 
-import pytest
-
-from benefits.routes import routes
 from benefits.core import middleware
+from benefits.routes import routes
 
 
 @pytest.mark.django_db

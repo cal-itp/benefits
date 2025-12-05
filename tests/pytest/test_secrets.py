@@ -2,7 +2,8 @@ import pytest
 from azure.core.exceptions import ClientAuthenticationError
 from django.core.exceptions import ValidationError
 
-from benefits.secrets import KEY_VAULT_URL, NAME_VALIDATOR, SecretNameValidator, get_secret_by_name
+from benefits.secrets import (KEY_VAULT_URL, NAME_VALIDATOR,
+                              SecretNameValidator, get_secret_by_name)
 
 
 @pytest.fixture(autouse=True)

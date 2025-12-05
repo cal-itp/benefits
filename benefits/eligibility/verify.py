@@ -1,5 +1,4 @@
 from django.conf import settings
-
 from eligibility_api.client import Client
 
 from benefits.core import models

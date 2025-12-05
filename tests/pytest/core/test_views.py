@@ -1,18 +1,13 @@
+import pytest
 from django.urls import reverse
 
-import pytest
-
+import benefits.core.session
 from benefits.core import views
-from benefits.routes import routes
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.core.models import EnrollmentFlow
-from benefits.core.views import (
-    bad_request,
-    csrf_failure,
-    page_not_found,
-    server_error,
-)
-import benefits.core.session
+from benefits.core.views import (bad_request, csrf_failure, page_not_found,
+                                 server_error)
+from benefits.routes import routes
 
 
 @pytest.fixture

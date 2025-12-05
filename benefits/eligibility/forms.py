@@ -7,9 +7,9 @@ import logging
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from benefits.routes import routes
 from benefits.core import models, widgets
 from benefits.core.mixins import ValidateRecaptchaMixin
+from benefits.routes import routes
 
 logger = logging.getLogger(__name__)
 

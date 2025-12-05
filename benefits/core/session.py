@@ -2,11 +2,11 @@
 The core application: helpers to work with request sessions.
 """
 
-from datetime import datetime, timedelta, timezone
 import hashlib
 import logging
 import time
 import uuid
+from datetime import datetime, timedelta, timezone
 
 from cdt_identity.claims import ClaimsResult
 from cdt_identity.session import Session as OAuthSession
@@ -15,8 +15,8 @@ from django.urls import reverse
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.enrollment_switchio.session import Session as SwitchioSession
 from benefits.routes import routes
-from . import models
 
+from . import models
 
 logger = logging.getLogger(__name__)
 

@@ -4,9 +4,8 @@ Django settings for benefits project.
 
 import os
 
-from django.conf import settings
-
 from csp.constants import NONCE, NONE, SELF
+from django.conf import settings
 
 from benefits import sentry
 

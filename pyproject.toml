@@ -32,6 +32,7 @@ dev = [
     "black",
     "djlint",
     "flake8",
+    "isort",
     "pre-commit",
     "setuptools_scm>=8"
 ]

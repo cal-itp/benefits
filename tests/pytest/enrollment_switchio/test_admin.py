@@ -1,10 +1,10 @@
 import pytest
-
 from django.contrib import admin
 
 from benefits.core.admin.mixins import StaffPermissionMixin
 from benefits.enrollment_switchio import models
-from benefits.enrollment_switchio.admin import SwitchioConfigAdmin, SwitchioGroupAdmin
+from benefits.enrollment_switchio.admin import (SwitchioConfigAdmin,
+                                                SwitchioGroupAdmin)
 
 
 @pytest.mark.django_db

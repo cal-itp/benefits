@@ -1,5 +1,5 @@
-from django.views.generic.base import ContextMixin
 from django.contrib.admin import site as admin_site
+from django.views.generic.base import ContextMixin
 
 
 class CommonContextMixin(ContextMixin):

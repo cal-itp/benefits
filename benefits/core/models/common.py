@@ -1,12 +1,11 @@
-from functools import cached_property
 import logging
+from functools import cached_property
 from pathlib import Path
 
+import requests
 from django import template
 from django.conf import settings
 from django.db import models
-
-import requests
 
 from benefits.secrets import NAME_VALIDATOR, get_secret_by_name
 

@@ -2,7 +2,8 @@
 The oauth application: analytics implementation.
 """
 
-from benefits.core import analytics as core, session
+from benefits.core import analytics as core
+from benefits.core import session
 
 
 class OAuthEvent(core.Event):

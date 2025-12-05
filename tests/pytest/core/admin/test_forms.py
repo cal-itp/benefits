@@ -1,6 +1,7 @@
 import pytest
 
-from benefits.core.admin.forms import BenefitsPasswordResetForm, BenefitsSetPasswordForm
+from benefits.core.admin.forms import (BenefitsPasswordResetForm,
+                                       BenefitsSetPasswordForm)
 from benefits.core.mixins import ValidateRecaptchaMixin
 
 

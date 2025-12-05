@@ -1,9 +1,9 @@
 import pytest
+from django.contrib.sessions.middleware import SessionMiddleware
+from django.middleware.locale import LocaleMiddleware
 
 import benefits.core.analytics
 from benefits.core.analytics import Event, ViewedPageEvent
-from django.contrib.sessions.middleware import SessionMiddleware
-from django.middleware.locale import LocaleMiddleware
 
 
 @pytest.fixture

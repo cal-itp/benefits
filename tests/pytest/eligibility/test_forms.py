@@ -2,13 +2,10 @@ import pytest
 
 from benefits.core import models
 from benefits.core.mixins import ValidateRecaptchaMixin
-from benefits.eligibility.forms import (
-    CSTAgencyCard,
-    MSTCourtesyCard,
-    SBMTDMobilityPass,
-    EnrollmentFlowSelectionForm,
-    EligibilityVerificationForm,
-)
+from benefits.eligibility.forms import (CSTAgencyCard,
+                                        EligibilityVerificationForm,
+                                        EnrollmentFlowSelectionForm,
+                                        MSTCourtesyCard, SBMTDMobilityPass)
 
 
 @pytest.mark.django_db

@@ -1,8 +1,7 @@
 from django.urls import path
 
+from benefits.enrollment_switchio.views import GatewayUrlView, IndexView
 from benefits.routes import routes
-from benefits.enrollment_switchio.views import IndexView, GatewayUrlView
-
 
 app_name = "switchio"
 urlpatterns = [

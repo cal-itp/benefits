@@ -1,10 +1,13 @@
 from urllib.parse import quote
 
-from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView
 from django.contrib import messages
+from django.contrib.auth.views import (PasswordResetConfirmView,
+                                       PasswordResetDoneView,
+                                       PasswordResetView)
 from django.urls import reverse_lazy
 
-from benefits.core.admin.forms import BenefitsPasswordResetForm, BenefitsSetPasswordForm
+from benefits.core.admin.forms import (BenefitsPasswordResetForm,
+                                       BenefitsSetPasswordForm)
 from benefits.core.mixins import RecaptchaEnabledMixin
 
 

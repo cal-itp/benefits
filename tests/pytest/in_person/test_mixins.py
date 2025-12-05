@@ -1,6 +1,6 @@
+import pytest
 from django.contrib.admin import site as admin_site
 from django.views import View
-import pytest
 
 from benefits.in_person import mixins
 

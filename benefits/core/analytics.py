@@ -9,12 +9,12 @@ import re
 import time
 import uuid
 
-from django.conf import settings
 import requests
+from django.conf import settings
 
 from benefits import VERSION
-from . import models, session
 
+from . import models, session
 
 logger = logging.getLogger(__name__)
 

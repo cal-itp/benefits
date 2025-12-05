@@ -1,8 +1,7 @@
+import pytest
 from django.utils.decorators import decorator_from_middleware
 
-import pytest
-
-from benefits.core.middleware import FlowSessionRequired, TEMPLATE_USER_ERROR
+from benefits.core.middleware import TEMPLATE_USER_ERROR, FlowSessionRequired
 
 
 @pytest.fixture
