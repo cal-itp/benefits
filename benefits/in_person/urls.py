@@ -47,5 +47,5 @@ urlpatterns = [
         admin.site.admin_view(views.SwitchioGatewayUrlView.as_view()),
         name=routes.name(routes.IN_PERSON_ENROLLMENT_SWITCHIO_GATEWAY_URL),
     ),
-    path("error/", admin.site.admin_view(views.server_error), name=routes.name(routes.IN_PERSON_SERVER_ERROR)),
+    path("error/", admin.site.admin_view(views.ServerErrorView.as_view()), name=routes.name(routes.IN_PERSON_SERVER_ERROR)),
 ]
