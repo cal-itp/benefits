@@ -179,14 +179,18 @@ class TestReenrollmentErrorView:
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_agency")
-def test_system_error(admin_client):
-    path = reverse(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR)
+class TestSystemErrorView:
+    @pytest.fixture
+    def view(self, app_request, model_LittlepayConfig, model_EnrollmentFlow, model_User):
+        app_request.user = model_User
+        v = views.SystemErrorView()
+        v.setup(app_request)
+        v.agency = model_LittlepayConfig.transit_agency
+        v.flow = model_EnrollmentFlow
+        return v
 
-    response = admin_client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == "in_person/enrollment/system_error.html"
+    def test_get_origin_url(self, view):
+        assert view.get_origin_url() == reverse(routes.ADMIN_INDEX)
 
 
 @pytest.mark.django_db

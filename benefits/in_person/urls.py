@@ -13,7 +13,7 @@ urlpatterns = [
     path("enrollment/", admin.site.admin_view(views.EnrollmentView.as_view()), name=routes.name(routes.IN_PERSON_ENROLLMENT)),
     path(
         "enrollment/error",
-        admin.site.admin_view(views.system_error),
+        admin.site.admin_view(views.SystemErrorView.as_view()),
         name=routes.name(routes.IN_PERSON_ENROLLMENT_SYSTEM_ERROR),
     ),
     path(

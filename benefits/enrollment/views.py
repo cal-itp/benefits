@@ -113,10 +113,13 @@ class SystemErrorView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Elig
 
     template_name = "enrollment/system_error.html"
 
+    def get_origin_url(self):
+        return self.agency.index_url
+
     def get(self, request, *args, **kwargs):
         # overwrite origin so that CTA takes user to agency index
-        agency = self.agency
-        session.update(request, origin=agency.index_url)
+        origin_url = self.get_origin_url()
+        session.update(request, origin=origin_url)
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
