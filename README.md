@@ -51,7 +51,7 @@
 | benefits/enrollment/enrollment.py                                                              |       47 |        1 |       10 |        2 |     95% |71, 113->exit |
 | benefits/enrollment/forms.py                                                                   |       14 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/urls.py                                                                    |        5 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment/views.py                                                                   |       88 |        1 |       10 |        1 |     98% |       202 |
+| benefits/enrollment/views.py                                                                   |       90 |        1 |       10 |        1 |     98% |       205 |
 | benefits/enrollment\_littlepay/\_\_init\_\_.py                                                 |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/admin.py                                                        |        9 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/apps.py                                                         |        4 |        0 |        0 |        0 |    100% |           |
@@ -88,7 +88,7 @@
 | benefits/in\_person/forms.py                                                                   |       42 |        9 |        6 |        0 |     73% |     59-70 |
 | benefits/in\_person/mixins.py                                                                  |        7 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/urls.py                                                                    |        6 |        0 |        0 |        0 |    100% |           |
-| benefits/in\_person/views.py                                                                   |      111 |        1 |        6 |        1 |     98% |       191 |
+| benefits/in\_person/views.py                                                                   |      111 |        1 |        6 |        1 |     98% |       190 |
 | benefits/locale/\_\_init\_\_.py                                                                |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/\_\_init\_\_.py                                                             |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/formats.py                                                                  |        1 |        0 |        0 |        0 |    100% |           |
@@ -107,7 +107,7 @@
 | benefits/settings.py                                                                           |      129 |        8 |       24 |        9 |     89% |109, 130->135, 146->149, 166, 350, 360, 366, 375, 399-400 |
 | benefits/urls.py                                                                               |       30 |        7 |        4 |        2 |     74% |37->48, 52-66 |
 | benefits/wsgi.py                                                                               |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                                                                      **TOTAL** | **3186** |  **161** |  **532** |   **64** | **93%** |           |
+|                                                                                      **TOTAL** | **3188** |  **161** |  **532** |   **64** | **93%** |           |
 
 
 ## Setup coverage badge
