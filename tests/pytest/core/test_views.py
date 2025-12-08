@@ -71,6 +71,27 @@ class TestAgencyIndexView:
 
 
 @pytest.mark.django_db
+class TestAgencyEligibilityIndexView:
+    @pytest.fixture
+    def view(self, app_request, model_TransitAgency):
+        v = views.AgencyEligibilityIndexView()
+        v.setup(app_request, agency=model_TransitAgency)
+        return v
+
+    def test_view(self, view):
+        assert view.pattern_name == routes.ELIGIBILITY_INDEX
+
+    def test_get(self, view, app_request, mocked_session_reset, mocked_session_update):
+        agency = view.kwargs["agency"]
+        # recreate the condition of the live view, where the agency kwarg is passed to the get() call
+        response = view.get(app_request, agency=agency)
+
+        assert response.status_code == 302
+        mocked_session_reset.assert_called_once()
+        mocked_session_update.assert_called_once_with(app_request, agency=agency, origin=agency.index_url)
+
+
+@pytest.mark.django_db
 def test_agency_public_key(client, model_TransitAgency):
     url = reverse(routes.AGENCY_PUBLIC_KEY, args=[model_TransitAgency.slug])
     response = client.get(url)
@@ -131,18 +152,6 @@ def test_agency_card_without_eligibility_api_flow(
     assert response.template_name == TEMPLATE_USER_ERROR
 
     mocked_session_reset.assert_called()
-    mocked_session_update.assert_called_once()
-    assert mocked_session_update.mock_calls[0].kwargs["agency"] == model_TransitAgency
-    assert mocked_session_update.mock_calls[0].kwargs["origin"] == model_TransitAgency.index_url
-
-
-@pytest.mark.django_db
-def test_agency_eligibility_index(client, model_TransitAgency, mocked_session_update):
-    url = reverse(routes.AGENCY_ELIGIBILITY_INDEX, args=[model_TransitAgency.slug])
-    response = client.get(url)
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ELIGIBILITY_INDEX)
     mocked_session_update.assert_called_once()
     assert mocked_session_update.mock_calls[0].kwargs["agency"] == model_TransitAgency
     assert mocked_session_update.mock_calls[0].kwargs["origin"] == model_TransitAgency.index_url
