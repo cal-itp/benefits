@@ -14,7 +14,7 @@ default_stages: [pre-commit]
 
 repos:
   - repo: https://github.com/compilerla/conventional-pre-commit
-    rev: v4.2.0
+    rev: v4.3.0
     hooks:
       - id: conventional-pre-commit
         stages: [commit-msg]
@@ -32,8 +32,8 @@ repos:
       - id: check-added-large-files
         args: ["--maxkb=1500"]
 
-  - repo: https://github.com/psf/black
-    rev: 25.9.0
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 25.12.0
     hooks:
       - id: black
         types:
@@ -47,7 +47,7 @@ repos:
           - python
 
   - repo: https://github.com/pycqa/bandit
-    rev: 1.8.6
+    rev: 1.9.2
     hooks:
       - id: bandit
         args: ["-ll"]
@@ -56,7 +56,7 @@ repos:
   # esbenp.prettier-vscode defaults to using prettier@2.8.8. this mirror is the closest equivalent
   # another option would be to 'npm install prettier' explicitly in the Dockerfile, as the VS Code plugin will use it
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.7.1
+    rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
         types_or: [javascript, css]
