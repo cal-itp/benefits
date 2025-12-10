@@ -71,6 +71,69 @@ class TestAgencyIndexView:
 
 
 @pytest.mark.django_db
+class TestAgencyCardView:
+    @pytest.fixture
+    def view(self, app_request, model_TransitAgency):
+        v = views.AgencyCardView()
+        v.setup(app_request, agency=model_TransitAgency)
+        return v
+
+    def test_view(self, view):
+        assert view.pattern_name == routes.ELIGIBILITY_CONFIRM
+
+    def test_get__with_one_eligibility_api_flow(
+        self, view, app_request, mocked_session_reset, mocked_session_update, model_EnrollmentFlow_with_eligibility_api
+    ):
+        agency = view.kwargs["agency"]
+        # recreate the condition of the live view, where the agency kwarg is passed to the get() call
+        response = view.get(app_request, agency=agency)
+
+        assert response.status_code == 302
+
+        mocked_session_reset.assert_called_once()
+        update_calls = mocked_session_update.mock_calls
+        assert len(update_calls) == 2
+        assert update_calls[0].kwargs["agency"] == agency
+        assert update_calls[0].kwargs["origin"] == agency.index_url
+        assert update_calls[1].kwargs["flow"] == model_EnrollmentFlow_with_eligibility_api
+
+    def test_get__with_multiple_eligibility_api_flow(
+        self, view, app_request, mocked_session_reset, mocked_session_update, model_EnrollmentFlow_with_eligibility_api
+    ):
+        agency = view.kwargs["agency"]
+        # fake multiple Eligibility API flows for the agency
+        new_flow = EnrollmentFlow.objects.get(pk=model_EnrollmentFlow_with_eligibility_api.id)
+        new_flow.label = "New flow"
+        new_flow.system_name = "senior"
+        new_flow.pk = None
+        new_flow.transit_agency = agency
+        new_flow.save()
+
+        # recreate the condition of the live view, where the agency kwarg is passed to the get() call
+        response = view.get(app_request, agency=agency)
+
+        assert response.status_code == 302
+        mocked_session_reset.assert_called_once()
+        assert mocked_session_update.mock_calls[1].kwargs["flow"] == new_flow
+
+    def test_get__without_eligibility_api_flow(
+        self, view, app_request, mocked_session_reset, mocked_session_update, model_EnrollmentFlow_with_scope_and_claim
+    ):
+        agency = view.kwargs["agency"]
+        # we don't configure a flow with Eligibility API details
+        model_EnrollmentFlow_with_scope_and_claim.transit_agency = agency
+        model_EnrollmentFlow_with_scope_and_claim.save()
+
+        # recreate the condition of the live view, where the agency kwarg is passed to the get() call
+        response = view.get(app_request, agency=agency)
+
+        assert response.status_code == 200
+        assert response.template_name == TEMPLATE_USER_ERROR
+        mocked_session_reset.assert_called_once()
+        mocked_session_update.assert_called_once_with(app_request, agency=agency, origin=agency.index_url)
+
+
+@pytest.mark.django_db
 class TestAgencyEligibilityIndexView:
     @pytest.fixture
     def view(self, app_request, model_TransitAgency):
@@ -108,62 +171,6 @@ class TestAgencyPublicKeyView:
         assert response.status_code == 200
         assert response.headers["Content-Type"] == "text/plain"
         assert response.content.decode("utf-8") == agency.eligibility_api_public_key_data
-
-
-@pytest.mark.django_db
-def test_agency_card_with_eligibility_api_flow(
-    client, model_TransitAgency, model_EnrollmentFlow_with_eligibility_api, mocked_session_update, mocked_session_reset
-):
-    url = reverse(routes.AGENCY_CARD, args=[model_TransitAgency.slug])
-    response = client.get(url)
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ELIGIBILITY_CONFIRM)
-
-    mocked_session_reset.assert_called()
-    update_calls = mocked_session_update.mock_calls
-    assert len(update_calls) == 2
-    assert update_calls[0].kwargs["agency"] == model_TransitAgency
-    assert update_calls[0].kwargs["origin"] == model_TransitAgency.index_url
-    assert update_calls[1].kwargs["flow"] == model_EnrollmentFlow_with_eligibility_api
-
-
-@pytest.mark.django_db
-def test_agency_card_with_multiple_eligibility_api_flows(
-    client, model_TransitAgency, model_EnrollmentFlow_with_eligibility_api, mocked_session_update
-):
-    new_flow = EnrollmentFlow.objects.get(pk=model_EnrollmentFlow_with_eligibility_api.id)
-    new_flow.label = "New flow"
-    new_flow.system_name = "senior"
-    new_flow.pk = None
-    new_flow.transit_agency = model_TransitAgency
-    new_flow.save()
-
-    url = reverse(routes.AGENCY_CARD, args=[model_TransitAgency.slug])
-    response = client.get(url)
-
-    assert response.status_code == 302
-    assert response.url == reverse(routes.ELIGIBILITY_CONFIRM)
-    assert mocked_session_update.mock_calls[1].kwargs["flow"] == new_flow
-
-
-@pytest.mark.django_db
-def test_agency_card_without_eligibility_api_flow(
-    client, model_TransitAgency, model_EnrollmentFlow_with_scope_and_claim, mocked_session_update, mocked_session_reset
-):
-    model_EnrollmentFlow_with_scope_and_claim.transit_agency = model_TransitAgency
-    model_EnrollmentFlow_with_scope_and_claim.save()
-
-    url = reverse(routes.AGENCY_CARD, args=[model_TransitAgency.slug])
-    response = client.get(url)
-
-    assert response.status_code == 200
-    assert response.template_name == TEMPLATE_USER_ERROR
-
-    mocked_session_reset.assert_called()
-    mocked_session_update.assert_called_once()
-    assert mocked_session_update.mock_calls[0].kwargs["agency"] == model_TransitAgency
-    assert mocked_session_update.mock_calls[0].kwargs["origin"] == model_TransitAgency.index_url
 
 
 @pytest.mark.django_db
