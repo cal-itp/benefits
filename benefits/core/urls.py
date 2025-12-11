@@ -52,6 +52,10 @@ urlpatterns = [
     path("error", views.server_error, name=routes.name(routes.SERVER_ERROR)),
     path("<agency:agency>", views.AgencyIndexView.as_view(), name=routes.name(routes.AGENCY_INDEX)),
     path("<agency:agency>/agency-card", views.agency_card, name=routes.name(routes.AGENCY_CARD)),
-    path("<agency:agency>/eligibility", views.agency_eligibility_index, name=routes.name(routes.AGENCY_ELIGIBILITY_INDEX)),
+    path(
+        "<agency:agency>/eligibility",
+        views.AgencyEligibilityIndexView.as_view(),
+        name=routes.name(routes.AGENCY_ELIGIBILITY_INDEX),
+    ),
     path("<agency:agency>/publickey", views.agency_public_key, name=routes.name(routes.AGENCY_PUBLIC_KEY)),
 ]

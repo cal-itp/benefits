@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView, TemplateView
 from django.views.generic.edit import FormView
 
 from benefits.core.forms import ChooseAgencyForm
@@ -60,13 +60,20 @@ class AgencyIndexView(TemplateView):
         return context
 
 
-@pageview_decorator
-def agency_eligibility_index(request, agency: models.TransitAgency):
+class AgencyEligibilityIndexView(RedirectView):
     """View handler forwards the request to the agency's Eligibility Index (e.g. flow selection) page."""
-    session.reset(request)
-    session.update(request, agency=agency, origin=agency.index_url)
 
-    return redirect(routes.ELIGIBILITY_INDEX)
+    pattern_name = routes.ELIGIBILITY_INDEX
+
+    @method_decorator(pageview_decorator)
+    def get(self, request, *args, **kwargs):
+        # keep a reference to the agency before removing from kwargs
+        # since the eventual reverse() lookup doesn't expect this key in the kwargs for routes.ELIGIBILITY_INDEX
+        # self.kwargs still contains the agency if needed
+        agency = kwargs.pop("agency")
+        session.reset(request)
+        session.update(request, agency=agency, origin=agency.index_url)
+        return super().get(request, *args, **kwargs)
 
 
 @pageview_decorator
