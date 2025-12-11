@@ -131,9 +131,6 @@ class ServerErrorView(mixins.CommonContextMixin, AgencySessionRequiredMixin, Tem
 
     template_name = "in_person/enrollment/server_error.html"
 
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
-
     def post(self, request, *args, **kwargs):
         # the Javascript in in_person/index_littlepay.html sends a form POST to this view
         # rather than implementing this view as a FormView, which requires instantiating the

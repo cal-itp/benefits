@@ -203,12 +203,6 @@ class TestServerErrorView:
         v.agency = model_LittlepayConfig.transit_agency
         return v
 
-    def test_get(self, app_request, view):
-        response = view.get(app_request)
-
-        assert response.status_code == 200
-        assert response.template_name == ["in_person/enrollment/server_error.html"]
-
     def test_post(self, app_request_post, view):
         response = view.post(app_request_post)
 
