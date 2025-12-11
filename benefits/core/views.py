@@ -13,8 +13,6 @@ from benefits.routes import routes
 from . import models, session
 from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator, user_error
 
-TEMPLATE_AGENCY = "core/index--agency-base.html"
-
 TEMPLATE_BAD_REQUEST = "400.html"
 TEMPLATE_NOT_FOUND = "404.html"
 TEMPLATE_SERVER_ERROR = "500.html"
