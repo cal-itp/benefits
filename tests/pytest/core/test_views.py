@@ -92,13 +92,22 @@ class TestAgencyEligibilityIndexView:
 
 
 @pytest.mark.django_db
-def test_agency_public_key(client, model_TransitAgency):
-    url = reverse(routes.AGENCY_PUBLIC_KEY, args=[model_TransitAgency.slug])
-    response = client.get(url)
+class TestAgencyPublicKeyView:
 
-    assert response.status_code == 200
-    assert response.headers["Content-Type"] == "text/plain"
-    assert response.content.decode("utf-8") == model_TransitAgency.eligibility_api_public_key_data
+    @pytest.fixture
+    def view(self, app_request, model_TransitAgency):
+        v = views.AgencyPublicKeyView()
+        v.setup(app_request, agency=model_TransitAgency)
+        return v
+
+    def test_get(self, view, app_request):
+        agency = view.kwargs["agency"]
+        # recreate the condition of the live view, where the agency kwarg is passed to the get() call
+        response = view.get(app_request, agency=agency)
+
+        assert response.status_code == 200
+        assert response.headers["Content-Type"] == "text/plain"
+        assert response.content.decode("utf-8") == agency.eligibility_api_public_key_data
 
 
 @pytest.mark.django_db

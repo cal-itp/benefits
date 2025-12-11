@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.utils.decorators import method_decorator
-from django.views.generic import RedirectView, TemplateView
+from django.views.generic import RedirectView, TemplateView, View
 from django.views.generic.edit import FormView
 
 from benefits.core.forms import ChooseAgencyForm
@@ -76,10 +76,13 @@ class AgencyEligibilityIndexView(RedirectView):
         return super().get(request, *args, **kwargs)
 
 
-@pageview_decorator
-def agency_public_key(request, agency: models.TransitAgency):
+class AgencyPublicKeyView(View):
     """View handler returns an agency's public key as plain text."""
-    return HttpResponse(agency.eligibility_api_public_key_data, content_type="text/plain")
+
+    @method_decorator(pageview_decorator)
+    def get(self, request, *args, **kwargs):
+        agency = kwargs.get("agency")
+        return HttpResponse(agency.eligibility_api_public_key_data, content_type="text/plain")
 
 
 @pageview_decorator

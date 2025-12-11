@@ -57,5 +57,5 @@ urlpatterns = [
         views.AgencyEligibilityIndexView.as_view(),
         name=routes.name(routes.AGENCY_ELIGIBILITY_INDEX),
     ),
-    path("<agency:agency>/publickey", views.agency_public_key, name=routes.name(routes.AGENCY_PUBLIC_KEY)),
+    path("<agency:agency>/publickey", views.AgencyPublicKeyView.as_view(), name=routes.name(routes.AGENCY_PUBLIC_KEY)),
 ]
