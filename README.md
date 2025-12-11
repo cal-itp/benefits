@@ -32,7 +32,7 @@
 | benefits/core/recaptcha.py                                                                     |       13 |        5 |        4 |        1 |     53% |     26-32 |
 | benefits/core/session.py                                                                       |      131 |        3 |       32 |        0 |     98% |     53-55 |
 | benefits/core/urls.py                                                                          |       25 |        0 |        2 |        0 |    100% |           |
-| benefits/core/views.py                                                                         |       89 |        6 |        4 |        0 |     91% |100, 103-109 |
+| benefits/core/views.py                                                                         |       92 |        6 |        4 |        0 |     92% |107, 110-116 |
 | benefits/core/widgets.py                                                                       |       25 |        5 |        6 |        2 |     71% |17, 18->exit, 38-43 |
 | benefits/eligibility/\_\_init\_\_.py                                                           |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/analytics.py                                                              |       27 |        3 |        2 |        1 |     86% |21, 39->exit, 45, 55 |
@@ -107,7 +107,7 @@
 | benefits/settings.py                                                                           |      129 |        8 |       24 |        9 |     89% |109, 130->135, 146->149, 166, 350, 360, 366, 375, 399-400 |
 | benefits/urls.py                                                                               |       30 |        7 |        4 |        2 |     74% |37->48, 52-66 |
 | benefits/wsgi.py                                                                               |        4 |        4 |        0 |        0 |      0% |     10-17 |
-|                                                                                      **TOTAL** | **3188** |  **161** |  **532** |   **64** | **93%** |           |
+|                                                                                      **TOTAL** | **3191** |  **161** |  **532** |   **64** | **93%** |           |
 
 
 ## Setup coverage badge
