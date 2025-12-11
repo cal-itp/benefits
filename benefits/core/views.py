@@ -3,7 +3,6 @@ The core application: view definition for the root of the webapp.
 """
 
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
-from django.shortcuts import redirect
 from django.template import loader
 from django.template.response import TemplateResponse
 from django.utils.decorators import method_decorator
@@ -60,6 +59,28 @@ class AgencyIndexView(TemplateView):
         return context
 
 
+class AgencyCardView(RedirectView):
+    """View handler forwards the request to the agency's Agency Card (e.g. Eligibility API) flow, or returns a user error."""
+
+    pattern_name = routes.ELIGIBILITY_CONFIRM
+
+    @method_decorator(pageview_decorator)
+    def get(self, request, *args, **kwargs):
+        # keep a reference to the agency before removing from kwargs
+        # since the eventual reverse() lookup doesn't expect this key in the kwargs for routes.ELIGIBILITY_CONFIRM
+        # self.kwargs still contains the agency if needed
+        agency = kwargs.pop("agency")
+        session.reset(request)
+        session.update(request, agency=agency, origin=agency.index_url)
+
+        eligibility_api_flow = agency.enrollment_flows.exclude(api_request=None).order_by("id").last()
+        if eligibility_api_flow:
+            session.update(request, flow=eligibility_api_flow)
+            return super().get(request, *args, **kwargs)
+        else:
+            return user_error(request)
+
+
 class AgencyEligibilityIndexView(RedirectView):
     """View handler forwards the request to the agency's Eligibility Index (e.g. flow selection) page."""
 
@@ -83,21 +104,6 @@ class AgencyPublicKeyView(View):
     def get(self, request, *args, **kwargs):
         agency = kwargs.get("agency")
         return HttpResponse(agency.eligibility_api_public_key_data, content_type="text/plain")
-
-
-@pageview_decorator
-def agency_card(request, agency: models.TransitAgency):
-    """View handler forwards the request to the agency's Agency Card (e.g. Eligibility API) flow, or returns a user error."""
-    session.reset(request)
-    session.update(request, agency=agency, origin=agency.index_url)
-
-    eligibility_api_flow = agency.enrollment_flows.exclude(api_request=None).order_by("id").last()
-
-    if eligibility_api_flow:
-        session.update(request, flow=eligibility_api_flow)
-        return redirect(routes.ELIGIBILITY_CONFIRM)
-    else:
-        return user_error(request)
 
 
 class HelpView(TemplateView):

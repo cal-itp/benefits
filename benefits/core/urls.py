@@ -51,7 +51,7 @@ urlpatterns = [
     path("logged_out", views.logged_out, name=routes.name(routes.LOGGED_OUT)),
     path("error", views.server_error, name=routes.name(routes.SERVER_ERROR)),
     path("<agency:agency>", views.AgencyIndexView.as_view(), name=routes.name(routes.AGENCY_INDEX)),
-    path("<agency:agency>/agency-card", views.agency_card, name=routes.name(routes.AGENCY_CARD)),
+    path("<agency:agency>/agency-card", views.AgencyCardView.as_view(), name=routes.name(routes.AGENCY_CARD)),
     path(
         "<agency:agency>/eligibility",
         views.AgencyEligibilityIndexView.as_view(),
