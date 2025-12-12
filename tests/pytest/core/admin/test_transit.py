@@ -1,5 +1,6 @@
 import pytest
 from django.contrib import admin
+from django.contrib.auth.models import Group
 
 from benefits.core import models
 from benefits.core.admin.mixins import StaffPermissionMixin, SuperuserPermissionMixin
@@ -50,3 +51,31 @@ class TestTransitAgencyAdmin:
             assert set(excluded) == set(expected)
         else:
             assert excluded is None
+
+    def test_save_model_create_agency(self, admin_user_request, model_TransitAgency):
+        request = admin_user_request("super")
+        obj = model_TransitAgency
+        form = None
+        change = False  # Simulate creating a new agency
+        initial_group_count = Group.objects.count()
+
+        self.model_admin.save_model(request, obj, form, change)
+
+        assert obj.staff_group.name == f"{obj.short_name} Staff"
+        assert obj.customer_service_group.name == f"{obj.short_name} Customer Service"
+        assert Group.objects.count() == initial_group_count + 2
+
+    def test_save_model_modify_agency(self, admin_user_request, model_TransitAgency):
+        request = admin_user_request("super")
+        model_TransitAgency.staff_group = Group.objects.create(name="Existing Staff Group")
+        model_TransitAgency.customer_service_group = Group.objects.create(name="Existing Customer Service Group")
+        obj = model_TransitAgency
+        form = None
+        change = True  # Simulate modifying an existing agency
+        initial_group_count = Group.objects.count()
+
+        self.model_admin.save_model(request, obj, form, change)
+
+        assert obj.staff_group.name == "Existing Staff Group"
+        assert obj.customer_service_group.name == "Existing Customer Service Group"
+        assert Group.objects.count() == initial_group_count
