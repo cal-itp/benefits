@@ -22,6 +22,10 @@ class TransitAgencyAdmin(StaffPermissionMixin, admin.ModelAdmin):
                 ]
             )
 
+        if not obj:
+            # hide these fields when creating a new agency
+            fields.extend(["staff_group", "customer_service_group"])
+
         return fields or super().get_exclude(request, obj)
 
     def save_model(self, request, obj, form, change):

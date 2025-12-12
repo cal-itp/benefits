@@ -31,11 +31,9 @@ class TestTransitAgencyAdmin:
         [
             (
                 "staff",
-                [
-                    "sso_domain",
-                ],
+                ["sso_domain", "staff_group", "customer_service_group"],
             ),
-            ("super", ()),
+            ("super", ["staff_group", "customer_service_group"]),
         ],
     )
     def test_get_exclude(self, admin_user_request, user_type, expected):
@@ -46,6 +44,23 @@ class TestTransitAgencyAdmin:
         request = admin_user_request(user_type)
 
         excluded = self.model_admin.get_exclude(request)
+
+        if expected:
+            assert set(excluded) == set(expected)
+        else:
+            assert excluded is None
+
+    @pytest.mark.parametrize(
+        "user_type,expected",
+        [
+            ("staff", ["sso_domain"]),
+            ("super", []),
+        ],
+    )
+    def test_get_exclude_modify_agency(self, admin_user_request, user_type, expected, model_TransitAgency):
+        obj = model_TransitAgency
+        request = admin_user_request(user_type)
+        excluded = self.model_admin.get_exclude(request, obj)
 
         if expected:
             assert set(excluded) == set(expected)
