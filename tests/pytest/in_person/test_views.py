@@ -211,14 +211,15 @@ class TestServerErrorView:
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_flow", "mocked_session_agency")
-def test_success(admin_client):
-    path = reverse(routes.IN_PERSON_ENROLLMENT_SUCCESS)
+class TestSuccessView:
+    @pytest.fixture
+    def view(self, app_request):
+        v = views.SuccessView()
+        v.setup(app_request)
+        return v
 
-    response = admin_client.get(path)
-
-    assert response.status_code == 200
-    assert response.template_name == "in_person/enrollment/success.html"
+    def test_view(self, view):
+        assert view.template_name == "in_person/enrollment/success.html"
 
 
 @pytest.mark.django_db
