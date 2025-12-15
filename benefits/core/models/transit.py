@@ -126,15 +126,6 @@ class TransitAgency(models.Model):
         default=None,
         help_text="The Eligibility API configuration for this transit agency.",
     )
-    staff_group = models.OneToOneField(
-        Group,
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        default=None,
-        help_text="The group of users associated with this TransitAgency.",
-        related_name="transit_agency",
-    )
     sso_domain = models.TextField(
         blank=True,
         default="",
@@ -147,7 +138,7 @@ class TransitAgency(models.Model):
         blank=True,
         default=None,
         help_text="The group of users who are allowed to do in-person eligibility verification and enrollment.",
-        related_name="+",
+        related_name="transit_agency",
     )
     logo = models.ImageField(
         default="",
@@ -305,7 +296,7 @@ class TransitAgency(models.Model):
     def for_user(user: User):
         for group in user.groups.all():
             if hasattr(group, "transit_agency"):
-                return group.transit_agency  # this is looking at the TransitAgency's staff_group
+                return group.transit_agency  # this is looking at the TransitAgency's customer_service_group
 
         # the loop above returns the first match found. Return None if no match was found.
         return None

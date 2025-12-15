@@ -31,9 +31,9 @@ class TestTransitAgencyAdmin:
         [
             (
                 "staff",
-                ["sso_domain", "staff_group", "customer_service_group"],
+                ["sso_domain", "customer_service_group"],
             ),
-            ("super", ["staff_group", "customer_service_group"]),
+            ("super", ["customer_service_group"]),
         ],
     )
     def test_get_exclude(self, admin_user_request, user_type, expected):
@@ -76,13 +76,11 @@ class TestTransitAgencyAdmin:
 
         self.model_admin.save_model(request, obj, form, change)
 
-        assert obj.staff_group.name == f"{obj.short_name} Staff"
         assert obj.customer_service_group.name == f"{obj.short_name} Customer Service"
-        assert Group.objects.count() == initial_group_count + 2
+        assert Group.objects.count() == initial_group_count + 1
 
     def test_save_model_modify_agency(self, admin_user_request, model_TransitAgency):
         request = admin_user_request("super")
-        model_TransitAgency.staff_group = Group.objects.create(name="Existing Staff Group")
         model_TransitAgency.customer_service_group = Group.objects.create(name="Existing Customer Service Group")
         obj = model_TransitAgency
         form = None
@@ -91,6 +89,5 @@ class TestTransitAgencyAdmin:
 
         self.model_admin.save_model(request, obj, form, change)
 
-        assert obj.staff_group.name == "Existing Staff Group"
         assert obj.customer_service_group.name == "Existing Customer Service Group"
         assert Group.objects.count() == initial_group_count

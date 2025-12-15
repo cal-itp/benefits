@@ -152,27 +152,3 @@ def test_pre_login_user_does_not_add_transit_staff_to_group(mocker, settings):
     staff_group = Group.objects.get(name=settings.STAFF_GROUP_NAME)
     assert staff_group.user_set.count() == 0
     assert agency_user.groups.count() == 0
-
-
-@pytest.mark.django_db
-def test_pre_login_user_add_transit_staff_to_transit_staff_group(mocker, settings, model_TransitAgency):
-    mocked_request = mocker.Mock()
-    mocked_request.session.get.return_value = None
-
-    transit_agency_staff_group = Group.objects.create(name="CST Staff")
-    model_TransitAgency.pk = None
-    model_TransitAgency.staff_group = transit_agency_staff_group
-    model_TransitAgency.sso_domain = "cst.org"
-    model_TransitAgency.save()
-
-    settings.GOOGLE_SSO_STAFF_LIST = ["*"]
-    settings.GOOGLE_SSO_ALLOWABLE_DOMAINS = ["cst.org"]
-
-    # simulate what `django_google_sso` does for us (sets is_staff to True)
-    agency_user = User.objects.create_user(username="agency_user", email="manager@cst.org", is_staff=True)
-
-    pre_login_user(agency_user, mocked_request)
-
-    # assert that a transit agency user gets added to their TransitAgency's staff group based on SSO domain
-    assert agency_user.groups.count() == 1
-    assert agency_user.groups.first() == transit_agency_staff_group

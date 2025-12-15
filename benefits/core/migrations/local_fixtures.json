@@ -162,7 +162,6 @@
       "info_url": "https://www.agency-website.com",
       "phone": "1-800-555-5555",
       "eligibility_api_config": 1,
-      "staff_group": 2,
       "customer_service_group": 2,
       "logo": "agencies/cst.png"
     }
@@ -308,7 +307,7 @@
     "model": "auth.Group",
     "pk": 2,
     "fields": {
-      "name": "CST"
+      "name": "CST Customer Service"
     }
   },
   {
