@@ -5,6 +5,7 @@ The eligibility application: Form definition for the eligibility verification fl
 import logging
 
 from django import forms
+from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
 from benefits.routes import routes
@@ -87,10 +88,16 @@ class EligibilityVerificationForm(ValidateRecaptchaMixin, forms.Form):
             sub_widget.attrs.update({"data-custom-validity": self.sub_custom_validity})
             self.use_custom_validity = True
 
+        sub_validators = []
+        if self.sub_pattern and self.sub_custom_validity:
+            sub_validators.append(RegexValidator(regex=self.sub_pattern, message=self.sub_custom_validity))
+
         self.fields["sub"] = forms.CharField(
             label=self.sub_label,
             widget=sub_widget,
             help_text=self.sub_help_text,
+            max_length=self.sub_max_length,
+            validators=sub_validators,
         )
 
         # Configure the 'name' field
@@ -102,7 +109,12 @@ class EligibilityVerificationForm(ValidateRecaptchaMixin, forms.Form):
             name_widget.attrs.update({"data-custom-validity": self.name_custom_validity})
             self.use_custom_validity = True
 
-        self.fields["name"] = forms.CharField(label=self.name_label, widget=name_widget, help_text=self.name_help_text)
+        self.fields["name"] = forms.CharField(
+            label=self.name_label,
+            widget=name_widget,
+            help_text=self.name_help_text,
+            max_length=self.name_max_length,
+        )
 
 
 class MSTCourtesyCard(EligibilityVerificationForm):
