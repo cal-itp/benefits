@@ -4,7 +4,6 @@ The core application: view definition for the root of the webapp.
 
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, HttpResponseServerError
 from django.template import loader
-from django.template.response import TemplateResponse
 from django.utils.decorators import method_decorator
 from django.views.generic import RedirectView, TemplateView, View
 from django.views.generic.edit import FormView
@@ -13,9 +12,6 @@ from benefits.core.forms import ChooseAgencyForm
 from benefits.routes import routes
 from . import models, session
 from .middleware import pageview_decorator, index_or_agencyindex_origin_decorator, user_error
-
-TEMPLATE_AGENCY = "core/index--agency-base.html"
-TEMPLATE_LOGGED_OUT = "core/logged-out.html"
 
 TEMPLATE_BAD_REQUEST = "400.html"
 TEMPLATE_NOT_FOUND = "404.html"
@@ -125,6 +121,12 @@ class HelpView(TemplateView):
         return context
 
 
+class LoggedOutView(TemplateView):
+    """View handler for the final log out confirmation message."""
+
+    template_name = "core/logged-out.html"
+
+
 @pageview_decorator
 @index_or_agencyindex_origin_decorator
 def bad_request(request, exception, template_name=TEMPLATE_BAD_REQUEST):
@@ -161,8 +163,3 @@ def server_error(request, template_name=TEMPLATE_SERVER_ERROR):
     t = loader.get_template(template_name)
 
     return HttpResponseServerError(t.render(request=request))
-
-
-def logged_out(request):
-    """View handler for the final log out confirmation message."""
-    return TemplateResponse(request, TEMPLATE_LOGGED_OUT)

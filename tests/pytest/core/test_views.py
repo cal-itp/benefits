@@ -186,6 +186,18 @@ class TestHelpView:
 
 
 @pytest.mark.django_db
+class TestLoggedOutView:
+    @pytest.fixture
+    def view(self, app_request):
+        v = views.LoggedOutView()
+        v.setup(app_request)
+        return v
+
+    def test_view(self, view):
+        assert view.template_name == "core/logged-out.html"
+
+
+@pytest.mark.django_db
 def test_bad_request_active_agency(app_request, mocked_session_agency, mocked_session_update):
     response = bad_request(app_request, Exception())
 
@@ -253,13 +265,3 @@ def test_server_error(app_request):
     response = server_error(app_request)
 
     assert response.status_code == 500
-
-
-@pytest.mark.django_db
-def test_logged_out(client):
-    path = reverse(routes.LOGGED_OUT)
-    response = client.get(path)
-
-    assert response.status_code == 200
-    assert "happybus" in str(response.content)
-    assert "logged out" in str(response.content)
