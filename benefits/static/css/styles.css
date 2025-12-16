@@ -376,7 +376,7 @@ footer .footer-links li a.footer-link:visited {
 .btn-outline-light:focus,
 .btn-ouline-light:focus-visible {
   outline: 3px solid var(--focus-color);
-  outline-offset: 2px;
+  outline-offset: 3px;
   box-shadow: none;
 }
 
