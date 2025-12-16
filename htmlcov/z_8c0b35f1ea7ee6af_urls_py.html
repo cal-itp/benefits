@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Coverage for benefits/core/urls.py: 89%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_58284776.png">
-    <link rel="stylesheet" href="style_cb_8432e98f.css" type="text/css">
+    <link rel="stylesheet" href="style_cb_a5a05ca4.css" type="text/css">
     <script src="coverage_html_cb_bcae5fc4.js" defer></script>
 </head>
 <body class="pyfile">
@@ -66,8 +66,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_8c0b35f1ea7ee6af_views_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.12.0">coverage.py v7.12.0</a>,
-            created at 2025-12-11 20:43 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.0">coverage.py v7.13.0</a>,
+            created at 2025-12-16 16:21 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -132,7 +132,7 @@
     <p class="run"><span class="n"><a id="t48" href="#t48">48</a></span><span class="t"><span class="nam">urlpatterns</span> <span class="op">=</span> <span class="op">[</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t49" href="#t49">49</a></span><span class="t">    <span class="nam">path</span><span class="op">(</span><span class="str">""</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">IndexView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="op">)</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="nam">routes</span><span class="op">.</span><span class="nam">name</span><span class="op">(</span><span class="nam">routes</span><span class="op">.</span><span class="nam">INDEX</span><span class="op">)</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t50" href="#t50">50</a></span><span class="t">    <span class="nam">path</span><span class="op">(</span><span class="str">"help"</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">HelpView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="op">)</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="nam">routes</span><span class="op">.</span><span class="nam">name</span><span class="op">(</span><span class="nam">routes</span><span class="op">.</span><span class="nam">HELP</span><span class="op">)</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t51" href="#t51">51</a></span><span class="t">    <span class="nam">path</span><span class="op">(</span><span class="str">"logged_out"</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">logged_out</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="nam">routes</span><span class="op">.</span><span class="nam">name</span><span class="op">(</span><span class="nam">routes</span><span class="op">.</span><span class="nam">LOGGED_OUT</span><span class="op">)</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t51" href="#t51">51</a></span><span class="t">    <span class="nam">path</span><span class="op">(</span><span class="str">"logged_out"</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">LoggedOutView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="op">)</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="nam">routes</span><span class="op">.</span><span class="nam">name</span><span class="op">(</span><span class="nam">routes</span><span class="op">.</span><span class="nam">LOGGED_OUT</span><span class="op">)</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t52" href="#t52">52</a></span><span class="t">    <span class="nam">path</span><span class="op">(</span><span class="str">"error"</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">server_error</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="nam">routes</span><span class="op">.</span><span class="nam">name</span><span class="op">(</span><span class="nam">routes</span><span class="op">.</span><span class="nam">SERVER_ERROR</span><span class="op">)</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t53" href="#t53">53</a></span><span class="t">    <span class="nam">path</span><span class="op">(</span><span class="str">"&lt;agency:agency>"</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">AgencyIndexView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="op">)</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="nam">routes</span><span class="op">.</span><span class="nam">name</span><span class="op">(</span><span class="nam">routes</span><span class="op">.</span><span class="nam">AGENCY_INDEX</span><span class="op">)</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t54" href="#t54">54</a></span><span class="t">    <span class="nam">path</span><span class="op">(</span><span class="str">"&lt;agency:agency>/agency-card"</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">AgencyCardView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="op">)</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="nam">routes</span><span class="op">.</span><span class="nam">name</span><span class="op">(</span><span class="nam">routes</span><span class="op">.</span><span class="nam">AGENCY_CARD</span><span class="op">)</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -151,8 +151,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_8c0b35f1ea7ee6af_views_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.12.0">coverage.py v7.12.0</a>,
-            created at 2025-12-11 20:43 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.0">coverage.py v7.13.0</a>,
+            created at 2025-12-16 16:21 +0000
         </p>
     </div>
 </footer>
