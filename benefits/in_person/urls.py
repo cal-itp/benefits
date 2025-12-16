@@ -36,7 +36,11 @@ urlpatterns = [
         admin.site.admin_view(views.RetryView.as_view()),
         name=routes.name(routes.IN_PERSON_ENROLLMENT_RETRY),
     ),
-    path("enrollment/success", admin.site.admin_view(views.success), name=routes.name(routes.IN_PERSON_ENROLLMENT_SUCCESS)),
+    path(
+        "enrollment/success",
+        admin.site.admin_view(views.SuccessView.as_view()),
+        name=routes.name(routes.IN_PERSON_ENROLLMENT_SUCCESS),
+    ),
     path(
         "enrollment/switchio",
         admin.site.admin_view(views.SwitchioEnrollmentIndexView.as_view()),

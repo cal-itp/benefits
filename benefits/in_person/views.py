@@ -1,8 +1,6 @@
 import logging
 
-from django.contrib.admin import site as admin_site
 from django.shortcuts import redirect
-from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views.generic import FormView, TemplateView
 
@@ -15,6 +13,7 @@ from benefits.enrollment.views import (
     ReenrollmentErrorView as DigitalReenrollmentErrorView,
     RetryView as DigitalRetryView,
     SystemErrorView as DigitalSystemErrorView,
+    SuccessView as DigitalSuccessView,
 )
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.enrollment_littlepay.views import TokenView, IndexView as LittlepayIndexView
@@ -139,15 +138,10 @@ class ServerErrorView(mixins.CommonContextMixin, AgencySessionRequiredMixin, Tem
         return super().get(request, *args, **kwargs)
 
 
-def success(request):
+class SuccessView(mixins.CommonContextMixin, AgencySessionRequiredMixin, DigitalSuccessView):
     """View handler for the final success page."""
-    agency = session.agency(request)
-    context = {
-        **admin_site.each_context(request),
-        "title": f"{agency.long_name} | In-person enrollment | {admin_site.site_title}",
-    }
 
-    return TemplateResponse(request, "in_person/enrollment/success.html", context)
+    template_name = "in_person/enrollment/success.html"
 
 
 class SwitchioGatewayUrlView(GatewayUrlView):
