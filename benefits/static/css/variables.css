@@ -45,6 +45,5 @@
   --focus-style: 3px solid var(--focus-color);
   --focus-border-radius: calc(2rem / 16);
   --focus-outline-offset: calc(3rem / 16); /* 3px */
-  --focus-border-radius: calc(2rem / 16);
   --grid-spacer: calc(1rem / 2); /* 8px */
 }
