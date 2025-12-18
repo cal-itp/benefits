@@ -172,6 +172,24 @@ def test_TransitAgency_clean(model_TransitAgency_inactive):
 
 
 @pytest.mark.django_db
+def test_TransitAgency_clean_short_name_change_requires_group(model_TransitAgency_inactive):
+    group = Group.objects.create(name="Existing Customer Service Group")
+    model_TransitAgency_inactive.customer_service_group = group
+    model_TransitAgency_inactive.save()
+
+    # change the short name and assign no group
+    model_TransitAgency_inactive.short_name = "NEW"
+    model_TransitAgency_inactive.customer_service_group = None
+
+    with pytest.raises(ValidationError) as e:
+        model_TransitAgency_inactive.clean()
+
+    errors = e.value.error_dict
+    assert "customer_service_group" in errors
+    assert "Blank not allowed. Set to its original value if changing the Short Name." in str(errors["customer_service_group"])
+
+
+@pytest.mark.django_db
 def test_TransitAgency_transit_processor_littlepay(model_TransitAgency, model_LittlepayConfig):
     model_LittlepayConfig.transit_agency = model_TransitAgency
     model_TransitAgency.save()

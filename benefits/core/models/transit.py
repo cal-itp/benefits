@@ -265,6 +265,17 @@ class TransitAgency(models.Model):
                         message += f" Missing fields: {', '.join(e.error_dict.keys())}"
                         non_field_errors.append(ValidationError(message))
 
+        if self.pk:  # prohibit updating short_name with blank customer_service_group
+            original_obj = TransitAgency.objects.get(pk=self.pk)
+            if self.short_name != original_obj.short_name and not self.customer_service_group:
+                field_errors.update(
+                    {
+                        "customer_service_group": ValidationError(
+                            "Blank not allowed. Set to its original value if changing the Short Name."
+                        )
+                    }
+                )
+
         all_errors = {}
         if field_errors:
             all_errors.update(field_errors)

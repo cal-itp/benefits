@@ -34,5 +34,8 @@ class TransitAgencyAdmin(StaffPermissionMixin, admin.ModelAdmin):
             cs_group_name = f"{obj.short_name} Customer Service"
             customer_service_group = Group.objects.create(name=cs_group_name)
             obj.customer_service_group = customer_service_group
+        elif "short_name" in form.changed_data:
+            obj.customer_service_group.name = f"{obj.short_name} Customer Service"
+            obj.customer_service_group.save()
 
         super().save_model(request, obj, form, change)
