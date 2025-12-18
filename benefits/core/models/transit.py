@@ -98,7 +98,7 @@ class TransitAgency(models.Model):
         help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}",
     )
     short_name = models.TextField(
-        default="", blank=True, help_text="The user-facing short name for this agency. Often an uppercase acronym."
+        default="", help_text="The user-facing short name for this agency. Often an uppercase acronym."
     )
     long_name = models.TextField(
         default="",
@@ -239,7 +239,6 @@ class TransitAgency(models.Model):
         if self.active:
             message = "This field is required for active transit agencies."
             needed = dict(
-                short_name=self.short_name,
                 long_name=self.long_name,
                 phone=self.phone,
                 info_url=self.info_url,

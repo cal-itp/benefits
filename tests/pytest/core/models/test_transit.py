@@ -147,7 +147,6 @@ def test_agency_logo(model_TransitAgency):
 
 @pytest.mark.django_db
 def test_TransitAgency_clean(model_TransitAgency_inactive):
-    model_TransitAgency_inactive.short_name = ""
     model_TransitAgency_inactive.long_name = ""
     model_TransitAgency_inactive.phone = ""
     model_TransitAgency_inactive.info_url = ""
@@ -162,7 +161,6 @@ def test_TransitAgency_clean(model_TransitAgency_inactive):
 
     errors = e.value.error_dict
 
-    assert "short_name" in errors
     assert "long_name" in errors
     assert "phone" in errors
     assert "info_url" in errors

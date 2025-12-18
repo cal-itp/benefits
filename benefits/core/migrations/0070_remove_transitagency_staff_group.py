@@ -29,4 +29,11 @@ class Migration(migrations.Migration):
                 to="auth.group",
             ),
         ),
+        migrations.AlterField(
+            model_name="transitagency",
+            name="short_name",
+            field=models.TextField(
+                default="", help_text="The user-facing short name for this agency. Often an uppercase acronym."
+            ),
+        ),
     ]
