@@ -31,11 +31,11 @@ class TransitAgencyAdmin(StaffPermissionMixin, admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
 
         if not change:
-            cs_group_name = f"{obj.short_name} Customer Service"
+            cs_group_name = obj.customer_service_group_name
             customer_service_group = Group.objects.create(name=cs_group_name)
             obj.customer_service_group = customer_service_group
         elif "short_name" in form.changed_data:
-            obj.customer_service_group.name = f"{obj.short_name} Customer Service"
+            obj.customer_service_group.name = obj.customer_service_group_name
             obj.customer_service_group.save()
 
         super().save_model(request, obj, form, change)

@@ -232,6 +232,11 @@ class TransitAgency(models.Model):
     def enrollment_flows(self):
         return self.enrollmentflow_set
 
+    @property
+    def customer_service_group_name(self):
+        """Returns the standardized name for this Agency's customer service group."""
+        return f"{self.short_name} Customer Service"
+
     def clean(self):
         field_errors = {}
         non_field_errors = []

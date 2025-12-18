@@ -261,3 +261,9 @@ def test_TransitAgency_in_person_enrollment_index_route_no_config(model_TransitA
         ),
     ):
         model_TransitAgency.in_person_enrollment_index_route
+
+
+@pytest.mark.django_db
+def test_TransitAgency_customer_service_group_name(model_TransitAgency):
+    model_TransitAgency.short_name = "CST"
+    assert model_TransitAgency.customer_service_group_name == "CST Customer Service"
