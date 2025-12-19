@@ -17,7 +17,6 @@ from .users import (
     GroupAdmin,
     UserAdmin,
     add_staff_user_to_group,
-    add_transit_agency_staff_user_to_group,
     add_google_sso_userinfo,
     pre_login_user,
 )
@@ -36,7 +35,6 @@ __all__ = [
     "GroupAdmin",
     "UserAdmin",
     "add_staff_user_to_group",
-    "add_transit_agency_staff_user_to_group",
     "add_google_sso_userinfo",
     "pre_login_user",
 ]

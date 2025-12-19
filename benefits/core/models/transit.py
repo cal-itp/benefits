@@ -98,7 +98,7 @@ class TransitAgency(models.Model):
         help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}",
     )
     short_name = models.TextField(
-        default="", blank=True, help_text="The user-facing short name for this agency. Often an uppercase acronym."
+        default="", help_text="The user-facing short name for this agency. Often an uppercase acronym."
     )
     long_name = models.TextField(
         default="",
@@ -126,15 +126,6 @@ class TransitAgency(models.Model):
         default=None,
         help_text="The Eligibility API configuration for this transit agency.",
     )
-    staff_group = models.OneToOneField(
-        Group,
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        default=None,
-        help_text="The group of users associated with this TransitAgency.",
-        related_name="transit_agency",
-    )
     sso_domain = models.TextField(
         blank=True,
         default="",
@@ -147,7 +138,7 @@ class TransitAgency(models.Model):
         blank=True,
         default=None,
         help_text="The group of users who are allowed to do in-person eligibility verification and enrollment.",
-        related_name="+",
+        related_name="transit_agency",
     )
     logo = models.ImageField(
         default="",
@@ -241,6 +232,11 @@ class TransitAgency(models.Model):
     def enrollment_flows(self):
         return self.enrollmentflow_set
 
+    @property
+    def customer_service_group_name(self):
+        """Returns the standardized name for this Agency's customer service group."""
+        return f"{self.short_name} Customer Service"
+
     def clean(self):
         field_errors = {}
         non_field_errors = []
@@ -248,7 +244,6 @@ class TransitAgency(models.Model):
         if self.active:
             message = "This field is required for active transit agencies."
             needed = dict(
-                short_name=self.short_name,
                 long_name=self.long_name,
                 phone=self.phone,
                 info_url=self.info_url,
@@ -274,6 +269,17 @@ class TransitAgency(models.Model):
                         message = "Switchio configuration is missing fields that are required when this agency is active."
                         message += f" Missing fields: {', '.join(e.error_dict.keys())}"
                         non_field_errors.append(ValidationError(message))
+
+        if self.pk:  # prohibit updating short_name with blank customer_service_group
+            original_obj = TransitAgency.objects.get(pk=self.pk)
+            if self.short_name != original_obj.short_name and not self.customer_service_group:
+                field_errors.update(
+                    {
+                        "customer_service_group": ValidationError(
+                            "Blank not allowed. Set to its original value if changing the Short Name."
+                        )
+                    }
+                )
 
         all_errors = {}
         if field_errors:
@@ -305,7 +311,7 @@ class TransitAgency(models.Model):
     def for_user(user: User):
         for group in user.groups.all():
             if hasattr(group, "transit_agency"):
-                return group.transit_agency  # this is looking at the TransitAgency's staff_group
+                return group.transit_agency  # this is looking at the TransitAgency's customer_service_group
 
         # the loop above returns the first match found. Return None if no match was found.
         return None

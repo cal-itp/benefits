@@ -107,7 +107,7 @@ def test_TransitAgency_for_user_in_group(model_TransitAgency):
 
     agency_for_user = TransitAgency.by_id(model_TransitAgency.id)
     agency_for_user.pk = None
-    agency_for_user.staff_group = group
+    agency_for_user.customer_service_group = group
     agency_for_user.save()
 
     user = User.objects.create_user(username="test_user", email="test_user@example.com", password="test", is_staff=True)
@@ -122,7 +122,7 @@ def test_TransitAgency_for_user_not_in_group(model_TransitAgency):
 
     agency_for_user = TransitAgency.by_id(model_TransitAgency.id)
     agency_for_user.pk = None
-    agency_for_user.staff_group = group
+    agency_for_user.customer_service_group = group
     agency_for_user.save()
 
     user = User.objects.create_user(username="test_user", email="test_user@example.com", password="test", is_staff=True)
@@ -147,7 +147,6 @@ def test_agency_logo(model_TransitAgency):
 
 @pytest.mark.django_db
 def test_TransitAgency_clean(model_TransitAgency_inactive):
-    model_TransitAgency_inactive.short_name = ""
     model_TransitAgency_inactive.long_name = ""
     model_TransitAgency_inactive.phone = ""
     model_TransitAgency_inactive.info_url = ""
@@ -162,7 +161,6 @@ def test_TransitAgency_clean(model_TransitAgency_inactive):
 
     errors = e.value.error_dict
 
-    assert "short_name" in errors
     assert "long_name" in errors
     assert "phone" in errors
     assert "info_url" in errors
@@ -171,6 +169,24 @@ def test_TransitAgency_clean(model_TransitAgency_inactive):
     non_field_errors = errors[NON_FIELD_ERRORS]
     assert len(non_field_errors) == 1
     assert non_field_errors[0].message == "Must fill out configuration for either Littlepay or Switchio."
+
+
+@pytest.mark.django_db
+def test_TransitAgency_clean_short_name_change_requires_group(model_TransitAgency_inactive):
+    group = Group.objects.create(name="Existing Customer Service Group")
+    model_TransitAgency_inactive.customer_service_group = group
+    model_TransitAgency_inactive.save()
+
+    # change the short name and assign no group
+    model_TransitAgency_inactive.short_name = "NEW"
+    model_TransitAgency_inactive.customer_service_group = None
+
+    with pytest.raises(ValidationError) as e:
+        model_TransitAgency_inactive.clean()
+
+    errors = e.value.error_dict
+    assert "customer_service_group" in errors
+    assert "Blank not allowed. Set to its original value if changing the Short Name." in str(errors["customer_service_group"])
 
 
 @pytest.mark.django_db
@@ -245,3 +261,9 @@ def test_TransitAgency_in_person_enrollment_index_route_no_config(model_TransitA
         ),
     ):
         model_TransitAgency.in_person_enrollment_index_route
+
+
+@pytest.mark.django_db
+def test_TransitAgency_customer_service_group_name(model_TransitAgency):
+    model_TransitAgency.short_name = "CST"
+    assert model_TransitAgency.customer_service_group_name == "CST Customer Service"

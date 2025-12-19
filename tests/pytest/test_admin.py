@@ -17,8 +17,8 @@ class TestBenefitsAdminLoginForm:
 
 
 @pytest.fixture
-def model_AgencyUser(model_User):
-    cst_group = Group.objects.create(name="CST")
+def model_AgencyCustomerServiceUser(model_User):
+    cst_group = Group.objects.create(name="CST Customer Service")
     model_User.groups.add(cst_group)
     model_User.save()
     return model_User
@@ -39,42 +39,21 @@ def model_SuperUser(model_User):
 
 
 @pytest.mark.django_db
-def test_admin_override_agency_user_customer_service(model_AgencyUser, model_TransitAgency, client):
+def test_admin_override_agency_user_customer_service(model_AgencyCustomerServiceUser, model_TransitAgency, client):
     url = reverse(routes.ADMIN_INDEX)
-    client.force_login(model_AgencyUser)
+    client.force_login(model_AgencyCustomerServiceUser)
 
-    # set up TransitAgency with staff_group and customer_service_group
+    # set up TransitAgency with customer_service_group
     model_TransitAgency.pk = None
-    model_TransitAgency.staff_group = Group.objects.get(name="CST")
-    customer_service_group = Group.objects.create(name="CST Customer Service")
+    customer_service_group = Group.objects.get(name="CST Customer Service")
     model_TransitAgency.customer_service_group = customer_service_group
     model_TransitAgency.save()
-
-    # add the user to the customer service group
-    model_AgencyUser.groups.add(customer_service_group)
 
     response = client.get(url)
 
     assert response.status_code == 200
     assert response.template_name == "admin/agency-dashboard-index.html"
     assert response.context_data["has_permission_for_in_person"] is True
-
-
-@pytest.mark.django_db
-def test_admin_override_agency_user_not_customer_service(model_AgencyUser, model_TransitAgency, client):
-    url = reverse(routes.ADMIN_INDEX)
-    client.force_login(model_AgencyUser)
-
-    # set up TransitAgency with only a staff_group
-    model_TransitAgency.pk = None
-    model_TransitAgency.staff_group = Group.objects.get(name="CST")
-    model_TransitAgency.save()
-
-    response = client.get(url)
-
-    assert response.status_code == 200
-    assert response.template_name == "admin/agency-dashboard-index.html"
-    assert response.context_data["has_permission_for_in_person"] is False
 
 
 @pytest.mark.django_db
