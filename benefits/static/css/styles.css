@@ -103,7 +103,7 @@ a:hover:not(.btn) {
 
 a:focus:not(.btn):not(.card):not(.footer-link):not(#skip-to-content),
 a:focus-visible:not(.btn):not(.card):not(.footer-link):not(#skip-to-content) {
-  outline: var(--focus-style) !important;
+  outline: var(--focus-style-dark) !important;
   outline-offset: var(--focus-outline-offset) !important;
 }
 
@@ -277,7 +277,7 @@ main {
 }
 
 #skip-to-content:focus span {
-  outline: var(--focus-style) !important;
+  outline: var(--focus-style-dark) !important;
   outline-offset: var(--focus-outline-offset) !important;
   font-weight: var(--bold-font-weight);
   border-radius: var(--focus-border-radius);
@@ -321,7 +321,7 @@ footer .footer-links li a.footer-link:hover {
 
 footer .footer-links li a.footer-link:focus,
 footer .footer-links li a.footer-link:focus-visible {
-  outline: 3px solid var(--secondary-bg-color) !important;
+  outline: var(--focus-style-light) !important;
   outline-offset: 2px !important;
 }
 
@@ -372,11 +372,16 @@ footer .footer-links li a.footer-link:visited {
 .btn.btn-lg:focus,
 .btn.btn-lg:focus-visible,
 .btn-outline-dark:focus,
-.btn-outline-dark:focus-visible,
+.btn-outline-dark:focus-visible {
+  outline: var(--focus-style-dark);
+  outline-offset: var(--focus-outline-offset);
+  box-shadow: none;
+}
+
 .btn-outline-light:focus,
 .btn-ouline-light:focus-visible {
-  outline: 3px solid var(--focus-color);
-  outline-offset: 2px;
+  outline: var(--focus-style-light);
+  outline-offset: var(--focus-outline-offset);
   box-shadow: none;
 }
 
@@ -564,7 +569,7 @@ footer .footer-links li a.footer-link:visited {
 
 .form-field-container .form-control:focus,
 .form-field-container .form-control:focus-visible {
-  outline: 3px solid var(--focus-color) !important;
+  outline: var(--focus-style-dark) !important;
   outline-offset: 2px !important;
   box-shadow: none !important;
 }
@@ -589,7 +594,7 @@ footer .footer-links li a.footer-link:visited {
 
 #form-agency-selection .form-select:focus,
 #form-agency-selection .form-select:focus-visible {
-  outline: var(--focus-style);
+  outline: var(--focus-style-light);
   outline-offset: var(--focus-outline-offset);
 }
 
@@ -597,6 +602,13 @@ footer .footer-links li a.footer-link:visited {
   font-size: var(--font-size-20px);
   line-height: var(--bs-body-line-height);
   letter-spacing: calc(var(--font-size-20px) * var(--letter-spacing-2));
+}
+
+#form-agency-selection .btn.btn-lg.btn-primary:focus,
+#form-agency-selection .btn.btn-lg.btn-primary:focus-visible {
+  outline: var(--focus-style-light);
+  outline-offset: var(--focus-outline-offset);
+  box-shadow: none;
 }
 
 @media (min-width: 992px) {
@@ -634,7 +646,7 @@ footer .footer-links li a.footer-link:visited {
 
 .radio-input:focus,
 .radio-input:focus-visible {
-  outline: 2px solid var(--focus-color) !important;
+  outline: 2px solid var(--focus-color-dark) !important;
   outline-offset: 1px !important;
 }
 
@@ -672,7 +684,7 @@ footer .footer-links li a.footer-link:visited {
 .modal-header .btn-close:focus,
 .modal-header .btn-close:focus-visible {
   filter: none;
-  outline: 2px solid var(--focus-color) !important;
+  outline: 2px solid var(--focus-color-dark) !important;
   outline-offset: 1px !important;
   box-shadow: none !important; /* override CA State Web Template */
 }

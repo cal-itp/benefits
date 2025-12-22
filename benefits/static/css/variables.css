@@ -25,7 +25,8 @@
   --hover-color: #044869;
   --error-color: #ea1010;
   --selected-color: #562b97;
-  --focus-color: #fdb714;
+  --focus-color-light: #febd28;
+  --focus-color-dark: #756fff;
   --secondary-bg-color: #fafafa;
   --error-color-rgb: 234, 16, 16;
   --bs-danger: var(--error-color);
@@ -42,9 +43,9 @@
   --font-size-12px: calc(12rem / 16);
   --border-width: calc(2rem / 16);
   --border-radius: calc(3rem / 16);
-  --focus-style: 3px solid var(--focus-color);
+  --focus-style-light: 3px solid var(--focus-color-light);
+  --focus-style-dark: 3px solid var(--focus-color-dark);
   --focus-border-radius: calc(2rem / 16);
-  --focus-outline-offset: calc(2rem / 16);
-  --focus-border-radius: calc(2rem / 16);
+  --focus-outline-offset: calc(3rem / 16); /* 3px */
   --grid-spacer: calc(1rem / 2); /* 8px */
 }

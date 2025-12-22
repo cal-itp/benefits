@@ -55,7 +55,7 @@ input[type="text"]:focus,
 input[type="password"]:focus,
 a.sso-login-btn:focus,
 .login input[type="submit"]:focus {
-  outline: 3px solid var(--focus-color) !important;
+  outline: var(--focus-style-dark) !important;
   outline-offset: 2px !important;
   box-shadow: none !important; /* override CA State Web Template */
   text-decoration: none;
@@ -183,7 +183,7 @@ iframe.card-collection {
 
 .login a:focus:not(.btn):not(.sso-login-btn),
 .login a:focus-visible:not(.btn):not(.sso-login-btn) {
-  outline: var(--focus-style) !important;
+  outline: var(--focus-style-dark) !important;
   outline-offset: var(--focus-outline-offset) !important;
 }
 
