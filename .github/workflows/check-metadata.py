@@ -23,14 +23,22 @@ def get_metadata(url: str):
     return response.json()
 
 
-def check_metadata_timestamp(url: str):
+def _check_metadata_ts(url: str, ts_field: str):
     now = datetime.now(tz=timezone.utc)
     data = get_metadata(url)
-    ts = data["db"]["timestamp"]
+    ts = data["db"][ts_field]
     timestamp = datetime.fromisoformat(ts)
 
     if not all((timestamp.year == now.year, timestamp.month == now.month, timestamp.day == now.day)):
-        raise RuntimeError(f"Database timestamp mismatch: {ts}")
+        raise RuntimeError(f"Timestamp mismatch in {ts_field}: {ts}")
+
+
+def check_metadata_file_ts(url: str):
+    _check_metadata_ts(url, "file_ts")
+
+
+def check_metadata_load_ts(url: str):
+    _check_metadata_ts(url, "load_ts")
 
 
 def check_metadata_users(url: str):
@@ -56,6 +64,7 @@ if __name__ == "__main__":
 
     agency = args[1]
     url = get_agency_url(agency)
-    check_metadata_timestamp(url)
+    check_metadata_file_ts(url)
+    check_metadata_load_ts(url)
     check_metadata_users(url)
     check_metadata_eligibility(url)
