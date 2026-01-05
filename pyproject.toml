@@ -21,7 +21,7 @@ dependencies = [
     "django-google-sso==8.0.0",
     "django-multiselectfield==1.0.1",
     "eligibility-api==2025.4.1",
-    "pillow==11.3.0",
+    "pillow==12.1.0",
     "requests==2.32.5",
     "sentry-sdk==2.48.0",
     "six==1.17.0",
