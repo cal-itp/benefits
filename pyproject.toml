@@ -18,7 +18,7 @@ dependencies = [
     "django-azure-communication-email==1.5.0",
     "django-cdt-identity @ git+https://github.com/Office-of-Digital-Services/django-cdt-identity.git@c635773a75e7f184a9382748afcef6d5a705b2d6",
     "django-csp==4.0",
-    "django-google-sso==8.0.0",
+    "django-google-sso==9.0.2",
     "django-multiselectfield==1.0.1",
     "eligibility-api==2025.4.1",
     "pillow==11.3.0",
