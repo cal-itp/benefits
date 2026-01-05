@@ -4,7 +4,7 @@
 #      https://github.com/mkdocs/mkdocs/issues/4032
 #      https://github.com/pallets/click/issues/3084
 # Remove when a fixed version of Click has been released
-click==8.2.1
+click==8.3.1
 mdx_truly_sane_lists
 mkdocs==1.6.1
 mkdocs-awesome-pages-plugin
