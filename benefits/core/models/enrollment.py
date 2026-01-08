@@ -121,11 +121,6 @@ class EnrollmentFlow(models.Model):
         blank=True,
         help_text="The Eligibility API request details for this flow.",
     )
-    selection_label_template_override = models.TextField(
-        blank=True,
-        default="",
-        help_text="Override the default template that defines the end-user UI for selecting this flow among other options.",
-    )
     supports_expiration = models.BooleanField(
         default=False, help_text="Indicates if the enrollment expires or does not expire"
     )
@@ -187,9 +182,9 @@ class EnrollmentFlow(models.Model):
     def selection_label_template(self):
         prefix = "eligibility/includes/selection-label"
         if self.uses_api_verification:
-            return self.selection_label_template_override or f"{prefix}--{self.agency_card_name}.html"
+            return f"{prefix}--{self.agency_card_name}.html"
         else:
-            return self.selection_label_template_override or f"{prefix}--{self.system_name}.html"
+            return f"{prefix}--{self.system_name}.html"
 
     @property
     def eligibility_start_context(self):
