@@ -124,7 +124,6 @@ def model_EligibilityApiVerificationRequest(model_PemData):
 def model_EnrollmentFlow(model_TransitAgency):
     flow = EnrollmentFlow.objects.create(
         system_name="senior",
-        selection_label_template_override="eligibility/includes/selection-label.html",
         label="Test flow label",
         transit_agency=model_TransitAgency,
     )

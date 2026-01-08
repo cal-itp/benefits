@@ -29,12 +29,7 @@ class TestEnrollmentFlowAdmin:
     @pytest.mark.parametrize(
         "user_type,expected",
         [
-            (
-                "staff",
-                [
-                    "selection_label_template_override",
-                ],
-            ),
+            ("staff", ()),
             ("super", ()),
         ],
     )
