@@ -120,15 +120,7 @@ def test_EnrollmentFlow_no_claims_scheme(model_EnrollmentFlow_with_scope_and_cla
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_template_overrides_claims(model_EnrollmentFlow_with_scope_and_claim):
-    assert (
-        model_EnrollmentFlow_with_scope_and_claim.selection_label_template
-        == model_EnrollmentFlow_with_scope_and_claim.selection_label_template_override
-    )
-
-    model_EnrollmentFlow_with_scope_and_claim.selection_label_template_override = ""
-    model_EnrollmentFlow_with_scope_and_claim.save()
-
+def test_EnrollmentFlow_template_claims(model_EnrollmentFlow_with_scope_and_claim):
     assert (
         model_EnrollmentFlow_with_scope_and_claim.selection_label_template
         == f"eligibility/includes/selection-label--{model_EnrollmentFlow_with_scope_and_claim.system_name}.html"
@@ -136,35 +128,11 @@ def test_EnrollmentFlow_template_overrides_claims(model_EnrollmentFlow_with_scop
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_template_overrides_eligibility_api(model_EnrollmentFlow_with_eligibility_api):
-    model_EnrollmentFlow_with_eligibility_api.selection_label_template_override = ""
-    model_EnrollmentFlow_with_eligibility_api.save()
-
+def test_EnrollmentFlow_template_eligibility_api(model_EnrollmentFlow_with_eligibility_api):
     assert (
         model_EnrollmentFlow_with_eligibility_api.selection_label_template
         == f"eligibility/includes/selection-label--{model_EnrollmentFlow_with_eligibility_api.agency_card_name}.html"
     )
-
-
-@pytest.mark.django_db
-@pytest.mark.parametrize(
-    "template_attribute",
-    [
-        "selection_label_template_override",
-    ],
-)
-def test_EnrollmentFlow_clean_templates(model_EnrollmentFlow_with_scope_and_claim, model_TransitAgency, template_attribute):
-    # remove the agency
-    model_EnrollmentFlow_with_scope_and_claim.transit_agency = None
-    # set a bad template field
-    setattr(model_EnrollmentFlow_with_scope_and_claim, template_attribute, "does/not/exist.html")
-    # no agency assigned, OK
-    model_EnrollmentFlow_with_scope_and_claim.clean()
-
-    # now assign an agency and expect failure on clean()
-    model_EnrollmentFlow_with_scope_and_claim.transit_agency = model_TransitAgency
-    with pytest.raises(ValidationError, match="Template not found: does/not/exist.html"):
-        model_EnrollmentFlow_with_scope_and_claim.clean()
 
 
 @pytest.mark.django_db

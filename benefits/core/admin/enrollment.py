@@ -74,15 +74,3 @@ class EnrollmentFlowForm(forms.ModelForm):
 class SortableEnrollmentFlowAdmin(StaffPermissionMixin, SortableAdminMixin, admin.ModelAdmin):
     list_display = ("label", "transit_agency", "supported_enrollment_methods")
     form = EnrollmentFlowForm
-
-    def get_readonly_fields(self, request, obj=None):
-        fields = []
-
-        if not request.user.is_superuser:
-            fields.extend(
-                [
-                    "selection_label_template_override",
-                ]
-            )
-
-        return fields or super().get_readonly_fields(request, obj)
