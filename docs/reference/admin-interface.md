@@ -20,6 +20,8 @@ These environment variables can be set in your `.env` file to use certain featur
 
 The connection string needed to use an Azure Communication Service for sending emails, such as the one for user password reset. If this variable is not set, the file-based email backend is used.
 
+In deployed instances, this is automatically set by Terraform by referencing the [`azurerm_communication_service.primary_connection_string`](https://github.com/cal-itp/benefits/blob/main/terraform/email.tf#L15) attribute.
+
 ### DEFAULT_FROM_EMAIL
 
 !!! tldr "Django docs"
