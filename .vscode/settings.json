@@ -24,10 +24,12 @@
   "python.testing.pytestEnabled": true,
   "python.testing.unittestEnabled": false,
   "[terraform]": {
-    "editor.defaultFormatter": "hashicorp.terraform"
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true
   },
   "[terraform-vars]": {
-    "editor.defaultFormatter": "hashicorp.terraform"
+    "editor.defaultFormatter": "hashicorp.terraform",
+    "editor.formatOnSave": true
   },
   "workbench.editorAssociations": {
     "*.db": "sqlite-viewer.option"
