@@ -10,17 +10,17 @@ Single sign-on authentication is supported by the admin interface using [`django
 
 ## Environment variables
 
+These environment variables can be set in your `.env` file to use certain features in the admin interface locally:
+
+### GOOGLE_SSO_CLIENT_ID
+
 !!! tldr "`django-google-sso` docs"
 
     [All settings for `django-google-sso`](https://megalus.github.io/django-google-sso/settings/)
 
 !!! info "`settings.py`"
 
-    Configuration of `django-google-sso` in [Benefits settings](https://github.com/cal-itp/benefits/blob/main/benefits/settings.py#L60-L73)
-
-These environment variables must be set in your `.env` file to use the admin interface locally:
-
-### GOOGLE_SSO_CLIENT_ID
+    Configuration of `django-google-sso` in [Benefits settings](https://github.com/cal-itp/benefits/blob/main/benefits/settings.py#L74-L90)
 
 > The Google OAuth 2.0 Web Application Client ID.
 
