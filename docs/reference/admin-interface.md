@@ -12,6 +12,22 @@ Single sign-on authentication is supported by the admin interface using [`django
 
 These environment variables can be set in your `.env` file to use certain features in the admin interface locally:
 
+### AZURE_COMMUNICATION_CONNECTION_STRING
+
+!!! info "`settings.py`"
+
+    Usage of `AZURE_COMMUNICATION_CONNECTION_STRING` in [Benefits settings](https://github.com/cal-itp/benefits/blob/main/benefits/settings.py#L396)
+
+The connection string needed to use an Azure Communication Service for sending emails, such as the one for user password reset. If this variable is not set, the file-based email backend is used.
+
+### DEFAULT_FROM_EMAIL
+
+!!! tldr "Django docs"
+
+    [Settings: `DEFAULT_FROM_EMAIL`](https://docs.djangoproject.com/en/5.2/ref/settings/#default-from-email)
+
+The email address used by default in the `From:` header of outgoing emails.
+
 ### GOOGLE_SSO_CLIENT_ID
 
 !!! tldr "`django-google-sso` docs"
