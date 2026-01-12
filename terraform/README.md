@@ -1,1 +1,1 @@
-[Documentation](https://docs.calitp.org/benefits/deployment/infrastructure/)
+[Documentation](https://docs.calitp.org/benefits/explanation/infrastructure/)
