@@ -46,7 +46,7 @@ These environment variables must be set in your `.env` file to use the admin int
 
 > List of emails that will be created as superuser.
 
-## To add a new user:
+## Adding a new user
 
 - Add the user's email to either `GOOGLE_SSO_STAFF_LIST` or `GOOGLE_SSO_SUPERUSER_LIST` depending on what permissions they should have.
   - The email must be from a domain that is in the `GOOGLE_SSO_ALLOWABLE_DOMAINS` list.
