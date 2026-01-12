@@ -8,7 +8,6 @@ The configuration values that can be stored in the application database are mana
 
 Single sign-on authentication is supported by the admin interface using [`django-google-sso`](https://megalus.github.io/django-google-sso/).
 
-
 ## Environment variables
 
 !!! tldr "`django-google-sso` docs"
@@ -48,7 +47,8 @@ These environment variables must be set in your `.env` file to use the admin int
 > List of emails that will be created as superuser.
 
 ## To add a new user:
+
 - Add the user's email to either `GOOGLE_SSO_STAFF_LIST` or `GOOGLE_SSO_SUPERUSER_LIST` depending on what permissions they should have.
-   - The email must be from a domain that is in the `GOOGLE_SSO_ALLOWABLE_DOMAINS` list.
+  - The email must be from a domain that is in the `GOOGLE_SSO_ALLOWABLE_DOMAINS` list.
 - Restart the Benefits application so that Django settings are re-loaded.
 - Have the user log in to the admin interface with their Google account.
