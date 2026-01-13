@@ -1,9 +1,15 @@
 1. Cal-ITP creates new `EnrollmentFlow`s in the Admin:
+   - <mark>_Typically performed by transit provider's Account Manager_</mark>
    - For each type of discount the new transit provider will be using, add an enrollment flow with the following:
      - System name
      - Label (retype the system name)
      - Choose the `TransitAgency` that was just created
      - Modify supported enrollment methods, if necessary
-     - Choose the appropriate OAuth config (e.g., benefits-logingov for an Older Adults flow)
-     - Choose the appropriate claims request
-   - All other fields can likely be skipped or left at their default value.
+     - <mark>Sign out button template</mark>
+     - <mark>Sign out link template</mark>
+     - Choose the appropriate OAuth config (e.g., benefits-logingov for an Older Adults flow) <mark>will need a training checklist</mark>
+     - Choose the appropriate claims request <mark>will need a training checklist</mark>
+     - <mark>Choose the appropriate API request. will need a training checklist</mark>
+     - <mark>Selection label template override</mark>
+     - <mark>Supports expiration (days and reenrollment days). will need a training checklist</mark>
+   - <del><mark>All other fields can likely be skipped or left at their default value. </mark></del>

@@ -40,7 +40,9 @@ Certain parts of the codebase must be updated to support a new transit provider:
 
 [Here is an example PR that makes these updates for a new transit provider.](https://github.com/cal-itp/benefits/pull/3246)
 
-## Configuration for development and testing
+<mark>Make an `rc` release to deploy the new code to the `test` environment. Notify the Cal-ITP team that the `test` environment is ready by updating the associated GitHub issue (task).</mark>
+
+## Configuration for <del><mark>development and</mark></del> testing
 
 _These items can all be done in parallel._
 
@@ -70,9 +72,11 @@ For production validation, both a customer group and discount product are needed
 1. Transit provider staff creates the discount product in production Littlepay (if it does not already exist).
 1. Transit provider staff takes a screenshot of the discount product in the Merchant Portal, making sure the browser URL is visible, and sends that to Cal-ITP.
 1. Cal-ITP creates a customer group **for testing purposes** in production Littlepay.
-1. Cal-ITP associates the group with the product.
+1. Cal-ITP associates the group with the product <mark> and notifies the dev team in its associated GitHub Issue (task).</mark>
    - _Typically performed by transit provider's Account Manager_
-   - Once this is complete, verify that the setup is correct by using the [littlepay CLI](https://github.com/cal-itp/littlepay). Example:
+1. <mark>Once this is complete, verify that the setup is correct by using the [littlepay CLI](https://github.com/cal-itp/littlepay).</mark>
+   - <mark>_Typically performed by an engineer_</mark>
+   - Example:
    ```bash
    $ littlepay groups products
    👥 Matching groups (3): ⚠️  prod, edcta
@@ -88,16 +92,15 @@ For production validation, both a customer group and discount product are needed
      ProductResponse(id='267edc99-6989-4779-a445-94a121387a25', code='Senior 65+', status='ACTIVE', type='DISCOUNT', description='Senior 65+', participant_id='eldorado-transit')
      ProductResponse(id='d7d948c2-20bf-4b10-a181-d1f2c89456b6', code='Senior 65+', status='ACTIVE', type='CAPPING', description='Senior 65+', participant_id='eldorado-transit')
    ```
-1. Cal-ITP ensures the code changes made [during development and testing configuration](#configuration-for-development-and-testing) are deployed to the test environment.
-
---8<-- "inc/add-transitagency.md"
---8<-- "inc/add-enrollmentflow.md"
+1. <del><mark>Cal-ITP ensures the code changes made [during development and testing configuration](#configuration-for-development-and-testing) are deployed to the test environment. Also removed new `TransitAgency` and new `EnrollmentFlow`s setup steps</mark></del>
 
 1. Cal-ITP creates a new `EnrollmentGroup` in the Benefits test environment:
+   - <mark>_Typically performed by transit provider's Account Manager_</mark>
    - Choose one of the new `EnrollmentFlow`s.
    - Set the group value to the corresponding **testing** group ID (from production Littlepay) for production validation.
      - This will be set back to the QA group value after final production configuration is complete.
 1. Cal-ITP creates a new `LittlepayConfig` in the Benefits test environment:
+   - <mark>_Performed by an engineer._</mark>
    - Set Environment to **Production** for production validation.
      - This will be set back to QA after final production configuration is complete.
    - Choose the new `TransitAgency`.
@@ -123,17 +126,23 @@ At this point, Cal-ITP and transit provider staff can coordinate to do on-the-gr
 Once production validation is done, the transit provider can be added to the production Benefits database.
 
 1. Cal-ITP creates a customer group **for production use** in production Littlepay.
+   - <mark>_Typically performed by transit provider's Account Manager_</mark>
 1. Cal-ITP associates the group with the discount product [created previously during production validation](#configuration-for-production-validation).
-   - Once this is complete, verify that the setup is correct by using the [littlepay CLI](https://github.com/cal-itp/littlepay).
+   - <mark>_Typically performed by transit provider's Account Manager_</mark>
+1. <mark>Once this is complete, verify that the setup is correct by using the [littlepay CLI](https://github.com/cal-itp/littlepay).</mark>
+   - <mark>_Performed by an engineer_</mark>
 1. Cal-ITP ensures the code changes made [during development and testing configuration](#configuration-for-development-and-testing) are deployed to the prod environment.
+   - <mark>_Performed by an engineer during a regular release_</mark>
 
 --8<-- "inc/add-transitagency.md"
 --8<-- "inc/add-enrollmentflow.md"
 
 1. Cal-ITP creates a new `EnrollmentGroup` in the Benefits prod environment:
+   - <mark>_Typically performed by transit provider's Account Manager_</mark>
    - Choose one of the new `EnrollmentFlow`s.
    - Set the group value to the corresponding **production** group ID.
 1. Cal-ITP creates a new `LittlepayConfig` in the Benefits prod environment:
+   - <mark>_Performed by an engineer._</mark>
    - Set Environment to **Production**.
    - Choose the new `TransitAgency`.
    - Retrieve Audience and Client ID values for the **production** config from shared LastPass note.
