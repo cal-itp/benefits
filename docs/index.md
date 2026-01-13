@@ -88,19 +88,20 @@ timeline
 
 The following California transit providers have adopted Cal-ITP Benefits. The benefit options available to eligible riders are denoted by a green checkmark.
 
-| Transit provider                                | Initial launch date | Older adults | Medicare cardholders | U.S. Veterans | Agency card | Low-income |
-| ----------------------------------------------- | ------------------- | ------------ | -------------------- | ------------- | ----------- | ---------- |
-| **Monterey-Salinas Transit**                    | 12/2021             | ✅           | ✅                   | ✅            | ✅          | ―          |
-| **Santa Barbara Metropolitan Transit District** | 10/2023             | ✅           | ✅                   | ―             | ✅          | ―          |
-| **Sacramento Regional Transit District**        | 10/2024             | ✅           | ✅                   | ✅            | ―           | ―          |
-| **Nevada County Connects**                      | 03/2025             | ✅           | ✅                   | ✅            | ―           | ―          |
-| **Ventura County Transportation Commission**    | 10/2025             | ✅           | ✅                   | ―             | ―           | ―          |
-| **San Luis Obispo Regional Transit**            | 12/2025             | ✅           | ✅                   | ―             | ―           | ―          |
-| **El Dorado Transit Authority**                 | 01/2026 (target)    | \*           | \*                   | \*            | \*          | \*         |
-| **Redding Area Bus Authority**                  | 01/2026 (target)    | \*           | \*                   | \*            | \*          | \*         |
-| **City of San Luis Obispo**                     | 02/2026 (target)    | \*           | \*                   | \*            | \*          | \*         |
-| **City of Roseville**                           | Planned             | \*           | \*                   | \*            | \*          | \*         |
-| **Santa Cruz Metropolitan Transit District**    | Planned             | \*           | \*                   | \*            | \*          | \*         |
+| Transit provider                                    | Initial launch date | Older adults | Medicare cardholders | U.S. Veterans | Agency card | Low-income |
+| --------------------------------------------------- | ------------------- | ------------ | -------------------- | ------------- | ----------- | ---------- |
+| **Monterey-Salinas Transit**                        | 12/2021             | ✅           | ✅                   | ✅            | ✅          | ―          |
+| **Santa Barbara Metropolitan Transit District**     | 10/2023             | ✅           | ✅                   | ―             | ✅          | ―          |
+| **Sacramento Regional Transit District**            | 10/2024             | ✅           | ✅                   | ✅            | ―           | ―          |
+| **Nevada County Connects**                          | 03/2025             | ✅           | ✅                   | ✅            | ―           | ―          |
+| **Ventura County Transportation Commission**        | 10/2025             | ✅           | ✅                   | ―             | ―           | ―          |
+| **San Luis Obispo Regional Transit**                | 12/2025             | ✅           | ✅                   | ―             | ―           | ―          |
+| **El Dorado Transit Authority**                     | 01/2026 (target)    | \*           | \*                   | \*            | \*          | \*         |
+| **Redding Area Bus Authority**                      | 01/2026 (target)    | \*           | \*                   | \*            | \*          | \*         |
+| **City of San Luis Obispo**                         | 02/2026 (target)    | \*           | \*                   | \*            | \*          | \*         |
+| **City of Roseville**                               | Planned             | \*           | \*                   | \*            | \*          | \*         |
+| **Santa Cruz Metropolitan Transit District**        | Planned             | \*           | \*                   | \*            | \*          | \*         |
+| **Santa Barbara County Association of Governments** | Planned             | \*           | \*                   | \*            | \*          | \*         |
 
 ## Supported enrollment pathways
 
