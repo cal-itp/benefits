@@ -1,5 +1,8 @@
 FROM benefits_client:latest
 
+# should match the version specified in terraform/pipeline/deploy.yml
+ENV TF_VERSION="1.13.4"
+
 USER root
 
 # install apt packages using the archives and lists cache
@@ -10,7 +13,13 @@ RUN --mount=type=cache,id=apt-archives,sharing=locked,target=/var/cache/apt/arch
     curl -sL https://aka.ms/InstallAzureCLIDeb | bash && \
     # install webp CLI
     # https://developers.google.com/speed/webp/download
-    apt install locales webp -y
+    apt install locales webp -y && \
+    # install Terraform
+    # https://developer.hashicorp.com/terraform/tutorials/docker-get-started/install-cli#install-terraform
+    wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip && \
+    unzip terraform_${TF_VERSION}_linux_amd64.zip && \
+    chmod +x terraform && \
+    mv terraform /usr/local/bin/
 
 # VSCode will use en_US for git operations, so make it available in the container
 # https://github.com/microsoft/vscode/pull/210506

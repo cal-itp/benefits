@@ -23,12 +23,12 @@ resource "azurerm_linux_web_app" "main" {
   virtual_network_subnet_id = local.subnet_id
 
   site_config {
-    ftps_state                                    = "Disabled"
-    vnet_route_all_enabled                        = true
+    ftps_state             = "Disabled"
+    vnet_route_all_enabled = true
 
     # https://github.com/hashicorp/terraform-provider-azurerm/issues/25244
-    ip_restriction_default_action                 = "Allow"
-    scm_ip_restriction_default_action             = "Allow"
+    ip_restriction_default_action     = "Allow"
+    scm_ip_restriction_default_action = "Allow"
   }
 
   identity {
