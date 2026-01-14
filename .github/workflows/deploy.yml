@@ -33,10 +33,19 @@ jobs:
     uses: ./.github/workflows/check-migrations-and-messages.yml
     if: github.ref_type == 'tag'
 
+  check-dynamic-version:
+    uses: ./.github/workflows/check-dynamic-version.yml
+    if: github.ref_type == 'tag'
+
   deploy:
     runs-on: ubuntu-latest
     needs:
-      [tests-ui, tests-pytest, check-migrations-and-messages]
+      [
+        tests-ui,
+        tests-pytest,
+        check-migrations-and-messages,
+        check-dynamic-version,
+      ]
     if: (!cancelled())
     environment: ${{ github.ref_type != 'tag' && github.ref_name || contains(github.ref, '-rc') && 'test' || 'prod' }}
 

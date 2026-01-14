@@ -1,0 +1,64 @@
+name: Check the dynamic version of the Benefits package
+
+on: [push, pull_request, workflow_call]
+
+jobs:
+  check-dynamic-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # fetch all history/tags for setuptools_scm to work
+
+      - name: Configure Git
+        # required Git setup for creating annotated tags
+        run: |
+          git config user.name "Version Checker"
+          git config user.email "user@checker.org"
+
+      - name: Create annotated tag for testing
+        id: create_tag
+        run: |
+          # create "<current_year>.<current_month>.100" test tag
+          TEST_TAG="$(date +'%Y.%m.100')"
+          echo "tag=$TEST_TAG" >> $GITHUB_OUTPUT
+          git tag -a $TEST_TAG -m "Testing tag"
+
+      - name: Build and start the app container
+        run: |
+          # create an empty .env file required by Compose so it doesn't crash
+          touch .env
+          docker compose build --no-cache client
+          docker compose up -d client
+
+      - name: Verify version match
+        run: |
+          # define expected version
+          EXPECTED="${{ steps.create_tag.outputs.tag }}"
+
+          # get the Python actual version from the app container
+          # tail is required to ignore the "... objects imported automatically..." banner preceding the version number
+          ACTUAL_PYTHON=$(docker compose exec -T client python manage.py shell -c "import benefits; print(benefits.VERSION)" | tail -n 1)
+          # Python versions normalize single digit months to no leading zeros
+          # so we need to format (add back the leading zero for single digit months) the Python version to match the expected tag format
+          ACTUAL=$(echo "$ACTUAL_PYTHON" | awk -F. -v OFS=. '{$2=sprintf("%02d",$2); print $0}')
+
+          echo "Expected tag: $EXPECTED"
+          echo "Actual   tag: $ACTUAL"
+
+          # compare versions
+          if [ "$ACTUAL" == "$EXPECTED" ]; then
+            echo "Success: Version matches git tag."
+            exit 0
+          else
+            echo "Error: Version mismatch"
+            exit 1
+          fi
+
+      - name: Cleanup
+        if: ${{ !cancelled() }} # Run even if any of the previous steps fail
+        run: |
+          docker compose down
+          # delete the test tag or simply run true if it doesn't exist
+          git tag -d ${{ steps.create_tag.outputs.tag }} || true
