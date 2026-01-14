@@ -5,6 +5,7 @@ The eligibility application: Form definition for the eligibility verification fl
 import logging
 
 from django import forms
+from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
 from benefits.routes import routes
@@ -39,7 +40,7 @@ class EnrollmentFlowSelectionForm(ValidateRecaptchaMixin, forms.Form):
 
 
 class EligibilityVerificationForm(ValidateRecaptchaMixin, forms.Form):
-    """Form to collect eligibility verification details."""
+    """Base form to collect eligibility verification details."""
 
     action_url = routes.ELIGIBILITY_CONFIRM
     id = "form-eligibility-verification"
@@ -47,176 +48,111 @@ class EligibilityVerificationForm(ValidateRecaptchaMixin, forms.Form):
 
     submit_value = _("Find my record")
     submitting_value = _("Checking")
+    classes = "eligibility-verification-form"
 
-    def __init__(
-        self,
-        title,
-        headline,
-        blurb,
-        name_label,
-        name_placeholder,
-        name_help_text,
-        sub_label,
-        sub_placeholder,
-        sub_help_text,
-        name_max_length=None,
-        sub_input_mode=None,
-        sub_max_length=None,
-        sub_pattern=None,
-        sub_custom_validity=None,
-        name_custom_validity=None,
-        *args,
-        **kwargs,
-    ):
-        """Initialize a new EligibilityVerification form.
+    # Default configuration attributes (override in subclasses)
+    title = _("Agency card information")
+    headline = _("Let’s find the record of your transit benefit.")
+    blurb = None
 
-        Args:
-            title (str): The page (i.e. tab) title for the form's page.
+    name_label = _("Last Name")
+    name_placeholder = "Garcia"
+    name_help_text = _(
+        "Please enter your last name the same way it is printed on your card, including capital letters and hyphens."
+    )
+    name_max_length = 255
+    name_custom_validity = _("Please enter your last name.")
 
-            headline (str): The <h1> on the form's page.
-
-            blurb (str): Intro <p> on the form's page.
-
-            name_label (str): Label for the name form field.
-
-            name_placeholder (str): Field placeholder for the name form field.
-
-            name_help_text (str): Extra help text for the name form field.
-
-            sub_label (str): Label for the sub form field.
-
-            sub_placeholder (str): Field placeholder for the sub form field.
-
-            sub_help_text (str): Extra help text for the sub form field.
-
-            name_max_length (int): The maximum length accepted for the 'name' API field before sending an API request
-
-            sub_input_mode (str): Input mode can be "numeric", "tel", "search", etc. to override default "text" keyboard on
-                                  mobile devices
-
-            sub_max_length (int): The maximum length accepted for the 'sub' API field before sending an API request
-
-            sub_pattern (str): A regular expression used to validate the 'sub' API field before sending an API request
-
-        Extra args and kwargs are passed through to the underlying django.forms.Form.
-        """
-        super().__init__(auto_id=True, label_suffix="", *args, **kwargs)
-
-        self.title = title
-        self.headline = headline
-        self.blurb = blurb
-        self.classes = "eligibility-verification-form"
-
-        sub_widget = widgets.FormControlTextInput(placeholder=sub_placeholder)
-        if sub_pattern:
-            sub_widget.attrs.update({"pattern": sub_pattern})
-        if sub_input_mode:
-            sub_widget.attrs.update({"inputmode": sub_input_mode})
-        if sub_max_length:
-            sub_widget.attrs.update({"maxlength": sub_max_length})
-        if sub_custom_validity:
-            sub_widget.attrs.update({"data-custom-validity": sub_custom_validity})
-            self.use_custom_validity = True
-
-        self.fields["sub"] = forms.CharField(
-            label=sub_label,
-            widget=sub_widget,
-            help_text=sub_help_text,
-        )
-
-        name_widget = widgets.FormControlTextInput(placeholder=name_placeholder)
-        if name_max_length:
-            name_widget.attrs.update({"maxlength": name_max_length})
-        if name_custom_validity:
-            name_widget.attrs.update({"data-custom-validity": name_custom_validity})
-            self.use_custom_validity = True
-
-        self.fields["name"] = forms.CharField(label=name_label, widget=name_widget, help_text=name_help_text)
-
-
-class CSTAgencyCard(EligibilityVerificationForm):
-    """EligibilityVerification form for the CST Agency Card."""
+    sub_label = None
+    sub_placeholder = None
+    sub_help_text = None
+    sub_input_mode = None
+    sub_max_length = None
+    sub_pattern = None
+    sub_custom_validity = None
 
     def __init__(self, *args, **kwargs):
-        super().__init__(
-            title=_("Agency card information"),
-            headline=_("Let’s find the record of your transit benefit."),
-            blurb=_(
-                "We use the information on your CST Agency Card to find the record of your transit benefit in our system."
-            ),
-            name_label=_("Last Name"),
-            name_placeholder="Hernandez-Demarcos",
-            name_help_text=_(
-                "Please enter your last name the same way it is printed on your card, including capital letters and hyphens."
-            ),
-            sub_label=_("Agency Card number"),
-            sub_help_text=_("This is a 5-digit number on the front and back of your card."),
-            sub_placeholder="12345",
-            name_max_length=255,
-            sub_input_mode="numeric",
-            sub_max_length=5,
-            sub_pattern=r"\d{5}",
-            sub_custom_validity=_("Please enter a 5-digit number."),
-            name_custom_validity=_("Please enter your last name."),
-            *args,
-            **kwargs,
+        """Initialize the form using class attributes for configuration."""
+        super().__init__(auto_id=True, label_suffix="", *args, **kwargs)
+
+        # Configure the 'sub' field (ID/Card Number)
+        sub_widget = widgets.FormControlTextInput(placeholder=self.sub_placeholder)
+
+        if self.sub_pattern:
+            sub_widget.attrs.update({"pattern": self.sub_pattern})
+        if self.sub_input_mode:
+            sub_widget.attrs.update({"inputmode": self.sub_input_mode})
+        if self.sub_max_length:
+            sub_widget.attrs.update({"maxlength": self.sub_max_length})
+        if self.sub_custom_validity:
+            sub_widget.attrs.update({"data-custom-validity": self.sub_custom_validity})
+            self.use_custom_validity = True
+
+        sub_validators = []
+        if self.sub_pattern and self.sub_custom_validity:
+            sub_validators.append(RegexValidator(regex=self.sub_pattern, message=self.sub_custom_validity))
+
+        self.fields["sub"] = forms.CharField(
+            label=self.sub_label,
+            widget=sub_widget,
+            help_text=self.sub_help_text,
+            max_length=self.sub_max_length,
+            validators=sub_validators,
+        )
+
+        # Configure the 'name' field
+        name_widget = widgets.FormControlTextInput(placeholder=self.name_placeholder)
+
+        if self.name_max_length:
+            name_widget.attrs.update({"maxlength": self.name_max_length})
+        if self.name_custom_validity:
+            name_widget.attrs.update({"data-custom-validity": self.name_custom_validity})
+            self.use_custom_validity = True
+
+        self.fields["name"] = forms.CharField(
+            label=self.name_label,
+            widget=name_widget,
+            help_text=self.name_help_text,
+            max_length=self.name_max_length,
         )
 
 
 class MSTCourtesyCard(EligibilityVerificationForm):
     """EligibilityVerification form for the MST Courtesy Card."""
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(
-            title=_("Agency card information"),
-            headline=_("Let’s find the record of your transit benefit."),
-            blurb=_(
-                "We use the information on your MST Courtesy Card to find the record of your transit benefit in our system."
-            ),
-            name_label=_("Last Name"),
-            name_placeholder="Garcia",
-            name_help_text=_(
-                "Please enter your last name the same way it is printed on your card, including capital letters and hyphens."
-            ),
-            sub_label=_("Courtesy Card number"),
-            sub_help_text=_("This is a 5-digit number on the front and back of your card."),
-            sub_placeholder="12345",
-            name_max_length=255,
-            sub_input_mode="numeric",
-            sub_max_length=5,
-            sub_pattern=r"\d{5}",
-            sub_custom_validity=_("Please enter a 5-digit number."),
-            name_custom_validity=_("Please enter your last name."),
-            *args,
-            **kwargs,
-        )
+    blurb = _("We use the information on your MST Courtesy Card to find the record of your transit benefit in our system.")
+
+    sub_label = _("Courtesy Card number")
+    sub_placeholder = "12345"
+    sub_help_text = _("This is a 5-digit number on the front and back of your card.")
+    sub_input_mode = "numeric"
+    sub_max_length = 5
+    sub_pattern = r"\d{5}"
+    sub_custom_validity = _("Please enter a 5-digit number.")
+
+
+class CSTAgencyCard(MSTCourtesyCard):
+    """
+    EligibilityVerification form for the CST Agency Card.
+    Inherits validation logic from MSTCourtesyCard but overrides specific text.
+    """
+
+    blurb = _("We use the information on your CST Agency Card to find the record of your transit benefit in our system.")
+
+    sub_label = _("Agency Card number")
 
 
 class SBMTDMobilityPass(EligibilityVerificationForm):
     """EligibilityVerification form for the SBMTD Reduced Fare Mobility ID."""
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(
-            title=_("Agency card information"),
-            headline=_("Let’s find the record of your transit benefit."),
-            blurb=_(
-                "We use the information on your SBMTD Reduced Fare Mobility ID card to find the record of your transit "
-                + "benefit in our system."
-            ),
-            name_label=_("Last Name"),
-            name_placeholder="Garcia",
-            name_help_text=_(
-                "Please enter your last name the same way it is printed on your card, including capital letters and hyphens."
-            ),
-            sub_label=_("Reduced Fare Mobility ID card number"),
-            sub_help_text=_("This is a 4- or 5-digit number on the back of your card."),
-            sub_placeholder="12345",
-            name_max_length=255,
-            sub_input_mode="numeric",
-            sub_max_length=5,
-            sub_pattern=r"\d{4,5}",
-            sub_custom_validity=_("Please enter a 4- or 5-digit number."),
-            name_custom_validity=_("Please enter your last name."),
-            *args,
-            **kwargs,
-        )
+    blurb = _(
+        "We use the information on your SBMTD Reduced Fare Mobility ID card to find the record of your transit benefit in our system."  # noqa: E501
+    )
+
+    sub_label = _("Reduced Fare Mobility ID card number")
+    sub_placeholder = "12345"
+    sub_help_text = _("This is a 4- or 5-digit number on the back of your card.")
+    sub_input_mode = "numeric"
+    sub_max_length = 5
+    sub_pattern = r"\d{4,5}"
+    sub_custom_validity = _("Please enter a 4- or 5-digit number.")
