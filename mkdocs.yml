@@ -25,13 +25,13 @@ plugins:
   - awesome-pages
   - redirects:
       redirect_maps:
-        "configuration/admin-interface.md": "reference/admin-interface.md"
+        "configuration/admin-interface.md": "reference/environment-variables.md#django-admin-interface"
         "configuration/data.md": "tutorials/load-sample-data.md"
-        "configuration/content-security-policy.md": "reference/content-security-policy.md"
+        "configuration/content-security-policy.md": "reference/environment-variables.md#django-csp"
         "configuration/environment-variables.md": "reference/environment-variables.md"
         "configuration/rate-limit.md": "reference/rate-limit.md"
         "configuration/README.md": "explanation/configuration.md"
-        "configuration/recaptcha.md": "reference/recaptcha.md"
+        "configuration/recaptcha.md": "reference/environment-variables.md#recaptcha"
         "configuration/transit-provider.md": "guides/onboard-transit-provider.md"
 
         "deployment/azure.md": "explanation/infrastructure.md"
