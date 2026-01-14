@@ -1,14 +1,13 @@
+import pytest
 from django.urls import reverse
 
-import pytest
-
+import benefits.core.session
+import benefits.eligibility.views as views
 from benefits.core.context.agency import AgencySlug
 from benefits.core.context.flow import SystemName
 from benefits.eligibility import forms
+from benefits.eligibility.forms import EligibilityVerificationForm, EnrollmentFlowSelectionForm
 from benefits.routes import routes
-import benefits.core.session
-from benefits.eligibility.forms import EnrollmentFlowSelectionForm, EligibilityVerificationForm
-import benefits.eligibility.views as views
 
 
 @pytest.fixture

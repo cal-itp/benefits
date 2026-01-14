@@ -1,11 +1,10 @@
 from datetime import timedelta
 
+import pytest
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 
-import pytest
-
-from benefits.core.models import EligibilityApiVerificationRequest, EnrollmentFlow, EnrollmentEvent, EnrollmentMethods
+from benefits.core.models import EligibilityApiVerificationRequest, EnrollmentEvent, EnrollmentFlow, EnrollmentMethods
 
 
 @pytest.mark.django_db

@@ -1,14 +1,12 @@
 import logging
 
+import requests
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.auth.models import Group, User
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin, UserAdmin as BaseUserAdmin
-
-import requests
+from django.contrib.auth.models import Group, User
 
 from benefits.core.admin.mixins import StaffPermissionMixin
-
 
 logger = logging.getLogger(__name__)
 

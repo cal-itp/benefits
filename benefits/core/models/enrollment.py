@@ -1,18 +1,19 @@
 import logging
 import uuid
 
-from cdt_identity.models import IdentityGatewayConfig, ClaimsVerificationRequest
+from cdt_identity.models import ClaimsVerificationRequest, IdentityGatewayConfig
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 from multiselectfield import MultiSelectField
 
-from .common import PemData, SecretNameField, template_path
-from .transit import TransitAgency
 from benefits.core import context as core_context
 from benefits.eligibility import context as eligibility_context
 from benefits.enrollment import context as enrollment_context
 from benefits.in_person import context as in_person_context
+
+from .common import PemData, SecretNameField, template_path
+from .transit import TransitAgency
 
 logger = logging.getLogger(__name__)
 

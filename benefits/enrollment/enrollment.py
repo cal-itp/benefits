@@ -1,12 +1,13 @@
 from datetime import datetime, timedelta
 from enum import Enum
 
+import sentry_sdk
 from django.shortcuts import redirect
 from django.utils import timezone
-import sentry_sdk
 
-from benefits.routes import routes
 from benefits.core import models, session
+from benefits.routes import routes
+
 from . import analytics
 
 

@@ -1,21 +1,20 @@
 from unittest.mock import create_autospec
+
+import pytest
 from cdt_identity.models import ClaimsVerificationRequest, IdentityGatewayConfig
 from django.contrib.auth.models import User
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.middleware.locale import LocaleMiddleware
 from django.utils import timezone
-
-import pytest
-
 from pytest_socket import disable_socket
 
 from benefits.core import session
 from benefits.core.models import (
     EligibilityApiVerificationRequest,
     EnrollmentFlow,
+    Environment,
     PemData,
     TransitAgency,
-    Environment,
 )
 from benefits.core.models.transit import EligibilityApiConfig
 from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup

@@ -1,19 +1,18 @@
 import json
 import logging
 
+import sentry_sdk
 from django.http import JsonResponse
 from django.urls import reverse
 from django.views.generic import FormView, View
-import sentry_sdk
 
-from benefits.routes import routes
 from benefits.core import models
 from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FlowSessionRequiredMixin
-
 from benefits.enrollment import analytics, forms
 from benefits.enrollment.enrollment import Status, handle_enrollment_results
 from benefits.enrollment_littlepay.enrollment import enroll, request_card_tokenization_access
 from benefits.enrollment_littlepay.session import Session
+from benefits.routes import routes
 
 logger = logging.getLogger(__name__)
 

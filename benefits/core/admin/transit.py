@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 
 from benefits.core import models
+
 from .mixins import StaffPermissionMixin, SuperuserPermissionMixin
 
 

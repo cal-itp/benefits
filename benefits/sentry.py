@@ -1,12 +1,12 @@
 import logging
-import shutil
 import os
+import shutil
 import subprocess
 
-from django.conf import settings
 import sentry_sdk
+from django.conf import settings
 from sentry_sdk.integrations.django import DjangoIntegration
-from sentry_sdk.scrubber import EventScrubber, DEFAULT_DENYLIST
+from sentry_sdk.scrubber import DEFAULT_DENYLIST, EventScrubber
 
 from benefits import VERSION
 

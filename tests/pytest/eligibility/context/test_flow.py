@@ -1,9 +1,9 @@
 import pytest
 
 from benefits.core import context as core_context
-from benefits.routes import routes
 from benefits.eligibility import context as eligibility_context
 from benefits.eligibility.context.flow import CTAButton, EligibilityStart, EligibilityUnverified
+from benefits.routes import routes
 
 
 @pytest.mark.parametrize("system_name", core_context.SystemName)

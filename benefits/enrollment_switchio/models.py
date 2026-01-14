@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from benefits.core.models import PemData, SecretNameField, Environment, EnrollmentGroup, TransitProcessorConfig
+from benefits.core.models import EnrollmentGroup, Environment, PemData, SecretNameField, TransitProcessorConfig
 from benefits.secrets import get_secret_by_name
 
 

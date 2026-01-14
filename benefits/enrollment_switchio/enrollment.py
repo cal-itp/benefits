@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
+
 from django.conf import settings
 from django.http import HttpRequest
 from django.urls import reverse
@@ -8,16 +9,16 @@ from requests import HTTPError
 from benefits.core import session
 from benefits.core.models.enrollment import EnrollmentFlow
 from benefits.enrollment.enrollment import Status, _calculate_expiry, _is_expired, _is_within_reenrollment_window
-from benefits.enrollment_switchio.models import SwitchioConfig
-from benefits.routes import routes
 from benefits.enrollment_switchio.api import (
     EnrollmentClient,
-    TokenizationClient,
     EshopResponseMode,
     Registration,
     RegistrationMode,
     RegistrationStatus,
+    TokenizationClient,
 )
+from benefits.enrollment_switchio.models import SwitchioConfig
+from benefits.routes import routes
 
 
 @dataclass

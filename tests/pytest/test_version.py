@@ -2,7 +2,7 @@ import re
 
 
 def test_version():
-    from benefits import __version__, VERSION
+    from benefits import VERSION, __version__
 
     assert __version__ is not None
     assert __version__ == VERSION

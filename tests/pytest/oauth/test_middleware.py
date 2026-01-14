@@ -1,12 +1,11 @@
+import pytest
 from django.urls import reverse
 from django.utils.decorators import decorator_from_middleware
 
-import pytest
-
+import benefits.oauth.middleware
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.oauth.middleware import FlowUsesClaimsVerificationSessionRequired
 from benefits.routes import routes
-import benefits.oauth.middleware
 
 
 @pytest.fixture

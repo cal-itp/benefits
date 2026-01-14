@@ -13,8 +13,8 @@ from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
 
 from benefits.routes import routes
-from . import analytics, recaptcha, session
 
+from . import analytics, recaptcha, session
 
 logger = logging.getLogger(__name__)
 

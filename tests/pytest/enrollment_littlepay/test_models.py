@@ -1,5 +1,5 @@
-from django.forms import ValidationError
 import pytest
+from django.forms import ValidationError
 
 from benefits.enrollment_littlepay.models import LittlepayConfig
 

@@ -14,7 +14,7 @@ from django.http import HttpResponse
 from django.urls import include, path, re_path
 from django.views.static import serve
 
-from .core.admin.views import BenefitsPasswordResetView, BenefitsPasswordResetDoneView, BenefitsPasswordResetConfirmView
+from .core.admin.views import BenefitsPasswordResetConfirmView, BenefitsPasswordResetDoneView, BenefitsPasswordResetView
 
 logger = logging.getLogger(__name__)
 
