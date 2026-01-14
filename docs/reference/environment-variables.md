@@ -210,7 +210,7 @@ Comma-separated list of User-Agent strings which, when present as an HTTP header
 
     [The Django admin site](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/)
 
-The configuration values that can be stored in the application database are managed directly in the [Django Admin interface](./admin-interface.md) at the `/admin` endpoint.
+The configuration values that can be stored in the application database are managed directly in the Django Admin interface at the `/admin` endpoint.
 
 Single sign-on authentication is supported by the admin interface using [`django-google-sso`](https://megalus.github.io/django-google-sso/).
 
@@ -390,7 +390,7 @@ Segments errors by which deployment they occur in. This defaults to `dev`, and c
 
     [Security Policy Reporting](https://docs.sentry.io/product/security-policy-reporting/)
 
-Collect information on Content-Security-Policy (CSP) violations. Read more about [CSP configuration in Benefits](./content-security-policy.md).
+Collect information on Content-Security-Policy (CSP) violations. Read more about [CSP configuration in Benefits](#django-csp).
 
 To enable report collection, set this env var to the authenticated Sentry endpoint.
 

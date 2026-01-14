@@ -17,7 +17,7 @@ Migrations are run as the application starts up. See the [`bin/init.sh`][init] s
 The sample values provided in the repository are sufficient to run the app locally and interact with e.g. the sample Transit
 Agencies. [Django fixtures][django-fixtures] are used to load the database with sample data when running locally.
 
-During the [deployment](../explanation/deployment.md) process, some environment-specific values are set in environment variables and read dynamically at runtime. Most configuration values are managed directly in the [Django Admin interface](../reference/admin-interface.md) at the `/admin` endpoint.
+During the [deployment](../explanation/deployment.md) process, some environment-specific values are set in environment variables and read dynamically at runtime. Most configuration values are managed directly in the Django Admin interface at the `/admin` endpoint.
 
 ## Sample data
 
