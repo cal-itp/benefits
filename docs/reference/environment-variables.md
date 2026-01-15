@@ -5,8 +5,6 @@ The first steps of the Getting Started guide mention [creating an `.env` file][g
 The sections below outline in more detail the application environment variables that you may want to override, and their purpose.
 In Azure App Services, this is more generally called the ["configuration"][app-service-config].
 
-See other topic pages in this section for more specific environment variable configurations.
-
 !!! warning "Multiline environment variables"
 
     Although Docker, bash, etc. support multiline values directly in e.g. an .env file:
@@ -206,6 +204,152 @@ Comma-separated list of hosts which are trusted origins for unsafe requests (e.g
 
 Comma-separated list of User-Agent strings which, when present as an HTTP header, should only receive healthcheck responses. Used by our `HealthcheckUserAgents` middleware.
 
+## Django admin interface
+
+!!! tldr "Django docs"
+
+    [The Django admin site](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/)
+
+The configuration values that can be stored in the application database are managed directly in the Django Admin interface at the `/admin` endpoint.
+
+Single sign-on authentication is supported by the admin interface using [`django-google-sso`](https://megalus.github.io/django-google-sso/).
+
+These environment variables can be set in your `.env` file to use certain features in the admin interface locally:
+
+### AZURE_COMMUNICATION_CONNECTION_STRING
+
+!!! info "`settings.py`"
+
+    Usage of `AZURE_COMMUNICATION_CONNECTION_STRING` in [Benefits settings](https://github.com/cal-itp/benefits/blob/main/benefits/settings.py#L396)
+
+The connection string needed to use an Azure Communication Service for sending emails, such as the one for user password reset. If this variable is not set, the file-based email backend is used.
+
+In deployed instances, this is automatically set by Terraform by referencing the [`azurerm_communication_service.primary_connection_string`](https://github.com/cal-itp/benefits/blob/main/terraform/email.tf#L15) attribute.
+
+### DEFAULT_FROM_EMAIL
+
+!!! tldr "Django docs"
+
+    [Settings: `DEFAULT_FROM_EMAIL`](https://docs.djangoproject.com/en/5.2/ref/settings/#default-from-email)
+
+The email address used by default in the `From:` header of outgoing emails.
+
+### GOOGLE_SSO_CLIENT_ID
+
+!!! tldr "`django-google-sso` docs"
+
+    [All settings for `django-google-sso`](https://megalus.github.io/django-google-sso/settings/)
+
+!!! info "`settings.py`"
+
+    Configuration of `django-google-sso` in [Benefits settings](https://github.com/cal-itp/benefits/blob/main/benefits/settings.py#L74-L90)
+
+> The Google OAuth 2.0 Web Application Client ID.
+
+### GOOGLE_SSO_PROJECT_ID
+
+> The Google OAuth 2.0 Project ID.
+
+### GOOGLE_SSO_CLIENT_SECRET
+
+> The Google OAuth 2.0 Web Application Client Secret.
+
+### GOOGLE_SSO_ALLOWABLE_DOMAINS
+
+> List of domains that will be allowed to create users.
+
+### GOOGLE_SSO_STAFF_LIST
+
+> List of emails that will be created as staff.
+
+"Staff" refers to Django's concept of a user with `is_staff` set to `True`, which means they can log in, and also to the Cal-ITP Benefits concept of a user who should have a "Cal-ITP staff" level of access to configuration values.
+
+### GOOGLE_SSO_SUPERUSER_LIST
+
+> List of emails that will be created as superuser.
+
+## `django-csp`
+
+!!! tldr "MDN docs"
+
+    The Mozilla Developer Network has more on [Content Security Policy][mdn-csp]
+
+> The HTTP `Content-Security-Policy` response header allows web site administrators to control resources the user agent is
+> allowed to load for a given page.
+>
+> With a few exceptions, policies mostly involve specifying server origins and script endpoints. This helps guard against
+> cross-site scripting attacks
+
+!!! warning "Strict CSP"
+
+    Benefits configures a Strict Content Security Policy. Read more about Strict CSP from Google: <https://csp.withgoogle.com/docs/strict-csp.html>.
+
+!!! tldr "django-csp docs"
+
+    [Configuring `django-csp`][django-csp-config]
+
+Benefits uses the open source `django-csp` library for helping to configure the correct response headers.
+
+### `DJANGO_CSP_CONNECT_SRC`
+
+Comma-separated list of URIs. Configures the [`connect-src`][mdn-csp-connect-src] Content Security Policy directive.
+
+### `DJANGO_CSP_FONT_SRC`
+
+Comma-separated list of URIs. Configures the [`font-src`][mdn-csp-font-src] Content Security Policy directive.
+
+### `DJANGO_CSP_FRAME_SRC`
+
+Comma-separated list of URIs. Configures the [`frame-src`][mdn-csp-frame-src] Content Security Policy directive.
+
+### `DJANGO_CSP_SCRIPT_SRC`
+
+Comma-separated list of URIs. Configures the [`script-src`][mdn-csp-script-src] Content Security Policy directive.
+
+### `DJANGO_CSP_STYLE_SRC`
+
+Comma-separated list of URIs. Configures the [`style-src`][mdn-csp-style-src] Content Security Policy directive.
+
+## reCAPTCHA
+
+!!! tldr "reCAPTCHA docs"
+
+    See the [reCAPTCHA Developer's Guide][recaptcha-intro] for more information
+
+[reCAPTCHA v3][recaptcha] is a free Google-provided service that helps protect the app from spam and abuse by using advanced
+risk analysis techniques to tell humans and bots apart.
+
+reCAPTCHA is applied to all forms in the Benefits app that collect user-provided information. Version 3 works silently in the
+background, with no additional interaction required by the user.
+
+!!! warning
+
+    The following environment variables are all required to activate the reCAPTCHA feature
+
+### `DJANGO_RECAPTCHA_API_URL`
+
+URL to the reCAPTCHA JavaScript API library.
+
+By default, `https://www.google.com/recaptcha/api.js`
+
+### `DJANGO_RECAPTCHA_SITE_KEY`
+
+Site key for the reCAPTCHA configuration.
+
+### `DJANGO_RECAPTCHA_SECRET_KEY`
+
+Secret key for the reCAPTCHA configuration.
+
+### `DJANGO_RECAPTCHA_VERIFY_URL`
+
+!!! tldr "reCAPTCHA docs"
+
+    [Verifying the user's response][recaptcha-verify]
+
+URL for the reCAPTCHA verify service.
+
+By default, `https://www.google.com/recaptcha/api/siteverify`
+
 ## `requests` configuration
 
 !!! tldr "`requests` docs"
@@ -246,7 +390,7 @@ Segments errors by which deployment they occur in. This defaults to `dev`, and c
 
     [Security Policy Reporting](https://docs.sentry.io/product/security-policy-reporting/)
 
-Collect information on Content-Security-Policy (CSP) violations. Read more about [CSP configuration in Benefits](./content-security-policy.md).
+Collect information on Content-Security-Policy (CSP) violations. Read more about [CSP configuration in Benefits](#django-csp).
 
 To enable report collection, set this env var to the authenticated Sentry endpoint.
 
@@ -262,3 +406,13 @@ The default is `0.0` (i.e. no transactions are tracked).
 
 [app-service-config]: https://docs.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal
 [getting-started_create-env]: ../guides/getting-started.md#create-an-environment-file
+[django-csp-config]: https://django-csp.readthedocs.io/en/latest/configuration.html#configuring-django-csp
+[mdn-csp]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+[mdn-csp-connect-src]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/connect-src
+[mdn-csp-font-src]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/font-src
+[mdn-csp-frame-src]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src
+[mdn-csp-script-src]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src
+[mdn-csp-style-src]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src
+[recaptcha]: https://developers.google.com/recaptcha
+[recaptcha-intro]: https://developers.google.com/recaptcha/intro
+[recaptcha-verify]: https://developers.google.com/recaptcha/docs/verify
