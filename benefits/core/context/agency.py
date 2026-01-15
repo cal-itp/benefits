@@ -1,4 +1,4 @@
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _

@@ -1,23 +1,24 @@
 import logging
+
+import sentry_sdk
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import FormView, View
-import sentry_sdk
 
-from benefits.enrollment_switchio.models import SwitchioConfig
-from benefits.routes import routes
 from benefits.core import models
-from benefits.core.mixins import EligibleSessionRequiredMixin, AgencySessionRequiredMixin, FlowSessionRequiredMixin
+from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FlowSessionRequiredMixin
 from benefits.enrollment import analytics, forms
 from benefits.enrollment.enrollment import Status, handle_enrollment_results
 from benefits.enrollment_switchio.enrollment import (
     enroll,
-    request_registration,
-    get_registration_status,
     get_latest_active_token_value,
+    get_registration_status,
+    request_registration,
 )
+from benefits.enrollment_switchio.models import SwitchioConfig
 from benefits.enrollment_switchio.session import Session
+from benefits.routes import routes
 
 logger = logging.getLogger(__name__)
 

@@ -1,7 +1,6 @@
+import pytest
 from django.forms import Form, ValidationError
 from django.views import View
-
-import pytest
 
 import benefits.core.mixins
 from benefits.core import recaptcha

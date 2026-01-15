@@ -1,16 +1,16 @@
-from datetime import datetime, timedelta, timezone
 import time
+from datetime import datetime, timedelta, timezone
 
+import pytest
 from cdt_identity.claims import ClaimsResult
 from cdt_identity.session import Session as OAuthSession
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse
-import pytest
 
+from benefits.core import models, session
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.enrollment_switchio.session import Session as SwitchioSession
 from benefits.routes import routes
-from benefits.core import models, session
 
 
 @pytest.mark.django_db

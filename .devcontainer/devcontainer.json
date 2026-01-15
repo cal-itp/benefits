@@ -30,9 +30,10 @@
         "mhutchie.git-graph",
         "monosans.djlint",
         "mrorz.language-gettext",
-        "ms-python.python",
         "ms-python.black-formatter",
+        "ms-python.isort",
         "ms-python.flake8",
+        "ms-python.python",
         "qwtel.sqlite-viewer",
         "tamasfe.even-better-toml"
       ]

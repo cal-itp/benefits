@@ -1,13 +1,12 @@
 from datetime import timedelta
-from django.urls import reverse
-from django.utils import timezone
 
 import pytest
+from django.urls import reverse
+from django.utils import timezone
 from requests import HTTPError
 
-from benefits.core import models
-from benefits.routes import routes
 import benefits.enrollment.enrollment
+from benefits.core import models
 from benefits.enrollment.enrollment import (
     Status,
     _calculate_expiry,
@@ -15,6 +14,7 @@ from benefits.enrollment.enrollment import (
     _is_within_reenrollment_window,
     handle_enrollment_results,
 )
+from benefits.routes import routes
 
 
 @pytest.fixture

@@ -1,9 +1,7 @@
-from django.contrib.auth.models import Group, User
-from django.core.exceptions import ValidationError, NON_FIELD_ERRORS
-
 import pytest
+from django.contrib.auth.models import Group, User
+from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
 
-from benefits.routes import routes
 from benefits.core.models import (
     CardSchemes,
     Environment,
@@ -11,6 +9,7 @@ from benefits.core.models import (
     TransitProcessorConfig,
     agency_logo,
 )
+from benefits.routes import routes
 
 
 class TestCardSchemes:

@@ -7,8 +7,8 @@ import logging
 from django.urls import path, register_converter
 
 from benefits.routes import routes
-from . import models, views
 
+from . import models, views
 
 logger = logging.getLogger(__name__)
 

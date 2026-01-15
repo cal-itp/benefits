@@ -1,7 +1,6 @@
 import pytest
-
 from django.contrib import admin
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group, User
 
 import benefits.core.admin
 from benefits.core.admin.mixins import StaffPermissionMixin

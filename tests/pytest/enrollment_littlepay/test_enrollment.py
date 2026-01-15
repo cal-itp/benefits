@@ -5,9 +5,9 @@ from requests import HTTPError
 
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_littlepay.enrollment import (
-    request_card_tokenization_access,
-    enroll,
     _get_group_funding_source,
+    enroll,
+    request_card_tokenization_access,
 )
 
 

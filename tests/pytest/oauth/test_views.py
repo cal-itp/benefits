@@ -1,7 +1,6 @@
+import pytest
 from cdt_identity.routes import Routes as OAuthRoutes
 from django.urls import reverse
-
-import pytest
 
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.oauth.views import SystemErrorView

@@ -1,15 +1,16 @@
+import pytest
 from django.conf import settings
 from django.urls import reverse
-import pytest
 from requests import HTTPError
+
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_switchio.api import EshopResponseMode, GroupExpiry, Registration, RegistrationMode, RegistrationStatus
 from benefits.enrollment_switchio.enrollment import (
+    _generate_redirect_uri,
     enroll,
+    get_latest_active_token_value,
     get_registration_status,
     request_registration,
-    get_latest_active_token_value,
-    _generate_redirect_uri,
 )
 from benefits.routes import routes
 

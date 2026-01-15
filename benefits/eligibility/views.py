@@ -5,15 +5,16 @@ The eligibility application: view definitions for the eligibility verification f
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.views.generic import TemplateView, FormView
+from django.views.generic import FormView, TemplateView
 
-from benefits.core.context.flow import SystemName
-from benefits.routes import routes
 from benefits.core import recaptcha, session
-from benefits.core.context.agency import AgencySlug
 from benefits.core.context import formatted_gettext_lazy as _
+from benefits.core.context.agency import AgencySlug
+from benefits.core.context.flow import SystemName
 from benefits.core.mixins import AgencySessionRequiredMixin, FlowSessionRequiredMixin, RecaptchaEnabledMixin
 from benefits.core.models import EnrollmentFlow
+from benefits.routes import routes
+
 from . import analytics, forms, verify
 
 

@@ -32,6 +32,7 @@ dev = [
     "black",
     "djlint",
     "flake8",
+    "isort",
     "pre-commit",
     "setuptools_scm>=8"
 ]
@@ -76,6 +77,12 @@ max_line_length = 127
 profile = "django"
 preserve_blank_lines = true
 use_gitignore = true
+
+[tool.isort]
+profile = "black"
+combine_as_imports = true
+line_length = 127
+skip_gitignore = true
 
 [tool.pyright]
 include = ["benefits", "tests/pytest"]

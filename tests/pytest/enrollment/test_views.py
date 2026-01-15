@@ -1,11 +1,11 @@
 import pytest
 from django.urls import reverse
 
+import benefits.enrollment.enrollment
+import benefits.enrollment.views as views
 from benefits.core import models
 from benefits.core.context.flow import SystemName
 from benefits.routes import routes
-import benefits.enrollment.views as views
-import benefits.enrollment.enrollment
 
 
 @pytest.fixture

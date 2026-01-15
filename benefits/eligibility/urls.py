@@ -5,8 +5,8 @@ The eligibility application: URLConf for the eligibility verification flow.
 from django.urls import path
 
 from benefits.routes import routes
-from . import views
 
+from . import views
 
 app_name = "eligibility"
 urlpatterns = [

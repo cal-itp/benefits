@@ -1,5 +1,4 @@
 import re
-
 from dataclasses import dataclass
 
 from littlepay.api.client import Client

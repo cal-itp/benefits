@@ -1,17 +1,18 @@
-from datetime import datetime
 import json
-from django.urls import reverse
+from datetime import datetime
+
 import pytest
+from django.urls import reverse
 from requests import HTTPError
 
+import benefits.enrollment_switchio.views
 from benefits.core import models
-from benefits.routes import routes
 from benefits.enrollment.enrollment import Status
 from benefits.enrollment_switchio.api import Registration, RegistrationStatus
 from benefits.enrollment_switchio.enrollment import RegistrationResponse, RegistrationStatusResponse
 from benefits.enrollment_switchio.session import Session
-import benefits.enrollment_switchio.views
 from benefits.enrollment_switchio.views import GatewayUrlView, IndexView
+from benefits.routes import routes
 
 
 @pytest.fixture

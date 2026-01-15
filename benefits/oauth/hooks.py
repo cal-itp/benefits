@@ -1,12 +1,13 @@
+import sentry_sdk
 from cdt_identity.hooks import DefaultHooks
 from django.shortcuts import redirect
-from django.utils.decorators import method_decorator, decorator_from_middleware
-import sentry_sdk
+from django.utils.decorators import decorator_from_middleware, method_decorator
 
-from benefits.routes import routes
 from benefits.core import session
 from benefits.core.middleware import AgencySessionRequired, FlowSessionRequired
 from benefits.eligibility.views import analytics as eligibility_analytics
+from benefits.routes import routes
+
 from . import analytics
 
 

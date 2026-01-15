@@ -2,9 +2,9 @@
 
 from django.db import migrations, models
 
-from benefits.core.migrations import create_all_permissions
 import benefits.core.models
 import benefits.secrets
+from benefits.core.migrations import create_all_permissions
 
 
 def update_permissions(apps, schema_editor):

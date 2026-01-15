@@ -1,7 +1,7 @@
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from typing import Optional
 
-from benefits.core.context import formatted_gettext_lazy as _, SystemName
+from benefits.core.context import SystemName, formatted_gettext_lazy as _
 from benefits.routes import routes
 
 

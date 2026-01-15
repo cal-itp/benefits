@@ -1,7 +1,6 @@
 import base64
 
 import pytest
-
 from django.contrib.messages.middleware import MessageMiddleware
 from django.urls import reverse
 

@@ -1,6 +1,6 @@
 import pytest
 
-from benefits.oauth.analytics import OAuthErrorEvent, OAuthEvent, FinishedSignInEvent
+from benefits.oauth.analytics import FinishedSignInEvent, OAuthErrorEvent, OAuthEvent
 
 
 @pytest.mark.django_db
