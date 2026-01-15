@@ -9,8 +9,7 @@ from multiselectfield import MultiSelectField
 
 from benefits.core import context as core_context
 from benefits.routes import routes
-
-from .common import Environment, PemData
+from .common import Environment
 
 logger = logging.getLogger(__name__)
 
@@ -68,18 +67,6 @@ class EligibilityApiConfig(models.Model):
     id = models.AutoField(primary_key=True)
     api_id = models.SlugField(
         help_text="The identifier for this agency used in Eligibility API calls.",
-    )
-    api_private_key = models.ForeignKey(
-        PemData,
-        related_name="+",
-        on_delete=models.PROTECT,
-        help_text="Private key used to sign Eligibility API tokens created on behalf of this Agency.",
-    )
-    api_public_key = models.ForeignKey(
-        PemData,
-        related_name="+",
-        on_delete=models.PROTECT,
-        help_text="Public key corresponding to the agency's private key, used by Eligibility Verification servers to encrypt responses.",  # noqa: E501
     )
 
     def __str__(self):
