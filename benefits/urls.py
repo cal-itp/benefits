@@ -10,7 +10,8 @@ import re
 
 from django.conf import settings
 from django.contrib import admin
-from django.http import HttpResponse
+from django.core.exceptions import BadRequest, PermissionDenied
+from django.http import Http404, HttpResponse
 from django.urls import include, path, re_path
 from django.views.static import serve
 
@@ -50,15 +51,26 @@ if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.LOCAL:
         [re_path(r"^%s(?P<path>.*)$" % re.escape(prefix.lstrip("/")), serve, {"document_root": settings.MEDIA_ROOT})]
     )
 
-if settings.DEBUG:
     # based on
     # https://docs.sentry.io/platforms/python/guides/django/#verify
+    def trigger_400(request):
+        raise BadRequest("Test 400")
 
-    def trigger_error(request):
-        raise RuntimeError("Test error")
+    def trigger_403(request):
+        raise PermissionDenied("Test 403")
 
-    urlpatterns.append(path("testerror/", trigger_error))
+    def trigger_404(request):
+        raise Http404("Test 404")
 
+    def trigger_500(request):
+        raise Exception("Test 500")
+
+    urlpatterns.append(path("test400/", trigger_400))
+    urlpatterns.append(path("test403/", trigger_403))
+    urlpatterns.append(path("test404/", trigger_404))
+    urlpatterns.append(path("test500/", trigger_500))
+
+if settings.RUNTIME_ENVIRONMENT() in (settings.RUNTIME_ENVS.LOCAL, settings.RUNTIME_ENVS.DEV):
     # simple route to read a pre-defined "secret"
     # this "secret" does not contain sensitive information
     # and is only configured in the dev environment for testing/debugging
