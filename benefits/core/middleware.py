@@ -12,9 +12,8 @@ from django.utils.decorators import decorator_from_middleware
 from django.utils.deprecation import MiddlewareMixin
 from django.views import i18n
 
+from benefits.core import analytics, recaptcha, session
 from benefits.routes import routes
-
-from . import analytics, recaptcha, session
 
 logger = logging.getLogger(__name__)
 

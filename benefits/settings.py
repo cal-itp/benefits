@@ -128,7 +128,7 @@ SESSION_COOKIE_NAME = "_benefitssessionid"
 
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
-    CSRF_FAILURE_VIEW = "benefits.core.views.csrf_failure"
+    CSRF_FAILURE_VIEW = "benefits.views.csrf_failure_handler"
     SESSION_COOKIE_SECURE = True
 
 SECURE_BROWSER_XSS_FILTER = True
