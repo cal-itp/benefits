@@ -29,3 +29,9 @@ class BaseErrorView(TemplateView):
         """
         response_kwargs.setdefault("status", self.status_code)
         return super().render_to_response(context, **response_kwargs)
+
+
+class BadRequestView(BaseErrorView):
+    """View handler for HTTP 400 Bad Request responses."""
+
+    status_code = 400

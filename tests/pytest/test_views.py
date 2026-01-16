@@ -62,3 +62,16 @@ class TestBaseErrorView:
         view.status_code = 420
         response = view.render_to_response({})
         assert response.status_code == 420
+
+
+@pytest.mark.django_db
+class TestBadRequestView:
+    @pytest.fixture
+    def view(self, app_request):
+        v = views.BadRequestView()
+        v.setup(app_request)
+        return v
+
+    def test_view(self, view):
+        assert view.status_code == 400
+        assert view.template_name == "400.html"

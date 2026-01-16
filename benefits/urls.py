@@ -14,12 +14,17 @@ from django.http import HttpResponse
 from django.urls import include, path, re_path
 from django.views.static import serve
 
-from .core.admin.views import BenefitsPasswordResetConfirmView, BenefitsPasswordResetDoneView, BenefitsPasswordResetView
+from benefits.core.admin.views import (
+    BenefitsPasswordResetConfirmView,
+    BenefitsPasswordResetDoneView,
+    BenefitsPasswordResetView,
+)
+from benefits.views import BadRequestView
 
 logger = logging.getLogger(__name__)
 
-handler400 = "benefits.core.views.bad_request"
-handler403 = "benefits.core.views.bad_request"
+handler400 = BadRequestView.as_view()
+handler403 = BadRequestView.as_view()
 handler404 = "benefits.core.views.page_not_found"
 handler500 = "benefits.core.views.server_error"
 

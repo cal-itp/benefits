@@ -5,12 +5,7 @@ import benefits.core.session
 from benefits.core import views
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.core.models import EnrollmentFlow
-from benefits.core.views import (
-    bad_request,
-    csrf_failure,
-    page_not_found,
-    server_error,
-)
+from benefits.core.views import csrf_failure, page_not_found, server_error
 from benefits.routes import routes
 
 
@@ -194,24 +189,6 @@ class TestLoggedOutView:
 
     def test_view(self, view):
         assert view.template_name == "core/logged-out.html"
-
-
-@pytest.mark.django_db
-def test_bad_request_active_agency(app_request, mocked_session_agency, mocked_session_update):
-    response = bad_request(app_request, Exception())
-
-    assert response.status_code == 400
-    assert "origin" in mocked_session_update.call_args.kwargs
-    assert mocked_session_update.call_args.kwargs["origin"] == mocked_session_agency.return_value.index_url
-
-
-@pytest.mark.django_db
-def test_bad_request_no_active_agency(app_request, mocked_session_update):
-    response = bad_request(app_request, Exception())
-
-    assert response.status_code == 400
-    assert "origin" in mocked_session_update.call_args.kwargs
-    assert mocked_session_update.call_args.kwargs["origin"] == reverse(routes.INDEX)
 
 
 @pytest.mark.django_db
