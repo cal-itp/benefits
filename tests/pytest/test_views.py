@@ -94,3 +94,16 @@ class TestCsrfFailureView:
         # Verify the wrapper function used for CSRF_FAILURE_VIEW
         response = views.csrf_failure_handler(app_request, reason="Denied")
         assert response.status_code == 403
+
+
+@pytest.mark.django_db
+class TestNotFoundView:
+    @pytest.fixture
+    def view(self, app_request):
+        v = views.NotFoundView()
+        v.setup(app_request)
+        return v
+
+    def test_view(self, view):
+        assert view.status_code == 404
+        assert view.template_name == "404.html"

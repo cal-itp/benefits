@@ -2,7 +2,7 @@
 The core application: view definition for the root of the webapp.
 """
 
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseServerError
 from django.template import loader
 from django.utils.decorators import method_decorator
 from django.views.generic import RedirectView, TemplateView, View
@@ -13,7 +13,6 @@ from benefits.core.forms import ChooseAgencyForm
 from benefits.core.middleware import index_or_agencyindex_origin_decorator, pageview_decorator, user_error
 from benefits.routes import routes
 
-TEMPLATE_NOT_FOUND = "404.html"
 TEMPLATE_SERVER_ERROR = "500.html"
 
 
@@ -124,15 +123,6 @@ class LoggedOutView(TemplateView):
     """View handler for the final log out confirmation message."""
 
     template_name = "core/logged-out.html"
-
-
-@pageview_decorator
-@index_or_agencyindex_origin_decorator
-def page_not_found(request, exception, template_name=TEMPLATE_NOT_FOUND):
-    """View handler for HTTP 404 Not Found responses."""
-    t = loader.get_template(template_name)
-
-    return HttpResponseNotFound(t.render(request=request))
 
 
 @pageview_decorator

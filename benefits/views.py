@@ -47,3 +47,9 @@ class CsrfFailureView(BaseErrorView):
 def csrf_failure_handler(request, reason=""):
     """Wrapper function to satisfy CSRF_FAILURE_VIEW string resolution."""
     return CsrfFailureView.as_view()(request, reason=reason)
+
+
+class NotFoundView(BaseErrorView):
+    """View handler for HTTP 404 Not Found responses."""
+
+    status_code = 404
