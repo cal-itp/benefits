@@ -13,7 +13,6 @@ from benefits.core.forms import ChooseAgencyForm
 from benefits.core.middleware import index_or_agencyindex_origin_decorator, pageview_decorator, user_error
 from benefits.routes import routes
 
-TEMPLATE_BAD_REQUEST = "400.html"
 TEMPLATE_NOT_FOUND = "404.html"
 TEMPLATE_SERVER_ERROR = "500.html"
 
@@ -125,17 +124,6 @@ class LoggedOutView(TemplateView):
     """View handler for the final log out confirmation message."""
 
     template_name = "core/logged-out.html"
-
-
-@pageview_decorator
-@index_or_agencyindex_origin_decorator
-def csrf_failure(request, reason):
-    """
-    View handler for CSRF_FAILURE_VIEW with custom data.
-    """
-    t = loader.get_template(TEMPLATE_BAD_REQUEST)
-
-    return HttpResponseNotFound(t.render(request=request))
 
 
 @pageview_decorator

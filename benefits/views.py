@@ -35,3 +35,15 @@ class BadRequestView(BaseErrorView):
     """View handler for HTTP 400 Bad Request responses."""
 
     status_code = 400
+
+
+class CsrfFailureView(BaseErrorView):
+    """View handler for CSRF_FAILURE_VIEW. Returns a 403 response with the BadRequest template."""
+
+    status_code = 403
+    template_name = "400.html"
+
+
+def csrf_failure_handler(request, reason=""):
+    """Wrapper function to satisfy CSRF_FAILURE_VIEW string resolution."""
+    return CsrfFailureView.as_view()(request, reason=reason)

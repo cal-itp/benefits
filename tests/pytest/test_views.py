@@ -75,3 +75,22 @@ class TestBadRequestView:
     def test_view(self, view):
         assert view.status_code == 400
         assert view.template_name == "400.html"
+
+
+@pytest.mark.django_db
+class TestCsrfFailureView:
+    @pytest.fixture
+    def view(self, app_request):
+        v = views.CsrfFailureView()
+        v.setup(app_request)
+        return v
+
+    def test_view(self, view):
+        assert view.status_code == 403
+        # Verifying the explicit override
+        assert view.template_name == "400.html"
+
+    def test_handler_signature(self, app_request):
+        # Verify the wrapper function used for CSRF_FAILURE_VIEW
+        response = views.csrf_failure_handler(app_request, reason="Denied")
+        assert response.status_code == 403
