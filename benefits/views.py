@@ -30,6 +30,14 @@ class BaseErrorView(TemplateView):
         response_kwargs.setdefault("status", self.status_code)
         return super().render_to_response(context, **response_kwargs)
 
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests by treating them as GET requests.
+        This prevents 405 errors when error handlers are triggered
+        by failed POST submissions (common with CSRF failures).
+        """
+        return self.get(request, *args, **kwargs)
+
 
 class BadRequestView(BaseErrorView):
     """View handler for HTTP 400 Bad Request responses."""

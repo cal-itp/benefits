@@ -63,6 +63,11 @@ class TestBaseErrorView:
         response = view.render_to_response({})
         assert response.status_code == 420
 
+    def test_post_is_get(self, view, app_request_post, mocker):
+        spy = mocker.patch.object(view, "get")
+        view.post(app_request_post)
+        spy.assert_called_once()
+
 
 @pytest.mark.django_db
 class TestBadRequestView:

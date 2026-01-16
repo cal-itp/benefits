@@ -65,10 +65,19 @@ if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.LOCAL:
     def trigger_500(request):
         raise Exception("Test 500")
 
+    def trigger_csrf(request):
+        if request.method == "POST":
+            return HttpResponse("Should not reach here")
+        return HttpResponse(
+            "<html><body><form method='post' action='/testcsrf/'>"
+            "<button type='submit'>Submit CSRF failure</button></form></body></html>"
+        )
+
     urlpatterns.append(path("test400/", trigger_400))
     urlpatterns.append(path("test403/", trigger_403))
     urlpatterns.append(path("test404/", trigger_404))
     urlpatterns.append(path("test500/", trigger_500))
+    urlpatterns.append(path("testcsrf/", trigger_csrf))
 
 if settings.RUNTIME_ENVIRONMENT() in (settings.RUNTIME_ENVS.LOCAL, settings.RUNTIME_ENVS.DEV):
     # simple route to read a pre-defined "secret"
