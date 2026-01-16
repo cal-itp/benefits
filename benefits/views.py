@@ -45,6 +45,13 @@ class BadRequestView(BaseErrorView):
     status_code = 400
 
 
+class ForbiddenView(BaseErrorView):
+    """View handler for HTTP 403 Forbidden responses. Returns a 403 response with the BadRequest template."""
+
+    status_code = 403
+    template_name = "400.html"
+
+
 class CsrfFailureView(BaseErrorView):
     """View handler for CSRF_FAILURE_VIEW. Returns a 403 response with the BadRequest template."""
 

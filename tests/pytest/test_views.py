@@ -83,6 +83,20 @@ class TestBadRequestView:
 
 
 @pytest.mark.django_db
+class TestForbiddenView:
+    @pytest.fixture
+    def view(self, app_request):
+        v = views.ForbiddenView()
+        v.setup(app_request)
+        return v
+
+    def test_view(self, view):
+        assert view.status_code == 403
+        # Verifying the explicit override
+        assert view.template_name == "400.html"
+
+
+@pytest.mark.django_db
 class TestCsrfFailureView:
     @pytest.fixture
     def view(self, app_request):
