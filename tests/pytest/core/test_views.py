@@ -4,7 +4,6 @@ import benefits.core.session
 from benefits.core import views
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.core.models import EnrollmentFlow
-from benefits.core.views import server_error
 from benefits.routes import routes
 
 
@@ -188,10 +187,3 @@ class TestLoggedOutView:
 
     def test_view(self, view):
         assert view.template_name == "core/logged-out.html"
-
-
-@pytest.mark.django_db
-def test_server_error(app_request):
-    response = server_error(app_request)
-
-    assert response.status_code == 500

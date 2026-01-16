@@ -53,3 +53,14 @@ class NotFoundView(BaseErrorView):
     """View handler for HTTP 404 Not Found responses."""
 
     status_code = 404
+
+
+class ServerErrorView(BaseErrorView):
+    """View handler for HTTP 500 Server Error responses."""
+
+    status_code = 500
+
+
+def server_error_handler(request):
+    """Wrapper function to satisfy handler500 system check (urls.E007)."""
+    return ServerErrorView.as_view()(request)

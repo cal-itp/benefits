@@ -19,14 +19,14 @@ from benefits.core.admin.views import (
     BenefitsPasswordResetDoneView,
     BenefitsPasswordResetView,
 )
-from benefits.views import BadRequestView, NotFoundView
+from benefits.views import BadRequestView, NotFoundView, server_error_handler
 
 logger = logging.getLogger(__name__)
 
 handler400 = BadRequestView.as_view()
 handler403 = BadRequestView.as_view()
 handler404 = NotFoundView.as_view()
-handler500 = "benefits.core.views.server_error"
+handler500 = server_error_handler
 
 urlpatterns = [
     path("", include("benefits.core.urls")),

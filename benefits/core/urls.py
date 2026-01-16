@@ -6,9 +6,18 @@ import logging
 
 from django.urls import path, register_converter
 
+from benefits.core import models
+from benefits.core.views import (
+    AgencyCardView,
+    AgencyEligibilityIndexView,
+    AgencyIndexView,
+    AgencyPublicKeyView,
+    HelpView,
+    IndexView,
+    LoggedOutView,
+)
 from benefits.routes import routes
-
-from . import models, views
+from benefits.views import ServerErrorView
 
 logger = logging.getLogger(__name__)
 
@@ -46,16 +55,16 @@ register_converter(TransitAgencyPathConverter, "agency")
 app_name = "core"
 
 urlpatterns = [
-    path("", views.IndexView.as_view(), name=routes.name(routes.INDEX)),
-    path("help", views.HelpView.as_view(), name=routes.name(routes.HELP)),
-    path("logged_out", views.LoggedOutView.as_view(), name=routes.name(routes.LOGGED_OUT)),
-    path("error", views.server_error, name=routes.name(routes.SERVER_ERROR)),
-    path("<agency:agency>", views.AgencyIndexView.as_view(), name=routes.name(routes.AGENCY_INDEX)),
-    path("<agency:agency>/agency-card", views.AgencyCardView.as_view(), name=routes.name(routes.AGENCY_CARD)),
+    path("", IndexView.as_view(), name=routes.name(routes.INDEX)),
+    path("help", HelpView.as_view(), name=routes.name(routes.HELP)),
+    path("logged_out", LoggedOutView.as_view(), name=routes.name(routes.LOGGED_OUT)),
+    path("error", ServerErrorView.as_view(), name=routes.name(routes.SERVER_ERROR)),
+    path("<agency:agency>", AgencyIndexView.as_view(), name=routes.name(routes.AGENCY_INDEX)),
+    path("<agency:agency>/agency-card", AgencyCardView.as_view(), name=routes.name(routes.AGENCY_CARD)),
     path(
         "<agency:agency>/eligibility",
-        views.AgencyEligibilityIndexView.as_view(),
+        AgencyEligibilityIndexView.as_view(),
         name=routes.name(routes.AGENCY_ELIGIBILITY_INDEX),
     ),
-    path("<agency:agency>/publickey", views.AgencyPublicKeyView.as_view(), name=routes.name(routes.AGENCY_PUBLIC_KEY)),
+    path("<agency:agency>/publickey", AgencyPublicKeyView.as_view(), name=routes.name(routes.AGENCY_PUBLIC_KEY)),
 ]

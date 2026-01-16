@@ -2,18 +2,15 @@
 The core application: view definition for the root of the webapp.
 """
 
-from django.http import HttpResponse, HttpResponseServerError
-from django.template import loader
+from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.views.generic import RedirectView, TemplateView, View
 from django.views.generic.edit import FormView
 
 from benefits.core import models, session
 from benefits.core.forms import ChooseAgencyForm
-from benefits.core.middleware import index_or_agencyindex_origin_decorator, pageview_decorator, user_error
+from benefits.core.middleware import pageview_decorator, user_error
 from benefits.routes import routes
-
-TEMPLATE_SERVER_ERROR = "500.html"
 
 
 class IndexView(FormView):
@@ -123,12 +120,3 @@ class LoggedOutView(TemplateView):
     """View handler for the final log out confirmation message."""
 
     template_name = "core/logged-out.html"
-
-
-@pageview_decorator
-@index_or_agencyindex_origin_decorator
-def server_error(request, template_name=TEMPLATE_SERVER_ERROR):
-    """View handler for HTTP 500 Server Error responses."""
-    t = loader.get_template(template_name)
-
-    return HttpResponseServerError(t.render(request=request))

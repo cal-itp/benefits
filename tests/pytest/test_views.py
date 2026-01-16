@@ -107,3 +107,21 @@ class TestNotFoundView:
     def test_view(self, view):
         assert view.status_code == 404
         assert view.template_name == "404.html"
+
+
+@pytest.mark.django_db
+class TestServerErrorView:
+    @pytest.fixture
+    def view(self, app_request):
+        v = views.ServerErrorView()
+        v.setup(app_request)
+        return v
+
+    def test_view(self, view):
+        assert view.status_code == 500
+        assert view.template_name == "500.html"
+
+    def test_handler_signature(self, app_request):
+        # Verify the wrapper function used for handler500
+        response = views.server_error_handler(app_request)
+        assert response.status_code == 500
