@@ -10,6 +10,7 @@ from django.views.generic.edit import FormView
 from benefits.core import models, session
 from benefits.core.forms import ChooseAgencyForm
 from benefits.core.middleware import pageview_decorator, user_error
+from benefits.core.models.enrollment import EligibilityApiVerificationRequest
 from benefits.routes import routes
 
 
@@ -93,8 +94,10 @@ class AgencyPublicKeyView(View):
 
     @method_decorator(pageview_decorator)
     def get(self, request, *args, **kwargs):
-        agency = kwargs.get("agency")
-        return HttpResponse(agency.eligibility_api_public_key_data, content_type="text/plain")
+        # in the URL, a TransitAgency argument is required, but we just need to return the single
+        # EligibilityApiVerificationRequest client public key that is shared across all agencies
+        eligibility_api_public_key_data = EligibilityApiVerificationRequest.objects.first().api_client_public_key_data
+        return HttpResponse(eligibility_api_public_key_data, content_type="text/plain")
 
 
 class HelpView(TemplateView):

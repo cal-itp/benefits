@@ -153,20 +153,6 @@ class TransitAgency(models.Model):
         return reverse(routes.AGENCY_ELIGIBILITY_INDEX, args=[self.slug])
 
     @property
-    def eligibility_api_private_key_data(self):
-        """This Agency's private key as a string."""
-        if self.eligibility_api_config:
-            return self.eligibility_api_config.api_private_key.data
-        return None
-
-    @property
-    def eligibility_api_public_key_data(self):
-        """This Agency's public key as a string."""
-        if self.eligibility_api_config:
-            return self.eligibility_api_config.api_public_key.data
-        return None
-
-    @property
     def littlepay_config(self):
         if hasattr(self, "transitprocessorconfig") and hasattr(self.transitprocessorconfig, "littlepayconfig"):
             return self.transitprocessorconfig.littlepayconfig

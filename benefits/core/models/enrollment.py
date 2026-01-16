@@ -89,6 +89,16 @@ class EligibilityApiVerificationRequest(models.Model):
         return secret_field.secret_value(self)
 
     @property
+    def api_client_private_key_data(self):
+        """The private key used to sign Eligibility API tokens created by the Benefits client as a string."""
+        return self.api_client_private_key.data
+
+    @property
+    def api_client_public_key_data(self):
+        """The public key corresponding to the Benefits client's private key as a string."""
+        return self.api_client_public_key.data
+
+    @property
     def api_public_key_data(self):
         """The Eligibility API public key as a string."""
         return self.api_public_key.data

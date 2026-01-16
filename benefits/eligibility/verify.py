@@ -13,7 +13,7 @@ def eligibility_from_api(flow: models.EnrollmentFlow, form, agency: models.Trans
         issuer=settings.ALLOWED_HOSTS[0],
         agency=agency.eligibility_api_config.api_id,
         jws_signing_alg=flow.api_request.api_jws_signing_alg,
-        client_private_key=agency.eligibility_api_private_key_data,
+        client_private_key=flow.api_request.api_client_private_key_data,
         jwe_encryption_alg=flow.api_request.api_jwe_encryption_alg,
         jwe_cek_enc=flow.api_request.api_jwe_cek_enc,
         server_public_key=flow.api_request.api_public_key_data,

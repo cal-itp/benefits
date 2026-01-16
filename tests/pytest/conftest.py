@@ -112,6 +112,8 @@ def model_EligibilityApiVerificationRequest(model_PemData):
         api_jwe_cek_enc="cek-enc",
         api_jwe_encryption_alg="alg",
         api_jws_signing_alg="alg",
+        api_client_private_key=model_PemData,
+        api_client_public_key=model_PemData,
         api_public_key=model_PemData,
         api_url="https://example.com/verify",
     )
@@ -232,8 +234,8 @@ def model_SwitchioConfig(model_PemData, model_TransitAgency):
 
 
 @pytest.fixture
-def model_EligibilityApiConfig(model_PemData):
-    config = EligibilityApiConfig.objects.create(api_id="test123", api_private_key=model_PemData, api_public_key=model_PemData)
+def model_EligibilityApiConfig():
+    config = EligibilityApiConfig.objects.create(api_id="test123")
 
     return config
 
