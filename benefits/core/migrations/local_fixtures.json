@@ -143,15 +143,6 @@
     }
   },
   {
-    "model": "core.eligibilityapiconfig",
-    "pk": 1,
-    "fields": {
-      "api_id": "cst",
-      "api_private_key": 2,
-      "api_public_key": 3
-    }
-  },
-  {
     "model": "core.transitagency",
     "pk": 1,
     "fields": {
@@ -161,7 +152,6 @@
       "long_name": "California State Transit (local)",
       "info_url": "https://www.agency-website.com",
       "phone": "1-800-555-5555",
-      "eligibility_api_config": 1,
       "customer_service_group": 2,
       "logo": "agencies/cst.png"
     }
@@ -224,6 +214,8 @@
       "api_url": "http://server:8000/verify",
       "api_auth_header": "X-Server-API-Key",
       "api_auth_key_secret_name": "agency-card-flow-api-auth-key",
+      "api_client_private_key": 2,
+      "api_client_public_key": 3,
       "api_public_key": 1,
       "api_jwe_cek_enc": "A256CBC-HS512",
       "api_jwe_encryption_alg": "RSA-OAEP",
