@@ -235,7 +235,7 @@ def model_SwitchioConfig(model_PemData, model_TransitAgency):
 
 @pytest.fixture
 def model_EligibilityApiConfig():
-    config = EligibilityApiConfig.objects.create(api_id="test123")
+    config = EligibilityApiConfig.objects.create()
 
     return config
 

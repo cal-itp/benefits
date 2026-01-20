@@ -59,4 +59,8 @@ class Migration(migrations.Migration):
             model_name="eligibilityapiconfig",
             name="api_public_key",
         ),
+        migrations.RemoveField(
+            model_name="eligibilityapiconfig",
+            name="api_id",
+        ),
     ]

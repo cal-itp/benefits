@@ -65,12 +65,6 @@ class EligibilityApiConfig(models.Model):
     """Per-agency configuration for Eligibility Server integrations via the Eligibility API."""
 
     id = models.AutoField(primary_key=True)
-    api_id = models.SlugField(
-        help_text="The identifier for this agency used in Eligibility API calls.",
-    )
-
-    def __str__(self):
-        return self.api_id
 
 
 class TransitAgency(models.Model):
