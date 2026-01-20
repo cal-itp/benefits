@@ -61,12 +61,6 @@ class TransitProcessorConfig(models.Model):
         return f"({environment_label}) {agency_slug}"
 
 
-class EligibilityApiConfig(models.Model):
-    """Per-agency configuration for Eligibility Server integrations via the Eligibility API."""
-
-    id = models.AutoField(primary_key=True)
-
-
 class TransitAgency(models.Model):
     """An agency offering transit service."""
 

@@ -16,7 +16,6 @@ from benefits.core.models import (
     PemData,
     TransitAgency,
 )
-from benefits.core.models.transit import EligibilityApiConfig
 from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup
 from benefits.enrollment_switchio.models import SwitchioConfig, SwitchioGroup
 
@@ -234,14 +233,7 @@ def model_SwitchioConfig(model_PemData, model_TransitAgency):
 
 
 @pytest.fixture
-def model_EligibilityApiConfig():
-    config = EligibilityApiConfig.objects.create()
-
-    return config
-
-
-@pytest.fixture
-def model_TransitAgency(model_EligibilityApiConfig):
+def model_TransitAgency():
     agency = TransitAgency.objects.create(
         slug="cst",
         short_name="TEST",
