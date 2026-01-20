@@ -100,14 +100,6 @@ class TransitAgency(models.Model):
         default=[CardSchemes.VISA, CardSchemes.MASTERCARD],
         help_text="The contactless card schemes this agency supports.",
     )
-    eligibility_api_config = models.ForeignKey(
-        EligibilityApiConfig,
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        default=None,
-        help_text="The Eligibility API configuration for this transit agency.",
-    )
     sso_domain = models.TextField(
         blank=True,
         default="",

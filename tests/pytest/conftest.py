@@ -249,7 +249,6 @@ def model_TransitAgency(model_EligibilityApiConfig):
         info_url="https://example.com/test-agency",
         phone="800-555-5555",
         active=True,
-        eligibility_api_config=model_EligibilityApiConfig,
         logo="agencies/cst.png",
     )
 
