@@ -96,7 +96,7 @@ class AgencyPublicKeyView(View):
     def get(self, request, *args, **kwargs):
         # in the URL, a TransitAgency argument is required, but we just need to return the single
         # EligibilityApiVerificationRequest client public key that is shared across all agencies
-        eligibility_api_public_key_data = EligibilityApiVerificationRequest.objects.first().api_client_public_key_data
+        eligibility_api_public_key_data = EligibilityApiVerificationRequest.objects.first().client_public_key_data
         return HttpResponse(eligibility_api_public_key_data, content_type="text/plain")
 
 

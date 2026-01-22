@@ -44,7 +44,7 @@ class EligibilityApiVerificationRequest(models.Model):
     api_auth_key_secret_name = SecretNameField(
         help_text="The name of a secret containing the value of the auth header to send in Eligibility API requests.",
     )
-    api_client_private_key = models.ForeignKey(
+    client_private_key = models.ForeignKey(
         PemData,
         related_name="+",
         on_delete=models.PROTECT,
@@ -52,7 +52,7 @@ class EligibilityApiVerificationRequest(models.Model):
         null=True,
         help_text="Private key used to sign Eligibility API tokens created on behalf of the Benefits client.",
     )
-    api_client_public_key = models.ForeignKey(
+    client_public_key = models.ForeignKey(
         PemData,
         related_name="+",
         on_delete=models.PROTECT,
@@ -89,14 +89,14 @@ class EligibilityApiVerificationRequest(models.Model):
         return secret_field.secret_value(self)
 
     @property
-    def api_client_private_key_data(self):
+    def client_private_key_data(self):
         """The private key used to sign Eligibility API tokens created by the Benefits client as a string."""
-        return self.api_client_private_key.data
+        return self.client_private_key.data
 
     @property
-    def api_client_public_key_data(self):
+    def client_public_key_data(self):
         """The public key corresponding to the Benefits client's private key as a string."""
-        return self.api_client_public_key.data
+        return self.client_public_key.data
 
     @property
     def api_public_key_data(self):

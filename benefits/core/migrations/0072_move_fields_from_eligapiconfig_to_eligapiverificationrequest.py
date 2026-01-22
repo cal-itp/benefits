@@ -11,8 +11,8 @@ def migrate_eligibility_api_config_data(apps, schema_editor):
     eligibility_api_config = EligibilityApiConfig.objects.first()
 
     for request in EligibilityApiVerificationRequest.objects.all():
-        request.api_client_private_key = eligibility_api_config.api_private_key
-        request.api_client_public_key = eligibility_api_config.api_public_key
+        request.client_private_key = eligibility_api_config.api_private_key
+        request.client_public_key = eligibility_api_config.api_public_key
         request.save()
 
 
@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name="eligibilityapiverificationrequest",
-            name="api_client_private_key",
+            name="client_private_key",
             field=models.ForeignKey(
                 default=None,
                 help_text="Private key used to sign Eligibility API tokens created on behalf of the Benefits client.",
@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name="eligibilityapiverificationrequest",
-            name="api_client_public_key",
+            name="client_public_key",
             field=models.ForeignKey(
                 default=None,
                 help_text=(

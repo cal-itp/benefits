@@ -164,7 +164,7 @@ class TestAgencyPublicKeyView:
 
         assert response.status_code == 200
         assert response.headers["Content-Type"] == "text/plain"
-        assert response.content.decode("utf-8") == model_EligibilityApiVerificationRequest.api_client_public_key_data
+        assert response.content.decode("utf-8") == model_EligibilityApiVerificationRequest.client_public_key_data
 
     def test_get_select_first_instance(self, view, app_request, model_EligibilityApiVerificationRequest):
         """
@@ -173,13 +173,13 @@ class TestAgencyPublicKeyView:
         """
         # Create a second verification request instance with different data
         public_key = PemData.objects.create(label="Test public key 2", text_secret_name="pem-secret-data-2")
-        EligibilityApiVerificationRequest.objects.create(api_client_public_key=public_key, api_public_key=public_key)
+        EligibilityApiVerificationRequest.objects.create(client_public_key=public_key, api_public_key=public_key)
 
         # Ensure we have more than one object in the DB
         assert EligibilityApiVerificationRequest.objects.count() > 1
 
         # The 'first' instance should be the one from the fixture
-        expected_key = model_EligibilityApiVerificationRequest.api_client_public_key_data
+        expected_key = model_EligibilityApiVerificationRequest.client_public_key_data
 
         agency = view.kwargs["agency"]
         response = view.get(app_request, agency=agency)

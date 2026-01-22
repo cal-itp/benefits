@@ -9,13 +9,7 @@ from django.utils import timezone
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import (
-    EligibilityApiVerificationRequest,
-    EnrollmentFlow,
-    Environment,
-    PemData,
-    TransitAgency,
-)
+from benefits.core.models import EligibilityApiVerificationRequest, EnrollmentFlow, Environment, PemData, TransitAgency
 from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup
 from benefits.enrollment_switchio.models import SwitchioConfig, SwitchioGroup
 
@@ -111,8 +105,8 @@ def model_EligibilityApiVerificationRequest(model_PemData):
         api_jwe_cek_enc="cek-enc",
         api_jwe_encryption_alg="alg",
         api_jws_signing_alg="alg",
-        api_client_private_key=model_PemData,
-        api_client_public_key=model_PemData,
+        client_private_key=model_PemData,
+        client_public_key=model_PemData,
         api_public_key=model_PemData,
         api_url="https://example.com/verify",
     )
