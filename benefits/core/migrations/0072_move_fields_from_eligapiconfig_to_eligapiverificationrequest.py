@@ -16,13 +16,6 @@ def migrate_eligibility_api_config_data(apps, schema_editor):
         request.save()
 
 
-def delete_eligibility_api_config_instances(apps, schema_editor):
-    EligibilityApiConfig = apps.get_model("core", "EligibilityApiConfig")
-
-    for config in EligibilityApiConfig.objects.all():
-        config.delete()
-
-
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -74,7 +67,6 @@ class Migration(migrations.Migration):
             model_name="transitagency",
             name="eligibility_api_config",
         ),
-        migrations.RunPython(delete_eligibility_api_config_instances),
         migrations.DeleteModel(
             name="EligibilityApiConfig",
         ),
