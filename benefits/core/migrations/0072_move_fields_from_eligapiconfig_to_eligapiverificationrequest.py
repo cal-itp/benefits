@@ -52,18 +52,6 @@ class Migration(migrations.Migration):
         ),
         migrations.RunPython(migrate_eligibility_api_config_data),
         migrations.RemoveField(
-            model_name="eligibilityapiconfig",
-            name="api_private_key",
-        ),
-        migrations.RemoveField(
-            model_name="eligibilityapiconfig",
-            name="api_public_key",
-        ),
-        migrations.RemoveField(
-            model_name="eligibilityapiconfig",
-            name="api_id",
-        ),
-        migrations.RemoveField(
             model_name="transitagency",
             name="eligibility_api_config",
         ),
