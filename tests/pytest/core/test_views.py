@@ -4,6 +4,8 @@ import benefits.core.session
 from benefits.core import views
 from benefits.core.middleware import TEMPLATE_USER_ERROR
 from benefits.core.models import EnrollmentFlow
+from benefits.core.models.common import PemData
+from benefits.core.models.enrollment import EligibilityApiVerificationRequest
 from benefits.routes import routes
 
 
@@ -155,14 +157,35 @@ class TestAgencyPublicKeyView:
         v.setup(app_request, agency=model_TransitAgency)
         return v
 
-    def test_get(self, view, app_request):
+    def test_get(self, view, app_request, model_EligibilityApiVerificationRequest):
         agency = view.kwargs["agency"]
         # recreate the condition of the live view, where the agency kwarg is passed to the get() call
         response = view.get(app_request, agency=agency)
 
         assert response.status_code == 200
         assert response.headers["Content-Type"] == "text/plain"
-        assert response.content.decode("utf-8") == agency.eligibility_api_public_key_data
+        assert response.content.decode("utf-8") == model_EligibilityApiVerificationRequest.client_public_key_data
+
+    def test_get_select_first_instance(self, view, app_request, model_EligibilityApiVerificationRequest):
+        """
+        Ensures that if multiple EligibilityApiVerificationRequest objects exist,
+        the view returns the public key from the first one.
+        """
+        # Create a second verification request instance with different data
+        public_key = PemData.objects.create(label="Test public key 2", text_secret_name="pem-secret-data-2")
+        EligibilityApiVerificationRequest.objects.create(client_public_key=public_key, api_public_key=public_key)
+
+        # Ensure we have more than one object in the DB
+        assert EligibilityApiVerificationRequest.objects.count() > 1
+
+        # The 'first' instance should be the one from the fixture
+        expected_key = model_EligibilityApiVerificationRequest.client_public_key_data
+
+        agency = view.kwargs["agency"]
+        response = view.get(app_request, agency=agency)
+
+        assert response.status_code == 200
+        assert response.content.decode("utf-8") == expected_key
 
 
 @pytest.mark.django_db

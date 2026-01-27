@@ -9,14 +9,7 @@ from django.utils import timezone
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import (
-    EligibilityApiVerificationRequest,
-    EnrollmentFlow,
-    Environment,
-    PemData,
-    TransitAgency,
-)
-from benefits.core.models.transit import EligibilityApiConfig
+from benefits.core.models import EligibilityApiVerificationRequest, EnrollmentFlow, Environment, PemData, TransitAgency
 from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup
 from benefits.enrollment_switchio.models import SwitchioConfig, SwitchioGroup
 
@@ -112,6 +105,8 @@ def model_EligibilityApiVerificationRequest(model_PemData):
         api_jwe_cek_enc="cek-enc",
         api_jwe_encryption_alg="alg",
         api_jws_signing_alg="alg",
+        client_private_key=model_PemData,
+        client_public_key=model_PemData,
         api_public_key=model_PemData,
         api_url="https://example.com/verify",
     )
@@ -232,14 +227,7 @@ def model_SwitchioConfig(model_PemData, model_TransitAgency):
 
 
 @pytest.fixture
-def model_EligibilityApiConfig(model_PemData):
-    config = EligibilityApiConfig.objects.create(api_id="test123", api_private_key=model_PemData, api_public_key=model_PemData)
-
-    return config
-
-
-@pytest.fixture
-def model_TransitAgency(model_EligibilityApiConfig):
+def model_TransitAgency():
     agency = TransitAgency.objects.create(
         slug="cst",
         short_name="TEST",
@@ -247,7 +235,6 @@ def model_TransitAgency(model_EligibilityApiConfig):
         info_url="https://example.com/test-agency",
         phone="800-555-5555",
         active=True,
-        eligibility_api_config=model_EligibilityApiConfig,
         logo="agencies/cst.png",
     )
 

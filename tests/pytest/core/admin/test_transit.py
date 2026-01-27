@@ -3,18 +3,8 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 
 from benefits.core import models
-from benefits.core.admin.mixins import StaffPermissionMixin, SuperuserPermissionMixin
-from benefits.core.admin.transit import EligibilityApiConfigAdmin, TransitAgencyAdmin
-
-
-@pytest.mark.django_db
-class TestEligibilityApiConfigAdmin:
-    @pytest.fixture(autouse=True)
-    def init(self):
-        self.model_admin = EligibilityApiConfigAdmin(models.EligibilityApiConfig, admin.site)
-
-    def test_permissions_mixin(self):
-        assert isinstance(self.model_admin, SuperuserPermissionMixin)
+from benefits.core.admin.mixins import StaffPermissionMixin
+from benefits.core.admin.transit import TransitAgencyAdmin
 
 
 @pytest.mark.django_db

@@ -10,7 +10,7 @@ from multiselectfield import MultiSelectField
 from benefits.core import context as core_context
 from benefits.routes import routes
 
-from .common import Environment, PemData
+from .common import Environment
 
 logger = logging.getLogger(__name__)
 
@@ -62,30 +62,6 @@ class TransitProcessorConfig(models.Model):
         return f"({environment_label}) {agency_slug}"
 
 
-class EligibilityApiConfig(models.Model):
-    """Per-agency configuration for Eligibility Server integrations via the Eligibility API."""
-
-    id = models.AutoField(primary_key=True)
-    api_id = models.SlugField(
-        help_text="The identifier for this agency used in Eligibility API calls.",
-    )
-    api_private_key = models.ForeignKey(
-        PemData,
-        related_name="+",
-        on_delete=models.PROTECT,
-        help_text="Private key used to sign Eligibility API tokens created on behalf of this Agency.",
-    )
-    api_public_key = models.ForeignKey(
-        PemData,
-        related_name="+",
-        on_delete=models.PROTECT,
-        help_text="Public key corresponding to the agency's private key, used by Eligibility Verification servers to encrypt responses.",  # noqa: E501
-    )
-
-    def __str__(self):
-        return self.api_id
-
-
 class TransitAgency(models.Model):
     """An agency offering transit service."""
 
@@ -118,14 +94,6 @@ class TransitAgency(models.Model):
         max_choices=len(CardSchemes.CHOICES),
         default=[CardSchemes.VISA, CardSchemes.MASTERCARD],
         help_text="The contactless card schemes this agency supports.",
-    )
-    eligibility_api_config = models.ForeignKey(
-        EligibilityApiConfig,
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        default=None,
-        help_text="The Eligibility API configuration for this transit agency.",
     )
     sso_domain = models.TextField(
         blank=True,
@@ -164,20 +132,6 @@ class TransitAgency(models.Model):
     def eligibility_index_url(self):
         """Public facing URL to the TransitAgency's eligibility page."""
         return reverse(routes.AGENCY_ELIGIBILITY_INDEX, args=[self.slug])
-
-    @property
-    def eligibility_api_private_key_data(self):
-        """This Agency's private key as a string."""
-        if self.eligibility_api_config:
-            return self.eligibility_api_config.api_private_key.data
-        return None
-
-    @property
-    def eligibility_api_public_key_data(self):
-        """This Agency's public key as a string."""
-        if self.eligibility_api_config:
-            return self.eligibility_api_config.api_public_key.data
-        return None
 
     @property
     def littlepay_config(self):

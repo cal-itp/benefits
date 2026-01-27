@@ -3,12 +3,7 @@ from django.contrib.auth.models import Group
 
 from benefits.core import models
 
-from .mixins import StaffPermissionMixin, SuperuserPermissionMixin
-
-
-@admin.register(models.EligibilityApiConfig)
-class EligibilityApiConfigAdmin(SuperuserPermissionMixin, admin.ModelAdmin):
-    pass
+from .mixins import StaffPermissionMixin
 
 
 @admin.register(models.TransitAgency)
