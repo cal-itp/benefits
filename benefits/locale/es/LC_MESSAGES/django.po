@@ -980,6 +980,15 @@ msgstr ""
 
 #, python-format
 msgid ""
+"Cal-ITP doesn’t save any of your information. All Roseville transit benefits "
+"reduce fares by 50%% for bus service on fixed routes."
+msgstr ""
+"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
+"Roseville reducen las tarifas en un 50%% para el servicio de autobús en "
+"rutas fijas."
+
+#, python-format
+msgid ""
 "Cal-ITP doesn’t save any of your information. All SacRT transit benefits "
 "reduce fares by 50%% for bus service on fixed routes."
 msgstr ""
