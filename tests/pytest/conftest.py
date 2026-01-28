@@ -215,7 +215,7 @@ def model_LittlepayConfig(model_TransitAgency):
 def model_SwitchioConfig(model_PemData, model_TransitAgency):
     switchio_config = SwitchioConfig.objects.create(
         transit_agency=model_TransitAgency,
-        environment=Environment.QA,
+        environment=Environment.ACC,
         tokenization_api_key="api_key",
         tokenization_api_secret_name="apisecret",
         client_certificate=model_PemData,

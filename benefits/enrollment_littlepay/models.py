@@ -42,6 +42,11 @@ class LittlepayConfig(TransitProcessorConfig):
             needed = dict(audience=self.audience, client_id=self.client_id, client_secret_name=self.client_secret_name)
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
+        if self.environment not in ["qa", "prod"]:
+            field_errors.update(
+                {"environment": ValidationError("Valid environment values for Littlepay are QA and Production.")}
+            )
+
         if field_errors:
             raise ValidationError(field_errors)
 
