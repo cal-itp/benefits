@@ -34,6 +34,9 @@ agency_index = {
         headline=_("Get your reduced fare on Nevada County Connects public transit when you tap to ride")
     ),
     AgencySlug.RABA.value: AgencyIndex(headline=_("Get your reduced fare on RABA public transit when you tap to ride")),
+    AgencySlug.ROSEVILLE.value: AgencyIndex(
+        headline=_("Get your reduced fare on Roseville public transit when you tap to ride")
+    ),
     AgencySlug.SACRT.value: AgencyIndex(headline=_("Get your reduced fare on SacRT buses when you tap to ride")),
     AgencySlug.SBMTD.value: AgencyIndex(headline=_("Get your reduced fare on Santa Barbara MTD buses when you tap to ride")),
     AgencySlug.SLORTA.value: AgencyIndex(
