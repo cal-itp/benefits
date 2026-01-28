@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2025-12-17 13:43-0800\n"
+"POT-Creation-Date: 2026-01-27 17:23-0800\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,6 +28,9 @@ msgid ""
 msgstr ""
 
 msgid "Get your reduced fare on RABA public transit when you tap to ride"
+msgstr ""
+
+msgid "Get your reduced fare on Roseville public transit when you tap to ride"
 msgstr ""
 
 msgid "Get your reduced fare on SacRT buses when you tap to ride"
@@ -763,6 +766,12 @@ msgstr ""
 
 #, python-format
 msgid ""
+"Cal-ITP doesn’t save any of your information. All Roseville transit benefits "
+"reduce fares by 50%% for bus service on fixed routes."
+msgstr ""
+
+#, python-format
+msgid ""
 "Cal-ITP doesn’t save any of your information. All SacRT transit benefits "
 "reduce fares by 50%% for bus service on fixed routes."
 msgstr ""
@@ -939,6 +948,9 @@ msgid "a Nevada County Connects bus"
 msgstr ""
 
 msgid "a RABA bus"
+msgstr ""
+
+msgid "a Roseville bus"
 msgstr ""
 
 msgid "a SacRT bus"
