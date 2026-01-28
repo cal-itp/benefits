@@ -950,6 +950,9 @@ msgstr ""
 msgid "a RABA bus"
 msgstr ""
 
+msgid "a Roseville bus"
+msgstr ""
+
 msgid "a SacRT bus"
 msgstr ""
 

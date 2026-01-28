@@ -184,6 +184,7 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
             AgencySlug.MST.value: DefaultEnrollmentSuccess(transportation_type=_("an MST bus")),
             AgencySlug.NEVCO.value: DefaultEnrollmentSuccess(transportation_type=_("a Nevada County Connects bus")),
             AgencySlug.RABA.value: DefaultEnrollmentSuccess(transportation_type=_("a RABA bus")),
+            AgencySlug.ROSEVILLE.value: DefaultEnrollmentSuccess(transportation_type=_("a Roseville bus")),
             AgencySlug.SACRT.value: DefaultEnrollmentSuccess(transportation_type=_("a SacRT bus")),
             AgencySlug.SLORTA.value: DefaultEnrollmentSuccess(transportation_type=_("a RTA bus")),
             AgencySlug.SBMTD.value: DefaultEnrollmentSuccess(transportation_type=_("an SBMTD bus")),

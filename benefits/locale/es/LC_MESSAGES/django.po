@@ -1212,6 +1212,9 @@ msgstr "un autobús de Nevada County Connects"
 msgid "a RABA bus"
 msgstr "un autobús de RABA"
 
+msgid "a Roseville bus"
+msgstr "un autobús de Roseville"
+
 msgid "a SacRT bus"
 msgstr "un autobús de SacRT"
 
