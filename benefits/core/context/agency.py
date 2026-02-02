@@ -1,7 +1,4 @@
-from dataclasses import asdict, dataclass
-
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 
 class AgencySlug(models.TextChoices):
@@ -16,33 +13,3 @@ class AgencySlug(models.TextChoices):
     SBMTD = "sbmtd", "sbmtd"
     SLORTA = "slorta", "slorta"
     VCTC = "vctc", "vctc"
-
-
-@dataclass
-class AgencyIndex:
-    headline: str
-
-    def dict(self):
-        return asdict(self)
-
-
-agency_index = {
-    AgencySlug.CST.value: AgencyIndex(headline=_("Get your reduced fare on CST public transit when you tap to ride")),
-    AgencySlug.EDCTA.value: AgencyIndex(headline=_("Get your reduced fare on EDCTA public transit when you tap to ride")),
-    AgencySlug.MST.value: AgencyIndex(headline=_("Get your reduced fare on MST public transit when you tap to ride")),
-    AgencySlug.NEVCO.value: AgencyIndex(
-        headline=_("Get your reduced fare on Nevada County Connects public transit when you tap to ride")
-    ),
-    AgencySlug.RABA.value: AgencyIndex(headline=_("Get your reduced fare on RABA public transit when you tap to ride")),
-    AgencySlug.ROSEVILLE.value: AgencyIndex(
-        headline=_("Get your reduced fare on Roseville public transit when you tap to ride")
-    ),
-    AgencySlug.SACRT.value: AgencyIndex(headline=_("Get your reduced fare on SacRT buses when you tap to ride")),
-    AgencySlug.SBMTD.value: AgencyIndex(headline=_("Get your reduced fare on Santa Barbara MTD buses when you tap to ride")),
-    AgencySlug.SLORTA.value: AgencyIndex(
-        headline=_("Get your reduced fare on San Luis Obispo RTA buses when you tap to ride")
-    ),
-    AgencySlug.VCTC.value: AgencyIndex(
-        headline=_("Get your reduced fare on Ventura County Transportation Commission buses when you tap to ride")
-    ),
-}
