@@ -1,7 +1,7 @@
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy
 
-from .flow import FlowHelp, SystemName, flows_help
+from .flow import SystemName
 
 
 def formatted_gettext_lazy(string, *args, **kwargs):
@@ -9,4 +9,4 @@ def formatted_gettext_lazy(string, *args, **kwargs):
     return format_lazy(gettext_lazy(string), *args, **kwargs)
 
 
-__all__ = ["FlowHelp", "SystemName", "flows_help", "formatted_gettext_lazy"]
+__all__ = ["SystemName", "formatted_gettext_lazy"]
