@@ -120,10 +120,6 @@ class TransitAgency(models.Model):
         return self.long_name
 
     @property
-    def index_context(self):
-        return core_context.agency_index[self.slug].dict()
-
-    @property
     def index_url(self):
         """Public-facing URL to the TransitAgency's landing page."""
         return reverse(routes.AGENCY_INDEX, args=[self.slug])

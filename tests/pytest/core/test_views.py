@@ -57,12 +57,6 @@ class TestAgencyIndexView:
         mocked_session_reset.assert_called_once()
         mocked_session_update.assert_called_once()
 
-    def test_get_context_data(self, view, model_TransitAgency):
-        context = view.get_context_data()
-
-        for key, value in model_TransitAgency.index_context.items():
-            assert context[key] == value
-
 
 @pytest.mark.django_db
 class TestAgencyCardView:
