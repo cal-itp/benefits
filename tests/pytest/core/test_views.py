@@ -193,6 +193,14 @@ class TestHelpView:
     def test_view(self, view):
         assert view.template_name == "core/help.html"
 
+    def test_get_context_data_with_no_agency(self, view):
+        context_data = view.get_context_data()
+        assert "flows_help" not in context_data
+
+    def test_get_context_data_with_agency(self, view, mocked_session_agency):
+        context_data = view.get_context_data()
+        assert "flows_help" in context_data
+
 
 @pytest.mark.django_db
 class TestLoggedOutView:

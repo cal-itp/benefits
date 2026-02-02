@@ -111,8 +111,8 @@
             <a href="https://login.gov/help/" target="_blank" rel="noopener noreferrer">more information on identity verification</a>.
           {% endblocktranslate %}
         </p>
-        {% if agency and agency.flows_help %}
-          {% for flow_help in agency.flows_help %}
+        {% if agency and flows_help %}
+          {% for flow_help in flows_help %}
             <h2 class="h2-sm pt-4 pt-lg-8" id="{{ flow_help.id }}">{{ flow_help.headline }}</h2>
             <p class="pt-2 pt-lg-4">{{ flow_help.text|safe }}</p>
           {% endfor %}

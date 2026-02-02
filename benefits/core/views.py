@@ -155,6 +155,17 @@ class HelpView(TemplateView):
         if not session.active_agency(self.request):
             choices = models.CardSchemes.CHOICES
             context["all_card_schemes"] = [choices[card_scheme] for card_scheme in choices.keys()]
+        else:
+            agency = session.agency(self.request)
+
+            # build up a single list of all flow help contexts
+            flows_help = []
+            for flow in agency.enrollment_flows.all():
+                # flow.help_context is a list of context objects
+                if len(flow.help_context) > 0:
+                    flows_help.extend(flow.help_context)
+
+            context["flows_help"] = flows_help
 
         return context
 
