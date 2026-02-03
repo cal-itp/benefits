@@ -6,9 +6,9 @@ from benefits.enrollment_switchio.models import SwitchioConfig
 
 @pytest.mark.django_db
 def test_SwitchioConfig_defaults():
-    switchio_config = SwitchioConfig.objects.create(environment="acc")
+    switchio_config = SwitchioConfig.objects.create(environment="dev")
 
-    assert switchio_config.environment == "acc"
+    assert switchio_config.environment == "dev"
     assert switchio_config.tokenization_api_key == ""
     assert switchio_config.tokenization_api_secret_name == ""
     assert switchio_config.enrollment_api_authorization_header == ""
@@ -22,7 +22,7 @@ def test_SwitchioConfig_defaults():
 
 @pytest.mark.django_db
 def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
-    switchio_config = SwitchioConfig.objects.create(environment="acc")
+    switchio_config = SwitchioConfig.objects.create(environment="dev")
     switchio_config.transit_agency = model_TransitAgency_inactive
     switchio_config.save()
 
@@ -35,7 +35,7 @@ def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
 
 @pytest.mark.django_db
 def test_SwitchioConfig_clean(model_TransitAgency_inactive):
-    switchio_config = SwitchioConfig.objects.create(environment="acc")
+    switchio_config = SwitchioConfig.objects.create(environment="dev")
     switchio_config.transit_agency = model_TransitAgency_inactive
     switchio_config.save()
 
@@ -66,7 +66,11 @@ def test_SwitchioConfig_clean(model_TransitAgency_inactive):
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "environment, secret_name",
-    [("acc", "switchio-acc-tokenization-api-base-url"), ("prod", "switchio-prod-tokenization-api-base-url")],
+    [
+        ("dev", "switchio-int-tokenization-api-base-url"),
+        ("test", "switchio-acc-tokenization-api-base-url"),
+        ("prod", "switchio-prod-tokenization-api-base-url"),
+    ],
 )
 def test_SwitchioConfig_tokenization_api_base_url(mocker, environment, secret_name):
     switchio_config = SwitchioConfig.objects.create(environment=environment)
@@ -82,7 +86,11 @@ def test_SwitchioConfig_tokenization_api_base_url(mocker, environment, secret_na
 @pytest.mark.django_db
 @pytest.mark.parametrize(
     "environment, secret_name",
-    [("acc", "switchio-acc-enrollment-api-base-url"), ("prod", "switchio-prod-enrollment-api-base-url")],
+    [
+        ("dev", "switchio-int-enrollment-api-base-url"),
+        ("test", "switchio-acc-enrollment-api-base-url"),
+        ("prod", "switchio-prod-enrollment-api-base-url"),
+    ],
 )
 def test_SwitchioConfig_enrollment_api_base_url(mocker, environment, secret_name):
     switchio_config = SwitchioConfig.objects.create(environment=environment)

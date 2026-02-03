@@ -56,7 +56,9 @@ class SwitchioConfig(TransitProcessorConfig):
 
     @property
     def tokenization_api_base_url(self):
-        if self.environment == Environment.ACC.value:
+        if self.environment == Environment.DEV.value:
+            return get_secret_by_name("switchio-int-tokenization-api-base-url")
+        if self.environment == Environment.TEST.value:
             return get_secret_by_name("switchio-acc-tokenization-api-base-url")
         elif self.environment == Environment.PROD.value:
             return get_secret_by_name("switchio-prod-tokenization-api-base-url")
@@ -65,7 +67,9 @@ class SwitchioConfig(TransitProcessorConfig):
 
     @property
     def enrollment_api_base_url(self):
-        if self.environment == Environment.ACC.value:
+        if self.environment == Environment.DEV.value:
+            return get_secret_by_name("switchio-int-enrollment-api-base-url")
+        if self.environment == Environment.TEST.value:
             return get_secret_by_name("switchio-acc-enrollment-api-base-url")
         elif self.environment == Environment.PROD.value:
             return get_secret_by_name("switchio-prod-enrollment-api-base-url")
@@ -107,11 +111,6 @@ class SwitchioConfig(TransitProcessorConfig):
                 private_key=self.private_key,
             )
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
-
-        if self.environment not in ["acc", "prod"]:
-            field_errors.update(
-                {"environment": ValidationError("Valid environment values for Switchio are Acceptance and Production.")}
-            )
 
         if field_errors:
             raise ValidationError(field_errors)

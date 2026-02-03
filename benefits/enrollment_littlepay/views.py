@@ -95,7 +95,7 @@ class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
         enrollment_index_context_dict = flow.enrollment_index_context
 
         match agency.littlepay_config.environment:
-            case models.Environment.QA.value:
+            case models.Environment.TEST.value:
                 url = "https://verify.qa.littlepay.com/assets/js/littlepay.min.js"
                 card_tokenize_env = "https://verify.qa.littlepay.com"
             case models.Environment.PROD.value:

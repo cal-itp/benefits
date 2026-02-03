@@ -28,7 +28,7 @@
     "pk": 4,
     "fields": {
       "label": "Switchio client certificate",
-      "text_secret_name": "switchio-acc-client-cert"
+      "text_secret_name": "switchio-int-client-cert"
     }
   },
   {
@@ -36,7 +36,7 @@
     "pk": 5,
     "fields": {
       "label": "Switchio CA certificate",
-      "text_secret_name": "switchio-acc-ca-cert"
+      "text_secret_name": "switchio-int-ca-cert"
     }
   },
   {
@@ -44,7 +44,7 @@
     "pk": 6,
     "fields": {
       "label": "Switchio private key",
-      "text_secret_name": "switchio-acc-private-key"
+      "text_secret_name": "switchio-int-private-key"
     }
   },
   {
@@ -116,7 +116,7 @@
     "model": "core.transitprocessorconfig",
     "pk": 2,
     "fields": {
-      "environment": "acc",
+      "environment": "dev",
       "transit_agency": null
     }
   },
@@ -134,7 +134,7 @@
     "pk": 2,
     "fields": {
       "tokenization_api_key": "123",
-      "tokenization_api_secret_name": "cst-switchio-acc-api-secret",
+      "tokenization_api_secret_name": "cst-switchio-int-api-secret",
       "enrollment_api_authorization_header": "Basic 1234",
       "pto_id": 123,
       "client_certificate": 4,

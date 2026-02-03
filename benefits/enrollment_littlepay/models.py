@@ -22,7 +22,7 @@ class LittlepayConfig(TransitProcessorConfig):
 
     @property
     def api_base_url(self):
-        if self.environment == Environment.QA.value:
+        if self.environment == Environment.TEST.value:
             return get_secret_by_name("littlepay-qa-api-base-url")
         elif self.environment == Environment.PROD.value:
             return get_secret_by_name("littlepay-prod-api-base-url")
@@ -42,9 +42,9 @@ class LittlepayConfig(TransitProcessorConfig):
             needed = dict(audience=self.audience, client_id=self.client_id, client_secret_name=self.client_secret_name)
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
-        if self.environment not in ["qa", "prod"]:
+        if self.environment not in ["test", "prod"]:
             field_errors.update(
-                {"environment": ValidationError("Valid environment values for Littlepay are QA and Production.")}
+                {"environment": ValidationError("Valid environment values for Littlepay are Testing and Production.")}
             )
 
         if field_errors:

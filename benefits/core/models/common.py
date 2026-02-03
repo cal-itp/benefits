@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 
 
 class Environment(models.TextChoices):
-    QA = "qa", "QA"
-    ACC = "acc", "Acceptance"
+    DEV = "dev", "Development"
+    TEST = "test", "Testing"
     PROD = "prod", "Production"
 
 
