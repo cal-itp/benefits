@@ -16,12 +16,11 @@ PROD_ID=$(az account list --query "[?name == 'CDT/ODI Production'] | [0].id" --o
 terraform init -backend-config="subscription_id=$PROD_ID"
 
 printf "\n\nSelecting the Terraform workspace...\n"
+SUBSCRIPTION="CDT/ODI Production"
 if [ "$ENV" = "prod" ]; then
   terraform workspace select default
-  SUBSCRIPTION="CDT/ODI Production"
 else
   terraform workspace select "$ENV"
-  SUBSCRIPTION="CDT/ODI Development"
 fi
 
 echo "Setting the subscription for the Azure CLI..."
