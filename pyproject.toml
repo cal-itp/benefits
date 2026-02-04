@@ -13,7 +13,7 @@ dependencies = [
     "azure-keyvault-secrets==4.10.0",
     "azure-identity==1.25.1",
     "calitp-littlepay==2025.4.1",
-    "Django==5.2.7",
+    "Django==5.2.11",
     "django-admin-sortable2==2.3.1",
     "django-azure-communication-email==1.5.0",
     "django-cdt-identity @ git+https://github.com/Office-of-Digital-Services/django-cdt-identity.git@c635773a75e7f184a9382748afcef6d5a705b2d6",
