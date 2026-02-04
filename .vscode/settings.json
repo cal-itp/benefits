@@ -17,7 +17,8 @@
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.codeActionsOnSave": { "source.organizeImports": "explicit" }
   },
   "python.languageServer": "Pylance",
   "python.testing.pytestArgs": ["tests/pytest"],
