@@ -11,7 +11,6 @@ from django.views.generic import RedirectView, TemplateView
 
 from benefits.core import models, session
 from benefits.core.context import formatted_gettext_lazy as _
-from benefits.core.context.agency import AgencySlug
 from benefits.core.context.flow import SystemName
 from benefits.core.mixins import (
     AgencySessionRequiredMixin,
@@ -19,6 +18,7 @@ from benefits.core.mixins import (
     FlowSessionRequiredMixin,
     PageViewMixin,
 )
+from benefits.core.models import AgencySlug
 from benefits.routes import routes
 
 from . import analytics

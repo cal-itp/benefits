@@ -9,10 +9,9 @@ from django.views.generic import FormView, TemplateView
 
 from benefits.core import recaptcha, session
 from benefits.core.context import formatted_gettext_lazy as _
-from benefits.core.context.agency import AgencySlug
 from benefits.core.context.flow import SystemName
 from benefits.core.mixins import AgencySessionRequiredMixin, FlowSessionRequiredMixin, RecaptchaEnabledMixin
-from benefits.core.models import EnrollmentFlow
+from benefits.core.models import AgencySlug, EnrollmentFlow
 from benefits.routes import routes
 
 from . import analytics, forms, verify
