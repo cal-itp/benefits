@@ -3,6 +3,15 @@
 from django.db import migrations, models
 
 
+def migrate_data(apps, schema_editor):
+    TransitProcessorConfig = apps.get_model("core", "TransitProcessorConfig")
+
+    for config in TransitProcessorConfig.objects.all():
+        if config.environment == "qa":
+            config.environment = "test"
+        config.save()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -18,4 +27,5 @@ class Migration(migrations.Migration):
                 help_text="A label to indicate which environment this configuration is for.",
             ),
         ),
+        migrations.RunPython(migrate_data),
     ]
