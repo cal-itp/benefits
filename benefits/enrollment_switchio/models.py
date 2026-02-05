@@ -56,8 +56,10 @@ class SwitchioConfig(TransitProcessorConfig):
 
     @property
     def tokenization_api_base_url(self):
-        if self.environment == Environment.QA.value:
-            return get_secret_by_name("switchio-qa-tokenization-api-base-url")
+        if self.environment == Environment.DEV.value:
+            return get_secret_by_name("switchio-int-tokenization-api-base-url")
+        if self.environment == Environment.TEST.value:
+            return get_secret_by_name("switchio-acc-tokenization-api-base-url")
         elif self.environment == Environment.PROD.value:
             return get_secret_by_name("switchio-prod-tokenization-api-base-url")
         else:
@@ -65,8 +67,10 @@ class SwitchioConfig(TransitProcessorConfig):
 
     @property
     def enrollment_api_base_url(self):
-        if self.environment == Environment.QA.value:
-            return get_secret_by_name("switchio-qa-enrollment-api-base-url")
+        if self.environment == Environment.DEV.value:
+            return get_secret_by_name("switchio-int-enrollment-api-base-url")
+        if self.environment == Environment.TEST.value:
+            return get_secret_by_name("switchio-acc-enrollment-api-base-url")
         elif self.environment == Environment.PROD.value:
             return get_secret_by_name("switchio-prod-enrollment-api-base-url")
         else:

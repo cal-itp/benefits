@@ -6,9 +6,9 @@ from benefits.enrollment_littlepay.models import LittlepayConfig
 
 @pytest.mark.django_db
 def test_LittlepayConfig_defaults():
-    littlepay_config = LittlepayConfig.objects.create(environment="qa")
+    littlepay_config = LittlepayConfig.objects.create(environment="test")
 
-    assert littlepay_config.environment == "qa"
+    assert littlepay_config.environment == "test"
     assert littlepay_config.audience == ""
     assert littlepay_config.client_id == ""
     assert littlepay_config.client_secret_name == ""
@@ -18,7 +18,7 @@ def test_LittlepayConfig_defaults():
 
 @pytest.mark.django_db
 def test_LittlepayConfig_clean_inactive_agency(model_TransitAgency_inactive):
-    littlepay_config = LittlepayConfig.objects.create(environment="qa")
+    littlepay_config = LittlepayConfig.objects.create(environment="test")
     littlepay_config.transit_agency = model_TransitAgency_inactive
     littlepay_config.save()
 
@@ -31,7 +31,7 @@ def test_LittlepayConfig_clean_inactive_agency(model_TransitAgency_inactive):
 
 @pytest.mark.django_db
 def test_LittlepayConfig_clean(model_TransitAgency_inactive):
-    littlepay_config = LittlepayConfig.objects.create(environment="qa")
+    littlepay_config = LittlepayConfig.objects.create(environment="test")
     littlepay_config.transit_agency = model_TransitAgency_inactive
     littlepay_config.save()
 
@@ -59,7 +59,7 @@ def test_LittlepayConfig_clean(model_TransitAgency_inactive):
 
 @pytest.mark.django_db
 @pytest.mark.parametrize(
-    "environment, secret_name", [("qa", "littlepay-qa-api-base-url"), ("prod", "littlepay-prod-api-base-url")]
+    "environment, secret_name", [("test", "littlepay-qa-api-base-url"), ("prod", "littlepay-prod-api-base-url")]
 )
 def test_LittlepayConfig_api_base_url(mocker, environment, secret_name):
     littlepay_config = LittlepayConfig.objects.create(environment=environment)
