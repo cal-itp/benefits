@@ -10,16 +10,8 @@ from . import models, session
 
 
 def _agency_context(agency: models.TransitAgency):
-    # build up a single list of all flow help contexts
-    flows_help = []
-    for flow in agency.enrollment_flows.all():
-        # flow.help_context is a list of context objects
-        if len(flow.help_context) > 0:
-            flows_help.extend(flow.help_context)
-
     agency_context = {
         "eligibility_index_url": agency.eligibility_index_url,
-        "flows_help": flows_help,
         "info_url": agency.info_url,
         "littlepay_config": agency.littlepay_config,
         "long_name": agency.long_name,

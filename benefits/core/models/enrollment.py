@@ -264,11 +264,6 @@ class EnrollmentFlow(models.Model):
         return in_person_context.eligibility_index[self.system_name].dict()
 
     @property
-    def help_context(self):
-        ctx = core_context.flows_help.get(self.system_name)
-        return [c.dict() for c in ctx] if ctx else []
-
-    @property
     def supports_sign_out(self):
         return bool(self.sign_out_button_template) or bool(self.sign_out_link_template)
 
