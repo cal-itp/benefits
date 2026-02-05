@@ -5,12 +5,10 @@
 {% endblock title %}
 
 {% block flow-content %}
-  <div class="p-3">
-    <div class="loading">
-      <p>
-        <span class="spinner-border align-middle text-primary" role="status"></span>
-        <span id="loading-message" class="fw-bold p-2">{{ loading_message }}</span>
-      </p>
+  <div class="loading">
+    <p id="loading-message" class="pt-3 px-3">{{ loading_message }}</p>
+    <div class="progress progress-indeterminate">
+      <div class="progress-bar" role="progressbar" aria-label="progress bar"></div>
     </div>
   </div>
 
