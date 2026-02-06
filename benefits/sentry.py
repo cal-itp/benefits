@@ -1,4 +1,4 @@
-import logging
+import datetime
 import os
 import shutil
 import subprocess
@@ -9,8 +9,6 @@ from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.scrubber import DEFAULT_DENYLIST, EventScrubber
 
 from benefits import VERSION
-
-logger = logging.getLogger(__name__)
 
 SENTRY_CSP_REPORT_URI = None
 
@@ -68,12 +66,21 @@ def get_traces_sample_rate():
     try:
         rate = float(os.environ.get("SENTRY_TRACES_SAMPLE_RATE", "0.0"))
         if rate < 0.0 or rate > 1.0:
-            logger.warning("SENTRY_TRACES_SAMPLE_RATE was not in the range [0.0, 1.0], defaulting to 0.0")
+            print(
+                f"[{datetime.datetime.now().strftime("%d/%b/%Y %H:%M:%S")}] "
+                "WARNING benefits.sentry SENTRY_TRACES_SAMPLE_RATE was not in the range [0.0, 1.0], defaulting to 0.0"
+            )
             rate = 0.0
         else:
-            logger.info(f"SENTRY_TRACES_SAMPLE_RATE set to: {rate}")
+            print(
+                f"[{datetime.datetime.now().strftime("%d/%b/%Y %H:%M:%S")}] "
+                f"INFO benefits.sentry SENTRY_TRACES_SAMPLE_RATE set to: {rate}"
+            )
     except ValueError:
-        logger.warning("SENTRY_TRACES_SAMPLE_RATE did not parse to float, defaulting to 0.0")
+        print(
+            f"[{datetime.datetime.now().strftime("%d/%b/%Y %H:%M:%S")}] "
+            "WARNING benefits.sentry SENTRY_TRACES_SAMPLE_RATE did not parse to float, defaulting to 0.0"
+        )
         rate = 0.0
 
     return rate
@@ -85,7 +92,11 @@ def configure():
 
     if sentry_dsn:
         release = get_release()
-        logger.info(f"Enabling Sentry for environment '{sentry_environment}', release '{release}'...")
+        print(
+            f"[{datetime.datetime.now().strftime("%d/%b/%Y %H:%M:%S")}] "
+            f"INFO benefits.sentry Enabling Sentry for environment '{sentry_environment}', "
+            f"release '{release}'..."
+        )
 
         # https://docs.sentry.io/platforms/python/configuration/
         sentry_sdk.init(
@@ -107,4 +118,7 @@ def configure():
         global SENTRY_CSP_REPORT_URI
         SENTRY_CSP_REPORT_URI = os.environ.get("SENTRY_REPORT_URI", "")
     else:
-        logger.info("SENTRY_DSN not set, so won't send events")
+        print(
+            f"[{datetime.datetime.now().strftime("%d/%b/%Y %H:%M:%S")}] "
+            "INFO benefits.sentry SENTRY_DSN not set, so won't send events"
+        )
