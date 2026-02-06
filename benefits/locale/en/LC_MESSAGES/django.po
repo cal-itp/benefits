@@ -585,65 +585,10 @@ msgstr ""
 msgid "Please reach out to %(short_name)s for assistance."
 msgstr ""
 
-#, python-format
+#, python-brace-format
 msgid ""
-"Cal-ITP doesn’t save any of your information. All CST transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All EDCTA transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All MST transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All Nevada County Connects "
-"transit benefits reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All RABA transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All Roseville transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All SacRT transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All SBMTD transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All RTA transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All Ventura County "
-"Transportation Commission transit benefits reduce fares by 50%% for bus "
-"service on fixed routes."
+"Cal-ITP doesn’t save any of your information. Please visit the {short_name} "
+"website for discount program details."
 msgstr ""
 
 msgid "Get started with"

@@ -745,89 +745,11 @@ msgstr "¡Está bien! Usted aún puede ser elegible para nuestro programa."
 msgid "Please reach out to %(short_name)s for assistance."
 msgstr "Comuníquese con %(short_name)s para obtener ayuda."
 
-#, python-format
+#, python-brace-format
 msgid ""
-"Cal-ITP doesn’t save any of your information. All CST transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de CST "
-"reducen las tarifas de autobuses en un 50%%."
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All EDCTA transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
-"EDCTA reducen las tarifas de autobuses en un 50%%."
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All MST transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de MST "
-"reducen las tarifas de autobuses en un 50%%."
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All Nevada County Connects "
-"transit benefits reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
-"Nevada County Connects reducen las tarifas de autobuses en un 50%%."
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All RABA transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de RABA "
-"reducen las tarifas de autobuses en un 50%%."
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All Roseville transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
-"Roseville reducen las tarifas en un 50%% para el servicio de autobús en "
-"rutas fijas."
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All SacRT transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
-"SacRT reducen las tarifas en un 50%% para el servicio de autobús en rutas "
-"fijas."
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All SBMTD transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
-"SBMTD le ofrecen a los pasajeros tarifas de autobús reducidas."
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All RTA transit benefits "
-"reduce fares by 50%% for bus service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de RTA "
-"reducen las tarifas en un 50%% para el servicio de autobús en rutas fijas."
-
-#, python-format
-msgid ""
-"Cal-ITP doesn’t save any of your information. All Ventura County "
-"Transportation Commission transit benefits reduce fares by 50%% for bus "
-"service on fixed routes."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
-"Ventura County Transportation Commission reducen las tarifas de autobuses en "
-"un 50%%."
+"Cal-ITP doesn’t save any of your information. Please visit the {short_name} "
+"website for discount program details."
+msgstr "Cal-ITP no almacena su información. {short_name} TK."
 
 msgid "Get started with"
 msgstr "Comience con"

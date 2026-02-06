@@ -13,21 +13,10 @@ from django.views.generic import FormView, TemplateView
 from benefits.core import recaptcha, session
 from benefits.core.context_processors import formatted_gettext_lazy as _
 from benefits.core.mixins import AgencySessionRequiredMixin, FlowSessionRequiredMixin, RecaptchaEnabledMixin
-from benefits.core.models import AgencySlug, EnrollmentFlow, SystemName
+from benefits.core.models import EnrollmentFlow, SystemName
 from benefits.routes import routes
 
 from . import analytics, forms, verify
-
-
-class EligibilityIndex:
-    def __init__(self, form_text):
-        if not isinstance(form_text, list):
-            form_text = [form_text]
-
-        self.form_text = form_text
-
-    def dict(self):
-        return dict(form_text=self.form_text)
 
 
 class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
@@ -46,72 +35,13 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
         """Add agency-specific context data."""
         context = super().get_context_data(**kwargs)
 
-        eligiblity_index = {
-            AgencySlug.CST.value: EligibilityIndex(
-                form_text=_(
-                    "Cal-ITP doesn’t save any of your information. "
-                    "All CST transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
-                )
-            ),
-            AgencySlug.EDCTA.value: EligibilityIndex(
-                form_text=_(
-                    "Cal-ITP doesn’t save any of your information. "
-                    "All EDCTA transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
-                ),
-            ),
-            AgencySlug.MST.value: EligibilityIndex(
-                form_text=_(
-                    "Cal-ITP doesn’t save any of your information. "
-                    "All MST transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
-                )
-            ),
-            AgencySlug.NEVCO.value: EligibilityIndex(
-                form_text=_(
-                    "Cal-ITP doesn’t save any of your information. "
-                    "All Nevada County Connects transit benefits reduce fares "
-                    "by 50%% for bus service on fixed routes.".replace("%%", "%")
-                )
-            ),
-            AgencySlug.RABA.value: EligibilityIndex(
-                form_text=_(
-                    "Cal-ITP doesn’t save any of your information. "
-                    "All RABA transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
-                )
-            ),
-            AgencySlug.ROSEVILLE.value: EligibilityIndex(
-                form_text=_(
-                    "Cal-ITP doesn’t save any of your information. "
-                    "All Roseville transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
-                )
-            ),
-            AgencySlug.SACRT.value: EligibilityIndex(
-                form_text=_(
-                    "Cal-ITP doesn’t save any of your information. "
-                    "All SacRT transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
-                )
-            ),
-            AgencySlug.SBMTD.value: EligibilityIndex(
-                form_text=_(
-                    "Cal-ITP doesn’t save any of your information. "
-                    "All SBMTD transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
-                )
-            ),
-            AgencySlug.SLORTA.value: EligibilityIndex(
-                form_text=_(
-                    "Cal-ITP doesn’t save any of your information. "
-                    "All RTA transit benefits reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
-                )
-            ),
-            AgencySlug.VCTC.value: EligibilityIndex(
-                form_text=_(
-                    "Cal-ITP doesn’t save any of your information. "
-                    "All Ventura County Transportation Commission transit benefits "
-                    "reduce fares by 50%% for bus service on fixed routes.".replace("%%", "%")
-                )
-            ),
-        }
+        form_text = _(
+            "Cal-ITP doesn’t save any of your information. Please visit the {short_name} website for discount program "
+            "details.",
+            short_name=self.agency.short_name,
+        )
 
-        context.update(eligiblity_index[self.agency.slug].dict())
+        context.update({"form_text": [form_text]})
         return context
 
     def get(self, request, *args, **kwargs):
