@@ -32,7 +32,7 @@ jobs:
       - run: gh pr comment $PR --body "You have added a Django migration without updating any fixtures. Please confirm whether a fixture update is needed."
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR: ${{ github.event.pull_request.number }}
+          PR: ${{ github.event.pull_request.html_url }}
 
   # Remind author to update shared fixtures and publicize it after merging
   fixtures_updated:
@@ -43,4 +43,4 @@ jobs:
       - run: gh pr comment $PR --body "You have updated `local_fixtures.json`. After merging, please be sure to make a corresponding update to the fixtures with secrets in our shared LastPass folder."
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR: ${{ github.event.pull_request.number }}
+          PR: ${{ github.event.pull_request.html_url }}
