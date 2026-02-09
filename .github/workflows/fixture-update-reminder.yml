@@ -29,7 +29,7 @@ jobs:
     if: ${{ needs.changes.outputs.migrations == 'true' && needs.changes.outputs.fixtures == 'false' }}
     runs-on: ubuntu-latest
     steps:
-      - run: gh pr comment $PR --body "You have added a Django migration without updating any fixtures. Please confirm whether a fixture update is needed."
+      - run: gh pr comment $PR --body 'You have added a Django migration without updating any fixtures. Please confirm whether a fixture update is needed.'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.html_url }}
@@ -40,7 +40,7 @@ jobs:
     if: ${{ needs.changes.outputs.fixtures == 'true' }}
     runs-on: ubuntu-latest
     steps:
-      - run: gh pr comment $PR --body "You have updated `local_fixtures.json`. After merging, please be sure to make a corresponding update to the fixtures with secrets in our shared LastPass folder."
+      - run: gh pr comment $PR --body 'You have updated `local_fixtures.json`. After merging, please be sure to make a corresponding update to the fixtures with secrets in our shared LastPass folder.'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.html_url }}
