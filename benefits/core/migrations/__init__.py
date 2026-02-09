@@ -1,5 +1,7 @@
 from django.contrib.auth.management import create_permissions
 
+# Test comment to trigger workflow
+
 
 def create_all_permissions(apps, schema_editor):
     for app_config in apps.get_app_configs():
