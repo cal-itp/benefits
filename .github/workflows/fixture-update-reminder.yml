@@ -1,0 +1,66 @@
+name: Fixture update reminder
+
+on:
+  pull_request:
+    paths:
+      - 'benefits/core/migrations/**'
+
+jobs:
+  # Check which files have changed
+  changes:
+    runs-on: ubuntu-latest
+    # Set job outputs to values from filter step
+    outputs:
+      migrations: ${{ steps.filter.outputs.migrations }}
+      fixtures: ${{ steps.filter.outputs.fixtures }}
+    steps:
+    - uses: dorny/paths-filter@v3
+      id: filter
+      with:
+        filters: |
+          migrations:
+            - 'benefits/core/migrations/*.py'
+          fixtures:
+            - 'benefits/core/migrations/local_fixtures.json'
+
+  # Remind author to confirm whether a fixture update is needed after adding a migration
+  migration_added_without_fixtures_update:
+    needs: changes
+    if: ${{ needs.changes.outputs.migrations == 'true' && needs.changes.outputs.fixtures == 'false' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find existing comment
+        uses: peter-evans/find-comment@v4
+        id: find-comment
+        with:
+          issue-number: ${{ github.event.number }}
+          comment-author: github-actions[bot]
+          body-includes: Is a corresponding fixture update needed?
+
+      - name: Add new comment if one doesn't exist
+        if: steps.find-comment.outputs.comment-id == ''
+        run: gh pr comment $PR --body 'This PR adds a Django migration without updating any fixtures. Is a corresponding fixture update needed?'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.html_url }}
+
+  # Remind author to update shared fixtures and publicize it after merging
+  fixtures_updated:
+    needs: changes
+    if: ${{ needs.changes.outputs.fixtures == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find existing comment
+        uses: peter-evans/find-comment@v4
+        id: find-comment
+        with:
+          issue-number: ${{ github.event.number }}
+          comment-author: github-actions[bot]
+          body-includes: make a corresponding update to the fixtures with secrets
+
+      - name: Add new comment if one doesn't exist
+        if: steps.find-comment.outputs.comment-id == ''
+        run: gh pr comment $PR --body 'This PR updates `local_fixtures.json`. After merging, please be sure to make a corresponding update to the fixtures with secrets in our shared LastPass folder and let other developers know that they should update their local fixtures accordingly.'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.html_url }}
