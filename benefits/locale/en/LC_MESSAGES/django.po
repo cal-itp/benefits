@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-02-13 11:19-0800\n"
+"POT-Creation-Date: 2026-02-13 13:44-0800\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -884,10 +884,10 @@ msgstr ""
 
 #, python-brace-format
 msgid ""
-"You were not charged anything today. When boarding {transportation_type}, "
-"tap your contactless card and you will be charged a reduced fare. You will "
-"need to re-enroll if you choose to change the card you use to pay for "
-"transit service."
+"You were not charged anything today. When boarding public transit provided "
+"by {short_name}, tap your contactless card and you will be charged a reduced "
+"fare. You will need to re-enroll if you choose to change the card you use to "
+"pay for transit service."
 msgstr ""
 
 msgid "Thank you for using Cal-ITP Benefits!"
@@ -896,43 +896,13 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "Your contactless card is now enrolled in {transit_benefit}. When boarding "
-"{transportation_type}, tap this card and you will be charged a reduced fare. "
-"You will need to re-enroll if you choose to change the card you use to pay "
-"for transit service."
+"public transit provided by {short_name}, tap this card and you will be "
+"charged a reduced fare. You will need to re-enroll if you choose to change "
+"the card you use to pay for transit service."
 msgstr ""
 
 msgid ""
 "You were not charged anything today. Thank you for using Cal-ITP Benefits!"
-msgstr ""
-
-msgid "a CST bus"
-msgstr ""
-
-msgid "an EDCTA bus"
-msgstr ""
-
-msgid "an MST bus"
-msgstr ""
-
-msgid "a Nevada County Connects bus"
-msgstr ""
-
-msgid "a RABA bus"
-msgstr ""
-
-msgid "a Roseville bus"
-msgstr ""
-
-msgid "a SacRT bus"
-msgstr ""
-
-msgid "a RTA bus"
-msgstr ""
-
-msgid "an SBMTD bus"
-msgstr ""
-
-msgid "a Ventura County Transportation Commission bus"
 msgstr ""
 
 msgid "a CST Agency Card transit benefit"
