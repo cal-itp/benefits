@@ -256,18 +256,6 @@ class TestUnverifiedView:
     def test_view(self, view):
         assert view.template_name == "eligibility/unverified.html"
 
-    def test_get_context_data__dispatched(self, view, app_request, model_EnrollmentFlow):
-        view.dispatch(app_request)
-
-        ctx = view.get_context_data()
-
-        for key, value in model_EnrollmentFlow.eligibility_unverified_context.items():
-            assert ctx[key] == value
-
-    def test_get_context_data__not_dispatched(self, view, model_EnrollmentFlow):
-        with pytest.raises(AttributeError, match="object has no attribute 'flow'"):
-            view.get_context_data()
-
     def test_get(self, mocker, view, app_request, mocked_analytics_module):
         # spy on the call to get() but call dispatch() like a real request
         spy = mocker.spy(view, "get")

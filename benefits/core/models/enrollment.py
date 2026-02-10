@@ -8,7 +8,6 @@ from django.utils import timezone
 from multiselectfield import MultiSelectField
 
 from benefits.core import context as core_context
-from benefits.eligibility import context as eligibility_context
 from benefits.enrollment import context as enrollment_context
 from benefits.in_person import context as in_person_context
 
@@ -212,11 +211,6 @@ class EnrollmentFlow(models.Model):
             return f"{prefix}--{self.agency_card_name}.html"
         else:
             return f"{prefix}--{self.system_name}.html"
-
-    @property
-    def eligibility_unverified_context(self):
-        ctx = eligibility_context.eligibility_unverified.get(self.system_name)
-        return ctx.dict() if ctx else {}
 
     @property
     def uses_claims_verification(self):
