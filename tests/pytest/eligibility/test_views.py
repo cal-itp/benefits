@@ -106,13 +106,6 @@ class TestStartView:
     def test_template_name(self, view):
         assert view.template_name == "eligibility/start.html"
 
-    def test_get_context_data(self, view, app_request, model_EnrollmentFlow):
-        view.dispatch(app_request)
-        context = view.get_context_data()
-
-        for key, value in model_EnrollmentFlow.eligibility_start_context.items():
-            assert context[key] == value
-
     def test_get(self, mocker, view, app_request, mocked_session_update):
         # spy on the call to get() but call dispatch() like a real request
         spy = mocker.spy(view, "get")

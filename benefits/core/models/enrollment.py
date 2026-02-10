@@ -214,10 +214,6 @@ class EnrollmentFlow(models.Model):
             return f"{prefix}--{self.system_name}.html"
 
     @property
-    def eligibility_start_context(self):
-        return eligibility_context.eligibility_start[self.system_name].dict()
-
-    @property
     def eligibility_unverified_context(self):
         ctx = eligibility_context.eligibility_unverified.get(self.system_name)
         return ctx.dict() if ctx else {}
