@@ -35,11 +35,11 @@ jobs:
         with:
           issue-number: ${{ github.event.number }}
           comment-author: github-actions[bot]
-          body-includes: Please confirm whether a fixture update is needed.
+          body-includes: Is a corresponding fixture update needed?
 
       - name: Add new comment if one doesn't exist
         if: steps.find-comment.outputs.comment-id == ''
-        run: gh pr comment $PR --body 'You have added a Django migration without updating any fixtures. Please confirm whether a fixture update is needed.'
+        run: gh pr comment $PR --body 'This PR adds a Django migration without updating any fixtures. Is a corresponding fixture update needed?'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.html_url }}
@@ -56,11 +56,11 @@ jobs:
         with:
           issue-number: ${{ github.event.number }}
           comment-author: github-actions[bot]
-          body-includes: Please confirm whether a fixture update is needed.
+          body-includes: make a corresponding update to the fixtures with secrets
 
       - name: Add new comment if one doesn't exist
         if: steps.find-comment.outputs.comment-id == ''
-        run: gh pr comment $PR --body 'You have updated `local_fixtures.json`. After merging, please be sure to make a corresponding update to the fixtures with secrets in our shared LastPass folder.'
+        run: gh pr comment $PR --body 'This PR updates `local_fixtures.json`. After merging, please be sure to make a corresponding update to the fixtures with secrets in our shared LastPass folder and let other developers know that they should update their local fixtures accordingly.'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.html_url }}
