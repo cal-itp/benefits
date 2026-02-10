@@ -15,7 +15,7 @@ jobs:
         # required Git setup for creating annotated tags
         run: |
           git config user.name "Version Checker"
-          git config user.email "user@checker.org"
+          git config user.email "checker@benefits.calitp.org"
 
       - name: Create annotated tag for testing
         id: create_tag
@@ -34,27 +34,7 @@ jobs:
 
       - name: Verify version match
         run: |
-          # define expected version
-          EXPECTED="${{ steps.create_tag.outputs.tag }}"
-
-          # get the Python actual version from the app container
-          # tail is required to ignore the "... objects imported automatically..." banner preceding the version number
-          ACTUAL_PYTHON=$(docker compose exec -T client python manage.py shell -c "import benefits; print(benefits.VERSION)" | tail -n 1)
-          # Python versions normalize single digit months to no leading zeros
-          # so we need to format (add back the leading zero for single digit months) the Python version to match the expected tag format
-          ACTUAL=$(echo "$ACTUAL_PYTHON" | awk -F. -v OFS=. '{$2=sprintf("%02d",$2); print $0}')
-
-          echo "Expected tag: $EXPECTED"
-          echo "Actual   tag: $ACTUAL"
-
-          # compare versions
-          if [ "$ACTUAL" == "$EXPECTED" ]; then
-            echo "Success: Version matches git tag."
-            exit 0
-          else
-            echo "Error: Version mismatch"
-            exit 1
-          fi
+          python .github/workflows/check-dynamic-version.py "${{ steps.create_tag.outputs.tag }}"
 
       - name: Cleanup
         if: ${{ !cancelled() }} # Run even if any of the previous steps fail
