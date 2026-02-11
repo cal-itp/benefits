@@ -249,19 +249,14 @@ class ConfirmView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Recaptch
     template_name = "eligibility/confirm.html"
 
     def get_form_class(self):
-        agency_slug = self.agency.slug
         flow_system_name = self.flow.system_name
 
-        if agency_slug == AgencySlug.CST and flow_system_name == SystemName.AGENCY_CARD:
-            form_class = forms.CSTAgencyCard
-        elif agency_slug == AgencySlug.MST and flow_system_name == SystemName.COURTESY_CARD:
+        if flow_system_name == SystemName.COURTESY_CARD:
             form_class = forms.MSTCourtesyCard
-        elif agency_slug == AgencySlug.SBMTD and flow_system_name == SystemName.REDUCED_FARE_MOBILITY_ID:
+        elif flow_system_name == SystemName.REDUCED_FARE_MOBILITY_ID:
             form_class = forms.SBMTDMobilityPass
         else:
-            raise ValueError(
-                f"This agency/flow combination does not support Eligibility API verification: {agency_slug}, {flow_system_name}"  # noqa
-            )
+            raise ValueError(f"The {flow_system_name} flow does not support Eligibility API verification.")
 
         return form_class
 
