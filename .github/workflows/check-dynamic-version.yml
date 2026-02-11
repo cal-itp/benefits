@@ -17,28 +17,6 @@ jobs:
           git config user.name "Version Checker"
           git config user.email "checker@benefits.calitp.org"
 
-      - name: Create annotated tag for testing
-        id: create_tag
-        run: |
-          # create "<current_year>.<current_month>.100" test tag
-          TEST_TAG="$(date +'%Y.%m.100')"
-          echo "tag=$TEST_TAG" >> $GITHUB_OUTPUT
-          git tag -a $TEST_TAG -m "Testing tag"
-
-      - name: Build and start the app container
-        run: |
-          # create an empty .env file required by Compose so it doesn't crash
-          touch .env
-          docker compose build --no-cache client
-          docker compose up -d client
-
       - name: Verify version match
         run: |
-          python .github/workflows/check-dynamic-version.py "${{ steps.create_tag.outputs.tag }}"
-
-      - name: Cleanup
-        if: ${{ !cancelled() }} # Run even if any of the previous steps fail
-        run: |
-          docker compose down
-          # delete the test tag or simply run true if it doesn't exist
-          git tag -d ${{ steps.create_tag.outputs.tag }} || true
+          python .github/workflows/check_dynamic_version.py
