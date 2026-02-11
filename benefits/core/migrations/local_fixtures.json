@@ -107,7 +107,7 @@
     "model": "core.transitprocessorconfig",
     "pk": 1,
     "fields": {
-      "environment": "qa",
+      "environment": "test",
       "transit_agency": 1,
       "portal_url": "https://www.transit-processor-portal.com"
     }
