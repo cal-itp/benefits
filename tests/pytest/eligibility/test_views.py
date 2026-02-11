@@ -97,21 +97,19 @@ class TestIndexView:
 @pytest.mark.django_db
 class TestStartView:
     @pytest.fixture
-    def view(self, app_request, mocked_eligibility_request_session):
+    def view(self, app_request, model_EnrollmentFlow):
         """Fixture to create an instance of StartView."""
         v = views.StartView()
         v.setup(app_request)
+        v.flow = model_EnrollmentFlow
         return v
 
     def test_template_name(self, view):
         assert view.template_name == "eligibility/start.html"
 
-    def test_get(self, mocker, view, app_request, mocked_session_update):
-        # spy on the call to get() but call dispatch() like a real request
-        spy = mocker.spy(view, "get")
-        response = view.dispatch(app_request)
+    def test_get(self, view, app_request, mocked_session_update):
+        response = view.get(app_request)
 
-        spy.assert_called_once()
         assert response.status_code == 200
         mocked_session_update.assert_called_once()
 
