@@ -12,11 +12,7 @@ from django.views.generic import FormView, TemplateView
 
 from benefits.core import recaptcha, session
 from benefits.core.context_processors import formatted_gettext_lazy as _
-from benefits.core.mixins import (
-    AgencySessionRequiredMixin,
-    FlowSessionRequiredMixin,
-    RecaptchaEnabledMixin,
-)
+from benefits.core.mixins import AgencySessionRequiredMixin, FlowSessionRequiredMixin, RecaptchaEnabledMixin
 from benefits.core.models import AgencySlug, EnrollmentFlow, SystemName
 from benefits.routes import routes
 
@@ -330,7 +326,6 @@ class UnverifiedView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Templ
         context = super().get_context_data(**kwargs)
 
         eligibility_unverified = {
-            SystemName.AGENCY_CARD.value: AgencyCardEligibilityUnverified(agency_card=_("CST Agency Card")),
             SystemName.COURTESY_CARD.value: AgencyCardEligibilityUnverified(agency_card=_("MST Courtesy Card")),
             SystemName.REDUCED_FARE_MOBILITY_ID.value: AgencyCardEligibilityUnverified(
                 agency_card=_("SBMTD Reduced Fare Mobility ID card")

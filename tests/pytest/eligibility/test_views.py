@@ -3,7 +3,7 @@ from django.urls import reverse
 
 import benefits.core.session
 import benefits.eligibility.views as views
-from benefits.core.models import AgencySlug, SystemName
+from benefits.core.models import SystemName
 from benefits.eligibility import forms
 from benefits.eligibility.forms import EligibilityVerificationForm, EnrollmentFlowSelectionForm
 from benefits.routes import routes
@@ -140,15 +140,13 @@ class TestConfirmView:
         return v
 
     @pytest.mark.parametrize(
-        "agency_slug, flow_system_name,expected_form_class",
+        "flow_system_name, expected_form_class",
         [
-            (AgencySlug.CST, SystemName.AGENCY_CARD, forms.CSTAgencyCard),
-            (AgencySlug.MST, SystemName.COURTESY_CARD, forms.MSTCourtesyCard),
-            (AgencySlug.SBMTD, SystemName.REDUCED_FARE_MOBILITY_ID, forms.SBMTDMobilityPass),
+            (SystemName.COURTESY_CARD, forms.MSTCourtesyCard),
+            (SystemName.REDUCED_FARE_MOBILITY_ID, forms.SBMTDMobilityPass),
         ],
     )
-    def test_get_form_class_valid(self, view, agency_slug, flow_system_name, expected_form_class):
-        view.agency.slug = agency_slug
+    def test_get_form_class_valid(self, view, flow_system_name, expected_form_class):
         view.flow.system_name = flow_system_name
 
         form_class = view.get_form_class()
@@ -158,10 +156,7 @@ class TestConfirmView:
     def test_get_form_class_invalid(self, view):
         view.agency.slug = "cst"
         view.flow.system_name = "senior"
-        expected_error_msg = (
-            f"This agency/flow combination does not support Eligibility API verification: "
-            f"{view.agency.slug}, {view.flow.system_name}"
-        )
+        expected_error_msg = "The senior flow does not support Eligibility API verification."
 
         with pytest.raises(ValueError, match=expected_error_msg):
             view.get_form_class()
@@ -251,7 +246,7 @@ class TestUnverifiedView:
         v = views.UnverifiedView()
         v.setup(app_request)
 
-        model_EnrollmentFlow.system_name = SystemName.AGENCY_CARD
+        model_EnrollmentFlow.system_name = SystemName.COURTESY_CARD
         v.flow = model_EnrollmentFlow
         return v
 
