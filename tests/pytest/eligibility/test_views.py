@@ -107,6 +107,15 @@ class TestStartView:
     def test_template_name(self, view):
         assert view.template_name == "eligibility/start.html"
 
+    def test_get_context_data(self, view):
+        context = view.get_context_data()
+
+        assert "page_title" in context
+        assert "headline_text" in context
+        assert "eligibility_item_headline" in context
+        assert "eligibility_item_body" in context
+        assert "call_to_action_button" in context
+
     def test_get(self, view, app_request, mocked_session_update):
         response = view.get(app_request)
 
