@@ -181,17 +181,6 @@ class HelpView(TemplateView):
 
     def get_help_contexts(self, flow) -> list[dict]:
         flows_help = {
-            SystemName.AGENCY_CARD.value: [
-                FlowHelp(
-                    id="cst-agency-card",
-                    headline=_("What is an Agency Card?"),
-                    text=_(
-                        "California State Transit issues Agency Cards to riders who qualify for a number of reduced fare "
-                        "programs. This transit benefit may need to be renewed in the future based on the expiration date of the "  # noqa: E501
-                        'Agency Card. Learn more at the <a href="https://www.agency-website.com" target="_blank" rel="noopener noreferrer">www.agency-website.com</a>.'  # noqa: E501
-                    ),
-                )
-            ],
             SystemName.CALFRESH.value: [
                 FlowHelp(
                     id="calfresh-transit-benefit",

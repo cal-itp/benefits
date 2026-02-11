@@ -12,7 +12,11 @@ from django.views.generic import FormView, TemplateView
 
 from benefits.core import recaptcha, session
 from benefits.core.context_processors import formatted_gettext_lazy as _
-from benefits.core.mixins import AgencySessionRequiredMixin, FlowSessionRequiredMixin, RecaptchaEnabledMixin
+from benefits.core.mixins import (
+    AgencySessionRequiredMixin,
+    FlowSessionRequiredMixin,
+    RecaptchaEnabledMixin,
+)
 from benefits.core.models import AgencySlug, EnrollmentFlow, SystemName
 from benefits.routes import routes
 
@@ -196,13 +200,6 @@ class StartView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateVi
         context = super().get_context_data(**kwargs)
 
         eligibility_start = {
-            SystemName.AGENCY_CARD.value: AgencyCardEligibilityStart(
-                headline_text=_("You selected an Agency Card transit benefit."),
-                eligibility_item_headline=_("Your current Agency Card number"),
-                eligibility_item_body=_(
-                    "You do not need to have your physical CST Agency Card, but you will need to know the number."
-                ),
-            ),
             SystemName.CALFRESH.value: LoginGovEligibilityStart(
                 page_title=_("CalFresh benefit overview"),
                 headline_text=_("You selected a CalFresh Cardholder transit benefit."),
