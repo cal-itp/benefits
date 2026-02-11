@@ -99,7 +99,7 @@ def model_ClaimsVerificationRequest():
 @pytest.fixture
 def model_EligibilityApiVerificationRequest(model_PemData):
     api_request = EligibilityApiVerificationRequest.objects.create(
-        label="agency_card",
+        label="courtesy_card",
         api_auth_header="X-API-AUTH",
         api_auth_key_secret_name="secret-key",
         api_jwe_cek_enc="cek-enc",
@@ -143,7 +143,7 @@ def model_SwitchioGroup(model_EnrollmentFlow):
 
 @pytest.fixture
 def model_EnrollmentFlow_with_eligibility_api(model_EnrollmentFlow, model_EligibilityApiVerificationRequest):
-    model_EnrollmentFlow.system_name = "agency_card"
+    model_EnrollmentFlow.system_name = "courtesy_card"
     model_EnrollmentFlow.api_request = model_EligibilityApiVerificationRequest
     model_EnrollmentFlow.save()
 

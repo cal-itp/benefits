@@ -31,7 +31,7 @@ def test_eligibility_from_api_error(
 def test_eligibility_from_api_verified_types(
     mocker, model_TransitAgency, model_EnrollmentFlow_with_eligibility_api, mock_api_client_verify, form
 ):
-    verified_types = ["agency_card"]
+    verified_types = ["courtesy_card"]
     api_response = mocker.Mock(eligibility=verified_types, error=None)
     mock_api_client_verify.return_value = api_response
 

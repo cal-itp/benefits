@@ -28,7 +28,6 @@ def test_EligibilityStart_dict():
 @pytest.mark.parametrize(
     "system_name",
     [
-        core_context.SystemName.AGENCY_CARD,
         core_context.SystemName.COURTESY_CARD,
         core_context.SystemName.REDUCED_FARE_MOBILITY_ID,
     ],
