@@ -191,9 +191,6 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
             AgencySlug.VCTC.value: DefaultEnrollmentSuccess(
                 transportation_type=_("a Ventura County Transportation Commission bus")
             ),
-            SystemName.AGENCY_CARD.value: AgencyCardEnrollmentSuccess(
-                transit_benefit=_("a CST Agency Card transit benefit"), transportation_type=_("a CST bus")
-            ),
             SystemName.COURTESY_CARD.value: AgencyCardEnrollmentSuccess(
                 transit_benefit=_("an MST Courtesy Card transit benefit"), transportation_type="an MST bus"
             ),

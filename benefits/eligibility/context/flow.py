@@ -51,13 +51,6 @@ class AgencyCardEligibilityStart(EligibilityStart):
 
 
 eligibility_start = {
-    SystemName.AGENCY_CARD.value: AgencyCardEligibilityStart(
-        headline_text=_("You selected an Agency Card transit benefit."),
-        eligibility_item_headline=_("Your current Agency Card number"),
-        eligibility_item_body=_(
-            "You do not need to have your physical CST Agency Card, but you will need to know the number."
-        ),
-    ),
     SystemName.CALFRESH.value: LoginGovEligibilityStart(
         page_title=_("CalFresh benefit overview"),
         headline_text=_("You selected a CalFresh Cardholder transit benefit."),
@@ -119,7 +112,6 @@ class AgencyCardEligibilityUnverified(EligibilityUnverified):
 
 
 eligibility_unverified = {
-    SystemName.AGENCY_CARD.value: AgencyCardEligibilityUnverified(agency_card=_("CST Agency Card")),
     SystemName.COURTESY_CARD.value: AgencyCardEligibilityUnverified(agency_card=_("MST Courtesy Card")),
     SystemName.REDUCED_FARE_MOBILITY_ID.value: AgencyCardEligibilityUnverified(
         agency_card=_("SBMTD Reduced Fare Mobility ID card")

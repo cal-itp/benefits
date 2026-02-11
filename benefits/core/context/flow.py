@@ -2,7 +2,6 @@ from django.db import models
 
 
 class SystemName(models.TextChoices):
-    AGENCY_CARD = "agency_card"
     CALFRESH = "calfresh"
     COURTESY_CARD = "courtesy_card"
     MEDICARE = "medicare"
