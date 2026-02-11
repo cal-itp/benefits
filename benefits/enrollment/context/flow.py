@@ -43,7 +43,6 @@ class CalFreshEnrollmentIndex(DefaultEnrollmentIndex):
 
 
 enrollment_index = {
-    SystemName.AGENCY_CARD: AgencyCardEnrollmentIndex(),
     SystemName.COURTESY_CARD: AgencyCardEnrollmentIndex(),
     SystemName.REDUCED_FARE_MOBILITY_ID: AgencyCardEnrollmentIndex(),
     SystemName.CALFRESH: CalFreshEnrollmentIndex(),
