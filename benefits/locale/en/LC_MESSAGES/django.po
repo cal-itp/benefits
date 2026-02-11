@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-02-12 16:52-0800\n"
+"POT-Creation-Date: 2026-02-17 12:57-0800\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -321,17 +321,6 @@ msgstr ""
 msgid ""
 "Get your reduced fare on Ventura County Transportation Commission buses when "
 "you tap to ride"
-msgstr ""
-
-msgid "What is an Agency Card?"
-msgstr ""
-
-msgid ""
-"California State Transit issues Agency Cards to riders who qualify for a "
-"number of reduced fare programs. This transit benefit may need to be renewed "
-"in the future based on the expiration date of the Agency Card. Learn more at "
-"the <a href=\"https://www.agency-website.com\" target=\"_blank\" "
-"rel=\"noopener noreferrer\">www.agency-website.com</a>."
 msgstr ""
 
 msgid ""
@@ -704,17 +693,6 @@ msgstr ""
 msgid "Continue"
 msgstr ""
 
-msgid "You selected an Agency Card transit benefit."
-msgstr ""
-
-msgid "Your current Agency Card number"
-msgstr ""
-
-msgid ""
-"You do not need to have your physical CST Agency Card, but you will need to "
-"know the number."
-msgstr ""
-
 msgid "CalFresh benefit overview"
 msgstr ""
 
@@ -784,9 +762,6 @@ msgid ""
 msgstr ""
 
 msgid "Try again"
-msgstr ""
-
-msgid "CST Agency Card"
 msgstr ""
 
 msgid "MST Courtesy Card"
@@ -963,9 +938,6 @@ msgid "an SBMTD bus"
 msgstr ""
 
 msgid "a Ventura County Transportation Commission bus"
-msgstr ""
-
-msgid "a CST Agency Card transit benefit"
 msgstr ""
 
 msgid "an MST Courtesy Card transit benefit"
