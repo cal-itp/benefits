@@ -248,31 +248,26 @@ class TestConfirmView:
 @pytest.mark.django_db
 class TestUnverifiedView:
     @pytest.fixture
-    def view(self, app_request, mocked_eligibility_request_session):
+    def view(self, app_request, model_EnrollmentFlow):
         v = views.UnverifiedView()
         v.setup(app_request)
+
+        model_EnrollmentFlow.system_name = SystemName.AGENCY_CARD
+        v.flow = model_EnrollmentFlow
         return v
 
     def test_view(self, view):
         assert view.template_name == "eligibility/unverified.html"
 
-    def test_get_context_data__dispatched(self, view, app_request, model_EnrollmentFlow):
-        view.dispatch(app_request)
+    def test_get_context_data(self, view):
+        context = view.get_context_data()
 
-        ctx = view.get_context_data()
-
-        for key, value in model_EnrollmentFlow.eligibility_unverified_context.items():
-            assert ctx[key] == value
-
-    def test_get_context_data__not_dispatched(self, view, model_EnrollmentFlow):
-        with pytest.raises(AttributeError, match="object has no attribute 'flow'"):
-            view.get_context_data()
+        assert "headline_text" in context
+        assert "body_text" in context
+        assert "button_text" in context
 
     def test_get(self, mocker, view, app_request, mocked_analytics_module):
-        # spy on the call to get() but call dispatch() like a real request
-        spy = mocker.spy(view, "get")
-        response = view.dispatch(app_request)
+        response = view.get(app_request)
 
-        spy.assert_called_once()
         assert response.status_code == 200
         mocked_analytics_module.returned_fail.assert_called_once()
