@@ -19,4 +19,4 @@ jobs:
 
       - name: Verify version match
         run: |
-          python .github/workflows/check_dynamic_version.py
+          python .github/workflows/check-dynamic-version.py
