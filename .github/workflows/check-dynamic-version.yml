@@ -1,0 +1,22 @@
+name: Check the dynamic version of the Benefits package
+
+on: [push, pull_request, workflow_call]
+
+jobs:
+  check-dynamic-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # fetch all history/tags for setuptools_scm to work
+
+      - name: Configure Git
+        # required Git setup for creating annotated tags
+        run: |
+          git config user.name "Version Checker"
+          git config user.email "checker@benefits.calitp.org"
+
+      - name: Verify version match
+        run: |
+          python .github/workflows/check-dynamic-version.py
