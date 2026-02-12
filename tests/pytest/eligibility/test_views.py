@@ -251,11 +251,20 @@ class TestUnverifiedView:
     def view(self, app_request, model_EnrollmentFlow):
         v = views.UnverifiedView()
         v.setup(app_request)
+
+        model_EnrollmentFlow.system_name = SystemName.AGENCY_CARD
         v.flow = model_EnrollmentFlow
         return v
 
     def test_view(self, view):
         assert view.template_name == "eligibility/unverified.html"
+
+    def test_get_context_data(self, view):
+        context = view.get_context_data()
+
+        assert "headline_text" in context
+        assert "body_text" in context
+        assert "button_text" in context
 
     def test_get(self, mocker, view, app_request, mocked_analytics_module):
         response = view.get(app_request)
