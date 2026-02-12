@@ -248,19 +248,17 @@ class TestConfirmView:
 @pytest.mark.django_db
 class TestUnverifiedView:
     @pytest.fixture
-    def view(self, app_request, mocked_eligibility_request_session):
+    def view(self, app_request, model_EnrollmentFlow):
         v = views.UnverifiedView()
         v.setup(app_request)
+        v.flow = model_EnrollmentFlow
         return v
 
     def test_view(self, view):
         assert view.template_name == "eligibility/unverified.html"
 
     def test_get(self, mocker, view, app_request, mocked_analytics_module):
-        # spy on the call to get() but call dispatch() like a real request
-        spy = mocker.spy(view, "get")
-        response = view.dispatch(app_request)
+        response = view.get(app_request)
 
-        spy.assert_called_once()
         assert response.status_code == 200
         mocked_analytics_module.returned_fail.assert_called_once()
