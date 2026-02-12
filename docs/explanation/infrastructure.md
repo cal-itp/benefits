@@ -29,7 +29,7 @@ All resources in these Resource Groups should be reflected in Terraform in this 
 
 The following things in Azure are managed by the California Department of Technology (CDT)'s DevSecOps (OET) team:
 
-- Subcriptions
+- Subscriptions
 - [Resource Groups](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal)
 - Networking
 - Front Door
