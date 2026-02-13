@@ -7,9 +7,10 @@ from django.urls import reverse
 from django.views.generic import FormView, View
 
 from benefits.core import models
-from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FlowSessionRequiredMixin
+from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin
 from benefits.enrollment import analytics, forms
 from benefits.enrollment.enrollment import Status, handle_enrollment_results
+from benefits.enrollment.views import IndexContextMixin
 from benefits.enrollment_littlepay.enrollment import enroll, request_card_tokenization_access
 from benefits.enrollment_littlepay.session import Session
 from benefits.routes import routes
@@ -50,7 +51,7 @@ class TokenView(EligibleSessionRequiredMixin, View):
         return JsonResponse(data)
 
 
-class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSessionRequiredMixin, FormView):
+class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexContextMixin, FormView):
     """View for the enrollment landing page."""
 
     enrollment_method = models.EnrollmentMethods.DIGITAL
@@ -64,9 +65,10 @@ class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
     template_name = "enrollment_littlepay/index.html"
 
     def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
         request = self.request
         agency = self.agency
-        flow = self.flow
 
         tokenize_retry_form = forms.CardTokenizeFailForm(self.route_enrollment_retry, "form-card-tokenize-fail-retry")
         tokenize_server_error_form = forms.CardTokenizeFailForm(
@@ -79,20 +81,20 @@ class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
             action_url=self.route_tokenize_success, auto_id=True, label_suffix=""
         )
 
-        context = {
-            "forms": [tokenize_retry_form, tokenize_server_error_form, tokenize_system_error_form, tokenize_success_form],
-            "cta_button": "tokenize_card",
-            "enrollment_method": self.enrollment_method,
-            "token_field": "card_token",
-            "form_retry": tokenize_retry_form.id,
-            "form_server_error": tokenize_server_error_form.id,
-            "form_success": tokenize_success_form.id,
-            "form_system_error": tokenize_system_error_form.id,
-            "overlay_language": self._get_overlay_language(request.LANGUAGE_CODE),
-            "card_schemes": json.dumps(agency.supported_card_schemes),
-        }
-
-        enrollment_index_context_dict = flow.enrollment_index_context
+        context.update(
+            {
+                "forms": [tokenize_retry_form, tokenize_server_error_form, tokenize_system_error_form, tokenize_success_form],
+                "cta_button": "tokenize_card",
+                "enrollment_method": self.enrollment_method,
+                "token_field": "card_token",
+                "form_retry": tokenize_retry_form.id,
+                "form_server_error": tokenize_server_error_form.id,
+                "form_success": tokenize_success_form.id,
+                "form_system_error": tokenize_system_error_form.id,
+                "overlay_language": self._get_overlay_language(request.LANGUAGE_CODE),
+                "card_schemes": json.dumps(agency.supported_card_schemes),
+            }
+        )
 
         match agency.littlepay_config.environment:
             case models.Environment.TEST.value:
@@ -104,12 +106,9 @@ class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
             case _:
                 raise ValueError("Unrecognized environment value")
 
-        transit_processor_context = dict(
+        context["transit_processor"] = dict(
             name="Littlepay", website="https://littlepay.com", card_tokenize_url=url, card_tokenize_env=card_tokenize_env
         )
-
-        enrollment_index_context_dict["transit_processor"] = transit_processor_context
-        context.update(enrollment_index_context_dict)
 
         return context
 

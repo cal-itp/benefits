@@ -4,6 +4,7 @@ The enrollment application: view definitions for the benefits enrollment flow.
 
 import logging
 from dataclasses import asdict, dataclass
+from typing import Any, Optional
 
 from django.template.defaultfilters import date
 from django.urls import reverse
@@ -24,6 +25,45 @@ from benefits.routes import routes
 from . import analytics
 
 logger = logging.getLogger(__name__)
+
+
+@dataclass
+class EnrollmentIndex:
+    headline: str = _("Your eligibility is confirmed! You’re almost there.")
+    next_step: str = _("The next step is to enroll the contactless card you will use to tap to ride for a reduced fare.")
+    partner_post_link: str = _(", to enter your contactless card details.")
+    alert_include: Optional[str] = ""
+
+    def dict(self):
+        return asdict(self)
+
+
+@dataclass
+class AgencyCardEnrollmentIndex(EnrollmentIndex):
+    def __init__(self):
+        super().__init__(headline=_("We found your record! Now let’s enroll your contactless card."))
+
+
+@dataclass
+class CalFreshEnrollmentIndex(EnrollmentIndex):
+    def __init__(self):
+        super().__init__(
+            next_step=_("The next step is to connect your contactless card to your transit benefit"),
+            partner_post_link=".",
+            alert_include="enrollment/includes/alert-box--warning--calfresh.html",
+        )
+
+
+class IndexContextMixin(FlowSessionRequiredMixin):
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        enrollment_index = {
+            SystemName.AGENCY_CARD: AgencyCardEnrollmentIndex(),
+            SystemName.COURTESY_CARD: AgencyCardEnrollmentIndex(),
+            SystemName.REDUCED_FARE_MOBILITY_ID: AgencyCardEnrollmentIndex(),
+            SystemName.CALFRESH: CalFreshEnrollmentIndex(),
+        }
+        context = enrollment_index.get(self.flow.system_name, EnrollmentIndex())
+        return context.dict()
 
 
 class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, RedirectView):

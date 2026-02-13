@@ -36,6 +36,31 @@ def mock_system_error_view_session(mocker, mocked_session_agency):
 
 
 @pytest.mark.django_db
+class TestIndexContextMixin:
+    @pytest.mark.parametrize(
+        "system_name,expected_ctx",
+        [
+            (SystemName.AGENCY_CARD, views.AgencyCardEnrollmentIndex()),
+            (SystemName.CALFRESH, views.CalFreshEnrollmentIndex()),
+            (SystemName.COURTESY_CARD, views.AgencyCardEnrollmentIndex()),
+            (SystemName.OLDER_ADULT, views.EnrollmentIndex()),
+            (SystemName.REDUCED_FARE_MOBILITY_ID, views.AgencyCardEnrollmentIndex()),
+        ],
+    )
+    def test_get_context_data(self, model_EnrollmentFlow, system_name, expected_ctx):
+        mixin = views.IndexContextMixin()
+        mixin.flow = model_EnrollmentFlow
+        mixin.flow.system_name = system_name
+
+        ctx = mixin.get_context_data()
+
+        assert ctx["headline"] == expected_ctx.headline
+        assert ctx["next_step"] == expected_ctx.next_step
+        assert ctx["partner_post_link"] == expected_ctx.partner_post_link
+        assert ctx["alert_include"] == expected_ctx.alert_include
+
+
+@pytest.mark.django_db
 class TestIndexView:
 
     @pytest.fixture

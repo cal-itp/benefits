@@ -7,9 +7,10 @@ from django.urls import reverse
 from django.views.generic import FormView, View
 
 from benefits.core import models
-from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin, FlowSessionRequiredMixin
+from benefits.core.mixins import AgencySessionRequiredMixin, EligibleSessionRequiredMixin
 from benefits.enrollment import analytics, forms
 from benefits.enrollment.enrollment import Status, handle_enrollment_results
+from benefits.enrollment.views import IndexContextMixin
 from benefits.enrollment_switchio.enrollment import (
     enroll,
     get_latest_active_token_value,
@@ -23,7 +24,7 @@ from benefits.routes import routes
 logger = logging.getLogger(__name__)
 
 
-class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSessionRequiredMixin, FormView):
+class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexContextMixin, FormView):
     """View for the enrollment landing page."""
 
     enrollment_method = models.EnrollmentMethods.DIGITAL
@@ -40,7 +41,6 @@ class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
         context = super().get_context_data(**kwargs)
 
         request = self.request
-        flow = self.flow
 
         tokenize_system_error_form = forms.CardTokenizeFailForm(
             self.route_system_error, "form-card-tokenize-fail-system-error"
@@ -50,7 +50,6 @@ class IndexView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
         )
         context.update(
             {
-                **flow.enrollment_index_context,
                 "forms": [tokenize_system_error_form, tokenize_success_form],
                 "form_success": tokenize_success_form.id,
                 "form_system_error": tokenize_system_error_form.id,

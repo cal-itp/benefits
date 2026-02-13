@@ -8,7 +8,6 @@ from django.utils import timezone
 from multiselectfield import MultiSelectField
 
 from benefits.core import context as core_context
-from benefits.enrollment import context as enrollment_context
 from benefits.in_person import context as in_person_context
 
 from .common import PemData, SecretNameField, template_path
@@ -243,11 +242,6 @@ class EnrollmentFlow(models.Model):
             return self.api_request.api_url
         else:
             return "undefined"
-
-    @property
-    def enrollment_index_context(self):
-        ctx = enrollment_context.enrollment_index.get(self.system_name, enrollment_context.DefaultEnrollmentIndex())
-        return ctx.dict()
 
     @property
     def in_person_eligibility_context(self):
