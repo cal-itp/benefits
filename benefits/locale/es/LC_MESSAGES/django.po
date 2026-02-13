@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-02-09 16:49-0800\n"
+"POT-Creation-Date: 2026-02-12 16:52-0800\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1022,29 +1022,6 @@ msgstr "tarjeta de cortesía de MST"
 msgid "SBMTD Reduced Fare Mobility ID card"
 msgstr "tarjeta Reduced Fare Mobility ID de SBMTD"
 
-msgid "Your eligibility is confirmed! You’re almost there."
-msgstr "¡Su elegibilidad está confirmada! Ya falta poco."
-
-msgid ""
-"The next step is to enroll the contactless card you will use to tap to ride "
-"for a reduced fare."
-msgstr ""
-"El siguiente paso es inscribir la tarjeta de pago sin contacto que usará "
-"para viajar y obtener una tarifa reducida"
-
-msgid ", to enter your contactless card details."
-msgstr ", para introducir los datos de su tarjeta de pago sin contacto."
-
-msgid "We found your record! Now let’s enroll your contactless card."
-msgstr ""
-"¡Encontramos su registro! Ahora inscribamos su tarjeta de pago sin contacto."
-
-msgid ""
-"The next step is to connect your contactless card to your transit benefit"
-msgstr ""
-"El siguiente paso es conectar su tarjeta sin contacto a su beneficio de "
-"tránsito"
-
 msgid "Do not enter information from your EBT card."
 msgstr "No ingrese información de su tarjeta EBT."
 
@@ -1153,6 +1130,29 @@ msgstr ""
 
 msgid "Sign out of"
 msgstr "Cierre sesión de"
+
+msgid "Your eligibility is confirmed! You’re almost there."
+msgstr "¡Su elegibilidad está confirmada! Ya falta poco."
+
+msgid ""
+"The next step is to enroll the contactless card you will use to tap to ride "
+"for a reduced fare."
+msgstr ""
+"El siguiente paso es inscribir la tarjeta de pago sin contacto que usará "
+"para viajar y obtener una tarifa reducida"
+
+msgid ", to enter your contactless card details."
+msgstr ", para introducir los datos de su tarjeta de pago sin contacto."
+
+msgid "We found your record! Now let’s enroll your contactless card."
+msgstr ""
+"¡Encontramos su registro! Ahora inscribamos su tarjeta de pago sin contacto."
+
+msgid ""
+"The next step is to connect your contactless card to your transit benefit"
+msgstr ""
+"El siguiente paso es conectar su tarjeta sin contacto a su beneficio de "
+"tránsito"
 
 msgid "Your CalFresh Cardholder transit benefit does not expire until"
 msgstr ""
