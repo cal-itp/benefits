@@ -7,8 +7,6 @@ from django.db import models
 from django.utils import timezone
 from multiselectfield import MultiSelectField
 
-from benefits.in_person import context as in_person_context
-
 from .common import PemData, SecretNameField, template_path
 from .transit import TransitAgency
 
@@ -113,6 +111,8 @@ class EligibilityApiVerificationRequest(models.Model):
 
 class EnrollmentFlow(models.Model):
     """Represents a user journey through the Benefits app for a single eligibility type."""
+
+    supported_in_person_flows = (SystemName.COURTESY_CARD.value, SystemName.MEDICARE.value, SystemName.OLDER_ADULT.value)
 
     id = models.AutoField(primary_key=True)
     system_name = models.SlugField(
@@ -253,10 +253,6 @@ class EnrollmentFlow(models.Model):
             return "undefined"
 
     @property
-    def in_person_eligibility_context(self):
-        return in_person_context.eligibility_index[self.system_name].dict()
-
-    @property
     def supports_sign_out(self):
         return bool(self.sign_out_button_template) or bool(self.sign_out_link_template)
 
@@ -275,16 +271,11 @@ class EnrollmentFlow(models.Model):
                 if not template_path(t):
                     errors.append(ValidationError(f"Template not found: {t}"))
 
-            if EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods:
-                try:
-                    in_person_eligibility_context = self.in_person_eligibility_context
-                except KeyError:
-                    in_person_eligibility_context = None
-
-                if not in_person_eligibility_context:
-                    errors.append(
-                        ValidationError(f"{self.system_name} not configured for In-person. Please uncheck to continue.")
-                    )
+            if (
+                EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods
+                and self.system_name not in self.supported_in_person_flows
+            ):
+                errors.append(ValidationError(f"{self.system_name} not configured for In-person. Please uncheck to continue."))
 
             if self.transit_agency.active and self.group_id is None:
                 errors.append(
