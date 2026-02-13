@@ -7,7 +7,6 @@ from django.db import models
 from django.utils import timezone
 from multiselectfield import MultiSelectField
 
-from benefits.core import context as core_context
 from benefits.in_person import context as in_person_context
 
 from .common import PemData, SecretNameField, template_path
@@ -25,6 +24,16 @@ SUPPORTED_METHODS = (
     (EnrollmentMethods.DIGITAL, EnrollmentMethods.DIGITAL.capitalize()),
     (EnrollmentMethods.IN_PERSON, EnrollmentMethods.IN_PERSON.replace("_", "-").capitalize()),
 )
+
+
+class SystemName(models.TextChoices):
+    AGENCY_CARD = "agency_card"
+    CALFRESH = "calfresh"
+    COURTESY_CARD = "courtesy_card"
+    MEDICARE = "medicare"
+    OLDER_ADULT = "senior"
+    REDUCED_FARE_MOBILITY_ID = "mobility_pass"
+    VETERAN = "veteran"
 
 
 class EligibilityApiVerificationRequest(models.Model):
@@ -107,7 +116,7 @@ class EnrollmentFlow(models.Model):
 
     id = models.AutoField(primary_key=True)
     system_name = models.SlugField(
-        choices=core_context.SystemName,
+        choices=SystemName,
         help_text="Primary internal system name for this EnrollmentFlow instance, e.g. in analytics and Eligibility API requests.",  # noqa: 501
     )
     label = models.TextField(

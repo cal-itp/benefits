@@ -11,11 +11,9 @@ from django.views.generic import RedirectView, TemplateView, View
 from django.views.generic.edit import FormView
 
 from benefits.core import models, session
-from benefits.core.context import SystemName
 from benefits.core.forms import ChooseAgencyForm
 from benefits.core.middleware import pageview_decorator, user_error
-from benefits.core.models import AgencySlug
-from benefits.core.models.enrollment import EligibilityApiVerificationRequest
+from benefits.core.models import AgencySlug, EligibilityApiVerificationRequest, SystemName
 from benefits.routes import routes
 
 
