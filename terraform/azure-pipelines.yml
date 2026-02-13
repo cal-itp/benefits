@@ -36,19 +36,8 @@ stages:
             name: env_select
             env:
               REASON: $(Build.Reason)
-      - job: dev
+      - job: deploy
         dependsOn: environment
-        condition: eq(dependencies.environment.outputs['env_select.service_connection'], 'Development')
-        variables:
-          workspace: $[ dependencies.environment.outputs['env_select.workspace'] ]
-        steps:
-          - template: pipeline/deploy.yml
-            parameters:
-              service_connection: Development
-              workspace: $(workspace)
-      - job: prod
-        dependsOn: environment
-        condition: eq(dependencies.environment.outputs['env_select.service_connection'], 'Production')
         variables:
           workspace: $[ dependencies.environment.outputs['env_select.workspace'] ]
         steps:
