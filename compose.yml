@@ -64,6 +64,16 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  pgweb:
+    container_name: pgweb
+    image: sosedoff/pgweb
+    ports:
+      - "${PGWEB_PORT:-8081}:8081"
+    depends_on:
+      - postgres
+    environment:
+      - PGWEB_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable
+
 volumes:
   pgdata:
     driver: local
