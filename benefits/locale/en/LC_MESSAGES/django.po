@@ -277,7 +277,7 @@ msgstr ""
 msgid "Choose transit agency"
 msgstr ""
 
-msgid "Get your reduced fare on public transit when you tap to ride"
+msgid "Get your reduced fare when you tap to ride on public transit"
 msgstr ""
 
 msgid "Logged out"

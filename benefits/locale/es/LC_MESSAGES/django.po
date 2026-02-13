@@ -369,9 +369,9 @@ msgstr ""
 msgid "Choose transit agency"
 msgstr "Elija la agencia de tránsito"
 
-msgid "Get your reduced fare on public transit when you tap to ride"
+msgid "Get your reduced fare when you tap to ride on public transit"
 msgstr ""
-"Obtenga una tarifa reducida en el transporte público cuando toque para viajar"
+"Obtenga una tarifa reducida cuando toque para viajar en el transporte público"
 
 msgid "Logged out"
 msgstr "Cierre sesión"
