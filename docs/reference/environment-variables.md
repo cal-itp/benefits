@@ -310,6 +310,36 @@ Comma-separated list of URIs. Configures the [`script-src`][mdn-csp-script-src] 
 
 Comma-separated list of URIs. Configures the [`style-src`][mdn-csp-style-src] Content Security Policy directive.
 
+## PostgreSQL
+
+!!! tldr "`postgres` Docker image docs"
+
+    The official PostgreSQL Docker image has more on available [`postgres` environment variables][postgres]
+
+### `PGWEB_PORT`
+
+The port to serve a (local only) [`pgweb`](https://sosedoff.github.io/pgweb/) service on.
+
+### `POSTGRES_DB`
+
+Used to define a different name for the default database that is created when the image is first started. If it is not specified, then the value of [`POSTGRES_USER`](#postgres_user) will be used.
+
+### `POSTGRES_HOSTNAME`
+
+The hostname of the (local) PostgreSQL Docker service, which is usually just the name of the service itself (`postgres`). Used by e.g. `pgweb` to establish a connection. Or the hostname of a cloud-based PostgreSQL service for e.g. Django to establish a connection.
+
+### `POSTGRES_PASSWORD`
+
+Required to use the (local) PostgreSQL Docker service. It must not be empty or undefined. This environment variable sets the superuser password for PostgreSQL.
+
+### `POSTGRES_PORT`
+
+The port exposed by the (local) PostgreSQL Docker service. Or the port on which to connect to a cloud-based PostgreSQL service.
+
+### `POSTGRES_USER`
+
+Used in conjunction with [`POSTGRES_PASSWORD`](#postgres_password) to set a user and its password. This variable will create the specified user with superuser power.
+
 ## reCAPTCHA
 
 !!! tldr "reCAPTCHA docs"
@@ -413,6 +443,7 @@ The default is `0.0` (i.e. no transactions are tracked).
 [mdn-csp-frame-src]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src
 [mdn-csp-script-src]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src
 [mdn-csp-style-src]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src
+[postgres]: https://hub.docker.com/_/postgres/#environment-variables
 [recaptcha]: https://developers.google.com/recaptcha
 [recaptcha-intro]: https://developers.google.com/recaptcha/intro
 [recaptcha-verify]: https://developers.google.com/recaptcha/docs/verify

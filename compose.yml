@@ -52,3 +52,28 @@ services:
       - ./tests/playwright:/playwright
       - /tmp/.X11-unix:/tmp/.X11-unix
     command: ./run.sh
+
+  postgres:
+    image: postgres:16
+    environment:
+      - POSTGRES_DB
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  pgweb:
+    container_name: pgweb
+    image: sosedoff/pgweb
+    ports:
+      - "${PGWEB_PORT:-8081}:8081"
+    depends_on:
+      - postgres
+    environment:
+      - PGWEB_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable
+
+volumes:
+  pgdata:
+    driver: local
