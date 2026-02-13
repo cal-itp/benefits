@@ -63,16 +63,3 @@ resource "azurerm_backup_policy_file_share" "policy" {
     weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
   }
 }
-
-resource "azurerm_storage_share" "data" {
-  name               = "benefits-data"
-  storage_account_id = azurerm_storage_account.main.id
-  quota              = 5
-  enabled_protocol   = "SMB"
-  acl {
-    id = "benefits-data-rwdl"
-    access_policy {
-      permissions = "rwdl"
-    }
-  }
-}
