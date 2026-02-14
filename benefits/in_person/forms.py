@@ -4,11 +4,18 @@ in-person eligibility verification flow, in which a
 transit agency employee manually verifies a rider's eligibility.
 """
 
+from dataclasses import dataclass
+
 from django import forms
 
 from benefits.core import models
 from benefits.enrollment.forms import CardTokenizeFailForm, CardTokenizeSuccessForm  # noqa
 from benefits.routes import routes
+
+
+@dataclass
+class EligibilityPolicy:
+    details: str
 
 
 class InPersonEligibilityForm(forms.Form):
@@ -24,6 +31,24 @@ class InPersonEligibilityForm(forms.Form):
 
     flow_field_error_message = "Choose an eligibility type"
     verified_field_error_message = "Check the box to verify you have confirmed eligibility"
+
+    eligibility_policies = {
+        models.SystemName.COURTESY_CARD.value: EligibilityPolicy(
+            details="I confirmed this rider’s identity using a government-issued ID and verified they possess an MST "
+            "Courtesy Card."
+        ),
+        models.SystemName.MEDICARE.value: EligibilityPolicy(
+            details="I confirmed this rider’s identity using a government-issued ID and verified they possess a valid "
+            "Medicare card."
+        ),
+        models.SystemName.OLDER_ADULT.value: EligibilityPolicy(
+            details="I confirmed this rider’s identity using a government-issued ID and verified they are age 65 or older."
+        ),
+        models.SystemName.REDUCED_FARE_MOBILITY_ID.value: EligibilityPolicy(
+            details="I confirmed this rider’s identity using a government-issued ID and verified they possess an SBMTD "
+            "Reduced Fare Mobility ID."
+        ),
+    }
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -49,12 +74,8 @@ class InPersonEligibilityForm(forms.Form):
         self.use_custom_validity = True
 
     def get_policy_details(self, flow: models.EnrollmentFlow):
-        try:
-            eligibility_context = flow.in_person_eligibility_context
-        except KeyError:
-            eligibility_context = None
-
-        return eligibility_context["policy_details"] if eligibility_context else None
+        policy = self.eligibility_policies.get(flow.system_name, None)
+        return policy.details if policy else None
 
     def clean(self):
         cleaned_data = super().clean()
