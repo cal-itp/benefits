@@ -112,7 +112,12 @@ class EligibilityApiVerificationRequest(models.Model):
 class EnrollmentFlow(models.Model):
     """Represents a user journey through the Benefits app for a single eligibility type."""
 
-    supported_in_person_flows = (SystemName.COURTESY_CARD.value, SystemName.MEDICARE.value, SystemName.OLDER_ADULT.value)
+    supported_in_person_flows = (
+        SystemName.COURTESY_CARD.value,
+        SystemName.MEDICARE.value,
+        SystemName.OLDER_ADULT.value,
+        SystemName.REDUCED_FARE_MOBILITY_ID,
+    )
 
     id = models.AutoField(primary_key=True)
     system_name = models.SlugField(

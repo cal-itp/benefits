@@ -33,16 +33,20 @@ class InPersonEligibilityForm(forms.Form):
     verified_field_error_message = "Check the box to verify you have confirmed eligibility"
 
     eligibility_policies = {
-        models.SystemName.OLDER_ADULT.value: EligibilityPolicy(
-            details="I confirmed this rider’s identity using a government-issued ID and verified they are age 65 or older."
+        models.SystemName.COURTESY_CARD.value: EligibilityPolicy(
+            details="I confirmed this rider’s identity using a government-issued ID and verified they possess an MST "
+            "Courtesy Card."
         ),
         models.SystemName.MEDICARE.value: EligibilityPolicy(
             details="I confirmed this rider’s identity using a government-issued ID and verified they possess a valid "
             "Medicare card."
         ),
-        models.SystemName.COURTESY_CARD.value: EligibilityPolicy(
-            details="I confirmed this rider’s identity using a government-issued ID and verified they possess an MST "
-            "Courtesy Card."
+        models.SystemName.OLDER_ADULT.value: EligibilityPolicy(
+            details="I confirmed this rider’s identity using a government-issued ID and verified they are age 65 or older."
+        ),
+        models.SystemName.REDUCED_FARE_MOBILITY_ID.value: EligibilityPolicy(
+            details="I confirmed this rider’s identity using a government-issued ID and verified they possess an SBMTD "
+            "Reduced Fare Mobility ID."
         ),
     }
 
