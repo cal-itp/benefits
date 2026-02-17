@@ -3,7 +3,6 @@ import pytest
 from benefits.core import models
 from benefits.core.mixins import ValidateRecaptchaMixin
 from benefits.eligibility.forms import (
-    CSTAgencyCard,
     EligibilityVerificationForm,
     EnrollmentFlowSelectionForm,
     MSTCourtesyCard,
@@ -101,52 +100,6 @@ class TestMSTCourtesyCard:
 
         # Non-numeric
         form_alpha = MSTCourtesyCard(data={"sub": "abcde", "name": "Gonzalez"})
-        assert not form_alpha.is_valid()
-
-
-class TestCSTAgencyCard:
-    """Tests related to the CSTAgencyCard form, including inheritance logic."""
-
-    @pytest.fixture(autouse=True)
-    def init(self):
-        # Initialize the form with valid data
-        self.valid_data = {"sub": "12345", "name": "Gonzalez"}
-        self.form = CSTAgencyCard(data=self.valid_data)
-        self.mst_form = MSTCourtesyCard(data=self.valid_data)
-
-    def test_inheritance_logic(self):
-        """Ensure CST inherits from MST and only the expected text fields are overridden."""
-        assert issubclass(CSTAgencyCard, MSTCourtesyCard)
-
-        # Test SHARED validation attributes (should be identical, inherited from MST)
-        assert self.form.sub_pattern == self.mst_form.sub_pattern
-        assert self.form.sub_max_length == self.mst_form.sub_max_length
-        assert self.form.sub_custom_validity == self.mst_form.sub_custom_validity
-
-        # Test OVERRIDDEN text/label attributes (should be different)
-        assert self.form.blurb != self.mst_form.blurb
-        assert self.form.sub_label != self.mst_form.sub_label
-
-    def test_valid_data_and_widget_attributes(self):
-        """Test happy path validation and ensure required HTML widget attributes are present."""
-        assert self.form.is_valid()
-
-        sub_attrs = self.form.fields["sub"].widget.attrs
-        assert sub_attrs["pattern"] == r"\d{5}"
-        assert sub_attrs["inputmode"] == "numeric"
-        assert sub_attrs["maxlength"] == "5"
-        assert sub_attrs["data-custom-validity"] == "Please enter a 5-digit number."
-
-        assert self.form.use_custom_validity
-
-    def test_invalid_data(self):
-        """Test failure cases for CSTAgencyCard (wrong length, non-numeric)."""
-        # Too short (4 digits)
-        form_short = CSTAgencyCard(data={"sub": "1234", "name": "Gonzalez"})
-        assert not form_short.is_valid()
-
-        # Non-numeric
-        form_alpha = CSTAgencyCard(data={"sub": "abcde", "name": "Gonzalez"})
         assert not form_alpha.is_valid()
 
 

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-02-17 12:57-0800\n"
+"POT-Creation-Date: 2026-02-17 13:05-0800\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -617,16 +617,6 @@ msgstr "Este es un número de 5 dígitos en el anverso y reverso de su tarjeta."
 
 msgid "Please enter a 5-digit number."
 msgstr "Ingrese un número de 5 dígitos."
-
-msgid ""
-"We use the information on your CST Agency Card to find the record of your "
-"transit benefit in our system."
-msgstr ""
-"Utilizamos la información de su Tarjeta de agencia CST para encontrar el "
-"registro de su beneficio de tránsito en nuestro sistema."
-
-msgid "Agency Card number"
-msgstr "Número de tarjeta de agencia de CST"
 
 msgid ""
 "We use the information on your SBMTD Reduced Fare Mobility ID card to find "
