@@ -154,10 +154,9 @@ class TestConfirmView:
         assert form_class == expected_form_class
 
     def test_get_form_class_invalid(self, view):
-        view.agency.slug = "cst"
         view.flow.system_name = "senior"
         expected_error_msg = "The senior flow does not support Eligibility API verification."
-
+        expected_error_msg = f"The {view.flow.system_name} flow does not support Eligibility API verification."
         with pytest.raises(ValueError, match=expected_error_msg):
             view.get_form_class()
 
