@@ -13,7 +13,7 @@ from django.views.generic import FormView, TemplateView
 from benefits.core import recaptcha, session
 from benefits.core.context_processors import formatted_gettext_lazy as _
 from benefits.core.mixins import AgencySessionRequiredMixin, FlowSessionRequiredMixin, RecaptchaEnabledMixin
-from benefits.core.models import AgencySlug, EnrollmentFlow, SystemName
+from benefits.core.models import EnrollmentFlow, SystemName
 from benefits.routes import routes
 
 from . import analytics, forms, verify
@@ -36,9 +36,10 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
         context = super().get_context_data(**kwargs)
 
         form_text = _(
-            "Cal-ITP doesn’t save any of your information. All {short_name} transit " "benefits reduce fares by 50%%.",
+            "Cal-ITP doesn’t save any of your information. Please visit the {short_name} website for discount program "
+            "details.",
             short_name=self.agency.short_name,
-        ).replace("%%", "%")
+        )
 
         context.update({"form_text": [form_text]})
         return context

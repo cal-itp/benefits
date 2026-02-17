@@ -585,10 +585,10 @@ msgstr ""
 msgid "Please reach out to %(short_name)s for assistance."
 msgstr ""
 
-#, python-format, python-brace-format
+#, python-brace-format
 msgid ""
-"Cal-ITP doesn’t save any of your information. All {short_name} transit "
-"benefits reduce fares by 50%%."
+"Cal-ITP doesn’t save any of your information. Please visit the {short_name} "
+"website for discount program details."
 msgstr ""
 
 msgid "Get started with"

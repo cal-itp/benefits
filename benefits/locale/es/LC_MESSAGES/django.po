@@ -745,13 +745,11 @@ msgstr "¡Está bien! Usted aún puede ser elegible para nuestro programa."
 msgid "Please reach out to %(short_name)s for assistance."
 msgstr "Comuníquese con %(short_name)s para obtener ayuda."
 
-#, python-format, python-brace-format
+#, python-brace-format
 msgid ""
-"Cal-ITP doesn’t save any of your information. All {short_name} transit "
-"benefits reduce fares by 50%%."
-msgstr ""
-"Cal-ITP no almacena su información. Todos los beneficios de tránsito de "
-"{short_name} reducen las tarifas en un 50%%."
+"Cal-ITP doesn’t save any of your information. Please visit the {short_name} "
+"website for discount program details."
+msgstr "Cal-ITP no almacena su información. {short_name} TK."
 
 msgid "Get started with"
 msgstr "Comience con"
