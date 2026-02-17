@@ -18,7 +18,7 @@ from benefits.core.mixins import (
     FlowSessionRequiredMixin,
     PageViewMixin,
 )
-from benefits.core.models import AgencySlug, SystemName
+from benefits.core.models import SystemName
 from benefits.routes import routes
 
 from . import analytics
@@ -179,27 +179,27 @@ class EnrollmentSuccess:
 
 
 class DefaultEnrollmentSuccess(EnrollmentSuccess):
-    def __init__(self, transportation_type):
+    def __init__(self, short_name):
         super().__init__(
             success_message=_(
-                "You were not charged anything today. When boarding {transportation_type}, tap your contactless card and you "
-                "will be charged a reduced fare. You will need to re-enroll if you choose to change the card you use to "
-                "pay for transit service.",
-                transportation_type=transportation_type,
+                "You were not charged anything today. When boarding public transit provided by {short_name}, tap this "
+                "card to receive a reduced fare. You will need to re-enroll if you choose to change "
+                "the card you use to pay for transit service.",
+                short_name=short_name,
             ),
             thank_you_message=_("Thank you for using Cal-ITP Benefits!"),
         )
 
 
 class AgencyCardEnrollmentSuccess(EnrollmentSuccess):
-    def __init__(self, transit_benefit, transportation_type):
+    def __init__(self, transit_benefit, short_name):
         super().__init__(
             success_message=_(
-                "Your contactless card is now enrolled in {transit_benefit}. When boarding {transportation_type}, tap this "
-                "card and you will be charged a reduced fare. You will need to re-enroll if you choose to change the card you "
-                "use to pay for transit service.",
+                "Your contactless card is now enrolled in {transit_benefit}. When boarding public transit provided by "
+                "{short_name}, tap this card and you will be charged a reduced fare. You will need to re-enroll if you choose "
+                "to change the card you use to pay for transit service.",
                 transit_benefit=transit_benefit,
-                transportation_type=transportation_type,
+                short_name=short_name,
             ),
             thank_you_message=_("You were not charged anything today. Thank you for using Cal-ITP Benefits!"),
         )
@@ -217,34 +217,24 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
         flow = self.flow
 
         context = {"redirect_to": request.path}
+        short_name = flow.transit_agency.short_name
+
         copy = {
-            AgencySlug.CST.value: DefaultEnrollmentSuccess(transportation_type=_("a CST bus")),
-            AgencySlug.EDCTA.value: DefaultEnrollmentSuccess(transportation_type=_("an EDCTA bus")),
-            AgencySlug.MST.value: DefaultEnrollmentSuccess(transportation_type=_("an MST bus")),
-            AgencySlug.NEVCO.value: DefaultEnrollmentSuccess(transportation_type=_("a Nevada County Connects bus")),
-            AgencySlug.RABA.value: DefaultEnrollmentSuccess(transportation_type=_("a RABA bus")),
-            AgencySlug.ROSEVILLE.value: DefaultEnrollmentSuccess(transportation_type=_("a Roseville bus")),
-            AgencySlug.SACRT.value: DefaultEnrollmentSuccess(transportation_type=_("a SacRT bus")),
-            AgencySlug.SLORTA.value: DefaultEnrollmentSuccess(transportation_type=_("a RTA bus")),
-            AgencySlug.SBMTD.value: DefaultEnrollmentSuccess(transportation_type=_("an SBMTD bus")),
-            AgencySlug.VCTC.value: DefaultEnrollmentSuccess(
-                transportation_type=_("a Ventura County Transportation Commission bus")
-            ),
             SystemName.AGENCY_CARD.value: AgencyCardEnrollmentSuccess(
-                transit_benefit=_("a CST Agency Card transit benefit"), transportation_type=_("a CST bus")
+                transit_benefit=_("a CST Agency Card transit benefit"), short_name=short_name
             ),
             SystemName.COURTESY_CARD.value: AgencyCardEnrollmentSuccess(
-                transit_benefit=_("an MST Courtesy Card transit benefit"), transportation_type="an MST bus"
+                transit_benefit=_("an MST Courtesy Card transit benefit"), short_name=short_name
             ),
             SystemName.REDUCED_FARE_MOBILITY_ID.value: AgencyCardEnrollmentSuccess(
-                transit_benefit=_("an SBMTD Reduced Fare Mobility ID transit benefit"), transportation_type=_("an SBMTD bus")
+                transit_benefit=_("an SBMTD Reduced Fare Mobility ID transit benefit"), short_name=short_name
             ),
         }
 
         if flow.uses_api_verification:
             copy_context = copy[flow.system_name].dict()
         else:
-            copy_context = copy[flow.transit_agency.slug].dict()
+            copy_context = DefaultEnrollmentSuccess(short_name=short_name).dict()
 
         context.update(copy_context)
 
