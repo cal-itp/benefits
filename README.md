@@ -44,7 +44,7 @@
 | benefits/enrollment/enrollment.py                                                              |       47 |        1 |       10 |        2 |     95% |72, 114->exit |
 | benefits/enrollment/forms.py                                                                   |       14 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/urls.py                                                                    |        5 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment/views.py                                                                   |      111 |        1 |       10 |        1 |     98% |       245 |
+| benefits/enrollment/views.py                                                                   |      112 |        1 |       10 |        1 |     98% |       235 |
 | benefits/enrollment\_littlepay/\_\_init\_\_.py                                                 |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/admin.py                                                        |        9 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/apps.py                                                         |        4 |        0 |        0 |        0 |    100% |           |
@@ -99,7 +99,7 @@
 | benefits/urls.py                                                                               |       46 |        9 |        6 |        2 |     75% |43->82, 57, 60, 63, 66, 69-71, 82->94, 88-90 |
 | benefits/views.py                                                                              |       33 |        0 |        0 |        0 |    100% |           |
 | benefits/wsgi.py                                                                               |        4 |        4 |        0 |        0 |      0% |     10-16 |
-| **TOTAL**                                                                                      | **3193** |  **167** |  **540** |   **58** | **93%** |           |
+| **TOTAL**                                                                                      | **3194** |  **167** |  **540** |   **58** | **93%** |           |
 
 
 ## Setup coverage badge
