@@ -1,5 +1,12 @@
 from .common import Environment, PemData, SecretNameField, template_path
-from .enrollment import EligibilityApiVerificationRequest, EnrollmentEvent, EnrollmentFlow, EnrollmentGroup, EnrollmentMethods
+from .enrollment import (
+    EligibilityApiVerificationRequest,
+    EnrollmentEvent,
+    EnrollmentFlow,
+    EnrollmentGroup,
+    EnrollmentMethods,
+    SystemName,
+)
 from .transit import AgencySlug, CardSchemes, TransitAgency, TransitProcessorConfig, agency_logo
 
 __all__ = [
@@ -15,6 +22,7 @@ __all__ = [
     "EnrollmentEvent",
     "PemData",
     "SecretNameField",
+    "SystemName",
     "TransitAgency",
     "TransitProcessorConfig",
 ]

@@ -3,6 +3,8 @@ The core application: context processors for enriching request context data.
 """
 
 from django.conf import settings
+from django.utils.text import format_lazy
+from django.utils.translation import gettext_lazy
 
 from benefits.routes import routes as app_routes
 
@@ -93,6 +95,11 @@ def enrollment(request):
 def feature_flags(request):
     """Context processor adds feature flags to request context."""
     return {"feature_flags": {}}
+
+
+def formatted_gettext_lazy(string, *args, **kwargs):
+    """Wraps format_lazy around gettext_lazy for simpler calling."""
+    return format_lazy(gettext_lazy(string), *args, **kwargs)
 
 
 def origin(request):

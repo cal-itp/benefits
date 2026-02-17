@@ -4,7 +4,6 @@ from django.urls import reverse
 import benefits.enrollment.enrollment
 import benefits.enrollment.views as views
 from benefits.core import models
-from benefits.core.context.flow import SystemName
 from benefits.routes import routes
 
 
@@ -40,11 +39,11 @@ class TestIndexContextMixin:
     @pytest.mark.parametrize(
         "system_name,expected_ctx",
         [
-            (SystemName.AGENCY_CARD, views.AgencyCardEnrollmentIndex()),
-            (SystemName.CALFRESH, views.CalFreshEnrollmentIndex()),
-            (SystemName.COURTESY_CARD, views.AgencyCardEnrollmentIndex()),
-            (SystemName.OLDER_ADULT, views.EnrollmentIndex()),
-            (SystemName.REDUCED_FARE_MOBILITY_ID, views.AgencyCardEnrollmentIndex()),
+            (models.SystemName.AGENCY_CARD, views.AgencyCardEnrollmentIndex()),
+            (models.SystemName.CALFRESH, views.CalFreshEnrollmentIndex()),
+            (models.SystemName.COURTESY_CARD, views.AgencyCardEnrollmentIndex()),
+            (models.SystemName.OLDER_ADULT, views.EnrollmentIndex()),
+            (models.SystemName.REDUCED_FARE_MOBILITY_ID, views.AgencyCardEnrollmentIndex()),
         ],
     )
     def test_get_context_data(self, model_EnrollmentFlow, system_name, expected_ctx):
@@ -116,7 +115,7 @@ class TestReenrollmentErrorView:
         v = views.ReenrollmentErrorView()
         v.setup(app_request)
         v.flow = model_EnrollmentFlow_supports_expiration
-        v.flow.system_name = SystemName.CALFRESH
+        v.flow.system_name = models.SystemName.CALFRESH
         return v
 
     def test_get_context_data(self, view):
