@@ -182,8 +182,8 @@ class DefaultEnrollmentSuccess(EnrollmentSuccess):
     def __init__(self, short_name):
         super().__init__(
             success_message=_(
-                "You were not charged anything today. When boarding public transit provided by {short_name}, tap your "
-                "contactless card and you will be charged a reduced fare. You will need to re-enroll if you choose to change "
+                "You were not charged anything today. When boarding public transit provided by {short_name}, tap this "
+                "card to receive a reduced fare. You will need to re-enroll if you choose to change "
                 "the card you use to pay for transit service.",
                 short_name=short_name,
             ),
