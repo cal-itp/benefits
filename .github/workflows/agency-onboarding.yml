@@ -22,6 +22,10 @@ on:
         description: "The full URL (including https://) to the transit provider's website"
         required: false
         type: string
+      launch_date:
+        description: "Estimated launch date (month and year); e.g. August 2026"
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -43,14 +47,15 @@ jobs:
             const path = require('path');
 
             const templatePath = '.github/workflows/agency-onboarding/parent.md';
-            const { long_name, short_name, transit_processor, website } = context.payload.inputs;
+            const { long_name, short_name, transit_processor, website, launch_date } = context.payload.inputs;
 
             // read body from template, fill in placeholders
             let body = fs.readFileSync(templatePath, 'utf8');
             body = body.replace(/{{LONG_NAME}}/g, long_name)
                        .replace(/{{SHORT_NAME}}/g, short_name)
                        .replace(/{{TRANSIT_PROCESSOR}}/g, transit_processor)
-                       .replace(/{{WEBSITE}}/g, website);
+                       .replace(/{{WEBSITE}}/g, website || "N/A")
+                       .replace(/{{LAUNCH_DATE}}/g, launch_date || "TBD");
 
             const response = await github.rest.issues.create({
               owner: context.repo.owner,

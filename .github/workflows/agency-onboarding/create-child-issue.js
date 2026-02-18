@@ -9,7 +9,7 @@ module.exports = async ({
   templateName,
   title,
 }) => {
-  const { long_name, short_name, transit_processor, website } =
+  const { long_name, short_name, transit_processor, website, launch_date } =
     context.payload.inputs;
 
   // read and process body template
@@ -25,7 +25,8 @@ module.exports = async ({
     .replace(/{{LONG_NAME}}/g, long_name)
     .replace(/{{SHORT_NAME}}/g, short_name)
     .replace(/{{TRANSIT_PROCESSOR}}/g, transit_processor)
-    .replace(/{{WEBSITE}}/g, website || "N/A");
+    .replace(/{{WEBSITE}}/g, website || "N/A")
+    .replace(/{{LAUNCH_DATE}}/g, launch_date || "TBD");
 
   // create the child issue
   const child = await github.rest.issues.create({
