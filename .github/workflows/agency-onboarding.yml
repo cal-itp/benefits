@@ -172,8 +172,8 @@ jobs:
               title: `${short_name}: Transit provider is configured for In-Person Enrollments in Benefits Administrator`
             });
 
-      - name: Metabase transaction charts configuration issue
-        id: metabase-configured
+      - name: Metabase configuration issue
+        id: metabase-config
         uses: actions/github-script@v7
         with:
           script: |
@@ -183,7 +183,7 @@ jobs:
             await createChild({
               github, context, core,
               parentNodeId: ${{ steps.parent.outputs.result }},
-              templateName: 'metabase-transactions.md',
+              templateName: 'metabase-config.md',
               title: `${short_name}: Add product names to transaction charts in Metabase`
             });
 
