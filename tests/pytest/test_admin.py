@@ -45,7 +45,6 @@ def test_admin_override_agency_user_customer_service(model_AgencyCustomerService
     client.force_login(model_AgencyCustomerServiceUser)
 
     # set up TransitAgency with customer_service_group
-    model_TransitAgency.pk = None
     customer_service_group = Group.objects.get(name="CST Customer Service")
     model_TransitAgency.customer_service_group = customer_service_group
     model_TransitAgency.save()
