@@ -130,6 +130,7 @@ jobs:
       - name: Test environment configuration issue
         id: test
         uses: actions/github-script@v7
+        if: inputs.transit_processor == 'Littlepay'
         with:
           script: |
             const createChild = require('./.github/workflows/agency-onboarding/create-child-issue.js');
