@@ -61,20 +61,6 @@ class TransitProcessorConfig(models.Model):
         return f"({environment_label}) {agency_slug}"
 
 
-class AgencySlug(models.TextChoices):
-    # raw value, display value
-    CST = "cst", "cst"
-    MST = "mst", "mst"
-    EDCTA = "edcta", "edcta"
-    NEVCO = "nevco", "nevco"
-    RABA = "raba", "raba"
-    ROSEVILLE = "roseville", "roseville"
-    SACRT = "sacrt", "sacrt"
-    SBMTD = "sbmtd", "sbmtd"
-    SLORTA = "slorta", "slorta"
-    VCTC = "vctc", "vctc"
-
-
 class TransitAgency(models.Model):
     """An agency offering transit service."""
 
@@ -84,7 +70,7 @@ class TransitAgency(models.Model):
     id = models.AutoField(primary_key=True)
     active = models.BooleanField(default=False, help_text="Determines if this Agency is enabled for users")
     slug = models.SlugField(
-        choices=AgencySlug,
+        unique=True,
         help_text="Used for URL navigation for this agency, e.g. the agency homepage url is /{slug}",
     )
     short_name = models.TextField(
