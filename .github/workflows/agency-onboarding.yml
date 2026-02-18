@@ -202,8 +202,8 @@ jobs:
               title: `${short_name}: Amplitude displays one or more successful enrollments for this transit provider`
             });
 
-      - name: Metabase enrollment issue
-        id: metabase-enrollment
+      - name: Metabase metrics issue
+        id: metabase-metrics
         uses: actions/github-script@v7
         with:
           script: |
@@ -214,5 +214,5 @@ jobs:
               github, context, core,
               parentNodeId: ${{ steps.parent.outputs.result }},
               templateName: 'metabase-enrollments.md',
-              title: `${short_name}: Metabase displays one or more successful enrollments for this transit provider`
+              title: `${short_name}: Metabase metrics display activity for this transit provider`
             });
