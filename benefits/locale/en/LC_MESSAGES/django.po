@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-02-17 13:05-0800\n"
+"POT-Creation-Date: 2026-02-18 12:04-0800\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -277,7 +277,7 @@ msgstr ""
 msgid "Choose transit agency"
 msgstr ""
 
-msgid "Get your reduced fare on public transit when you tap to ride"
+msgid "Get your reduced fare when you tap to ride on public transit"
 msgstr ""
 
 msgid "Logged out"
@@ -289,38 +289,8 @@ msgstr ""
 msgid "Which transit benefit would you like to enroll in?"
 msgstr ""
 
-msgid "Get your reduced fare on CST public transit when you tap to ride"
-msgstr ""
-
-msgid "Get your reduced fare on EDCTA public transit when you tap to ride"
-msgstr ""
-
-msgid "Get your reduced fare on MST public transit when you tap to ride"
-msgstr ""
-
-msgid ""
-"Get your reduced fare on Nevada County Connects public transit when you tap "
-"to ride"
-msgstr ""
-
-msgid "Get your reduced fare on RABA public transit when you tap to ride"
-msgstr ""
-
-msgid "Get your reduced fare on Roseville public transit when you tap to ride"
-msgstr ""
-
-msgid "Get your reduced fare on SacRT buses when you tap to ride"
-msgstr ""
-
-msgid "Get your reduced fare on Santa Barbara MTD buses when you tap to ride"
-msgstr ""
-
-msgid "Get your reduced fare on San Luis Obispo RTA buses when you tap to ride"
-msgstr ""
-
-msgid ""
-"Get your reduced fare on Ventura County Transportation Commission buses when "
-"you tap to ride"
+#, python-brace-format
+msgid "Get your reduced fare when you tap to ride on {short_name}"
 msgstr ""
 
 msgid ""
@@ -881,10 +851,10 @@ msgstr ""
 
 #, python-brace-format
 msgid ""
-"You were not charged anything today. When boarding {transportation_type}, "
-"tap your contactless card and you will be charged a reduced fare. You will "
-"need to re-enroll if you choose to change the card you use to pay for "
-"transit service."
+"You were not charged anything today. When boarding public transit provided "
+"by {short_name}, tap this card to receive a reduced fare. You will need to "
+"re-enroll if you choose to change the card you use to pay for transit "
+"service."
 msgstr ""
 
 msgid "Thank you for using Cal-ITP Benefits!"
@@ -893,43 +863,13 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "Your contactless card is now enrolled in {transit_benefit}. When boarding "
-"{transportation_type}, tap this card and you will be charged a reduced fare. "
-"You will need to re-enroll if you choose to change the card you use to pay "
-"for transit service."
+"public transit provided by {short_name}, tap this card and you will be "
+"charged a reduced fare. You will need to re-enroll if you choose to change "
+"the card you use to pay for transit service."
 msgstr ""
 
 msgid ""
 "You were not charged anything today. Thank you for using Cal-ITP Benefits!"
-msgstr ""
-
-msgid "a CST bus"
-msgstr ""
-
-msgid "an EDCTA bus"
-msgstr ""
-
-msgid "an MST bus"
-msgstr ""
-
-msgid "a Nevada County Connects bus"
-msgstr ""
-
-msgid "a RABA bus"
-msgstr ""
-
-msgid "a Roseville bus"
-msgstr ""
-
-msgid "a SacRT bus"
-msgstr ""
-
-msgid "a RTA bus"
-msgstr ""
-
-msgid "an SBMTD bus"
-msgstr ""
-
-msgid "a Ventura County Transportation Commission bus"
 msgstr ""
 
 msgid "an MST Courtesy Card transit benefit"
