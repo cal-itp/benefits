@@ -7,12 +7,11 @@ from .enrollment import (
     EnrollmentMethods,
     SystemName,
 )
-from .transit import AgencySlug, CardSchemes, TransitAgency, TransitProcessorConfig, agency_logo
+from .transit import CardSchemes, TransitAgency, TransitProcessorConfig, agency_logo
 
 __all__ = [
     "agency_logo",
     "template_path",
-    "AgencySlug",
     "CardSchemes",
     "Environment",
     "EnrollmentMethods",
