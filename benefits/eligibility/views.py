@@ -196,13 +196,6 @@ class StartView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, TemplateVi
         context = super().get_context_data(**kwargs)
 
         eligibility_start = {
-            SystemName.AGENCY_CARD.value: AgencyCardEligibilityStart(
-                headline_text=_("You selected an Agency Card transit benefit."),
-                eligibility_item_headline=_("Your current Agency Card number"),
-                eligibility_item_body=_(
-                    "You do not need to have your physical CST Agency Card, but you will need to know the number."
-                ),
-            ),
             SystemName.CALFRESH.value: LoginGovEligibilityStart(
                 page_title=_("CalFresh benefit overview"),
                 headline_text=_("You selected a CalFresh Cardholder transit benefit."),
@@ -249,19 +242,14 @@ class ConfirmView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Recaptch
     template_name = "eligibility/confirm.html"
 
     def get_form_class(self):
-        agency_slug = self.agency.slug
         flow_system_name = self.flow.system_name
 
-        if agency_slug == AgencySlug.CST and flow_system_name == SystemName.AGENCY_CARD:
-            form_class = forms.CSTAgencyCard
-        elif agency_slug == AgencySlug.MST and flow_system_name == SystemName.COURTESY_CARD:
+        if flow_system_name == SystemName.COURTESY_CARD:
             form_class = forms.MSTCourtesyCard
-        elif agency_slug == AgencySlug.SBMTD and flow_system_name == SystemName.REDUCED_FARE_MOBILITY_ID:
+        elif flow_system_name == SystemName.REDUCED_FARE_MOBILITY_ID:
             form_class = forms.SBMTDMobilityPass
         else:
-            raise ValueError(
-                f"This agency/flow combination does not support Eligibility API verification: {agency_slug}, {flow_system_name}"  # noqa
-            )
+            raise ValueError(f"The {flow_system_name} flow does not support Eligibility API verification.")
 
         return form_class
 
@@ -338,7 +326,6 @@ class UnverifiedView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Templ
         context = super().get_context_data(**kwargs)
 
         eligibility_unverified = {
-            SystemName.AGENCY_CARD.value: AgencyCardEligibilityUnverified(agency_card=_("CST Agency Card")),
             SystemName.COURTESY_CARD.value: AgencyCardEligibilityUnverified(agency_card=_("MST Courtesy Card")),
             SystemName.REDUCED_FARE_MOBILITY_ID.value: AgencyCardEligibilityUnverified(
                 agency_card=_("SBMTD Reduced Fare Mobility ID card")

@@ -131,17 +131,6 @@ class MSTCourtesyCard(EligibilityVerificationForm):
     sub_custom_validity = _("Please enter a 5-digit number.")
 
 
-class CSTAgencyCard(MSTCourtesyCard):
-    """
-    EligibilityVerification form for the CST Agency Card.
-    Inherits validation logic from MSTCourtesyCard but overrides specific text.
-    """
-
-    blurb = _("We use the information on your CST Agency Card to find the record of your transit benefit in our system.")
-
-    sub_label = _("Agency Card number")
-
-
 class SBMTDMobilityPass(EligibilityVerificationForm):
     """EligibilityVerification form for the SBMTD Reduced Fare Mobility ID."""
 

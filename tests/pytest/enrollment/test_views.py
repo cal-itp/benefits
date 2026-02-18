@@ -36,10 +36,10 @@ def mock_system_error_view_session(mocker, mocked_session_agency):
 
 @pytest.mark.django_db
 class TestIndexContextMixin:
+
     @pytest.mark.parametrize(
         "system_name,expected_ctx",
         [
-            (models.SystemName.AGENCY_CARD, views.AgencyCardEnrollmentIndex()),
             (models.SystemName.CALFRESH, views.CalFreshEnrollmentIndex()),
             (models.SystemName.COURTESY_CARD, views.AgencyCardEnrollmentIndex()),
             (models.SystemName.OLDER_ADULT, views.EnrollmentIndex()),

@@ -56,7 +56,6 @@ class CalFreshEnrollmentIndex(EnrollmentIndex):
 class IndexContextMixin(FlowSessionRequiredMixin):
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         enrollment_index = {
-            SystemName.AGENCY_CARD: AgencyCardEnrollmentIndex(),
             SystemName.COURTESY_CARD: AgencyCardEnrollmentIndex(),
             SystemName.REDUCED_FARE_MOBILITY_ID: AgencyCardEnrollmentIndex(),
             SystemName.CALFRESH: CalFreshEnrollmentIndex(),
@@ -220,9 +219,6 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
         short_name = flow.transit_agency.short_name
 
         copy = {
-            SystemName.AGENCY_CARD.value: AgencyCardEnrollmentSuccess(
-                transit_benefit=_("a CST Agency Card transit benefit"), short_name=short_name
-            ),
             SystemName.COURTESY_CARD.value: AgencyCardEnrollmentSuccess(
                 transit_benefit=_("an MST Courtesy Card transit benefit"), short_name=short_name
             ),
