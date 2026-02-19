@@ -65,7 +65,8 @@ jobs:
               body: body
             });
 
-            return response.data.node_id;
+            core.setOutput('node_id', response.data.node_id);
+            core.setOutput('issue_number', response.data.number);
 
       - name: Onboarding form issue
         id: form
@@ -77,7 +78,7 @@ jobs:
 
             await createChild({
               github, context, core,
-              parentNodeId: ${{ steps.parent.outputs.result }},
+              parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'onboarding-form.md',
               title: `${short_name}: Transit provider has completed their onboarding form`
             });
@@ -107,7 +108,7 @@ jobs:
 
             await createChild({
               github, context, core,
-              parentNodeId: ${{ steps.parent.outputs.result }},
+              parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: `${transit_processor.toLowerCase()}.md`,
               title: `${short_name}: ${transit_processor} configuration complete; ready for configuration in Cal-ITP Benefits`
             });
@@ -122,7 +123,7 @@ jobs:
 
             await createChild({
               github, context, core,
-              parentNodeId: ${{ steps.parent.outputs.result }},
+              parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'production-validation.md',
               title: `${short_name}: Transit provider fully configured for Production Validation testing in Cal-ITP Benefits \`test\` environment`
             });
@@ -138,7 +139,7 @@ jobs:
 
             await createChild({
               github, context, core,
-              parentNodeId: ${{ steps.parent.outputs.result }},
+              parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'test.md',
               title: `${short_name}: Transit provider fully configured and in Cal-ITP Benefits \`test\` environment`
             });
@@ -153,7 +154,7 @@ jobs:
 
             await createChild({
               github, context, core,
-              parentNodeId: ${{ steps.parent.outputs.result }},
+              parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'production.md',
               title: `${short_name}: Transit provider fully configured and active in Cal-ITP Benefits \`production\` environment`
             });
@@ -168,7 +169,7 @@ jobs:
 
             await createChild({
               github, context, core,
-              parentNodeId: ${{ steps.parent.outputs.result }},
+              parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'in-person.md',
               title: `${short_name}: Transit provider is configured for In-Person Enrollments in Benefits Administrator`
             });
@@ -183,7 +184,7 @@ jobs:
 
             await createChild({
               github, context, core,
-              parentNodeId: ${{ steps.parent.outputs.result }},
+              parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'metabase-config.md',
               title: `${short_name}: Add product names to transaction charts in Metabase`
             });
@@ -198,7 +199,7 @@ jobs:
 
             await createChild({
               github, context, core,
-              parentNodeId: ${{ steps.parent.outputs.result }},
+              parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'amplitude.md',
               title: `${short_name}: Amplitude displays one or more successful enrollments for this transit provider`
             });
@@ -213,7 +214,7 @@ jobs:
 
             await createChild({
               github, context, core,
-              parentNodeId: ${{ steps.parent.outputs.result }},
+              parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'metabase-enrollments.md',
               title: `${short_name}: Metabase metrics display activity for this transit provider`
             });
