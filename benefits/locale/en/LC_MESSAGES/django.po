@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-02-18 12:04-0800\n"
+"POT-Creation-Date: 2026-02-20 15:22-0800\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -587,8 +587,8 @@ msgstr ""
 
 #, python-brace-format
 msgid ""
-"Cal-ITP doesn’t save any of your information. Please visit the {short_name} "
-"website for discount program details."
+"Cal-ITP doesn’t save any of your information. {short_name} provides reduced "
+"fares to riders who qualify."
 msgstr ""
 
 msgid "Get started with"

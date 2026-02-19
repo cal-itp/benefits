@@ -36,8 +36,7 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
         context = super().get_context_data(**kwargs)
 
         form_text = _(
-            "Cal-ITP doesn’t save any of your information. Please visit the {short_name} website for discount program "
-            "details.",
+            "Cal-ITP doesn’t save any of your information. {short_name} provides reduced fares to riders who qualify.",
             short_name=self.agency.short_name,
         )
 
