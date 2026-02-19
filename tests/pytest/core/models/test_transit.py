@@ -88,6 +88,7 @@ def test_TransitAgency_all_active(model_TransitAgency):
 
     inactive_agency = TransitAgency.by_id(model_TransitAgency.id)
     inactive_agency.pk = None
+    inactive_agency.slug = "abc"
     inactive_agency.active = False
     inactive_agency.save()
 
