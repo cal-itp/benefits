@@ -32,7 +32,7 @@ module.exports = async ({
   const child = await github.rest.issues.create({
     owner: context.repo.owner,
     repo: context.repo.repo,
-    title: title,
+    title: `${short_name}: ${title}`,
     labels: ["agency-onboarding"],
     body: body,
   });

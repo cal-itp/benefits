@@ -73,14 +73,13 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/create-child-issue.js');
-            const { short_name } = context.payload.inputs;
+            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
 
             await createChild({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'onboarding-form.md',
-              title: `${short_name}: Transit provider has completed their onboarding form`
+              title: `Transit provider has completed their onboarding form`
             });
 
       - name: Adoption table issue
@@ -103,14 +102,14 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/create-child-issue.js');
-            const { short_name, transit_processor } = context.payload.inputs;
+            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
+            const { transit_processor } = context.payload.inputs;
 
             await createChild({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: `${transit_processor.toLowerCase()}.md`,
-              title: `${short_name}: ${transit_processor} configuration complete; ready for configuration in Cal-ITP Benefits`
+              title: `${transit_processor} configuration complete; ready for configuration in Cal-ITP Benefits`
             });
 
       - name: Production Validation configuration issue
@@ -118,14 +117,13 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/create-child-issue.js');
-            const { short_name } = context.payload.inputs;
+            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
 
             await createChild({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'production-validation.md',
-              title: `${short_name}: Transit provider fully configured for Production Validation testing in Cal-ITP Benefits \`test\` environment`
+              title: `Transit provider fully configured for Production Validation testing in Cal-ITP Benefits \`test\` environment`
             });
 
       - name: Test environment configuration issue
@@ -134,14 +132,13 @@ jobs:
         if: inputs.transit_processor == 'Littlepay'
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/create-child-issue.js');
-            const { short_name } = context.payload.inputs;
+            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
 
             await createChild({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'test.md',
-              title: `${short_name}: Transit provider fully configured and in Cal-ITP Benefits \`test\` environment`
+              title: `Transit provider fully configured and in Cal-ITP Benefits \`test\` environment`
             });
 
       - name: Production environment configuration issue
@@ -149,14 +146,13 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/create-child-issue.js');
-            const { short_name } = context.payload.inputs;
+            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
 
             await createChild({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'production.md',
-              title: `${short_name}: Transit provider fully configured and active in Cal-ITP Benefits \`production\` environment`
+              title: `Transit provider fully configured and active in Cal-ITP Benefits \`production\` environment`
             });
 
       - name: In-Person Enrollment configuration issue
@@ -164,14 +160,13 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/create-child-issue.js');
-            const { short_name } = context.payload.inputs;
+            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
 
             await createChild({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'in-person.md',
-              title: `${short_name}: Transit provider is configured for In-Person Enrollments in Benefits Administrator`
+              title: `Transit provider is configured for In-Person Enrollments in Benefits Administrator`
             });
 
       - name: Metabase configuration issue
@@ -179,14 +174,13 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/create-child-issue.js');
-            const { short_name } = context.payload.inputs;
+            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
 
             await createChild({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'metabase-config.md',
-              title: `${short_name}: Add product names to transaction charts in Metabase`
+              title: `Add product names to transaction charts in Metabase`
             });
 
       - name: Amplitude enrollment issue
@@ -194,14 +188,13 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/create-child-issue.js');
-            const { short_name } = context.payload.inputs;
+            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
 
             await createChild({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'amplitude.md',
-              title: `${short_name}: Amplitude displays one or more successful enrollments for this transit provider`
+              title: `Amplitude displays one or more successful enrollments for this transit provider`
             });
 
       - name: Metabase metrics issue
@@ -209,12 +202,11 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/create-child-issue.js');
-            const { short_name } = context.payload.inputs;
+            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
 
             await createChild({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'metabase-enrollments.md',
-              title: `${short_name}: Metabase metrics display activity for this transit provider`
+              title: `Metabase metrics display activity for this transit provider`
             });
