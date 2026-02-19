@@ -12,6 +12,19 @@ These steps currently assume the transit provider is using Littlepay as their tr
 
 _These items can all be done in parallel._
 
+### Create transit provider onboarding epic
+
+_Typically performed by the Benefits Product Manager._
+
+1. Navigate to the [Cal-ITP Benefits repository, Actions tab](https://github.com/cal-itp/benefits/actions)
+2. Look in the left bar for the (pinned) workflow called `Agency Onboarding Issue Scaffold`, click on this to open the workflow run history
+3. In the center view, on the top right, look for a drop-down button that says `Run workflow`, and click this
+4. Leaving the branch selection the default (`main`), provide values for the other inputs (some of which are required)
+5. Click the green `Run workflow` button under the input fields
+6. Refresh the current page to see an in-progress workflow run, wait for it to finish with a green checkmark
+
+Once the workflow runs successfully, the onboarding epic and all sub-issues will have been created based on the input data provided. They can be further edited, modified from the USB, etc. as normal.
+
 ### Add transit provider to adoption table
 
 _Typically performed by the Benefits Product Manager._
