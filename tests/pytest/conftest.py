@@ -201,12 +201,13 @@ def model_EnrollmentFlow_supports_sign_out(model_EnrollmentFlow):
 @pytest.fixture
 def model_LittlepayConfig(model_TransitAgency):
     littlepay_config = LittlepayConfig.objects.create(
-        transit_agency=model_TransitAgency,
         environment=Environment.TEST,
         client_id="client_id",
         client_secret_name="client_secret_name",
         audience="audience",
     )
+    model_TransitAgency.transit_processor_config = littlepay_config
+    model_TransitAgency.save()
 
     return littlepay_config
 
@@ -214,7 +215,6 @@ def model_LittlepayConfig(model_TransitAgency):
 @pytest.fixture
 def model_SwitchioConfig(model_PemData, model_TransitAgency):
     switchio_config = SwitchioConfig.objects.create(
-        transit_agency=model_TransitAgency,
         environment=Environment.DEV,
         tokenization_api_key="api_key",
         tokenization_api_secret_name="apisecret",
@@ -222,6 +222,9 @@ def model_SwitchioConfig(model_PemData, model_TransitAgency):
         ca_certificate=model_PemData,
         private_key=model_PemData,
     )
+
+    model_TransitAgency.transit_processor_config = switchio_config
+    model_TransitAgency.save()
 
     return switchio_config
 
