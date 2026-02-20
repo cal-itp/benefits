@@ -20,6 +20,8 @@ _Typically performed by the Benefits Product Manager._
 2. Look in the left bar for the (pinned) workflow called `Agency Onboarding Issue Scaffold`, click on this to open the workflow run history
 3. In the center view, on the top right, look for a drop-down button that says `Run workflow`, and click this
 4. Leaving the branch selection the default (`main`), provide values for the other inputs (some of which are required)
+   - For the `Estimated launch date`, enter a value like `August 2026`
+   - For the `Initiative issue`, enter the number only like `1234`
 5. Click the green `Run workflow` button under the input fields
 6. Refresh the current page to see an in-progress workflow run, wait for it to finish with a green checkmark
 
