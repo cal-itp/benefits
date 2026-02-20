@@ -26,6 +26,10 @@ on:
         description: "Estimated launch date (month and year); e.g. August 2026"
         required: false
         type: string
+      initiative_issue:
+        description: "The number (e.g. 1234) for the parent Initiative issue"
+        required: false
+        type: number
 
 permissions:
   contents: write
@@ -46,9 +50,10 @@ jobs:
           script: |
             const fs = await import('fs')
             const path = await import('path')
+            const { linkSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
 
             const templatePath = '.github/workflows/agency-onboarding/parent.md';
-            const { long_name, short_name, transit_processor, website, launch_date } = context.payload.inputs;
+            const { long_name, short_name, transit_processor, website, launch_date, initiative_issue } = context.payload.inputs;
 
             // read body from template, fill in placeholders
             const body = fs.readFileSync(templatePath, 'utf8')
@@ -58,7 +63,7 @@ jobs:
               .replace(/{{WEBSITE}}/g, website ?? "N/A")
               .replace(/{{LAUNCH_DATE}}/g, launch_date ?? "TBD");
 
-            const response = await github.rest.issues.create({
+            const epicIssue = await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: `Agency onboarding: ${long_name}`,
@@ -66,8 +71,21 @@ jobs:
               body: body
             });
 
-            core.setOutput('node_id', response.data.node_id);
-            core.setOutput('issue_number', response.data.number);
+            if (initiative_issue) {
+              const initiativeIssue = await github.rest.issues.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: initiative_issue
+              });
+              await linkSubIssue({
+                github, core,
+                parentNodeId: initiativeIssue.data.node_id,
+                childNodeId: epicIssue.data.node_id
+              });
+            }
+
+            core.setOutput('node_id', epicIssue.data.node_id);
+            core.setOutput('issue_number', epicIssue.data.number);
 
       - name: Onboarding form issue
         id: form
