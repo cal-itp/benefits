@@ -19,8 +19,9 @@ def test_LittlepayConfig_defaults():
 @pytest.mark.django_db
 def test_LittlepayConfig_clean_inactive_agency(model_TransitAgency_inactive):
     littlepay_config = LittlepayConfig.objects.create(environment="test")
-    littlepay_config.transit_agency = model_TransitAgency_inactive
     littlepay_config.save()
+    model_TransitAgency_inactive.transit_processor_config = littlepay_config
+    model_TransitAgency_inactive.save()
 
     # test fails if clean fails
     littlepay_config.clean()
@@ -32,14 +33,16 @@ def test_LittlepayConfig_clean_inactive_agency(model_TransitAgency_inactive):
 @pytest.mark.django_db
 def test_LittlepayConfig_clean(model_TransitAgency_inactive):
     littlepay_config = LittlepayConfig.objects.create(environment="test")
-    littlepay_config.transit_agency = model_TransitAgency_inactive
     littlepay_config.save()
+    model_TransitAgency_inactive.transit_processor_config = littlepay_config
+    model_TransitAgency_inactive.save()
 
     # agency is inactive, OK to have incomplete fields on agency's littlepay_config
     model_TransitAgency_inactive.clean()
 
     # now mark it active and expect failure on clean()
     model_TransitAgency_inactive.active = True
+    model_TransitAgency_inactive.save()
     with pytest.raises(ValidationError) as e:
         model_TransitAgency_inactive.clean()
 
