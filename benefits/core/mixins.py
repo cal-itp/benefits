@@ -54,6 +54,8 @@ class FlowSessionRequiredMixin:
         flow = session.flow(request)
         if flow:
             self.flow = flow
+            self.agency = session.agency(request)
+            self.group = session.group(request)
             return super().dispatch(request, *args, **kwargs)
         else:
             logger.warning("Session not configured with enrollment flow")

@@ -1,8 +1,12 @@
+import logging
+
 from django.core.exceptions import ValidationError
 from django.db import models
 
 from benefits.core.models import EnrollmentGroup, Environment, SecretNameField, TransitProcessorConfig
 from benefits.secrets import get_secret_by_name
+
+logger = logging.getLogger(__name__)
 
 
 class LittlepayConfig(TransitProcessorConfig):
@@ -53,3 +57,9 @@ class LittlepayConfig(TransitProcessorConfig):
 
 class LittlepayGroup(EnrollmentGroup):
     group_id = models.UUIDField(default=None, blank=True, help_text="The ID of the Littlepay group for user enrollment.")
+
+    @staticmethod
+    def by_id(id):
+        """Get a LittlepayGroup instance by its ID."""
+        logger.debug(f"Get {LittlepayGroup.__name__} by id: {id}")
+        return LittlepayGroup.objects.get(id=id)
