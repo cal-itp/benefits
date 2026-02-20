@@ -1,7 +1,7 @@
 locals {
   # VNet uses a shared Resource Group, different from App Service Resource Group we use for Benefits stuff
-  network_resource_group_name = local.is_prod ? "RG-CDT-PUB-SHRD-W-P-001" : "RG-CDT-PUB-D-001"
-  vnet_name                   = local.is_prod ? "VNET-CDT-PUB-SHRD-W-P-001" : "VNET-CDT-PUB-D-001"
+  network_resource_group_name = "RG-CDT-PUB-SHRD-W-P-001"
+  vnet_name                   = "VNET-CDT-PUB-SHRD-W-P-001"
   subnet_name                 = local.is_prod ? "SNET-CDT-PUB-CALITP-P-001" : "SN-CDT-PUB-CALITP-${local.env_letter}-001"
 
   # use the subnet ID rather than referencing it as a data source to work around permissions issues

@@ -18,7 +18,7 @@ terraform {
 }
 
 provider "azurerm" {
-  subscription_id = local.is_prod ? var.ARM_SUBSCRIPTION_ID : var.ARM_DEV_SUBSCRIPTION_ID
+  subscription_id = var.ARM_SUBSCRIPTION_ID
   features {}
 }
 

@@ -14,9 +14,6 @@ SOURCE = os.environ.get("OTHER_SOURCE") or os.environ["INDIVIDUAL_SOURCE"]
 TARGET = os.environ["TARGET"]
 IS_TAG = os.environ["IS_TAG"].lower() == "true"
 
-# workspace to service connection mapping
-SERVICE_CONNECTIONS = {"dev": "Development", "test": "Development", "default": "Production"}
-
 if REASON == "PullRequest" and TARGET == "main":
     # it's a pull request against main, this is for the dev environment
     environment = "dev"
@@ -34,7 +31,7 @@ else:
 # matching logic in ../init.sh
 workspace = "default" if environment == "prod" else environment
 
-service_connection = SERVICE_CONNECTIONS[workspace]
+service_connection = "Production"
 
 # just for troubleshooting
 if TARGET is not None:
@@ -50,4 +47,3 @@ print(
 
 # https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-variables-scripts?view=azure-devops&tabs=bash#about-tasksetvariable
 print(f"##vso[task.setvariable variable=workspace;isOutput=true]{workspace}")
-print(f"##vso[task.setvariable variable=service_connection;isOutput=true]{service_connection}")
