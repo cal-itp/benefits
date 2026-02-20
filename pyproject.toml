@@ -11,7 +11,7 @@ maintainers = [
 ]
 dependencies = [
     "azure-keyvault-secrets==4.10.0",
-    "azure-identity==1.25.1",
+    "azure-identity==1.25.2",
     "calitp-littlepay==2025.4.1",
     "Django==5.2.11",
     "django-admin-sortable2==2.3.1",
