@@ -50,7 +50,7 @@ jobs:
           script: |
             const fs = await import('fs')
             const path = await import('path')
-            const { linkSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
+            const { linkSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
 
             const templatePath = '.github/workflows/agency-onboarding/parent.md';
             const { long_name, short_name, transit_processor, website, launch_date, initiative_issue } = context.payload.inputs;
@@ -92,9 +92,9 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
+            const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
 
-            await createChild({
+            await createSubIssue({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'onboarding-form.md',
@@ -106,7 +106,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { updateAdoptionTable } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/adoption-table.js')
+            const { updateAdoptionTable } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
 
             draftPr = await updateAdoptionTable({
               github, context,
@@ -120,11 +120,11 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
+            const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
 
             const { transit_processor } = context.payload.inputs;
 
-            await createChild({
+            await createSubIssue({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: `${transit_processor.toLowerCase()}.md`,
@@ -136,9 +136,9 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
+            const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
 
-            await createChild({
+            await createSubIssue({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'production-validation.md',
@@ -151,9 +151,9 @@ jobs:
         if: inputs.transit_processor == 'Littlepay'
         with:
           script: |
-            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
+            const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
 
-            await createChild({
+            await createSubIssue({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'test.md',
@@ -165,9 +165,9 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
+            const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
 
-            await createChild({
+            await createSubIssue({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'production.md',
@@ -179,9 +179,9 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
+            const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
 
-            await createChild({
+            await createSubIssue({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'in-person.md',
@@ -193,9 +193,9 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
+            const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
 
-            await createChild({
+            await createSubIssue({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'metabase-config.md',
@@ -207,9 +207,9 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
+            const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
 
-            await createChild({
+            await createSubIssue({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'amplitude.md',
@@ -221,9 +221,9 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
+            const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
 
-            await createChild({
+            await createSubIssue({
               github, context, core,
               parentNodeId: "${{ steps.parent.outputs.node_id }}",
               templateName: 'metabase-enrollments.md',
