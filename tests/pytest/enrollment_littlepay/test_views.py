@@ -211,11 +211,11 @@ def test_token_connection_error(mocker, client, mocked_analytics_module, mocked_
 @pytest.mark.django_db
 class TestIndexView:
     @pytest.fixture
-    def view(self, app_request, model_LittlepayConfig, model_EnrollmentFlow):
+    def view(self, app_request, model_TransitAgency, model_LittlepayConfig, model_EnrollmentFlow):
         """Fixture to create an instance of IndexView."""
         v = IndexView()
         v.setup(app_request)
-        v.agency = model_LittlepayConfig.transit_agency
+        v.agency = model_TransitAgency
         v.agency.supported_card_schemes = [CardSchemes.DISCOVER, CardSchemes.AMEX]
         v.flow = model_EnrollmentFlow
 
