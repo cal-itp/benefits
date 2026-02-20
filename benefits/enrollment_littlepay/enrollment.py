@@ -73,7 +73,7 @@ def enroll(request, card_token) -> tuple[Status, Exception]:
     client.oauth.ensure_active_token(client.token)
 
     funding_source = client.get_funding_source_by_token(card_token)
-    group_id = flow.group_id
+    group_id = str(session.group(request).group_id)  # needs to be a string for the API call
 
     exception = None
     try:
