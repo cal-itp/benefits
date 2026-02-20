@@ -13,7 +13,7 @@ from django.views.generic import FormView, TemplateView
 from benefits.core import recaptcha, session
 from benefits.core.context_processors import formatted_gettext_lazy as _
 from benefits.core.mixins import AgencySessionRequiredMixin, FlowSessionRequiredMixin, RecaptchaEnabledMixin
-from benefits.core.models import EnrollmentFlow, SystemName
+from benefits.core.models import EnrollmentFlow, EnrollmentGroup, SystemName
 from benefits.routes import routes
 
 from . import analytics, forms, verify
@@ -52,10 +52,11 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        """If the form is valid, set enrollment flow and redirect."""
+        """If the form is valid, set enrollment flow and group and redirect."""
         flow_id = form.cleaned_data.get("flow")
         flow = EnrollmentFlow.objects.get(id=flow_id)
-        session.update(self.request, flow=flow)
+        group = EnrollmentGroup.objects.get(transit_agency=self.agency, enrollment_flow=flow)
+        session.update(self.request, flow=flow, group=group)
 
         analytics.selected_flow(self.request, flow)
         return redirect(routes.ELIGIBILITY_START)

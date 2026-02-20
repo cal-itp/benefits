@@ -1,8 +1,12 @@
+import logging
+
 from django.core.exceptions import ValidationError
 from django.db import models
 
 from benefits.core.models import EnrollmentGroup, Environment, PemData, SecretNameField, TransitProcessorConfig
 from benefits.secrets import get_secret_by_name
+
+logger = logging.getLogger(__name__)
 
 
 class SwitchioConfig(TransitProcessorConfig):
@@ -118,3 +122,9 @@ class SwitchioConfig(TransitProcessorConfig):
 
 class SwitchioGroup(EnrollmentGroup):
     group_id = models.TextField(default=None, blank=True, help_text="The ID of the Switchio group for user enrollment.")
+
+    @staticmethod
+    def by_id(id):
+        """Get a SwitchioGroup instance by its ID."""
+        logger.debug(f"Get {SwitchioGroup.__name__} by id: {id}")
+        return SwitchioGroup.objects.get(id=id)
