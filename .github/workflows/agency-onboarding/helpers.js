@@ -64,21 +64,14 @@ export const linkSubIssue = async ({
   }
 };
 
-// Helper function to convert "Month Year" to "MM/YYYY", or return "Planned"
-const months = {
-  january: "01",
-  february: "02",
-  march: "03",
-  april: "04",
-  may: "05",
-  june: "06",
-  july: "07",
-  august: "08",
-  september: "09",
-  october: "10",
-  november: "11",
-  december: "12",
-};
+// Helper functions to convert "Month Year" to "MM/YYYY", or return "Planned"
+
+function monthFromString(month) {
+  // March > '3'
+  // march > '3'
+  // mar > '3'
+  return String(new Date(Date.parse(month + " 1, 2026")).getMonth() + 1);
+}
 
 function convertToMMYYYY(dateStr) {
   if (!dateStr || !dateStr.trim()) {
@@ -87,7 +80,7 @@ function convertToMMYYYY(dateStr) {
 
   const parts = dateStr.trim().split(/\s+/);
   if (parts.length >= 2) {
-    const month = months[parts[0].toLowerCase()];
+    const month = monthFromString(parts[0]);
     const year = parts.slice(1).join("");
     if (month && year && /^\d{4}$/.test(year)) {
       return `${month}/${year} (target)`;
