@@ -32,11 +32,11 @@ def test_ReturnedEnrollmentEvent_without_error(app_request, mocker):
 @pytest.mark.django_db
 @pytest.mark.usefixtures("model_LittlepayGroup")
 def test_returned_success_sends_event_with_optional_data(
-    app_request, mocker, model_EnrollmentFlow_with_scope_and_claim, model_LittlepayConfig
+    app_request, mocker, model_EnrollmentFlow_with_scope_and_claim, model_TransitAgency
 ):
     keys = ["enrollment_group", "transit_processor", "extra_claims", "card_scheme", "card_category"]
     spy_send_event = mocker.spy(benefits.core.analytics, "send_event")
-    agency = model_LittlepayConfig.transit_agency
+    agency = model_TransitAgency
     returned_success(
         app_request,
         enrollment_group=model_EnrollmentFlow_with_scope_and_claim.group_id,

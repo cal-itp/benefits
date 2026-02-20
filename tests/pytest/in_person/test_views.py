@@ -140,11 +140,11 @@ class TestEnrollmentView:
 @pytest.mark.django_db
 class TestLittlepayEnrollmentView:
     @pytest.fixture
-    def view(self, app_request, model_LittlepayConfig, model_EnrollmentFlow, model_User):
+    def view(self, app_request, model_TransitAgency, model_LittlepayConfig, model_EnrollmentFlow, model_User):
         app_request.user = model_User
         v = views.LittlepayEnrollmentView()
         v.setup(app_request)
-        v.agency = model_LittlepayConfig.transit_agency
+        v.agency = model_TransitAgency
         v.flow = model_EnrollmentFlow
         return v
 
@@ -162,11 +162,11 @@ class TestLittlepayEnrollmentView:
 @pytest.mark.django_db
 class TestReenrollmentErrorView:
     @pytest.fixture
-    def view(self, app_request, model_LittlepayConfig, model_EnrollmentFlow, model_User):
+    def view(self, app_request, model_TransitAgency, model_LittlepayConfig, model_EnrollmentFlow, model_User):
         app_request.user = model_User
         v = views.ReenrollmentErrorView()
         v.setup(app_request)
-        v.agency = model_LittlepayConfig.transit_agency
+        v.agency = model_TransitAgency
         v.flow = model_EnrollmentFlow
         return v
 
@@ -180,11 +180,11 @@ class TestReenrollmentErrorView:
 @pytest.mark.django_db
 class TestSystemErrorView:
     @pytest.fixture
-    def view(self, app_request, model_LittlepayConfig, model_EnrollmentFlow, model_User):
+    def view(self, app_request, model_TransitAgency, model_LittlepayConfig, model_EnrollmentFlow, model_User):
         app_request.user = model_User
         v = views.SystemErrorView()
         v.setup(app_request)
-        v.agency = model_LittlepayConfig.transit_agency
+        v.agency = model_TransitAgency
         v.flow = model_EnrollmentFlow
         return v
 
@@ -195,11 +195,11 @@ class TestSystemErrorView:
 @pytest.mark.django_db
 class TestServerErrorView:
     @pytest.fixture
-    def view(self, app_request, model_LittlepayConfig, model_User):
+    def view(self, app_request, model_TransitAgency, model_LittlepayConfig, model_User):
         app_request.user = model_User
         v = views.ServerErrorView()
         v.setup(app_request)
-        v.agency = model_LittlepayConfig.transit_agency
+        v.agency = model_TransitAgency
         return v
 
     def test_post(self, app_request_post, view):
@@ -224,10 +224,10 @@ class TestSuccessView:
 @pytest.mark.django_db
 class TestSwitchioGatewayUrlView:
     @pytest.fixture
-    def view(self, app_request, model_SwitchioConfig):
+    def view(self, app_request, model_TransitAgency, model_SwitchioConfig):
         v = views.SwitchioGatewayUrlView()
         v.setup(app_request)
-        v.agency = model_SwitchioConfig.transit_agency
+        v.agency = model_TransitAgency
         return v
 
     def test_view(self, view: views.SwitchioGatewayUrlView):
@@ -240,11 +240,11 @@ class TestSwitchioGatewayUrlView:
 @pytest.mark.django_db
 class TestSwitchioEnrollmentIndexView:
     @pytest.fixture
-    def view(self, app_request, model_SwitchioConfig, model_EnrollmentFlow, model_User):
+    def view(self, app_request, model_TransitAgency, model_SwitchioConfig, model_EnrollmentFlow, model_User):
         app_request.user = model_User
         v = views.SwitchioEnrollmentIndexView()
         v.setup(app_request)
-        v.agency = model_SwitchioConfig.transit_agency
+        v.agency = model_TransitAgency
         v.flow = model_EnrollmentFlow
         return v
 
