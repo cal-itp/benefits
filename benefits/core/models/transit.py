@@ -133,15 +133,15 @@ class TransitAgency(models.Model):
 
     @property
     def littlepay_config(self):
-        if hasattr(self, "transitprocessorconfig") and hasattr(self.transitprocessorconfig, "littlepayconfig"):
-            return self.transitprocessorconfig.littlepayconfig
+        if self.transit_processor_config and hasattr(self.transit_processor_config, "littlepayconfig"):
+            return self.transit_processor_config.littlepayconfig
         else:
             return None
 
     @property
     def switchio_config(self):
-        if hasattr(self, "transitprocessorconfig") and hasattr(self.transitprocessorconfig, "switchioconfig"):
-            return self.transitprocessorconfig.switchioconfig
+        if hasattr(self, "transit_processor_config") and hasattr(self.transit_processor_config, "switchioconfig"):
+            return self.transit_processor_config.switchioconfig
         else:
             return None
 
