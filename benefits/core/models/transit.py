@@ -10,6 +10,7 @@ from multiselectfield import MultiSelectField
 from benefits.routes import routes
 
 from .common import Environment
+from .enrollment import EnrollmentFlow
 
 logger = logging.getLogger(__name__)
 
@@ -83,6 +84,10 @@ class TransitAgency(models.Model):
         help_text="URL of a website/page with more information about the agency's discounts",
     )
     phone = models.TextField(default="", blank=True, help_text="Agency customer support phone number")
+    enrollment_flows = models.ManyToManyField(
+        EnrollmentFlow,
+        help_text="Select the enrollment flows this agency supports.",
+    )
     supported_card_schemes = MultiSelectField(
         choices=CardSchemes.CHOICES,
         min_choices=1,
@@ -180,10 +185,6 @@ class TransitAgency(models.Model):
             raise ValueError(
                 "TransitAgency must have either a LittlepayConfig or SwitchioConfig in order to show enrollment index."
             )
-
-    @property
-    def enrollment_flows(self):
-        return self.enrollmentflow_set
 
     @property
     def customer_service_group_name(self):
