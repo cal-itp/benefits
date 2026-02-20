@@ -1,41 +1,41 @@
-const fs = require("fs");
+const fs = await import("fs");
 
-module.exports = async ({ github, context, parentIssue }) => {
-  const { long_name, launch_date, short_name } = context.payload.inputs;
-
-  // Helper function to convert "Month Year" to "MM/YYYY", or return "Planned"
-  function convertToMMYYYY(dateStr) {
-    if (!dateStr || !dateStr.trim()) {
-      return "Planned";
-    }
-
-    const months = {
-      january: "01",
-      february: "02",
-      march: "03",
-      april: "04",
-      may: "05",
-      june: "06",
-      july: "07",
-      august: "08",
-      september: "09",
-      october: "10",
-      november: "11",
-      december: "12",
-    };
-
-    const parts = dateStr.trim().split(/\s+/);
-    if (parts.length >= 2) {
-      const month = months[parts[0].toLowerCase()];
-      const year = parts.slice(1).join("");
-      if (month && year && /^\d{4}$/.test(year)) {
-        return `${month}/${year} (target)`;
-      }
-    }
-
-    // If not in expected format, return as-is (assume it's already MM/YYYY)
-    return dateStr.trim();
+// Helper function to convert "Month Year" to "MM/YYYY", or return "Planned"
+function convertToMMYYYY(dateStr) {
+  if (!dateStr || !dateStr.trim()) {
+    return "Planned";
   }
+
+  const months = {
+    january: "01",
+    february: "02",
+    march: "03",
+    april: "04",
+    may: "05",
+    june: "06",
+    july: "07",
+    august: "08",
+    september: "09",
+    october: "10",
+    november: "11",
+    december: "12",
+  };
+
+  const parts = dateStr.trim().split(/\s+/);
+  if (parts.length >= 2) {
+    const month = months[parts[0].toLowerCase()];
+    const year = parts.slice(1).join("");
+    if (month && year && /^\d{4}$/.test(year)) {
+      return `${month}/${year} (target)`;
+    }
+  }
+
+  // If not in expected format, return as-is (assume it's already MM/YYYY)
+  return dateStr.trim();
+}
+
+export const updateAdoptionTable = async ({ github, context, parentIssue }) => {
+  const { long_name, launch_date, short_name } = context.payload.inputs;
 
   const launchDateStr = convertToMMYYYY(launch_date);
 

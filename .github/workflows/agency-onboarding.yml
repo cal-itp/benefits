@@ -44,19 +44,19 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const fs = require('fs');
-            const path = require('path');
+            const fs = await import('fs')
+            const path = await import('path')
 
             const templatePath = '.github/workflows/agency-onboarding/parent.md';
             const { long_name, short_name, transit_processor, website, launch_date } = context.payload.inputs;
 
             // read body from template, fill in placeholders
-            let body = fs.readFileSync(templatePath, 'utf8');
-            body = body.replace(/{{LONG_NAME}}/g, long_name)
-                       .replace(/{{SHORT_NAME}}/g, short_name)
-                       .replace(/{{TRANSIT_PROCESSOR}}/g, transit_processor)
-                       .replace(/{{WEBSITE}}/g, website || "N/A")
-                       .replace(/{{LAUNCH_DATE}}/g, launch_date || "TBD");
+            const body = fs.readFileSync(templatePath, 'utf8')
+              .replace(/{{LONG_NAME}}/g, long_name)
+              .replace(/{{SHORT_NAME}}/g, short_name)
+              .replace(/{{TRANSIT_PROCESSOR}}/g, transit_processor)
+              .replace(/{{WEBSITE}}/g, website ?? "N/A")
+              .replace(/{{LAUNCH_DATE}}/g, launch_date ?? "TBD");
 
             const response = await github.rest.issues.create({
               owner: context.repo.owner,
@@ -74,7 +74,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
+            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
 
             await createChild({
               github, context, core,
@@ -88,7 +88,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const updateAdoptionTable = require('./.github/workflows/agency-onboarding/adoption-table.js');
+            const { updateAdoptionTable } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/adoption-table.js')
 
             draftPr = await updateAdoptionTable({
               github, context,
@@ -102,7 +102,8 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
+            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
+
             const { transit_processor } = context.payload.inputs;
 
             await createChild({
@@ -117,7 +118,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
+            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
 
             await createChild({
               github, context, core,
@@ -132,7 +133,7 @@ jobs:
         if: inputs.transit_processor == 'Littlepay'
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
+            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
 
             await createChild({
               github, context, core,
@@ -146,7 +147,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
+            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
 
             await createChild({
               github, context, core,
@@ -160,7 +161,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
+            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
 
             await createChild({
               github, context, core,
@@ -174,7 +175,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
+            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
 
             await createChild({
               github, context, core,
@@ -188,7 +189,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
+            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
 
             await createChild({
               github, context, core,
@@ -202,7 +203,7 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const createChild = require('./.github/workflows/agency-onboarding/child-issue.js');
+            const { createChild } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/child-issue.js')
 
             await createChild({
               github, context, core,

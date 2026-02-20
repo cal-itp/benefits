@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
+const fs = await import("fs");
+const path = await import("path");
 
-module.exports = async ({
+export const createChild = async ({
   github,
   context,
   core,
@@ -18,10 +18,9 @@ module.exports = async ({
     `.github/workflows/agency-onboarding/${templateName}`
   );
 
-  let body = fs.readFileSync(templatePath, "utf8");
-
   // replace all placeholders
-  body = body
+  const body = fs
+    .readFileSync(templatePath, "utf8")
     .replace(/{{LONG_NAME}}/g, long_name)
     .replace(/{{SHORT_NAME}}/g, short_name)
     .replace(/{{TRANSIT_PROCESSOR}}/g, transit_processor)
