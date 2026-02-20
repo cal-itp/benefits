@@ -35,8 +35,19 @@ export const createChild = async ({
     labels: ["agency-onboarding"],
     body: body,
   });
-  const childNodeId = child.data.node_id;
 
+  const childNodeId = child.data.node_id;
+  await linkSubIssue({ github, core, parentNodeId, childNodeId });
+
+  return child.data.number;
+};
+
+export const linkSubIssue = async ({
+  github,
+  core,
+  parentNodeId,
+  childNodeId,
+}) => {
   // link sub-issue using GraphQL
   try {
     await github.graphql(
@@ -55,6 +66,4 @@ export const createChild = async ({
   } catch (error) {
     core.warning(`Failed to link sub-issue via GraphQL: ${error.message}`);
   }
-
-  return child.data.number;
 };
