@@ -14,11 +14,11 @@ Within the `CDT Digital CA` directory, there is one [`CDT/ODI Production` Subscr
 
 Each of our environments corresponds to a single Resource Group, [Terraform Workspace](https://developer.hashicorp.com/terraform/language/state/workspaces), and branch.
 
-| Environment | Resource Group                | Workspace | Branch |
-| ----------- | ----------------------------- | --------- | ------ |
-| Dev         | `RG-CDT-PUB-VIP-CALITP-D-001` | `dev`     | `main` |
-| Test        | `RG-CDT-PUB-VIP-CALITP-T-001` | `test`    | `test` |
-| Prod        | `RG-CDT-PUB-VIP-CALITP-P-001` | `default` | `prod` |
+| Environment | Resource Group                | Workspace |
+| ----------- | ----------------------------- | --------- |
+| Dev         | `RG-CDT-PUB-VIP-CALITP-D-001` | `dev`     |
+| Test        | `RG-CDT-PUB-VIP-CALITP-T-001` | `test`    |
+| Prod        | `RG-CDT-PUB-VIP-CALITP-P-001` | `default` |
 
 All resources in these Resource Groups should be reflected in Terraform in this repository. The exceptions are:
 
