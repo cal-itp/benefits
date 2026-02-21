@@ -31,7 +31,7 @@ else:
 # matching logic in ../init.sh
 workspace = "default" if environment == "prod" else environment
 
-service_connection = "Production"
+service_connection = "Fed-Production"
 
 # just for troubleshooting
 if TARGET is not None:
