@@ -88,6 +88,7 @@ def test_TransitAgency_all_active(model_TransitAgency):
 
     inactive_agency = TransitAgency.by_id(model_TransitAgency.id)
     inactive_agency.pk = None
+    inactive_agency.slug = "abc"
     inactive_agency.active = False
     inactive_agency.save()
 
@@ -105,7 +106,6 @@ def test_TransitAgency_for_user_in_group(model_TransitAgency):
     group = Group.objects.create(name="test_group")
 
     agency_for_user = TransitAgency.by_id(model_TransitAgency.id)
-    agency_for_user.pk = None
     agency_for_user.customer_service_group = group
     agency_for_user.save()
 
@@ -120,7 +120,6 @@ def test_TransitAgency_for_user_not_in_group(model_TransitAgency):
     group = Group.objects.create(name="test_group")
 
     agency_for_user = TransitAgency.by_id(model_TransitAgency.id)
-    agency_for_user.pk = None
     agency_for_user.customer_service_group = group
     agency_for_user.save()
 
