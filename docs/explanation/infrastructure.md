@@ -10,15 +10,15 @@ The Azure portal is where you can view the infrastructure resources for Benefits
 
 ## Environments
 
-Within the `CDT Digital CA` directory, there are two [Subscriptions](https://learn.microsoft.com/en-us/microsoft-365/enterprise/subscriptions-licenses-accounts-and-tenants-for-microsoft-cloud-offerings?view=o365-worldwide#subscriptions), with Resource Groups under each. (Refer to Azure's documentation for [switching directories](https://learn.microsoft.com/en-us/azure/devtest/offer/how-to-change-directory-tenants-visual-studio-azure).)
+Within the `CDT Digital CA` directory, there is one [`CDT/ODI Production` Subscription](https://learn.microsoft.com/en-us/microsoft-365/enterprise/subscriptions-licenses-accounts-and-tenants-for-microsoft-cloud-offerings?view=o365-worldwide#subscriptions), with Resource Groups for each deployed environment.
 
 Each of our environments corresponds to a single Resource Group, [Terraform Workspace](https://developer.hashicorp.com/terraform/language/state/workspaces), and branch.
 
-| Environment | Subscription          | Resource Group                | Workspace | Branch |
-| ----------- | --------------------- | ----------------------------- | --------- | ------ |
-| Dev         | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-D-001` | `dev`     | `main` |
-| Test        | `CDT/ODI Development` | `RG-CDT-PUB-VIP-CALITP-T-001` | `test`    | `test` |
-| Prod        | `CDT/ODI Production`  | `RG-CDT-PUB-VIP-CALITP-P-001` | `default` | `prod` |
+| Environment | Resource Group                | Workspace |
+| ----------- | ----------------------------- | --------- |
+| Dev         | `RG-CDT-PUB-VIP-CALITP-D-001` | `dev`     |
+| Test        | `RG-CDT-PUB-VIP-CALITP-T-001` | `test`    |
+| Prod        | `RG-CDT-PUB-VIP-CALITP-P-001` | `default` |
 
 All resources in these Resource Groups should be reflected in Terraform in this repository. The exceptions are:
 
