@@ -72,5 +72,5 @@ class EnrollmentFlowForm(forms.ModelForm):
 
 @admin.register(models.EnrollmentFlow)
 class SortableEnrollmentFlowAdmin(StaffPermissionMixin, SortableAdminMixin, admin.ModelAdmin):
-    list_display = ("label", "transit_agency", "supported_enrollment_methods")
+    list_display = ("label", "supported_enrollment_methods")
     form = EnrollmentFlowForm

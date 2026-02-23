@@ -255,8 +255,10 @@
       "display_order": 2,
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_request": "a0b45237-b056-4d25-aebe-d4f2a5fe6bbc",
-      "supported_enrollment_methods": ["digital", "in_person"],
-      "transit_agency": 1,
+      "supported_enrollment_methods": [
+        "digital",
+        "in_person"
+      ],
       "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
       "sign_out_link_template": "core/includes/link--sign-out--login-gov.html"
     }
@@ -270,8 +272,9 @@
       "display_order": 4,
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_request": "8fa9e649-4de6-4bd6-8eec-f5f47802ceab",
-      "supported_enrollment_methods": ["digital"],
-      "transit_agency": 1,
+      "supported_enrollment_methods": [
+        "digital"
+      ],
       "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
       "sign_out_link_template": "core/includes/link--sign-out--login-gov.html"
     }
@@ -284,8 +287,9 @@
       "label": "Agency Cardholder",
       "api_request": 1,
       "display_order": 5,
-      "supported_enrollment_methods": ["digital"],
-      "transit_agency": 1
+      "supported_enrollment_methods": [
+        "digital"
+      ]
     }
   },
   {
@@ -300,8 +304,9 @@
       "display_order": 3,
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_request": "c6332e8c-7081-48e9-ae3c-07360879a8ae",
-      "supported_enrollment_methods": ["digital"],
-      "transit_agency": 1,
+      "supported_enrollment_methods": [
+        "digital"
+      ],
       "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
       "sign_out_link_template": "core/includes/link--sign-out--login-gov.html"
     }
@@ -315,8 +320,10 @@
       "display_order": 1,
       "oauth_config": "7687895d-c3d6-4063-a26e-518514fb01b2",
       "claims_request": "d27e630b-980c-40ae-9104-a36633bcf7ac",
-      "supported_enrollment_methods": ["digital", "in_person"],
-      "transit_agency": 1
+      "supported_enrollment_methods": [
+        "digital",
+        "in_person"
+      ]
     }
   },
   {

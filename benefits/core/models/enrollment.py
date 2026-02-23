@@ -127,8 +127,6 @@ class EnrollmentFlow(models.Model):
         default="",
         help_text="A human readable label, used as the display text in Admin.",
     )
-    # TODO: remove in subsequent commit
-    transit_agency = models.ForeignKey("core.TransitAgency", on_delete=models.PROTECT, null=True, blank=True)
     supported_enrollment_methods = MultiSelectField(
         choices=SUPPORTED_METHODS,
         max_choices=2,
@@ -179,13 +177,6 @@ class EnrollmentFlow(models.Model):
         return self.label
 
     @property
-    def agency_card_name(self):
-        if self.uses_api_verification:
-            return f"{self.transit_agency.slug}-agency-card"
-        else:
-            return ""
-
-    @property
     def eligibility_api_auth_key(self):
         if self.uses_api_verification:
             return self.api_request.api_auth_key
@@ -202,11 +193,7 @@ class EnrollmentFlow(models.Model):
 
     @property
     def selection_label_template(self):
-        prefix = "eligibility/includes/selection-label"
-        if self.uses_api_verification:
-            return f"{prefix}--{self.agency_card_name}.html"
-        else:
-            return f"{prefix}--{self.system_name}.html"
+        return f"eligibility/includes/selection-label--{self.system_name}.html"
 
     @property
     def uses_claims_verification(self):

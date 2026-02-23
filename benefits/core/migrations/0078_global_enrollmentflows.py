@@ -137,4 +137,8 @@ class Migration(migrations.Migration):
             ),
         ),
         migrations.RunPython(migrate_data),
+        migrations.RemoveField(
+            model_name="enrollmentflow",
+            name="transit_agency",
+        ),
     ]
