@@ -108,7 +108,7 @@
     "pk": 1,
     "fields": {
       "environment": "test",
-      "transit_agency": 1,
+      "label": "cst",
       "portal_url": "https://www.transit-processor-portal.com"
     }
   },
@@ -117,7 +117,8 @@
     "pk": 2,
     "fields": {
       "environment": "dev",
-      "transit_agency": null
+      "label": "",
+      "portal_url": ""
     }
   },
   {
@@ -153,7 +154,8 @@
       "info_url": "https://www.agency-website.com",
       "phone": "1-800-555-5555",
       "customer_service_group": 2,
-      "logo": "agencies/cst.png"
+      "logo": "agencies/cst.png",
+      "transit_processor_config": 1
     }
   },
   {
