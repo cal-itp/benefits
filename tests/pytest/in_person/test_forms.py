@@ -7,15 +7,13 @@ from benefits.in_person.forms import InPersonEligibilityForm
 @pytest.mark.django_db
 def test_eligibility_logged_in_filtering_flows(model_TransitAgency):
     digital = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency, supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL], label="Digital"
+        supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL], label="Digital"
     )
     in_person = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency,
         supported_enrollment_methods=[models.EnrollmentMethods.IN_PERSON],
         label="In-Person",
     )
     both = models.EnrollmentFlow.objects.create(
-        transit_agency=model_TransitAgency,
         supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
         label="Both",
     )

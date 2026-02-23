@@ -4,11 +4,7 @@ from littlepay.api.groups import GroupFundingSourceResponse
 from requests import HTTPError
 
 from benefits.enrollment.enrollment import Status
-from benefits.enrollment_littlepay.enrollment import (
-    _get_group_funding_source,
-    enroll,
-    request_card_tokenization_access,
-)
+from benefits.enrollment_littlepay.enrollment import _get_group_funding_source, enroll, request_card_tokenization_access
 
 
 @pytest.fixture
@@ -88,6 +84,7 @@ def test_get_group_funding_sources_funding_source_already_enrolled(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_EnrollmentFlow_does_not_support_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
@@ -119,6 +116,7 @@ def test_enroll_system_error(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_EnrollmentFlow_does_not_support_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
@@ -151,6 +149,7 @@ def test_enroll_exception_http_error_400(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_EnrollmentFlow_does_not_support_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
@@ -185,6 +184,7 @@ def test_enroll_exception_http_error_409(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_EnrollmentFlow_does_not_support_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
@@ -211,6 +211,7 @@ def test_enroll_exception_non_http_error(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_EnrollmentFlow_does_not_support_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
@@ -244,6 +245,7 @@ def test_enroll_success_flow_does_not_support_expiration_customer_already_enroll
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
 )
@@ -272,6 +274,7 @@ def test_enroll_success_flow_does_not_support_expiration_no_expiry(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
 )
@@ -303,6 +306,7 @@ def test_enroll_success_flow_supports_expiration(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
 )
@@ -340,6 +344,7 @@ def test_enroll_success_flow_supports_expiration_no_expiry(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
 )
@@ -379,6 +384,7 @@ def test_enroll_success_flow_supports_expiration_is_expired(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
 )
@@ -419,6 +425,7 @@ def test_enroll_success_flow_supports_expiration_is_within_reenrollment_window(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_EnrollmentFlow_supports_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
@@ -455,6 +462,7 @@ def test_enroll_reenrollment_error(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_EnrollmentFlow_does_not_support_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",

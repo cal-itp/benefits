@@ -165,13 +165,16 @@ def test_is_within_enrollment_window_equal_expiry_date(mocker):
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible", "model_LittlepayGroup")
+@pytest.mark.usefixtures(
+    "mocked_session_agency", "mocked_session_flow", "mocked_session_group", "mocked_session_eligible", "model_LittlepayGroup"
+)
 def test_handle_enrollment_results_success_claims(
     mocker,
     app_request,
     mocked_session_oauth_extra_claims,
     model_TransitAgency,
     model_EnrollmentFlow_with_scope_and_claim,
+    model_LittlepayGroup,
     mocked_analytics_module,
 ):
     mocked_session_oauth_extra_claims.return_value = ["claim_1", "claim_2"]
@@ -192,18 +195,21 @@ def test_handle_enrollment_results_success_claims(
     assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
     mocked_analytics_module.returned_success.assert_called_once()
     analytics_kwargs = mocked_analytics_module.returned_success.call_args.kwargs
-    assert analytics_kwargs["enrollment_group"] == model_EnrollmentFlow_with_scope_and_claim.group_id
+    assert analytics_kwargs["enrollment_group"] == model_LittlepayGroup.group_id
     assert analytics_kwargs["enrollment_method"] == models.EnrollmentMethods.DIGITAL
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible", "model_LittlepayGroup")
+@pytest.mark.usefixtures(
+    "mocked_session_agency", "mocked_session_flow", "mocked_session_group", "mocked_session_eligible", "model_LittlepayGroup"
+)
 def test_handle_enrollment_results_success_eligibility_api(
     mocker,
     app_request,
     mocked_session_oauth_extra_claims,
     model_TransitAgency,
     model_EnrollmentFlow_with_eligibility_api,
+    model_LittlepayGroup,
     mocked_analytics_module,
 ):
     mocked_session_oauth_extra_claims.return_value = ["claim_1", "claim_2"]
@@ -224,12 +230,14 @@ def test_handle_enrollment_results_success_eligibility_api(
     assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
     mocked_analytics_module.returned_success.assert_called_once()
     analytics_kwargs = mocked_analytics_module.returned_success.call_args.kwargs
-    assert analytics_kwargs["enrollment_group"] == model_EnrollmentFlow_with_eligibility_api.group_id
+    assert analytics_kwargs["enrollment_group"] == model_LittlepayGroup.group_id
     assert analytics_kwargs["enrollment_method"] == models.EnrollmentMethods.DIGITAL
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible", "model_LittlepayGroup")
+@pytest.mark.usefixtures(
+    "mocked_session_agency", "mocked_session_flow", "mocked_session_group", "mocked_session_eligible", "model_LittlepayGroup"
+)
 @pytest.mark.parametrize("status_code", [500, 501, 502, 503, 504])
 def test_handle_enrollment_results_system_error(
     mocker, app_request, status_code, mocked_analytics_module, mocked_sentry_sdk_module
@@ -249,7 +257,9 @@ def test_handle_enrollment_results_system_error(
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible", "model_LittlepayGroup")
+@pytest.mark.usefixtures(
+    "mocked_session_agency", "mocked_session_flow", "mocked_session_group", "mocked_session_eligible", "model_LittlepayGroup"
+)
 def test_handle_enrollment_results_exception(app_request, mocked_analytics_module):
     with pytest.raises(Exception, match=r"some exception"):
         handle_enrollment_results(app_request, Status.EXCEPTION, "verified by", Exception("some exception"))
@@ -258,7 +268,9 @@ def test_handle_enrollment_results_exception(app_request, mocked_analytics_modul
 
 
 @pytest.mark.django_db
-@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_eligible", "model_LittlepayGroup")
+@pytest.mark.usefixtures(
+    "mocked_session_agency", "mocked_session_flow", "mocked_session_group", "mocked_session_eligible", "model_LittlepayGroup"
+)
 def test_handle_enrollment_results_reenrollment_error(app_request, mocked_analytics_module):
     response = handle_enrollment_results(app_request, Status.REENROLLMENT_ERROR, "verified by")
 

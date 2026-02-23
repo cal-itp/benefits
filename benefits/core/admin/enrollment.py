@@ -50,19 +50,13 @@ class EnrollmentFlowForm(forms.ModelForm):
             if expiration_reenrollment_days is None or expiration_reenrollment_days <= 0:
                 field_errors.update(expiration_reenrollment_days=ValidationError(message))
 
-        transit_agency = cleaned_data.get("transit_agency")
+        # these fields might not be on the form, so use helper method to correctly get the value
+        eligibility_api_request = self.get(cleaned_data, "api_request")
+        claims_request = self.get(cleaned_data, "claims_request")
 
-        if transit_agency:
-            # these fields might not be on the form, so use helper method to correctly get the value
-            eligibility_api_request = self.get(cleaned_data, "api_request")
-            claims_request = self.get(cleaned_data, "claims_request")
-
-            if not (claims_request or eligibility_api_request):
-                message = (
-                    "Must configure either claims verification or Eligibility API verification before"
-                    + " adding to a transit agency."
-                )
-                non_field_errors.append(ValidationError(message))
+        if not (claims_request or eligibility_api_request):
+            message = "Must configure either claims verification or Eligibility API verification."
+            non_field_errors.append(ValidationError(message))
 
         for field_name, validation_error in field_errors.items():
             self.add_error(field_name, validation_error)

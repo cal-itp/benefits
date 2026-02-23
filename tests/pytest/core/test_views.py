@@ -73,6 +73,8 @@ class TestAgencyCardView:
         self, view, app_request, mocked_session_reset, mocked_session_update, model_EnrollmentFlow_with_eligibility_api
     ):
         agency = view.kwargs["agency"]
+        agency.enrollment_flows.add(model_EnrollmentFlow_with_eligibility_api)
+        agency.save()
         # recreate the condition of the live view, where the agency kwarg is passed to the get() call
         response = view.get(app_request, agency=agency)
 
@@ -89,13 +91,15 @@ class TestAgencyCardView:
         self, view, app_request, mocked_session_reset, mocked_session_update, model_EnrollmentFlow_with_eligibility_api
     ):
         agency = view.kwargs["agency"]
+        agency.enrollment_flows.add(model_EnrollmentFlow_with_eligibility_api)
         # fake multiple Eligibility API flows for the agency
         new_flow = EnrollmentFlow.objects.get(pk=model_EnrollmentFlow_with_eligibility_api.id)
         new_flow.label = "New flow"
         new_flow.system_name = "senior"
         new_flow.pk = None
-        new_flow.transit_agency = agency
         new_flow.save()
+        agency.enrollment_flows.add(new_flow)
+        agency.save()
 
         # recreate the condition of the live view, where the agency kwarg is passed to the get() call
         response = view.get(app_request, agency=agency)
@@ -109,8 +113,6 @@ class TestAgencyCardView:
     ):
         agency = view.kwargs["agency"]
         # we don't configure a flow with Eligibility API details
-        model_EnrollmentFlow_with_scope_and_claim.transit_agency = agency
-        model_EnrollmentFlow_with_scope_and_claim.save()
 
         # recreate the condition of the live view, where the agency kwarg is passed to the get() call
         response = view.get(app_request, agency=agency)
