@@ -25,7 +25,7 @@
 | benefits/core/models/\_\_init\_\_.py                                                           |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/core/models/common.py                                                                 |       52 |        2 |       14 |        0 |     97% |     91-92 |
 | benefits/core/models/enrollment.py                                                             |      156 |        5 |       32 |        5 |     95% |193, 209, 217, 244, 284->289, 308 |
-| benefits/core/models/transit.py                                                                |      139 |        0 |       38 |        1 |     99% |  223->234 |
+| benefits/core/models/transit.py                                                                |      139 |        0 |       38 |        1 |     99% |  226->237 |
 | benefits/core/recaptcha.py                                                                     |       13 |        5 |        4 |        1 |     53% |     24-30 |
 | benefits/core/session.py                                                                       |      131 |        3 |       32 |        0 |     98% |     53-55 |
 | benefits/core/urls.py                                                                          |       27 |        2 |        2 |        1 |     90% |     38-39 |

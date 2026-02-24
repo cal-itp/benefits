@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_e599dcf151c8fcbe_session_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-02-24 19:10 +0000
+            created at 2026-02-24 19:16 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -183,7 +183,7 @@
     <p class="run"><span class="n"><a id="t99" href="#t99">99</a></span><span class="t">    <span class="key">def</span> <span class="nam">clean</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t100" href="#t100">100</a></span><span class="t">        <span class="nam">field_errors</span> <span class="op">=</span> <span class="op">{</span><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t101" href="#t101">101</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t102" href="#t102">102</a></span><span class="t">        <span class="key">if</span> <span class="nam">self</span><span class="op">.</span><span class="nam">transit_agency</span> <span class="key">and</span> <span class="nam">self</span><span class="op">.</span><span class="nam">transit_agency</span><span class="op">.</span><span class="nam">active</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t102" href="#t102">102</a></span><span class="t">        <span class="key">if</span> <span class="nam">self</span><span class="op">.</span><span class="nam">transitagency_set</span> <span class="key">and</span> <span class="nam">any</span><span class="op">(</span><span class="op">[</span><span class="nam">agency</span><span class="op">.</span><span class="nam">active</span> <span class="key">for</span> <span class="nam">agency</span> <span class="key">in</span> <span class="nam">self</span><span class="op">.</span><span class="nam">transitagency_set</span><span class="op">.</span><span class="nam">all</span><span class="op">(</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t103" href="#t103">103</a></span><span class="t">            <span class="nam">message</span> <span class="op">=</span> <span class="str">"This field is required when this configuration is referenced by an active transit agency."</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t104" href="#t104">104</a></span><span class="t">            <span class="nam">needed</span> <span class="op">=</span> <span class="nam">dict</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t105" href="#t105">105</a></span><span class="t">                <span class="nam">tokenization_api_key</span><span class="op">=</span><span class="nam">self</span><span class="op">.</span><span class="nam">tokenization_api_key</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -211,7 +211,7 @@
             <a class="nav" href="z_e599dcf151c8fcbe_session_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-02-24 19:10 +0000
+            created at 2026-02-24 19:16 +0000
         </p>
     </div>
 </footer>
