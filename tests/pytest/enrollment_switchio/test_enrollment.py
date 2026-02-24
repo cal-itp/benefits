@@ -344,7 +344,7 @@ def test_enroll_exception_http_error_400(
 
     assert status is Status.EXCEPTION
     assert isinstance(exception, Exception)
-    assert exception.args[0] == f"{http_error}: {http_error.response.json()}"
+    assert exception.args[0] == f"{http_error}: {http_error.response.text}"
 
 
 @pytest.mark.django_db

@@ -225,7 +225,7 @@ def enroll(request, switchio_config: SwitchioConfig, flow: EnrollmentFlow, token
             exception = e
         else:
             status = Status.EXCEPTION
-            exception = Exception(f"{e}: {e.response.json()}")
+            exception = Exception(f"{e}: {e.response.text}")
     except Exception as e:
         status = Status.EXCEPTION
         exception = e
