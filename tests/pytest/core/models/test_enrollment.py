@@ -122,6 +122,11 @@ def test_EnrollmentFlow_clean_in_person_eligibility_context_not_found(model_Enro
 
 
 @pytest.mark.django_db
+def test_EnrollmentGroup_str(model_LittlepayGroup):
+    assert str(model_LittlepayGroup) == f"{model_LittlepayGroup.enrollment_flow} ({model_LittlepayGroup.transit_agency.slug})"
+
+
+@pytest.mark.django_db
 def test_EnrollmentEvent_create(model_TransitAgency, model_EnrollmentFlow):
     ts = timezone.now()
     event = EnrollmentEvent.objects.create(

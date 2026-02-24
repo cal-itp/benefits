@@ -1,7 +1,7 @@
 import pytest
 from django.forms import ValidationError
 
-from benefits.enrollment_switchio.models import SwitchioConfig
+from benefits.enrollment_switchio.models import SwitchioConfig, SwitchioGroup
 
 
 @pytest.mark.django_db
@@ -120,3 +120,16 @@ def test_SwitchioConfig_enrollment_api_base_url_unexpected_environment():
 
     with pytest.raises(ValueError, match=f"Unexpected value for environment: {environment}"):
         switchio_config.enrollment_api_base_url
+
+
+@pytest.mark.django_db
+def test_SwitchioGroup_by_id_matching(model_SwitchioGroup):
+    flow = SwitchioGroup.by_id(model_SwitchioGroup.id)
+
+    assert flow == model_SwitchioGroup
+
+
+@pytest.mark.django_db
+def test_SwitchioGroup_by_id_nonmatching():
+    with pytest.raises(SwitchioGroup.DoesNotExist):
+        SwitchioGroup.by_id(99999)

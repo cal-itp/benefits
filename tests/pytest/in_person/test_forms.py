@@ -17,6 +17,8 @@ def test_eligibility_logged_in_filtering_flows(model_TransitAgency):
         supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
         label="Both",
     )
+    model_TransitAgency.enrollment_flows.set([digital, in_person, both])
+    model_TransitAgency.save()
     form = InPersonEligibilityForm(agency=model_TransitAgency)
 
     filtered_flow_ids = [choice[0] for choice in form.fields["flow"].choices]
