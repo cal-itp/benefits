@@ -36,8 +36,9 @@ def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
 @pytest.mark.django_db
 def test_SwitchioConfig_clean(model_TransitAgency_inactive):
     switchio_config = SwitchioConfig.objects.create(environment="dev")
-    switchio_config.transit_agency = model_TransitAgency_inactive
     switchio_config.save()
+    model_TransitAgency_inactive.transit_processor_config = switchio_config
+    model_TransitAgency_inactive.save()
 
     # agency is inactive, OK to have incomplete fields on agency's switchio_config
     model_TransitAgency_inactive.clean()

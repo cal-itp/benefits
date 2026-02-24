@@ -63,10 +63,10 @@ class TestIndexContextMixin:
 class TestIndexView:
 
     @pytest.fixture
-    def view(self, app_request, model_LittlepayConfig):
+    def view(self, app_request, model_TransitAgency, model_LittlepayConfig):
         v = views.IndexView()
         v.setup(app_request)
-        v.agency = model_LittlepayConfig.transit_agency
+        v.agency = model_TransitAgency
         return v
 
     def test_get_redirect_url(self, view):
@@ -82,10 +82,10 @@ class TestIndexView:
 @pytest.mark.django_db
 class TestSystemErrorView:
     @pytest.fixture
-    def view(self, app_request, model_LittlepayConfig, model_LittlepayGroup):
+    def view(self, app_request, model_TransitAgency, model_LittlepayConfig, model_LittlepayGroup):
         v = views.SystemErrorView()
         v.setup(app_request)
-        v.agency = model_LittlepayConfig.transit_agency
+        v.agency = model_TransitAgency
         v.flow = model_LittlepayGroup.enrollment_flow
         return v
 
@@ -147,10 +147,10 @@ class TestReenrollmentErrorView:
 @pytest.mark.django_db
 class TestRetryView:
     @pytest.fixture
-    def view(self, app_request, model_LittlepayConfig, model_LittlepayGroup):
+    def view(self, app_request, model_TransitAgency, model_LittlepayConfig, model_LittlepayGroup):
         v = views.RetryView()
         v.setup(app_request)
-        v.agency = model_LittlepayConfig.transit_agency
+        v.agency = model_TransitAgency
         v.flow = model_LittlepayGroup.enrollment_flow
         return v
 

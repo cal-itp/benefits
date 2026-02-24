@@ -41,13 +41,10 @@ class TransitProcessorConfig(models.Model):
         choices=Environment,
         help_text="A label to indicate which environment this configuration is for.",
     )
-    transit_agency = models.OneToOneField(
-        "TransitAgency",
-        on_delete=models.PROTECT,
-        null=True,
+    label = models.TextField(
+        default="",
         blank=True,
-        default=None,
-        help_text="The transit agency that uses this configuration.",
+        help_text="A label for internal use.",
     )
     portal_url = models.TextField(
         default="",
@@ -57,8 +54,7 @@ class TransitProcessorConfig(models.Model):
 
     def __str__(self):
         environment_label = Environment(self.environment).label if self.environment else "unknown"
-        agency_slug = self.transit_agency.slug if self.transit_agency else "(no agency)"
-        return f"({environment_label}) {agency_slug}"
+        return f"({environment_label}) {self.label}"
 
 
 class TransitAgency(models.Model):
@@ -114,6 +110,13 @@ class TransitAgency(models.Model):
         upload_to=agency_logo,
         help_text="The transit agency's logo.",
     )
+    transit_processor_config = models.ForeignKey(
+        TransitProcessorConfig,
+        on_delete=models.PROTECT,
+        null=True,
+        default=None,
+        help_text="The transit processor configuration to use for enrollment.",
+    )
 
     def __str__(self):
         return self.long_name
@@ -130,15 +133,15 @@ class TransitAgency(models.Model):
 
     @property
     def littlepay_config(self):
-        if hasattr(self, "transitprocessorconfig") and hasattr(self.transitprocessorconfig, "littlepayconfig"):
-            return self.transitprocessorconfig.littlepayconfig
+        if self.transit_processor_config and hasattr(self.transit_processor_config, "littlepayconfig"):
+            return self.transit_processor_config.littlepayconfig
         else:
             return None
 
     @property
     def switchio_config(self):
-        if hasattr(self, "transitprocessorconfig") and hasattr(self.transitprocessorconfig, "switchioconfig"):
-            return self.transitprocessorconfig.switchioconfig
+        if hasattr(self, "transit_processor_config") and hasattr(self.transit_processor_config, "switchioconfig"):
+            return self.transit_processor_config.switchioconfig
         else:
             return None
 

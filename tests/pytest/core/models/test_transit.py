@@ -19,11 +19,12 @@ class TestCardSchemes:
 
 
 @pytest.mark.django_db
-def test_TransitProcessorConfig_str(model_TransitAgency):
-    transit_processor_config = TransitProcessorConfig.objects.create(environment="dev", transit_agency=model_TransitAgency)
+def test_TransitProcessorConfig_str():
+    label = "cst"
+    transit_processor_config = TransitProcessorConfig.objects.create(environment="dev", label=label)
     environment_label = Environment(transit_processor_config.environment).label
-    agency_slug = transit_processor_config.transit_agency.slug
-    assert str(transit_processor_config) == f"({environment_label}) {agency_slug}"
+
+    assert str(transit_processor_config) == f"({environment_label}) {label}"
 
 
 @pytest.mark.django_db
