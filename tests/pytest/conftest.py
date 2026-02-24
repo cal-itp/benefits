@@ -120,7 +120,6 @@ def model_EnrollmentFlow():
     flow = EnrollmentFlow.objects.create(
         system_name="senior",
         label="Test flow label",
-        # transit_agency=model_TransitAgency,
     )
 
     return flow

@@ -7,7 +7,7 @@ from django.urls import reverse
 from requests import HTTPError
 
 from benefits.core import session
-from benefits.core.models.enrollment import EnrollmentFlow, EnrollmentGroup
+from benefits.core.models.enrollment import EnrollmentFlow
 from benefits.enrollment.enrollment import Status, _calculate_expiry, _is_expired, _is_within_reenrollment_window
 from benefits.enrollment_switchio.api import (
     EnrollmentClient,
@@ -17,7 +17,7 @@ from benefits.enrollment_switchio.api import (
     RegistrationStatus,
     TokenizationClient,
 )
-from benefits.enrollment_switchio.models import SwitchioConfig
+from benefits.enrollment_switchio.models import SwitchioConfig, SwitchioGroup
 from benefits.routes import routes
 
 
@@ -150,7 +150,7 @@ def get_latest_active_token_value(tokens):
 
 
 def enroll(
-    request, switchio_config: SwitchioConfig, flow: EnrollmentFlow, group: EnrollmentGroup, token: str
+    request, switchio_config: SwitchioConfig, flow: EnrollmentFlow, group: SwitchioGroup, token: str
 ) -> tuple[Status, Exception]:
     client = EnrollmentClient(
         api_url=switchio_config.enrollment_api_base_url,
