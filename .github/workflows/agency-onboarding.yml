@@ -45,7 +45,7 @@ jobs:
 
       - name: Parent issue
         id: parent
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const fs = await import('fs')
@@ -96,7 +96,7 @@ jobs:
 
       - name: Onboarding form issue
         id: form
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
@@ -110,7 +110,7 @@ jobs:
 
       - name: Adoption table issue
         id: table
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { updateAdoptionTable } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
@@ -124,7 +124,7 @@ jobs:
 
       - name: Transit processor configuration issue
         id: transit-processor
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
@@ -140,7 +140,7 @@ jobs:
 
       - name: Production Validation configuration issue
         id: production-validation
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
@@ -154,7 +154,7 @@ jobs:
 
       - name: Test environment configuration issue
         id: test
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         if: inputs.transit_processor == 'Littlepay'
         with:
           script: |
@@ -169,7 +169,7 @@ jobs:
 
       - name: Production environment configuration issue
         id: production
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
@@ -183,7 +183,7 @@ jobs:
 
       - name: In-Person Enrollment configuration issue
         id: in-person
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
@@ -197,7 +197,7 @@ jobs:
 
       - name: Metabase configuration issue
         id: metabase-config
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
@@ -211,7 +211,7 @@ jobs:
 
       - name: Amplitude enrollment issue
         id: amplitude-enrollment
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
@@ -225,7 +225,7 @@ jobs:
 
       - name: Metabase metrics issue
         id: metabase-metrics
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const { createSubIssue } = await import('${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js')
