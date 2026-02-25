@@ -57,7 +57,7 @@ export const linkSubIssue = async ({
       {
         issueId: parentNodeId,
         subIssueId: childNodeId,
-      }
+      },
     );
   } catch (error) {
     core.warning(`Failed to link sub-issue via GraphQL: ${error.message}`);
