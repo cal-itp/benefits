@@ -434,7 +434,7 @@ def test_flow_default(app_request):
 
 
 @pytest.mark.django_db
-def test_update_group_without_agency_in_session(app_request, model_LittlepayGroup):
+def test_group_without_agency_in_session(app_request, model_LittlepayGroup):
     group = model_LittlepayGroup
     session.update(app_request, group=group)
 
@@ -442,7 +442,7 @@ def test_update_group_without_agency_in_session(app_request, model_LittlepayGrou
 
 
 @pytest.mark.django_db
-def test_update_group_agency_missing_transit_processor(app_request, model_LittlepayGroup, model_TransitAgency):
+def test_group_agency_missing_transit_processor(app_request, model_LittlepayGroup, model_TransitAgency):
     group = model_LittlepayGroup
     session.update(app_request, agency=model_TransitAgency, group=group)
 
@@ -451,7 +451,7 @@ def test_update_group_agency_missing_transit_processor(app_request, model_Little
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("model_LittlepayConfig")
-def test_update_group_littlepay(app_request, model_LittlepayGroup, model_TransitAgency):
+def test_group_littlepay(app_request, model_LittlepayGroup, model_TransitAgency):
     group = model_LittlepayGroup
     session.update(app_request, agency=model_TransitAgency, group=group)
 
@@ -460,7 +460,7 @@ def test_update_group_littlepay(app_request, model_LittlepayGroup, model_Transit
 
 @pytest.mark.django_db
 @pytest.mark.usefixtures("model_SwitchioConfig")
-def test_update_group_switchio(app_request, model_SwitchioGroup, model_TransitAgency):
+def test_group_switchio(app_request, model_SwitchioGroup, model_TransitAgency):
     group = model_SwitchioGroup
     session.update(app_request, agency=model_TransitAgency, group=group)
 
