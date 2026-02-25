@@ -59,10 +59,12 @@ repos:
       - id: isort
         args: ["--profile", "black"]
 
-  # esbenp.prettier-vscode defaults to using prettier@2.8.8. this mirror is the closest equivalent
-  # another option would be to 'npm install prettier' explicitly in the Dockerfile, as the VS Code plugin will use it
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.7.1
+  # as of 2/25/26, esbenp.prettier-vscode defaults to installing prettier@3.7.4.
+  # this mirror ensures that the VS Code plugin and pre-commit are simpatico
+  # if we end up bitten again by drift, i recommend we consider running 'npm install prettier'
+  # explicitly in the Dockerfile, as the VS Code plugin will honor it
+  - repo: https://github.com/JoC0de/pre-commit-prettier
+    rev: v3.7.4
     hooks:
       - id: prettier
         types_or: [javascript, css]
