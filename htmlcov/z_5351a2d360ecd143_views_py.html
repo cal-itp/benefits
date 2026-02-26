@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_4565af4a6a68e360_admin_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-02-25 22:36 +0000
+            created at 2026-02-26 17:32 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -215,7 +215,7 @@
     <p class="pln"><span class="n"><a id="t131" href="#t131">131</a></span><span class="t">        <span class="com"># call super().dispatch() first to ensure all mixins are processed (i.e. so we have a self.flow and self.agency)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t132" href="#t132">132</a></span><span class="t">        <span class="nam">response</span> <span class="op">=</span> <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">dispatch</span><span class="op">(</span><span class="nam">request</span><span class="op">,</span> <span class="op">*</span><span class="nam">args</span><span class="op">,</span> <span class="op">**</span><span class="nam">kwargs</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t133" href="#t133">133</a></span><span class="t">        <span class="key">if</span> <span class="nam">request</span><span class="op">.</span><span class="nam">method</span> <span class="op">==</span> <span class="str">"POST"</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t134" href="#t134">134</a></span><span class="t">            <span class="nam">enrollment_group</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">flow</span><span class="op">.</span><span class="nam">group_id</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t134" href="#t134">134</a></span><span class="t">            <span class="nam">enrollment_group</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">group</span><span class="op">.</span><span class="nam">group_id</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t135" href="#t135">135</a></span><span class="t">            <span class="nam">transit_processor</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">agency</span><span class="op">.</span><span class="nam">transit_processor</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t136" href="#t136">136</a></span><span class="t">            <span class="nam">analytics</span><span class="op">.</span><span class="nam">returned_retry</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t137" href="#t137">137</a></span><span class="t">                <span class="nam">request</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -300,7 +300,7 @@
     <p class="run"><span class="n"><a id="t216" href="#t216">216</a></span><span class="t">        <span class="nam">flow</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">flow</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t217" href="#t217">217</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t218" href="#t218">218</a></span><span class="t">        <span class="nam">context</span> <span class="op">=</span> <span class="op">{</span><span class="str">"redirect_to"</span><span class="op">:</span> <span class="nam">request</span><span class="op">.</span><span class="nam">path</span><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t219" href="#t219">219</a></span><span class="t">        <span class="nam">short_name</span> <span class="op">=</span> <span class="nam">flow</span><span class="op">.</span><span class="nam">transit_agency</span><span class="op">.</span><span class="nam">short_name</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t219" href="#t219">219</a></span><span class="t">        <span class="nam">short_name</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">agency</span><span class="op">.</span><span class="nam">short_name</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t220" href="#t220">220</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t221" href="#t221">221</a></span><span class="t">        <span class="nam">copy</span> <span class="op">=</span> <span class="op">{</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t222" href="#t222">222</a></span><span class="t">            <span class="nam">SystemName</span><span class="op">.</span><span class="nam">COURTESY_CARD</span><span class="op">.</span><span class="nam">value</span><span class="op">:</span> <span class="nam">AgencyCardEnrollmentSuccess</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
@@ -340,7 +340,7 @@
             <a class="nav" href="z_4565af4a6a68e360_admin_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-02-25 22:36 +0000
+            created at 2026-02-26 17:32 +0000
         </p>
     </div>
 </footer>
