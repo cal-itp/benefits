@@ -83,7 +83,10 @@ class TestIndexView:
 
         session_logout_spy.assert_called_once()
 
+    @pytest.mark.usefixtures("model_LittlepayGroup")
     def test_form_valid(self, view, model_EnrollmentFlow, mocked_session_update, mocked_analytics_module):
+        view.agency.enrollment_flows.add(model_EnrollmentFlow)
+        view.agency.save()
         form = view.form_class(data=dict(flow=model_EnrollmentFlow.id), agency=view.agency)
 
         assert form.is_valid()

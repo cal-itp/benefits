@@ -152,6 +152,7 @@ class TestRetryView:
         v.setup(app_request)
         v.agency = model_TransitAgency
         v.flow = model_LittlepayGroup.enrollment_flow
+        v.group = model_LittlepayGroup
         return v
 
     def test_dispatch__get(self, app_request, view, mocked_analytics_module):
@@ -179,10 +180,12 @@ class TestRetryView:
 class TestSuccessView:
 
     @pytest.fixture
-    def view(self, app_request, model_EnrollmentFlow_supports_sign_out):
+    def view(self, app_request, model_EnrollmentFlow_supports_sign_out, model_LittlepayGroup):
         v = views.SuccessView()
         v.setup(app_request)
+        v.agency = model_LittlepayGroup.transit_agency
         v.flow = model_EnrollmentFlow_supports_sign_out
+        v.group = model_LittlepayGroup
         return v
 
     def test_get_context_data(self, view):

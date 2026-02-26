@@ -293,6 +293,7 @@ def test_enroll_system_error(
     app_request,
     model_SwitchioConfig,
     model_EnrollmentFlow_does_not_support_expiration,
+    model_SwitchioGroup,
     card_token,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment_switchio.enrollment.EnrollmentClient")
@@ -308,6 +309,7 @@ def test_enroll_system_error(
         request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_does_not_support_expiration,
+        group=model_SwitchioGroup,
         token=card_token,
     )
 
@@ -322,6 +324,7 @@ def test_enroll_exception_http_error_400(
     app_request,
     model_EnrollmentFlow_does_not_support_expiration,
     model_SwitchioConfig,
+    model_SwitchioGroup,
     card_token,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment_switchio.enrollment.EnrollmentClient")
@@ -339,6 +342,7 @@ def test_enroll_exception_http_error_400(
         request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_does_not_support_expiration,
+        group=model_SwitchioGroup,
         token=card_token,
     )
 
@@ -357,6 +361,7 @@ def test_enroll_exception_non_http_error(
     app_request,
     model_EnrollmentFlow_does_not_support_expiration,
     model_SwitchioConfig,
+    model_SwitchioGroup,
     card_token,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment_switchio.enrollment.EnrollmentClient")
@@ -368,6 +373,7 @@ def test_enroll_exception_non_http_error(
         request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_does_not_support_expiration,
+        group=model_SwitchioGroup,
         token=card_token,
     )
 
@@ -383,6 +389,7 @@ def test_enroll_success_flow_does_not_support_expiration_customer_already_enroll
     app_request,
     model_EnrollmentFlow_does_not_support_expiration,
     model_SwitchioConfig,
+    model_SwitchioGroup,
     card_token,
     mocked_group_expiry_no_expiry,
 ):
@@ -394,6 +401,7 @@ def test_enroll_success_flow_does_not_support_expiration_customer_already_enroll
         request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_does_not_support_expiration,
+        group=model_SwitchioGroup,
         token=card_token,
     )
 
@@ -410,6 +418,7 @@ def test_enroll_success_flow_does_not_support_expiration_no_expiry(
     app_request,
     model_EnrollmentFlow_does_not_support_expiration,
     model_SwitchioConfig,
+    model_SwitchioGroup,
     card_token,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment_switchio.enrollment.EnrollmentClient")
@@ -419,12 +428,13 @@ def test_enroll_success_flow_does_not_support_expiration_no_expiry(
         request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_does_not_support_expiration,
+        group=model_SwitchioGroup,
         token=card_token,
     )
 
     mock_client.add_group_to_token.assert_called_once_with(
         pto_id=model_SwitchioConfig.pto_id,
-        group_id=model_EnrollmentFlow_does_not_support_expiration.group_id,
+        group_id=model_SwitchioGroup.group_id,
         token=card_token,
         timeout=settings.REQUESTS_TIMEOUT,
     )
@@ -439,6 +449,7 @@ def test_enroll_does_not_support_expiration_has_expiration_date(
     app_request,
     model_EnrollmentFlow_does_not_support_expiration,
     model_SwitchioConfig,
+    model_SwitchioGroup,
     card_token,
     mocked_group_expiry_with_expiry,
 ):
@@ -455,13 +466,14 @@ def test_enroll_does_not_support_expiration_has_expiration_date(
         request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_does_not_support_expiration,
+        group=model_SwitchioGroup,
         token=card_token,
     )
 
     assert status is Status.SUCCESS
     mock_client.add_group_to_token.assert_called_once_with(
         pto_id=model_SwitchioConfig.pto_id,
-        group_id=model_EnrollmentFlow_does_not_support_expiration.group_id,
+        group_id=model_SwitchioGroup.group_id,
         token=card_token,
         timeout=settings.REQUESTS_TIMEOUT,
     )
@@ -475,6 +487,7 @@ def test_enroll_success_flow_supports_expiration(
     mocked_session_enrollment_expiry,
     model_EnrollmentFlow_supports_expiration,
     model_SwitchioConfig,
+    model_SwitchioGroup,
     card_token,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment_switchio.enrollment.EnrollmentClient")
@@ -484,12 +497,13 @@ def test_enroll_success_flow_supports_expiration(
         request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_supports_expiration,
+        group=model_SwitchioGroup,
         token=card_token,
     )
 
     mock_client.add_group_to_token.assert_called_once_with(
         model_SwitchioConfig.pto_id,
-        model_EnrollmentFlow_supports_expiration.group_id,
+        model_SwitchioGroup.group_id,
         card_token,
         expiry=mocked_session_enrollment_expiry.return_value,
     )
@@ -505,6 +519,7 @@ def test_enroll_success_flow_supports_expiration_no_expiry(
     mocked_session_enrollment_expiry,
     model_EnrollmentFlow_supports_expiration,
     model_SwitchioConfig,
+    model_SwitchioGroup,
     card_token,
     mocked_group_expiry_no_expiry,
 ):
@@ -516,12 +531,13 @@ def test_enroll_success_flow_supports_expiration_no_expiry(
         request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_supports_expiration,
+        group=model_SwitchioGroup,
         token=card_token,
     )
 
     mock_client.add_group_to_token.assert_called_once_with(
         model_SwitchioConfig.pto_id,
-        model_EnrollmentFlow_supports_expiration.group_id,
+        model_SwitchioGroup.group_id,
         card_token,
         expiry=mocked_session_enrollment_expiry.return_value,
     )
@@ -539,6 +555,7 @@ def test_enroll_success_supports_expiration_with_expiry(
     mocked_session_enrollment_expiry,
     model_EnrollmentFlow_supports_expiration,
     model_SwitchioConfig,
+    model_SwitchioGroup,
     card_token,
     mocked_group_expiry_with_expiry,
     is_expired,
@@ -560,13 +577,14 @@ def test_enroll_success_supports_expiration_with_expiry(
         request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_supports_expiration,
+        group=model_SwitchioGroup,
         token=card_token,
     )
 
     assert status is Status.SUCCESS
     mock_client.add_group_to_token.assert_called_once_with(
         model_SwitchioConfig.pto_id,
-        model_EnrollmentFlow_supports_expiration.group_id,
+        model_SwitchioGroup.group_id,
         card_token,
         expiry=mocked_session_enrollment_expiry.return_value,
     )
@@ -580,6 +598,7 @@ def test_enroll_supports_expiration_not_expired_not_in_window(
     mocked_session_enrollment_expiry,
     model_EnrollmentFlow_supports_expiration,
     model_SwitchioConfig,
+    model_SwitchioGroup,
     card_token,
     mocked_group_expiry_with_expiry,
 ):
@@ -599,6 +618,7 @@ def test_enroll_supports_expiration_not_expired_not_in_window(
         request=app_request,
         switchio_config=model_SwitchioConfig,
         flow=model_EnrollmentFlow_supports_expiration,
+        group=model_SwitchioGroup,
         token=card_token,
     )
 

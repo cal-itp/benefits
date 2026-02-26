@@ -43,29 +43,13 @@ class TestEnrollmentFlowAdmin:
 
         assert set(readonly) == set(expected)
 
-    def test_EnrollmentFlowForm_no_transit_agency(self, admin_user_request):
-        request = admin_user_request()
-
-        request.POST = dict(
-            system_name="senior",
-            supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
-        )
-
-        # get the Form class that's used in the admin add view as the user would see it
-        form_class = self.model_admin.get_form(request)
-        form = form_class(request.POST)
-
-        assert not form.errors
-        assert form.is_valid()
-
-    def test_EnrollmentFlowForm_no_request_config(self, admin_user_request, model_TransitAgency):
+    def test_EnrollmentFlowForm_no_request_config(self, admin_user_request):
         request = admin_user_request()
 
         # fill out the form without EligibilityApiVerificationRequest nor ClaimsVerificationRequest
         request.POST = dict(
             system_name="senior",  # use value that will map to existing templates
             supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
-            transit_agency=model_TransitAgency.id,
         )
 
         form_class = self.model_admin.get_form(request)
@@ -73,20 +57,16 @@ class TestEnrollmentFlowAdmin:
 
         assert not form.is_valid()
         error_dict = form.errors
-        assert (
-            "Must configure either claims verification or Eligibility API verification before adding to a transit agency."
-            in error_dict["__all__"]
-        )
+        assert "Must configure either claims verification or Eligibility API verification." in error_dict["__all__"]
 
     def test_EnrollmentFlowForm_supports_expiration(
-        self, admin_user_request, model_TransitAgency, model_IdentityGatewayConfig, model_ClaimsVerificationRequest
+        self, admin_user_request, model_IdentityGatewayConfig, model_ClaimsVerificationRequest
     ):
         request = admin_user_request()
 
         request.POST = dict(
             system_name="senior",  # use value that will map to existing templates
             supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
-            transit_agency=model_TransitAgency.id,
             supports_expiration=True,
             # invalid expiration data when supports_expiration is True
             expiration_days=0,

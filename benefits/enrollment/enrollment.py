@@ -60,6 +60,7 @@ def handle_enrollment_results(
 ):
     flow = session.flow(request)
     agency = session.agency(request)
+    group_id = str(session.group(request).group_id)  # needs to be a string for the API call
     match (status):
         case Status.SUCCESS:
             agency = session.agency(request)
@@ -81,7 +82,7 @@ def handle_enrollment_results(
             event.save()
             analytics.returned_success(
                 request,
-                enrollment_group=flow.group_id,
+                enrollment_group=group_id,
                 transit_processor=agency.transit_processor,
                 enrollment_method=enrollment_method,
                 extra_claims=oauth_extra_claims,
@@ -94,7 +95,7 @@ def handle_enrollment_results(
             analytics.returned_error(
                 request,
                 str(exception),
-                enrollment_group=flow.group_id,
+                enrollment_group=group_id,
                 transit_processor=agency.transit_processor,
                 enrollment_method=enrollment_method,
             )
@@ -105,7 +106,7 @@ def handle_enrollment_results(
             analytics.returned_error(
                 request,
                 str(exception),
-                enrollment_group=flow.group_id,
+                enrollment_group=group_id,
                 transit_processor=agency.transit_processor,
                 enrollment_method=enrollment_method,
             )
@@ -115,7 +116,7 @@ def handle_enrollment_results(
             analytics.returned_error(
                 request,
                 "Re-enrollment error.",
-                enrollment_group=flow.group_id,
+                enrollment_group=group_id,
                 transit_processor=agency.transit_processor,
                 enrollment_method=enrollment_method,
             )

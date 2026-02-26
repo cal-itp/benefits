@@ -17,7 +17,7 @@ from benefits.enrollment_switchio.api import (
     RegistrationStatus,
     TokenizationClient,
 )
-from benefits.enrollment_switchio.models import SwitchioConfig
+from benefits.enrollment_switchio.models import SwitchioConfig, SwitchioGroup
 from benefits.routes import routes
 
 
@@ -149,7 +149,9 @@ def get_latest_active_token_value(tokens):
     return latest_active_token.token if latest_active_token else ""
 
 
-def enroll(request, switchio_config: SwitchioConfig, flow: EnrollmentFlow, token: str) -> tuple[Status, Exception]:
+def enroll(
+    request, switchio_config: SwitchioConfig, flow: EnrollmentFlow, group: SwitchioGroup, token: str
+) -> tuple[Status, Exception]:
     client = EnrollmentClient(
         api_url=switchio_config.enrollment_api_base_url,
         authorization_header_value=switchio_config.enrollment_api_authorization_header,
@@ -159,7 +161,7 @@ def enroll(request, switchio_config: SwitchioConfig, flow: EnrollmentFlow, token
     )
 
     pto_id = switchio_config.pto_id
-    group_id = flow.group_id
+    group_id = group.group_id
 
     exception = None
     try:

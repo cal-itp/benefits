@@ -12,7 +12,9 @@ from cdt_identity.claims import ClaimsResult
 from cdt_identity.session import Session as OAuthSession
 from django.urls import reverse
 
+from benefits.enrollment_littlepay.models import LittlepayGroup
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
+from benefits.enrollment_switchio.models import SwitchioGroup
 from benefits.enrollment_switchio.session import Session as SwitchioSession
 from benefits.routes import routes
 
@@ -27,6 +29,7 @@ _DID = "did"
 _ELIGIBLE = "eligibility"
 _ENROLLMENT_EXP = "enrollment_expiry"
 _FLOW = "flow"
+_GROUP = "group"  # EnrollmentGroup, not django.auth Group
 _LANG = "lang"
 _LOGGED_IN = "logged_in"
 _ORIGIN = "origin"
@@ -57,6 +60,7 @@ def context_dict(request):
         _DEBUG: debug(request),
         _DID: did(request),
         _FLOW: flow(request),
+        _GROUP: group(request),
         _ELIGIBLE: eligible(request),
         _ENROLLMENT_EXP: enrollment_expiry(request),
         littlepay_session._keys_access_token: littlepay_session.access_token,
@@ -118,6 +122,34 @@ def enrollment_reenrollment(request):
         return None
 
 
+def flow(request) -> models.EnrollmentFlow | None:
+    """Get the EnrollmentFlow from the request's session, or None"""
+    try:
+        return models.EnrollmentFlow.by_id(request.session[_FLOW])
+    except (KeyError, models.EnrollmentFlow.DoesNotExist):
+        return None
+
+
+def group(request) -> models.EnrollmentGroup | None:
+    """Get the EnrollmentGroup from the request's session, or None"""
+
+    if agency(request):
+        match agency(request).transit_processor:
+            case "littlepay":
+                group_model = LittlepayGroup
+            case "switchio":
+                group_model = SwitchioGroup
+            case _:
+                return None
+
+        try:
+            return group_model.by_id(request.session[_GROUP])
+        except (KeyError, group_model.DoesNotExist):
+            return None
+
+    return None
+
+
 def language(request):
     """Get the language configured for the request."""
     return request.LANGUAGE_CODE
@@ -160,6 +192,7 @@ def reset(request):
     logger.debug("Reset session")
     request.session[_AGENCY] = None
     request.session[_FLOW] = None
+    request.session[_GROUP] = None
     request.session[_ELIGIBLE] = False
     request.session[_ORIGIN] = reverse(routes.INDEX)
     request.session[_ENROLLMENT_EXP] = None
@@ -220,6 +253,7 @@ def update(
     agency=None,
     debug=None,
     flow=None,
+    group=None,
     eligible=None,
     enrollment_expiry=None,
     logged_in=None,
@@ -250,11 +284,5 @@ def update(
         oauth_session = OAuthSession(request)
         oauth_session.client_config = flow.oauth_config
         oauth_session.claims_request = flow.claims_request
-
-
-def flow(request) -> models.EnrollmentFlow | None:
-    """Get the EnrollmentFlow from the request's session, or None"""
-    try:
-        return models.EnrollmentFlow.by_id(request.session[_FLOW])
-    except (KeyError, models.EnrollmentFlow.DoesNotExist):
-        return None
+    if group is not None and isinstance(group, models.EnrollmentGroup):
+        request.session[_GROUP] = group.id

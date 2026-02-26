@@ -27,30 +27,6 @@ class TestEligibilityApiVerificationRequest:
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_str(model_EnrollmentFlow):
-    assert str(model_EnrollmentFlow) == f"{model_EnrollmentFlow.label} ({model_EnrollmentFlow.transit_agency.slug})"
-
-
-@pytest.mark.django_db
-def test_EnrollmentFlow_str_no_agency(model_EnrollmentFlow):
-    model_EnrollmentFlow.transit_agency = None
-    assert str(model_EnrollmentFlow) == f"{model_EnrollmentFlow.label} (no agency)"
-
-
-@pytest.mark.django_db
-def test_EnrollmentFlow_agency_card_name(model_EnrollmentFlow_with_eligibility_api):
-    assert (
-        model_EnrollmentFlow_with_eligibility_api.agency_card_name
-        == f"{model_EnrollmentFlow_with_eligibility_api.transit_agency.slug}-agency-card"
-    )
-
-
-@pytest.mark.django_db
-def test_EnrollmentFlow_agency_card_name__claims(model_EnrollmentFlow_with_scope_and_claim):
-    assert model_EnrollmentFlow_with_scope_and_claim.agency_card_name == ""
-
-
-@pytest.mark.django_db
 def test_EnrollmentFlow_supported_enrollment_methods(model_EnrollmentFlow_with_scope_and_claim):
     assert model_EnrollmentFlow_with_scope_and_claim.supported_enrollment_methods == ["digital", "in_person"]
 
@@ -130,7 +106,7 @@ def test_EnrollmentFlow_template_claims(model_EnrollmentFlow_with_scope_and_clai
 def test_EnrollmentFlow_template_eligibility_api(model_EnrollmentFlow_with_eligibility_api):
     assert (
         model_EnrollmentFlow_with_eligibility_api.selection_label_template
-        == f"eligibility/includes/selection-label--{model_EnrollmentFlow_with_eligibility_api.agency_card_name}.html"
+        == f"eligibility/includes/selection-label--{model_EnrollmentFlow_with_eligibility_api.system_name}.html"
     )
 
 
@@ -139,20 +115,15 @@ def test_EnrollmentFlow_clean_in_person_eligibility_context_not_found(model_Enro
     model_EnrollmentFlow.system_name = "nonexistent_system_name"
 
     with pytest.raises(
-        ValidationError, match=f"{model_EnrollmentFlow.system_name} not configured for In-person. Please uncheck to continue."
+        ValidationError,
+        match=f"{model_EnrollmentFlow.system_name} not configured for in-person enrollment. Please uncheck to continue.",
     ):
         model_EnrollmentFlow.clean()
 
 
 @pytest.mark.django_db
-def test_EnrollmentFlow_clean_group_id(model_EnrollmentFlow):
-    assert not hasattr(model_EnrollmentFlow, "enrollmentgroup")
-
-    with pytest.raises(
-        ValidationError,
-        match=f"{model_EnrollmentFlow.system_name} needs either a LittlepayGroup or SwitchioGroup linked to it.",
-    ):
-        model_EnrollmentFlow.clean()
+def test_EnrollmentGroup_str(model_LittlepayGroup):
+    assert str(model_LittlepayGroup) == f"{model_LittlepayGroup.enrollment_flow} ({model_LittlepayGroup.transit_agency.slug})"
 
 
 @pytest.mark.django_db

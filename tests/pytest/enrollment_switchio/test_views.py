@@ -36,12 +36,13 @@ def mocked_api_base_url(mocker):
 @pytest.mark.usefixtures("mocked_session_flow")
 class TestIndexView:
     @pytest.fixture
-    def view(self, app_request, mocked_session_agency, mocked_session_flow):
+    def view(self, app_request, mocked_session_agency, mocked_session_flow, mocked_session_group):
         """Fixture to create an instance of IndexView."""
         v = IndexView()
         v.setup(app_request)
         v.agency = mocked_session_agency(app_request)
         v.flow = mocked_session_flow(app_request)
+        v.group = mocked_session_group(app_request)
 
         return v
 

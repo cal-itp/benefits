@@ -131,7 +131,7 @@ class RetryView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
         # call super().dispatch() first to ensure all mixins are processed (i.e. so we have a self.flow and self.agency)
         response = super().dispatch(request, *args, **kwargs)
         if request.method == "POST":
-            enrollment_group = self.flow.group_id
+            enrollment_group = self.group.group_id
             transit_processor = self.agency.transit_processor
             analytics.returned_retry(
                 request,
@@ -216,7 +216,7 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
         flow = self.flow
 
         context = {"redirect_to": request.path}
-        short_name = flow.transit_agency.short_name
+        short_name = self.agency.short_name
 
         copy = {
             SystemName.COURTESY_CARD.value: AgencyCardEnrollmentSuccess(

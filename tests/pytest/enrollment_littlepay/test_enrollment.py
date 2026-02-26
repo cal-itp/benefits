@@ -3,12 +3,8 @@ from littlepay.api.funding_sources import FundingSourceResponse
 from littlepay.api.groups import GroupFundingSourceResponse
 from requests import HTTPError
 
-from benefits.enrollment.enrollment import Status
-from benefits.enrollment_littlepay.enrollment import (
-    _get_group_funding_source,
-    enroll,
-    request_card_tokenization_access,
-)
+from benefits.enrollment.enrollment import Status, _calculate_expiry
+from benefits.enrollment_littlepay.enrollment import _get_group_funding_source, enroll, request_card_tokenization_access
 
 
 @pytest.fixture
@@ -88,6 +84,7 @@ def test_get_group_funding_sources_funding_source_already_enrolled(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_EnrollmentFlow_does_not_support_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
@@ -119,6 +116,7 @@ def test_enroll_system_error(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_EnrollmentFlow_does_not_support_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
@@ -151,6 +149,7 @@ def test_enroll_exception_http_error_400(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_EnrollmentFlow_does_not_support_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
@@ -185,6 +184,7 @@ def test_enroll_exception_http_error_409(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_EnrollmentFlow_does_not_support_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
@@ -211,6 +211,7 @@ def test_enroll_exception_non_http_error(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_EnrollmentFlow_does_not_support_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
@@ -244,15 +245,18 @@ def test_enroll_success_flow_does_not_support_expiration_customer_already_enroll
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
+    "model_EnrollmentFlow_does_not_support_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
 )
 def test_enroll_success_flow_does_not_support_expiration_no_expiry(
     mocker,
     app_request,
-    model_EnrollmentFlow_does_not_support_expiration,
     card_token,
     mocked_funding_source,
+    mocked_session_group,
+    mocked_session_update,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment_littlepay.enrollment.Client")
     mock_client = mock_client_cls.return_value
@@ -261,8 +265,9 @@ def test_enroll_success_flow_does_not_support_expiration_no_expiry(
     status, exception, funding_source = enroll(app_request, card_token)
 
     mock_client.link_concession_group_funding_source.assert_called_once_with(
-        funding_source_id=mocked_funding_source.id, group_id=model_EnrollmentFlow_does_not_support_expiration.group_id
+        funding_source_id=mocked_funding_source.id, group_id=mocked_session_group(app_request).group_id
     )
+    mocked_session_update.assert_not_called()
     assert status is Status.SUCCESS
     assert exception is None
 
@@ -272,16 +277,20 @@ def test_enroll_success_flow_does_not_support_expiration_no_expiry(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
+    "model_EnrollmentFlow_supports_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
 )
 def test_enroll_success_flow_supports_expiration(
     mocker,
     app_request,
-    model_EnrollmentFlow_supports_expiration,
     card_token,
     mocked_funding_source,
     mocked_session_enrollment_expiry,
+    mocked_session_flow,
+    mocked_session_group,
+    mocked_session_update,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment_littlepay.enrollment.Client")
     mock_client = mock_client_cls.return_value
@@ -291,8 +300,11 @@ def test_enroll_success_flow_supports_expiration(
 
     mock_client.link_concession_group_funding_source.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
-        group_id=model_EnrollmentFlow_supports_expiration.group_id,
+        group_id=mocked_session_group(app_request).group_id,
         expiry=mocked_session_enrollment_expiry.return_value,
+    )
+    mocked_session_update.assert_called_once_with(
+        app_request, enrollment_expiry=_calculate_expiry(mocked_session_flow(app_request).expiration_days)
     )
     assert status == Status.SUCCESS
     assert exception is None
@@ -303,17 +315,21 @@ def test_enroll_success_flow_supports_expiration(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
+    "model_EnrollmentFlow_supports_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
 )
 def test_enroll_success_flow_supports_expiration_no_expiry(
     mocker,
     app_request,
-    model_EnrollmentFlow_supports_expiration,
     card_token,
     mocked_funding_source,
     mocked_group_funding_source_no_expiry,
     mocked_session_enrollment_expiry,
+    mocked_session_flow,
+    mocked_session_group,
+    mocked_session_update,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment_littlepay.enrollment.Client")
     mock_client = mock_client_cls.return_value
@@ -328,8 +344,11 @@ def test_enroll_success_flow_supports_expiration_no_expiry(
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
-        group_id=model_EnrollmentFlow_supports_expiration.group_id,
+        group_id=mocked_session_group(app_request).group_id,
         expiry=mocked_session_enrollment_expiry.return_value,
+    )
+    mocked_session_update.assert_called_once_with(
+        app_request, enrollment_expiry=_calculate_expiry(mocked_session_flow(app_request).expiration_days)
     )
     assert status == Status.SUCCESS
     assert exception is None
@@ -340,16 +359,19 @@ def test_enroll_success_flow_supports_expiration_no_expiry(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
+    "model_EnrollmentFlow_supports_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
 )
 def test_enroll_success_flow_supports_expiration_is_expired(
     mocker,
     app_request,
-    model_EnrollmentFlow_supports_expiration,
     mocked_funding_source,
     mocked_group_funding_source_with_expiry,
     mocked_session_enrollment_expiry,
+    mocked_session_group,
+    mocked_session_update,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment_littlepay.enrollment.Client")
     mock_client = mock_client_cls.return_value
@@ -362,14 +384,20 @@ def test_enroll_success_flow_supports_expiration_is_expired(
     )
 
     mocker.patch("benefits.enrollment_littlepay.enrollment._is_expired", return_value=True)
-
     status, exception, funding_source = enroll(app_request, card_token)
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
-        group_id=model_EnrollmentFlow_supports_expiration.group_id,
+        group_id=mocked_session_group(app_request).group_id,
         expiry=mocked_session_enrollment_expiry.return_value,
     )
+    mocked_session_update.assert_called_once_with(
+        app_request, enrollment_expiry=mocked_group_funding_source_with_expiry.expiry_date
+    )
+
+    # First call comes from checking _is_within_reenrollment_window
+    assert len(mocked_session_enrollment_expiry.mock_calls) == 2
+
     assert status is Status.SUCCESS
     assert exception is None
 
@@ -379,17 +407,20 @@ def test_enroll_success_flow_supports_expiration_is_expired(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
+    "model_EnrollmentFlow_supports_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
 )
 def test_enroll_success_flow_supports_expiration_is_within_reenrollment_window(
     mocker,
     app_request,
-    model_EnrollmentFlow_supports_expiration,
     card_token,
     mocked_funding_source,
     mocked_group_funding_source_with_expiry,
     mocked_session_enrollment_expiry,
+    mocked_session_group,
+    mocked_session_update,
 ):
     mock_client_cls = mocker.patch("benefits.enrollment_littlepay.enrollment.Client")
     mock_client = mock_client_cls.return_value
@@ -407,9 +438,16 @@ def test_enroll_success_flow_supports_expiration_is_within_reenrollment_window(
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
-        group_id=model_EnrollmentFlow_supports_expiration.group_id,
+        group_id=mocked_session_group(app_request).group_id,
         expiry=mocked_session_enrollment_expiry.return_value,
     )
+    mocked_session_update.assert_called_once_with(
+        app_request, enrollment_expiry=mocked_group_funding_source_with_expiry.expiry_date
+    )
+
+    # First call comes from checking _is_within_reenrollment_window
+    assert len(mocked_session_enrollment_expiry.mock_calls) == 2
+
     assert status is Status.SUCCESS
     assert exception is None
 
@@ -419,6 +457,7 @@ def test_enroll_success_flow_supports_expiration_is_within_reenrollment_window(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_EnrollmentFlow_supports_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",
@@ -455,6 +494,7 @@ def test_enroll_reenrollment_error(
     "mocked_api_base_url",
     "mocked_session_agency",
     "mocked_session_flow",
+    "mocked_session_group",
     "model_EnrollmentFlow_does_not_support_expiration",
     "model_LittlepayGroup",
     "model_LittlepayConfig",

@@ -153,6 +153,7 @@
       "long_name": "California State Transit (local)",
       "info_url": "https://www.agency-website.com",
       "phone": "1-800-555-5555",
+      "enrollment_flows": [1, 2, 3, 4, 5],
       "customer_service_group": 2,
       "logo": "agencies/cst.png",
       "transit_processor_config": 1
@@ -161,27 +162,42 @@
   {
     "model": "core.enrollmentgroup",
     "pk": 1,
-    "fields": { "enrollment_flow": 5 }
+    "fields": {
+      "enrollment_flow": 5,
+      "transit_agency": 1
+    }
   },
   {
     "model": "core.enrollmentgroup",
     "pk": 2,
-    "fields": { "enrollment_flow": 4 }
+    "fields": {
+      "enrollment_flow": 4,
+      "transit_agency": 1
+    }
   },
   {
     "model": "core.enrollmentgroup",
     "pk": 3,
-    "fields": { "enrollment_flow": 2 }
+    "fields": {
+      "enrollment_flow": 2,
+      "transit_agency": 1
+    }
   },
   {
     "model": "core.enrollmentgroup",
     "pk": 4,
-    "fields": { "enrollment_flow": 3 }
+    "fields": {
+      "enrollment_flow": 3,
+      "transit_agency": 1
+    }
   },
   {
     "model": "core.enrollmentgroup",
     "pk": 5,
-    "fields": { "enrollment_flow": 1 }
+    "fields": {
+      "enrollment_flow": 1,
+      "transit_agency": 1
+    }
   },
   {
     "model": "enrollment_littlepay.littlepaygroup",
@@ -234,7 +250,6 @@
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_request": "a0b45237-b056-4d25-aebe-d4f2a5fe6bbc",
       "supported_enrollment_methods": ["digital", "in_person"],
-      "transit_agency": 1,
       "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
       "sign_out_link_template": "core/includes/link--sign-out--login-gov.html"
     }
@@ -249,7 +264,6 @@
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_request": "8fa9e649-4de6-4bd6-8eec-f5f47802ceab",
       "supported_enrollment_methods": ["digital"],
-      "transit_agency": 1,
       "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
       "sign_out_link_template": "core/includes/link--sign-out--login-gov.html"
     }
@@ -262,8 +276,7 @@
       "label": "Agency Cardholder",
       "api_request": 1,
       "display_order": 5,
-      "supported_enrollment_methods": ["digital"],
-      "transit_agency": 1
+      "supported_enrollment_methods": ["digital"]
     }
   },
   {
@@ -279,7 +292,6 @@
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
       "claims_request": "c6332e8c-7081-48e9-ae3c-07360879a8ae",
       "supported_enrollment_methods": ["digital"],
-      "transit_agency": 1,
       "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
       "sign_out_link_template": "core/includes/link--sign-out--login-gov.html"
     }
@@ -293,8 +305,7 @@
       "display_order": 1,
       "oauth_config": "7687895d-c3d6-4063-a26e-518514fb01b2",
       "claims_request": "d27e630b-980c-40ae-9104-a36633bcf7ac",
-      "supported_enrollment_methods": ["digital", "in_person"],
-      "transit_agency": 1
+      "supported_enrollment_methods": ["digital", "in_person"]
     }
   },
   {

@@ -15,20 +15,19 @@ class TestEnrollmentFlowSelectionForm:
     @pytest.fixture(autouse=True)
     def init(self, model_TransitAgency):
         self.digital = models.EnrollmentFlow.objects.create(
-            transit_agency=model_TransitAgency,
             supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL],
             label="Digital",
         )
         self.in_person = models.EnrollmentFlow.objects.create(
-            transit_agency=model_TransitAgency,
             supported_enrollment_methods=[models.EnrollmentMethods.IN_PERSON],
             label="In-Person",
         )
         self.both = models.EnrollmentFlow.objects.create(
-            transit_agency=model_TransitAgency,
             supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
             label="Both",
         )
+        model_TransitAgency.enrollment_flows.set([self.digital, self.in_person, self.both])
+        model_TransitAgency.save()
         self.form = EnrollmentFlowSelectionForm(agency=model_TransitAgency)
 
     def test_recaptcha_mixin(self):

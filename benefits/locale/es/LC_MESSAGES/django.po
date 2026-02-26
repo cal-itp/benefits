@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-02-20 15:22-0800\n"
+"POT-Creation-Date: 2026-02-23 14:11-0800\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -632,25 +632,6 @@ msgstr ""
 "Este beneficio de tránsito permanecerá activo por un año. Necesitará "
 "verificar su identidad con"
 
-msgid "Agency Cardholder"
-msgstr "Titular de la tarjeta de agencia"
-
-msgid ""
-"This option is for people who have a current CST Agency Card or a CST "
-"Paratransit Eligibility Card."
-msgstr ""
-"Esta opción es para personas que cuentan actualmente con una tarjeta de la "
-"CST o una tarjeta de elegibilidad CST Paratransit."
-
-msgid "Medicare Cardholder"
-msgstr "Titular de tarjeta Medicare"
-
-msgid "You must be"
-msgstr "Debe estar"
-
-msgid "currently enrolled in Medicare"
-msgstr "inscrito en Medicare"
-
 msgid "Courtesy Card"
 msgstr "Tarjeta de cortesía de MST"
 
@@ -660,6 +641,15 @@ msgid ""
 msgstr ""
 "Esta opción es para personas que cuentan actualmente con una tarjeta de "
 "cortesía o una tarjeta de elegibilidad MST RIDES."
+
+msgid "Medicare Cardholder"
+msgstr "Titular de tarjeta Medicare"
+
+msgid "You must be"
+msgstr "Debe estar"
+
+msgid "currently enrolled in Medicare"
+msgstr "inscrito en Medicare"
 
 msgid "Reduced Fare Mobility ID"
 msgstr ""

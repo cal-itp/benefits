@@ -1,7 +1,7 @@
 import pytest
 from django.forms import ValidationError
 
-from benefits.enrollment_littlepay.models import LittlepayConfig
+from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup
 
 
 @pytest.mark.django_db
@@ -82,3 +82,16 @@ def test_LittlepayConfig_api_base_url_unexpected_environment():
 
     with pytest.raises(ValueError, match=f"Unexpected value for environment: {environment}"):
         littlepay_config.api_base_url
+
+
+@pytest.mark.django_db
+def test_LittlepayGroup_by_id_matching(model_LittlepayGroup):
+    flow = LittlepayGroup.by_id(model_LittlepayGroup.id)
+
+    assert flow == model_LittlepayGroup
+
+
+@pytest.mark.django_db
+def test_LittlepayGroup_by_id_nonmatching():
+    with pytest.raises(LittlepayGroup.DoesNotExist):
+        LittlepayGroup.by_id(99999)

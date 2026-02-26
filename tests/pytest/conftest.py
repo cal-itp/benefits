@@ -115,29 +115,30 @@ def model_EligibilityApiVerificationRequest(model_PemData):
 
 
 @pytest.fixture
-def model_EnrollmentFlow(model_TransitAgency):
+def model_EnrollmentFlow():
     flow = EnrollmentFlow.objects.create(
         system_name="senior",
         label="Test flow label",
-        transit_agency=model_TransitAgency,
     )
 
     return flow
 
 
 @pytest.fixture
-def model_LittlepayGroup(model_EnrollmentFlow):
+def model_LittlepayGroup(model_EnrollmentFlow, model_TransitAgency):
     return LittlepayGroup.objects.create(
         group_id="d0fe23fd-61d6-455f-8e19-808058603171",
         enrollment_flow=model_EnrollmentFlow,
+        transit_agency=model_TransitAgency,
     )
 
 
 @pytest.fixture
-def model_SwitchioGroup(model_EnrollmentFlow):
+def model_SwitchioGroup(model_EnrollmentFlow, model_TransitAgency):
     return SwitchioGroup.objects.create(
         group_id="senior-discount",
         enrollment_flow=model_EnrollmentFlow,
+        transit_agency=model_TransitAgency,
     )
 
 
@@ -162,9 +163,8 @@ def model_EnrollmentFlow_with_scope_and_claim(
 
 
 @pytest.fixture
-def model_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow_with_scope_and_claim, model_TransitAgency):
+def model_EnrollmentFlow_with_claims_scheme(model_EnrollmentFlow_with_scope_and_claim):
     model_EnrollmentFlow_with_scope_and_claim.claims_request.scheme = "scheme"
-    model_EnrollmentFlow_with_scope_and_claim.transit_agency = model_TransitAgency
     model_EnrollmentFlow_with_scope_and_claim.save()
 
     return model_EnrollmentFlow_with_scope_and_claim
@@ -299,6 +299,11 @@ def mocked_session_enrollment_expiry(mocker):
 @pytest.fixture
 def mocked_session_flow(mocker, model_EnrollmentFlow):
     return mocker.patch("benefits.core.session.flow", autospec=True, return_value=model_EnrollmentFlow)
+
+
+@pytest.fixture
+def mocked_session_group(mocker, model_LittlepayGroup):
+    return mocker.patch("benefits.core.session.group", autospec=True, return_value=model_LittlepayGroup)
 
 
 @pytest.fixture

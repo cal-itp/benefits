@@ -279,6 +279,15 @@ def test_reset_flow(app_request):
 
 
 @pytest.mark.django_db
+def test_reset_group(app_request):
+    app_request.session[session._GROUP] = "group"
+
+    session.reset(app_request)
+
+    assert session.group(app_request) is None
+
+
+@pytest.mark.django_db
 def test_reset_user(app_request):
     # subsequent reset should not overwrite these
     uid = session.uid(app_request)
@@ -422,6 +431,45 @@ def test_update_flow(app_request, model_EnrollmentFlow_with_scope_and_claim: mod
 @pytest.mark.django_db
 def test_flow_default(app_request):
     assert session.flow(app_request) is None
+
+
+@pytest.mark.django_db
+def test_group_without_agency_in_session(app_request, model_LittlepayGroup):
+    group = model_LittlepayGroup
+    session.update(app_request, group=group)
+
+    assert session.group(app_request) is None
+
+
+@pytest.mark.django_db
+def test_group_agency_missing_transit_processor(app_request, model_LittlepayGroup, model_TransitAgency):
+    group = model_LittlepayGroup
+    session.update(app_request, agency=model_TransitAgency, group=group)
+
+    assert session.group(app_request) is None
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("model_LittlepayConfig")
+def test_group_littlepay(app_request, model_LittlepayGroup, model_TransitAgency):
+    group = model_LittlepayGroup
+    session.update(app_request, agency=model_TransitAgency, group=group)
+
+    assert session.group(app_request) == group
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("model_SwitchioConfig")
+def test_group_switchio(app_request, model_SwitchioGroup, model_TransitAgency):
+    group = model_SwitchioGroup
+    session.update(app_request, agency=model_TransitAgency, group=group)
+
+    assert session.group(app_request) == group
+
+
+@pytest.mark.django_db
+def test_group_default(app_request):
+    assert session.group(app_request) is None
 
 
 @pytest.mark.django_db

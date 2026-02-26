@@ -8,7 +8,6 @@ from django.utils import timezone
 from multiselectfield import MultiSelectField
 
 from .common import PemData, SecretNameField, template_path
-from .transit import TransitAgency
 
 logger = logging.getLogger(__name__)
 
@@ -128,7 +127,6 @@ class EnrollmentFlow(models.Model):
         default="",
         help_text="A human readable label, used as the display text in Admin.",
     )
-    transit_agency = models.ForeignKey(TransitAgency, on_delete=models.PROTECT, null=True, blank=True)
     supported_enrollment_methods = MultiSelectField(
         choices=SUPPORTED_METHODS,
         max_choices=2,
@@ -176,30 +174,7 @@ class EnrollmentFlow(models.Model):
         ordering = ["display_order"]
 
     def __str__(self):
-        agency_slug = self.transit_agency.slug if self.transit_agency else "no agency"
-        return f"{self.label} ({agency_slug})"
-
-    @property
-    def group_id(self):
-        if hasattr(self, "enrollmentgroup"):
-            enrollment_group = self.enrollmentgroup
-
-            # these are the class names for models in enrollment_littlepay and enrollment_switchio
-            if hasattr(enrollment_group, "littlepaygroup"):
-                return str(enrollment_group.littlepaygroup.group_id)
-            elif hasattr(enrollment_group, "switchiogroup"):
-                return enrollment_group.switchiogroup.group_id
-            else:
-                return None
-        else:
-            return None
-
-    @property
-    def agency_card_name(self):
-        if self.uses_api_verification:
-            return f"{self.transit_agency.slug}-agency-card"
-        else:
-            return ""
+        return self.label
 
     @property
     def eligibility_api_auth_key(self):
@@ -218,11 +193,7 @@ class EnrollmentFlow(models.Model):
 
     @property
     def selection_label_template(self):
-        prefix = "eligibility/includes/selection-label"
-        if self.uses_api_verification:
-            return f"{prefix}--{self.agency_card_name}.html"
-        else:
-            return f"{prefix}--{self.system_name}.html"
+        return f"eligibility/includes/selection-label--{self.system_name}.html"
 
     @property
     def uses_claims_verification(self):
@@ -263,28 +234,24 @@ class EnrollmentFlow(models.Model):
     def clean(self):
         errors = []
 
-        if self.transit_agency:
-            templates = [
-                self.selection_label_template,
-            ]
+        templates = [
+            self.selection_label_template,
+        ]
 
-            # since templates are calculated from the pattern or the override field
-            # we can't add a field-level validation error
-            # so just create directly for a missing template
-            for t in templates:
-                if not template_path(t):
-                    errors.append(ValidationError(f"Template not found: {t}"))
+        # since templates are calculated from the pattern or the override field
+        # we can't add a field-level validation error
+        # so just create directly for a missing template
+        for t in templates:
+            if not template_path(t):
+                errors.append(ValidationError(f"Template not found: {t}"))
 
-            if (
-                EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods
-                and self.system_name not in self.supported_in_person_flows
-            ):
-                errors.append(ValidationError(f"{self.system_name} not configured for In-person. Please uncheck to continue."))
-
-            if self.transit_agency.active and self.group_id is None:
-                errors.append(
-                    ValidationError(f"{self.system_name} needs either a LittlepayGroup or SwitchioGroup linked to it.")
-                )
+        if (
+            EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods
+            and self.system_name not in self.supported_in_person_flows
+        ):
+            errors.append(
+                ValidationError(f"{self.system_name} not configured for in-person enrollment. Please uncheck to continue.")
+            )
 
         if errors:
             raise ValidationError(errors)
@@ -298,21 +265,26 @@ class EnrollmentFlow(models.Model):
 
 class EnrollmentGroup(models.Model):
     id = models.AutoField(primary_key=True)
-    enrollment_flow = models.OneToOneField(
+    transit_agency = models.ForeignKey(
+        "core.TransitAgency",
+        on_delete=models.PROTECT,
+        help_text="The transit agency that this group is for.",
+    )
+    enrollment_flow = models.ForeignKey(
         EnrollmentFlow,
         on_delete=models.PROTECT,
         help_text="The enrollment flow that this group is for.",
     )
 
     def __str__(self):
-        return str(self.enrollment_flow)
+        return f"{self.enrollment_flow} ({self.transit_agency.slug})"
 
 
 class EnrollmentEvent(models.Model):
     """A record of a successful enrollment."""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    transit_agency = models.ForeignKey(TransitAgency, on_delete=models.PROTECT)
+    transit_agency = models.ForeignKey("core.TransitAgency", on_delete=models.PROTECT)
     enrollment_flow = models.ForeignKey(EnrollmentFlow, on_delete=models.PROTECT)
     enrollment_method = models.TextField(
         choices={
