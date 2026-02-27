@@ -1,4 +1,60 @@
-const fs = await import("fs");
+import { readFileSync } from "fs";
+
+const createIssue = async ({
+  context,
+  github,
+  labels,
+  templateName,
+  title,
+}) => {
+  const templatePath = `.github/workflows/agency-onboarding/${templateName}`;
+  const { long_name, short_name, transit_processor, website, launch_date } =
+    context.payload.inputs;
+
+  // read body from template, fill in placeholders
+  const body = readFileSync(templatePath, "utf8")
+    .replace(/{{LONG_NAME}}/g, long_name)
+    .replace(/{{SHORT_NAME}}/g, short_name)
+    .replace(/{{TRANSIT_PROCESSOR}}/g, transit_processor)
+    .replace(/{{WEBSITE}}/g, website || "N/A")
+    .replace(/{{LAUNCH_DATE}}/g, launch_date || "TBD");
+
+  return await github.rest.issues.create({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    title,
+    labels,
+    body,
+  });
+};
+
+export const createEpicIssue = async ({ github, context, core }) => {
+  const { long_name, initiative_issue } = context.payload.inputs;
+
+  const epicIssue = await createIssue({
+    context,
+    github,
+    labels: ["epic", "agency-onboarding"],
+    templateName: "parent.md",
+    title: `Agency onboarding: ${long_name}`,
+  });
+
+  if (initiative_issue) {
+    const initiativeIssue = await github.rest.issues.get({
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      issue_number: initiative_issue,
+    });
+    await linkSubIssue({
+      github,
+      core,
+      parentNodeId: initiativeIssue.data.node_id,
+      childNodeId: epicIssue.data.node_id,
+    });
+  }
+
+  return epicIssue;
+};
 
 export const createSubIssue = async ({
   github,
@@ -8,28 +64,15 @@ export const createSubIssue = async ({
   templateName,
   title,
 }) => {
-  const { long_name, short_name, transit_processor, website, launch_date } =
-    context.payload.inputs;
-
-  // read and process body template
-  const templatePath = `${process.env.GITHUB_WORKSPACE}/.github/workflows/agency-onboarding/${templateName}`;
-
-  // replace all placeholders
-  const body = fs
-    .readFileSync(templatePath, "utf8")
-    .replace(/{{LONG_NAME}}/g, long_name)
-    .replace(/{{SHORT_NAME}}/g, short_name)
-    .replace(/{{TRANSIT_PROCESSOR}}/g, transit_processor)
-    .replace(/{{WEBSITE}}/g, website || "N/A")
-    .replace(/{{LAUNCH_DATE}}/g, launch_date || "TBD");
+  const { short_name } = context.payload.inputs;
 
   // create the child issue
-  const child = await github.rest.issues.create({
-    owner: context.repo.owner,
-    repo: context.repo.repo,
-    title: `${short_name}: ${title}`,
+  const child = await createIssue({
+    context,
+    github,
     labels: ["agency-onboarding"],
-    body: body,
+    templateName,
+    title: `${short_name}: ${title}`,
   });
 
   const childNodeId = child.data.node_id;
@@ -98,7 +141,7 @@ export const updateAdoptionTable = async ({ github, context, parentIssue }) => {
 
   // Read the current docs/index.md file
   const filePath = "docs/index.md";
-  let content = fs.readFileSync(filePath, "utf8");
+  let content = readFileSync(filePath, "utf8");
 
   // Create the new row with proper padding
   const namePadding = " ".repeat(Math.max(0, 47 - long_name.length));
