@@ -5,13 +5,13 @@
 {% endblock title %}
 
 {% block flow-content %}
-  <div class="p-3">
-    <div class="loading">
-      <p>
-        <span class="spinner-border align-middle text-primary" role="status"></span>
-        <span id="loading-message" class="fw-bold p-2">Please wait...</span>
-      </p>
+  <div class="loading">
+    <p id="loading-message" class="pt-3 px-3">Please wait...</p>
+    <div class="progress progress-indeterminate">
+      <div class="progress-bar" role="progressbar" aria-label="progress bar"></div>
     </div>
+  </div>
+  <div class="p-3">
     <div class="invisible">
       <p>Provide the rider's contactless debit or credit card details.</p>
       <iframe class="card-collection" name="card-collection-iframe"></iframe>
@@ -37,6 +37,8 @@
   <script nonce="{{ request.csp_nonce }}">
         var startedEvent = "started card tokenization", closedEvent = "finished card tokenization";
 
+        // hack to keep loader on screen indefinitely
+        // throw Error('whoops')
         $.ajax({ dataType: "script", attrs: { nonce: "{{ request.csp_nonce }}"}, url: "{{ transit_processor.card_tokenize_url }}" })
             .done(function() {
             $.get("{% url routes.IN_PERSON_ENROLLMENT_LITTLEPAY_TOKEN %}", function(data) {
