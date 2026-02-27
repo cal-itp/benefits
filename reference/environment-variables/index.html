@@ -1,0 +1,2784 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.calitp.org/benefits/reference/environment-variables/">
+      
+      
+        <link rel="prev" href="../copy-style/">
+      
+      
+        <link rel="next" href="../newsletter-archive/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>Environment variables - cal-itp/benefits: documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../styles/theme.css">
+    
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-SZB618VNBZ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-SZB618VNBZ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-SZB618VNBZ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#environment-variables" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="cal-itp/benefits: documentation" class="md-header__button md-logo" aria-label="cal-itp/benefits: documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            cal-itp/benefits: documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Environment variables
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cal-itp/benefits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Overview
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../explanation/configuration/" class="md-tabs__link">
+          
+  
+  
+  Explanation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guides/admin-interface/" class="md-tabs__link">
+          
+  
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../analytics/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../tutorials/load-sample-data/" class="md-tabs__link">
+          
+  
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="cal-itp/benefits: documentation" class="md-nav__button md-logo" aria-label="cal-itp/benefits: documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    cal-itp/benefits: documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cal-itp/benefits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Explanation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Explanation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuring the Benefits app
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/infrastructure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code with Dev Containers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/commits-branches-merging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commits, branches, and merging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/docker-dynamic-ports/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker dynamic ports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/linting-pre-commit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linting and pre-commit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/application-logic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Application logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/models-migrations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Django models and migrations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/i18n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Django message files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/test-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test Eligibility Verification server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enrollment pathways
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Enrollment pathways
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/enrollment-pathways/agency-cards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agency cards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/enrollment-pathways/low-income/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Low-income
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/enrollment-pathways/medicare-cardholders/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Medicare cardholders
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/enrollment-pathways/older-adults/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Older adults
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/enrollment-pathways/veterans/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Veterans
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/admin-interface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Admin interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/automated-tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automated tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/copy-delivery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copy delivery process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/hotfix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Making a hotfix release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/manual-tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manual tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/onboard-transit-provider/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Onboarding a new transit provider
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Making a regular release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/rollback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Making a rollback release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../analytics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analytics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../copy-style/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copy terms and style
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Environment variables
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Environment variables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#amplitude" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Amplitude
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Amplitude">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#analytics_key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ANALYTICS_KEY
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Django
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Django">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#django_allowed_hosts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_ALLOWED_HOSTS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_storage_dir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_STORAGE_DIR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_db_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_DB_FILE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_db_fixtures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_DB_FIXTURES
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_db_reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_DB_RESET
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_DEBUG
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_local_port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_LOCAL_PORT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_log_level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_LOG_LEVEL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_secret_key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_SECRET_KEY
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_superuser_email" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_SUPERUSER_EMAIL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_superuser_password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_SUPERUSER_PASSWORD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_superuser_username" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_SUPERUSER_USERNAME
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_trusted_origins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_TRUSTED_ORIGINS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#healthcheck_user_agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HEALTHCHECK_USER_AGENTS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django-admin-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Django admin interface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Django admin interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#azure_communication_connection_string" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AZURE_COMMUNICATION_CONNECTION_STRING
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default_from_email" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DEFAULT_FROM_EMAIL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google_sso_client_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GOOGLE_SSO_CLIENT_ID
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google_sso_project_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GOOGLE_SSO_PROJECT_ID
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google_sso_client_secret" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GOOGLE_SSO_CLIENT_SECRET
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google_sso_allowable_domains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GOOGLE_SSO_ALLOWABLE_DOMAINS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google_sso_staff_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GOOGLE_SSO_STAFF_LIST
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#google_sso_superuser_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GOOGLE_SSO_SUPERUSER_LIST
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#django-csp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        django-csp
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="django-csp">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#django_csp_connect_src" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_CSP_CONNECT_SRC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_csp_font_src" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_CSP_FONT_SRC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_csp_frame_src" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_CSP_FRAME_SRC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_csp_script_src" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_CSP_SCRIPT_SRC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_csp_style_src" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_CSP_STYLE_SRC
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PostgreSQL
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PostgreSQL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pgweb_port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PGWEB_PORT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postgres_db" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POSTGRES_DB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postgres_hostname" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POSTGRES_HOSTNAME
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postgres_password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POSTGRES_PASSWORD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postgres_port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POSTGRES_PORT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postgres_user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POSTGRES_USER
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recaptcha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        reCAPTCHA
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="reCAPTCHA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#django_recaptcha_api_url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_RECAPTCHA_API_URL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_recaptcha_site_key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_RECAPTCHA_SITE_KEY
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_recaptcha_secret_key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_RECAPTCHA_SECRET_KEY
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#django_recaptcha_verify_url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DJANGO_RECAPTCHA_VERIFY_URL
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requests-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        requests configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="requests configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#requests_connect_timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REQUESTS_CONNECT_TIMEOUT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requests_read_timeout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        REQUESTS_READ_TIMEOUT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sentry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sentry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sentry_dsn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SENTRY_DSN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sentry_environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SENTRY_ENVIRONMENT
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sentry_report_uri" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SENTRY_REPORT_URI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sentry_traces_sample_rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SENTRY_TRACES_SAMPLE_RATE
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../newsletter-archive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benefits newsletter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rate-limit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rate limiting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coverage" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coverage report
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/load-sample-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Loading sample data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/secrets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setting secrets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="environment-variables">Environment variables<a class="headerlink" href="#environment-variables" title="Permanent link"> ¶</a></h1>
+<p>The first steps of the Getting Started guide mention <a href="../../guides/getting-started/#create-an-environment-file">creating an <code>.env</code> file</a>.</p>
+<p>The sections below outline in more detail the application environment variables that you may want to override, and their purpose.
+In Azure App Services, this is more generally called the <a href="https://docs.microsoft.com/en-us/azure/app-service/configure-common?tabs=portal">&ldquo;configuration&rdquo;</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Multiline environment variables</p>
+<p>Although Docker, bash, etc. support multiline values directly in e.g. an .env file:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">multi_line_value</span><span class="o">=</span><span class="s1">&#39;first line</span>
+<span class="s1">second line</span>
+<span class="s1">third line&#39;</span>
+</code></pre></div>
+<p>The VS Code Python extension does not parse multiline values: https://code.visualstudio.com/docs/python/environments#_environment-variables</p>
+<p>When specifying multiline values for local usage, use the literal newline character <code>\n</code> but maintain the single quote wrapper:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">multi_line_value</span><span class="o">=</span><span class="s1">&#39;first line\nsecond line\third line&#39;</span>
+</code></pre></div>
+<p>A quick bash script to convert direct multiline values to their literal newline character equivalent is:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">multi_line_value</span><span class="p">//</span><span class="s1">$&#39;\n&#39;</span><span class="p">/</span><span class="se">\\</span><span class="nv">n</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div>
+</div>
+<h2 id="amplitude">Amplitude<a class="headerlink" href="#amplitude" title="Permanent link"> ¶</a></h2>
+<div class="admonition tldr">
+<p class="admonition-title">Amplitude API docs</p>
+<p>Read more at <a href="https://developers.amplitude.com/docs/http-api-v2#request-format">https://developers.amplitude.com/docs/http-api-v2#request-format</a></p>
+</div>
+<h3 id="analytics_key"><code>ANALYTICS_KEY</code><a class="headerlink" href="#analytics_key" title="Permanent link"> ¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Deployment configuration</p>
+<p>You may change this setting when deploying the app to a non-localhost domain</p>
+</div>
+<p>Amplitude API key for the project where the app will direct events.</p>
+<p>If blank or an invalid key, analytics events aren&rsquo;t captured (though may still be logged).</p>
+<h2 id="django">Django<a class="headerlink" href="#django" title="Permanent link"> ¶</a></h2>
+<h3 id="django_allowed_hosts"><code>DJANGO_ALLOWED_HOSTS</code><a class="headerlink" href="#django_allowed_hosts" title="Permanent link"> ¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Deployment configuration</p>
+<p>You must change this setting when deploying the app to a non-localhost domain</p>
+</div>
+<div class="admonition tldr">
+<p class="admonition-title">Django docs</p>
+<p><a href="https://docs.djangoproject.com/en/5.0/ref/settings/#allowed-hosts">Settings: <code>ALLOWS_HOSTS</code></a></p>
+</div>
+<p>A list of strings representing the host/domain names that this Django site can serve.</p>
+<h3 id="django_storage_dir"><code>DJANGO_STORAGE_DIR</code><a class="headerlink" href="#django_storage_dir" title="Permanent link"> ¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Deployment configuration</p>
+<p>You may change this setting when deploying the app to a non-localhost domain</p>
+</div>
+<p>The directory where Django creates its SQLite database file and where it creates the <code>uploads</code> folder for file uploads.
+<em>Must exist and be writable by the Django process.</em></p>
+<p>By default, the base project directory (i.e. the root of the repository).</p>
+<h3 id="django_db_file"><code>DJANGO_DB_FILE</code><a class="headerlink" href="#django_db_file" title="Permanent link"> ¶</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Local configuration</p>
+<p>This setting only affects the app running on localhost</p>
+</div>
+<p>The name of the Django database file to use locally (during both normal app startup and for resetting the database).</p>
+<p>By default, <code>django.db</code>.</p>
+<h3 id="django_db_fixtures"><code>DJANGO_DB_FIXTURES</code><a class="headerlink" href="#django_db_fixtures" title="Permanent link"> ¶</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Local configuration</p>
+<p>This setting only affects the app running on localhost</p>
+</div>
+<p>A path, relative to the repository root, of Django data fixtures to load when resetting the database.</p>
+<p>The file must end in <code>fixtures.json</code> for the script to process it correctly.</p>
+<p>By default, <code>benefits/core/migrations/local_fixtures.json</code>.</p>
+<h3 id="django_db_reset"><code>DJANGO_DB_RESET</code><a class="headerlink" href="#django_db_reset" title="Permanent link"> ¶</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Local configuration</p>
+<p>This setting only affects the app running on localhost</p>
+</div>
+<p>Boolean:</p>
+<ul>
+<li><code>True</code> (default): deletes the existing database file and runs fresh Django migrations.</li>
+<li><code>False</code>: Django uses the existing database file.
+  (Note: Fixtures will still be loaded, updating any values on those objects if they have changed.)</li>
+</ul>
+<h3 id="django_debug"><code>DJANGO_DEBUG</code><a class="headerlink" href="#django_debug" title="Permanent link"> ¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Deployment configuration</p>
+<p>Do not enable this in production</p>
+</div>
+<div class="admonition tldr">
+<p class="admonition-title">Django docs</p>
+<p><a href="https://docs.djangoproject.com/en/5.0/ref/settings/#debug">Settings: <code>DEBUG</code></a></p>
+</div>
+<p>Boolean:</p>
+<ul>
+<li><code>True</code>: the application is launched with debug mode turned on, allows pausing on breakpoints in the code, changes how static
+  files are served</li>
+<li><code>False</code> (default): the application is launched with debug mode turned off, similar to how it runs in production</li>
+</ul>
+<h3 id="django_local_port"><code>DJANGO_LOCAL_PORT</code><a class="headerlink" href="#django_local_port" title="Permanent link"> ¶</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Local configuration</p>
+<p>This setting only affects the app running on localhost</p>
+</div>
+<p>The port used to serve the Django application from the <em>host</em> machine (that is running the application container).</p>
+<p>i.e. if you are running the app in Docker on your local machine, this is the port that the app will be accessible from at
+<a href="http://localhost:$DJANGO_LOCAL_PORT">http://localhost:$DJANGO_LOCAL_PORT</a></p>
+<p>From inside the container, the app is always listening on port <code>8000</code>.</p>
+<h3 id="django_log_level"><code>DJANGO_LOG_LEVEL</code><a class="headerlink" href="#django_log_level" title="Permanent link"> ¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Deployment configuration</p>
+<p>You may change this setting when deploying the app to a non-localhost domain</p>
+</div>
+<div class="admonition tldr">
+<p class="admonition-title">Django docs</p>
+<p><a href="https://docs.djangoproject.com/en/5.0/ref/settings/#logging">Settings: <code>LOGGING</code></a></p>
+</div>
+<p>The log level used in the application&rsquo;s logging configuration.
+Defaults to <code>DEBUG</code> when Django is running in debug mode and <code>WARNING</code> otherwise.</p>
+<p>By default the application sends logs to <code>stdout</code>.</p>
+<h3 id="django_secret_key"><code>DJANGO_SECRET_KEY</code><a class="headerlink" href="#django_secret_key" title="Permanent link"> ¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Deployment configuration</p>
+<p>You must change this setting when deploying the app to a non-localhost domain</p>
+</div>
+<div class="admonition tldr">
+<p class="admonition-title">Django docs</p>
+<p><a href="https://docs.djangoproject.com/en/5.0/ref/settings/#secret-key">Settings: <code>SECRET_KEY</code></a></p>
+</div>
+<p>Django&rsquo;s primary secret, keep this safe!</p>
+<h3 id="django_superuser_email"><code>DJANGO_SUPERUSER_EMAIL</code><a class="headerlink" href="#django_superuser_email" title="Permanent link"> ¶</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Local configuration</p>
+<p>This setting only affects the app running on localhost</p>
+</div>
+<p>The email address of the Django Admin superuser created when resetting the database.</p>
+<h3 id="django_superuser_password"><code>DJANGO_SUPERUSER_PASSWORD</code><a class="headerlink" href="#django_superuser_password" title="Permanent link"> ¶</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Local configuration</p>
+<p>This setting only affects the app running on localhost</p>
+</div>
+<p>The password of the Django Admin superuser created when resetting the database.</p>
+<h3 id="django_superuser_username"><code>DJANGO_SUPERUSER_USERNAME</code><a class="headerlink" href="#django_superuser_username" title="Permanent link"> ¶</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Local configuration</p>
+<p>This setting only affects the app running on localhost</p>
+</div>
+<p>The username of the Django Admin superuser created when resetting the database.</p>
+<h3 id="django_trusted_origins"><code>DJANGO_TRUSTED_ORIGINS</code><a class="headerlink" href="#django_trusted_origins" title="Permanent link"> ¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Deployment configuration</p>
+<p>You must change this setting when deploying the app to a non-localhost domain</p>
+</div>
+<div class="admonition tldr">
+<p class="admonition-title">Django docs</p>
+<p><a href="https://docs.djangoproject.com/en/5.0/ref/settings/#csrf-trusted-origins">Settings: <code>CSRF_TRUSTED_ORIGINS</code></a></p>
+</div>
+<p>Comma-separated list of hosts which are trusted origins for unsafe requests (e.g. POST)</p>
+<h3 id="healthcheck_user_agents"><code>HEALTHCHECK_USER_AGENTS</code><a class="headerlink" href="#healthcheck_user_agents" title="Permanent link"> ¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Deployment configuration</p>
+<p>You must change this setting when deploying the app to a non-localhost domain</p>
+</div>
+<p>Comma-separated list of User-Agent strings which, when present as an HTTP header, should only receive healthcheck responses. Used by our <code>HealthcheckUserAgents</code> middleware.</p>
+<h2 id="django-admin-interface">Django admin interface<a class="headerlink" href="#django-admin-interface" title="Permanent link"> ¶</a></h2>
+<div class="admonition tldr">
+<p class="admonition-title">Django docs</p>
+<p><a href="https://docs.djangoproject.com/en/5.0/ref/contrib/admin/">The Django admin site</a></p>
+</div>
+<p>The configuration values that can be stored in the application database are managed directly in the Django Admin interface at the <code>/admin</code> endpoint.</p>
+<p>Single sign-on authentication is supported by the admin interface using <a href="https://megalus.github.io/django-google-sso/"><code>django-google-sso</code></a>.</p>
+<p>These environment variables can be set in your <code>.env</code> file to use certain features in the admin interface locally:</p>
+<h3 id="azure_communication_connection_string">AZURE_COMMUNICATION_CONNECTION_STRING<a class="headerlink" href="#azure_communication_connection_string" title="Permanent link"> ¶</a></h3>
+<div class="admonition info">
+<p class="admonition-title"><code>settings.py</code></p>
+<p>Usage of <code>AZURE_COMMUNICATION_CONNECTION_STRING</code> in <a href="https://github.com/cal-itp/benefits/blob/main/benefits/settings.py#L396">Benefits settings</a></p>
+</div>
+<p>The connection string needed to use an Azure Communication Service for sending emails, such as the one for user password reset. If this variable is not set, the file-based email backend is used.</p>
+<p>In deployed instances, this is automatically set by Terraform by referencing the <a href="https://github.com/cal-itp/benefits/blob/main/terraform/email.tf#L15"><code>azurerm_communication_service.primary_connection_string</code></a> attribute.</p>
+<h3 id="default_from_email">DEFAULT_FROM_EMAIL<a class="headerlink" href="#default_from_email" title="Permanent link"> ¶</a></h3>
+<div class="admonition tldr">
+<p class="admonition-title">Django docs</p>
+<p><a href="https://docs.djangoproject.com/en/5.2/ref/settings/#default-from-email">Settings: <code>DEFAULT_FROM_EMAIL</code></a></p>
+</div>
+<p>The email address used by default in the <code>From:</code> header of outgoing emails.</p>
+<h3 id="google_sso_client_id">GOOGLE_SSO_CLIENT_ID<a class="headerlink" href="#google_sso_client_id" title="Permanent link"> ¶</a></h3>
+<div class="admonition tldr">
+<p class="admonition-title"><code>django-google-sso</code> docs</p>
+<p><a href="https://megalus.github.io/django-google-sso/settings/">All settings for <code>django-google-sso</code></a></p>
+</div>
+<div class="admonition info">
+<p class="admonition-title"><code>settings.py</code></p>
+<p>Configuration of <code>django-google-sso</code> in <a href="https://github.com/cal-itp/benefits/blob/main/benefits/settings.py#L74-L90">Benefits settings</a></p>
+</div>
+<blockquote>
+<p>The Google OAuth 2.0 Web Application Client ID.</p>
+</blockquote>
+<h3 id="google_sso_project_id">GOOGLE_SSO_PROJECT_ID<a class="headerlink" href="#google_sso_project_id" title="Permanent link"> ¶</a></h3>
+<blockquote>
+<p>The Google OAuth 2.0 Project ID.</p>
+</blockquote>
+<h3 id="google_sso_client_secret">GOOGLE_SSO_CLIENT_SECRET<a class="headerlink" href="#google_sso_client_secret" title="Permanent link"> ¶</a></h3>
+<blockquote>
+<p>The Google OAuth 2.0 Web Application Client Secret.</p>
+</blockquote>
+<h3 id="google_sso_allowable_domains">GOOGLE_SSO_ALLOWABLE_DOMAINS<a class="headerlink" href="#google_sso_allowable_domains" title="Permanent link"> ¶</a></h3>
+<blockquote>
+<p>List of domains that will be allowed to create users.</p>
+</blockquote>
+<h3 id="google_sso_staff_list">GOOGLE_SSO_STAFF_LIST<a class="headerlink" href="#google_sso_staff_list" title="Permanent link"> ¶</a></h3>
+<blockquote>
+<p>List of emails that will be created as staff.</p>
+</blockquote>
+<p>&ldquo;Staff&rdquo; refers to Django&rsquo;s concept of a user with <code>is_staff</code> set to <code>True</code>, which means they can log in, and also to the Cal-ITP Benefits concept of a user who should have a &ldquo;Cal-ITP staff&rdquo; level of access to configuration values.</p>
+<h3 id="google_sso_superuser_list">GOOGLE_SSO_SUPERUSER_LIST<a class="headerlink" href="#google_sso_superuser_list" title="Permanent link"> ¶</a></h3>
+<blockquote>
+<p>List of emails that will be created as superuser.</p>
+</blockquote>
+<h2 id="django-csp"><code>django-csp</code><a class="headerlink" href="#django-csp" title="Permanent link"> ¶</a></h2>
+<div class="admonition tldr">
+<p class="admonition-title">MDN docs</p>
+<p>The Mozilla Developer Network has more on <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy">Content Security Policy</a></p>
+</div>
+<blockquote>
+<p>The HTTP <code>Content-Security-Policy</code> response header allows web site administrators to control resources the user agent is
+allowed to load for a given page.</p>
+<p>With a few exceptions, policies mostly involve specifying server origins and script endpoints. This helps guard against
+cross-site scripting attacks</p>
+</blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Strict CSP</p>
+<p>Benefits configures a Strict Content Security Policy. Read more about Strict CSP from Google: <a href="https://csp.withgoogle.com/docs/strict-csp.html">https://csp.withgoogle.com/docs/strict-csp.html</a>.</p>
+</div>
+<div class="admonition tldr">
+<p class="admonition-title">django-csp docs</p>
+<p><a href="https://django-csp.readthedocs.io/en/latest/configuration.html#configuring-django-csp">Configuring <code>django-csp</code></a></p>
+</div>
+<p>Benefits uses the open source <code>django-csp</code> library for helping to configure the correct response headers.</p>
+<h3 id="django_csp_connect_src"><code>DJANGO_CSP_CONNECT_SRC</code><a class="headerlink" href="#django_csp_connect_src" title="Permanent link"> ¶</a></h3>
+<p>Comma-separated list of URIs. Configures the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/connect-src"><code>connect-src</code></a> Content Security Policy directive.</p>
+<h3 id="django_csp_font_src"><code>DJANGO_CSP_FONT_SRC</code><a class="headerlink" href="#django_csp_font_src" title="Permanent link"> ¶</a></h3>
+<p>Comma-separated list of URIs. Configures the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/font-src"><code>font-src</code></a> Content Security Policy directive.</p>
+<h3 id="django_csp_frame_src"><code>DJANGO_CSP_FRAME_SRC</code><a class="headerlink" href="#django_csp_frame_src" title="Permanent link"> ¶</a></h3>
+<p>Comma-separated list of URIs. Configures the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src"><code>frame-src</code></a> Content Security Policy directive.</p>
+<h3 id="django_csp_script_src"><code>DJANGO_CSP_SCRIPT_SRC</code><a class="headerlink" href="#django_csp_script_src" title="Permanent link"> ¶</a></h3>
+<p>Comma-separated list of URIs. Configures the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src"><code>script-src</code></a> Content Security Policy directive.</p>
+<h3 id="django_csp_style_src"><code>DJANGO_CSP_STYLE_SRC</code><a class="headerlink" href="#django_csp_style_src" title="Permanent link"> ¶</a></h3>
+<p>Comma-separated list of URIs. Configures the <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src"><code>style-src</code></a> Content Security Policy directive.</p>
+<h2 id="postgresql">PostgreSQL<a class="headerlink" href="#postgresql" title="Permanent link"> ¶</a></h2>
+<div class="admonition tldr">
+<p class="admonition-title"><code>postgres</code> Docker image docs</p>
+<p>The official PostgreSQL Docker image has more on available <a href="https://hub.docker.com/_/postgres/#environment-variables"><code>postgres</code> environment variables</a></p>
+</div>
+<h3 id="pgweb_port"><code>PGWEB_PORT</code><a class="headerlink" href="#pgweb_port" title="Permanent link"> ¶</a></h3>
+<p>The port to serve a (local only) <a href="https://sosedoff.github.io/pgweb/"><code>pgweb</code></a> service on.</p>
+<h3 id="postgres_db"><code>POSTGRES_DB</code><a class="headerlink" href="#postgres_db" title="Permanent link"> ¶</a></h3>
+<p>Used to define a different name for the default database that is created when the image is first started. If it is not specified, then the value of <a href="#postgres_user"><code>POSTGRES_USER</code></a> will be used.</p>
+<h3 id="postgres_hostname"><code>POSTGRES_HOSTNAME</code><a class="headerlink" href="#postgres_hostname" title="Permanent link"> ¶</a></h3>
+<p>The hostname of the (local) PostgreSQL Docker service, which is usually just the name of the service itself (<code>postgres</code>). Used by e.g. <code>pgweb</code> to establish a connection. Or the hostname of a cloud-based PostgreSQL service for e.g. Django to establish a connection.</p>
+<h3 id="postgres_password"><code>POSTGRES_PASSWORD</code><a class="headerlink" href="#postgres_password" title="Permanent link"> ¶</a></h3>
+<p>Required to use the (local) PostgreSQL Docker service. It must not be empty or undefined. This environment variable sets the superuser password for PostgreSQL.</p>
+<h3 id="postgres_port"><code>POSTGRES_PORT</code><a class="headerlink" href="#postgres_port" title="Permanent link"> ¶</a></h3>
+<p>The port exposed by the (local) PostgreSQL Docker service. Or the port on which to connect to a cloud-based PostgreSQL service.</p>
+<h3 id="postgres_user"><code>POSTGRES_USER</code><a class="headerlink" href="#postgres_user" title="Permanent link"> ¶</a></h3>
+<p>Used in conjunction with <a href="#postgres_password"><code>POSTGRES_PASSWORD</code></a> to set a user and its password. This variable will create the specified user with superuser power.</p>
+<h2 id="recaptcha">reCAPTCHA<a class="headerlink" href="#recaptcha" title="Permanent link"> ¶</a></h2>
+<div class="admonition tldr">
+<p class="admonition-title">reCAPTCHA docs</p>
+<p>See the <a href="https://developers.google.com/recaptcha/intro">reCAPTCHA Developer&rsquo;s Guide</a> for more information</p>
+</div>
+<p><a href="https://developers.google.com/recaptcha">reCAPTCHA v3</a> is a free Google-provided service that helps protect the app from spam and abuse by using advanced
+risk analysis techniques to tell humans and bots apart.</p>
+<p>reCAPTCHA is applied to all forms in the Benefits app that collect user-provided information. Version 3 works silently in the
+background, with no additional interaction required by the user.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The following environment variables are all required to activate the reCAPTCHA feature</p>
+</div>
+<h3 id="django_recaptcha_api_url"><code>DJANGO_RECAPTCHA_API_URL</code><a class="headerlink" href="#django_recaptcha_api_url" title="Permanent link"> ¶</a></h3>
+<p>URL to the reCAPTCHA JavaScript API library.</p>
+<p>By default, <code>https://www.google.com/recaptcha/api.js</code></p>
+<h3 id="django_recaptcha_site_key"><code>DJANGO_RECAPTCHA_SITE_KEY</code><a class="headerlink" href="#django_recaptcha_site_key" title="Permanent link"> ¶</a></h3>
+<p>Site key for the reCAPTCHA configuration.</p>
+<h3 id="django_recaptcha_secret_key"><code>DJANGO_RECAPTCHA_SECRET_KEY</code><a class="headerlink" href="#django_recaptcha_secret_key" title="Permanent link"> ¶</a></h3>
+<p>Secret key for the reCAPTCHA configuration.</p>
+<h3 id="django_recaptcha_verify_url"><code>DJANGO_RECAPTCHA_VERIFY_URL</code><a class="headerlink" href="#django_recaptcha_verify_url" title="Permanent link"> ¶</a></h3>
+<div class="admonition tldr">
+<p class="admonition-title">reCAPTCHA docs</p>
+<p><a href="https://developers.google.com/recaptcha/docs/verify">Verifying the user&rsquo;s response</a></p>
+</div>
+<p>URL for the reCAPTCHA verify service.</p>
+<p>By default, <code>https://www.google.com/recaptcha/api/siteverify</code></p>
+<h2 id="requests-configuration"><code>requests</code> configuration<a class="headerlink" href="#requests-configuration" title="Permanent link"> ¶</a></h2>
+<div class="admonition tldr">
+<p class="admonition-title"><code>requests</code> docs</p>
+<p><a href="https://requests.readthedocs.io/en/latest/user/advanced/#timeouts">Docs for timeouts</a></p>
+</div>
+<h3 id="requests_connect_timeout"><code>REQUESTS_CONNECT_TIMEOUT</code><a class="headerlink" href="#requests_connect_timeout" title="Permanent link"> ¶</a></h3>
+<p>The number of seconds <code>requests</code> will wait for the client to establish a connection to a remote machine. Defaults to 3 seconds.</p>
+<h3 id="requests_read_timeout"><code>REQUESTS_READ_TIMEOUT</code><a class="headerlink" href="#requests_read_timeout" title="Permanent link"> ¶</a></h3>
+<p>The number of seconds the client will wait for the server to send a response. Defaults to 1 second.</p>
+<h2 id="sentry">Sentry<a class="headerlink" href="#sentry" title="Permanent link"> ¶</a></h2>
+<h3 id="sentry_dsn"><code>SENTRY_DSN</code><a class="headerlink" href="#sentry_dsn" title="Permanent link"> ¶</a></h3>
+<div class="admonition tldr">
+<p class="admonition-title">Sentry docs</p>
+<p><a href="https://docs.sentry.io/product/sentry-basics/dsn-explainer/">Data Source Name (DSN)</a></p>
+</div>
+<p>Enables <a href="../../guides/troubleshooting/#sentry">sending events to Sentry</a>.</p>
+<h3 id="sentry_environment"><code>SENTRY_ENVIRONMENT</code><a class="headerlink" href="#sentry_environment" title="Permanent link"> ¶</a></h3>
+<div class="admonition tldr">
+<p class="admonition-title">Sentry docs</p>
+<p><a href="https://docs.sentry.io/platforms/python/configuration/options/#environment"><code>environment</code> config value</a></p>
+</div>
+<p>Segments errors by which deployment they occur in. This defaults to <code>dev</code>, and can be set to match one of the <a href="../../explanation/infrastructure/#environments">environment names</a>.</p>
+<p><code>local</code> may also be used for local testing of the Sentry integration.</p>
+<h3 id="sentry_report_uri"><code>SENTRY_REPORT_URI</code><a class="headerlink" href="#sentry_report_uri" title="Permanent link"> ¶</a></h3>
+<div class="admonition tldr">
+<p class="admonition-title">Sentry docs</p>
+<p><a href="https://docs.sentry.io/product/security-policy-reporting/">Security Policy Reporting</a></p>
+</div>
+<p>Collect information on Content-Security-Policy (CSP) violations. Read more about <a href="#django-csp">CSP configuration in Benefits</a>.</p>
+<p>To enable report collection, set this env var to the authenticated Sentry endpoint.</p>
+<h3 id="sentry_traces_sample_rate"><code>SENTRY_TRACES_SAMPLE_RATE</code><a class="headerlink" href="#sentry_traces_sample_rate" title="Permanent link"> ¶</a></h3>
+<div class="admonition tldr">
+<p class="admonition-title">Sentry docs</p>
+<p><a href="https://docs.sentry.io/platforms/python/configuration/sampling/#configuring-the-transaction-sample-rate"><code>traces_sample_rate</code></a></p>
+</div>
+<p>Control the volume of transactions sent to Sentry. Value must be a float in the range <code>[0.0, 1.0]</code>.</p>
+<p>The default is <code>0.0</code> (i.e. no transactions are tracked).</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.tabs", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

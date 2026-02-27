@@ -1,0 +1,2352 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://docs.calitp.org/benefits/guides/onboard-transit-provider/">
+      
+      
+        <link rel="prev" href="../manual-tests/">
+      
+      
+        <link rel="next" href="../release/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+    
+    
+      
+        <title>Onboarding a new transit provider - cal-itp/benefits: documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../styles/theme.css">
+    
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-SZB618VNBZ"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-SZB618VNBZ",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-SZB618VNBZ",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#onboarding-a-new-transit-provider" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="cal-itp/benefits: documentation" class="md-header__button md-logo" aria-label="cal-itp/benefits: documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            cal-itp/benefits: documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Onboarding a new transit provider
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cal-itp/benefits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Overview
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../explanation/configuration/" class="md-tabs__link">
+          
+  
+  
+  Explanation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../admin-interface/" class="md-tabs__link">
+          
+  
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/analytics/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../tutorials/load-sample-data/" class="md-tabs__link">
+          
+  
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="cal-itp/benefits: documentation" class="md-nav__button md-logo" aria-label="cal-itp/benefits: documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    cal-itp/benefits: documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cal-itp/benefits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Explanation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Explanation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuring the Benefits app
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/infrastructure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Infrastructure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code with Dev Containers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/commits-branches-merging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commits, branches, and merging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/docker-dynamic-ports/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker dynamic ports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/linting-pre-commit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Linting and pre-commit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/application-logic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Application logic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/models-migrations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Django models and migrations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/i18n/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Django message files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/development/test-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Test Eligibility Verification server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enrollment pathways
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Enrollment pathways
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/enrollment-pathways/agency-cards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Agency cards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/enrollment-pathways/low-income/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Low-income
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/enrollment-pathways/medicare-cardholders/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Medicare cardholders
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/enrollment-pathways/older-adults/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Older adults
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../explanation/enrollment-pathways/veterans/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Veterans
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../admin-interface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Admin interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../automated-tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Automated tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../copy-delivery/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copy delivery process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hotfix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Making a hotfix release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manual-tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manual tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Onboarding a new transit provider
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Onboarding a new transit provider
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pre-configuration-prep-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-configuration prep work
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pre-configuration prep work">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-transit-provider-onboarding-epic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Create transit provider onboarding epic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-transit-provider-to-adoption-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add transit provider to adoption table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#produce-formatted-transit-provider-logos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Produce formatted transit provider logos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-hardcoded-parts-of-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update hardcoded parts of the application
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-for-development-and-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration for development and testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration for development and testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initial-littlepay-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initial Littlepay configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-transit-provider-data-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic transit provider data configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-for-production-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration for production validation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration for production validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#production-validation-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Production validation testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration-for-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration for production
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify-real-user-enrollments-are-starting-to-happen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify real user enrollments are starting to happen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Verify real user enrollments are starting to happen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#amplitude" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Amplitude
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metabase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Metabase
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cleanup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cleanup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cleanup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remove-test-group-in-production-littlepay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Remove test group in production Littlepay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-transit-provider-configuration-in-test-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update transit provider configuration in test environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Making a regular release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rollback/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Making a rollback release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/analytics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analytics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/copy-style/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Copy terms and style
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/environment-variables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Environment variables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/newsletter-archive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benefits newsletter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/rate-limit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rate limiting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/coverage" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Coverage report
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/load-sample-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Loading sample data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/secrets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setting secrets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="onboarding-a-new-transit-provider">Onboarding a new transit provider<a class="headerlink" href="#onboarding-a-new-transit-provider" title="Permanent link"> ¶</a></h1>
+<p>This guide describes the steps needed to add support for a new transit provider to the application and take them from testing to production.</p>
+<p>Before starting any configuration, the Cal-ITP team and transit provider staff should have a kickoff meeting to confirm that information provided is complete, implementation plan is feasible, and any approvals needed have been obtained.</p>
+<p>Then, the following steps are done by the Cal-ITP team to configure a new transit provider in the Benefits application.</p>
+<p>These steps currently assume the transit provider is using Littlepay as their transit processor. Support for integration with Switchio has been added but still needs to be documented, and integration with <a href="https://www.camobilitymarketplace.org/contracts/">other transit processors</a> may be added in the future.</p>
+<h2 id="pre-configuration-prep-work">Pre-configuration prep work<a class="headerlink" href="#pre-configuration-prep-work" title="Permanent link"> ¶</a></h2>
+<p><em>These items can all be done in parallel.</em></p>
+<h3 id="create-transit-provider-onboarding-epic">Create transit provider onboarding epic<a class="headerlink" href="#create-transit-provider-onboarding-epic" title="Permanent link"> ¶</a></h3>
+<p><em>Typically performed by the Benefits Product Manager.</em></p>
+<ol>
+<li>Navigate to the <a href="https://github.com/cal-itp/benefits/actions">Cal-ITP Benefits repository, Actions tab</a></li>
+<li>Look in the left bar for the (pinned) workflow called <code>Agency Onboarding Issue Scaffold</code>, click on this to open the workflow run history</li>
+<li>In the center view, on the top right, look for a drop-down button that says <code>Run workflow</code>, and click this</li>
+<li>Leaving the branch selection the default (<code>main</code>), provide values for the other inputs (some of which are required)<ul>
+<li>For the <code>Estimated launch date</code>, enter a value like <code>August 2026</code></li>
+<li>For the <code>Initiative issue</code>, enter the number only like <code>1234</code></li>
+</ul>
+</li>
+<li>Click the green <code>Run workflow</code> button under the input fields</li>
+<li>Refresh the current page to see an in-progress workflow run, wait for it to finish with a green checkmark</li>
+</ol>
+<p>Once the workflow runs successfully, the onboarding epic and all sub-issues will have been created based on the input data provided. They can be further edited, modified from the USB, etc. as normal.</p>
+<h3 id="add-transit-provider-to-adoption-table">Add transit provider to adoption table<a class="headerlink" href="#add-transit-provider-to-adoption-table" title="Permanent link"> ¶</a></h3>
+<p><em>Typically performed by the Benefits Product Manager.</em></p>
+<p>Open a Pull Request adding the new transit provider to the table in the README, similar to this <a href="https://github.com/cal-itp/benefits/pull/2944">example</a>.</p>
+<h3 id="produce-formatted-transit-provider-logos">Produce formatted transit provider logos<a class="headerlink" href="#produce-formatted-transit-provider-logos" title="Permanent link"> ¶</a></h3>
+<p><em>Typically performed by a designer.</em></p>
+<p>The application currently requires one transit provider logo for display on the landing page. The logo should be white with a clear background in the dimensions below:</p>
+<ul>
+<li>height: 64px</li>
+<li>width: any</li>
+</ul>
+<h3 id="update-hardcoded-parts-of-the-application">Update hardcoded parts of the application<a class="headerlink" href="#update-hardcoded-parts-of-the-application" title="Permanent link"> ¶</a></h3>
+<p><em>Typically performed by an engineer.</em></p>
+<p>Certain parts of the codebase must be updated to support a new transit provider:</p>
+<ul>
+<li><a href="https://github.com/cal-itp/benefits/blob/main/benefits/core/context/agency.py"><code>benefits/core/context/agency.py</code></a> (requires a <a href="../../explanation/development/models-migrations/">migration</a>)</li>
+<li><a href="https://github.com/cal-itp/benefits/blob/main/benefits/eligibility/views.py"><code>benefits/eligibility/views.py</code></a></li>
+<li><a href="https://github.com/cal-itp/benefits/blob/main/benefits/enrollment/context/flow.py"><code>benefits/enrollment/context/flow.py</code></a></li>
+<li><a href="../../explanation/development/i18n/">Message files</a></li>
+</ul>
+<p><a href="https://github.com/cal-itp/benefits/pull/3246">Here is an example PR that makes these updates for a new transit provider.</a></p>
+<h2 id="configuration-for-development-and-testing">Configuration for development and testing<a class="headerlink" href="#configuration-for-development-and-testing" title="Permanent link"> ¶</a></h2>
+<p><em>These items can all be done in parallel.</em></p>
+<h3 id="initial-littlepay-configuration">Initial Littlepay configuration<a class="headerlink" href="#initial-littlepay-configuration" title="Permanent link"> ¶</a></h3>
+<p>For development and testing, only a Littlepay customer group is needed since there is no need to interact with any discount product. (We don&rsquo;t have a way to tap a card against the QA system to trigger a discount and therefore have no reason to associate the group with any product.)</p>
+<p>This work can begin once the transit provider has a contract in place with Littlepay.</p>
+<ul>
+<li>Cal-ITP uses the transit provider&rsquo;s Littlepay merchant ID to create a customer group in the Littlepay QA environment for each type of eligibility (e.g. senior).<ul>
+<li><em>Typically performed by transit provider&rsquo;s Account Manager</em></li>
+<li>For each group that&rsquo;s created, a group ID will be returned and should be set as the <code>group_id</code> on a new <code>LittlepayGroup</code> in the Benefits database. (See <a href="../../tutorials/load-sample-data/">Configuration data</a> for more on loading the database.)</li>
+</ul>
+</li>
+<li>Cal-ITP requests and receives Littlepay Back Office API access (for both PROD and QA) for the new transit provider.<ul>
+<li><em>Typically requested by a developer via email to Littlepay</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="basic-transit-provider-data-configuration">Basic transit provider data configuration<a class="headerlink" href="#basic-transit-provider-data-configuration" title="Permanent link"> ¶</a></h3>
+<ol>
+<li>Cal-ITP creates a new <code>TransitAgency</code> in the Admin:<ul>
+<li>Once the code changes above are in place, add a new transit agency with the following:<ul>
+<li>Slug: Choose the one added in code</li>
+<li>Short name, long name, info URL, phone, and supported card schemes: Get from their enrollment form</li>
+<li>Logo: Typically found attached to a GitHub issue comment</li>
+<li>Active: Leave <strong>unchecked</strong> for now</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Cal-ITP creates new <code>EnrollmentFlow</code>s in the Admin:<ul>
+<li>For each type of discount the new transit provider will be using, add an enrollment flow with the following:<ul>
+<li>System name</li>
+<li>Label (retype the system name)</li>
+<li>Choose the <code>TransitAgency</code> that was just created</li>
+<li>Modify supported enrollment methods, if necessary</li>
+<li>Choose the appropriate OAuth config (e.g., benefits-logingov for an Older Adults flow)</li>
+<li>Choose the appropriate claims request</li>
+</ul>
+</li>
+<li>All other fields can likely be skipped or left at their default value.</li>
+</ul>
+</li>
+</ol>
+<h2 id="configuration-for-production-validation">Configuration for production validation<a class="headerlink" href="#configuration-for-production-validation" title="Permanent link"> ¶</a></h2>
+<p><strong>Production validation</strong> is the process of doing a end-to-end test of enrolling a real person&rsquo;s card through the Benefits app and using it to ride with a discounted fare. The word &ldquo;production&rdquo; here refers to <strong>Littlepay&rsquo;s production environment</strong> (which must be used to take a ride in real life), but the Benefits application&rsquo;s test environment is used for the enrollment process to avoid disruption of the Benefits production environment.</p>
+<p>For production validation, both a customer group and discount product are needed. The customer group used here is a temporary one for testing only.</p>
+<ol>
+<li>Transit provider staff creates the discount product in production Littlepay (if it does not already exist).</li>
+<li>Transit provider staff takes a screenshot of the discount product in the Merchant Portal, making sure the browser URL is visible, and sends that to Cal-ITP.</li>
+<li>Cal-ITP creates a customer group <strong>for testing purposes</strong> in production Littlepay.</li>
+<li>Cal-ITP associates the group with the product.<ul>
+<li><em>Typically performed by transit provider&rsquo;s Account Manager</em></li>
+<li>Once this is complete, verify that the setup is correct by using the <a href="https://github.com/cal-itp/littlepay">littlepay CLI</a>. Example:
+ <div class="highlight"><pre><span></span><code>$<span class="w"> </span>littlepay<span class="w"> </span>groups<span class="w"> </span>products
+👥<span class="w"> </span>Matching<span class="w"> </span>groups<span class="w"> </span><span class="o">(</span><span class="m">3</span><span class="o">)</span>:<span class="w"> </span>⚠️<span class="w">  </span>prod,<span class="w"> </span>edcta
+GroupResponse<span class="o">(</span><span class="nv">id</span><span class="o">=</span><span class="s1">&#39;b9634346-5a03-448d-8f7a-c7bec1169e00&#39;</span>,<span class="w"> </span><span class="nv">label</span><span class="o">=</span><span class="s1">&#39;Discounted&#39;</span>,<span class="w"> </span><span class="nv">participant_id</span><span class="o">=</span><span class="s1">&#39;eldorado-transit&#39;</span><span class="o">)</span>
+<span class="w">  </span>🛒<span class="w"> </span>Linked<span class="w"> </span>products<span class="w"> </span><span class="o">(</span><span class="m">1</span><span class="o">)</span>
+<span class="w">  </span>ProductResponse<span class="o">(</span><span class="nv">id</span><span class="o">=</span><span class="s1">&#39;56755aa9-0227-4208-a8a4-8b3217cebaa9&#39;</span>,<span class="w"> </span><span class="nv">code</span><span class="o">=</span><span class="s1">&#39;Daily Max - Discounted&#39;</span>,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="s1">&#39;ACTIVE&#39;</span>,<span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s1">&#39;CAPPING&#39;</span>,<span class="w"> </span><span class="nv">description</span><span class="o">=</span><span class="s1">&#39;Daily Max - Discounted&#39;</span>,<span class="w"> </span><span class="nv">participant_id</span><span class="o">=</span><span class="s1">&#39;eldorado-transit&#39;</span><span class="o">)</span>
+GroupResponse<span class="o">(</span><span class="nv">id</span><span class="o">=</span><span class="s1">&#39;f410db55-f1b5-49ef-8072-a5bbb685d0f5&#39;</span>,<span class="w"> </span><span class="nv">label</span><span class="o">=</span><span class="s1">&#39;Medicare&#39;</span>,<span class="w"> </span><span class="nv">participant_id</span><span class="o">=</span><span class="s1">&#39;eldorado-transit&#39;</span><span class="o">)</span>
+<span class="w">  </span>🛒<span class="w"> </span>Linked<span class="w"> </span>products<span class="w"> </span><span class="o">(</span><span class="m">2</span><span class="o">)</span>
+<span class="w">  </span>ProductResponse<span class="o">(</span><span class="nv">id</span><span class="o">=</span><span class="s1">&#39;b9f4b2aa-ecc2-4019-9552-03d7af4c484c&#39;</span>,<span class="w"> </span><span class="nv">code</span><span class="o">=</span><span class="s1">&#39;Medicare&#39;</span>,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="s1">&#39;ACTIVE&#39;</span>,<span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s1">&#39;CAPPING&#39;</span>,<span class="w"> </span><span class="nv">description</span><span class="o">=</span><span class="s1">&#39;Medicare&#39;</span>,<span class="w"> </span><span class="nv">participant_id</span><span class="o">=</span><span class="s1">&#39;eldorado-transit&#39;</span><span class="o">)</span>
+<span class="w">  </span>ProductResponse<span class="o">(</span><span class="nv">id</span><span class="o">=</span><span class="s1">&#39;05b43044-759d-4938-b150-2adc603e4f74&#39;</span>,<span class="w"> </span><span class="nv">code</span><span class="o">=</span><span class="s1">&#39;Medicare&#39;</span>,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="s1">&#39;ACTIVE&#39;</span>,<span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s1">&#39;DISCOUNT&#39;</span>,<span class="w"> </span><span class="nv">description</span><span class="o">=</span><span class="s1">&#39;Medicare&#39;</span>,<span class="w"> </span><span class="nv">participant_id</span><span class="o">=</span><span class="s1">&#39;eldorado-transit&#39;</span><span class="o">)</span>
+GroupResponse<span class="o">(</span><span class="nv">id</span><span class="o">=</span><span class="s1">&#39;e88042e2-7b56-4ffa-83b6-fa895a8e6a3d&#39;</span>,<span class="w"> </span><span class="nv">label</span><span class="o">=</span><span class="s1">&#39;Senior 65+&#39;</span>,<span class="w"> </span><span class="nv">participant_id</span><span class="o">=</span><span class="s1">&#39;eldorado-transit&#39;</span><span class="o">)</span>
+<span class="w">  </span>🛒<span class="w"> </span>Linked<span class="w"> </span>products<span class="w"> </span><span class="o">(</span><span class="m">2</span><span class="o">)</span>
+<span class="w">  </span>ProductResponse<span class="o">(</span><span class="nv">id</span><span class="o">=</span><span class="s1">&#39;267edc99-6989-4779-a445-94a121387a25&#39;</span>,<span class="w"> </span><span class="nv">code</span><span class="o">=</span><span class="s1">&#39;Senior 65+&#39;</span>,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="s1">&#39;ACTIVE&#39;</span>,<span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s1">&#39;DISCOUNT&#39;</span>,<span class="w"> </span><span class="nv">description</span><span class="o">=</span><span class="s1">&#39;Senior 65+&#39;</span>,<span class="w"> </span><span class="nv">participant_id</span><span class="o">=</span><span class="s1">&#39;eldorado-transit&#39;</span><span class="o">)</span>
+<span class="w">  </span>ProductResponse<span class="o">(</span><span class="nv">id</span><span class="o">=</span><span class="s1">&#39;d7d948c2-20bf-4b10-a181-d1f2c89456b6&#39;</span>,<span class="w"> </span><span class="nv">code</span><span class="o">=</span><span class="s1">&#39;Senior 65+&#39;</span>,<span class="w"> </span><span class="nv">status</span><span class="o">=</span><span class="s1">&#39;ACTIVE&#39;</span>,<span class="w"> </span><span class="nv">type</span><span class="o">=</span><span class="s1">&#39;CAPPING&#39;</span>,<span class="w"> </span><span class="nv">description</span><span class="o">=</span><span class="s1">&#39;Senior 65+&#39;</span>,<span class="w"> </span><span class="nv">participant_id</span><span class="o">=</span><span class="s1">&#39;eldorado-transit&#39;</span><span class="o">)</span>
+</code></pre></div></li>
+</ul>
+</li>
+<li>
+<p>Cal-ITP ensures the code changes made <a href="#configuration-for-development-and-testing">during development and testing configuration</a> are deployed to the test environment.</p>
+</li>
+<li>
+<p>Cal-ITP creates a new <code>TransitAgency</code> in the Admin:</p>
+<ul>
+<li>Once the code changes above are in place, add a new transit agency with the following:<ul>
+<li>Slug: Choose the one added in code</li>
+<li>Short name, long name, info URL, phone, and supported card schemes: Get from their enrollment form</li>
+<li>Logo: Typically found attached to a GitHub issue comment</li>
+<li>Active: Leave <strong>unchecked</strong> for now</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Cal-ITP creates new <code>EnrollmentFlow</code>s in the Admin:</p>
+<ul>
+<li>For each type of discount the new transit provider will be using, add an enrollment flow with the following:<ul>
+<li>System name</li>
+<li>Label (retype the system name)</li>
+<li>Choose the <code>TransitAgency</code> that was just created</li>
+<li>Modify supported enrollment methods, if necessary</li>
+<li>Choose the appropriate OAuth config (e.g., benefits-logingov for an Older Adults flow)</li>
+<li>Choose the appropriate claims request</li>
+</ul>
+</li>
+<li>All other fields can likely be skipped or left at their default value.</li>
+</ul>
+</li>
+<li>
+<p>Cal-ITP creates a new <code>EnrollmentGroup</code> in the Benefits test environment:</p>
+<ul>
+<li>Choose one of the new <code>EnrollmentFlow</code>s.</li>
+<li>Set the group value to the corresponding <strong>testing</strong> group ID (from production Littlepay) for production validation.<ul>
+<li>This will be set back to the QA group value after final production configuration is complete.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Cal-ITP creates a new <code>LittlepayConfig</code> in the Benefits test environment:<ul>
+<li>Set Environment to <strong>Production</strong> for production validation.<ul>
+<li>This will be set back to QA after final production configuration is complete.</li>
+</ul>
+</li>
+<li>Choose the new <code>TransitAgency</code>.</li>
+<li>Retrieve Audience and Client ID values for the <strong>production</strong> config from shared LastPass note.</li>
+<li><a href="../../tutorials/secrets/">Create the client secret in the Azure Key Vault</a> for the test environment, then paste its name in the Client Secret Name field.<ul>
+<li>Be sure to refresh the secrets for this to take effect!<ol>
+<li>In the Azure portal, go to the App Service.</li>
+<li>Inside the App Service, navigate to Settings -&gt; Environment variables.</li>
+<li>Click the <strong>Pull reference values</strong> button to force the App Service to bypass the 24-hour cache and fetch the latest values for Key Vault references. This triggers a graceful restart of the app.</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Cal-ITP returns to the <code>TransitAgency</code> instance and checks the <strong>Active</strong> box.</li>
+</ol>
+<p>At this point, Cal-ITP and transit provider staff can coordinate to do on-the-ground testing using the <a href="https://test-benefits.calitp.org">test client</a> to enroll a real card and testing it by tapping on a live payment validator.</p>
+<h3 id="production-validation-testing">Production validation testing<a class="headerlink" href="#production-validation-testing" title="Permanent link"> ¶</a></h3>
+<ol>
+<li>Transit provider staff (or Cal-ITP staff) does live test in the field.</li>
+<li>Transit provider staff uses the Merchant Portal to verify the taps and discounts were successful.</li>
+<li>Cal-ITP uses logs from Azure to verify the user was associated to the customer group.</li>
+<li>Cal-ITP verifies that Amplitude analytic events are being sent.</li>
+</ol>
+<h2 id="configuration-for-production">Configuration for production<a class="headerlink" href="#configuration-for-production" title="Permanent link"> ¶</a></h2>
+<p>Once production validation is done, the transit provider can be added to the production Benefits database.</p>
+<ol>
+<li>Cal-ITP creates a customer group <strong>for production use</strong> in production Littlepay.</li>
+<li>Cal-ITP associates the group with the discount product <a href="#configuration-for-production-validation">created previously during production validation</a>.<ul>
+<li>Once this is complete, verify that the setup is correct by using the <a href="https://github.com/cal-itp/littlepay">littlepay CLI</a>.</li>
+</ul>
+</li>
+<li>
+<p>Cal-ITP ensures the code changes made <a href="#configuration-for-development-and-testing">during development and testing configuration</a> are deployed to the prod environment.</p>
+</li>
+<li>
+<p>Cal-ITP creates a new <code>TransitAgency</code> in the Admin:</p>
+<ul>
+<li>Once the code changes above are in place, add a new transit agency with the following:<ul>
+<li>Slug: Choose the one added in code</li>
+<li>Short name, long name, info URL, phone, and supported card schemes: Get from their enrollment form</li>
+<li>Logo: Typically found attached to a GitHub issue comment</li>
+<li>Active: Leave <strong>unchecked</strong> for now</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Cal-ITP creates new <code>EnrollmentFlow</code>s in the Admin:</p>
+<ul>
+<li>For each type of discount the new transit provider will be using, add an enrollment flow with the following:<ul>
+<li>System name</li>
+<li>Label (retype the system name)</li>
+<li>Choose the <code>TransitAgency</code> that was just created</li>
+<li>Modify supported enrollment methods, if necessary</li>
+<li>Choose the appropriate OAuth config (e.g., benefits-logingov for an Older Adults flow)</li>
+<li>Choose the appropriate claims request</li>
+</ul>
+</li>
+<li>All other fields can likely be skipped or left at their default value.</li>
+</ul>
+</li>
+<li>
+<p>Cal-ITP creates a new <code>EnrollmentGroup</code> in the Benefits prod environment:</p>
+<ul>
+<li>Choose one of the new <code>EnrollmentFlow</code>s.</li>
+<li>Set the group value to the corresponding <strong>production</strong> group ID.</li>
+</ul>
+</li>
+<li>Cal-ITP creates a new <code>LittlepayConfig</code> in the Benefits prod environment:<ul>
+<li>Set Environment to <strong>Production</strong>.</li>
+<li>Choose the new <code>TransitAgency</code>.</li>
+<li>Retrieve Audience and Client ID values for the <strong>production</strong> config from shared LastPass note.</li>
+<li><a href="../../tutorials/secrets/">Create the client secret in the Azure Key Vault</a> for the prod environment, then paste its name in the Client Secret Name field.<ul>
+<li>Be sure to refresh the secrets for this to take effect!<ol>
+<li>In the Azure portal, go to the App Service.</li>
+<li>Inside the App Service, navigate to Settings -&gt; Environment variables.</li>
+<li>Click the <strong>Pull reference values</strong> button to force the App Service to bypass the 24-hour cache and fetch the latest values for Key Vault references. This triggers a graceful restart of the app.</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Cal-ITP returns to the <code>TransitAgency</code> instance and checks the <strong>Active</strong> box.</li>
+</ol>
+<p>At this point, real customers can begin enrolling their cards and receiving their discounted fares with this transit provider!</p>
+<h2 id="verify-real-user-enrollments-are-starting-to-happen">Verify real user enrollments are starting to happen<a class="headerlink" href="#verify-real-user-enrollments-are-starting-to-happen" title="Permanent link"> ¶</a></h2>
+<h3 id="amplitude">Amplitude<a class="headerlink" href="#amplitude" title="Permanent link"> ¶</a></h3>
+<p><img align="right" alt="Amplitude chart config with settings described in detail below" src="../img/amplitude-verification-query.png" /></p>
+<p>We consider a transit provider officially onboarded to Cal-ITP Benefits when the transit provider appears in our metrics. Specifically, the transit provider is onboarded when we see one or more complete enrollments for that transit provider in <a href="https://amplitude.com/">Amplitude</a>.</p>
+<p>Use this query to confirm:</p>
+<ul>
+<li><strong>Segment:</strong> All Users</li>
+<li><strong>Measured as:</strong> Event Totals</li>
+<li><strong>Events:</strong> Completed enrollment<ul>
+<li>User property <code>enrollment_method</code>: <code>digital</code>, <code>in_person</code></li>
+<li>Grouped by: <code>transit_agency</code></li>
+</ul>
+</li>
+</ul>
+<p>You can also go directly to the existing <a href="https://app.amplitude.com/analytics/compiler/chart/mccedr54/edit/o9xupwel">Enrollments by transit provider</a> chart.</p>
+<h3 class="clear" id="metabase">Metabase<a class="headerlink" href="#metabase" title="Permanent link"> ¶</a></h3>
+<p>Amplitude currently stores only a year of historical data, so we archive all Cal-ITP data in <a href="https://www.metabase.com/">Metabase</a>. Thus, we also need to ensure metrics for the new transit provider are successfully piped from from Amplitude to Metabase.</p>
+<p>Use this query to confirm:</p>
+<p><img alt="Metabase chart config with settings described in detail below" src="../img/metabase-verification-query.png" /></p>
+<ul>
+<li><strong>Data:</strong> Fct Benefits Events</li>
+<li><strong>Filter:</strong><ul>
+<li>Event Type is returned enrollment</li>
+<li>Event Properties Status is success</li>
+<li>Event Time is [some date range that includes the dates you&rsquo;re expecting to see data for the new transit provider]</li>
+</ul>
+</li>
+<li><strong>Summarize:</strong> Count by Event Properties Transit Agency</li>
+</ul>
+<p>You can also go directly to the existing <a href="https://dashboards.calitp.org/question/3762-cal-itp-benefits-enrollments-by-transit-provider-2025">Cal-ITP Benefits enrollments by transit provider 2025</a> chart.</p>
+<h2 id="cleanup">Cleanup<a class="headerlink" href="#cleanup" title="Permanent link"> ¶</a></h2>
+<p>Once the transit provider is live in production, there are some cleanup steps to take.</p>
+<p><em>These items can all be done in parallel, and can also be done in parallel with the analytics verification described above.</em></p>
+<h3 id="remove-test-group-in-production-littlepay">Remove test group in production Littlepay<a class="headerlink" href="#remove-test-group-in-production-littlepay" title="Permanent link"> ¶</a></h3>
+<p>The customer group that was created in production Littlepay for testing purposes can be deleted.</p>
+<h3 id="update-transit-provider-configuration-in-test-environment">Update transit provider configuration in test environment<a class="headerlink" href="#update-transit-provider-configuration-in-test-environment" title="Permanent link"> ¶</a></h3>
+<p>The transit provider&rsquo;s configuration in the test environment should be updated to change the production values back to the QA values for its steady state going forward.</p>
+<ul>
+<li>Littlepay config<ul>
+<li>Environment</li>
+<li>Audience</li>
+<li>Client ID</li>
+<li>Client secret <a href="../../tutorials/secrets/">(update value in Azure Key Vault)</a></li>
+</ul>
+</li>
+<li>Littlepay groups:<ul>
+<li>Set group IDs back to the groups <a href="#configuration-for-development-and-testing">created previously during development and testing configuration</a></li>
+<li>Once this is complete, verify that the setup is correct by using the <a href="https://github.com/cal-itp/littlepay">littlepay CLI</a>.</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.tabs", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
