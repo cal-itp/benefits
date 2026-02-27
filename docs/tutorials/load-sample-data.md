@@ -85,8 +85,14 @@ As mentioned above in the section about sample data that is [not included](#not-
 
 An easy way to update these fixture files is to run them through the migrations that were created. The steps in general are:
 
+_(from within the devcontainer)_
+
 1. Download the fixtures that you need to update
-1. Set `$DJANGO_DB_FIXTURES` to that file
+1. Set your `DJANGO_DB_FIXTURES` environment variable to that file
+  - There are many ways to do this. Here is one way:
+    1. Update the value of `DJANGO_DB_FIXTURES` in your `.env` file
+    1. Run `source .env`
+    1. Check the value with `echo $DJANGO_DB_FIXTURES`
 1. Checkout the commit on `main` prior to the model changes (i.e. where the fixtures can be loaded in)
 1. Run `./bin/reset_db.sh` to reset your database and load in the fixtures
 1. Checkout the commit with the new model changes (most likely, the latest commit on `main`)
@@ -98,7 +104,7 @@ An easy way to update these fixture files is to run them through the migrations 
 A helper script at [`bin/dumpdata.sh`][dumpdata] handles some of these steps, prompting where input is needed, so the steps are simplified down to:
 
 1. Download the fixtures that you need to update
-1. Set `$DJANGO_DB_FIXTURES` to that file
+1. Set your `DJANGO_DB_FIXTURES` environment variable to that file
 1. Run `./bin/dumpdata.sh`
 1. Review the migrated fixtures, and do any clean-up needed or manual updating needed (though generally we should be able to have data migrations that make it so no manual updating is needed)
 1. Save the updated fixtures back
