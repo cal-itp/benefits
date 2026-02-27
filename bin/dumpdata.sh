@@ -20,5 +20,5 @@ git checkout $post_model_change_commit
 
 # Export migrated fixtures and prompt user to review migrated contents.
 temp_file_name="unreviewed_fixtures.json"
-python manage.py dumpdata --exclude auth.permission --exclude contenttypes > $temp_file_name
+python manage.py dumpdata --exclude auth.permission --exclude contenttypes --indent=2 --output $temp_file_name
 echo "Review the migrated fixtures at ./$temp_file_name"
