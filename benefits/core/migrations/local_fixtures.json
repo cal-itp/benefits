@@ -362,19 +362,6 @@
     }
   },
   {
-    "model": "enrollment_switchio.switchioconfig",
-    "pk": 2,
-    "fields": {
-      "tokenization_api_key": "123",
-      "tokenization_api_secret_name": "cst-switchio-int-api-secret",
-      "enrollment_api_authorization_header": "Basic 1234",
-      "pto_id": 123,
-      "client_certificate": 4,
-      "ca_certificate": 5,
-      "private_key": 6
-    }
-  },
-  {
     "model": "enrollment_littlepay.littlepaygroup",
     "pk": 1,
     "fields": { "group_id": "d106dab3-bb24-42eb-8bbe-38dab3bfa4dc" }
@@ -398,5 +385,18 @@
     "model": "enrollment_littlepay.littlepaygroup",
     "pk": 5,
     "fields": { "group_id": "30027174-bc59-40bb-935c-3bd9b1c26a63" }
+  },
+  {
+    "model": "enrollment_switchio.switchioconfig",
+    "pk": 2,
+    "fields": {
+      "tokenization_api_key": "123",
+      "tokenization_api_secret_name": "cst-switchio-int-api-secret",
+      "enrollment_api_authorization_header": "Basic 1234",
+      "pto_id": 123,
+      "client_certificate": 4,
+      "ca_certificate": 5,
+      "private_key": 6
+    }
   }
 ]
