@@ -8,6 +8,11 @@ If you’re interested in receiving this update delivered directly to your email
 
 - [The January Update](https://5519226.hs-sites.com/cal-itp-benefits-the-january-update-2026)
 
+- [The February Update](https://5519226.hs-sites.com/cal-itp-benefits-the-february-update-2026)
+<!--
+- [The March Update]()
+  -->
+
 ### 2025
 
 - [The March Update](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update)
@@ -25,10 +30,6 @@ If you’re interested in receiving this update delivered directly to your email
 - [The October Update](https://5519226.hs-sites.com/cal-itp-benefits-the-october-update-2025)
 
 - [The November Update](https://5519226.hs-sites.com/cal-itp-benefits-the-november-update-2025)
-
-<!--
-- [The December Update]()
-  -->
 
 ### 2024
 
