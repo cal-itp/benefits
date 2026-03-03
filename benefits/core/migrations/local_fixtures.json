@@ -6,7 +6,7 @@
       "name": "CST Customer Service"
     }
   },
-   {
+  {
     "model": "auth.user",
     "pk": 3,
     "fields": {
@@ -40,6 +40,62 @@
       "date_joined": "2024-09-17T18:54:46Z",
       "groups": [1],
       "user_permissions": []
+    }
+  },
+  {
+    "model": "cdt_identity.claimsverificationrequest",
+    "pk": "8fa9e649-4de6-4bd6-8eec-f5f47802ceab",
+    "fields": {
+      "system_name": "veteran",
+      "scopes": "veteran:confirm",
+      "eligibility_claim": "va38"
+    }
+  },
+  {
+    "model": "cdt_identity.claimsverificationrequest",
+    "pk": "a0b45237-b056-4d25-aebe-d4f2a5fe6bbc",
+    "fields": {
+      "system_name": "senior",
+      "scopes": "age:65plus",
+      "eligibility_claim": "age65p"
+    }
+  },
+  {
+    "model": "cdt_identity.claimsverificationrequest",
+    "pk": "c6332e8c-7081-48e9-ae3c-07360879a8ae",
+    "fields": {
+      "system_name": "calfresh",
+      "scopes": "income:calfresh",
+      "eligibility_claim": "calfresh"
+    }
+  },
+  {
+    "model": "cdt_identity.claimsverificationrequest",
+    "pk": "d27e630b-980c-40ae-9104-a36633bcf7ac",
+    "fields": {
+      "system_name": "medicare",
+      "scopes": "medicare:enrolled",
+      "eligibility_claim": "medicare"
+    }
+  },
+  {
+    "model": "cdt_identity.identitygatewayconfig",
+    "pk": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
+    "fields": {
+      "client_name": "benefits-logingov",
+      "client_id": "319efaea-615b-4cd4-958f-e6cd2fd31646",
+      "authority": "https://example.com",
+      "scheme": "dev-cal-itp_benefits"
+    }
+  },
+  {
+    "model": "cdt_identity.identitygatewayconfig",
+    "pk": "7687895d-c3d6-4063-a26e-518514fb01b2",
+    "fields": {
+      "client_name": "benefits-medicaregov",
+      "client_id": "319efaea-615b-4cd4-958f-e6cd2fd31646",
+      "authority": "https://example.com",
+      "scheme": "bluebutton"
     }
   },
   {
@@ -88,62 +144,6 @@
     "fields": {
       "label": "Switchio private key",
       "text_secret_name": "switchio-int-private-key"
-    }
-  },
-  {
-    "model": "cdt_identity.identitygatewayconfig",
-    "pk": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
-    "fields": {
-      "client_name": "benefits-logingov",
-      "client_id": "319efaea-615b-4cd4-958f-e6cd2fd31646",
-      "authority": "https://example.com",
-      "scheme": "dev-cal-itp_benefits"
-    }
-  },
-  {
-    "model": "cdt_identity.identitygatewayconfig",
-    "pk": "7687895d-c3d6-4063-a26e-518514fb01b2",
-    "fields": {
-      "client_name": "benefits-medicaregov",
-      "client_id": "319efaea-615b-4cd4-958f-e6cd2fd31646",
-      "authority": "https://example.com",
-      "scheme": "bluebutton"
-    }
-  },
-  {
-    "model": "cdt_identity.claimsverificationrequest",
-    "pk": "a0b45237-b056-4d25-aebe-d4f2a5fe6bbc",
-    "fields": {
-      "system_name": "senior",
-      "scopes": "age:65plus",
-      "eligibility_claim": "age65p"
-    }
-  },
-  {
-    "model": "cdt_identity.claimsverificationrequest",
-    "pk": "8fa9e649-4de6-4bd6-8eec-f5f47802ceab",
-    "fields": {
-      "system_name": "veteran",
-      "scopes": "veteran:confirm",
-      "eligibility_claim": "va38"
-    }
-  },
-  {
-    "model": "cdt_identity.claimsverificationrequest",
-    "pk": "c6332e8c-7081-48e9-ae3c-07360879a8ae",
-    "fields": {
-      "system_name": "calfresh",
-      "scopes": "income:calfresh",
-      "eligibility_claim": "calfresh"
-    }
-  },
-  {
-    "model": "cdt_identity.claimsverificationrequest",
-    "pk": "d27e630b-980c-40ae-9104-a36633bcf7ac",
-    "fields": {
-      "system_name": "medicare",
-      "scopes": "medicare:enrolled",
-      "eligibility_claim": "medicare"
     }
   },
   {
