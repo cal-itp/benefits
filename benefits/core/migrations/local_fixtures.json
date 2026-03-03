@@ -1,318 +1,36 @@
 [
   {
-    "model": "core.pemdata",
+    "model": "auth.group",
     "pk": 1,
     "fields": {
-      "label": "(CST) eligibility server public key",
-      "remote_url": "https://raw.githubusercontent.com/cal-itp/eligibility-server/main/keys/server.pub"
+      "name": "Cal-ITP",
+      "permissions": []
     }
   },
   {
-    "model": "core.pemdata",
+    "model": "auth.group",
     "pk": 2,
     "fields": {
-      "label": "Benefits client private key",
-      "text_secret_name": "client-private-key"
+      "name": "CST Customer Service",
+      "permissions": []
     }
   },
   {
-    "model": "core.pemdata",
-    "pk": 3,
-    "fields": {
-      "label": "Benefits client public key",
-      "text_secret_name": "client-public-key"
-    }
-  },
-  {
-    "model": "core.pemdata",
-    "pk": 4,
-    "fields": {
-      "label": "Switchio client certificate",
-      "text_secret_name": "switchio-int-client-cert"
-    }
-  },
-  {
-    "model": "core.pemdata",
-    "pk": 5,
-    "fields": {
-      "label": "Switchio CA certificate",
-      "text_secret_name": "switchio-int-ca-cert"
-    }
-  },
-  {
-    "model": "core.pemdata",
-    "pk": 6,
-    "fields": {
-      "label": "Switchio private key",
-      "text_secret_name": "switchio-int-private-key"
-    }
-  },
-  {
-    "model": "cdt_identity.identitygatewayconfig",
-    "pk": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
-    "fields": {
-      "client_name": "benefits-logingov",
-      "client_id": "319efaea-615b-4cd4-958f-e6cd2fd31646",
-      "authority": "https://example.com",
-      "scheme": "dev-cal-itp_benefits"
-    }
-  },
-  {
-    "model": "cdt_identity.identitygatewayconfig",
-    "pk": "7687895d-c3d6-4063-a26e-518514fb01b2",
-    "fields": {
-      "client_name": "benefits-medicaregov",
-      "client_id": "319efaea-615b-4cd4-958f-e6cd2fd31646",
-      "authority": "https://example.com",
-      "scheme": "bluebutton"
-    }
-  },
-  {
-    "model": "cdt_identity.claimsverificationrequest",
-    "pk": "a0b45237-b056-4d25-aebe-d4f2a5fe6bbc",
-    "fields": {
-      "system_name": "senior",
-      "scopes": "age:65plus",
-      "eligibility_claim": "age65p"
-    }
-  },
-  {
-    "model": "cdt_identity.claimsverificationrequest",
-    "pk": "8fa9e649-4de6-4bd6-8eec-f5f47802ceab",
-    "fields": {
-      "system_name": "veteran",
-      "scopes": "veteran:confirm",
-      "eligibility_claim": "va38"
-    }
-  },
-  {
-    "model": "cdt_identity.claimsverificationrequest",
-    "pk": "c6332e8c-7081-48e9-ae3c-07360879a8ae",
-    "fields": {
-      "system_name": "calfresh",
-      "scopes": "income:calfresh",
-      "eligibility_claim": "calfresh"
-    }
-  },
-  {
-    "model": "cdt_identity.claimsverificationrequest",
-    "pk": "d27e630b-980c-40ae-9104-a36633bcf7ac",
-    "fields": {
-      "system_name": "medicare",
-      "scopes": "medicare:enrolled",
-      "eligibility_claim": "medicare"
-    }
-  },
-  {
-    "model": "core.transitprocessorconfig",
+    "model": "auth.user",
     "pk": 1,
     "fields": {
-      "environment": "test",
-      "label": "cst",
-      "portal_url": "https://www.transit-processor-portal.com"
-    }
-  },
-  {
-    "model": "core.transitprocessorconfig",
-    "pk": 2,
-    "fields": {
-      "environment": "dev",
-      "label": "",
-      "portal_url": ""
-    }
-  },
-  {
-    "model": "enrollment_littlepay.littlepayconfig",
-    "pk": 1,
-    "fields": {
-      "audience": "",
-      "client_id": "",
-      "client_secret_name": "cst-littlepay-client-secret"
-    }
-  },
-  {
-    "model": "enrollment_switchio.switchioconfig",
-    "pk": 2,
-    "fields": {
-      "tokenization_api_key": "123",
-      "tokenization_api_secret_name": "cst-switchio-int-api-secret",
-      "enrollment_api_authorization_header": "Basic 1234",
-      "pto_id": 123,
-      "client_certificate": 4,
-      "ca_certificate": 5,
-      "private_key": 6
-    }
-  },
-  {
-    "model": "core.transitagency",
-    "pk": 1,
-    "fields": {
-      "active": true,
-      "slug": "cst",
-      "short_name": "CST (local)",
-      "long_name": "California State Transit (local)",
-      "info_url": "https://www.agency-website.com",
-      "phone": "1-800-555-5555",
-      "enrollment_flows": [1, 2, 3, 4, 5],
-      "customer_service_group": 2,
-      "logo": "agencies/cst.png",
-      "transit_processor_config": 1
-    }
-  },
-  {
-    "model": "core.enrollmentgroup",
-    "pk": 1,
-    "fields": {
-      "enrollment_flow": 5,
-      "transit_agency": 1
-    }
-  },
-  {
-    "model": "core.enrollmentgroup",
-    "pk": 2,
-    "fields": {
-      "enrollment_flow": 4,
-      "transit_agency": 1
-    }
-  },
-  {
-    "model": "core.enrollmentgroup",
-    "pk": 3,
-    "fields": {
-      "enrollment_flow": 2,
-      "transit_agency": 1
-    }
-  },
-  {
-    "model": "core.enrollmentgroup",
-    "pk": 4,
-    "fields": {
-      "enrollment_flow": 3,
-      "transit_agency": 1
-    }
-  },
-  {
-    "model": "core.enrollmentgroup",
-    "pk": 5,
-    "fields": {
-      "enrollment_flow": 1,
-      "transit_agency": 1
-    }
-  },
-  {
-    "model": "enrollment_littlepay.littlepaygroup",
-    "pk": 1,
-    "fields": { "group_id": "d106dab3-bb24-42eb-8bbe-38dab3bfa4dc" }
-  },
-  {
-    "model": "enrollment_littlepay.littlepaygroup",
-    "pk": 2,
-    "fields": { "group_id": "c0df1bf1-e5c5-4c25-a25d-86039c83ce52" }
-  },
-  {
-    "model": "enrollment_littlepay.littlepaygroup",
-    "pk": 3,
-    "fields": { "group_id": "4e37871d-3852-4171-a3a4-9d41f2b2276e" }
-  },
-  {
-    "model": "enrollment_littlepay.littlepaygroup",
-    "pk": 4,
-    "fields": { "group_id": "db631fbb-7949-485a-8068-066dd826acac" }
-  },
-  {
-    "model": "enrollment_littlepay.littlepaygroup",
-    "pk": 5,
-    "fields": { "group_id": "30027174-bc59-40bb-935c-3bd9b1c26a63" }
-  },
-  {
-    "model": "core.eligibilityapiverificationrequest",
-    "pk": 1,
-    "fields": {
-      "label": "courtesy_card",
-      "api_url": "http://server:8000/verify",
-      "api_auth_header": "X-Server-API-Key",
-      "api_auth_key_secret_name": "agency-card-flow-api-auth-key",
-      "client_private_key": 2,
-      "client_public_key": 3,
-      "api_public_key": 1,
-      "api_jwe_cek_enc": "A256CBC-HS512",
-      "api_jwe_encryption_alg": "RSA-OAEP",
-      "api_jws_signing_alg": "RS256"
-    }
-  },
-  {
-    "model": "core.enrollmentflow",
-    "pk": 1,
-    "fields": {
-      "system_name": "senior",
-      "label": "Older Adult",
-      "display_order": 2,
-      "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
-      "claims_request": "a0b45237-b056-4d25-aebe-d4f2a5fe6bbc",
-      "supported_enrollment_methods": ["digital", "in_person"],
-      "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
-      "sign_out_link_template": "core/includes/link--sign-out--login-gov.html"
-    }
-  },
-  {
-    "model": "core.enrollmentflow",
-    "pk": 2,
-    "fields": {
-      "system_name": "veteran",
-      "label": "U.S. Veteran",
-      "display_order": 4,
-      "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
-      "claims_request": "8fa9e649-4de6-4bd6-8eec-f5f47802ceab",
-      "supported_enrollment_methods": ["digital"],
-      "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
-      "sign_out_link_template": "core/includes/link--sign-out--login-gov.html"
-    }
-  },
-  {
-    "model": "core.enrollmentflow",
-    "pk": 3,
-    "fields": {
-      "system_name": "courtesy_card",
-      "label": "Agency Cardholder",
-      "api_request": 1,
-      "display_order": 5,
-      "supported_enrollment_methods": ["digital"]
-    }
-  },
-  {
-    "model": "core.enrollmentflow",
-    "pk": 4,
-    "fields": {
-      "system_name": "calfresh",
-      "label": "CalFresh Cardholder",
-      "supports_expiration": "True",
-      "expiration_days": 5,
-      "expiration_reenrollment_days": 3,
-      "display_order": 3,
-      "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
-      "claims_request": "c6332e8c-7081-48e9-ae3c-07360879a8ae",
-      "supported_enrollment_methods": ["digital"],
-      "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
-      "sign_out_link_template": "core/includes/link--sign-out--login-gov.html"
-    }
-  },
-  {
-    "model": "core.enrollmentflow",
-    "pk": 5,
-    "fields": {
-      "system_name": "medicare",
-      "label": "Medicare Cardholder",
-      "display_order": 1,
-      "oauth_config": "7687895d-c3d6-4063-a26e-518514fb01b2",
-      "claims_request": "d27e630b-980c-40ae-9104-a36633bcf7ac",
-      "supported_enrollment_methods": ["digital", "in_person"]
-    }
-  },
-  {
-    "model": "auth.Group",
-    "pk": 2,
-    "fields": {
-      "name": "CST Customer Service"
+      "password": "pbkdf2_sha256$1000000$H6BFlszeskSeWPovh1VLeO$Cl5tArANop26610+d3XJfuh5C2d9UZ/ZVD4cGiP1iXo=",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "benefits-admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "benefits-admin@calitp.org",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2026-03-03T16:45:12.147Z",
+      "groups": [],
+      "user_permissions": []
     }
   },
   {
@@ -352,6 +70,270 @@
     }
   },
   {
+    "model": "cdt_identity.claimsverificationrequest",
+    "pk": "8fa9e649-4de6-4bd6-8eec-f5f47802ceab",
+    "fields": {
+      "system_name": "veteran",
+      "scopes": "veteran:confirm",
+      "eligibility_claim": "va38",
+      "extra_claims": "",
+      "scheme": ""
+    }
+  },
+  {
+    "model": "cdt_identity.claimsverificationrequest",
+    "pk": "a0b45237-b056-4d25-aebe-d4f2a5fe6bbc",
+    "fields": {
+      "system_name": "senior",
+      "scopes": "age:65plus",
+      "eligibility_claim": "age65p",
+      "extra_claims": "",
+      "scheme": ""
+    }
+  },
+  {
+    "model": "cdt_identity.claimsverificationrequest",
+    "pk": "c6332e8c-7081-48e9-ae3c-07360879a8ae",
+    "fields": {
+      "system_name": "calfresh",
+      "scopes": "income:calfresh",
+      "eligibility_claim": "calfresh",
+      "extra_claims": "",
+      "scheme": ""
+    }
+  },
+  {
+    "model": "cdt_identity.claimsverificationrequest",
+    "pk": "d27e630b-980c-40ae-9104-a36633bcf7ac",
+    "fields": {
+      "system_name": "medicare",
+      "scopes": "medicare:enrolled",
+      "eligibility_claim": "medicare",
+      "extra_claims": "",
+      "scheme": ""
+    }
+  },
+  {
+    "model": "cdt_identity.identitygatewayconfig",
+    "pk": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
+    "fields": {
+      "client_name": "benefits-logingov",
+      "client_id": "319efaea-615b-4cd4-958f-e6cd2fd31646",
+      "authority": "https://example.com",
+      "scheme": "dev-cal-itp_benefits"
+    }
+  },
+  {
+    "model": "cdt_identity.identitygatewayconfig",
+    "pk": "7687895d-c3d6-4063-a26e-518514fb01b2",
+    "fields": {
+      "client_name": "benefits-medicaregov",
+      "client_id": "319efaea-615b-4cd4-958f-e6cd2fd31646",
+      "authority": "https://example.com",
+      "scheme": "bluebutton"
+    }
+  },
+  {
+    "model": "core.pemdata",
+    "pk": 1,
+    "fields": {
+      "label": "(CST) eligibility server public key",
+      "text_secret_name": "",
+      "remote_url": "https://raw.githubusercontent.com/cal-itp/eligibility-server/main/keys/server.pub"
+    }
+  },
+  {
+    "model": "core.pemdata",
+    "pk": 2,
+    "fields": {
+      "label": "Benefits client private key",
+      "text_secret_name": "client-private-key",
+      "remote_url": ""
+    }
+  },
+  {
+    "model": "core.pemdata",
+    "pk": 3,
+    "fields": {
+      "label": "Benefits client public key",
+      "text_secret_name": "client-public-key",
+      "remote_url": ""
+    }
+  },
+  {
+    "model": "core.pemdata",
+    "pk": 4,
+    "fields": {
+      "label": "Switchio client certificate",
+      "text_secret_name": "switchio-int-client-cert",
+      "remote_url": ""
+    }
+  },
+  {
+    "model": "core.pemdata",
+    "pk": 5,
+    "fields": {
+      "label": "Switchio CA certificate",
+      "text_secret_name": "switchio-int-ca-cert",
+      "remote_url": ""
+    }
+  },
+  {
+    "model": "core.pemdata",
+    "pk": 6,
+    "fields": {
+      "label": "Switchio private key",
+      "text_secret_name": "switchio-int-private-key",
+      "remote_url": ""
+    }
+  },
+  {
+    "model": "core.eligibilityapiverificationrequest",
+    "pk": 1,
+    "fields": {
+      "label": "courtesy_card",
+      "api_url": "http://server:8000/verify",
+      "api_auth_header": "X-Server-API-Key",
+      "api_auth_key_secret_name": "agency-card-flow-api-auth-key",
+      "client_private_key": 2,
+      "client_public_key": 3,
+      "api_public_key": 1,
+      "api_jwe_cek_enc": "A256CBC-HS512",
+      "api_jwe_encryption_alg": "RSA-OAEP",
+      "api_jws_signing_alg": "RS256"
+    }
+  },
+  {
+    "model": "core.enrollmentflow",
+    "pk": 1,
+    "fields": {
+      "system_name": "senior",
+      "label": "Older Adult",
+      "supported_enrollment_methods": "digital,in_person",
+      "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
+      "sign_out_link_template": "core/includes/link--sign-out--login-gov.html",
+      "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
+      "claims_request": "a0b45237-b056-4d25-aebe-d4f2a5fe6bbc",
+      "api_request": null,
+      "supports_expiration": false,
+      "expiration_days": null,
+      "expiration_reenrollment_days": null,
+      "display_order": 2
+    }
+  },
+  {
+    "model": "core.enrollmentflow",
+    "pk": 2,
+    "fields": {
+      "system_name": "veteran",
+      "label": "U.S. Veteran",
+      "supported_enrollment_methods": "digital",
+      "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
+      "sign_out_link_template": "core/includes/link--sign-out--login-gov.html",
+      "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
+      "claims_request": "8fa9e649-4de6-4bd6-8eec-f5f47802ceab",
+      "api_request": null,
+      "supports_expiration": false,
+      "expiration_days": null,
+      "expiration_reenrollment_days": null,
+      "display_order": 4
+    }
+  },
+  {
+    "model": "core.enrollmentflow",
+    "pk": 3,
+    "fields": {
+      "system_name": "courtesy_card",
+      "label": "Agency Cardholder",
+      "supported_enrollment_methods": "digital",
+      "sign_out_button_template": "",
+      "sign_out_link_template": "",
+      "oauth_config": null,
+      "claims_request": null,
+      "api_request": 1,
+      "supports_expiration": false,
+      "expiration_days": null,
+      "expiration_reenrollment_days": null,
+      "display_order": 5
+    }
+  },
+  {
+    "model": "core.enrollmentflow",
+    "pk": 4,
+    "fields": {
+      "system_name": "calfresh",
+      "label": "CalFresh Cardholder",
+      "supported_enrollment_methods": "digital",
+      "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
+      "sign_out_link_template": "core/includes/link--sign-out--login-gov.html",
+      "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
+      "claims_request": "c6332e8c-7081-48e9-ae3c-07360879a8ae",
+      "api_request": null,
+      "supports_expiration": true,
+      "expiration_days": 5,
+      "expiration_reenrollment_days": 3,
+      "display_order": 3
+    }
+  },
+  {
+    "model": "core.enrollmentflow",
+    "pk": 5,
+    "fields": {
+      "system_name": "medicare",
+      "label": "Medicare Cardholder",
+      "supported_enrollment_methods": "digital,in_person",
+      "sign_out_button_template": "",
+      "sign_out_link_template": "",
+      "oauth_config": "7687895d-c3d6-4063-a26e-518514fb01b2",
+      "claims_request": "d27e630b-980c-40ae-9104-a36633bcf7ac",
+      "api_request": null,
+      "supports_expiration": false,
+      "expiration_days": null,
+      "expiration_reenrollment_days": null,
+      "display_order": 1
+    }
+  },
+  {
+    "model": "core.enrollmentgroup",
+    "pk": 1,
+    "fields": {
+      "transit_agency": 1,
+      "enrollment_flow": 5
+    }
+  },
+  {
+    "model": "core.enrollmentgroup",
+    "pk": 2,
+    "fields": {
+      "transit_agency": 1,
+      "enrollment_flow": 4
+    }
+  },
+  {
+    "model": "core.enrollmentgroup",
+    "pk": 3,
+    "fields": {
+      "transit_agency": 1,
+      "enrollment_flow": 2
+    }
+  },
+  {
+    "model": "core.enrollmentgroup",
+    "pk": 4,
+    "fields": {
+      "transit_agency": 1,
+      "enrollment_flow": 3
+    }
+  },
+  {
+    "model": "core.enrollmentgroup",
+    "pk": 5,
+    "fields": {
+      "transit_agency": 1,
+      "enrollment_flow": 1
+    }
+  },
+  {
     "model": "core.enrollmentevent",
     "pk": "49328a98-f829-4009-a16a-d71ece9e51e3",
     "fields": {
@@ -359,8 +341,9 @@
       "enrollment_flow": 3,
       "enrollment_method": "digital",
       "verified_by": "http://server:8000/verify",
-      "enrollment_datetime": "2024-09-13T16:00:00.000Z",
-      "expiration_datetime": null
+      "enrollment_datetime": "2024-09-13T16:00:00Z",
+      "expiration_datetime": null,
+      "extra_claims": ""
     }
   },
   {
@@ -371,8 +354,9 @@
       "enrollment_flow": 2,
       "enrollment_method": "in_person",
       "verified_by": "Test User",
-      "enrollment_datetime": "2024-09-13T15:45:30.000Z",
-      "expiration_datetime": null
+      "enrollment_datetime": "2024-09-13T15:45:30Z",
+      "expiration_datetime": null,
+      "extra_claims": ""
     }
   },
   {
@@ -383,8 +367,9 @@
       "enrollment_flow": 1,
       "enrollment_method": "digital",
       "verified_by": "benefits-oauth-client-name",
-      "enrollment_datetime": "2024-09-12T18:25:25.000Z",
-      "expiration_datetime": null
+      "enrollment_datetime": "2024-09-12T18:25:25Z",
+      "expiration_datetime": null,
+      "extra_claims": ""
     }
   },
   {
@@ -395,8 +380,102 @@
       "enrollment_flow": 4,
       "enrollment_method": "digital",
       "verified_by": "benefits-oauth-client-name",
-      "enrollment_datetime": "2024-09-11T20:00:00.000Z",
-      "expiration_datetime": "2025-09-12T07:00:00.000Z"
+      "enrollment_datetime": "2024-09-11T20:00:00Z",
+      "expiration_datetime": "2025-09-12T07:00:00Z",
+      "extra_claims": ""
+    }
+  },
+  {
+    "model": "core.transitprocessorconfig",
+    "pk": 1,
+    "fields": {
+      "environment": "test",
+      "label": "cst",
+      "portal_url": "https://www.transit-processor-portal.com"
+    }
+  },
+  {
+    "model": "core.transitprocessorconfig",
+    "pk": 2,
+    "fields": {
+      "environment": "dev",
+      "label": "",
+      "portal_url": ""
+    }
+  },
+  {
+    "model": "core.transitagency",
+    "pk": 1,
+    "fields": {
+      "active": true,
+      "slug": "cst",
+      "short_name": "CST (local)",
+      "long_name": "California State Transit (local)",
+      "info_url": "https://www.agency-website.com",
+      "phone": "1-800-555-5555",
+      "supported_card_schemes": "visa,mastercard",
+      "sso_domain": "",
+      "customer_service_group": 2,
+      "logo": "agencies/cst.png",
+      "transit_processor_config": 1,
+      "enrollment_flows": [5, 1, 4, 2, 3]
+    }
+  },
+  {
+    "model": "enrollment_littlepay.littlepayconfig",
+    "pk": 1,
+    "fields": {
+      "audience": "",
+      "client_id": "",
+      "client_secret_name": "cst-littlepay-client-secret"
+    }
+  },
+  {
+    "model": "enrollment_littlepay.littlepaygroup",
+    "pk": 1,
+    "fields": {
+      "group_id": "d106dab3-bb24-42eb-8bbe-38dab3bfa4dc"
+    }
+  },
+  {
+    "model": "enrollment_littlepay.littlepaygroup",
+    "pk": 2,
+    "fields": {
+      "group_id": "c0df1bf1-e5c5-4c25-a25d-86039c83ce52"
+    }
+  },
+  {
+    "model": "enrollment_littlepay.littlepaygroup",
+    "pk": 3,
+    "fields": {
+      "group_id": "4e37871d-3852-4171-a3a4-9d41f2b2276e"
+    }
+  },
+  {
+    "model": "enrollment_littlepay.littlepaygroup",
+    "pk": 4,
+    "fields": {
+      "group_id": "db631fbb-7949-485a-8068-066dd826acac"
+    }
+  },
+  {
+    "model": "enrollment_littlepay.littlepaygroup",
+    "pk": 5,
+    "fields": {
+      "group_id": "30027174-bc59-40bb-935c-3bd9b1c26a63"
+    }
+  },
+  {
+    "model": "enrollment_switchio.switchioconfig",
+    "pk": 2,
+    "fields": {
+      "tokenization_api_key": "123",
+      "tokenization_api_secret_name": "cst-switchio-int-api-secret",
+      "enrollment_api_authorization_header": "Basic 1234",
+      "pto_id": 123,
+      "client_certificate": 4,
+      "ca_certificate": 5,
+      "private_key": 6
     }
   }
 ]
