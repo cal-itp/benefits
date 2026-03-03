@@ -1,9 +1,9 @@
 nav:
   - README.md
   - commits-branches-merging.md
+  - django-models.md
   - docker-dynamic-ports.md
   - linting-pre-commit.md
   - application-logic.md
-  - models-migrations.md
   - i18n.md
   - test-server.md
