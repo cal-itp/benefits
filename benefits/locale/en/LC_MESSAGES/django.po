@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-02-23 14:11-0800\n"
+"POT-Creation-Date: 2026-02-26 13:47-0800\n"
 "Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -215,7 +215,7 @@ msgid ""
 "service team for your local transit provider."
 msgstr ""
 
-msgid "Go Back"
+msgid "Go back"
 msgstr ""
 
 msgid "Return home"
@@ -263,9 +263,6 @@ msgid ""
 msgstr ""
 
 msgid "Get started"
-msgstr ""
-
-msgid "Get Started"
 msgstr ""
 
 msgid "Cal-ITP connects your transit benefit to your contactless card"
@@ -445,9 +442,6 @@ msgid "Please enter a 4- or 5-digit number."
 msgstr ""
 
 msgid "Learn more about the transit benefit for CalFresh Cardholders"
-msgstr ""
-
-msgid "Go back"
 msgstr ""
 
 msgid "Learn more about contactless cards"
