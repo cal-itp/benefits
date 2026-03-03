@@ -1,5 +1,48 @@
 [
   {
+    "model": "auth.Group",
+    "pk": 2,
+    "fields": {
+      "name": "CST Customer Service"
+    }
+  },
+   {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$5pS1ll33O6bi2rCCELW8kZ$OvFJJIERCEE0H2RhI8WzKTi+tFhbrfo/sxFdwAUzESI=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "cst-user",
+      "first_name": "CST",
+      "last_name": "User",
+      "email": "user@cst.ca.gov",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-09-17T18:54:46Z",
+      "groups": [2],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$870000$UOTPdUZcVa1vrGNjw7BEv5$91er7Bp+yGI49FDS6DdWI5MutLwEegEMRHgIOZCfrYs=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "calitp-user",
+      "first_name": "CalITP",
+      "last_name": "User",
+      "email": "user@calitp.org",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-09-17T18:54:46Z",
+      "groups": [1],
+      "user_permissions": []
+    }
+  },
+  {
     "model": "core.pemdata",
     "pk": 1,
     "fields": {
@@ -306,49 +349,6 @@
       "oauth_config": "7687895d-c3d6-4063-a26e-518514fb01b2",
       "claims_request": "d27e630b-980c-40ae-9104-a36633bcf7ac",
       "supported_enrollment_methods": ["digital", "in_person"]
-    }
-  },
-  {
-    "model": "auth.Group",
-    "pk": 2,
-    "fields": {
-      "name": "CST Customer Service"
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 3,
-    "fields": {
-      "password": "pbkdf2_sha256$870000$5pS1ll33O6bi2rCCELW8kZ$OvFJJIERCEE0H2RhI8WzKTi+tFhbrfo/sxFdwAUzESI=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "cst-user",
-      "first_name": "CST",
-      "last_name": "User",
-      "email": "user@cst.ca.gov",
-      "is_staff": true,
-      "is_active": true,
-      "date_joined": "2024-09-17T18:54:46Z",
-      "groups": [2],
-      "user_permissions": []
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 4,
-    "fields": {
-      "password": "pbkdf2_sha256$870000$UOTPdUZcVa1vrGNjw7BEv5$91er7Bp+yGI49FDS6DdWI5MutLwEegEMRHgIOZCfrYs=",
-      "last_login": null,
-      "is_superuser": false,
-      "username": "calitp-user",
-      "first_name": "CalITP",
-      "last_name": "User",
-      "email": "user@calitp.org",
-      "is_staff": true,
-      "is_active": true,
-      "date_joined": "2024-09-17T18:54:46Z",
-      "groups": [1],
-      "user_permissions": []
     }
   },
   {
