@@ -1,7 +1,7 @@
 """Create Cal-ITP staff group
 
 Originally from 0013_create_staff_group.py, this group needs to be created immediately
-so that unguarded queries for the group named in the default the `STAFF_GROUP_NAME` setting
+so that unguarded queries for the group named in the default `STAFF_GROUP_NAME` setting
 do not fail right out of the gate.
 """
 
