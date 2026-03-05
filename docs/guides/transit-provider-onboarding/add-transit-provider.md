@@ -74,5 +74,5 @@ The steps to create a transit processor config and associate it with your new ag
 
 Next steps:
 
-- [Configure a transit provider for production validation](./b-configure-production-validation.md)
-- [Configure a transit provider for production](./c-configure-production.md)
+- [Configure for production validation](./b-configure-production-validation.md)
+- [Configure for production](./c-configure-production.md)

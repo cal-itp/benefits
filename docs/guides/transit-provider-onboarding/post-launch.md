@@ -1,4 +1,4 @@
-# Transit provider post-launch
+# Post-launch
 
 ## Verify real user enrollments are starting to happen
 

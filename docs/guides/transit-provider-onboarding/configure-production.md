@@ -1,4 +1,4 @@
-# Configure a transit provider for production
+# Configure for production
 
 Once production validation is done, the transit provider can be added to the production Benefits database.
 
@@ -42,4 +42,4 @@ At this point, real customers can begin enrolling their cards and receiving thei
 
 Next steps:
 
-- [Transit provider post-launch](./d-post-launch.md)
+- [Post-launch](./d-post-launch.md)
