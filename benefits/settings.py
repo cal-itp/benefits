@@ -183,6 +183,8 @@ TEMPLATES = [
 WSGI_APPLICATION = "benefits.wsgi.application"
 
 STORAGE_DIR = os.environ.get("DJANGO_STORAGE_DIR", BASE_DIR)
+USE_POSTGRES = os.environ.get("USE_POSTGRES", "false").lower() == "true"
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
