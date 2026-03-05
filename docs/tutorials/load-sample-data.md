@@ -62,7 +62,7 @@ database rebuild.
 
 When models are updated, our fixtures will need to be updated.
 
-[Read our guide to migrations and fixtures](../guides/migrations-and-fixtures)
+[Read our guide to migrations and fixtures](../../guides/migrations-and-fixtures)
 
 [core-models]: https://github.com/cal-itp/benefits/tree/main/benefits/core/models/
 [django-fixtures]: https://docs.djangoproject.com/en/5.2/topics/db/fixtures/
