@@ -1,4 +1,4 @@
-# Add a new transit agency
+# Add a new transit provider
 
 This set of guides describe the steps needed to add a new transit provider to the application and take them from testing to production.
 
@@ -38,13 +38,13 @@ The application currently requires one transit provider logo for display on the 
 - height: 64px
 - width: any
 
-## Add the transit agency to the application
+## Add the transit provider to the application
 
 _Typically performed by a Cal-ITP developer._
 
 The steps below are the same whether you are adding the agency to our dev, test or production environment.
 
-- Add a new transit agency in the Admin with the following:
+- Add a new transit provider in the Admin with the following:
   - Slug: Define the agency's unique landing page (no spaces or special characters)
   - Short name, long name, info URL, phone, enrollment flows and supported card schemes: Get from their enrollment form
   - Logo: Typically found attached to a GitHub issue comment
@@ -64,7 +64,7 @@ The steps to create a transit processor config and associate it with your new ag
     - Cal-ITP uses the transit provider's Littlepay merchant ID to create a customer group in the Littlepay QA environment for each type of eligibility (e.g. older adult).
       - _Typically performed by transit provider's Account Manager_
       - For each group that is created, a group ID will be returned and should be set as the `group_id` on a new `LittlepayGroup`.
-      - The new `LittlepayGroup` is then associated with an enrollment flow and transit agency using the dropdowns. (See [Configuration data](../tutorials/load-sample-data.md) for more on loading the database.)
+      - The new `LittlepayGroup` is then associated with an enrollment flow and transit provider using the dropdowns. (See [Configuration data](../tutorials/load-sample-data.md) for more on loading the database.)
     - Cal-ITP requests and receives Littlepay Back Office API access (for both PROD and QA) for the new transit provider.
       - _Typically requested by a developer via email to Littlepay_
 
@@ -74,5 +74,5 @@ The steps to create a transit processor config and associate it with your new ag
 
 Next steps:
 
-- [Configure an agency for production validation](./b-configure-production-validation.md)
-- [Configure an agency for production](./c-configure-production.md)
+- [Configure a transit provider for production validation](./b-configure-production-validation.md)
+- [Configure a transit provider for production](./c-configure-production.md)
