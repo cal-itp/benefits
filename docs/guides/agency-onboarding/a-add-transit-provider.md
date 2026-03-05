@@ -70,7 +70,7 @@ The steps to create a transit processor config and associate it with your new ag
 
 === "Switchio"
 
-    TK
+    For development and testing, the agency can use the same INT credentials as CST (stored in LastPass).
 
 Next steps:
 

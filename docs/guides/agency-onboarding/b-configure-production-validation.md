@@ -2,6 +2,8 @@
 
 **Production validation** is the process of doing an end-to-end test of enrolling a real person's card through the Benefits app and using it to ride with a discounted fare. The word "production" here refers to **Littlepay's production environment** (which must be used to take a ride in real life), but the Benefits application's test environment is used for the enrollment process to avoid disruption of the Benefits production environment.
 
+_Typically performed by a Cal-ITP developer._
+
 === "Littlepay"
 
     For production validation, both customer groups and a discount product are needed.
@@ -38,18 +40,29 @@
         - This will be set back to QA after final production configuration is complete.
       - Choose the new `TransitAgency`.
       - Retrieve Audience and Client ID values for the **production** config from shared LastPass note.
-      - [Create the client secret in the Azure Key Vault](../tutorials/secrets.md) for the test environment, then paste its name in the Client Secret Name field.
-        - Be sure to refresh the secrets for this to take effect!
-          1. In the Azure portal, go to the App Service.
-          1. Inside the App Service, navigate to Settings -> Environment variables.
-          1. Click the **Pull reference values** button to force the App Service to bypass the 24-hour cache and fetch the latest values for Key Vault references. This triggers a graceful restart of the app.
+      - Client Secret Name: `${agency_slug}-payment-processor-client-secret`
+      --8<-- "./inc/create-secret.md"
     1. Cal-ITP returns to the `TransitAgency` instance and selects the `LittlepayConfig` above as the agency's transit processor config and checks the **Active** box.
 
 === "Switchio"
 
-    TK
+    1. Cal-ITP creates a new `SwitchioConfig` in the Benefits test environment:
+      - Environment: **Testing**
+      - Label: `${agency_short_name}`
+      - Tokenization api key: from LastPass
+      - Tokenization api secret name: `${agency_slug}-switchio-acc-api-secret`
+      --8<-- "./inc/create-secret.md"
+      - Enrollment api authorization header: See LastPass (same for all agencies in the env)
+      - Pto id: from LastPass
+      - Client certificate: Switchio (ACC) client certificate (same for all agencies in the env)
+      - Ca certificate: Switchio (ACC) CA certificate (same for all agencies in the env)
+      - Private key: Switchio (ACC) private key (same for all agencies in the env)
 
-At this point, Cal-ITP and transit provider staff can coordinate to do on-the-ground testing using the [test client](https://test-benefits.calitp.org) to enroll a real card and testing it by tapping on a live payment validator.
+    1. Cal-ITP creates a new `SwitchioGroup` in the Benefits test environment for each enrollment flow:
+      - Group id: (unlike Littlepay, same for all agencies in the env)
+    1. Cal-ITP returns to the `TransitAgency` instance and selects the `SwitchioConfig` above as the agency's transit processor config and checks the **Active** box.
+
+At this point, Cal-ITP and transit provider staff can coordinate to do on-the-ground testing using the [test client](https://test-benefits.calitp.org) to enroll a real card and test it by tapping on a live payment validator.
 
 ### Production validation testing
 

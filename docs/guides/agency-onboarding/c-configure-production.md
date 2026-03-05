@@ -2,6 +2,8 @@
 
 Once production validation is done, the transit provider can be added to the production Benefits database.
 
+_Typically performed by a Cal-ITP developer._
+
 === "Littlepay"
 
     1.  Cal-ITP creates a customer group **for production use** in production Littlepay.
@@ -14,16 +16,27 @@ Once production validation is done, the transit provider can be added to the pro
       - Set Environment to **Production**.
       - Choose the new `TransitAgency`.
       - Retrieve Audience and Client ID values for the **production** config from shared LastPass note.
-      - [Create the client secret in the Azure Key Vault](../tutorials/secrets.md) for the prod environment, then paste its name in the Client Secret Name field.
-      - Be sure to refresh the secrets for this to take effect!
-         1.  In the Azure portal, go to the App Service.
-         1.  Inside the App Service, navigate to Settings -> Environment variables.
-         1.  Click the **Pull reference values** button to force the App Service to bypass the 24-hour cache and fetch the latest values for Key Vault references. This triggers a graceful restart of the app.
+      - Client Secret Name: `${agency_slug}-payment-processor-client-secret`
+      --8<-- "./inc/create-secret.md"
     1.  Cal-ITP returns to the `TransitAgency` instance and checks the **Active** box.
 
 === "Switchio"
 
-    TK
+    1. Cal-ITP creates a new `SwitchioConfig` in the Benefits production environment:
+      - Environment: **Production**
+      - Label: `${agency_short_name}`
+      - Tokenization api key: from LastPass
+      - Tokenization api secret name: `${agency_slug}-switchio-prod-api-secret`
+      --8<-- "./inc/create-secret.md"
+      - Enrollment api authorization header: See LastPass (same for all agencies in the env)
+      - Pto id: from LastPass
+      - Client certificate: Switchio (prod) client certificate (same for all agencies in the env)
+      - Ca certificate: Switchio (prod) CA certificate (same for all agencies in the env)
+      - Private key: Switchio (prod) private key (same for all agencies in the env)
+
+    1. Cal-ITP creates a new `SwitchioGroup` in the Benefits test environment for each enrollment flow:
+      - Group id: (unlike Littlepay, same for all agencies in the env)
+    1. Cal-ITP returns to the `TransitAgency` instance and selects the `SwitchioConfig` above as the agency's transit processor config and checks the **Active** box.
 
 At this point, real customers can begin enrolling their cards and receiving their discounted fares with this transit provider!
 

@@ -56,4 +56,4 @@ The transit provider's configuration in the test environment should be updated t
 
 === "Switchio"
 
-    TK
+    Because Switchio's acceptance environment is entirely distinct and isolated from production, nothing needs to be reverted.
