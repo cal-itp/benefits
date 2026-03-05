@@ -14,7 +14,7 @@ Runtime configuration changes can be persisted via [Django's Admin interface](ht
 
 When models are updated, **migrations** will need to be added and **fixtures** will need to be updated.
 
-[Read our guide to migrations and fixtures](../guides/migrations-and-fixtures)
+[Read our guide to migrations and fixtures](../../../guides/migrations-and-fixtures)
 
 [core-models]: https://github.com/cal-itp/benefits/tree/main/benefits/core/models/
 [littlepay-models]: https://github.com/cal-itp/benefits/blob/main/benefits/enrollment_littlepay/models.py
