@@ -1,0 +1,64 @@
+# Configure an agency for production validation
+
+**Production validation** is the process of doing an end-to-end test of enrolling a real person's card through the Benefits app and using it to ride with a discounted fare. The word "production" here refers to **Littlepay's production environment** (which must be used to take a ride in real life), but the Benefits application's test environment is used for the enrollment process to avoid disruption of the Benefits production environment.
+
+=== "Littlepay"
+
+    For production validation, both customer groups and a discount product are needed.
+
+    1. Transit provider staff creates the discount product in production Littlepay (if it does not already exist).
+    1. Transit provider staff takes a screenshot of the discount product in the Merchant Portal, making sure the browser URL is visible, and sends that to Cal-ITP.
+    1. Cal-ITP creates the customer groups in production Littlepay.
+    1. Cal-ITP associates the groups with the product.
+      - _Typically performed by transit provider's Account Manager_
+      - Once this is complete, verify that the setup is correct by using the [littlepay CLI](https://github.com/cal-itp/littlepay). Example:
+
+        ```bash
+        $ littlepay groups products
+        👥 Matching groups (3): ⚠️  prod, edcta
+        GroupResponse(id='b9634346-5a03-448d-8f7a-c7bec1169e00', label='Discounted', participant_id='eldorado-transit')
+          🛒 Linked products (1)
+          ProductResponse(id='56755aa9-0227-4208-a8a4-8b3217cebaa9', code='Daily Max - Discounted', status='ACTIVE', type='CAPPING', description='Daily Max - Discounted', participant_id='eldorado-transit')
+        GroupResponse(id='f410db55-f1b5-49ef-8072-a5bbb685d0f5', label='Medicare', participant_id='eldorado-transit')
+          🛒 Linked products (2)
+          ProductResponse(id='b9f4b2aa-ecc2-4019-9552-03d7af4c484c', code='Medicare', status='ACTIVE', type='CAPPING', description='Medicare', participant_id='eldorado-transit')
+          ProductResponse(id='05b43044-759d-4938-b150-2adc603e4f74', code='Medicare', status='ACTIVE', type='DISCOUNT', description='Medicare', participant_id='eldorado-transit')
+        GroupResponse(id='e88042e2-7b56-4ffa-83b6-fa895a8e6a3d', label='Senior 65+', participant_id='eldorado-transit')
+          🛒 Linked products (2)
+          ProductResponse(id='267edc99-6989-4779-a445-94a121387a25', code='Senior 65+', status='ACTIVE', type='DISCOUNT', description='Senior 65+', participant_id='eldorado-transit')
+          ProductResponse(id='d7d948c2-20bf-4b10-a181-d1f2c89456b6', code='Senior 65+', status='ACTIVE', type='CAPPING', description='Senior 65+', participant_id='eldorado-transit')
+        ```
+
+    1. Cal-ITP creates a new `LittlepayGroup` in the Benefits test environment:
+      - Set the 'Group id' to the corresponding **production** group ID (from production Littlepay) for production validation.
+        - This will be set back to the QA group value after final production configuration is complete.
+      - The new `LittlepayGroup` is then associated with the correct enrollment flow and transit agency using the dropdowns.
+    1. Cal-ITP creates a new `LittlepayConfig` in the Benefits test environment:
+      - Set Environment to **Testing** for production validation.
+        - This will be set back to QA after final production configuration is complete.
+      - Choose the new `TransitAgency`.
+      - Retrieve Audience and Client ID values for the **production** config from shared LastPass note.
+      - [Create the client secret in the Azure Key Vault](../tutorials/secrets.md) for the test environment, then paste its name in the Client Secret Name field.
+        - Be sure to refresh the secrets for this to take effect!
+          1. In the Azure portal, go to the App Service.
+          1. Inside the App Service, navigate to Settings -> Environment variables.
+          1. Click the **Pull reference values** button to force the App Service to bypass the 24-hour cache and fetch the latest values for Key Vault references. This triggers a graceful restart of the app.
+    1. Cal-ITP returns to the `TransitAgency` instance and selects the `LittlepayConfig` above as the agency's transit processor config and checks the **Active** box.
+
+=== "Switchio"
+
+    TK
+
+At this point, Cal-ITP and transit provider staff can coordinate to do on-the-ground testing using the [test client](https://test-benefits.calitp.org) to enroll a real card and testing it by tapping on a live payment validator.
+
+### Production validation testing
+
+1. Transit provider staff (or Cal-ITP staff) does live test in the field.
+1. Transit provider staff uses the Merchant Portal to verify the taps and discounts were successful.
+1. Cal-ITP uses logs from Azure to verify the user was associated to the customer group.
+1. Cal-ITP verifies that Amplitude analytic events are being sent.
+
+Next steps:
+
+- [Configure an agency for production](./c-configure-production.md)
+- [Post launch](./d-post-launch.md)
