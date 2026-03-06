@@ -2,13 +2,13 @@
 
 Once production validation is done, the transit provider can be added to the production Benefits database.
 
-_Typically performed by a Cal-ITP developer._
+_Most of these steps are typically performed by a Cal-ITP developer._
 
 === "Littlepay"
 
-    1.  Cal-ITP creates a customer group **for production use** in production Littlepay.
-    1.  Cal-ITP associates the group with the discount product [created previously during production validation](#configuration-for-production-validation).
-      - Once this is complete, verify that the setup is correct by using the [littlepay CLI](https://github.com/cal-itp/littlepay).
+    1.  Transit agency creates a customer group **for production use** in production Littlepay.
+    1.  Transit agency associates the group with the discount product [created previously during production validation](#configuration-for-production-validation).
+      - Once this is complete, Cal-ITP verifies that the setup is correct by using the [littlepay CLI](https://github.com/cal-itp/littlepay).
     1.  Cal-ITP creates a new `LittlepayGroup` in the Benefits prod environment:
       - Set the 'Group id' value to the corresponding **production** group ID.
       - The new `LittlepayGroup` is then associated with the correct enrollment flow and transit provider using the dropdowns.

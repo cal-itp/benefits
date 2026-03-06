@@ -8,12 +8,9 @@ _Typically performed by a Cal-ITP developer._
 
     For production validation, both customer groups and a discount product are needed.
 
-    1. Transit provider staff creates the discount product in production Littlepay (if it does not already exist).
-    1. Transit provider staff takes a screenshot of the discount product in the Merchant Portal, making sure the browser URL is visible, and sends that to Cal-ITP.
-    1. Cal-ITP creates the customer groups in production Littlepay.
-    1. Cal-ITP associates the groups with the product.
-      - _Typically performed by transit provider's Account Manager_
-      - Once this is complete, verify that the setup is correct by using the [littlepay CLI](https://github.com/cal-itp/littlepay). Example:
+    1. Transit provider staff creates the discount product and associated customer groups in production Littlepay.
+    1. Transit provider provides group names and ids to Cal-ITPstaff takes a screenshot of the discount product in the Merchant Portal, making sure the browser URL is visible, and sends that to Cal-ITP.
+    1. Once this is complete, Cal-ITP verifies that the setup is correct by using the [littlepay CLI](https://github.com/cal-itp/littlepay). Example:
 
         ```bash
         $ littlepay groups products
@@ -36,8 +33,8 @@ _Typically performed by a Cal-ITP developer._
         - This will be set back to the QA group value after final production configuration is complete.
       - The new `LittlepayGroup` is then associated with the correct enrollment flow and transit provider using the dropdowns.
     1. Cal-ITP creates a new `LittlepayConfig` in the Benefits test environment:
-      - Set Environment to **Testing** for production validation.
-        - This will be set back to QA after final production configuration is complete.
+      - Set Environment to **Production** for production validation.
+        - This will be set back to **Testing** after final production configuration is complete.
       - Choose the new `TransitAgency`.
       - Retrieve Audience and Client ID values for the **production** config from shared LastPass note.
       - Client Secret Name: `${agency_slug}-payment-processor-client-secret`
@@ -67,7 +64,7 @@ At this point, Cal-ITP and transit provider staff can coordinate to do on-the-gr
 ### Production validation testing
 
 1. Transit provider staff (or Cal-ITP staff) does live test in the field.
-1. Transit provider staff uses the Merchant Portal to verify the taps and discounts were successful.
+1. Transit provider staff verify the taps and confirm that discounts were applied.
 1. Cal-ITP uses logs from Azure to verify the user was associated to the customer group.
 1. Cal-ITP verifies that Amplitude analytic events are being sent.
 

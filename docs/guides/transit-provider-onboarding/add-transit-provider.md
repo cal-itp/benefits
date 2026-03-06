@@ -61,9 +61,9 @@ The steps to create a transit processor config and associate it with your new ag
 
     This work can begin once the transit provider has a contract in place with Littlepay.
 
-    - Cal-ITP uses the transit provider's Littlepay merchant ID to create a customer group in the Littlepay QA environment for each type of eligibility (e.g. older adult).
+    - Transit provider uses their Littlepay merchant ID to create a customer group in the Littlepay QA environment for each type of eligibility (e.g. older adult).
       - _Typically performed by transit provider's Account Manager_
-      - For each group that is created, a group ID will be returned and should be set as the `group_id` on a new `LittlepayGroup`.
+      - For each group that was created, a group ID will be returned and should be set as the `group_id` on a new `LittlepayGroup`.
       - The new `LittlepayGroup` is then associated with an enrollment flow and transit provider using the dropdowns. (See [Configuration data](../tutorials/load-sample-data.md) for more on loading the database.)
     - Cal-ITP requests and receives Littlepay Back Office API access (for both PROD and QA) for the new transit provider.
       - _Typically requested by a developer via email to Littlepay_
