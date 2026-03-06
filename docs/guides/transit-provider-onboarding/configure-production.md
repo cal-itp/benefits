@@ -15,7 +15,7 @@ _Most of these steps are typically performed by a Cal-ITP developer._
       - The new `LittlepayGroup` is then associated with the correct enrollment flow and transit provider using the dropdowns.
     1.  Cal-ITP creates a new `LittlepayConfig` in the Benefits prod environment:
       - Set Environment to **Production**.
-      - Choose the new `TransitAgency`.
+      - return to the `TransitAgency` and associate the new `LittlepayConfig` as its 'Transit processor config'.- Choose the new `TransitAgency`.
       - Retrieve Audience and Client ID values for the **production** config from shared LastPass note.
       - Client Secret Name: `${agency_slug}-payment-processor-client-secret`
       --8<-- "./inc/create-secret.md"
