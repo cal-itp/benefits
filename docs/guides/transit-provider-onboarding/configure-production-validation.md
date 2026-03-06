@@ -9,8 +9,7 @@ _Typically performed by a Cal-ITP developer._
     For production validation, both customer groups and a discount product are needed.
 
     1. Transit provider staff creates the discount product and associated customer groups in production Littlepay.
-    1. Transit provider provides group names and ids to Cal-ITPstaff takes a screenshot of the discount product in the Merchant Portal, making sure the browser URL is visible, and sends that to Cal-ITP.
-    1. Once this is complete, Cal-ITP verifies that the setup is correct by using the [littlepay CLI](https://github.com/cal-itp/littlepay). Example:
+    1. Transit provider provides group names and ids and Cal-ITP verifies that the setup is correct by using the [Littlepay CLI](https://github.com/cal-itp/littlepay). Example:
 
         ```bash
         $ littlepay groups products
@@ -32,10 +31,11 @@ _Typically performed by a Cal-ITP developer._
       - Set the 'Group id' to the corresponding **production** group ID (from production Littlepay) for production validation.
         - This will be set back to the QA group value after final production configuration is complete.
       - The new `LittlepayGroup` is then associated with the correct enrollment flow and transit provider using the dropdowns.
+    1.  Cal-ITP [creates a `TransitAgency`](./add-transit-provider.md#add-the-transit-provider-to-the-application) in the test environment
     1. Cal-ITP creates a new `LittlepayConfig` in the Benefits test environment:
       - Set Environment to **Production** for production validation.
         - This will be set back to **Testing** after final production configuration is complete.
-      - Choose the new `TransitAgency`.
+      - return to the `TransitAgency` and associate the new `LittlepayConfig` as its 'Transit processor config'.
       - Retrieve Audience and Client ID values for the **production** config from shared LastPass note.
       - Client Secret Name: `${agency_slug}-payment-processor-client-secret`
       --8<-- "./inc/create-secret.md"
@@ -43,6 +43,7 @@ _Typically performed by a Cal-ITP developer._
 
 === "Switchio"
 
+    1.  Cal-ITP [creates a `TransitAgency`](./add-transit-provider.md#add-the-transit-provider-to-the-application) in the test environment
     1. Cal-ITP creates a new `SwitchioConfig` in the Benefits test environment:
       - Environment: **Testing**
       - Label: `${agency_short_name}`
@@ -70,5 +71,5 @@ At this point, Cal-ITP and transit provider staff can coordinate to do on-the-gr
 
 Next steps:
 
-- [Configure for production](./c-configure-production.md)
-- [Post-launch](./d-post-launch.md)
+- [Configure for production](./configure-production.md)
+- [Post-launch](./post-launch.md)
