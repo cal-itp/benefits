@@ -9,8 +9,14 @@ locals {
 
   subnet_prefix = "SNET-CDT-PUB-VIP-CALITP-${local.env_letter}"
   network_subnets = {
-    "APP" = ["10.0.0.0/26"]  # 64 addresses - 10.0.4.0 to 10.0.4.63
-    "DB"  = ["10.0.0.64/26"] # 64 addresses - 10.0.0.64 to 10.0.0.127
+    "APP" = {
+      prefix     = ["10.0.0.0/26"] # 64 addresses - 10.0.4.0 to 10.0.4.63
+      delegation = "Microsoft.Web/serverFarms"
+    }
+    "DB" = {
+      prefix     = ["10.0.0.64/26"] # 64 addresses - 10.0.0.64 to 10.0.0.127
+      delegation = "Microsoft.DBforPostgreSQL/flexibleServers"
+    }
   }
 }
 
@@ -28,13 +34,20 @@ resource "azurerm_virtual_network" "main" {
 
 # The subnets for the primary VNet
 resource "azurerm_subnet" "main" {
-  # This for_each loop creates a subnet for each item in the network_subnets variable.
+  # This for_each loop creates a subnet for each item in the network_subnets map.
   for_each = local.network_subnets
 
   name                 = "${local.subnet_prefix}-${each.key}"
   virtual_network_name = azurerm_virtual_network.main.name
   resource_group_name  = data.azurerm_resource_group.main.name
-  address_prefixes     = each.value
+  address_prefixes     = each.value.prefix
+
+  delegation {
+    name = "delegation-${lower(each.key)}"
+    service_delegation {
+      name = each.value.delegation
+    }
+  }
 
   default_outbound_access_enabled = false
 }
