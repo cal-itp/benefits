@@ -51,3 +51,16 @@ resource "azurerm_subnet" "main" {
 
   default_outbound_access_enabled = false
 }
+
+# DNS Zone required for Private Access
+resource "azurerm_private_dns_zone" "db" {
+  name                = "privatelink.postgres.database.azure.com"
+  resource_group_name = data.azurerm_resource_group.main.name
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "db" {
+  name                  = "db-link-${lower(local.env_letter)}"
+  resource_group_name   = data.azurerm_resource_group.main.name
+  private_dns_zone_name = azurerm_private_dns_zone.db.name
+  virtual_network_id    = azurerm_virtual_network.main.id
+}
