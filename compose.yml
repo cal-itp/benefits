@@ -20,6 +20,7 @@ services:
     entrypoint: sleep infinity
     depends_on:
       - server
+      - postgres
     ports:
       - "${DJANGO_LOCAL_PORT:-8000}:8000"
     volumes:
