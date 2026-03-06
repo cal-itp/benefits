@@ -90,7 +90,7 @@ include = ["benefits", "tests/pytest"]
 typeCheckingMode = "off"
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "benefits.settings"
+DJANGO_SETTINGS_MODULE = "tests.pytest.settings"
 markers = [
     "request_path: use with session_request to initialize with the given path",
 ]
