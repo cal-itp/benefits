@@ -8,7 +8,7 @@ jobs:
   add-to-project-issues:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/add-to-project@main
+      - uses: actions/add-to-project@1
         with:
           project-url: ${{ secrets.USB_PROJECT_URL }}
           github-token: ${{ secrets.USB_PROJECT_TOKEN }}
