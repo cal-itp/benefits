@@ -40,7 +40,7 @@ repos:
           - python
 
   - repo: https://github.com/pycqa/bandit
-    rev: 1.9.3
+    rev: 1.9.4
     hooks:
       - id: bandit
         args: ["-ll"]
@@ -54,7 +54,7 @@ repos:
           - python
 
   - repo: https://github.com/pycqa/isort
-    rev: 8.0.0
+    rev: 8.0.1
     hooks:
       - id: isort
         args: ["--profile", "black"]
@@ -64,7 +64,7 @@ repos:
   # if we end up bitten again by drift, i recommend we consider running 'npm install prettier'
   # explicitly in the Dockerfile, as the VS Code plugin will honor it
   - repo: https://github.com/JoC0de/pre-commit-prettier
-    rev: v3.7.4
+    rev: v3.8.1
     hooks:
       - id: prettier
         types_or: [javascript, css]
