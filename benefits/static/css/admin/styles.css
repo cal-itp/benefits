@@ -267,3 +267,61 @@ a.sso-login-btn:hover {
 .login ul.messagelist li:not(:first-child) {
   margin-top: 8px 0 0 0;
 }
+
+/*
+  indeterminate progress bar
+  adapted from https://fastbootstrap.com/components/progress-bar/ (MIT licensed)
+*/
+.progress {
+  --bs-progress-height: 0.5rem;
+  --bs-progress-border-radius: 0;
+  --bs-progress-bar-bg: var(--primary-color);
+
+  position: relative;
+}
+
+.progress-indeterminate {
+  .progress-bar {
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      background-color: inherit;
+    }
+
+    &:before {
+      animation: animation-indeterminate 5s ease infinite;
+    }
+
+    &:after {
+      animation: animation-indeterminate-short 5s ease 0.5s infinite;
+    }
+  }
+}
+
+@keyframes animation-indeterminate {
+  0% {
+    left: -5%;
+    width: 5%;
+  }
+
+  100% {
+    left: 130%;
+    width: 100%;
+  }
+}
+
+@keyframes animation-indeterminate-short {
+  0% {
+    left: -80%;
+    width: 80%;
+  }
+
+  100% {
+    left: 110%;
+    width: 10%;
+  }
+}
