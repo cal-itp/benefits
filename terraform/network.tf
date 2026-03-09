@@ -64,3 +64,40 @@ resource "azurerm_private_dns_zone_virtual_network_link" "db" {
   private_dns_zone_name = azurerm_private_dns_zone.db.name
   virtual_network_id    = azurerm_virtual_network.main.id
 }
+
+# NAT Gateway for the App Service's outbound connectivity (IdG, Sentry, Google SSO)
+resource "azurerm_nat_gateway" "main" {
+  name                = "NAT-CDT-PUB-VIP-CALITP-${local.env_letter}"
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
+  sku_name            = "Standard"
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
+}
+
+# Public IP for the NAT Gateway
+resource "azurerm_public_ip" "nat" {
+  name                = "PIP-CDT-PUB-VIP-CALITP-${local.env_letter}"
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
+}
+
+# Associate public IP to NAT Gateway
+resource "azurerm_nat_gateway_public_ip_association" "main" {
+  nat_gateway_id       = azurerm_nat_gateway.main.id
+  public_ip_address_id = azurerm_public_ip.nat.id
+}
+
+# Associate NAT Gateway with the APP Subnet
+resource "azurerm_subnet_nat_gateway_association" "app" {
+  subnet_id      = azurerm_subnet.main["APP"].id
+  nat_gateway_id = azurerm_nat_gateway.main.id
+}
