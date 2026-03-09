@@ -70,6 +70,7 @@ The steps to create a transit processor config and associate it with your new ag
 === "Switchio"
 
     For development and testing, the agency can use the same INT credentials as CST (stored in LastPass).
+
     - Switchio API credentials are typically requested by a Cal-ITP developer in Slack.
     - A `SwitchioGroup` is created in admin for each enrollment flow using identifiers common to other agencies.
 
