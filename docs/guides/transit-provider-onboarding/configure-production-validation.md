@@ -35,7 +35,7 @@ _Typically performed by a Cal-ITP developer._
     1. Cal-ITP creates a new `LittlepayConfig` in the Benefits test environment:
       - Set Environment to **Production** for production validation.
         - This will be set back to **Testing** after final production configuration is complete.
-      - return to the `TransitAgency` and associate the new `LittlepayConfig` as its 'Transit processor config'.
+      - Return to the `TransitAgency` and associate the new `LittlepayConfig` as its 'Transit processor config'.
       - Retrieve Audience and Client ID values for the **production** config from shared LastPass note.
       - Client Secret Name: `${agency_slug}-payment-processor-client-secret`
       --8<-- "./inc/create-secret.md"
