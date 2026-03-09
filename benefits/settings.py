@@ -305,7 +305,7 @@ LOGGING = {
     },
 }
 
-sentry.configure()
+sentry.configure(RUNTIME_ENVIRONMENT())
 
 # Analytics configuration
 
