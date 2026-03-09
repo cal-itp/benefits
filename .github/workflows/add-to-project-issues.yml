@@ -8,7 +8,20 @@ jobs:
   add-to-project-issues:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/add-to-project@main
+      - uses: actions/add-to-project@1
         with:
           project-url: ${{ secrets.USB_PROJECT_URL }}
           github-token: ${{ secrets.USB_PROJECT_TOKEN }}
+
+  # issues created by our onboarding scaffolding are already shaped
+  agency-onboarding-status:
+    runs-on: ubuntu-latest
+    if: "contains( github.event.issue.labels.*.name, 'agency-onboarding')"
+    steps:
+      - uses: EndBug/project-fields@v2
+        with:
+          operation: set
+          fields: Status
+          values: "Todo"
+          project_url: ${{ secrets.USB_PROJECT_URL }}
+          github_token: ${{ secrets.USB_PROJECT_TOKEN }}
