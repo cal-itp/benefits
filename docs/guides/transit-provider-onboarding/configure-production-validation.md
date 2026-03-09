@@ -9,7 +9,7 @@ _Typically performed by a Cal-ITP developer._
     For production validation, both customer groups and a discount product are needed.
 
     1. Transit provider staff creates the discount product and associated customer groups in production Littlepay.
-    1. Transit provider provides group names and ids and Cal-ITP verifies that the setup is correct by using the [Littlepay CLI](https://github.com/cal-itp/littlepay). Example:
+    1. Transit provider staff give group names and ids to their Account Manager and Cal-ITP verifies that the setup is correct by using the [Littlepay CLI](https://github.com/cal-itp/littlepay). Example:
 
         ```bash
         $ littlepay groups products
