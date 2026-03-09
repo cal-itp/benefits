@@ -29,5 +29,5 @@ jobs:
 
       - uses: actions/add-to-project@1
         with:
-          project-url: ${{ secrets.CS_PROJECT_URL }}
+          project-url: ${{ vars.CS_PROJECT_URL }}
           github-token: ${{ secrets.CS_PROJECT_TOKEN }}
