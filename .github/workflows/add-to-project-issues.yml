@@ -25,3 +25,8 @@ jobs:
           values: "Todo"
           project_url: ${{ secrets.USB_PROJECT_URL }}
           github_token: ${{ secrets.USB_PROJECT_TOKEN }}
+
+      - uses: actions/add-to-project@1
+        with:
+          project-url: ${{ secrets.CS_PROJECT_URL }}
+          github-token: ${{ secrets.GH_PROJECTS_TOKEN }}
