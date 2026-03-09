@@ -1,0 +1,7 @@
+# get control over order explicitly instead of relying on alphabetization
+title: Transit provider onboarding
+arrange:
+  - add-transit-provider.md
+  - configure-production-validation.md
+  - configure-production.md
+  - post-launch.md
