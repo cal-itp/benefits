@@ -14,6 +14,7 @@ jobs:
           github-token: ${{ secrets.USB_PROJECT_TOKEN }}
 
   # issues created by our onboarding scaffolding are already shaped
+  # and should be added to the Customer Success project too
   agency-onboarding-status:
     runs-on: ubuntu-latest
     if: "contains( github.event.issue.labels.*.name, 'agency-onboarding')"
@@ -25,3 +26,8 @@ jobs:
           values: "Todo"
           project_url: ${{ secrets.USB_PROJECT_URL }}
           github_token: ${{ secrets.USB_PROJECT_TOKEN }}
+
+      - uses: actions/add-to-project@1
+        with:
+          project-url: ${{ vars.CS_PROJECT_URL }}
+          github-token: ${{ secrets.CS_PROJECT_TOKEN }}
