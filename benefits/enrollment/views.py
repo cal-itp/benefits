@@ -120,7 +120,7 @@ class RetryView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
     """View handler for a recoverable failure condition."""
 
     template_name = "enrollment/retry.html"
-    enrollment_method = models.EnrollmentMethods.DIGITAL
+    enrollment_method = models.EnrollmentMethods.SELF_SERVICE
 
     def dispatch(self, request, *args, **kwargs):
         # for Littlepay, the Javascript in enrollment_littlepay/index.html sends a form POST to this view

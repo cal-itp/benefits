@@ -177,7 +177,7 @@ class TestRetryView:
             app_request_post,
             enrollment_group=model_LittlepayGroup.group_id,
             transit_processor="littlepay",
-            enrollment_method=models.EnrollmentMethods.DIGITAL,
+            enrollment_method=models.EnrollmentMethods.SELF_SERVICE,
         )
 
 
