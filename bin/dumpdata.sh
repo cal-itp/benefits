@@ -9,7 +9,7 @@ read -p "Enter the commit on main just prior to model changes: " pre_model_chang
 
 # Checkout that commit and reset the database.
 git checkout $pre_model_change_commit
-./bin/reset_db.sh
+./bin/setup.sh
 
 # Prompt the user to checkout the commit with the new model changes.
 read -p "Enter the commit with the new model changes: " post_model_change_commit
