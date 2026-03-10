@@ -15,7 +15,7 @@ class TestEnrollmentFlowSelectionForm:
     @pytest.fixture(autouse=True)
     def init(self, model_TransitAgency):
         self.digital = models.EnrollmentFlow.objects.create(
-            supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL],
+            supported_enrollment_methods=[models.EnrollmentMethods.SELF_SERVICE],
             label="Digital",
         )
         self.in_person = models.EnrollmentFlow.objects.create(
@@ -23,7 +23,7 @@ class TestEnrollmentFlowSelectionForm:
             label="In-Person",
         )
         self.both = models.EnrollmentFlow.objects.create(
-            supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
+            supported_enrollment_methods=[models.EnrollmentMethods.SELF_SERVICE, models.EnrollmentMethods.IN_PERSON],
             label="Both",
         )
         model_TransitAgency.enrollment_flows.set([self.digital, self.in_person, self.both])

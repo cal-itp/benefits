@@ -16,7 +16,7 @@ class ReturnedEnrollmentEvent(core.Event):
         enrollment_group,
         transit_processor,
         error=None,
-        enrollment_method=models.EnrollmentMethods.DIGITAL,
+        enrollment_method=models.EnrollmentMethods.SELF_SERVICE,
         extra_claims=None,
         card_category=None,
         card_scheme=None,
@@ -39,7 +39,7 @@ class ReturnedEnrollmentEvent(core.Event):
 class FailedPretokenizationRequestEvent(core.Event):
     """Analytics event representing a failure to do the pre-tokenization step for card tokenization."""
 
-    def __init__(self, request, transit_processor, status_code=None, enrollment_method=models.EnrollmentMethods.DIGITAL):
+    def __init__(self, request, transit_processor, status_code=None, enrollment_method=models.EnrollmentMethods.SELF_SERVICE):
         super().__init__(request, "failed pre-tokenization request", enrollment_method)
         self.update_event_properties(transit_processor=transit_processor)
         if status_code is not None:
@@ -52,7 +52,7 @@ def returned_error(
     agency,
     enrollment_group,
     transit_processor,
-    enrollment_method: str = models.EnrollmentMethods.DIGITAL,
+    enrollment_method: str = models.EnrollmentMethods.SELF_SERVICE,
 ):
     """Send the "returned enrollment" analytics event with an error status and message."""
     core.send_event(
@@ -73,7 +73,7 @@ def returned_retry(
     agency,
     enrollment_group,
     transit_processor,
-    enrollment_method: str = models.EnrollmentMethods.DIGITAL,
+    enrollment_method: str = models.EnrollmentMethods.SELF_SERVICE,
 ):
     """Send the "returned enrollment" analytics event with a retry status."""
     core.send_event(
@@ -93,7 +93,7 @@ def returned_success(
     agency,
     enrollment_group,
     transit_processor,
-    enrollment_method: str = models.EnrollmentMethods.DIGITAL,
+    enrollment_method: str = models.EnrollmentMethods.SELF_SERVICE,
     extra_claims=None,
     card_scheme=None,
     card_category=None,
@@ -115,7 +115,7 @@ def returned_success(
 
 
 def failed_pretokenization_request(
-    request, transit_processor, status_code=None, enrollment_method: str = models.EnrollmentMethods.DIGITAL
+    request, transit_processor, status_code=None, enrollment_method: str = models.EnrollmentMethods.SELF_SERVICE
 ):
     """Send the "failed pre-tokenization request" analytics event with the response status code."""
     core.send_event(

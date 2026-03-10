@@ -132,13 +132,13 @@ def test_EnrollmentEvent_create(model_TransitAgency, model_EnrollmentFlow):
     event = EnrollmentEvent.objects.create(
         transit_agency=model_TransitAgency,
         enrollment_flow=model_EnrollmentFlow,
-        enrollment_method=EnrollmentMethods.DIGITAL,
+        enrollment_method=EnrollmentMethods.SELF_SERVICE,
         verified_by="Test",
     )
 
     assert event.transit_agency == model_TransitAgency
     assert event.enrollment_flow == model_EnrollmentFlow
-    assert event.enrollment_method == EnrollmentMethods.DIGITAL
+    assert event.enrollment_method == EnrollmentMethods.SELF_SERVICE
     assert event.verified_by == "Test"
     # default enrollment_datetime should be nearly the same as the timestamp
     assert event.enrollment_datetime - ts <= timedelta(milliseconds=1)
@@ -148,7 +148,7 @@ def test_EnrollmentEvent_create(model_TransitAgency, model_EnrollmentFlow):
     event = EnrollmentEvent(
         transit_agency=model_TransitAgency,
         enrollment_flow=model_EnrollmentFlow,
-        enrollment_method=EnrollmentMethods.DIGITAL,
+        enrollment_method=EnrollmentMethods.SELF_SERVICE,
         verified_by="Test",
         enrollment_datetime=dt,
         expiration_datetime=expiry,
@@ -165,7 +165,7 @@ def test_EnrollmentEvent_str(model_TransitAgency, model_EnrollmentFlow):
     event = EnrollmentEvent.objects.create(
         transit_agency=model_TransitAgency,
         enrollment_flow=model_EnrollmentFlow,
-        enrollment_method=EnrollmentMethods.DIGITAL,
+        enrollment_method=EnrollmentMethods.SELF_SERVICE,
         verified_by="Test",
         enrollment_datetime=ts,
     )
