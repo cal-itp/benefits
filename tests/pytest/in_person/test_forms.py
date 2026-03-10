@@ -6,8 +6,8 @@ from benefits.in_person.forms import InPersonEligibilityForm
 
 @pytest.mark.django_db
 def test_eligibility_logged_in_filtering_flows(model_TransitAgency):
-    digital = models.EnrollmentFlow.objects.create(
-        supported_enrollment_methods=[models.EnrollmentMethods.SELF_SERVICE], label="Digital"
+    self_service = models.EnrollmentFlow.objects.create(
+        supported_enrollment_methods=[models.EnrollmentMethods.SELF_SERVICE], label="Self-Service"
     )
     in_person = models.EnrollmentFlow.objects.create(
         supported_enrollment_methods=[models.EnrollmentMethods.IN_PERSON],
@@ -17,11 +17,11 @@ def test_eligibility_logged_in_filtering_flows(model_TransitAgency):
         supported_enrollment_methods=[models.EnrollmentMethods.SELF_SERVICE, models.EnrollmentMethods.IN_PERSON],
         label="Both",
     )
-    model_TransitAgency.enrollment_flows.set([digital, in_person, both])
+    model_TransitAgency.enrollment_flows.set([self_service, in_person, both])
     model_TransitAgency.save()
     form = InPersonEligibilityForm(agency=model_TransitAgency)
 
     filtered_flow_ids = [choice[0] for choice in form.fields["flow"].choices]
 
     assert in_person.id, both.id in filtered_flow_ids
-    assert digital.id not in filtered_flow_ids
+    assert self_service.id not in filtered_flow_ids
