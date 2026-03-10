@@ -209,7 +209,7 @@
     "fields": {
       "system_name": "senior",
       "label": "Older Adult",
-      "supported_enrollment_methods": "digital,in_person",
+      "supported_enrollment_methods": "self_service,in_person",
       "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
       "sign_out_link_template": "core/includes/link--sign-out--login-gov.html",
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
@@ -227,7 +227,7 @@
     "fields": {
       "system_name": "veteran",
       "label": "U.S. Veteran",
-      "supported_enrollment_methods": "digital",
+      "supported_enrollment_methods": "self_service",
       "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
       "sign_out_link_template": "core/includes/link--sign-out--login-gov.html",
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
@@ -245,7 +245,7 @@
     "fields": {
       "system_name": "courtesy_card",
       "label": "Agency Cardholder",
-      "supported_enrollment_methods": "digital",
+      "supported_enrollment_methods": "self_service",
       "sign_out_button_template": "",
       "sign_out_link_template": "",
       "oauth_config": null,
@@ -263,7 +263,7 @@
     "fields": {
       "system_name": "calfresh",
       "label": "CalFresh Cardholder",
-      "supported_enrollment_methods": "digital",
+      "supported_enrollment_methods": "self_service",
       "sign_out_button_template": "core/includes/button--sign-out--login-gov.html",
       "sign_out_link_template": "core/includes/link--sign-out--login-gov.html",
       "oauth_config": "00e5cbdb-242a-4df5-a147-45d0c1e4dceb",
@@ -281,7 +281,7 @@
     "fields": {
       "system_name": "medicare",
       "label": "Medicare Cardholder",
-      "supported_enrollment_methods": "digital,in_person",
+      "supported_enrollment_methods": "self_service,in_person",
       "sign_out_button_template": "",
       "sign_out_link_template": "",
       "oauth_config": "7687895d-c3d6-4063-a26e-518514fb01b2",
@@ -339,7 +339,7 @@
     "fields": {
       "transit_agency": 1,
       "enrollment_flow": 3,
-      "enrollment_method": "digital",
+      "enrollment_method": "self_service",
       "verified_by": "http://server:8000/verify",
       "enrollment_datetime": "2024-09-13T16:00:00Z",
       "expiration_datetime": null,
@@ -365,7 +365,7 @@
     "fields": {
       "transit_agency": 1,
       "enrollment_flow": 1,
-      "enrollment_method": "digital",
+      "enrollment_method": "self_service",
       "verified_by": "benefits-oauth-client-name",
       "enrollment_datetime": "2024-09-12T18:25:25Z",
       "expiration_datetime": null,
@@ -378,7 +378,7 @@
     "fields": {
       "transit_agency": 1,
       "enrollment_flow": 4,
-      "enrollment_method": "digital",
+      "enrollment_method": "self_service",
       "verified_by": "benefits-oauth-client-name",
       "enrollment_datetime": "2024-09-11T20:00:00Z",
       "expiration_datetime": "2025-09-12T07:00:00Z",
