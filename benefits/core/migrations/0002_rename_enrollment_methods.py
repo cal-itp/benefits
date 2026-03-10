@@ -4,6 +4,27 @@ import multiselectfield.db.fields
 from django.db import migrations, models
 
 
+def update_digital_method(apps, schema_editor):
+    """Update models that previously used EnrollmentMethods.DIGITAL with the new value."""
+    EnrollmentFlow = apps.get_model("core", "EnrollmentFlow")
+    EnrollmentEvent = apps.get_model("core", "EnrollmentEvent")
+
+    for flow in EnrollmentFlow.objects.all():
+        original_methods = list(flow.supported_enrollment_methods)
+        new_methods = []
+        if "digital" in original_methods:
+            new_methods.append("self_service")
+        if "in_person" in original_methods:
+            new_methods.append("in_person")
+        flow.supported_enrollment_methods = new_methods
+        flow.save()
+
+    for event in EnrollmentEvent.objects.all():
+        if event.enrollment_method == "digital":
+            event.enrollment_method = "self_service"
+            event.save()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -26,4 +47,5 @@ class Migration(migrations.Migration):
                 max_length=50,
             ),
         ),
+        migrations.RunPython(update_digital_method),
     ]
