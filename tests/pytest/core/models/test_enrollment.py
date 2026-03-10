@@ -28,7 +28,10 @@ class TestEligibilityApiVerificationRequest:
 
 @pytest.mark.django_db
 def test_EnrollmentFlow_supported_enrollment_methods(model_EnrollmentFlow_with_scope_and_claim):
-    assert model_EnrollmentFlow_with_scope_and_claim.supported_enrollment_methods == ["digital", "in_person"]
+    assert model_EnrollmentFlow_with_scope_and_claim.supported_enrollment_methods == [
+        EnrollmentMethods.SELF_SERVICE,
+        EnrollmentMethods.IN_PERSON,
+    ]
 
 
 @pytest.mark.django_db
