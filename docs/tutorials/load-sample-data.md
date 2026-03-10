@@ -48,11 +48,11 @@ Compiler developers, instead of setting these manually, you can load some of the
 
 A local Django database will be initialized upon first startup of the devcontainer.
 
-To rebuild the local Django database, run the [`bin/reset_db.sh`][reset-db] script from within the repository root,
+To rebuild the local Django database, run the [`bin/setup.sh`][setup] script from within the repository root,
 inside the devcontainer:
 
 ```bash
-bin/reset_db.sh
+bin/setup.sh
 ```
 
 See the [Django Environment Variables](../reference/environment-variables.md#django) section for details about how to configure the local
@@ -69,5 +69,5 @@ When models are updated, our fixtures will need to be updated.
 [django-load-initial-data]: https://docs.djangoproject.com/en/stable/howto/initial-data/
 [eligibility-server]: https://docs.calitp.org/eligibility-server
 [init]: https://github.com/cal-itp/benefits/blob/main/bin/init.sh
-[reset-db]: https://github.com/cal-itp/benefits/blob/main/bin/reset_db.sh
+[setup]: https://github.com/cal-itp/benefits/blob/main/bin/setup.sh
 [sample-fixtures]: https://github.com/cal-itp/benefits/tree/main/benefits/core/migrations/local_fixtures.json
