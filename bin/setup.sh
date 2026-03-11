@@ -22,8 +22,8 @@ else
         # definitely reset if the database file is not found
         DB_RESET=true
     else
-        # use the DJANGO_DB_RESET env var or default to true
-        DB_RESET="${DJANGO_DB_RESET:-true}"
+        # use the DJANGO_DB_RESET env var or default to false
+        DB_RESET="${DJANGO_DB_RESET:-false}"
     fi
 
     if [[ $DB_RESET = true ]]; then

@@ -111,4 +111,4 @@ RUN --mount=type=cache,id=pipcache,target=${PIP_CACHE_DIR},uid=${USER_UID},gid=$
 
 # configure container executable
 ENTRYPOINT ["/bin/bash"]
-CMD ["bin/start.sh"]
+CMD ["-c", "bin/setup.sh; bin/start.sh"]
