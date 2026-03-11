@@ -7,6 +7,8 @@ services:
       dockerfile: appcontainer/Dockerfile
     image: benefits_client:latest
     env_file: .env
+    depends_on:
+      - postgres
     ports:
       - "${DJANGO_LOCAL_PORT:-8000}:8000"
 
