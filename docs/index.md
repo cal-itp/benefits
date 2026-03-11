@@ -90,18 +90,18 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 
 | Transit provider                                    | Initial launch date | Older adults | Medicare cardholders | U.S. Veterans | CalFresh cardholders | Agency card |
 | --------------------------------------------------- | ------------------- | ------------ | -------------------- | ------------- | -------------------- | ----------- |
-| **Monterey-Salinas Transit**                        | 12/2021             | ✅           | ✅                   | ✅            | ―                    | ✅
-| **Santa Barbara Metropolitan Transit District**     | 10/2023             | ✅           | ✅                   | ―             | ―                    | ✅
-| **Sacramento Regional Transit District**            | 10/2024             | ✅           | ✅                   | ✅            | ―                    | ―
-| **Nevada County Connects**                          | 03/2025             | ✅           | ✅                   | ✅            | ―                    | ―
-| **Ventura County Transportation Commission**        | 10/2025             | ✅           | ✅                   | ―             | ―                    | ―
-| **San Luis Obispo Regional Transit**                | 12/2025             | ✅           | ✅                   | ―             | ―                    | ―
-| **El Dorado Transit Authority**                     | 01/2026             | ✅           | ✅                   | ―             | ―                    | ―
-| **Redding Area Bus Authority**                      | 02/2026             | ✅           | ✅                   | ✅            | ✅                   | ―
-| **City of San Luis Obispo**                         | 04/2026 (target)    | \*           | \*                   | \*            | \*                   | \*
-| **City of Roseville**                               | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*
-| **Santa Cruz Metropolitan Transit District**        | Planned             | \*           | \*                   | \*            | \*                   | \*
-| **Santa Barbara County Association of Governments** | Planned             | \*           | \*                   | \*            | \*                   | \*
+| **Monterey-Salinas Transit**                        | 12/2021             | ✅           | ✅                   | ✅            | ―                    | ✅          |
+| **Santa Barbara Metropolitan Transit District**     | 10/2023             | ✅           | ✅                   | ―             | ―                    | ✅          |
+| **Sacramento Regional Transit District**            | 10/2024             | ✅           | ✅                   | ✅            | ―                    | ―           |
+| **Nevada County Connects**                          | 03/2025             | ✅           | ✅                   | ✅            | ―                    | ―           |
+| **Ventura County Transportation Commission**        | 10/2025             | ✅           | ✅                   | ―             | ―                    | ―           |
+| **San Luis Obispo Regional Transit**                | 12/2025             | ✅           | ✅                   | ―             | ―                    | ―           |
+| **El Dorado Transit Authority**                     | 01/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
+| **Redding Area Bus Authority**                      | 02/2026             | ✅           | ✅                   | ✅            | ✅                   | ―           |
+| **City of San Luis Obispo**                         | 04/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **City of Roseville**                               | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **Santa Cruz Metropolitan Transit District**        | Planned             | \*           | \*                   | \*            | \*                   | \*          |
+| **Santa Barbara County Association of Governments** | Planned             | \*           | \*                   | \*            | \*                   | \*          |
 
 ## Supported enrollment pathways
 
@@ -197,4 +197,4 @@ All code changes are reviewed by at least one other member of the engineering te
 [hosting]: explanation/deployment.md
 [littlepay]: https://littlepay.com/
 [switchio]: https://switchio.com/transport/
-[i18n]: https://docs.djangoproject.com/en/5.0/topics/i18n/
+[i18n]: https://docs.djangoproject.com/en/stable/topics/i18n/

@@ -8,7 +8,7 @@ and [`enrollment_switchio`][switchio-models] apps for their individual subclasse
 of the base `EnrollmentGroup` and `TransitProcessorConfig` models.
 
 The Cal-ITP Benefits database mostly acts as a read-only configuration store.
-Runtime configuration changes can be persisted via [Django's Admin interface](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/).
+Runtime configuration changes can be persisted via [Django's Admin interface](https://docs.djangoproject.com/en/stable/ref/contrib/admin/).
 
 ## Updating models
 

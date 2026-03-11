@@ -55,7 +55,7 @@ If blank or an invalid key, analytics events aren't captured (though may still b
 
 !!! tldr "Django docs"
 
-    [Settings: `ALLOWS_HOSTS`](https://docs.djangoproject.com/en/5.0/ref/settings/#allowed-hosts)
+    [Settings: `ALLOWS_HOSTS`](https://docs.djangoproject.com/en/stable/ref/settings/#allowed-hosts)
 
 A list of strings representing the host/domain names that this Django site can serve.
 
@@ -112,7 +112,7 @@ Boolean:
 
 !!! tldr "Django docs"
 
-    [Settings: `DEBUG`](https://docs.djangoproject.com/en/5.0/ref/settings/#debug)
+    [Settings: `DEBUG`](https://docs.djangoproject.com/en/stable/ref/settings/#debug)
 
 Boolean:
 
@@ -141,7 +141,7 @@ From inside the container, the app is always listening on port `8000`.
 
 !!! tldr "Django docs"
 
-    [Settings: `LOGGING`](https://docs.djangoproject.com/en/5.0/ref/settings/#logging)
+    [Settings: `LOGGING`](https://docs.djangoproject.com/en/stable/ref/settings/#logging)
 
 The log level used in the application's logging configuration.
 Defaults to `DEBUG` when Django is running in debug mode and `WARNING` otherwise.
@@ -156,7 +156,7 @@ By default the application sends logs to `stdout`.
 
 !!! tldr "Django docs"
 
-    [Settings: `SECRET_KEY`](https://docs.djangoproject.com/en/5.0/ref/settings/#secret-key)
+    [Settings: `SECRET_KEY`](https://docs.djangoproject.com/en/stable/ref/settings/#secret-key)
 
 Django's primary secret, keep this safe!
 
@@ -192,7 +192,7 @@ The username of the Django Admin superuser created when resetting the database.
 
 !!! tldr "Django docs"
 
-    [Settings: `CSRF_TRUSTED_ORIGINS`](https://docs.djangoproject.com/en/5.0/ref/settings/#csrf-trusted-origins)
+    [Settings: `CSRF_TRUSTED_ORIGINS`](https://docs.djangoproject.com/en/stable/ref/settings/#csrf-trusted-origins)
 
 Comma-separated list of hosts which are trusted origins for unsafe requests (e.g. POST)
 
@@ -208,7 +208,7 @@ Comma-separated list of User-Agent strings which, when present as an HTTP header
 
 !!! tldr "Django docs"
 
-    [The Django admin site](https://docs.djangoproject.com/en/5.0/ref/contrib/admin/)
+    [The Django admin site](https://docs.djangoproject.com/en/stable/ref/contrib/admin/)
 
 The configuration values that can be stored in the application database are managed directly in the Django Admin interface at the `/admin` endpoint.
 
@@ -230,7 +230,7 @@ In deployed instances, this is automatically set by Terraform by referencing the
 
 !!! tldr "Django docs"
 
-    [Settings: `DEFAULT_FROM_EMAIL`](https://docs.djangoproject.com/en/5.2/ref/settings/#default-from-email)
+    [Settings: `DEFAULT_FROM_EMAIL`](https://docs.djangoproject.com/en/stable/ref/settings/#default-from-email)
 
 The email address used by default in the `From:` header of outgoing emails.
 
