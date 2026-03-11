@@ -101,3 +101,66 @@ resource "azurerm_subnet_nat_gateway_association" "app" {
   subnet_id      = azurerm_subnet.main["APP"].id
   nat_gateway_id = azurerm_nat_gateway.main.id
 }
+
+# Network Security Group for the APP Subnet
+resource "azurerm_network_security_group" "app" {
+  name                = "NSG-CDT-PUB-VIP-CALITP-${local.env_letter}-APP"
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
+
+  # Allow traffic out to the Internet
+  # (Sentry, Google, IdG, Transit Processors, Eligibility Servers)
+  security_rule {
+    name                       = "AllowHTTPSOutbound"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "443"
+    source_address_prefix      = "*"
+    destination_address_prefix = "Internet"
+    access                     = "Allow"
+    priority                   = 100
+    direction                  = "Outbound"
+  }
+}
+
+resource "azurerm_subnet_network_security_group_association" "app" {
+  subnet_id                 = azurerm_subnet.main["APP"].id
+  network_security_group_id = azurerm_network_security_group.app.id
+}
+
+# Network Security Group for the DB Subnet
+resource "azurerm_network_security_group" "db" {
+  name                = "NSG-CDT-PUB-VIP-CALITP-${local.env_letter}-DB"
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
+
+  # Only allow traffic from the APP subnet to the DB subnet on the PostgreSQL port
+  security_rule {
+    name                       = "AllowPostgresInboundFromApp"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "5432"
+    source_address_prefix      = local.network_subnets["APP"].prefix[0]
+    destination_address_prefix = "*"
+    access                     = "Allow"
+    priority                   = 100
+    direction                  = "Inbound"
+  }
+
+  security_rule {
+    name                       = "DenyAllInbound"
+    protocol                   = "*"
+    source_port_range          = "*"
+    destination_port_range     = "*"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+    access                     = "Deny"
+    priority                   = 110
+    direction                  = "Inbound"
+  }
+}
+
+resource "azurerm_subnet_network_security_group_association" "db" {
+  subnet_id                 = azurerm_subnet.main["DB"].id
+  network_security_group_id = azurerm_network_security_group.db.id
+}
