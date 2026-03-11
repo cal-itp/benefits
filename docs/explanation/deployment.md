@@ -49,7 +49,7 @@ Push the new image:tag to the Azure App Service instance.
 ## Configuration
 
 Sensitive [configuration settings](configuration.md) are maintained as Application Configuration variables in Azure,
-referencing [Azure Key Vault secrets](https://azure.microsoft.com/en-us/products/key-vault/). Other non-sensitive configuration is maintained directly in the configuration database via the [Django Admin](https://docs.djangoproject.com/en/5.2/ref/contrib/admin/).
+referencing [Azure Key Vault secrets](https://azure.microsoft.com/en-us/products/key-vault/). Other non-sensitive configuration is maintained directly in the configuration database via the [Django Admin](https://docs.djangoproject.com/en/stable/ref/contrib/admin/).
 
 ## Docker images
 

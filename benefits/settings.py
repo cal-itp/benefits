@@ -141,7 +141,7 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 # SSL terminates before getting to Django, and NGINX adds this header to indicate
 # if the original request was secure or not
 #
-# See https://docs.djangoproject.com/en/5.0/ref/settings/#secure-proxy-ssl-header
+# See https://docs.djangoproject.com/en/stable/ref/settings/#secure-proxy-ssl-header
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
@@ -226,14 +226,14 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, "benefits", "locale")]
 
 USE_I18N = True
 
-# See https://docs.djangoproject.com/en/5.0/ref/settings/#std-setting-TIME_ZONE
+# See https://docs.djangoproject.com/en/stable/ref/settings/#std-setting-TIME_ZONE
 # > Note that this isn’t necessarily the time zone of the server.
 # > When USE_TZ is True, this is the default time zone that Django will use to display datetimes in templates
 # > and to interpret datetimes entered in forms.
 TIME_ZONE = "America/Los_Angeles"
 USE_TZ = True
 
-# https://docs.djangoproject.com/en/5.0/topics/i18n/formatting/#creating-custom-format-files
+# https://docs.djangoproject.com/en/stable/topics/i18n/formatting/#creating-custom-format-files
 FORMAT_MODULE_PATH = [
     "benefits.locale",
 ]
@@ -390,7 +390,7 @@ except Exception:
 REQUESTS_TIMEOUT = (REQUESTS_CONNECT_TIMEOUT, REQUESTS_READ_TIMEOUT)
 
 # Email
-# https://docs.djangoproject.com/en/5.2/ref/settings/#email-backend
+# https://docs.djangoproject.com/en/stable/ref/settings/#email-backend
 # https://github.com/retech-us/django-azure-communication-email
 AZURE_COMMUNICATION_CONNECTION_STRING = os.environ.get("AZURE_COMMUNICATION_CONNECTION_STRING")
 
@@ -401,5 +401,5 @@ else:
     EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
     EMAIL_FILE_PATH = os.path.join(STORAGE_DIR, ".sent_emails")
 
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-from-email
+# https://docs.djangoproject.com/en/stable/ref/settings/#default-from-email
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "noreply@example.calitp.org")

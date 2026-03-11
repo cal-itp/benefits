@@ -27,7 +27,7 @@ class SecretNameValidator(RegexValidator):
     https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-name-rules#microsoftkeyvault
 
     Read more about Django validators:
-    https://docs.djangoproject.com/en/5.0/ref/validators/#module-django.core.validators
+    https://docs.djangoproject.com/en/stable/ref/validators/#module-django.core.validators
     """
 
     def __init__(self, *args, **kwargs):

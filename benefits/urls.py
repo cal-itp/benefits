@@ -2,7 +2,7 @@
 benefits URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
+    https://docs.djangoproject.com/en/stable/topics/http/urls/
 """
 
 import logging
@@ -44,7 +44,7 @@ if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.LOCAL:
     # serve user-uploaded media files
     #
     # the helper function `django.conf.urls.static.static` mentioned in
-    # https://docs.djangoproject.com/en/5.1/howto/static-files/#serving-files-uploaded-by-a-user-during-development
+    # https://docs.djangoproject.com/en/stable/howto/static-files/#serving-files-uploaded-by-a-user-during-development
     # only works when settings.DEBUG = True, so here we add the URL pattern ourselves so it works regardless of DEBUG.
     prefix = settings.MEDIA_URL
     urlpatterns.extend(

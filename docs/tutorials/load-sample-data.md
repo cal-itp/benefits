@@ -65,8 +65,8 @@ When models are updated, our fixtures will need to be updated.
 [Read our guide to migrations and fixtures](../../guides/migrations-and-fixtures)
 
 [core-models]: https://github.com/cal-itp/benefits/tree/main/benefits/core/models/
-[django-fixtures]: https://docs.djangoproject.com/en/5.2/topics/db/fixtures/
-[django-load-initial-data]: https://docs.djangoproject.com/en/5.2/howto/initial-data/
+[django-fixtures]: https://docs.djangoproject.com/en/stable/topics/db/fixtures/
+[django-load-initial-data]: https://docs.djangoproject.com/en/stable/howto/initial-data/
 [eligibility-server]: https://docs.calitp.org/eligibility-server
 [init]: https://github.com/cal-itp/benefits/blob/main/bin/init.sh
 [reset-db]: https://github.com/cal-itp/benefits/blob/main/bin/reset_db.sh

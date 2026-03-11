@@ -41,8 +41,8 @@ app is imported by the other apps.
 
 ## Django request pipeline
 
-Each request to the Benefits app is ultimately a [Django request](https://docs.djangoproject.com/en/5.0/ref/request-response/)
-and goes through the [Django HTTP request pipeline](https://docs.djangoproject.com/en/5.0/topics/http/).
+Each request to the Benefits app is ultimately a [Django request](https://docs.djangoproject.com/en/stable/ref/request-response/)
+and goes through the [Django HTTP request pipeline](https://docs.djangoproject.com/en/stable/topics/http/).
 
 Benefits uses middleware to pre- and post-process requests for (view) access control, session configuration, and analytics.
 Benefits also uses context processors to enrich the Django template context with data needed for rendering on the front-end.

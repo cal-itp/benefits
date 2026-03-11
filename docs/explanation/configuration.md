@@ -77,9 +77,9 @@ else:
 [benefits-manage]: https://github.com/cal-itp/benefits/blob/main/manage.py
 [benefits-settings]: https://github.com/cal-itp/benefits/blob/main/benefits/settings.py
 [benefits-wsgi]: https://github.com/cal-itp/benefits/blob/main/benefits/wsgi.py
-[django-model]: https://docs.djangoproject.com/en/5.0/topics/db/models/
-[django-settings]: https://docs.djangoproject.com/en/5.0/topics/settings/
-[django-using-settings]: https://docs.djangoproject.com/en/5.0/topics/settings/#using-settings-in-python-code
+[django-model]: https://docs.djangoproject.com/en/stable/topics/db/models/
+[django-settings]: https://docs.djangoproject.com/en/stable/topics/settings/
+[django-using-settings]: https://docs.djangoproject.com/en/stable/topics/settings/#using-settings-in-python-code
 [env-vars]: ../reference/environment-variables.md
 [data]: ../tutorials/load-sample-data.md
 [getting-started]: ../guides/getting-started.md
