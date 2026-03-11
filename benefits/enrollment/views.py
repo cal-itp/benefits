@@ -173,14 +173,17 @@ class SystemErrorView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Elig
 @dataclass
 class EnrollmentSuccess:
     short_name: str
+
+    re_enrollment_message: str = _(
+        "You will need to re-enroll if you choose to change the card you use to pay for transit service."
+    )
     success_message: str = ""
     thank_you_message: str = _("Thank you for using Cal-ITP Benefits!")
 
     def __post_init__(self):
         self.success_message = _(
             "You were not charged anything today. When boarding public transit provided by {short_name}, tap this "
-            "card to receive a reduced fare. You will need to re-enroll if you choose to change "
-            "the card you use to pay for transit service.",
+            "card to receive a reduced fare.",
             short_name=self.short_name,
         )
 
