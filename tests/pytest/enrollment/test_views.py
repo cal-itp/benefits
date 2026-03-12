@@ -72,11 +72,16 @@ class TestIndexView:
     def test_get_redirect_url(self, view):
         assert view.get_redirect_url() == reverse(view.agency.enrollment_index_route)
 
-    def test_get(self, view, app_request, mocked_session_update):
+    def test_get(self, mocker, view, app_request, mocked_session_update, mocked_session_flow, model_LittlepayGroup):
+        mocker.patch.object(models.EnrollmentGroup.objects, "get", return_value=model_LittlepayGroup)
+
         response = view.get(app_request)
 
         assert response.status_code == 302
-        mocked_session_update.assert_called_once()
+        mocked_session_flow.assert_called_once_with(app_request)
+        mocked_session_update.assert_called_once_with(
+            app_request, origin=reverse(view.route_origin), group=model_LittlepayGroup
+        )
 
 
 @pytest.mark.django_db

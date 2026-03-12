@@ -74,7 +74,9 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, Redire
         return reverse(route_name)
 
     def get(self, request, *args, **kwargs):
-        session.update(request, origin=reverse(self.route_origin))
+        flow = session.flow(request)
+        group = models.EnrollmentGroup.objects.get(transit_agency=self.agency, enrollment_flow=flow)
+        session.update(request, origin=reverse(self.route_origin), group=group)
         return super().get(request, *args, **kwargs)
 
 
