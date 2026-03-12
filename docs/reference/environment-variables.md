@@ -70,16 +70,6 @@ _Must exist and be writable by the Django process._
 
 By default, the base project directory (i.e. the root of the repository).
 
-### `DJANGO_DB_FILE`
-
-!!! info "Local configuration"
-
-    This setting only affects the app running on localhost
-
-The name of the Django database file to use locally (during both normal app startup and for resetting the database).
-
-By default, `django.db`.
-
 ### `DJANGO_DB_FIXTURES`
 
 !!! info "Local configuration"
@@ -91,18 +81,6 @@ A path, relative to the repository root, of Django data fixtures to load when re
 The file must end in `fixtures.json` for the script to process it correctly.
 
 By default, `benefits/core/migrations/local_fixtures.json`.
-
-### `DJANGO_DB_RESET`
-
-!!! info "Local configuration"
-
-    This setting only affects the app running on localhost
-
-Boolean:
-
-- `true` (default): deletes the existing database file and runs fresh Django migrations.
-- `false`: Django uses the existing database file.
-  (Note: Fixtures will still be loaded, updating any values on those objects if they have changed.)
 
 ### `DJANGO_DEBUG`
 
@@ -203,6 +181,30 @@ Comma-separated list of hosts which are trusted origins for unsafe requests (e.g
     You must change this setting when deploying the app to a non-localhost domain
 
 Comma-separated list of User-Agent strings which, when present as an HTTP header, should only receive healthcheck responses. Used by our `HealthcheckUserAgents` middleware.
+
+## Django database (SQLite)
+
+### `DJANGO_DB_FILE`
+
+!!! info "Local configuration"
+
+    This setting only affects the app running on localhost
+
+The name of the Django database file to use locally (during both normal app startup and for resetting the database).
+
+By default, `django.db`.
+
+### `DJANGO_DB_RESET`
+
+!!! info "Local configuration"
+
+    This setting only affects the app running on localhost
+
+Boolean:
+
+- `true` (default): deletes the existing database file and runs fresh Django migrations.
+- `false`: Django uses the existing database file.
+  (Note: Fixtures will still be loaded, updating any values on those objects if they have changed.)
 
 ## Django admin interface
 
