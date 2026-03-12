@@ -100,9 +100,20 @@ class TestEligibilityView:
         mocked_session_module.update.assert_called_once()
         assert view.agency == model_TransitAgency
 
-    def test_form_valid(self, view, mocker, model_EnrollmentFlow, mocked_session_module, mocked_eligibility_analytics_module):
+    def test_form_valid(
+        self,
+        view,
+        mocker,
+        model_EnrollmentFlow,
+        model_LittlepayGroup,
+        mocked_session_module,
+        mocked_eligibility_analytics_module,
+    ):
         mock_enrollment_flow_model = mocker.patch.object(models.EnrollmentFlow.objects, "get")
         mock_enrollment_flow_model.return_value = model_EnrollmentFlow
+
+        mock_enrollment_group_model = mocker.patch.object(models.EnrollmentGroup.objects, "get")
+        mock_enrollment_group_model.return_value = model_LittlepayGroup
 
         mock_form = mocker.Mock()
         mock_form.cleaned_data = {"flow": model_EnrollmentFlow.id}
@@ -110,7 +121,10 @@ class TestEligibilityView:
         response = view.form_valid(mock_form)
 
         mock_enrollment_flow_model.assert_called_once_with(id=model_EnrollmentFlow.id)
-        mocked_session_module.update.assert_called_once_with(view.request, flow=model_EnrollmentFlow, eligible=True)
+        mock_enrollment_group_model.assert_called_once_with(transit_agency=view.agency, enrollment_flow=model_EnrollmentFlow)
+        mocked_session_module.update.assert_called_once_with(
+            view.request, flow=model_EnrollmentFlow, group=model_LittlepayGroup, eligible=True
+        )
         mocked_eligibility_analytics_module.selected_flow.assert_called_once_with(
             view.request, model_EnrollmentFlow, enrollment_method=models.EnrollmentMethods.IN_PERSON
         )
