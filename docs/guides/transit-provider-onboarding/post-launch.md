@@ -13,7 +13,7 @@ Use this query to confirm:
 - **Segment:** All Users
 - **Measured as:** Event Totals
 - **Events:** Completed enrollment
-  - User property `enrollment_method`: `digital`, `in_person`
+  - User property `enrollment_method`: `self_service`, `in_person`
   - Grouped by: `transit_agency`
 
 You can also go directly to the existing [Enrollments by transit provider](https://app.amplitude.com/analytics/compiler/chart/mccedr54/edit/o9xupwel) chart.
