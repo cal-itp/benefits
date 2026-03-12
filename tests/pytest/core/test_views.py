@@ -70,11 +70,12 @@ class TestAgencyCardView:
         assert view.pattern_name == routes.ELIGIBILITY_CONFIRM
 
     def test_get__with_one_eligibility_api_flow(
-        self, view, app_request, mocked_session_reset, mocked_session_update, model_EnrollmentFlow_with_eligibility_api
+        self, mocker, view, app_request, mocked_session_reset, mocked_session_update, model_EnrollmentFlow_with_eligibility_api
     ):
         agency = view.kwargs["agency"]
         agency.enrollment_flows.add(model_EnrollmentFlow_with_eligibility_api)
         agency.save()
+
         # recreate the condition of the live view, where the agency kwarg is passed to the get() call
         response = view.get(app_request, agency=agency)
 
@@ -82,13 +83,12 @@ class TestAgencyCardView:
 
         mocked_session_reset.assert_called_once()
         update_calls = mocked_session_update.mock_calls
-        assert len(update_calls) == 2
-        assert update_calls[0].kwargs["agency"] == agency
-        assert update_calls[0].kwargs["origin"] == agency.index_url
-        assert update_calls[1].kwargs["flow"] == model_EnrollmentFlow_with_eligibility_api
+
+        assert mocker.call(app_request, agency=agency, origin=agency.index_url) in update_calls
+        assert mocker.call(app_request, flow=model_EnrollmentFlow_with_eligibility_api) in update_calls
 
     def test_get__with_multiple_eligibility_api_flow(
-        self, view, app_request, mocked_session_reset, mocked_session_update, model_EnrollmentFlow_with_eligibility_api
+        self, mocker, view, app_request, mocked_session_reset, mocked_session_update, model_EnrollmentFlow_with_eligibility_api
     ):
         agency = view.kwargs["agency"]
         agency.enrollment_flows.add(model_EnrollmentFlow_with_eligibility_api)
@@ -106,7 +106,7 @@ class TestAgencyCardView:
 
         assert response.status_code == 302
         mocked_session_reset.assert_called_once()
-        assert mocked_session_update.mock_calls[1].kwargs["flow"] == new_flow
+        assert mocker.call(app_request, flow=new_flow) in mocked_session_update.mock_calls
 
     def test_get__without_eligibility_api_flow(
         self, view, app_request, mocked_session_reset, mocked_session_update, model_EnrollmentFlow_with_scope_and_claim

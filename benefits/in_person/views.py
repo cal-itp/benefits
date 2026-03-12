@@ -9,7 +9,7 @@ from benefits.core.mixins import AgencySessionRequiredMixin
 from benefits.core.models.transit import TransitAgency
 from benefits.eligibility import analytics as eligibility_analytics
 from benefits.enrollment.views import (
-    IndexView,
+    IndexView as DigitalEnrollmentIndexView,
     ReenrollmentErrorView as DigitalReenrollmentErrorView,
     RetryView as DigitalRetryView,
     SuccessView as DigitalSuccessView,
@@ -56,8 +56,7 @@ class EligibilityView(mixins.CommonContextMixin, FormView):
 
         flow_id = form.cleaned_data.get("flow")
         flow = models.EnrollmentFlow.objects.get(id=flow_id)
-        group = models.EnrollmentGroup.objects.get(transit_agency=self.agency, enrollment_flow=flow)
-        session.update(self.request, flow=flow, group=group, eligible=True)
+        session.update(self.request, flow=flow, eligible=True)
         eligibility_analytics.selected_flow(self.request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
         eligibility_analytics.started_eligibility(self.request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
         eligibility_analytics.returned_success(self.request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
@@ -72,7 +71,7 @@ class LittlepayTokenView(TokenView):
     route_server_error = routes.IN_PERSON_SERVER_ERROR
 
 
-class EnrollmentView(IndexView):
+class EnrollmentView(DigitalEnrollmentIndexView):
 
     route_origin = routes.IN_PERSON_ENROLLMENT
 
