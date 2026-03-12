@@ -56,7 +56,8 @@ class EligibilityView(mixins.CommonContextMixin, FormView):
 
         flow_id = form.cleaned_data.get("flow")
         flow = models.EnrollmentFlow.objects.get(id=flow_id)
-        session.update(self.request, flow=flow, eligible=True)
+        group = models.EnrollmentGroup.objects.get(transit_agency=self.agency, enrollment_flow=flow)
+        session.update(self.request, flow=flow, group=group, eligible=True)
         eligibility_analytics.selected_flow(self.request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
         eligibility_analytics.started_eligibility(self.request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
         eligibility_analytics.returned_success(self.request, flow, enrollment_method=models.EnrollmentMethods.IN_PERSON)
