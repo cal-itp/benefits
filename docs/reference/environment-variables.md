@@ -206,6 +206,24 @@ Boolean:
 - `false`: Django uses the existing database file.
   (Note: Fixtures will still be loaded, updating any values on those objects if they have changed.)
 
+## Django database (PostgreSQL)
+
+### `DJANGO_DB_NAME`
+
+The name of the database to use for Django.
+
+By default, `django`.
+
+### `DJANGO_DB_USER`
+
+The username to use when connecting to the Django database.
+
+By default, `django`.
+
+### `DJANGO_DB_PASSWORD`
+
+The password to use when connecting to the Django database.
+
 ## Django admin interface
 
 !!! tldr "Django docs"
