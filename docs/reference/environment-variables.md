@@ -206,6 +206,50 @@ Boolean:
 - `False`: Django uses the existing database file.
   (Note: Fixtures will still be loaded, updating any values on those objects if they have changed.)
 
+## Django database (PostgreSQL)
+
+### `DJANGO_DB_NAME`
+
+The name of the database to use for Django.
+
+By default, `django`.
+
+### `DJANGO_DB_USER`
+
+The username to use when connecting to the Django database.
+
+By default, `django`.
+
+### `DJANGO_DB_PASSWORD`
+
+The password to use when connecting to the Django database.
+
+## PostgreSQL
+
+### `POSTGRES_HOSTNAME`
+
+The host name for the Postgres database server.
+
+By default, `postgres`.
+
+### `POSTGRES_PORT`
+
+The port for the Postgres database server.
+
+By default, `5432`.
+
+### `POSTGRES_DB`
+
+The name of the Postgres database, for use when creating an admin connection to set up the Django database.
+
+### `POSTGRES_USER`
+
+The username to use when connecting to the Postgres database.
+
+### `POSTGRES_PASSWORD`
+
+The username to use when connecting to the Postgres database.
+
 ## Django admin interface
 
 !!! tldr "Django docs"
