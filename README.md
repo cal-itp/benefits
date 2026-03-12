@@ -37,14 +37,14 @@
 | benefits/eligibility/forms.py                              |       85 |        0 |       14 |        2 |     98% |106->108, 108->112 |
 | benefits/eligibility/urls.py                               |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/verify.py                             |       12 |        0 |        4 |        0 |    100% |           |
-| benefits/eligibility/views.py                              |      118 |        3 |       14 |        0 |     96% |     66-68 |
+| benefits/eligibility/views.py                              |      117 |        3 |       14 |        0 |     96% |     65-67 |
 | benefits/enrollment/\_\_init\_\_.py                        |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/analytics.py                           |       30 |        3 |       12 |        2 |     88% |24->exit, 29, 56, 75 |
 | benefits/enrollment/apps.py                                |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/enrollment.py                          |       48 |        1 |       10 |        2 |     95% |73, 115->exit |
 | benefits/enrollment/forms.py                               |       14 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/urls.py                                |        5 |        0 |        0 |        0 |    100% |           |
-| benefits/enrollment/views.py                               |      112 |        1 |       10 |        1 |     98% |       231 |
+| benefits/enrollment/views.py                               |      114 |        1 |       10 |        1 |     98% |       233 |
 | benefits/enrollment\_littlepay/\_\_init\_\_.py             |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/admin.py                    |        9 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment\_littlepay/apps.py                     |        4 |        0 |        0 |        0 |    100% |           |
@@ -71,7 +71,7 @@
 | benefits/in\_person/forms.py                               |       43 |        9 |        6 |        0 |     73% |     81-92 |
 | benefits/in\_person/mixins.py                              |        7 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/urls.py                                |        6 |        0 |        0 |        0 |    100% |           |
-| benefits/in\_person/views.py                               |      108 |        1 |        6 |        1 |     98% |       186 |
+| benefits/in\_person/views.py                               |      107 |        1 |        6 |        1 |     98% |       185 |
 | benefits/locale/\_\_init\_\_.py                            |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/\_\_init\_\_.py                         |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/formats.py                              |        1 |        0 |        0 |        0 |    100% |           |
