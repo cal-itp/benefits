@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexContextMixin, FormView):
     """View for the enrollment landing page."""
 
-    enrollment_method = models.EnrollmentMethods.DIGITAL
+    enrollment_method = models.EnrollmentMethods.SELF_SERVICE
     form_class = forms.CardTokenizeSuccessForm
     route_enrollment_success = routes.ENROLLMENT_SUCCESS
     route_reenrollment_error = routes.ENROLLMENT_REENROLLMENT_ERROR
@@ -125,7 +125,7 @@ class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexC
 class GatewayUrlView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, View):
     """View for the tokenization gateway registration"""
 
-    enrollment_method = models.EnrollmentMethods.DIGITAL
+    enrollment_method = models.EnrollmentMethods.SELF_SERVICE
     route_redirect = routes.ENROLLMENT_SWITCHIO_INDEX
     route_system_error = routes.ENROLLMENT_SYSTEM_ERROR
     route_server_error = routes.SERVER_ERROR
