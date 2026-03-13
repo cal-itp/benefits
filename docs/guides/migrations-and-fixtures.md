@@ -111,7 +111,7 @@ _(from within the devcontainer)_
 1. Checkout the commit on `main` prior to the model changes (i.e. where the fixtures can be loaded in)
 1. Run `./bin/setup.sh` to reset your database and load in the fixtures
 1. Checkout the commit with the new model changes (most likely, the latest commit on `main`)
-1. Run `./bin/init.sh` to apply migrations
+1. Run `python manage.py migrate` to apply migrations
 1. Export the migrated fixtures to a temporary file
 1. Review the migrated fixtures, and do any clean-up or manual updating needed
    (though generally we should be able to have data migrations that make it so no manual updating is needed)

@@ -31,8 +31,8 @@ jobs:
       - name: Install Python dependencies
         run: pip install -e .[test]
 
-      - name: Run setup
-        run: ./bin/init.sh
+      - name: Run database migrations
+        run: python manage.py migrate
 
       - name: Run tests
         run: ./tests/pytest/run.sh

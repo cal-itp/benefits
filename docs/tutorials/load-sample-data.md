@@ -12,7 +12,7 @@
 
 The app's core model classes are defined in [`benefits/core/models/`][core-models].
 
-Migrations are run as the application starts up. See the [`bin/init.sh`][init] script.
+Migrations are run as the application starts up.
 
 The sample values provided in the repository are sufficient to run the app locally and interact with e.g. the sample Transit
 Agencies. [Django fixtures][django-fixtures] are used to load the database with sample data when running locally.
@@ -68,6 +68,5 @@ When models are updated, our fixtures will need to be updated.
 [django-fixtures]: https://docs.djangoproject.com/en/stable/topics/db/fixtures/
 [django-load-initial-data]: https://docs.djangoproject.com/en/stable/howto/initial-data/
 [eligibility-server]: https://docs.calitp.org/eligibility-server
-[init]: https://github.com/cal-itp/benefits/blob/main/bin/init.sh
 [setup]: https://github.com/cal-itp/benefits/blob/main/bin/setup.sh
 [sample-fixtures]: https://github.com/cal-itp/benefits/tree/main/benefits/core/migrations/local_fixtures.json

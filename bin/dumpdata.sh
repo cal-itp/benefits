@@ -16,7 +16,7 @@ read -p "Enter the commit with the new model changes: " post_model_change_commit
 
 # Checkout that commit and run migrations.
 git checkout $post_model_change_commit
-./bin/init.sh
+python manage.py migrate
 
 # Export migrated fixtures and prompt user to review migrated contents.
 temp_file_name="unreviewed_fixtures.json"
