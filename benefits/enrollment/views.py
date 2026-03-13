@@ -170,36 +170,30 @@ class SystemErrorView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, Elig
         return self.get(request, *args, **kwargs)
 
 
-@dataclass
-class EnrollmentSuccess:
-    short_name: str
-
-    re_enrollment_message: str = _(
-        "You will need to re-enroll if you choose to change the card you use to pay for transit service."
-    )
-    success_message: str = ""
-    thank_you_message: str = _("Thank you for using Cal-ITP Benefits!")
-
-    def __post_init__(self):
-        self.success_message = _(
-            "You were not charged anything today. When boarding public transit provided by {short_name}, tap this "
-            "card to receive a reduced fare.",
-            short_name=self.short_name,
-        )
-
-    def dict(self):
-        return asdict(self)
-
-
 class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequiredMixin, TemplateView):
     """View handler for the final success page."""
 
     template_name = "enrollment/success.html"
 
-    def get_context_data(self):
-        context = {"redirect_to": self.request.path}
-        context.update(EnrollmentSuccess(short_name=self.agency.short_name).dict())
+    re_enrollment_message: str = _(
+        "You will need to re-enroll if you choose to change the card you use to pay for transit service."
+    )
+    thank_you_message: str = _("Thank you for using Cal-ITP Benefits!")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        success_message = _(
+            "You were not charged anything today. When boarding public transit provided by {short_name}, tap this "
+            "card to receive a reduced fare.",
+            short_name=self.agency.short_name,
+        )
+
+        context |= {
+            "redirect_to": self.request.path,
+            "re_enrollment_message": self.re_enrollment_message,
+            "success_message": success_message,
+            "thank_you_message": self.thank_you_message,
+        }
         return context
 
     def get(self, request, *args, **kwargs):
