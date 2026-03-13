@@ -17,6 +17,16 @@ def test_LittlepayConfig_defaults():
 
 
 @pytest.mark.django_db
+def test_LittlepayConfig_clean_first_time_instance():
+    # Simulate how Django Admin would call clean() on a new instance
+    # first create a LittlepayConfig instance without saving it to the database
+    littlepay_config = LittlepayConfig(environment="test")
+    # then call clean() on it, which is what Django Admin does before saving
+    # test fails if clean() fails
+    littlepay_config.clean()
+
+
+@pytest.mark.django_db
 def test_LittlepayConfig_clean_inactive_agency(model_TransitAgency_inactive):
     littlepay_config = LittlepayConfig.objects.create(environment="test")
     littlepay_config.save()

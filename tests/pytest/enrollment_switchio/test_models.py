@@ -21,6 +21,16 @@ def test_SwitchioConfig_defaults():
 
 
 @pytest.mark.django_db
+def test_SwitchioConfig_clean_first_time_instance():
+    # Simulate how Django Admin would call clean() on a new instance
+    # first create a SwitchioConfig instance without saving it to the database
+    switchio_config = SwitchioConfig(environment="dev")
+    # then call clean() on it, which is what Django Admin does before saving
+    # test fails if clean() fails
+    switchio_config.clean()
+
+
+@pytest.mark.django_db
 def test_SwitchioConfig_clean_inactive_agency(model_TransitAgency_inactive):
     switchio_config = SwitchioConfig.objects.create(environment="dev")
     switchio_config.transit_agency = model_TransitAgency_inactive
