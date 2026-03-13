@@ -30,8 +30,8 @@ else
         # delete existing DB, if present
         rm -f "${DB_PATH}"
 
-        # run database migrations and other initialization
-        bin/init.sh
+        # run database migrations
+        python manage.py migrate
 
         # create a superuser account for backend admin access
         # set username, email, and password using environment variables
