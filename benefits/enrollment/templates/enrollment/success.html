@@ -35,6 +35,11 @@
                 {{ success_message }}
                 {% endblock success-message %}
               </p>
+              <p class="pt-4">
+                {% block re-enrollment-message %}
+                {{ re_enrollment_message }}
+                {% endblock re-enrollment-message %}
+              </p>
             {# djlint:on #}
             <p class="pt-4">
               {% block thank-you-message %}
