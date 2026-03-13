@@ -31,8 +31,11 @@ jobs:
       - name: Install Python dependencies
         run: pip install -e .[test]
 
-      - name: Run database migrations
-        run: python manage.py migrate
+      - name: Run setup
+        run: |
+          python manage.py migrate
+          python manage.py compilemessages
+          python manage.py collectstatic --no-input
 
       - name: Run tests
         run: ./tests/pytest/run.sh
