@@ -4,7 +4,6 @@ import shutil
 import subprocess
 
 import sentry_sdk
-from django.conf import settings
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.scrubber import DEFAULT_DENYLIST, EventScrubber
 
@@ -86,9 +85,9 @@ def get_traces_sample_rate():
     return rate
 
 
-def configure():
+def configure(runtime_environment):
     sentry_dsn = os.environ.get("SENTRY_DSN")
-    sentry_environment = os.environ.get("SENTRY_ENVIRONMENT", settings.RUNTIME_ENVIRONMENT())
+    sentry_environment = os.environ.get("SENTRY_ENVIRONMENT", runtime_environment)
 
     if sentry_dsn:
         release = get_release()

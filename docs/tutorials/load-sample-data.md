@@ -12,7 +12,7 @@
 
 The app's core model classes are defined in [`benefits/core/models/`][core-models].
 
-Migrations are run as the application starts up. See the [`bin/init.sh`][init] script.
+Migrations are run as the application starts up.
 
 The sample values provided in the repository are sufficient to run the app locally and interact with e.g. the sample Transit
 Agencies. [Django fixtures][django-fixtures] are used to load the database with sample data when running locally.
@@ -48,11 +48,11 @@ Compiler developers, instead of setting these manually, you can load some of the
 
 A local Django database will be initialized upon first startup of the devcontainer.
 
-To rebuild the local Django database, run the [`bin/reset_db.sh`][reset-db] script from within the repository root,
+To rebuild the local Django database, run the [`bin/setup.sh`][setup] script from within the repository root,
 inside the devcontainer:
 
 ```bash
-bin/reset_db.sh
+bin/setup.sh
 ```
 
 See the [Django Environment Variables](../reference/environment-variables.md#django) section for details about how to configure the local
@@ -68,6 +68,5 @@ When models are updated, our fixtures will need to be updated.
 [django-fixtures]: https://docs.djangoproject.com/en/stable/topics/db/fixtures/
 [django-load-initial-data]: https://docs.djangoproject.com/en/stable/howto/initial-data/
 [eligibility-server]: https://docs.calitp.org/eligibility-server
-[init]: https://github.com/cal-itp/benefits/blob/main/bin/init.sh
-[reset-db]: https://github.com/cal-itp/benefits/blob/main/bin/reset_db.sh
+[setup]: https://github.com/cal-itp/benefits/blob/main/bin/setup.sh
 [sample-fixtures]: https://github.com/cal-itp/benefits/tree/main/benefits/core/migrations/local_fixtures.json
