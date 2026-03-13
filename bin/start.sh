@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 set -eux
 
-# initialize Django
+# generate language *.mo files for use by Django
 
-bin/init.sh
+python manage.py compilemessages
+
+# collect static files
+
+python manage.py collectstatic --no-input
 
 # start the web server
 
