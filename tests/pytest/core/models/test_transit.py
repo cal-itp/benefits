@@ -6,6 +6,7 @@ from benefits.core.models import (
     CardSchemes,
     Environment,
     TransitAgency,
+    TransitAgencyGroup,
     TransitProcessorConfig,
     agency_logo,
 )
@@ -46,6 +47,14 @@ def test_TransitAgency_defaults():
 @pytest.mark.django_db
 def test_TransitAgency_str(model_TransitAgency):
     assert str(model_TransitAgency) == model_TransitAgency.long_name
+
+
+@pytest.mark.django_db
+def test_TransitAgency_str__falls_back_to_short_name(model_TransitAgency):
+    model_TransitAgency.long_name = ""
+    model_TransitAgency.save()
+
+    assert str(model_TransitAgency) == model_TransitAgency.short_name
 
 
 @pytest.mark.django_db
@@ -266,3 +275,86 @@ def test_TransitAgency_in_person_enrollment_index_route_no_config(model_TransitA
 def test_TransitAgency_customer_service_group_name(model_TransitAgency):
     model_TransitAgency.short_name = "CST"
     assert model_TransitAgency.customer_service_group_name == "CST Customer Service"
+
+
+@pytest.mark.django_db
+def test_TransitAgency_group_agencies(model_TransitAgency, model_TransitAgencyGroup):
+    agency2 = TransitAgency.objects.create(
+        slug="cst2",
+        short_name="TEST",
+        long_name="Test Transit Agency",
+        info_url="https://example.com/test-agency",
+        phone="800-555-5555",
+        active=True,
+        logo="agencies/cst.png",
+    )
+
+    model_TransitAgencyGroup.transit_agencies.add(model_TransitAgency, agency2)
+    model_TransitAgencyGroup.save()
+
+    assert agency2 in model_TransitAgency.group_agencies()
+
+
+@pytest.mark.django_db
+def test_TransitAgency_group_agencies__excludes_inactives(
+    model_TransitAgency, model_TransitAgency_inactive, model_TransitAgencyGroup
+):
+    agency2 = TransitAgency.objects.create(
+        slug="cst2",
+        short_name="TEST",
+        long_name="Test Transit Agency",
+        info_url="https://example.com/test-agency",
+        phone="800-555-5555",
+        active=False,
+        logo="agencies/cst.png",
+    )
+
+    model_TransitAgencyGroup.transit_agencies.add(model_TransitAgency, model_TransitAgency_inactive)
+    model_TransitAgencyGroup.save()
+
+    assert agency2 not in model_TransitAgency.group_agencies()
+
+
+@pytest.mark.django_db
+def test_TransitAgency_group_agencies__excludes_self(model_TransitAgency, model_TransitAgencyGroup):
+    agency2 = TransitAgency.objects.create(
+        slug="cst2",
+        short_name="TEST",
+        long_name="Test Transit Agency",
+        info_url="https://example.com/test-agency",
+        phone="800-555-5555",
+        active=True,
+        logo="agencies/cst.png",
+    )
+
+    model_TransitAgencyGroup.transit_agencies.add(model_TransitAgency, agency2)
+    model_TransitAgencyGroup.save()
+
+    assert model_TransitAgency not in model_TransitAgency.group_agencies()
+
+
+@pytest.mark.django_db
+def test_TransitAgency_group_agencies__returns_agency_in_multiple_groups_once(model_TransitAgency, model_TransitAgencyGroup):
+    agency2 = TransitAgency.objects.create(
+        slug="cst2",
+        short_name="TEST",
+        long_name="Test Transit Agency",
+        info_url="https://example.com/test-agency",
+        phone="800-555-5555",
+        active=True,
+        logo="agencies/cst.png",
+    )
+
+    model_TransitAgencyGroup.transit_agencies.add(model_TransitAgency, agency2)
+    model_TransitAgencyGroup.save()
+
+    group2 = TransitAgencyGroup.objects.create(label="group2")
+
+    group2.transit_agencies.add(model_TransitAgency, agency2)
+
+    assert len(model_TransitAgency.group_agencies()) == 1
+
+
+@pytest.mark.django_db
+def test_TransitAgencyGroup_str(model_TransitAgencyGroup):
+    assert str(model_TransitAgencyGroup) == model_TransitAgencyGroup.label

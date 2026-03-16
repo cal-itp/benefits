@@ -24,10 +24,10 @@ class TransitAgencyGroupForm(forms.ModelForm):
         This cannot be done in the model's clean() because of how
         ManyToMany relationships are added after initial object creation.
         """
-        if transit_agencies := self.cleaned_data.get("transit_agencies"):
-            transit_processors = set(agency.transit_processor for agency in transit_agencies)
+        transit_agencies = self.cleaned_data.get("transit_agencies")
+        transit_processors = set(agency.transit_processor for agency in transit_agencies)
 
-            if len(transit_processors) > 1:
-                raise forms.ValidationError("Agencies must all use the same transit processor.")
+        if len(transit_processors) > 1:
+            raise forms.ValidationError("Agencies must all use the same transit processor.")
 
         return transit_agencies

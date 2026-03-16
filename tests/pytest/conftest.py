@@ -9,7 +9,14 @@ from django.utils import timezone
 from pytest_socket import disable_socket
 
 from benefits.core import session
-from benefits.core.models import EligibilityApiVerificationRequest, EnrollmentFlow, Environment, PemData, TransitAgency
+from benefits.core.models import (
+    EligibilityApiVerificationRequest,
+    EnrollmentFlow,
+    Environment,
+    PemData,
+    TransitAgency,
+    TransitAgencyGroup,
+)
 from benefits.enrollment_littlepay.models import LittlepayConfig, LittlepayGroup
 from benefits.enrollment_switchio.models import SwitchioConfig, SwitchioGroup
 
@@ -250,6 +257,13 @@ def model_TransitAgency_inactive(model_TransitAgency):
     model_TransitAgency.save()
 
     return model_TransitAgency
+
+
+@pytest.fixture
+def model_TransitAgencyGroup(model_TransitAgency, model_LittlepayConfig):
+    group = TransitAgencyGroup.objects.create(label="group")
+
+    return group
 
 
 @pytest.fixture
