@@ -285,8 +285,13 @@ class TransitAgency(models.Model):
 
 class TransitAgencyGroup(models.Model):
     id = models.AutoField(primary_key=True)
-    label = models.TextField()
-    transit_agencies = models.ManyToManyField(TransitAgency, help_text="Select the agencies that belong to this group.")
+    label = models.TextField(
+        help_text="A human readable label, used as the display text in Admin.",
+    )
+    transit_agencies = models.ManyToManyField(
+        TransitAgency,
+        help_text="Select the agencies that belong to this group.",
+    )
 
     def __str__(self):
         return self.label
