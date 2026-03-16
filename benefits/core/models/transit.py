@@ -125,7 +125,9 @@ class TransitAgency(models.Model):
     )
 
     def __str__(self):
-        return self.long_name
+        if self.long_name:
+            return self.long_name
+        return self.short_name
 
     @property
     def index_url(self):
@@ -191,6 +193,15 @@ class TransitAgency(models.Model):
     def customer_service_group_name(self):
         """Returns the standardized name for this Agency's customer service group."""
         return f"{self.short_name} Customer Service"
+
+    def group_agencies(self):
+        """The set of all agencies in all groups associated with this agency, excluding itself."""
+        return list(
+            TransitAgency.objects.filter(transitagencygroup__in=list(self.transitagencygroup_set.all()))
+            .distinct()
+            .exclude(active=False)
+            .exclude(pk=self.pk)
+        )
 
     def clean(self):
         field_errors = {}
@@ -270,3 +281,12 @@ class TransitAgency(models.Model):
 
         # the loop above returns the first match found. Return None if no match was found.
         return None
+
+
+class TransitAgencyGroup(models.Model):
+    id = models.AutoField(primary_key=True)
+    label = models.TextField()
+    transit_agencies = models.ManyToManyField(TransitAgency, help_text="Select the agencies that belong to this group.")
+
+    def __str__(self):
+        return self.label
