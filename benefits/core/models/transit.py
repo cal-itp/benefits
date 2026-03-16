@@ -119,6 +119,7 @@ class TransitAgency(models.Model):
         TransitProcessorConfig,
         on_delete=models.PROTECT,
         null=True,
+        blank=True,
         default=None,
         help_text="The transit processor configuration to use for enrollment.",
     )
