@@ -18,7 +18,7 @@ else
     DB_FILE="${DJANGO_DB_FILE:-django.db}"
     DB_PATH="${DB_DIR}/${DB_FILE}"
 
-    if ! [[ -f "{$DB_PATH}" ]]; then
+    if ! [[ -f "${DB_PATH}" ]]; then
         # definitely reset if the database file is not found
         DB_RESET=true
     else
