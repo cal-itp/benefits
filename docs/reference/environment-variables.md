@@ -217,8 +217,8 @@ By default, `django.db`.
 
 Boolean:
 
-- `true` (default): deletes the existing database file and runs fresh Django migrations.
-- `false`: Django uses the existing database file.
+- `true`: deletes the existing database file and runs fresh Django migrations.
+- `false` (default): Django uses the existing database file.
   (Note: Fixtures will still be loaded, updating any values on those objects if they have changed.)
 
 ## Django database (PostgreSQL)
