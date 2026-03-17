@@ -44,12 +44,13 @@ class TestCardSchemes:
 
 
 @pytest.mark.django_db
-def test_TransitProcessorConfig_str():
-    label = "cst"
-    transit_processor_config = TransitProcessorConfig.objects.create(environment="dev", label=label)
-    environment_label = Environment(transit_processor_config.environment).label
+class TestTransitProcessorConfig:
+    def test_str(self):
+        label = "cst"
+        transit_processor_config = TransitProcessorConfig.objects.create(environment="dev", label=label)
+        environment_label = Environment(transit_processor_config.environment).label
 
-    assert str(transit_processor_config) == f"({environment_label}) {label}"
+        assert str(transit_processor_config) == f"({environment_label}) {label}"
 
 
 @pytest.mark.django_db
@@ -87,9 +88,7 @@ class TestTransitAgency:
 
         assert result == model_TransitAgency
 
-    def test_by_id_nonmatching(
-        self,
-    ):
+    def test_by_id_nonmatching(self):
         with pytest.raises(TransitAgency.DoesNotExist):
             TransitAgency.by_id(99999)
 
@@ -98,9 +97,7 @@ class TestTransitAgency:
 
         assert result == model_TransitAgency
 
-    def test_by_slug_nonmatching(
-        self,
-    ):
+    def test_by_slug_nonmatching(self):
         result = TransitAgency.by_slug("nope")
 
         assert not result
@@ -146,9 +143,7 @@ class TestTransitAgency:
 
         assert TransitAgency.for_user(user) is None
 
-    def test_for_user_in_group_not_linked_to_any_agency(
-        self,
-    ):
+    def test_for_user_in_group_not_linked_to_any_agency(self):
         group = Group.objects.create(name="another test group")
 
         user = User.objects.create_user(username="test_user", email="test_user@example.com", password="test", is_staff=True)
@@ -286,5 +281,6 @@ class TestTransitAgency:
 
 
 @pytest.mark.django_db
-def test_TransitAgencyGroup_str(model_TransitAgencyGroup):
-    assert str(model_TransitAgencyGroup) == model_TransitAgencyGroup.label
+class TestTransitAgencyGroup:
+    def test_str(self, model_TransitAgencyGroup):
+        assert str(model_TransitAgencyGroup) == model_TransitAgencyGroup.label
