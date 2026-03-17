@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "secret")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DJANGO_DEBUG", "False").lower() == "true"
+DEBUG = os.environ.get("DJANGO_DEBUG", "false").lower() == "true"
 
 ALLOWED_HOSTS = _filter_empty(os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(","))
 
@@ -85,7 +85,7 @@ GOOGLE_SSO_SCOPES = [
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
 ]
-SSO_SHOW_FORM_ON_ADMIN_PAGE = os.environ.get("SSO_SHOW_FORM_ON_ADMIN_PAGE", "False").lower() == "true"
+SSO_SHOW_FORM_ON_ADMIN_PAGE = os.environ.get("SSO_SHOW_FORM_ON_ADMIN_PAGE", "false").lower() == "true"
 STAFF_GROUP_NAME = "Cal-ITP"
 
 MIDDLEWARE = [
