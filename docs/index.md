@@ -57,7 +57,7 @@ timeline
         : Utilize CDT Identity Gateway connection library
 
           Q2<br>Complete
-        
+
           Q3<br>Complete
         : Support for multiple transit processors (Enghouse)
 
