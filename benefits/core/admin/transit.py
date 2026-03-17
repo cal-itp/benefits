@@ -3,6 +3,7 @@ from django.contrib.auth.models import Group
 
 from benefits.core import models
 
+from .forms import TransitAgencyGroupForm
 from .mixins import StaffPermissionMixin
 
 
@@ -35,3 +36,8 @@ class TransitAgencyAdmin(StaffPermissionMixin, admin.ModelAdmin):
             obj.customer_service_group.save()
 
         super().save_model(request, obj, form, change)
+
+
+@admin.register(models.TransitAgencyGroup)
+class TransitAgencyGroupAdmin(StaffPermissionMixin, admin.ModelAdmin):
+    form = TransitAgencyGroupForm

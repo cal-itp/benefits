@@ -7,7 +7,7 @@ from .enrollment import (
     EnrollmentMethods,
     SystemName,
 )
-from .transit import CardSchemes, TransitAgency, TransitProcessorConfig, agency_logo
+from .transit import CardSchemes, TransitAgency, TransitAgencyGroup, TransitProcessorConfig, agency_logo
 
 __all__ = [
     "agency_logo",
@@ -23,5 +23,6 @@ __all__ = [
     "SecretNameField",
     "SystemName",
     "TransitAgency",
+    "TransitAgencyGroup",
     "TransitProcessorConfig",
 ]
