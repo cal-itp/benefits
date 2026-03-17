@@ -7,6 +7,8 @@ services:
       dockerfile: appcontainer/Dockerfile
     image: benefits_client:latest
     env_file: .env
+    depends_on:
+      - postgres
     ports:
       - "${DJANGO_LOCAL_PORT:-8000}:8000"
 
@@ -20,6 +22,7 @@ services:
     entrypoint: sleep infinity
     depends_on:
       - server
+      - postgres
     ports:
       - "${DJANGO_LOCAL_PORT:-8000}:8000"
     volumes:
@@ -54,7 +57,7 @@ services:
     command: ./run.sh
 
   postgres:
-    image: postgres:16
+    image: postgres:17
     environment:
       - POSTGRES_DB
       - POSTGRES_USER
@@ -63,6 +66,9 @@ services:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready -U pgweb -h 127.0.0.1
+      interval: 5s
 
   pgweb:
     container_name: pgweb
@@ -70,9 +76,13 @@ services:
     ports:
       - "${PGWEB_PORT:-8081}:8081"
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "nc", "-vz", "127.0.0.1", "8081"]
+      interval: 5s
     environment:
-      - PGWEB_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable
+      - PGWEB_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${DJANGO_DB_NAME}?sslmode=disable
 
 volumes:
   pgdata:

@@ -69,6 +69,9 @@ resource "azurerm_linux_web_app" "main" {
     "DJANGO_SECRET_KEY"           = "${local.secret_prefix}django-secret-key)",
     "DJANGO_TRUSTED_ORIGINS"      = "${local.secret_prefix}django-trusted-origins)",
 
+    # Database settings
+    "USE_POSTGRES" = "${local.secret_prefix}use-postgres)",
+
     "HEALTHCHECK_USER_AGENTS" = local.is_dev ? null : "${local.secret_prefix}healthcheck-user-agents)",
 
     # Google SSO for Admin

@@ -183,12 +183,26 @@ TEMPLATES = [
 WSGI_APPLICATION = "benefits.wsgi.application"
 
 STORAGE_DIR = os.environ.get("DJANGO_STORAGE_DIR", BASE_DIR)
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(STORAGE_DIR, os.environ.get("DJANGO_DB_FILE", "django.db")),
+USE_POSTGRES = os.environ.get("USE_POSTGRES", "false").lower() == "true"
+
+if USE_POSTGRES:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ.get("DJANGO_DB_NAME", "django"),
+            "USER": os.environ.get("DJANGO_DB_USER", "django"),
+            "PASSWORD": os.environ.get("DJANGO_DB_PASSWORD"),
+            "HOST": os.environ.get("POSTGRES_HOSTNAME", "postgres"),
+            "PORT": os.environ.get("POSTGRES_PORT", "5432"),
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.path.join(STORAGE_DIR, os.environ.get("DJANGO_DB_FILE", "django.db")),
+        }
+    }
 
 # Password handling
 
@@ -291,7 +305,7 @@ LOGGING = {
     },
 }
 
-sentry.configure()
+sentry.configure(RUNTIME_ENVIRONMENT())
 
 # Analytics configuration
 

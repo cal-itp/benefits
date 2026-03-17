@@ -32,7 +32,10 @@ jobs:
         run: pip install -e .[test]
 
       - name: Run setup
-        run: ./bin/init.sh
+        run: |
+          python manage.py migrate
+          python manage.py compilemessages
+          python manage.py collectstatic --no-input
 
       - name: Run tests
         run: ./tests/pytest/run.sh
