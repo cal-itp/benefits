@@ -57,19 +57,15 @@ timeline
         : Utilize CDT Identity Gateway connection library
 
           Q2<br>Complete
-        : Support for Discover and American Express cards
 
-          Q3<br>Now
+          Q3<br>Complete
         : Support for multiple transit processors (Enghouse)
+
+          Q4<br>Complete
+        : Support for additional card schemes<br>(Discover and American Express)
         : UI enhancements to help the application scale
-        : Benefits admin tool (user management)
-
-          Q4<br>Projected
-        : Enhanced Veteran eligibility checks (disability status)
-        : Support for additional identity provider (Socure)
-        : Single eligibility check across multiple benefit options
-        : Eligibility check for individuals with disabilities (CA DMV)
-
+        : Eligibility standards research
+        : Operational enhancements for more efficient agency onboarding
 %%{
   init: {
     'logLevel': 'debug',
