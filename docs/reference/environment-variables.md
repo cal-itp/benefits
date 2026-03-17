@@ -182,6 +182,21 @@ Comma-separated list of hosts which are trusted origins for unsafe requests (e.g
 
 Comma-separated list of User-Agent strings which, when present as an HTTP header, should only receive healthcheck responses. Used by our `HealthcheckUserAgents` middleware.
 
+## Django database
+
+### `USE_POSTGRES`
+
+!!! tldr "Django docs"
+
+    [Settings: `DATABASES`](https://docs.djangoproject.com/en/6.0/ref/settings/#databases)
+
+Feature flag to enable using Postgres as the database.
+
+Boolean:
+
+- `true`: the `DATABASES` Django setting is configured to use Postgres (see [`Django database (Postgres)`](#django-database-postgresql))
+- `false` (default): the `DATABASES` Django setting is configured to use SQLite (see [`Django database (SQLite)`](#django-database-sqlite))
+
 ## Django database (SQLite)
 
 ### `DJANGO_DB_FILE`
