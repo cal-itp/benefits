@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_795c8c28b74e7b9e_urls_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-03-16 14:44 +0000
+            created at 2026-03-17 18:08 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -105,7 +105,7 @@
     <p class="run"><span class="n"><a id="t21" href="#t21">21</a></span><span class="t"><span class="nam">SECRET_KEY</span> <span class="op">=</span> <span class="nam">os</span><span class="op">.</span><span class="nam">environ</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">"DJANGO_SECRET_KEY"</span><span class="op">,</span> <span class="str">"secret"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t22" href="#t22">22</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t23" href="#t23">23</a></span><span class="t"><span class="com"># SECURITY WARNING: don't run with debug turned on in production!</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t24" href="#t24">24</a></span><span class="t"><span class="nam">DEBUG</span> <span class="op">=</span> <span class="nam">os</span><span class="op">.</span><span class="nam">environ</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">"DJANGO_DEBUG"</span><span class="op">,</span> <span class="str">"False"</span><span class="op">)</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="str">"true"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t24" href="#t24">24</a></span><span class="t"><span class="nam">DEBUG</span> <span class="op">=</span> <span class="nam">os</span><span class="op">.</span><span class="nam">environ</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">"DJANGO_DEBUG"</span><span class="op">,</span> <span class="str">"false"</span><span class="op">)</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="str">"true"</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t25" href="#t25">25</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t26" href="#t26">26</a></span><span class="t"><span class="nam">ALLOWED_HOSTS</span> <span class="op">=</span> <span class="nam">_filter_empty</span><span class="op">(</span><span class="nam">os</span><span class="op">.</span><span class="nam">environ</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">"DJANGO_ALLOWED_HOSTS"</span><span class="op">,</span> <span class="str">"localhost"</span><span class="op">)</span><span class="op">.</span><span class="nam">split</span><span class="op">(</span><span class="str">","</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t27" href="#t27">27</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -169,7 +169,7 @@
     <p class="run run2"><span class="n"><a id="t85" href="#t85">85</a></span><span class="t">    <span class="str">"https://www.googleapis.com/auth/userinfo.email"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t86" href="#t86">86</a></span><span class="t">    <span class="str">"https://www.googleapis.com/auth/userinfo.profile"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t87" href="#t87">87</a></span><span class="t"><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t88" href="#t88">88</a></span><span class="t"><span class="nam">SSO_SHOW_FORM_ON_ADMIN_PAGE</span> <span class="op">=</span> <span class="nam">os</span><span class="op">.</span><span class="nam">environ</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">"SSO_SHOW_FORM_ON_ADMIN_PAGE"</span><span class="op">,</span> <span class="str">"False"</span><span class="op">)</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="str">"true"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t88" href="#t88">88</a></span><span class="t"><span class="nam">SSO_SHOW_FORM_ON_ADMIN_PAGE</span> <span class="op">=</span> <span class="nam">os</span><span class="op">.</span><span class="nam">environ</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="str">"SSO_SHOW_FORM_ON_ADMIN_PAGE"</span><span class="op">,</span> <span class="str">"false"</span><span class="op">)</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="str">"true"</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t89" href="#t89">89</a></span><span class="t"><span class="nam">STAFF_GROUP_NAME</span> <span class="op">=</span> <span class="str">"Cal-ITP"</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t90" href="#t90">90</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t91" href="#t91">91</a></span><span class="t"><span class="nam">MIDDLEWARE</span> <span class="op">=</span> <span class="op">[</span>&nbsp;</span><span class="r"></span></p>
@@ -496,7 +496,7 @@
             <a class="nav" href="z_795c8c28b74e7b9e_urls_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-03-16 14:44 +0000
+            created at 2026-03-17 18:08 +0000
         </p>
     </div>
 </footer>
