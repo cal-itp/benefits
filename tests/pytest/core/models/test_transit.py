@@ -13,6 +13,30 @@ from benefits.core.models import (
 from benefits.routes import routes
 
 
+@pytest.fixture
+def model_TransitAgency_2():
+    agency = TransitAgency.objects.create(
+        slug="cst2",
+        short_name="TEST 2",
+        long_name="Test Transit Agency 2",
+        info_url="https://example.com/test-agency-2",
+        phone="800-555-5556",
+        active=True,
+        logo="agencies/cst.png",
+    )
+
+    return agency
+
+
+@pytest.fixture()
+def model_TransitAgencyGroup(model_TransitAgency, model_TransitAgency_2):
+    group = TransitAgencyGroup.objects.create(label="group")
+    group.transit_agencies.add(model_TransitAgency, model_TransitAgency_2)
+    group.save()
+
+    return group
+
+
 class TestCardSchemes:
     def test_choice_order(self):
         expected_order = [CardSchemes.VISA, CardSchemes.MASTERCARD, CardSchemes.DISCOVER, CardSchemes.AMEX]
@@ -237,73 +261,26 @@ class TestTransitAgency:
         model_TransitAgency.short_name = "CST"
         assert model_TransitAgency.customer_service_group_name == "CST Customer Service"
 
-    def test_group_agencies(self, model_TransitAgency, model_TransitAgencyGroup):
-        agency2 = TransitAgency.objects.create(
-            slug="cst2",
-            short_name="TEST",
-            long_name="Test Transit Agency",
-            info_url="https://example.com/test-agency",
-            phone="800-555-5555",
-            active=True,
-            logo="agencies/cst.png",
-        )
-
-        model_TransitAgencyGroup.transit_agencies.add(model_TransitAgency, agency2)
-        model_TransitAgencyGroup.save()
-
-        assert agency2 in model_TransitAgency.group_agencies()
+    @pytest.mark.usefixtures("model_TransitAgencyGroup")
+    def test_group_agencies(self, model_TransitAgency, model_TransitAgency_2):
+        assert model_TransitAgency_2 in model_TransitAgency.group_agencies()
 
     def test_group_agencies__excludes_inactives(
-        self, model_TransitAgency, model_TransitAgency_inactive, model_TransitAgencyGroup
+        self, model_TransitAgency_2, model_TransitAgency_inactive, model_TransitAgencyGroup
     ):
-        agency2 = TransitAgency.objects.create(
-            slug="cst2",
-            short_name="TEST",
-            long_name="Test Transit Agency",
-            info_url="https://example.com/test-agency",
-            phone="800-555-5555",
-            active=False,
-            logo="agencies/cst.png",
-        )
-
-        model_TransitAgencyGroup.transit_agencies.add(model_TransitAgency, model_TransitAgency_inactive)
+        model_TransitAgencyGroup.transit_agencies.add(model_TransitAgency_2, model_TransitAgency_inactive)
         model_TransitAgencyGroup.save()
 
-        assert agency2 not in model_TransitAgency.group_agencies()
+        assert model_TransitAgency_inactive not in model_TransitAgency_2.group_agencies()
 
-    def test_group_agencies__excludes_self(self, model_TransitAgency, model_TransitAgencyGroup):
-        agency2 = TransitAgency.objects.create(
-            slug="cst2",
-            short_name="TEST",
-            long_name="Test Transit Agency",
-            info_url="https://example.com/test-agency",
-            phone="800-555-5555",
-            active=True,
-            logo="agencies/cst.png",
-        )
-
-        model_TransitAgencyGroup.transit_agencies.add(model_TransitAgency, agency2)
-        model_TransitAgencyGroup.save()
-
+    @pytest.mark.usefixtures("model_TransitAgencyGroup")
+    def test_group_agencies__excludes_self(self, model_TransitAgency):
         assert model_TransitAgency not in model_TransitAgency.group_agencies()
 
-    def test_group_agencies__returns_agency_in_multiple_groups_once(self, model_TransitAgency, model_TransitAgencyGroup):
-        agency2 = TransitAgency.objects.create(
-            slug="cst2",
-            short_name="TEST",
-            long_name="Test Transit Agency",
-            info_url="https://example.com/test-agency",
-            phone="800-555-5555",
-            active=True,
-            logo="agencies/cst.png",
-        )
-
-        model_TransitAgencyGroup.transit_agencies.add(model_TransitAgency, agency2)
-        model_TransitAgencyGroup.save()
-
+    @pytest.mark.usefixtures("model_TransitAgencyGroup")
+    def test_group_agencies__returns_agency_in_multiple_groups_once(self, model_TransitAgency, model_TransitAgency_2):
         group2 = TransitAgencyGroup.objects.create(label="group2")
-
-        group2.transit_agencies.add(model_TransitAgency, agency2)
+        group2.transit_agencies.add(model_TransitAgency, model_TransitAgency_2)
 
         assert len(model_TransitAgency.group_agencies()) == 1
 
