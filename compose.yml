@@ -82,7 +82,7 @@ services:
       test: ["CMD", "nc", "-vz", "127.0.0.1", "8081"]
       interval: 5s
     environment:
-      - PGWEB_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable
+      - PGWEB_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${DJANGO_DB_NAME}?sslmode=disable
 
 volumes:
   pgdata:
