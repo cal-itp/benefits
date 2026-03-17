@@ -100,8 +100,8 @@ By default, `benefits/core/migrations/local_fixtures.json`.
 
 Boolean:
 
-- `True` (default): deletes the existing database file and runs fresh Django migrations.
-- `False`: Django uses the existing database file.
+- `true` (default): deletes the existing database file and runs fresh Django migrations.
+- `false`: Django uses the existing database file.
   (Note: Fixtures will still be loaded, updating any values on those objects if they have changed.)
 
 ### `DJANGO_DEBUG`
@@ -116,9 +116,9 @@ Boolean:
 
 Boolean:
 
-- `True`: the application is launched with debug mode turned on, allows pausing on breakpoints in the code, changes how static
+- `true`: the application is launched with debug mode turned on, allows pausing on breakpoints in the code, changes how static
   files are served
-- `False` (default): the application is launched with debug mode turned off, similar to how it runs in production
+- `false` (default): the application is launched with debug mode turned off, similar to how it runs in production
 
 ### `DJANGO_LOCAL_PORT`
 
