@@ -23,3 +23,24 @@ To test the Littlepay or Switchio card enrollment flows, use test [Payment card 
 ## Benefits Administrator
 
 To test the Benefits Administrator from the perspective of a _Transit Agency user_, login using the sample [Benefits Admin account](https://docs.google.com/document/d/1bFynuiLy9POXYEYnLVEQJpAm1TVqlappN9lU9ev3Bvg/edit?tab=t.0#heading=h.yavvkfyg4n).
+
+## When to test
+
+Manual testing is an important part of the feature release and refactoring processes. The following table outlines some key conditions
+in which different manual testing scenarios should be run.
+
+| Condition                                                            | Scenario(s)                                           | Environment(s)         |
+| -------------------------------------------------------------------- | ----------------------------------------------------- | ---------------------- |
+| New feature development                                              | [in-person][ip], [self-service][ss]                   | `local`, `dev`         |
+| Bug fixes, refactors, etc. that do not change expected functionality | [in-person][ip], [self-service][ss]                   | `local`, `dev`         |
+| New or refactored designs, layouts, fonts, colors, etc.              | [keyboard][kb]                                        | `local`, `dev`, `test` |
+| New translations and/or updated copy                                 | [translations][tr]                                    | `local`, `test`        |
+| New agency onboarding                                                | [in-person][ip], [self-service][ss], translations[tr] | `test`                 |
+| Deployment to `test`                                                 | [in-person][ip], [self-service][ss]                   | `test`                 |
+| Release to `prod`                                                    | [smoke testing][sk]                                   | `prod`                 |
+
+[ip]: ./in-person.md
+[kb]: ./keyboard.md
+[sk]: ./smoke-testing.md
+[ss]: ./self-service.md
+[tr]: ./translations.md
