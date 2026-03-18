@@ -1,4 +1,4 @@
-# Testing Self-Service enrollment
+# Testing self-service enrollment
 
 Testing the Self-Service Enrollment featureset refers to using the Benefits app as a _member of the public_, and
 stepping through the process of Self-Service Enrollment for one or more enrollment flows.

@@ -1,4 +1,4 @@
-# Testing In-Person enrollment
+# Testing in-person enrollment
 
 Testing the In-Person Enrollment featureset refers to logging in to the Benefits Administrator as a _Transit Agency user_, and
 stepping through the process of In-Person Enrollment for one or more enrollment flows.

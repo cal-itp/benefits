@@ -1,4 +1,4 @@
-# Getting started
+# Getting started with manual testing
 
 In order to test a complete enrollment flow in the app, you will need to use appropriate test credentials for the flow and associated identity provider(s) (IdPs).
 
