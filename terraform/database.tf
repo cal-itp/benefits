@@ -20,6 +20,7 @@ resource "azurerm_postgresql_flexible_server" "main" {
     password_auth_enabled         = true
   }
   public_network_access_enabled = false
+  private_dns_zone_id           = azurerm_private_dns_zone.db.id # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server#private_dns_zone_id-1
   delegated_subnet_id           = azurerm_subnet.main["DB"].id
   administrator_login           = "postgres_admin"
   administrator_password        = azurerm_key_vault_secret.postgres_admin_password.value
