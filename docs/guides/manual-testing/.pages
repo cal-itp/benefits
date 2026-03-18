@@ -2,3 +2,4 @@ title: Manual testing
 arrange:
   - getting-started.md
   - keyboard.md
+  - translations.md
