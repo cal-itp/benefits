@@ -179,7 +179,7 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
         context = super().get_context_data(**kwargs)
         success_message = _(
             "You were not charged anything today. When boarding public transit provided by {short_name}, tap this "
-            "card to receive a reduced fare.",
+            "card and you will be charged a reduced fare.",
             short_name=self.agency.short_name,
         )
 
