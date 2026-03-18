@@ -849,3 +849,12 @@ footer .footer-links li a.footer-link:visited {
     column-gap: 80px !important;
   }
 }
+
+.nearby-provider_table {
+  border: 1px solid #9e9e9e;
+  border-bottom: 0;
+}
+
+.nearby-provider {
+  border-bottom: 1px solid #9e9e9e;
+}

@@ -35,6 +35,11 @@ class Routes:
         return "core:agency_card"
 
     @property
+    def PROVIDERS(self):
+        """The agency participates in a group, user acknowledges bulk enrollment."""
+        return "core:providers"
+
+    @property
     def AGENCY_ELIGIBILITY_INDEX(self):
         """The user picks a flow and a transit agency is configured for them."""
         return "core:agency_eligibility_index"

@@ -136,7 +136,11 @@ class TransitAgency(models.Model):
 
     @property
     def eligibility_index_url(self):
-        """Public facing URL to the TransitAgency's eligibility page."""
+        """Public facing URL to the TransitAgency's eligibility page or group interstitial."""
+
+        if len(self.group_agencies()) > 0:
+            return reverse(routes.PROVIDERS, args=[self.slug])
+
         return reverse(routes.AGENCY_ELIGIBILITY_INDEX, args=[self.slug])
 
     @property

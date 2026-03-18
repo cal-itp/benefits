@@ -49,9 +49,11 @@ class AgencyIndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        short_name = self.kwargs.get("agency").short_name
+        agency = self.kwargs.get("agency")
+        short_name = agency.short_name
         headline = _("Get your reduced fare when you tap to ride on {short_name}", short_name=short_name)
-        context |= {"headline": headline}
+        context |= {"headline": headline, "next_url": agency.eligibility_index_url}
+
         return context
 
 
@@ -243,3 +245,30 @@ class LoggedOutView(TemplateView):
     """View handler for the final log out confirmation message."""
 
     template_name = "core/logged-out.html"
+
+
+class ProvidersView(TemplateView):
+    """View handler for...."""
+
+    template_name = "eligibility/providers.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        agency = self.kwargs.get("agency")
+        grouped_agencies = agency.group_agencies()
+
+        # TODO: alphabetize here or upstream?
+        grouped_agency_names = [o.short_name for o in grouped_agencies]
+        context |= {
+            "count": len(grouped_agencies) + 1,
+            "headline": _("Weʼll also enroll you at nearby transit providers"),
+            "providers": [agency.short_name, *grouped_agency_names],
+        }
+
+        return context
+
+    def get(self, request, *args, **kwargs):
+        """Initialize session state before handling the request."""
+
+        return super().get(request, *args, **kwargs)
