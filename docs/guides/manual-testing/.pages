@@ -1,0 +1,3 @@
+title: Manual testing
+arrange:
+  - getting-started.md

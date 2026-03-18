@@ -1,0 +1,25 @@
+# Getting started
+
+In order to test a complete enrollment flow in the app, you will need to use appropriate test credentials for the flow and associated identity provider(s) (IdPs).
+
+The [Benefits Test Data document](https://docs.google.com/document/d/1bFynuiLy9POXYEYnLVEQJpAm1TVqlappN9lU9ev3Bvg/edit?tab=t.0) has more information.
+
+## Login.gov
+
+See the tutorial on [Using the Login.gov sandbox](../../tutorials/logingov-sandbox.md) to learn how to setup a Login.gov sandbox account for testing. Note you can create _multiple_ Login.gov sandbox accounts for testing different scenarios (Older Adult and U.S. Veteran for example).
+
+## Agency cards
+
+To test the agency card enrollment pathways, use test credentials specific to the Transit Agency:
+
+- [Agency Cards (CST)](https://docs.google.com/document/d/1bFynuiLy9POXYEYnLVEQJpAm1TVqlappN9lU9ev3Bvg/edit?tab=t.0#heading=h.jxhxmhjl8rik)
+- [Courtesy Cards (MST)](https://docs.google.com/document/d/1bFynuiLy9POXYEYnLVEQJpAm1TVqlappN9lU9ev3Bvg/edit#heading=h.l2jcqsl4s6rh)
+- [Reduced Fare Mobility ID (SBMTD)](https://docs.google.com/document/d/1bFynuiLy9POXYEYnLVEQJpAm1TVqlappN9lU9ev3Bvg/edit#heading=h.rkuhoc19aku7)
+
+## Payment cards
+
+To test the Littlepay or Switchio card enrollment flows, use test [Payment card information](https://docs.google.com/document/d/1bFynuiLy9POXYEYnLVEQJpAm1TVqlappN9lU9ev3Bvg/edit#heading=h.6l8f6lihq1vz), along with any fake name, any CVV and an expiration date in the future.
+
+## Benefits Administrator
+
+To test the Benefits Administrator from the perspective of a _Transit Agency user_, login using the sample [Benefits Admin account](https://docs.google.com/document/d/1bFynuiLy9POXYEYnLVEQJpAm1TVqlappN9lU9ev3Bvg/edit?tab=t.0#heading=h.yavvkfyg4n).
