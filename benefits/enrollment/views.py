@@ -175,11 +175,6 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
 
     template_name = "enrollment/success.html"
 
-    re_enrollment_message: str = _(
-        "You will need to re-enroll if you choose to change the card you use to pay for transit service."
-    )
-    thank_you_message: str = _("Thank you for using Cal-ITP Benefits!")
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         success_message = _(
@@ -190,9 +185,7 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
 
         context |= {
             "redirect_to": self.request.path,
-            "re_enrollment_message": self.re_enrollment_message,
             "success_message": success_message,
-            "thank_you_message": self.thank_you_message,
         }
         return context
 

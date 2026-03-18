@@ -197,7 +197,6 @@ class TestSuccessView:
         context = view.get_context_data()
         assert "redirect_to" in context
         assert "success_message" in context
-        assert "thank_you_message" in context
 
     def test_get_logged_in(self, view, app_request, mocker):
         mock_session = mocker.patch("benefits.enrollment.views.session")
