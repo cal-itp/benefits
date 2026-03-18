@@ -34,15 +34,15 @@ To test the Benefits Administrator from the perspective of a _Transit Agency use
 
 The following table outlines some key conditions in which different manual testing scenarios should be run.
 
-| Condition                                                            | Scenario(s)                                           | Environment(s)         |
-| -------------------------------------------------------------------- | ----------------------------------------------------- | ---------------------- |
-| New feature development                                              | [in-person][ip], [self-service][ss]                   | `local`, `dev`         |
-| Bug fixes, refactors, etc. that do not change expected functionality | [in-person][ip], [self-service][ss]                   | `local`, `dev`         |
-| New or refactored designs, layouts, fonts, colors, etc.              | [keyboard][kb]                                        | `local`, `dev`, `test` |
-| New translations and/or updated copy                                 | [translations][tr]                                    | `local`, `test`        |
-| New agency onboarding                                                | [in-person][ip], [self-service][ss], translations[tr] | `test`                 |
-| Deployment to `test`                                                 | [in-person][ip], [self-service][ss]                   | `test`                 |
-| Release to `prod`                                                    | [smoke testing][sk]                                   | `prod`                 |
+| Condition                                                 | Scenario(s)                                                                  | Environment(s)         |
+| --------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------- |
+| New feature development, new UI elements                  | [keyboard][kb], ([in-person][ip], [self-service][ss])                        | `local`, `dev`         |
+| Bug fixes, refactors - maintaining existing functionality | [in-person][ip], [self-service][ss]                                          | `local`, `dev`         |
+| New or refactored designs, layouts, fonts, colors         | [keyboard][kb]                                                               | `local`, `dev`, `test` |
+| New translations and/or updated copy                      | [translations][tr]                                                           | `local`, `test`        |
+| New agency onboarding                                     | [in-person][ip], [self-service][ss], [smoke testing][sk], [translations][tr] | `test`, `prod`         |
+| Deployment to `test`                                      | [in-person][ip], [self-service][ss]                                          | `test`                 |
+| Release to `prod`                                         | [smoke testing][sk]                                                          | `prod`                 |
 
 [ip]: ./in-person.md
 [kb]: ./keyboard.md
