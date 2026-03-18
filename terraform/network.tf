@@ -56,6 +56,10 @@ resource "azurerm_subnet" "main" {
 resource "azurerm_private_dns_zone" "db" {
   name                = "privatelink.postgres.database.azure.com"
   resource_group_name = data.azurerm_resource_group.main.name
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "db" {
@@ -63,6 +67,10 @@ resource "azurerm_private_dns_zone_virtual_network_link" "db" {
   resource_group_name   = data.azurerm_resource_group.main.name
   private_dns_zone_name = azurerm_private_dns_zone.db.name
   virtual_network_id    = azurerm_virtual_network.main.id
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
 }
 
 # NAT Gateway for the App Service's outbound connectivity (IdG, Sentry, Google SSO)
@@ -121,6 +129,10 @@ resource "azurerm_network_security_group" "app" {
     priority                   = 100
     direction                  = "Outbound"
   }
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
 }
 
 resource "azurerm_subnet_network_security_group_association" "app" {
@@ -157,6 +169,10 @@ resource "azurerm_network_security_group" "db" {
     access                     = "Deny"
     priority                   = 110
     direction                  = "Inbound"
+  }
+
+  lifecycle {
+    ignore_changes = [tags]
   }
 }
 
