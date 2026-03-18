@@ -2,12 +2,16 @@ locals {
   subnet_prefix = "SNET-CDT-PUB-VIP-CALITP-${local.env_letter}"
   network_subnets = {
     "APP" = {
-      prefix     = ["10.0.0.0/26"] # 64 addresses - 10.0.4.0 to 10.0.4.63
-      delegation = "Microsoft.Web/serverFarms"
+      prefix            = ["10.0.0.0/26"] # 64 addresses - 10.0.4.0 to 10.0.4.63
+      delegation        = "Microsoft.Web/serverFarms"
+      actions           = ["Microsoft.Network/virtualNetworks/subnets/action"]
+      service_endpoints = null
     }
     "DB" = {
-      prefix     = ["10.0.0.64/26"] # 64 addresses - 10.0.0.64 to 10.0.0.127
-      delegation = "Microsoft.DBforPostgreSQL/flexibleServers"
+      prefix            = ["10.0.0.64/26"] # 64 addresses - 10.0.0.64 to 10.0.0.127
+      delegation        = "Microsoft.DBforPostgreSQL/flexibleServers"
+      actions           = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
+      service_endpoints = ["Microsoft.Storage"]
     }
   }
 }
@@ -33,11 +37,13 @@ resource "azurerm_subnet" "main" {
   virtual_network_name = azurerm_virtual_network.main.name
   resource_group_name  = data.azurerm_resource_group.main.name
   address_prefixes     = each.value.prefix
+  service_endpoints    = each.value.service_endpoints
 
   delegation {
     name = "delegation-${lower(each.key)}"
     service_delegation {
-      name = each.value.delegation
+      name    = each.value.delegation
+      actions = each.value.actions
     }
   }
 
