@@ -31,9 +31,15 @@
             {% else %}
               <p class="pt-lg-3 mt-lg-0">
             {% endif %}
-                {% block success-message %}
                 {{ success_message }}
-                {% endblock success-message %}
+
+                {% if agency_short_names %}
+                <ul class="pt-3">
+                  {% for agency_short_name in agency_short_names %}
+                  <li>{{ agency_short_name }}</li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
               </p>
               <p class="pt-4">
                 {% translate "You will need to re-enroll if you choose to change the card you use to pay for transit service." %}
