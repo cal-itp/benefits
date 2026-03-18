@@ -1,6 +1,7 @@
 title: Manual testing
 arrange:
   - getting-started.md
+  - in-person.md
   - keyboard.md
   - self-service.md
   - translations.md
