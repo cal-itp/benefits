@@ -25,7 +25,7 @@ class Event:
     _counter = itertools.count()
     _domain_re = re.compile(r"^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n?]+)", re.IGNORECASE)
 
-    def __init__(self, request, event_type, enrollment_method=models.EnrollmentMethods.DIGITAL, **kwargs):
+    def __init__(self, request, event_type, enrollment_method=models.EnrollmentMethods.DIGITAL, agency=None, **kwargs):
         self.app_version = VERSION
         # device_id is generated based on the user_id, and both are set explicitly (per session)
         self.device_id = session.did(request)
@@ -42,8 +42,10 @@ class Event:
         self.user_properties = {}
         self.__dict__.update(kwargs)
 
-        agency = session.agency(request)
-        agency_name = agency.long_name if agency else None
+        # Use agency argument if present, otherwise look for one in the session
+        agency = agency or session.agency(request)
+        agency_name = str(agency) if agency else None
+
         flow = session.flow(request)
         verifier_name = flow.eligibility_verifier if flow else None
 

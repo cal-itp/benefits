@@ -63,7 +63,6 @@ def handle_enrollment_results(
     group_id = str(session.group(request).group_id)  # needs to be a string for the API call
     match (status):
         case Status.SUCCESS:
-            agency = session.agency(request)
             expiry = session.enrollment_expiry(request)
             oauth_extra_claims = session.oauth_extra_claims(request)
             # EnrollmentEvent expects a string value for extra_claims
@@ -71,24 +70,32 @@ def handle_enrollment_results(
                 str_extra_claims = ", ".join(oauth_extra_claims)
             else:
                 str_extra_claims = ""
-            event = models.EnrollmentEvent.objects.create(
-                transit_agency=agency,
-                enrollment_flow=flow,
-                enrollment_method=enrollment_method,
-                verified_by=verified_by,
-                expiration_datetime=expiry,
-                extra_claims=str_extra_claims,
-            )
-            event.save()
-            analytics.returned_success(
-                request,
-                enrollment_group=group_id,
-                transit_processor=agency.transit_processor,
-                enrollment_method=enrollment_method,
-                extra_claims=oauth_extra_claims,
-                card_scheme=card_scheme,
-                card_category=card_category,
-            )
+
+            agencies_to_report = [agency]
+            agencies_to_report.extend(agency.group_agencies())
+
+            for agency in agencies_to_report:
+                event = models.EnrollmentEvent.objects.create(
+                    transit_agency=agency,
+                    enrollment_flow=flow,
+                    enrollment_method=enrollment_method,
+                    verified_by=verified_by,
+                    expiration_datetime=expiry,
+                    extra_claims=str_extra_claims,
+                )
+                event.save()
+
+                analytics.returned_success(
+                    request,
+                    agency=agency,
+                    enrollment_group=group_id,
+                    transit_processor=agency.transit_processor,
+                    enrollment_method=enrollment_method,
+                    extra_claims=oauth_extra_claims,
+                    card_scheme=card_scheme,
+                    card_category=card_category,
+                )
+
             return redirect(route_success)
 
         case Status.SYSTEM_ERROR:

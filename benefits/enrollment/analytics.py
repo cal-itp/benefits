@@ -12,6 +12,7 @@ class ReturnedEnrollmentEvent(core.Event):
         self,
         request,
         status,
+        agency,
         enrollment_group,
         transit_processor,
         error=None,
@@ -20,7 +21,7 @@ class ReturnedEnrollmentEvent(core.Event):
         card_category=None,
         card_scheme=None,
     ):
-        super().__init__(request, "returned enrollment", enrollment_method)
+        super().__init__(request, "returned enrollment", enrollment_method, agency)
         if str(status).lower() in ("error", "retry", "success"):
             self.update_event_properties(status=status)
             self.update_event_properties(enrollment_group=enrollment_group)
@@ -85,6 +86,7 @@ def returned_retry(
 
 def returned_success(
     request,
+    agency,
     enrollment_group,
     transit_processor,
     enrollment_method: str = models.EnrollmentMethods.DIGITAL,
@@ -97,6 +99,7 @@ def returned_success(
         ReturnedEnrollmentEvent(
             request,
             status="success",
+            agency=agency,
             enrollment_group=enrollment_group,
             transit_processor=transit_processor,
             enrollment_method=enrollment_method,
