@@ -13,30 +13,6 @@ from benefits.core.models import (
 from benefits.routes import routes
 
 
-@pytest.fixture
-def model_TransitAgency_2():
-    agency = TransitAgency.objects.create(
-        slug="cst2",
-        short_name="TEST 2",
-        long_name="Test Transit Agency 2",
-        info_url="https://example.com/test-agency-2",
-        phone="800-555-5556",
-        active=True,
-        logo="agencies/cst.png",
-    )
-
-    return agency
-
-
-@pytest.fixture()
-def model_TransitAgencyGroup(model_TransitAgency, model_TransitAgency_2):
-    group = TransitAgencyGroup.objects.create(label="group")
-    group.transit_agencies.add(model_TransitAgency, model_TransitAgency_2)
-    group.save()
-
-    return group
-
-
 class TestCardSchemes:
     def test_choice_order(self):
         expected_order = [CardSchemes.VISA, CardSchemes.MASTERCARD, CardSchemes.DISCOVER, CardSchemes.AMEX]

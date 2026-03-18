@@ -14,7 +14,7 @@ def test_FailedPretokenizationRequestEvent_sets_properties(app_request):
 
 
 @pytest.mark.django_db
-def test_ReturnedEnrollmentEvent_without_error(app_request, mocker):
+def test_ReturnedEnrollmentEvent_without_error(app_request, mocker, model_TransitAgency):
     mock_flow = mocker.Mock()
     mock_flow.system_name = "flow_1"
     mocker.patch("benefits.core.session.flow", return_value=mock_flow)
@@ -23,7 +23,7 @@ def test_ReturnedEnrollmentEvent_without_error(app_request, mocker):
     mocker.patch("benefits.core.session.OAuthSession.claims_result", return_value=ClaimsResult(verified=mock_verified))
 
     event = ReturnedEnrollmentEvent(
-        app_request, status="success", enrollment_group="TEST GROUP", transit_processor="processor"
+        app_request, status="success", agency=model_TransitAgency, enrollment_group="TEST GROUP", transit_processor="processor"
     )
     assert "error_code" not in event.event_properties
     assert "enrollment_flows" in event.event_properties
@@ -37,6 +37,7 @@ def test_returned_success_sends_event_with_optional_data(app_request, mocker, mo
     agency = model_TransitAgency
     returned_success(
         app_request,
+        agency=agency,
         enrollment_group=model_LittlepayGroup.group_id,
         transit_processor=agency.transit_processor,
         extra_claims="claim",

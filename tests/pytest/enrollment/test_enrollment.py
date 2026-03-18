@@ -200,6 +200,29 @@ def test_handle_enrollment_results_success_claims(
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_group", "model_TransitAgencyGroup")
+def test_handle_enrollment_results_success_transitagencygroup(
+    mocker,
+    app_request,
+    mocked_session_oauth_extra_claims,
+    model_TransitAgency_2,
+    mocked_analytics_module,
+):
+    mocked_session_oauth_extra_claims.return_value = ["claim_1", "claim_2"]
+    spy = mocker.spy(benefits.enrollment.enrollment.models.EnrollmentEvent.objects, "create")
+
+    handle_enrollment_results(app_request, Status.SUCCESS, "verified by")
+
+    assert spy.call_count == 2
+    spy_kwargs = spy.call_args.kwargs
+    assert spy_kwargs["transit_agency"] == model_TransitAgency_2
+
+    assert mocked_analytics_module.returned_success.call_count == 2
+    analytics_kwargs = mocked_analytics_module.returned_success.call_args.kwargs
+    assert analytics_kwargs["agency"] == model_TransitAgency_2
+
+
+@pytest.mark.django_db
 @pytest.mark.usefixtures(
     "mocked_session_agency", "mocked_session_flow", "mocked_session_group", "mocked_session_eligible", "model_LittlepayGroup"
 )
