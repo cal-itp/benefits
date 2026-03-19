@@ -36,6 +36,6 @@ manifest when the display language is changed.
   - Also review when a user _is not eligible_.
 - Following a **Medicare.gov** enrollment pathway to completion.
   - Also review when a user _is not eligible_.
-- Following an **Agency Card** pathway to completion.
+- Following an **Agency Card** enrollment pathway to completion.
   - Also review when a user _is not eligible_.
 - Reviewing the **Help** page (link in the footer).
