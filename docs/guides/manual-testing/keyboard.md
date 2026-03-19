@@ -12,7 +12,7 @@ To perform keyboard testing:
 ## When to test
 
 - When new UI elements are introduced.
-- When significant UI/design changes are introduced (e.g. sit-wide style changes, template refactoring).
+- When significant UI/design changes are introduced (e.g. site-wide style changes, template refactoring).
 
 ## Scenarios
 
