@@ -584,7 +584,13 @@ msgstr ""
 
 #, python-brace-format
 msgid ""
-"Cal-ITP doesn’t save any of your information. {short_name} provides reduced "
+"Cal-ITP doesn’t save any of your information. {short_name} and nearby "
+"transit providers offer reduced fares to riders who qualify."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Cal-ITP doesn’t save any of your information. {short_name} offers reduced "
 "fares to riders who qualify."
 msgstr ""
 
