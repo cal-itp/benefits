@@ -23,4 +23,12 @@ events are being accurately captured in the Benefits Administrator.
   - Also review when a user _is not eligible_.
 - Following a grouped agency enrollment to completion
 - Following a Littlepay enrollment to completion
-- Following a Switchio enrollment to completion
+- Following a **Login.gov** enrollment pathway to completion.
+  - Also review when a user _is not eligible_.
+- Following a **Medicare.gov** enrollment pathway to completion.
+  - Also review when a user _is not eligible_.
+- Following an **Agency Card** enrollment pathway to completion.
+  - Also review when a user _is not eligible_.
+- Following a grouped agency enrollment to completion.
+- Following a Littlepay enrollment to completion.
+- Following a Switchio enrollment to completion.
