@@ -25,6 +25,34 @@ from benefits.routes import routes
 logger = logging.getLogger(__name__)
 
 
+class AdditionalProvidersView(mixins.CommonContextMixin, TemplateView):
+    """View handler for showing the list of agencies the customer will be enrolled at (if more than one)."""
+
+    template_name = "in_person/additional-providers.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        """Initialize session state before handling the request."""
+
+        agency = session.agency(request)
+        if not agency:
+            agency = TransitAgency.for_user(request.user)
+            session.update(request, agency=agency)
+        self.agency = agency
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        agency = self.agency
+        group_agencies = agency.group_agencies()
+        agencies = [agency] + group_agencies
+        context["agencies"] = [a.short_name for a in agencies]
+
+        context["cancel_url"] = routes.ADMIN_INDEX
+
+        return context
+
+
 class EligibilityView(mixins.CommonContextMixin, FormView):
     """CBV for the in-person eligibility flow selection form."""
 

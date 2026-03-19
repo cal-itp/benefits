@@ -130,6 +130,11 @@ class Routes:
         return "admin:index"
 
     @property
+    def IN_PERSON_ADDITIONAL_PROVIDERS(self):
+        """In-person (e.g. agency assisted) additional providers prompt"""
+        return "in_person:additional_providers"
+
+    @property
     def IN_PERSON_ELIGIBILITY(self):
         """In-person (e.g. agency assisted) eligibility"""
         return "in_person:eligibility"

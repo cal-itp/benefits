@@ -8,6 +8,11 @@ from . import views
 app_name = "in_person"
 urlpatterns = [
     path(
+        "additional-providers/",
+        admin.site.admin_view(views.AdditionalProvidersView.as_view()),
+        name=routes.name(routes.IN_PERSON_ADDITIONAL_PROVIDERS),
+    ),
+    path(
         "eligibility/", admin.site.admin_view(views.EligibilityView.as_view()), name=routes.name(routes.IN_PERSON_ELIGIBILITY)
     ),
     path("enrollment/", admin.site.admin_view(views.EnrollmentView.as_view()), name=routes.name(routes.IN_PERSON_ENROLLMENT)),
