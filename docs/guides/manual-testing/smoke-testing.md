@@ -12,15 +12,6 @@ cannot necessarily complete an entire enrollment flow and exercise all parts of 
 Whenever a new feature or major refactor is introduced for the Benefits or Eligibility Server applications, the Smoke Testing
 procedures should be followed.
 
-Some examples of new features or major refactors that would trigger a need for Smoke Testing include but are not necessarily limited to:
-
-- A new enrollment pathway is launched
-- A new transit agency is launched
-- A new payment processor integration is launched
-- A refactor of an integration with an external service (i.e. Eligibility Server, Identity Gateway, payment processor)
-- A refactor of the underlying data model
-- A significant refactor or redesign of the User Interface and/or User Experience (i.e. the steps a user takes through an enrollment pathway)
-
 ## Follow-up
 
 ### If Smoke Testing reveals no critical flaws?
