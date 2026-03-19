@@ -186,8 +186,7 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
                 "You were not charged anything today. When boarding public transit at the following providers, tap this card "
                 "and you will be charged a reduced fare:"
             )
-            agencies = [agency] + group_agencies
-            agency_short_names = [a.short_name for a in agencies]
+            agency_short_names = agency.group_agency_short_names()
         else:
             success_message = _(
                 "You were not charged anything today. When boarding public transit provided by {short_name}, tap this "
