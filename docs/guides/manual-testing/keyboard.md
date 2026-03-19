@@ -1,6 +1,6 @@
 # Keyboard testing
 
-Keyboard testing refers to testing the app on a desktop/laptop machine _without_ using a mouse/trackpad. This is an important
+Keyboard testing refers to testing the app on a desktop/laptop machine _without_ using a mouse, trackpad, or touchscreen. This is an important
 part of manual testing as there are many users that prefer and/or need to primarily or exclusively use a keyboard for online
 navigation.
 
