@@ -31,7 +31,7 @@ The following scenarios should be reviewed at a minimum. Look out for missing tr
 manifest when the display language is changed.
 
 - Choosing a transit agency.
-- Choose an enrollment pathway.
+- Choosing an enrollment pathway.
 - Following a **Login.gov** enrollment pathway to completion.
   - Also review when a user _is not eligible_.
 - Following a **Medicare.gov** enrollment pathway to completion.
