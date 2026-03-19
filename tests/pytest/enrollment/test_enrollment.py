@@ -204,18 +204,35 @@ def test_handle_enrollment_results_success_claims(
 def test_handle_enrollment_results_success_transitagencygroup(
     mocker,
     app_request,
-    mocked_session_oauth_extra_claims,
+    model_EnrollmentFlow,
+    model_TransitAgency,
     model_TransitAgency_2,
     mocked_analytics_module,
 ):
-    mocked_session_oauth_extra_claims.return_value = ["claim_1", "claim_2"]
     spy = mocker.spy(benefits.enrollment.enrollment.models.EnrollmentEvent.objects, "create")
 
     handle_enrollment_results(app_request, Status.SUCCESS, "verified by")
 
-    assert spy.call_count == 2
-    spy_kwargs = spy.call_args.kwargs
-    assert spy_kwargs["transit_agency"] == model_TransitAgency_2
+    expected_calls = [
+        mocker.call(
+            transit_agency=model_TransitAgency,
+            enrollment_flow=model_EnrollmentFlow,
+            enrollment_method="digital",
+            verified_by="verified by",
+            expiration_datetime=None,
+            extra_claims="",
+        ),
+        mocker.call(
+            transit_agency=model_TransitAgency_2,
+            enrollment_flow=model_EnrollmentFlow,
+            enrollment_method="digital",
+            verified_by="verified by",
+            expiration_datetime=None,
+            extra_claims="",
+        ),
+    ]
+    spy.assert_has_calls(expected_calls)
+    assert spy.call_count == 2  # assert_has_calls doesn't assert that those are the _only_ calls
 
     assert mocked_analytics_module.returned_success.call_count == 2
     analytics_kwargs = mocked_analytics_module.returned_success.call_args.kwargs
