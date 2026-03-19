@@ -27,7 +27,7 @@
 | benefits/core/models/\_\_init\_\_.py                       |        4 |        0 |        0 |        0 |    100% |           |
 | benefits/core/models/common.py                             |       52 |        2 |       14 |        0 |     97% |     91-92 |
 | benefits/core/models/enrollment.py                         |      133 |        3 |       18 |        3 |     96% |184, 192, 215 |
-| benefits/core/models/transit.py                            |      148 |        0 |       40 |        1 |     99% |  239->250 |
+| benefits/core/models/transit.py                            |      153 |        0 |       42 |        1 |     99% |  258->269 |
 | benefits/core/recaptcha.py                                 |       13 |        5 |        4 |        1 |     53% |     24-30 |
 | benefits/core/session.py                                   |      151 |        3 |       40 |        0 |     98% |     56-58 |
 | benefits/core/urls.py                                      |       27 |        2 |        2 |        1 |     90% |     38-39 |
@@ -93,7 +93,7 @@
 | benefits/urls.py                                           |       46 |        9 |        6 |        2 |     75% |43->82, 57, 60, 63, 66, 69-71, 82->94, 88-90 |
 | benefits/views.py                                          |       33 |        0 |        0 |        0 |    100% |           |
 | benefits/wsgi.py                                           |        4 |        4 |        0 |        0 |      0% |     10-16 |
-| **TOTAL**                                                  | **3326** |  **157** |  **568** |   **58** | **94%** |           |
+| **TOTAL**                                                  | **3331** |  **157** |  **570** |   **58** | **94%** |           |
 
 
 ## Setup coverage badge
