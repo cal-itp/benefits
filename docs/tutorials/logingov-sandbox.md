@@ -40,7 +40,7 @@ Login.gov also provides more information and sample `YAML` files in their [Testi
 1. Select a language and check **I read and accept the Login.gov Rules of Use** and submit.
 1. Check your email for a confirmation link and click it.
 1. Create a strong, unique password for use with this test account only. **Save this (ideally with a password manager)**.
-1. Continue to setup a multi-factor authentication method. Selecting _Backup codes_ is perfectly fine especially if this is a temporary test account, but note that you only get 10 one-time-use codes. You will get a fresh 10 after using the first batch. _Authentication application_ or **Text or voice message** may be better options if you plan to use the test account frequently, for some time.
+1. Continue to setup a multi-factor authentication method. Selecting _Backup codes_ is perfectly fine especially if this is a temporary test account, but note that you only get 10 one-time-use codes. You will get a fresh 10 after using the first batch. _Authentication application_ or _Text or voice message_ may be better options if you plan to use the test account frequently, for some time.
 
 At this point, you will be shown your Login.gov sandbox account page, and you are signed in.
 
