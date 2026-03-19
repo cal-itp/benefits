@@ -6,19 +6,28 @@
 {% endblock title %}
 
 {% block flow-content %}
-  <div class="p-3 min-vh-60 d-flex flex-column justify-content-between">
-    <div class="d-flex">
+  <div class="p-3 d-flex flex-column justify-content-between gap-3">
+    <div class="d-flex align-items-center">
       <i class="success-icon"></i>
-      <div>
-        <p>Success! This rider can now use their contactless card to automatically receive a reduced fare when they tap-to-ride.</p>
-
-        {% if enrollment.supports_expiration %}
-          <p>
-            <span class="fw-bold my-3">This rider will enjoy a transit benefit until {{ enrollment.expires|date }}.</span> They will need to enroll again at that time to continue receiving reduced fares.
-          </p>
-        {% endif %}
-      </div>
+      <h3 class="h5 fw-bold mb-0">Success!</h3>
     </div>
+
+    <div>
+      {% if enrollment.supports_expiration %}
+        <p>
+          <span class="fw-bold my-3">This rider will enjoy a transit benefit until {{ enrollment.expires|date }}.</span> They will need to enroll again at that time to continue receiving reduced fares.
+        </p>
+      {% endif %}
+
+      <p>{{ success_message }}</p>
+
+      {% if agencies %}
+        <ul>
+          {% for agency in agencies %}<li class="fs-6 mb-2">{{ agency }}</li>{% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+
     <div class="row">
       <div class="col-6">
         {% url routes.IN_PERSON_ELIGIBILITY as url_eligibility %}
