@@ -9,11 +9,11 @@ from benefits.core.mixins import AgencySessionRequiredMixin
 from benefits.core.models.transit import TransitAgency
 from benefits.eligibility import analytics as eligibility_analytics
 from benefits.enrollment.views import (
-    IndexView as DigitalEnrollmentIndexView,
-    ReenrollmentErrorView as DigitalReenrollmentErrorView,
-    RetryView as DigitalRetryView,
-    SuccessView as DigitalSuccessView,
-    SystemErrorView as DigitalSystemErrorView,
+    IndexView as SelfServiceEnrollmentIndexView,
+    ReenrollmentErrorView as SelfServiceReenrollmentErrorView,
+    RetryView as SelfServiceRetryView,
+    SuccessView as SelfServiceSuccessView,
+    SystemErrorView as SelfServiceSystemErrorView,
 )
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.enrollment_littlepay.views import IndexView as LittlepayIndexView, TokenView
@@ -71,7 +71,7 @@ class LittlepayTokenView(TokenView):
     route_server_error = routes.IN_PERSON_SERVER_ERROR
 
 
-class EnrollmentView(DigitalEnrollmentIndexView):
+class EnrollmentView(SelfServiceEnrollmentIndexView):
 
     route_origin = routes.IN_PERSON_ENROLLMENT
 
@@ -96,7 +96,7 @@ class LittlepayEnrollmentView(mixins.CommonContextMixin, LittlepayIndexView):
         return f"{self.request.user.first_name} {self.request.user.last_name}"
 
 
-class ReenrollmentErrorView(mixins.CommonContextMixin, AgencySessionRequiredMixin, DigitalReenrollmentErrorView):
+class ReenrollmentErrorView(mixins.CommonContextMixin, AgencySessionRequiredMixin, SelfServiceReenrollmentErrorView):
     """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
 
     template_name = "in_person/enrollment/reenrollment_error.html"
@@ -108,14 +108,14 @@ class ReenrollmentErrorView(mixins.CommonContextMixin, AgencySessionRequiredMixi
         return context
 
 
-class RetryView(mixins.CommonContextMixin, DigitalRetryView):
+class RetryView(mixins.CommonContextMixin, SelfServiceRetryView):
     """View handler for card verification failure."""
 
     template_name = "in_person/enrollment/retry.html"
     enrollment_method = models.EnrollmentMethods.IN_PERSON
 
 
-class SystemErrorView(mixins.CommonContextMixin, DigitalSystemErrorView):
+class SystemErrorView(mixins.CommonContextMixin, SelfServiceSystemErrorView):
     """View handler for an enrollment system error."""
 
     template_name = "in_person/enrollment/system_error.html"
@@ -137,7 +137,7 @@ class ServerErrorView(mixins.CommonContextMixin, AgencySessionRequiredMixin, Tem
         return super().get(request, *args, **kwargs)
 
 
-class SuccessView(mixins.CommonContextMixin, AgencySessionRequiredMixin, DigitalSuccessView):
+class SuccessView(mixins.CommonContextMixin, AgencySessionRequiredMixin, SelfServiceSuccessView):
     """View handler for the final success page."""
 
     template_name = "in_person/enrollment/success.html"

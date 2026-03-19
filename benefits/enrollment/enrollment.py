@@ -51,7 +51,7 @@ def handle_enrollment_results(
     status: Status,
     verified_by: str,
     exception: Exception = None,
-    enrollment_method: str = models.EnrollmentMethods.DIGITAL,
+    enrollment_method: str = models.EnrollmentMethods.SELF_SERVICE,
     route_reenrollment_error=routes.ENROLLMENT_REENROLLMENT_ERROR,
     route_success=routes.ENROLLMENT_SUCCESS,
     route_system_error=routes.ENROLLMENT_SYSTEM_ERROR,
