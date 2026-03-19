@@ -73,7 +73,7 @@ This process will prompt you through the identity proofing flow before taking yo
 1. Upload the `YAML` file as the _Front_ and _Back_ image of the ID and submit.
 1. Enter a **fake** Social Security number following the on-screen instructions (must start with `900-` or `666-`). _DO NOT enter real PII in this field_.
 1. Verify the (sample) information was processed from the `YAML` file and submit.
-1. Enter your real cell phone number to receive a verification SMS.
+1. Enter your real cell phone number to receive a verification SMS. (The same phone number can be used for multiple accounts.)
 1. Check your text messages for a message from Login.gov. The message should specify `idp.int.identitysandbox.gov`.
 1. Enter the code into the browser.
 1. Re-enter your Login.gov sandbox account password.
