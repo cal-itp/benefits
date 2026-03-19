@@ -54,6 +54,10 @@ Testers should modify their browser’s User Agent String to the following value
 cal-itp/benefits-smoke-test
 ```
 
+!!! tip "Set it and forget it"
+
+    If using an extension that supports modifying the User Agent String based on the domain you are accessing, just leave it on all the time for `https://benefits.calitp.org`!
+
 ## Scenarios
 
 ### Self-Service
