@@ -74,15 +74,24 @@ class TestIndexView:
         kwargs = view.get_form_kwargs()
         assert kwargs["agency"] == view.agency
 
-    def test_get_context_data(self, view):
+    @pytest.mark.parametrize(
+        "group_agencies, expected_agency_text, expected_previous_url",
+        [
+            ([], "offers reduced fares to riders who qualify.", routes.INDEX),
+            (
+                ["agency"],
+                "and nearby transit providers offer reduced fares to riders who qualify.",
+                routes.ADDITIONAL_AGENCIES,
+            ),
+        ],
+    )
+    def test_get_context_data(self, view, mocker, group_agencies, expected_agency_text, expected_previous_url):
+        mocker.patch.object(view.agency, "group_agencies", return_value=group_agencies)
         context_data = view.get_context_data()
-        assert "form_text" in context_data
-        assert context_data["previous_url"] == routes.INDEX
 
-    @pytest.mark.usefixtures("model_TransitAgencyGroup")
-    def test_get_context_data_grouped(self, view):
-        context_data = view.get_context_data()
-        assert context_data["previous_url"] == routes.ADDITIONAL_AGENCIES
+        assert "form_text" in context_data
+        assert expected_agency_text in context_data["form_text"][0]
+        assert expected_previous_url == context_data["previous_url"]
 
     def test_get(self, view, app_request, session_logout_spy):
         view.get(app_request)
