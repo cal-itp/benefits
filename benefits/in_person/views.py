@@ -44,9 +44,7 @@ class AdditionalProvidersView(mixins.CommonContextMixin, TemplateView):
         context = super().get_context_data(**kwargs)
 
         agency = self.agency
-        group_agencies = agency.group_agencies()
-        agencies = [agency] + group_agencies
-        context["agencies"] = [a.short_name for a in agencies]
+        context["agencies"] = agency.group_agency_short_names()
 
         context["cancel_url"] = routes.ADMIN_INDEX
 
