@@ -18,6 +18,6 @@ To perform keyboard testing:
 
 The following scenarios should be reviewed at a minimum.
 
-- The skip nav, a link with the text `Skip to main content` / `Saltar al contenido principal`, should appear on the first tab press on any page.
+- The skip link, a link with the text `Skip to main content` / `Saltar al contenido principal`, should appear on the first <kbd>Tab</kbd> press on any page. When selected, it should move focus past all elements in the header so that the next <kbd>Tab</kbd> lands on the first interactive element in the main content area.
 - All links, buttons, and form elements should have a visible indication that the targeted item is focused.
 - All modals should close by pressing <kbd>Escape</kbd>.
