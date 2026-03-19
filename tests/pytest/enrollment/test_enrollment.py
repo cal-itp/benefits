@@ -200,6 +200,46 @@ def test_handle_enrollment_results_success_claims(
 
 
 @pytest.mark.django_db
+@pytest.mark.usefixtures("mocked_session_agency", "mocked_session_flow", "mocked_session_group", "model_TransitAgencyGroup")
+def test_handle_enrollment_results_success_transitagencygroup(
+    mocker,
+    app_request,
+    model_EnrollmentFlow,
+    model_TransitAgency,
+    model_TransitAgency_2,
+    mocked_analytics_module,
+):
+    spy = mocker.spy(benefits.enrollment.enrollment.models.EnrollmentEvent.objects, "create")
+
+    handle_enrollment_results(app_request, Status.SUCCESS, "verified by")
+
+    expected_calls = [
+        mocker.call(
+            transit_agency=model_TransitAgency,
+            enrollment_flow=model_EnrollmentFlow,
+            enrollment_method="digital",
+            verified_by="verified by",
+            expiration_datetime=None,
+            extra_claims="",
+        ),
+        mocker.call(
+            transit_agency=model_TransitAgency_2,
+            enrollment_flow=model_EnrollmentFlow,
+            enrollment_method="digital",
+            verified_by="verified by",
+            expiration_datetime=None,
+            extra_claims="",
+        ),
+    ]
+    spy.assert_has_calls(expected_calls)
+    assert spy.call_count == 2  # assert_has_calls doesn't assert that those are the _only_ calls
+
+    assert mocked_analytics_module.returned_success.call_count == 2
+    analytics_kwargs = mocked_analytics_module.returned_success.call_args.kwargs
+    assert analytics_kwargs["agency"] == model_TransitAgency_2
+
+
+@pytest.mark.django_db
 @pytest.mark.usefixtures(
     "mocked_session_agency", "mocked_session_flow", "mocked_session_group", "mocked_session_eligible", "model_LittlepayGroup"
 )

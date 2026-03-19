@@ -62,6 +62,16 @@ def test_Event_reads_session(app_request, mocker):
 
 
 @pytest.mark.django_db
+def test_Event_uses_passed_agency_instead_of_session(app_request, mocker, model_TransitAgency):
+    session_spy = mocker.spy(benefits.core.analytics, "session")
+
+    event = Event(app_request, "event_type", agency=model_TransitAgency)
+
+    session_spy.agency.assert_not_called()
+    assert event.event_properties["transit_agency"] == str(model_TransitAgency)
+
+
+@pytest.mark.django_db
 def test_Event_sets_default_event_properties(app_request, mocker):
     update_spy = mocker.spy(benefits.core.analytics.Event, "update_event_properties")
 
