@@ -201,7 +201,20 @@ class TransitAgency(models.Model):
             .distinct()
             .exclude(active=False)
             .exclude(pk=self.pk)
+            .order_by("short_name")
         )
+
+    def group_agency_short_names(self):
+        """A list of agency short names for this agency and any agencies it shares a group with.
+
+        The list begins with the current agency and the rest follow in alphabetical order.
+        """
+        agencies = [self] + self.group_agencies()
+
+        if len(agencies) > 1:
+            return [agency.short_name for agency in agencies]
+        else:
+            return []
 
     def clean(self):
         field_errors = {}
