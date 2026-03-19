@@ -8,6 +8,7 @@ stepping through the process of In-Person Enrollment for one or more enrollment 
 - When refactoring/functional changes are introduced to the In-Person Enrollment featureset.
 - When new copy or UI elements are introduced for the In-Person Enrollment featureset.
 - When significant refactoring/functional changes are introduced to the Self-Service Enrollment featureset.
+  - This is important because the In-Person and Self-Service Enrollment featuresets share much underlying code. When working on self-service, it can be easy to overlook knock-on effects that could impact in-person.
 
 ## Scenarios
 
