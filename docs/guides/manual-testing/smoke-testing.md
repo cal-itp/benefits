@@ -21,6 +21,8 @@ indicating such on the corresponding Release issue in GitHub.
 
 Upon receiving this comment, the Release Manager for this release may close the Release issue and mark the release as complete.
 
+[See below](#scenarios) for a Markdown snippet to use for the comment.
+
 ### If Smoke Testing reveals critical flaws?
 
 A critical flaw would include instances where the Benefits app is unable to communicate with an external service due to
@@ -60,29 +62,32 @@ cal-itp/benefits-smoke-test
 
 ## Scenarios
 
-### Self-Service
+The following Markdown snippet lists the scenarios for smoke testing.
 
-- **Login.gov** enrollment flow using a _real personal Login.gov account_
+Use this snippet to draft a comment for smoke testing in the Release issue.
+
+```markdown
+## Smoke testing in `prod`
+
+- [ ] Self-service Login.gov enrollment flow using a _real personal Login.gov account_
   - Expect to be redirected to the "not eligible" page
-- **Medicare.gov** enrollment flow
+- [ ] Self-service Medicare.gov enrollment flow
   - Expect to be redirected to Medicare.gov homepage
-- **MST Courtesy Cards** enrollment flow using sample data
+- [ ] Self-service MST Courtesy Cards - using sample data
   - Expect to be redirected to the "not eligible" page
-- **MST Courtesy Cards** enrollment flow using `MST Courtesy Card (for testing)` in LastPass
+- [ ] Self-service MST Courtesy Cards - using `MST Courtesy Card (for testing)` in LastPass
   - Expect to be verified as eligible
   - Enroll business credit card with Littlepay
   - See success screen
-- **SBMTD Reduced Fare Mobility ID** enrollment flow using sample data
+- [ ] Self-service SBMTD Reduced Fare Mobility ID - using sample data
   - Expect to be redirected to the "not eligible" page
-- **SBMTD Reduced Fare Mobility ID** enrollment flow using `SBMTD Reduced Fare Mobility ID (for testing)` in LastPass
+- [ ] Self-service SBMTD Reduced Fare Mobility ID - using `SBMTD Reduced Fare Mobility ID (for testing)` in LastPass
   - Expect to be verified as eligible
   - Enroll business credit card with Littlepay
   - See success screen
-- Select a **grouped agency**
+- [ ] Self-service select a grouped agency
   - Expect to see the group overview page before continuing to eligibility
-
-### In-Person
-
-- Sign in to the Benefits Administrator as the **`mst-user`** (in LastPass) and complete any enrollment flow
+- [ ] In-person enrollment - using `mst-user` in LastPass
   - Enroll business credit card with Littlepay
   - Expect to see the success screen
+```
