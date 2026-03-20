@@ -1,3 +1,6 @@
+locals {
+  django_db_password_secret_name = "django-db-password"
+}
 resource "azurerm_service_plan" "main" {
   name                = "ASP-CDT-PUB-VIP-CALITP-${local.env_letter}-001"
   location            = data.azurerm_resource_group.main.location
@@ -68,9 +71,13 @@ resource "azurerm_linux_web_app" "main" {
     "DJANGO_RECAPTCHA_SITE_KEY"   = "${local.secret_prefix}django-recaptcha-site-key)",
     "DJANGO_SECRET_KEY"           = "${local.secret_prefix}django-secret-key)",
     "DJANGO_TRUSTED_ORIGINS"      = "${local.secret_prefix}django-trusted-origins)",
+    "DJANGO_DB_NAME"              = "${local.secret_prefix}django-db-name)",
+    "DJANGO_DB_USER"              = "${local.secret_prefix}django-db-user)",
+    "DJANGO_DB_PASSWORD"          = "${local.secret_prefix}${local.django_db_password_secret_name})",
 
     # Database settings
-    "USE_POSTGRES" = "${local.secret_prefix}use-postgres)",
+    "USE_POSTGRES"      = "${local.secret_prefix}use-postgres)",
+    "POSTGRES_HOSTNAME" = azurerm_postgresql_flexible_server.main.fqdn,
 
     "HEALTHCHECK_USER_AGENTS" = local.is_dev ? null : "${local.secret_prefix}healthcheck-user-agents)",
 
@@ -100,6 +107,27 @@ resource "azurerm_app_service_custom_hostname_binding" "main" {
   hostname            = local.hostname
   app_service_name    = azurerm_linux_web_app.main.name
   resource_group_name = data.azurerm_resource_group.main.name
+}
+
+# Generate a random password for PostgreSQL's Django database user
+resource "random_password" "django_db_password" {
+  length      = 32
+  min_lower   = 4
+  min_upper   = 4
+  min_numeric = 4
+  min_special = 4
+  special     = true
+}
+
+# Create the secret for PostgreSQL's Django database user password using the generated password
+resource "azurerm_key_vault_secret" "django_db_password" {
+  name         = local.django_db_password_secret_name
+  value        = random_password.django_db_password.result
+  key_vault_id = azurerm_key_vault.main.id
+  content_type = "password"
+  depends_on = [
+    random_password.django_db_password # Ensure password is generated first
+  ]
 }
 
 # migrations
