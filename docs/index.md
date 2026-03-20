@@ -66,6 +66,35 @@ timeline
         : UI enhancements to help the application scale
         : Eligibility standards research
         : Operational enhancements for more efficient agency onboarding
+
+%% Cal-ITP Benefits Epics (2026)
+
+        section 2026
+
+        Q1<br>Now
+        : Core infrastructure improvements to support app scaling
+        : Regional rider enrollment (Phase 1)
+        
+        Q2<br>Planned
+        : In-person enrollment for U.S. Veterans with disabilities
+        : In-person enrollment for CalFresh cardholders
+        : Self-serve eligibility check for U.S. Veterans with disabilities (VA)
+        : Regional rider enrollment for transit providers using Switchio
+
+        Q3<br>Projected
+        : In-person enrollment for SSI / SSDI
+        : Identity verification and eligibility confirmation using Socure
+        : Self-serve eligibility verification using a verifiable credential (SSDI)
+        : Regional rider enrollment for multiple transit providers using Littlepay
+        : In-person enrollment for young people
+        : Cal-ITP Benefits Administrator<br>(agency configuration by account managers)       
+
+        Q4<br>Projected
+        : Support for additional transit processor (INIT)
+        : Self-serve eligibility check for U.S. Veterans (CA DMV)
+        : Self-serve eligibility check for individuals with disabilities (CA DMV)
+        : Alert system for application outages and events
+
 %%{
   init: {
     'logLevel': 'debug',
