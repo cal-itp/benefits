@@ -18,5 +18,5 @@
 {% endblock inner-content %}
 
 {% block call-to-action-button %}
-  <a href="{{ url_next }}" class="btn btn-lg btn-primary">{% translate "Next" %}</a>
+  <a href="{% url routes.ELIGIBILITY_INDEX %}" class="btn btn-lg btn-primary">{% translate "Next" %}</a>
 {% endblock call-to-action-button %}

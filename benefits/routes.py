@@ -35,14 +35,9 @@ class Routes:
         return "core:agency_card"
 
     @property
-    def AGENCY_ADDITIONAL_PROVIDERS(self):
-        """Additional provider redirect for an agency."""
-        return "core:agency_additional_providers"
-
-    @property
-    def AGENCY_ELIGIBILITY_INDEX(self):
-        """The user picks a flow and a transit agency is configured for them."""
-        return "core:agency_eligibility_index"
+    def AGENCY_ENTRYPOINT(self):
+        """Agency redirect to either eligibility or list of grouped providers."""
+        return "core:agency_entrypoint"
 
     @property
     def AGENCY_PUBLIC_KEY(self):

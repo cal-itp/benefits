@@ -9,9 +9,8 @@ from django.urls import path, register_converter
 from benefits.core import models
 from benefits.core.views import (
     AdditionalProvidersView,
-    AgencyAdditionalProvidersView,
     AgencyCardView,
-    AgencyEligibilityIndexView,
+    AgencyEntrypointView,
     AgencyIndexView,
     AgencyPublicKeyView,
     HelpView,
@@ -62,17 +61,12 @@ urlpatterns = [
     path("logged_out", LoggedOutView.as_view(), name=routes.name(routes.LOGGED_OUT)),
     path("error", ServerErrorView.as_view(), name=routes.name(routes.SERVER_ERROR)),
     path("providers", AdditionalProvidersView.as_view(), name=routes.name(routes.ADDITIONAL_PROVIDERS)),
-    path(
-        "<agency:agency>/providers",
-        AgencyAdditionalProvidersView.as_view(),
-        name=routes.name(routes.AGENCY_ADDITIONAL_PROVIDERS),
-    ),
     path("<agency:agency>", AgencyIndexView.as_view(), name=routes.name(routes.AGENCY_INDEX)),
     path("<agency:agency>/agency-card", AgencyCardView.as_view(), name=routes.name(routes.AGENCY_CARD)),
     path(
-        "<agency:agency>/eligibility",
-        AgencyEligibilityIndexView.as_view(),
-        name=routes.name(routes.AGENCY_ELIGIBILITY_INDEX),
+        "<agency:agency>/entrypoint",
+        AgencyEntrypointView.as_view(),
+        name=routes.name(routes.AGENCY_ENTRYPOINT),
     ),
     path("<agency:agency>/publickey", AgencyPublicKeyView.as_view(), name=routes.name(routes.AGENCY_PUBLIC_KEY)),
 ]

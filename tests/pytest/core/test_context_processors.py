@@ -26,7 +26,7 @@ def test_agency_session_agency(app_request, mocked_session_agency):
     assert "agency" in context
 
     agency_context = context["agency"]
-    assert "eligibility_index_url" in agency_context
+    assert "entrypoint_url" in agency_context
     assert "info_url" in agency_context
     assert "littlepay_config" in agency_context
     assert "long_name" in agency_context

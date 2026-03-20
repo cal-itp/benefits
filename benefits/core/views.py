@@ -5,6 +5,7 @@ The core application: view definition for the root of the webapp.
 from dataclasses import asdict, dataclass
 
 from django.http import HttpResponse
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import RedirectView, TemplateView, View
 from django.views.generic.edit import FormView
@@ -54,8 +55,8 @@ class AgencyIndexView(TemplateView):
         short_name = agency.short_name
         headline = _("Get your reduced fare when you tap to ride on {short_name}", short_name=short_name)
         # we display an interstitial view for grouped agencies prior to checking eligibility
-        url_next = agency.entrypoint_url
-        context |= {"headline": headline, "url_next": url_next}
+        next_url = agency.entrypoint_url
+        context |= {"headline": headline, "next_url": next_url}
 
         return context
 
@@ -82,20 +83,30 @@ class AgencyCardView(RedirectView):
             return user_error(request)
 
 
-class AgencyAdditionalProvidersView(RedirectView):
-    """View handler forwards the request to the agency's Additional Providers interstitial view, or returns a user error."""
-
-    pattern_name = routes.ADDITIONAL_PROVIDERS
+# TODO: deprecate AgencyEligibilityIndexView if this is indeed a viable path forward
+class AgencyEntrypointView(RedirectView):
+    """View handler forwards the request to the agency's Eligibility Index (e.g. flow selection) page
+    or a list of additional grouped providers."""
 
     @method_decorator(pageview_decorator)
     def get(self, request, *args, **kwargs):
         # keep a reference to the agency before removing from kwargs
-        # since the eventual reverse() lookup doesn't expect this key in the kwargs for routes.ELIGIBILITY_INDEX
+        # since the eventual reverse() lookup doesn't expect this key in the kwargs for
+        # routes.ELIGIBILITY_INDEX or routes.ADDITIONAL_PROVIDERS
         # self.kwargs still contains the agency if needed
-        agency = kwargs.pop("agency")
+        self.agency = kwargs.pop("agency")
+
         session.reset(request)
-        session.update(request, agency=agency, origin=agency.index_url)
+        session.update(request, agency=self.agency, origin=self.agency.index_url)
         return super().get(request, *args, **kwargs)
+
+    def get_redirect_url(self, *args, **kwargs):
+        if self.agency.group_agencies():
+            self.url = reverse(routes.ADDITIONAL_PROVIDERS)
+        else:
+            self.url = reverse(routes.ELIGIBILITY_INDEX)
+
+        return super().get_redirect_url(self, *args, **kwargs)
 
 
 class AgencyEligibilityIndexView(RedirectView):
@@ -269,7 +280,7 @@ class LoggedOutView(TemplateView):
 class AdditionalProvidersView(AgencySessionRequiredMixin, TemplateView):
     """View handler for the nearby/additional providers view."""
 
-    template_name = "eligibility/additional-providers.html"
+    template_name = "core/additional-providers.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -281,7 +292,6 @@ class AdditionalProvidersView(AgencySessionRequiredMixin, TemplateView):
             "headline": _("Weʼll also enroll you at nearby transit providers"),
             "blurb": _("Youʼll get reduced fares when you tap to pay at {count} transit providers.", count=count),
             "providers": agency.group_agency_short_names(),
-            "url_next": agency.eligibility_index_url,
         }
 
         return context

@@ -1,4 +1,5 @@
 import pytest
+from django.urls import reverse
 
 import benefits.core.session
 from benefits.core import views
@@ -36,7 +37,7 @@ class TestIndexView:
 
         assert form.is_valid()
         view.form_valid(form)
-        assert view.success_url == model_TransitAgency.eligibility_index_url
+        assert view.success_url == model_TransitAgency.entrypoint_url
 
 
 @pytest.mark.django_db
@@ -119,6 +120,30 @@ class TestAgencyCardView:
 
         assert response.status_code == 200
         assert response.template_name == TEMPLATE_USER_ERROR
+        mocked_session_reset.assert_called_once()
+        mocked_session_update.assert_called_once_with(app_request, agency=agency, origin=agency.index_url)
+
+
+@pytest.mark.django_db
+class TestAgencyEntrypointView:
+    @pytest.fixture
+    def view(self, app_request, model_TransitAgency):
+        v = views.AgencyEntrypointView()
+        v.setup(app_request, agency=model_TransitAgency)
+        return v
+
+    def test_view(self, view):
+        # this is set dynamically
+        view.pattern_name = None
+
+    def test_get(self, view, app_request, mocked_session_reset, mocked_session_update):
+        agency = view.kwargs["agency"]
+
+        # recreate the condition of the live view, where the agency kwarg is passed to the get() call
+        response = view.get(app_request, agency=agency)
+
+        assert response.url == reverse(routes.ELIGIBILITY_INDEX)
+        assert response.status_code == 302
         mocked_session_reset.assert_called_once()
         mocked_session_update.assert_called_once_with(app_request, agency=agency, origin=agency.index_url)
 
