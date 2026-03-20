@@ -23,7 +23,7 @@ language to English.
 
 - When new pages and/or UI elements are introduced.
 - When significant copy changes are introduced.
-- When a new transit agency and/or enrollment flow are introduced.
+- When a new enrollment flow is introduced.
 
 ## Scenarios
 
