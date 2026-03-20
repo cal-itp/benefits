@@ -24,7 +24,7 @@ stepping through the process of In-Person Enrollment for one or more enrollment 
 
 Look out for issues with the user session and interaction with eligibility verification systems (Eligibility Servers and Identity Gateway) and transit processor systems. Ensure enrollment events are being accurately captured in the Benefits Administrator.
 
-The following Markdown snippet lists the scenarios for smoke testing.
+The following Markdown snippet lists the scenarios for QA testing.
 
 Use this snippet to draft a comment for QA testing in the Release issue.
 
