@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block page-title %}
-  {% translate "Nearby transit providers" %}
+  {{ title }}
 {% endblock page-title %}
 
 {% block headline %}
@@ -10,9 +10,7 @@
 {% endblock headline %}
 
 {% block inner-content %}
-  <p class="py-4">
-    {% blocktranslate with count=count %}Youʼll get reduced fares when you tap to pay at {{ count }} transit providers.{% endblocktranslate %}
-  </p>
+  <p class="py-4">{{ blurb }}</p>
   <div class="d-flex flex-column nearby-provider_table">
     {% for p in providers %}<p class="py-2 px-3 nearby-provider">{{ p }}</p>{% endfor %}
   </div>
@@ -20,5 +18,5 @@
 {% endblock inner-content %}
 
 {% block call-to-action-button %}
-  <a href="{% url routes.ELIGIBILITY_INDEX %}"class="btn btn-lg btn-primary">{% translate "Next" %}</a>
+  <a href="{{ url_next }}" class="btn btn-lg btn-primary">{% translate "Next" %}</a>
 {% endblock call-to-action-button %}

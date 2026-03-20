@@ -13,6 +13,7 @@ from benefits.core import models, session
 from benefits.core.context_processors import formatted_gettext_lazy as _
 from benefits.core.forms import ChooseAgencyForm
 from benefits.core.middleware import pageview_decorator, user_error
+from benefits.core.mixins import AgencySessionRequiredMixin
 from benefits.core.models import EligibilityApiVerificationRequest, SystemName
 from benefits.routes import routes
 
@@ -26,7 +27,7 @@ class IndexView(FormView):
     # this form cannot use an action_url because the redirect is determined
     # *after* user interaction
     def form_valid(self, form):
-        self.success_url = form.selected_transit_agency.eligibility_index_url
+        self.success_url = form.selected_transit_agency.entrypoint_url
         return super().form_valid(form)
 
     @method_decorator(pageview_decorator)
@@ -52,7 +53,9 @@ class AgencyIndexView(TemplateView):
         agency = self.kwargs.get("agency")
         short_name = agency.short_name
         headline = _("Get your reduced fare when you tap to ride on {short_name}", short_name=short_name)
-        context |= {"headline": headline, "next_url": agency.eligibility_index_url}
+        # we display an interstitial view for grouped agencies prior to checking eligibility
+        url_next = agency.entrypoint_url
+        context |= {"headline": headline, "url_next": url_next}
 
         return context
 
@@ -77,6 +80,22 @@ class AgencyCardView(RedirectView):
             return super().get(request, *args, **kwargs)
         else:
             return user_error(request)
+
+
+class AgencyAdditionalProvidersView(RedirectView):
+    """View handler forwards the request to the agency's Additional Providers interstitial view, or returns a user error."""
+
+    pattern_name = routes.ADDITIONAL_PROVIDERS
+
+    @method_decorator(pageview_decorator)
+    def get(self, request, *args, **kwargs):
+        # keep a reference to the agency before removing from kwargs
+        # since the eventual reverse() lookup doesn't expect this key in the kwargs for routes.ELIGIBILITY_INDEX
+        # self.kwargs still contains the agency if needed
+        agency = kwargs.pop("agency")
+        session.reset(request)
+        session.update(request, agency=agency, origin=agency.index_url)
+        return super().get(request, *args, **kwargs)
 
 
 class AgencyEligibilityIndexView(RedirectView):
@@ -247,23 +266,22 @@ class LoggedOutView(TemplateView):
     template_name = "core/logged-out.html"
 
 
-class ProvidersView(TemplateView):
-    """View handler for...."""
+class AdditionalProvidersView(AgencySessionRequiredMixin, TemplateView):
+    """View handler for the nearby/additional providers view."""
 
-    template_name = "eligibility/providers.html"
+    template_name = "eligibility/additional-providers.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        agency = self.agency
+        count = len(agency.group_agencies()) + 1
 
-        agency = self.kwargs.get("agency")
-        grouped_agencies = agency.group_agencies()
-
-        # TODO: alphabetize here or upstream?
-        grouped_agency_names = [o.short_name for o in grouped_agencies]
         context |= {
-            "count": len(grouped_agencies) + 1,
+            "title": _("Nearby transit providers"),
             "headline": _("Weʼll also enroll you at nearby transit providers"),
-            "providers": [agency.short_name, *grouped_agency_names],
+            "blurb": _("Youʼll get reduced fares when you tap to pay at {count} transit providers.", count=count),
+            "providers": agency.group_agency_short_names(),
+            "url_next": agency.eligibility_index_url,
         }
 
         return context

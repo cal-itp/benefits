@@ -35,9 +35,9 @@ class Routes:
         return "core:agency_card"
 
     @property
-    def PROVIDERS(self):
-        """The agency participates in a group, user acknowledges bulk enrollment."""
-        return "core:providers"
+    def AGENCY_ADDITIONAL_PROVIDERS(self):
+        """Additional provider redirect for an agency."""
+        return "core:agency_additional_providers"
 
     @property
     def AGENCY_ELIGIBILITY_INDEX(self):
@@ -68,6 +68,11 @@ class Routes:
     def ELIGIBILITY_INDEX(self):
         """Start of eligibility phase, the user picks a flow."""
         return "eligibility:index"
+
+    @property
+    def ADDITIONAL_PROVIDERS(self):
+        """For agencies that participates in a group, user acknowledges bulk enrollment."""
+        return "core:additional-providers"
 
     @property
     def ELIGIBILITY_START(self):
