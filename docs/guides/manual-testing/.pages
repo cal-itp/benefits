@@ -3,6 +3,5 @@ nav:
   - Getting started: getting-started.md
   - keyboard.md
   - translations.md
-  - self-service.md
-  - in-person.md
+  - qa.md
   - smoke-testing.md
