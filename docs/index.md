@@ -26,27 +26,6 @@ Our product roadmap captures what we're currently building, what we've built, an
 ```mermaid
 timeline
     title Cal-ITP Benefits Product Roadmap
-%% Cal-ITP Benefits Epics (2024)
-          section 2024
-
-          Q1<br>Complete
-          : Benefits admin tool (foundation)
-          : Deploy SBMTD Reduced Fare Mobility ID enrollment pathway
-          : Migrate to Littlepay Backoffice API
-
-          Q2<br>Complete
-          : Support for expiring benefits (low-income)
-          : Improved UX for agency card enrollment
-          : Improved UX for application error states
-
-          Q3<br>Complete
-          : Deploy low-income riders enrollment pathway
-          : Benefits admin tool (agency users)
-          : Benefits admin tool (in-person eligibility verification)
-
-          Q4<br>Complete
-          : Deploy Medicare cardholder enrollment pathway
-          : Support for multiple identity providers (Medicare.gov)
 
 %% Cal-ITP Benefits Epics (2025)
           section 2025
