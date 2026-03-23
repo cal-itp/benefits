@@ -60,14 +60,14 @@ class Routes:
         return OAuthRoutes.route("system_error")
 
     @property
-    def ELIGIBILITY_INDEX(self):
-        """Start of eligibility phase, the user picks a flow."""
-        return "eligibility:index"
-
-    @property
     def ADDITIONAL_PROVIDERS(self):
         """For agencies that participate in a group, user acknowledges bulk enrollment."""
         return "core:additional-providers"
+
+    @property
+    def ELIGIBILITY_INDEX(self):
+        """Start of eligibility phase, the user picks a flow."""
+        return "eligibility:index"
 
     @property
     def ELIGIBILITY_START(self):

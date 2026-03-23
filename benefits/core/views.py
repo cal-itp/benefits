@@ -54,8 +54,13 @@ class AgencyIndexView(TemplateView):
         agency = self.kwargs.get("agency")
         short_name = agency.short_name
         headline = _("Get your reduced fare when you tap to ride on {short_name}", short_name=short_name)
-        # we display an interstitial view for grouped agencies prior to checking eligibility
-        next_url = agency.entrypoint_url
+
+        # for grouped agencies, we display an interstitial view prior to checking eligibility
+        if agency.group_agencies():
+            next_url = reverse(routes.ADDITIONAL_PROVIDERS)
+        else:
+            next_url = reverse(routes.ELIGIBILITY_INDEX)
+
         context |= {"headline": headline, "next_url": next_url}
 
         return context
@@ -268,13 +273,13 @@ class AdditionalProvidersView(AgencySessionRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         agency = self.agency
-        count = len(agency.group_agencies()) + 1
+        providers = agency.group_agency_short_names()
 
         context |= {
             "title": _("Nearby transit providers"),
             "headline": _("Weʼll also enroll you at nearby transit providers"),
-            "blurb": _("Youʼll get reduced fares when you tap to pay at {count} transit providers.", count=count),
-            "providers": agency.group_agency_short_names(),
+            "blurb": _("Youʼll get reduced fares when you tap to pay at {count} transit providers.", count=len(providers)),
+            "providers": providers,
         }
 
         return context

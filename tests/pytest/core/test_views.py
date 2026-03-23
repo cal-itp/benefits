@@ -48,6 +48,10 @@ class TestAgencyIndexView:
         v.setup(app_request, agency=model_TransitAgency)
         return v
 
+    def test_get_context_data(self, view):
+        context_data = view.get_context_data()
+        assert context_data["next_url"] == reverse(routes.ELIGIBILITY_INDEX)
+
     def test_view(self, view):
         assert view.template_name == "core/index--agency.html"
 
@@ -57,6 +61,19 @@ class TestAgencyIndexView:
         assert response.status_code == 200
         mocked_session_reset.assert_called_once()
         mocked_session_update.assert_called_once()
+
+
+@pytest.mark.django_db
+class TestAgencyIndexViewGrouped:
+    @pytest.fixture
+    def view(self, app_request, model_TransitAgency_grouped):
+        v = views.AgencyIndexView()
+        v.setup(app_request, agency=model_TransitAgency_grouped)
+        return v
+
+    def test_get_context_data(self, view):
+        context_data = view.get_context_data()
+        assert context_data["next_url"] == reverse(routes.ADDITIONAL_PROVIDERS)
 
 
 @pytest.mark.django_db
