@@ -5,6 +5,11 @@
   {{ title }}
 {% endblock page-title %}
 
+{% block nav-buttons %}
+  {% url routes.INDEX as url %}
+  {% include "core/includes/button--previous-page.html" with url=url %}
+{% endblock nav-buttons %}
+
 {% block headline %}
   <h1>{{ headline }}</h1>
 {% endblock headline %}
