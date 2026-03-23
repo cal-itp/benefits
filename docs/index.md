@@ -26,27 +26,6 @@ Our product roadmap captures what we're currently building, what we've built, an
 ```mermaid
 timeline
     title Cal-ITP Benefits Product Roadmap
-%% Cal-ITP Benefits Epics (2024)
-          section 2024
-
-          Q1<br>Complete
-          : Benefits admin tool (foundation)
-          : Deploy SBMTD Reduced Fare Mobility ID enrollment pathway
-          : Migrate to Littlepay Backoffice API
-
-          Q2<br>Complete
-          : Support for expiring benefits (low-income)
-          : Improved UX for agency card enrollment
-          : Improved UX for application error states
-
-          Q3<br>Complete
-          : Deploy low-income riders enrollment pathway
-          : Benefits admin tool (agency users)
-          : Benefits admin tool (in-person eligibility verification)
-
-          Q4<br>Complete
-          : Deploy Medicare cardholder enrollment pathway
-          : Support for multiple identity providers (Medicare.gov)
 
 %% Cal-ITP Benefits Epics (2025)
           section 2025
@@ -66,6 +45,35 @@ timeline
         : UI enhancements to help the application scale
         : Eligibility standards research
         : Operational enhancements for more efficient agency onboarding
+
+%% Cal-ITP Benefits Epics (2026)
+
+        section 2026
+
+        Q1<br>Now
+        : Core infrastructure improvements to support app scaling
+        : Regional rider enrollment (Phase 1)
+
+        Q2<br>Planned
+        : In-person enrollment for U.S. Veterans with disabilities
+        : In-person enrollment for CalFresh cardholders
+        : Self-serve eligibility check for U.S. Veterans with disabilities (VA)
+        : Regional rider enrollment for transit providers using Switchio
+
+        Q3<br>Projected
+        : In-person enrollment for SSI / SSDI
+        : Identity verification and eligibility confirmation using Socure
+        : Self-serve eligibility verification using a verifiable credential (SSDI)
+        : Regional rider enrollment for multiple transit providers using Littlepay
+        : In-person enrollment for young people
+        : Cal-ITP Benefits Administrator<br>(agency configuration by account managers)
+
+        Q4<br>Projected
+        : Support for additional transit processor (INIT)
+        : Self-serve eligibility check for U.S. Veterans (CA DMV)
+        : Self-serve eligibility check for individuals with disabilities (CA DMV)
+        : Alert system for application outages and events
+
 %%{
   init: {
     'logLevel': 'debug',
