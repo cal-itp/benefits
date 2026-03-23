@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: https://github.com/cal-itp/benefits/issues \n"
-"POT-Creation-Date: 2026-03-20 11:48-0700\n"
+"POT-Creation-Date: 2026-03-23 15:43-0700\n"
 "Language: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -519,15 +519,17 @@ msgstr ""
 "Passes</a>."
 
 msgid "Nearby transit providers"
-msgstr ""
+msgstr "Proveedores de transporte cercanos"
 
 msgid "Weʼll also enroll you at nearby transit providers"
-msgstr ""
+msgstr "También le inscribiremos con los proveedores de transporte cercanos"
 
 #, python-brace-format
 msgid ""
 "Youʼll get reduced fares when you tap to pay at {count} transit providers."
 msgstr ""
+"Obtendrá tarifas reducidas al tocar para pagar con {count} proveedores de "
+"transporte."
 
 msgid "Choose this benefit"
 msgstr "Elegir este beneficio"
