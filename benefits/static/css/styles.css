@@ -850,11 +850,11 @@ footer .footer-links li a.footer-link:visited {
   }
 }
 
-.nearby-provider_table {
+.nearby-agency_table {
   border: 1px solid var(--dsdl-gray-40);
   border-bottom: 0;
 }
 
-.nearby-provider {
+.nearby-agency {
   border-bottom: 1px solid var(--dsdl-gray-40);
 }

@@ -79,6 +79,11 @@ class TestIndexView:
         assert "form_text" in context_data
         assert context_data["previous_url"] == routes.INDEX
 
+    @pytest.mark.usefixtures("model_TransitAgencyGroup")
+    def test_get_context_data_grouped(self, view):
+        context_data = view.get_context_data()
+        assert context_data["previous_url"] == routes.ADDITIONAL_AGENCIES
+
     def test_get(self, view, app_request, session_logout_spy):
         view.get(app_request)
 
@@ -95,20 +100,6 @@ class TestIndexView:
 
         assert mocked_session_update.call_args.kwargs["flow"] == model_EnrollmentFlow
         mocked_analytics_module.selected_flow.assert_called_once()
-
-
-@pytest.mark.django_db
-class TestIndexViewGrouped:
-    @pytest.fixture
-    def view(self, app_request, mocked_session_agency_grouped):
-        v = views.IndexView()
-        v.setup(app_request)
-        v.agency = mocked_session_agency_grouped(app_request)
-        return v
-
-    def test_get_context_data(self, view):
-        context_data = view.get_context_data()
-        assert context_data["previous_url"] == routes.ADDITIONAL_PROVIDERS
 
 
 @pytest.mark.django_db

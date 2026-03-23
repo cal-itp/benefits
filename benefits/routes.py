@@ -35,11 +35,6 @@ class Routes:
         return "core:agency_card"
 
     @property
-    def AGENCY_ENTRYPOINT(self):
-        """Agency redirect to either eligibility or list of grouped providers."""
-        return "core:agency_entrypoint"
-
-    @property
     def AGENCY_PUBLIC_KEY(self):
         """Agency's eligibility API public key."""
         return "core:agency_public_key"
@@ -60,9 +55,9 @@ class Routes:
         return OAuthRoutes.route("system_error")
 
     @property
-    def ADDITIONAL_PROVIDERS(self):
+    def ADDITIONAL_AGENCIES(self):
         """For agencies that participate in a group, user acknowledges bulk enrollment."""
-        return "core:additional-providers"
+        return "core:additional-agencies"
 
     @property
     def ELIGIBILITY_INDEX(self):

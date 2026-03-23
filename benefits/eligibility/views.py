@@ -41,7 +41,7 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
         )
 
         if self.agency.group_agencies():
-            previous_url = routes.ADDITIONAL_PROVIDERS
+            previous_url = routes.ADDITIONAL_AGENCIES
         else:
             previous_url = routes.INDEX
 

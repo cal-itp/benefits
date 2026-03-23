@@ -16,8 +16,8 @@
 
 {% block inner-content %}
   <p class="py-4">{{ blurb }}</p>
-  <div class="d-flex flex-column nearby-provider_table">
-    {% for p in providers %}<p class="py-2 px-3 nearby-provider">{{ p }}</p>{% endfor %}
+  <div class="d-flex flex-column nearby-agency_table">
+    {% for a in agencies %}<p class="py-2 px-3 nearby-agency">{{ a }}</p>{% endfor %}
   </div>
 
 {% endblock inner-content %}

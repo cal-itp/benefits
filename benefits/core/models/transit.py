@@ -135,11 +135,6 @@ class TransitAgency(models.Model):
         return reverse(routes.AGENCY_INDEX, args=[self.slug])
 
     @property
-    def entrypoint_url(self):
-        """Public facing URL to the TransitAgency's eligibility page or additional providers interstitial redirect."""
-        return reverse(routes.AGENCY_ENTRYPOINT, args=[self.slug])
-
-    @property
     def littlepay_config(self):
         if self.transit_processor_config and hasattr(self.transit_processor_config, "littlepayconfig"):
             return self.transit_processor_config.littlepayconfig
