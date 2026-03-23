@@ -149,27 +149,6 @@ class TestAgencyEntrypointView:
 
 
 @pytest.mark.django_db
-class TestAgencyEligibilityIndexView:
-    @pytest.fixture
-    def view(self, app_request, model_TransitAgency):
-        v = views.AgencyEligibilityIndexView()
-        v.setup(app_request, agency=model_TransitAgency)
-        return v
-
-    def test_view(self, view):
-        assert view.pattern_name == routes.ELIGIBILITY_INDEX
-
-    def test_get(self, view, app_request, mocked_session_reset, mocked_session_update):
-        agency = view.kwargs["agency"]
-        # recreate the condition of the live view, where the agency kwarg is passed to the get() call
-        response = view.get(app_request, agency=agency)
-
-        assert response.status_code == 302
-        mocked_session_reset.assert_called_once()
-        mocked_session_update.assert_called_once_with(app_request, agency=agency, origin=agency.index_url)
-
-
-@pytest.mark.django_db
 class TestAgencyPublicKeyView:
 
     @pytest.fixture

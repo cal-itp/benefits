@@ -83,7 +83,6 @@ class AgencyCardView(RedirectView):
             return user_error(request)
 
 
-# TODO: deprecate AgencyEligibilityIndexView if this is indeed a viable path forward
 class AgencyEntrypointView(RedirectView):
     """View handler forwards the request to the agency's Eligibility Index (e.g. flow selection) page
     or a list of additional grouped providers."""
@@ -107,22 +106,6 @@ class AgencyEntrypointView(RedirectView):
             self.url = reverse(routes.ELIGIBILITY_INDEX)
 
         return super().get_redirect_url(self, *args, **kwargs)
-
-
-class AgencyEligibilityIndexView(RedirectView):
-    """View handler forwards the request to the agency's Eligibility Index (e.g. flow selection) page."""
-
-    pattern_name = routes.ELIGIBILITY_INDEX
-
-    @method_decorator(pageview_decorator)
-    def get(self, request, *args, **kwargs):
-        # keep a reference to the agency before removing from kwargs
-        # since the eventual reverse() lookup doesn't expect this key in the kwargs for routes.ELIGIBILITY_INDEX
-        # self.kwargs still contains the agency if needed
-        agency = kwargs.pop("agency")
-        session.reset(request)
-        session.update(request, agency=agency, origin=agency.index_url)
-        return super().get(request, *args, **kwargs)
 
 
 class AgencyPublicKeyView(View):
