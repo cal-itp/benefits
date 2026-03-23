@@ -40,7 +40,12 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
             short_name=self.agency.short_name,
         )
 
-        context.update({"form_text": [form_text]})
+        if self.agency.group_agencies():
+            previous_url = routes.ADDITIONAL_PROVIDERS
+        else:
+            previous_url = routes.INDEX
+
+        context.update({"form_text": [form_text], "previous_url": previous_url})
         return context
 
     def get(self, request, *args, **kwargs):
