@@ -149,6 +149,22 @@ class TestAgencyEntrypointView:
 
 
 @pytest.mark.django_db
+class TestAgencyEntrypointView2:
+    @pytest.fixture
+    def view(self, app_request, model_TransitAgencyGroup):
+        v = views.AgencyEntrypointView()
+        agency = model_TransitAgencyGroup.transit_agencies.all()[0]
+        v.setup(app_request, agency=agency)
+        return v
+
+    def test_get(self, view, app_request, mocked_session_reset, mocked_session_update):
+        agency = view.kwargs["agency"]
+        response = view.get(app_request, agency=agency)
+        # agencies that participate in a group have a unique redirect
+        assert response.url == reverse(routes.ADDITIONAL_PROVIDERS)
+
+
+@pytest.mark.django_db
 class TestAgencyPublicKeyView:
 
     @pytest.fixture
