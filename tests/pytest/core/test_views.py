@@ -133,7 +133,7 @@ class TestAgencyEntrypointView:
         return v
 
     def test_view(self, view):
-        # this is set dynamically
+        # the url is set dynamically
         view.pattern_name = None
 
     def test_get(self, view, app_request, mocked_session_reset, mocked_session_update):
@@ -239,3 +239,25 @@ class TestLoggedOutView:
 
     def test_view(self, view):
         assert view.template_name == "core/logged-out.html"
+
+
+@pytest.mark.django_db
+class TestAdditionalProvidersView:
+    @pytest.fixture
+    def view(self, app_request, model_TransitAgency):
+        v = views.AdditionalProvidersView()
+        v.setup(app_request)
+        v.agency = model_TransitAgency
+        return v
+
+    def test_view(self, view):
+        assert view.template_name == "core/additional-providers.html"
+
+    def test_get(self, view, app_request):
+        response = view.get(app_request)
+        assert response.status_code == 200
+
+    def test_get_context_data_with_agency(self, view):
+        context_data = view.get_context_data()
+        assert "title" in context_data
+        assert len(context_data["providers"]) == 0

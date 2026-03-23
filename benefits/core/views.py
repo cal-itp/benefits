@@ -278,7 +278,7 @@ class LoggedOutView(TemplateView):
 
 
 class AdditionalProvidersView(AgencySessionRequiredMixin, TemplateView):
-    """View handler for the nearby/additional providers view."""
+    """View handler for nearby/additional providers."""
 
     template_name = "core/additional-providers.html"
 
