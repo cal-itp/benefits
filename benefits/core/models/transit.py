@@ -135,6 +135,14 @@ class TransitAgency(models.Model):
         return reverse(routes.AGENCY_INDEX, args=[self.slug])
 
     @property
+    def entrypoint_url(self):
+        """For grouped agencies, we display an interstitial view prior to commencing the eligibility check."""
+        if self.group_agencies():
+            return reverse(routes.ADDITIONAL_AGENCIES)
+
+        return reverse(routes.ELIGIBILITY_INDEX)
+
+    @property
     def littlepay_config(self):
         if self.transit_processor_config and hasattr(self.transit_processor_config, "littlepayconfig"):
             return self.transit_processor_config.littlepayconfig

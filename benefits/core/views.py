@@ -5,7 +5,6 @@ The core application: view definition for the root of the webapp.
 from dataclasses import asdict, dataclass
 
 from django.http import HttpResponse
-from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import RedirectView, TemplateView, View
 from django.views.generic.edit import FormView
@@ -31,12 +30,7 @@ class IndexView(FormView):
         agency = form.selected_transit_agency
         session.reset(self.request)
         session.update(self.request, agency=form.selected_transit_agency, origin=form.selected_transit_agency.index_url)
-
-        if agency.group_agencies():
-            self.success_url = reverse(routes.ADDITIONAL_AGENCIES)
-        else:
-            self.success_url = reverse(routes.ELIGIBILITY_INDEX)
-
+        self.success_url = agency.entrypoint_url
         return super().form_valid(form)
 
     @method_decorator(pageview_decorator)
@@ -63,14 +57,7 @@ class AgencyIndexView(TemplateView):
         short_name = agency.short_name
         headline = _("Get your reduced fare when you tap to ride on {short_name}", short_name=short_name)
 
-        # for grouped agencies, we display an interstitial view prior to checking eligibility
-        if agency.group_agencies():
-            next_url = reverse(routes.ADDITIONAL_AGENCIES)
-        else:
-            next_url = reverse(routes.ELIGIBILITY_INDEX)
-
-        context |= {"headline": headline, "next_url": next_url}
-
+        context |= {"headline": headline, "next_url": agency.entrypoint_url}
         return context
 
 
