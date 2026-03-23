@@ -1,0 +1,7 @@
+title: Manual testing
+nav:
+  - Getting started: getting-started.md
+  - keyboard.md
+  - translations.md
+  - qa.md
+  - smoke-testing.md

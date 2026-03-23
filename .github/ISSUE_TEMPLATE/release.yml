@@ -15,7 +15,7 @@ body:
         as-needed, but is otherwise responsible for all aspects of the release.
 
         Each release also identifies a **Smoke Tester** responsible for carrying out the [Smoke Tests according to our
-        established procedure](https://docs.google.com/document/d/1ADXWW4mfLJwLKVqtVemPNX9yTqYKqIWfCz1DipAU02g/edit).
+        established procedure](https://docs.calitp.org/benefits/guides/manual-testing/smoke-testing/).
 
         After this issue is created, use the checklist to manage the steps
         of the release process, marking items as completed. [Read more about the
