@@ -66,7 +66,7 @@ class Routes:
 
     @property
     def ADDITIONAL_PROVIDERS(self):
-        """For agencies that participates in a group, user acknowledges bulk enrollment."""
+        """For agencies that participate in a group, user acknowledges bulk enrollment."""
         return "core:additional-providers"
 
     @property
