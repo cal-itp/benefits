@@ -149,15 +149,15 @@ class TestAgencyEntrypointView:
 
 
 @pytest.mark.django_db
-class TestAgencyEntrypointView2:
+class TestAgencyEntrypointViewGrouped:
     @pytest.fixture
-    def view(self, app_request, model_TransitAgencyGroup):
+    def view(self, app_request, model_TransitAgency_grouped):
         v = views.AgencyEntrypointView()
-        agency = model_TransitAgencyGroup.transit_agencies.all()[0]
+        agency = model_TransitAgency_grouped
         v.setup(app_request, agency=agency)
         return v
 
-    def test_get(self, view, app_request, mocked_session_reset, mocked_session_update):
+    def test_get(self, view, app_request):
         agency = view.kwargs["agency"]
         response = view.get(app_request, agency=agency)
         # agencies that participate in a group have a unique redirect

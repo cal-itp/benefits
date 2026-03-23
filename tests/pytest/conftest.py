@@ -274,6 +274,12 @@ def model_TransitAgency_2():
     return agency
 
 
+#
+@pytest.fixture
+def model_TransitAgency_grouped(model_TransitAgencyGroup):
+    return model_TransitAgencyGroup.transit_agencies.all()[0]
+
+
 @pytest.fixture()
 def model_TransitAgencyGroup(model_TransitAgency, model_TransitAgency_2):
     group = TransitAgencyGroup.objects.create(label="group")
@@ -306,6 +312,11 @@ def mocked_view():
 @pytest.fixture
 def mocked_session_agency(mocker, model_TransitAgency):
     return mocker.patch("benefits.core.session.agency", autospec=True, return_value=model_TransitAgency)
+
+
+@pytest.fixture
+def mocked_session_agency_grouped(mocker, model_TransitAgency_grouped):
+    return mocker.patch("benefits.core.session.agency", autospec=True, return_value=model_TransitAgency_grouped)
 
 
 @pytest.fixture
