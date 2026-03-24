@@ -135,9 +135,12 @@ class TransitAgency(models.Model):
         return reverse(routes.AGENCY_INDEX, args=[self.slug])
 
     @property
-    def eligibility_index_url(self):
-        """Public facing URL to the TransitAgency's eligibility page."""
-        return reverse(routes.AGENCY_ELIGIBILITY_INDEX, args=[self.slug])
+    def entrypoint_url(self):
+        """For grouped agencies, we display an interstitial view prior to commencing the eligibility check."""
+        if self.group_agencies():
+            return reverse(routes.ADDITIONAL_AGENCIES)
+
+        return reverse(routes.ELIGIBILITY_INDEX)
 
     @property
     def littlepay_config(self):

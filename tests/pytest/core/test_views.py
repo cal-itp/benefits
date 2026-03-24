@@ -1,4 +1,5 @@
 import pytest
+from django.urls import reverse
 
 import benefits.core.session
 from benefits.core import views
@@ -36,7 +37,15 @@ class TestIndexView:
 
         assert form.is_valid()
         view.form_valid(form)
-        assert view.success_url == model_TransitAgency.eligibility_index_url
+        assert view.success_url == reverse(routes.ELIGIBILITY_INDEX)
+
+    @pytest.mark.usefixtures("model_TransitAgencyGroup")
+    def test_form_valid_grouped(self, view, model_TransitAgency):
+        form = view.form_class(data=dict(select_transit_agency=model_TransitAgency.slug))
+
+        assert form.is_valid()
+        view.form_valid(form)
+        assert view.success_url == reverse(routes.ADDITIONAL_AGENCIES)
 
 
 @pytest.mark.django_db
@@ -46,6 +55,15 @@ class TestAgencyIndexView:
         v = views.AgencyIndexView()
         v.setup(app_request, agency=model_TransitAgency)
         return v
+
+    def test_get_context_data(self, view):
+        context_data = view.get_context_data()
+        assert context_data["next_url"] == reverse(routes.ELIGIBILITY_INDEX)
+
+    @pytest.mark.usefixtures("model_TransitAgencyGroup")
+    def test_get_context_data_grouped(self, view):
+        context_data = view.get_context_data()
+        assert context_data["next_url"] == reverse(routes.ADDITIONAL_AGENCIES)
 
     def test_view(self, view):
         assert view.template_name == "core/index--agency.html"
@@ -124,27 +142,6 @@ class TestAgencyCardView:
 
 
 @pytest.mark.django_db
-class TestAgencyEligibilityIndexView:
-    @pytest.fixture
-    def view(self, app_request, model_TransitAgency):
-        v = views.AgencyEligibilityIndexView()
-        v.setup(app_request, agency=model_TransitAgency)
-        return v
-
-    def test_view(self, view):
-        assert view.pattern_name == routes.ELIGIBILITY_INDEX
-
-    def test_get(self, view, app_request, mocked_session_reset, mocked_session_update):
-        agency = view.kwargs["agency"]
-        # recreate the condition of the live view, where the agency kwarg is passed to the get() call
-        response = view.get(app_request, agency=agency)
-
-        assert response.status_code == 302
-        mocked_session_reset.assert_called_once()
-        mocked_session_update.assert_called_once_with(app_request, agency=agency, origin=agency.index_url)
-
-
-@pytest.mark.django_db
 class TestAgencyPublicKeyView:
 
     @pytest.fixture
@@ -214,3 +211,25 @@ class TestLoggedOutView:
 
     def test_view(self, view):
         assert view.template_name == "core/logged-out.html"
+
+
+@pytest.mark.django_db
+class TestAdditionalAgenciesView:
+    @pytest.fixture
+    def view(self, app_request, model_TransitAgency):
+        v = views.AdditionalAgenciesView()
+        v.setup(app_request)
+        v.agency = model_TransitAgency
+        return v
+
+    def test_view(self, view):
+        assert view.template_name == "core/additional-agencies.html"
+
+    def test_get(self, view, app_request):
+        response = view.get(app_request)
+        assert response.status_code == 200
+
+    def test_get_context_data_with_agency(self, view):
+        context_data = view.get_context_data()
+        assert "title" in context_data
+        assert len(context_data["agencies"]) == 0

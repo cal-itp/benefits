@@ -35,11 +35,6 @@ class Routes:
         return "core:agency_card"
 
     @property
-    def AGENCY_ELIGIBILITY_INDEX(self):
-        """The user picks a flow and a transit agency is configured for them."""
-        return "core:agency_eligibility_index"
-
-    @property
     def AGENCY_PUBLIC_KEY(self):
         """Agency's eligibility API public key."""
         return "core:agency_public_key"
@@ -58,6 +53,11 @@ class Routes:
     def OAUTH_SYSTEM_ERROR(self):
         """OAuth error not caused by the user."""
         return OAuthRoutes.route("system_error")
+
+    @property
+    def ADDITIONAL_AGENCIES(self):
+        """For agencies that participate in a group, user acknowledges bulk enrollment."""
+        return "core:additional-agencies"
 
     @property
     def ELIGIBILITY_INDEX(self):

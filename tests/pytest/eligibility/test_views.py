@@ -77,6 +77,12 @@ class TestIndexView:
     def test_get_context_data(self, view):
         context_data = view.get_context_data()
         assert "form_text" in context_data
+        assert context_data["previous_url"] == routes.INDEX
+
+    @pytest.mark.usefixtures("model_TransitAgencyGroup")
+    def test_get_context_data_grouped(self, view):
+        context_data = view.get_context_data()
+        assert context_data["previous_url"] == routes.ADDITIONAL_AGENCIES
 
     def test_get(self, view, app_request, session_logout_spy):
         view.get(app_request)

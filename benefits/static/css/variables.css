@@ -49,4 +49,7 @@
   --focus-border-radius: calc(2rem / 16);
   --focus-outline-offset: calc(3rem / 16); /* 3px */
   --grid-spacer: calc(1rem / 2); /* 8px */
+
+  /* until we start importing DSDL in benefits  */
+  --dsdl-gray-40: #9e9e9e;
 }

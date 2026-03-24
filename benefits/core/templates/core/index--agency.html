@@ -10,5 +10,5 @@
 {% endblock headline %}
 
 {% block call-to-action %}
-  <a href="{% url routes.ELIGIBILITY_INDEX %}" class="btn btn-lg btn-primary">{% translate "Get started" %}</a>
+  <a href="{{ next_url }}" class="btn btn-lg btn-primary">{% translate "Get started" %}</a>
 {% endblock call-to-action %}

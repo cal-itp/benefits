@@ -13,7 +13,7 @@ from . import models, session
 
 def _agency_context(agency: models.TransitAgency):
     agency_context = {
-        "eligibility_index_url": agency.eligibility_index_url,
+        "entrypoint_url": agency.entrypoint_url,
         "info_url": agency.info_url,
         "littlepay_config": agency.littlepay_config,
         "long_name": agency.long_name,

@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+{% load i18n %}
+
+{% block page-title %}
+  {{ title }}
+{% endblock page-title %}
+
+{% block nav-buttons %}
+  {% url routes.INDEX as url %}
+  {% include "core/includes/button--previous-page.html" with url=url %}
+{% endblock nav-buttons %}
+
+{% block headline %}
+  <h1>{{ headline }}</h1>
+{% endblock headline %}
+
+{% block inner-content %}
+  <p class="py-4">{{ blurb }}</p>
+  <div class="d-flex flex-column nearby-agency_table">
+    {% for a in agencies %}<p class="py-2 px-3 nearby-agency">{{ a }}</p>{% endfor %}
+  </div>
+
+{% endblock inner-content %}
+
+{% block call-to-action-button %}
+  <a href="{% url routes.ELIGIBILITY_INDEX %}" class="btn btn-lg btn-primary">{% translate "Next" %}</a>
+{% endblock call-to-action-button %}
