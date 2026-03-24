@@ -5,7 +5,7 @@
 | Name                                                       |    Stmts |     Miss |   Branch |   BrPart |   Cover |   Missing |
 |----------------------------------------------------------- | -------: | -------: | -------: | -------: | ------: | --------: |
 | benefits/\_\_init\_\_.py                                   |        6 |        2 |        0 |        0 |     67% |       5-7 |
-| benefits/admin.py                                          |       37 |        1 |        6 |        2 |     93% |56->72, 60 |
+| benefits/admin.py                                          |       38 |        1 |        6 |        2 |     93% |57->76, 61 |
 | benefits/apps.py                                           |        3 |        0 |        0 |        0 |    100% |           |
 | benefits/core/\_\_init\_\_.py                              |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/core/admin/\_\_init\_\_.py                        |        6 |        0 |        0 |        0 |    100% |           |
@@ -73,7 +73,7 @@
 | benefits/in\_person/forms.py                               |       43 |        9 |        6 |        0 |     73% |     81-92 |
 | benefits/in\_person/mixins.py                              |        7 |        0 |        0 |        0 |    100% |           |
 | benefits/in\_person/urls.py                                |        6 |        0 |        0 |        0 |    100% |           |
-| benefits/in\_person/views.py                               |      107 |        1 |        6 |        1 |     98% |       185 |
+| benefits/in\_person/views.py                               |      110 |        1 |        6 |        1 |     98% |       192 |
 | benefits/locale/\_\_init\_\_.py                            |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/\_\_init\_\_.py                         |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/locale/en/formats.py                              |        1 |        0 |        0 |        0 |    100% |           |
@@ -86,14 +86,14 @@
 | benefits/oauth/middleware.py                               |       23 |        0 |        6 |        0 |    100% |           |
 | benefits/oauth/urls.py                                     |       12 |        0 |        0 |        0 |    100% |           |
 | benefits/oauth/views.py                                    |        8 |        0 |        0 |        0 |    100% |           |
-| benefits/routes.py                                         |      116 |        0 |        0 |        0 |    100% |           |
+| benefits/routes.py                                         |      119 |        0 |        0 |        0 |    100% |           |
 | benefits/secrets.py                                        |       48 |        8 |       10 |        1 |     81% |     90-99 |
 | benefits/sentry.py                                         |       55 |       12 |       10 |        1 |     80% |16, 21-22, 27, 31-32, 60-61, 93-118 |
 | benefits/settings.py                                       |      132 |        9 |       26 |       10 |     88% |108, 129->134, 145->148, 165, 189, 363, 373, 379, 388, 412-413 |
 | benefits/urls.py                                           |       46 |        9 |        6 |        2 |     75% |43->82, 57, 60, 63, 66, 69-71, 82->94, 88-90 |
 | benefits/views.py                                          |       33 |        0 |        0 |        0 |    100% |           |
 | benefits/wsgi.py                                           |        4 |        4 |        0 |        0 |      0% |     10-16 |
-| **TOTAL**                                                  | **3343** |  **156** |  **576** |   **57** | **94%** |           |
+| **TOTAL**                                                  | **3350** |  **156** |  **576** |   **57** | **94%** |           |
 
 
 ## Setup coverage badge
