@@ -8,7 +8,7 @@ from . import views
 app_name = "in_person"
 urlpatterns = [
     path(
-        "additional-providers/",
+        "providers/",
         admin.site.admin_view(views.AdditionalAgenciesView.as_view()),
         name=routes.name(routes.IN_PERSON_ADDITIONAL_AGENCIES),
     ),
