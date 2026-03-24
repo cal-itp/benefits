@@ -185,6 +185,10 @@ WSGI_APPLICATION = "benefits.wsgi.application"
 STORAGE_DIR = os.environ.get("DJANGO_STORAGE_DIR", BASE_DIR)
 USE_POSTGRES = os.environ.get("USE_POSTGRES", "false").lower() == "true"
 
+sslmode = os.environ.get("POSTGRES_SSLMODE", "verify-full")
+sslrootcert_path = os.environ.get("POSTGRES_SSLROOTCERT_PATH", "/etc/ssl/certs/ca-certificates.crt")
+sslrootcert = sslrootcert_path if sslmode == "verify-full" and sslrootcert_path else None
+
 if USE_POSTGRES:
     DATABASES = {
         "default": {
@@ -194,6 +198,17 @@ if USE_POSTGRES:
             "PASSWORD": os.environ.get("DJANGO_DB_PASSWORD"),
             "HOST": os.environ.get("POSTGRES_HOSTNAME", "postgres"),
             "PORT": os.environ.get("POSTGRES_PORT", "5432"),
+            "OPTIONS": {
+                "sslmode": sslmode,
+                "sslrootcert": sslrootcert,
+                # add these lines to enable TCP keepalives --
+                # tiny network packets that keep the connection active and prevent
+                # network hardware or the database server from thinking it's idle
+                "keepalives": 1,
+                "keepalives_idle": 60,
+                "keepalives_interval": 10,
+                "keepalives_count": 5,
+            },
         }
     }
 else:
