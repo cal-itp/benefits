@@ -35,14 +35,21 @@ class IndexView(AgencySessionRequiredMixin, RecaptchaEnabledMixin, FormView):
         """Add agency-specific context data."""
         context = super().get_context_data(**kwargs)
 
-        form_text = _(
-            "Cal-ITP doesn’t save any of your information. {short_name} provides reduced fares to riders who qualify.",
-            short_name=self.agency.short_name,
-        )
+        agency = self.agency
+        group_agencies = agency.group_agencies()
 
-        if self.agency.group_agencies():
+        if group_agencies:
+            form_text = _(
+                "Cal-ITP doesn’t save any of your information. {short_name} and "
+                "nearby transit providers offer reduced fares to riders who qualify.",
+                short_name=agency.short_name,
+            )
             previous_url = routes.ADDITIONAL_AGENCIES
         else:
+            form_text = _(
+                "Cal-ITP doesn’t save any of your information. {short_name} offers reduced fares to riders who qualify.",
+                short_name=agency.short_name,
+            )
             previous_url = routes.INDEX
 
         context.update({"form_text": [form_text], "previous_url": previous_url})
