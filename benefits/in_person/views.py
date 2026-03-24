@@ -7,6 +7,7 @@ from django.views.generic import FormView, TemplateView
 from benefits.core import models, session
 from benefits.core.mixins import AgencySessionRequiredMixin
 from benefits.core.models.transit import TransitAgency
+from benefits.core.views import AdditionalAgenciesView as DigitalAdditionalAgenciesView
 from benefits.eligibility import analytics as eligibility_analytics
 from benefits.enrollment.views import (
     IndexView as DigitalEnrollmentIndexView,
@@ -25,30 +26,10 @@ from benefits.routes import routes
 logger = logging.getLogger(__name__)
 
 
-class AdditionalProvidersView(mixins.CommonContextMixin, TemplateView):
+class AdditionalAgenciesView(mixins.CommonContextMixin, DigitalAdditionalAgenciesView):
     """View handler for showing the list of agencies the customer will be enrolled at (if more than one)."""
 
-    template_name = "in_person/additional-providers.html"
-
-    def dispatch(self, request, *args, **kwargs):
-        """Initialize session state before handling the request."""
-
-        agency = session.agency(request)
-        if not agency:
-            agency = TransitAgency.for_user(request.user)
-            session.update(request, agency=agency)
-        self.agency = agency
-        return super().dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        agency = self.agency
-        context["agencies"] = agency.group_agency_short_names()
-
-        context["cancel_url"] = routes.ADMIN_INDEX
-
-        return context
+    template_name = "in_person/additional-agencies.html"
 
 
 class EligibilityView(mixins.CommonContextMixin, FormView):

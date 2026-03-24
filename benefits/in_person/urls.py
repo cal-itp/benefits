@@ -9,8 +9,8 @@ app_name = "in_person"
 urlpatterns = [
     path(
         "additional-providers/",
-        admin.site.admin_view(views.AdditionalProvidersView.as_view()),
-        name=routes.name(routes.IN_PERSON_ADDITIONAL_PROVIDERS),
+        admin.site.admin_view(views.AdditionalAgenciesView.as_view()),
+        name=routes.name(routes.IN_PERSON_ADDITIONAL_AGENCIES),
     ),
     path(
         "eligibility/", admin.site.admin_view(views.EligibilityView.as_view()), name=routes.name(routes.IN_PERSON_ELIGIBILITY)

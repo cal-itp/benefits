@@ -60,31 +60,20 @@ def test_view_not_logged_in(client, viewname):
 
 
 @pytest.mark.django_db
-class TestAdditionalProvidersView:
+class TestAdditionalAgenciesView:
     @pytest.fixture
     def view(self, model_User, app_request, mocked_session_agency):
         # manually attach a logged-in user to the request
         app_request.user = model_User
 
-        v = views.AdditionalProvidersView()
+        v = views.AdditionalAgenciesView()
         v.setup(app_request)
         v.agency = mocked_session_agency(app_request)
         return v
 
-    def test_dispatch_no_agency_in_session(
-        self, view, mocked_session_module, mocked_transit_agency_class, model_TransitAgency
-    ):
-        view.agency = None
-        mocked_session_module.agency.return_value = None
-        mocked_transit_agency_class.for_user.return_value = model_TransitAgency
-
-        view.dispatch(view.request)
-
-        mocked_session_module.update.assert_called_once()
-        assert view.agency == model_TransitAgency
-
     @pytest.mark.usefixtures("model_TransitAgencyGroup")
     def test_get_context_data(self, view, model_TransitAgency_2):
+        """Confirimg that it's inherited correctly from the self-service AdditionalAgenciesView."""
         context_data = view.get_context_data()
         assert model_TransitAgency_2.short_name in context_data["agencies"]
 
