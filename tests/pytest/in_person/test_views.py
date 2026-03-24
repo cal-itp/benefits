@@ -238,13 +238,30 @@ class TestServerErrorView:
 @pytest.mark.django_db
 class TestSuccessView:
     @pytest.fixture
-    def view(self, app_request):
+    def view(self, app_request, model_User, mocked_session_agency):
+        # manually attach a logged-in user to the request
+        app_request.user = model_User
+
         v = views.SuccessView()
         v.setup(app_request)
+        v.agency = mocked_session_agency(app_request)
         return v
 
     def test_view(self, view):
         assert view.template_name == "in_person/enrollment/success.html"
+
+    def test_get_context_data__no_group(self, view):
+        context_data = view.get_context_data()
+
+        assert "when they tap-to-ride." in context_data["success_message"]
+        assert not context_data["agency_short_names"]
+
+    @pytest.mark.usefixtures("model_TransitAgencyGroup")
+    def test_get_context_data__group_agencies(self, view, model_TransitAgency_2):
+        context_data = view.get_context_data()
+
+        assert "when they tap-to-ride at the following transit providers:" in context_data["success_message"]
+        assert model_TransitAgency_2.short_name in context_data["agency_short_names"]
 
 
 @pytest.mark.django_db

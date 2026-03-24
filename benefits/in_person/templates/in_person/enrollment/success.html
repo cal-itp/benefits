@@ -21,9 +21,9 @@
 
       <p>{{ success_message }}</p>
 
-      {% if agencies %}
+      {% if agency_short_names %}
         <ul>
-          {% for agency in agencies %}<li class="fs-6 mb-2">{{ agency }}</li>{% endfor %}
+          {% for agency in agency_short_names %}<li class="fs-6 mb-2">{{ agency }}</li>{% endfor %}
         </ul>
       {% endif %}
     </div>

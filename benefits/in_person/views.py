@@ -152,26 +152,17 @@ class SuccessView(mixins.CommonContextMixin, AgencySessionRequiredMixin, Digital
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        agency = self.agency
-        group_agencies = agency.group_agencies()
-
-        if group_agencies:
-            success_message = (
+        # Check DigitalSuccessView's agency_short_names to see if we have a group situation
+        if context["agency_short_names"]:
+            context["success_message"] = (
                 "This rider can now use their contactless card to automatically receive a reduced fare "
                 "when they tap-to-ride at the following transit providers:"
             )
-            agencies = agency.group_agency_short_names()
         else:
-            success_message = (
+            context["success_message"] = (
                 "This rider can now use their contactless card to automatically receive a reduced fare "
                 "when they tap-to-ride."
             )
-            agencies = None
-
-        context |= {
-            "success_message": success_message,
-            "agencies": agencies,
-        }
 
         return context
 
