@@ -9,6 +9,7 @@ from benefits.core import session
 from benefits.core.middleware import RecaptchaEnabled
 from benefits.core.mixins import ValidateRecaptchaMixin
 from benefits.core.models import TransitAgency
+from benefits.routes import routes
 
 
 class BenefitsAdminLoginForm(ValidateRecaptchaMixin, AdminAuthenticationForm):
@@ -66,6 +67,9 @@ class BenefitsAdminSite(AdminSite):
                         "has_permission_for_in_person": has_permission_for_in_person,
                         "transit_processor_portal_url": transit_processor_portal_url,
                         "title": f"{agency.long_name} | {self.index_title} | {self.site_title}",
+                        "start_url": (
+                            routes.IN_PERSON_ADDITIONAL_AGENCIES if agency.group_agencies() else routes.IN_PERSON_ELIGIBILITY
+                        ),
                     }
                 )
 

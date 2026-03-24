@@ -137,3 +137,17 @@ div.breadcrumbs {
   height: 1rem;
   width: 1rem;
 }
+
+/* In-person enrollment flow, overriding Django Admin styles */
+
+.in-person li,
+.in-person dt,
+.in-person dd {
+  font-size: var(--bs-body-font-size);
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.in-person ul > li {
+  list-style-type: unset;
+}

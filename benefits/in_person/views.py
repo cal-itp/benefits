@@ -7,6 +7,7 @@ from django.views.generic import FormView, TemplateView
 from benefits.core import models, session
 from benefits.core.mixins import AgencySessionRequiredMixin
 from benefits.core.models.transit import TransitAgency
+from benefits.core.views import AdditionalAgenciesView as DigitalAdditionalAgenciesView
 from benefits.eligibility import analytics as eligibility_analytics
 from benefits.enrollment.views import (
     IndexView as DigitalEnrollmentIndexView,
@@ -23,6 +24,12 @@ from benefits.in_person import forms, mixins
 from benefits.routes import routes
 
 logger = logging.getLogger(__name__)
+
+
+class AdditionalAgenciesView(mixins.CommonContextMixin, DigitalAdditionalAgenciesView):
+    """View handler for showing the list of agencies the customer will be enrolled at (if more than one)."""
+
+    template_name = "in_person/additional-agencies.html"
 
 
 class EligibilityView(mixins.CommonContextMixin, FormView):

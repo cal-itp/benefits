@@ -1,0 +1,24 @@
+{% extends "admin/flow-base.html" %}
+
+{% block flow-content %}
+  <div class="p-3">
+    <h3 class="h5 mb-3">Additional providers</h3>
+    <p>Let the rider know they’ll get reduced fares when they tap to pay at {{ agencies|length }} transit providers.</p>
+    <ul>
+      {% for agency in agencies %}<li>{{ agency }}</li>{% endfor %}
+    </ul>
+  </div>
+
+  <div class="row d-flex justify-content-start p-3 pt-8">
+    <div class="col-6">
+      {% url routes.ADMIN_INDEX as url_cancel %}
+      <a href="{{ url_cancel }}" class="btn btn-lg btn-outline-primary d-block">Cancel</a>
+    </div>
+    <div class="col-6">
+      {% url routes.IN_PERSON_ELIGIBILITY as url_eligibility %}
+      <a href="{{ url_eligibility }}" class="btn btn-lg btn-primary d-flex justify-content-center align-items-center text-white">
+        <span class="btn-text">Continue</span>
+      </a>
+    </div>
+  </div>
+{% endblock flow-content %}
