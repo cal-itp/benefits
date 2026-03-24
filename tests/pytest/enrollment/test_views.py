@@ -193,11 +193,17 @@ class TestSuccessView:
         v.group = model_LittlepayGroup
         return v
 
-    def test_get_context_data(self, view):
+    def test_get_context_data_with_TransitAgencyGroup(self, view, model_TransitAgencyGroup):
         context = view.get_context_data()
         assert "redirect_to" in context
         assert "success_message" in context
-        assert "thank_you_message" in context
+        assert context["agency_short_names"]
+
+    def test_get_context_data_without_TransitAgencyGroup(self, view):
+        context = view.get_context_data()
+        assert "redirect_to" in context
+        assert "success_message" in context
+        assert not context["agency_short_names"]
 
     def test_get_logged_in(self, view, app_request, mocker):
         mock_session = mocker.patch("benefits.enrollment.views.session")

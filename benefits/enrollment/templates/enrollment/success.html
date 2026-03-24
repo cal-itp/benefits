@@ -31,21 +31,21 @@
             {% else %}
               <p class="pt-lg-3 mt-lg-0">
             {% endif %}
-                {% block success-message %}
                 {{ success_message }}
-                {% endblock success-message %}
+
+                {% if agency_short_names %}
+                <ul class="pt-3">
+                  {% for agency_short_name in agency_short_names %}
+                  <li>{{ agency_short_name }}</li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
               </p>
               <p class="pt-4">
-                {% block re-enrollment-message %}
-                {{ re_enrollment_message }}
-                {% endblock re-enrollment-message %}
+                {% translate "You will need to re-enroll if you choose to change the card you use to pay for transit service." %}
               </p>
             {# djlint:on #}
-            <p class="pt-4">
-              {% block thank-you-message %}
-                {{ thank_you_message }}
-              {% endblock thank-you-message %}
-            </p>
+            <p class="pt-4">{% translate "Thank you for using Cal-ITP Benefits!" %}</p>
           </div>
           <div class="col-lg-5">
             <img width="180"

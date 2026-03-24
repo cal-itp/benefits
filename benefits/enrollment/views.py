@@ -175,24 +175,30 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
 
     template_name = "enrollment/success.html"
 
-    re_enrollment_message: str = _(
-        "You will need to re-enroll if you choose to change the card you use to pay for transit service."
-    )
-    thank_you_message: str = _("Thank you for using Cal-ITP Benefits!")
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        success_message = _(
-            "You were not charged anything today. When boarding public transit provided by {short_name}, tap this "
-            "card to receive a reduced fare.",
-            short_name=self.agency.short_name,
-        )
+
+        agency = self.agency
+        group_agencies = agency.group_agencies()
+
+        if group_agencies:
+            success_message = _(
+                "You were not charged anything today. When boarding public transit at the following providers, tap this card "
+                "and you will be charged a reduced fare:"
+            )
+            agency_short_names = agency.group_agency_short_names()
+        else:
+            success_message = _(
+                "You were not charged anything today. When boarding public transit provided by {short_name}, tap this "
+                "card and you will be charged a reduced fare.",
+                short_name=self.agency.short_name,
+            )
+            agency_short_names = None
 
         context |= {
             "redirect_to": self.request.path,
-            "re_enrollment_message": self.re_enrollment_message,
             "success_message": success_message,
-            "thank_you_message": self.thank_you_message,
+            "agency_short_names": agency_short_names,
         }
         return context
 
