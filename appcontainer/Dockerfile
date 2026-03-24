@@ -81,6 +81,16 @@ ENV PYTHONUNBUFFERED=${PYTHONUNBUFFERED} \
     # https://pip.pypa.io/en/stable/cli/pip/#cmdoption-cache-dir
     PIP_CACHE_DIR="/${USER}/.cache/pip"
 
+# install apt packages using the archives and lists cache
+USER root
+RUN --mount=type=cache,id=apt-archives,sharing=locked,target=/var/cache/apt/archives \
+    --mount=type=cache,id=apt-lists,sharing=locked,target=/var/lib/apt/lists \
+    apt-get update && \
+    # upgrade ca-certificates (since it is already installed) to have the latest certs
+    apt-get install --only-upgrade -y ca-certificates && \
+    # rebuild the .crt bundle with the latest certs for use by all applications in the container
+    update-ca-certificates
+
 USER $USER
 
 # copy mostly-static runtime files
