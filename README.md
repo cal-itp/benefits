@@ -39,7 +39,7 @@
 | benefits/eligibility/forms.py                              |       85 |        0 |       14 |        2 |     98% |106->108, 108->112 |
 | benefits/eligibility/urls.py                               |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/verify.py                             |       12 |        0 |        4 |        0 |    100% |           |
-| benefits/eligibility/views.py                              |      120 |        3 |       16 |        0 |     96% |     70-72 |
+| benefits/eligibility/views.py                              |      123 |        3 |       16 |        0 |     96% |     77-79 |
 | benefits/enrollment/\_\_init\_\_.py                        |        0 |        0 |        0 |        0 |    100% |           |
 | benefits/enrollment/analytics.py                           |       30 |        3 |       12 |        2 |     88% |25->exit, 30, 57, 76 |
 | benefits/enrollment/apps.py                                |        5 |        0 |        0 |        0 |    100% |           |
@@ -93,7 +93,7 @@
 | benefits/urls.py                                           |       46 |        9 |        6 |        2 |     75% |43->82, 57, 60, 63, 66, 69-71, 82->94, 88-90 |
 | benefits/views.py                                          |       33 |        0 |        0 |        0 |    100% |           |
 | benefits/wsgi.py                                           |        4 |        4 |        0 |        0 |      0% |     10-16 |
-| **TOTAL**                                                  | **3354** |  **156** |  **578** |   **57** | **94%** |           |
+| **TOTAL**                                                  | **3357** |  **156** |  **578** |   **57** | **94%** |           |
 
 
 ## Setup coverage badge
