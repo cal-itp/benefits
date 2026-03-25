@@ -186,8 +186,7 @@ STORAGE_DIR = os.environ.get("DJANGO_STORAGE_DIR", BASE_DIR)
 USE_POSTGRES = os.environ.get("USE_POSTGRES", "false").lower() == "true"
 
 sslmode = os.environ.get("POSTGRES_SSLMODE", "verify-full")
-sslrootcert_path = os.environ.get("POSTGRES_SSLROOTCERT_PATH", "/etc/ssl/certs/ca-certificates.crt")
-sslrootcert = sslrootcert_path if sslmode == "verify-full" and sslrootcert_path else None
+sslrootcert = "/etc/ssl/certs/ca-certificates.crt" if sslmode == "verify-full" else None
 
 if USE_POSTGRES:
     DATABASES = {
