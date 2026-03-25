@@ -371,6 +371,10 @@ Required to use the (local) PostgreSQL Docker service. It must not be empty or u
 
 The port exposed by the (local) PostgreSQL Docker service. Or the port on which to connect to a cloud-based PostgreSQL service.
 
+### `POSTGRES_SSLMODE`
+
+Determines whether or with what priority a secure SSL TCP/IP connection will be negotiated with the PostgreSQL server. Set to `disable` for local environments.
+
 ### `POSTGRES_USER`
 
 Used in conjunction with [`POSTGRES_PASSWORD`](#postgres_password) to set a user and its password. This variable will create the specified user with superuser power.
