@@ -149,6 +149,23 @@ class SuccessView(mixins.CommonContextMixin, AgencySessionRequiredMixin, Digital
 
     template_name = "in_person/enrollment/success.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Check DigitalSuccessView's agency_short_names to see if we have a group situation
+        if context["agency_short_names"]:
+            context["success_message"] = (
+                "This rider can now use their contactless card to automatically receive a reduced fare "
+                "when they tap-to-ride at the following transit providers:"
+            )
+        else:
+            context["success_message"] = (
+                "This rider can now use their contactless card to automatically receive a reduced fare "
+                "when they tap-to-ride."
+            )
+
+        return context
+
 
 class SwitchioGatewayUrlView(GatewayUrlView):
     enrollment_method = models.EnrollmentMethods.IN_PERSON

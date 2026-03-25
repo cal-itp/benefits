@@ -104,8 +104,8 @@ iframe.card-collection {
   -webkit-mask: url("../../../static/img/icon/check-circle-fill.svg") no-repeat;
 
   display: inline-block;
-  width: 64px;
-  height: 64px;
+  width: calc(24rem / 16);
+  height: calc(24rem / 16);
   margin-right: calc(12rem / 16);
 }
 
@@ -121,8 +121,8 @@ iframe.card-collection {
     no-repeat;
 
   display: inline-block;
-  width: 64px;
-  height: 64px;
+  width: calc(24rem / 16);
+  height: calc(24rem / 16);
   margin-right: calc(12rem / 16);
 }
 
