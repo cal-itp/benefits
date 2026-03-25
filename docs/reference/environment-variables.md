@@ -373,7 +373,7 @@ The port exposed by the (local) PostgreSQL Docker service. Or the port on which 
 
 ### `POSTGRES_SSLMODE`
 
-Determines whether or with what priority a secure SSL TCP/IP connection will be negotiated with the PostgreSQL server. Set to `disable` for local environments.
+Determines whether or with what priority a [secure SSL TCP/IP connection will be negotiated with the PostgreSQL server](https://learn.microsoft.com/en-us/azure/postgresql/security/security-tls-how-to-connect#client-tls-configurationSet). In deployed environments, this value needs to be `verify-full`. For local environments, set to `disable`.
 
 ### `POSTGRES_USER`
 
