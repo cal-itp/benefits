@@ -138,7 +138,7 @@ div.breadcrumbs {
   width: 1rem;
 }
 
-/* In-person enrollment flow, overriding Django Admin styles */
+/* In-person enrollment flow: overriding Django Admin and Bootstrap styles */
 
 .in-person li,
 .in-person dt,
@@ -150,4 +150,63 @@ div.breadcrumbs {
 
 .in-person ul > li {
   list-style-type: unset;
+}
+
+/* In-person enrollment flow: Eligibility form */
+
+.form-field-container.in-person-eligibility-form
+  .form-group:has(input[type="checkbox"]) {
+  display: flex;
+  flex-direction: row-reverse; /* Checkbox form fields should show the checkbox first, then label */
+  justify-content: start;
+  gap: 1rem;
+  padding: 1.5rem 1.625rem 0;
+  border-top: 1px solid var(--bs-secondary);
+  margin: 1rem -1rem 0;
+}
+
+.form-field-container.in-person-eligibility-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-field-container.in-person-eligibility-form #id_flow {
+  margin-top: 1rem;
+}
+
+legend {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+label:has(input[type="radio"]) {
+  padding: 0.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+label:has(input[type="radio"]) {
+  font-weight: 600;
+}
+
+input[type="radio"] {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0.0625rem;
+}
+
+label:has(input[type="radio"]:checked) {
+  outline: 1px solid var(--primary-color);
+  background-color: #d9e8f6;
+}
+
+input:checked {
+  accent-color: var(--primary-color);
 }
