@@ -1,3 +1,4 @@
+import uuid
 from unittest.mock import create_autospec
 
 import pytest
@@ -134,7 +135,7 @@ def model_EnrollmentFlow():
 @pytest.fixture
 def model_LittlepayGroup(model_EnrollmentFlow, model_TransitAgency):
     return LittlepayGroup.objects.create(
-        group_id="d0fe23fd-61d6-455f-8e19-808058603171",
+        group_id=uuid.UUID("d0fe23fd-61d6-455f-8e19-808058603171"),
         enrollment_flow=model_EnrollmentFlow,
         transit_agency=model_TransitAgency,
     )

@@ -265,7 +265,7 @@ def test_enroll_success_flow_does_not_support_expiration_no_expiry(
     status, exception, funding_source = enroll(app_request, card_token)
 
     mock_client.link_concession_group_funding_source.assert_called_once_with(
-        funding_source_id=mocked_funding_source.id, group_id=mocked_session_group(app_request).group_id
+        funding_source_id=mocked_funding_source.id, group_id=str(mocked_session_group(app_request).group_id)
     )
     mocked_session_update.assert_not_called()
     assert status is Status.SUCCESS
@@ -300,7 +300,7 @@ def test_enroll_success_flow_supports_expiration(
 
     mock_client.link_concession_group_funding_source.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
-        group_id=mocked_session_group(app_request).group_id,
+        group_id=str(mocked_session_group(app_request).group_id),
         expiry=mocked_session_enrollment_expiry.return_value,
     )
     mocked_session_update.assert_called_once_with(
@@ -344,7 +344,7 @@ def test_enroll_success_flow_supports_expiration_no_expiry(
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
-        group_id=mocked_session_group(app_request).group_id,
+        group_id=str(mocked_session_group(app_request).group_id),
         expiry=mocked_session_enrollment_expiry.return_value,
     )
     mocked_session_update.assert_called_once_with(
@@ -388,7 +388,7 @@ def test_enroll_success_flow_supports_expiration_is_expired(
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
-        group_id=mocked_session_group(app_request).group_id,
+        group_id=str(mocked_session_group(app_request).group_id),
         expiry=mocked_session_enrollment_expiry.return_value,
     )
     mocked_session_update.assert_called_once_with(
@@ -438,7 +438,7 @@ def test_enroll_success_flow_supports_expiration_is_within_reenrollment_window(
 
     mock_client.update_concession_group_funding_source_expiry.assert_called_once_with(
         funding_source_id=mocked_funding_source.id,
-        group_id=mocked_session_group(app_request).group_id,
+        group_id=str(mocked_session_group(app_request).group_id),
         expiry=mocked_session_enrollment_expiry.return_value,
     )
     mocked_session_update.assert_called_once_with(
