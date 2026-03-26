@@ -175,6 +175,7 @@ class TestRetryView:
         assert response.template_name == ["enrollment/retry.html"]
         mocked_analytics_module.returned_retry.assert_called_once_with(
             app_request_post,
+            agency=view.agency,
             enrollment_group=model_LittlepayGroup.group_id,
             transit_processor="littlepay",
             enrollment_method=models.EnrollmentMethods.DIGITAL,

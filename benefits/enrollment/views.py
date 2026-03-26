@@ -133,10 +133,12 @@ class RetryView(AgencySessionRequiredMixin, FlowSessionRequiredMixin, EligibleSe
         # call super().dispatch() first to ensure all mixins are processed (i.e. so we have a self.flow and self.agency)
         response = super().dispatch(request, *args, **kwargs)
         if request.method == "POST":
+            agency = self.agency
             enrollment_group = self.group.group_id
-            transit_processor = self.agency.transit_processor
+            transit_processor = agency.transit_processor
             analytics.returned_retry(
                 request,
+                agency=agency,
                 enrollment_group=enrollment_group,
                 transit_processor=transit_processor,
                 enrollment_method=self.enrollment_method,

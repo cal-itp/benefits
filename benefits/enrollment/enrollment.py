@@ -102,6 +102,7 @@ def handle_enrollment_results(
             analytics.returned_error(
                 request,
                 str(exception),
+                agency=agency,
                 enrollment_group=group_id,
                 transit_processor=agency.transit_processor,
                 enrollment_method=enrollment_method,
@@ -113,6 +114,7 @@ def handle_enrollment_results(
             analytics.returned_error(
                 request,
                 str(exception),
+                agency=agency,
                 enrollment_group=group_id,
                 transit_processor=agency.transit_processor,
                 enrollment_method=enrollment_method,
@@ -123,6 +125,7 @@ def handle_enrollment_results(
             analytics.returned_error(
                 request,
                 "Re-enrollment error.",
+                agency=agency,
                 enrollment_group=group_id,
                 transit_processor=agency.transit_processor,
                 enrollment_method=enrollment_method,
