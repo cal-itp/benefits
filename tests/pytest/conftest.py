@@ -290,7 +290,7 @@ def mocked_analytics_module(mocker):
     """
 
     def mock(module):
-        return mocker.patch.object(module, "analytics")
+        return mocker.patch.object(module, "analytics", autospec=True)
 
     return mock
 

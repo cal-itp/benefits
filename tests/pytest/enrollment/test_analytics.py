@@ -2,7 +2,13 @@ import pytest
 from cdt_identity.claims import ClaimsResult
 
 import benefits.core.analytics
-from benefits.enrollment.analytics import FailedPretokenizationRequestEvent, ReturnedEnrollmentEvent, returned_success
+from benefits.enrollment.analytics import (
+    FailedPretokenizationRequestEvent,
+    ReturnedEnrollmentEvent,
+    returned_error,
+    returned_retry,
+    returned_success,
+)
 
 
 @pytest.mark.django_db
@@ -27,6 +33,49 @@ def test_ReturnedEnrollmentEvent_without_error(app_request, mocker, model_Transi
     )
     assert "error_code" not in event.event_properties
     assert "enrollment_flows" in event.event_properties
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("model_LittlepayGroup")
+def test_returned_error(app_request, mocker, model_LittlepayGroup, model_TransitAgency):
+    keys = ["enrollment_group", "transit_processor"]
+    spy_send_event = mocker.spy(benefits.core.analytics, "send_event")
+    agency = model_TransitAgency
+    returned_error(
+        app_request,
+        "error message",
+        enrollment_group=model_LittlepayGroup.group_id,
+        transit_processor=agency.transit_processor,
+    )
+
+    # event should have been sent
+    spy_send_event.assert_called_once()
+    # the first arg of the first (and only) call
+    call_arg = spy_send_event.call_args[0][0]
+    assert isinstance(call_arg, ReturnedEnrollmentEvent)
+    for key in keys:
+        assert key in call_arg.event_properties
+
+
+@pytest.mark.django_db
+@pytest.mark.usefixtures("model_LittlepayGroup")
+def test_returned_retry(app_request, mocker, model_LittlepayGroup, model_TransitAgency):
+    keys = ["enrollment_group", "transit_processor"]
+    spy_send_event = mocker.spy(benefits.core.analytics, "send_event")
+    agency = model_TransitAgency
+    returned_retry(
+        app_request,
+        enrollment_group=model_LittlepayGroup.group_id,
+        transit_processor=agency.transit_processor,
+    )
+
+    # event should have been sent
+    spy_send_event.assert_called_once()
+    # the first arg of the first (and only) call
+    call_arg = spy_send_event.call_args[0][0]
+    assert isinstance(call_arg, ReturnedEnrollmentEvent)
+    for key in keys:
+        assert key in call_arg.event_properties
 
 
 @pytest.mark.django_db
