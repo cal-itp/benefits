@@ -49,6 +49,7 @@ class FailedPretokenizationRequestEvent(core.Event):
 def returned_error(
     request,
     error,
+    agency,
     enrollment_group,
     transit_processor,
     enrollment_method: str = models.EnrollmentMethods.DIGITAL,
@@ -58,6 +59,7 @@ def returned_error(
         ReturnedEnrollmentEvent(
             request,
             status="error",
+            agency=agency,
             enrollment_group=enrollment_group,
             transit_processor=transit_processor,
             error=error,
@@ -68,6 +70,7 @@ def returned_error(
 
 def returned_retry(
     request,
+    agency,
     enrollment_group,
     transit_processor,
     enrollment_method: str = models.EnrollmentMethods.DIGITAL,
@@ -77,6 +80,7 @@ def returned_retry(
         ReturnedEnrollmentEvent(
             request,
             status="retry",
+            agency=agency,
             enrollment_group=enrollment_group,
             transit_processor=transit_processor,
             enrollment_method=enrollment_method,

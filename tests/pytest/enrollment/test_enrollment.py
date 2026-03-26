@@ -195,7 +195,7 @@ def test_handle_enrollment_results_success_claims(
     assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
     mocked_analytics_module.returned_success.assert_called_once()
     analytics_kwargs = mocked_analytics_module.returned_success.call_args.kwargs
-    assert analytics_kwargs["enrollment_group"] == model_LittlepayGroup.group_id
+    assert analytics_kwargs["enrollment_group"] == str(model_LittlepayGroup.group_id)
     assert analytics_kwargs["enrollment_method"] == models.EnrollmentMethods.DIGITAL
 
 
@@ -270,7 +270,7 @@ def test_handle_enrollment_results_success_eligibility_api(
     assert response.url == reverse(routes.ENROLLMENT_SUCCESS)
     mocked_analytics_module.returned_success.assert_called_once()
     analytics_kwargs = mocked_analytics_module.returned_success.call_args.kwargs
-    assert analytics_kwargs["enrollment_group"] == model_LittlepayGroup.group_id
+    assert analytics_kwargs["enrollment_group"] == str(model_LittlepayGroup.group_id)
     assert analytics_kwargs["enrollment_method"] == models.EnrollmentMethods.DIGITAL
 
 
