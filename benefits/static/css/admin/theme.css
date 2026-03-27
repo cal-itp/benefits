@@ -175,18 +175,10 @@ div.breadcrumbs {
   margin-top: 1rem;
 }
 
-legend {
-  margin-bottom: 1rem;
-  font-size: 1rem;
-}
-
 label:has(input[type="radio"]) {
   padding: 0.5rem;
   display: flex;
   gap: 1rem;
-}
-
-label:has(input[type="radio"]) {
   font-weight: 600;
 }
 
