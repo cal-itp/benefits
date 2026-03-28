@@ -2,21 +2,21 @@
 
 ## Overview
 
-This use case describes a feature in the [Cal-ITP Benefits app](https://benefits.calitp.org) that allows Californians to verify their active participation in the Medicare program to receive reduced fares for transit when paying by contactless debit or credit card at participating transit operators in California.
+This use case describes a feature in the [Cal-ITP Benefits](https://benefits.calitp.org) that allows Californians to verify their active participation in the Medicare program to receive reduced fares for transit when paying by contactless debit or credit card at participating transit operators in California.
 
 **Actor:** A person who uses public transit in California. For benefit eligibility, a Medicare cardholder is a person who has enrolled in the Medicare program, has a Medicare.gov account, and is not deceased.
 
 **Goal:** To verify a transit rider’s Medicare status so they receive reduced fares when paying by contactless debit or credit card.
 
-**Precondition:** The California transit operator offers fixed route service, has installed and tested validator hardware necessary to collect fares using contactless payment on bus or rail lines, and the operator has a policy in place to offer a transit discount to riders enrolled in Medicare.
+**Precondition:** The California transit operator offers fixed route service, has installed and tested validator hardware necessary to collect fares using open-loop payments on bus or rail lines, and the operator has a policy in place to offer a transit benefit to riders enrolled in Medicare.
 
 ## Demonstration
 
-Here's a video showing what the flow looks like for a Medicare enrollee to confirm their eligibility for a transit benefit through Medicare.gov and then register their contactless debit or credit card with Littlepay, one of the supported transit processors:
+Here's a video walkthrough of the rider self-service enrollment experience when choosing the Medicare cardholder enrollment pathway.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/YZylD7oAbso?si=1aUb26LYDgkm_SCo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-## Basic Flow
+## Self-service enrollment
 
 ```mermaid
 sequenceDiagram
@@ -57,21 +57,23 @@ TransitProcessor-->>Benefits: card registration confirmation
 
 1. The transit rider chooses the transit operator that serves an area where they want to ride public transit.
 
-1. The transit rider chooses to verify their eligibility as a person who is living and enrolled in Medicare.
+1. The transit rider chooses to verify their eligibility as a Medicare cardholder.
 
-1. The transit rider authenticates with their existing Medicare.gov account or, if they don’t have one, creates a Medicare.gov account using their Medicare card.
+1. The Cal-ITP Benefits app interfaces with the [California Department of Technology Identity Gateway](https://digitalidstrategy.cdt.ca.gov/primary-elements.html) (IdG) to verify rider identity and benefit eligibility.
 
-1. The Cal-ITP Benefits app interfaces with the [California Department of Technology Identity Gateway](https://digitalidstrategy.cdt.ca.gov/primary-elements.html) (IdG) to verify benefit eligibility. The IdG uses successful authentication with Medicare.gov and personal information shared by the [Blue Button API](https://bluebutton.cms.gov/) to verify Medicare status.
+1. The transit rider authenticates with their Medicare.gov account or, if they don’t have one, creates a Medicare.gov account using their Medicare card.
 
-1. The IdG uses the response provided by Blue Button API to determine the rider’s eligibility for a transit benefit.
+1. The transit rider consents to share information from their Medicare.gov account to verify their eligibility for a transit benefit. 
+
+1. The IdG uses the response provided by the [Blue Button API](https://bluebutton.cms.gov/) to determine the rider’s eligibility for a transit benefit.
 
 1. The IdG then passes an eligibility response as Medicare enrollment status = TRUE to the Cal-ITP Benefits app to indicate the person is eligible for a benefit.
 
 1. The transit rider provides the debit or credit card details they use to pay for transit to the [transit processor](../../index.md#transit-processors) that facilitates fare collection for the transit provider.
 
-1. The app registers the transit benefit with the transit rider’s debit or credit card.
+1. The app registers the transit rider’s debit or credit card for reduced fares.
 
-## Alternative Flows
+## Alternative self-service flows
 
 - Suppose the transit rider does not have a desktop computer. In this case, they open the web application at benefits.calitp.org in a mobile browser on their iOS or Android tablet or mobile device to complete enrollment using the basic flow.
 
