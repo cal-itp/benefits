@@ -63,7 +63,7 @@ TransitProcessor-->>Benefits: card registration confirmation
 
 1. The transit rider authenticates with their Medicare.gov account or, if they don’t have one, creates a Medicare.gov account using their Medicare card.
 
-1. The transit rider consents to share information from their Medicare.gov account to verify their eligibility for a transit benefit. 
+1. The transit rider consents to share information from their Medicare.gov account to verify their eligibility for a transit benefit.
 
 1. The IdG uses the response provided by the [Blue Button API](https://bluebutton.cms.gov/) to determine the rider’s eligibility for a transit benefit.
 
