@@ -21,7 +21,7 @@ Here's a video walkthrough of the rider self-service enrollment experience when 
 ```mermaid
 sequenceDiagram
 autonumber
-%% Medicare Cardholders Enrollment Pathway
+%% Self-service Enrollment for Medicare Cardholders
     actor TransitRider as Transit Rider
     participant Benefits as Cal-ITP Benefits
     participant IdG as Identity Gateway
@@ -85,6 +85,32 @@ TransitProcessor-->>Benefits: card registration confirmation
 
 - If the transit rider uses more than one debit or credit card to pay for transit, they repeat the basic flow for each card.
 
+## In-person enrollment
+
+```mermaid
+sequenceDiagram
+autonumber
+%% In-person Enrollment for Medicare cardhold
+    actor Transit_Rider as Transit Rider
+    participant location as Agency Office
+    actor Agency_Staff as Agency Staff Member
+    participant Benefits as Cal-ITP Benefits Administrator
+    participant Fare_processor as Fare processor
+Transit_Rider->>location: visits a physical location or enrollment event
+Agency_Staff->>Benefits: starts in-person enrollment
+    activate Benefits
+Agency_Staff->>Benefits: chooses enrollment pathway
+Transit_Rider->>Agency_Staff: shares government-issued photo ID +<br> Medicare card
+Agency_Staff->>Benefits: verifies eligibility
+    Note over Benefits: eligible (Y/N)
+Fare_processor-->>Benefits: card registration form
+    activate Fare_processor
+Transit_Rider->>Fare_processor: enters debit or credit card details
+Fare_processor-->>Benefits: card registration confirmation
+    deactivate Fare_processor
+    deactivate Benefits
+    Note over Benefits: Successful enrollment
+```
 ## Postcondition
 
 The transit rider receives a fare reduction each time they use the debit or credit card they registered to pay for transit rides. The number of times they can use the card to pay for transit is unlimited and the benefit never expires.
