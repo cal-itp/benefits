@@ -22,34 +22,35 @@ Here's a video showing what the flow looks like for a Medicare enrollee to confi
 sequenceDiagram
 autonumber
 %% Medicare Cardholders Enrollment Pathway
-    actor Transit Rider
-    participant Benefits as Benefits app
+    actor TransitRider as Transit Rider
+    participant Benefits as Cal-ITP Benefits
     participant IdG as Identity Gateway
     participant Medicare as Medicare.gov
-    participant BB API as Blue Button API
-    participant Transit processor
-Transit Rider->>Benefits: visits benefits.calitp.org
+    participant BBAPI as Blue Button API
+    participant TransitProcessor as Transit processor
+TransitRider->>Benefits: visits benefits.calitp.org
     activate Benefits
-Benefits-->>IdG: begin eligibility verification
+Benefits-->>IdG: begins identity verification
     activate IdG
-Transit Rider->>Medicare: account authentication
+TransitRider->>Medicare: account authentication
     activate Medicare
-    Note over Medicare: authenticated (Y/N)
-Medicare->>IdG: authentication confirmation
+    Note over Medicare: Authenticated (Y/N)
+Medicare-->>IdG: authentication confirmation
     deactivate Medicare
-IdG-->>BB API: requests required PII
-    activate BB API
-    Note over BB API: deceased (Y/N)
-BB API-->>IdG: returns required PII
-    deactivate BB API
+IdG-->>BBAPI: sends required PII
+    activate BBAPI
+    Note over BBAPI: Deceased (Y/N)
+BBAPI-->>IdG: returns response
+    deactivate BBAPI
 IdG-->>Benefits: eligibility response
     deactivate IdG
-Benefits-->>Transit processor: card enrollment start
-    activate Transit processor
-Transit Rider->>Transit processor: provides debit or credit card details
-Transit processor-->>Benefits: card enrollment confirmation
-    deactivate Transit processor
+Benefits-->>TransitProcessor: card registration start
+    activate TransitProcessor
+TransitRider->>TransitProcessor: provides debit or credit card details
+TransitProcessor-->>Benefits: card registration confirmation
+    deactivate TransitProcessor
     deactivate Benefits
+    Note over Benefits: Successfull enrollment
 ```
 
 1. The transit rider visits the web application at benefits.calitp.org in a browser on their desktop computer.
