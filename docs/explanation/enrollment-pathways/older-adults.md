@@ -142,4 +142,3 @@ The transit rider receives a fare reduction each time they use the debit or cred
 - Benefit enrollment takes minutes rather than days or weeks.
 
 - Benefit enrollment doesn’t require online accounts with private companies.
-
