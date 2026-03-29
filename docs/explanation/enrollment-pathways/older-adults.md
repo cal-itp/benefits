@@ -1,8 +1,14 @@
 # Older adults
 
-One Benefits application use case is for riders age 65 years and older. The Benefits application verifies the person's age to confirm eligibility and allows those eligible to enroll their contactless payment card for their transit benefit.
+## Overview
 
-Currently, the app uses [Login.gov's Identity Assurance Level 2 (IAL2)](https://developers.login.gov/attributes/) to confirm age, which requires a person to have a Social Security number, a valid state-issued ID card and a phone number with a phone plan associated with the person's name. Adding ways to confirm eligibility for people without a Social Security number, for people who are part of a transit agency benefit program are on the roadmap.
+This use case describes a feature in [Cal-ITP Benefits](https://benefits.calitp.org) that allows transit riders to verify they are age 65 or older so they receive reduced fares when paying for transit using a contactless debit or credit card at participating transit operators in California.
+
+**Actor:** A person who uses public transit in California. For benefit eligibility, a person who is age 65 or older, has a Login.gov account, and has completed Login.gov's Identity Assurance Level 2 (IAL2) identity proofing process. Note, for a person to create a Login.gov and complete identity proofing, they need a Social Security number, a valid state-issued ID, and a mobile phone number with a plan associated with the person's name. 
+
+**Goal:** To verify a transit rider’s age so they receive reduced fares when paying by contactless debit or credit card.
+
+**Precondition:** The California transit operator offers fixed route service, has installed and tested validator hardware necessary to collect fares using open-loop payments on bus or rail lines, and the operator has a policy in place to offer a transit benefit to riders enrolled in Medicare.
 
 ## Demonstration
 
