@@ -54,7 +54,7 @@ Notes:
 - [More details about the Benefits architecture](../infrastructure.md#architecture)
 - At MST, the `Data Source` is Velocity, the product MST uses to manage and print Courtesy Cards.
 
-## Process
+## Self-service enrollment
 
 ```mermaid
 sequenceDiagram
@@ -75,10 +75,24 @@ autonumber
         activate elig_server
     elig_server-->>Benefits: returns eligibility status (y/n)
         deactivate elig_server
-    Benefits-->>Transit processor: payment enrollment start
+    Benefits-->>Transit processor: card registration start
         activate Transit processor
     Transit rider->>Transit processor: provides debit or credit card details
     Transit processor-->>Benefits: card registration confirmation
         deactivate Transit processor
         deactivate Benefits
+        Note over Benefits: Successfull enrollment
 ```
+1. The transit rider visits the web application at benefits.calitp.org in a browser on their desktop computer.
+
+1. The transit rider chooses the transit operator that serves an area where they want to ride public transit.
+
+1. The transit rider chooses to verify their eligibility as an agency cardholder.
+
+1. The transit rider enters the required information exactly as it appears on their agency card.
+
+1. The eligibility server looks for a match for the card details in the hashed list of eligible riders.
+
+1. The transit rider provides the debit or credit card details they use to pay for transit to the [transit processor](../../index.md#transit-processors) that facilitates fare collection for the transit provider.
+
+1. The app registers the transit rider’s debit or credit card for reduced fares.
