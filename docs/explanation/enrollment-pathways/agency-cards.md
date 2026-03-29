@@ -96,3 +96,48 @@ autonumber
 1. The transit rider provides the debit or credit card details they use to pay for transit to the [transit processor](../../index.md#transit-processors) that facilitates fare collection for the transit provider.
 
 1. The app registers the transit rider’s debit or credit card for reduced fares.
+
+## In-person enrollment
+
+```mermaid
+sequenceDiagram
+autonumber
+%% In-person Enrollment for agency cardholders
+    actor Transit_Rider as Transit Rider
+    participant location as Agency Office
+    actor Agency_Staff as Agency Staff Member
+    participant Benefits as Cal-ITP Benefits Administrator
+    participant Fare_processor as Transit processor
+Transit_Rider->>location: visits a physical location or enrollment event
+Agency_Staff->>Benefits: starts in-person enrollment
+    activate Benefits
+Agency_Staff->>Benefits: chooses agency cardholder enrollment pathway
+Transit_Rider->>Agency_Staff: shares government-issued photo ID + agency card
+Agency_Staff->>Benefits: verifies eligibility
+    Note over Benefits: eligible (Y/N)
+Fare_processor-->>Benefits: card registration form
+    activate Fare_processor
+Transit_Rider->>Fare_processor: enters debit or credit card details
+Fare_processor-->>Benefits: card registration confirmation
+    deactivate Fare_processor
+    deactivate Benefits
+    Note over Benefits: Successful enrollment
+```
+
+1. The transit rider visits an agency office or enrollment event in person.
+
+1. A transit agency staff member logs into Cal-ITP Benefits Administrator, typically on a tablet device.
+
+1. The transit agency staff member launches in-person enrollment and chooses `agency cardholder` as the eligibility type.
+
+1. The transit rider hands the transit agency staff member their government-issued photo ID and agency card.
+
+1. The transit agency staff member confirms the person’s identity and verifies that the agency card indicates the person is an active enrollee.
+
+1. The transit agency staff member hands the transit rider the tablet so they can enter the debit or credit card details for the card they use to pay for transit.
+
+1. The app registers the transit rider’s debit or credit card with the [transit processor](../../index.md#transit-processors).
+
+## Postcondition
+
+The transit rider receives a fare reduction each time they use the debit or credit card they registered to pay for transit rides. The number of times they can use the card to pay for transit is unlimited.
