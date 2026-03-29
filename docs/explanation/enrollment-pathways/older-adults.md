@@ -44,6 +44,37 @@ TransitProcessor-->>Benefits: card registration confirmation
     deactivate Benefits
     Note over Benefits: Successfull enrollment
 ```
+1. The transit rider visits the web application at benefits.calitp.org in a browser on their desktop computer.
+
+1. The transit rider chooses the transit operator that serves an area where they want to ride public transit.
+
+1. The transit rider chooses to verify their eligibility as an older adult.
+
+1. The Cal-ITP Benefits app interfaces with the [California Department of Technology Identity Gateway](https://digitalidstrategy.cdt.ca.gov/primary-elements.html) (IdG) to verify rider identity and benefit eligibility.
+
+1. The transit rider authenticates with their Login.gov account or, if they don’t have one, creates one.
+
+1. The transit rider consents to share information from their Login.gov account to verify their eligibility for a transit benefit.
+
+1. The IdG uses the response provided by the Login.gov to determine the rider’s eligibility for a transit benefit.
+
+1. The IdG then passes an eligibility response as older adult enrollment status = TRUE to the Cal-ITP Benefits app to indicate the person is eligible for a benefit.
+
+1. The transit rider provides the debit or credit card details they use to pay for transit to the [transit processor](../../index.md#transit-processors) that facilitates fare collection for the transit provider.
+
+1. The app registers the transit rider’s debit or credit card for reduced fares.
+
+## Alternative self-service flows
+
+- Suppose the transit rider does not have a desktop computer. In this case, they open the web application at benefits.calitp.org in a mobile browser on their iOS or Android tablet or mobile device to complete enrollment using the basic flow.
+
+- Suppose the transit rider cannot authenticate with Login.gov, will not create an account, or cannot complete identity verification. In any of these cases, the app cannot determine their age and they cannot enroll their contactless debit or credit card for a reduced fare.
+
+- Suppose the CDT Identity Gateway returns older adult enrollment status = FALSE. In that case, the Cal-ITP Benefits app will not allow the transit rider to enroll their contactless debit or credit card for a reduced fare.
+
+- Suppose the debit or credit card expires or is canceled by the issuer. In that case, the transit rider must repeat the basic flow to register the new debit or credit card.
+
+- If the transit rider uses more than one debit or credit card to pay for transit, they repeat the basic flow for each card.
 
 ## In-person enrollment
 
