@@ -4,7 +4,7 @@
 
 This use case describes a feature in [Cal-ITP Benefits](https://benefits.calitp.org) that allows transit riders to verify they are age 65 or older so they receive reduced fares when paying for transit using a contactless debit or credit card at participating transit operators in California.
 
-**Actor:** A person who uses public transit in California. For benefit eligibility, a person who is age 65 or older, has a Login.gov account, and has completed Login.gov's Identity Assurance Level 2 (IAL2) identity proofing process. Note, for a person to create a Login.gov and complete identity proofing, they need a Social Security number, a valid state-issued ID, and a mobile phone number with a plan associated with the person's name. 
+**Actor:** A person who uses public transit in California. For benefit eligibility, a person who is age 65 or older, has a Login.gov account, and has completed Login.gov's Identity Assurance Level 2 (IAL2) identity proofing process. Note, for a person to create a Login.gov and complete identity proofing, they need a Social Security number, a valid state-issued ID, and a mobile phone number with a plan associated with the person's name.
 
 **Goal:** To verify a transit rider’s age so they receive reduced fares when paying by contactless debit or credit card.
 
