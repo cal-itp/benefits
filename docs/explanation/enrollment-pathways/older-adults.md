@@ -142,3 +142,9 @@ The transit rider receives a fare reduction each time they use the debit or cred
 - Benefit enrollment takes minutes rather than days or weeks.
 
 - Benefit enrollment doesn’t require online accounts with private companies.
+
+## Example Scenario
+
+A 68-year-old who owns a car now prefers public transit, which is cheaper and more relaxing. Although they get a 50% fare reduction, they must use a closed-loop card issued by their transit provider for every ride. Reloading $10 on the card each week is frustrating, especially when that money is sometimes needed elsewhere. They use the transit card for transportation and cash or debit for other expenses.
+
+The transit operator in their region of California implements open-loop payments on fixed-route bus lines throughout the service area. This rider opens the Cal-ITP Benefits web application at home, completes the self-service workflow to digitally confirm they are over age 65, and registers their debit card for reduced fares. If the rider struggles to create a Login.gov account or complete identity proofing, they visit the transit agency office and complete enrollment in person. Now, when they tap to pay when boarding, the system automatically charges them the reduced fare. They no longer use their closed-loop agency card to pay for transit and can access all funds in their weekly budget.
