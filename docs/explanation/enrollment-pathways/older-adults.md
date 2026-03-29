@@ -6,27 +6,41 @@ Currently, the app uses [Login.gov's Identity Assurance Level 2 (IAL2)](https://
 
 ## Demonstration
 
-Here's a video showing what the flow looks like for an older adult to confirm their eligibility for a transit benefit through Login.gov and then register their contactless debit or credit card with Littlepay, one of the supported transit processors:
+Here's a video walkthrough of the rider self-service enrollment experience when choosing the Older adult enrollment pathway.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/vAJ_3lTeWJU?si=FCQX51zX_aaL556_&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-## Process
+## Self-service enrollment
 
 ```mermaid
 sequenceDiagram
-    actor Rider
-    participant Benefits as Benefits app
+autonumber
+%% Self-service Enrollment for Older Adults
+    actor TransitRider as Transit Rider
+    participant Benefits as Cal-ITP Benefits
     participant IdG as Identity Gateway
-    participant Login.gov
-    participant Transit processor
-
-    Rider->>Benefits: visits site
-    Benefits-->>IdG: identity proofing
-    IdG-->>Login.gov: identity proofing
-    Rider->>Login.gov: enters SSN and ID
-    Login.gov-->>IdG: eligibility verification
-    IdG-->>Benefits: eligibility verification
-    Benefits-->>Transit processor: enrollment start
-    Rider->>Transit processor: enters payment card details
-    Transit processor-->>Benefits: enrollment complete
+    participant verifyIdentity as Login.gov
+    participant TransitProcessor as Transit processor
+TransitRider->>Benefits: visits benefits.calitp.org
+    activate Benefits
+Benefits-->>IdG: begins identity verification
+    activate IdG
+TransitRider->>verifyIdentity: account authentication
+    activate verifyIdentity
+    Note over verifyIdentity: Authenticated (Y/N)
+verifyIdentity-->>IdG: identity confirmation
+IdG-->>verifyIdentity: requests required PII
+    Note over verifyIdentity: Date of Birth
+verifyIdentity-->>IdG: returns response
+    deactivate verifyIdentity
+    Note over IdG: Age 65 or older (Y/N)
+IdG-->>Benefits: eligibility response
+    deactivate IdG
+Benefits-->>TransitProcessor: card registration start
+    activate TransitProcessor
+TransitRider->>TransitProcessor: provides debit or credit card details
+TransitProcessor-->>Benefits: card registration confirmation
+    deactivate TransitProcessor
+    deactivate Benefits
+    Note over Benefits: Successfull enrollment
 ```
