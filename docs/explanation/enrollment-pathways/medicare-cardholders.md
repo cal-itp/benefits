@@ -111,6 +111,7 @@ Fare_processor-->>Benefits: card registration confirmation
     deactivate Benefits
     Note over Benefits: Successful enrollment
 ```
+
 1. The transit rider visits an agency office or enrollment event in person.
 
 1. A transit agency staff member logs into Cal-ITP Benefits Administrator, typically on a tablet device.
