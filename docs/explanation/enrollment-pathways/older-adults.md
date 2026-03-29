@@ -122,3 +122,24 @@ Fare_processor-->>Benefits: card registration confirmation
 1. The transit agency staff member hands the transit rider the tablet so they can enter the debit or credit card details for the card they use to pay for transit.
 
 1. The app registers the transit rider’s debit or credit card with the [transit processor](../../index.md#transit-processors).
+
+## Postcondition
+
+The transit rider receives a fare reduction each time they use the debit or credit card they registered to pay for transit rides. The number of times they can use the card to pay for transit is unlimited and the benefit never expires.
+
+## Benefits
+
+- The transit rider no longer needs cash to pay for transit rides.
+
+- The transit rider doesn’t have to lock up funds on a closed-loop card offered by the transit operator.
+
+- The transit rider pays for transit rides with their debit or credit card, just as they do for groceries, a cup of coffee, or any other good or service.
+
+- The transit rider can enroll in a transit benefit from home when it is convenient for them; they do not have to visit a transit agency office in person unless they choose to.
+
+- Secure state and federal solutions manage the transit rider’s personal identifiable information (PII): Login.gov and the California Department of Technology Identity Gateway. Transit riders do not have to share personal information with local transit operators, nor do transit operator have to store and manage rider data.
+
+- Benefit enrollment takes minutes rather than days or weeks.
+
+- Benefit enrollment doesn’t require online accounts with private companies.
+
