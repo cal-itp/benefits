@@ -2,7 +2,7 @@
 
 ## Overview
 
-This use case describes a feature in the [Cal-ITP Benefits](https://benefits.calitp.org) that allows Californians to verify their active participation in the Medicare program to receive reduced fares for transit when paying by contactless debit or credit card at participating transit operators in California.
+This use case describes a feature in [Cal-ITP Benefits](https://benefits.calitp.org) that allows eligible riders to verify their active participation in the Medicare program to receive reduced fares for transit when paying by contactless debit or credit card at participating transits operators in California.
 
 **Actor:** A person who uses public transit in California. For benefit eligibility, a Medicare cardholder is a person who has enrolled in the Medicare program, has a Medicare.gov account, and is not deceased.
 
@@ -53,7 +53,7 @@ TransitProcessor-->>Benefits: card registration confirmation
     Note over Benefits: Successfull enrollment
 ```
 
-1. The transit rider visits the web application at benefits.calitp.org in a browser on their desktop computer.
+1. The transit rider visits the web application at benefits.calitp.org in a browser on their desktop computer or mobile device.
 
 1. The transit rider chooses the transit operator that serves an area where they want to ride public transit.
 
@@ -75,11 +75,9 @@ TransitProcessor-->>Benefits: card registration confirmation
 
 ## Alternative self-service flows
 
-- Suppose the transit rider does not have a desktop computer. In this case, they open the web application at benefits.calitp.org in a mobile browser on their iOS or Android tablet or mobile device to complete enrollment using the basic flow.
-
 - Suppose the transit rider cannot authenticate with Medicare.gov, or will not create an account. In either case, the app cannot determine their Medicare status and they cannot enroll their contactless debit or credit card for a reduced fare.
 
-- Suppose the CDT Identity Gateway returns Medicare enrollment status = FALSE. In that case, the Cal-ITP Benefits app will not allow the transit rider to enroll their contactless debit or credit card for a reduced fare.
+- Suppose the CDT Identity Gateway returns Medicare enrollment status = FALSE. In that case, the Cal-ITP Benefits app will not allow the transit rider to register their contactless debit or credit card for a reduced fare.
 
 - Suppose the debit or credit card expires or is canceled by the issuer. In that case, the transit rider must repeat the basic flow to register the new debit or credit card.
 
@@ -136,9 +134,9 @@ The transit rider receives a fare reduction each time they use the debit or cred
 
 - The transit rider doesn’t have to lock up funds on a closed-loop card offered by the transit operator.
 
-- The transit rider pays for transit rides with their debit or credit card, just as they do for groceries, a cup of coffee, or any other good or service.
+- The transit rider pays for transit rides with the same contactless debit or credit card they use for everyday purchases.
 
-- The transit rider can enroll in a transit benefit from home when it is convenient for them; they do not have to visit a transit agency office in person unless they choose to.
+- The transit rider can enroll in a transit benefit from home when it is convenient for them; they are not required to visit a transit agency office in person unless they choose the in-person enrollment method.
 
 - Secure state and federal solutions manage the transit rider’s personal identifiable information (PII): Medicare.gov, the Blue Button API, and the California Department of Technology Identity Gateway (IdG). Transit riders do not have to share personal information with local transit operators.
 
@@ -148,6 +146,6 @@ The transit rider receives a fare reduction each time they use the debit or cred
 
 ## Example Scenario
 
-A 46-year old person with End-Stage Renal Disease (ESRD) uses public transit to get to and from dialysis treatments. They have undergone dialysis treatments for the last four months and are now covered by Medicare. In order to save on transportation expenses, they scheduled an appointment with their local transit agency and made a special trip to complete the in-person eligibility process to qualify for reduced transit fares. They now receive a 50% fare reduction but have to pay for transit rides using the closed-loop card provided by the operator to receive the reduced fare. It’s frustrating and inconvenient to reload this closed-loop agency card in $10 payments every week, especially because they sometimes could use the money tied up on the card to make ends meet. In summary, this person pays for daily expenses using several forms of payment: their agency card for transportation and their debit card or cash for everything else.
+A 46-year old person with End-Stage Renal Disease (ESRD) uses public transit to get to and from dialysis treatments. They have undergone dialysis treatments for the last four months and are now covered by Medicare. In order to save on transportation expenses, they scheduled an appointment with their local transit agency and made a special trip to complete the in-person eligibility process to qualify for reduced transit fares. They now receive a 50% fare reduction but have to pay for transit rides using the closed-loop card provided by the operator to receive the reduced fare. It’s frustrating and inconvenient to reload this closed-loop agency card in $10 increments every week, especially because they sometimes could use the money tied up on the card to make ends meet. In summary, this person pays for daily expenses using several forms of payment: their agency card for transportation and their debit card or cash for everything else.
 
 The transit operator serving their region of California implements open-loop payments on fixed bus routes throughout the service area. This rider opens the Cal-ITP Benefits web application at home, completes the self-service workflow to digitally confirm they are enrolled in Medicare, and registers their debit card for reduced fares. If the rider doesn't want to create a Medicare.gov account, they visit the transit agency office and complete enrollment in person. Now, when they tap-to-pay when boarding the bus, they are automatically charged the reduced fare. They no longer need to use their closed-loop agency card to pay for transit and have complete access to all funds in their weekly budget.
