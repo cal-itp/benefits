@@ -57,8 +57,8 @@ class BenefitsAdminSite(AdminSite):
             if agency is not None:
                 has_permission_for_in_person = agency.customer_service_group in request.user.groups.all()
 
-                if hasattr(agency, "transitprocessorconfig"):
-                    transit_processor_portal_url = agency.transitprocessorconfig.portal_url
+                if agency.transit_processor_config is not None:
+                    transit_processor_portal_url = agency.transit_processor_config.portal_url
                 else:
                     transit_processor_portal_url = ""
 
