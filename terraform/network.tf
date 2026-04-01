@@ -13,6 +13,12 @@ locals {
       actions           = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
       service_endpoints = ["Microsoft.Storage"]
     }
+    "ACAPP" = {
+      prefix            = ["10.0.0.128/26"] # 64 addresses - 10.0.0.128 to 10.0.0.191
+      delegation        = "Microsoft.App/environments"
+      actions           = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
+      service_endpoints = null
+    }
   }
 }
 
