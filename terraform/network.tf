@@ -2,7 +2,7 @@ locals {
   subnet_prefix = "SNET-CDT-PUB-VIP-CALITP-${local.env_letter}"
   network_subnets = {
     "APP" = {
-      prefix            = ["10.0.0.0/26"] # 64 addresses - 10.0.4.0 to 10.0.4.63
+      prefix            = ["10.0.0.0/26"] # 64 addresses - 10.0.0.0 to 10.0.0.63
       delegation        = "Microsoft.Web/serverFarms"
       actions           = ["Microsoft.Network/virtualNetworks/subnets/action"]
       service_endpoints = null
