@@ -150,13 +150,18 @@ resource "azurerm_subnet_network_security_group_association" "app" {
   network_security_group_id = azurerm_network_security_group.app.id
 }
 
+resource "azurerm_subnet_network_security_group_association" "acapp" {
+  subnet_id                 = azurerm_subnet.main["ACAPP"].id
+  network_security_group_id = azurerm_network_security_group.app.id
+}
+
 # Network Security Group for the DB Subnet
 resource "azurerm_network_security_group" "db" {
   name                = "NSG-CDT-PUB-VIP-CALITP-${local.env_letter}-DB"
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
 
-  # Only allow traffic from the APP subnet to the DB subnet on the PostgreSQL port
+  # Allow traffic from the APP and ACAPP subnets to the DB subnet on the PostgreSQL port
   security_rule {
     name                       = "AllowPostgresInboundFromApp"
     protocol                   = "Tcp"
@@ -166,6 +171,18 @@ resource "azurerm_network_security_group" "db" {
     destination_address_prefix = "*"
     access                     = "Allow"
     priority                   = 100
+    direction                  = "Inbound"
+  }
+
+  security_rule {
+    name                       = "AllowPostgresInboundFromContainerApp"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "5432"
+    source_address_prefix      = local.network_subnets["ACAPP"].prefix[0]
+    destination_address_prefix = "*"
+    access                     = "Allow"
+    priority                   = 105 # between existing rules
     direction                  = "Inbound"
   }
 
