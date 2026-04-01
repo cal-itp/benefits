@@ -114,6 +114,12 @@ resource "azurerm_subnet_nat_gateway_association" "app" {
   nat_gateway_id = azurerm_nat_gateway.main.id
 }
 
+# Associate NAT Gateway with the ACAPP Subnet
+resource "azurerm_subnet_nat_gateway_association" "acapp" {
+  subnet_id      = azurerm_subnet.main["ACAPP"].id
+  nat_gateway_id = azurerm_nat_gateway.main.id
+}
+
 # Network Security Group for the APP Subnet
 resource "azurerm_network_security_group" "app" {
   name                = "NSG-CDT-PUB-VIP-CALITP-${local.env_letter}-APP"
