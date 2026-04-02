@@ -22,3 +22,42 @@ resource "azurerm_container_app_environment" "main" {
     ignore_changes = [tags, infrastructure_resource_group_name]
   }
 }
+
+# The Container App
+resource "azurerm_container_app" "main" {
+  name                         = "CA-CDT-PUB-VIP-CALITP-${local.env_letter}-001"
+  container_app_environment_id = azurerm_container_app_environment.main.id
+  resource_group_name          = data.azurerm_resource_group.main.name
+  revision_mode                = "Single"
+  workload_profile_name        = "Consumption"
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  ingress {
+    allow_insecure_connections = false
+    external_enabled           = true
+    target_port                = 8000
+
+    traffic_weight {
+      percentage      = 100
+      latest_revision = true
+    }
+  }
+
+  template {
+    container {
+      name   = "benefits"
+      image  = "${var.CONTAINER_REGISTRY}/${var.CONTAINER_REPOSITORY}:${var.CONTAINER_TAG}"
+      cpu    = 0.5
+      memory = "1Gi"
+    }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
+}
