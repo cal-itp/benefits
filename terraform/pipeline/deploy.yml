@@ -39,6 +39,7 @@ steps:
   - bash: python terraform/pipeline/tag.py
     displayName: Set tag-type variable
     env:
+      COMMIT_SHA: $(Build.SourceVersion)
       REASON: $(Build.Reason)
       INDIVIDUAL_SOURCE: $(Build.SourceBranchName)
       SOURCE_BRANCH: $(Build.SourceBranch)
@@ -49,7 +50,7 @@ steps:
       command: plan
       # wait for lock to be released, in case being used by another pipeline run
       # https://discuss.hashicorp.com/t/terraform-plan-wait-for-lock-to-be-released/6870/2
-      commandOptions: -input=false -lock-timeout=5m
+      commandOptions: -input=false -lock-timeout=5m -var="CONTAINER_TAG=$(container_tag)"
       workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
       # service connection
       environmentServiceNameAzureRM: "${{ parameters.service_connection }}"
@@ -66,7 +67,7 @@ steps:
       provider: azurerm
       command: apply
       # (ditto the lock comment above)
-      commandOptions: -input=false -lock-timeout=5m
+      commandOptions: -input=false -lock-timeout=5m -var="CONTAINER_TAG=$(container_tag)"
       workingDirectory: "$(System.DefaultWorkingDirectory)/terraform"
       # service connection
       environmentServiceNameAzureRM: "${{ parameters.service_connection }}"
