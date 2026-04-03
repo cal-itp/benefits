@@ -1,3 +1,6 @@
+locals {
+  django_storage_dir_path = "/calitp/app/data"
+}
 # The Container App Environment
 resource "azurerm_container_app_environment" "main" {
   name                           = "CAE-CDT-PUB-VIP-CALITP-${local.env_letter}-001"
@@ -47,11 +50,24 @@ resource "azurerm_container_app" "main" {
   }
 
   template {
+    # Define the volume using the environment storage
+    volume {
+      name         = azurerm_container_app_environment_storage.main.name
+      storage_name = azurerm_container_app_environment_storage.main.name
+      storage_type = "AzureFile"
+    }
+
     container {
       name   = "benefits"
       image  = "${var.CONTAINER_REGISTRY}/${var.CONTAINER_REPOSITORY}:${var.CONTAINER_TAG}"
       cpu    = 0.5
       memory = "1Gi"
+
+      # Mount the volume into the container's file system
+      volume_mounts {
+        name = azurerm_container_app_environment_storage.main.name
+        path = local.django_storage_dir_path
+      }
 
       # Amplitude
       env {
@@ -86,7 +102,7 @@ resource "azurerm_container_app" "main" {
       }
       env {
         name  = "DJANGO_STORAGE_DIR"
-        value = "${local.secret_prefix}django-storage-dir)"
+        value = local.django_storage_dir_path
       }
       env {
         name  = "DJANGO_DEBUG"
@@ -194,4 +210,14 @@ resource "azurerm_container_app" "main" {
       tags
     ]
   }
+}
+
+# Manages the 'benefits-storage' file share of the Container App Environment
+resource "azurerm_container_app_environment_storage" "main" {
+  name                         = "benefits-storage"
+  container_app_environment_id = azurerm_container_app_environment.main.id
+  account_name                 = azurerm_storage_account.main.name
+  access_key                   = azurerm_storage_account.main.primary_access_key
+  share_name                   = azurerm_storage_share.main.name
+  access_mode                  = "ReadWrite"
 }

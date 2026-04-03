@@ -24,3 +24,10 @@ resource "azurerm_storage_account" "main" {
     ignore_changes = [tags]
   }
 }
+
+# The File Share for the Django storage directory
+resource "azurerm_storage_share" "main" {
+  name               = "benefits-storage"
+  storage_account_id = azurerm_storage_account.main.id
+  quota              = 10 # Max size in GB
+}
