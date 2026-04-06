@@ -151,6 +151,19 @@ resource "azurerm_container_app" "main" {
         value = azurerm_postgresql_flexible_server.main.fqdn
       }
       env {
+        name  = "POSTGRES_DB"
+        value = local.postgres_admin_db
+      }
+      env {
+        name  = "POSTGRES_USER"
+        value = local.postgres_admin_login
+      }
+      env {
+        name  = "POSTGRES_PASSWORD"
+        value = azurerm_key_vault_secret.postgres_admin_password.value
+      }
+
+      env {
         name  = "HEALTHCHECK_USER_AGENTS"
         value = local.is_dev ? null : "${local.secret_prefix}healthcheck-user-agents)"
       }
