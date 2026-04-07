@@ -104,11 +104,23 @@ resource "azurerm_key_vault_access_policy" "webapp" {
   depends_on = [azurerm_key_vault.main]
 }
 
-# Standalone Access Policy for Container App Managed Identity
-resource "azurerm_key_vault_access_policy" "container_app" {
+# Standalone Access Policy for the Benefits Container App's Managed Identity
+resource "azurerm_key_vault_access_policy" "benefits_container_app" {
   key_vault_id = azurerm_key_vault.main.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = azurerm_container_app.main.identity.0.principal_id
+  object_id    = azurerm_container_app.benefits.identity.0.principal_id
+
+  secret_permissions = ["Get"]
+
+  # This ensures the Key Vault itself is created before trying to attach a policy.
+  depends_on = [azurerm_key_vault.main]
+}
+
+# Standalone Access Policy for the pgAdmin Container App's Managed Identity
+resource "azurerm_key_vault_access_policy" "pgadmin_container_app" {
+  key_vault_id = azurerm_key_vault.main.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = azurerm_container_app.pgadmin.identity.0.principal_id
 
   secret_permissions = ["Get"]
 

@@ -74,8 +74,8 @@ resource "azurerm_container_app_environment" "main" {
   }
 }
 
-# The Container App
-resource "azurerm_container_app" "main" {
+# The Benefits Container App
+resource "azurerm_container_app" "benefits" {
   name                         = "ca-cdt-pub-vip-calitp-${lower(local.env_letter)}-001"
   container_app_environment_id = azurerm_container_app_environment.main.id
   resource_group_name          = data.azurerm_resource_group.main.name
@@ -166,4 +166,96 @@ resource "azurerm_container_app_environment_storage" "main" {
   access_key                   = azurerm_storage_account.main.primary_access_key
   share_name                   = azurerm_storage_share.main.name
   access_mode                  = "ReadWrite"
+}
+
+# The pgAdmin Container App
+resource "azurerm_container_app" "pgadmin" {
+  name                         = "ca-cdt-pub-vip-calitp-${lower(local.env_letter)}-pgadmin"
+  container_app_environment_id = azurerm_container_app_environment.main.id
+  resource_group_name          = data.azurerm_resource_group.main.name
+  revision_mode                = "Single"
+  workload_profile_name        = "Consumption"
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  ingress {
+    allow_insecure_connections = false
+    external_enabled           = true
+    target_port                = 80 # pgAdmin listens on port 80 internally
+
+    traffic_weight {
+      percentage      = 100
+      latest_revision = true
+    }
+  }
+
+  # Postgres admin password for psql access
+  secret {
+    name                = local.postgres_admin_password_secret_name
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/${local.postgres_admin_password_secret_name}"
+  }
+
+  # pgAdmin admin password for web login
+  secret {
+    name                = local.pgadmin_admin_password_secret_name
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/${local.pgadmin_admin_password_secret_name}"
+  }
+
+  template {
+    min_replicas = 0
+    max_replicas = 1
+
+    cooldown_period_in_seconds = 3600 # Scale down to zero after 1 hour of inactivity
+
+    container {
+      name   = "pgadmin"
+      image  = "dpage/pgadmin4:latest"
+      cpu    = 0.5
+      memory = "1Gi"
+
+      # pgAdmin web UI
+      env {
+        name  = "PGADMIN_DEFAULT_EMAIL"
+        value = "benefits-admin@calitp.org"
+      }
+      env {
+        name        = "PGADMIN_DEFAULT_PASSWORD"
+        secret_name = local.pgadmin_admin_password_secret_name
+      }
+      env {
+        name  = "PGADMIN_CONFIG_SERVER_MODE" # Running on a web server requiring user authentication
+        value = "True"
+      }
+
+      # psql default connection parameter values for convenience
+      env {
+        name  = "PGHOST"
+        value = azurerm_postgresql_flexible_server.main.fqdn
+      }
+      env {
+        name  = "PGUSER"
+        value = local.postgres_admin_login
+      }
+      env {
+        name  = "PGDATABASE"
+        value = local.postgres_admin_db
+      }
+      env {
+        name  = "PGSSLMODE"
+        value = "verify-full"
+      }
+      env {
+        name        = "PGPASSWORD"
+        secret_name = local.postgres_admin_password_secret_name
+      }
+    }
+  }
+
+  lifecycle {
+    ignore_changes = [tags]
+  }
 }
