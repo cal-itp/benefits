@@ -49,6 +49,165 @@ resource "azurerm_container_app" "main" {
     }
   }
 
+  dynamic "secret" {
+    for_each = local.is_dev ? [] : [1] # Only create secret in non-dev environments
+    content {
+      name                = "analytics-key"
+      identity            = "System"
+      key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/analytics-key"
+    }
+  }
+
+  secret {
+    name                = local.azure_communication_connection_string_name
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/${local.azure_communication_connection_string_name}"
+  }
+
+  secret {
+    name                = "django-allowed-hosts"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/django-allowed-hosts"
+  }
+
+  dynamic "secret" {
+    for_each = local.is_prod ? [] : [1] # Only create secret in non-prod environments
+    content {
+      name                = "django-debug"
+      identity            = "System"
+      key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/django-debug"
+    }
+  }
+
+  secret {
+    name                = "django-log-level"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/django-log-level"
+  }
+
+  secret {
+    name                = "django-recaptcha-secret-key"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/django-recaptcha-secret-key"
+  }
+
+  secret {
+    name                = "django-recaptcha-site-key"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/django-recaptcha-site-key"
+  }
+
+  secret {
+    name                = "django-secret-key"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/django-secret-key"
+  }
+
+  secret {
+    name                = "django-trusted-origins"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/django-trusted-origins"
+  }
+
+  secret {
+    name                = "django-db-name"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/django-db-name"
+  }
+
+  secret {
+    name                = "django-db-user"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/django-db-user"
+  }
+
+  secret {
+    name                = local.django_db_password_secret_name
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/${local.django_db_password_secret_name}"
+  }
+
+  secret {
+    name                = "use-postgres"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/use-postgres"
+  }
+
+  secret {
+    name                = local.postgres_admin_password_secret_name
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/${local.postgres_admin_password_secret_name}"
+  }
+
+  dynamic "secret" {
+    for_each = local.is_dev ? [] : [1] # Only create secret in non-dev environments
+    content {
+      name                = "healthcheck-user-agents"
+      identity            = "System"
+      key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/healthcheck-user-agents"
+    }
+  }
+
+  secret {
+    name                = "google-sso-client-id"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/google-sso-client-id"
+  }
+
+  secret {
+    name                = "google-sso-project-id"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/google-sso-project-id"
+  }
+
+  secret {
+    name                = "google-sso-client-secret"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/google-sso-client-secret"
+  }
+
+  secret {
+    name                = "google-sso-allowable-domains"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/google-sso-allowable-domains"
+  }
+
+  secret {
+    name                = "google-sso-staff-list"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/google-sso-staff-list"
+  }
+
+  secret {
+    name                = "google-sso-superuser-list"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/google-sso-superuser-list"
+  }
+
+  secret {
+    name                = "sso-show-form-on-admin-page"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/sso-show-form-on-admin-page"
+  }
+
+  secret {
+    name                = "sentry-dsn"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/sentry-dsn"
+  }
+
+  secret {
+    name                = "sentry-report-uri"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/sentry-report-uri"
+  }
+
+  secret {
+    name                = "sentry-traces-sample-rate"
+    identity            = "System"
+    key_vault_secret_id = "${local.key_vault_secret_uri_prefix}/sentry-traces-sample-rate"
+  }
+
   template {
     # Define the volume using the environment storage
     volume {
@@ -70,25 +229,28 @@ resource "azurerm_container_app" "main" {
       }
 
       # Amplitude
-      env {
-        name  = "ANALYTICS_KEY"
-        value = local.is_dev ? null : "${local.secret_prefix}analytics-key)"
+      dynamic "env" {
+        for_each = local.is_dev ? [] : [1] # Only create env var in non-dev environments
+        content {
+          name        = "ANALYTICS_KEY"
+          secret_name = "analytics-key"
+        }
       }
 
       # Requests
       env {
         name  = "REQUESTS_CONNECT_TIMEOUT"
-        value = "${local.secret_prefix}requests-connect-timeout)"
+        value = "5"
       }
       env {
         name  = "REQUESTS_READ_TIMEOUT"
-        value = "${local.secret_prefix}requests-read-timeout)"
+        value = "20"
       }
 
       # Django Azure Email Backend
       env {
-        name  = "AZURE_COMMUNICATION_CONNECTION_STRING"
-        value = "${local.secret_prefix}${local.azure_communication_connection_string_name})"
+        name        = "AZURE_COMMUNICATION_CONNECTION_STRING"
+        secret_name = local.azure_communication_connection_string_name
       }
       env {
         name  = "DEFAULT_FROM_EMAIL"
@@ -97,54 +259,57 @@ resource "azurerm_container_app" "main" {
 
       # Django settings
       env {
-        name  = "DJANGO_ALLOWED_HOSTS"
-        value = "${local.secret_prefix}django-allowed-hosts)"
+        name        = "DJANGO_ALLOWED_HOSTS"
+        secret_name = "django-allowed-hosts"
       }
       env {
         name  = "DJANGO_STORAGE_DIR"
         value = local.django_storage_dir_path
       }
-      env {
-        name  = "DJANGO_DEBUG"
-        value = local.is_prod ? null : "${local.secret_prefix}django-debug)"
+      dynamic "env" {
+        for_each = local.is_prod ? [] : [1] # Only create secret in non-prod environments
+        content {
+          name        = "DJANGO_DEBUG"
+          secret_name = "django-debug"
+        }
       }
       env {
-        name  = "DJANGO_LOG_LEVEL"
-        value = "${local.secret_prefix}django-log-level)"
+        name        = "DJANGO_LOG_LEVEL"
+        secret_name = "django-log-level"
       }
       env {
-        name  = "DJANGO_RECAPTCHA_SECRET_KEY"
-        value = "${local.secret_prefix}django-recaptcha-secret-key)"
+        name        = "DJANGO_RECAPTCHA_SECRET_KEY"
+        secret_name = "django-recaptcha-secret-key"
       }
       env {
-        name  = "DJANGO_RECAPTCHA_SITE_KEY"
-        value = "${local.secret_prefix}django-recaptcha-site-key)"
+        name        = "DJANGO_RECAPTCHA_SITE_KEY"
+        secret_name = "django-recaptcha-site-key"
       }
       env {
-        name  = "DJANGO_SECRET_KEY"
-        value = "${local.secret_prefix}django-secret-key)"
+        name        = "DJANGO_SECRET_KEY"
+        secret_name = "django-secret-key"
       }
       env {
-        name  = "DJANGO_TRUSTED_ORIGINS"
-        value = "${local.secret_prefix}django-trusted-origins)"
+        name        = "DJANGO_TRUSTED_ORIGINS"
+        secret_name = "django-trusted-origins"
       }
       env {
-        name  = "DJANGO_DB_NAME"
-        value = "${local.secret_prefix}django-db-name)"
+        name        = "DJANGO_DB_NAME"
+        secret_name = "django-db-name"
       }
       env {
-        name  = "DJANGO_DB_USER"
-        value = "${local.secret_prefix}django-db-user)"
+        name        = "DJANGO_DB_USER"
+        secret_name = "django-db-user"
       }
       env {
-        name  = "DJANGO_DB_PASSWORD"
-        value = "${local.secret_prefix}${local.django_db_password_secret_name})"
+        name        = "DJANGO_DB_PASSWORD"
+        secret_name = local.django_db_password_secret_name
       }
 
       # Database settings
       env {
-        name  = "USE_POSTGRES"
-        value = "${local.secret_prefix}use-postgres)"
+        name        = "USE_POSTGRES"
+        secret_name = "use-postgres"
       }
       env {
         name  = "POSTGRES_HOSTNAME"
@@ -159,61 +324,62 @@ resource "azurerm_container_app" "main" {
         value = local.postgres_admin_login
       }
       env {
-        name  = "POSTGRES_PASSWORD"
-        value = azurerm_key_vault_secret.postgres_admin_password.value
+        name        = "POSTGRES_PASSWORD"
+        secret_name = local.postgres_admin_password_secret_name
       }
-
-      env {
-        name  = "HEALTHCHECK_USER_AGENTS"
-        value = local.is_dev ? null : "${local.secret_prefix}healthcheck-user-agents)"
+      dynamic "env" {
+        for_each = local.is_dev ? [] : [1] # Only create secret in non-dev environments
+        content {
+          name        = "HEALTHCHECK_USER_AGENTS"
+          secret_name = "healthcheck-user-agents"
+        }
       }
-
       # Google SSO for Admin
       env {
-        name  = "GOOGLE_SSO_CLIENT_ID"
-        value = "${local.secret_prefix}google-sso-client-id)"
+        name        = "GOOGLE_SSO_CLIENT_ID"
+        secret_name = "google-sso-client-id"
       }
       env {
-        name  = "GOOGLE_SSO_PROJECT_ID"
-        value = "${local.secret_prefix}google-sso-project-id)"
+        name        = "GOOGLE_SSO_PROJECT_ID"
+        secret_name = "google-sso-project-id"
       }
       env {
-        name  = "GOOGLE_SSO_CLIENT_SECRET"
-        value = "${local.secret_prefix}google-sso-client-secret)"
+        name        = "GOOGLE_SSO_CLIENT_SECRET"
+        secret_name = "google-sso-client-secret"
       }
       env {
-        name  = "GOOGLE_SSO_ALLOWABLE_DOMAINS"
-        value = "${local.secret_prefix}google-sso-allowable-domains)"
+        name        = "GOOGLE_SSO_ALLOWABLE_DOMAINS"
+        secret_name = "google-sso-allowable-domains"
       }
       env {
-        name  = "GOOGLE_SSO_STAFF_LIST"
-        value = "${local.secret_prefix}google-sso-staff-list)"
+        name        = "GOOGLE_SSO_STAFF_LIST"
+        secret_name = "google-sso-staff-list"
       }
       env {
-        name  = "GOOGLE_SSO_SUPERUSER_LIST"
-        value = "${local.secret_prefix}google-sso-superuser-list)"
+        name        = "GOOGLE_SSO_SUPERUSER_LIST"
+        secret_name = "google-sso-superuser-list"
       }
       env {
-        name  = "SSO_SHOW_FORM_ON_ADMIN_PAGE"
-        value = "${local.secret_prefix}sso-show-form-on-admin-page)"
+        name        = "SSO_SHOW_FORM_ON_ADMIN_PAGE"
+        secret_name = "sso-show-form-on-admin-page"
       }
 
       # Sentry
       env {
-        name  = "SENTRY_DSN"
-        value = "${local.secret_prefix}sentry-dsn)"
+        name        = "SENTRY_DSN"
+        secret_name = "sentry-dsn"
       }
       env {
         name  = "SENTRY_ENVIRONMENT"
         value = local.env_name
       }
       env {
-        name  = "SENTRY_REPORT_URI"
-        value = "${local.secret_prefix}sentry-report-uri)"
+        name        = "SENTRY_REPORT_URI"
+        secret_name = "sentry-report-uri"
       }
       env {
-        name  = "SENTRY_TRACES_SAMPLE_RATE"
-        value = "${local.secret_prefix}sentry-traces-sample-rate)"
+        name        = "SENTRY_TRACES_SAMPLE_RATE"
+        secret_name = "sentry-traces-sample-rate"
       }
     }
   }
