@@ -184,6 +184,12 @@ resource "azurerm_container_app" "pgadmin" {
     allow_insecure_connections = false
     external_enabled           = true
     target_port                = 80 # pgAdmin listens on port 80 internally
+    ip_security_restriction {
+      action           = "Allow"
+      ip_address_range = "127.0.0.1/32" # Dummy IP range to effectively block all traffic since we will manage access via Azure Portal
+      name             = "DenyAllExceptPortal"
+      description      = "Only allow traffic from manually added IP addresses via Azure Portal"
+    }
 
     traffic_weight {
       percentage      = 100
