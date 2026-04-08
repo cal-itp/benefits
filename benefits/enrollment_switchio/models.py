@@ -121,7 +121,10 @@ class SwitchioConfig(TransitProcessorConfig):
 
 
 class SwitchioGroup(EnrollmentGroup):
-    group_id = models.TextField(default=None, blank=True, help_text="The ID of the Switchio group for user enrollment.")
+
+    @property
+    def group_id(self):
+        return self.enrollment_flow.switchio_group_id
 
     @staticmethod
     def by_id(id):

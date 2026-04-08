@@ -32,6 +32,16 @@ class SystemName(models.TextChoices):
     VETERAN = "veteran"
 
 
+class SwitchioGroupIDs:
+    # SystemName.name: Switchio group ID
+    MEDICARE = "MEDICARE"
+    CALFRESH = "LOW_INCOME"
+    OLDER_ADULT = "OLDER_ADULT"
+    VETERAN = "VETERAN"
+    # We have no Switchio agencies with Agency Card flows, but this is needed for testing.
+    COURTESY_CARD = "AGENCY_CARD"
+
+
 class EligibilityApiVerificationRequest(models.Model):
     """Represents configuration for eligibility verification via Eligibility API calls."""
 
@@ -230,6 +240,11 @@ class EnrollmentFlow(models.Model):
     @property
     def supports_sign_out(self):
         return bool(self.sign_out_button_template) or bool(self.sign_out_link_template)
+
+    @property
+    def switchio_group_id(self):
+        """Return an entry from SwitchioGroupIDs matching this flow's system_name, or None if one isn't found."""
+        return getattr(SwitchioGroupIDs, SystemName(self.system_name).name, None)
 
     def clean(self):
         errors = []
