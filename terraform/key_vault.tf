@@ -108,7 +108,7 @@ resource "azurerm_key_vault_access_policy" "webapp" {
 resource "azurerm_key_vault_access_policy" "benefits_container_app" {
   key_vault_id = azurerm_key_vault.main.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = azurerm_container_app.benefits.identity.0.principal_id
+  object_id    = module.application.benefits_principal_id
 
   secret_permissions = ["Get"]
 
@@ -120,7 +120,7 @@ resource "azurerm_key_vault_access_policy" "benefits_container_app" {
 resource "azurerm_key_vault_access_policy" "pgadmin_container_app" {
   key_vault_id = azurerm_key_vault.main.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = azurerm_container_app.pgadmin.identity.0.principal_id
+  object_id    = module.application.pgadmin_principal_id
 
   secret_permissions = ["Get"]
 
