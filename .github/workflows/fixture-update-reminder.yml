@@ -3,7 +3,7 @@ name: Fixture update reminder
 on:
   pull_request:
     paths:
-      - 'benefits/core/migrations/**'
+      - 'benefits/**/migrations/**'
 
 jobs:
   # Check which files have changed
