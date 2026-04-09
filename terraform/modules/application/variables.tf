@@ -43,8 +43,12 @@ variable "storage_account_access_key" {
   type        = string
   sensitive   = true
 }
-variable "storage_share_name" {
+variable "storage_share_benefits_name" {
   description = "The name of the File Share for the Django storage directory."
+  type        = string
+}
+variable "storage_share_pgadmin_name" {
+  description = "The name of the File Share for the pgAdmin storage directory."
   type        = string
 }
 # Benefits Container App Image Details

@@ -26,8 +26,15 @@ resource "azurerm_storage_account" "main" {
 }
 
 # The File Share for the Django storage directory
-resource "azurerm_storage_share" "main" {
+resource "azurerm_storage_share" "benefits" {
   name               = "benefits-storage"
+  storage_account_id = azurerm_storage_account.main.id
+  quota              = 10 # Max size in GB
+}
+
+# The File Share for the pgAdmin storage directory
+resource "azurerm_storage_share" "pgadmin" {
+  name               = "pgadmin-storage"
   storage_account_id = azurerm_storage_account.main.id
   quota              = 10 # Max size in GB
 }

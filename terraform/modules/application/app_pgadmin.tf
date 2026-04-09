@@ -47,11 +47,23 @@ resource "azurerm_container_app" "pgadmin" {
 
     cooldown_period_in_seconds = 3600 # Scale down to zero after 1 hour of inactivity
 
+    volume {
+      name         = azurerm_container_app_environment_storage.pgadmin.name
+      storage_name = azurerm_container_app_environment_storage.pgadmin.name
+      storage_type = "AzureFile"
+    }
+
     container {
       name   = "pgadmin"
       image  = "dpage/pgadmin4:latest"
       cpu    = 0.5
       memory = "1Gi"
+
+      # Mount the volume into the container's file system
+      volume_mounts {
+        name = azurerm_container_app_environment_storage.pgadmin.name
+        path = local.pgadmin_storage_dir_path
+      }
 
       # pgAdmin web UI
       env {

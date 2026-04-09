@@ -16,9 +16,10 @@ module "application" {
   infrastructure_subnet_id = azurerm_subnet.main["ACAPP"].id
 
   # Storage
-  storage_account_name       = azurerm_storage_account.main.name
-  storage_account_access_key = azurerm_storage_account.main.primary_access_key
-  storage_share_name         = azurerm_storage_share.main.name
+  storage_account_name        = azurerm_storage_account.main.name
+  storage_account_access_key  = azurerm_storage_account.main.primary_access_key
+  storage_share_benefits_name = azurerm_storage_share.benefits.name
+  storage_share_pgadmin_name  = azurerm_storage_share.pgadmin.name
 
   # Benefits Container App Image Details
   container_registry   = var.CONTAINER_REGISTRY

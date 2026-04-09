@@ -34,8 +34,8 @@ resource "azurerm_container_app" "benefits" {
   template {
     # Define the volume using the environment storage
     volume {
-      name         = azurerm_container_app_environment_storage.main.name
-      storage_name = azurerm_container_app_environment_storage.main.name
+      name         = azurerm_container_app_environment_storage.benefits.name
+      storage_name = azurerm_container_app_environment_storage.benefits.name
       storage_type = "AzureFile"
     }
 
@@ -47,7 +47,7 @@ resource "azurerm_container_app" "benefits" {
 
       # Mount the volume into the container's file system
       volume_mounts {
-        name = azurerm_container_app_environment_storage.main.name
+        name = azurerm_container_app_environment_storage.benefits.name
         path = local.django_storage_dir_path
       }
 
@@ -78,6 +78,6 @@ resource "azurerm_container_app" "benefits" {
   }
 
   depends_on = [
-    azurerm_container_app_environment_storage.main
+    azurerm_container_app_environment_storage.benefits
   ]
 }

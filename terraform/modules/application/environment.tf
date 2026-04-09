@@ -24,11 +24,21 @@ resource "azurerm_container_app_environment" "main" {
 }
 
 # Manages the 'benefits-storage' file share of the Container App Environment
-resource "azurerm_container_app_environment_storage" "main" {
+resource "azurerm_container_app_environment_storage" "benefits" {
   name                         = "benefits-storage"
   container_app_environment_id = azurerm_container_app_environment.main.id
   account_name                 = var.storage_account_name
   access_key                   = var.storage_account_access_key
-  share_name                   = var.storage_share_name
+  share_name                   = var.storage_share_benefits_name
+  access_mode                  = "ReadWrite"
+}
+
+# Manages the 'pgadmin-storage' file share of the Container App Environment
+resource "azurerm_container_app_environment_storage" "pgadmin" {
+  name                         = "pgadmin-storage"
+  container_app_environment_id = azurerm_container_app_environment.main.id
+  account_name                 = var.storage_account_name
+  access_key                   = var.storage_account_access_key
+  share_name                   = var.storage_share_benefits_name
   access_mode                  = "ReadWrite"
 }
