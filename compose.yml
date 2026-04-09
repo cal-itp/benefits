@@ -67,7 +67,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: pg_isready -U pgweb -h 127.0.0.1
+      test: pg_isready -U ${POSTGRES_USER:-postgres} -h 127.0.0.1
       interval: 5s
 
   pgweb:
