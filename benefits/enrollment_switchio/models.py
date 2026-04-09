@@ -3,10 +3,20 @@ import logging
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from benefits.core.models import EnrollmentGroup, Environment, PemData, SecretNameField, TransitProcessorConfig
+from benefits.core.models import EnrollmentGroup, Environment, PemData, SecretNameField, SystemName, TransitProcessorConfig
 from benefits.secrets import get_secret_by_name
 
 logger = logging.getLogger(__name__)
+
+
+class SwitchioGroupIDs:
+    # SystemName.name: Switchio group ID
+    MEDICARE = "MEDICARE"
+    CALFRESH = "LOW_INCOME"
+    OLDER_ADULT = "OLDER_ADULT"
+    VETERAN = "VETERAN"
+    # We have no Switchio agencies with Agency Card flows, but this is needed for testing.
+    COURTESY_CARD = "AGENCY_CARD"
 
 
 class SwitchioConfig(TransitProcessorConfig):
@@ -124,7 +134,7 @@ class SwitchioGroup(EnrollmentGroup):
 
     @property
     def group_id(self):
-        return self.enrollment_flow.switchio_group_id
+        return getattr(SwitchioGroupIDs, SystemName(self.enrollment_flow.system_name).name, None)
 
     @staticmethod
     def by_id(id):
