@@ -27,11 +27,11 @@ _Typically performed by a Cal-ITP developer._
           ProductResponse(id='d7d948c2-20bf-4b10-a181-d1f2c89456b6', code='Senior 65+', status='ACTIVE', type='CAPPING', description='Senior 65+', participant_id='eldorado-transit')
         ```
 
+    1.  Cal-ITP [creates a `TransitAgency`](./add-transit-provider.md#add-the-transit-provider-to-the-application) in the test environment
     1. Cal-ITP creates a new `LittlepayGroup` in the Benefits test environment:
+      - Associate the new `LittlepayGroup` with the correct transit provider and enrollment flow using the dropdowns.
       - Set the 'Group id' to the corresponding **production** group ID (from production Littlepay) for production validation.
         - This will be set back to the QA group value after final production configuration is complete.
-      - The new `LittlepayGroup` is then associated with the correct enrollment flow and transit provider using the dropdowns.
-    1.  Cal-ITP [creates a `TransitAgency`](./add-transit-provider.md#add-the-transit-provider-to-the-application) in the test environment
     1. Cal-ITP creates a new `LittlepayConfig` in the Benefits test environment:
       - Set Environment to **Production** for production validation.
         - This will be set back to **Testing** after final production configuration is complete.
@@ -57,7 +57,8 @@ _Typically performed by a Cal-ITP developer._
       - Private key: Switchio (ACC) private key (same for all agencies in the env)
 
     1. Cal-ITP creates a new `SwitchioGroup` in the Benefits test environment for each enrollment flow:
-      - Group id: (unlike Littlepay, same for all agencies in the env)
+      - Associate the new `SwitchioGroup` with the correct transit provider and enrollment flow using the dropdowns.
+      - Unlike Littlepay, Switchio group IDs are consistent across environments and agencies, so that does not need to be set here.
     1. Cal-ITP returns to the `TransitAgency` instance and selects the `SwitchioConfig` above as the agency's transit processor config and checks the **Active** box.
 
 At this point, Cal-ITP and transit provider staff can coordinate to do on-the-ground testing using the [test client](https://test-benefits.calitp.org) to enroll a real card and test it by tapping on a live payment validator.
