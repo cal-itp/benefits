@@ -96,6 +96,10 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=admin
       - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
       - PGADMIN_CONFIG_SERVER_MODE=False
+      - PGHOST=postgres
+      - PGUSER=postgres
+      - PGSSLMODE=disable
+      - PGPASSWORD=postgres
     volumes:
       - pgadmin_data:/var/lib/pgadmin
 
