@@ -1,5 +1,8 @@
 locals {
   postgres_admin_password_secret_name = "postgres-admin-password"
+  postgres_admin_login                = "postgres_admin"
+  postgres_admin_db                   = "postgres"
+  pgadmin_admin_password_secret_name  = "pgadmin-admin-password"
 }
 
 # Manage an Azure Database for PostgreSQL Flexible Server
@@ -22,7 +25,7 @@ resource "azurerm_postgresql_flexible_server" "main" {
   public_network_access_enabled = false
   private_dns_zone_id           = azurerm_private_dns_zone.db.id # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/postgresql_flexible_server#private_dns_zone_id-1
   delegated_subnet_id           = azurerm_subnet.main["DB"].id
-  administrator_login           = "postgres_admin"
+  administrator_login           = local.postgres_admin_login
   administrator_password        = azurerm_key_vault_secret.postgres_admin_password.value
 
   lifecycle {
@@ -30,7 +33,7 @@ resource "azurerm_postgresql_flexible_server" "main" {
   }
 }
 
-# Generate a random password for PostgreSQL
+# Generate a random password for the PostgreSQL Admin
 resource "random_password" "postgres_admin_password" {
   length           = 32
   min_lower        = 4
@@ -49,5 +52,27 @@ resource "azurerm_key_vault_secret" "postgres_admin_password" {
   content_type = "password"
   depends_on = [
     random_password.postgres_admin_password # Ensure password is generated first
+  ]
+}
+
+# Generate a random password for the pgAdmin Admin
+resource "random_password" "pgadmin_admin_password" {
+  length           = 32
+  min_lower        = 4
+  min_upper        = 4
+  min_numeric      = 4
+  min_special      = 4
+  special          = true
+  override_special = "_%@!-"
+}
+
+# Create the secret for pgAdmin Admin Password using the generated password
+resource "azurerm_key_vault_secret" "pgadmin_admin_password" {
+  name         = local.pgadmin_admin_password_secret_name
+  value        = random_password.pgadmin_admin_password.result
+  key_vault_id = azurerm_key_vault.main.id
+  content_type = "password"
+  depends_on = [
+    random_password.pgadmin_admin_password # Ensure password is generated first
   ]
 }

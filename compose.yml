@@ -67,7 +67,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: pg_isready -U pgweb -h 127.0.0.1
+      test: pg_isready -U ${POSTGRES_USER:-postgres} -h 127.0.0.1
       interval: 5s
 
   pgweb:
@@ -84,6 +84,27 @@ services:
     environment:
       - PGWEB_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${DJANGO_DB_NAME}?sslmode=disable
 
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    ports:
+      - "${PGADMIN_PORT:-8082}:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=benefits-admin@calitp.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - PGHOST=postgres
+      - PGUSER=postgres
+      - PGSSLMODE=disable
+      - PGPASSWORD=postgres
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
 volumes:
   pgdata:
+    driver: local
+  pgadmin_data:
     driver: local
