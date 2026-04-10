@@ -18,7 +18,6 @@ locals {
     "django-db-user"                     = { env_name = "DJANGO_DB_USER", exists = true },
     (var.django_db_password_secret_name) = { env_name = "DJANGO_DB_PASSWORD", exists = true },
     # Postgres settings
-    "use-postgres"                            = { env_name = "USE_POSTGRES", exists = true },
     (var.postgres_admin_password_secret_name) = { env_name = "POSTGRES_PASSWORD", exists = true },
     "healthcheck-user-agents"                 = { env_name = "HEALTHCHECK_USER_AGENTS", exists = !var.is_dev }, # Only create secret in non-dev environments
     # Google SSO for Admin
@@ -43,6 +42,7 @@ locals {
     # Django settings
     "DJANGO_STORAGE_DIR" = local.django_storage_dir_path,
     # Database settings
+    "USE_POSTGRES"      = "true",
     "POSTGRES_HOSTNAME" = var.postgres_fqdn,
     "POSTGRES_DB"       = var.postgres_admin_db,
     "POSTGRES_USER"     = var.postgres_admin_login,
