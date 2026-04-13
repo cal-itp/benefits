@@ -112,15 +112,15 @@ Fare_processor-->>Benefits: card registration confirmation
 
 1. The transit rider visits an agency office or enrollment event in person.
 
-1. A transit agency staff member logs into Cal-ITP Benefits Administrator, typically on a tablet device.
+1. A transit provider staff member logs into Cal-ITP Benefits Administrator, typically on a tablet device.
 
-1. The transit agency staff member launches in-person enrollment and chooses Medicare cardholder as the eligibility type.
+1. The transit provider staff member launches in-person enrollment and chooses Medicare cardholder as the eligibility type.
 
-1. The transit rider hands the transit agency staff member their government-issued photo ID and Medicare card.
+1. The transit rider hands the transit provider staff member their government-issued photo ID and Medicare card.
 
-1. The transit agency staff member confirms the person’s identity and verifies that the Medicare card indicates the person is an active enrollee.
+1. The transit provider staff member confirms the person’s identity and verifies that the Medicare card indicates the person is an active enrollee.
 
-1. The transit agency staff member hands the transit rider the tablet so they can enter the debit or credit card details for the card they use to pay for transit into the form provided by the [transit processor](../../index.md#transit-processors) that facilitates fare collection for the transit agency.
+1. The transit provider staff member hands the transit rider the tablet so they can enter the debit or credit card details for the card they use to pay for transit into the form provided by the [transit processor](../../index.md#transit-processors) that facilitates fare collection for the transit provider.
 
 1. The app registers the transit rider’s debit or credit card for reduced fares.
 
@@ -136,7 +136,7 @@ The transit rider receives a fare reduction each time they use the debit or cred
 
 - The transit rider pays for transit rides with the same contactless debit or credit card they use for everyday purchases.
 
-- The transit rider can enroll in a transit benefit from home when it is convenient for them; they are not required to visit a transit agency office in person unless they choose the in-person enrollment method.
+- The transit rider can enroll in a transit benefit from home when it is convenient for them; they are not required to visit a transit provider office in person unless they choose the in-person enrollment method.
 
 - Secure state and federal solutions manage the transit rider’s personal identifiable information (PII): Medicare.gov, the Blue Button API, and the California Department of Technology Identity Gateway (IdG). Transit riders do not have to share personal information with local transit operators.
 
@@ -146,6 +146,6 @@ The transit rider receives a fare reduction each time they use the debit or cred
 
 ## Example Scenario
 
-A 46-year old person with End-Stage Renal Disease (ESRD) uses public transit to get to and from dialysis treatments. They have undergone dialysis treatments for the last four months and are now covered by Medicare. In order to save on transportation expenses, they scheduled an appointment with their local transit agency and made a special trip to complete the in-person eligibility process to qualify for reduced transit fares. They now receive a 50% fare reduction but have to pay for transit rides using the closed-loop card provided by the operator to receive the reduced fare. It’s frustrating and inconvenient to reload this closed-loop agency card in $10 increments every week, especially because they sometimes could use the money tied up on the card to make ends meet. In summary, this person pays for daily expenses using several forms of payment: their agency card for transportation and their debit card or cash for everything else.
+A 46-year old person with End-Stage Renal Disease (ESRD) uses public transit to get to and from dialysis treatments. They have undergone dialysis treatments for the last four months and are now covered by Medicare. In order to save on transportation expenses, they scheduled an appointment with their local transit provider and made a special trip to complete the in-person eligibility process to qualify for reduced transit fares. They now receive a 50% fare reduction but have to pay for transit rides using the closed-loop card provided by the operator to receive the reduced fare. It’s frustrating and inconvenient to reload this closed-loop agency card in $10 increments every week, especially because they sometimes could use the money tied up on the card to make ends meet. In summary, this person pays for daily expenses using several forms of payment: their agency card for transportation and their debit card or cash for everything else.
 
-The transit operator serving their region of California implements open-loop payments on fixed bus routes throughout the service area. This rider opens the Cal-ITP Benefits web application at home, completes the self-service workflow to digitally confirm they are enrolled in Medicare, and registers their debit card for reduced fares. If the rider doesn't want to create a Medicare.gov account, they visit the transit agency office and complete enrollment in person. Now, when they tap-to-pay when boarding the bus, they are automatically charged the reduced fare. They no longer need to use their closed-loop agency card to pay for transit and have complete access to all funds in their weekly budget.
+The transit operator serving their region of California implements open-loop payments on fixed bus routes throughout the service area. This rider opens the Cal-ITP Benefits web application at home, completes the self-service workflow to digitally confirm they are enrolled in Medicare, and registers their debit card for reduced fares. If the rider doesn't want to create a Medicare.gov account, they visit the transit provider office and complete enrollment in person. Now, when they tap-to-pay when boarding the bus, they are automatically charged the reduced fare. They no longer need to use their closed-loop agency card to pay for transit and have complete access to all funds in their weekly budget.
