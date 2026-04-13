@@ -134,6 +134,11 @@ class SwitchioGroup(EnrollmentGroup):
 
     @property
     def group_id(self):
+        """Get the Switchio group ID, which is the same for all agencies for a given flow.
+
+        Returns the value of the attribute on SwitchioGroupIDs whose attribute name
+        matches the one in SystemName that's used by this group's enrollment flow.
+        """
         return getattr(SwitchioGroupIDs, SystemName(self.enrollment_flow.system_name).name, None)
 
     @staticmethod
