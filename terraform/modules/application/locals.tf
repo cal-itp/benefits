@@ -1,5 +1,5 @@
 locals {
-  django_storage_dir_path  = "/calitp/app/data"
+  django_storage_dir_path  = "/home/calitp/app/data"
   pgadmin_storage_dir_path = "/var/lib/pgadmin"
   app_config_secrets = {
     # Amplitude
