@@ -3,7 +3,7 @@ name: Fixture update reminder
 on:
   pull_request:
     paths:
-      - 'benefits/core/migrations/**'
+      - 'benefits/*/migrations/**'
 
 jobs:
   # Check which files have changed
@@ -19,9 +19,9 @@ jobs:
       with:
         filters: |
           migrations:
-            - 'benefits/core/migrations/*.py'
+            - 'benefits/*/migrations/*.py'
           fixtures:
-            - 'benefits/core/migrations/local_fixtures.json'
+            - 'benefits/*/migrations/local_fixtures.json'
 
   # Remind author to confirm whether a fixture update is needed after adding a migration
   migration_added_without_fixtures_update:
