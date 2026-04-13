@@ -28,7 +28,7 @@ def update_digital_method(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("core", "0001_initial"),
+        ("core", "0003_add_transitagencygroup"),
     ]
 
     operations = [

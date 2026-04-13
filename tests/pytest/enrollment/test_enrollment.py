@@ -217,7 +217,7 @@ def test_handle_enrollment_results_success_transitagencygroup(
         mocker.call(
             transit_agency=model_TransitAgency,
             enrollment_flow=model_EnrollmentFlow,
-            enrollment_method="digital",
+            enrollment_method=models.EnrollmentMethods.SELF_SERVICE,
             verified_by="verified by",
             expiration_datetime=None,
             extra_claims="",
@@ -225,7 +225,7 @@ def test_handle_enrollment_results_success_transitagencygroup(
         mocker.call(
             transit_agency=model_TransitAgency_2,
             enrollment_flow=model_EnrollmentFlow,
-            enrollment_method="digital",
+            enrollment_method=models.EnrollmentMethods.SELF_SERVICE,
             verified_by="verified by",
             expiration_datetime=None,
             extra_claims="",
