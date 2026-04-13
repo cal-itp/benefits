@@ -32,6 +32,9 @@ resource "azurerm_container_app" "benefits" {
   }
 
   template {
+    min_replicas = 1
+    max_replicas = 1
+
     # Define the volume using the environment storage
     volume {
       name         = azurerm_container_app_environment_storage.benefits.name
