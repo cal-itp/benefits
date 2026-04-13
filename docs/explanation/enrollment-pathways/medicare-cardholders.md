@@ -8,7 +8,7 @@ This use case describes a feature in [Cal-ITP Benefits](https://benefits.calitp.
 
 **Goal:** To verify a transit rider’s Medicare status so they receive reduced fares when paying by contactless debit or credit card.
 
-**Precondition:** The California transit operator offers fixed route service, has installed and tested validator hardware necessary to collect fares using open-loop payments on bus or rail lines, and the operator has a policy in place to offer a transit benefit to riders enrolled in Medicare.
+**Precondition:** The transit operator offers fixed route service, has installed and tested validator hardware necessary to collect fares using open-loop payments on bus or rail lines, and has a policy in place to offer a transit benefit to riders enrolled in Medicare.
 
 ## Demonstration
 
