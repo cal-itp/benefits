@@ -3,10 +3,20 @@ import logging
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from benefits.core.models import EnrollmentGroup, Environment, PemData, SecretNameField, TransitProcessorConfig
+from benefits.core.models import EnrollmentGroup, Environment, PemData, SecretNameField, SystemName, TransitProcessorConfig
 from benefits.secrets import get_secret_by_name
 
 logger = logging.getLogger(__name__)
+
+
+class SwitchioGroupIDs:
+    # SystemName.name: Switchio group ID
+    MEDICARE = "MEDICARE"
+    CALFRESH = "LOW_INCOME"
+    OLDER_ADULT = "OLDER_ADULT"
+    VETERAN = "VETERAN"
+    # We have no Switchio agencies with Agency Card flows, but this is needed for testing.
+    COURTESY_CARD = "AGENCY_CARD"
 
 
 class SwitchioConfig(TransitProcessorConfig):
@@ -121,7 +131,15 @@ class SwitchioConfig(TransitProcessorConfig):
 
 
 class SwitchioGroup(EnrollmentGroup):
-    group_id = models.TextField(default=None, blank=True, help_text="The ID of the Switchio group for user enrollment.")
+
+    @property
+    def group_id(self):
+        """Get the Switchio group ID, which is the same for all agencies for a given flow.
+
+        Returns the value of the attribute on SwitchioGroupIDs whose attribute name
+        matches the one in SystemName that's used by this group's enrollment flow.
+        """
+        return getattr(SwitchioGroupIDs, SystemName(self.enrollment_flow.system_name).name, None)
 
     @staticmethod
     def by_id(id):
