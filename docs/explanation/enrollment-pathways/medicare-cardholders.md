@@ -120,9 +120,9 @@ Fare_processor-->>Benefits: card registration confirmation
 
 1. The transit agency staff member confirms the person’s identity and verifies that the Medicare card indicates the person is an active enrollee.
 
-1. The transit agency staff member hands the transit rider the tablet so they can enter the debit or credit card details for the card they use to pay for transit.
+1. The transit agency staff member hands the transit rider the tablet so they can enter the debit or credit card details for the card they use to pay for transit into the form provided by the [transit processor](../../index.md#transit-processors) that facilitates fare collection for the transit agency.
 
-1. The app registers the transit rider’s debit or credit card with the [transit processor](../../index.md#transit-processors).
+1. The app registers the transit rider’s debit or credit card for reduced fares.
 
 ## Postcondition
 
