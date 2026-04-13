@@ -2,7 +2,7 @@
 
 ## Overview
 
-This use case describes a feature in [Cal-ITP Benefits](https://benefits.calitp.org) that allows eligible riders to verify their active participation in the Medicare program to receive reduced fares for transit when paying by contactless debit or credit card at participating transits operators in California.
+This use case describes a feature in [Cal-ITP Benefits](https://benefits.calitp.org) that allows eligible riders to verify their active participation in the Medicare program to receive reduced fares for transit when paying by contactless debit or credit card at participating transit operators in California.
 
 **Actor:** A person who uses public transit in California. For benefit eligibility, a Medicare cardholder is a person who has enrolled in the Medicare program, has a Medicare.gov account, and is not deceased.
 
