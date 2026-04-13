@@ -12,7 +12,7 @@ This use case describes a feature in [Cal-ITP Benefits](https://benefits.calitp.
 
 ## Demonstration
 
-Here's a video walkthrough of the rider self-service enrollment experience when choosing the Medicare cardholder enrollment pathway.
+Here's a video walkthrough of the self-service enrollment experience when choosing the Medicare cardholder enrollment pathway.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/YZylD7oAbso?si=1aUb26LYDgkm_SCo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
