@@ -39,6 +39,6 @@ resource "azurerm_container_app_environment_storage" "pgadmin" {
   container_app_environment_id = azurerm_container_app_environment.main.id
   account_name                 = var.storage_account_name
   access_key                   = var.storage_account_access_key
-  share_name                   = var.storage_share_benefits_name
+  share_name                   = var.storage_share_pgadmin_name
   access_mode                  = "ReadWrite"
 }
