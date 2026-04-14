@@ -29,8 +29,8 @@ variable "log_analytics_workspace_id" {
   type        = string
 }
 # Network
-variable "infrastructure_subnet_id" {
-  description = "The ID of the 'ACAPP' subnet."
+variable "subnet_ca_id" {
+  description = "The ID of the 'CA' subnet."
   type        = string
 }
 # Storage
@@ -43,7 +43,7 @@ variable "storage_account_access_key" {
   type        = string
   sensitive   = true
 }
-variable "storage_share_benefits_name" {
+variable "storage_share_web_name" {
   description = "The name of the File Share for the Django storage directory."
   type        = string
 }

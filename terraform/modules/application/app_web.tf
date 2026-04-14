@@ -1,6 +1,6 @@
-# The Benefits Container App
-resource "azurerm_container_app" "benefits" {
-  name                         = "ca-cdt-pub-vip-calitp-${lower(var.env_letter)}-001"
+# The Benefits (web) Container App
+resource "azurerm_container_app" "web" {
+  name                         = "ca-cdt-pub-vip-calitp-${lower(var.env_letter)}-web"
   container_app_environment_id = azurerm_container_app_environment.main.id
   resource_group_name          = var.resource_group_name
   revision_mode                = "Single"
@@ -37,20 +37,20 @@ resource "azurerm_container_app" "benefits" {
 
     # Define the volume using the environment storage
     volume {
-      name         = azurerm_container_app_environment_storage.benefits.name
-      storage_name = azurerm_container_app_environment_storage.benefits.name
+      name         = azurerm_container_app_environment_storage.web.name
+      storage_name = azurerm_container_app_environment_storage.web.name
       storage_type = "AzureFile"
     }
 
     container {
-      name   = "benefits"
+      name   = "web"
       image  = "${var.container_registry}/${var.container_repository}:${var.container_tag}"
       cpu    = 0.5
       memory = "1Gi"
 
       # Mount the volume into the container's file system
       volume_mounts {
-        name = azurerm_container_app_environment_storage.benefits.name
+        name = azurerm_container_app_environment_storage.web.name
         path = local.django_storage_dir_path
       }
 
@@ -81,6 +81,6 @@ resource "azurerm_container_app" "benefits" {
   }
 
   depends_on = [
-    azurerm_container_app_environment_storage.benefits
+    azurerm_container_app_environment_storage.web
   ]
 }

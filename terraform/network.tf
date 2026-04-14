@@ -13,7 +13,7 @@ locals {
       actions           = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
       service_endpoints = ["Microsoft.Storage"]
     }
-    "ACAPP" = {
+    "CA" = {
       prefix            = ["10.0.0.128/26"] # 64 addresses - 10.0.0.128 to 10.0.0.191
       delegation        = "Microsoft.App/environments"
       actions           = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
@@ -114,9 +114,9 @@ resource "azurerm_subnet_nat_gateway_association" "app" {
   nat_gateway_id = azurerm_nat_gateway.main.id
 }
 
-# Associate NAT Gateway with the ACAPP Subnet
-resource "azurerm_subnet_nat_gateway_association" "acapp" {
-  subnet_id      = azurerm_subnet.main["ACAPP"].id
+# Associate NAT Gateway with the CA Subnet
+resource "azurerm_subnet_nat_gateway_association" "ca" {
+  subnet_id      = azurerm_subnet.main["CA"].id
   nat_gateway_id = azurerm_nat_gateway.main.id
 }
 
@@ -150,8 +150,8 @@ resource "azurerm_subnet_network_security_group_association" "app" {
   network_security_group_id = azurerm_network_security_group.app.id
 }
 
-resource "azurerm_subnet_network_security_group_association" "acapp" {
-  subnet_id                 = azurerm_subnet.main["ACAPP"].id
+resource "azurerm_subnet_network_security_group_association" "ca" {
+  subnet_id                 = azurerm_subnet.main["CA"].id
   network_security_group_id = azurerm_network_security_group.app.id
 }
 
@@ -161,7 +161,7 @@ resource "azurerm_network_security_group" "db" {
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
 
-  # Allow traffic from the APP and ACAPP subnets to the DB subnet on the PostgreSQL port
+  # Allow traffic from the APP and CA subnets to the DB subnet on the PostgreSQL port
   security_rule {
     name                       = "AllowPostgresInboundFromApp"
     protocol                   = "Tcp"
@@ -179,7 +179,7 @@ resource "azurerm_network_security_group" "db" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "5432"
-    source_address_prefix      = local.network_subnets["ACAPP"].prefix[0]
+    source_address_prefix      = local.network_subnets["CA"].prefix[0]
     destination_address_prefix = "*"
     access                     = "Allow"
     priority                   = 105 # between existing rules

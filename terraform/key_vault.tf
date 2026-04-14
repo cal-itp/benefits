@@ -104,11 +104,11 @@ resource "azurerm_key_vault_access_policy" "webapp" {
   depends_on = [azurerm_key_vault.main]
 }
 
-# Standalone Access Policy for the Benefits Container App's Managed Identity
-resource "azurerm_key_vault_access_policy" "benefits_container_app" {
+# Standalone Access Policy for the Benefits (web) Container App's Managed Identity
+resource "azurerm_key_vault_access_policy" "web_container_app" {
   key_vault_id = azurerm_key_vault.main.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = module.application.benefits_principal_id
+  object_id    = module.application.web_principal_id
 
   secret_permissions = ["Get"]
 

@@ -4,7 +4,7 @@ resource "azurerm_container_app_environment" "main" {
   location                       = var.location
   resource_group_name            = var.resource_group_name
   log_analytics_workspace_id     = var.log_analytics_workspace_id
-  infrastructure_subnet_id       = var.infrastructure_subnet_id
+  infrastructure_subnet_id       = var.subnet_ca_id
   internal_load_balancer_enabled = false
 
   # Set the Environment type to Workload profile
@@ -23,13 +23,13 @@ resource "azurerm_container_app_environment" "main" {
   }
 }
 
-# Manages the 'benefits-storage' file share of the Container App Environment
-resource "azurerm_container_app_environment_storage" "benefits" {
-  name                         = "benefits-storage"
+# Manages the 'web-storage' file share of the Container App Environment
+resource "azurerm_container_app_environment_storage" "web" {
+  name                         = "web-storage"
   container_app_environment_id = azurerm_container_app_environment.main.id
   account_name                 = var.storage_account_name
   access_key                   = var.storage_account_access_key
-  share_name                   = var.storage_share_benefits_name
+  share_name                   = var.storage_share_web_name
   access_mode                  = "ReadWrite"
 }
 
