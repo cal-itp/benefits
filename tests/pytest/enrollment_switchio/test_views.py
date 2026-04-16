@@ -241,7 +241,7 @@ class TestIndexView:
         mock_handler.assert_called_once()
         handler_kwargs = mock_handler.call_args.kwargs
         assert handler_kwargs["verified_by"] == view._get_verified_by()
-        assert handler_kwargs["enrollment_method"] == models.EnrollmentMethods.DIGITAL
+        assert handler_kwargs["enrollment_method"] == models.EnrollmentMethods.SELF_SERVICE
         assert handler_kwargs["route_reenrollment_error"] == routes.ENROLLMENT_REENROLLMENT_ERROR
         assert handler_kwargs["route_success"] == routes.ENROLLMENT_SUCCESS
         assert handler_kwargs["route_system_error"] == routes.ENROLLMENT_SYSTEM_ERROR
@@ -260,7 +260,7 @@ class TestGatewayUrlView:
         return v
 
     def test_view(self, view: GatewayUrlView):
-        assert view.enrollment_method == models.EnrollmentMethods.DIGITAL
+        assert view.enrollment_method == models.EnrollmentMethods.SELF_SERVICE
         assert view.route_redirect == routes.ENROLLMENT_SWITCHIO_INDEX
         assert view.route_system_error == routes.ENROLLMENT_SYSTEM_ERROR
         assert view.route_server_error == routes.SERVER_ERROR

@@ -185,7 +185,7 @@ def test_handle_enrollment_results_success_claims(
     spy.assert_called_once_with(
         transit_agency=model_TransitAgency,
         enrollment_flow=model_EnrollmentFlow_with_scope_and_claim,
-        enrollment_method=models.EnrollmentMethods.DIGITAL,
+        enrollment_method=models.EnrollmentMethods.SELF_SERVICE,
         verified_by="verified by",
         expiration_datetime=None,
         extra_claims="claim_1, claim_2",
@@ -196,7 +196,7 @@ def test_handle_enrollment_results_success_claims(
     mocked_analytics_module.returned_success.assert_called_once()
     analytics_kwargs = mocked_analytics_module.returned_success.call_args.kwargs
     assert analytics_kwargs["enrollment_group"] == str(model_LittlepayGroup.group_id)
-    assert analytics_kwargs["enrollment_method"] == models.EnrollmentMethods.DIGITAL
+    assert analytics_kwargs["enrollment_method"] == models.EnrollmentMethods.SELF_SERVICE
 
 
 @pytest.mark.django_db
@@ -217,7 +217,7 @@ def test_handle_enrollment_results_success_transitagencygroup(
         mocker.call(
             transit_agency=model_TransitAgency,
             enrollment_flow=model_EnrollmentFlow,
-            enrollment_method="digital",
+            enrollment_method=models.EnrollmentMethods.SELF_SERVICE,
             verified_by="verified by",
             expiration_datetime=None,
             extra_claims="",
@@ -225,7 +225,7 @@ def test_handle_enrollment_results_success_transitagencygroup(
         mocker.call(
             transit_agency=model_TransitAgency_2,
             enrollment_flow=model_EnrollmentFlow,
-            enrollment_method="digital",
+            enrollment_method=models.EnrollmentMethods.SELF_SERVICE,
             verified_by="verified by",
             expiration_datetime=None,
             extra_claims="",
@@ -260,7 +260,7 @@ def test_handle_enrollment_results_success_eligibility_api(
     spy.assert_called_once_with(
         transit_agency=model_TransitAgency,
         enrollment_flow=model_EnrollmentFlow_with_eligibility_api,
-        enrollment_method=models.EnrollmentMethods.DIGITAL,
+        enrollment_method=models.EnrollmentMethods.SELF_SERVICE,
         verified_by="verified by",
         expiration_datetime=None,
         extra_claims="claim_1, claim_2",
@@ -271,7 +271,7 @@ def test_handle_enrollment_results_success_eligibility_api(
     mocked_analytics_module.returned_success.assert_called_once()
     analytics_kwargs = mocked_analytics_module.returned_success.call_args.kwargs
     assert analytics_kwargs["enrollment_group"] == str(model_LittlepayGroup.group_id)
-    assert analytics_kwargs["enrollment_method"] == models.EnrollmentMethods.DIGITAL
+    assert analytics_kwargs["enrollment_method"] == models.EnrollmentMethods.SELF_SERVICE
 
 
 @pytest.mark.django_db

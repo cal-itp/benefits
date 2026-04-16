@@ -7,14 +7,14 @@ from django.views.generic import FormView, TemplateView
 from benefits.core import models, session
 from benefits.core.mixins import AgencySessionRequiredMixin
 from benefits.core.models.transit import TransitAgency
-from benefits.core.views import AdditionalAgenciesView as DigitalAdditionalAgenciesView
+from benefits.core.views import AdditionalAgenciesView as SelfServiceAdditionalAgenciesView
 from benefits.eligibility import analytics as eligibility_analytics
 from benefits.enrollment.views import (
-    IndexView as DigitalEnrollmentIndexView,
-    ReenrollmentErrorView as DigitalReenrollmentErrorView,
-    RetryView as DigitalRetryView,
-    SuccessView as DigitalSuccessView,
-    SystemErrorView as DigitalSystemErrorView,
+    IndexView as SelfServiceEnrollmentIndexView,
+    ReenrollmentErrorView as SelfServiceReenrollmentErrorView,
+    RetryView as SelfServiceRetryView,
+    SuccessView as SelfServiceSuccessView,
+    SystemErrorView as SelfServiceSystemErrorView,
 )
 from benefits.enrollment_littlepay.session import Session as LittlepaySession
 from benefits.enrollment_littlepay.views import IndexView as LittlepayIndexView, TokenView
@@ -26,7 +26,7 @@ from benefits.routes import routes
 logger = logging.getLogger(__name__)
 
 
-class AdditionalAgenciesView(mixins.CommonContextMixin, DigitalAdditionalAgenciesView):
+class AdditionalAgenciesView(mixins.CommonContextMixin, SelfServiceAdditionalAgenciesView):
     """View handler for showing the list of agencies the customer will be enrolled at (if more than one)."""
 
     template_name = "in_person/additional-agencies.html"
@@ -78,7 +78,7 @@ class LittlepayTokenView(TokenView):
     route_server_error = routes.IN_PERSON_SERVER_ERROR
 
 
-class EnrollmentView(DigitalEnrollmentIndexView):
+class EnrollmentView(SelfServiceEnrollmentIndexView):
 
     route_origin = routes.IN_PERSON_ENROLLMENT
 
@@ -103,7 +103,7 @@ class LittlepayEnrollmentView(mixins.CommonContextMixin, LittlepayIndexView):
         return f"{self.request.user.first_name} {self.request.user.last_name}"
 
 
-class ReenrollmentErrorView(mixins.CommonContextMixin, AgencySessionRequiredMixin, DigitalReenrollmentErrorView):
+class ReenrollmentErrorView(mixins.CommonContextMixin, AgencySessionRequiredMixin, SelfServiceReenrollmentErrorView):
     """View handler for a re-enrollment attempt that is not yet within the re-enrollment window."""
 
     template_name = "in_person/enrollment/reenrollment_error.html"
@@ -115,14 +115,14 @@ class ReenrollmentErrorView(mixins.CommonContextMixin, AgencySessionRequiredMixi
         return context
 
 
-class RetryView(mixins.CommonContextMixin, DigitalRetryView):
+class RetryView(mixins.CommonContextMixin, SelfServiceRetryView):
     """View handler for card verification failure."""
 
     template_name = "in_person/enrollment/retry.html"
     enrollment_method = models.EnrollmentMethods.IN_PERSON
 
 
-class SystemErrorView(mixins.CommonContextMixin, DigitalSystemErrorView):
+class SystemErrorView(mixins.CommonContextMixin, SelfServiceSystemErrorView):
     """View handler for an enrollment system error."""
 
     template_name = "in_person/enrollment/system_error.html"
@@ -144,7 +144,7 @@ class ServerErrorView(mixins.CommonContextMixin, AgencySessionRequiredMixin, Tem
         return super().get(request, *args, **kwargs)
 
 
-class SuccessView(mixins.CommonContextMixin, AgencySessionRequiredMixin, DigitalSuccessView):
+class SuccessView(mixins.CommonContextMixin, AgencySessionRequiredMixin, SelfServiceSuccessView):
     """View handler for the final success page."""
 
     template_name = "in_person/enrollment/success.html"
@@ -152,7 +152,7 @@ class SuccessView(mixins.CommonContextMixin, AgencySessionRequiredMixin, Digital
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Check DigitalSuccessView's agency_short_names to see if we have a group situation
+        # Check SelfServiceSuccessView's agency_short_names to see if we have a group situation
         if context["agency_short_names"]:
             context["success_message"] = (
                 "This rider can now use their contactless card to automatically receive a reduced fare "
