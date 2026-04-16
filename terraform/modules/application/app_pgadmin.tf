@@ -113,6 +113,10 @@ resource "azurerm_container_app" "pgadmin" {
         value = "verify-full"
       }
       env {
+        name  = "PGSSLROOTCERT"
+        value = "system"
+      }
+      env {
         name        = "PGPASSWORD"
         secret_name = var.postgres_admin_password_secret_name
       }
