@@ -161,33 +161,6 @@
     }
   },
   {
-    "model": "core.pemdata",
-    "pk": 4,
-    "fields": {
-      "label": "Switchio client certificate",
-      "text_secret_name": "switchio-int-client-cert",
-      "remote_url": ""
-    }
-  },
-  {
-    "model": "core.pemdata",
-    "pk": 5,
-    "fields": {
-      "label": "Switchio CA certificate",
-      "text_secret_name": "switchio-int-ca-cert",
-      "remote_url": ""
-    }
-  },
-  {
-    "model": "core.pemdata",
-    "pk": 6,
-    "fields": {
-      "label": "Switchio private key",
-      "text_secret_name": "switchio-int-private-key",
-      "remote_url": ""
-    }
-  },
-  {
     "model": "core.eligibilityapiverificationrequest",
     "pk": 1,
     "fields": {
@@ -471,11 +444,7 @@
     "fields": {
       "tokenization_api_key": "123",
       "tokenization_api_secret_name": "cst-switchio-int-api-secret",
-      "enrollment_api_authorization_header": "Basic 1234",
-      "pto_id": 123,
-      "client_certificate": 4,
-      "ca_certificate": 5,
-      "private_key": 6
+      "pto_id": 123
     }
   }
 ]
