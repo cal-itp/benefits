@@ -3,7 +3,7 @@ import logging
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from benefits.core.models import EnrollmentGroup, Environment, PemData, SecretNameField, SystemName, TransitProcessorConfig
+from benefits.core.models import EnrollmentGroup, SecretNameField, SystemName, TransitProcessorConfig
 from benefits.secrets import get_secret_by_name
 
 logger = logging.getLogger(__name__)
@@ -30,65 +30,23 @@ class SwitchioConfig(TransitProcessorConfig):
         default="",
         blank=True,
     )
-    enrollment_api_authorization_header = models.TextField(
-        help_text="The value to use for the 'Authorization' header when accessing the Switchio API for enrollment.",
-        default="",
-        blank=True,
-    )
     pto_id = models.PositiveIntegerField(
         help_text="The Public Transport Operator ID to use with the Switchio API for enrollment.",
         default=0,
         blank=True,
     )
-    client_certificate = models.ForeignKey(
-        PemData,
-        related_name="+",
-        on_delete=models.PROTECT,
-        help_text="The client certificate for accessing the Switchio API.",
-        null=True,
-        blank=True,
-        default=None,
-    )
-    ca_certificate = models.ForeignKey(
-        PemData,
-        related_name="+",
-        on_delete=models.PROTECT,
-        help_text="The CA certificate chain for accessing the Switchio API.",
-        null=True,
-        blank=True,
-        default=None,
-    )
-    private_key = models.ForeignKey(
-        PemData,
-        related_name="+",
-        on_delete=models.PROTECT,
-        help_text="The private key for accessing the Switchio API.",
-        null=True,
-        blank=True,
-        default=None,
-    )
 
     @property
     def tokenization_api_base_url(self):
-        if self.environment == Environment.DEV.value:
-            return get_secret_by_name("switchio-int-tokenization-api-base-url")
-        if self.environment == Environment.TEST.value:
-            return get_secret_by_name("switchio-acc-tokenization-api-base-url")
-        elif self.environment == Environment.PROD.value:
-            return get_secret_by_name("switchio-prod-tokenization-api-base-url")
-        else:
-            raise ValueError(f"Unexpected value for environment: {self.environment}")
+        return get_secret_by_name("switchio-tokenization-api-base-url")
 
     @property
     def enrollment_api_base_url(self):
-        if self.environment == Environment.DEV.value:
-            return get_secret_by_name("switchio-int-enrollment-api-base-url")
-        if self.environment == Environment.TEST.value:
-            return get_secret_by_name("switchio-acc-enrollment-api-base-url")
-        elif self.environment == Environment.PROD.value:
-            return get_secret_by_name("switchio-prod-enrollment-api-base-url")
-        else:
-            raise ValueError(f"Unexpected value for environment: {self.environment}")
+        return get_secret_by_name("switchio-enrollment-api-base-url")
+
+    @property
+    def enrollment_api_authorization_header(self):
+        return get_secret_by_name("switchio-enrollment-api-authorization-header")
 
     @property
     def tokenization_api_secret(self):
@@ -98,17 +56,17 @@ class SwitchioConfig(TransitProcessorConfig):
     @property
     def client_certificate_data(self):
         """This SwitchioConfig's client certificate as a string."""
-        return self.client_certificate.data
+        return get_secret_by_name("switchio-client-cert")
 
     @property
     def ca_certificate_data(self):
         """This SwitchioConfig's CA certificate as a string."""
-        return self.ca_certificate.data
+        return get_secret_by_name("switchio-ca-cert")
 
     @property
     def private_key_data(self):
         """This SwitchioConfig's private key as a string."""
-        return self.private_key.data
+        return get_secret_by_name("switchio-private-key")
 
     def clean(self):
         field_errors = {}
@@ -118,11 +76,7 @@ class SwitchioConfig(TransitProcessorConfig):
             needed = dict(
                 tokenization_api_key=self.tokenization_api_key,
                 tokenization_api_secret_name=self.tokenization_api_secret_name,
-                enrollment_api_authorization_header=self.enrollment_api_authorization_header,
                 pto_id=self.pto_id,
-                client_certificate=self.client_certificate,
-                ca_certificate=self.ca_certificate,
-                private_key=self.private_key,
             )
             field_errors.update({k: ValidationError(message) for k, v in needed.items() if not v})
 
