@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="z_7432a6a7a8e99cb0_apps_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.5">coverage.py v7.13.5</a>,
-            created at 2026-04-13 18:00 +0000
+            created at 2026-04-16 16:36 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -111,7 +111,7 @@
     <p class="run"><span class="n"><a id="t27" href="#t27">27</a></span><span class="t"><span class="key">class</span> <span class="nam">IndexView</span><span class="op">(</span><span class="nam">AgencySessionRequiredMixin</span><span class="op">,</span> <span class="nam">EligibleSessionRequiredMixin</span><span class="op">,</span> <span class="nam">IndexContextMixin</span><span class="op">,</span> <span class="nam">FormView</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t28" href="#t28">28</a></span><span class="t">    <span class="str">"""View for the enrollment landing page."""</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t29" href="#t29">29</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t30" href="#t30">30</a></span><span class="t">    <span class="nam">enrollment_method</span> <span class="op">=</span> <span class="nam">models</span><span class="op">.</span><span class="nam">EnrollmentMethods</span><span class="op">.</span><span class="nam">DIGITAL</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t30" href="#t30">30</a></span><span class="t">    <span class="nam">enrollment_method</span> <span class="op">=</span> <span class="nam">models</span><span class="op">.</span><span class="nam">EnrollmentMethods</span><span class="op">.</span><span class="nam">SELF_SERVICE</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t31" href="#t31">31</a></span><span class="t">    <span class="nam">form_class</span> <span class="op">=</span> <span class="nam">forms</span><span class="op">.</span><span class="nam">CardTokenizeSuccessForm</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t32" href="#t32">32</a></span><span class="t">    <span class="nam">route_enrollment_success</span> <span class="op">=</span> <span class="nam">routes</span><span class="op">.</span><span class="nam">ENROLLMENT_SUCCESS</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t33" href="#t33">33</a></span><span class="t">    <span class="nam">route_reenrollment_error</span> <span class="op">=</span> <span class="nam">routes</span><span class="op">.</span><span class="nam">ENROLLMENT_REENROLLMENT_ERROR</span>&nbsp;</span><span class="r"></span></p>
@@ -209,7 +209,7 @@
     <p class="run"><span class="n"><a id="t125" href="#t125">125</a></span><span class="t"><span class="key">class</span> <span class="nam">GatewayUrlView</span><span class="op">(</span><span class="nam">AgencySessionRequiredMixin</span><span class="op">,</span> <span class="nam">EligibleSessionRequiredMixin</span><span class="op">,</span> <span class="nam">View</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t126" href="#t126">126</a></span><span class="t">    <span class="str">"""View for the tokenization gateway registration"""</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t127" href="#t127">127</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t128" href="#t128">128</a></span><span class="t">    <span class="nam">enrollment_method</span> <span class="op">=</span> <span class="nam">models</span><span class="op">.</span><span class="nam">EnrollmentMethods</span><span class="op">.</span><span class="nam">DIGITAL</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t128" href="#t128">128</a></span><span class="t">    <span class="nam">enrollment_method</span> <span class="op">=</span> <span class="nam">models</span><span class="op">.</span><span class="nam">EnrollmentMethods</span><span class="op">.</span><span class="nam">SELF_SERVICE</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t129" href="#t129">129</a></span><span class="t">    <span class="nam">route_redirect</span> <span class="op">=</span> <span class="nam">routes</span><span class="op">.</span><span class="nam">ENROLLMENT_SWITCHIO_INDEX</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t130" href="#t130">130</a></span><span class="t">    <span class="nam">route_system_error</span> <span class="op">=</span> <span class="nam">routes</span><span class="op">.</span><span class="nam">ENROLLMENT_SYSTEM_ERROR</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t131" href="#t131">131</a></span><span class="t">    <span class="nam">route_server_error</span> <span class="op">=</span> <span class="nam">routes</span><span class="op">.</span><span class="nam">SERVER_ERROR</span>&nbsp;</span><span class="r"></span></p>
@@ -276,7 +276,7 @@
             <a class="nav" href="z_7432a6a7a8e99cb0_apps_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.5">coverage.py v7.13.5</a>,
-            created at 2026-04-13 18:00 +0000
+            created at 2026-04-16 16:36 +0000
         </p>
     </div>
 </footer>

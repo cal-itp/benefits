@@ -34,7 +34,7 @@
 | benefits/core/views.py                                                             |       93 |        8 |        8 |        1 |     89% |105, 115, 129-131, 138-229 |
 | benefits/core/widgets.py                                                           |       25 |        5 |        6 |        1 |     74% | 18, 39-44 |
 | benefits/eligibility/\_\_init\_\_.py                                               |        0 |        0 |        0 |        0 |    100% |           |
-| benefits/eligibility/analytics.py                                                  |       27 |        4 |        2 |        1 |     83% |21, 39-\>exit, 45, 55, 60 |
+| benefits/eligibility/analytics.py                                                  |       27 |        4 |        2 |        1 |     83% |23, 41-\>exit, 47, 57, 62 |
 | benefits/eligibility/apps.py                                                       |        5 |        0 |        0 |        0 |    100% |           |
 | benefits/eligibility/forms.py                                                      |       85 |        0 |       14 |        2 |     98% |106-\>108, 108-\>112 |
 | benefits/eligibility/urls.py                                                       |        5 |        0 |        0 |        0 |    100% |           |
