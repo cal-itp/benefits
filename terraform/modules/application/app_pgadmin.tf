@@ -13,7 +13,7 @@ resource "azurerm_container_app" "pgadmin" {
   ingress {
     allow_insecure_connections = false
     external_enabled           = true
-    target_port                = 80 # pgAdmin listens on port 80 internally
+    target_port                = 5050 # Since Azure blocks pgAdmin's default port (80)
     ip_security_restriction {
       action           = "Allow"
       ip_address_range = "127.0.0.1/32" # Dummy IP range to effectively block all traffic since we will manage access via Azure Portal
@@ -77,6 +77,10 @@ resource "azurerm_container_app" "pgadmin" {
       env {
         name  = "PGADMIN_CONFIG_SERVER_MODE" # Running on a web server requiring user authentication
         value = "True"
+      }
+      env {
+        name  = "PGADMIN_LISTEN_PORT" # Override the default port that the server listens on
+        value = "5050"
       }
 
       # psql default connection parameter values for convenience
