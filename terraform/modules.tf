@@ -33,9 +33,12 @@ module "application" {
   azure_communication_connection_string_name = local.azure_communication_connection_string_name
   django_db_password_secret_name             = local.django_db_password_secret_name
   postgres_admin_password_secret_name        = local.postgres_admin_password_secret_name
-  pgadmin_admin_password_secret_name         = local.pgadmin_admin_password_secret_name
   sender_email                               = local.sender_email
   postgres_fqdn                              = azurerm_postgresql_flexible_server.main.fqdn
   postgres_admin_login                       = local.postgres_admin_login
   postgres_admin_db                          = local.postgres_admin_db
+
+  # pgAdmin Config
+  pgadmin_admin_password_secret_name = local.pgadmin_admin_password_secret_name
+  pgadmin_config_db_uri_secret_name  = local.pgadmin_config_db_uri_secret_name
 }

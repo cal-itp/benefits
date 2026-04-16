@@ -3,6 +3,8 @@ locals {
   postgres_admin_login                = "postgres_admin"
   postgres_admin_db                   = "postgres"
   pgadmin_admin_password_secret_name  = "pgadmin-admin-password"
+  pgadmin_config_db                   = "pgadmin_config"
+  pgadmin_config_db_uri_secret_name   = "pgadmin-config-db-uri"
 }
 
 # Manage an Azure Database for PostgreSQL Flexible Server
@@ -74,5 +76,24 @@ resource "azurerm_key_vault_secret" "pgadmin_admin_password" {
   content_type = "password"
   depends_on = [
     random_password.pgadmin_admin_password # Ensure password is generated first
+  ]
+}
+
+# Create a dedicated database for pgAdmin's configuration
+resource "azurerm_postgresql_flexible_server_database" "pgadmin_config" {
+  name      = local.pgadmin_config_db
+  server_id = azurerm_postgresql_flexible_server.main.id
+  charset   = "UTF8"
+  collation = "en_US.utf8"
+}
+
+# Create a connection string URI for pgAdmin's configuration DB
+resource "azurerm_key_vault_secret" "pgadmin_config_db_uri" {
+  name         = local.pgadmin_config_db_uri_secret_name
+  value        = "postgresql://${local.postgres_admin_login}:${random_password.postgres_admin_password.result}@${azurerm_postgresql_flexible_server.main.fqdn}:5432/${azurerm_postgresql_flexible_server_database.pgadmin_config.name}"
+  key_vault_id = azurerm_key_vault.main.id
+  content_type = "password"
+  depends_on = [
+    random_password.postgres_admin_password
   ]
 }

@@ -82,10 +82,6 @@ variable "postgres_admin_password_secret_name" {
   description = "The secret name for the Postgres admin's password."
   type        = string
 }
-variable "pgadmin_admin_password_secret_name" {
-  description = "The secret name for the pgAdmin admin's password."
-  type        = string
-}
 variable "sender_email" {
   description = "The sender email for Azure Communication Services."
   type        = string
@@ -100,5 +96,14 @@ variable "postgres_admin_login" {
 }
 variable "postgres_admin_db" {
   description = "The name of the postgres database (e.g. 'postgres')."
+  type        = string
+}
+# pgAdmin Config
+variable "pgadmin_admin_password_secret_name" {
+  description = "The secret name for the pgAdmin admin's password."
+  type        = string
+}
+variable "pgadmin_config_db_uri_secret_name" {
+  description = "The secret name of the connection string URI for pgAdmin's configuration DB."
   type        = string
 }

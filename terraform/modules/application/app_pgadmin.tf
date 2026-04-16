@@ -41,6 +41,13 @@ resource "azurerm_container_app" "pgadmin" {
     key_vault_secret_id = "${var.key_vault_secret_uri_prefix}/${var.pgadmin_admin_password_secret_name}"
   }
 
+  # connection string URI for pgAdmin's configuration DB
+  secret {
+    name                = var.pgadmin_config_db_uri_secret_name
+    identity            = "System"
+    key_vault_secret_id = "${var.key_vault_secret_uri_prefix}/${var.pgadmin_config_db_uri_secret_name}"
+  }
+
   template {
     min_replicas = 0
     max_replicas = 1
@@ -77,6 +84,11 @@ resource "azurerm_container_app" "pgadmin" {
       env {
         name  = "PGADMIN_CONFIG_SERVER_MODE" # Running on a web server requiring user authentication
         value = "True"
+      }
+      # pgAdmin to use Postgres instead of SQLite for its configuration
+      env {
+        name        = "PGADMIN_CONFIG_CONFIG_DATABASE_URI"
+        secret_name = var.pgadmin_config_db_uri_secret_name
       }
       env {
         name  = "PGADMIN_LISTEN_PORT" # Override the default port that the server listens on
