@@ -82,6 +82,14 @@ resource "azurerm_container_app" "pgadmin" {
         secret_name = var.pgadmin_admin_password_secret_name
       }
       env {
+        name  = "PGADMIN_SETUP_EMAIL"
+        value = "benefits-admin@calitp.org"
+      }
+      env {
+        name        = "PGADMIN_SETUP_PASSWORD"
+        secret_name = var.pgadmin_admin_password_secret_name
+      }
+      env {
         name  = "PGADMIN_CONFIG_SERVER_MODE" # Running on a web server requiring user authentication
         value = "True"
       }
