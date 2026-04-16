@@ -11,11 +11,7 @@ def test_SwitchioConfig_defaults():
     assert switchio_config.environment == "dev"
     assert switchio_config.tokenization_api_key == ""
     assert switchio_config.tokenization_api_secret_name == ""
-    assert switchio_config.enrollment_api_authorization_header == ""
     assert switchio_config.pto_id == 0
-    assert switchio_config.client_certificate is None
-    assert switchio_config.ca_certificate is None
-    assert switchio_config.private_key is None
     # test fails if save fails
     switchio_config.save()
 
@@ -70,66 +66,63 @@ def test_SwitchioConfig_clean(model_TransitAgency_inactive):
     error_message = validation_errors[0].message
     assert (
         error_message
-        == "Switchio configuration is missing fields that are required when this agency is active. Missing fields: tokenization_api_key, tokenization_api_secret_name, enrollment_api_authorization_header, pto_id, client_certificate, ca_certificate, private_key"  # noqa
+        == "Switchio configuration is missing fields that are required when this agency is active. Missing fields: tokenization_api_key, tokenization_api_secret_name, pto_id"  # noqa
     )
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "environment, secret_name",
-    [
-        ("dev", "switchio-int-tokenization-api-base-url"),
-        ("test", "switchio-acc-tokenization-api-base-url"),
-        ("prod", "switchio-prod-tokenization-api-base-url"),
-    ],
-)
-def test_SwitchioConfig_tokenization_api_base_url(mocker, environment, secret_name):
-    switchio_config = SwitchioConfig.objects.create(environment=environment)
+def test_SwitchioConfig_tokenization_api_base_url(mocker, model_SwitchioConfig):
     mocked_get_secret_by_name = mocker.patch(
         "benefits.enrollment_switchio.models.get_secret_by_name", return_value="secret url"
     )
 
-    switchio_config.tokenization_api_base_url
+    model_SwitchioConfig.tokenization_api_base_url
 
-    mocked_get_secret_by_name.assert_called_once_with(secret_name)
+    mocked_get_secret_by_name.assert_called_once_with("switchio-tokenization-api-base-url")
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize(
-    "environment, secret_name",
-    [
-        ("dev", "switchio-int-enrollment-api-base-url"),
-        ("test", "switchio-acc-enrollment-api-base-url"),
-        ("prod", "switchio-prod-enrollment-api-base-url"),
-    ],
-)
-def test_SwitchioConfig_enrollment_api_base_url(mocker, environment, secret_name):
-    switchio_config = SwitchioConfig.objects.create(environment=environment)
+def test_SwitchioConfig_enrollment_api_base_url(mocker, model_SwitchioConfig):
     mocked_get_secret_by_name = mocker.patch(
         "benefits.enrollment_switchio.models.get_secret_by_name", return_value="secret url"
     )
 
-    switchio_config.enrollment_api_base_url
+    model_SwitchioConfig.enrollment_api_base_url
 
-    mocked_get_secret_by_name.assert_called_once_with(secret_name)
-
-
-@pytest.mark.django_db
-def test_SwitchioConfig_tokenization_api_base_url_unexpected_environment():
-    environment = "unexpected-thiswillneverexist"
-    switchio_config = SwitchioConfig.objects.create(environment=environment)
-
-    with pytest.raises(ValueError, match=f"Unexpected value for environment: {environment}"):
-        switchio_config.tokenization_api_base_url
+    mocked_get_secret_by_name.assert_called_once_with("switchio-enrollment-api-base-url")
 
 
 @pytest.mark.django_db
-def test_SwitchioConfig_enrollment_api_base_url_unexpected_environment():
-    environment = "unexpected-thiswillneverexist"
-    switchio_config = SwitchioConfig.objects.create(environment=environment)
+def test_SwitchioConfig_client_certificate_data(mocker, model_SwitchioConfig):
+    mocked_get_secret_by_name = mocker.patch(
+        "benefits.enrollment_switchio.models.get_secret_by_name", return_value="secret cert"
+    )
 
-    with pytest.raises(ValueError, match=f"Unexpected value for environment: {environment}"):
-        switchio_config.enrollment_api_base_url
+    model_SwitchioConfig.client_certificate_data
+
+    mocked_get_secret_by_name.assert_called_once_with("switchio-client-cert")
+
+
+@pytest.mark.django_db
+def test_SwitchioConfig_ca_certificate_data(mocker, model_SwitchioConfig):
+    mocked_get_secret_by_name = mocker.patch(
+        "benefits.enrollment_switchio.models.get_secret_by_name", return_value="secret cert"
+    )
+
+    model_SwitchioConfig.ca_certificate_data
+
+    mocked_get_secret_by_name.assert_called_once_with("switchio-ca-cert")
+
+
+@pytest.mark.django_db
+def test_SwitchioConfig_private_key_data(mocker, model_SwitchioConfig):
+    mocked_get_secret_by_name = mocker.patch(
+        "benefits.enrollment_switchio.models.get_secret_by_name", return_value="secret cert"
+    )
+
+    model_SwitchioConfig.private_key_data
+
+    mocked_get_secret_by_name.assert_called_once_with("switchio-private-key")
 
 
 @pytest.mark.django_db
