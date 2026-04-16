@@ -90,7 +90,7 @@ resource "azurerm_postgresql_flexible_server_database" "pgadmin_config" {
 # Create a connection string URI for pgAdmin's configuration DB
 resource "azurerm_key_vault_secret" "pgadmin_config_db_uri" {
   name         = local.pgadmin_config_db_uri_secret_name
-  value        = "postgresql://${local.postgres_admin_login}:${random_password.postgres_admin_password.result}@${azurerm_postgresql_flexible_server.main.fqdn}:5432/${azurerm_postgresql_flexible_server_database.pgadmin_config.name}"
+  value        = "'postgresql://${local.postgres_admin_login}:${urlencode(random_password.postgres_admin_password.result)}@${azurerm_postgresql_flexible_server.main.fqdn}:5432/${azurerm_postgresql_flexible_server_database.pgadmin_config.name}'"
   key_vault_id = azurerm_key_vault.main.id
   content_type = "password"
   depends_on = [
