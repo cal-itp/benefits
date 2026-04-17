@@ -71,6 +71,15 @@ resource "azurerm_container_app" "web" {
           value = env.value
         }
       }
+
+      # Container Apps health probes
+      liveness_probe {
+        transport               = "HTTP"
+        port                    = 8000
+        path                    = "/healthcheck"
+        failure_count_threshold = 5
+        initial_delay           = 15
+      }
     }
   }
 
