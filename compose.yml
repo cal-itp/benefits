@@ -70,24 +70,10 @@ services:
       test: pg_isready -U ${POSTGRES_USER:-postgres} -h 127.0.0.1
       interval: 5s
 
-  pgweb:
-    container_name: pgweb
-    image: sosedoff/pgweb
-    ports:
-      - "${PGWEB_PORT:-8081}:8081"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "nc", "-vz", "127.0.0.1", "8081"]
-      interval: 5s
-    environment:
-      - PGWEB_DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOSTNAME}:${POSTGRES_PORT}/${DJANGO_DB_NAME}?sslmode=disable
-
   pgadmin:
     image: dpage/pgadmin4:latest
     ports:
-      - "${PGADMIN_PORT:-8082}:80"
+      - "${PGADMIN_PORT:-8081}:80"
     depends_on:
       postgres:
         condition: service_healthy
