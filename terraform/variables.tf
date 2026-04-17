@@ -14,3 +14,20 @@ variable "ENGINEERING_GROUP_OBJECT_ID" {
   description = "Object ID for the Cal-ITP engineering Active Directory Group"
   type        = string
 }
+
+variable "CONTAINER_REGISTRY" {
+  description = "The name of the container registry"
+  type        = string
+  default     = "ghcr.io"
+}
+
+variable "CONTAINER_REPOSITORY" {
+  description = "The repository path within the registry."
+  type        = string
+  default     = "cal-itp/benefits"
+}
+
+variable "CONTAINER_TAG" {
+  type        = string
+  description = "The specific tag of the image to deploy (e.g., 'main')."
+}
