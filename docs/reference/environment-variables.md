@@ -351,17 +351,13 @@ Comma-separated list of URIs. Configures the [`style-src`][mdn-csp-style-src] Co
 
     The official PostgreSQL Docker image has more on available [`postgres` environment variables][postgres]
 
-### `PGWEB_PORT`
-
-The port to serve a (local only) [`pgweb`](https://sosedoff.github.io/pgweb/) service on.
-
 ### `POSTGRES_DB`
 
 Used to define a different name for the default database that is created when the image is first started. If it is not specified, then the value of [`POSTGRES_USER`](#postgres_user) will be used.
 
 ### `POSTGRES_HOSTNAME`
 
-The hostname of the (local) PostgreSQL Docker service, which is usually just the name of the service itself (`postgres`). Used by e.g. `pgweb` to establish a connection. Or the hostname of a cloud-based PostgreSQL service for e.g. Django to establish a connection.
+The hostname of the (local) PostgreSQL Docker service, which is usually just the name of the service itself (`postgres`). Or the hostname of a cloud-based PostgreSQL service for e.g. Django to establish a connection.
 
 ### `POSTGRES_PASSWORD`
 
