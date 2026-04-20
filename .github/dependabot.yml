@@ -28,7 +28,9 @@ updates:
     labels:
       - "dependencies"
   - package-ecosystem: "docker"
-    directory: "/tests/playwright" # Playwright Docker image
+    directories:
+      - "/appcontainer" # appcontainer Docker image
+      - "/tests/playwright" # Playwright Docker image
     schedule:
       interval: "daily"
     commit-message:
