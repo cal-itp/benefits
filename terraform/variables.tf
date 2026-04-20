@@ -29,5 +29,5 @@ variable "CONTAINER_REPOSITORY" {
 
 variable "CONTAINER_TAG" {
   type        = string
-  description = "The specific tag of the image to deploy (e.g., 'main')."
+  description = "The specific tag of the image to deploy (e.g., a commit SHA)."
 }
