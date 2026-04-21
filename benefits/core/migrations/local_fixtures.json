@@ -443,7 +443,7 @@
     "pk": 2,
     "fields": {
       "tokenization_api_key": "123",
-      "tokenization_api_secret_name": "cst-switchio-int-api-secret",
+      "tokenization_api_secret_name": "cst-switchio-api-secret",
       "pto_id": 123
     }
   }
