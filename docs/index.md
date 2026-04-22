@@ -209,5 +209,4 @@ All code changes are reviewed by at least one other member of the engineering te
 [switchio]: https://switchio.com/transport/
 [i18n]: https://docs.djangoproject.com/en/stable/topics/i18n/
 [disabled vets]: https://github.com/cal-itp/benefits/issues/3048
-[VA VSHE API]: https://developer.va.gov/explore/api/veteran-service-history-and-eligibility/docs?version=current 
-
+[VA VSHE API]: https://developer.va.gov/explore/api/veteran-service-history-and-eligibility/docs?version=current
