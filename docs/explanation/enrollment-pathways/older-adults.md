@@ -131,7 +131,7 @@ The transit rider receives a fare reduction each time they use the debit or cred
 
 - The transit rider doesn’t have to lock up funds on a closed-loop card offered by the transit operator.
 
-- The transit rider pays for transit rides with their debit or credit card, just as they do for groceries, a cup of coffee, or any other good or service.
+- The transit rider pays for transit rides with the same contactless debit or credit card they use for everyday purchases.
 
 - The transit rider can enroll in a transit benefit from home when it is convenient for them; they do not have to visit a transit agency office in person unless they choose to.
 
