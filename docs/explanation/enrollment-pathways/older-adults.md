@@ -50,7 +50,7 @@ TransitProcessor-->>Benefits: card registration confirmation
     deactivate Benefits
     Note over Benefits: Successful enrollment
 ```
-1. The transit rider visits the web application at benefits.calitp.org in a browser on their desktop computer.
+1. The transit rider visits the web application at benefits.calitp.org in a browser on their desktop computer or mobile device.
 
 1. The transit rider chooses the transit operator that serves an area where they want to ride public transit.
 
@@ -72,11 +72,9 @@ TransitProcessor-->>Benefits: card registration confirmation
 
 ## Alternative self-service flows
 
-- Suppose the transit rider does not have a desktop computer. In this case, they open the web application at benefits.calitp.org in a mobile browser on their iOS or Android tablet or mobile device to complete enrollment using the basic flow.
+- Suppose the transit rider cannot authenticate with Login.gov, will not create an account, or cannot complete identity verification. In any of these cases, the app cannot determine their age and they cannot register their contactless debit or credit card for a reduced fare.
 
-- Suppose the transit rider cannot authenticate with Login.gov, will not create an account, or cannot complete identity verification. In any of these cases, the app cannot determine their age and they cannot enroll their contactless debit or credit card for a reduced fare.
-
-- Suppose the CDT Identity Gateway returns older adult enrollment status = FALSE. In that case, the Cal-ITP Benefits app will not allow the transit rider to enroll their contactless debit or credit card for a reduced fare.
+- Suppose the CDT Identity Gateway returns older adult enrollment status = FALSE. In that case, the Cal-ITP Benefits app will not allow the transit rider to register their contactless debit or credit card for a reduced fare.
 
 - Suppose the debit or credit card expires or is canceled by the issuer. In that case, the transit rider must repeat the basic flow to register the new debit or credit card.
 
