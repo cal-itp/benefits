@@ -144,7 +144,6 @@ def model_LittlepayGroup(model_EnrollmentFlow, model_TransitAgency):
 @pytest.fixture
 def model_SwitchioGroup(model_EnrollmentFlow, model_TransitAgency):
     return SwitchioGroup.objects.create(
-        group_id="senior-discount",
         enrollment_flow=model_EnrollmentFlow,
         transit_agency=model_TransitAgency,
     )

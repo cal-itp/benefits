@@ -42,10 +42,13 @@ locals {
     "Backup",
     "Restore",
   ]
+
+  key_vault_name              = "KV-CDT-PUB-CALITP-${local.env_letter}-001"
+  key_vault_secret_uri_prefix = "https://${local.key_vault_name}.vault.azure.net/secrets"
 }
 
 resource "azurerm_key_vault" "main" {
-  name                     = "KV-CDT-PUB-CALITP-${local.env_letter}-001"
+  name                     = local.key_vault_name
   location                 = data.azurerm_resource_group.main.location
   resource_group_name      = data.azurerm_resource_group.main.name
   sku_name                 = "standard"
@@ -94,6 +97,30 @@ resource "azurerm_key_vault_access_policy" "webapp" {
   key_vault_id = azurerm_key_vault.main.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
   object_id    = azurerm_linux_web_app.main.identity.0.principal_id
+
+  secret_permissions = ["Get"]
+
+  # This ensures the Key Vault itself is created before trying to attach a policy.
+  depends_on = [azurerm_key_vault.main]
+}
+
+# Standalone Access Policy for the Benefits (web) Container App's Managed Identity
+resource "azurerm_key_vault_access_policy" "web_container_app" {
+  key_vault_id = azurerm_key_vault.main.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = module.application.web_principal_id
+
+  secret_permissions = ["Get"]
+
+  # This ensures the Key Vault itself is created before trying to attach a policy.
+  depends_on = [azurerm_key_vault.main]
+}
+
+# Standalone Access Policy for the pgAdmin Container App's Managed Identity
+resource "azurerm_key_vault_access_policy" "pgadmin_container_app" {
+  key_vault_id = azurerm_key_vault.main.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = module.application.pgadmin_principal_id
 
   secret_permissions = ["Get"]
 

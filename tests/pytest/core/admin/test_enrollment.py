@@ -49,7 +49,7 @@ class TestEnrollmentFlowAdmin:
         # fill out the form without EligibilityApiVerificationRequest nor ClaimsVerificationRequest
         request.POST = dict(
             system_name="senior",  # use value that will map to existing templates
-            supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
+            supported_enrollment_methods=[models.EnrollmentMethods.SELF_SERVICE, models.EnrollmentMethods.IN_PERSON],
         )
 
         form_class = self.model_admin.get_form(request)
@@ -66,7 +66,7 @@ class TestEnrollmentFlowAdmin:
 
         request.POST = dict(
             system_name="senior",  # use value that will map to existing templates
-            supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
+            supported_enrollment_methods=[models.EnrollmentMethods.SELF_SERVICE, models.EnrollmentMethods.IN_PERSON],
             supports_expiration=True,
             # invalid expiration data when supports_expiration is True
             expiration_days=0,
