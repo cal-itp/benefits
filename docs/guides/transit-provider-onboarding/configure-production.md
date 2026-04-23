@@ -11,8 +11,8 @@ _Most of these steps are typically performed by a Cal-ITP developer._
       - Once this is complete, Cal-ITP verifies that the setup is correct by using the [littlepay CLI](https://github.com/cal-itp/littlepay).
     1.  Cal-ITP [creates a `TransitAgency`](./add-transit-provider.md#add-the-transit-provider-to-the-application) in the prod environment
     1.  Cal-ITP creates a new `LittlepayGroup` in the Benefits prod environment:
-      - Set the 'Group id' value to the corresponding **production** group ID.
-      - The new `LittlepayGroup` is then associated with the correct enrollment flow and transit provider using the dropdowns.
+      - Associate the new `LittlepayGroup` with the correct transit provider and enrollment flow using the dropdowns.
+      - Set the 'Group id' to the corresponding **production** group ID (from production Littlepay).
     1.  Cal-ITP creates a new `LittlepayConfig` in the Benefits prod environment:
       - Set Environment to **Production**.
       - Return to the `TransitAgency` and associate the new `LittlepayConfig` as its 'Transit processor config'.- Choose the new `TransitAgency`.
@@ -37,7 +37,8 @@ _Most of these steps are typically performed by a Cal-ITP developer._
       - Private key: Switchio (prod) private key (same for all agencies in the env)
 
     1. Cal-ITP creates a new `SwitchioGroup` in the Benefits prod environment for each enrollment flow:
-      - Group id: (unlike Littlepay, same for all agencies in the env)
+      - Associate the new `SwitchioGroup` with the correct transit provider and enrollment flow using the dropdowns.
+      - Unlike Littlepay, Switchio group IDs are consistent across environments and agencies, so that does not need to be set here.
     1. Cal-ITP returns to the `TransitAgency` instance and selects the `SwitchioConfig` above as the agency's transit processor config and checks the **Active** box.
 
 At this point, real customers can begin enrolling their cards and receiving their discounted fares with this transit provider!

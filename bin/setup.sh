@@ -27,7 +27,7 @@ else
     fi
 
     if [[ $DB_RESET = true ]]; then
-        # delete existing DB, if present
+        echo "DB_RESET is true, deleting existing DB (if present)"
         rm -f "${DB_PATH}"
 
         # run database migrations
@@ -38,7 +38,8 @@ else
         # DJANGO_SUPERUSER_USERNAME, DJANGO_SUPERUSER_EMAIL, and DJANGO_SUPERUSER_PASSWORD
         python manage.py createsuperuser --no-input
     else
-        echo "DB_RESET is false, skipping"
+        echo "DB_RESET is false, migrating existing database"
+        python manage.py migrate
     fi
 fi
 
