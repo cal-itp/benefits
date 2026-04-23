@@ -1,10 +1,10 @@
 # Agency cards
 
-An _agency card_ is a generic term for the proprietary physical card tranist providers issue to eligible riders to show they participate in the provider's reduced fare program. The [Courtesy Card program](https://mst.org/riders-guide/how-to-ride/courtesy-card/) at Monterey-Salinas Transit (MST) is a good example. Agency card programs pre-date the option of fare collection using contactless payments. Transit providers often require riders to show the card to bus operators when boarding to prove their eligibility for reduced fares.
+An _agency card_ is a generic term for the proprietary physical card transit providers issue to eligible riders to show they participate in the provider's reduced fare program. The [Courtesy Card program](https://mst.org/riders-guide/how-to-ride/courtesy-card/) at Monterey-Salinas Transit (MST) is a good example. Agency card programs pre-date the option of fare collection using contactless payments. Transit providers often require riders to show the card to bus operators when boarding to prove their eligibility for reduced fares.
 
 During the pilot phase of Cal-ITP Benefits, we offered the agency card enrollment option to transit providers that were early adopters of contactless payments and wanted to use Cal-ITP Benefits as a way to enroll riders in discount groups the application didn't yet support, such as Medicare cardholders and people with disabilities. As the range of enrollment options in the app expands to cover previously unsupported discount groups, the agency card enrollment option becomes less necessary. We plan to deprecate the agency card enrollment option when the application offers enrollment pathways for all required groups.
 
-The agency card enrollment option differs from other options in the application because of the way the app verifies a rider's eligibility for transit benefits. When a rider chooses the agency card enrollment pathway, the application uses the [Eligibility API call](https://docs.calitp.org/eligibility-api/specification/). This API call queries data stored offline on the agency side to confirm the rider is active in the program. For all other enrollment options, the Cal-ITP Benefits app confirms rider eligibility by querying external data sources via to the CDT Identity Gateway. See the [older adult enrollment pathway](older-adults.md) as one example.
+The agency card enrollment option differs from other options in the application because of the way the app verifies a rider's eligibility for transit benefits. When a rider chooses the agency card enrollment pathway, the application uses the [Eligibility API call](https://docs.calitp.org/eligibility-api/specification/). This API call queries data stored offline on the agency side to confirm the rider is active in the program. For all other enrollment options, the Cal-ITP Benefits app confirms rider eligibility by querying external data sources via the CDT Identity Gateway. See the [older adult enrollment pathway](older-adults.md) as one example.
 
 ## Demonstration
 
@@ -83,7 +83,7 @@ autonumber
         deactivate Benefits
         Note over Benefits: Successful enrollment
 ```
-1. The transit rider visits the web application at benefits.calitp.org in a browser on their desktop computer.
+1. The transit rider visits the web application at benefits.calitp.org in a browser on their desktop computer or mobile device.
 
 1. The transit rider chooses the transit operator that serves an area where they want to ride public transit.
 
