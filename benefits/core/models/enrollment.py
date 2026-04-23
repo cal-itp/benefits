@@ -13,12 +13,12 @@ logger = logging.getLogger(__name__)
 
 
 class EnrollmentMethods:
-    DIGITAL = "digital"
+    SELF_SERVICE = "self_service"
     IN_PERSON = "in_person"
 
 
 SUPPORTED_METHODS = (
-    (EnrollmentMethods.DIGITAL, EnrollmentMethods.DIGITAL.capitalize()),
+    (EnrollmentMethods.SELF_SERVICE, EnrollmentMethods.SELF_SERVICE.replace("_", "-").capitalize()),
     (EnrollmentMethods.IN_PERSON, EnrollmentMethods.IN_PERSON.replace("_", "-").capitalize()),
 )
 
@@ -131,8 +131,8 @@ class EnrollmentFlow(models.Model):
         choices=SUPPORTED_METHODS,
         max_choices=2,
         max_length=50,
-        default=[EnrollmentMethods.DIGITAL, EnrollmentMethods.IN_PERSON],
-        help_text="If the flow is supported by digital enrollment, in-person enrollment, or both",
+        default=[EnrollmentMethods.SELF_SERVICE, EnrollmentMethods.IN_PERSON],
+        help_text="If the flow is supported by self-service enrollment, in-person enrollment, or both",
     )
     sign_out_button_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out button")
     sign_out_link_template = models.TextField(default="", blank=True, help_text="Template that renders sign-out link")
@@ -288,7 +288,7 @@ class EnrollmentEvent(models.Model):
     enrollment_flow = models.ForeignKey(EnrollmentFlow, on_delete=models.PROTECT)
     enrollment_method = models.TextField(
         choices={
-            EnrollmentMethods.DIGITAL: EnrollmentMethods.DIGITAL,
+            EnrollmentMethods.SELF_SERVICE: EnrollmentMethods.SELF_SERVICE,
             EnrollmentMethods.IN_PERSON: EnrollmentMethods.IN_PERSON,
         }
     )

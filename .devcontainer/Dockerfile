@@ -30,6 +30,8 @@ USER $USER
 # copy only minimal files needed for dev dependency installs
 COPY .git .git
 COPY pyproject.toml pyproject.toml
+# ensure setuptools_scm can run git commands
+RUN git config --global --add safe.directory /calitp/app
 
 # this RUN command uses pipcache
 # setting uid,gid here is critical, as otherwise the Buildkit cache is mounted as root

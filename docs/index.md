@@ -102,15 +102,15 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 | **San Luis Obispo Regional Transit**                | 12/2025             | ✅           | ✅                   | ―             | ―                    | ―           |
 | **El Dorado Transit Authority**                     | 01/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
 | **Redding Area Bus Authority**                      | 02/2026             | ✅           | ✅                   | ✅            | ✅                   | ―           |
-| **City of San Luis Obispo**                         | 04/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **Santa Cruz Metropolitan Transit District**        | 05/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **Santa Barbara County Association of Governments** | 06/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **City of San Luis Obispo**                         | 04/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
+| **Santa Cruz Metropolitan Transit District**        | 06/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Camarillo**                               | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Roseville**                               | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Simi Valley**                             | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Thousand Oaks**                           | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Gold Coast Transit Distict**                      | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Valley Express**                                  | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **Santa Barbara County Association of Governments** | Planned             | \*           | \*                   | \*            | \*                   | \*          |
 
 ## Supported enrollment pathways
 

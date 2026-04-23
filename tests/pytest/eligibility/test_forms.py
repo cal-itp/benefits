@@ -14,19 +14,19 @@ from benefits.eligibility.forms import (
 class TestEnrollmentFlowSelectionForm:
     @pytest.fixture(autouse=True)
     def init(self, model_TransitAgency):
-        self.digital = models.EnrollmentFlow.objects.create(
-            supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL],
-            label="Digital",
+        self.self_service = models.EnrollmentFlow.objects.create(
+            supported_enrollment_methods=[models.EnrollmentMethods.SELF_SERVICE],
+            label="Self-Service",
         )
         self.in_person = models.EnrollmentFlow.objects.create(
             supported_enrollment_methods=[models.EnrollmentMethods.IN_PERSON],
             label="In-Person",
         )
         self.both = models.EnrollmentFlow.objects.create(
-            supported_enrollment_methods=[models.EnrollmentMethods.DIGITAL, models.EnrollmentMethods.IN_PERSON],
+            supported_enrollment_methods=[models.EnrollmentMethods.SELF_SERVICE, models.EnrollmentMethods.IN_PERSON],
             label="Both",
         )
-        model_TransitAgency.enrollment_flows.set([self.digital, self.in_person, self.both])
+        model_TransitAgency.enrollment_flows.set([self.self_service, self.in_person, self.both])
         model_TransitAgency.save()
         self.form = EnrollmentFlowSelectionForm(agency=model_TransitAgency)
 
@@ -34,10 +34,10 @@ class TestEnrollmentFlowSelectionForm:
         assert isinstance(self.form, ValidateRecaptchaMixin)
 
     def test_filtering_flows(self):
-        """Ensures the form only shows flows supporting DIGITAL enrollment."""
+        """Ensures the form only shows flows supporting SELF_SERVICE enrollment."""
         filtered_flow_ids = [choice[0] for choice in self.form.fields["flow"].choices]
 
-        expected_ids = {self.digital.id, self.both.id}
+        expected_ids = {self.self_service.id, self.both.id}
         actual_ids = set(filtered_flow_ids)
 
         assert expected_ids.issubset(actual_ids)

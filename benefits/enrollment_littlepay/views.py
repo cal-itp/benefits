@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 class TokenView(EligibleSessionRequiredMixin, View):
     """View handler for the card tokenization access token."""
 
-    enrollment_method = models.EnrollmentMethods.DIGITAL
+    enrollment_method = models.EnrollmentMethods.SELF_SERVICE
     route_system_error = routes.ENROLLMENT_SYSTEM_ERROR
     route_server_error = routes.SERVER_ERROR
 
@@ -54,7 +54,7 @@ class TokenView(EligibleSessionRequiredMixin, View):
 class IndexView(AgencySessionRequiredMixin, EligibleSessionRequiredMixin, IndexContextMixin, FormView):
     """View for the enrollment landing page."""
 
-    enrollment_method = models.EnrollmentMethods.DIGITAL
+    enrollment_method = models.EnrollmentMethods.SELF_SERVICE
     form_class = forms.CardTokenizeSuccessForm
     route_enrollment_success = routes.ENROLLMENT_SUCCESS
     route_enrollment_retry = routes.ENROLLMENT_RETRY

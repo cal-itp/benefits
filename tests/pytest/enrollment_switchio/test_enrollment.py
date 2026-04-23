@@ -45,12 +45,12 @@ def card_token():
 
 @pytest.fixture
 def mocked_group_expiry_no_expiry():
-    return GroupExpiry(group="senior-discount", expiresAt=None)
+    return GroupExpiry(group="OLDER_ADULT", expiresAt=None)
 
 
 @pytest.fixture
 def mocked_group_expiry_with_expiry():
-    return GroupExpiry(group="senior-discount", expiresAt="2025-01-01T00:00:00")
+    return GroupExpiry(group="OLDER_ADULT", expiresAt="2025-01-01T00:00:00")
 
 
 @pytest.mark.django_db
