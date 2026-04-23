@@ -81,7 +81,7 @@ autonumber
     Transit processor-->>Benefits: card registration confirmation
         deactivate Transit processor
         deactivate Benefits
-        Note over Benefits: Successfull enrollment
+        Note over Benefits: Successful enrollment
 ```
 1. The transit rider visits the web application at benefits.calitp.org in a browser on their desktop computer.
 
