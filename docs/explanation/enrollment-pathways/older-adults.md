@@ -50,6 +50,7 @@ TransitProcessor-->>Benefits: card registration confirmation
     deactivate Benefits
     Note over Benefits: Successful enrollment
 ```
+
 1. The transit rider visits the web application at benefits.calitp.org in a browser on their desktop computer or mobile device.
 
 1. The transit rider chooses the transit operator that serves an area where they want to ride public transit.
