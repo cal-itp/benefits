@@ -1,0 +1,18 @@
+# List of direct dependencies
+# Used to generate requirements.txt with pinned transitive dependencies
+azure-keyvault-secrets==4.10.0
+azure-identity==1.25.2
+calitp-littlepay==2025.4.1
+Django==5.2.11
+django-admin-sortable2==2.3.1
+django-azure-communication-email==1.5.0
+django-cdt-identity==2025.10.3
+django-csp==4.0
+django-google-sso==9.0.3
+django-multiselectfield==1.0.1
+eligibility-api==2025.4.1
+pillow==12.1.0
+psycopg[binary,pool]==3.3.2
+requests==2.32.5
+sentry-sdk==2.54.0
+six==1.17.0
