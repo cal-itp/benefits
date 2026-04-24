@@ -2,10 +2,6 @@
 
 Enrollment is the core workflow in Cal-ITP Benefits. It’s the process that eligible riders complete to automatically receive reduced fares when they tap to pay for transit with their debit or credit card. A transit benefit enrollment consists of three primary, sequential steps.
 
-1. Identity confirmation
-2. Eligibility verification
-3. Card registration
-
 ```mermaid
 %% The key steps in an enrollment in Cal-ITP Benefits
 graph LR
@@ -36,15 +32,12 @@ Once the Identity Gateway successfully identifies a person, it then verifies the
 
 There are currently four self-service enrollment pathways that transit operators can offer their riders in Cal-ITP Benefits. Follow the links below for additional details about each pathway.
 
-- [Older adults](https://app.heptabase.com/17d7bbdc-d3b8-4dc1-9134-71bc71df4ff7/card/6f7663e5-e181-483a-aac7-9ed052290b1d)
+- [Older adults][older-adults]
+- [Medicare cardholders][medicare]
+- [U.S. Veterans][veterans
+- [CalFresh cardholders][low-income]
 
-- [Medicare cardholders](https://docs.calitp.org/benefits/explanation/enrollment-pathways/medicare-cardholders/)
-
-- [U.S. Veterans](https://docs.calitp.org/benefits/explanation/enrollment-pathways/veterans/)
-
-- [CalFresh cardholders](https://docs.calitp.org/benefits/explanation/enrollment-pathways/low-income/)
-
-> Note: When Cal-ITP Benefits was in the pilot phase, we offered our early adopters, MST and SBMTD, an [agency cardholder enrollment pathway](https://docs.calitp.org/benefits/explanation/enrollment-pathways/agency-cards/). This self-service enrollment pathway is no longer offered as base functionality in the product. Implementing this option requires extensive collaboration between the agency’s IT staff and Cal-ITP engineers. Going forward, Cal-ITP is devoting its collective effort to expanding self-service enrollment options so that the agency cardholder enrollment option is no longer necessary. We anticipate eventually sunsetting agency cardholder enrollment entirely.
+> Note: When Cal-ITP Benefits was in the pilot phase, we offered our early adopters, MST and SBMTD, an [agency cardholder enrollment pathway][agency-cards]. This self-service enrollment pathway is no longer offered as base functionality in the product. Implementing this option requires extensive collaboration between the agency’s IT staff and Cal-ITP engineers. Going forward, Cal-ITP is devoting its collective effort to expanding self-service enrollment options so that the agency cardholder enrollment option is no longer necessary. We anticipate eventually sunsetting agency cardholder enrollment entirely.
 
 ### Card registration
 
@@ -77,8 +70,12 @@ There are currently three in-person enrollment pathways that transit operators c
 
 Follow the links below for additional details about each pathway.
 
-- [Older adults](https://docs.calitp.org/benefits/explanation/enrollment-pathways/older-adults/)
+- [Older adults][older-adults]
+- [Medicare cardholders][medicare]
+- [Agency cardholders][agency-cards]
 
-- [Medicare cardholders](https://docs.calitp.org/benefits/explanation/enrollment-pathways/medicare-cardholders/)
-
-- [Agency cardholders](https://docs.calitp.org/benefits/explanation/enrollment-pathways/agency-cards/)
+[older-adults]: enrollment-pathways/older-adults.md
+[agency-cards]: enrollment-pathways/agency-cards.md
+[veterans]: enrollment-pathways/veterans.md
+[medicare]: enrollment-pathways/medicare-cardholders.md
+[low-income]: explanation/enrollment-pathways/low-income.md
