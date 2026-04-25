@@ -34,7 +34,7 @@ There are currently four self-service enrollment pathways that transit operators
 
 - [Older adults][older-adults]
 - [Medicare cardholders][medicare]
-- [U.S. Veterans][veterans
+- [U.S. Veterans][veterans]
 - [CalFresh cardholders][low-income]
 
 > Note: When Cal-ITP Benefits was in the pilot phase, we offered our early adopters, MST and SBMTD, an [agency cardholder enrollment pathway][agency-cards]. This self-service enrollment pathway is no longer offered as base functionality in the product. Implementing this option requires extensive collaboration between the agency’s IT staff and Cal-ITP engineers. Going forward, Cal-ITP is devoting its collective effort to expanding self-service enrollment options so that the agency cardholder enrollment option is no longer necessary. We anticipate eventually sunsetting agency cardholder enrollment entirely.
@@ -43,8 +43,8 @@ There are currently four self-service enrollment pathways that transit operators
 
 Once an eligible rider completes the identity check and confirms their eligibility for a transit benefit, Cal-ITP Benefits connects them to the agency’s transit processor so they can register their debit or credit card for reduced fares. An agency contracts with a single transit processor. Cal-ITP Benefits is currently integrated with two transit processors.
 
-- Littlepay
-- Switchio
+- [Littlepay][littlepay]
+- [Switchio][switchio]
 
 ### Configuration
 
@@ -79,3 +79,5 @@ Follow the links below for additional details about each pathway.
 [veterans]: enrollment-pathways/veterans.md
 [medicare]: enrollment-pathways/medicare-cardholders.md
 [low-income]: explanation/enrollment-pathways/low-income.md
+[littlepay]: https://littlepay.com/
+[switchio]: https://switchio.com/transport/
