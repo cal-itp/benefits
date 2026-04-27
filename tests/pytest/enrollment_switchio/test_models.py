@@ -100,7 +100,7 @@ def test_SwitchioConfig_client_certificate_data(mocker, model_SwitchioConfig):
 
     model_SwitchioConfig.client_certificate_data
 
-    mocked_get_secret_by_name.assert_called_once_with("switchio-client-cert")
+    mocked_get_secret_by_name.assert_called_once_with("switchio-int-client-cert")
 
 
 @pytest.mark.django_db
