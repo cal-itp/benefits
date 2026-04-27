@@ -345,6 +345,52 @@ Comma-separated list of URIs. Configures the [`script-src`][mdn-csp-script-src] 
 
 Comma-separated list of URIs. Configures the [`style-src`][mdn-csp-style-src] Content Security Policy directive.
 
+## pgAdmin
+
+!!! tldr "Container Deployment configuration"
+
+    The pgAdmin image [exposes some environment variables directly for its configuration](https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html#environment-variables). For other configuration settings, the `PGADMIN_CONFIG_` environment variable prefix can be used to override any of the configuration options in pgAdmin’s [`config.py`](https://www.pgadmin.org/docs/pgadmin4/latest/config_py.html#config-py) file.
+
+### `PGADMIN_DEFAULT_EMAIL`
+
+The email address used when setting up the initial administrator account to login to pgAdmin.
+
+### `PGADMIN_DEFAULT_PASSWORD`
+
+The password used when setting up the initial administrator account to login to pgAdmin.
+
+### `PGADMIN_CONFIG_SERVER_MODE`
+
+The server mode determines whether pgAdmin is running on a web `Server Mode` requiring user authentication (`true`), such as in Azure; or in `Desktop Mode`, such as for local development, which uses an automatic default login (`false`).
+
+### `PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED`
+
+Applicable to `Desktop Mode` only, the master password used to encrypt/decrypt saved server passwords. Set to `false` for local development.
+
+!!! info "Cloud configuration"
+
+    The environment variables below only need to be set for Cloud deployments.
+
+### `PGADMIN_CONFIG_CONFIG_DATABASE_URI`
+
+Configuration settings are stored by default in a SQLite database. SQLite does not work well over a network, such as an Azure File Share, thus requiring them to be stored in a Postgres database. In order to use the Postgres server's database, set this variable to the connection string to the Postgres server that stores the configuration settings.
+
+### `PGADMIN_LISTEN_PORT`
+
+On the pgAdmin Container App using the `dpage/pgadmin4:latest` image, it is not possible to run pgAdmin without specifying a value greater than `1024` for this variable. Since the container runs as `UID/GID 5050`, set this to `5050` by convention.
+
+### `PGSSLROOTCERT`
+
+When pgAdmin starts up and sets its configuration settings, `sqlalchemy` runs and uses this variable. Since the `dpage/pgadmin4:latest` image has system-provided certifications, set to `system` to avoid manually adding certifications to the image.
+
+### `PGADMIN_SETUP_EMAIL`
+
+[Required when running in `Server Mode`](https://github.com/pgadmin-org/pgadmin4/blob/master/web/pgadmin/setup/user_info.py#L34) (`PGADMIN_CONFIG_SERVER_MODE=true`) to configure authentication. Should be set to the same value as `PGADMIN_DEFAULT_EMAIL`.
+
+### `PGADMIN_SETUP_PASSWORD`
+
+[Required when running in `Server Mode`](https://github.com/pgadmin-org/pgadmin4/blob/master/web/pgadmin/setup/user_info.py#L34) (`PGADMIN_CONFIG_SERVER_MODE=true`) to configure authentication. Should be set to the same value as `PGADMIN_DEFAULT_PASSWORD`.
+
 ## PostgreSQL
 
 !!! tldr "`postgres` Docker image docs"
