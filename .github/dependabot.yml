@@ -9,6 +9,10 @@ updates:
     directories:
       - "/" # pyproject.toml
       - "/tests/playwright" # Playwright pytest plugin
+    exclude-paths:
+      - "requirements.txt"
+    allow:
+      - dependency-type: "all"
     schedule:
       interval: "daily"
     commit-message:
