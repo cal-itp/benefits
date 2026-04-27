@@ -6,7 +6,10 @@
 version: 2
 updates:
   - package-ecosystem: "pip"
-    directory: "/" # pyproject.toml
+    directory: "/" # pyproject.toml, requirements.in
+    exclude-paths: "requirements.txt"
+    allow:
+      - dependency-type: "all"
     schedule:
       interval: "daily"
     commit-message:
