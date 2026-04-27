@@ -48,13 +48,9 @@ _Typically performed by a Cal-ITP developer._
       - Environment: **Testing**
       - Label: `${agency_short_name}`
       - Tokenization api key: from LastPass
-      - Tokenization api secret name: `${agency_slug}-switchio-acc-api-secret`
+      - Tokenization api secret name: `${agency_slug}-switchio-api-secret`
       --8<-- "./inc/create-secret.md"
-      - Enrollment api authorization header: See LastPass (same for all agencies in the env)
       - Pto id: from LastPass
-      - Client certificate: Switchio (ACC) client certificate (same for all agencies in the env)
-      - Ca certificate: Switchio (ACC) CA certificate (same for all agencies in the env)
-      - Private key: Switchio (ACC) private key (same for all agencies in the env)
 
     1. Cal-ITP creates a new `SwitchioGroup` in the Benefits test environment for each enrollment flow:
       - Associate the new `SwitchioGroup` with the correct transit provider and enrollment flow using the dropdowns.

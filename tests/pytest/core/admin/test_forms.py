@@ -46,7 +46,8 @@ class TestTransitAgencyGroupForm:
         assert form.is_valid()
         assert list(form.cleaned_data["transit_agencies"]) == agency_list
 
-    def test_invalid_if_multiple_processors(self, model_TransitAgency, model_LittlepayConfig, model_PemData):
+    @pytest.mark.usefixtures("model_LittlepayConfig")
+    def test_invalid_if_multiple_processors(self, model_TransitAgency, model_PemData):
         switchio_agency = TransitAgency.objects.create(
             slug="cst2",
             short_name="TEST",
@@ -56,13 +57,11 @@ class TestTransitAgencyGroupForm:
             active=True,
             logo="agencies/cst.png",
         )
+        # Can't use model_SwitchioConfig here because that applies itself to model_TransitAgency.
         switchio_config = SwitchioConfig.objects.create(
             environment=Environment.DEV,
             tokenization_api_key="api_key",
             tokenization_api_secret_name="apisecret",
-            client_certificate=model_PemData,
-            ca_certificate=model_PemData,
-            private_key=model_PemData,
         )
         switchio_agency.transit_processor_config = switchio_config
         switchio_agency.save()
