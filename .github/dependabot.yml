@@ -6,7 +6,9 @@
 version: 2
 updates:
   - package-ecosystem: "pip"
-    directory: "/" # pyproject.toml
+    directories:
+      - "/" # pyproject.toml
+      - "/tests/playwright" # Playwright pytest plugin
     schedule:
       interval: "daily"
     commit-message:
@@ -26,16 +28,9 @@ updates:
     labels:
       - "dependencies"
   - package-ecosystem: "docker"
-    directory: "/tests/playwright" # Playwright Docker image
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: "chore"
-      include: "scope"
-    labels:
-      - "dependencies"
-  - package-ecosystem: "pip"
-    directory: "/tests/playwright" # Playwright pytest plugin
+    directories:
+      - "/appcontainer" # appcontainer Docker image
+      - "/tests/playwright" # Playwright Docker image
     schedule:
       interval: "daily"
     commit-message:
