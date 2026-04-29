@@ -111,6 +111,7 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 | **Gold Coast Transit Distict**                      | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Valley Express**                                  | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Santa Barbara County Association of Governments** | Planned             | \*           | \*                   | \*            | \*                   | \*          |
+| **Gold Coast Transit District**                     | 6/2026 (target)   | \*           | \*                   | \*            | \*          | \*         |
 
 ## Supported enrollment pathways
 
