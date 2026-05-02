@@ -9,7 +9,7 @@ ARG PYTHONDONTWRITEBYTECODE=1 \
 #
 # stage 1: builds the benefits package from source
 #          using the git metadata for version info
-FROM ghcr.io/cal-itp/docker-python-web:1.0.0 AS build_wheel
+FROM ghcr.io/cal-itp/docker-python-web:1.0.1 AS build_wheel
 
 # renew top-level args in this stage
 ARG PYTHONDONTWRITEBYTECODE \
@@ -55,7 +55,7 @@ RUN --mount=type=cache,id=pipcache,target=${PIP_CACHE_DIR},uid=${USER_UID},gid=$
 #
 # stage 2: installs the benefits package in a fresh base container
 #          using the pre-built package, and copying only needed source
-FROM ghcr.io/cal-itp/docker-python-web:1.0.0 AS appcontainer
+FROM ghcr.io/cal-itp/docker-python-web:1.0.1 AS appcontainer
 
 # renew top-level args in this stage
 ARG PYTHONDONTWRITEBYTECODE \
