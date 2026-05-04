@@ -34,19 +34,4 @@ To verify the value of a secret, you can use the helper script named `read.sh`.
 
 ## Refreshing secrets
 
-To make sure the Benefits application uses the latest secret values in Key Vault, you will need to make a change to the app service's configuration. If you don't do this step, the application will instead use cached values, which may not be what you expect. See the [Azure docs](https://learn.microsoft.com/en-us/azure/app-service/app-service-key-vault-references?tabs=azure-cli#rotation) for more details.
-
-The steps are:
-
-1. After setting new secret values, cd into the `/terraform` directory
-2. run the command below, which updates a dummy environment variable called `change_me_to_refresh_secrets` in the relevant App Service configuration in Azure Portal.
-
-```bash
-cd terraform
-./restart-app.sh <environment_letter>
-```
-
-The effects of following those steps should be:
-
-- A restart of the App Service is triggered.
-- The next time that our Azure infrastructure pipeline is run, the value of `change_me_to_refresh_secrets` is set back to the value defined in our Terraform file for the App Service resource.
+To make sure the Benefits application uses the latest secret values in Key Vault, you will need to navigate to App service > Settings > Environment variables and click 'Pull reference values'.
