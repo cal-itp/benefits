@@ -38,8 +38,13 @@ To make sure the Benefits application uses the latest secret values in Key Vault
 
 The steps are:
 
-1. After setting new secret values, go to the App Service configuration in Azure Portal, and change the value of the setting named `change_me_to_refresh_secrets`.
-1. Save your changes.
+1. After setting new secret values, cd into the `/terraform` directory
+2. run the command below, which updates a dummy environment variable called `change_me_to_refresh_secrets` in the relevant App Service configuration in Azure Portal.
+
+```bash
+cd terraform
+./restart-app.sh <environment_letter>
+```
 
 The effects of following those steps should be:
 
