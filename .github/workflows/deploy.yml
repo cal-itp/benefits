@@ -110,6 +110,64 @@ jobs:
           images: ghcr.io/${{ github.repository }}:${{ github.sha }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
 
+      - name: Trigger Azure Pipeline
+        id: trigger_pipeline
+        run: |
+          TOKEN_RESPONSE=$(curl -sS -X POST \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -d "client_id=${{ secrets.AZURE_CLIENT_ID }}" \
+            -d "client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" \
+            -d "grant_type=client_credentials" \
+            -d "scope=499b84ac-1321-427f-aa17-267ca6975798/.default" \
+            "https://login.microsoftonline.com/${{ secrets.AZURE_TENANT_ID }}/oauth2/v2.0/token")
+
+          export AZURE_DEVOPS_EXT_PAT=$(echo "$TOKEN_RESPONSE" | jq -r '.access_token // empty')
+
+          if [ -z "$AZURE_DEVOPS_EXT_PAT" ]; then
+            echo "Failed to get Azure DevOps token"
+            exit 1
+          fi
+
+          RUN_ID=$(az pipelines run \
+            --id "${{ secrets.ADO_PIPELINE_ID }}" \
+            --org "${{ secrets.ADO_ORG_URL }}" \
+            --project "${{ secrets.ADO_PROJECT }}" \
+            --branch "${{ github.ref }}" \
+            --commit-id ${{ github.sha }} \
+            --query "id" -o tsv)
+
+          echo "Waiting for Azure DevOps Pipeline run to complete..."
+          while true; do
+            PIPELINE_STATUS=$(az pipelines runs show \
+              --id $RUN_ID \
+              --org "${{ secrets.ADO_ORG_URL }}" \
+              --project "${{ secrets.ADO_PROJECT }}" \
+              --query "status" -o tsv)
+
+            echo "Current pipeline status: $PIPELINE_STATUS"
+
+            if [[ "$PIPELINE_STATUS" == "completed" ]]; then
+              PIPELINE_RESULT=$(az pipelines runs show \
+                --id $RUN_ID \
+                --org "${{ secrets.ADO_ORG_URL }}" \
+                --project "${{ secrets.ADO_PROJECT }}" \
+                --query "result" -o tsv)
+
+              echo "Pipeline completed with result: $PIPELINE_RESULT"
+              if [[ "$PIPELINE_RESULT" == "succeeded" ]]; then
+                exit 0
+              else
+                echo "Azure DevOps Pipeline failed with result: $PIPELINE_RESULT"
+                exit 1
+              fi
+            elif [[ "$PIPELINE_STATUS" == "cancelling" || "$PIPELINE_STATUS" == "notStarted" || "$PIPELINE_STATUS" == "inProgress" ]]; then
+              sleep 10
+            else
+              echo "Azure DevOps Pipeline finished with unexpected status: $PIPELINE_STATUS"
+              exit 1
+            fi
+          done
+
   release:
     needs: deploy
     if: ${{ github.ref_type == 'tag' && !contains(github.ref, '-rc') }}
