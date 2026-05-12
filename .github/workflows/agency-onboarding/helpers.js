@@ -180,7 +180,7 @@ export const updateAdoptionTable = async ({ github, context, parentIssue }) => {
   }
 
   // Create a new branch name
-  const branchName = `docs/update-adoption-table-${short_name.toLowerCase()}`;
+  const branchName = `docs/update-adoption-table-${short_name.toLowerCase().split(/\s+/).join("-")}`;
 
   // Get the main branch reference
   const mainRef = await github.rest.git.getRef({
