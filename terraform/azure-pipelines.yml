@@ -6,10 +6,6 @@ trigger:
       - main
       - refs/tags/20??.??.?*-rc?*
       - refs/tags/20??.??.?*
-  # only run for changes to Terraform files
-  paths:
-    include:
-      - terraform/*
 stages:
   - stage: terraform
     pool:
