@@ -1,15 +1,8 @@
-trigger:
-  # automatically runs on pull requests
-  # https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#pr-triggers
-  branches:
-    include:
-      - main
-      - refs/tags/20??.??.?*-rc?*
-      - refs/tags/20??.??.?*
-  # only run for changes to Terraform files
-  paths:
-    include:
-      - terraform/*
+trigger: none
+# it will be triggered "manually" from a GitHub Actions workflow
+# but will still automatically run on pull requests
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/trigger?view=azure-pipelines#trigger-none
+
 stages:
   - stage: terraform
     pool:
