@@ -53,8 +53,9 @@ class EnrollmentFlowForm(forms.ModelForm):
         # these fields might not be on the form, so use helper method to correctly get the value
         eligibility_api_request = self.get(cleaned_data, "api_request")
         claims_request = self.get(cleaned_data, "claims_request")
+        supports_self_service = self.get(cleaned_data, "supports_self_service")
 
-        if not (claims_request or eligibility_api_request):
+        if supports_self_service and not (claims_request or eligibility_api_request):
             message = "Must configure either claims verification or Eligibility API verification."
             non_field_errors.append(ValidationError(message))
 

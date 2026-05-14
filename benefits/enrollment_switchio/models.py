@@ -15,8 +15,7 @@ class SwitchioGroupIDs:
     CALFRESH = "LOW_INCOME"
     OLDER_ADULT = "OLDER_ADULT"
     VETERAN = "VETERAN"
-    # We have no Switchio agencies with Agency Card flows, but this is needed for testing.
-    COURTESY_CARD = "AGENCY_CARD"
+    GCTD_CARD = "AGENCY_CARD"
 
 
 class SwitchioConfig(TransitProcessorConfig):
