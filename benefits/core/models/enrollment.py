@@ -256,7 +256,7 @@ class EnrollmentFlow(models.Model):
             # so far we only have templates for self-service flows
             # if/when we templatize in-person, we'll need to revisit and ensure that
             # all templates associated with the currently enabled paths are present
-            if not template_path(t) and not self.supports_self_service:
+            if self.supports_self_service and not template_path(t):
                 errors.append(ValidationError(f"Template not found: {t}"))
 
         if self.supports_in_person and self.system_name not in SUPPORTED_IN_PERSON_FLOWS:
