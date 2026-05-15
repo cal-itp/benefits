@@ -48,6 +48,10 @@ class InPersonEligibilityForm(forms.Form):
             details="I confirmed this rider’s identity using a government-issued ID and verified they possess an SBMTD "
             "Reduced Fare Mobility ID."
         ),
+        models.SystemName.GCTD_CARD.value: EligibilityPolicy(
+            details="I confirmed this rider’s identity using a government-issued ID and verified they possess a GCTD Reduced "
+            " Fare ID."
+        ),
     }
 
     def __init__(self, agency: models.TransitAgency, *args, **kwargs):

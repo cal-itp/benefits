@@ -30,6 +30,7 @@ class SystemName(models.TextChoices):
     OLDER_ADULT = "senior"
     REDUCED_FARE_MOBILITY_ID = "mobility_pass"
     VETERAN = "veteran"
+    GCTD_CARD = "agency_card"
 
 
 class EligibilityApiVerificationRequest(models.Model):
@@ -107,15 +108,17 @@ class EligibilityApiVerificationRequest(models.Model):
         return self.api_public_key.data
 
 
+SUPPORTED_IN_PERSON_FLOWS = (
+    SystemName.COURTESY_CARD.value,
+    SystemName.MEDICARE.value,
+    SystemName.OLDER_ADULT.value,
+    SystemName.REDUCED_FARE_MOBILITY_ID.value,
+    SystemName.GCTD_CARD.value,
+)
+
+
 class EnrollmentFlow(models.Model):
     """Represents a user journey through the Benefits app for a single eligibility type."""
-
-    supported_in_person_flows = (
-        SystemName.COURTESY_CARD.value,
-        SystemName.MEDICARE.value,
-        SystemName.OLDER_ADULT.value,
-        SystemName.REDUCED_FARE_MOBILITY_ID,
-    )
 
     id = models.AutoField(primary_key=True)
     system_name = models.SlugField(
@@ -215,6 +218,14 @@ class EnrollmentFlow(models.Model):
             return None
 
     @property
+    def supports_self_service(self):
+        return EnrollmentMethods.SELF_SERVICE in self.supported_enrollment_methods
+
+    @property
+    def supports_in_person(self):
+        return EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods
+
+    @property
     def eligibility_verifier(self):
         """A str representing the entity that verifies eligibility for this flow.
 
@@ -242,13 +253,13 @@ class EnrollmentFlow(models.Model):
         # we can't add a field-level validation error
         # so just create directly for a missing template
         for t in templates:
-            if not template_path(t):
+            # so far we only have templates for self-service flows
+            # if/when we templatize in-person, we'll need to revisit and ensure that
+            # all templates associated with the currently enabled paths are present
+            if not template_path(t) and not self.supports_self_service:
                 errors.append(ValidationError(f"Template not found: {t}"))
 
-        if (
-            EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods
-            and self.system_name not in self.supported_in_person_flows
-        ):
+        if self.supports_in_person and self.system_name not in SUPPORTED_IN_PERSON_FLOWS:
             errors.append(
                 ValidationError(f"{self.system_name} not configured for in-person enrollment. Please uncheck to continue.")
             )
