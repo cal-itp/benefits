@@ -30,7 +30,7 @@ class SystemName(models.TextChoices):
     OLDER_ADULT = "senior"
     REDUCED_FARE_MOBILITY_ID = "mobility_pass"
     VETERAN = "veteran"
-    GCTD_CARD = "agency_card"
+    GCTD_CARD = "gctd_card"
 
 
 class EligibilityApiVerificationRequest(models.Model):
@@ -218,14 +218,6 @@ class EnrollmentFlow(models.Model):
             return None
 
     @property
-    def supports_self_service(self):
-        return EnrollmentMethods.SELF_SERVICE in self.supported_enrollment_methods
-
-    @property
-    def supports_in_person(self):
-        return EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods
-
-    @property
     def eligibility_verifier(self):
         """A str representing the entity that verifies eligibility for this flow.
 
@@ -256,10 +248,13 @@ class EnrollmentFlow(models.Model):
             # so far we only have templates for self-service flows
             # if/when we templatize in-person, we'll need to revisit and ensure that
             # all templates associated with the currently enabled paths are present
-            if self.supports_self_service and not template_path(t):
+            if EnrollmentMethods.SELF_SERVICE in self.supported_enrollment_methods and not template_path(t):
                 errors.append(ValidationError(f"Template not found: {t}"))
 
-        if self.supports_in_person and self.system_name not in SUPPORTED_IN_PERSON_FLOWS:
+        if (
+            EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods
+            and self.system_name not in SUPPORTED_IN_PERSON_FLOWS
+        ):
             errors.append(
                 ValidationError(f"{self.system_name} not configured for in-person enrollment. Please uncheck to continue.")
             )
