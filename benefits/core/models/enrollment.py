@@ -109,11 +109,11 @@ class EligibilityApiVerificationRequest(models.Model):
 
 
 SUPPORTED_IN_PERSON_FLOWS = (
-    SystemName.COURTESY_CARD.value,
-    SystemName.MEDICARE.value,
-    SystemName.OLDER_ADULT.value,
-    SystemName.REDUCED_FARE_MOBILITY_ID.value,
-    SystemName.GCTD_CARD.value,
+    SystemName.COURTESY_CARD,
+    SystemName.MEDICARE,
+    SystemName.OLDER_ADULT,
+    SystemName.REDUCED_FARE_MOBILITY_ID,
+    SystemName.GCTD_CARD,
 )
 
 
