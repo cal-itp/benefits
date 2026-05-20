@@ -267,6 +267,24 @@
     }
   },
   {
+    "model": "core.enrollmentflow",
+    "pk": 6,
+    "fields": {
+      "system_name": "gctd_card",
+      "label": "GCTD Reduced Fare ID",
+      "supported_enrollment_methods": "in_person",
+      "sign_out_button_template": "",
+      "sign_out_link_template": "",
+      "oauth_config": null,
+      "claims_request": null,
+      "api_request": null,
+      "supports_expiration": false,
+      "expiration_days": null,
+      "expiration_reenrollment_days": null,
+      "display_order": 6
+    }
+  },
+  {
     "model": "core.enrollmentgroup",
     "pk": 1,
     "fields": {

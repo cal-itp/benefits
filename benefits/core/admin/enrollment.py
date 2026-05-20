@@ -54,7 +54,12 @@ class EnrollmentFlowForm(forms.ModelForm):
         eligibility_api_request = self.get(cleaned_data, "api_request")
         claims_request = self.get(cleaned_data, "claims_request")
 
-        if not (claims_request or eligibility_api_request):
+        supported_enrollment_methods = self.get(cleaned_data, "supported_enrollment_methods")
+        supports_self_service = (
+            supported_enrollment_methods and models.EnrollmentMethods.SELF_SERVICE in supported_enrollment_methods
+        )
+
+        if supports_self_service and not (claims_request or eligibility_api_request):
             message = "Must configure either claims verification or Eligibility API verification."
             non_field_errors.append(ValidationError(message))
 

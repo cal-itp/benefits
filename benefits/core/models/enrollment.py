@@ -30,6 +30,7 @@ class SystemName(models.TextChoices):
     OLDER_ADULT = "senior"
     REDUCED_FARE_MOBILITY_ID = "mobility_pass"
     VETERAN = "veteran"
+    GCTD_CARD = "gctd_card"
 
 
 class EligibilityApiVerificationRequest(models.Model):
@@ -107,15 +108,17 @@ class EligibilityApiVerificationRequest(models.Model):
         return self.api_public_key.data
 
 
+SUPPORTED_IN_PERSON_FLOWS = (
+    SystemName.COURTESY_CARD,
+    SystemName.MEDICARE,
+    SystemName.OLDER_ADULT,
+    SystemName.REDUCED_FARE_MOBILITY_ID,
+    SystemName.GCTD_CARD,
+)
+
+
 class EnrollmentFlow(models.Model):
     """Represents a user journey through the Benefits app for a single eligibility type."""
-
-    supported_in_person_flows = (
-        SystemName.COURTESY_CARD.value,
-        SystemName.MEDICARE.value,
-        SystemName.OLDER_ADULT.value,
-        SystemName.REDUCED_FARE_MOBILITY_ID,
-    )
 
     id = models.AutoField(primary_key=True)
     system_name = models.SlugField(
@@ -231,24 +234,21 @@ class EnrollmentFlow(models.Model):
     def supports_sign_out(self):
         return bool(self.sign_out_button_template) or bool(self.sign_out_link_template)
 
+    # until we can make time to consolidate, additional validation logic can be found in EnrollmentFlow.clean()
+    # see https://cal-itp.slack.com/archives/C037Y3UE71P/p1779234784673319?thread_ts=1779231543.096499&cid=C037Y3UE71P
     def clean(self):
         errors = []
 
-        templates = [
-            self.selection_label_template,
-        ]
+        supports_self_service = EnrollmentMethods.SELF_SERVICE in self.supported_enrollment_methods
+        supports_in_person = EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods
+        t = self.selection_label_template
 
-        # since templates are calculated from the pattern or the override field
-        # we can't add a field-level validation error
-        # so just create directly for a missing template
-        for t in templates:
-            if not template_path(t):
-                errors.append(ValidationError(f"Template not found: {t}"))
+        if supports_self_service and not template_path(t):
+            # we can't add a field-level validation error
+            # because the actual template for the self-service flow is derived from a pattern
+            errors.append(ValidationError(f"Template not found: {t}"))
 
-        if (
-            EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods
-            and self.system_name not in self.supported_in_person_flows
-        ):
+        if supports_in_person and self.system_name not in SUPPORTED_IN_PERSON_FLOWS:
             errors.append(
                 ValidationError(f"{self.system_name} not configured for in-person enrollment. Please uncheck to continue.")
             )
