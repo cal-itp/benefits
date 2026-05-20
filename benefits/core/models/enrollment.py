@@ -237,24 +237,16 @@ class EnrollmentFlow(models.Model):
     def clean(self):
         errors = []
 
-        templates = [
-            self.selection_label_template,
-        ]
+        supports_self_service = EnrollmentMethods.SELF_SERVICE in self.supported_enrollment_methods
+        supports_in_person = EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods
+        t = self.selection_label_template
 
-        # since templates are calculated from the pattern or the override field
-        # we can't add a field-level validation error
-        # so just create directly for a missing template
-        for t in templates:
-            # so far we only have templates for self-service flows
-            # if/when we templatize in-person, we'll need to revisit and ensure that
-            # all templates associated with the currently enabled paths are present
-            if EnrollmentMethods.SELF_SERVICE in self.supported_enrollment_methods and not template_path(t):
-                errors.append(ValidationError(f"Template not found: {t}"))
+        if supports_self_service and not template_path(t):
+            # we can't add a field-level validation error
+            # because the actual template for the self-service flow is derived from a pattern
+            errors.append(ValidationError(f"Template not found: {t}"))
 
-        if (
-            EnrollmentMethods.IN_PERSON in self.supported_enrollment_methods
-            and self.system_name not in SUPPORTED_IN_PERSON_FLOWS
-        ):
+        if supports_in_person and self.system_name not in SUPPORTED_IN_PERSON_FLOWS:
             errors.append(
                 ValidationError(f"{self.system_name} not configured for in-person enrollment. Please uncheck to continue.")
             )
