@@ -234,6 +234,8 @@ class EnrollmentFlow(models.Model):
     def supports_sign_out(self):
         return bool(self.sign_out_button_template) or bool(self.sign_out_link_template)
 
+    # until we can make time to consolidate, additional validation logic can be found in EnrollmentFlow.clean()
+    # see https://cal-itp.slack.com/archives/C037Y3UE71P/p1779234784673319?thread_ts=1779231543.096499&cid=C037Y3UE71P
     def clean(self):
         errors = []
 
