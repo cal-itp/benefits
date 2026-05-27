@@ -343,6 +343,7 @@ CONTENT_SECURITY_POLICY = {
         "connect-src": [
             SELF,
             "https://api.amplitude.com/",
+            "https://cdn.jsdelivr.net/sm/",  # centralized sourcemap hosting
             "https://cdn.jsdelivr.net/npm/@switchio",
             "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/",
             "https://cdn.jsdelivr.net/npm/jquery",
