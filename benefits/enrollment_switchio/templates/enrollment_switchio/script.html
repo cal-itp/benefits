@@ -37,7 +37,7 @@
     });
   } else {
     fetch("{% url gateway_url_route %}")
-      .then(response => response.json()
+      .then(response => response.json())
       .then(data => {
         if (data.redirect) {
           // https://stackoverflow.com/a/42469170
@@ -70,6 +70,6 @@
           tokenizeWithRedirect(data.gateway_url)
         });
         {% endblock gateway-url-handler %}
-      }));
+      });
   }
 </script>
