@@ -50,30 +50,36 @@ timeline
 
         section 2026
 
-        Q1<br>Now
+        Q1<br>Complete
         : Core infrastructure improvements to support app scaling
-        : Regional rider enrollment (Phase 1)
+        : Regional rider enrollment (for transit providers using Littlepay)
 
-        Q2<br>Planned
-        : In-person enrollment for U.S. Veterans with disabilities
+        Q2<br>Now
+        : Regional rider enrollment (for transit providers using Switchio)
+
+        Q3<br>Planned
+        : In-person enrollment for U.S. Veterans
         : In-person enrollment for CalFresh cardholders
-        : Self-serve eligibility check for U.S. Veterans with disabilities (VA)
-        : Regional rider enrollment for transit providers using Switchio
-
-        Q3<br>Projected
-        : In-person enrollment for SSI / SSDI
-        : Identity verification and eligibility confirmation using Socure
-        : Self-serve eligibility verification using a verifiable credential (SSDI)
-        : Regional rider enrollment for multiple transit providers using Littlepay
-        : In-person enrollment for young people
+        : In-person enrollment for U.S. Veterans with disabilities
         : Cal-ITP Benefits Administrator<br>(agency configuration by account managers)
 
         Q4<br>Projected
-        : Support for additional transit processor (INIT)
-        : Self-serve eligibility check for U.S. Veterans (CA DMV)
+        : In-person enrollment for SSDI
+        : In-person enrollment for young people
+        : Self-serve eligibility check for U.S. Veterans with disabilities (VA & CA DMV)
         : Self-serve eligibility check for individuals with disabilities (CA DMV)
-        : Alert system for application outages and events
+        : Regional rider enrollment (for multiple transit providers using Littlepay)
+        : User-facing alerts during application outages and events
 
+%% Cal-ITP Benefits Epics & Initiatives (Future)
+
+        section 2027
+
+        H1<br>Projected
+
+        : Identity verification and eligibility confirmation using Socure
+        : Self-serve eligibility verification using a verifiable credential (SSDI)
+        : Support for additional transit processor (INIT)
 %%{
   init: {
     'logLevel': 'debug',
