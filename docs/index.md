@@ -27,25 +27,6 @@ Our product roadmap captures what we're currently building, what we've built, an
 timeline
     title Cal-ITP Benefits Product Roadmap
 
-%% Cal-ITP Benefits Epics (2025)
-          section 2025
-
-          Q1<br>Complete
-        : Front-end enhancements and optimization
-        : Deploy in-person enrollments
-        : Utilize CDT Identity Gateway connection library
-
-          Q2<br>Complete
-
-          Q3<br>Complete
-        : Support for multiple transit processors (Enghouse)
-
-          Q4<br>Complete
-        : Support for additional card schemes<br>(Discover and American Express)
-        : UI enhancements to help the application scale
-        : Eligibility standards research
-        : Operational enhancements for more efficient agency onboarding
-
 %% Cal-ITP Benefits Epics (2026)
 
         section 2026
