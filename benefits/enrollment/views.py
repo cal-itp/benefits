@@ -176,19 +176,20 @@ class SuccessView(PageViewMixin, FlowSessionRequiredMixin, EligibleSessionRequir
     """View handler for the final success page."""
 
     template_name = "enrollment/success.html"
+    only_active_agencies = True
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         agency = self.agency
-        group_agencies = agency.group_agencies()
+        group_agencies = agency.group_agencies(only_active=self.only_active_agencies)
 
         if group_agencies:
             success_message = _(
                 "You were not charged anything today. When boarding public transit at the following providers, tap this card "
                 "and you will be charged a reduced fare:"
             )
-            agency_short_names = agency.group_agency_short_names()
+            agency_short_names = agency.group_agency_short_names(only_active=self.only_active_agencies)
         else:
             success_message = _(
                 "You were not charged anything today. When boarding public transit provided by {short_name}, tap this "

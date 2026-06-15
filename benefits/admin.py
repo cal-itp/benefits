@@ -68,7 +68,9 @@ class BenefitsAdminSite(AdminSite):
                         "transit_processor_portal_url": transit_processor_portal_url,
                         "title": f"{agency.long_name} | {self.index_title} | {self.site_title}",
                         "start_url": (
-                            routes.IN_PERSON_ADDITIONAL_AGENCIES if agency.group_agencies() else routes.IN_PERSON_ELIGIBILITY
+                            routes.IN_PERSON_ADDITIONAL_AGENCIES
+                            if agency.group_agencies(only_active=False)
+                            else routes.IN_PERSON_ELIGIBILITY
                         ),
                     }
                 )

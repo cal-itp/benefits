@@ -239,11 +239,12 @@ class AdditionalAgenciesView(AgencySessionRequiredMixin, TemplateView):
     """View handler for nearby/additional providers."""
 
     template_name = "core/additional-agencies.html"
+    only_active_agencies = True
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         agency = self.agency
-        agencies = agency.group_agency_short_names()
+        agencies = agency.group_agency_short_names(only_active=self.only_active_agencies)
 
         context |= {
             "title": _("Nearby transit providers"),

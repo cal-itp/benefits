@@ -30,6 +30,7 @@ class AdditionalAgenciesView(mixins.CommonContextMixin, SelfServiceAdditionalAge
     """View handler for showing the list of agencies the customer will be enrolled at (if more than one)."""
 
     template_name = "in_person/additional-agencies.html"
+    only_active_agencies = False
 
 
 class EligibilityView(mixins.CommonContextMixin, FormView):
@@ -148,6 +149,7 @@ class SuccessView(mixins.CommonContextMixin, AgencySessionRequiredMixin, SelfSer
     """View handler for the final success page."""
 
     template_name = "in_person/enrollment/success.html"
+    only_active_agencies = False
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
