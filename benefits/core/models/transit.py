@@ -198,7 +198,7 @@ class TransitAgency(models.Model):
         return f"{self.short_name} Customer Service"
 
     def group_agencies(self):
-        """The set of all agencies in all groups associated with this agency, excluding itself.
+        """The set of all active agencies in all groups associated with this agency, excluding itself.
 
         If an agency is not associated with any other agencies via TransitAgencyGroup,
         this returns an empty list.
