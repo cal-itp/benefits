@@ -197,19 +197,23 @@ class TransitAgency(models.Model):
         """Returns the standardized name for this Agency's customer service group."""
         return f"{self.short_name} Customer Service"
 
-    def group_agencies(self):
-        """The set of all active agencies in all groups associated with this agency, excluding itself.
+    def group_agencies(self, only_active=True):
+        """The set of agencies in all groups associated with this agency, excluding itself.
+        If only_active is True, only active agencies are returned. If only_active is False,
+        all agencies are returned.
 
         If an agency is not associated with any other agencies via TransitAgencyGroup,
         this returns an empty list.
         """
-        return list(
-            TransitAgency.objects.filter(transitagencygroup__in=list(self.transitagencygroup_set.all()))
-            .distinct()
-            .exclude(active=False)
-            .exclude(pk=self.pk)
-            .order_by("short_name")
-        )
+
+        agencies_in_group = TransitAgency.objects.filter(
+            transitagencygroup__in=list(self.transitagencygroup_set.all())
+        ).distinct()
+
+        if only_active:
+            agencies_in_group = agencies_in_group.exclude(active=False)
+
+        return list(agencies_in_group.exclude(pk=self.pk).order_by("short_name"))
 
     def group_agency_short_names(self):
         """A list of agency short names for this agency and any agencies it shares a group with.

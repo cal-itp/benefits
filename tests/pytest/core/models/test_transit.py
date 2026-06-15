@@ -244,6 +244,14 @@ class TestTransitAgency:
 
         assert model_TransitAgency_inactive not in model_TransitAgency_2.group_agencies()
 
+    def test_group_agencies__includes_inactives(
+        self, model_TransitAgency_2, model_TransitAgency_inactive, model_TransitAgencyGroup
+    ):
+        model_TransitAgencyGroup.transit_agencies.add(model_TransitAgency_2, model_TransitAgency_inactive)
+        model_TransitAgencyGroup.save()
+
+        assert model_TransitAgency_inactive in model_TransitAgency_2.group_agencies(only_active=False)
+
     @pytest.mark.usefixtures("model_TransitAgencyGroup")
     def test_group_agencies__excludes_self(self, model_TransitAgency):
         assert model_TransitAgency not in model_TransitAgency.group_agencies()
