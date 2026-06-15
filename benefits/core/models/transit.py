@@ -215,14 +215,16 @@ class TransitAgency(models.Model):
 
         return list(agencies_in_group.exclude(pk=self.pk).order_by("short_name"))
 
-    def group_agency_short_names(self):
+    def group_agency_short_names(self, only_active=True):
         """A list of agency short names for this agency and any agencies it shares a group with.
+        If only_active is True, only active short names are returned. If only_active is False,
+        all short names are returned.
 
         The list begins with the current agency and the rest follow in alphabetical order.
         If an agency is not associated with any other agencies via TransitAgencyGroup,
         this returns an empty list.
         """
-        agencies = [self] + self.group_agencies()
+        agencies = [self] + self.group_agencies(only_active=only_active)
 
         if len(agencies) > 1:
             return [agency.short_name for agency in agencies]

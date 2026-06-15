@@ -264,6 +264,13 @@ class TestTransitAgency:
         assert len(model_TransitAgency.group_agencies()) == 1
 
     @pytest.mark.usefixtures("model_TransitAgencyGroup")
+    def test_group_agency_short_names_includes_inactives(self, model_TransitAgency_inactive, model_TransitAgency_2):
+        assert model_TransitAgency_2.group_agency_short_names(only_active=False) == [
+            model_TransitAgency_2.short_name,
+            model_TransitAgency_inactive.short_name,
+        ]
+
+    @pytest.mark.usefixtures("model_TransitAgencyGroup")
     def test_group_agency_short_names(self, model_TransitAgency, model_TransitAgency_2):
         assert model_TransitAgency_2.group_agency_short_names() == [
             model_TransitAgency_2.short_name,
