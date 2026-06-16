@@ -157,20 +157,6 @@ jobs:
               title: `Transit provider is configured for In-Person Enrollments in Benefits Administrator`
             });
 
-      - name: Metabase configuration issue
-        id: metabase-config
-        uses: actions/github-script@v9
-        with:
-          script: |
-            const { createSubIssue } = await import(process.env.helpers_script);
-
-            await createSubIssue({
-              github, context, core,
-              parentNodeId: "${{ steps.parent.outputs.node_id }}",
-              templateName: 'metabase-config.md',
-              title: `Add product names to transaction charts in Metabase`
-            });
-
       - name: Amplitude enrollment issue
         id: amplitude-enrollment
         uses: actions/github-script@v9
