@@ -206,14 +206,16 @@ class TransitAgency(models.Model):
         this returns an empty list.
         """
 
-        agencies_in_group = TransitAgency.objects.filter(
-            transitagencygroup__in=list(self.transitagencygroup_set.all())
-        ).distinct()
+        agencies_in_group = (
+            TransitAgency.objects.filter(transitagencygroup__in=list(self.transitagencygroup_set.all()))
+            .distinct()
+            .exclude(pk=self.pk)
+        )
 
         if only_active:
             agencies_in_group = agencies_in_group.exclude(active=False)
 
-        return list(agencies_in_group.exclude(pk=self.pk).order_by("short_name"))
+        return list(agencies_in_group.order_by("short_name"))
 
     def group_agency_short_names(self, only_active=True):
         """A list of agency short names for this agency and any agencies it shares a group with.
