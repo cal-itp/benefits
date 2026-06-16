@@ -222,7 +222,7 @@ export const updateAdoptionTable = async ({ github, context, parentIssue }) => {
   const prResponse = await github.rest.pulls.create({
     owner: context.repo.owner,
     repo: context.repo.repo,
-    title: `Docs: Add ${long_name} to adoption table`,
+    title: `docs: adds ${long_name} to adoption table`,
     head: branchName,
     base: "main",
     body: `Adds **${long_name}** to the adoption table in the docs.\n\nPart of onboarding epic #${parentIssue}.`,
