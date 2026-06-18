@@ -10,11 +10,11 @@ If you’re interested in receiving this update delivered directly to your email
 
       - :material-newspaper-variant-outline: **[The January Update](https://5519226.hs-sites.com/cal-itp-benefits-the-january-update-2026)**
 
-            *2025 year in review*
+      *2025 year in review*
 
-            ---
+      ---
 
-            473 enrollments in 2025 (304% YoY growth), 6,646 reduced-fare transactions (138% YoY), and 3 new agencies onboarded. Also covered: the Switchio fare processor integration, an in-person enrollment beta at SBMTD and MST, and the completion of eligibility standards research for riders with disabilities.
+      473 enrollments in 2025 (304% YoY growth), 6,646 reduced-fare transactions (138% YoY), and 3 new agencies onboarded. Also covered: the Switchio fare processor integration, an in-person enrollment beta at SBMTD and MST, and the completion of eligibility standards research for riders with disabilities.
 
       - :material-newspaper-variant-outline: **[The February Update](https://5519226.hs-sites.com/cal-itp-benefits-the-february-update-2026)**
 
