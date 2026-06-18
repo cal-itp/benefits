@@ -4,23 +4,15 @@ We send a newsletter each month to share product updates, adoption metrics, and 
 
 If you’re interested in receiving this update delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
 
-### 2026
+=== "2026"
 
-- [The January Update](https://5519226.hs-sites.com/cal-itp-benefits-the-january-update-2026)
+  - [The January Update](https://5519226.hs-sites.com/cal-itp-benefits-the-january-update-2026)
+  - [The February Update](https://5519226.hs-sites.com/cal-itp-benefits-the-february-update-2026)
+  - [The March Update](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update-2026)
+  - [The April Update](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2026)
+  - [The June Update](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update-2026)
 
-- [The February Update](https://5519226.hs-sites.com/cal-itp-benefits-the-february-update-2026)
-
-- [The March Update](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update-2026)
-
-- [The April Update](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2026)
-
-- [The June Update](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update-2026)
-
-<!--
-- [The July Update]()
-  -->
-
-### 2025
+=== "2025"
 
 - [The March Update](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update)
 
@@ -38,7 +30,7 @@ If you’re interested in receiving this update delivered directly to your email
 
 - [The November Update](https://5519226.hs-sites.com/cal-itp-benefits-the-november-update-2025)
 
-### 2024
+=== "2024"
 
 - [The April Update](https://calitp-5519226.hs-sites.com/cal-itp-benefits-the-april-update)
 
