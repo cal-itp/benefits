@@ -5,11 +5,21 @@ We send a newsletter each month to share product updates, adoption metrics, and 
 If you’re interested in receiving this update delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
 
 === "2026"
+   <div class="grid cards" id="newsletter-cards-2026" markdown>
+      
+    * :material-newspaper-variant-outline: **[The January Update](https://5519226.hs-sites.com/cal-itp-benefits-the-january-update-2026)**
 
-    * [The January Update](https://5519226.hs-sites.com/cal-itp-benefits-the-january-update-2026)
+    *2025 year in review*
+
+        ---
+
+        473 enrollments in 2025 (304% YoY growth), 6,646 reduced-fare transactions (138% YoY), and 3 new agencies onboarded. Also covered: the Switchio fare processor integration, an in-person enrollment beta at SBMTD and MST, and the completion of eligibility    standards research for riders with disabilities.
+        
     * [The February Update](https://5519226.hs-sites.com/cal-itp-benefits-the-february-update-2026)
     * [The March Update](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update-2026)
     * [The April Update](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2026)
+   
+   </div>
 
 === "2025"
 
