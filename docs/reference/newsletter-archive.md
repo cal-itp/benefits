@@ -23,15 +23,15 @@ If you’re interested in receiving this update delivered directly to your email
         ---
 
         El Dorado Transit Authority completed their contactless payment implementation and went live with Cal-ITP Benefits for older adults and Medicare cardholders, bringing the total to seven active agencies. The team also highlighted behind-the-scenes infrastructure work to support scalability.
-       
+
     * :material-newspaper-variant-outline: **[The March Update](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update-2026)**
-       
+
        *New enrollment pathway*
 
         ---
 
         Redding Area Bus Authority (RABA) became the eighth agency to adopt Cal-ITP Benefits and the first to enable the low-income (CalFresh) enrollment pathway. Californians who receive CalFresh benefits can now verify eligibility and register a contactless card entirely online — no income disclosure or in-person visit required.
-       
+
     * :material-newspaper-variant-outline: **[The April Update](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2026)**
 
        *Major feature*
@@ -39,7 +39,7 @@ If you’re interested in receiving this update delivered directly to your email
         ---
 
         Regional enrollment launched in San Luis Obispo County: a single enrollment now automatically applies reduced fares at both SLO Transit and San Luis Obispo RTA. Regional enrollment will expand to a group of transit providers in Ventura County in summer 2026. The California Mobility Marketplace also published a new "Rider Benefits" resource page devoted entirely to information about Cal-ITP Benefits.
-       
+
       </div>
 
 === "2025"
