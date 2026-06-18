@@ -16,15 +16,16 @@ class AgencySessionRequiredMixin:
 
     Gets the active `TransitAgency` out of session and sets an attribute on `self`.
 
-    If the session is not configured with an agency, return a user error.
+    Allows inactive agencies ONLY if the user is an authenticated staff member, otherwise returns a user error.
     """
 
     def dispatch(self, request, *args, **kwargs):
-        if session.active_agency(request):
-            self.agency = session.agency(request)
+        agency = session.agency(request)
+        if agency and (agency.active or getattr(request.user, "is_staff", False)):
+            self.agency = agency
             return super().dispatch(request, *args, **kwargs)
         else:
-            logger.warning("Session not configured with an active agency")
+            logger.warning("Session missing an agency, or user lacks permission to access an inactive agency")
             return user_error(request)
 
 

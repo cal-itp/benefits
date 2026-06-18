@@ -25,9 +25,9 @@ class TestAgencySessionRequiredMixin:
         v.setup(app_request)
         return v
 
-    def test_dispatch_without_active_agency(self, view, app_request, mocker):
+    def test_dispatch_without_agency(self, view, app_request, mocker):
         mock_session = mocker.patch("benefits.core.mixins.session")
-        mock_session.active_agency.return_value = False
+        mock_session.agency.return_value = None
 
         response = view.dispatch(app_request)
 
@@ -35,14 +35,25 @@ class TestAgencySessionRequiredMixin:
         assert response.status_code == 200
         assert response.template_name == TEMPLATE_USER_ERROR
 
-    def test_dispatch_with_active_agency(self, view, app_request, mocker):
+    @pytest.mark.django_db
+    def test_dispatch_with_active_agency(self, view, app_request, mocker, model_TransitAgency):
         mock_session = mocker.patch("benefits.core.mixins.session")
-        mock_session.active_agency.return_value = True
-        mock_session.agency.return_value = {"agency": "123"}
+        mock_session.agency.return_value = model_TransitAgency
 
         view.dispatch(app_request)
 
-        assert view.agency == {"agency": "123"}
+        assert view.agency == model_TransitAgency
+
+    @pytest.mark.django_db
+    def test_dispatch_with_inactive_agency_staff_user(self, view, app_request, mocker, model_TransitAgency):
+        mock_session = mocker.patch("benefits.core.mixins.session")
+        model_TransitAgency.active = False
+        mock_session.agency.return_value = model_TransitAgency
+        app_request.user = mocker.Mock(is_staff=True)
+
+        view.dispatch(app_request)
+
+        assert view.agency == model_TransitAgency
 
 
 class TestEligibleSessionRequiredMixin:
