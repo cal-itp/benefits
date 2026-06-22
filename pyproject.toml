@@ -35,7 +35,7 @@ dev = [
     "flake8",
     "isort",
     "pre-commit",
-    "setuptools_scm>=8"
+    "setuptools_scm>=9.2.2"
 ]
 test = [
     "coverage",
