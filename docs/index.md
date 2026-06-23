@@ -93,11 +93,11 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 | **Gold Coast Transit Distict**                      | 06/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Santa Cruz Metropolitan Transit District**        | 06/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Camarillo**                               | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **City of Roseville**                               | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Simi Valley**                             | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Thousand Oaks**                           | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Valley Express**                                  | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Wasco**                                   | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **City of Roseville**                               | 10/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Santa Barbara County Association of Governments** | Planned             | \*           | \*                   | \*            | \*                   | \*          |
 
 ## Supported enrollment pathways
