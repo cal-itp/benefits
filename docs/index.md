@@ -90,8 +90,8 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 | **El Dorado Transit Authority**                     | 01/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
 | **Redding Area Bus Authority**                      | 02/2026             | ✅           | ✅                   | ✅            | ✅                   | ―           |
 | **City of San Luis Obispo**                         | 04/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
-| **Gold Coast Transit Distict**                      | 06/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **Santa Cruz Metropolitan Transit District**        | 06/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **Santa Cruz Metropolitan Transit District**        | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **Gold Coast Transit Distict**                      | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Camarillo**                               | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Simi Valley**                             | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Thousand Oaks**                           | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
