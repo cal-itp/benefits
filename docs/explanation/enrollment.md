@@ -14,11 +14,21 @@ graph LR
     style C fill:#a8d5a2,stroke:#6aab62,color:#000
 ```
 
+## Supported enrollment pathways
+
+Cal-ITP Benefits offers the following enrollment pathways to all transit providers as part of the standard product offering.
+
+| Enrollment pathway                              | Self-service eligibility verifier                                                     | Status  | Launch               | Available for in-person enrollment |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------- | ------- | -------------------- | ---------------------------------- |
+| [**Older adults**][older-adults]                | [Login.gov ID Proofed](https://developers.login.gov/attributes/)                      | Live    | [08/2022][2022.08.1] | ✅                                 |
+| [**Veterans**][veterans]                        | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live    | [09/2023][2023.09.1] | ―                                  |
+| [**Low-income**][low-income]                    | CalFresh Confirm API                                                                  | Live    | [07/2024][2024.07.1] | ―                                  |
+| [**Medicare cardholders**][medicare]            | [Blue Button API](https://bluebutton.cms.gov/developers/#overview)                    | Live    | [09/2024][2024.09.3] | ✅                                 |
+| [**Veterans with disabilities**][disabled vets] | [Veteran Service History and Eligibility API][VA VSHE API]                            | Planned | \*                   | \*                                 |
+
 ## Enrollment methods
 
 Cal-ITP Benefits offers two different methods for a rider to enroll for a transit benefit: self-service and in-person enrollment.
-
-\[eligibility verifier table goes here\]
 
 ### Self-service enrollment
 
@@ -78,6 +88,10 @@ Follow the links below for additional details about each pathway.
 - [Medicare cardholders][medicare]
 - [Agency cardholders][agency-cards]
 
+!!! note
+
+    While we no longer offer [agency cardholder enrollment][agency-cards] as a _self-service_ option, we do support it for in-person enrollment.
+
 [older-adults]: enrollment-pathways/older-adults.md
 [agency-cards]: enrollment-pathways/agency-cards.md
 [veterans]: enrollment-pathways/veterans.md
@@ -85,3 +99,10 @@ Follow the links below for additional details about each pathway.
 [low-income]: explanation/enrollment-pathways/low-income.md
 [littlepay]: https://littlepay.com/
 [switchio]: https://switchio.com/transport/
+[2022.08.1]: https://github.com/cal-itp/benefits/releases/tag/2022.08.1
+[2022.11.1]: https://github.com/cal-itp/benefits/releases/tag/2022.11.1
+[2023.09.1]: https://github.com/cal-itp/benefits/releases/tag/2023.09.1
+[2024.07.1]: https://github.com/cal-itp/benefits/releases/tag/2024.07.1
+[2024.09.3]: https://github.com/cal-itp/benefits/releases/tag/2024.09.3
+[disabled vets]: https://github.com/cal-itp/benefits/issues/3048
+[VA VSHE API]: https://developer.va.gov/explore/api/veteran-service-history-and-eligibility/docs?version=current
