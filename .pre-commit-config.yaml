@@ -33,7 +33,7 @@ repos:
         args: ["--maxkb=1500"]
 
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 26.3.0
+    rev: 26.5.1
     hooks:
       - id: black
         types:
@@ -54,7 +54,7 @@ repos:
           - python
 
   - repo: https://github.com/pycqa/isort
-    rev: 8.0.1
+    rev: 9.0.0a3
     hooks:
       - id: isort
         args: ["--profile", "black"]
@@ -64,13 +64,13 @@ repos:
   # if we end up bitten again by drift, i recommend we consider running 'npm install prettier'
   # explicitly in the Dockerfile, as the VS Code plugin will honor it
   - repo: https://github.com/JoC0de/pre-commit-prettier
-    rev: v3.8.1
+    rev: v3.9.3
     hooks:
       - id: prettier
         types_or: [javascript, css]
 
   - repo: https://github.com/djlint/djLint
-    rev: v1.36.4
+    rev: v1.39.5
     hooks:
       - id: djlint-reformat-django
       - id: djlint-django
