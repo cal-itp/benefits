@@ -43,7 +43,7 @@ jobs:
       helpers_script: "${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js"
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Parent issue
         id: parent
