@@ -1,6 +1,10 @@
 ci:
   autofix_commit_msg: "chore(pre-commit): autofix run"
   autoupdate_commit_msg: "chore(pre-commit): autoupdate hooks"
+  # as of 7/1/26, esbenp.prettier-vscode installs prettier@3.7.4.
+  # pinning the mirror ensures that the VS Code plugin and pre-commit are simpatico
+  # another option would be to install node/prettier manually, as the VS Code plugin will honor it
+  skip: [prettier]
 
 # by default, install these hook types
 # https://pre-commit.com/#top_level-default_install_hook_types
@@ -59,12 +63,9 @@ repos:
       - id: isort
         args: ["--profile", "black"]
 
-  # as of 2/25/26, esbenp.prettier-vscode defaults to installing prettier@3.7.4.
-  # this mirror ensures that the VS Code plugin and pre-commit are simpatico
-  # if we end up bitten again by drift, i recommend we consider running 'npm install prettier'
-  # explicitly in the Dockerfile, as the VS Code plugin will honor it
+  # this hook is frozen at 3.7.4. see ci configuration code comment above for more info
   - repo: https://github.com/JoC0de/pre-commit-prettier
-    rev: v3.9.3
+    rev: v3.7.4
     hooks:
       - id: prettier
         types_or: [javascript, css]
