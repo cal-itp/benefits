@@ -109,15 +109,19 @@ USER root
 RUN chown -R $USER:$USER benefits
 USER $USER
 
+# install dependencies from lockfile
+# this RUN command uses pipcache; if the wheel file changes (due to code changes),
+# this Docker layer will be rebuilt, but pip will use its cache for downloads
+COPY pylock.toml pylock.toml
+RUN --mount=type=cache,id=pipcache,target=${PIP_CACHE_DIR},uid=${USER_UID},gid=${USER_GID} \
+    python -m pip install --user --upgrade pip && \
+    pip install --user -r pylock.toml
+
 # copy the wheel built in the previous stage
 COPY --from=build_wheel /build/dist /build/dist
 
-# install the locally built wheel and its dependencies
-# this RUN command uses pipcache; if the wheel file changes (due to code changes),
-# this Docker layer will be rebuilt, but pip will use its cache for downloads
-RUN --mount=type=cache,id=pipcache,target=${PIP_CACHE_DIR},uid=${USER_UID},gid=${USER_GID} \
-    python -m pip install --user --upgrade pip && \
-    pip install --user $(find /build/dist -name benefits*.whl)
+# install the locally built wheel
+RUN pip install --user --no-deps --no-index $(find /build/dist -name benefits*.whl)
 
 # configure container executable
 ENTRYPOINT ["/bin/bash"]

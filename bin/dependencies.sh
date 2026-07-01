@@ -1,25 +1,28 @@
 #!/usr/bin/env bash
 set -ex
 
-# Uninstall all existing packages
-pip freeze --exclude-editable | xargs pip uninstall -y
+# Uninstall benefits individually because `pip uninstall` chokes on how it's formatted in `pip freeze` output
+pip uninstall -y benefits
 
-# Reinstall from list of direct dependencies
-pip install --user -r requirements.in
+# Uninstall everything else
+pip freeze | xargs pip uninstall -y
 
-# Update requirements.txt with new list of intalled packages (excluding benefits itself)
-pip freeze --exclude-editable > requirements.txt
+# Update pylock.toml
+pip lock .
 
-# Re-add header to top of requirements.txt
-tmpfile=$(mktemp)
-cp requirements.txt "$tmpfile" &&
-cat - "$tmpfile" <<HEADER >requirements.txt
-# List of all dependencies, direct and transitive
-# Consumed by tool.setuptools.dynamic.dependencies in pyproject.toml
-# DO NOT EDIT DIRECTLY! Update with bin/dependencies.sh
-HEADER
-rm "$tmpfile"
+# TEMP: Extract local benefits package from the lockfile
+# See https://github.com/pypa/pip/issues/13952#issuecomment-4357746894 and the immediate reply to it
+# TODO: Remove once that is resolved
+export SEARCH_STRING='[[packages]]
+name = "benefits"
+
+[packages.directory]
+path = "."'
+# Doing this via Python because it's very hard to do with Bash alone
+python -c 'import sys, os; f=sys.argv[1]; c=open(f).read(); open(f, "w").write(c.replace(os.environ["SEARCH_STRING"], ""))' pylock.toml
+
+# Install the dependencies from the lockfile
+pip install -r pylock.toml
 
 # Reinstall dev/test/docs dependencies, in case this container continues to be used
-pip install --user -e .[dev,test]
-pip install --user -r docs/requirements.txt
+pip install --user --group dev --group test -r docs/requirements.txt
