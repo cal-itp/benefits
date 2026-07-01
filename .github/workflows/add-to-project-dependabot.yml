@@ -11,7 +11,7 @@ jobs:
     if: github.actor == 'dependabot[bot]' || github.actor == 'pre-commit-ci[bot]'
     steps:
       # https://github.com/actions/add-to-project/issues/563
-      - uses: actions/add-to-project@v2.0.0
+      - uses: actions/add-to-project@v2
         with:
           project-url: ${{ secrets.USB_PROJECT_URL }}
           github-token: ${{ secrets.USB_PROJECT_TOKEN }}
