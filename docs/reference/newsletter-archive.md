@@ -18,7 +18,7 @@ If you’re interested in receiving this update delivered directly to your email
 
 <!--
 - [The July Update]()
-  -->1
+  -->
 
 ### 2025
 
