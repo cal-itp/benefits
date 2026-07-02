@@ -9,6 +9,7 @@ requires-python = ">=3.12"
 maintainers = [
   { name = "Compiler LLC", email = "dev@compiler.la" }
 ]
+
 dependencies = [
     "azure-keyvault-secrets==4.11.0",
     "azure-identity==1.25.3",
@@ -16,7 +17,7 @@ dependencies = [
     "Django==5.2.15",
     "django-admin-sortable2==2.3.1",
     "django-azure-communication-email==1.5.0",
-    "django-cdt-identity @ git+https://github.com/Office-of-Digital-Services/django-cdt-identity.git@c635773a75e7f184a9382748afcef6d5a705b2d6",
+    "django-cdt-identity==2025.10.3",
     "django-csp==4.0",
     "django-google-sso==9.0.3",
     "django-multiselectfield==1.0.1",
@@ -28,7 +29,7 @@ dependencies = [
     "six==1.17.0",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
     "black",
     "djlint",
