@@ -29,7 +29,10 @@ jobs:
           cache-dependency-path: "**/pyproject.toml"
 
       - name: Install Python dependencies
-        run: pip install -e .[test]
+        run: |
+          pip install --upgrade pip
+          pip install -r pylock.toml
+          pip install --group test
 
       - name: Run setup
         run: |
