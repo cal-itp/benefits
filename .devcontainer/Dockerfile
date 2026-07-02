@@ -33,11 +33,15 @@ COPY pyproject.toml pyproject.toml
 # ensure setuptools_scm can run git commands
 RUN git config --global --add safe.directory /calitp/app
 
+# Install dev and test dependencies in userland
+# - These are listed under dependency-groups in pyproject.toml
+# - Using three day cooldown period (--uploaded-prior-to=P3D) since they're not locked
 # this RUN command uses pipcache
 # setting uid,gid here is critical, as otherwise the Buildkit cache is mounted as root
 # even though we are running in the context of non-root $USER
 RUN --mount=type=cache,id=pipcache,target=${PIP_CACHE_DIR},uid=${USER_UID},gid=${USER_GID} \
-     pip install --user -e .[dev,test]
+    pip install --user --upgrade pip && \
+    pip install --user --group dev --group test --uploaded-prior-to=P3D
 
 # docs requirements are in a separate file for the GitHub Action
 COPY docs/requirements.txt docs/requirements.txt
@@ -45,4 +49,4 @@ COPY docs/requirements.txt docs/requirements.txt
 # setting uid,gid here is critical, as otherwise the Buildkit cache is mounted as root
 # even though we are running in the context of non-root $USER
 RUN --mount=type=cache,id=pipcache,target=${PIP_CACHE_DIR},uid=${USER_UID},gid=${USER_GID} \
-    pip install --user -r docs/requirements.txt
+    pip install --user --uploaded-prior-to=P3D -r docs/requirements.txt
