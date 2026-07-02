@@ -5,7 +5,7 @@ description = "Cal-ITP Benefits is an application that enables automated eligibi
 readme = "README.md"
 license-files = ["LICENSE"]
 classifiers = ["Programming Language :: Python :: 3 :: Only"]
-requires-python = ">=3.9"
+requires-python = ">=3.12"
 maintainers = [
   { name = "Compiler LLC", email = "dev@compiler.la" }
 ]
