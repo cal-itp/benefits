@@ -23,6 +23,9 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "false").lower() == "true"
 
+# SECURITY WARNING: don't run with debug_toolbar turned on in production!
+DEBUG_TOOLBAR = os.environ.get("DJANGO_DEBUG_TOOLBAR", "false").lower() == "true"
+
 ALLOWED_HOSTS = _filter_empty(os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(","))
 
 
@@ -106,6 +109,20 @@ MIDDLEWARE = [
 
 if DEBUG:
     MIDDLEWARE.append("benefits.core.middleware.DebugSession")
+
+if DEBUG_TOOLBAR:
+    INSTALLED_APPS.append("debug_toolbar")
+    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+    INTERNAL_IPS = ["127.0.0.1"]
+
+    def show_toolbar(request):
+        # Show the toolbar when in local development mode
+        return DEBUG
+
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+    }
+
 
 HEALTHCHECK_USER_AGENTS = _filter_empty(os.environ.get("HEALTHCHECK_USER_AGENTS", "").split(","))
 

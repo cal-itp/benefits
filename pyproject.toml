@@ -35,6 +35,7 @@ dev = [
     "flake8",
     "isort",
     "pre-commit",
+    "django-debug-toolbar"
 ]
 test = [
     "coverage",

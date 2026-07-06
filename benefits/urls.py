@@ -79,6 +79,12 @@ if settings.RUNTIME_ENVIRONMENT() == settings.RUNTIME_ENVS.LOCAL:
     urlpatterns.append(path("test500/", trigger_500))
     urlpatterns.append(path("testcsrf/", trigger_csrf))
 
+if settings.DEBUG_TOOLBAR:
+    from debug_toolbar.toolbar import debug_toolbar_urls
+
+    urlpatterns.extend(debug_toolbar_urls())
+
+
 if settings.RUNTIME_ENVIRONMENT() in (settings.RUNTIME_ENVS.LOCAL, settings.RUNTIME_ENVS.DEV):
     # simple route to read a pre-defined "secret"
     # this "secret" does not contain sensitive information
