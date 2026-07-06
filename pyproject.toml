@@ -23,7 +23,7 @@ dependencies = [
     "eligibility-api==2025.4.1",
     "pillow==12.3.0",
     "psycopg[binary,pool]==3.3.4",
-    "requests==2.33.0",
+    "requests==2.34.2",
     "sentry-sdk==2.64.0",
     "six==1.17.0",
 ]
