@@ -65,13 +65,13 @@ repos:
 
   # this hook is frozen at 3.7.4. see ci configuration code comment above for more info
   - repo: https://github.com/JoC0de/pre-commit-prettier
-    rev: v3.7.4
+    rev: v3.9.4
     hooks:
       - id: prettier
         types_or: [javascript, css]
 
   - repo: https://github.com/djlint/djLint
-    rev: v1.39.5
+    rev: v1.40.3
     hooks:
       - id: djlint-reformat-django
       - id: djlint-django
