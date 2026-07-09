@@ -14,6 +14,12 @@ from benefits.routes import routes
 
 
 @pytest.mark.django_db
+def test_agency_does_not_exist(app_request):
+    app_request.session[session._AGENCY] = -1
+    assert not session.agency(app_request)
+
+
+@pytest.mark.django_db
 def test_active_agency_False(app_request, model_TransitAgency_inactive):
     session.update(app_request, agency=None)
 
