@@ -39,9 +39,12 @@ _UID = "uid"
 
 def agency(request):
     """Get the agency from the request's session, or None"""
+    agency_id = request.session.get(_AGENCY)
+    if not agency_id:
+        return None
     try:
-        return models.TransitAgency.by_id(request.session[_AGENCY])
-    except (KeyError, models.TransitAgency.DoesNotExist):
+        return models.TransitAgency.by_id(agency_id)
+    except models.TransitAgency.DoesNotExist:
         return None
 
 
