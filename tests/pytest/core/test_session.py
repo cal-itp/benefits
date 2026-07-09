@@ -133,6 +133,12 @@ def test_enrollment_reenrollment(app_request, model_EnrollmentFlow_supports_expi
 
 
 @pytest.mark.django_db
+def test_flow_does_not_exist(app_request):
+    app_request.session[session._FLOW] = -1
+    assert not session.flow(app_request)
+
+
+@pytest.mark.django_db
 def test_language_default(app_request):
     assert session.language(app_request) == "en"
 

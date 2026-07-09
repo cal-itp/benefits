@@ -124,9 +124,12 @@ def enrollment_reenrollment(request):
 
 def flow(request) -> models.EnrollmentFlow | None:
     """Get the EnrollmentFlow from the request's session, or None"""
+    flow_id = request.session.get(_FLOW)
+    if not flow_id:
+        return None
     try:
-        return models.EnrollmentFlow.by_id(request.session[_FLOW])
-    except (KeyError, models.EnrollmentFlow.DoesNotExist):
+        return models.EnrollmentFlow.by_id(flow_id)
+    except models.EnrollmentFlow.DoesNotExist:
         return None
 
 
