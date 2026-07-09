@@ -100,19 +100,6 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 | **City of Roseville**                               | 10/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Santa Barbara County Association of Governments** | Planned             | \*           | \*                   | \*            | \*                   | \*          |
 
-## Supported enrollment pathways
-
-Cal-ITP Benefits offers the following enrollment pathways to all transit providers as part of the standard product offering.
-
-| Enrollment pathway                              | Self-service eligibility verifier                                                     | Status | Launch               | Available for in-person enrollment |
-| ------------------------------------------------| ------------------------------------------------------------------------------------- | ------ | -------------------- | ---------------------------------- |
-| [**Older adults**][older-adults]                | [Login.gov ID Proofed](https://developers.login.gov/attributes/)                      | Live   | [08/2022][2022.08.1] | ✅                                |
-| [**Agency cards**][agency-cards]                | [Eligibility API](https://docs.calitp.org/eligibility-api/specification/)             | Live   | [11/2022][2022.11.1] | ✅                                |
-| [**Veterans**][veterans]                        | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live   | [09/2023][2023.09.1] | ―                                 |
-| [**Low-income**][low-income]                    | CalFresh Confirm API                                                                  | Live   | [07/2024][2024.07.1] | ―                                 |
-| [**Medicare cardholders**][medicare]            | [Blue Button API](https://bluebutton.cms.gov/developers/#overview)                    | Live   | [09/2024][2024.09.3] | ✅                                |
-| [**Veterans with disabilities**][disabled vets] | [Veteran Service History and Eligibility API][VA VSHE API]                            | Planned| *                    | *                                 |
-
 ## Technical and security details
 
 `benefits` is a [Django 5][django] web application. The application talks to one or more [Eligibility Verification APIs](https://docs.calitp.org/eligibility-api/specification) or claims providers. These APIs and the application itself are
@@ -176,16 +163,6 @@ Upon doing new major integrations, features, or architectural changes, the Benef
 
 All code changes are reviewed by at least one other member of the engineering team, which is enforced through [branch protections](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/about-protected-branches).
 
-[2022.08.1]: https://github.com/cal-itp/benefits/releases/tag/2022.08.1
-[2022.11.1]: https://github.com/cal-itp/benefits/releases/tag/2022.11.1
-[2023.09.1]: https://github.com/cal-itp/benefits/releases/tag/2023.09.1
-[2024.07.1]: https://github.com/cal-itp/benefits/releases/tag/2024.07.1
-[2024.09.3]: https://github.com/cal-itp/benefits/releases/tag/2024.09.3
-[older-adults]: explanation/enrollment-pathways/older-adults.md
-[agency-cards]: explanation/enrollment-pathways/agency-cards.md
-[veterans]: explanation/enrollment-pathways/veterans.md
-[low-income]: explanation/enrollment-pathways/low-income.md
-[medicare]: explanation/enrollment-pathways/medicare-cardholders.md
 [benefits-repo]: https://github.com/cal-itp/benefits
 [board]: https://github.com/orgs/compilerla/projects/6/views/8
 [calitp]: https://calitp.org
@@ -196,5 +173,3 @@ All code changes are reviewed by at least one other member of the engineering te
 [littlepay]: https://littlepay.com/
 [switchio]: https://switchio.com/transport/
 [i18n]: https://docs.djangoproject.com/en/stable/topics/i18n/
-[disabled vets]: https://github.com/cal-itp/benefits/issues/3048
-[VA VSHE API]: https://developer.va.gov/explore/api/veteran-service-history-and-eligibility/docs?version=current
