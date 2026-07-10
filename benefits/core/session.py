@@ -42,8 +42,13 @@ def agency(request):
     agency_id = request.session.get(_AGENCY)
     if not agency_id:
         return None
+
+    if getattr(request, "_cached_agency", None) and request._cached_agency.id == agency_id:
+        return request._cached_agency
     try:
-        return models.TransitAgency.by_id(agency_id)
+        agency = models.TransitAgency.by_id(agency_id)
+        request._cached_agency = agency
+        return agency
     except models.TransitAgency.DoesNotExist:
         return None
 
