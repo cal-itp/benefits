@@ -20,6 +20,23 @@ def test_agency_does_not_exist(app_request):
 
 
 @pytest.mark.django_db
+def test_agency_cache(model_TransitAgency, app_request):
+    session.update(app_request, agency=model_TransitAgency)
+    assert not hasattr(app_request, "_cached_agency")
+
+    # set _cached_agency
+    first_call = session.agency(app_request)
+
+    assert first_call == model_TransitAgency
+    assert hasattr(app_request, "_cached_agency")
+    assert app_request._cached_agency == model_TransitAgency
+
+    second_call = session.agency(app_request)
+
+    assert second_call == model_TransitAgency
+
+
+@pytest.mark.django_db
 def test_active_agency_False(app_request, model_TransitAgency_inactive):
     session.update(app_request, agency=None)
 
