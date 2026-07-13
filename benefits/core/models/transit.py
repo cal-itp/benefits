@@ -207,7 +207,7 @@ class TransitAgency(models.Model):
         """
 
         agencies_in_group = (
-            TransitAgency.objects.filter(transitagencygroup__in=list(self.transitagencygroup_set.all()))
+            TransitAgency.objects.filter(transitagencygroup__in=self.transitagencygroup_set.all())
             .distinct()
             .exclude(pk=self.pk)
         )
