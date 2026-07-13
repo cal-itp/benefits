@@ -162,6 +162,23 @@ def test_flow_does_not_exist(app_request):
 
 
 @pytest.mark.django_db
+def test_flow_cache(model_EnrollmentFlow, app_request):
+    session.update(app_request, flow=model_EnrollmentFlow)
+    assert not hasattr(app_request, "_cached_flow")
+
+    # set _cached_flow
+    first_call = session.flow(app_request)
+
+    assert first_call == model_EnrollmentFlow
+    assert hasattr(app_request, "_cached_flow")
+    assert app_request._cached_flow == model_EnrollmentFlow
+
+    second_call = session.flow(app_request)
+
+    assert second_call == model_EnrollmentFlow
+
+
+@pytest.mark.django_db
 def test_language_default(app_request):
     assert session.language(app_request) == "en"
 

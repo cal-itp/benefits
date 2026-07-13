@@ -135,8 +135,13 @@ def flow(request) -> models.EnrollmentFlow | None:
     flow_id = request.session.get(_FLOW)
     if not flow_id:
         return None
+
+    if getattr(request, "_cached_flow", None) and request._cached_flow.id == flow_id:
+        return request._cached_flow
     try:
-        return models.EnrollmentFlow.by_id(flow_id)
+        flow = models.EnrollmentFlow.by_id(flow_id)
+        request._cached_flow = flow
+        return flow
     except models.EnrollmentFlow.DoesNotExist:
         return None
 
