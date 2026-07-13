@@ -54,7 +54,7 @@ repos:
           - python
 
   - repo: https://github.com/pycqa/isort
-    rev: 9.0.0a3
+    rev: 9.0.0b1
     hooks:
       - id: isort
         args: ["--profile", "black"]
@@ -63,13 +63,13 @@ repos:
   # to match the version installed by esbenp.prettier-vscode (as of 7/1/26)
   # another option would be to install node/prettier manually, as the VS Code plugin will honor it
   - repo: https://github.com/JoC0de/pre-commit-prettier
-    rev: v3.7.4
+    rev: v3.9.5
     hooks:
       - id: prettier
         types_or: [javascript, css]
 
   - repo: https://github.com/djlint/djLint
-    rev: v1.40.3
+    rev: v1.40.6
     hooks:
       - id: djlint-reformat-django
       - id: djlint-django
