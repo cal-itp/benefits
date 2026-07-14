@@ -44,7 +44,9 @@ def agency(request):
 
 def active_agencies(request):
     """Context processor adds some information about all active agencies to the request context."""
-    agencies = models.TransitAgency.all_active()
+    agencies = models.TransitAgency.all_active().select_related(
+        "transit_processor_config", "transit_processor_config__littlepayconfig", "transit_processor_config__switchioconfig"
+    )
 
     return {"active_agencies": [_agency_context(agency) for agency in agencies]}
 
