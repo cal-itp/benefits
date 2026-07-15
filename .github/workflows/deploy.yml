@@ -48,6 +48,9 @@ jobs:
       ]
     if: (!cancelled())
     environment: ${{ github.ref_type != 'tag' && github.ref_name || contains(github.ref, '-rc') && 'test' || 'prod' }}
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout
