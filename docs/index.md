@@ -97,9 +97,10 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 | **City of Thousand Oaks**                           | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Valley Express**                                  | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Wasco**                                   | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **Yolo County Transportation District**             | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **City of Roseville**                               | 10/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Santa Barbara County Association of Governments** | Planned             | \*           | \*                   | \*            | \*                   | \*          |
-| **Yolo County Transportation District**             | 8/2026 (target)   | \*           | \*                   | \*            | \*          | \*         |
+
 
 ## Supported enrollment pathways
 
