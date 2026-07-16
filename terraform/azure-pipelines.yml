@@ -3,6 +3,16 @@ trigger: none
 # but will still automatically run on pull requests
 # https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/trigger?view=azure-pipelines#trigger-none
 
+parameters:
+  - name: TargetRef
+    type: string
+    default: "main"
+
+steps:
+  - checkout: self
+    # Automatically check out the tag if it's passed, otherwise default to main
+    ref: $(TargetRef)
+
 stages:
   - stage: terraform
     pool:
