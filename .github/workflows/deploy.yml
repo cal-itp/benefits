@@ -132,7 +132,7 @@ jobs:
             --id "${{ secrets.AZURE_ADO_PIPELINE_ID }}" \
             --org "${{ secrets.AZURE_ADO_ORG_URL }}" \
             --project "${{ secrets.AZURE_ADO_PROJECT }}" \
-            --branch "fix/pipeline-perms" \
+            --branch "${{ github.ref }}" \
             --commit-id "${{ github.sha }}" \
             --query "id" -o tsv)
 

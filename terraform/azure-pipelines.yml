@@ -35,6 +35,7 @@ stages:
           workspace: $[ dependencies.environment.outputs['env_select.workspace'] ]
         steps:
           - template: pipeline/deploy.yml
+            fetchTags: true
             parameters:
               service_connection: Production
               workspace: $(workspace)
