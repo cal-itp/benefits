@@ -90,30 +90,29 @@ The following California transit providers have adopted Cal-ITP Benefits. The be
 | **El Dorado Transit Authority**                     | 01/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
 | **Redding Area Bus Authority**                      | 02/2026             | ✅           | ✅                   | ✅            | ✅                   | ―           |
 | **City of San Luis Obispo**                         | 04/2026             | ✅           | ✅                   | ―             | ―                    | ―           |
-| **Santa Cruz Metropolitan Transit District**        | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **Gold Coast Transit Distict**                      | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **City of Camarillo**                               | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **City of Simi Valley**                             | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **City of Thousand Oaks**                           | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **Valley Express**                                  | 07/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **City of Wasco**                                   | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **Yolo County Transportation District**             | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
-| **City of Roseville**                               | 10/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **City of Camarillo**                               | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **City of Simi Valley**                             | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **City of Thousand Oaks**                           | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **Gold Coast Transit Distict**                      | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **Santa Cruz Metropolitan Transit District**        | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **Valley Express**                                  | 08/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **City of Roseville**                               | 09/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **City of Wasco**                                   | 09/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
+| **Yolo County Transportation District**             | 09/2026 (target)    | \*           | \*                   | \*            | \*                   | \*          |
 | **Santa Barbara County Association of Governments** | Planned             | \*           | \*                   | \*            | \*                   | \*          |
-
 
 ## Supported enrollment pathways
 
 Cal-ITP Benefits offers the following enrollment pathways to all transit providers as part of the standard product offering.
 
-| Enrollment pathway                              | Self-service eligibility verifier                                                     | Status | Launch               | Available for in-person enrollment |
-| ------------------------------------------------| ------------------------------------------------------------------------------------- | ------ | -------------------- | ---------------------------------- |
-| [**Older adults**][older-adults]                | [Login.gov ID Proofed](https://developers.login.gov/attributes/)                      | Live   | [08/2022][2022.08.1] | ✅                                |
-| [**Agency cards**][agency-cards]                | [Eligibility API](https://docs.calitp.org/eligibility-api/specification/)             | Live   | [11/2022][2022.11.1] | ✅                                |
-| [**Veterans**][veterans]                        | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live   | [09/2023][2023.09.1] | ―                                 |
-| [**Low-income**][low-income]                    | CalFresh Confirm API                                                                  | Live   | [07/2024][2024.07.1] | ―                                 |
-| [**Medicare cardholders**][medicare]            | [Blue Button API](https://bluebutton.cms.gov/developers/#overview)                    | Live   | [09/2024][2024.09.3] | ✅                                |
-| [**Veterans with disabilities**][disabled vets] | [Veteran Service History and Eligibility API][VA VSHE API]                            | Planned| *                    | *                                 |
+| Enrollment pathway                              | Self-service eligibility verifier                                                     | Status  | Launch               | Available for in-person enrollment |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------- | ------- | -------------------- | ---------------------------------- |
+| [**Older adults**][older-adults]                | [Login.gov ID Proofed](https://developers.login.gov/attributes/)                      | Live    | [08/2022][2022.08.1] | ✅                                 |
+| [**Agency cards**][agency-cards]                | [Eligibility API](https://docs.calitp.org/eligibility-api/specification/)             | Live    | [11/2022][2022.11.1] | ✅                                 |
+| [**Veterans**][veterans]                        | [Veteran Confirmation API](https://developer.va.gov/explore/api/veteran-confirmation) | Live    | [09/2023][2023.09.1] | ―                                  |
+| [**Low-income**][low-income]                    | CalFresh Confirm API                                                                  | Live    | [07/2024][2024.07.1] | ―                                  |
+| [**Medicare cardholders**][medicare]            | [Blue Button API](https://bluebutton.cms.gov/developers/#overview)                    | Live    | [09/2024][2024.09.3] | ✅                                 |
+| [**Veterans with disabilities**][disabled vets] | [Veteran Service History and Eligibility API][VA VSHE API]                            | Planned | \*                   | \*                                 |
 
 ## Technical and security details
 
