@@ -35,22 +35,18 @@ timeline
         : Core infrastructure improvements to support app scaling
         : Regional rider enrollment (for transit providers using Littlepay)
 
-        Q2<br>Now
+        Q2<br>Complete
         : Regional rider enrollment (for transit providers using Switchio)
 
-        Q3<br>Planned
+        Q3<br>Now
         : In-person enrollment for U.S. Veterans
         : In-person enrollment for CalFresh cardholders
-        : In-person enrollment for U.S. Veterans with disabilities
         : Cal-ITP Benefits Administrator<br>(agency configuration by account managers)
 
-        Q4<br>Projected
-        : In-person enrollment for SSDI
-        : In-person enrollment for young people
-        : Self-serve eligibility check for U.S. Veterans with disabilities (VA & CA DMV)
-        : Self-serve eligibility check for individuals with disabilities (CA DMV)
-        : Regional rider enrollment (for multiple transit providers using Littlepay)
-        : User-facing alerts during application outages and events
+        Q4<br>Planned
+        : Support for additional transit processor (INIT)
+        : In-person enrollment for U.S. Veterans with disabilities
+        : Self-serve enrollment for U.S. Veterans with disabilities (VA)
 
 %% Cal-ITP Benefits Epics & Initiatives (Future)
 
@@ -58,9 +54,13 @@ timeline
 
         H1<br>Projected
 
+        : Self-serve eligibility check for individuals with disabilities (CA DMV)
+        : Regional rider enrollment (for multiple transit providers using Littlepay)
+        : In-person enrollment for SSDI
+        : In-person enrollment for young people
+        : User-facing alerts during application outages and events
         : Identity verification and eligibility confirmation using Socure
         : Self-serve eligibility verification using a verifiable credential (SSDI)
-        : Support for additional transit processor (INIT)
 %%{
   init: {
     'logLevel': 'debug',
