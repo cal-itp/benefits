@@ -1,46 +1,60 @@
 # Cal-ITP Benefits newsletter
 
-We send a newsletter each month to share product updates, adoption metrics, and news related to Cal-ITP Benefits. Below is an archive of all newsletters we’ve shared organized by year and month.
+Most months we send a newsletter to share product updates, adoption metrics, and news related to Cal-ITP Benefits. Below is an archive of all newsletters we’ve shared. Browse the list by year or use the search field in the header to locate content about a specific topic.
 
-If you’re interested in receiving this update delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
+!!! note ""
+
+    If you’re interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
 
 === "2026"
 
-      <div class="grid cards" id="newsletter-cards-2026" markdown>
+    <div class="grid cards" id="newsletter-cards-2026" markdown>
 
-      -   :material-newspaper-variant-outline: **[The January Update](https://5519226.hs-sites.com/cal-itp-benefits-the-january-update-2026)**
+    -   :material-email-newsletter: The January Update
 
           *2025 year in review*
 
           ---
 
-          473 enrollments in 2025 (304% YoY growth), 6,646 reduced-fare transactions (138% YoY), and 3 new agencies onboarded. Also covered: the Switchio fare processor integration, an in-person enrollment beta at SBMTD and MST, and the completion of eligibility standards research for riders with disabilities.
+          473 enrollments in 2025 (304% YoY growth), 6,646 reduced-fare transactions (138% YoY growth), and three new agencies onboarded. Also covered: the Switchio fare processor integration, an in-person enrollment beta at SBMTD and MST, and the completion of eligibility standards research for riders with disabilities.
 
-      -   :material-newspaper-variant-outline: **[The February Update](https://5519226.hs-sites.com/cal-itp-benefits-the-february-update-2026)**
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-january-update-2026){target="_blank"}
+
+    -   :material-email-newsletter: The February Update
 
           *New transit partner*
 
           ---
 
-          El Dorado Transit Authority completed their contactless payment implementation and went live with Cal-ITP Benefits for older adults and Medicare cardholders, bringing the total to seven active agencies. The team also highlighted behind-the-scenes infrastructure work to support scalability.
+          El Dorado Transit Authority went live in Cal-ITP Benefits for older adults and Medicare cardholders, bringing the total to seven active agencies. The team also highlighted behind-the-scenes infrastructure work to support scalability and a reminder that this is an open-source project in GitHub.
 
-      -   :material-newspaper-variant-outline: **[The March Update](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update-2026)**
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-february-update-2026){target="_blank"}
 
-          *New enrollment pathway*
+    -  :material-email-newsletter: The March Update
 
-          ---
-
-          Redding Area Bus Authority (RABA) became the eighth agency to adopt Cal-ITP Benefits and the first to enable the low-income (CalFresh) enrollment pathway. Californians who receive CalFresh benefits can now verify eligibility and register a contactless card entirely online — no income disclosure or in-person visit required.
-
-      -   :material-newspaper-variant-outline: **[The April Update](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2026)**
-
-          *Major feature*
+          *Low-income enrollment*
 
           ---
 
-          Regional enrollment launched in San Luis Obispo County: a single enrollment now automatically applies reduced fares at both SLO Transit and San Luis Obispo RTA. Regional enrollment will expand to a group of transit providers in Ventura County in summer 2026. The California Mobility Marketplace also published a new "Rider Benefits" resource page devoted entirely to information about Cal-ITP Benefits.
+          Redding Area Bus Authority (RABA) became the eighth agency to adopt Cal-ITP Benefits and the first to enable the low-income (CalFresh) enrollment pathway. Californians who receive CalFresh benefits can now verify eligibility for a transit benefit and register a contactless card entirely online — no income disclosure or in-person visit required.
 
-      </div>
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update-2026){target="_blank"}
+
+    -  :material-email-newsletter: The April Update
+
+          *Regional enrollment*
+
+          ---
+
+          Regional enrollment launched in San Luis Obispo County: a single enrollment now automatically applies reduced fares when riders tap-to-ride on both SLO Transit and San Luis Obispo RTA buses. A group of transit providers in Ventura County will launch as a second region in Cal-ITP Benefits in the summer of 2026. The California Mobility Marketplace published a new *Rider Benefits* resource page devoted entirely to information about Cal-ITP Benefits.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2026){target="_blank"}
+
+    </div>
+
+    !!! note ""
+
+        If you’re interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
 
 === "2025"
 
