@@ -33,7 +33,7 @@ repos:
         args: ["--maxkb=1500"]
 
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 26.3.0
+    rev: 26.5.1
     hooks:
       - id: black
         types:
@@ -54,23 +54,22 @@ repos:
           - python
 
   - repo: https://github.com/pycqa/isort
-    rev: 8.0.1
+    rev: 9.0.0b1
     hooks:
       - id: isort
         args: ["--profile", "black"]
 
-  # as of 2/25/26, esbenp.prettier-vscode defaults to installing prettier@3.7.4.
-  # this mirror ensures that the VS Code plugin and pre-commit are simpatico
-  # if we end up bitten again by drift, i recommend we consider running 'npm install prettier'
-  # explicitly in the Dockerfile, as the VS Code plugin will honor it
+  # we cannot disable autoupdate in pre-commit.ci, but this hook should remain pinned at 3.7.4.
+  # to match the version installed by esbenp.prettier-vscode (as of 7/1/26)
+  # another option would be to install node/prettier manually, as the VS Code plugin will honor it
   - repo: https://github.com/JoC0de/pre-commit-prettier
-    rev: v3.8.1
+    rev: v3.7.4
     hooks:
       - id: prettier
         types_or: [javascript, css]
 
   - repo: https://github.com/djlint/djLint
-    rev: v1.36.4
+    rev: v1.40.6
     hooks:
       - id: djlint-reformat-django
       - id: djlint-django

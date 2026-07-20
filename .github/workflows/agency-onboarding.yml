@@ -43,11 +43,11 @@ jobs:
       helpers_script: "${{ github.workspace }}/.github/workflows/agency-onboarding/helpers.js"
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Parent issue
         id: parent
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const { createEpicIssue } = await import(process.env.helpers_script);
@@ -58,7 +58,7 @@ jobs:
 
       - name: Onboarding form issue
         id: form
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const { createSubIssue } = await import(process.env.helpers_script);
@@ -72,7 +72,7 @@ jobs:
 
       - name: Adoption table issue
         id: table
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const { updateAdoptionTable } = await import(process.env.helpers_script);
@@ -86,7 +86,7 @@ jobs:
 
       - name: Transit processor configuration issue
         id: transit-processor
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const { createSubIssue } = await import(process.env.helpers_script);
@@ -102,7 +102,7 @@ jobs:
 
       - name: Production Validation configuration issue
         id: production-validation
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const { createSubIssue } = await import(process.env.helpers_script);
@@ -116,7 +116,7 @@ jobs:
 
       - name: Test environment configuration issue
         id: test
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         if: inputs.transit_processor == 'Littlepay'
         with:
           script: |
@@ -131,7 +131,7 @@ jobs:
 
       - name: Production environment configuration issue
         id: production
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const { createSubIssue } = await import(process.env.helpers_script);
@@ -145,7 +145,7 @@ jobs:
 
       - name: In-Person Enrollment configuration issue
         id: in-person
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const { createSubIssue } = await import(process.env.helpers_script);
@@ -157,23 +157,9 @@ jobs:
               title: `Transit provider is configured for In-Person Enrollments in Benefits Administrator`
             });
 
-      - name: Metabase configuration issue
-        id: metabase-config
-        uses: actions/github-script@v8
-        with:
-          script: |
-            const { createSubIssue } = await import(process.env.helpers_script);
-
-            await createSubIssue({
-              github, context, core,
-              parentNodeId: "${{ steps.parent.outputs.node_id }}",
-              templateName: 'metabase-config.md',
-              title: `Add product names to transaction charts in Metabase`
-            });
-
       - name: Amplitude enrollment issue
         id: amplitude-enrollment
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const { createSubIssue } = await import(process.env.helpers_script);
@@ -187,7 +173,7 @@ jobs:
 
       - name: Metabase metrics issue
         id: metabase-metrics
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const { createSubIssue } = await import(process.env.helpers_script);

@@ -5,7 +5,7 @@ description = "Cal-ITP Benefits is an application that enables automated eligibi
 readme = "README.md"
 license-files = ["LICENSE"]
 classifiers = ["Programming Language :: Python :: 3 :: Only"]
-requires-python = ">=3.9"
+requires-python = ">=3.12"
 maintainers = [
   { name = "Compiler LLC", email = "dev@compiler.la" }
 ]
@@ -13,18 +13,18 @@ dependencies = [
     "azure-keyvault-secrets==4.11.0",
     "azure-identity==1.25.3",
     "calitp-littlepay==2025.4.1",
-    "Django==5.2.11",
+    "Django==5.2.16",
     "django-admin-sortable2==2.3.1",
-    "django-azure-communication-email==1.5.0",
+    "django-azure-communication-email==1.6.0",
     "django-cdt-identity @ git+https://github.com/Office-of-Digital-Services/django-cdt-identity.git@c635773a75e7f184a9382748afcef6d5a705b2d6",
     "django-csp==4.0",
-    "django-google-sso==9.0.3",
+    "django-google-sso==10.0.0",
     "django-multiselectfield==1.0.1",
     "eligibility-api==2025.4.1",
-    "pillow==12.1.0",
-    "psycopg[binary,pool]==3.3.2",
-    "requests==2.32.5",
-    "sentry-sdk==2.58.0",
+    "pillow==12.3.0",
+    "psycopg[binary,pool]==3.3.4",
+    "requests==2.34.2",
+    "sentry-sdk==2.65.0",
     "six==1.17.0",
 ]
 
@@ -35,7 +35,6 @@ dev = [
     "flake8",
     "isort",
     "pre-commit",
-    "setuptools_scm>=8"
 ]
 test = [
     "coverage",
@@ -54,7 +53,7 @@ Homepage = "https://www.calitp.org/#initiatives-benefits"
 Issues = "https://github.com/cal-itp/benefits/issues"
 
 [build-system]
-requires = ["setuptools>=65", "setuptools-scm>=8"]
+requires = ["setuptools>=83.0.0", "setuptools-scm>=10.2.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.black]
