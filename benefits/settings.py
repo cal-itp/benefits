@@ -115,7 +115,7 @@ if DEBUG_TOOLBAR:
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
     # Show the toolbar when in local development mode
     DEBUG_TOOLBAR_CONFIG = {
-        "SHOW_TOOLBAR_CALLBACK": lambda request: settings.DEBUG,
+        "SHOW_TOOLBAR_CALLBACK": lambda request: settings.DEBUG_TOOLBAR,
     }
 
 
