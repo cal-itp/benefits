@@ -116,7 +116,7 @@ if DEBUG_TOOLBAR:
 
     def show_toolbar(request):
         # Show the toolbar when in local development mode
-        return DEBUG
+        return settings.DEBUG
 
     DEBUG_TOOLBAR_CONFIG = {
         "SHOW_TOOLBAR_CALLBACK": show_toolbar,
