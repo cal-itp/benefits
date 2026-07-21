@@ -113,13 +113,9 @@ if DEBUG:
 if DEBUG_TOOLBAR:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
-
-    def show_toolbar(request):
-        # Show the toolbar when in local development mode
-        return settings.DEBUG
-
+    # Show the toolbar when in local development mode
     DEBUG_TOOLBAR_CONFIG = {
-        "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+        "SHOW_TOOLBAR_CALLBACK": lambda request: settings.DEBUG,
     }
 
 
