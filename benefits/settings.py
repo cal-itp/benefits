@@ -113,7 +113,6 @@ if DEBUG:
 if DEBUG_TOOLBAR:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
-    INTERNAL_IPS = ["127.0.0.1"]
 
     def show_toolbar(request):
         # Show the toolbar when in local development mode
