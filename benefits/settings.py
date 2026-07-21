@@ -107,12 +107,12 @@ MIDDLEWARE = [
 if DEBUG:
     MIDDLEWARE.append("benefits.core.middleware.DebugSession")
 
-# SECURITY WARNING: don't run with debug_toolbar turned on in any non-local environment!
-DEBUG_TOOLBAR = os.environ.get("DJANGO_DEBUG_TOOLBAR", "false").lower() == "true"
+# The Django Debug Toolbar can be toggled on/off but in both cases the application has to be in debug mode
+DEBUG_TOOLBAR = DEBUG and os.environ.get("DJANGO_DEBUG_TOOLBAR", "false").lower() == "true"
 if DEBUG_TOOLBAR:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
-    # Show the toolbar when in local development mode
+    # Show the toolbar when in local development mode and with debug on
     DEBUG_TOOLBAR_CONFIG = {
         "SHOW_TOOLBAR_CALLBACK": lambda request: settings.DEBUG_TOOLBAR,
     }
