@@ -50,6 +50,16 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
         [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2026){target="_blank"}
 
+    -  :material-email-newsletter: The June Update
+
+          *Open-loop payments reach a turning point*
+
+          ---
+
+          LA Metro's soft launch of open-loop payments ahead of the World Cup mark a turning point: transit operators carrying the majority of California statewide ridership now accept tap-to-pay. However, a gap remains; neither LA Metro nor Clipper yet offers reduced fares for eligible riders using open-loop payments. Cal-ITP Benefits solves that problem, and is available today to any California transit operator regardless of size.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update-2026){target="_blank"}
+
     </div>
 
     !!! note ""
