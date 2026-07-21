@@ -1,6 +1,6 @@
 trigger: none
-# it will be triggered "manually" from a GitHub Actions workflow
-# but will still automatically run on pull requests
+pr: none
+# all previous triggers are now disabled but "manual" runs from a GitHub Actions workflow are still supported
 # https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/trigger?view=azure-pipelines#trigger-none
 
 stages:

@@ -78,6 +78,8 @@ resource "azurerm_key_vault_access_policy" "engineering" {
   depends_on = [azurerm_key_vault.main]
 }
 
+# this access policy below can be removed when the ADO pipeline has been deprecated
+
 # Standalone Access Policy for DevSecOps
 resource "azurerm_key_vault_access_policy" "devsecops" {
   key_vault_id = azurerm_key_vault.main.id
