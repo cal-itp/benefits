@@ -23,9 +23,6 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "false").lower() == "true"
 
-# SECURITY WARNING: don't run with debug_toolbar turned on in production!
-DEBUG_TOOLBAR = os.environ.get("DJANGO_DEBUG_TOOLBAR", "false").lower() == "true"
-
 ALLOWED_HOSTS = _filter_empty(os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(","))
 
 
@@ -110,6 +107,8 @@ MIDDLEWARE = [
 if DEBUG:
     MIDDLEWARE.append("benefits.core.middleware.DebugSession")
 
+# SECURITY WARNING: don't run with debug_toolbar turned on in any non-local environment!
+DEBUG_TOOLBAR = os.environ.get("DJANGO_DEBUG_TOOLBAR", "false").lower() == "true"
 if DEBUG_TOOLBAR:
     INSTALLED_APPS.append("debug_toolbar")
     MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
