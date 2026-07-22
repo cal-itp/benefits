@@ -1,7 +1,5 @@
 name: Deploy
 
-# will it?
-
 on:
   workflow_dispatch:
   push:
@@ -21,8 +19,6 @@ defaults:
 env:
   # this ternary returns the name of the deployment environment (see https://docs.github.com/en/actions/learn-github-actions/expressions#example)
   ENV_NAME: github.ref_type != 'tag' && 'dev' || contains(github.ref, '-rc') && 'test' || 'prod'
-
-environment: $ENV_NAME
 
 permissions:
   id-token: write
@@ -59,7 +55,7 @@ jobs:
     #     check-dynamic-version,
     #   ]
     # if: (!cancelled())
-
+    environment: $ENV_NAME
     steps:
       - name: Checkout
         uses: actions/checkout@v7
