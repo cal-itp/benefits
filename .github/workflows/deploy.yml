@@ -55,7 +55,7 @@ jobs:
     #     check-dynamic-version,
     #   ]
     # if: (!cancelled())
-    environment: ${{ env.ENV_NAME }}
+    environment: "dev" # TODO: how to reference$ENV_NAME?
     steps:
       - name: Checkout
         uses: actions/checkout@v7
