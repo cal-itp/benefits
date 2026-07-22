@@ -25,7 +25,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: $ENV_NAME
+  group: ${{ env.ENV_NAME }}
   cancel-in-progress: true
 
 jobs:
@@ -55,7 +55,7 @@ jobs:
     #     check-dynamic-version,
     #   ]
     # if: (!cancelled())
-    environment: $ENV_NAME
+    environment: ${{ env.ENV_NAME }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -139,7 +139,7 @@ jobs:
         working-directory: terraform
         env:
           TF_VAR_ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SP_SUBSCRIPTION_ID }}
-          TF_VAR_CONTAINER_TAG: 9909b651b1e2f69ae47457fedb7f8a9bb2470b99 # ${{ github.sha }}
+          TF_VAR_CONTAINER_TAG: 2b7a7515bb23ff60d01a4a20c16fbb7d3a8d590e # ${{ github.sha }}
           TF_VAR_DEVSECOPS_OBJECT_ID: ${{ secrets.TF_VAR_DEVSECOPS_OBJECT_ID }}
           TF_VAR_ENGINEERING_GROUP_OBJECT_ID: ${{ secrets.TF_VAR_ENGINEERING_GROUP_OBJECT_ID }}
         run: terraform apply -input=false -lock-timeout=5m
