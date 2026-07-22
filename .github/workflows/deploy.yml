@@ -78,45 +78,45 @@ jobs:
       - name: Write commit SHA to file
         run: echo "${{ github.sha }}" >> benefits/static/sha.txt
 
-      - name: Docker Login to GitHub Container Registry
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Docker Login to GitHub Container Registry
+      #   uses: docker/login-action@v4
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v4
+      # - name: Set up Docker Buildx
+      #   id: buildx
+      #   uses: docker/setup-buildx-action@v4
 
-      - name: Cache Parameters
-        id: cache_params
-        run: |
-          CACHE_SCOPE="cal-itp"
-          MAIN_BRANCH_REF="refs/heads/main"
+      # - name: Cache Parameters
+      #   id: cache_params
+      #   run: |
+      #     CACHE_SCOPE="cal-itp"
+      #     MAIN_BRANCH_REF="refs/heads/main"
 
-          echo "cache_from_args=type=gha,scope=${CACHE_SCOPE},ref=${MAIN_BRANCH_REF}" >> $GITHUB_OUTPUT
-          echo "cache_to_args=type=gha,scope=${CACHE_SCOPE},mode=max,ref=${MAIN_BRANCH_REF}" >> $GITHUB_OUTPUT
+      #     echo "cache_from_args=type=gha,scope=${CACHE_SCOPE},ref=${MAIN_BRANCH_REF}" >> $GITHUB_OUTPUT
+      #     echo "cache_to_args=type=gha,scope=${CACHE_SCOPE},mode=max,ref=${MAIN_BRANCH_REF}" >> $GITHUB_OUTPUT
 
-      - name: Build, tag, and push image to GitHub Container Registry
-        uses: docker/build-push-action@v7
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          build-args: GIT-SHA=${{ github.sha }}
-          cache-from: ${{ steps.cache_params.outputs.cache_from_args }}
-          cache-to: ${{ steps.cache_params.outputs.cache_to_args }}
-          context: .
-          file: appcontainer/Dockerfile
-          push: true
-          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
+      # - name: Build, tag, and push image to GitHub Container Registry
+      #   uses: docker/build-push-action@v7
+      #   with:
+      #     builder: ${{ steps.buildx.outputs.name }}
+      #     build-args: GIT-SHA=${{ github.sha }}
+      #     cache-from: ${{ steps.cache_params.outputs.cache_from_args }}
+      #     cache-to: ${{ steps.cache_params.outputs.cache_to_args }}
+      #     context: .
+      #     file: appcontainer/Dockerfile
+      #     push: true
+      #     tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
 
-      # deploy application service
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ vars.AZURE_WEBAPP_NAME }}
-          images: ghcr.io/${{ github.repository }}:${{ github.sha }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      # # deploy application service
+      # - name: Deploy to Azure Web App
+      #   uses: azure/webapps-deploy@v2
+      #   with:
+      #     app-name: ${{ vars.AZURE_WEBAPP_NAME }}
+      #     images: ghcr.io/${{ github.repository }}:${{ github.sha }}
+      #     publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
 
       # begin setup to deploy container app
       - name: Log in to azure using federated identity credentials
@@ -139,7 +139,7 @@ jobs:
         working-directory: terraform
         env:
           TF_VAR_ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SP_SUBSCRIPTION_ID }}
-          TF_VAR_CONTAINER_TAG: ${{ github.sha }}
+          TF_VAR_CONTAINER_TAG: 9909b651b1e2f69ae47457fedb7f8a9bb2470b99 # ${{ github.sha }}
           TF_VAR_DEVSECOPS_OBJECT_ID: ${{ secrets.TF_VAR_DEVSECOPS_OBJECT_ID }}
           TF_VAR_ENGINEERING_GROUP_OBJECT_ID: ${{ secrets.TF_VAR_ENGINEERING_GROUP_OBJECT_ID }}
         run: terraform apply -input=false -lock-timeout=5m
