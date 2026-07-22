@@ -148,3 +148,13 @@ class IndexOrAgencyIndexOrigin(MiddlewareMixin):
 
 
 index_or_agencyindex_origin_decorator = decorator_from_middleware(IndexOrAgencyIndexOrigin)
+
+
+class SessionCache(MiddlewareMixin):
+    """Middleware to initialize a cache for the session within a request/response cycle."""
+
+    def process_request(self, request):
+        request._cached_agency = None
+        request._cached_flow = None
+
+        return None
