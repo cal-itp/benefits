@@ -128,8 +128,8 @@ jobs:
 
       - name: Setup terraform
         uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4
-        with:
-          terraform_version: 1.14.5
+        # with:
+        #   terraform_version: 1.14.5
 
       - name: Initialize terraform and select workspace
         working-directory: terraform
@@ -142,7 +142,8 @@ jobs:
           TF_VAR_CONTAINER_TAG: "2b7a7515bb23ff60d01a4a20c16fbb7d3a8d590e" # ${{ github.sha }}
           TF_VAR_DEVSECOPS_OBJECT_ID: ${{ secrets.TF_VAR_DEVSECOPS_OBJECT_ID }}
           TF_VAR_ENGINEERING_GROUP_OBJECT_ID: ${{ secrets.TF_VAR_ENGINEERING_GROUP_OBJECT_ID }}
-        run: TF_INPUT=0 terraform apply -lock-timeout=5m
+          TF_INPUT: 0
+        run: terraform apply -lock-timeout=5m
 
   release:
     needs: deploy
