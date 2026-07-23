@@ -10,7 +10,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
     <div class="grid cards" id="newsletter-cards-2026" markdown>
 
-    -   :material-email-newsletter: The January Update
+    -   :material-email-newsletter: January 2026
 
           *2025 year in review*
 
@@ -20,7 +20,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
         [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-january-update-2026){target="_blank"}
 
-    -   :material-email-newsletter: The February Update
+    -   :material-email-newsletter: February 2026
 
           *New transit partner*
 
@@ -30,7 +30,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
         [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-february-update-2026){target="_blank"}
 
-    -  :material-email-newsletter: The March Update
+    -  :material-email-newsletter: March 2026
 
           *Low-income enrollment*
 
@@ -40,7 +40,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
         [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update-2026){target="_blank"}
 
-    -  :material-email-newsletter: The April Update
+    -  :material-email-newsletter: April 2026
 
           *Regional enrollment*
 
@@ -50,7 +50,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
         [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2026){target="_blank"}
 
-    -  :material-email-newsletter: The June Update
+    -  :material-email-newsletter: June 2026
 
           *Open-loop payments reach a turning point*
 
@@ -70,7 +70,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
     <div class="grid cards" id="newsletter-cards-2025" markdown>
 
-    -   :material-email-newsletter: The March Update
+    -   :material-email-newsletter: March 2025
 
           *New transit provider and an update on 2024 goals*
 
@@ -80,7 +80,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
         [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update){target="_blank"}
 
-    -   :material-email-newsletter: The April Update
+    -   :material-email-newsletter: April 2025
 
           *SacRT launches open-loop payments*
 
@@ -90,7 +90,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
         [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2025){target="_blank"}
 
-    -   :material-email-newsletter: The May Update
+    -   :material-email-newsletter: May 2025
 
           *An update on in-person enrollment*
 
@@ -100,7 +100,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
         [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-may-update-2025){target="_blank"}
 
-    -   :material-email-newsletter: The June Update
+    -   :material-email-newsletter: June 2025
 
           *2025 enrollment insights*
 
@@ -110,7 +110,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
         [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update-2025){target="_blank"}
 
-    -   :material-email-newsletter: The July Update
+    -   :material-email-newsletter: July 2025
 
           *Annual enrollment goal surpassed by mid-year*
 
@@ -120,7 +120,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
         [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-july-update-2025){target="_blank"}
 
-    -   :material-email-newsletter: The September Update
+    -   :material-email-newsletter: September 2025
 
           *Offering enrollment for riders with disabilities*
 
@@ -130,7 +130,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
         [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-sept-update-2025){target="_blank"}
 
-    -   :material-email-newsletter: The October Update
+    -   :material-email-newsletter: October 2025
 
           *Support for Amex and Discover and VCTC launches*
 
@@ -140,7 +140,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
         [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-october-update-2025){target="_blank"}
 
-    -   :material-email-newsletter: The November Update
+    -   :material-email-newsletter: November 2025
 
           *New landing page*
 
