@@ -1,7 +1,7 @@
 trigger: none
 pr: none
-# all previous triggers are now disabled but "manual" runs from a GitHub Actions workflow are still supported
-# https://learn.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/trigger?view=azure-pipelines#trigger-none
+# automatic pull request validation triggers are also now disabled but "manual" runs from a GitHub Actions workflow are still supported
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/build/triggers?view=azure-devops&tabs=yaml#pr-triggers
 
 stages:
   - stage: terraform
