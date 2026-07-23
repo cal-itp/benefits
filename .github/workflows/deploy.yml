@@ -131,12 +131,9 @@ jobs:
         with:
           terraform_version: 1.14.5
 
-      - name: throwaway
-        run: echo$(${{ env.ENV_NAME }})
-
       - name: Initialize terraform and select workspace
         working-directory: terraform
-        run: ./init.sh "dev"
+        run: ./init.sh "${{ env.ENV_NAME }}"
 
       - name: Terraform apply
         working-directory: terraform
