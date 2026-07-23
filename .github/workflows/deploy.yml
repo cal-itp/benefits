@@ -18,7 +18,7 @@ defaults:
 
 env:
   # this ternary returns the name of the deployment environment (see https://docs.github.com/en/actions/learn-github-actions/expressions#example)
-  ENV_NAME: github.ref_type != 'tag' && 'dev' || contains(github.ref, '-rc') && 'test' || 'prod'
+  ENV_NAME: ${{ github.ref_type != 'tag' && 'dev' || contains(github.ref, '-rc') && 'test' || 'prod' }}
 
 permissions:
   id-token: write
@@ -131,9 +131,12 @@ jobs:
         with:
           terraform_version: 1.14.5
 
+      - name: throwaway
+        run: echo$(${{ env.ENV_NAME }})
+
       - name: Initialize terraform and select workspace
         working-directory: terraform
-        run: ./init.sh "${{ env.ENV_NAME }}"
+        run: ./init.sh "dev"
 
       - name: Terraform apply
         working-directory: terraform
