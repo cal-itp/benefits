@@ -142,8 +142,7 @@ jobs:
           TF_VAR_CONTAINER_TAG: "2b7a7515bb23ff60d01a4a20c16fbb7d3a8d590e" # ${{ github.sha }}
           TF_VAR_DEVSECOPS_OBJECT_ID: ${{ secrets.TF_VAR_DEVSECOPS_OBJECT_ID }}
           TF_VAR_ENGINEERING_GROUP_OBJECT_ID: ${{ secrets.TF_VAR_ENGINEERING_GROUP_OBJECT_ID }}
-          TF_INPUT: 0 # disable interactive prompts
-        run: terraform apply -lock-timeout=5m
+        run: TF_INPUT=0 terraform apply -lock-timeout=5m
 
   release:
     needs: deploy
