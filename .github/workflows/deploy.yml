@@ -147,7 +147,7 @@ jobs:
 
       - name: Terraform apply
         working-directory: terraform
-        run: terraform apply tfplan -lock-timeout=5m
+        run: terraform apply -lock-timeout=5m tfplan
 
   release:
     needs: deploy
