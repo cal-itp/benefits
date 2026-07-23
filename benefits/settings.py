@@ -91,7 +91,6 @@ STAFF_GROUP_NAME = "Cal-ITP"
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "benefits.core.middleware.SessionCache",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "benefits.core.middleware.Healthcheck",
