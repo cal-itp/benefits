@@ -133,7 +133,7 @@ jobs:
 
       - name: Initialize terraform and select workspace
         working-directory: terraform
-        run: ./init.sh "$ENV_NAME"
+        run: ./init.sh "${{ env.ENV_NAME }}"
 
       - name: Terraform apply
         working-directory: terraform
