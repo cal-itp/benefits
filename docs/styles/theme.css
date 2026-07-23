@@ -30,7 +30,9 @@ a.md-tabs__link {
 /* Newsletter archive — force single-column card layout
    Targets each year's card container by ID so other .grid.cards
    instances elsewhere in the docs are not affected. */
-#newsletter-cards-2026 {
+#newsletter-cards-2026,
+#newsletter-cards-2025,
+#newsletter-cards-2024 {
   grid-template-columns: 1fr;
 }
 
@@ -40,7 +42,10 @@ a.md-tabs__link {
   font-size: 1.1rem;
 }
 
-#newsletter-cards-2026 .twemoji svg path {
+#newsletter-cards-2026,
+#newsletter-cards-2025,
+#newsletter-cards-2024,
+.twemoji svg path {
   fill: var(--md-primary-fg-color) !important;
 }
 

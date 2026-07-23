@@ -68,14 +68,93 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
 === "2025"
 
-    * [The March Update](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update)
-    * [The April Update](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2025)
-    * [The May Update](https://5519226.hs-sites.com/cal-itp-benefits-the-may-update-2025)
-    * [The June Update](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update-2025)
-    * [The July Update](https://5519226.hs-sites.com/cal-itp-benefits-the-july-update-2025)
-    * [The September Update](https://5519226.hs-sites.com/cal-itp-benefits-the-sept-update-2025)
-    * [The October Update](https://5519226.hs-sites.com/cal-itp-benefits-the-october-update-2025)
-    * [The November Update](https://5519226.hs-sites.com/cal-itp-benefits-the-november-update-2025)
+    <div class="grid cards" id="newsletter-cards-2025" markdown>
+
+    -   :material-email-newsletter: The March Update
+
+          *New transit provider and an update on 2024 goals*
+
+          ---
+
+          Nevada County Connects launches in Cal-ITP Benefits. Santa Barbara MTD and SacRT now offer the Medicare cardholder enrollment pathway. A new video walkthrough of the rider experience for CalFresh cardholder enrollment is available on YouTube. In January, we met our 2024 metric goals by surpassing 5,000 reduced-fare transactions and 225 enrollments. New targets for 2025: 425 enrollments and 10,000 transactions.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update){target="_blank"}
+
+    -   :material-email-newsletter: The April Update
+
+          *SacRT launches open-loop payments*
+
+          ---
+
+          SacRT publicly announces the launch of open-loop payments across their bus system, driving the largest single-month enrollment spike to date. Development began on the Enghouse fare processor integration, with VCTC set to be the first agency to use it. Nevada County Connects added Veterans as an eligible group — the first agency to do so without a pre-existing Veterans discount program. The in-person enrollment pilot expanded to SBMTD.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2025){target="_blank"}
+
+    -   :material-email-newsletter: The May Update
+
+          *An update on in-person enrollment*
+
+          ---
+
+          MST and SBMTD are using in-person enrollment to enroll riders when self-service enrollment is difficult or not possible. In-person enrollments now account for over 10% of 2025 enrollments. This new option is proving especially useful at community events where agency staff can verify eligibility on the spot. Roseville Transit and El Dorado Transit joined the adoption pipeline.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-may-update-2025){target="_blank"}
+
+    -   :material-email-newsletter: The June Update
+
+          *2025 enrollment insights*
+
+          ---
+
+          Monthly enrollments over the last two months were up four times the 2024 average. A breakdown by benefit option showed that older adults (65+) and Medicare cardholders account for over half of all enrollments, while Veterans — a benefit none of the live agencies offered before adopting Cal-ITP Benefits — represent nearly a quarter. The data challenges the notion that older adults won't use new technology options.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update-2025){target="_blank"}
+
+    -   :material-email-newsletter: The July Update
+
+          *Annual enrollment goal surpassed by mid-year*
+
+          ---
+
+          It's only mid-year, and we've surpassed our 2025 enrollment goal. The technical integration to support agencies using Enghouse is complete; VCTC is set to become the first agency to use it. Littlepay announced a new "eligibility portal as a service" product using ID.me, one example of how Cal-ITP's work is influencing the broader transit technology landscape.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-july-update-2025){target="_blank"}
+
+    -   :material-email-newsletter: The September Update
+
+          *Offering enrollment for riders with disabilities*
+
+          ---
+
+          This month we kicked off research to develop standard eligibility policies for people with disabilities, the third FTA-required discount group not yet supported by Cal-ITP Benefits. Interviews with agency staff and riders with disabilities are planned for October and November, with standard policies expected by year-end and deployment in the product in 2026.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-sept-update-2025){target="_blank"}
+
+    -   :material-email-newsletter: The October Update
+
+          *Support for Amex and Discover and VCTC launches*
+
+          ---
+
+          The Enghouse integration, which uses Switchio for fare processing, went live at VCTC after nine months of development. Cal-ITP Benefits now supports all four major card schemes: Visa, Mastercard, Discover, and American Express. MST will be the first agency to offer Discover and Amex in California.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-october-update-2025){target="_blank"}
+
+    -   :material-email-newsletter: The November Update
+
+          *New landing page*
+
+          ---
+
+          We launched a new landing page in the rider-facing app to accommodate the growing number of live agencies. A brief reflection on how far we've come after surpassing our reduced-fare transaction goal for 2025 with a month to spare.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-november-update-2025){target="_blank"}
+
+    </div>
+
+    !!! note ""
+
+        If you're interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
 
 === "2024"
 
