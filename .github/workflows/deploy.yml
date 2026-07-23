@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - chore/gh-action-apply # TODO: remove!
     tags:
       # pre-release tag
       - "202[3-9].[0-9][0-9].[0-9]+-rc[0-9]+"
@@ -15,40 +16,46 @@ defaults:
   run:
     shell: bash
 
+env:
+  # this ternary returns the name of the deployment environment (see https://docs.github.com/en/actions/learn-github-actions/expressions#example)
+  ENV_NAME: ${{ github.ref_type != 'tag' && 'dev' || contains(github.ref, '-rc') && 'test' || 'prod' }}
+
+permissions:
+  id-token: write
+  contents: read
+
 concurrency:
-  # this ternary operator like expression gives us the name of the deployment environment (see https://docs.github.com/en/actions/learn-github-actions/expressions#example)
-  group: ${{ github.ref_type != 'tag' && github.ref_name || contains(github.ref, '-rc') && 'test' || 'prod' }}
+  group: $ENV_NAME
   cancel-in-progress: true
 
 jobs:
-  tests-ui:
-    uses: ./.github/workflows/tests-ui.yml
-    if: github.ref_type == 'tag'
+  # tests-ui:
+  #   uses: ./.github/workflows/tests-ui.yml
+  #   if: github.ref_type == 'tag'
 
-  tests-pytest:
-    uses: ./.github/workflows/tests-pytest.yml
-    if: github.ref_type == 'tag'
+  # tests-pytest:
+  #   uses: ./.github/workflows/tests-pytest.yml
+  #   if: github.ref_type == 'tag'
 
-  check-migrations-and-messages:
-    uses: ./.github/workflows/check-migrations-and-messages.yml
-    if: github.ref_type == 'tag'
+  # check-migrations-and-messages:
+  #   uses: ./.github/workflows/check-migrations-and-messages.yml
+  #   if: github.ref_type == 'tag'
 
-  check-dynamic-version:
-    uses: ./.github/workflows/check-dynamic-version.yml
-    if: github.ref_type == 'tag'
+  # check-dynamic-version:
+  #   uses: ./.github/workflows/check-dynamic-version.yml
+  #   if: github.ref_type == 'tag'
 
   deploy:
     runs-on: ubuntu-latest
-    needs:
-      [
-        tests-ui,
-        tests-pytest,
-        check-migrations-and-messages,
-        check-dynamic-version,
-      ]
-    if: (!cancelled())
-    environment: ${{ github.ref_type != 'tag' && github.ref_name || contains(github.ref, '-rc') && 'test' || 'prod' }}
-
+    # needs:
+    #   [
+    #     tests-ui,
+    #     tests-pytest,
+    #     check-migrations-and-messages,
+    #     check-dynamic-version,
+    #   ]
+    # if: (!cancelled())
+    environment: "dev" # TODO: how to reference$ENV_NAME?
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -71,102 +78,76 @@ jobs:
       - name: Write commit SHA to file
         run: echo "${{ github.sha }}" >> benefits/static/sha.txt
 
-      - name: Docker Login to GitHub Container Registry
-        uses: docker/login-action@v4
+      # - name: Docker Login to GitHub Container Registry
+      #   uses: docker/login-action@v4
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Set up Docker Buildx
+      #   id: buildx
+      #   uses: docker/setup-buildx-action@v4
+
+      # - name: Cache Parameters
+      #   id: cache_params
+      #   run: |
+      #     CACHE_SCOPE="cal-itp"
+      #     MAIN_BRANCH_REF="refs/heads/main"
+
+      #     echo "cache_from_args=type=gha,scope=${CACHE_SCOPE},ref=${MAIN_BRANCH_REF}" >> $GITHUB_OUTPUT
+      #     echo "cache_to_args=type=gha,scope=${CACHE_SCOPE},mode=max,ref=${MAIN_BRANCH_REF}" >> $GITHUB_OUTPUT
+
+      # - name: Build, tag, and push image to GitHub Container Registry
+      #   uses: docker/build-push-action@v7
+      #   with:
+      #     builder: ${{ steps.buildx.outputs.name }}
+      #     build-args: GIT-SHA=${{ github.sha }}
+      #     cache-from: ${{ steps.cache_params.outputs.cache_from_args }}
+      #     cache-to: ${{ steps.cache_params.outputs.cache_to_args }}
+      #     context: .
+      #     file: appcontainer/Dockerfile
+      #     push: true
+      #     tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
+
+      # # deploy application service
+      # - name: Deploy to Azure Web App
+      #   uses: azure/webapps-deploy@v2
+      #   with:
+      #     app-name: ${{ vars.AZURE_WEBAPP_NAME }}
+      #     images: ghcr.io/${{ github.repository }}:${{ github.sha }}
+      #     publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+
+      # begin setup to deploy container app
+      - name: Log in to azure using federated identity credentials
+        uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3
         with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          client-id: ${{ secrets.AZURE_SP_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_SP_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SP_SUBSCRIPTION_ID }}
 
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v4
-
-      - name: Cache Parameters
-        id: cache_params
-        run: |
-          CACHE_SCOPE="cal-itp"
-          MAIN_BRANCH_REF="refs/heads/main"
-
-          echo "cache_from_args=type=gha,scope=${CACHE_SCOPE},ref=${MAIN_BRANCH_REF}" >> $GITHUB_OUTPUT
-          echo "cache_to_args=type=gha,scope=${CACHE_SCOPE},mode=max,ref=${MAIN_BRANCH_REF}" >> $GITHUB_OUTPUT
-
-      - name: Build, tag, and push image to GitHub Container Registry
-        uses: docker/build-push-action@v7
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4
         with:
-          builder: ${{ steps.buildx.outputs.name }}
-          build-args: GIT-SHA=${{ github.sha }}
-          cache-from: ${{ steps.cache_params.outputs.cache_from_args }}
-          cache-to: ${{ steps.cache_params.outputs.cache_to_args }}
-          context: .
-          file: appcontainer/Dockerfile
-          push: true
-          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
+          terraform_version: 1.14.5
 
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ vars.AZURE_WEBAPP_NAME }}
-          images: ghcr.io/${{ github.repository }}:${{ github.sha }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      - name: Initialize terraform and select workspace
+        working-directory: terraform
+        run: ./init.sh "${{ env.ENV_NAME }}"
 
-      - name: Trigger Azure Pipeline
-        id: trigger_pipeline
-        run: |
-          TOKEN_RESPONSE=$(curl -sS -X POST \
-            -H "Content-Type: application/x-www-form-urlencoded" \
-            -d "client_id=${{ secrets.AZURE_ADO_CLIENT_ID }}" \
-            -d "client_secret=${{ secrets.AZURE_ADO_CLIENT_SECRET }}" \
-            -d "grant_type=client_credentials" \
-            -d "scope=499b84ac-1321-427f-aa17-267ca6975798/.default" \
-            "https://login.microsoftonline.com/${{ secrets.AZURE_ADO_TENANT_ID }}/oauth2/v2.0/token")
+      - name: Terraform plan
+        working-directory: terraform
+        env:
+          TF_VAR_ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SP_SUBSCRIPTION_ID }}
+          TF_VAR_CONTAINER_TAG: "2b7a7515bb23ff60d01a4a20c16fbb7d3a8d590e" # ${{ github.sha }}
+          TF_VAR_DEVSECOPS_OBJECT_ID: ${{ secrets.TF_VAR_DEVSECOPS_OBJECT_ID }}
+          TF_VAR_ENGINEERING_GROUP_OBJECT_ID: ${{ secrets.TF_VAR_ENGINEERING_GROUP_OBJECT_ID }}
+          TF_INPUT: 0
+        run: terraform plan -out=tfplan -lock-timeout=5m
 
-          export AZURE_DEVOPS_EXT_PAT=$(echo "$TOKEN_RESPONSE" | jq -r '.access_token // empty')
-
-          if [ -z "$AZURE_DEVOPS_EXT_PAT" ]; then
-            echo "Failed to get Azure DevOps token"
-            exit 1
-          fi
-
-          RUN_ID=$(az pipelines run \
-            --id "${{ secrets.AZURE_ADO_PIPELINE_ID }}" \
-            --org "${{ secrets.AZURE_ADO_ORG_URL }}" \
-            --project "${{ secrets.AZURE_ADO_PROJECT }}" \
-            --branch "${{ github.ref }}" \
-            --commit-id ${{ github.sha }} \
-            --query "id" -o tsv)
-
-          echo "Waiting for Azure DevOps Pipeline run to complete..."
-          while true; do
-            PIPELINE_STATUS=$(az pipelines runs show \
-              --id $RUN_ID \
-              --org "${{ secrets.AZURE_ADO_ORG_URL }}" \
-              --project "${{ secrets.AZURE_ADO_PROJECT }}" \
-              --query "status" -o tsv)
-
-            echo "Current pipeline status: $PIPELINE_STATUS"
-
-            if [[ "$PIPELINE_STATUS" == "completed" ]]; then
-              PIPELINE_RESULT=$(az pipelines runs show \
-                --id $RUN_ID \
-                --org "${{ secrets.AZURE_ADO_ORG_URL }}" \
-                --project "${{ secrets.AZURE_ADO_PROJECT }}" \
-                --query "result" -o tsv)
-
-              echo "Pipeline completed with result: $PIPELINE_RESULT"
-              if [[ "$PIPELINE_RESULT" == "succeeded" ]]; then
-                exit 0
-              else
-                echo "Azure DevOps Pipeline failed with result: $PIPELINE_RESULT"
-                exit 1
-              fi
-            elif [[ "$PIPELINE_STATUS" == "cancelling" || "$PIPELINE_STATUS" == "notStarted" || "$PIPELINE_STATUS" == "inProgress" ]]; then
-              sleep 10
-            else
-              echo "Azure DevOps Pipeline finished with unexpected status: $PIPELINE_STATUS"
-              exit 1
-            fi
-          done
+      - name: Terraform apply
+        working-directory: terraform
+        run: terraform apply -lock-timeout=5m tfplan
 
   release:
     needs: deploy
