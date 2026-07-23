@@ -4,7 +4,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
 !!! note ""
 
-    If you’re interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
+    If you’re interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA){target="_blank"}.
 
 === "2026"
 
@@ -154,16 +154,104 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
     !!! note ""
 
-        If you're interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
+        If you're interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA){target="_blank"}.
 
 === "2024"
 
-    * [The April Update](https://calitp-5519226.hs-sites.com/cal-itp-benefits-the-april-update)
-    * [The May Update](https://5519226.hs-sites.com/cal-itp-benefits-the-may-update)
-    * [The June Update](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update)
-    * [The July Update](https://5519226.hs-sites.com/cal-itp-benefits-the-july-update)
-    * [The August Update](https://5519226.hs-sites.com/cal-itp-benefits-the-august-update)
-    * [The September Update](https://5519226.hs-sites.com/cal-itp-benefits-the-september-update)
-    * [The October Update](https://5519226.hs-sites.com/cal-itp-benefits-the-october-update)
-    * [The November Update](https://5519226.hs-sites.com/cal-itp-benefits-the-november-update)
-    * [The December Update](https://5519226.hs-sites.com/cal-itp-benefits-the-december-update)
+    <div class="grid cards" id="newsletter-cards-2024" markdown>
+
+    -   :material-email-newsletter: April 2024
+
+          *First newsletter*
+
+          ---
+
+          The first edition of the newsletter marks the beginning of a push for wider product adoption. Product updates include a new enrollment pathway for SBMTD riders with a Reduced Fare Mobility ID, an alpha of the Admin interface, and a refactored Littlepay integration supporting their new Backoffice API. Additionally, we now offer video walkthroughs of the rider enrollment experience on YouTube.
+
+        [Read full newsletter →](https://calitp-5519226.hs-sites.com/cal-itp-benefits-the-april-update){target="_blank"}
+
+    -   :material-email-newsletter: May 2024
+
+          *Outreach and product marketing*
+
+          ---
+
+          The Cal-ITP Customer Success team attended CALACT in San Diego, generating interest from ten agencies. Cal-ITP is collaborating on a campaign to promote Cal-ITP Benefits within Transit app for MST riders.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-may-update){target="_blank"}
+
+    -   :material-email-newsletter: June 2024
+
+          *Continued state and national outreach*
+
+          ---
+
+          The rider promotion campaign with Transit app for MST is complete. The team presented at the Disability & Aging Community Living Advisory Committee (DACLAC) quarterly meeting and shared learnings with Connecticut's Integrated Mobility project to promote Cal-ITP's objectives at the national level. A live webinar on Cal-ITP Benefits for transit operators will take place in July.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update){target="_blank"}
+
+    -   :material-email-newsletter: July 2024
+
+          *App enhancements*
+
+          ---
+
+          We released improvements to the agency cardholder enrollment flow that allow riders to re-enter incorrect card details without restarting the flow and overhauled copy on error pages to improve clarity.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-july-update){target="_blank"}
+
+    -   :material-email-newsletter: August 2024
+
+          *Medicare pathway in development*
+
+          ---
+
+          A recording of the first webinar presenting Cal-ITP Benefits to agencies is now available on YouTube. Design and development kicked off for the Medicare cardholder enrollment pathway, a key feature for FTA-compliant fare discount programs. View the roadmap for the second half of 2024.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-august-update){target="_blank"}
+
+    -   :material-email-newsletter: September 2024
+
+          *Development of in-person enrollment begins*
+
+          ---
+
+          GSA published a blog featuring Cal-ITP Benefits as one of the first state programs to use Login.gov. CDT applied for access to the Blue Button API, which Cal-ITP Benefits will utilize for Medicare eligibility verification via the California Identity Gateway. Development began on _Cal-ITP Benefits Administrator_, a new aspect of the product, with in-person enrollment as its first feature.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-september-update){target="_blank"}
+
+    -   :material-email-newsletter: October 2024
+
+          *Launch of low-income enrollment*
+
+          ---
+
+          After many months of work, the Digital ID team at the California Department of Technology secured production access to the CalFresh Confirm API; the low-income enrollment pathway is now available to any agency using Cal-ITP Benefits.  Cal-ITP supported SBMTD at the 33rd Annual Santa Barbara Senior Expo by offering an in-person enrollment beta in Cal-ITP Benefits, enrolling 14 riders for reduced fares in under three hours.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-october-update){target="_blank"}
+
+    -   :material-email-newsletter: November 2024
+
+          *Launch of the Medicare enrollment pathway*
+
+          ---
+
+          The Medicare cardholder enrollment pathway is now available to any agency using Cal-ITP Benefits, completing support for two of the three FTA-required discount groups. Sacramento Regional Transit (SacRT) went live in Cal-ITP Benefits, including a new Veterans benefit pilot.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-november-update){target="_blank"}
+
+    -   :material-email-newsletter: December 2024
+
+          *MST enables Medicare pathway*
+
+          ---
+
+          Monterey-Salinas Transit became the first agency to enable the new Medicare cardholder enrollment pathway, moving closer to a fully FTA-compliant discount program for open-loop payments.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-december-update){target="_blank"}
+
+    </div>
+
+    !!! note ""
+
+        If you're interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA){target="_blank"}.
