@@ -27,6 +27,28 @@ a.md-tabs__link {
   opacity: 1;
 }
 
+/* Newsletter archive — force single-column card layout
+   Targets each year's card container by ID so other .grid.cards
+   instances elsewhere in the docs are not affected. */
+#newsletter-cards-2026,
+#newsletter-cards-2025,
+#newsletter-cards-2024 {
+  grid-template-columns: 1fr;
+}
+
+#newsletter-cards-2026 li > p:first-child,
+#newsletter-cards-2025 li > p:first-child,
+#newsletter-cards-2024 li > p:first-child {
+  font-size: 1.1rem;
+}
+
+#newsletter-cards-2026,
+#newsletter-cards-2025,
+#newsletter-cards-2024,
+.twemoji svg path {
+  fill: var(--md-primary-fg-color) !important;
+}
+
 .clear {
   clear: both;
 }

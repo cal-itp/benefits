@@ -1,59 +1,169 @@
 # Cal-ITP Benefits newsletter
 
-We send a newsletter each month to share product updates, adoption metrics, and news related to Cal-ITP Benefits. Below is an archive of all newsletters we’ve shared organized by year and month.
+Most months we send a newsletter to share product updates, adoption metrics, and news related to Cal-ITP Benefits. Below is an archive of all newsletters we’ve shared. Browse the list by year or use the search field in the header to locate content about a specific topic.
 
-If you’re interested in receiving this update delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
+!!! note ""
 
-### 2026
+    If you’re interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
 
-- [The January Update](https://5519226.hs-sites.com/cal-itp-benefits-the-january-update-2026)
+=== "2026"
 
-- [The February Update](https://5519226.hs-sites.com/cal-itp-benefits-the-february-update-2026)
+    <div class="grid cards" id="newsletter-cards-2026" markdown>
 
-- [The March Update](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update-2026)
+    -   :material-email-newsletter: January 2026
 
-- [The April Update](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2026)
+          *2025 year in review*
 
-- [The June Update](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update-2026)
+          ---
 
-<!--
-- [The July Update]()
-  -->
+          473 enrollments in 2025 (304% YoY growth), 6,646 reduced-fare transactions (138% YoY growth), and three new agencies onboarded. Also covered: the Switchio fare processor integration, an in-person enrollment beta at SBMTD and MST, and the completion of eligibility standards research for riders with disabilities.
 
-### 2025
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-january-update-2026){target="_blank"}
 
-- [The March Update](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update)
+    -   :material-email-newsletter: February 2026
 
-- [The April Update](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2025)
+          *New transit partner*
 
-- [The May Update](https://5519226.hs-sites.com/cal-itp-benefits-the-may-update-2025)
+          ---
 
-- [The June Update](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update-2025)
+          El Dorado Transit Authority went live in Cal-ITP Benefits for older adults and Medicare cardholders, bringing the total to seven active agencies. The team also highlighted behind-the-scenes infrastructure work to support scalability and a reminder that this is an open-source project in GitHub.
 
-- [The July Update](https://5519226.hs-sites.com/cal-itp-benefits-the-july-update-2025)
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-february-update-2026){target="_blank"}
 
-- [The September Update](https://5519226.hs-sites.com/cal-itp-benefits-the-sept-update-2025)
+    -  :material-email-newsletter: March 2026
 
-- [The October Update](https://5519226.hs-sites.com/cal-itp-benefits-the-october-update-2025)
+          *Low-income enrollment*
 
-- [The November Update](https://5519226.hs-sites.com/cal-itp-benefits-the-november-update-2025)
+          ---
 
-### 2024
+          Redding Area Bus Authority (RABA) became the eighth agency to adopt Cal-ITP Benefits and the first to enable the low-income (CalFresh) enrollment pathway. Californians who receive CalFresh benefits can now verify eligibility for a transit benefit and register a contactless card entirely online — no income disclosure or in-person visit required.
 
-- [The April Update](https://calitp-5519226.hs-sites.com/cal-itp-benefits-the-april-update)
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update-2026){target="_blank"}
 
-- [The May Update](https://5519226.hs-sites.com/cal-itp-benefits-the-may-update)
+    -  :material-email-newsletter: April 2026
 
-- [The June Update](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update)
+          *Regional enrollment*
 
-- [The July Update](https://5519226.hs-sites.com/cal-itp-benefits-the-july-update)
+          ---
 
-- [The August Update](https://5519226.hs-sites.com/cal-itp-benefits-the-august-update)
+          Regional enrollment launched in San Luis Obispo County: a single enrollment now automatically applies reduced fares when riders tap-to-ride on both SLO Transit and San Luis Obispo RTA buses. A group of transit providers in Ventura County will launch as a second region in Cal-ITP Benefits in the summer of 2026. The California Mobility Marketplace published a new *Rider Benefits* resource page devoted entirely to information about Cal-ITP Benefits.
 
-- [The September Update](https://5519226.hs-sites.com/cal-itp-benefits-the-september-update)
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2026){target="_blank"}
 
-- [The October Update](https://5519226.hs-sites.com/cal-itp-benefits-the-october-update)
+    -  :material-email-newsletter: June 2026
 
-- [The November Update](https://5519226.hs-sites.com/cal-itp-benefits-the-november-update)
+          *Open-loop payments reach a turning point*
 
-- [The December Update](https://5519226.hs-sites.com/cal-itp-benefits-the-december-update)
+          ---
+
+          LA Metro's soft launch of open-loop payments ahead of the World Cup mark a turning point: transit operators carrying the majority of California statewide ridership now accept tap-to-pay. However, a gap remains; neither LA Metro nor Clipper yet offers reduced fares for eligible riders using open-loop payments. Cal-ITP Benefits solves that problem, and is available today to any California transit operator regardless of size.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update-2026){target="_blank"}
+
+    </div>
+
+    !!! note ""
+
+        If you’re interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
+
+=== "2025"
+
+    <div class="grid cards" id="newsletter-cards-2025" markdown>
+
+    -   :material-email-newsletter: March 2025
+
+          *New transit provider and an update on 2024 goals*
+
+          ---
+
+          Nevada County Connects launches in Cal-ITP Benefits. Santa Barbara MTD and SacRT now offer the Medicare cardholder enrollment pathway. A new video walkthrough of the rider experience for CalFresh cardholder enrollment is available on YouTube. In January, we met our 2024 metric goals by surpassing 5,000 reduced-fare transactions and 225 enrollments. New targets for 2025: 425 enrollments and 10,000 transactions.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update){target="_blank"}
+
+    -   :material-email-newsletter: April 2025
+
+          *SacRT launches open-loop payments*
+
+          ---
+
+          SacRT publicly announces the launch of open-loop payments across their bus system, driving the largest single-month enrollment spike to date. Development began on the Enghouse fare processor integration, with VCTC set to be the first agency to use it. Nevada County Connects added Veterans as an eligible group — the first agency to do so without a pre-existing Veterans discount program. The in-person enrollment pilot expanded to SBMTD.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2025){target="_blank"}
+
+    -   :material-email-newsletter: May 2025
+
+          *An update on in-person enrollment*
+
+          ---
+
+          MST and SBMTD are using in-person enrollment to enroll riders when self-service enrollment is difficult or not possible. In-person enrollments now account for over 10% of 2025 enrollments. This new option is proving especially useful at community events where agency staff can verify eligibility on the spot. Roseville Transit and El Dorado Transit joined the adoption pipeline.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-may-update-2025){target="_blank"}
+
+    -   :material-email-newsletter: June 2025
+
+          *2025 enrollment insights*
+
+          ---
+
+          Monthly enrollments over the last two months were up four times the 2024 average. A breakdown by benefit option showed that older adults (65+) and Medicare cardholders account for over half of all enrollments, while Veterans — a benefit none of the live agencies offered before adopting Cal-ITP Benefits — represent nearly a quarter. The data challenges the notion that older adults won't use new technology options.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update-2025){target="_blank"}
+
+    -   :material-email-newsletter: July 2025
+
+          *Annual enrollment goal surpassed by mid-year*
+
+          ---
+
+          It's only mid-year, and we've surpassed our 2025 enrollment goal. The technical integration to support agencies using Enghouse is complete; VCTC is set to become the first agency to use it. Littlepay announced a new "eligibility portal as a service" product using ID.me, one example of how Cal-ITP's work is influencing the broader transit technology landscape.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-july-update-2025){target="_blank"}
+
+    -   :material-email-newsletter: September 2025
+
+          *Offering enrollment for riders with disabilities*
+
+          ---
+
+          This month we kicked off research to develop standard eligibility policies for people with disabilities, the third FTA-required discount group not yet supported by Cal-ITP Benefits. Interviews with agency staff and riders with disabilities are planned for October and November, with standard policies expected by year-end and deployment in the product in 2026.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-sept-update-2025){target="_blank"}
+
+    -   :material-email-newsletter: October 2025
+
+          *Support for Amex and Discover and VCTC launches*
+
+          ---
+
+          The Enghouse integration, which uses Switchio for fare processing, went live at VCTC after nine months of development. Cal-ITP Benefits now supports all four major card schemes: Visa, Mastercard, Discover, and American Express. MST will be the first agency to offer Discover and Amex in California.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-october-update-2025){target="_blank"}
+
+    -   :material-email-newsletter: November 2025
+
+          *New landing page*
+
+          ---
+
+          We launched a new landing page in the rider-facing app to accommodate the growing number of live agencies. A brief reflection on how far we've come after surpassing our reduced-fare transaction goal for 2025 with a month to spare.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-november-update-2025){target="_blank"}
+
+    </div>
+
+    !!! note ""
+
+        If you're interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
+
+=== "2024"
+
+    * [The April Update](https://calitp-5519226.hs-sites.com/cal-itp-benefits-the-april-update)
+    * [The May Update](https://5519226.hs-sites.com/cal-itp-benefits-the-may-update)
+    * [The June Update](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update)
+    * [The July Update](https://5519226.hs-sites.com/cal-itp-benefits-the-july-update)
+    * [The August Update](https://5519226.hs-sites.com/cal-itp-benefits-the-august-update)
+    * [The September Update](https://5519226.hs-sites.com/cal-itp-benefits-the-september-update)
+    * [The October Update](https://5519226.hs-sites.com/cal-itp-benefits-the-october-update)
+    * [The November Update](https://5519226.hs-sites.com/cal-itp-benefits-the-november-update)
+    * [The December Update](https://5519226.hs-sites.com/cal-itp-benefits-the-december-update)
