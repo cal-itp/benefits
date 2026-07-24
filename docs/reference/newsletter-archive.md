@@ -10,15 +10,35 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
     <div class="grid cards" id="newsletter-cards-2026" markdown>
 
-    -   :material-email-newsletter: January 2026
+    -   :material-email-newsletter: June 2026
 
-          *2025 year in review*
+          *Open-loop payments reach a tipping point*
 
           ---
 
-          473 enrollments in 2025 (304% YoY growth), 6,646 reduced-fare transactions (138% YoY growth), and three new agencies onboarded. Also covered: the Switchio fare processor integration, an in-person enrollment beta at SBMTD and MST, and the completion of eligibility standards research for riders with disabilities.
+          LA Metro's soft launch of open-loop payments ahead of the World Cup marked a turning point: transit operators carrying the majority of California statewide ridership now accept tap-to-pay. However, a gap remains — neither LA Metro nor Clipper yet offers reduced fares for eligible riders using open-loop payments. Cal-ITP Benefits solves that problem, and is available today to any California transit operator regardless of size.
 
-        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-january-update-2026){target="_blank"}
+        [Read full newsletter →](https://5519226.hs-sites-na2.com/cal-itp-benefits-the-june-update-2026){target="_blank"}
+
+    -   :material-email-newsletter: April 2026
+
+          *Regional enrollment*
+
+          ---
+
+          Regional enrollment launched in San Luis Obispo County: a single enrollment now automatically applies reduced fares when riders tap-to-ride on both SLO Transit and San Luis Obispo RTA buses. A group of transit providers in Ventura County will launch as a second region in Cal-ITP Benefits in the summer of 2026. The California Mobility Marketplace published a new *Rider Benefits* resource page devoted entirely to information about Cal-ITP Benefits.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2026){target="_blank"}
+
+    -   :material-email-newsletter: March 2026
+
+          *Low-income enrollment*
+
+          ---
+
+          Redding Area Bus Authority (RABA) became the eighth agency to adopt Cal-ITP Benefits and the first to enable the low-income (CalFresh) enrollment pathway. Californians who receive CalFresh benefits can now verify eligibility for a transit benefit and register a contactless card entirely online — no income disclosure or in-person visit required.
+
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update-2026){target="_blank"}
 
     -   :material-email-newsletter: February 2026
 
@@ -30,41 +50,21 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
         [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-february-update-2026){target="_blank"}
 
-    -  :material-email-newsletter: March 2026
+    -   :material-email-newsletter: January 2026
 
-          *Low-income enrollment*
-
-          ---
-
-          Redding Area Bus Authority (RABA) became the eighth agency to adopt Cal-ITP Benefits and the first to enable the low-income (CalFresh) enrollment pathway. Californians who receive CalFresh benefits can now verify eligibility for a transit benefit and register a contactless card entirely online — no income disclosure or in-person visit required.
-
-        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-march-update-2026){target="_blank"}
-
-    -  :material-email-newsletter: April 2026
-
-          *Regional enrollment*
+          *2025 year in review*
 
           ---
 
-          Regional enrollment launched in San Luis Obispo County: a single enrollment now automatically applies reduced fares when riders tap-to-ride on both SLO Transit and San Luis Obispo RTA buses. A group of transit providers in Ventura County will launch as a second region in Cal-ITP Benefits in the summer of 2026. The California Mobility Marketplace published a new *Rider Benefits* resource page devoted entirely to information about Cal-ITP Benefits.
+          473 enrollments in 2025 (304% YoY growth), 6,646 reduced-fare transactions (138% YoY growth), and three new agencies onboarded. Also covered: the Switchio fare processor integration, an in-person enrollment beta at SBMTD and MST, and the completion of eligibility standards research for riders with disabilities.
 
-        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-april-update-2026){target="_blank"}
-
-    -  :material-email-newsletter: June 2026
-
-          *Open-loop payments reach a turning point*
-
-          ---
-
-          LA Metro's soft launch of open-loop payments ahead of the World Cup mark a turning point: transit operators carrying the majority of California statewide ridership now accept tap-to-pay. However, a gap remains; neither LA Metro nor Clipper yet offers reduced fares for eligible riders using open-loop payments. Cal-ITP Benefits solves that problem, and is available today to any California transit operator regardless of size.
-
-        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-june-update-2026){target="_blank"}
+        [Read full newsletter →](https://5519226.hs-sites.com/cal-itp-benefits-the-january-update-2026){target="_blank"}
 
     </div>
 
     !!! note ""
 
-        If you’re interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
+        If you're interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
 
 === "2025"
 
