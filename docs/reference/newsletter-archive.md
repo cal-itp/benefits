@@ -4,7 +4,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
 !!! note ""
 
-    If you’re interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA){target="_blank"}.
+    If you’re interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu){target="_blank"}.
 
 === "2026"
 
@@ -64,7 +64,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
     !!! note ""
 
-        If you're interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA).
+        If you're interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu){target="_blank"}.
 
 === "2025"
 
@@ -154,7 +154,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
     !!! note ""
 
-        If you're interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA){target="_blank"}.
+        If you're interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu){target="_blank"}.
 
 === "2024"
 
@@ -254,4 +254,4 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
     !!! note ""
 
-        If you're interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu?utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz-83CN5gNFMDIl72kAgvLBPDaiYymXt4jVuntgiYzc3hwnvhlghSYQSOYZgY_Hbqew-LzXGA){target="_blank"}.
+        If you're interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu){target="_blank"}.
