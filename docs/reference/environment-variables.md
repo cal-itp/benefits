@@ -367,6 +367,26 @@ The server mode determines whether pgAdmin is running on a web `Server Mode` req
 
 Applicable to `Desktop Mode` only, the master password used to encrypt/decrypt saved server passwords. Set to `false` for local development.
 
+!!! info "`psql` default connection parameters"
+
+    For convenience, the environment variables below are set for the `psql` command to run in the pgAdmin container.
+
+### `PGHOST`
+
+Maps to [POSTGRES_HOSTNAME](http://localhost:32862/benefits/reference/environment-variables/#postgres_hostname)
+
+### `PGPASSWORD`
+
+Maps to [POSTGRES_PASSWORD](http://localhost:32862/benefits/reference/environment-variables/#postgres_password)
+
+### `PGUSER`
+
+Maps to [POSTGRES_USER](http://localhost:32862/benefits/reference/environment-variables/#postgres_user)
+
+### `PGSSLMODE`
+
+Maps to [POSTGRES_SSLMODE](http://localhost:32862/benefits/reference/environment-variables/#postgres_sslmode)
+
 !!! info "Cloud configuration"
 
     The environment variables below only need to be set for Cloud deployments.
