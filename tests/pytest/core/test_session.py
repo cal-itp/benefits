@@ -14,6 +14,29 @@ from benefits.routes import routes
 
 
 @pytest.mark.django_db
+def test_agency_does_not_exist(app_request):
+    app_request.session[session._AGENCY] = -1
+    assert not session.agency(app_request)
+
+
+@pytest.mark.django_db
+def test_agency_cache(model_TransitAgency, app_request):
+    session.update(app_request, agency=model_TransitAgency)
+    assert not hasattr(app_request, "_cached_agency")
+
+    # set _cached_agency
+    first_call = session.agency(app_request)
+
+    assert first_call == model_TransitAgency
+    assert hasattr(app_request, "_cached_agency")
+    assert app_request._cached_agency == model_TransitAgency
+
+    second_call = session.agency(app_request)
+
+    assert second_call == model_TransitAgency
+
+
+@pytest.mark.django_db
 def test_active_agency_False(app_request, model_TransitAgency_inactive):
     session.update(app_request, agency=None)
 
@@ -130,6 +153,29 @@ def test_enrollment_reenrollment(app_request, model_EnrollmentFlow_supports_expi
     )
 
     assert session.enrollment_reenrollment(app_request) == expected_reenrollment
+
+
+@pytest.mark.django_db
+def test_flow_does_not_exist(app_request):
+    app_request.session[session._FLOW] = -1
+    assert not session.flow(app_request)
+
+
+@pytest.mark.django_db
+def test_flow_cache(model_EnrollmentFlow, app_request):
+    session.update(app_request, flow=model_EnrollmentFlow)
+    assert not hasattr(app_request, "_cached_flow")
+
+    # set _cached_flow
+    first_call = session.flow(app_request)
+
+    assert first_call == model_EnrollmentFlow
+    assert hasattr(app_request, "_cached_flow")
+    assert app_request._cached_flow == model_EnrollmentFlow
+
+    second_call = session.flow(app_request)
+
+    assert second_call == model_EnrollmentFlow
 
 
 @pytest.mark.django_db

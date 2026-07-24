@@ -39,9 +39,17 @@ _UID = "uid"
 
 def agency(request):
     """Get the agency from the request's session, or None"""
+    agency_id = request.session.get(_AGENCY)
+    if not agency_id:
+        return None
+
+    if getattr(request, "_cached_agency", None) and request._cached_agency.id == agency_id:
+        return request._cached_agency
     try:
-        return models.TransitAgency.by_id(request.session[_AGENCY])
-    except (KeyError, models.TransitAgency.DoesNotExist):
+        agency = models.TransitAgency.by_id(agency_id)
+        request._cached_agency = agency
+        return agency
+    except models.TransitAgency.DoesNotExist:
         return None
 
 
@@ -124,9 +132,17 @@ def enrollment_reenrollment(request):
 
 def flow(request) -> models.EnrollmentFlow | None:
     """Get the EnrollmentFlow from the request's session, or None"""
+    flow_id = request.session.get(_FLOW)
+    if not flow_id:
+        return None
+
+    if getattr(request, "_cached_flow", None) and request._cached_flow.id == flow_id:
+        return request._cached_flow
     try:
-        return models.EnrollmentFlow.by_id(request.session[_FLOW])
-    except (KeyError, models.EnrollmentFlow.DoesNotExist):
+        flow = models.EnrollmentFlow.by_id(flow_id)
+        request._cached_flow = flow
+        return flow
+    except models.EnrollmentFlow.DoesNotExist:
         return None
 
 
