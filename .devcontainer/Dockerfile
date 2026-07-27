@@ -1,6 +1,6 @@
 FROM benefits_client:latest
 
-# should match the version specified in terraform/pipeline/deploy.yml
+# should match the version specified in .github/workflows/deploy.yml and .github/workflows/terraform-plan.yml
 ENV TF_VERSION="1.15.8"
 
 USER root

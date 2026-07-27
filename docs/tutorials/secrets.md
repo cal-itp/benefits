@@ -44,4 +44,4 @@ The steps are:
 The effects of following those steps should be:
 
 - A restart of the App Service is triggered.
-- The next time that our Azure infrastructure pipeline is run, the value of `change_me_to_refresh_secrets` is set back to the value defined in our Terraform file for the App Service resource.
+- The next time that GitHub action deploy workflow is run, the value of `change_me_to_refresh_secrets` is set back to the value defined in our Terraform file for the App Service resource.

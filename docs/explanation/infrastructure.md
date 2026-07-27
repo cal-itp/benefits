@@ -4,9 +4,9 @@ The infrastructure is configured as code via [Terraform](https://www.terraform.i
 
 ## Getting started
 
-Since the Benefits app is deployed into a Microsoft Azure account provided by the California Department of Technology (CDT)'s Office of Enterprise Technology (OET) team, you'll need to request access from them to the `CDT Digital CA` directory so you can get into the [Azure portal](https://portal.azure.com), and to the `California Department of Technology` directory so you can access [Azure DevOps](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP).
+Since the Benefits app is deployed into a Microsoft Azure account provided by the California Department of Technology (CDT)'s Office of Enterprise Technology (OET) team, you'll need to request access from them to the `CDT Digital CA` directory so you can get into the [Azure portal](https://portal.azure.com).
 
-The Azure portal is where you can view the infrastructure resources for Benefits. Azure DevOps is where our [infrastructure pipeline](https://github.com/cal-itp/benefits/blob/main/terraform/azure-pipelines.yml) is run to build and deploy those infrastructure resources.
+The Azure portal is where you can view the infrastructure resources for Benefits. We use [GitHub actions](https://github.com/cal-itp/benefits/blob/main/.github/workflows/deploy.yml) to build and deploy those resources.
 
 ## Environments
 
@@ -160,7 +160,7 @@ Use the following shorthand for conveying the Resource Type as part of the Resou
    ./init.sh <env>
    ```
 
-1. Create a local `terraform.tfvars` file (ignored by git) from the sample; fill in the `*_OBJECT_ID` variables with values from the Azure Pipeline definition.
+1. Create a local `terraform.tfvars` file (ignored by git) from the sample; `ARM_SUBSCRIPTION_ID` refers to our <kbd>CDT/ODI Production</kbd> Azure subscription. `ENGINEERING_GROUP_OBJECT_ID` is stored as a GitHub actions environment variable.
 
 ### Development process
 
@@ -185,16 +185,11 @@ When configuration changes to infrastructure resources are needed, they should b
     }
     ```
 
-### Infrastructure pipeline
+### Infrastructure workflows
 
-[![Build Status](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_apis/build/status/cal-itp.benefits%20Infra?branchName=dev)](https://calenterprise.visualstudio.com/CDT.OET.CAL-ITP/_build/latest?definitionId=828&branchName=dev)
+[![Build Status](https://github.com/cal-itp/benefits/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/cal-itp/benefits/actions/workflows/deploy.yml)
 
-When code is pushed to any branch on GitHub, our infrastructure pipeline in Azure DevOps runs [`terraform plan`](https://www.terraform.io/cli/commands/plan). When the pull request is merged into `main`, the pipeline runs [`terraform apply`](https://www.terraform.io/cli/commands/apply).
-
-While other automation for this project is done through GitHub Actions, we use an Azure Pipeline for a couple of reasons:
-
-- Easier authentication with the Azure API using a service connnection
-- Log output is hidden, avoiding accidentally leaking secrets
+When code is pushed to any branch, a GitHub actions workflow runs [`terraform plan`](https://www.terraform.io/cli/commands/plan). When the pull request is merged into `main`, another workflow runs [`terraform apply`](https://www.terraform.io/cli/commands/apply).
 
 ## Azure environment setup
 
