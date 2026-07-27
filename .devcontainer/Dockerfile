@@ -1,7 +1,7 @@
 FROM benefits_client:latest
 
 # should match the version specified in terraform/pipeline/deploy.yml
-ENV TF_VERSION="1.14.5"
+ENV TF_VERSION="1.15.8"
 
 USER root
 
