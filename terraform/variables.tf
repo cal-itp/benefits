@@ -1,5 +1,6 @@
-# needs to be uppercase "because Azure DevOps will always transform pipeline variables to uppercase environment variables"
+# these are all uppercase because Azure DevOps transformed pipeline variables to uppercase environment variables
 # https://gaunacode.com/terraform-input-variables-using-azure-devops
+# now that we run terraform commands via GitHub actions, lowercase variables may be fine
 
 variable "ARM_SUBSCRIPTION_ID" {
   description = "Production Subscription ID"
