@@ -10,16 +10,16 @@
         <div>
           {{ group }}
           <div {% if id %}id="{{ id }}_{{ index }}"{% endif %}>
-          {% endif %}
-
-          {% for option in options %}
-            <div class="gap-4 gap-md-3 d-flex pt-4">{% include option.template_name with widget=option %}</div>
-          {% endfor %}
-
-          {% if group %}
-          </div>
-        </div>
       {% endif %}
-    {% endfor %}
+
+      {% for option in options %}
+        <div class="gap-4 gap-md-3 d-flex pt-4">{% include option.template_name with widget=option %}</div>
+      {% endfor %}
+
+      {% if group %}
+        </div>
+        </div>
+    {% endif %}
+  {% endfor %}
   </div>
 {% endwith %}
