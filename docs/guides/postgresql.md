@@ -68,15 +68,16 @@ Generally we expect that the steps to be:
 
 ## Use pgAdmin
 
-You can use pgAdmin to manage the PostgreSQL server via a GUI. Setting up pgAdmin is slightly different depending on the environment where it is being hosted.
+pgAdmin provides a GUI to manage the PostgreSQL server. pgAdmin is setup slightly differently depending on the hosted environment.
 
 ### Local development environment
 
 If this is your first time using pgAdmin or if you have recently cleared your associated Docker volume (`pgadmin_data`), you will need to register the PostgreSQL server:
 
-1. Select _Add New Server_ from the dashboard or navigate to _Object > Register > Server_.
-2. Under the _General_ tab, provide any descriptive _Name_ for the server.
-3. Under the _Connection_ tab, configure the following properties based on your environment variables:
+1. Navigate to http://localhost:8081 (replace 8081 with your `PGADMIN_PORT` value if it was changed).
+2. Select _Add New Server_ from the dashboard or navigate to _Object > Register > Server_.
+3. Under the _General_ tab, provide any descriptive _Name_ for the server.
+4. Under the _Connection_ tab, configure the following properties based on your environment variables:
    - _Host name/address_: Value of `POSTGRES_HOSTNAME` (usually `postgres`)
    - _Port_: Value of `POSTGRES_PORT` (usually `5432`)
    - _Maintenance database_: Value of `POSTGRES_DB` (usually `postgres`)
@@ -88,11 +89,11 @@ Note that because `PGADMIN_CONFIG_SERVER_MODE=false`, pgAdmin runs in desktop mo
 
 ### Cloud environments
 
-To use pgAdmin in any of the Cloud environments:
+To use pgAdmin in any of the cloud environments:
 
 1. Select the _pgAdmin Container App_ resource in Azure Portal.
 2. Go to _Networking > Ingress > IP Restrictions_ and add your local public IP as an allowed _Source_.
-3. Open pgAdmin by going to the Container App's _Application Url_.
+3. Open pgAdmin by launching the Container App's _Application Url_.
 4. On the pgAdmin landing page, use the value of the environment variable `PGADMIN_DEFAULT_EMAIL` for _Email Address / Username_ and the value of the `pgadmin-admin-password` secret for _Password_.
 
 You can then start using pgAdmin to manage the database since the _Azure Database for PostgreSQL flexible server_ is already registered via Terraform, mostly through the configuration of the appropriate [pgAdmin environment variables](../reference/environment-variables.md#pgadmin).
