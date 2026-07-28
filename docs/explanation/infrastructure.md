@@ -160,7 +160,7 @@ Use the following shorthand for conveying the Resource Type as part of the Resou
    ./init.sh <env>
    ```
 
-1. Create a local `terraform.tfvars` file (ignored by git) from the sample; `ARM_SUBSCRIPTION_ID` refers to our <kbd>CDT/ODI Production</kbd> Azure subscription. `ENGINEERING_GROUP_OBJECT_ID` is stored as a GitHub actions environment variable.
+1. Create a local `terraform.tfvars` file (ignored by git) using the `terraform.tfvars.sample` file.
 
 ### Development process
 
