@@ -373,19 +373,19 @@ Applicable to `Desktop Mode` only, the master password used to encrypt/decrypt s
 
 ### `PGHOST`
 
-Maps to [POSTGRES_HOSTNAME](http://localhost:32862/benefits/reference/environment-variables/#postgres_hostname)
+Maps to [POSTGRES_HOSTNAME](#postgres_hostname)
 
 ### `PGPASSWORD`
 
-Maps to [POSTGRES_PASSWORD](http://localhost:32862/benefits/reference/environment-variables/#postgres_password)
+Maps to [POSTGRES_PASSWORD](#postgres_password)
 
 ### `PGUSER`
 
-Maps to [POSTGRES_USER](http://localhost:32862/benefits/reference/environment-variables/#postgres_user)
+Maps to [POSTGRES_USER](#postgres_user)
 
 ### `PGSSLMODE`
 
-Maps to [POSTGRES_SSLMODE](http://localhost:32862/benefits/reference/environment-variables/#postgres_sslmode)
+Maps to [POSTGRES_SSLMODE](#postgres_sslmode)
 
 !!! info "Cloud configuration"
 
