@@ -34,14 +34,4 @@ To verify the value of a secret, you can use the helper script named `read.sh`.
 
 ## Refreshing secrets
 
-To make sure the Benefits application uses the latest secret values in Key Vault, you will need to make a change to the app service's configuration. If you don't do this step, the application will instead use cached values, which may not be what you expect. See the [Azure docs](https://learn.microsoft.com/en-us/azure/app-service/app-service-key-vault-references?tabs=azure-cli#rotation) for more details.
-
-The steps are:
-
-1. After setting new secret values, go to the App Service configuration in Azure Portal, and change the value of the setting named `change_me_to_refresh_secrets`.
-1. Save your changes.
-
-The effects of following those steps should be:
-
-- A restart of the App Service is triggered.
-- The next time that GitHub action deploy workflow is run, the value of `change_me_to_refresh_secrets` is set back to the value defined in our Terraform file for the App Service resource.
+Container apps pick up new key vault values [within 30 minutes](https://learn.microsoft.com/en-us/azure/container-apps/manage-secrets?tabs=azure-portal#key-vault-secret-uri-and-secret-rotation) without intervention. You can trigger an immediate reevaluation by deploying a new revision or stopping and restarting the container app.
