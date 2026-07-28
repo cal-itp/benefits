@@ -33,7 +33,7 @@ jobs:
     steps:
       - id: set-env
         run: |
-          # 1. Determine if its a tag
+          # 1. Determine if it's a tag
           if [[ "${{ github.ref_type }}" == "tag" ]]; then
             IS_TAG="true"
           else
@@ -41,7 +41,7 @@ jobs:
           fi
           echo "is_tag=$IS_TAG" >> $GITHUB_OUTPUT
 
-          # 1. Determine environment name
+          # 2. Determine environment name
           if [[ $IS_TAG == "false" ]]; then
             ENV="dev"
           elif [[ "${{ github.ref }}" == *"-rc"* ]]; then
@@ -51,8 +51,8 @@ jobs:
           fi
           echo "env_name=$ENV" >> $GITHUB_OUTPUT
 
-          # 2. Determine if it's a final release tag
-          if [[ "$IS_TAG" == "true" && "${{ github.ref }}" != *"-rc"* ]]; then
+          # 3. Determine if it's a final release tag
+          if [[ $ENV == "prod" ]]; then
             echo "is_release=true" >> $GITHUB_OUTPUT
           else
             echo "is_release=false" >> $GITHUB_OUTPUT
