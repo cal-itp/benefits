@@ -36,12 +36,6 @@ a.md-tabs__link {
   grid-template-columns: 1fr;
 }
 
-#newsletter-cards-2026 li > p:first-child,
-#newsletter-cards-2025 li > p:first-child,
-#newsletter-cards-2024 li > p:first-child {
-  font-size: 1.1rem;
-}
-
 #newsletter-cards-2026,
 #newsletter-cards-2025,
 #newsletter-cards-2024,
