@@ -300,6 +300,10 @@ MEDIA_ROOT = os.path.join(STORAGE_DIR, "uploads/")
 
 MEDIA_URL = "/media/"
 
+# Prevent Django from attempting to use os.chmod() when saving agency logos since it causes permission errors
+# on the Container App's Azure File Share
+FILE_UPLOAD_PERMISSIONS = None
+
 # Logging configuration
 LOG_LEVEL = os.environ.get("DJANGO_LOG_LEVEL", "DEBUG" if DEBUG else "WARNING")
 LOGGING = {
