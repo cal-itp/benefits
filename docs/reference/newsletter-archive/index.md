@@ -4,7 +4,7 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
 !!! note ""
 
-    If you’re interested in receiving this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu){target="_blank"}.
+    If you’re interested in having this newsletter delivered directly to your email inbox, [subscribe here](https://share.hsforms.com/1uC9WaFRTQJOgZXEgplZrRQ3aanu){target="_blank"}.
 
 === "2026"
 
