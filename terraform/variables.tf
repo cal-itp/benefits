@@ -2,10 +2,6 @@
 # https://gaunacode.com/terraform-input-variables-using-azure-devops
 # now that we run terraform commands via GitHub actions, lowercase variables may be fine
 
-variable "ARM_SUBSCRIPTION_ID" {
-  description = "Production Subscription ID"
-  type        = string
-}
 variable "DEVSECOPS_OBJECT_ID" {
   description = "Object ID for the DevSecOps principal, which includes the Production service connection"
   type        = string

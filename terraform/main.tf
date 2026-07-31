@@ -16,8 +16,8 @@ terraform {
   }
 }
 
+// subscription_id is inferred from the active Azure CLI session
 provider "azurerm" {
-  subscription_id = var.ARM_SUBSCRIPTION_ID
   features {}
 }
 
