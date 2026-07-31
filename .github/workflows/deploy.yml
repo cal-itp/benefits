@@ -174,7 +174,6 @@ jobs:
       - name: Terraform plan
         working-directory: terraform
         env:
-          TF_VAR_ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SP_SUBSCRIPTION_ID }}
           TF_VAR_CONTAINER_TAG: ${{ github.sha }}
           TF_VAR_DEVSECOPS_OBJECT_ID: ${{ secrets.TF_VAR_DEVSECOPS_OBJECT_ID }}
           TF_VAR_ENGINEERING_GROUP_OBJECT_ID: ${{ secrets.TF_VAR_ENGINEERING_GROUP_OBJECT_ID }}
