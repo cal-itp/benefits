@@ -183,6 +183,15 @@ jobs:
         working-directory: terraform
         run: terraform apply -lock-timeout=5m tfplan
 
+      # attach a detailed summary directly to a gh actions job. sensitive values that match repo secrets are automatically redacted
+      - name: Attach detailed summary to job
+        uses: borchero/terraform-plan-comment@2d41e908725447b1677913001dfb92fa7010c025 # v3.1.0
+        with:
+          planfile: tfplan
+          token: ${{ github.token }}
+          skip-comment: true
+          working-directory: terraform
+
   release:
     needs: deploy
     if: ${{ needs.setup.outputs.is_release =='true' }}
