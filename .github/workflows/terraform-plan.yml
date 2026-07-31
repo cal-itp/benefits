@@ -8,8 +8,9 @@ on:
       - ".github/workflows/terraform-plan.yml"
 
 permissions:
-  id-token: write
   contents: read
+  id-token: write
+  pull-requests: write
 
 jobs:
   terraform-plan:
@@ -50,4 +51,17 @@ jobs:
           TF_VAR_CONTAINER_TAG: ${{ steps.get_main_sha.outputs.sha }}
           TF_VAR_DEVSECOPS_OBJECT_ID: ${{ secrets.TF_VAR_DEVSECOPS_OBJECT_ID }}
           TF_VAR_ENGINEERING_GROUP_OBJECT_ID: ${{ secrets.TF_VAR_ENGINEERING_GROUP_OBJECT_ID }}
-        run: terraform plan -lock-timeout=5m
+        run: terraform plan -out=tfplan -lock-timeout=5m
+
+      # tf-summarize generates a course-grained summary w/ no sensitive infra details
+      - name: Setup tf-summarize
+        uses: kishaningithub/setup-tf-summarize@1596bb06f9509eb36b71bc1b304407cc111059c0 #v3.0.0
+
+      - name: Create tf-summarize markdown file
+        run: tf-summarize -md tfplan >> tf-summary.md
+
+      - name: Create PR comment with course-grained plan summary
+        uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
+        with:
+          issue-number: ${{ github.event.number }}
+          body-path: "./terraform/tf-summary.md"
