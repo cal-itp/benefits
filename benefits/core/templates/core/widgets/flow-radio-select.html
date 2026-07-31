@@ -16,10 +16,12 @@
         <div class="gap-4 gap-md-3 d-flex pt-4">{% include option.template_name with widget=option %}</div>
       {% endfor %}
 
+      {# djlint:off #}
       {% if group %}
+          </div>
         </div>
-        </div>
-    {% endif %}
-  {% endfor %}
+      {% endif %}
+      {# djlint:on #}
+    {% endfor %}
   </div>
 {% endwith %}
