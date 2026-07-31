@@ -33,10 +33,10 @@ timeline
 
         Q1<br>Complete
         : Streamling agency configuration and onboarding to support app scaling
-        : Regional rider enrollment (for transit providers using Littlepay)
+        : Regional rider enrollment (San Luis Obispo County)
 
         Q2<br>Complete
-        : Regional rider enrollment (for transit providers using Switchio)
+        : Regional rider enrollment (Ventura County)
 
         Q3<br>Now
         : Core infrastructure improvements to support app scaling
@@ -59,7 +59,7 @@ timeline
         : Self-serve enrollment for U.S. Veterans with disabilities (VA)
         : In-person enrollment for SSDI
         : In-person enrollment for young people
-        : Regional rider enrollment (for multiple transit providers using Littlepay)
+        : Regional rider enrollment (multiple agencies with different Littlepay back offices)
         : Identity verification and eligibility confirmation using Socure
 
           H2<br>Projected
