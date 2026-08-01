@@ -12,6 +12,16 @@ Most months we send a newsletter to share product updates, adoption metrics, and
 
     ## 2026 {.sr-only}
 
+    -   ### :material-email-newsletter: July 2026
+
+          *Cal-ITP Benefits goes national*
+
+          ---
+
+          Pinellas Suncoast Transit Authority (PSTA) in St. Petersburg, Florida will become the first transit operator outside California to adopt Cal-ITP Benefits, with a go-live targeted for early 2027. The project also adds support for INIT as a third supported fare processor, meaning any California agency currently using INIT can now adopt Cal-ITP Benefits. Year-to-date, the product has reached 453 enrollments and 4,293 reduced-fare transactions, with month-over-month transactions up 36%.
+
+        [Read full newsletter →](https://5519226.hs-sites-na2.com/cal-itp-benefits-the-july-update-2026){target="_blank"}
+
     -   ### :material-email-newsletter: June 2026
 
           *Open-loop payments reach a tipping point*
