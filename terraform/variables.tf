@@ -34,9 +34,11 @@ variable "CONTAINER_TAG" {
 variable "sp_apply_object_id" {
   description = "Object ID for the GH Actions service principal created by DevSecOps"
   type        = string
+  sensitive   = true
 }
 
 variable "sp_plan_object_id" {
   description = "Object ID for the plan-only GH Actions service principal created by DevSecOps"
   type        = string
+  sensitive   = true
 }
