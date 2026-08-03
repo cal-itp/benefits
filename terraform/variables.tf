@@ -1,6 +1,6 @@
-# these are all uppercase because Azure DevOps transformed pipeline variables to uppercase environment variables
+# many of these are uppercase because Azure DevOps transformed pipeline variables to uppercase environment variables
 # https://gaunacode.com/terraform-input-variables-using-azure-devops
-# now that we run terraform commands via GitHub actions, lowercase variables may be fine
+# lowercase variables *are* supported when running terraform commands via GH Actions
 
 variable "DEVSECOPS_OBJECT_ID" {
   description = "Object ID for the DevSecOps principal, which includes the Production service connection"
@@ -29,4 +29,14 @@ variable "CONTAINER_REPOSITORY" {
 variable "CONTAINER_TAG" {
   type        = string
   description = "The specific tag of the image to deploy (e.g., a commit SHA)."
+}
+
+variable "sp_apply_object_id" {
+  description = "Object ID for the GH Actions service principal created by DevSecOps"
+  type        = string
+}
+
+variable "sp_plan_object_id" {
+  description = "Object ID for the plan-only GH Actions service principal created by DevSecOps"
+  type        = string
 }
