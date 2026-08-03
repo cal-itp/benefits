@@ -70,7 +70,7 @@ plugins:
         "product-and-design/analytics.md": "reference/analytics.md"
         "product-and-design/copy-delivery.md": "guides/copy-delivery.md"
         "product-and-design/copy-style.md": "reference/copy-style.md"
-        "product-and-design/newsletter-archive.md": "reference/newsletter-archive.md"
+        "product-and-design/newsletter-archive.md": "reference/newsletter-archive/index.md"
         "product-and-design/use-cases/enrollment-use-cases.md": "index.md#supported-enrollment-pathways"
 
         "reference/admin-interface.md": "reference/environment-variables.md#django-admin-interface"
