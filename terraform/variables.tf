@@ -5,11 +5,13 @@
 variable "DEVSECOPS_OBJECT_ID" {
   description = "Object ID for the DevSecOps principal, which includes the Production service connection"
   type        = string
+  sensitive   = true
 }
 
 variable "ENGINEERING_GROUP_OBJECT_ID" {
   description = "Object ID for the Cal-ITP engineering Active Directory Group"
   type        = string
+  sensitive   = true
 }
 
 variable "CONTAINER_REGISTRY" {
