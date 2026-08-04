@@ -43,8 +43,9 @@ locals {
     "Restore",
   ]
 
-  key_vault_name              = "KV-CDT-PUB-CALITP-${local.env_letter}-001"
-  key_vault_secret_uri_prefix = "https://${local.key_vault_name}.vault.azure.net/secrets"
+  key_vault_name                  = "KV-CDT-PUB-CALITP-${local.env_letter}-001"
+  key_vault_secret_uri_prefix     = "https://${local.key_vault_name}.vault.azure.net/secrets"
+  access_policy_service_principal = local.is_dev ? var.sp_dev_object_id : (local.is_test ? var.sp_test_object_id : var.sp_prod_object_id)
 }
 
 resource "azurerm_key_vault" "main" {
@@ -93,12 +94,11 @@ resource "azurerm_key_vault_access_policy" "devsecops" {
   depends_on = [azurerm_key_vault.main]
 }
 
-# Standalone Access Policies for GH Actions Service Principals
-
-resource "azurerm_key_vault_access_policy" "devsecops_apply" {
+# Standalone Access Policy for GH Actions environment Service Principals
+resource "azurerm_key_vault_access_policy" "env_service_principal" {
   key_vault_id = azurerm_key_vault.main.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = var.sp_apply_object_id
+  object_id    = local.access_policy_service_principal
 
   secret_permissions = local.all_secret_permissions
 
@@ -106,6 +106,7 @@ resource "azurerm_key_vault_access_policy" "devsecops_apply" {
   depends_on = [azurerm_key_vault.main]
 }
 
+# Standalone Access Policy for GH Actions pull request Service Principal
 resource "azurerm_key_vault_access_policy" "devsecops_plan" {
   key_vault_id = azurerm_key_vault.main.id
   tenant_id    = data.azurerm_client_config.current.tenant_id

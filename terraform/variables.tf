@@ -31,14 +31,26 @@ variable "CONTAINER_TAG" {
   description = "The specific tag of the image to deploy (e.g., a commit SHA)."
 }
 
-variable "sp_apply_object_id" {
-  description = "Object ID for the GH Actions service principal created by DevSecOps"
+variable "sp_plan_object_id" {
+  description = "Object ID of the SP-CDT-PUB-VIP-CALITP-TF-PLAN service principal created by DevSecOps"
   type        = string
   sensitive   = true
 }
 
-variable "sp_plan_object_id" {
-  description = "Object ID for the plan-only GH Actions service principal created by DevSecOps"
+variable "sp_dev_object_id" {
+  description = "Object ID of the SP-CDT-PUB-VIP-CALITP-D-001 service principal created by DevSecOps"
+  type        = string
+  sensitive   = true
+}
+
+variable "sp_test_object_id" {
+  description = "Object ID of the SP-CDT-PUB-VIP-CALITP-T-001 service principal created by DevSecOps"
+  type        = string
+  sensitive   = true
+}
+
+variable "sp_prod_object_id" {
+  description = "Object ID of the SP-CDT-PUB-VIP-CALITP-P-001 service principal created by DevSecOps"
   type        = string
   sensitive   = true
 }

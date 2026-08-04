@@ -51,8 +51,11 @@ jobs:
           TF_VAR_CONTAINER_TAG: ${{ steps.get_main_sha.outputs.sha }}
           TF_VAR_DEVSECOPS_OBJECT_ID: ${{ secrets.TF_VAR_DEVSECOPS_OBJECT_ID }}
           TF_VAR_ENGINEERING_GROUP_OBJECT_ID: ${{ secrets.TF_VAR_ENGINEERING_GROUP_OBJECT_ID }}
-          TF_VAR_sp_apply_object_id: ${{ secrets.AZURE_SP_DEV_OBJECT_ID }}
-          TF_VAR_sp_plan_object_id: ${{ secrets.AZURE_SP_PLAN_OBJECT_ID }}
+          TF_VAR_sp_pr_object_id: ${{ secrets.AZURE_SP_PR_OBJECT_ID }}
+          TF_VAR_sp_dev_object_id: ${{ secrets.AZURE_SP_DEV_OBJECT_ID }}
+          TF_VAR_sp_test_object_id: ${{ secrets.AZURE_SP_TEST_OBJECT_ID }}
+          TF_VAR_sp_prod_object_id: ${{ secrets.AZURE_SP_PROD_OBJECT_ID }}
+
         run: terraform plan -out=tfplan -lock-timeout=5m
 
       # tf-summarize generates a course-grained summary w/ no sensitive infra details
