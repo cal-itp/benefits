@@ -1,4 +1,4 @@
-# Cal-ITP Benefits newsletter
+# Cal-ITP Benefits Newsletter
 
 Most months we send a newsletter to share product updates, adoption metrics, and news related to Cal-ITP Benefits. Below is an archive of all newsletters we’ve shared. Browse the list by year or use the search field in the header to locate content about a specific topic.
 
