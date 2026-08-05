@@ -107,7 +107,7 @@ resource "azurerm_key_vault_access_policy" "env_service_principal" {
 }
 
 # Standalone Access Policy for GH Actions pull request Service Principal
-resource "azurerm_key_vault_access_policy" "devsecops_plan" {
+resource "azurerm_key_vault_access_policy" "pr_service_principal" {
   key_vault_id = azurerm_key_vault.main.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
   object_id    = var.sp_plan_object_id
