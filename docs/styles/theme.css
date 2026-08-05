@@ -43,6 +43,30 @@ a.md-tabs__link {
   fill: var(--md-primary-fg-color);
 }
 
+.newsletter-frame {
+  width: 100%;
+  height: calc(100vh - 300px);
+  border: 1px solid black;
+}
+
+@media (min-width: 1220px) {
+  .newsletter-frame {
+    height: calc(100vh - 345px);
+  }
+}
+
+@media (min-width: 1600px) {
+  .newsletter-frame {
+    height: calc(100vh - 380px);
+  }
+}
+
+@media (min-width: 2000px) {
+  .newsletter-frame {
+    height: calc(100vh - 415px);
+  }
+}
+
 .clear {
   clear: both;
 }

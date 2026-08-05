@@ -23,8 +23,10 @@ repos:
     rev: v6.0.0
     hooks:
       - id: trailing-whitespace
+        exclude: 'docs/reference/newsletter-archive/exports'
       - id: mixed-line-ending
       - id: end-of-file-fixer
+        exclude: 'docs/reference/newsletter-archive/exports'
       - id: requirements-txt-fixer
       - id: check-toml
       - id: check-yaml
@@ -72,4 +74,6 @@ repos:
     rev: v1.43.1
     hooks:
       - id: djlint-reformat-django
+        exclude: 'docs/reference/newsletter-archive/exports'
       - id: djlint-django
+        exclude: 'docs/reference/newsletter-archive/exports'

@@ -71,6 +71,7 @@ omit = [
 source = ["benefits"]
 
 [tool.djlint]
+exclude = "docs/reference/newsletter-archive/exports"
 ignore = "H017,H031"
 indent = 2
 max_attribute_length = 127
