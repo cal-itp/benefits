@@ -1,0 +1,2 @@
+# create test.tfvars and/or prod.tfvars to terraform plan in those envs
+sp_apply_object_id = "object-id"
