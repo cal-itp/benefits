@@ -93,6 +93,30 @@ resource "azurerm_key_vault_access_policy" "devsecops" {
   depends_on = [azurerm_key_vault.main]
 }
 
+# Standalone Access Policies for GH Actions Service Principals
+
+resource "azurerm_key_vault_access_policy" "devsecops_apply" {
+  key_vault_id = azurerm_key_vault.main.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = var.sp_apply_object_id
+
+  secret_permissions = local.all_secret_permissions
+
+  # This ensures the Key Vault itself is created before trying to attach a policy.
+  depends_on = [azurerm_key_vault.main]
+}
+
+resource "azurerm_key_vault_access_policy" "devsecops_plan" {
+  key_vault_id = azurerm_key_vault.main.id
+  tenant_id    = data.azurerm_client_config.current.tenant_id
+  object_id    = var.sp_plan_object_id
+
+  secret_permissions = ["Get", "List"]
+
+  # This ensures the Key Vault itself is created before trying to attach a policy.
+  depends_on = [azurerm_key_vault.main]
+}
+
 # https://learn.microsoft.com/en-us/azure/app-service/app-service-key-vault-references?tabs=azure-cli#granting-your-app-access-to-key-vault
 # Standalone Access Policy for App Service Managed Identity
 resource "azurerm_key_vault_access_policy" "webapp" {

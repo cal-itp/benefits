@@ -161,6 +161,7 @@ Use the following shorthand for conveying the Resource Type as part of the Resou
    ```
 
 1. Create a local `terraform.tfvars` file (ignored by git) using the `terraform.tfvars.sample` file.
+1. Create local `env/[env].tfvars` files (ignored by git) using `env/dev.tfvars.sample` for any environments you plan on interacting with.
 
 ### Development process
 
@@ -170,7 +171,7 @@ When configuration changes to infrastructure resources are needed, they should b
 1. Preview the changes, as necessary.
 
    ```sh
-   terraform plan
+   ./plan.sh # runs terraform plan with necessary variables hydrated
    ```
 
 1. [Submit the changes via pull request.](development/commits-branches-merging.md)
