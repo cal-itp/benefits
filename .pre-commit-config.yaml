@@ -71,7 +71,7 @@ repos:
         types_or: [javascript, css]
 
   - repo: https://github.com/djlint/djLint
-    rev: v1.43.1
+    rev: v1.43.2
     hooks:
       - id: djlint-reformat-django
         exclude: 'docs/reference/newsletter-archive/exports'
