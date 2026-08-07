@@ -92,7 +92,8 @@ jobs:
         check-migrations-and-messages,
         check-dynamic-version,
       ]
-    if: (!cancelled())
+    # this convoluted syntax allows skipped and successful prerequisite runs and disallows failures
+    if: (always() && !cancelled() && !failure())
     environment: ${{ needs.setup.outputs.env_name }}
     steps:
       - name: Checkout
