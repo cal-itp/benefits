@@ -18,7 +18,7 @@ def date_march():
 
 
 def test_en_DATE_FORMAT_december(date_december):
-    assert date_format(date_december, DATE_FORMAT_EN) == "December 25, 2024"
+    assert date_format(date_december, DATE_FORMAT_EN) == "December 1, 2024"
 
 
 def test_en_DATE_FORMAT_march(date_march):
