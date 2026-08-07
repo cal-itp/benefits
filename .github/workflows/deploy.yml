@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - patch/3967
     tags:
       # pre-release tag
       - "202[3-9].[0-9][0-9].[0-9]+-rc[0-9]+"
@@ -68,7 +69,7 @@ jobs:
   tests-pytest:
     needs: [setup]
     uses: ./.github/workflows/tests-pytest.yml
-    if: ${{ needs.setup.outputs.is_tag == 'true' }}
+    # if: ${{ needs.setup.outputs.is_tag == 'true' }}
     with:
       parent_event: ${{ github.event_name }}
 
@@ -117,102 +118,102 @@ jobs:
       - name: Write commit SHA to file
         run: echo "${{ github.sha }}" >> benefits/static/sha.txt
 
-      - name: Docker Login to GitHub Container Registry
-        uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Docker Login to GitHub Container Registry
+  #       uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+  #       with:
+  #         registry: ghcr.io
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Docker Buildx
-        id: buildx
-        uses: docker/setup-buildx-action@v4
+  #     - name: Set up Docker Buildx
+  #       id: buildx
+  #       uses: docker/setup-buildx-action@v4
 
-      - name: Cache Parameters
-        id: cache_params
-        run: |
-          CACHE_SCOPE="cal-itp"
-          MAIN_BRANCH_REF="refs/heads/main"
+  #     - name: Cache Parameters
+  #       id: cache_params
+  #       run: |
+  #         CACHE_SCOPE="cal-itp"
+  #         MAIN_BRANCH_REF="refs/heads/main"
 
-          echo "cache_from_args=type=gha,scope=${CACHE_SCOPE},ref=${MAIN_BRANCH_REF}" >> $GITHUB_OUTPUT
-          echo "cache_to_args=type=gha,scope=${CACHE_SCOPE},mode=max,ref=${MAIN_BRANCH_REF}" >> $GITHUB_OUTPUT
+  #         echo "cache_from_args=type=gha,scope=${CACHE_SCOPE},ref=${MAIN_BRANCH_REF}" >> $GITHUB_OUTPUT
+  #         echo "cache_to_args=type=gha,scope=${CACHE_SCOPE},mode=max,ref=${MAIN_BRANCH_REF}" >> $GITHUB_OUTPUT
 
-      - name: Build, tag, and push image to GitHub Container Registry
-        uses: docker/build-push-action@v7
-        with:
-          builder: ${{ steps.buildx.outputs.name }}
-          build-args: GIT-SHA=${{ github.sha }}
-          cache-from: ${{ steps.cache_params.outputs.cache_from_args }}
-          cache-to: ${{ steps.cache_params.outputs.cache_to_args }}
-          context: .
-          file: appcontainer/Dockerfile
-          push: true
-          tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
+  #     - name: Build, tag, and push image to GitHub Container Registry
+  #       uses: docker/build-push-action@v7
+  #       with:
+  #         builder: ${{ steps.buildx.outputs.name }}
+  #         build-args: GIT-SHA=${{ github.sha }}
+  #         cache-from: ${{ steps.cache_params.outputs.cache_from_args }}
+  #         cache-to: ${{ steps.cache_params.outputs.cache_to_args }}
+  #         context: .
+  #         file: appcontainer/Dockerfile
+  #         push: true
+  #         tags: ghcr.io/${{ github.repository }}:${{ github.sha }}
 
-      # deploy application service
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: ${{ vars.AZURE_WEBAPP_NAME }}
-          images: ghcr.io/${{ github.repository }}:${{ github.sha }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+  #     # deploy application service
+  #     - name: Deploy to Azure Web App
+  #       uses: azure/webapps-deploy@v2
+  #       with:
+  #         app-name: ${{ vars.AZURE_WEBAPP_NAME }}
+  #         images: ghcr.io/${{ github.repository }}:${{ github.sha }}
+  #         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
 
-      # begin setup to deploy container app
-      - name: Log in to azure using federated identity credentials
-        uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3
-        with:
-          client-id: ${{ secrets.AZURE_SP_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  #     # begin setup to deploy container app
+  #     - name: Log in to azure using federated identity credentials
+  #       uses: azure/login@532459ea530d8321f2fb9bb10d1e0bcf23869a43 # v3
+  #       with:
+  #         client-id: ${{ secrets.AZURE_SP_CLIENT_ID }}
+  #         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+  #         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Setup terraform
-        uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4
-        with:
-          terraform_version: 1.15.8 # should match TF_VERSION in .devcontainer/Dockerfile
+  #     - name: Setup terraform
+  #       uses: hashicorp/setup-terraform@dfe3c3f87815947d99a8997f908cb6525fc44e9e # v4
+  #       with:
+  #         terraform_version: 1.15.8 # should match TF_VERSION in .devcontainer/Dockerfile
 
-      - name: Initialize terraform and select workspace
-        working-directory: terraform
-        run: ./init.sh "${{ needs.setup.outputs.env_name }}"
+  #     - name: Initialize terraform and select workspace
+  #       working-directory: terraform
+  #       run: ./init.sh "${{ needs.setup.outputs.env_name }}"
 
-      - name: Terraform plan
-        working-directory: terraform
-        env:
-          TF_VAR_CONTAINER_TAG: ${{ github.sha }}
-          TF_VAR_DEVSECOPS_OBJECT_ID: ${{ secrets.TF_VAR_DEVSECOPS_OBJECT_ID }}
-          TF_VAR_ENGINEERING_GROUP_OBJECT_ID: ${{ secrets.TF_VAR_ENGINEERING_GROUP_OBJECT_ID }}
-          TF_VAR_sp_apply_object_id: ${{ secrets.AZURE_SP_OBJECT_ID }}
-          TF_VAR_sp_plan_object_id: ${{ secrets.AZURE_SP_PLAN_OBJECT_ID }}
-        run: terraform plan -out=tfplan -lock-timeout=5m
+  #     - name: Terraform plan
+  #       working-directory: terraform
+  #       env:
+  #         TF_VAR_CONTAINER_TAG: ${{ github.sha }}
+  #         TF_VAR_DEVSECOPS_OBJECT_ID: ${{ secrets.TF_VAR_DEVSECOPS_OBJECT_ID }}
+  #         TF_VAR_ENGINEERING_GROUP_OBJECT_ID: ${{ secrets.TF_VAR_ENGINEERING_GROUP_OBJECT_ID }}
+  #         TF_VAR_sp_apply_object_id: ${{ secrets.AZURE_SP_OBJECT_ID }}
+  #         TF_VAR_sp_plan_object_id: ${{ secrets.AZURE_SP_PLAN_OBJECT_ID }}
+  #       run: terraform plan -out=tfplan -lock-timeout=5m
 
-      - name: Terraform apply
-        working-directory: terraform
-        run: terraform apply -lock-timeout=5m tfplan
+  #     - name: Terraform apply
+  #       working-directory: terraform
+  #       run: terraform apply -lock-timeout=5m tfplan
 
-      # attach a detailed summary directly to a gh actions job. sensitive values that match repo secrets are automatically redacted
-      - name: Attach detailed summary to job
-        uses: borchero/terraform-plan-comment@f585438eda2fa77c6f275994b92aeccd86ef3542 # v3.2.0
-        with:
-          planfile: tfplan
-          token: ${{ github.token }}
-          skip-comment: true
-          working-directory: terraform
+  #     # attach a detailed summary directly to a gh actions job. sensitive values that match repo secrets are automatically redacted
+  #     - name: Attach detailed summary to job
+  #       uses: borchero/terraform-plan-comment@f585438eda2fa77c6f275994b92aeccd86ef3542 # v3.2.0
+  #       with:
+  #         planfile: tfplan
+  #         token: ${{ github.token }}
+  #         skip-comment: true
+  #         working-directory: terraform
 
-  release:
-    needs: deploy
-    if: ${{ needs.setup.outputs.is_release =='true' }}
-    runs-on: ubuntu-latest
-    permissions:
-      # https://github.com/softprops/action-gh-release#permissions
-      contents: write
+  # release:
+  #   needs: deploy
+  #   if: ${{ needs.setup.outputs.is_release =='true' }}
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     # https://github.com/softprops/action-gh-release#permissions
+  #     contents: write
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v7
+  #       with:
+  #         fetch-depth: 0
 
-      - name: Release
-        uses: softprops/action-gh-release@v3
-        with:
-          prerelease: false
-          generate_release_notes: true
+  #     - name: Release
+  #       uses: softprops/action-gh-release@v3
+  #       with:
+  #         prerelease: false
+  #         generate_release_notes: true
