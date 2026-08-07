@@ -69,6 +69,8 @@ jobs:
     needs: [setup]
     uses: ./.github/workflows/tests-pytest.yml
     if: ${{ needs.setup.outputs.is_tag == 'true' }}
+    with:
+      parent_event: ${{ github.event_name }}
 
   check-migrations-and-messages:
     needs: [setup]
