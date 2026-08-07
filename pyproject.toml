@@ -39,6 +39,7 @@ dev = [
 ]
 test = [
     "coverage",
+    "locust",
     "pytest",
     "pytest-django",
     "pytest-mock",
