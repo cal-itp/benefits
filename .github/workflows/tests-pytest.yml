@@ -1,6 +1,13 @@
 name: Pytest
 
-on: [push, pull_request, workflow_call]
+on:
+  push:
+  pull_request:
+  workflow_call:
+    inputs:
+      parent_event:
+        type: string
+        required: true
 
 jobs:
   pytest:
@@ -47,6 +54,7 @@ jobs:
           path: benefits/static/coverage
 
       - name: Coverage comment
+        if: ${{ inputs.parent_event != 'workflow_dispatch' }}
         uses: py-cov-action/python-coverage-comment-action@v3
         with:
           GITHUB_TOKEN: ${{ github.token }}
