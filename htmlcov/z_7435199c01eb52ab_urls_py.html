@@ -66,8 +66,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_7435199c01eb52ab_views_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.15.2">coverage.py v7.15.2</a>,
-            created at 2026-08-05 22:24 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.15.4">coverage.py v7.15.4</a>,
+            created at 2026-08-10 22:12 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -94,7 +94,7 @@
     <p class="run"><span class="n"><a id="t10" href="#t10">10</a></span><span class="t"><span class="key">from</span> <span class="op">.</span><span class="nam">middleware</span> <span class="key">import</span> <span class="nam">FlowUsesClaimsVerificationSessionRequired</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t11" href="#t11">11</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t12" href="#t12">12</a></span><span class="t"><span class="nam">decorator</span> <span class="op">=</span> <span class="nam">decorator_from_middleware</span><span class="op">(</span><span class="nam">FlowUsesClaimsVerificationSessionRequired</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t13" href="#t13">13</a></span><span class="t"><span class="nam">kwargs</span> <span class="op">=</span> <span class="op">{</span><span class="str">"hooks"</span><span class="op">:</span> <span class="nam">hooks</span><span class="op">.</span><span class="nam">OAuthHooks</span><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t13" href="#t13">13</a></span><span class="t"><span class="nam">kwargs</span> <span class="op">=</span> <span class="op">{</span><span class="str">&quot;hooks&quot;</span><span class="op">:</span> <span class="nam">hooks</span><span class="op">.</span><span class="nam">OAuthHooks</span><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t14" href="#t14">14</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t15" href="#t15">15</a></span><span class="t"><span class="com"># use cdt_identity app name so that the URL namespace matches what cdt_identity expects.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t16" href="#t16">16</a></span><span class="t"><span class="com"># (e.g. when cdt_identity reverses routes.)</span>&nbsp;</span><span class="r"></span></p>
@@ -106,7 +106,7 @@
     <p class="run run2"><span class="n"><a id="t22" href="#t22">22</a></span><span class="t">    <span class="nam">path</span><span class="op">(</span><span class="nam">Routes</span><span class="op">.</span><span class="nam">cancel</span><span class="op">,</span> <span class="nam">decorator</span><span class="op">(</span><span class="nam">cdt_identity_views</span><span class="op">.</span><span class="nam">cancel</span><span class="op">)</span><span class="op">,</span> <span class="nam">kwargs</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="nam">Routes</span><span class="op">.</span><span class="nam">cancel</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t23" href="#t23">23</a></span><span class="t">    <span class="nam">path</span><span class="op">(</span><span class="nam">Routes</span><span class="op">.</span><span class="nam">logout</span><span class="op">,</span> <span class="nam">decorator</span><span class="op">(</span><span class="nam">cdt_identity_views</span><span class="op">.</span><span class="nam">logout</span><span class="op">)</span><span class="op">,</span> <span class="nam">kwargs</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="nam">Routes</span><span class="op">.</span><span class="nam">logout</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t24" href="#t24">24</a></span><span class="t">    <span class="nam">path</span><span class="op">(</span><span class="nam">Routes</span><span class="op">.</span><span class="nam">post_logout</span><span class="op">,</span> <span class="nam">decorator</span><span class="op">(</span><span class="nam">cdt_identity_views</span><span class="op">.</span><span class="nam">post_logout</span><span class="op">)</span><span class="op">,</span> <span class="nam">kwargs</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="nam">Routes</span><span class="op">.</span><span class="nam">post_logout</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run run2"><span class="n"><a id="t25" href="#t25">25</a></span><span class="t">    <span class="nam">path</span><span class="op">(</span><span class="str">"error"</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">SystemErrorView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="op">)</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="nam">routes</span><span class="op">.</span><span class="nam">name</span><span class="op">(</span><span class="nam">routes</span><span class="op">.</span><span class="nam">OAUTH_SYSTEM_ERROR</span><span class="op">)</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run run2"><span class="n"><a id="t25" href="#t25">25</a></span><span class="t">    <span class="nam">path</span><span class="op">(</span><span class="str">&quot;error&quot;</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">SystemErrorView</span><span class="op">.</span><span class="nam">as_view</span><span class="op">(</span><span class="op">)</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="nam">routes</span><span class="op">.</span><span class="nam">name</span><span class="op">(</span><span class="nam">routes</span><span class="op">.</span><span class="nam">OAUTH_SYSTEM_ERROR</span><span class="op">)</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t26" href="#t26">26</a></span><span class="t"><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
@@ -116,8 +116,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_7435199c01eb52ab_views_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.15.2">coverage.py v7.15.2</a>,
-            created at 2026-08-05 22:24 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.15.4">coverage.py v7.15.4</a>,
+            created at 2026-08-10 22:12 +0000
         </p>
     </div>
 </footer>
